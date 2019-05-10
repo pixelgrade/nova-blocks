@@ -1,0 +1,138 @@
+
+.c-hero {
+    min-height: 30vh;
+    padding: 40px;
+    position: relative;
+}
+
+.c-hero__layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.c-hero__content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.c-hero__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none;
+    width: auto;
+    height: auto;
+
+    @supports (transform: translate(-50%,-50%)) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    @supports (object-fit: cover) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+}
+
+:root {
+    --hero-master-dark: #000000;
+    --hero-master-light: #FFFFFF;
+    --hero-master-color: #FF0000;
+}
+
+.c-hero {
+    --hero-background: var(--hero-master-dark);
+    --hero-foreground: var(--hero-master-light);
+}
+
+.c-hero__background {
+    background: var(--hero-background);
+}
+
+.c-hero__content-wrapper {
+    color: var(--hero-foreground);
+}
+
+@each $color in dark, light, color {
+
+    .c-hero--background-#{$color} {
+        --hero-background: var(--hero-master-#{$color});
+    }
+
+    .c-hero--content-#{$color} {
+        --hero-foreground: var(--hero-master-#{$color});
+    }
+}
+
+.c-hero__image {
+    opacity: 0.7;
+}
+
+.c-hero__content-wrapper {
+
+    .c-hero--align-left & {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .c-hero--align-center & {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .c-hero--align-right & {
+        justify-content: flex-end;
+        text-align: right;
+    }
+
+    .c-hero--align-middle & {
+        align-items: center;
+    }
+
+    .c-hero--align-top & {
+        align-items: flex-start;
+    }
+
+    .c-hero--align-bottom & {
+        align-items: flex-end;
+    }
+
+    .c-hero--spacing-s & {
+        padding: 20px;
+    }
+
+    .c-hero--spacing-m & {
+        padding: 40px;
+    }
+
+    .c-hero--spacing-l & {
+        padding: 60px;
+    }
+}
+
+.c-hero__slider {
+
+    &.slick-slider {
+        position: absolute;
+    }
+
+    .slick-list,
+    .slick-track {
+        height: 100%;
+    }
+}
+
+.c-hero__slide {
+    position: relative;
+}
