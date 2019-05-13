@@ -89,23 +89,23 @@ export default class Edit extends Component {
 		}
 
 		const mediaPlaceholder = (
-			<MediaPlaceholder
+			! hasImages && <MediaPlaceholder
 				addToGallery
 				isAppender
 				className={ className }
 				dropZoneUIOnly={ ! isSelected }
 				icon={ <BlockIcon icon="images-alt2" /> }
 				onSelect={ onSelectImages }
-				accept="image/*"
 				allowedTypes={ ALLOWED_MEDIA_TYPES }
 				multiple
+				gallery
 				value={ hasImages ? images : undefined }
 			/>
 		);
 
 		const blockControls = (
 			<BlockControls>
-				<Toolbar>
+				{ hasImages && <Toolbar>
 					<MediaUpload
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
 						multiple
@@ -120,7 +120,7 @@ export default class Edit extends Component {
 							/>
 						}}
 					/>
-				</Toolbar>
+				</Toolbar> }
 			</BlockControls>
 		);
 
