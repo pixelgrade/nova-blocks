@@ -1,6 +1,8 @@
 .c-hero {
   min-height: 30vh;
-  padding: 40px;
+  position: relative; }
+
+.c-hero__background-mask {
   position: relative; }
 
 .c-hero__layer {
@@ -78,30 +80,30 @@
 .c-hero__image {
   opacity: 0.7; }
 
-.c-hero--align-left .c-hero__content-wrapper {
+.c-hero--h-align-left .c-hero__content-wrapper {
   -ms-flex-pack: start;
       justify-content: flex-start;
   text-align: left; }
 
-.c-hero--align-center .c-hero__content-wrapper {
+.c-hero--h-align-center .c-hero__content-wrapper {
   -ms-flex-pack: center;
       justify-content: center;
   text-align: center; }
 
-.c-hero--align-right .c-hero__content-wrapper {
+.c-hero--h-align-right .c-hero__content-wrapper {
   -ms-flex-pack: end;
       justify-content: flex-end;
   text-align: right; }
 
-.c-hero--align-middle .c-hero__content-wrapper {
-  -ms-flex-align: center;
-      align-items: center; }
-
-.c-hero--align-top .c-hero__content-wrapper {
+.c-hero--v-align-top .c-hero__content-wrapper {
   -ms-flex-align: start;
       align-items: flex-start; }
 
-.c-hero--align-bottom .c-hero__content-wrapper {
+.c-hero--v-align-center .c-hero__content-wrapper {
+  -ms-flex-align: center;
+      align-items: center; }
+
+.c-hero--v-align-bottom .c-hero__content-wrapper {
   -ms-flex-align: end;
       align-items: flex-end; }
 

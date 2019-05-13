@@ -67,11 +67,9 @@
 				var parentHeight = this.$parent.outerHeight(),
 					parentWidth = this.$parent.outerWidth(),
 					actualHeight = Math.max( parentHeight, windowHeight ),
-					scaleY = ( actualHeight + ( windowHeight - actualHeight ) * ( 1 - this.options.amount ) ) / this.height,
+					scaleY = ( parentHeight + ( windowHeight - parentHeight ) * this.options.amount ) / this.height,
 					scaleX = parentWidth / this.width,
 					scale = Math.max( scaleX, scaleY );
-
-				console.log( parentHeight );
 
 				this.width = this.width * scale;
 				this.height = this.height * scale;

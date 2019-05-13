@@ -43,10 +43,7 @@ function pixelgrade_enqueue_frontend_assets() {
 		return;
 	}
 
-	$block_path = '/assets/js/frontend.blocks.js';
 	$rellax_path = '/assets/js/jquery.rellax.js';
-	$slick_path = '/assets/js/jquery.slick.js';
-
 	wp_register_script(
 		'pixelgrade-blocks-rellax',
 		_get_plugin_url() . $rellax_path,
@@ -54,6 +51,7 @@ function pixelgrade_enqueue_frontend_assets() {
 		filemtime( _get_plugin_directory() . $rellax_path )
 	);
 
+	$slick_path = '/assets/js/jquery.slick.js';
 	wp_register_script(
 		'pixelgrade-blocks-slick',
 		_get_plugin_url() . $slick_path,
@@ -61,6 +59,7 @@ function pixelgrade_enqueue_frontend_assets() {
 		filemtime( _get_plugin_directory() . $slick_path )
 	);
 
+	$block_path = '/assets/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'pixelgrade-blocks-frontend',
 		_get_plugin_url() . $block_path,

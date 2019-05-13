@@ -1,7 +1,10 @@
 
 .c-hero {
     min-height: 30vh;
-    padding: 40px;
+    position: relative;
+}
+
+.c-hero__background-mask {
     position: relative;
 }
 
@@ -81,30 +84,30 @@
 
 .c-hero__content-wrapper {
 
-    .c-hero--align-left & {
+    .c-hero--h-align-left & {
         justify-content: flex-start;
         text-align: left;
     }
 
-    .c-hero--align-center & {
+    .c-hero--h-align-center & {
         justify-content: center;
         text-align: center;
     }
 
-    .c-hero--align-right & {
+    .c-hero--h-align-right & {
         justify-content: flex-end;
         text-align: right;
     }
 
-    .c-hero--align-middle & {
-        align-items: center;
-    }
-
-    .c-hero--align-top & {
+    .c-hero--v-align-top & {
         align-items: flex-start;
     }
 
-    .c-hero--align-bottom & {
+    .c-hero--v-align-center & {
+        align-items: center;
+    }
+
+    .c-hero--v-align-bottom & {
         align-items: flex-end;
     }
 

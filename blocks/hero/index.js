@@ -69,13 +69,13 @@ export default registerBlockType(
 			},
 			minHeight: {
 				type: 'number',
-				default: 100,
+				default: 50,
 			},
 			backgroundColor: {
 				type: 'string',
 				default: 'dark',
 			},
-			overlayColor: {
+			foregroundColor: {
 				type: 'string',
 				default: 'light',
 			},
@@ -104,7 +104,7 @@ export default registerBlockType(
 					enableMinHeight,
 					minHeight,
 					backgroundColor,
-					overlayColor,
+					foregroundColor,
 					backgroundOpacity,
 					images
 				},
@@ -125,38 +125,40 @@ export default registerBlockType(
 				setAttributes( { images } );
 			}
 
-			const getImages = () => {
-				return images.map( image => {
-					return <img src={ image.sizes.large.url } />;
-				});
-			}
-
 			const classes = [
 				className,
 				'c-hero',
-				`c-hero--align-${verticalAlignment}`,
-				`c-hero--align-${horizontalAlignment}`,
+				`c-hero--v-align-${verticalAlignment}`,
+				`c-hero--h-align-${horizontalAlignment}`,
 				`c-hero--spacing-${contentSpacing}`,
-				`c-hero--content-${overlayColor}`,
+				`c-hero--content-${foregroundColor}`,
 				`c-hero--background-${backgroundColor}`
 			]
+
+			const wrapperClasses = [
+				'c-hero__content-wrapper',
+			];
+
+			if ( enableMinHeight ) {
+				wrapperClasses.push( 'c-hero__layer' );
+			}
 
 			return [
 				<div className={classes.join(' ')} style={styles.hero}>
 					<div className="c-hero__background-mask c-hero__layer">
-						<div className="c-hero__layer c-hero__background">
+						<div className="c-hero__background c-hero__layer">
 							{ !! images.length && <img className="c-hero__image" src={images[0].sizes.large.url} style={styles.image}/> }
 						</div>
-						<div className="c-hero__layer c-hero__content-wrapper">
-							<div className="c-hero__content">
-								<InnerBlocks />
-							</div>
+					</div>
+					<div className={wrapperClasses.join(' ')}>
+						<div className="c-hero__content">
+							<InnerBlocks />
 						</div>
 					</div>
 				</div>,
 				<InspectorControls>
 
-					<PanelBody>
+					<PanelBody title={ __( 'Spacing', '__plugin_txtd' ) }>
 						<RadioControl
 							label={ __( 'Spacing Content', '__plugin_txtd' ) }
 							selected={ contentSpacing }
@@ -186,7 +188,7 @@ export default registerBlockType(
 						</PanelRow>
 					</PanelBody>
 
-					<PanelBody>
+					<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
 						<ToggleControl
 							label={ __( "Enable Parallax", "__plugin_txtd" ) }
 							checked={ enableParallax }
@@ -203,7 +205,7 @@ export default registerBlockType(
 						/> }
 					</PanelBody>
 
-					<PanelBody>
+					<PanelBody title={ __( 'Hero Height', '__plugin_txtd' ) }>
 						<ToggleControl
 							label={ __( "Enable Minimum Height", "__plugin_txtd" ) }
 							checked={ enableMinHeight }
@@ -220,16 +222,16 @@ export default registerBlockType(
 						/> }
 					</PanelBody>
 
-					<PanelBody title={ __( 'Background Color', '__plugin_txtd' ) }>
+					<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
 						<RadioControl
-							label={ __( 'Overlay Color', '__plugin_txtd' ) }
-							selected={ overlayColor }
+							label={ __( 'Foreground Color', '__plugin_txtd' ) }
+							selected={ foregroundColor }
 							options={ [
 								{ label: 'Color', value: 'color' },
 								{ label: 'Dark', value: 'dark' },
 								{ label: 'Light', value: 'light' }
 							] }
-							onChange={ overlayColor => setAttributes( { overlayColor } ) }
+							onChange={ foregroundColor => setAttributes( { foregroundColor } ) }
 						/>
 
 						<RadioControl
@@ -286,7 +288,7 @@ export default registerBlockType(
 					horizontalAlignment,
 					enableMinHeight,
 					minHeight,
-					overlayColor,
+					foregroundColor,
 					backgroundColor,
 					backgroundOpacity,
 					images
@@ -306,10 +308,10 @@ export default registerBlockType(
 
 			const classes = [
 				'c-hero',
-				`c-hero--align-${verticalAlignment}`,
-				`c-hero--align-${horizontalAlignment}`,
+				`c-hero--v-align-${verticalAlignment}`,
+				`c-hero--h-align-${horizontalAlignment}`,
 				`c-hero--spacing-${contentSpacing}`,
-				`c-hero--content-${overlayColor}`,
+				`c-hero--content-${foregroundColor}`,
 				`c-hero--background-${backgroundColor}`
 			]
 
@@ -318,6 +320,14 @@ export default registerBlockType(
 			}
 
 			const actualParallaxAmount = Math.max( Math.min(1, parallaxAmount / 100 ), 0 );
+
+			const wrapperClasses = [
+				'c-hero__content-wrapper',
+			];
+
+			if ( enableMinHeight ) {
+				wrapperClasses.push( 'c-hero__layer' );
+			}
 
 			return (
 				<div className={classes.join( ' ' )} style={styles.hero}>
@@ -330,12 +340,12 @@ export default registerBlockType(
 										<img className="c-hero__image" src={image.sizes.large.url} style={styles.image} />
 									</div>
 								</div>
-								{ index === 0 && <div className="c-hero__layer c-hero__content-wrapper">
-									<div className="c-hero__content">
-								        <InnerBlocks.Content />
-									</div>
-								</div> }
 							</div>
+							{ index === 0 && <div className={wrapperClasses.join( ' ' )}>
+								<div className="c-hero__content">
+							        <InnerBlocks.Content />
+								</div>
+							</div> }
 						} ) }
 					</div> }
 
@@ -345,10 +355,10 @@ export default registerBlockType(
 								{ !! images.length &&
 								 <img className="c-hero__image" src={images[0].sizes.large.url} style={styles.image}/> }
 							</div>
-							<div className="c-hero__layer c-hero__content-wrapper">
-								<div className="c-hero__content">
-									<InnerBlocks.Content/>
-								</div>
+						</div>
+						<div className={wrapperClasses.join( ' ' )}>
+							<div className="c-hero__content">
+								<InnerBlocks.Content/>
 							</div>
 						</div>
 					</Fragment>}
