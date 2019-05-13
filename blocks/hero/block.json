@@ -1,0 +1,49 @@
+{
+  "category": "common",
+  "attributes": {
+    "horizontalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "verticalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "contentSpacing": {
+      "type": "string",
+      "default": "m"
+    },
+    "enableParallax": {
+      "type": "boolean",
+      "default": true
+    },
+    "parallaxAmount": {
+      "type": "number",
+      "default": 50
+    },
+    "enableMinHeight": {
+      "type": "boolean",
+      "default": true
+    },
+    "minHeight": {
+      "type": "number",
+      "default": 50
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "dark"
+    },
+    "foregroundColor": {
+      "type": "string",
+      "default": "light"
+    },
+    "backgroundOpacity": {
+      "type": "number",
+      "default": 70
+    },
+    "images": {
+      "type": "array",
+      "default": []
+    }
+  }
+}
