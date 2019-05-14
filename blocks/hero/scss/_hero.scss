@@ -6,11 +6,6 @@
 }
 
 .c-hero {
-    min-height: 30vh;
-    position: relative;
-}
-
-.c-hero__background-mask {
     position: relative;
 }
 
@@ -61,10 +56,15 @@
 
 .c-hero__background {
     background: var(--hero-background);
+    will-change: transform;
 }
 
 .c-hero__content-wrapper {
     color: var(--hero-foreground);
+
+    * {
+        color: inherit;
+    }
 }
 
 @each $color in dark, light, color {
@@ -76,10 +76,6 @@
     .c-hero--content-#{$color} {
         --hero-foreground: var(--hero-master-#{$color});
     }
-}
-
-.c-hero__image {
-    opacity: 0.7;
 }
 
 .c-hero__content-wrapper {
@@ -138,4 +134,5 @@
 
 .c-hero__slide {
     position: relative;
+    height: 100%;
 }

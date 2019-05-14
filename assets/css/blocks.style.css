@@ -5,10 +5,6 @@
   --hero-master-color: #FF0000; }
 
 .c-hero {
-  min-height: 30vh;
-  position: relative; }
-
-.c-hero__background-mask {
   position: relative; }
 
 .c-hero__layer {
@@ -55,10 +51,13 @@
   --hero-foreground: var(--hero-master-light); }
 
 .c-hero__background {
-  background: var(--hero-background); }
+  background: var(--hero-background);
+  will-change: transform; }
 
 .c-hero__content-wrapper {
   color: var(--hero-foreground); }
+  .c-hero__content-wrapper * {
+    color: inherit; }
 
 .c-hero--background-dark {
   --hero-background: var(--hero-master-dark); }
@@ -77,9 +76,6 @@
 
 .c-hero--content-color {
   --hero-foreground: var(--hero-master-color); }
-
-.c-hero__image {
-  opacity: 0.7; }
 
 .c-hero--h-align-left .c-hero__content-wrapper {
   -ms-flex-pack: start;
@@ -125,7 +121,8 @@
   height: 100%; }
 
 .c-hero__slide {
-  position: relative; }
+  position: relative;
+  height: 100%; }
 
 /* Slider */
 .slick-slider {
