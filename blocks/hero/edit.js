@@ -76,17 +76,9 @@ export default class Edit extends Component {
 			`c-hero--v-align-${verticalAlignment}`,
 			`c-hero--h-align-${horizontalAlignment}`,
 			`c-hero--spacing-${contentSpacing}`,
-			`c-hero--content-${foregroundColor}`,
+			`c-hero--foreground-${foregroundColor}`,
 			`c-hero--background-${backgroundColor}`
 		]
-
-		const wrapperClasses = [
-			'c-hero__content-wrapper',
-		];
-
-		if ( enableMinHeight ) {
-			wrapperClasses.push( 'c-hero__layer' );
-		}
 
 		const mediaPlaceholder = (
 			! hasImages && <MediaPlaceholder
@@ -126,12 +118,12 @@ export default class Edit extends Component {
 
 		const hero = (
 			<div className={classes.join(' ')} style={styles.hero}>
-				<div className="c-hero__background-mask c-hero__layer">
+				<div className="c-hero__mask c-hero__layer">
 					<div className="c-hero__background c-hero__layer">
 						{ !! images.length && <img className="c-hero__image" src={images[0].sizes.large.url} style={styles.image}/> }
 					</div>
 				</div>
-				<div className={wrapperClasses.join(' ')}>
+				<div className="c-hero__foreground">
 					<div className="c-hero__content">
 						<InnerBlocks />
 					</div>

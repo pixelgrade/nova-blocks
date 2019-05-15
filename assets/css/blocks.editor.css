@@ -6,20 +6,14 @@
 .c-hero {
   position: relative; }
 
-.c-hero__layer {
+.c-hero__mask,
+.c-hero__background,
+.c-hero__slider {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
-
-.c-hero__content-wrapper {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center; }
 
 .c-hero__image[class] {
   position: absolute;
@@ -49,68 +43,65 @@
   --hero-background: var(--hero-master-dark);
   --hero-foreground: var(--hero-master-light); }
 
-.c-hero__background {
-  background: var(--hero-background);
-  will-change: transform; }
-
-.c-hero__content-wrapper {
-  color: var(--hero-foreground); }
-  .c-hero__content-wrapper * {
-    color: inherit; }
-
 .c-hero--background-dark {
   --hero-background: var(--hero-master-dark); }
 
-.c-hero--content-dark {
+.c-hero--foreground-dark {
   --hero-foreground: var(--hero-master-dark); }
 
 .c-hero--background-light {
   --hero-background: var(--hero-master-light); }
 
-.c-hero--content-light {
+.c-hero--foreground-light {
   --hero-foreground: var(--hero-master-light); }
 
 .c-hero--background-color {
   --hero-background: var(--hero-master-color); }
 
-.c-hero--content-color {
+.c-hero--foreground-color {
   --hero-foreground: var(--hero-master-color); }
 
-.c-hero--h-align-left .c-hero__content-wrapper {
-  -ms-flex-pack: start;
-      justify-content: flex-start;
-  text-align: left; }
+.c-hero__background {
+  background: var(--hero-background);
+  will-change: transform; }
 
-.c-hero--h-align-center .c-hero__content-wrapper {
+.c-hero__foreground {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
-  text-align: center; }
-
-.c-hero--h-align-right .c-hero__content-wrapper {
-  -ms-flex-pack: end;
-      justify-content: flex-end;
-  text-align: right; }
-
-.c-hero--v-align-top .c-hero__content-wrapper {
-  -ms-flex-align: start;
-      align-items: flex-start; }
-
-.c-hero--v-align-center .c-hero__content-wrapper {
-  -ms-flex-align: center;
-      align-items: center; }
-
-.c-hero--v-align-bottom .c-hero__content-wrapper {
-  -ms-flex-align: end;
-      align-items: flex-end; }
-
-.c-hero--spacing-s .c-hero__content-wrapper {
-  padding: 20px; }
-
-.c-hero--spacing-m .c-hero__content-wrapper {
-  padding: 40px; }
-
-.c-hero--spacing-l .c-hero__content-wrapper {
-  padding: 60px; }
+  color: var(--hero-foreground); }
+  .c-hero__foreground h1, .c-hero__foreground h2, .c-hero__foreground h3, .c-hero__foreground h4, .c-hero__foreground h5, .c-hero__foreground h6,
+  .c-hero__foreground ul, .c-hero__foreground ol, .c-hero__foreground dl,
+  .c-hero__foreground .editor-block-list__block[class] {
+    color: inherit; }
+  .c-hero--h-align-left .c-hero__foreground {
+    -ms-flex-pack: start;
+        justify-content: flex-start; }
+  .c-hero--h-align-center .c-hero__foreground {
+    -ms-flex-pack: center;
+        justify-content: center; }
+  .c-hero--h-align-right .c-hero__foreground {
+    -ms-flex-pack: end;
+        justify-content: flex-end; }
+  .c-hero--v-align-top .c-hero__foreground {
+    -ms-flex-align: start;
+        align-items: flex-start; }
+  .c-hero--v-align-center .c-hero__foreground {
+    -ms-flex-align: center;
+        align-items: center; }
+  .c-hero--v-align-bottom .c-hero__foreground {
+    -ms-flex-align: end;
+        align-items: flex-end; }
+  .c-hero--spacing-s .c-hero__foreground {
+    padding: 20px; }
+  .c-hero--spacing-m .c-hero__foreground {
+    padding: 40px; }
+  .c-hero--spacing-l .c-hero__foreground {
+    padding: 60px; }
 
 .c-hero__slider.slick-slider {
   position: absolute; }

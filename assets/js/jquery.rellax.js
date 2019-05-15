@@ -178,9 +178,7 @@
 					move *= -1;
 				}
 
-				if ( ! this.$el.is( this.options.container ) ) {
-					this.el.style.transform = 'translate3d(0,' + move + 'px,0) ' + scaleTransform;
-				}
+				this.el.style.transform = 'translate3d(0,' + move + 'px,0) ' + scaleTransform;
 			},
 
 			_getProgress: function() {
@@ -194,7 +192,7 @@
 			if ( frameRendered !== true ) {
 				updateAll();
 			}
-			window.requestAnimationFrame( render );
+			requestAnimationFrame( render );
 			frameRendered = true;
 		}
 
@@ -219,22 +217,32 @@
 			};
 		}
 
-		function badRestart() {
+		function resetAll() {
 			$.each(elements, function(i, element) {
 				element._reset();
-				element._cachePosition();
-				element._prepareElement();
-				element._updatePosition();
 			});
 		}
 
-		var restart = debounce( badRestart, 100 );
+		function cacheAll() {
+			$.each(elements, function(i, element) {
+				element._cachePosition();
+			});
+		}
 
-		$( window ).on( 'resize', function() {
-			onResize();
-			restart();
-		} );
+		function badRestart() {
+			resetAll();
+			cacheAll();
+			requestAnimationFrame( function() {
+				$.each(elements, function(i, element) {
+					element._prepareElement();
+					element._updatePosition();
+				});
+			});
+		}
 
+		var restart = debounce( badRestart, 300 );
+
+		$( window ).on( 'resize', restart );
 		$( window ).on( 'scroll', onScroll );
 
 		render();

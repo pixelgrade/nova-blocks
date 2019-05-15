@@ -9,7 +9,7 @@
     position: relative;
 }
 
-.c-hero__layer {
+@mixin cover {
     position: absolute;
     top: 0;
     right: 0;
@@ -17,10 +17,10 @@
     left: 0;
 }
 
-.c-hero__content-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.c-hero__mask,
+.c-hero__background,
+.c-hero__slider {
+    @include cover;
 }
 
 .c-hero__image[class] {
@@ -54,45 +54,50 @@
     --hero-foreground: var(--hero-master-light);
 }
 
-.c-hero__background {
-    background: var(--hero-background);
-    will-change: transform;
-}
-
-.c-hero__content-wrapper {
-    color: var(--hero-foreground);
-
-    * {
-        color: inherit;
-    }
-}
-
 @each $color in dark, light, color {
 
     .c-hero--background-#{$color} {
         --hero-background: var(--hero-master-#{$color});
     }
 
-    .c-hero--content-#{$color} {
+    .c-hero--foreground-#{$color} {
         --hero-foreground: var(--hero-master-#{$color});
     }
 }
 
-.c-hero__content-wrapper {
+.c-hero__background {
+    background: var(--hero-background);
+    will-change: transform;
+}
+
+.c-hero__foreground {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--hero-foreground);
+
+    h1, h2, h3, h4, h5, h6,
+    ul, ol, dl,
+    .editor-block-list__block[class] {
+        color: inherit;
+    }
 
     .c-hero--h-align-left & {
         justify-content: flex-start;
-        text-align: left;
+        //text-align: left;
     }
 
     .c-hero--h-align-center & {
         justify-content: center;
-        text-align: center;
+        //text-align: center;
     }
 
     .c-hero--h-align-right & {
         justify-content: flex-end;
-        text-align: right;
+        //text-align: right;
     }
 
     .c-hero--v-align-top & {
