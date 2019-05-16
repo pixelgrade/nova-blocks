@@ -7,6 +7,7 @@
 
 .c-hero {
     position: relative;
+    display: flex;
 }
 
 @mixin cover {
@@ -85,33 +86,6 @@
         color: inherit;
     }
 
-    .c-hero--h-align-left & {
-        justify-content: flex-start;
-        //text-align: left;
-    }
-
-    .c-hero--h-align-center & {
-        justify-content: center;
-        //text-align: center;
-    }
-
-    .c-hero--h-align-right & {
-        justify-content: flex-end;
-        //text-align: right;
-    }
-
-    .c-hero--v-align-top & {
-        align-items: flex-start;
-    }
-
-    .c-hero--v-align-center & {
-        align-items: center;
-    }
-
-    .c-hero--v-align-bottom & {
-        align-items: flex-end;
-    }
-
     .c-hero--spacing-s & {
         padding: 20px;
     }
@@ -124,6 +98,35 @@
         padding: 60px;
     }
 }
+
+
+.c-hero--h-align-left {
+    justify-content: flex-start;
+    //text-align: left;
+}
+
+.c-hero--h-align-center {
+    justify-content: center;
+    //text-align: center;
+}
+
+.c-hero--h-align-right {
+    justify-content: flex-end;
+    //text-align: right;
+}
+
+.c-hero--v-align-top {
+    align-items: flex-start;
+}
+
+.c-hero--v-align-center {
+    align-items: center;
+}
+
+.c-hero--v-align-bottom {
+    align-items: flex-end;
+}
+
 
 .c-hero__slider {
 
@@ -140,4 +143,10 @@
 .c-hero__slide {
     position: relative;
     height: 100%;
+}
+
+.pixelgrade-hero-horizontal-alignment-toolbar {
+    svg {
+        transform: rotate(-90deg);
+    }
 }

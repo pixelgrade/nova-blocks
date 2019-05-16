@@ -11,7 +11,7 @@ const {
  * Internal dependencies
  */
 import edit from './edit';
-import icon from './icon';
+import { hero } from './icons';
 import metadata from './block.json';
 import save from './save';
 
@@ -20,7 +20,7 @@ export default registerBlockType( 'pixelgrade/hero',
 		title: __( 'Pixelgrade Hero', '__plugin_txtd' ),
 		description: __( 'Some sort of description for the hero block', '__plugin_txtd' ),
 		...metadata,
-		icon,
+		icon: hero,
 		edit,
 		save,
 		getEditWrapperProps() {
