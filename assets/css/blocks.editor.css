@@ -1,7 +1,6 @@
 :root {
   --hero-master-dark: #000000;
-  --hero-master-light: #FFFFFF;
-  --hero-master-color: #FF0000; }
+  --hero-master-light: #FFFFFF; }
 
 .c-hero {
   position: relative;
@@ -41,10 +40,6 @@
       left: 0;
       transform: none; } }
 
-.c-hero {
-  --hero-background: var(--hero-master-dark);
-  --hero-foreground: var(--hero-master-light); }
-
 .c-hero--background-dark {
   --hero-background: var(--hero-master-dark); }
 
@@ -56,12 +51,6 @@
 
 .c-hero--foreground-light {
   --hero-foreground: var(--hero-master-light); }
-
-.c-hero--background-color {
-  --hero-background: var(--hero-master-color); }
-
-.c-hero--foreground-color {
-  --hero-foreground: var(--hero-master-color); }
 
 .c-hero__background {
   background: var(--hero-background);
@@ -111,6 +100,15 @@
   -ms-flex-align: end;
       align-items: flex-end; }
 
+.c-hero--content-width-full .c-hero__content {
+  max-width: 100%; }
+
+.c-hero--content-width-large .c-hero__content {
+  max-width: 50%; }
+
+.c-hero--content-width-narrow .c-hero__content {
+  max-width: 25%; }
+
 .c-hero__slider.slick-slider {
   position: absolute; }
 
@@ -134,3 +132,22 @@
   display: flex;
   -ms-flex-pack: center;
       justify-content: center; }
+
+.pixelgrade-hero-button-group-wrapper label + .components-button-group {
+  margin-top: 5px; }
+
+.pixelgrade-hero-button-group-wrapper .components-button-group {
+  display: -ms-flexbox;
+  display: flex; }
+  .pixelgrade-hero-button-group-wrapper .components-button-group:not(:last-child) {
+    margin-bottom: 10px; }
+  .pixelgrade-hero-button-group-wrapper .components-button-group .components-button {
+    padding: 1px 5px 3px;
+    height: auto;
+    -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    text-align: center; }

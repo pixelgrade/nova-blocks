@@ -47,13 +47,27 @@ export default class Edit extends Component {
 	} ) {
 
 		const styles = {
-			foreground: {
+			hero: {
 				color: contentColor,
 			},
-			content: {
-				padding: `${contentPaddingCustom}px`,
-				maxWidth: `${contentWidthCustom}%`,
+			foreground: {
+
 			},
+			content: {
+
+			}
+		}
+
+		if ( !! applyMinimumHeightBlock ) {
+			styles.hero.minHeight = minHeight + 'vh'
+		}
+
+		if ( contentPadding === 'custom' ) {
+			styles.foreground.padding = contentPaddingCustom
+		}
+
+		if ( contentWidth === 'custom' ) {
+			styles.content.maxWidth = `${contentWidthCustom}%`
 		}
 
 		if ( !! applyMinimumHeightBlock ) {
@@ -75,8 +89,12 @@ export default class Edit extends Component {
 			classes.push( 'c-hero--parallax' );
 		}
 
-		const actualParallaxAmount = Math.max( Math.min(1, parallaxCustomAmount / 100 ), 0 );
 		const backgroundOpacity = 1 - overlayFilterStrength / 100;
+		let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parallaxAmount;
+
+		actualParallaxAmount = Math.max( Math.min(1, actualParallaxAmount / 100 ), 0 )
+
+		console.log( parallaxAmount, parallaxCustomAmount, actualParallaxAmount );
 
 		return (
 			<div className={classes.join( ' ' )} style={styles.hero}>

@@ -63,7 +63,7 @@
 			this.el = element;
 			this.$el = $( element );
 			this.ready = false;
-			this.options = $.extend( $.fn.rellax.defaults, options );
+			this.options = $.extend( {}, $.fn.rellax.defaults, options );
 
 			this.parent = {};
 			this.parent.$el = this.$el.closest( this.options.container );
@@ -81,7 +81,6 @@
 			}
 
 			elements.push( this );
-
 			restart();
 		}
 

@@ -37,11 +37,11 @@
 		});
 
 		$( window ).on( 'resize', debounce( onResize, 300 ) );
+	});
 
-		// initialize parallax effect
-		$( '.c-hero--parallax' ).find( '.c-hero__background' ).rellax({
-			container: '.c-hero__mask',
-		});
+	// initialize parallax effect
+	$( '.c-hero--parallax' ).find( '.c-hero__background' ).rellax({
+		container: '.c-hero__mask',
 	});
 
 })(jQuery, window);

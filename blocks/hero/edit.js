@@ -1,3 +1,6 @@
+import { debounce } from '../utils';
+import { alignTop, alignCenter, alignBottom } from '../icons';
+
 const { __ } = wp.i18n;
 
 const {
@@ -33,12 +36,50 @@ const {
 
 const editorData = wp.data.select( 'core/editor' );
 
-import { alignTop, alignCenter, alignBottom } from '../icons';
+const updateBlocks = ( attributes ) => {
+
+	editorData.getBlocks().filter( block => {
+		return block.name === 'pixelgrade/hero';
+	} ).filter( ( block, index ) => {
+		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
+		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
+		const scrollIndicatorBlock = scrollIndicator === true && index === 0;
+
+		wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, {
+			applyMinimumHeightBlock,
+			scrollIndicatorBlock
+		} );
+
+		return true;
+	} );
+
+}
+
+let blockList = editorData.getBlocks();
+let debouncedOnSubscribe = debounce(() => {
+
+	const newBlockList = editorData.getBlocks();
+	let blockListChanged = blockList.length !== newBlockList.length;
+
+	if ( ! blockListChanged ) {
+		blockListChanged = blockList.some( ( block, index ) => {
+			return ( blockList[index].clientId !== newBlockList[index].clientId );
+		} );
+	}
+
+	if ( blockListChanged ) {
+		blockList = newBlockList;
+		updateBlocks();
+	}
+}, 30);
+
+wp.data.subscribe( debouncedOnSubscribe );
 
 export default class Edit extends Component {
 
 	constructor() {
 		super( ...arguments );
+
 	}
 
 	render() {
@@ -76,19 +117,6 @@ export default class Edit extends Component {
 
 		const hasImages = !! images.length;
 
-		const styles = {
-			hero: {
-				color: contentColor,
-			},
-			image: {
-				opacity: 1 - overlayFilterStrength / 100
-			}
-		}
-
-		if ( !! applyMinimumHeightBlock ) {
-			styles.hero.minHeight = minHeight + 'vh'
-		}
-
 		const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 		const onSelectImages = images => {
@@ -101,6 +129,7 @@ export default class Edit extends Component {
 			`c-hero--v-align-${verticalAlignment}`,
 			`c-hero--h-align-${horizontalAlignment}`,
 			`c-hero--spacing-${contentPadding}`,
+			`c-hero--content-width-${contentWidth}`,
 			`c-hero--background-${overlayFilterStyle}`
 		]
 
@@ -140,15 +169,47 @@ export default class Edit extends Component {
 			</BlockControls>
 		);
 
-		const hero = (
-			<div className={classes.join(' ')} style={styles.hero}>
+		const hero = () => {
+
+			const styles = {
+				hero: {
+					color: contentColor,
+				},
+				foreground: {
+
+				},
+				content: {
+
+				},
+				image: {
+
+				}
+			}
+
+			if ( !! applyMinimumHeightBlock ) {
+				styles.hero.minHeight = minHeight + 'vh'
+			}
+
+			if ( contentPadding === 'custom' ) {
+				styles.foreground.padding = contentPaddingCustom
+			}
+
+			if ( contentWidth === 'custom' ) {
+				styles.content.maxWidth = `${contentWidthCustom}%`
+			}
+
+			if ( overlayFilterStyle !== 'none' ) {
+				styles.image.opacity = 1 - overlayFilterStrength / 100
+			}
+
+			return <div className={classes.join(' ')} style={styles.hero}>
 				<div className="c-hero__mask c-hero__layer">
 					<div className="c-hero__background c-hero__layer">
-						{ !! images.length && <img className="c-hero__image" src={images[0].sizes.large.url} style={styles.image}/> }
+						{ !! images.length && <img className="c-hero__image" src={ images[0].sizes.large.url } style={ styles.image }/> }
 					</div>
 				</div>
-				<div className="c-hero__foreground">
-					<div className="c-hero__content">
+				<div className="c-hero__foreground" style={ styles.foreground }>
+					<div className="c-hero__content" style={ styles.content }>
 						<InnerBlocks />
 					</div>
 					{ scrollIndicatorBlock && <div className="c-hero__indicator">
@@ -156,7 +217,7 @@ export default class Edit extends Component {
 					</div> }
 				</div>
 			</div>
-		);
+		}
 
 
 		const contentPaddingControls = () => {
@@ -172,8 +233,7 @@ export default class Edit extends Component {
 				<label>{ __( 'Content Padding', '__plugin_txtd') }</label>
 				<ButtonGroup>
 					{ contentPaddingOptions.map( option =>
-						<Button isSmall
-						        isDefault={ option.value !== contentPadding }
+						<Button isDefault={ option.value !== contentPadding }
 						        isPrimary={ option.value === contentPadding }
 						        onClick={ () => { setAttributes( { contentPadding: option.value } ) } }>
 							{ option.label }
@@ -202,8 +262,7 @@ export default class Edit extends Component {
 				<label>{ __( 'Content Width', '__plugin_txtd') }</label>
 				<ButtonGroup>
 					{ contentWidthOptions.map( option =>
-						<Button isSmall
-						        isDefault={ option.value !== contentWidth }
+						<Button isDefault={ option.value !== contentWidth }
 						        isPrimary={ option.value === contentWidth }
 						        onClick={ () => { setAttributes( { contentWidth: option.value } ) } }>
 							{ option.label }
@@ -287,12 +346,14 @@ export default class Edit extends Component {
 							 id="pixelgrade-hero-parallax-orbital-speed-control"
 							 value={parallaxAmount}
 							 onChange={ parallaxAmount => {
+
+							 	console.log( parallaxAmount, parallaxCustomAmount );
 							 	if ( parallaxAmount === 'custom' ) {
 								    setAttributes( { parallaxAmount } );
 							    } else {
 								    setAttributes( {
-									    parallaxAmount: toString( parallaxAmount ),
-									    parallaxCustomAmount: parallaxAmount
+									    parallaxAmount: parallaxAmount,
+									    parallaxCustomAmount: parseInt( parallaxAmount, 10 )
 								    } );
 							    }
 							 } }
@@ -343,17 +404,8 @@ export default class Edit extends Component {
 						}]}
 						value={ applyMinimumHeight }
 						onChange={ applyMinimumHeight => {
-							const heroBlocks = editorData.getBlocks().filter( block => {
-								return block.name === 'pixelgrade/hero';
-							} );
-
-							heroBlocks.filter( ( block, index ) => {
-								const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
-								wp.data.dispatch('core/editor').updateBlockAttributes(block.clientId, { applyMinimumHeightBlock } );
-								return true;
-							} );
-
 							setAttributes( { applyMinimumHeight } );
+							updateBlocks( { applyMinimumHeight } );
 						} }
 					/>
 					{ 'none' !== applyMinimumHeight && <Fragment>
@@ -363,6 +415,7 @@ export default class Edit extends Component {
 							value={ minHeight }
 							onChange={ minHeight => {
 								setAttributes( { minHeight } );
+								updateBlocks( { minHeight } );
 							} }
 							options={[{
 								label: __( 'Half', '__plugin_txtd' ),
@@ -385,7 +438,9 @@ export default class Edit extends Component {
 
 		const layoutControls = () => {
 			return (
-				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) }>
+				<PanelBody
+					className="pixelgrade-hero-button-group-wrapper"
+					title={ __( 'Layout', '__plugin_txtd' ) }>
 
 					{ contentPaddingControls() }
 					{ contentWidthControls() }
@@ -406,12 +461,8 @@ export default class Edit extends Component {
 					label={ __( "Enable Scroll Indicator", "__plugin_txtd" ) }
 					checked={ scrollIndicator }
 					onChange={ scrollIndicator => {
-						heroBlocks.filter( ( block, index ) => {
-							const scrollIndicatorBlock = scrollIndicator === true && index === 0;
-							wp.data.dispatch('core/editor').updateBlockAttributes(block.clientId, { scrollIndicatorBlock } );
-							return true;
-						} );
 						setAttributes( { scrollIndicator } );
+						updateBlocks( { scrollIndicator } );
 					} }
 				/>
 			</PanelBody>
@@ -419,7 +470,7 @@ export default class Edit extends Component {
 
 		return [
 			<Fragment>
-				{ hero }
+				{ hero() }
 				{ mediaPlaceholder }
 				{ blockControls }
 			</Fragment>,
@@ -458,14 +509,14 @@ export default class Edit extends Component {
 						onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
 					/>
 
-					<RangeControl
+					{ overlayFilterStyle !== 'none' && <RangeControl
 						label={ __( "Overlay Filter Strength", "__plugin_txtd" ) }
 						value={ overlayFilterStrength }
 						onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
 						min={0}
 						max={100}
 						step={10}
-					/>
+					/> }
 				</PanelBody>
 
 				{ scrollIndicatorControl() }

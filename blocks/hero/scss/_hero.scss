@@ -2,7 +2,6 @@
 :root {
     --hero-master-dark: #000000;
     --hero-master-light: #FFFFFF;
-    --hero-master-color: #FF0000;
 }
 
 .c-hero {
@@ -50,12 +49,7 @@
     }
 }
 
-.c-hero {
-    --hero-background: var(--hero-master-dark);
-    --hero-foreground: var(--hero-master-light);
-}
-
-@each $color in dark, light, color {
+@each $color in dark, light {
 
     .c-hero--background-#{$color} {
         --hero-background: var(--hero-master-#{$color});
@@ -78,8 +72,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-
-    //color: var(--hero-foreground);
 
     h1, h2, h3, h4, h5, h6,
     ul, ol, dl,
@@ -130,6 +122,21 @@
     }
 }
 
+.c-hero__content {
+
+    .c-hero--content-width-full & {
+        max-width: 100%;
+    }
+
+    .c-hero--content-width-large & {
+        max-width: 50%;
+    }
+
+    .c-hero--content-width-narrow & {
+        max-width: 25%;
+    }
+}
+
 
 .c-hero__slider {
 
@@ -162,4 +169,28 @@
 
     display: flex;
     justify-content: center;
+}
+
+.pixelgrade-hero-button-group-wrapper {
+
+    label + .components-button-group {
+        margin-top: 5px;
+    }
+
+    .components-button-group {
+        display: flex;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        .components-button {
+            padding: 1px 5px 3px;
+            height: auto;
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+    }
 }
