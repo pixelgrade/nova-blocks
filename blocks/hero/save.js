@@ -17,16 +17,28 @@ export default class Edit extends Component {
 
 	render( {
 		attributes: {
-			contentSpacing,
-			parallaxAmount,
-			enableParallax,
+			// layout
+			contentPadding,
+			contentPaddingCustom,
+			contentWidth,
+			contentWidthCustom,
+			// alignment
 			verticalAlignment,
 			horizontalAlignment,
-			enableMinHeight,
+			// height
 			minHeight,
-			foregroundColor,
-			backgroundColor,
-			backgroundOpacity,
+			applyMinimumHeight,
+			applyMinimumHeightBlock,
+			scrollIndicator,
+			// parallax
+			enableParallax,
+			parallaxAmount,
+			parallaxCustomAmount,
+			// colors
+			contentColor,
+			overlayFilterStyle,
+			overlayFilterStrength,
+			// images
 			images
 		},
 		className,
@@ -34,8 +46,13 @@ export default class Edit extends Component {
 	} ) {
 
 		const styles = {
-			hero: {
-
+			foreground: {
+				minHeight: `${minHeight}vh`,
+				color: contentColor,
+			},
+			content: {
+				padding: `${contentPaddingCustom}px`,
+				maxWidth: `${contentWidthCustom}%`,
 			},
 		}
 
@@ -43,35 +60,40 @@ export default class Edit extends Component {
 			'c-hero',
 			`c-hero--v-align-${verticalAlignment}`,
 			`c-hero--h-align-${horizontalAlignment}`,
-			`c-hero--spacing-${contentSpacing}`,
-			`c-hero--foreground-${foregroundColor}`,
-			`c-hero--background-${backgroundColor}`
-		]
 
-		minHeight = enableMinHeight ? `${minHeight}vh` : 0;
+			`c-hero--padding-${contentPadding}`,
+			`c-hero--width-${contentWidth}`,
+
+			`c-hero--background-${overlayFilterStyle}`
+		]
 
 		if ( !! enableParallax ) {
 			classes.push( 'c-hero--parallax' );
 		}
 
-		const actualParallaxAmount = Math.max( Math.min(1, parallaxAmount / 100 ), 0 );
+		if ( !! applyMinimumHeightBlock ) {
+			classes.push( 'c-hero--min-height' );
+		}
+
+		const actualParallaxAmount = Math.max( Math.min(1, parallaxCustomAmount / 100 ), 0 );
+		const backgroundOpacity = 1 - overlayFilterStrength / 100;
 
 		return (
 			<div className={classes.join( ' ' )} style={styles.hero}>
 				<Fragment>
 					<div className="c-hero__mask">
 						<div className="c-hero__background" data-rellax-amount={actualParallaxAmount}>
-							<div className="c-hero__slider">
+							<div className="c-hero__slider" style={{opacity: backgroundOpacity}}>
 								{ images.map( image => {
 									return <div class="c-hero__slide">
-										<img className="c-hero__image" src={image.sizes.large.url} style={{opacity: backgroundOpacity / 100}}/>
+										<img className="c-hero__image" src={image.sizes.large.url} />
 									</div>
 								} ) }
 							</div>
 						</div>
 					</div>
-					<div className="c-hero__foreground" style={{minHeight}}>
-						<div className="c-hero__content">
+					<div className="c-hero__foreground" style={styles.foreground}>
+						<div className="c-hero__content" style={styles.content}>
 							<InnerBlocks.Content/>
 						</div>
 					</div>

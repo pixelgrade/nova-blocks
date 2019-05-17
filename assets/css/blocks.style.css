@@ -75,8 +75,7 @@
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
-      justify-content: center;
-  color: var(--hero-foreground); }
+      justify-content: center; }
   .c-hero__foreground h1, .c-hero__foreground h2, .c-hero__foreground h3, .c-hero__foreground h4, .c-hero__foreground h5, .c-hero__foreground h6,
   .c-hero__foreground ul, .c-hero__foreground ol, .c-hero__foreground dl,
   .c-hero__foreground .editor-block-list__block[class] {

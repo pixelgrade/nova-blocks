@@ -1,25 +1,14 @@
 {
   "category": "common",
   "attributes": {
-    "horizontalAlignment": {
-      "type": "string",
-      "default": "center"
-    },
-    "verticalAlignment": {
-      "type": "string",
-      "default": "center"
-    },
-    "contentSpacing": {
-      "type": "string",
-      "default": "m"
-    },
+
     "contentPadding": {
       "type": "string",
       "default": "medium"
     },
     "contentPaddingCustom":  {
       "type": "number",
-      "default": "50"
+      "default": 50
     },
     "contentWidth":  {
       "type": "string",
@@ -29,34 +18,69 @@
       "type": "number",
       "default": 100
     },
+
+    "horizontalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "verticalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+
     "enableParallax": {
       "type": "boolean",
       "default": true
     },
     "parallaxAmount": {
+      "type": "string",
+      "default": "50"
+    },
+    "parallaxCustomAmount": {
       "type": "number",
       "default": 50
     },
+
     "enableMinHeight": {
       "type": "boolean",
       "default": true
     },
     "minHeight": {
       "type": "number",
-      "default": 50
+      "default": 50,
+      "source": "meta",
+      "meta": "nova_hero_minimum_height"
     },
-    "backgroundColor": {
+    "applyMinimumHeight": {
+      "type": "string",
+      "default": "first",
+      "source": "meta",
+      "meta": "nova_hero_apply_minimum_height"
+    },
+    "applyMinimumHeightBlock": {
+      "type": "boolean",
+      "default": false
+    },
+    "scrollIndicator": {
+      "type": "boolean",
+      "default": true,
+      "source": "meta",
+      "meta": "nova_hero_scroll_indicator"
+    },
+
+    "contentColor": {
+      "type": "string",
+      "default": "#FFF"
+    },
+    "overlayFilterStyle": {
       "type": "string",
       "default": "dark"
     },
-    "foregroundColor": {
-      "type": "string",
-      "default": "light"
-    },
-    "backgroundOpacity": {
+    "overlayFilterStrength": {
       "type": "number",
-      "default": 70
+      "default": 30
     },
+
     "images": {
       "type": "array",
       "default": []

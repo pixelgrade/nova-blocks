@@ -40,4 +40,49 @@ function _get_plugin_url() {
 	return $plugin_url;
 }
 
+function gutenberg_hero_block_init() {
+
+	register_meta( 'post', 'nova_hero_minimum_height', array(
+		'type' => 'number',
+		'single' => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'nova_hero_apply_minimum_height', array(
+		'type' => 'string',
+		'single' => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'nova_hero_scroll_indicator', array(
+		'type' => 'boolean',
+		'single' => true,
+		'show_in_rest' => true,
+	) );
+
+	register_block_type( 'pixelgrade/hero', array(
+		'render_callback' => 'pixelgrade_hero_render_callback'
+	) );
+}
+add_action( 'init', 'gutenberg_hero_block_init' );
+
+function output_post_meta() {
+	ob_start(); ?>
+	<style>
+		.c-hero {
+			min-height: <?php echo get_post_meta( get_the_ID(), 'nova_hero_minimum_height', true ) . 'vh'; ?>;
+		}
+	</style>
+	<?php echo ob_get_clean();
+}
+add_action( 'wp_footer', 'output_post_meta' );
+
+function pixelgrade_hero_render_callback( $attributes, $content ) {
+	ob_start();
+	echo '<pre>';
+	print_r($attributes);
+	echo '</pre>';
+	return ob_get_clean() . ' ' . $content;
+}
+
 include __DIR__ . '/lib/enqueue-scripts.php';

@@ -18,18 +18,22 @@ const {
 } = wp.element;
 
 const {
+	Button,
+	ButtonGroup,
+	ColorPalette,
 	IconButton,
 	PanelBody,
 	PanelRow,
-	RangeControl,
 	RadioControl,
+	RangeControl,
+	SelectControl,
 	ToggleControl,
 	Toolbar,
-	Button,
-	ButtonGroup
 } = wp.components;
 
-import { alignTop, alignCenter, alignBottom } from './icons';
+const editorData = wp.data.select( 'core/editor' );
+
+import { alignTop, alignCenter, alignBottom } from '../icons';
 
 export default class Edit extends Component {
 
@@ -45,16 +49,23 @@ export default class Edit extends Component {
 				contentPaddingCustom,
 				contentWidth,
 				contentWidthCustom,
-
-				enableParallax,
-				parallaxAmount,
+				// alignment
 				verticalAlignment,
 				horizontalAlignment,
-				enableMinHeight,
+				// height
 				minHeight,
-				backgroundColor,
-				foregroundColor,
-				backgroundOpacity,
+				applyMinimumHeight,
+				applyMinimumHeightBlock,
+				scrollIndicator,
+				// parallax
+				enableParallax,
+				parallaxAmount,
+				parallaxCustomAmount,
+				// colors
+				contentColor,
+				overlayFilterStyle,
+				overlayFilterStrength,
+				// images
 				images
 			},
 			className,
@@ -66,11 +77,23 @@ export default class Edit extends Component {
 
 		const styles = {
 			hero: {
-				minHeight: enableMinHeight ? minHeight + 'vh' : 0
+				color: contentColor,
 			},
 			image: {
-				opacity: backgroundOpacity / 100
+				opacity: 1 - overlayFilterStrength / 100
 			}
+		}
+
+		if ( ! applyMinimumHeight ) {
+			setAttributes( { applyMinimumHeight: 'first' } );
+		}
+
+		if ( ! scrollIndicator ) {
+			setAttributes( { scrollIndicator: true } );
+		}
+
+		if ( !! applyMinimumHeightBlock ) {
+			styles.hero.minHeight = minHeight + 'vh'
 		}
 
 		const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
@@ -85,8 +108,7 @@ export default class Edit extends Component {
 			`c-hero--v-align-${verticalAlignment}`,
 			`c-hero--h-align-${horizontalAlignment}`,
 			`c-hero--spacing-${contentPadding}`,
-			`c-hero--foreground-${foregroundColor}`,
-			`c-hero--background-${backgroundColor}`
+			`c-hero--background-${overlayFilterStyle}`
 		]
 
 		const mediaPlaceholder = (
@@ -222,7 +244,7 @@ export default class Edit extends Component {
 			const DEFAULT_CONTROL = 'center';
 
 			return (
-				<Fragment>
+				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) }>
 					<PanelRow>
 						<label
 							htmlFor='pixelgrade-hero-horizontal-alignment'>{__( 'Horizontal Alignment', '__plugin_txtd' )}</label>
@@ -247,7 +269,133 @@ export default class Edit extends Component {
 							onChange={verticalAlignment => setAttributes( {verticalAlignment} )}
 						/>
 					</PanelRow>
-				</Fragment>
+				</PanelBody>
+			)
+		}
+
+		const parallaxControls = () => {
+
+			return (
+				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
+					<ToggleControl
+						label={ __( "Enable Parallax", "__plugin_txtd" ) }
+						checked={ enableParallax }
+						onChange={ () => setAttributes( { enableParallax: ! enableParallax } ) }
+					/>
+					{ !! enableParallax &&
+					 <Fragment>
+						 <label htmlFor="pixelgrade-hero-parallax-orbital-speed-control">
+							 { __( 'Parallax Orbital Speed', '__plugin_txtd' ) }
+						 </label>
+						 <SelectControl
+							 id="pixelgrade-hero-parallax-orbital-speed-control"
+							 value={parallaxAmount}
+							 onChange={ parallaxAmount => {
+							 	if ( parallaxAmount === 'custom' ) {
+								    setAttributes( { parallaxAmount } );
+							    } else {
+								    setAttributes( {
+									    parallaxAmount: toString( parallaxAmount ),
+									    parallaxCustomAmount: parallaxAmount
+								    } );
+							    }
+							 } }
+							 options={[
+								 {
+									 label: __( 'Neptune', '__plugin_txtd' ),
+									 value: 100
+								 }, {
+									 label: __( 'Earth', '__plugin_txtd' ),
+									 value: 50
+								 }, {
+									 label: __( 'Mercur', '__plugin_txtd' ),
+									 value: 20
+								 }, {
+									 label: __( 'Custom', '__plugin_txtd' ),
+									 value: 'custom'
+								 }
+							 ]}
+						 />
+					 </Fragment>
+					}
+					{ !! enableParallax && 'custom' === parallaxAmount && <RangeControl
+						value={ parallaxCustomAmount }
+						onChange={ parallaxCustomAmount => setAttributes( { parallaxCustomAmount } ) }
+						min={0}
+						max={100}
+					/> }
+				</PanelBody>
+			)
+		}
+
+		const heightControls = () => {
+
+			return (
+				<PanelBody title={ __( 'Height', '__plugin_txtd' ) }>
+					<label htmlFor="pixelgrade-hero-apply-minimum-height-control">{ __( 'Apply Minimum Height', '__plugin_txtd' ) }</label>
+					<SelectControl
+						id="pixelgrade-hero-apply-minimum-height-control"
+						options={[{
+							label: __( 'None', '__plugin_txtd' ),
+							value: 'none'
+						}, {
+							label: __( 'First Block Only', '__plugin_txtd' ),
+							value: 'first'
+						}, {
+							label: __( 'All', '__plugin_txtd' ),
+							value: 'all'
+						}]}
+						value={ applyMinimumHeight }
+						onChange={ applyMinimumHeight => {
+							const heroBlocks = editorData.getBlocks().filter( block => {
+								return block.name === 'pixelgrade/hero';
+							} );
+
+							heroBlocks.filter( ( block, index ) => {
+								const attributes = block.attributes;
+								attributes.applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
+								wp.data.dispatch('core/editor').updateBlockAttributes(block.clientId, attributes);
+								return true;
+							} );
+
+							setAttributes( { applyMinimumHeight } );
+						} }
+					/>
+					{ 'none' !== applyMinimumHeight && <Fragment>
+						<label htmlFor="pixelgrade-hero-minimum-height-control">{ __( 'Minimum Height', '__plugin_txtd' ) }</label>
+						<SelectControl
+							id="pixelgrade-hero-minimum-height-control"
+							value={ minHeight }
+							onChange={ minHeight => {
+								setAttributes( { minHeight } );
+							} }
+							options={[{
+								label: __( 'Half', '__plugin_txtd' ),
+								value: 50
+							}, {
+								label: __( 'Two Thirds', '__plugin_txtd' ),
+								value: 66
+							}, {
+								label: __( 'Three Quarters', '__plugin_txtd' ),
+								value: 75
+							}, {
+								label: __( 'Full', '__plugin_txtd' ),
+								value: 100
+							}]}
+						/>
+					</Fragment> }
+				</PanelBody>
+			)
+		}
+
+		const layoutControls = () => {
+			return (
+				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) }>
+
+					{ contentPaddingControls() }
+					{ contentWidthControls() }
+
+				</PanelBody>
 			)
 		}
 
@@ -259,82 +407,54 @@ export default class Edit extends Component {
 			</Fragment>,
 			<InspectorControls>
 
-				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) }>
-
-					{ contentPaddingControls() }
-					{ contentWidthControls() }
-
-				</PanelBody>
-
-				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) }>
-					{ alignmentControls() }
-				</PanelBody>
-
-				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
-					<ToggleControl
-						label={ __( "Enable Parallax", "__plugin_txtd" ) }
-						checked={ enableParallax }
-						onChange={ () => setAttributes( { enableParallax: ! enableParallax } ) }
-					/>
-					{ enableParallax && <RangeControl
-						beforeIcon="arrow-left-alt2"
-						afterIcon="arrow-right-alt2"
-						label={ __( "Parallax Amount", "__plugin_txtd" ) }
-						value={ parallaxAmount }
-						onChange={ parallaxAmount => setAttributes( { parallaxAmount } ) }
-						min={0}
-						max={100}
-					/> }
-				</PanelBody>
-
-				<PanelBody title={ __( 'Hero Height', '__plugin_txtd' ) }>
-					<ToggleControl
-						label={ __( "Enable Minimum Height", "__plugin_txtd" ) }
-						checked={ enableMinHeight }
-						onChange={ () => setAttributes( { enableMinHeight: ! enableMinHeight } ) }
-					/>
-					{ enableMinHeight && <RangeControl
-						beforeIcon="arrow-left-alt2"
-						afterIcon="arrow-right-alt2"
-						label={ __( "Minimum Height", "__plugin_txtd" ) }
-						value={ minHeight }
-						onChange={ minHeight => setAttributes( { minHeight } ) }
-						min={50}
-						max={100}
-					/> }
-				</PanelBody>
+				{ layoutControls() }
+				{ alignmentControls() }
+				{ heightControls() }
+				{ parallaxControls() }
 
 				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
-					<RadioControl
-						label={ __( 'Foreground Color', '__plugin_txtd' ) }
-						selected={ foregroundColor }
-						options={ [
-							{ label: 'Color', value: 'color' },
-							{ label: 'Dark', value: 'dark' },
-							{ label: 'Light', value: 'light' }
-						] }
-						onChange={ foregroundColor => setAttributes( { foregroundColor } ) }
+
+					<ColorPalette
+						label={ __( 'Content Color', '__plugin_txtd' ) }
+						colors={[
+							{
+								name: __( 'Dark', '__plugin_txtd' ),
+								color: '#000'
+							}, {
+								name: __( 'Light', '__plugin_txtd' ),
+								color: '#FFF'
+							}
+						]}
+						value={ contentColor }
+						onChange={ contentColor => setAttributes( { contentColor } ) }
 					/>
 
-					<RadioControl
-						label={ __( 'Background Color', '__plugin_txtd' ) }
-						selected={ backgroundColor }
+					<SelectControl
+						label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
+						value={ overlayFilterStyle }
 						options={ [
-							{ label: 'Color', value: 'color' },
+							{ label: 'None', value: 'none' },
 							{ label: 'Dark', value: 'dark' },
 							{ label: 'Light', value: 'light' }
 						] }
-						onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
+						onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
 					/>
 
 					<RangeControl
-						beforeIcon="arrow-left-alt2"
-						afterIcon="arrow-right-alt2"
-						label={ __( "Background Opacity", "__plugin_txtd" ) }
-						value={ backgroundOpacity }
-						onChange={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
+						label={ __( "Overlay Filter Strength", "__plugin_txtd" ) }
+						value={ overlayFilterStrength }
+						onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
 						min={0}
 						max={100}
+						step={10}
+					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) }>
+					<ToggleControl
+						label={ __( "Enable Scroll Indicator", "__plugin_txtd" ) }
+						checked={ scrollIndicator }
+						onChange={ scrollIndicator => setAttributes( { scrollIndicator } ) }
 					/>
 				</PanelBody>
 

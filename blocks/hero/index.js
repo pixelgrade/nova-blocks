@@ -11,7 +11,7 @@ const {
  * Internal dependencies
  */
 import edit from './edit';
-import { hero } from './icons';
+import { hero } from '../icons';
 import metadata from './block.json';
 import save from './save';
 
