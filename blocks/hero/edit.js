@@ -57,6 +57,7 @@ export default class Edit extends Component {
 				applyMinimumHeight,
 				applyMinimumHeightBlock,
 				scrollIndicator,
+				scrollIndicatorBlock,
 				// parallax
 				enableParallax,
 				parallaxAmount,
@@ -82,14 +83,6 @@ export default class Edit extends Component {
 			image: {
 				opacity: 1 - overlayFilterStrength / 100
 			}
-		}
-
-		if ( ! applyMinimumHeight ) {
-			setAttributes( { applyMinimumHeight: 'first' } );
-		}
-
-		if ( ! scrollIndicator ) {
-			setAttributes( { scrollIndicator: true } );
 		}
 
 		if ( !! applyMinimumHeightBlock ) {
@@ -158,6 +151,9 @@ export default class Edit extends Component {
 					<div className="c-hero__content">
 						<InnerBlocks />
 					</div>
+					{ scrollIndicatorBlock && <div className="c-hero__indicator">
+						Scroll Down
+					</div> }
 				</div>
 			</div>
 		);
@@ -352,9 +348,8 @@ export default class Edit extends Component {
 							} );
 
 							heroBlocks.filter( ( block, index ) => {
-								const attributes = block.attributes;
-								attributes.applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
-								wp.data.dispatch('core/editor').updateBlockAttributes(block.clientId, attributes);
+								const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
+								wp.data.dispatch('core/editor').updateBlockAttributes(block.clientId, { applyMinimumHeightBlock } );
 								return true;
 							} );
 
@@ -397,6 +392,29 @@ export default class Edit extends Component {
 
 				</PanelBody>
 			)
+		}
+
+		const scrollIndicatorControl = () => {
+			const heroBlocks = editorData.getBlocks().filter( block => {
+				return block.name === 'pixelgrade/hero';
+			} );
+
+			const index = heroBlocks.findIndex( block => block.clientId === editorData.getSelectedBlockClientId() );
+
+			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } }>
+				<ToggleControl
+					label={ __( "Enable Scroll Indicator", "__plugin_txtd" ) }
+					checked={ scrollIndicator }
+					onChange={ scrollIndicator => {
+						heroBlocks.filter( ( block, index ) => {
+							const scrollIndicatorBlock = scrollIndicator === true && index === 0;
+							wp.data.dispatch('core/editor').updateBlockAttributes(block.clientId, { scrollIndicatorBlock } );
+							return true;
+						} );
+						setAttributes( { scrollIndicator } );
+					} }
+				/>
+			</PanelBody>
 		}
 
 		return [
@@ -450,13 +468,7 @@ export default class Edit extends Component {
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) }>
-					<ToggleControl
-						label={ __( "Enable Scroll Indicator", "__plugin_txtd" ) }
-						checked={ scrollIndicator }
-						onChange={ scrollIndicator => setAttributes( { scrollIndicator } ) }
-					/>
-				</PanelBody>
+				{ scrollIndicatorControl() }
 
 			</InspectorControls>
 		]

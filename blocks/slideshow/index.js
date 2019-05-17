@@ -7,13 +7,13 @@ const {
 /**
  * Internal dependencies
  */
-import { media } from '../icons';
+import { slideshow } from '../icons';
 
-export default registerBlockType( 'pixelgrade/media',
+export default registerBlockType( 'pixelgrade/slideshow',
 	{
-		title: __( 'Pixelgrade Media', '__plugin_txtd' ),
+		title: __( 'Pixelgrade Slideshow', '__plugin_txtd' ),
 		description: __( 'Some sort of description for the hero block', '__plugin_txtd' ),
-		icon: media,
+		icon: slideshow,
 		category: 'nova-by-pixelgrade'
 	}
 )

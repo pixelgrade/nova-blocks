@@ -30,6 +30,7 @@ export default class Edit extends Component {
 			applyMinimumHeight,
 			applyMinimumHeightBlock,
 			scrollIndicator,
+			scrollIndicatorBlock,
 			// parallax
 			enableParallax,
 			parallaxAmount,
@@ -47,13 +48,16 @@ export default class Edit extends Component {
 
 		const styles = {
 			foreground: {
-				minHeight: `${minHeight}vh`,
 				color: contentColor,
 			},
 			content: {
 				padding: `${contentPaddingCustom}px`,
 				maxWidth: `${contentWidthCustom}%`,
 			},
+		}
+
+		if ( !! applyMinimumHeightBlock ) {
+			styles.foreground.minHeight = `${minHeight}vh`;
 		}
 
 		const classes = [
@@ -71,33 +75,30 @@ export default class Edit extends Component {
 			classes.push( 'c-hero--parallax' );
 		}
 
-		if ( !! applyMinimumHeightBlock ) {
-			classes.push( 'c-hero--min-height' );
-		}
-
 		const actualParallaxAmount = Math.max( Math.min(1, parallaxCustomAmount / 100 ), 0 );
 		const backgroundOpacity = 1 - overlayFilterStrength / 100;
 
 		return (
 			<div className={classes.join( ' ' )} style={styles.hero}>
-				<Fragment>
-					<div className="c-hero__mask">
-						<div className="c-hero__background" data-rellax-amount={actualParallaxAmount}>
-							<div className="c-hero__slider" style={{opacity: backgroundOpacity}}>
-								{ images.map( image => {
-									return <div class="c-hero__slide">
-										<img className="c-hero__image" src={image.sizes.large.url} />
-									</div>
-								} ) }
-							</div>
+				<div className="c-hero__mask">
+					<div className="c-hero__background" data-rellax-amount={actualParallaxAmount}>
+						<div className="c-hero__slider" style={{opacity: backgroundOpacity}}>
+							{images.map( image => {
+								return <div class="c-hero__slide">
+									<img className="c-hero__image" src={image.sizes.large.url}/>
+								</div>
+							} )}
 						</div>
 					</div>
-					<div className="c-hero__foreground" style={styles.foreground}>
-						<div className="c-hero__content" style={styles.content}>
-							<InnerBlocks.Content/>
-						</div>
+				</div>
+				<div className="c-hero__foreground" style={styles.foreground}>
+					<div className="c-hero__content" style={styles.content}>
+						<InnerBlocks.Content/>
 					</div>
-				</Fragment>
+					{ scrollIndicatorBlock && <div className="c-hero__indicator">
+						Scroll Down
+					</div> }
+				</div>
 			</div>
 		)
 	}

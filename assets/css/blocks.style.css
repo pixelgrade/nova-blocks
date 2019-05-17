@@ -75,39 +75,40 @@
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
-      justify-content: center; }
+      justify-content: center;
+  width: 100%; }
   .c-hero__foreground h1, .c-hero__foreground h2, .c-hero__foreground h3, .c-hero__foreground h4, .c-hero__foreground h5, .c-hero__foreground h6,
   .c-hero__foreground ul, .c-hero__foreground ol, .c-hero__foreground dl,
   .c-hero__foreground .editor-block-list__block[class] {
     color: inherit; }
-  .c-hero--spacing-s .c-hero__foreground {
+  .c-hero--spacing-small .c-hero__foreground {
     padding: 20px; }
-  .c-hero--spacing-m .c-hero__foreground {
+  .c-hero--spacing-medium .c-hero__foreground {
     padding: 40px; }
-  .c-hero--spacing-l .c-hero__foreground {
+  .c-hero--spacing-large .c-hero__foreground {
     padding: 60px; }
 
-.c-hero--h-align-left {
+.c-hero--h-align-left .c-hero__foreground {
   -ms-flex-pack: start;
       justify-content: flex-start; }
 
-.c-hero--h-align-center {
+.c-hero--h-align-center .c-hero__foreground {
   -ms-flex-pack: center;
       justify-content: center; }
 
-.c-hero--h-align-right {
+.c-hero--h-align-right .c-hero__foreground {
   -ms-flex-pack: end;
       justify-content: flex-end; }
 
-.c-hero--v-align-top {
+.c-hero--v-align-top .c-hero__foreground {
   -ms-flex-align: start;
       align-items: flex-start; }
 
-.c-hero--v-align-center {
+.c-hero--v-align-center .c-hero__foreground {
   -ms-flex-align: center;
       align-items: center; }
 
-.c-hero--v-align-bottom {
+.c-hero--v-align-bottom .c-hero__foreground {
   -ms-flex-align: end;
       align-items: flex-end; }
 
@@ -124,6 +125,16 @@
 
 .pixelgrade-hero-horizontal-alignment-toolbar svg {
   transform: rotate(-90deg); }
+
+.c-hero__indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center; }
 
 /* Slider */
 .slick-slider {
