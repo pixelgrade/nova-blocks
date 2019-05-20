@@ -36,6 +36,8 @@ export default class Edit extends Component {
 			parallaxAmount,
 			parallaxCustomAmount,
 			// colors
+			backgroundType,
+			backgroundImage,
 			contentColor,
 			overlayFilterStyle,
 			overlayFilterStrength,
@@ -78,10 +80,8 @@ export default class Edit extends Component {
 			'c-hero',
 			`c-hero--v-align-${verticalAlignment}`,
 			`c-hero--h-align-${horizontalAlignment}`,
-
-			`c-hero--padding-${contentPadding}`,
-			`c-hero--width-${contentWidth}`,
-
+			`c-hero--spacing-${contentPadding}`,
+			`c-hero--content-width-${contentWidth}`,
 			`c-hero--background-${overlayFilterStyle}`
 		]
 
@@ -94,28 +94,18 @@ export default class Edit extends Component {
 
 		actualParallaxAmount = Math.max( Math.min(1, actualParallaxAmount / 100 ), 0 )
 
-		console.log( parallaxAmount, parallaxCustomAmount, actualParallaxAmount );
-
 		return (
 			<div className={classes.join( ' ' )} style={styles.hero}>
 				<div className="c-hero__mask">
 					<div className="c-hero__background" data-rellax-amount={actualParallaxAmount}>
-						<div className="c-hero__slider" style={{opacity: backgroundOpacity}}>
-							{images.map( image => {
-								return <div class="c-hero__slide">
-									<img className="c-hero__image" src={image.sizes.large.url}/>
-								</div>
-							} )}
-						</div>
+						<img className="c-hero__image" src={ backgroundImage } style={ { opacity: backgroundOpacity } }/>
 					</div>
 				</div>
 				<div className="c-hero__foreground" style={styles.foreground}>
-					<div className="c-hero__content" style={styles.content}>
-						<InnerBlocks.Content/>
+					<div className="c-hero__content-wrapper">
+						<div className="c-hero__content" style={styles.content}><InnerBlocks.Content/></div>
+						{ scrollIndicatorBlock && <a href="#" className="c-hero__indicator"></a> }
 					</div>
-					{ scrollIndicatorBlock && <div className="c-hero__indicator">
-						Scroll Down
-					</div> }
 				</div>
 			</div>
 		)

@@ -1,5 +1,5 @@
 import { debounce } from '../utils';
-import { alignTop, alignCenter, alignBottom } from '../icons';
+import * as icons from '../icons';
 
 const { __ } = wp.i18n;
 
@@ -24,6 +24,7 @@ const {
 	Button,
 	ButtonGroup,
 	ColorPalette,
+	Dropdown,
 	IconButton,
 	PanelBody,
 	PanelRow,
@@ -104,6 +105,8 @@ export default class Edit extends Component {
 				parallaxAmount,
 				parallaxCustomAmount,
 				// colors
+				backgroundType,
+				backgroundImage,
 				contentColor,
 				overlayFilterStyle,
 				overlayFilterStrength,
@@ -150,6 +153,51 @@ export default class Edit extends Component {
 
 		const blockControls = (
 			<BlockControls>
+				<Toolbar className="pixelgrade-hero-block-toolbar">
+					<Dropdown
+						position="bottom"
+						className="pixelgrade-hero-block-toolbar-dropdown"
+						contentClassName="table-of-contents__popover"
+						renderToggle={ ( { isOpen, onToggle } ) => (
+							<IconButton
+								onClick={ onToggle }
+								icon={ icons.alignment }
+								aria-expanded={ isOpen }
+								label={ __( 'Content alignment', '__plugin_txtd' ) }
+								labelPosition="bottom"
+							/>
+						) }
+						renderContent={ ( { onClose } ) => <Fragment>
+							{ alignmentControls() }
+						</Fragment> }
+					/>
+				</Toolbar>
+				<Toolbar className="pixelgrade-hero-block-toolbar">
+					<Dropdown
+						position="bottom"
+						className="pixelgrade-hero-block-toolbar-dropdown"
+						contentClassName="table-of-contents__popover"
+						renderToggle={ ( { isOpen, onToggle } ) => (
+							<IconButton
+								onClick={ onToggle }
+								icon={ icons.invert }
+								aria-expanded={ isOpen }
+								label={ __( 'Invert colors', '__plugin_txtd' ) }
+								labelPosition="bottom"
+							/>
+						) }
+						renderContent={ ( { onClose } ) => <Fragment>
+							{ colorControls() }
+						</Fragment> }
+					/>
+				</Toolbar>
+				<Toolbar className="pixelgrade-hero-block-toolbar">
+					<IconButton
+						icon={ icons.swap }
+						label={ __( 'Swap', '__plugin_txtd' ) }
+					/>
+				</Toolbar>
+
 				{ hasImages && <Toolbar>
 					<MediaUpload
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -205,16 +253,20 @@ export default class Edit extends Component {
 			return <div className={classes.join(' ')} style={styles.hero}>
 				<div className="c-hero__mask c-hero__layer">
 					<div className="c-hero__background c-hero__layer">
-						{ !! images.length && <img className="c-hero__image" src={ images[0].sizes.large.url } style={ styles.image }/> }
+						<img className="c-hero__image" src={ backgroundImage } style={ styles.image }/>
 					</div>
 				</div>
 				<div className="c-hero__foreground" style={ styles.foreground }>
-					<div className="c-hero__content" style={ styles.content }>
-						<InnerBlocks />
+					<div className="c-hero__content-wrapper">
+						<div className="c-hero__content" style={ styles.content }>
+							<InnerBlocks template={[
+								[ 'core/heading', { content: 'This is a catchy title', align: 'center' } ],
+								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],
+								[ 'core/button', { text: 'Discover more', align: 'center' } ],
+							]} />
+						</div>
+						{ scrollIndicatorBlock && <div className="c-hero__indicator"></div> }
 					</div>
-					{ scrollIndicatorBlock && <div className="c-hero__indicator">
-						Scroll Down
-					</div> }
 				</div>
 			</div>
 		}
@@ -278,19 +330,28 @@ export default class Edit extends Component {
 			</Fragment>
 		}
 
+		const alignmentPanel = () => {
+
+			return (
+				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) }>
+					{ alignmentControls() }
+				</PanelBody>
+			)
+		}
+
 		const alignmentControls = () => {
 
 			const BLOCK_ALIGNMENTS_CONTROLS = {
 				left: {
-					icon: alignTop,
+					icon: icons.alignTop,
 					title: __( 'Align Left', '__plugin_txtd' ),
 				},
 				center: {
-					icon: alignCenter,
+					icon: icons.alignCenter,
 					title: __( 'Align Middle', '__plugin_txtd' ),
 				},
 				right: {
-					icon: alignBottom,
+					icon: icons.alignBottom,
 					title: __( 'Align Right', '__plugin_txtd' ),
 				},
 			};
@@ -299,7 +360,7 @@ export default class Edit extends Component {
 			const DEFAULT_CONTROL = 'center';
 
 			return (
-				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) }>
+				<Fragment>
 					<PanelRow>
 						<label
 							htmlFor='pixelgrade-hero-horizontal-alignment'>{__( 'Horizontal Alignment', '__plugin_txtd' )}</label>
@@ -310,7 +371,12 @@ export default class Edit extends Component {
 									return {
 										...BLOCK_ALIGNMENTS_CONTROLS[ control ],
 										isActive: horizontalAlignment === control,
-										onClick: () => setAttributes( { horizontalAlignment: control } )
+										onClick: () => {
+											wp.data.select('core/editor').getSelectedBlock().innerBlocks.map( block => {
+												wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, { align: control } );
+											} );
+											setAttributes( { horizontalAlignment: control } )
+										}
 									};
 								} )
 							}
@@ -324,7 +390,7 @@ export default class Edit extends Component {
 							onChange={verticalAlignment => setAttributes( {verticalAlignment} )}
 						/>
 					</PanelRow>
-				</PanelBody>
+				</Fragment>
 			)
 		}
 
@@ -347,7 +413,6 @@ export default class Edit extends Component {
 							 value={parallaxAmount}
 							 onChange={ parallaxAmount => {
 
-							 	console.log( parallaxAmount, parallaxCustomAmount );
 							 	if ( parallaxAmount === 'custom' ) {
 								    setAttributes( { parallaxAmount } );
 							    } else {
@@ -468,55 +533,59 @@ export default class Edit extends Component {
 			</PanelBody>
 		}
 
+		const colorControls = () => {
+			return <Fragment>
+				<ColorPalette
+					label={ __( 'Content Color', '__plugin_txtd' ) }
+					colors={[
+						{
+							name: __( 'Dark', '__plugin_txtd' ),
+							color: '#000'
+						}, {
+							name: __( 'Light', '__plugin_txtd' ),
+							color: '#FFF'
+						}
+					]}
+					value={ contentColor }
+					onChange={ contentColor => setAttributes( { contentColor } ) }
+				/>
+				<SelectControl
+					label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
+					value={ overlayFilterStyle }
+					options={ [
+						{ label: 'None', value: 'none' },
+						{ label: 'Dark', value: 'dark' },
+						{ label: 'Light', value: 'light' }
+					] }
+					onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
+				/>
+				{ overlayFilterStyle !== 'none' && <RangeControl
+					label={ __( "Overlay Filter Strength", "__plugin_txtd" ) }
+					value={ overlayFilterStrength }
+					onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
+					min={0}
+					max={100}
+					step={10}
+				/> }
+			</Fragment>
+		}
+
 		return [
 			<Fragment>
 				{ hero() }
-				{ mediaPlaceholder }
+				{ ! mediaPlaceholder }
 				{ blockControls }
 			</Fragment>,
 			<InspectorControls>
 
 				{ layoutControls() }
-				{ alignmentControls() }
+				{ alignmentPanel() }
 				{ heightControls() }
 				{ parallaxControls() }
 
 				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
 
-					<ColorPalette
-						label={ __( 'Content Color', '__plugin_txtd' ) }
-						colors={[
-							{
-								name: __( 'Dark', '__plugin_txtd' ),
-								color: '#000'
-							}, {
-								name: __( 'Light', '__plugin_txtd' ),
-								color: '#FFF'
-							}
-						]}
-						value={ contentColor }
-						onChange={ contentColor => setAttributes( { contentColor } ) }
-					/>
-
-					<SelectControl
-						label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
-						value={ overlayFilterStyle }
-						options={ [
-							{ label: 'None', value: 'none' },
-							{ label: 'Dark', value: 'dark' },
-							{ label: 'Light', value: 'light' }
-						] }
-						onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
-					/>
-
-					{ overlayFilterStyle !== 'none' && <RangeControl
-						label={ __( "Overlay Filter Strength", "__plugin_txtd" ) }
-						value={ overlayFilterStrength }
-						onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
-						min={0}
-						max={100}
-						step={10}
-					/> }
+					{ colorControls() }
 				</PanelBody>
 
 				{ scrollIndicatorControl() }

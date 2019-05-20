@@ -58,7 +58,6 @@
   will-change: transform; }
 
 .c-hero__foreground {
-  position: relative;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -77,29 +76,30 @@
   .c-hero--spacing-large .c-hero__foreground {
     padding: 60px; }
 
-.c-hero--h-align-left .c-hero__foreground {
-  -ms-flex-pack: start;
-      justify-content: flex-start; }
-
-.c-hero--h-align-center .c-hero__foreground {
-  -ms-flex-pack: center;
-      justify-content: center; }
-
-.c-hero--h-align-right .c-hero__foreground {
-  -ms-flex-pack: end;
-      justify-content: flex-end; }
-
-.c-hero--v-align-top .c-hero__foreground {
-  -ms-flex-align: start;
-      align-items: flex-start; }
-
-.c-hero--v-align-center .c-hero__foreground {
-  -ms-flex-align: center;
-      align-items: center; }
-
-.c-hero--v-align-bottom .c-hero__foreground {
-  -ms-flex-align: end;
-      align-items: flex-end; }
+.c-hero__content-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex; }
+  .c-hero--h-align-left .c-hero__content-wrapper {
+    -ms-flex-pack: start;
+        justify-content: flex-start; }
+  .c-hero--h-align-center .c-hero__content-wrapper {
+    -ms-flex-pack: center;
+        justify-content: center; }
+  .c-hero--h-align-right .c-hero__content-wrapper {
+    -ms-flex-pack: end;
+        justify-content: flex-end; }
+  .c-hero--v-align-top .c-hero__content-wrapper {
+    -ms-flex-align: start;
+        align-items: flex-start; }
+  .c-hero--v-align-center .c-hero__content-wrapper {
+    -ms-flex-align: center;
+        align-items: center; }
+  .c-hero--v-align-bottom .c-hero__content-wrapper {
+    -ms-flex-align: end;
+        align-items: flex-end; }
 
 .c-hero--content-width-full .c-hero__content {
   max-width: 100%; }
@@ -132,7 +132,19 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
-      justify-content: center; }
+      justify-content: center;
+  color: inherit; }
+  .c-hero__indicator:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-right-color: currentColor;
+    border-bottom-color: currentColor;
+    transform: translateY(-100%) rotate(45deg); }
 
 .pixelgrade-hero-button-group-wrapper label + .components-button-group {
   margin-top: 5px; }

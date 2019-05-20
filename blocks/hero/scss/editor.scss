@@ -3,3 +3,31 @@
 .wp-block-pixelgrade-hero {
 
 }
+
+.pixelgrade-hero-block-toolbar {
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    button {
+
+    }
+}
+
+.pixelgrade-hero-block-toolbar-dropdown {
+
+    button {
+        display: flex;
+        align-items: center;
+
+        &:after {
+            content: "";
+            border: 0 solid transparent;
+            border-width: 4px 3px 0;
+            border-top-color: currentColor;
+            margin-left: 4px;
+        }
+    }
+}
