@@ -36,13 +36,11 @@ export default class Edit extends Component {
 			parallaxAmount,
 			parallaxCustomAmount,
 			// colors
-			backgroundType,
-			backgroundImage,
 			contentColor,
 			overlayFilterStyle,
 			overlayFilterStrength,
-			// images
-			images
+			// media
+			media
 		},
 		className,
 		setAttributes
@@ -56,6 +54,9 @@ export default class Edit extends Component {
 
 			},
 			content: {
+
+			},
+			image: {
 
 			}
 		}
@@ -74,6 +75,10 @@ export default class Edit extends Component {
 
 		if ( !! applyMinimumHeightBlock ) {
 			styles.foreground.minHeight = `${minHeight}vh`;
+		}
+
+		if ( overlayFilterStyle !== 'none' ) {
+			styles.image.opacity = 1 - overlayFilterStrength / 100
 		}
 
 		const classes = [
@@ -98,12 +103,17 @@ export default class Edit extends Component {
 			<div className={classes.join( ' ' )} style={styles.hero}>
 				<div className="c-hero__mask">
 					<div className="c-hero__background" data-rellax-amount={actualParallaxAmount}>
-						<img className="c-hero__image" src={ backgroundImage } style={ { opacity: backgroundOpacity } }/>
+						{ media.type === "image" && typeof media.sizes !== "undefined"
+						  && <img className="c-hero__image" src={ media.sizes.full.url } style={ styles.image }/> }
+						{ media.type === "video"
+						  && <video muted autoplay loop className="c-hero__image" src={ media.url } style={ styles.image }/> }
 					</div>
 				</div>
 				<div className="c-hero__foreground" style={styles.foreground}>
 					<div className="c-hero__content-wrapper">
-						<div className="c-hero__content" style={styles.content}><InnerBlocks.Content/></div>
+						<div className="c-hero__content" style={styles.content}>
+							<InnerBlocks.Content/>
+						</div>
 						{ scrollIndicatorBlock && <a href="#" className="c-hero__indicator"></a> }
 					</div>
 				</div>

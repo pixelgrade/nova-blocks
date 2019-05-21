@@ -84,6 +84,7 @@ export default class Edit extends Component {
 	}
 
 	render() {
+
 		const {
 			attributes: {
 				// layout
@@ -105,26 +106,18 @@ export default class Edit extends Component {
 				parallaxAmount,
 				parallaxCustomAmount,
 				// colors
-				backgroundType,
-				backgroundImage,
 				contentColor,
 				overlayFilterStyle,
 				overlayFilterStrength,
-				// images
-				images
+				// media
+				media,
 			},
 			className,
 			setAttributes,
 			isSelected
 		} = this.props;
 
-		const hasImages = !! images.length;
-
 		const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
-
-		const onSelectImages = images => {
-			setAttributes( { images } );
-		}
 
 		const classes = [
 			className,
@@ -135,21 +128,6 @@ export default class Edit extends Component {
 			`c-hero--content-width-${contentWidth}`,
 			`c-hero--background-${overlayFilterStyle}`
 		]
-
-		const mediaPlaceholder = (
-			! hasImages && <MediaPlaceholder
-				addToGallery
-				isAppender
-				className={ className }
-				dropZoneUIOnly={ ! isSelected }
-				icon={ <BlockIcon icon="images-alt2" /> }
-				onSelect={ onSelectImages }
-				allowedTypes={ ALLOWED_MEDIA_TYPES }
-				multiple
-				gallery
-				value={ hasImages ? images : undefined }
-			/>
-		);
 
 		const blockControls = (
 			<BlockControls>
@@ -191,29 +169,19 @@ export default class Edit extends Component {
 						</Fragment> }
 					/>
 				</Toolbar>
-				<Toolbar className="pixelgrade-hero-block-toolbar">
-					<IconButton
-						icon={ icons.swap }
-						label={ __( 'Swap', '__plugin_txtd' ) }
-					/>
-				</Toolbar>
-
-				{ hasImages && <Toolbar>
+				<Toolbar>
 					<MediaUpload
 						allowedTypes={ ALLOWED_MEDIA_TYPES }
-						multiple
-						gallery
-						value={ images.map( ( img ) => img.id ) }
-						onSelect={ onSelectImages }
+						onSelect={ media => setAttributes( { media } ) }
 						render={ ( { open } ) => {
 							return <IconButton
-								label={ __( 'Edit Gallery', '__plugin_txtd' ) }
-								icon="images-alt2"
+								label={ __( 'Swap Media', '__plugin_txtd' ) }
+								icon="format-image"
 								onClick={ open }
 							/>
 						}}
 					/>
-				</Toolbar> }
+				</Toolbar>
 			</BlockControls>
 		);
 
@@ -253,7 +221,10 @@ export default class Edit extends Component {
 			return <div className={classes.join(' ')} style={styles.hero}>
 				<div className="c-hero__mask c-hero__layer">
 					<div className="c-hero__background c-hero__layer">
-						<img className="c-hero__image" src={ backgroundImage } style={ styles.image }/>
+						{ media.type === "image" && typeof media.sizes !== "undefined"
+						  && <img className="c-hero__image" src={ media.sizes.full.url } style={ styles.image }/> }
+						{ media.type === "video"
+						  && <video muted autoplay loop className="c-hero__image" src={ media.url } style={ styles.image }/> }
 					</div>
 				</div>
 				<div className="c-hero__foreground" style={ styles.foreground }>
@@ -573,7 +544,6 @@ export default class Edit extends Component {
 		return [
 			<Fragment>
 				{ hero() }
-				{ ! mediaPlaceholder }
 				{ blockControls }
 			</Fragment>,
 			<InspectorControls>
@@ -584,7 +554,6 @@ export default class Edit extends Component {
 				{ parallaxControls() }
 
 				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
-
 					{ colorControls() }
 				</PanelBody>
 

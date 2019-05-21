@@ -73,9 +73,16 @@
       "type": "string",
       "default": "image"
     },
-    "backgroundImage": {
-      "type": "string",
-      "default": "https://images.unsplash.com/photo-1520257328559-2062fc7de0b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+    "media": {
+      "type": "object",
+      "default": {
+        "type": "image",
+        "sizes": {
+          "full": {
+            "url": "https://images.unsplash.com/photo-1520257328559-2062fc7de0b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+          }
+        }
+      }
     },
     "contentColor": {
       "type": "string",
