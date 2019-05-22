@@ -36,6 +36,7 @@ export default class ColorControls extends Component {
 				]}
 				value={ contentColor }
 				onChange={ contentColor => setAttributes( { contentColor } ) }
+				disableCustomColors
 			/>
 			<SelectControl
 				label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }

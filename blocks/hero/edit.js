@@ -307,7 +307,7 @@ export default class Edit extends Component {
 		const alignmentPanel = () => {
 
 			return (
-				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ true }>
 					{ alignmentControls() }
 				</PanelBody>
 			)
@@ -371,7 +371,7 @@ export default class Edit extends Component {
 		const parallaxControls = () => {
 
 			return (
-				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) } initialOpen={ false }>
 					<ToggleControl
 						label={ __( 'Enable Parallax Scrolling', '__plugin_txtd' ) }
 						checked={ enableParallax }
@@ -427,7 +427,7 @@ export default class Edit extends Component {
 		const heightControls = () => {
 
 			return (
-				<PanelBody title={ __( 'Height', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
 					<SelectControl
 						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
 						value={ applyMinimumHeight }
@@ -475,7 +475,7 @@ export default class Edit extends Component {
 
 		const layoutControls = () => {
 			return (
-				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) } className='pixelgrade-hero-button-group-wrapper'>
+				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) } className='pixelgrade-hero-button-group-wrapper' initialOpen={ true }>
 					{ contentPaddingControls() }
 					{ contentWidthControls() }
 				</PanelBody>
@@ -489,7 +489,7 @@ export default class Edit extends Component {
 
 			const index = heroBlocks.findIndex( block => block.clientId === editorData.getSelectedBlockClientId() );
 
-			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } }>
+			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
 				<ToggleControl
 					label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
 					checked={ scrollIndicator }
@@ -509,7 +509,7 @@ export default class Edit extends Component {
 			<InspectorControls>
 
 				{ alignmentPanel() }
-				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) } initialOpen={ true }>
 					<ColorControls { ...this.props } />
 				</PanelBody>
 
