@@ -1,7 +1,3 @@
-:root {
-  --hero-master-dark: #000000;
-  --hero-master-light: #FFFFFF; }
-
 .c-hero {
   position: relative;
   display: -ms-flexbox;
@@ -40,20 +36,7 @@
       left: 0;
       transform: none; } }
 
-.c-hero--background-dark {
-  --hero-background: var(--hero-master-dark); }
-
-.c-hero--foreground-dark {
-  --hero-foreground: var(--hero-master-dark); }
-
-.c-hero--background-light {
-  --hero-background: var(--hero-master-light); }
-
-.c-hero--foreground-light {
-  --hero-foreground: var(--hero-master-light); }
-
 .c-hero__background {
-  background: var(--hero-background);
   will-change: transform; }
 
 .c-hero__foreground {

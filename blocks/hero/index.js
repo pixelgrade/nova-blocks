@@ -10,15 +10,15 @@ const {
 /**
  * Internal dependencies
  */
-import edit from './edit';
-import { hero } from '../icons';
+import * as icons from '../icons';
 import attributes from './attributes.json';
+import edit from './edit';
 import save from './save';
 
 export default registerBlockType( 'pixelgrade/hero',
 	{
 		title: __( 'Pixelgrade Hero', '__plugin_txtd' ),
-		icon: hero,
+		icon: icons.hero,
 		description: __( 'Some sort of description for the hero block', '__plugin_txtd' ),
 		category: "nova-by-pixelgrade",
 		...attributes,
