@@ -1,5 +1,19 @@
 @import "../../../assets/scss/mixins";
 
+:root {
+    --hero-master-dark: #000000;
+    --hero-master-light: #FFFFFF;
+    --hero-spacing: 10%;
+    --hero-spacing-small: 5%;
+    --hero-spacing-medium: 10%;
+    --hero-spacing-large: 15%;
+
+    --hero-content-width: 50%;
+    --hero-content-width-full: 100%;
+    --hero-content-width-large: 50%;
+    --hero-content-width-narrow: 30%;
+}
+
 .c-hero {
     position: relative;
     display: flex;
@@ -31,16 +45,25 @@
         color: inherit;
     }
 
+    // Content Padding
+    [class*="c-hero--spacing"] & {
+        padding-top: var(--hero-spacing);
+        padding-bottom: var(--hero-spacing);
+
+        // Fixed options
+        padding-left: var(--hero-spacing-small);
+        padding-right: var(--hero-spacing-small);
+    }
     .c-hero--spacing-small & {
-        padding: 20px;
+        --hero-spacing: var(--hero-spacing-small);
     }
 
     .c-hero--spacing-medium & {
-        padding: 40px;
+        --hero-spacing: var(--hero-spacing-medium);
     }
 
     .c-hero--spacing-large & {
-        padding: 60px;
+        --hero-spacing: var(--hero-spacing-large);
     }
 }
 
@@ -77,16 +100,21 @@
 
 .c-hero__content {
 
+    // Content Width
+    [class*="c-hero--content-width"] & {
+        max-width: var(--hero-content-width);
+    }
+
     .c-hero--content-width-full & {
-        max-width: 100%;
+        --hero-content-width: var(--hero-content-width-full);
     }
 
     .c-hero--content-width-large & {
-        max-width: 50%;
+        --hero-content-width: var(--hero-content-width-large);
     }
 
     .c-hero--content-width-narrow & {
-        max-width: 25%;
+        --hero-content-width: var(--hero-content-width-narrow);
     }
 }
 

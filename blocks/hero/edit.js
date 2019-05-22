@@ -208,7 +208,8 @@ export default class Edit extends Component {
 			}
 
 			if ( contentPadding === 'custom' ) {
-				styles.foreground.padding = contentPaddingCustom
+				styles.foreground.paddingTop = `${contentPaddingCustom}%`
+				styles.foreground.paddingBottom = `${contentPaddingCustom}%`
 			}
 
 			if ( contentWidth === 'custom' ) {
@@ -268,7 +269,7 @@ export default class Edit extends Component {
 					value={ contentPaddingCustom }
 					onChange={ contentPaddingCustom => setAttributes( { contentPaddingCustom } ) }
 					min={0}
-					max={100}
+					max={25}
 				/> }
 			</Fragment>
 		}
@@ -288,7 +289,7 @@ export default class Edit extends Component {
 					{ contentWidthOptions.map( option =>
 						<Button isDefault={ option.value !== contentWidth }
 						        isPrimary={ option.value === contentWidth }
-						        onClick={ () => { setAttributes( { contentWidth: option.value } ) } }>
+						        onClick={ () => { setAttributes( { contentWidth: option.value} ) } }>
 							{ option.label }
 						</Button>
 					) }
@@ -296,8 +297,9 @@ export default class Edit extends Component {
 				{ 'custom' === contentWidth && <RangeControl
 					value={ contentWidthCustom }
 					onChange={ contentWidthCustom => setAttributes( { contentWidthCustom } ) }
-					min={0}
-					max={100}
+					min={20}
+					max={90}
+					step={10}
 				/> }
 			</Fragment>
 		}
@@ -305,7 +307,7 @@ export default class Edit extends Component {
 		const alignmentPanel = () => {
 
 			return (
-				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
 					{ alignmentControls() }
 				</PanelBody>
 			)
@@ -436,7 +438,7 @@ export default class Edit extends Component {
 							label: __( 'First Block Only', '__plugin_txtd' ),
 							value: 'first'
 						}, {
-							label: __( 'All', '__plugin_txtd' ),
+							label: __( 'All Blocks', '__plugin_txtd' ),
 							value: 'all'
 						}]}
 						value={ applyMinimumHeight }
@@ -512,16 +514,15 @@ export default class Edit extends Component {
 			</Fragment>,
 			<InspectorControls>
 
-				{ layoutControls() }
 				{ alignmentPanel() }
-				{ heightControls() }
-				{ parallaxControls() }
-
 				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
 					<ColorControls { ...this.props } />
 				</PanelBody>
 
+				{ layoutControls() }
+				{ heightControls() }
 				{ scrollIndicatorControl() }
+				{ parallaxControls() }
 
 			</InspectorControls>
 		]
