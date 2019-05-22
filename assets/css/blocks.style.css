@@ -390,8 +390,8 @@
   --gallery-spacing: 10px;
   display: -ms-flexbox;
   display: flex;
-  margin-top: calc( -1 * -var(--gallery-spacing));
-  margin-left: calc( -1 * -var(--gallery-spacing)); }
+  margin-top: calc( -1 * var(--gallery-spacing));
+  margin-left: calc( -1 * var(--gallery-spacing)); }
   .nova-slideshow__gallery-edit > * {
     -ms-flex-preferred-size: 33.33333%;
         flex-basis: 33.33333%;

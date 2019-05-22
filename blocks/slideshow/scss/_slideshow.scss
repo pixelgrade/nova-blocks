@@ -17,8 +17,8 @@
     --gallery-spacing: 10px;
 
     display: flex;
-    margin-top: calc( -1 * -var(--gallery-spacing) );
-    margin-left: calc( -1 * -var(--gallery-spacing) );
+    margin-top: calc( -1 * var(--gallery-spacing) );
+    margin-left: calc( -1 * var(--gallery-spacing) );
 
     > * {
         flex-basis: percentage(1/3);
