@@ -251,7 +251,7 @@ export default class Edit extends Component {
 		const parallaxControls = () => {
 
 			return (
-				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) } initialOpen={ false }>
 					<ToggleControl
 						label={ __( 'Enable Parallax Scrolling', '__plugin_txtd' ) }
 						checked={ enableParallax }
@@ -307,7 +307,7 @@ export default class Edit extends Component {
 		const heightControls = () => {
 
 			return (
-				<PanelBody title={ __( 'Height', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
 					<SelectControl
 						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
 						value={ applyMinimumHeight }
@@ -360,7 +360,7 @@ export default class Edit extends Component {
 
 			const index = heroBlocks.findIndex( block => block.clientId === editorData.getSelectedBlockClientId() );
 
-			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } }>
+			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
 				<ToggleControl
 					label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
 					checked={ scrollIndicator }
@@ -383,7 +383,7 @@ export default class Edit extends Component {
 					<AlignmentControls { ...this.props } />
 				</PanelBody>
 
-				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) } initialOpen={ true }>
 					<ColorControls { ...this.props } />
 				</PanelBody>
 
