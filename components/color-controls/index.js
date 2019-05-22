@@ -41,14 +41,14 @@ export default class ColorControls extends Component {
 				label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
 				value={ overlayFilterStyle }
 				options={ [
-					{ label: 'None', value: 'none' },
-					{ label: 'Dark', value: 'dark' },
-					{ label: 'Light', value: 'light' }
+					{ label: __( 'None', '__plugin_txtd' ), value: 'none' },
+					{ label: __( 'Dark', '__plugin_txtd' ), value: 'dark' },
+					{ label: __( 'Light', '__plugin_txtd' ), value: 'light' }
 				] }
 				onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
 			/>
 			{ overlayFilterStyle !== 'none' && <RangeControl
-				label={ __( "Overlay Filter Strength", "__plugin_txtd" ) }
+				label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
 				value={ overlayFilterStrength }
 				onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
 				min={0}

@@ -122,18 +122,18 @@ export default class Edit extends Component {
 
 		const blockControls = (
 			<BlockControls>
-				<Toolbar className="pixelgrade-hero-block-toolbar">
+				<Toolbar className='pixelgrade-hero-block-toolbar'>
 					<Dropdown
-						position="bottom"
-						className="pixelgrade-hero-block-toolbar-dropdown"
-						contentClassName="table-of-contents__popover"
+						position='bottom'
+						className='pixelgrade-hero-block-toolbar-dropdown'
+						contentClassName='table-of-contents__popover'
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<IconButton
 								onClick={ onToggle }
 								icon={ icons.alignment }
 								aria-expanded={ isOpen }
 								label={ __( 'Content alignment', '__plugin_txtd' ) }
-								labelPosition="bottom"
+								labelPosition='bottom'
 							/>
 						) }
 						renderContent={ ( { onClose } ) => <Fragment>
@@ -141,18 +141,18 @@ export default class Edit extends Component {
 						</Fragment> }
 					/>
 				</Toolbar>
-				<Toolbar className="pixelgrade-hero-block-toolbar">
+				<Toolbar className='pixelgrade-hero-block-toolbar'>
 					<Dropdown
-						position="bottom"
-						className="pixelgrade-hero-block-toolbar-dropdown"
-						contentClassName="table-of-contents__popover"
+						position='bottom'
+						className='pixelgrade-hero-block-toolbar-dropdown'
+						contentClassName='table-of-contents__popover'
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<IconButton
 								onClick={ onToggle }
 								icon={ icons.invert }
 								aria-expanded={ isOpen }
 								label={ __( 'Invert colors', '__plugin_txtd' ) }
-								labelPosition="bottom"
+								labelPosition='bottom'
 							/>
 						) }
 						renderContent={ ( { onClose } ) => <Fragment>
@@ -167,7 +167,7 @@ export default class Edit extends Component {
 						render={ ( { open } ) => {
 							return <IconButton
 								label={ __( 'Swap Media', '__plugin_txtd' ) }
-								icon="format-image"
+								icon='format-image'
 								onClick={ open }
 							/>
 						}}
@@ -221,24 +221,24 @@ export default class Edit extends Component {
 			}
 
 			return <div className={classes.join(' ')} style={styles.hero}>
-				<div className="c-hero__mask c-hero__layer">
-					<div className="c-hero__background c-hero__layer">
-						{ media.type === "image" && typeof media.sizes !== "undefined"
-						  && <img className="c-hero__image" src={ media.sizes.full.url } style={ styles.image }/> }
-						{ media.type === "video"
-						  && <video muted autoplay loop className="c-hero__image" src={ media.url } style={ styles.image }/> }
+				<div className='c-hero__mask c-hero__layer'>
+					<div className='c-hero__background c-hero__layer'>
+						{ media.type === 'image' && typeof media.sizes !== 'undefined'
+						  && <img className='c-hero__image' src={ media.sizes.full.url } style={ styles.image }/> }
+						{ media.type === 'video'
+						  && <video muted autoplay loop className='c-hero__image' src={ media.url } style={ styles.image }/> }
 					</div>
 				</div>
-				<div className="c-hero__foreground" style={ styles.foreground }>
-					<div className="c-hero__content-wrapper">
-						<div className="c-hero__content" style={ styles.content }>
+				<div className='c-hero__foreground' style={ styles.foreground }>
+					<div className='c-hero__content-wrapper'>
+						<div className='c-hero__content' style={ styles.content }>
 							<InnerBlocks template={[
 								[ 'core/heading', { content: 'This is a catchy title', align: 'center' } ],
 								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],
 								[ 'core/button', { text: 'Discover more', align: 'center' } ],
 							]} />
 						</div>
-						{ scrollIndicatorBlock && <div className="c-hero__indicator"></div> }
+						{ scrollIndicatorBlock && <div className='c-hero__indicator'></div> }
 					</div>
 				</div>
 			</div>
@@ -285,7 +285,7 @@ export default class Edit extends Component {
 
 			return <Fragment>
 				<label>{ __( 'Content Width', '__plugin_txtd') }</label>
-				<ButtonGroup label="Content Width">
+				<ButtonGroup label={ __( 'Content Width', '__plugin_txtd' ) }>
 					{ contentWidthOptions.map( option =>
 						<Button isDefault={ option.value !== contentWidth }
 						        isPrimary={ option.value === contentWidth }
@@ -339,7 +339,7 @@ export default class Edit extends Component {
 						<label
 							htmlFor='pixelgrade-hero-horizontal-alignment'>{__( 'Horizontal', '__plugin_txtd' )}</label>
 						<Toolbar
-							className="pixelgrade-hero-horizontal-alignment-toolbar"
+							className='pixelgrade-hero-horizontal-alignment-toolbar'
 							controls={
 								DEFAULT_CONTROLS.map( ( control ) => {
 									return {
@@ -373,16 +373,14 @@ export default class Edit extends Component {
 			return (
 				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
 					<ToggleControl
-						label={ __( "Enable Parallax Scrolling", "__plugin_txtd" ) }
+						label={ __( 'Enable Parallax Scrolling', '__plugin_txtd' ) }
 						checked={ enableParallax }
 						onChange={ () => setAttributes( { enableParallax: ! enableParallax } ) }
 					/>
 					{ !! enableParallax &&
 					 <Fragment>
 						 <SelectControl
-						 	 label="Parallax Orbital Speed"
-							 id="pixelgrade-hero-parallax-orbital-speed-control"
-							 help={'The speed at which the parallax effect runs. '}
+							 label={ __( 'Parallax Orbital Speed', '__plugin_txtd' ) }
 							 value={parallaxAmount}
 							 onChange={ parallaxAmount => {
 
@@ -410,6 +408,7 @@ export default class Edit extends Component {
 									 value: 'custom'
 								 }
 							 ]}
+							 help={ __('The speed at which the parallax effect runs.', '__plugin_txtd') }
 						 />
 					 </Fragment>
 					}
@@ -419,7 +418,7 @@ export default class Edit extends Component {
 						min={10}
 						max={100}
 						step={10}
-						help={'It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.'}
+						help={ __('It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.', '__plugin_txtd' )}
 					/> }
 				</PanelBody>
 			)
@@ -430,8 +429,12 @@ export default class Edit extends Component {
 			return (
 				<PanelBody title={ __( 'Height', '__plugin_txtd' ) }>
 					<SelectControl
-						label="Apply Minimum Height"
-						id="pixelgrade-hero-apply-minimum-height-control"
+						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
+						value={ applyMinimumHeight }
+						onChange={ applyMinimumHeight => {
+							setAttributes( { applyMinimumHeight } );
+							updateBlocks( { applyMinimumHeight } );
+						} }
 						options={[{
 							label: __( 'None', '__plugin_txtd' ),
 							value: 'none'
@@ -442,16 +445,10 @@ export default class Edit extends Component {
 							label: __( 'All Blocks', '__plugin_txtd' ),
 							value: 'all'
 						}]}
-						value={ applyMinimumHeight }
-						onChange={ applyMinimumHeight => {
-							setAttributes( { applyMinimumHeight } );
-							updateBlocks( { applyMinimumHeight } );
-						} }
 					/>
 					{ 'none' !== applyMinimumHeight && <Fragment>
 						<SelectControl
-							label="Minimum Height"
-							id="pixelgrade-hero-minimum-height-control"
+							label={ __( 'Minimum Height', '__plugin_txtd' ) }
 							value={ minHeight }
 							onChange={ minHeight => {
 								setAttributes( { minHeight } );
@@ -478,13 +475,9 @@ export default class Edit extends Component {
 
 		const layoutControls = () => {
 			return (
-				<PanelBody
-					className="pixelgrade-hero-button-group-wrapper"
-					title={ __( 'Layout', '__plugin_txtd' ) }>
-
+				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) } className='pixelgrade-hero-button-group-wrapper'>
 					{ contentPaddingControls() }
 					{ contentWidthControls() }
-
 				</PanelBody>
 			)
 		}
@@ -498,7 +491,7 @@ export default class Edit extends Component {
 
 			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } }>
 				<ToggleControl
-					label={ __( "Enable Scroll Indicator", "__plugin_txtd" ) }
+					label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
 					checked={ scrollIndicator }
 					onChange={ scrollIndicator => {
 						setAttributes( { scrollIndicator } );
