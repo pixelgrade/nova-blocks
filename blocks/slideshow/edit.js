@@ -1,6 +1,11 @@
+
 const { __ } = wp.i18n;
 
-import ColorControls from '../../components/color-controls';
+import {
+	AlignmentControls,
+	ColorControls,
+	LayoutControls
+} from "../../components";
 
 const {
 	InspectorControls,
@@ -189,9 +194,15 @@ export default class Edit extends Component {
 						{ mediaPlaceholder }
 					</PanelBody>
 
+					<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
+						<AlignmentControls { ...this.props } />
+					</PanelBody>
+
 					<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
 						<ColorControls { ...this.props } />
 					</PanelBody>
+
+					<LayoutControls { ...this.props } />
 
 				</InspectorControls>
 			</Fragment>
