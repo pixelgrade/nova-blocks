@@ -1,7 +1,11 @@
 import { debounce } from '../utils';
 import * as icons from '../icons';
 
-import ColorControls from '../../components/color-controls';
+import {
+	AlignmentControls,
+	ColorControls,
+	LayoutControls
+} from "../../components";
 
 const { __ } = wp.i18n;
 
@@ -137,7 +141,7 @@ export default class Edit extends Component {
 							/>
 						) }
 						renderContent={ ( { onClose } ) => <Fragment>
-							{ alignmentControls() }
+							<AlignmentControls { ...this.props } />
 						</Fragment> }
 					/>
 				</Toolbar>
@@ -242,130 +246,6 @@ export default class Edit extends Component {
 					</div>
 				</div>
 			</div>
-		}
-
-
-		const contentPaddingControls = () => {
-
-			const contentPaddingOptions = [
-				{ label: __( 'Small', '__plugin_txtd' ), value: 'small' },
-				{ label: __( 'Medium', '__plugin_txtd' ), value: 'medium' },
-				{ label: __( 'Large', '__plugin_txtd' ), value: 'large' },
-				{ label: __( 'Custom', '__plugin_txtd' ), value: 'custom' },
-			];
-
-			return <Fragment>
-				<label>{ __( 'Content Padding', '__plugin_txtd') }</label>
-				<ButtonGroup>
-					{ contentPaddingOptions.map( option =>
-						<Button isDefault={ option.value !== contentPadding }
-						        isPrimary={ option.value === contentPadding }
-						        onClick={ () => { setAttributes( { contentPadding: option.value } ) } }>
-							{ option.label }
-						</Button>
-					) }
-				</ButtonGroup>
-				{ 'custom' === contentPadding && <RangeControl
-					value={ contentPaddingCustom }
-					onChange={ contentPaddingCustom => setAttributes( { contentPaddingCustom } ) }
-					min={0}
-					max={25}
-				/> }
-			</Fragment>
-		}
-
-		const contentWidthControls = () => {
-
-			const contentWidthOptions = [
-				{ label: __( 'Full', '__plugin_txtd' ), value: 'full' },
-				{ label: __( 'Large', '__plugin_txtd' ), value: 'large' },
-				{ label: __( 'Narrow', '__plugin_txtd' ), value: 'narrow' },
-				{ label: __( 'Custom', '__plugin_txtd' ), value: 'custom' },
-			];
-
-			return <Fragment>
-				<label>{ __( 'Content Width', '__plugin_txtd') }</label>
-				<ButtonGroup label="Content Width">
-					{ contentWidthOptions.map( option =>
-						<Button isDefault={ option.value !== contentWidth }
-						        isPrimary={ option.value === contentWidth }
-						        onClick={ () => { setAttributes( { contentWidth: option.value} ) } }>
-							{ option.label }
-						</Button>
-					) }
-				</ButtonGroup>
-				{ 'custom' === contentWidth && <RangeControl
-					value={ contentWidthCustom }
-					onChange={ contentWidthCustom => setAttributes( { contentWidthCustom } ) }
-					min={20}
-					max={90}
-					step={10}
-				/> }
-			</Fragment>
-		}
-
-		const alignmentPanel = () => {
-
-			return (
-				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
-					{ alignmentControls() }
-				</PanelBody>
-			)
-		}
-
-		const alignmentControls = () => {
-
-			const BLOCK_ALIGNMENTS_CONTROLS = {
-				left: {
-					icon: icons.alignTop,
-					title: __( 'Align Left', '__plugin_txtd' ),
-				},
-				center: {
-					icon: icons.alignCenter,
-					title: __( 'Align Middle', '__plugin_txtd' ),
-				},
-				right: {
-					icon: icons.alignBottom,
-					title: __( 'Align Right', '__plugin_txtd' ),
-				},
-			};
-
-			const DEFAULT_CONTROLS = [ 'left', 'center', 'right' ];
-			const DEFAULT_CONTROL = 'center';
-
-			return (
-				<Fragment>
-					<PanelRow>
-						<label
-							htmlFor='pixelgrade-hero-horizontal-alignment'>{__( 'Horizontal', '__plugin_txtd' )}</label>
-						<Toolbar
-							className="pixelgrade-hero-horizontal-alignment-toolbar"
-							controls={
-								DEFAULT_CONTROLS.map( ( control ) => {
-									return {
-										...BLOCK_ALIGNMENTS_CONTROLS[ control ],
-										isActive: horizontalAlignment === control,
-										onClick: () => {
-											wp.data.select('core/editor').getSelectedBlock().innerBlocks.map( block => {
-												wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, { align: control } );
-											} );
-											setAttributes( { horizontalAlignment: control } )
-										}
-									};
-								} )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<label
-							htmlFor='pixelgrade-hero-verical-alignment'>{__( 'Vertical', '__plugin_txtd' )}</label>
-						<BlockVerticalAlignmentToolbar
-							value={verticalAlignment}
-							onChange={verticalAlignment => setAttributes( {verticalAlignment} )}
-						/>
-					</PanelRow>
-				</Fragment>
-			)
 		}
 
 		const parallaxControls = () => {
@@ -476,19 +356,6 @@ export default class Edit extends Component {
 			)
 		}
 
-		const layoutControls = () => {
-			return (
-				<PanelBody
-					className="pixelgrade-hero-button-group-wrapper"
-					title={ __( 'Layout', '__plugin_txtd' ) }>
-
-					{ contentPaddingControls() }
-					{ contentWidthControls() }
-
-				</PanelBody>
-			)
-		}
-
 		const scrollIndicatorControl = () => {
 			const heroBlocks = editorData.getBlocks().filter( block => {
 				return block.name === 'pixelgrade/hero';
@@ -515,12 +382,16 @@ export default class Edit extends Component {
 			</Fragment>,
 			<InspectorControls>
 
-				{ alignmentPanel() }
+				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
+					<AlignmentControls { ...this.props } />
+				</PanelBody>
+
 				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
 					<ColorControls { ...this.props } />
 				</PanelBody>
 
-				{ layoutControls() }
+				<LayoutControls { ...this.props } />
+
 				{ heightControls() }
 				{ scrollIndicatorControl() }
 				{ parallaxControls() }

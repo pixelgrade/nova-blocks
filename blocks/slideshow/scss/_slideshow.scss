@@ -17,6 +17,8 @@
     --gallery-spacing: 10px;
 
     display: flex;
+    flex-wrap: wrap;
+
     margin-top: calc( -1 * var(--gallery-spacing) );
     margin-left: calc( -1 * var(--gallery-spacing) );
 

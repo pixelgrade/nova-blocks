@@ -390,6 +390,8 @@
   --gallery-spacing: 10px;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin-top: calc( -1 * var(--gallery-spacing));
   margin-left: calc( -1 * var(--gallery-spacing)); }
   .nova-slideshow__gallery-edit > * {

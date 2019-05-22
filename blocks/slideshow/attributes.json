@@ -1,5 +1,32 @@
 {
   "attributes": {
+
+    "contentPadding": {
+      "type": "string",
+      "default": "medium"
+    },
+    "contentPaddingCustom":  {
+      "type": "number",
+      "default": 50
+    },
+    "contentWidth":  {
+      "type": "string",
+      "default": "full"
+    },
+    "contentWidthCustom":  {
+      "type": "number",
+      "default": 100
+    },
+
+    "horizontalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "verticalAlignment": {
+      "type": "string",
+      "default": "center"
+    },
+
     "slideshowType": {
       "type": "string",
       "default": "gallery"
