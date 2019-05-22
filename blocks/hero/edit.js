@@ -336,7 +336,7 @@ export default class Edit extends Component {
 				<Fragment>
 					<PanelRow>
 						<label
-							htmlFor='pixelgrade-hero-horizontal-alignment'>{__( 'Horizontal Alignment', '__plugin_txtd' )}</label>
+							htmlFor='pixelgrade-hero-horizontal-alignment'>{__( 'Horizontal', '__plugin_txtd' )}</label>
 						<Toolbar
 							className="pixelgrade-hero-horizontal-alignment-toolbar"
 							controls={
@@ -357,7 +357,7 @@ export default class Edit extends Component {
 					</PanelRow>
 					<PanelRow>
 						<label
-							htmlFor='pixelgrade-hero-verical-alignment'>{__( 'Vertical Alignment', '__plugin_txtd' )}</label>
+							htmlFor='pixelgrade-hero-verical-alignment'>{__( 'Vertical', '__plugin_txtd' )}</label>
 						<BlockVerticalAlignmentToolbar
 							value={verticalAlignment}
 							onChange={verticalAlignment => setAttributes( {verticalAlignment} )}
@@ -372,7 +372,7 @@ export default class Edit extends Component {
 			return (
 				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) }>
 					<ToggleControl
-						label={ __( "Enable Parallax", "__plugin_txtd" ) }
+						label={ __( "Enable Parallax Scrolling", "__plugin_txtd" ) }
 						checked={ enableParallax }
 						onChange={ () => setAttributes( { enableParallax: ! enableParallax } ) }
 					/>
@@ -383,6 +383,7 @@ export default class Edit extends Component {
 						 </label>
 						 <SelectControl
 							 id="pixelgrade-hero-parallax-orbital-speed-control"
+							 help={'The speed at which the parallax effect runs. '}
 							 value={parallaxAmount}
 							 onChange={ parallaxAmount => {
 
@@ -397,14 +398,14 @@ export default class Edit extends Component {
 							 } }
 							 options={[
 								 {
-									 label: __( 'Neptune', '__plugin_txtd' ),
-									 value: 100
+									 label: __( 'Fast as Mercure +20', '__plugin_txtd' ),
+									 value: 20
 								 }, {
-									 label: __( 'Earth', '__plugin_txtd' ),
+									 label: __( 'Natural as Earth +50', '__plugin_txtd' ),
 									 value: 50
 								 }, {
-									 label: __( 'Mercur', '__plugin_txtd' ),
-									 value: 20
+									 label: __( 'Slow as Neptune +70', '__plugin_txtd' ),
+									 value: 70
 								 }, {
 									 label: __( 'Custom', '__plugin_txtd' ),
 									 value: 'custom'
@@ -416,8 +417,10 @@ export default class Edit extends Component {
 					{ !! enableParallax && 'custom' === parallaxAmount && <RangeControl
 						value={ parallaxCustomAmount }
 						onChange={ parallaxCustomAmount => setAttributes( { parallaxCustomAmount } ) }
-						min={0}
+						min={10}
 						max={100}
+						step={10}
+						help={'It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.'}
 					/> }
 				</PanelBody>
 			)
