@@ -285,7 +285,7 @@ export default class Edit extends Component {
 
 			return <Fragment>
 				<label>{ __( 'Content Width', '__plugin_txtd') }</label>
-				<ButtonGroup>
+				<ButtonGroup label="Content Width">
 					{ contentWidthOptions.map( option =>
 						<Button isDefault={ option.value !== contentWidth }
 						        isPrimary={ option.value === contentWidth }
@@ -379,10 +379,8 @@ export default class Edit extends Component {
 					/>
 					{ !! enableParallax &&
 					 <Fragment>
-						 <label htmlFor="pixelgrade-hero-parallax-orbital-speed-control">
-							 { __( 'Parallax Orbital Speed', '__plugin_txtd' ) }
-						 </label>
 						 <SelectControl
+						 	 label="Parallax Orbital Speed"
 							 id="pixelgrade-hero-parallax-orbital-speed-control"
 							 help={'The speed at which the parallax effect runs. '}
 							 value={parallaxAmount}
@@ -431,8 +429,8 @@ export default class Edit extends Component {
 
 			return (
 				<PanelBody title={ __( 'Height', '__plugin_txtd' ) }>
-					<label htmlFor="pixelgrade-hero-apply-minimum-height-control">{ __( 'Apply Minimum Height', '__plugin_txtd' ) }</label>
 					<SelectControl
+						label="Apply Minimum Height"
 						id="pixelgrade-hero-apply-minimum-height-control"
 						options={[{
 							label: __( 'None', '__plugin_txtd' ),
@@ -451,8 +449,8 @@ export default class Edit extends Component {
 						} }
 					/>
 					{ 'none' !== applyMinimumHeight && <Fragment>
-						<label htmlFor="pixelgrade-hero-minimum-height-control">{ __( 'Minimum Height', '__plugin_txtd' ) }</label>
 						<SelectControl
+							label="Minimum Height"
 							id="pixelgrade-hero-minimum-height-control"
 							value={ minHeight }
 							onChange={ minHeight => {
