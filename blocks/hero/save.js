@@ -9,7 +9,7 @@ const {
 	InnerBlocks
 } = wp.blockEditor;
 
-export default class Edit extends Component {
+export default class Save extends Component {
 
 	constructor() {
 		super( ...arguments );
@@ -87,7 +87,8 @@ export default class Edit extends Component {
 			`c-hero--h-align-${horizontalAlignment}`,
 			`c-hero--spacing-${contentPadding}`,
 			`c-hero--content-width-${contentWidth}`,
-			`c-hero--background-${overlayFilterStyle}`
+			`u-background`,
+			`u-background-${overlayFilterStyle}`
 		]
 
 		if ( !! enableParallax ) {

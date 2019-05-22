@@ -1,6 +1,8 @@
 import { debounce } from '../utils';
 import * as icons from '../icons';
 
+import ColorControls from '../../components/color-controls';
+
 const { __ } = wp.i18n;
 
 const {
@@ -80,7 +82,6 @@ export default class Edit extends Component {
 
 	constructor() {
 		super( ...arguments );
-
 	}
 
 	render() {
@@ -119,16 +120,6 @@ export default class Edit extends Component {
 
 		const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
-		const classes = [
-			className,
-			'c-hero',
-			`c-hero--v-align-${verticalAlignment}`,
-			`c-hero--h-align-${horizontalAlignment}`,
-			`c-hero--spacing-${contentPadding}`,
-			`c-hero--content-width-${contentWidth}`,
-			`c-hero--background-${overlayFilterStyle}`
-		]
-
 		const blockControls = (
 			<BlockControls>
 				<Toolbar className="pixelgrade-hero-block-toolbar">
@@ -165,7 +156,7 @@ export default class Edit extends Component {
 							/>
 						) }
 						renderContent={ ( { onClose } ) => <Fragment>
-							{ colorControls() }
+							<ColorControls { ...this.props } />
 						</Fragment> }
 					/>
 				</Toolbar>
@@ -186,6 +177,16 @@ export default class Edit extends Component {
 		);
 
 		const hero = () => {
+			const classes = [
+				className,
+				'c-hero',
+				`c-hero--v-align-${verticalAlignment}`,
+				`c-hero--h-align-${horizontalAlignment}`,
+				`c-hero--spacing-${contentPadding}`,
+				`c-hero--content-width-${contentWidth}`,
+				`u-background`,
+				`u-background-${overlayFilterStyle}`
+			]
 
 			const styles = {
 				hero: {
@@ -509,43 +510,6 @@ export default class Edit extends Component {
 			</PanelBody>
 		}
 
-		const colorControls = () => {
-			return <Fragment>
-				<ColorPalette
-					label={ __( 'Content Color', '__plugin_txtd' ) }
-					colors={[
-						{
-							name: __( 'Dark', '__plugin_txtd' ),
-							color: '#000'
-						}, {
-							name: __( 'Light', '__plugin_txtd' ),
-							color: '#FFF'
-						}
-					]}
-					value={ contentColor }
-					onChange={ contentColor => setAttributes( { contentColor } ) }
-				/>
-				<SelectControl
-					label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
-					value={ overlayFilterStyle }
-					options={ [
-						{ label: 'None', value: 'none' },
-						{ label: 'Dark', value: 'dark' },
-						{ label: 'Light', value: 'light' }
-					] }
-					onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
-				/>
-				{ overlayFilterStyle !== 'none' && <RangeControl
-					label={ __( "Overlay Filter Strength", "__plugin_txtd" ) }
-					value={ overlayFilterStrength }
-					onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
-					min={0}
-					max={100}
-					step={10}
-				/> }
-			</Fragment>
-		}
-
 		return [
 			<Fragment>
 				{ hero() }
@@ -555,7 +519,7 @@ export default class Edit extends Component {
 
 				{ alignmentPanel() }
 				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
-					{ colorControls() }
+					<ColorControls { ...this.props } />
 				</PanelBody>
 
 				{ layoutControls() }

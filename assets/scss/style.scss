@@ -1,0 +1,19 @@
+:root {
+    --bg-master-dark: #000000;
+    --bg-master-light: #FFFFFF;
+}
+
+@each $color in dark, light {
+
+    .u-background-#{$color} {
+        --hero-background: var(--bg-master-#{$color});
+    }
+
+    .u-foreground-#{$color} {
+        --hero-foreground: var(--bg-master-#{$color});
+    }
+}
+
+.u-background {
+    background: var(--hero-background);
+}
