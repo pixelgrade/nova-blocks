@@ -17,9 +17,9 @@ import save from './save';
 
 export default registerBlockType( 'pixelgrade/hero',
 	{
-		title: __( 'Pixelgrade Hero', '__plugin_txtd' ),
+		title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
 		icon: icons.hero,
-		description: __( 'Some sort of description for the hero block', '__plugin_txtd' ),
+		description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 		category: "nova-by-pixelgrade",
 		...attributes,
 		edit,
