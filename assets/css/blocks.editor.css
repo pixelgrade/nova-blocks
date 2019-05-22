@@ -167,6 +167,9 @@
         justify-content: center;
     text-align: center; }
 
+.components-nova--popover.components-popover:not(.is-mobile) .components-popover__content {
+  padding: 16px; }
+
 .pixelgrade-hero-block-toolbar svg {
   width: 20px;
   height: 20px; }

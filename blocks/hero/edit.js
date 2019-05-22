@@ -126,7 +126,7 @@ export default class Edit extends Component {
 					<Dropdown
 						position='bottom'
 						className='pixelgrade-hero-block-toolbar-dropdown'
-						contentClassName='table-of-contents__popover'
+						contentClassName='components-nova--popover'
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<IconButton
 								onClick={ onToggle }
@@ -145,7 +145,7 @@ export default class Edit extends Component {
 					<Dropdown
 						position='bottom'
 						className='pixelgrade-hero-block-toolbar-dropdown'
-						contentClassName='table-of-contents__popover'
+						contentClassName='components-nova--popover'
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<IconButton
 								onClick={ onToggle }

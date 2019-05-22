@@ -168,6 +168,9 @@
         justify-content: center;
     text-align: center; }
 
+.components-nova--popover.components-popover:not(.is-mobile) .components-popover__content {
+  padding: 16px; }
+
 /* Slider */
 .slick-slider {
   position: relative;
