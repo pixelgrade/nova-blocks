@@ -9,6 +9,7 @@ const {
 	ColorPalette,
 	RangeControl,
 	SelectControl,
+	RadioControl,
 } = wp.components;
 
 export default class ColorControls extends Component {
@@ -22,9 +23,12 @@ export default class ColorControls extends Component {
 			setAttributes
 		} = this.props;
 
+		// @ToDo: use PanelColorSettings instead
 		return <Fragment>
+			<span className='components-base-control__label'>
+				 	{ __( 'Content Color', '__plugin_txtd') }
+			</span>
 			<ColorPalette
-				label={ __( 'Content Color', '__plugin_txtd' ) }
 				colors={[
 					{
 						name: __( 'Dark', '__plugin_txtd' ),
@@ -38,9 +42,10 @@ export default class ColorControls extends Component {
 				onChange={ contentColor => setAttributes( { contentColor } ) }
 				disableCustomColors
 			/>
-			<SelectControl
+			<RadioControl
 				label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
 				value={ overlayFilterStyle }
+				selected={ overlayFilterStyle }
 				options={ [
 					{ label: __( 'None', '__plugin_txtd' ), value: 'none' },
 					{ label: __( 'Dark', '__plugin_txtd' ), value: 'dark' },
