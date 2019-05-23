@@ -91,6 +91,12 @@ export default class Save extends Component {
 			`nova-u-background-${overlayFilterStyle}`
 		]
 
+		const settings = wp.data.select( 'core/block-editor' ).getSettings();
+
+		if ( settings.alignwide ) {
+			classes.push( 'alignfull' );
+		}
+
 		if ( !! enableParallax ) {
 			classes.push( 'nova-hero--parallax' );
 		}

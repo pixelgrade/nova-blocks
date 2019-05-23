@@ -142,6 +142,7 @@ export default class Edit extends Component {
 								labelPosition='bottom'
 							/>
 						) }
+						focusOnMount={ false }
 						renderContent={ ( { onClose } ) => <Fragment>
 							<AlignmentControls { ...this.props } />
 						</Fragment> }
@@ -161,6 +162,7 @@ export default class Edit extends Component {
 								labelPosition='bottom'
 							/>
 						) }
+						focusOnMount={ false }
 						renderContent={ ( { onClose } ) => <Fragment>
 							<ColorControls { ...this.props } />
 							<OverlayControls { ...this.props } />

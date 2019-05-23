@@ -25,9 +25,11 @@ export default registerBlockType( 'pixelgrade/hero',
 		edit,
 		save,
 		getEditWrapperProps() {
-			return {
+			const settings = wp.data.select( 'core/block-editor' ).getSettings();
+
+			return settings.alignWide ? {
 				'data-align': 'full'
-			}
+			} : {}
 		},
 	}
 )
