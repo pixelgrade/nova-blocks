@@ -1,6 +1,8 @@
 import * as icons from "../../blocks/icons";
 import "./style.scss";
 
+import BlockHorizontalAlignmentToolbar from '../block-horizontal-alignment-toolbar';
+
 const { __ } = wp.i18n;
 
 const {
@@ -14,7 +16,6 @@ const {
 
 const {
 	PanelRow,
-	Toolbar
 } = wp.components;
 
 export default class AlignmentControls extends Component {
@@ -28,44 +29,18 @@ export default class AlignmentControls extends Component {
 			setAttributes
 		} = this.props;
 
-		const BLOCK_ALIGNMENTS_CONTROLS = {
-			left: {
-				icon: icons.alignTop,
-				title: __( 'Align Left', '__plugin_txtd' ),
-			},
-			center: {
-				icon: icons.alignCenter,
-				title: __( 'Align Middle', '__plugin_txtd' ),
-			},
-			right: {
-				icon: icons.alignBottom,
-				title: __( 'Align Right', '__plugin_txtd' ),
-			},
-		};
-
-		const DEFAULT_CONTROLS = [ 'left', 'center', 'right' ];
-		const DEFAULT_CONTROL = 'center';
-
 		return (
 			<Fragment>
 				<PanelRow>
 					<span>{ __( 'Horizontal', '__plugin_txtd' ) }</span>
-					<Toolbar
-						className="pixelgrade-hero-horizontal-alignment-toolbar"
-						controls={
-							DEFAULT_CONTROLS.map( ( control ) => {
-								return {
-									...BLOCK_ALIGNMENTS_CONTROLS[ control ],
-									isActive: horizontalAlignment === control,
-									onClick: () => {
-										wp.data.select('core/editor').getSelectedBlock().innerBlocks.map( block => {
-											wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, { align: control } );
-										} );
-										setAttributes( { horizontalAlignment: control } )
-									}
-								};
-							} )
-						}
+					<BlockHorizontalAlignmentToolbar
+						value={horizontalAlignment}
+						onChange={horizontalAlignment => {
+							wp.data.select('core/editor').getSelectedBlock().innerBlocks.map( block => {
+								wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, { align: horizontalAlignment } );
+							} );
+							setAttributes( { horizontalAlignment } )
+						}}
 					/>
 				</PanelRow>
 				{ applyMinimumHeightBlock && <PanelRow>
