@@ -69,10 +69,21 @@ const TRANSITION_DURATION = 1000;
 	}
 
 	function getDirection( slick, currentSlide, nextSlide ) {
-		if ( nextSlide > currentSlide ) {
-			return 1;
+		let direction = 1;
+
+		if ( slick.slideCount > 2 ) {
+
+			if ( currentSlide === 0 && nextSlide === slick.slideCount - 1 ) {
+				direction = -1;
+			}
+
+			if ( nextSlide < currentSlide && ( nextSlide !== 0 || currentSlide !== slick.slideCount - 1 ) ) {
+				direction = -1;
+			}
+
 		}
-		return -1;
+
+		return direction;
 	}
 
 	$( window ).on( 'resize', debounce( onResize, 300 ) );
