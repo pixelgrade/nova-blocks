@@ -342,7 +342,8 @@
   padding-top: 75%; }
 
 .nova-slideshow__slide {
-  position: relative; }
+  position: relative;
+  overflow: hidden; }
   .nova-slideshow__slider > .nova-slideshow__slide {
     position: absolute;
     top: 0;
@@ -403,12 +404,19 @@
   bottom: 0;
   left: 0; }
 
+.nova-slideshow__slider {
+  z-index: 100; }
+
+.nova-slideshow__controls {
+  z-index: 200; }
+
 .nova-slideshow__arrow {
   --arrow-width: 2px;
   --arrow-color: #555555;
   --arrow-background: #FFFFFF;
   position: absolute;
   top: 50%;
+  z-index: 999;
   width: 22px;
   height: 24px;
   background: var(--arrow-background);
@@ -460,6 +468,9 @@
 .nova-slideshow .slick-list,
 .nova-slideshow .slick-track {
   height: 100%; }
+
+.nova-slideshow .slick-slide {
+  opacity: 1 !important; }
 .pixelgrade-hero-button-group-wrapper label + .components-button-group {
   margin-top: 5px; }
 

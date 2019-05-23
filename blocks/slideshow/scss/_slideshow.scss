@@ -7,6 +7,7 @@
 
 .nova-slideshow__slide {
     position: relative;
+    overflow: hidden;
 
     .nova-slideshow__slider > & {
         @include cover;
@@ -42,8 +43,12 @@
     @include cover;
 }
 
-.nova-slideshow__controls {
+.nova-slideshow__slider {
+    z-index: 100;
+}
 
+.nova-slideshow__controls {
+    z-index: 200;
 }
 
 .nova-slideshow__arrow {
@@ -53,6 +58,7 @@
 
     position: absolute;
     top: 50%;
+    z-index: 999;
 
     width: 22px;
     height: 24px;
@@ -125,5 +131,10 @@
     .slick-list,
     .slick-track {
         height: 100%;
+    }
+
+    // for simpler reveal transitions between slides
+    .slick-slide {
+        opacity: 1 !important;
     }
 }

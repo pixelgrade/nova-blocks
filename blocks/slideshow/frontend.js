@@ -2,6 +2,9 @@ import { debounce } from '../utils';
 
 const BLOCK_SELECTOR = '.nova-slideshow';
 const SLIDER_SELECTOR = '.nova-slideshow__slider';
+const BACKGROUND_SELECTOR = '.nova-slideshow__background';
+const FOREGROUND_SELECTOR = '.nova-slideshow__content';
+const TRANSITION_DURATION = 1000;
 
 (function($, window, undefined) {
 
@@ -15,11 +18,16 @@ const SLIDER_SELECTOR = '.nova-slideshow__slider';
 		if ( $slider.children().length > 1 ) {
 			$arrowContainer = $( '<div class="nova-slideshow__controls">' ).appendTo( $block );
 
+			$slider.on( 'beforeChange', onBeforeSlideChange );
+
 			$slider.slick({
 				rows: 0,
+				// for simpler reveal transitions between slides
+				fade: true,
 				prevArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--prev"></div>',
 				nextArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--next"></div>',
 				appendArrows: $arrowContainer,
+				speed: TRANSITION_DURATION
 			});
 		}
 	});
@@ -28,6 +36,43 @@ const SLIDER_SELECTOR = '.nova-slideshow__slider';
 		$blocks.each( function( index, block ) {
 			$( block ).find( SLIDER_SELECTOR ).slick( 'refresh' );
 		});
+	}
+
+	function onBeforeSlideChange( event, slick, currentSlide, nextSlide ) {
+		const $currentSlide = $( slick.$slides[currentSlide] );
+		const $nextSlide = $( slick.$slides[nextSlide] );
+
+		$( slick.$slides ).css( 'zIndex', 800 );
+
+		transition( $currentSlide, $nextSlide, getDirection( slick, currentSlide, nextSlide ) );
+	}
+
+	function transition( $current, $next, sign = 1 ) {
+		const timeline = new TimelineLite( {paused: true} );
+		const duration = TRANSITION_DURATION / 1000;
+		const slideWidth = $current.outerWidth();
+		const move = 300;
+
+		timeline.fromTo( $next, duration, { x: sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
+		timeline.fromTo( $next.find( BACKGROUND_SELECTOR ), duration,
+			{ x: -sign * (slideWidth - move) }, { x: 0, ease: Power4.easeInOut }, 0 );
+		timeline.fromTo( $next.find( FOREGROUND_SELECTOR ), duration,
+			{ x: -sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
+
+		timeline.fromTo( $current, duration, { x: 0 }, { x: -sign * slideWidth, ease: Power4.easeInOut }, 0 );
+		timeline.fromTo( $current.find( BACKGROUND_SELECTOR ), duration,
+			{ x: 0 }, { x: sign * (slideWidth - move), ease: Power4.easeInOut }, 0 );
+		timeline.fromTo( $current.find( FOREGROUND_SELECTOR ), duration,
+			{ x: 0 }, { x: sign * slideWidth, ease: Power4.easeInOut }, 0 );
+
+		timeline.play();
+	}
+
+	function getDirection( slick, currentSlide, nextSlide ) {
+		if ( nextSlide > currentSlide ) {
+			return 1;
+		}
+		return -1;
 	}
 
 	$( window ).on( 'resize', debounce( onResize, 300 ) );
