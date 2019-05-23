@@ -6,7 +6,6 @@ const { withViewportMatch } = wp.viewport;
 const { withSelect } = wp.data;
 const { compose, createHigherOrderComponent } = wp.compose;
 const { createContext } = wp.element;
-
 const { Consumer, Provider } = createContext( {
 	name: '',
 	isSelected: false,
@@ -63,6 +62,7 @@ export function BlockHorizontalAlignmentToolbar( { isCollapsed, value, onChange,
 	)
 }
 
+// @todo remove function declaration and use core method when exposed through the api
 const withBlockEditContext = ( mapContextToProps ) => createHigherOrderComponent( ( OriginalComponent ) => {
 	return ( props ) => (
 		<Consumer>
