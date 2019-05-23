@@ -16,7 +16,6 @@ const {
 	PanelColorSettings,
 } = wp.blockEditor;
 
-const setContentColor = contentColor => setAttributes( { contentColor } );
 const colors = [ {
 	name: __( 'Dark', '__plugin_txtd' ),
 	color: '#000'
@@ -72,9 +71,10 @@ class ColorControls extends Component {
 		} = this.props;
 
 		return <ColorPalette
-			colors={ colors }
+			className="nova-hide-clear-color"
 			value={ contentColor }
-			onChange={ setContentColor }
+			colors={ colors }
+			onChange={ contentColor => setAttributes( { contentColor } ) }
 			disableCustomColors
 		/>
 	}
@@ -92,11 +92,12 @@ class ColorPanel extends Component {
 		} = this.props;
 
 		return <PanelColorSettings
+			className="nova-hide-clear-color"
 			title={ __( 'Color Settings', '__plugin_txtd' ) }
 			colorSettings={ [
 				{
 					value: contentColor,
-					onChange: setContentColor,
+					onChange: contentColor => setAttributes( { contentColor } ),
 					label: __( 'Content Color', '__plugin_txtd' ),
 				},
 			] }

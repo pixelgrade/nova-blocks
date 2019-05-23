@@ -474,3 +474,9 @@
 
 .u-background {
   background: var(--hero-background); }
+
+.nova-hide-clear-color .components-color-palette__custom-color {
+  margin-right: 0; }
+
+.nova-hide-clear-color .components-color-palette__clear {
+  display: none; }
