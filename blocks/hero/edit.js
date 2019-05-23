@@ -3,8 +3,10 @@ import * as icons from '../icons';
 
 import {
 	AlignmentControls,
+	LayoutControls,
 	ColorControls,
-	LayoutControls
+	ColorPanel,
+	OverlayControls
 } from "../../components";
 
 const { __ } = wp.i18n;
@@ -161,6 +163,7 @@ export default class Edit extends Component {
 						) }
 						renderContent={ ( { onClose } ) => <Fragment>
 							<ColorControls { ...this.props } />
+							<OverlayControls { ...this.props } />
 						</Fragment> }
 					/>
 				</Toolbar>
@@ -383,10 +386,7 @@ export default class Edit extends Component {
 					<AlignmentControls { ...this.props } />
 				</PanelBody>
 
-				<PanelBody title={ __( 'Colors', '__plugin_txtd' ) } initialOpen={ true }>
-					<ColorControls { ...this.props } />
-				</PanelBody>
-
+				<ColorPanel { ...this.props } />
 				<LayoutControls { ...this.props } />
 
 				{ heightControls() }

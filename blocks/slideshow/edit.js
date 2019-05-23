@@ -3,7 +3,7 @@ const { __ } = wp.i18n;
 
 import {
 	AlignmentControls,
-	ColorControls,
+	ColorPanel,
 	LayoutControls
 } from "../../components";
 
@@ -198,9 +198,7 @@ export default class Edit extends Component {
 						<AlignmentControls { ...this.props } />
 					</PanelBody>
 
-					<PanelBody title={ __( 'Colors', '__plugin_txtd' ) }>
-						<ColorControls { ...this.props } />
-					</PanelBody>
+					<ColorPanel { ...this.props } />
 
 					<LayoutControls { ...this.props } />
 

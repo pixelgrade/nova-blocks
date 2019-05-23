@@ -6,42 +6,38 @@ const {
 } = wp.element;
 
 const {
-	ColorPalette,
 	RangeControl,
 	SelectControl,
 	RadioControl,
+	ColorPalette,
 } = wp.components;
 
-export default class ColorControls extends Component {
+const {
+	PanelColorSettings,
+} = wp.blockEditor;
+
+const setContentColor = contentColor => setAttributes( { contentColor } );
+const colors = [ {
+	name: __( 'Dark', '__plugin_txtd' ),
+	color: '#000'
+}, {
+	name: __( 'Light', '__plugin_txtd' ),
+	color: '#FFF'
+} ];
+
+class OverlayControls extends Component {
+
 	render() {
+
 		const {
 			attributes: {
-				contentColor,
 				overlayFilterStyle,
 				overlayFilterStrength
 			},
 			setAttributes
 		} = this.props;
 
-		// @ToDo: use PanelColorSettings instead
 		return <Fragment>
-			<span className='components-base-control__label'>
-				 	{ __( 'Content Color', '__plugin_txtd') }
-			</span>
-			<ColorPalette
-				colors={[
-					{
-						name: __( 'Dark', '__plugin_txtd' ),
-						color: '#000'
-					}, {
-						name: __( 'Light', '__plugin_txtd' ),
-						color: '#FFF'
-					}
-				]}
-				value={ contentColor }
-				onChange={ contentColor => setAttributes( { contentColor } ) }
-				disableCustomColors
-			/>
 			<RadioControl
 				label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
 				value={ overlayFilterStyle }
@@ -63,4 +59,55 @@ export default class ColorControls extends Component {
 			/> }
 		</Fragment>
 	}
+}
+
+class ColorControls extends Component {
+	render() {
+
+		const {
+			attributes: {
+				contentColor,
+			},
+			setAttributes
+		} = this.props;
+
+		return <ColorPalette
+			colors={ colors }
+			value={ contentColor }
+			onChange={ setContentColor }
+			disableCustomColors
+		/>
+	}
+}
+
+class ColorPanel extends Component {
+
+	render() {
+
+		const {
+			attributes: {
+				contentColor,
+			},
+			setAttributes
+		} = this.props;
+
+		return <PanelColorSettings
+			title={ __( 'Color Settings', '__plugin_txtd' ) }
+			colorSettings={ [
+				{
+					value: contentColor,
+					onChange: setContentColor,
+					label: __( 'Content Color', '__plugin_txtd' ),
+				},
+			] }
+			colors={ colors } >
+			<OverlayControls { ...this.props } />
+		</PanelColorSettings>
+	}
+}
+
+export {
+	ColorControls,
+	OverlayControls,
+	ColorPanel,
 }
