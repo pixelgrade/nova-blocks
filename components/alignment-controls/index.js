@@ -21,12 +21,14 @@ export default class AlignmentControls extends Component {
 	render() {
 		const {
 			attributes: {
-				applyMinimumHeight,
+				applyMinimumHeightBlock,
 				horizontalAlignment,
 				verticalAlignment
 			},
 			setAttributes
 		} = this.props;
+
+		console.log( this.props );
 
 		const BLOCK_ALIGNMENTS_CONTROLS = {
 			left: {
@@ -49,8 +51,8 @@ export default class AlignmentControls extends Component {
 		return (
 			<Fragment>
 				<PanelRow>
+					<span>{ __( 'Horizontal', '__plugin_txtd' ) }</span>
 					<Toolbar
-						label={ __( 'Horizontal', '__plugin_txtd' ) }
 						className="pixelgrade-hero-horizontal-alignment-toolbar"
 						controls={
 							DEFAULT_CONTROLS.map( ( control ) => {
@@ -68,9 +70,9 @@ export default class AlignmentControls extends Component {
 						}
 					/>
 				</PanelRow>
-				{ applyMinimumHeight && <PanelRow>
+				{ applyMinimumHeightBlock && <PanelRow>
+					<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
 					<BlockVerticalAlignmentToolbar
-						label={ __( 'Vertical', '__plugin_txtd' ) }
 						value={verticalAlignment}
 						onChange={verticalAlignment => setAttributes( {verticalAlignment} )}
 					/>

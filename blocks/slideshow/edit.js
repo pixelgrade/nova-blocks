@@ -214,7 +214,13 @@ export default class Edit extends Component {
 					</PanelBody>
 
 					<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
-						<AlignmentControls { ...this.props } />
+						<AlignmentControls { ...{
+							...this.props,
+							attributes: {
+								...this.props.attributes,
+								applyMinimumHeightBlock: true
+							}
+						} } />
 					</PanelBody>
 
 					<ColorPanel { ...this.props } />
