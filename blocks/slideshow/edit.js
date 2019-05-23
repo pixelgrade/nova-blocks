@@ -141,18 +141,20 @@ export default class Edit extends Component {
 
 			return (
 				<div className={ classes.join(' ') } style={ styles.hero }>
-					<div className="nova-slideshow__slide">
-						{ selectedImage && <Fragment>
-							<img className="nova-slideshow__media" src={ selectedImage.sizes.large.url } alt="" style={ styles.image } />
-							<div className="nova-slideshow__content nova-u-content-padding">
-								<div className="nova-u-content-align">
-									<div className="nova-u-content-width">
-										<h2>{ selectedImage.alt }</h2>
-										<p>{ selectedImage.caption }</p>
+					<div className="nova-slideshow__slider">
+						<div className="nova-slideshow__slide">
+							{ selectedImage && <Fragment>
+								<img className="nova-slideshow__media" src={ selectedImage.sizes.large.url } alt="" style={ styles.image } />
+								<div className="nova-slideshow__content nova-u-content-padding">
+									<div className="nova-u-content-align">
+										<div className="nova-u-content-width">
+											<h2>{ selectedImage.alt }</h2>
+											<p>{ selectedImage.caption }</p>
+										</div>
 									</div>
 								</div>
-							</div>
-						</Fragment> }
+							</Fragment> }
+						</div>
 					</div>
 					<div className="nova-slideshow__controls">
 						<div className="nova-slideshow__arrow nova-slideshow__arrow--prev" onClick={ goToPrevSlide }></div>

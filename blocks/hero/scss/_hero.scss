@@ -15,11 +15,9 @@
     @include image-cover;
 }
 
-.nova-hero__background {
-    will-change: transform;
-}
-
 .nova-hero__foreground {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,23 +29,6 @@
         color: inherit;
     }
 }
-
-//.nova-hero__slider {
-//
-//    &.slick-slider {
-//        position: absolute;
-//    }
-//
-//    .slick-list,
-//    .slick-track {
-//        height: 100%;
-//    }
-//}
-//
-//.nova-hero__slide {
-//    position: relative;
-//    height: 100%;
-//}
 
 .nova-hero__indicator {
     position: absolute;

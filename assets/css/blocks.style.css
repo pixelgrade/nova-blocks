@@ -37,10 +37,8 @@
       left: 0;
       transform: none; } }
 
-.nova-hero__background {
-  will-change: transform; }
-
 .nova-hero__foreground {
+  position: relative;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -326,13 +324,13 @@
   --bg-master-light: #FFFFFF; }
 
 .nova-u-background-dark {
-  --hero-background: var(--bg-master-dark); }
+  --element-background: var(--bg-master-dark); }
 
 .nova-u-background-light {
-  --hero-background: var(--bg-master-light); }
+  --element-background: var(--bg-master-light); }
 
 .nova-u-background {
-  background: var(--hero-background); }
+  background: var(--element-background); }
 
 .nova-hide-clear-color .components-color-palette__custom-color {
   margin-right: 0; }
@@ -344,6 +342,16 @@
   padding-top: 75%; }
 
 .nova-slideshow__slide {
+  position: relative; }
+  .nova-slideshow__slider > .nova-slideshow__slide {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; }
+
+.nova-slideshow__slider,
+.nova-slideshow__background {
   position: absolute;
   top: 0;
   right: 0;
@@ -441,6 +449,17 @@
   border-width: 2px;
   border-color: #0085BA;
   padding: 3px; }
+
+.nova-slideshow .slick-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.nova-slideshow .slick-list,
+.nova-slideshow .slick-track {
+  height: 100%; }
 .pixelgrade-hero-button-group-wrapper label + .components-button-group {
   margin-top: 5px; }
 

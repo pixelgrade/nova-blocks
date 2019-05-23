@@ -6,12 +6,12 @@
 @each $color in dark, light {
 
     .nova-u-background-#{$color} {
-        --hero-background: var(--bg-master-#{$color});
+        --element-background: var(--bg-master-#{$color});
     }
 }
 
 .nova-u-background {
-    background: var(--hero-background);
+    background: var(--element-background);
 }
 
 .nova-hide-clear-color {

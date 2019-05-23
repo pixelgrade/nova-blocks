@@ -36,10 +36,8 @@
       left: 0;
       transform: none; } }
 
-.nova-hero__background {
-  will-change: transform; }
-
 .nova-hero__foreground {
+  position: relative;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;

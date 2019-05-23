@@ -1,6 +1,7 @@
 import * as icons from '../icons';
 import attributes from './attributes.json';
 import edit from './edit';
+import save from './save';
 
 import './scss/style.scss';
 import './scss/editor.scss';
@@ -19,5 +20,6 @@ export default registerBlockType( 'pixelgrade/slideshow',
 		category: 'nova-by-pixelgrade',
 		...attributes,
 		edit,
+		save,
 	}
 )

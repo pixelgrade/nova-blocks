@@ -230,8 +230,8 @@ export default class Edit extends Component {
 			}
 
 			return <div className={classes.join(' ')} style={styles.hero}>
-				<div className='nova-hero__mask nova-hero__layer'>
-					<div className='nova-hero__background nova-hero__layer'>
+				<div className='nova-hero__mask'>
+					<div className='nova-hero__background'>
 						{ media.type === 'image' && typeof media.sizes !== 'undefined'
 						  && <img className='nova-hero__media' src={ media.sizes.full.url } style={ styles.image }/> }
 						{ media.type === 'video'

@@ -1,3 +1,5 @@
+import { debounce } from '../utils';
+
 (function($, window, undefined) {
 
 	function debounce(func, wait, immediate) {
@@ -15,33 +17,9 @@
 		};
 	}
 
-	function onResize() {
-		$( '.c-hero__slider' ).each( function( index, element ) {
-			var $element = $( element );
-			$element.slick( 'refresh' );
-		});
-	}
-
-	$( window ).on( 'load', function() {
-
-		$( '.c-hero__slider' ).each( function( index, element ) {
-			var $element = $( element ),
-				$hero = $element.closest( '.c-hero' );
-
-			if ( $element.children().length > 1 ) {
-				$element.slick({
-					rows: 0,
-					appendArrows: $hero
-				});
-			}
-		});
-
-		$( window ).on( 'resize', debounce( onResize, 300 ) );
-	});
-
 	// initialize parallax effect
-	$( '.c-hero--parallax' ).find( '.c-hero__background' ).rellax({
-		container: '.c-hero__mask',
+	$( '.nova-hero--parallax' ).find( '.nova-hero__background' ).rellax({
+		container: '.nova-hero__mask',
 	});
 
 })(jQuery, window);

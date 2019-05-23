@@ -91,11 +91,10 @@ export default class Save extends Component {
 			`nova-u-background-${overlayFilterStyle}`
 		]
 
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
-
-		if ( settings.alignwide ) {
+//		const settings = wp.data.select( 'core/block-editor' ).getSettings();
+//		if ( settings.alignWide ) {
 			classes.push( 'alignfull' );
-		}
+//		}
 
 		if ( !! enableParallax ) {
 			classes.push( 'nova-hero--parallax' );
@@ -116,9 +115,9 @@ export default class Save extends Component {
 						  && <video muted autoplay loop className="nova-hero__media" src={ media.url } style={ styles.image }/> }
 					</div>
 				</div>
-				<div className="nova-hero__foreground" style={styles.foreground}>
-					<div className="nova-hero__content-wrapper">
-						<div className="nova-hero__content" style={styles.content}>
+				<div className="nova-hero__foreground nova-u-content-padding" style={styles.foreground}>
+					<div className="nova-u-content-align">
+						<div className="nova-hero__content nova-u-content-width" style={styles.content}>
 							<InnerBlocks.Content/>
 						</div>
 						{ scrollIndicatorBlock && <a href="#" className="nova-hero__indicator"></a> }
