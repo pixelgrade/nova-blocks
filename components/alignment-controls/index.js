@@ -28,8 +28,6 @@ export default class AlignmentControls extends Component {
 			setAttributes
 		} = this.props;
 
-		console.log( this.props );
-
 		const BLOCK_ALIGNMENTS_CONTROLS = {
 			left: {
 				icon: icons.alignTop,
