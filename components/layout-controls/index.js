@@ -1,5 +1,6 @@
 import PaddingControls from "./padding";
 import WidthControls from "./width";
+import "./style.scss";
 
 const { __ } = wp.i18n;
 

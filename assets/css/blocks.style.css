@@ -1,31 +1,19 @@
 @charset "UTF-8";
-:root {
-  --hero-master-dark: #000000;
-  --hero-master-light: #FFFFFF;
-  --hero-spacing: 10%;
-  --hero-spacing-small: 5%;
-  --hero-spacing-medium: 10%;
-  --hero-spacing-large: 15%;
-  --hero-content-width: 50%;
-  --hero-content-width-full: 100%;
-  --hero-content-width-large: 50%;
-  --hero-content-width-narrow: 30%; }
-
-.c-hero {
+.nova-hero {
   position: relative;
   display: -ms-flexbox;
   display: flex; }
 
-.c-hero__mask,
-.c-hero__background,
-.c-hero__slider {
+.nova-hero__mask,
+.nova-hero__background,
+.nova-hero__slider {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
 
-.c-hero__image[class] {
+.nova-hero__media[class] {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,12 +23,12 @@
   width: auto;
   height: auto; }
   @supports (transform: translate(-50%, -50%)) {
-    .c-hero__image[class] {
+    .nova-hero__media[class] {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%); } }
   @supports ((-o-object-fit: cover) or (object-fit: cover)) {
-    .c-hero__image[class] {
+    .nova-hero__media[class] {
       width: 100%;
       height: 100%;
       -o-object-fit: cover;
@@ -49,10 +37,10 @@
       left: 0;
       transform: none; } }
 
-.c-hero__background {
+.nova-hero__background {
   will-change: transform; }
 
-.c-hero__foreground {
+.nova-hero__foreground {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -60,74 +48,12 @@
   -ms-flex-pack: center;
       justify-content: center;
   width: 100%; }
-  .c-hero__foreground h1, .c-hero__foreground h2, .c-hero__foreground h3, .c-hero__foreground h4, .c-hero__foreground h5, .c-hero__foreground h6,
-  .c-hero__foreground ul, .c-hero__foreground ol, .c-hero__foreground dl,
-  .c-hero__foreground .editor-block-list__block[class] {
+  .nova-hero__foreground h1, .nova-hero__foreground h2, .nova-hero__foreground h3, .nova-hero__foreground h4, .nova-hero__foreground h5, .nova-hero__foreground h6,
+  .nova-hero__foreground ul, .nova-hero__foreground ol, .nova-hero__foreground dl,
+  .nova-hero__foreground .editor-block-list__block[class] {
     color: inherit; }
-  [class*="c-hero--spacing"] .c-hero__foreground {
-    padding-top: var(--hero-spacing);
-    padding-bottom: var(--hero-spacing);
-    padding-left: var(--hero-spacing-small);
-    padding-right: var(--hero-spacing-small); }
-  .c-hero--spacing-small .c-hero__foreground {
-    --hero-spacing: var(--hero-spacing-small); }
-  .c-hero--spacing-medium .c-hero__foreground {
-    --hero-spacing: var(--hero-spacing-medium); }
-  .c-hero--spacing-large .c-hero__foreground {
-    --hero-spacing: var(--hero-spacing-large); }
 
-.c-hero__content-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: -ms-flexbox;
-  display: flex; }
-  .c-hero--h-align-left .c-hero__content-wrapper {
-    -ms-flex-pack: start;
-        justify-content: flex-start; }
-  .c-hero--h-align-center .c-hero__content-wrapper {
-    -ms-flex-pack: center;
-        justify-content: center; }
-  .c-hero--h-align-right .c-hero__content-wrapper {
-    -ms-flex-pack: end;
-        justify-content: flex-end; }
-  .c-hero--v-align-top .c-hero__content-wrapper {
-    -ms-flex-align: start;
-        align-items: flex-start; }
-  .c-hero--v-align-center .c-hero__content-wrapper {
-    -ms-flex-align: center;
-        align-items: center; }
-  .c-hero--v-align-bottom .c-hero__content-wrapper {
-    -ms-flex-align: end;
-        align-items: flex-end; }
-
-[class*="c-hero--content-width"] .c-hero__content {
-  max-width: var(--hero-content-width); }
-
-.c-hero--content-width-full .c-hero__content {
-  --hero-content-width: var(--hero-content-width-full); }
-
-.c-hero--content-width-large .c-hero__content {
-  --hero-content-width: var(--hero-content-width-large); }
-
-.c-hero--content-width-narrow .c-hero__content {
-  --hero-content-width: var(--hero-content-width-narrow); }
-
-.c-hero__slider.slick-slider {
-  position: absolute; }
-
-.c-hero__slider .slick-list,
-.c-hero__slider .slick-track {
-  height: 100%; }
-
-.c-hero__slide {
-  position: relative;
-  height: 100%; }
-
-.pixelgrade-hero-horizontal-alignment-toolbar svg {
-  transform: rotate(-90deg); }
-
-.c-hero__indicator {
+.nova-hero__indicator {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -137,7 +63,7 @@
   -ms-flex-pack: center;
       justify-content: center;
   color: inherit; }
-  .c-hero__indicator:after {
+  .nova-hero__indicator:after {
     content: "";
     position: absolute;
     top: 50%;
@@ -148,25 +74,6 @@
     border-right-color: currentColor;
     border-bottom-color: currentColor;
     transform: translateY(-100%) rotate(45deg); }
-
-.pixelgrade-hero-button-group-wrapper label + .components-button-group {
-  margin-top: 5px; }
-
-.pixelgrade-hero-button-group-wrapper .components-button-group {
-  display: -ms-flexbox;
-  display: flex; }
-  .pixelgrade-hero-button-group-wrapper .components-button-group:not(:last-child) {
-    margin-bottom: 10px; }
-  .pixelgrade-hero-button-group-wrapper .components-button-group .components-button {
-    padding: 1px 5px 3px;
-    height: auto;
-    -ms-flex: 1 1 auto;
-        flex: 1 1 auto;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: center;
-        justify-content: center;
-    text-align: center; }
 
 .components-nova--popover.components-popover:not(.is-mobile) .components-popover__content {
   padding: 16px; }
@@ -354,6 +261,84 @@
     .slick-dots li.slick-active button:before {
       color: black;
       opacity: 0.75; }
+.nova-u-content-align {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex; }
+  .nova-u-halign-left .nova-u-content-align {
+    -ms-flex-pack: start;
+        justify-content: flex-start;
+    text-align: left; }
+  .nova-u-halign-center .nova-u-content-align {
+    -ms-flex-pack: center;
+        justify-content: center;
+    text-align: center; }
+  .nova-u-halign-right .nova-u-content-align {
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+    text-align: right; }
+  .nova-u-valign-top .nova-u-content-align {
+    -ms-flex-align: start;
+        align-items: flex-start; }
+  .nova-u-valign-center .nova-u-content-align {
+    -ms-flex-align: center;
+        align-items: center; }
+  .nova-u-valign-bottom .nova-u-content-align {
+    -ms-flex-align: end;
+        align-items: flex-end; }
+:root {
+  --nova-spacing: 10%;
+  --nova-spacing-small: 5%;
+  --nova-spacing-medium: 10%;
+  --nova-spacing-large: 15%;
+  --nova-content-width: 50%;
+  --nova-content-width-full: 100%;
+  --nova-content-width-large: 50%;
+  --nova-content-width-narrow: 30%; }
+
+.nova-u-content-width {
+  max-width: var(--nova-content-width); }
+  .nova-u-content-width-full .nova-u-content-width {
+    --nova-content-width: var(--nova-content-width-full); }
+  .nova-u-content-width-large .nova-u-content-width {
+    --nova-content-width: var(--nova-content-width-large); }
+  .nova-u-content-width-narrow .nova-u-content-width {
+    --nova-content-width: var(--nova-content-width-narrow); }
+
+[class*="nova-u-spacing"] .nova-u-content-padding {
+  padding-top: var(--nova-spacing);
+  padding-bottom: var(--nova-spacing);
+  padding-left: var(--nova-spacing-small);
+  padding-right: var(--nova-spacing-small); }
+
+.nova-u-spacing-small .nova-u-content-padding {
+  --nova-spacing: var(--nova-spacing-small); }
+
+.nova-u-spacing-medium .nova-u-content-padding {
+  --nova-spacing: var(--nova-spacing-medium); }
+
+.nova-u-spacing-large .nova-u-content-padding {
+  --nova-spacing: var(--nova-spacing-large); }
+:root {
+  --bg-master-dark: #000000;
+  --bg-master-light: #FFFFFF; }
+
+.nova-u-background-dark {
+  --hero-background: var(--bg-master-dark); }
+
+.nova-u-background-light {
+  --hero-background: var(--bg-master-light); }
+
+.nova-u-background {
+  background: var(--hero-background); }
+
+.nova-hide-clear-color .components-color-palette__custom-color {
+  margin-right: 0; }
+
+.nova-hide-clear-color .components-color-palette__clear {
+  display: none; }
 .nova-slideshow {
   position: relative;
   padding-top: 75%; }
@@ -456,27 +441,24 @@
   border-width: 2px;
   border-color: #0085BA;
   padding: 3px; }
-:root {
-  --bg-master-dark: #000000;
-  --bg-master-light: #FFFFFF; }
+.pixelgrade-hero-button-group-wrapper label + .components-button-group {
+  margin-top: 5px; }
 
-.u-background-dark {
-  --hero-background: var(--bg-master-dark); }
+.pixelgrade-hero-button-group-wrapper .components-button-group {
+  display: -ms-flexbox;
+  display: flex; }
+  .pixelgrade-hero-button-group-wrapper .components-button-group:not(:last-child) {
+    margin-bottom: 10px; }
+  .pixelgrade-hero-button-group-wrapper .components-button-group .components-button {
+    padding: 1px 5px 3px;
+    height: auto;
+    -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    text-align: center; }
 
-.u-foreground-dark {
-  --hero-foreground: var(--bg-master-dark); }
-
-.u-background-light {
-  --hero-background: var(--bg-master-light); }
-
-.u-foreground-light {
-  --hero-foreground: var(--bg-master-light); }
-
-.u-background {
-  background: var(--hero-background); }
-
-.nova-hide-clear-color .components-color-palette__custom-color {
-  margin-right: 0; }
-
-.nova-hide-clear-color .components-color-palette__clear {
-  display: none; }
+.pixelgrade-hero-horizontal-alignment-toolbar svg {
+  transform: rotate(-90deg); }

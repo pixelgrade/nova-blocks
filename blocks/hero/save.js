@@ -82,17 +82,17 @@ export default class Save extends Component {
 		}
 
 		const classes = [
-			'c-hero',
-			`c-hero--v-align-${verticalAlignment}`,
-			`c-hero--h-align-${horizontalAlignment}`,
-			`c-hero--spacing-${contentPadding}`,
-			`c-hero--content-width-${contentWidth}`,
-			`u-background`,
-			`u-background-${overlayFilterStyle}`
+			'nova-hero',
+			`nova-u-valign-${verticalAlignment}`,
+			`nova-u-halign-${horizontalAlignment}`,
+			`nova-u-spacing-${contentPadding}`,
+			`nova-u-content-width-${contentWidth}`,
+			`nova-u-background`,
+			`nova-u-background-${overlayFilterStyle}`
 		]
 
 		if ( !! enableParallax ) {
-			classes.push( 'c-hero--parallax' );
+			classes.push( 'nova-hero--parallax' );
 		}
 
 		const backgroundOpacity = 1 - overlayFilterStrength / 100;
@@ -102,20 +102,20 @@ export default class Save extends Component {
 
 		return (
 			<div className={classes.join( ' ' )} style={styles.hero}>
-				<div className="c-hero__mask">
-					<div className="c-hero__background" data-rellax-amount={actualParallaxAmount}>
+				<div className="nova-hero__mask">
+					<div className="nova-hero__background" data-rellax-amount={actualParallaxAmount}>
 						{ media.type === "image" && typeof media.sizes !== "undefined"
-						  && <img className="c-hero__image" src={ media.sizes.full.url } style={ styles.image }/> }
+						  && <img className="nova-hero__media" src={ media.sizes.full.url } style={ styles.image }/> }
 						{ media.type === "video"
-						  && <video muted autoplay loop className="c-hero__image" src={ media.url } style={ styles.image }/> }
+						  && <video muted autoplay loop className="nova-hero__media" src={ media.url } style={ styles.image }/> }
 					</div>
 				</div>
-				<div className="c-hero__foreground" style={styles.foreground}>
-					<div className="c-hero__content-wrapper">
-						<div className="c-hero__content" style={styles.content}>
+				<div className="nova-hero__foreground" style={styles.foreground}>
+					<div className="nova-hero__content-wrapper">
+						<div className="nova-hero__content" style={styles.content}>
 							<InnerBlocks.Content/>
 						</div>
-						{ scrollIndicatorBlock && <a href="#" className="c-hero__indicator"></a> }
+						{ scrollIndicatorBlock && <a href="#" className="nova-hero__indicator"></a> }
 					</div>
 				</div>
 			</div>

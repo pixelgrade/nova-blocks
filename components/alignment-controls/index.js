@@ -1,4 +1,5 @@
 import * as icons from "../../blocks/icons";
+import "./style.scss";
 
 const { __ } = wp.i18n;
 

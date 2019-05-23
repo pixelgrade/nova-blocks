@@ -1,0 +1,49 @@
+:root {
+    --nova-spacing: 10%;
+    --nova-spacing-small: 5%;
+    --nova-spacing-medium: 10%;
+    --nova-spacing-large: 15%;
+
+    --nova-content-width: 50%;
+    --nova-content-width-full: 100%;
+    --nova-content-width-large: 50%;
+    --nova-content-width-narrow: 30%;
+}
+
+.nova-u-content-width {
+    max-width: var(--nova-content-width);
+
+    .nova-u-content-width-full & {
+        --nova-content-width: var(--nova-content-width-full);
+    }
+
+    .nova-u-content-width-large & {
+        --nova-content-width: var(--nova-content-width-large);
+    }
+
+    .nova-u-content-width-narrow & {
+        --nova-content-width: var(--nova-content-width-narrow);
+    }
+}
+
+.nova-u-content-padding {
+
+    [class*="nova-u-spacing"] & {
+        padding-top: var(--nova-spacing);
+        padding-bottom: var(--nova-spacing);
+
+        padding-left: var(--nova-spacing-small);
+        padding-right: var(--nova-spacing-small);
+    }
+    .nova-u-spacing-small & {
+        --nova-spacing: var(--nova-spacing-small);
+    }
+
+    .nova-u-spacing-medium & {
+        --nova-spacing: var(--nova-spacing-medium);
+    }
+
+    .nova-u-spacing-large & {
+        --nova-spacing: var(--nova-spacing-large);
+    }
+}

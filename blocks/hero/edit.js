@@ -186,13 +186,13 @@ export default class Edit extends Component {
 		const hero = () => {
 			const classes = [
 				className,
-				'c-hero',
-				`c-hero--v-align-${verticalAlignment}`,
-				`c-hero--h-align-${horizontalAlignment}`,
-				`c-hero--spacing-${contentPadding}`,
-				`c-hero--content-width-${contentWidth}`,
-				`u-background`,
-				`u-background-${overlayFilterStyle}`
+				'nova-hero',
+				`nova-u-valign-${verticalAlignment}`,
+				`nova-u-halign-${horizontalAlignment}`,
+				`nova-u-spacing-${contentPadding}`,
+				`nova-u-content-width-${contentWidth}`,
+				`nova-u-background`,
+				`nova-u-background-${overlayFilterStyle}`
 			]
 
 			const styles = {
@@ -228,24 +228,24 @@ export default class Edit extends Component {
 			}
 
 			return <div className={classes.join(' ')} style={styles.hero}>
-				<div className='c-hero__mask c-hero__layer'>
-					<div className='c-hero__background c-hero__layer'>
+				<div className='nova-hero__mask nova-hero__layer'>
+					<div className='nova-hero__background nova-hero__layer'>
 						{ media.type === 'image' && typeof media.sizes !== 'undefined'
-						  && <img className='c-hero__image' src={ media.sizes.full.url } style={ styles.image }/> }
+						  && <img className='nova-hero__media' src={ media.sizes.full.url } style={ styles.image }/> }
 						{ media.type === 'video'
-						  && <video muted autoplay loop className='c-hero__image' src={ media.url } style={ styles.image }/> }
+						  && <video muted autoplay loop className='nova-hero__media' src={ media.url } style={ styles.image }/> }
 					</div>
 				</div>
-				<div className='c-hero__foreground' style={ styles.foreground }>
-					<div className='c-hero__content-wrapper'>
-						<div className='c-hero__content' style={ styles.content }>
+				<div className='nova-hero__foreground nova-u-content-padding' style={ styles.foreground }>
+					<div className='nova-u-content-align'>
+						<div className='nova-hero__content nova-u-content-width' style={ styles.content }>
 							<InnerBlocks template={[
 								[ 'core/heading', { content: 'This is a catchy title', align: 'center' } ],
 								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],
 								[ 'core/button', { text: 'Discover more', align: 'center' } ],
 							]} />
 						</div>
-						{ scrollIndicatorBlock && <div className='c-hero__indicator'></div> }
+						{ scrollIndicatorBlock && <div className='nova-hero__indicator'></div> }
 					</div>
 				</div>
 			</div>

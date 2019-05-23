@@ -1,30 +1,31 @@
-:root {
-    --bg-master-dark: #000000;
-    --bg-master-light: #FFFFFF;
-}
 
-@each $color in dark, light {
+.pixelgrade-hero-button-group-wrapper {
 
-    .u-background-#{$color} {
-        --hero-background: var(--bg-master-#{$color});
+    label + .components-button-group {
+        margin-top: 5px;
     }
 
-    .u-foreground-#{$color} {
-        --hero-foreground: var(--bg-master-#{$color});
+    .components-button-group {
+        display: flex;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        .components-button {
+            padding: 1px 5px 3px;
+            height: auto;
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
     }
 }
 
-.u-background {
-    background: var(--hero-background);
-}
-
-.nova-hide-clear-color {
-
-    .components-color-palette__custom-color {
-        margin-right: 0;
-    }
-
-    .components-color-palette__clear {
-        display: none;
+.pixelgrade-hero-horizontal-alignment-toolbar {
+    svg {
+        transform: rotate(-90deg);
     }
 }
+

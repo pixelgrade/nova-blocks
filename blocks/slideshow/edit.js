@@ -40,6 +40,15 @@ export default class Edit extends Component {
 			attributes: {
 				slideshowType,
 				galleryImages,
+				// layout
+				contentPadding,
+				contentPaddingCustom,
+				contentWidth,
+				contentWidthCustom,
+				// alignment
+				verticalAlignment,
+				horizontalAlignment,
+				// colors
 				contentColor,
 				overlayFilterStyle,
 				overlayFilterStrength
@@ -122,8 +131,12 @@ export default class Edit extends Component {
 			const classes = [
 				className,
 				'nova-slideshow',
-				`u-background`,
-				`u-background-${overlayFilterStyle}`
+				`nova-u-valign-${verticalAlignment}`,
+				`nova-u-halign-${horizontalAlignment}`,
+				`nova-u-spacing-${contentPadding}`,
+				`nova-u-content-width-${contentWidth}`,
+				`nova-u-background`,
+				`nova-u-background-${overlayFilterStyle}`
 			]
 
 			return (
@@ -131,9 +144,13 @@ export default class Edit extends Component {
 					<div className="nova-slideshow__slide">
 						{ selectedImage && <Fragment>
 							<img className="nova-slideshow__media" src={ selectedImage.sizes.large.url } alt="" style={ styles.image } />
-							<div className="nova-slideshow__content">
-								<h2>{ selectedImage.alt }</h2>
-								<p>{ selectedImage.caption }</p>
+							<div className="nova-slideshow__content nova-u-content-padding">
+								<div className="nova-u-content-align">
+									<div className="nova-u-content-width">
+										<h2>{ selectedImage.alt }</h2>
+										<p>{ selectedImage.caption }</p>
+									</div>
+								</div>
 							</div>
 						</Fragment> }
 					</div>
