@@ -12,7 +12,7 @@ const {
 	ToggleControl,
 } = wp.components;
 
-export default class ParallaxControls extends Component {
+export default class ParallaxPanel extends Component {
 	render() {
 
 		const {

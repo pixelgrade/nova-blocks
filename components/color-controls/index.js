@@ -1,4 +1,6 @@
 import "./style.scss";
+import * as icons from "../../blocks/icons";
+import {AlignmentControls} from "../index";
 
 const { __ } = wp.i18n;
 
@@ -8,10 +10,12 @@ const {
 } = wp.element;
 
 const {
+	Dropdown,
+	IconButton,
+	RadioControl,
 	RangeControl,
 	SelectControl,
-	RadioControl,
-	ColorPalette,
+	Toolbar,
 } = wp.components;
 
 const {
@@ -62,26 +66,6 @@ class OverlayControls extends Component {
 	}
 }
 
-class ColorControls extends Component {
-	render() {
-
-		const {
-			attributes: {
-				contentColor,
-			},
-			setAttributes
-		} = this.props;
-
-		return <ColorPalette
-			className="nova-hide-clear-color"
-			value={ contentColor }
-			colors={ colors }
-			onChange={ contentColor => setAttributes( { contentColor } ) }
-			disableCustomColors
-		/>
-	}
-}
-
 class ColorPanel extends Component {
 
 	render() {
@@ -109,8 +93,33 @@ class ColorPanel extends Component {
 	}
 }
 
+class ColorToolbar extends Component {
+	render() {
+		return (
+			<Toolbar className='pixelgrade-hero-block-toolbar'>
+				<Dropdown
+					position='bottom'
+					className='pixelgrade-hero-block-toolbar-dropdown'
+					contentClassName='components-nova--popover'
+					renderToggle={ ( { isOpen, onToggle } ) => (
+						<IconButton
+							onClick={ onToggle }
+							icon={ icons.alignment }
+							aria-expanded={ isOpen }
+							label={ __( 'Content alignment', '__plugin_txtd' ) }
+							labelPosition='bottom'
+						/>
+					) }
+					focusOnMount={ false }
+					renderContent={ ( { onClose } ) => <ColorPanel { ...this.props } /> }
+				/>
+			</Toolbar>
+		)
+	}
+}
+
 export {
-	ColorControls,
-	OverlayControls,
 	ColorPanel,
+	ColorToolbar,
+	OverlayControls,
 }

@@ -15,11 +15,45 @@ const {
 } = wp.blockEditor;
 
 const {
+	Dropdown,
+	IconButton,
 	PanelRow,
+	Toolbar,
 } = wp.components;
 
-export default class AlignmentControls extends Component {
+class AlignmentToolbar extends Component {
+
 	render() {
+		return (
+			<Toolbar className='pixelgrade-hero-block-toolbar'>
+				<Dropdown
+					position='bottom'
+					className='pixelgrade-hero-block-toolbar-dropdown'
+					contentClassName='components-nova--popover'
+					renderToggle={ ( { isOpen, onToggle } ) => (
+						<IconButton
+							onClick={ onToggle }
+							icon={ icons.alignment }
+							aria-expanded={ isOpen }
+							label={ __( 'Content alignment', '__plugin_txtd' ) }
+							labelPosition='bottom'
+						/>
+					) }
+					focusOnMount={ false }
+					renderContent={ ( { onClose } ) => <Fragment>
+						<AlignmentControls { ...this.props } />
+					</Fragment> }
+				/>
+			</Toolbar>
+
+		)
+	}
+}
+
+class AlignmentControls extends Component {
+
+	render() {
+
 		const {
 			attributes: {
 				applyMinimumHeightBlock,
@@ -54,3 +88,8 @@ export default class AlignmentControls extends Component {
 		)
 	}
 }
+
+export {
+	AlignmentControls,
+	AlignmentToolbar,
+};
