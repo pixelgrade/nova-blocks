@@ -15,6 +15,7 @@
 }
 
 .nova-slideshow__slider,
+.nova-slideshow__mask,
 .nova-slideshow__background {
     @include cover;
 }

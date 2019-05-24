@@ -27,6 +27,10 @@ export default class Save extends Component {
 			// alignment
 			verticalAlignment,
 			horizontalAlignment,
+			// parallax
+			enableParallax,
+			parallaxAmount,
+			parallaxCustomAmount,
 			// colors
 			contentColor,
 			overlayFilterStyle,
@@ -83,26 +87,37 @@ export default class Save extends Component {
 			classes.push( 'alignfull' );
 //		}
 
+		if ( !! enableParallax ) {
+			classes.push( 'nova-slideshow--parallax' );
+		}
+
+		let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parallaxAmount;
+		actualParallaxAmount = Math.max( Math.min(1, actualParallaxAmount / 100 ), 0 );
+
 		return (
 			<div className={classes.join( ' ' )} style={styles.slideshow}>
-				<div className="nova-slideshow__slider">
-					{ galleryImages.map( image => {
-						return (
-							<div className="nova-slideshow__slide">
-								<div className="nova-slideshow__background nova-u-background">
-									<img className="nova-slideshow__media" src={ image.sizes.large.url } style={ styles.image } />
-								</div>
-								<div className="nova-slideshow__content nova-u-content-padding">
-									<div className="nova-u-content-align">
-										<div className="nova-u-content-width">
-											<h2>{ image.alt }</h2>
-											<p>{ image.caption }</p>
+				<div className="nova-slideshow__mask">
+				<div className="nova-slideshow__background" data-rellax-amount={ actualParallaxAmount }>
+					<div className="nova-slideshow__slider">
+						{ galleryImages.map( image => {
+							return (
+								<div className="nova-slideshow__slide">
+									<div className="nova-u-background">
+										<img className="nova-slideshow__media" src={ image.sizes.large.url } style={ styles.image } />
+									</div>
+									<div className="nova-slideshow__content nova-u-content-padding">
+										<div className="nova-u-content-align">
+											<div className="nova-u-content-width">
+												<h2>{ image.alt }</h2>
+												<p>{ image.caption }</p>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						)
-					} ) }
+							)
+						} ) }
+					</div>
+				</div>
 				</div>
 			</div>
 		)

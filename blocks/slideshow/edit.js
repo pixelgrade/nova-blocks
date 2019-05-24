@@ -4,7 +4,8 @@ const { __ } = wp.i18n;
 import {
 	AlignmentControls,
 	ColorPanel,
-	LayoutControls
+	LayoutControls,
+	ParallaxControls
 } from "../../components";
 
 const {
@@ -128,6 +129,7 @@ export default class Edit extends Component {
 		}
 
 		const slideshow = () => {
+
 			const classes = [
 				className,
 				'nova-slideshow',
@@ -224,8 +226,8 @@ export default class Edit extends Component {
 					</PanelBody>
 
 					<ColorPanel { ...this.props } />
-
 					<LayoutControls { ...this.props } />
+					<ParallaxControls { ...this.props } />
 
 				</InspectorControls>
 			</Fragment>

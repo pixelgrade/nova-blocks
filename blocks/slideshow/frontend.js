@@ -2,13 +2,19 @@ import { debounce } from '../utils';
 
 const BLOCK_SELECTOR = '.nova-slideshow';
 const SLIDER_SELECTOR = '.nova-slideshow__slider';
-const BACKGROUND_SELECTOR = '.nova-slideshow__background';
+const BACKGROUND_SELECTOR = '.nova-slideshow__media';
 const FOREGROUND_SELECTOR = '.nova-slideshow__content';
 const TRANSITION_DURATION = 1000;
 
 (function($, window, undefined) {
 
 	const $blocks = $( BLOCK_SELECTOR );
+
+	// initialize parallax effect
+	$blocks.filter( '.nova-slideshow--parallax' ).find( '.nova-slideshow__background' ).rellax({
+		container: '.nova-slideshow__mask',
+		children: '.nova-slideshow__content',
+	});
 
 	$blocks.each( function( index, block ) {
 		var $block = $( block ),
@@ -27,7 +33,7 @@ const TRANSITION_DURATION = 1000;
 				prevArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--prev"></div>',
 				nextArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--next"></div>',
 				appendArrows: $arrowContainer,
-				speed: TRANSITION_DURATION
+				speed: TRANSITION_DURATION,
 			});
 		}
 	});
@@ -80,7 +86,6 @@ const TRANSITION_DURATION = 1000;
 			if ( nextSlide < currentSlide && ( nextSlide !== 0 || currentSlide !== slick.slideCount - 1 ) ) {
 				direction = -1;
 			}
-
 		}
 
 		return direction;

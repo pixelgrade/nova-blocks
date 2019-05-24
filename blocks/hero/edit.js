@@ -6,20 +6,16 @@ import {
 	LayoutControls,
 	ColorControls,
 	ColorPanel,
-	OverlayControls
+	OverlayControls,
+	ParallaxControls
 } from "../../components";
 
 const { __ } = wp.i18n;
 
 const {
-	BlockIcon,
-	RichText,
 	InspectorControls,
 	BlockControls,
-	AlignmentToolbar,
-	BlockVerticalAlignmentToolbar,
 	MediaUpload,
-	MediaPlaceholder,
 	InnerBlocks
 } = wp.blockEditor;
 
@@ -30,14 +26,10 @@ const {
 
 const {
 	Button,
-	ButtonGroup,
-	ColorPalette,
 	Dropdown,
 	IconButton,
 	PanelBody,
 	PanelRow,
-	RadioControl,
-	RangeControl,
 	SelectControl,
 	ToggleControl,
 	Toolbar,
@@ -108,10 +100,6 @@ export default class Edit extends Component {
 				applyMinimumHeightBlock,
 				scrollIndicator,
 				scrollIndicatorBlock,
-				// parallax
-				enableParallax,
-				parallaxAmount,
-				parallaxCustomAmount,
 				// colors
 				contentColor,
 				overlayFilterStyle,
@@ -253,62 +241,6 @@ export default class Edit extends Component {
 			</div>
 		}
 
-		const parallaxControls = () => {
-
-			return (
-				<PanelBody title={ __( 'Parallax', '__plugin_txtd' ) } initialOpen={ false }>
-					<ToggleControl
-						label={ __( 'Enable Parallax Scrolling', '__plugin_txtd' ) }
-						checked={ enableParallax }
-						onChange={ () => setAttributes( { enableParallax: ! enableParallax } ) }
-					/>
-					{ !! enableParallax &&
-					 <Fragment>
-						 <SelectControl
-							 label={ __( 'Parallax Orbital Speed', '__plugin_txtd' ) }
-							 value={parallaxAmount}
-							 onChange={ parallaxAmount => {
-
-							 	if ( parallaxAmount === 'custom' ) {
-								    setAttributes( { parallaxAmount } );
-							    } else {
-								    setAttributes( {
-									    parallaxAmount: parallaxAmount,
-									    parallaxCustomAmount: parseInt( parallaxAmount, 10 )
-								    } );
-							    }
-							 } }
-							 options={[
-								 {
-									 label: __( 'Fast as Mercure +20', '__plugin_txtd' ),
-									 value: 20
-								 }, {
-									 label: __( 'Natural as Earth +50', '__plugin_txtd' ),
-									 value: 50
-								 }, {
-									 label: __( 'Slow as Neptune +70', '__plugin_txtd' ),
-									 value: 70
-								 }, {
-									 label: __( 'Custom', '__plugin_txtd' ),
-									 value: 'custom'
-								 }
-							 ]}
-							 help={ __('The speed at which the parallax effect runs.', '__plugin_txtd') }
-						 />
-					 </Fragment>
-					}
-					{ !! enableParallax && 'custom' === parallaxAmount && <RangeControl
-						value={ parallaxCustomAmount }
-						onChange={ parallaxCustomAmount => setAttributes( { parallaxCustomAmount } ) }
-						min={10}
-						max={100}
-						step={10}
-						help={ __('It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.', '__plugin_txtd' )}
-					/> }
-				</PanelBody>
-			)
-		}
-
 		const heightControls = () => {
 
 			return (
@@ -393,7 +325,8 @@ export default class Edit extends Component {
 
 				{ heightControls() }
 				{ scrollIndicatorControl() }
-				{ parallaxControls() }
+
+				<ParallaxControls { ...this.props } />
 
 			</InspectorControls>
 		]

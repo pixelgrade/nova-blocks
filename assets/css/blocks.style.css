@@ -352,6 +352,7 @@
     left: 0; }
 
 .nova-slideshow__slider,
+.nova-slideshow__mask,
 .nova-slideshow__background {
   position: absolute;
   top: 0;

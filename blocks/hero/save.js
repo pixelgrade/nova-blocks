@@ -102,8 +102,7 @@ export default class Save extends Component {
 
 		const backgroundOpacity = 1 - overlayFilterStrength / 100;
 		let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parallaxAmount;
-
-		actualParallaxAmount = Math.max( Math.min(1, actualParallaxAmount / 100 ), 0 )
+		actualParallaxAmount = Math.max( Math.min(1, actualParallaxAmount / 100 ), 0 );
 
 		return (
 			<div className={classes.join( ' ' )} style={styles.hero}>

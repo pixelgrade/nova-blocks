@@ -53,6 +53,7 @@
 			amount: 0.5,
 			bleed: 0,
 			container: "[data-rellax-container]",
+			children: "[data-rellax-child]",
 			absolute: false,
 			scale: 1,
 			scaleX: false,
@@ -67,6 +68,8 @@
 
 			this.parent = {};
 			this.parent.$el = this.$el.closest( this.options.container );
+			this.children = {};
+			this.children.$el = this.$el.find( this.options.children );
 
 			var amount = this.$el.data( 'rellax-amount' ),
 				bleed = this.$el.data( 'rellax-bleed' ),
@@ -145,11 +148,19 @@
 				var finalHeight = this.parent.height * (1 - this.options.amount) + windowHeight * this.options.amount,
 					scaleY = finalHeight / this.height,
 					scaleX = this.parent.width / this.width,
-					scale = Math.max( scaleX, scaleY );
+					scale = Math.max( scaleX, scaleY ),
+					offsetY = this.parent.height * ( 1 - scale ) / 2,
+					offsetX = this.parent.width * ( 1 - scale ) / 2;
 
 				if ( this.options.scaleY ) {
 					this.height *= scale;
-					this.offset.top += this.parent.height * ( 1 - scale ) / 2;
+					this.offset.top += offsetY;
+
+					this.children.$el.each( function( i, obj ) {
+						$( obj ).css( {
+							marginTop: -1 * offsetY
+						} )
+					} );
 				}
 
 				if ( this.options.scaleX ) {
@@ -163,19 +174,23 @@
 				if ( this.ready !== true ) return;
 
 				var progress = this._getProgress(),
-					move = ( windowHeight + this.parent.height ) * ( 0.5 - progress ) * this.options.amount,
+					move = ( windowHeight + this.parent.height ) * ( progress - 0.5 ) * this.options.amount,
+					moveChildren = -1 * move,
 					scale = 1 + ( this.options.scale - 1 ) * progress,
-					scaleTransform = scale >= 1 ? 'scale(' + scale + ')' : '';
+					scaleTransform = scale >= 1 ? 'scale(' + scale + ')' : '',
+					childrenScaleTransform = scale >= 1 ? 'scale(' + 1 / scale + ')' : '';
 
 				if ( progress < 0 || progress > 1 ) {
 					return;
 				}
 
 				if ( ! this.options.absolute ) {
-					move = - move - lastScrollY;
-				} else {
-					move *= -1;
+					move -= lastScrollY;
 				}
+
+				this.children.$el.each( function( index, el ) {
+					el.style.transform = 'translate3d(0,' + moveChildren + 'px,0) ' + childrenScaleTransform;
+				} );
 
 				this.el.style.transform = 'translate3d(0,' + move + 'px,0) ' + scaleTransform;
 			},

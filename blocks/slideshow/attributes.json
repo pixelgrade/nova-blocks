@@ -27,6 +27,19 @@
       "default": "center"
     },
 
+    "enableParallax": {
+      "type": "boolean",
+      "default": true
+    },
+    "parallaxAmount": {
+      "type": "string",
+      "default": "50"
+    },
+    "parallaxCustomAmount": {
+      "type": "number",
+      "default": 50
+    },
+
     "slideshowType": {
       "type": "string",
       "default": "gallery"
