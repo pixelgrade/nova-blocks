@@ -21,6 +21,7 @@ import {
 export {
 	AlignmentControls,
 	AlignmentToolbar,
+	ColorControls,
 	ColorPanel,
 	ColorToolbar,
 	GalleryPanel,

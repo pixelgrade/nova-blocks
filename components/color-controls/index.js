@@ -10,6 +10,7 @@ const {
 } = wp.element;
 
 const {
+	ColorPalette,
 	Dropdown,
 	IconButton,
 	RadioControl,
@@ -66,6 +67,26 @@ class OverlayControls extends Component {
 	}
 }
 
+class ColorControls extends Component {
+	render() {
+
+		const {
+			attributes: {
+				contentColor,
+			},
+			setAttributes
+		} = this.props;
+
+		return <ColorPalette
+			className="nova-hide-clear-color"
+			value={ contentColor }
+			colors={ colors }
+			onChange={ contentColor => setAttributes( { contentColor } ) }
+			disableCustomColors
+		/>
+	}
+}
+
 class ColorPanel extends Component {
 
 	render() {
@@ -111,7 +132,10 @@ class ColorToolbar extends Component {
 						/>
 					) }
 					focusOnMount={ false }
-					renderContent={ ( { onClose } ) => <ColorPanel { ...this.props } /> }
+					renderContent={ ( { onClose } ) => <Fragment>
+						<ColorControls { ...this.props } />
+						<OverlayControls { ...this.props } />
+					</Fragment> }
 				/>
 			</Toolbar>
 		)
@@ -119,6 +143,7 @@ class ColorToolbar extends Component {
 }
 
 export {
+	ColorControls,
 	ColorPanel,
 	ColorToolbar,
 	OverlayControls,
