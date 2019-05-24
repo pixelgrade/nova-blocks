@@ -1,9 +1,21 @@
 import LayoutPanel from './layout-panel';
 import ParallaxPanel from './parallax-panel';
 
-import { ColorPanel, ColorToolbar, OverlayControls } from './color-controls';
-import { AlignmentControls, AlignmentToolbar } from './alignment-controls';
-import { HeightPanel, ScrollIndicatorPanel } from './height-controls';
+import {
+	ColorPanel,
+	ColorToolbar,
+	OverlayControls
+} from './color-controls';
+
+import {
+	AlignmentControls,
+	AlignmentToolbar
+} from './alignment-controls';
+
+import {
+	HeightPanel,
+	ScrollIndicatorPanel
+} from './height-controls';
 
 export {
 	AlignmentControls,

@@ -5,6 +5,7 @@ const SLIDER_SELECTOR = '.nova-slideshow__slider';
 const BACKGROUND_SELECTOR = '.nova-slideshow__media';
 const FOREGROUND_SELECTOR = '.nova-slideshow__content';
 const TRANSITION_DURATION = 1000;
+const TRANSITION_EASING = "easeOutExpo";
 
 (function($, window, undefined) {
 
@@ -54,24 +55,20 @@ const TRANSITION_DURATION = 1000;
 	}
 
 	function transition( $current, $next, sign = 1 ) {
-		const timeline = new TimelineLite( {paused: true} );
-		const duration = TRANSITION_DURATION / 1000;
 		const slideWidth = $current.outerWidth();
 		const move = 300;
 
-		timeline.fromTo( $next, duration, { x: sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $next.find( BACKGROUND_SELECTOR ), duration,
-			{ x: -sign * (slideWidth - move) }, { x: 0, ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $next.find( FOREGROUND_SELECTOR ), duration,
-			{ x: -sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
-
-		timeline.fromTo( $current, duration, { x: 0 }, { x: -sign * slideWidth, ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $current.find( BACKGROUND_SELECTOR ), duration,
-			{ x: 0 }, { x: sign * (slideWidth - move), ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $current.find( FOREGROUND_SELECTOR ), duration,
-			{ x: 0 }, { x: sign * slideWidth, ease: Power4.easeInOut }, 0 );
-
-		timeline.play();
+		$current.velocity( {
+			tween: [0, 1]
+		}, {
+			duration: TRANSITION_DURATION,
+			easing: TRANSITION_EASING,
+			progress: function(elements, percentComplete, remaining, tweenValue, activeCall) {
+				$next.get(0).style.transform = 'translateX(' + sign * slideWidth * tweenValue + 'px)';
+				$next.find( BACKGROUND_SELECTOR ).get(0).style.transform = 'translateX(' + sign * (move - slideWidth) * tweenValue + 'px)';
+				$next.find( FOREGROUND_SELECTOR ).get(0).style.transform = 'translateX(' + sign * slideWidth * -tweenValue + 'px)';
+			}
+		});
 	}
 
 	function getDirection( slick, currentSlide, nextSlide ) {

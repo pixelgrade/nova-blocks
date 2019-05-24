@@ -59,17 +59,19 @@ function nova_enqueue_frontend_assets() {
 		filemtime( _get_plugin_directory() . $slick_path )
 	);
 
+	$velocity_path = '/assets/js/jquery.velocity.js';
 	wp_register_script(
-		'nova-blocks-gsap',
-		'//cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js',
-		array()
+		'nova-blocks-velocity',
+		_get_plugin_url() . $velocity_path,
+		array( 'jquery' ),
+		filemtime( _get_plugin_directory() . $slick_path )
 	);
 
 	$block_path = '/assets/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		_get_plugin_url() . $block_path,
-		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-gsap' ),
+		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity' ),
 		filemtime( _get_plugin_directory() . $block_path ),
 		true
 	);
