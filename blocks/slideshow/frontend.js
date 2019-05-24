@@ -11,7 +11,7 @@ const TRANSITION_DURATION = 1000;
 	const $blocks = $( BLOCK_SELECTOR );
 
 	// initialize parallax effect
-	$blocks.filter( '.nova-slideshow--parallax' ).find( '.nova-slideshow__background' ).rellax({
+	$blocks.filter( '.nova-slideshow--parallax' ).find( '.nova-slideshow__slider' ).rellax({
 		container: '.nova-slideshow__mask',
 		children: '.nova-slideshow__content',
 	});
