@@ -16,8 +16,14 @@
 
 .nova-slideshow__slider,
 .nova-slideshow__mask,
-.nova-slideshow__background {
+.nova-slideshow__background,
+.nova-slideshow__foreground {
     @include cover;
+}
+
+.nova-slideshow__background,
+.nova-slideshow__foreground {
+    will-color: transform;
 }
 
 .nova-slideshow__media {

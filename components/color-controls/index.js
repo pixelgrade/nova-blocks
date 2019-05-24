@@ -104,9 +104,9 @@ class ColorToolbar extends Component {
 					renderToggle={ ( { isOpen, onToggle } ) => (
 						<IconButton
 							onClick={ onToggle }
-							icon={ icons.alignment }
+							icon={ icons.invert }
 							aria-expanded={ isOpen }
-							label={ __( 'Content alignment', '__plugin_txtd' ) }
+							label={ __( 'Color Options', '__plugin_txtd' ) }
 							labelPosition='bottom'
 						/>
 					) }

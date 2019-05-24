@@ -353,12 +353,17 @@
 
 .nova-slideshow__slider,
 .nova-slideshow__mask,
-.nova-slideshow__background {
+.nova-slideshow__background,
+.nova-slideshow__foreground {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
+
+.nova-slideshow__background,
+.nova-slideshow__foreground {
+  will-color: transform; }
 
 .nova-slideshow__media {
   position: absolute;

@@ -79,13 +79,9 @@ export default class Save extends Component {
 			`nova-u-spacing-${contentPadding}`,
 			`nova-u-content-width-${contentWidth}`,
 			`nova-u-background`,
-			`nova-u-background-${overlayFilterStyle}`
+			`nova-u-background-${overlayFilterStyle}`,
+			'alignfull'
 		]
-
-//		const settings = wp.data.select( 'core/block-editor' ).getSettings();
-//		if ( settings.alignWide ) {
-			classes.push( 'alignfull' );
-//		}
 
 		if ( !! enableParallax ) {
 			classes.push( 'nova-slideshow--parallax' );
@@ -105,11 +101,13 @@ export default class Save extends Component {
 									<div className="nova-slideshow__background nova-u-background">
 										<img className="nova-slideshow__media" src={ image.sizes.large.url } style={ styles.image } />
 									</div>
-									<div className="nova-slideshow__content nova-u-content-padding">
-										<div className="nova-u-content-align">
-											<div className="nova-u-content-width">
-												<h2>{ image.alt }</h2>
-												<p>{ image.caption }</p>
+									<div className="nova-slideshow__foreground">
+										<div className="nova-slideshow__content nova-u-content-padding">
+											<div className="nova-u-content-align">
+												<div className="nova-u-content-width">
+													<h2>{ image.alt }</h2>
+													<p>{ image.caption }</p>
+												</div>
 											</div>
 										</div>
 									</div>

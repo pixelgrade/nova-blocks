@@ -2,10 +2,10 @@ import { debounce } from '../utils';
 
 const BLOCK_SELECTOR = '.nova-slideshow';
 const SLIDER_SELECTOR = '.nova-slideshow__slider';
-const BACKGROUND_SELECTOR = '.nova-slideshow__media';
-const FOREGROUND_SELECTOR = '.nova-slideshow__content';
+const BACKGROUND_SELECTOR = '.nova-slideshow__background';
+const FOREGROUND_SELECTOR = '.nova-slideshow__foreground';
 const TRANSITION_DURATION = 1000;
-const TRANSITION_EASING = "easeOutExpo";
+const TRANSITION_EASING = "easeInOutCirc";
 
 (function($, window, undefined) {
 
@@ -64,9 +64,21 @@ const TRANSITION_EASING = "easeOutExpo";
 			duration: TRANSITION_DURATION,
 			easing: TRANSITION_EASING,
 			progress: function(elements, percentComplete, remaining, tweenValue, activeCall) {
-				$next.get(0).style.transform = 'translateX(' + sign * slideWidth * tweenValue + 'px)';
-				$next.find( BACKGROUND_SELECTOR ).get(0).style.transform = 'translateX(' + sign * (move - slideWidth) * tweenValue + 'px)';
-				$next.find( FOREGROUND_SELECTOR ).get(0).style.transform = 'translateX(' + sign * slideWidth * -tweenValue + 'px)';
+				const next = $next.get(0);
+				const nextBg = $next.find( BACKGROUND_SELECTOR ).get(0);
+				const nextFg = $next.find( FOREGROUND_SELECTOR ).get(0);
+				const current = $current.get(0);
+				const currentBg = $current.find( BACKGROUND_SELECTOR ).get(0);
+				const currentFg = $current.find( FOREGROUND_SELECTOR ).get(0);
+
+				const moveX = x => 'translateX(' + sign * x + 'px)';
+
+				next.style.transform = moveX(slideWidth * tweenValue );
+				nextBg.style.transform = moveX( (move - slideWidth) * tweenValue );
+				nextFg.style.transform = moveX( slideWidth * -tweenValue );
+
+				current.style.transform = moveX( -move * (1 - tweenValue) );
+				currentFg.style.transform = moveX( move * (1 - tweenValue) );
 			}
 		});
 	}

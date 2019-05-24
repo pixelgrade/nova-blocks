@@ -1,14 +1,17 @@
-
 const { __ } = wp.i18n;
 
 import {
 	AlignmentControls,
 	ColorPanel,
 	LayoutPanel,
-	ParallaxPanel
+	ParallaxPanel,
+	GalleryPanel, AlignmentToolbar, ColorToolbar,
 } from "../../components";
 
+import SlideshowPreview from './preview';
+
 const {
+	BlockControls,
 	InspectorControls,
 	MediaPlaceholder,
 } = wp.blockEditor;
@@ -23,8 +26,6 @@ const {
 	Fragment,
 } = wp.element;
 
-const ALLOWED_MEDIA_TYPES = [ 'image' ];
-
 export default class Edit extends Component {
 
 	constructor() {
@@ -35,69 +36,30 @@ export default class Edit extends Component {
 		};
 	}
 
+	onChangeGallery( galleryImages ) {
+		const newImages = [];
+		const promises = galleryImages.map( image => {
+			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
+				newImages.push( { ...newImage, ...image } )
+			});
+		} );
+
+		Promise.all( promises ).then( () => {
+			setAttributes( { galleryImages: newImages } );
+		} );
+	}
+
 	render() {
 
 		const {
 			attributes: {
 				slideshowType,
 				galleryImages,
-				// layout
-				contentPadding,
-				contentPaddingCustom,
-				contentWidth,
-				contentWidthCustom,
-				// alignment
-				verticalAlignment,
-				horizontalAlignment,
-				// colors
-				contentColor,
-				overlayFilterStyle,
-				overlayFilterStrength
 			},
 			setAttributes,
 			isSelected,
 			className
 		} = this.props;
-
-		const hasImages = !! galleryImages.length;
-
-		const onSelectImages = galleryImages => {
-
-			const newImages = [];
-
-			const promises = galleryImages.map( image => {
-				return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
-					newImages.push( { ...newImage, ...image } )
-				});
-			} );
-
-			Promise.all( promises ).then( () => {
-				setAttributes( { galleryImages: newImages } );
-			} );
-
-		}
-
-		const onSelectImage = ( selectedIndex ) => {
-			this.setState( { selectedIndex } )
-		}
-
-		const mediaPlaceholder = (
-			<MediaPlaceholder
-				addToGallery={ hasImages }
-				isAppender={ hasImages }
-				className=""
-				dropZoneUIOnly={ hasImages && ! isSelected }
-				labels={ {
-					title: ! hasImages && __( 'Gallery' ),
-					instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' ),
-				} }
-				onSelect={ onSelectImages }
-				accept="image/*"
-				allowedTypes={ ALLOWED_MEDIA_TYPES }
-				multiple
-				value={ hasImages ? galleryImages : undefined }
-			/>
-		);
 
 		let { selectedIndex } = this.state;
 
@@ -105,73 +67,17 @@ export default class Edit extends Component {
 			selectedIndex = galleryImages.length - 1;
 		}
 
-		const selectedImage = galleryImages[ selectedIndex ];
-
-		const styles = {
-			hero: {
-				color: contentColor,
-			},
-			image: {
-
-			}
-		}
-
-		if ( overlayFilterStyle !== 'none' ) {
-			styles.image.opacity = 1 - overlayFilterStrength / 100
-		}
-
-		const goToPrevSlide = () => {
-			this.setState( { selectedIndex: ( selectedIndex + galleryImages.length - 1 ) % galleryImages.length } );
-		}
-
-		const goToNextSlide = () => {
-			this.setState( { selectedIndex: ( selectedIndex + 1 ) % galleryImages.length } );
-		}
-
-		const slideshow = () => {
-
-			const classes = [
-				className,
-				'nova-slideshow',
-				`nova-u-valign-${verticalAlignment}`,
-				`nova-u-halign-${horizontalAlignment}`,
-				`nova-u-spacing-${contentPadding}`,
-				`nova-u-content-width-${contentWidth}`,
-				`nova-u-background`,
-				`nova-u-background-${overlayFilterStyle}`
-			]
-
-			return (
-				<div className={ classes.join(' ') } style={ styles.hero }>
-					<div className="nova-slideshow__slider">
-						<div className="nova-slideshow__slide">
-							{ selectedImage && <Fragment>
-								<img className="nova-slideshow__media" src={ selectedImage.sizes.large.url } alt="" style={ styles.image } />
-								<div className="nova-slideshow__content nova-u-content-padding">
-									<div className="nova-u-content-align">
-										<div className="nova-u-content-width">
-											<h2>{ selectedImage.alt }</h2>
-											<p>{ selectedImage.caption }</p>
-										</div>
-									</div>
-								</div>
-							</Fragment> }
-						</div>
-					</div>
-					<div className="nova-slideshow__controls">
-						<div className="nova-slideshow__arrow nova-slideshow__arrow--prev" onClick={ goToPrevSlide }></div>
-						<div className="nova-slideshow__arrow nova-slideshow__arrow--next" onClick={ goToNextSlide }></div>
-					</div>
-				</div>
-			)
-		}
-
 		return (
 			<Fragment>
-				{ slideshow() }
+
+				<SlideshowPreview
+					{ ...this.props }
+					previewImage={ galleryImages[ selectedIndex ] }
+					onNextArrowClick/>
+
 				<InspectorControls>
 
-					<PanelBody>
+					<PanelBody title={ __( 'Slideshow Type', '__plugin_txtd' ) }>
 						<SelectControl
 							id="pixelgrade-slideshow-type-control"
 							value={ slideshowType }
@@ -191,45 +97,39 @@ export default class Edit extends Component {
 						/>
 					</PanelBody>
 
-					<PanelBody>
-						<ul class="nova-slideshow__gallery-edit">
-							{ galleryImages.map( ( img, index ) => {
+					{ 'gallery' === slideshowType && <Fragment>
 
-								const classes = [
-									'nova-slideshow__gallery-item',
-								];
+						<GalleryPanel
+							galleryImages={ galleryImages }
+							onChange={ this.onChangeGallery }
+							onSelectImage={ selectedIndex => { this.setState( { selectedIndex } ) } }
+							isSelected={ isSelected }
+							selected={ selectedIndex }
+						/>
 
-								if ( selectedIndex === index ) {
-									classes.push( 'nova-slideshow__gallery-item--active' );
+						<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
+							<AlignmentControls { ...{
+								...this.props,
+								attributes: {
+									...this.props.attributes,
+									applyMinimumHeightBlock: true
 								}
+							} } />
+						</PanelBody>
 
-								return (
-									<li key={ img.id || img.url } onClick={ () => { onSelectImage( index ) } }>
-										<div className={ classes.join( ' ' ) }>
-											<img src={ img.sizes.thumbnail.url } alt="" />
-										</div>
-									</li>
-								);
-							} ) }
-						</ul>
-						{ mediaPlaceholder }
-					</PanelBody>
+						<ColorPanel { ...this.props } />
+						<LayoutPanel { ...this.props } />
+						<ParallaxPanel { ...this.props } />
 
-					<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
-						<AlignmentControls { ...{
-							...this.props,
-							attributes: {
-								...this.props.attributes,
-								applyMinimumHeightBlock: true
-							}
-						} } />
-					</PanelBody>
-
-					<ColorPanel { ...this.props } />
-					<LayoutPanel { ...this.props } />
-					<ParallaxPanel { ...this.props } />
+					</Fragment> }
 
 				</InspectorControls>
+
+				<BlockControls>
+					<AlignmentToolbar { ...this.props } />
+					<ColorToolbar { ...this.props } />
+				</BlockControls>
+
 			</Fragment>
 		)
 	}
