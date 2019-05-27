@@ -5,14 +5,6 @@ const {
 
 export default class SlideshowPreview extends Component {
 
-	goToPrevSlide() {
-		this.setState( { selectedIndex: ( selectedIndex + galleryImages.length - 1 ) % galleryImages.length } );
-	}
-
-	goToNextSlide() {
-		this.setState( { selectedIndex: ( selectedIndex + 1 ) % galleryImages.length } );
-	}
-
 	render() {
 
 		const {
@@ -30,6 +22,8 @@ export default class SlideshowPreview extends Component {
 				contentColor,
 				overlayFilterStyle,
 				overlayFilterStrength,
+				// media
+				galleryImages
 			},
 			previewImage,
 			className
@@ -77,8 +71,8 @@ export default class SlideshowPreview extends Component {
 					</div>
 				</div>
 				<div className="nova-slideshow__controls">
-					<div className="nova-slideshow__arrow nova-slideshow__arrow--prev" onClick={ this.goToPrevSlide.bind(this) }></div>
-					<div className="nova-slideshow__arrow nova-slideshow__arrow--next" onClick={ this.goToNextSlide.bind(this) }></div>
+					<div className="nova-slideshow__arrow nova-slideshow__arrow--prev" onClick={ this.props.onPrevArrowClick }></div>
+					<div className="nova-slideshow__arrow nova-slideshow__arrow--next" onClick={ this.props.onNextArrowClick }></div>
 				</div>
 			</div>
 		)

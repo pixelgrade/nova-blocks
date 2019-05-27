@@ -49,6 +49,21 @@ export default class Edit extends Component {
 		} );
 	}
 
+
+	onPrevArrowClick() {
+		const { attributes: { galleryImages } } = this.props;
+		const { selectedIndex } = this.state;
+		const newIndex = ( selectedIndex + galleryImages.length - 1 ) % galleryImages.length;
+		this.setState( { selectedIndex: newIndex } );
+	}
+
+	onNextArrowClick() {
+		const { attributes: { galleryImages } } = this.props;
+		const { selectedIndex } = this.state;
+		const newIndex = ( selectedIndex + 1 ) % galleryImages.length;
+		this.setState( { selectedIndex: newIndex } );
+	}
+
 	render() {
 
 		const {
@@ -73,7 +88,9 @@ export default class Edit extends Component {
 				<SlideshowPreview
 					{ ...this.props }
 					previewImage={ galleryImages[ selectedIndex ] }
-					onNextArrowClick/>
+					onPrevArrowClick={ this.onPrevArrowClick.bind( this ) }
+					onNextArrowClick={ this.onNextArrowClick.bind( this ) }
+				/>
 
 				<InspectorControls>
 
