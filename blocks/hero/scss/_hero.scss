@@ -66,3 +66,36 @@
         }
     }
 }
+
+
+
+
+// ---------------------------------------
+// Themes Use Cases
+// Status: Work-in-progress
+// ---------------------------------------
+
+:root {
+    --blocks-spacing: -2em;
+}
+
+// Remove space between 
+// two consecutives Hero blocks
+@mixin remove-consecutive-blocks-spacing {
+    .alignfull {
+        &.nova-hero + &.nova-hero {
+            margin-top: var(--blocks-spacing);
+        }
+    }
+}
+@include remove-consecutive-blocks-spacing(); 
+
+// Theme: Twenty Nineteen
+.entry {
+    .entry-content {
+        @media only screen and (min-width: 768px) {
+            --blocks-spacing: calc(-2 * 1rem);
+            @include remove-consecutive-blocks-spacing();
+        }
+    }
+}

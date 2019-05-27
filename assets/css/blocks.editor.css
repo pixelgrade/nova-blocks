@@ -75,6 +75,18 @@
 .components-nova--popover.components-popover:not(.is-mobile) .components-popover__content {
   padding: 16px; }
 
+:root {
+  --blocks-spacing: -2em; }
+
+.alignfull.nova-hero + .alignfull.nova-hero {
+  margin-top: var(--blocks-spacing); }
+
+@media only screen and (min-width: 768px) {
+  .entry .entry-content {
+    --blocks-spacing: calc(-2 * 1rem); }
+    .entry .entry-content .alignfull.nova-hero + .entry .entry-content .alignfull.nova-hero {
+      margin-top: var(--blocks-spacing); } }
+
 .pixelgrade-hero-block-toolbar svg {
   width: 20px;
   height: 20px; }

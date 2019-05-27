@@ -14,8 +14,8 @@ const {
 
 export default registerBlockType( 'pixelgrade/slideshow',
 	{
-		title: __( 'Slideshow of Heroes', '__plugin_txtd' ),
-		description: __( 'Some sort of description for the hero block', '__plugin_txtd' ),
+		title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
+		description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 		icon: icons.slideshow,
 		category: 'nova-by-pixelgrade',
 		...attributes,

@@ -1,11 +1,22 @@
 <?php
 /**
  * Plugin Name: Nova Blocks by Pixelgrade
- * Plugin URI: https://github.com/WordPress/gutenberg
- * Description: Modern capabilities for Gutenberg's printer
+ * Plugin URI: https://github.com/pixelgrade/nova-blocks/
+ * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
  * Version: 0.0.1
  * Author: Pixelgrade
+ * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
+ * Tested up to: 5.2
+ *
+ * Nova Blocks is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Nova Blocks. If not, see <http://www.gnu.org/licenses/>.
+ * 
  */
 
 /**
