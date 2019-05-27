@@ -256,10 +256,10 @@ export default class Edit extends Component {
 							label: __( 'None', '__plugin_txtd' ),
 							value: 'none'
 						}, {
-							label: __( 'First Block Only', '__plugin_txtd' ),
+							label: __( 'First Hero Block Only', '__plugin_txtd' ),
 							value: 'first'
 						}, {
-							label: __( 'All Blocks', '__plugin_txtd' ),
+							label: __( 'All Hero Blocks', '__plugin_txtd' ),
 							value: 'all'
 						}]}
 					/>

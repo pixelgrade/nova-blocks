@@ -49,13 +49,13 @@ export default class ParallaxControls extends Component {
 					  } }
 					  options={[
 						  {
-							  label: __( 'Fast as Mercure +20', '__plugin_txtd' ),
+							  label: __( 'Fast as Mercure', '__plugin_txtd' ),
 							  value: 20
 						  }, {
-							  label: __( 'Natural as Earth +50', '__plugin_txtd' ),
+							  label: __( 'Natural as Earth', '__plugin_txtd' ),
 							  value: 50
 						  }, {
-							  label: __( 'Slow as Neptune +70', '__plugin_txtd' ),
+							  label: __( 'Slow as Neptune', '__plugin_txtd' ),
 							  value: 70
 						  }, {
 							  label: __( 'Custom', '__plugin_txtd' ),
