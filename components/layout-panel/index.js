@@ -12,7 +12,7 @@ const {
 	PanelBody,
 } = wp.components;
 
-export default class LayoutControls extends Component {
+export default class LayoutPanel extends Component {
 	render() {
 
 		return <PanelBody

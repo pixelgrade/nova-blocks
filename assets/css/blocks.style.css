@@ -259,33 +259,6 @@
     .slick-dots li.slick-active button:before {
       color: black;
       opacity: 0.75; }
-.nova-u-content-align {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: -ms-flexbox;
-  display: flex; }
-  .nova-u-halign-left .nova-u-content-align {
-    -ms-flex-pack: start;
-        justify-content: flex-start;
-    text-align: left; }
-  .nova-u-halign-center .nova-u-content-align {
-    -ms-flex-pack: center;
-        justify-content: center;
-    text-align: center; }
-  .nova-u-halign-right .nova-u-content-align {
-    -ms-flex-pack: end;
-        justify-content: flex-end;
-    text-align: right; }
-  .nova-u-valign-top .nova-u-content-align {
-    -ms-flex-align: start;
-        align-items: flex-start; }
-  .nova-u-valign-center .nova-u-content-align {
-    -ms-flex-align: center;
-        align-items: center; }
-  .nova-u-valign-bottom .nova-u-content-align {
-    -ms-flex-align: end;
-        align-items: flex-end; }
 :root {
   --nova-spacing: 10%;
   --nova-spacing-small: 5%;
@@ -337,6 +310,33 @@
 
 .nova-hide-clear-color .components-color-palette__clear {
   display: none; }
+.nova-u-content-align {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex; }
+  .nova-u-halign-left .nova-u-content-align {
+    -ms-flex-pack: start;
+        justify-content: flex-start;
+    text-align: left; }
+  .nova-u-halign-center .nova-u-content-align {
+    -ms-flex-pack: center;
+        justify-content: center;
+    text-align: center; }
+  .nova-u-halign-right .nova-u-content-align {
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+    text-align: right; }
+  .nova-u-valign-top .nova-u-content-align {
+    -ms-flex-align: start;
+        align-items: flex-start; }
+  .nova-u-valign-center .nova-u-content-align {
+    -ms-flex-align: center;
+        align-items: center; }
+  .nova-u-valign-bottom .nova-u-content-align {
+    -ms-flex-align: end;
+        align-items: flex-end; }
 .nova-slideshow {
   position: relative;
   padding-top: 75%; }
@@ -353,12 +353,17 @@
 
 .nova-slideshow__slider,
 .nova-slideshow__mask,
-.nova-slideshow__background {
+.nova-slideshow__background,
+.nova-slideshow__foreground {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
+
+.nova-slideshow__background,
+.nova-slideshow__foreground {
+  will-color: transform; }
 
 .nova-slideshow__media {
   position: absolute;

@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Gutenberg - Pixelgrade Blocks
+ * Plugin Name: Nova Blocks by Pixelgrade
  * Plugin URI: https://github.com/WordPress/gutenberg
  * Description: Modern capabilities for Gutenberg's printer
  * Version: 0.0.1
- * Author: Razvan
+ * Author: Pixelgrade
  * Text Domain: __plugin_txtd
  */
 

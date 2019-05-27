@@ -26,7 +26,6 @@ export default registerBlockType( 'pixelgrade/hero',
 		save,
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
-
 			return settings.alignWide ? {
 				'data-align': 'full'
 			} : {}

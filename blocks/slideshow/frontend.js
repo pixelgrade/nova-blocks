@@ -2,9 +2,10 @@ import { debounce } from '../utils';
 
 const BLOCK_SELECTOR = '.nova-slideshow';
 const SLIDER_SELECTOR = '.nova-slideshow__slider';
-const BACKGROUND_SELECTOR = '.nova-slideshow__media';
-const FOREGROUND_SELECTOR = '.nova-slideshow__content';
+const BACKGROUND_SELECTOR = '.nova-slideshow__background';
+const FOREGROUND_SELECTOR = '.nova-slideshow__foreground';
 const TRANSITION_DURATION = 1000;
+const TRANSITION_EASING = "easeInOutCirc";
 
 (function($, window, undefined) {
 
@@ -54,24 +55,32 @@ const TRANSITION_DURATION = 1000;
 	}
 
 	function transition( $current, $next, sign = 1 ) {
-		const timeline = new TimelineLite( {paused: true} );
-		const duration = TRANSITION_DURATION / 1000;
 		const slideWidth = $current.outerWidth();
 		const move = 300;
 
-		timeline.fromTo( $next, duration, { x: sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $next.find( BACKGROUND_SELECTOR ), duration,
-			{ x: -sign * (slideWidth - move) }, { x: 0, ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $next.find( FOREGROUND_SELECTOR ), duration,
-			{ x: -sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
+		$current.velocity( {
+			tween: [0, 1]
+		}, {
+			duration: TRANSITION_DURATION,
+			easing: TRANSITION_EASING,
+			progress: function(elements, percentComplete, remaining, tweenValue, activeCall) {
+				const next = $next.get(0);
+				const nextBg = $next.find( BACKGROUND_SELECTOR ).get(0);
+				const nextFg = $next.find( FOREGROUND_SELECTOR ).get(0);
+				const current = $current.get(0);
+				const currentBg = $current.find( BACKGROUND_SELECTOR ).get(0);
+				const currentFg = $current.find( FOREGROUND_SELECTOR ).get(0);
 
-		timeline.fromTo( $current, duration, { x: 0 }, { x: -sign * slideWidth, ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $current.find( BACKGROUND_SELECTOR ), duration,
-			{ x: 0 }, { x: sign * (slideWidth - move), ease: Power4.easeInOut }, 0 );
-		timeline.fromTo( $current.find( FOREGROUND_SELECTOR ), duration,
-			{ x: 0 }, { x: sign * slideWidth, ease: Power4.easeInOut }, 0 );
+				const moveX = x => 'translateX(' + sign * x + 'px)';
 
-		timeline.play();
+				next.style.transform = moveX(slideWidth * tweenValue );
+				nextBg.style.transform = moveX( (move - slideWidth) * tweenValue );
+				nextFg.style.transform = moveX( slideWidth * -tweenValue );
+
+				current.style.transform = moveX( -move * (1 - tweenValue) );
+				currentFg.style.transform = moveX( move * (1 - tweenValue) );
+			}
+		});
 	}
 
 	function getDirection( slick, currentSlide, nextSlide ) {

@@ -1,4 +1,6 @@
 import "./style.scss";
+import * as icons from "../../blocks/icons";
+import {AlignmentControls} from "../index";
 
 const { __ } = wp.i18n;
 
@@ -8,10 +10,13 @@ const {
 } = wp.element;
 
 const {
+	ColorPalette,
+	Dropdown,
+	IconButton,
+	RadioControl,
 	RangeControl,
 	SelectControl,
-	RadioControl,
-	ColorPalette,
+	Toolbar,
 } = wp.components;
 
 const {
@@ -109,8 +114,37 @@ class ColorPanel extends Component {
 	}
 }
 
+class ColorToolbar extends Component {
+	render() {
+		return (
+			<Toolbar className='pixelgrade-hero-block-toolbar'>
+				<Dropdown
+					position='bottom'
+					className='pixelgrade-hero-block-toolbar-dropdown'
+					contentClassName='components-nova--popover'
+					renderToggle={ ( { isOpen, onToggle } ) => (
+						<IconButton
+							onClick={ onToggle }
+							icon={ icons.invert }
+							aria-expanded={ isOpen }
+							label={ __( 'Color Options', '__plugin_txtd' ) }
+							labelPosition='bottom'
+						/>
+					) }
+					focusOnMount={ false }
+					renderContent={ ( { onClose } ) => <Fragment>
+						<ColorControls { ...this.props } />
+						<OverlayControls { ...this.props } />
+					</Fragment> }
+				/>
+			</Toolbar>
+		)
+	}
+}
+
 export {
 	ColorControls,
-	OverlayControls,
 	ColorPanel,
+	ColorToolbar,
+	OverlayControls,
 }
