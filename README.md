@@ -1,3 +1,5 @@
+<img width="100" alt="nova-icon" src="https://user-images.githubusercontent.com/1632775/58468221-d0f5b180-8145-11e9-9c5f-21a7eb902dcb.png">
+
 # Nova Blocks for Gutenberg Space 🌌
 
 Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.  It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
