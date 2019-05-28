@@ -38,3 +38,4 @@ Yes! Nova Block’s core features are free to use.
 ...
 
 ## License
+Nova Blocks source code is released under the [MIT License](https://github.com/pixelgrade/nova-blocks/blob/master/LICENSE).
