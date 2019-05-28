@@ -1,6 +1,32 @@
-# Nova Blocks for Gutenberg Space
+<img width="100" alt="nova-icon" src="https://user-images.githubusercontent.com/1632775/58468221-d0f5b180-8145-11e9-9c5f-21a7eb902dcb.png">
 
-Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
+# Nova Blocks for Gutenberg Space 🌌
+
+Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.  It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
+
+### Positioning
+*Clear and obvious, exciting and not afraid to take risks, distinctive, forward thinking.*
+
+1. Obvious not *confusing*
+2. Exciting not *dull*
+3. Distinctive not *common*
+
+### Principles
+
+1. Decisions not options.
+2. Purpose-driven
+3. Distinctive
+4. Cross-themes oriented
+
+## FAQs:
+
+**Can I use the Nova blocks with my own theme?**
+
+Yes! Nova Blocks are build to inherit your theme style as much as possible.
+
+**Is Nova Blocks free?**
+
+Yes! Nova Block’s core features are free to use.
 
 ## Installation
 ...
@@ -14,3 +40,4 @@ Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making
 ...
 
 ## License
+Nova Blocks source code is released under the [MIT License](https://github.com/pixelgrade/nova-blocks/blob/master/LICENSE).
