@@ -5,7 +5,9 @@ import {
 	ColorPanel,
 	LayoutPanel,
 	ParallaxPanel,
-	GalleryPanel, AlignmentToolbar, ColorToolbar,
+	GalleryPanel,
+	AlignmentToolbar,
+	ColorToolbar,
 } from "../../components";
 
 import SlideshowPreview from './preview';
@@ -45,7 +47,7 @@ export default class Edit extends Component {
 		} );
 
 		Promise.all( promises ).then( () => {
-			setAttributes( { galleryImages: newImages } );
+			this.props.setAttributes( { galleryImages: newImages } );
 		} );
 	}
 
@@ -118,7 +120,7 @@ export default class Edit extends Component {
 
 						<GalleryPanel
 							galleryImages={ galleryImages }
-							onChange={ this.onChangeGallery }
+							onChange={ this.onChangeGallery.bind( this ) }
 							onSelectImage={ selectedIndex => { this.setState( { selectedIndex } ) } }
 							isSelected={ isSelected }
 							selected={ selectedIndex }

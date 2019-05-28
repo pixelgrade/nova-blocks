@@ -25,7 +25,7 @@ export default class GalleryPanel extends Component {
 			galleryImages,
 			selected,
 			onSelectImage,
-			onSelectImages,
+			onChange,
 			isSelected
 		} = this.props;
 
@@ -62,7 +62,7 @@ export default class GalleryPanel extends Component {
 						title: ! hasImages && __( 'Gallery' ),
 						instructions: ! hasImages && __( 'Drag images, upload new ones or select files from your library.' ),
 					} }
-					onSelect={ onSelectImages }
+					onSelect={ onChange }
 					accept="image/*"
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					multiple

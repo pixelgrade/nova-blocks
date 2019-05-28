@@ -3,11 +3,11 @@ import * as icons from '../icons';
 
 import {
 	AlignmentControls,
-	LayoutControls,
+	LayoutPanel,
 	ColorControls,
 	ColorPanel,
 	OverlayControls,
-	ParallaxControls
+	ParallaxPanel
 } from "../../components";
 
 const { __ } = wp.i18n;
@@ -321,12 +321,12 @@ export default class Edit extends Component {
 				</PanelBody>
 
 				<ColorPanel { ...this.props } />
-				<LayoutControls { ...this.props } />
+				<LayoutPanel { ...this.props } />
 
 				{ heightControls() }
 				{ scrollIndicatorControl() }
 
-				<ParallaxControls { ...this.props } />
+				<ParallaxPanel { ...this.props } />
 
 			</InspectorControls>
 		]
