@@ -1,22 +1,22 @@
-# Nova Blocks for Gutenberg Space
+# Nova Blocks for Gutenberg Space 🌌
 
 Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.  It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
 
-**Positioning** 
+### Positioning
 *Clear and obvious, exciting and not afraid to take risks, distinctive, forward thinking.*
 
 1. Obvious not *confusing*
 2. Exciting not *dull*
 3. Distinctive not *common*
 
-**Principles**
+### Principles
 
 1. Decisions not options.
 2. Purpose-driven
 3. Distinctive
 4. Cross-themes oriented
 
-# FAQs:
+## FAQs:
 
 **Can I use the Nova blocks with my own theme?**
 
