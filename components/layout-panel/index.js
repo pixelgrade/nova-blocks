@@ -22,6 +22,7 @@ export default class LayoutPanel extends Component {
 			<PaddingControls { ...this.props } />
 			<WidthControls { ...this.props } />
 
+			{ this.props.children }
 		</PanelBody>
 	}
 }

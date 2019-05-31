@@ -24,6 +24,7 @@ export default class Save extends Component {
 			contentPaddingCustom,
 			contentWidth,
 			contentWidthCustom,
+			minHeight,
 			// alignment
 			verticalAlignment,
 			horizontalAlignment,
@@ -54,10 +55,6 @@ export default class Save extends Component {
 
 			}
 		}
-
-//		if ( !! applyMinimumHeightBlock ) {
-//			styles.slideshow.minHeight = minHeight + 'vh'
-//		}
 
 		if ( contentPadding === 'custom' ) {
 			styles.foreground.padding = contentPaddingCustom
@@ -91,7 +88,7 @@ export default class Save extends Component {
 		actualParallaxAmount = Math.max( Math.min(1, actualParallaxAmount / 100 ), 0 );
 
 		return (
-			<div className={classes.join( ' ' )} style={styles.slideshow}>
+			<div className={classes.join( ' ' )} style={styles.slideshow} data-min-height={ minHeight }>
 
 				<div className="nova-slideshow__mask">
 					<div className="nova-slideshow__slider" data-rellax-amount={ actualParallaxAmount }>
@@ -99,7 +96,13 @@ export default class Save extends Component {
 							return (
 								<div className="nova-slideshow__slide">
 									<div className="nova-slideshow__background nova-u-background">
-										<img className="nova-slideshow__media" src={ image.sizes.large.url } style={ styles.image } />
+										<img
+											className="nova-slideshow__media"
+											src={ image.sizes.large.url }
+											style={ styles.image }
+											data-width={ image.sizes.large.width }
+											data-height={ image.sizes.large.height }
+										/>
 									</div>
 									<div className="nova-slideshow__foreground">
 										<div className="nova-slideshow__content nova-u-content-padding">

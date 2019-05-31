@@ -45,6 +45,10 @@
 							elements.splice( idx, 1 );
 						}
 					}
+
+					if ( options === "refresh" ) {
+						restart();
+					}
 				}
 			} );
 		};
@@ -155,12 +159,6 @@
 				if ( this.options.scaleY ) {
 					this.height *= scale;
 					this.offset.top += offsetY;
-
-					this.children.$el.each( function( i, obj ) {
-						$( obj ).css( {
-							marginTop: -1 * offsetY
-						} )
-					} );
 				}
 
 				if ( this.options.scaleX ) {
@@ -244,6 +242,7 @@
 		}
 
 		function badRestart() {
+			onResize();
 			resetAll();
 			cacheAll();
 			requestAnimationFrame( function() {
@@ -256,7 +255,7 @@
 
 		var restart = debounce( badRestart, 300 );
 
-		$( window ).on( 'resize', restart );
+		$( window ).on( 'resize', onResize );
 		$( window ).on( 'scroll', onScroll );
 
 		render();

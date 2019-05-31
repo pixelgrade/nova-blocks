@@ -1,6 +1,10 @@
 import LayoutPanel from './layout-panel';
 import ParallaxPanel from './parallax-panel';
-import GalleryPanel from './gallery-panel';
+
+import {
+	GalleryPreview,
+	GalleryPlaceholder,
+} from './gallery-options';
 
 import {
 	ColorPanel,
@@ -24,7 +28,8 @@ export {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
-	GalleryPanel,
+	GalleryPreview,
+	GalleryPlaceholder,
 	HeightPanel,
 	LayoutPanel,
 	OverlayControls,

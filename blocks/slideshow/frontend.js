@@ -2,6 +2,8 @@ import { debounce } from '../utils';
 
 const BLOCK_SELECTOR = '.nova-slideshow';
 const SLIDER_SELECTOR = '.nova-slideshow__slider';
+const SLIDE_SELECTOR = '.nova-slideshow__slide';
+const CONTENT_SELECTOR = '.nova-slideshow__content';
 const BACKGROUND_SELECTOR = '.nova-slideshow__background';
 const FOREGROUND_SELECTOR = '.nova-slideshow__foreground';
 const TRANSITION_DURATION = 1000;
@@ -10,11 +12,12 @@ const TRANSITION_EASING = "easeInOutCirc";
 (function($, window, undefined) {
 
 	const $blocks = $( BLOCK_SELECTOR );
+	const $rellaxTarget = $blocks.filter( '.nova-slideshow--parallax' ).find( SLIDER_SELECTOR );
 
 	// initialize parallax effect
-	$blocks.filter( '.nova-slideshow--parallax' ).find( '.nova-slideshow__slider' ).rellax({
+	$rellaxTarget.rellax({
 		container: '.nova-slideshow__mask',
-		children: '.nova-slideshow__content',
+		children: CONTENT_SELECTOR,
 	});
 
 	$blocks.each( function( index, block ) {
@@ -24,6 +27,9 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 		if ( $slider.children().length > 1 ) {
 			$arrowContainer = $( '<div class="nova-slideshow__controls">' ).appendTo( $block );
+
+			resetBlockMinHeight( $block );
+			$block.addClass( 'is-ready' );
 
 			$slider.on( 'beforeChange', onBeforeSlideChange );
 
@@ -39,9 +45,46 @@ const TRANSITION_EASING = "easeInOutCirc";
 		}
 	});
 
+	function resetBlockMinHeight( $block ) {
+		$block.css( 'minHeight', '' );
+		$block.css( 'minHeight', getBlockMinHeight( $block ) );
+	}
+
+	function getBlockMinHeight( $block ) {
+		var windowWidth = window.innerWidth;
+		var $slider = $block.find( SLIDER_SELECTOR );
+		var sliderWidth = $block.find( SLIDER_SELECTOR ).outerWidth();
+		var windowHeight = window.innerHeight;
+		var sliderMinHeight = parseInt( $block.data( 'min-height' ) ) * windowHeight / 100;
+		var mediaMinHeight = 0;
+		var slideMaxHeight = 0;
+		var maxAspectRatio = 0;
+
+		$block.find( SLIDE_SELECTOR ).each( function( i, obj ) {
+			var $slide = $( obj ),
+				$media = $slide.find( '.nova-slideshow__media' ),
+				width = $media.data( 'width' ),
+				height = $media.data( 'height' ),
+				aspectRatio = width / height,
+				slideHeight = $slide.outerHeight();
+
+			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+			mediaMinHeight = sliderWidth / maxAspectRatio;
+			slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
+
+		} );
+
+		console.log( sliderMinHeight, slideMaxHeight, mediaMinHeight );
+
+		return Math.max( sliderMinHeight, slideMaxHeight, mediaMinHeight );
+	}
+
 	function onResize() {
 		$blocks.each( function( index, block ) {
-			$( block ).find( SLIDER_SELECTOR ).slick( 'refresh' );
+			var $block = $( block );
+			resetBlockMinHeight( $block )
+			$block.find( SLIDER_SELECTOR ).slick( 'refresh' );
+			$rellaxTarget.rellax( 'refresh' );
 		});
 	}
 

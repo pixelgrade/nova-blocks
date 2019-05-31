@@ -17,12 +17,16 @@
       "type": "number",
       "default": 100
     },
+    "minHeight": {
+      "type": "number",
+      "default": 0
+    },
 
-    "horizontalAlignment": {
+    "verticalAlignment": {
       "type": "string",
       "default": "center"
     },
-    "verticalAlignment": {
+    "horizontalAlignment": {
       "type": "string",
       "default": "center"
     },
@@ -46,8 +50,9 @@
     },
     "galleryImages": {
       "type": "array",
-      "default": [ ]
+      "default": []
     },
+
     "contentColor": {
       "type": "string",
       "default": "#FFF"

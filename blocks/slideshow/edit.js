@@ -5,9 +5,9 @@ import {
 	ColorPanel,
 	LayoutPanel,
 	ParallaxPanel,
-	GalleryPanel,
 	AlignmentToolbar,
 	ColorToolbar,
+	GalleryPreview, GalleryPlaceholder,
 } from "../../components";
 
 import SlideshowPreview from './preview';
@@ -15,7 +15,6 @@ import SlideshowPreview from './preview';
 const {
 	BlockControls,
 	InspectorControls,
-	MediaPlaceholder,
 } = wp.blockEditor;
 
 const {
@@ -28,6 +27,46 @@ const {
 	Fragment,
 } = wp.element;
 
+const defaultGalleryImages = [{
+	"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
+	"alt": "This is a catchy image title",
+	"caption": "A brilliant caption to explain its catchiness",
+	"sizes": {
+		"thumbnail": {
+			"url": "https://source.unsplash.com/_nqApgG-QrY/150x150"
+		},
+		"large": {
+			"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
+			"width": 1600,
+			"height": 900
+		}
+	}
+}, {
+	"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
+	"sizes": {
+		"thumbnail": {
+			"url": "https://source.unsplash.com/Gt_4iMB7hY0/150x150"
+		},
+		"large": {
+			"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
+			"width": 1600,
+			"height": 900
+		}
+	}
+}, {
+	"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
+	"sizes": {
+		"thumbnail": {
+			"url": "https://source.unsplash.com/1vKTnwLMdqs/150x150"
+		},
+		"large": {
+			"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
+			"width": 1600,
+			"height": 900
+		}
+	}
+}];
+
 export default class Edit extends Component {
 
 	constructor() {
@@ -37,20 +76,6 @@ export default class Edit extends Component {
 			selectedIndex: 0
 		};
 	}
-
-	onChangeGallery( galleryImages ) {
-		const newImages = [];
-		const promises = galleryImages.map( image => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
-				newImages.push( { ...newImage, ...image } )
-			});
-		} );
-
-		Promise.all( promises ).then( () => {
-			this.props.setAttributes( { galleryImages: newImages } );
-		} );
-	}
-
 
 	onPrevArrowClick() {
 		const { attributes: { galleryImages } } = this.props;
@@ -72,6 +97,7 @@ export default class Edit extends Component {
 			attributes: {
 				slideshowType,
 				galleryImages,
+				minHeight,
 			},
 			setAttributes,
 			isSelected,
@@ -79,6 +105,10 @@ export default class Edit extends Component {
 		} = this.props;
 
 		let { selectedIndex } = this.state;
+
+		if ( ! galleryImages.length ) {
+			defaultGalleryImages.map( image => galleryImages.push( image ) )
+		}
 
 		if ( selectedIndex >= galleryImages.length ) {
 			selectedIndex = galleryImages.length - 1;
@@ -96,9 +126,10 @@ export default class Edit extends Component {
 
 				<InspectorControls>
 
-					<PanelBody title={ __( 'Slideshow Type', '__plugin_txtd' ) }>
+					<PanelBody
+						className={ 'nova-blocks-slideshow-type-panel' }
+						title={ __( 'Slideshow Type', '__plugin_txtd' ) }>
 						<SelectControl
-							id="pixelgrade-slideshow-type-control"
 							value={ slideshowType }
 							onChange={ slideshowType => setAttributes( { slideshowType } ) }
 							options={[
@@ -114,17 +145,16 @@ export default class Edit extends Component {
 								}
 							]}
 						/>
-					</PanelBody>
-
-					{ 'gallery' === slideshowType && <Fragment>
-
-						<GalleryPanel
+						{ !! galleryImages.length && <GalleryPreview
 							galleryImages={ galleryImages }
-							onChange={ this.onChangeGallery.bind( this ) }
 							onSelectImage={ selectedIndex => { this.setState( { selectedIndex } ) } }
 							isSelected={ isSelected }
 							selected={ selectedIndex }
-						/>
+						/> }
+						<GalleryPlaceholder { ...this.props } />
+					</PanelBody>
+
+					{ 'gallery' === slideshowType && <Fragment>
 
 						<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
 							<AlignmentControls { ...{
@@ -137,10 +167,37 @@ export default class Edit extends Component {
 						</PanelBody>
 
 						<ColorPanel { ...this.props } />
-						<LayoutPanel { ...this.props } />
+						<LayoutPanel { ...this.props }>
+							<SelectControl
+								label={ __( 'Minimum Height', '__plugin_txtd' ) }
+								value={ minHeight }
+								onChange={ minHeight => { setAttributes( { minHeight } ) } }
+								options={[{
+									label: __( 'Auto', '__plugin_txtd' ),
+									value: 0
+								}, {
+									label: __( 'Half', '__plugin_txtd' ),
+									value: 50
+								}, {
+									label: __( 'Two Thirds', '__plugin_txtd' ),
+									value: 66
+								}, {
+									label: __( 'Three Quarters', '__plugin_txtd' ),
+									value: 75
+								}, {
+									label: __( 'Full Height', '__plugin_txtd' ),
+									value: 100
+								}]}
+							/>
+						</LayoutPanel>
+
 						<ParallaxPanel { ...this.props } />
 
 					</Fragment> }
+
+					{ 'gallery' !== slideshowType && <PanelBody>
+						{ __( 'Coming Soon', '__plugin_txtd' ) }
+					</PanelBody> }
 
 				</InspectorControls>
 

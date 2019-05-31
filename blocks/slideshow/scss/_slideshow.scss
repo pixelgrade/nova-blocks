@@ -2,23 +2,33 @@
 
 .nova-slideshow {
     position: relative;
-    padding-top: 75%;
 }
 
 .nova-slideshow__slide {
     position: relative;
     overflow: hidden;
+}
 
-    .nova-slideshow__slider > & {
-        @include cover;
+.editor-block-list__block-edit {
+
+    .nova-slideshow {
+        padding-top: 75%;
+
+        .nova-slideshow__slide {
+            @include cover;
+        }
     }
 }
 
-.nova-slideshow__slider,
-.nova-slideshow__mask,
-.nova-slideshow__background,
-.nova-slideshow__foreground {
-    @include cover;
+.nova-slideshow.is-ready {
+
+    .nova-slideshow__slider,
+    .nova-slideshow__mask,
+    .nova-slideshow__foreground,
+    .nova-slideshow__content,
+    .nova-slideshow__background {
+        @include cover;
+    }
 }
 
 .nova-slideshow__background,
@@ -46,10 +56,6 @@
     }
 }
 
-.nova-slideshow__content {
-    @include cover;
-}
-
 .nova-slideshow__slider {
     z-index: 100;
 }
@@ -72,7 +78,10 @@
 
     background: var(--arrow-background);
     border-radius: 3px;
-    cursor: pointer;
+
+    &:not(.nova-slideshow__arrow--disabled) {
+        cursor: pointer;
+    }
 
     &:before {
         content: "";
@@ -143,5 +152,23 @@
     // for simpler reveal transitions between slides
     .slick-slide {
         opacity: 1 !important;
+    }
+}
+
+.nova-blocks-slideshow-type-panel .block-editor-media-placeholder {
+
+    .components-placeholder__label,
+    .block-editor-media-placeholder__button {
+        display: none;
+    }
+
+    .editor-media-placeholder__media-library-button {
+        padding-left: 12px;
+        text-indent: -999em;
+
+        &:after {
+            content: 'Edit Gallery';
+            text-indent: 0;
+        }
     }
 }

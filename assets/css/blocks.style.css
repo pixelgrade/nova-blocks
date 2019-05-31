@@ -350,23 +350,26 @@
     -ms-flex-align: end;
         align-items: flex-end; }
 .nova-slideshow {
-  position: relative;
-  padding-top: 75%; }
+  position: relative; }
 
 .nova-slideshow__slide {
   position: relative;
   overflow: hidden; }
-  .nova-slideshow__slider > .nova-slideshow__slide {
+
+.editor-block-list__block-edit .nova-slideshow {
+  padding-top: 75%; }
+  .editor-block-list__block-edit .nova-slideshow .nova-slideshow__slide {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0; }
 
-.nova-slideshow__slider,
-.nova-slideshow__mask,
-.nova-slideshow__background,
-.nova-slideshow__foreground {
+.nova-slideshow.is-ready .nova-slideshow__slider,
+.nova-slideshow.is-ready .nova-slideshow__mask,
+.nova-slideshow.is-ready .nova-slideshow__foreground,
+.nova-slideshow.is-ready .nova-slideshow__content,
+.nova-slideshow.is-ready .nova-slideshow__background {
   position: absolute;
   top: 0;
   right: 0;
@@ -415,13 +418,6 @@
     padding-top: var(--gallery-spacing);
     padding-left: var(--gallery-spacing); }
 
-.nova-slideshow__content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
 .nova-slideshow__slider {
   z-index: 100; }
 
@@ -438,8 +434,9 @@
   width: 22px;
   height: 24px;
   background: var(--arrow-background);
-  border-radius: 3px;
-  cursor: pointer; }
+  border-radius: 3px; }
+  .nova-slideshow__arrow:not(.nova-slideshow__arrow--disabled) {
+    cursor: pointer; }
   .nova-slideshow__arrow:before {
     content: "";
     display: block;
@@ -489,6 +486,17 @@
 
 .nova-slideshow .slick-slide {
   opacity: 1 !important; }
+
+.nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__label,
+.nova-blocks-slideshow-type-panel .block-editor-media-placeholder .block-editor-media-placeholder__button {
+  display: none; }
+
+.nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button {
+  padding-left: 12px;
+  text-indent: -999em; }
+  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button:after {
+    content: 'Edit Gallery';
+    text-indent: 0; }
 .pixelgrade-hero-button-group-wrapper label + .components-button-group {
   margin-top: 5px; }
 
