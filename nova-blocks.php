@@ -28,7 +28,7 @@
  *
  * @return string
  */
-function _get_plugin_directory() {
+function nova_get_plugin_directory() {
 	return __DIR__;
 }
 
@@ -41,7 +41,7 @@ function _get_plugin_directory() {
  *
  * @return string
  */
-function _get_plugin_url() {
+function nova_get_plugin_url() {
 	static $plugin_url;
 
 	if ( empty( $plugin_url ) ) {
@@ -51,7 +51,7 @@ function _get_plugin_url() {
 	return $plugin_url;
 }
 
-function gutenberg_hero_block_init() {
+function nova_hero_block_init() {
 
 	register_meta( 'post', 'nova_hero_minimum_height', array(
 		'type' => 'number',
@@ -71,12 +71,8 @@ function gutenberg_hero_block_init() {
 		'show_in_rest' => true,
 	) );
 
-	register_block_type( 'pixelgrade/hero', array(
-		'render_callback' => 'pixelgrade_hero_render_callback'
-	) );
-
 }
-add_action( 'init', 'gutenberg_hero_block_init' );
+add_action( 'init', 'nova_hero_block_init' );
 
 function nova_add_blocks_category( $categories, $post ) {
     return array_merge(
@@ -90,9 +86,5 @@ function nova_add_blocks_category( $categories, $post ) {
     );
 }
 add_filter( 'block_categories', 'nova_add_blocks_category', 10, 2 );
-
-function pixelgrade_hero_render_callback( $attributes, $content ) {
-	return $content;
-}
 
 include __DIR__ . '/lib/enqueue-scripts.php';

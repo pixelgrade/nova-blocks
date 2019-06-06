@@ -128,18 +128,14 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 	function getDirection( slick, currentSlide, nextSlide ) {
 		let direction = 1;
-
 		if ( slick.slideCount > 2 ) {
-
 			if ( currentSlide === 0 && nextSlide === slick.slideCount - 1 ) {
 				direction = -1;
 			}
-
 			if ( nextSlide < currentSlide && ( nextSlide !== 0 || currentSlide !== slick.slideCount - 1 ) ) {
 				direction = -1;
 			}
 		}
-
 		return direction;
 	}
 

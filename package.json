@@ -1,5 +1,5 @@
 {
-  "name": "gutenberg-grade",
+  "name": "nova",
   "version": "0.0.1",
   "main": "blocks/index.js",
   "scripts": {
