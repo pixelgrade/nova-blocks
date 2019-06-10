@@ -1,0 +1,24 @@
+@import "../../../assets/scss/mixins";
+
+.nova-media {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 100px;
+
+  &[class][class] {
+    width: 100%;
+    max-width: 100%
+  }
+}
+
+.nova-media__image {
+  position: relative;
+}
+
+.nova-media__image--full {
+  img {
+    @include image-cover;
+  }
+}
