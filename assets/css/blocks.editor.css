@@ -131,7 +131,7 @@ html body {
       background-color: #2B2BBA;
       color: #FFE42E; }
 
-.wp-block-pixelgrade-hero * {
+.wp-block-pixelgrade-hero, .wp-block-pixelgrade-hero * {
   transition: all 0.4s ease; }
 
 .pixelgrade-hero-block-toolbar svg {

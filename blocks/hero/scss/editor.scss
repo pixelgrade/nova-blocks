@@ -3,7 +3,7 @@
 .wp-block-pixelgrade-hero {
     
     // Enable Transitions
-    * {
+    &, * {
         transition: all 0.4s ease;
     }
 }
