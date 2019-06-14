@@ -24,7 +24,8 @@ export default class Save extends Component {
 			mediaStyle,
 			contentStyle,
 			blockStyle,
-			mediaPosition
+			mediaPosition,
+			images
 		} = attributes;
 
 		const classNames = classnames(className, {
@@ -37,31 +38,24 @@ export default class Save extends Component {
 			'is-selected': isSelected,
 		});
 
-		const cardImage = (src, alt) => {
-			if( !src ) return null;
+		const galleryImages = images.map ( (image)  => JSON.parse(image));
 
-			if( alt ) {
-				return (
-					<img
-						src={ src }
-						alt={ alt }
-					/>
-				);
-			}
-
+		const displayImages = (images) => {
 			return (
-				<img
-					src={ src }
-					alt=""
-					aria-hidden="true"
-				/>
-			);
+				galleryImages.map( (image) => {
+					return (
+						<div className ='nova-media__image'>
+							<img src={ image.url } />
+						</div>
+					)
+				})
+			)
 		};
 
 		return <div className = { classNames } >
 			<div className="nova-media">
-				<div className="nova-media__image" >
-					{ cardImage(attributes.imageUrl, attributes.imageAlt) }
+				<div className="nova-media__aside" >
+					{ displayImages(images) }
 				</div>
 				<div className="nova-media__content">
 					<InnerBlocks.Content/>
