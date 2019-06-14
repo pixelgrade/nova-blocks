@@ -16,7 +16,7 @@ import {AlignmentToolbar, GalleryPreview, GalleryPlaceholder} from "../../compon
 const ALLOWED_BLOCKS = ['core/button', 'core/paragraph', 'core/heading'];
 const TEMPLATE = [
 	['core/heading', {content: 'Shoot for the moon, Even if You Miss.', level: 4}],
-	['core/heading', {content: 'Welcome to our planet, look and feel matters!', level: 1}],
+	['core/heading', {content: 'Welcome to our planet, look and feel matters!', level: 2}],
 	['core/paragraph', {content: 'If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon. I don\'t know what you could say about a day in which you have seen four beautiful sunsets.'}],
 	['core/button', {text: 'Discover More'}]
 ];
