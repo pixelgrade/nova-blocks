@@ -165,9 +165,31 @@ $content-bg-color: #FFFFFF;
 }
 
 
+
+// ---------------------------------------
+// Themes Use Cases
+// Status: Work-in-progress
+// ---------------------------------------
+
 // TwentyNineteen Styles
 .u-container-width {
-  width: calc(6 * (100vw / 12 ));
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media only screen and (min-width: 1168px) {
+  .entry .entry-content > .wp-block-pixelgrade-media, 
+  .entry .entry-summary > * {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+  }
+}
+
+.editor-styles-wrapper {
+  h1, h2, h3 {
+    line-height: 1.2;
+  }
+  
 }

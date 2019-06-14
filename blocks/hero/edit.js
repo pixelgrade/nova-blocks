@@ -230,7 +230,7 @@ export default class Edit extends Component {
 					<div className='nova-u-content-align'>
 						<div className='nova-hero__content nova-u-content-width' style={ styles.content }>
 							<InnerBlocks template={[
-								[ 'core/heading', { content: 'This is a catchy title', align: 'center' } ],
+								[ 'core/heading', { content: 'This is a catchy title', align: 'center', level: '1' } ],
 								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],
 								[ 'core/button', { text: 'Discover more', align: 'center' } ],
 							]} />
