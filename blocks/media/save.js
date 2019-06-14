@@ -18,13 +18,30 @@ export default class Save extends Component {
 
 		const {
 			attributes,
+			className,
 			setAttributes,
+			isSelected,
 		} = this.props;
 
 		const {
-			isCroppedImage,
-			contentStyle
+			backgroundColor,
+			mediaStyle,
+			contentStyle,
+			blockStyle,
+			backgroundType,
+			galleryImages,
+			mediaPosition
 		} = attributes;
+
+		const classNames = classnames(className, {
+			'has-image-on-the-right': 'right' === mediaPosition,
+			'content-is-moderate': 'moderate' === contentStyle,
+			'content-is-highlighted': 'highlighted' === contentStyle,
+			'block-is-moderate': 'moderate' === blockStyle,
+			'block-is-highlighted': 'highlighted' === blockStyle,
+			'is-simple-grid': 'simple-grid' === mediaStyle,
+			'is-selected': isSelected,
+		});
 
 		const cardImage = (src, alt) => {
 			if( !src ) return null;
@@ -48,19 +65,15 @@ export default class Save extends Component {
 			);
 		};
 
-		return (
+		return <div className = { classNames } >
 			<div className="nova-media">
-				<div className={ classnames(
-					'nova-media__image', {
-						'nova-media__image--full': isCroppedImage,
-					}
-				) } >
+				<div className="nova-media__image" >
 					{ cardImage(attributes.imageUrl, attributes.imageAlt) }
 				</div>
-				<div className="nova-media--content">
+				<div className="nova-media__content">
 					<InnerBlocks.Content/>
 				</div>
 			</div>
-		);
+		</div>
 	}
 }

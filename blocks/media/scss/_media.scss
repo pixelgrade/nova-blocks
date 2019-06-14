@@ -1,24 +1,173 @@
 @import "../../../assets/scss/mixins";
 
+$light-gray: #EEF1F2;
+$box-shadow-radius: 100px;
+
+$headings-color: #323067;
+$text-color: #272743;
+$content-bg-color: #FFFFFF;
+
 .nova-media {
   position: relative;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 100px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "image content";
+  grid-column-gap: 40px;
 
-  &[class][class] {
-    width: 100%;
-    max-width: 100%
+  .has-image-on-the-right & {
+    grid-template-areas: "content image";
+  }
+
+  .content-is-highlighted & {
+    grid-column-gap: 0;
+    .nova-media__content {
+      background-color: $headings-color;
+      padding: 30px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: $content-bg-color;
+    }
+
+    p {
+      color: $content-bg-color;
+    }
+  }
+
+  .content-is-highlighted.block-is-highlighted & {
+    .nova-media__content {
+      background-color: $content-bg-color;
+      padding: 30px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      color: $headings-color;
+    }
+
+    p {
+      color: $text-color;
+    }
+  }
+
+  .content-is-moderate.block-is-highlighted & {
+      h1, h2, h3, h4, h5, h6 {
+        color: $headings-color;
+      }
+
+      p {
+        color: $text-color;
+      }
+  }
+
+  .content-is-highlighted.block-is-moderate & {
+    background-color: $headings-color;
+  }
+
+  .block-is-moderate & {
+    background-color: $light-gray;
+    padding-top: 56px;
+    padding-bottom: 56px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      display: block;
+      width: calc(50vw - 50%);
+      height: 100%;
+      background-color: $light-gray;
+      z-index: 1;
+      right: 100%;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      display: block;
+      width: calc(50vw - 50%);
+      height: 100%;
+      background-color: $light-gray;
+      z-index: 1;
+      left: 100%;
+    }
+  }
+
+  .block-is-highlighted & {
+    background-color: $headings-color;
+    padding-top: 56px;
+    padding-bottom: 56px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      display: block;
+      width: calc(50vw - 50%);
+      height: 100%;
+      background-color: $headings-color;
+      z-index: 1;
+      right: 100%;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      display: block;
+      width: calc(50vw - 50%);
+      height: 100%;
+      background-color: $headings-color;
+      z-index: 1;
+      left: 100%;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: $content-bg-color;
+    }
+
+    p {
+      color: $content-bg-color;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $headings-color;
+  }
+
+  p {
+    color: $text-color;
+  }
+}
+
+.nova-media__image {
+  grid-area: image;
+}
+
+.nova-media__content {
+  grid-area: content;
+
+  .content-is-moderate & {
+    padding: 30px;
+    background-color: $content-bg-color;
+    @include box-shadow(nova);
   }
 }
 
 .nova-media__image {
   position: relative;
+
+  .is-simple-grid & {
+    img {
+      @include image-cover;
+    }
+  }
 }
 
-.nova-media__image--full {
-  img {
-    @include image-cover;
-  }
+
+// TwentyNineteen Styles
+.u-container-width {
+  width: calc(6 * (100vw / 12 ));
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -8,17 +8,29 @@
     "imageAlt": {
       "attribute": "alt"
     },
-    "isCroppedImage": {
-      "type": "boolean",
-      "default": true
-    },
     "backgroundColor": {
       "type": "string",
       "default": "#000"
     },
+    "mediaPosition": {
+      "default": "left"
+    },
+    "mediaStyle": {
+      "default": "simple-grid"
+    },
+    "contentStyle": {
+      "default": "basic"
+    },
+    "blockStyle": {
+      "default": "basic"
+    },
     "backgroundType": {
       "type": "string",
       "default": "transparent"
+    },
+    "galleryImages": {
+      "type": "array",
+      "default": []
     }
   }
 }

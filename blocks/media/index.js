@@ -1,8 +1,3 @@
-import './scss/style.scss';
-import './scss/editor.scss';
-
-const { __ } = wp.i18n;
-
 /**
  * Internal dependencies
  */
@@ -11,6 +6,11 @@ import attributes from './attributes.json';
 import edit from './edit';
 import save from './save';
 
+import './scss/style.scss';
+import './scss/editor.scss';
+
+const { __ } = wp.i18n;
+
 const {
 	registerBlockType,
 } = wp.blocks;
@@ -18,8 +18,8 @@ const {
 
 export default registerBlockType( 'pixelgrade/media',
 	{
-		title: __( 'Media', '__plugin_txtd' ),
-		description: __( 'Some sort of description for the hero block', '__plugin_txtd' ),
+		title: __( 'Media Card Constellation', '__plugin_txtd' ),
+		description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 		icon: media,
 		category: 'nova-by-pixelgrade',
 		...attributes,
