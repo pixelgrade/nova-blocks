@@ -87,6 +87,20 @@
     .entry .entry-content .alignfull.nova-hero + .entry .entry-content .alignfull.nova-hero {
       margin-top: var(--blocks-spacing); } }
 
+.editor-styles-wrapper.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link {
+  background-color: #FFE42E;
+  color: #2B2BBA;
+  border-radius: 20px 16px 18px; }
+
+.editor-styles-wrapper.editor-styles-wrapper .nova-hero h1 {
+  margin-bottom: 0; }
+  @media only screen and (min-width: 768px) {
+    .editor-styles-wrapper.editor-styles-wrapper .nova-hero h1 {
+      font-size: 3.5em; } }
+
+.editor-styles-wrapper.editor-styles-wrapper .nova-hero p {
+  font-size: 1.2em; }
+
 .pixelgrade-hero-block-toolbar svg {
   width: 20px;
   height: 20px; }
@@ -230,9 +244,19 @@
         transform: none; } }
 
 .u-container-width {
-  width: calc(6 * (100vw / 12 ));
+  width: 90%;
   margin-left: auto;
   margin-right: auto; }
+
+@media only screen and (min-width: 1168px) {
+  .entry .entry-content > .wp-block-pixelgrade-media,
+  .entry .entry-summary > * {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto; } }
+
+.editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3 {
+  line-height: 1.2; }
 
 .nova-media__placeholder {
   display: -ms-flexbox;
