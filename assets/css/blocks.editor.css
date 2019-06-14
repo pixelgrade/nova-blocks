@@ -123,21 +123,21 @@
   -ms-grid-columns: (1fr)[2];
       grid-template-columns: repeat(2, 1fr);
   grid-template-areas: "image content";
-  grid-column-gap: 40px; }
+  grid-column-gap: 56px; }
   .has-image-on-the-right .nova-media {
     grid-template-areas: "content image"; }
   .content-is-highlighted .nova-media {
     grid-column-gap: 0; }
     .content-is-highlighted .nova-media .nova-media__content {
       background-color: #323067;
-      padding: 30px; }
+      padding: 56px; }
     .content-is-highlighted .nova-media h1, .content-is-highlighted .nova-media h2, .content-is-highlighted .nova-media h3, .content-is-highlighted .nova-media h4, .content-is-highlighted .nova-media h5, .content-is-highlighted .nova-media h6 {
       color: #FFFFFF; }
     .content-is-highlighted .nova-media p {
       color: #FFFFFF; }
   .content-is-highlighted.block-is-highlighted .nova-media .nova-media__content {
     background-color: #FFFFFF;
-    padding: 30px; }
+    padding: 56px; }
   .content-is-highlighted.block-is-highlighted .nova-media h1, .content-is-highlighted.block-is-highlighted .nova-media h2, .content-is-highlighted.block-is-highlighted .nova-media h3, .content-is-highlighted.block-is-highlighted .nova-media h4, .content-is-highlighted.block-is-highlighted .nova-media h5, .content-is-highlighted.block-is-highlighted .nova-media h6 {
     color: #323067; }
   .content-is-highlighted.block-is-highlighted .nova-media p {
@@ -213,7 +213,7 @@
 .nova-media__content {
   grid-area: content; }
   .content-is-moderate .nova-media__content {
-    padding: 30px;
+    padding: 56px;
     background-color: #FFFFFF;
     box-shadow: 0px 32px 128px rgba(42, 54, 52, 0.1), 0px 16px 64px rgba(42, 54, 52, 0.1), 0px 8px 16px rgba(42, 54, 52, 0.1); }
 
@@ -267,3 +267,6 @@
       justify-content: center;
   height: 100%;
   background-color: #EEEEEE; }
+
+.wp-block-pixelgrade-media * {
+  transition: all 0.4s ease; }

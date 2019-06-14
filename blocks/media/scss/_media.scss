@@ -6,6 +6,7 @@ $box-shadow-radius: 100px;
 $headings-color: #323067;
 $text-color: #272743;
 $content-bg-color: #FFFFFF;
+$boxed-padding: 56px;
 
 .nova-media {
   position: relative;
@@ -13,7 +14,7 @@ $content-bg-color: #FFFFFF;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas: "image content";
-  grid-column-gap: 40px;
+  grid-column-gap: 56px;
 
   .has-image-on-the-right & {
     grid-template-areas: "content image";
@@ -23,7 +24,7 @@ $content-bg-color: #FFFFFF;
     grid-column-gap: 0;
     .nova-media__content {
       background-color: $headings-color;
-      padding: 30px;
+      padding: $boxed-padding;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -38,7 +39,7 @@ $content-bg-color: #FFFFFF;
   .content-is-highlighted.block-is-highlighted & {
     .nova-media__content {
       background-color: $content-bg-color;
-      padding: 30px;
+      padding: $boxed-padding;
     }
     h1, h2, h3, h4, h5, h6 {
       color: $headings-color;
@@ -154,7 +155,7 @@ $content-bg-color: #FFFFFF;
   grid-area: content;
 
   .content-is-moderate & {
-    padding: 30px;
+    padding: $boxed-padding;
     background-color: $content-bg-color;
     @include box-shadow(nova);
   }
