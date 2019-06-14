@@ -1,7 +1,11 @@
 @import "hero";
 
 .wp-block-pixelgrade-hero {
-
+    
+    // Enable Transitions
+    * {
+        transition: all 0.4s ease;
+    }
 }
 
 .pixelgrade-hero-block-toolbar {
@@ -30,8 +34,4 @@
             margin-left: 4px;
         }
     }
-}
-
-.editor-styles-wrapper {
-    
 }
