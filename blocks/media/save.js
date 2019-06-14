@@ -1,7 +1,5 @@
 import classnames from "classnames";
 
-const { __ } = wp.i18n;
-
 const { InnerBlocks } = wp.blockEditor;
 
 const {
@@ -19,17 +17,13 @@ export default class Save extends Component {
 		const {
 			attributes,
 			className,
-			setAttributes,
 			isSelected,
 		} = this.props;
 
 		const {
-			backgroundColor,
 			mediaStyle,
 			contentStyle,
 			blockStyle,
-			backgroundType,
-			galleryImages,
 			mediaPosition
 		} = attributes;
 
@@ -55,7 +49,6 @@ export default class Save extends Component {
 				);
 			}
 
-			// No alt set, so let's hide it from screen readers
 			return (
 				<img
 					src={ src }
