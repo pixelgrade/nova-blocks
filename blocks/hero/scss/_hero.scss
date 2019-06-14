@@ -99,3 +99,22 @@
         }
     }
 }
+
+.editor-styles-wrapper.editor-styles-wrapper {
+    .wp-block-button:not(.is-style-outline) .wp-block-button__link {
+        background-color: #FFE42E;
+        color: #2B2BBA;
+        border-radius: 20px 16px 18px;
+    }
+    .nova-hero {
+        h1 {
+            margin-bottom: 0;
+            @media only screen and (min-width: 768px) {
+                font-size: 3.5em;
+            }
+        }
+        p {
+            font-size: 1.2em;
+        }
+    }
+}
