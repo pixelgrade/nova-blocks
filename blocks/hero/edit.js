@@ -31,6 +31,7 @@ const {
 	PanelBody,
 	PanelRow,
 	SelectControl,
+	RadioControl,
 	ToggleControl,
 	Toolbar,
 } = wp.components;
@@ -95,9 +96,9 @@ export default class Edit extends Component {
 				verticalAlignment,
 				horizontalAlignment,
 				// height
-				minHeight,
 				applyMinimumHeight,
 				applyMinimumHeightBlock,
+				minHeight,
 				scrollIndicator,
 				scrollIndicatorBlock,
 				// colors
@@ -245,9 +246,10 @@ export default class Edit extends Component {
 
 			return (
 				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
-					<SelectControl
+					<RadioControl
 						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
 						value={ applyMinimumHeight }
+						selected={ applyMinimumHeight }
 						onChange={ applyMinimumHeight => {
 							setAttributes( { applyMinimumHeight } );
 							updateBlocks( { applyMinimumHeight } );
@@ -264,25 +266,26 @@ export default class Edit extends Component {
 						}]}
 					/>
 					{ 'none' !== applyMinimumHeight && <Fragment>
-						<SelectControl
+						<RadioControl
 							label={ __( 'Minimum Height', '__plugin_txtd' ) }
 							value={ minHeight }
+							selected={ minHeight }
 							onChange={ minHeight => {
 								setAttributes( { minHeight } );
 								updateBlocks( { minHeight } );
 							} }
 							options={[{
-								label: __( 'Half', '__plugin_txtd' ),
-								value: 50
+								label: __( 'Half the Screen', '__plugin_txtd' ),
+								value: '50'
 							}, {
 								label: __( 'Two Thirds', '__plugin_txtd' ),
-								value: 66
+								value: '66'
 							}, {
 								label: __( 'Three Quarters', '__plugin_txtd' ),
-								value: 75
+								value: '75'
 							}, {
-								label: __( 'Full', '__plugin_txtd' ),
-								value: 100
+								label: __( 'Full Screen', '__plugin_txtd' ),
+								value: '100'
 							}]}
 						/>
 					</Fragment> }

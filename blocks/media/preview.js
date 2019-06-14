@@ -2,9 +2,8 @@ import classnames from "classnames";
 
 const { Component, Fragment } = wp.element;
 
-const { MediaUpload, InnerBlocks, MediaPlaceholder} = wp.blockEditor;
+const { InnerBlocks, MediaPlaceholder} = wp.blockEditor;
 
-const { Button } = wp.components;
 
 /**
  * Constants
