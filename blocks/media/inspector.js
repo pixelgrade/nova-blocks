@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { InspectorControls } = wp.editor;
+const { InspectorControls } = wp.blockEditor;
 const { PanelBody, RadioControl } = wp.components;
 
 class Inspector extends Component {
