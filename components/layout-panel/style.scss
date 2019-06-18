@@ -11,7 +11,6 @@
 
 .nova-u-content-width {
     --nova-content-width: var(--nova-content-width-full);
-    max-width: var(--nova-content-width);
 
     .nova-u-content-width-full & {
         --nova-content-width: var(--nova-content-width-full);
@@ -24,17 +23,13 @@
     .nova-u-content-width-narrow & {
         --nova-content-width: var(--nova-content-width-narrow);
     }
+
+    max-width: var(--nova-content-width);
 }
 
 .nova-u-content-padding {
+    padding: var(--nova-spacing) var(--nova-spacing-small);
 
-    [class*="nova-u-spacing"] & {
-        padding-top: var(--nova-spacing);
-        padding-bottom: var(--nova-spacing);
-
-        padding-left: var(--nova-spacing-small);
-        padding-right: var(--nova-spacing-small);
-    }
     .nova-u-spacing-small & {
         --nova-spacing: var(--nova-spacing-small);
     }

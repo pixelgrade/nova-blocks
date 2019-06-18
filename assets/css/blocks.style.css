@@ -334,20 +334,14 @@ html body {
   .nova-u-content-width-narrow .nova-u-content-width {
     --nova-content-width: var(--nova-content-width-narrow); }
 
-[class*="nova-u-spacing"] .nova-u-content-padding {
-  padding-top: var(--nova-spacing);
-  padding-bottom: var(--nova-spacing);
-  padding-left: var(--nova-spacing-small);
-  padding-right: var(--nova-spacing-small); }
-
-.nova-u-spacing-small .nova-u-content-padding {
-  --nova-spacing: var(--nova-spacing-small); }
-
-.nova-u-spacing-medium .nova-u-content-padding {
-  --nova-spacing: var(--nova-spacing-medium); }
-
-.nova-u-spacing-large .nova-u-content-padding {
-  --nova-spacing: var(--nova-spacing-large); }
+.nova-u-content-padding {
+  padding: var(--nova-spacing) var(--nova-spacing-small); }
+  .nova-u-spacing-small .nova-u-content-padding {
+    --nova-spacing: var(--nova-spacing-small); }
+  .nova-u-spacing-medium .nova-u-content-padding {
+    --nova-spacing: var(--nova-spacing-medium); }
+  .nova-u-spacing-large .nova-u-content-padding {
+    --nova-spacing: var(--nova-spacing-large); }
 :root {
   --bg-master-dark: #000000;
   --bg-master-light: #FFFFFF; }

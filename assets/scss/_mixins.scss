@@ -65,14 +65,26 @@
 $tablet-width: 768px;
 $desktop-width: 1024px;
 
+@mixin above( $value ) {
+    @media only screen and (min-width: $value) {
+        @content;
+    }
+}
+
+@mixin below( $value ) {
+    @media not screen and (min-width: $value) {
+        @content;
+    }
+}
+
 @mixin tablet {
-    @media (min-width: #{$tablet-width}) {
+    @include above( $tablet-width ) {
         @content;
     }
 }
 
 @mixin desktop {
-    @media (min-width: #{$desktop-width}) {
+    @include above( $desktop-width ) {
         @content;
     }
 }
