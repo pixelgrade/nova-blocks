@@ -74,8 +74,8 @@
 
   .block-is-moderate & {
     background-color: var(--light-gray);
-    padding-top: 56px;
-    padding-bottom: 56px;
+    padding-top: var(--box-padding);
+    padding-bottom: var(--box-padding);
 
     &:before {
       content: '';
@@ -104,31 +104,19 @@
 
   .block-is-highlighted & {
     background-color: var(--highlighted-bg-color);
-    padding-top: 56px;
-    padding-bottom: 56px;
+    padding-top: var(--box-padding);
+    padding-bottom: var(--box-padding);
 
     &:before {
       content: '';
       position: absolute;
       top: 0;
       display: block;
-      width: calc(50vw - 50%);
+      width: 200vw;
       height: 100%;
       background-color: var(--highlighted-bg-color);
-      z-index: 1;
-      right: 100%;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      display: block;
-      width: calc(50vw - 50%);
-      height: 100%;
-      background-color: var(--highlighted-bg-color);
-      z-index: 1;
-      left: 100%;
+      z-index: -1;
+      left: -100vw;
     }
 
     h1, h2, h3, h4, h5, h6 {

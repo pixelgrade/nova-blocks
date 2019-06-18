@@ -189,8 +189,8 @@ html body {
     background-color: var(--light-gray); }
   .block-is-moderate .nova-media {
     background-color: var(--light-gray);
-    padding-top: 56px;
-    padding-bottom: 56px; }
+    padding-top: var(--box-padding);
+    padding-bottom: var(--box-padding); }
     .block-is-moderate .nova-media:before {
       content: '';
       position: absolute;
@@ -213,28 +213,18 @@ html body {
       left: 100%; }
   .block-is-highlighted .nova-media {
     background-color: var(--highlighted-bg-color);
-    padding-top: 56px;
-    padding-bottom: 56px; }
+    padding-top: var(--box-padding);
+    padding-bottom: var(--box-padding); }
     .block-is-highlighted .nova-media:before {
       content: '';
       position: absolute;
       top: 0;
       display: block;
-      width: calc(50vw - 50%);
+      width: 200vw;
       height: 100%;
       background-color: var(--highlighted-bg-color);
-      z-index: 1;
-      right: 100%; }
-    .block-is-highlighted .nova-media:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      display: block;
-      width: calc(50vw - 50%);
-      height: 100%;
-      background-color: var(--highlighted-bg-color);
-      z-index: 1;
-      left: 100%; }
+      z-index: -1;
+      left: -100vw; }
     .block-is-highlighted .nova-media h1, .block-is-highlighted .nova-media h2, .block-is-highlighted .nova-media h3, .block-is-highlighted .nova-media h4, .block-is-highlighted .nova-media h5, .block-is-highlighted .nova-media h6 {
       color: var(--content-bg-color); }
     .block-is-highlighted .nova-media p {
