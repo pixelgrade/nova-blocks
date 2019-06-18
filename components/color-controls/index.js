@@ -107,7 +107,8 @@ class ColorPanel extends Component {
 					label: __( 'Content Color', '__plugin_txtd' ),
 				},
 			] }
-			colors={ colors } >
+			colors={ colors } 
+			initialOpen={ false }>
 			<OverlayControls { ...this.props } />
 		</PanelColorSettings>
 	}

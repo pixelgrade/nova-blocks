@@ -22,8 +22,8 @@ export default class MediaPreview extends Component {
 		const {
 			attributes,
 			className,
-			setAttributes,
 			isSelected,
+			updateImages
 		} = this.props;
 
 		const {
@@ -42,7 +42,9 @@ export default class MediaPreview extends Component {
 			'block-is-moderate': 'moderate' === blockStyle,
 			'block-is-highlighted': 'highlighted' === blockStyle,
 			'is-simple-grid': 'simple-grid' === mediaStyle,
+			'is-overlap-grid': 'overlap-grid' === mediaStyle,
 			'is-selected': isSelected,
+			'has-multiple-images':  2 <= images.length
 		});
 
 		const galleryImages = images.map ( (image)  => JSON.parse(image));
@@ -65,29 +67,23 @@ export default class MediaPreview extends Component {
 					galleryImages.map( (image) => {
 						return (
 							<div className ='nova-media__image'>
-								<img src={ image.url } />
+								<img alt={ image.alt } src={ image.url } />
 							</div>
 						)
 					})
 				)
 			}
-		}
-
-		function updateImages( media ) {
-			setAttributes({
-				images: media.map( ( image ) => JSON.stringify({ url: image.url, alt: image.alt }) )
-			});
-		}
+		};
 
 		return (
 			<Fragment>
-				<div className = { classNames } >
-					<div className = "u-container-width">
+				<div className={classNames}>
+					<div className="u-container-width">
 						<div className="nova-media">
-							<div className="nova-media__aside" >
-								{ displayImages(images) }
+							<div className="nova-media__aside">
+								{displayImages( images )}
 							</div>
-							<div className="nova-media__content" style={ {textAlign:  alignment } }>
+							<div className="nova-media__content" style={{textAlign: alignment}}>
 								<InnerBlocks
 									allowedBlocks={ALLOWED_BLOCKS}
 									template={TEMPLATE}

@@ -1,79 +1,81 @@
 @import "../../../assets/scss/mixins";
 
-$light-gray: #EEF1F2;
-$box-shadow-radius: 100px;
-
-$headings-color: #323067;
-$text-color: #272743;
-$content-bg-color: #FFFFFF;
-$boxed-padding: 56px;
-
 .nova-media {
   position: relative;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas: "image content";
-  grid-column-gap: 56px;
+  grid-column-gap: var(--box-padding);
+
+  --light-gray: #EEF1F2;
+  --headings-color: #323067;
+  --secondary-headings-color: #203AB6;
+  --content-bg-color: #FFFFFF;
+  --highlighted-bg-color: #000043;
+  --box-padding: 56px;
 
   .has-image-on-the-right & {
     grid-template-areas: "content image";
   }
 
   .content-is-highlighted & {
-    grid-column-gap: 0;
     .nova-media__content {
-      background-color: $headings-color;
-      padding: $boxed-padding;
+      background-color: var(--highlighted-bg-color);
+      padding: var(--box-padding);
     }
 
     h1, h2, h3, h4, h5, h6 {
-      color: $content-bg-color;
+      color: var(--content-bg-color);
     }
 
     p {
-      color: $content-bg-color;
+      color: var(--content-bg-color);
     }
   }
 
   .content-is-highlighted.block-is-highlighted & {
     .nova-media__content {
-      background-color: $content-bg-color;
-      padding: $boxed-padding;
+      background-color: var(--content-bg-color);
+      padding: var(--box-padding);
     }
     h1, h2, h3, h4, h5, h6 {
-      color: $headings-color;
+      color: var(--headings-color);
     }
 
     p {
-      color: $text-color;
+      color: var(--text-color);
     }
   }
 
   .content-is-moderate.block-is-highlighted & {
 
       h1, h2, h3, h4, h5, h6 {
-        color: $headings-color;
+        color: var(--content-bg-color);
       }
 
       p {
-        color: $text-color;
+        color: var(--content-bg-color);
       }
+
+    .nova-media__content {
+      background-color: rgba(255, 255, 255, .2);
+    }
   }
 
   .content-is-highlighted.block-is-moderate & {
-    background-color: $headings-color;
 
      &:before,
      &:after {
-       background-color: $headings-color;
+       background-color: var(--light-gray);
      }
   }
 
+
   .block-is-moderate & {
-    background-color: $light-gray;
-    padding-top: 56px;
-    padding-bottom: 56px;
+    background-color: var(--light-gray);
+    padding-top: var(--box-padding);
+    padding-bottom: var(--box-padding);
 
     &:before {
       content: '';
@@ -82,7 +84,7 @@ $boxed-padding: 56px;
       display: block;
       width: calc(50vw - 50%);
       height: 100%;
-      background-color: $light-gray;
+      background-color: var(--light-gray);
       z-index: 1;
       right: 100%;
     }
@@ -94,56 +96,44 @@ $boxed-padding: 56px;
       display: block;
       width: calc(50vw - 50%);
       height: 100%;
-      background-color: $light-gray;
+      background-color: var(--light-gray);
       z-index: 1;
       left: 100%;
     }
   }
 
   .block-is-highlighted & {
-    background-color: $headings-color;
-    padding-top: 56px;
-    padding-bottom: 56px;
+    background-color: var(--highlighted-bg-color);
+    padding-top: var(--box-padding);
+    padding-bottom: var(--box-padding);
 
     &:before {
       content: '';
       position: absolute;
       top: 0;
       display: block;
-      width: calc(50vw - 50%);
+      width: 200vw;
       height: 100%;
-      background-color: $headings-color;
-      z-index: 1;
-      right: 100%;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      display: block;
-      width: calc(50vw - 50%);
-      height: 100%;
-      background-color: $headings-color;
-      z-index: 1;
-      left: 100%;
+      background-color: var(--highlighted-bg-color);
+      z-index: -1;
+      left: -100vw;
     }
 
     h1, h2, h3, h4, h5, h6 {
-      color: $content-bg-color;
+      color: var(--content-bg-color);
     }
 
     p {
-      color: $content-bg-color;
+      color: var(--content-bg-color);
     }
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: $headings-color;
+    color: var(--headings-color);
   }
 
   p {
-    color: $text-color;
+    color: var(--text-color);
   }
 }
 
@@ -155,19 +145,20 @@ $boxed-padding: 56px;
   grid-area: content;
 
   .content-is-moderate & {
-    padding: $boxed-padding;
-    background-color: $content-bg-color;
+    padding: var(--box-padding);
+    background-color: var(--content-bg-color);
     @include box-shadow(nova);
   }
 }
 
 .nova-media__aside {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-gap: 5%;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  grid-gap: 15px;
 
-  .is-simple-grid & {
+  .is-simple-grid &,
+  .is-overlap-grid & {
     img {
       @include image-cover;
     }
@@ -176,37 +167,37 @@ $boxed-padding: 56px;
 
 .nova-media__image {
   position: relative;
-  grid-column: span 3;
-  grid-row: span 2;
+  grid-column: span 6;
+  grid-row: span 6;
 }
 
 
 
 .nova-media__image:first-child:last-child,
 .nova-media__placeholder {
-  grid-column: span 6;
-  grid-row: span 4;
+  grid-column: span 12;
+  grid-row: span 12;
 }
 
 .nova-media__image:first-child:nth-last-child(2) ~ *,
 .nova-media__image:first-child:nth-last-child(2) {
-  grid-column: span 3;
-  grid-row: span 4;
+  grid-column: span 6;
+  grid-row: span 12;
 }
 
 .nova-media__image:nth-last-child(3):first-child {
-  grid-column: 1 / span 3;
-  grid-row: 1/ span 2;
+  grid-column: 1 / span 6;
+  grid-row: 1/ span 6;
 }
 
 .nova-media__image:nth-last-child(3):first-child~.nova-media__image:nth-child(2) {
-  grid-column: 4 / span 3;
-  grid-row: 1/ span 2;
+  grid-column: 7 / span 6;
+  grid-row: 1/ span 6;
 }
 
 .nova-media__image:nth-last-child(3):first-child~.nova-media__image:last-child {
-  grid-column: 1 / span 6;
-  grid-row: 3 / span 2;
+  grid-column: 1 / span 12;
+  grid-row: 7 / span 6;
 }
 
 
@@ -218,7 +209,7 @@ $boxed-padding: 56px;
 // Theme: Twenty Nineteen
 .u-container-width {
   width: 95%;
-  max-width: 1300px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -236,5 +227,4 @@ $boxed-padding: 56px;
   h1, h2, h3 {
     line-height: 1.2;
   }
-  
 }
