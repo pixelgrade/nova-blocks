@@ -231,7 +231,7 @@ export default class Edit extends Component {
 					<div className='nova-u-content-align'>
 						<div className='nova-hero__content nova-u-content-width' style={ styles.content }>
 							<InnerBlocks template={[
-								[ 'core/heading', { content: 'This is a catchy title', align: 'center', level: '1' } ],
+								[ 'core/heading', { content: 'This is a catchy title', align: 'center', level: 2 } ],
 								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],
 								[ 'core/button', { text: 'Discover more', align: 'center' } ],
 							]} />
@@ -248,45 +248,51 @@ export default class Edit extends Component {
 				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
 					<RadioControl
 						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
-						value={ applyMinimumHeight }
 						selected={ applyMinimumHeight }
 						onChange={ applyMinimumHeight => {
 							setAttributes( { applyMinimumHeight } );
 							updateBlocks( { applyMinimumHeight } );
 						} }
-						options={[{
-							label: __( 'None', '__plugin_txtd' ),
-							value: 'none'
-						}, {
-							label: __( 'First Hero Block Only', '__plugin_txtd' ),
-							value: 'first'
-						}, {
-							label: __( 'All Hero Blocks', '__plugin_txtd' ),
-							value: 'all'
-						}]}
+						options={
+							[
+								{
+									label: __( 'None', '__plugin_txtd' ),
+									value: 'none'
+								}, {
+									label: __( 'First Hero Block Only', '__plugin_txtd' ),
+									value: 'first'
+								}, {
+									label: __( 'All Hero Blocks', '__plugin_txtd' ),
+									value: 'all'
+								}
+							]
+						}
 					/>
 					{ 'none' !== applyMinimumHeight && <Fragment>
 						<RadioControl
 							label={ __( 'Minimum Height', '__plugin_txtd' ) }
-							value={ minHeight }
 							selected={ minHeight }
 							onChange={ minHeight => {
 								setAttributes( { minHeight } );
 								updateBlocks( { minHeight } );
 							} }
-							options={[{
-								label: __( 'Half the Screen', '__plugin_txtd' ),
-								value: '50'
-							}, {
-								label: __( 'Two Thirds', '__plugin_txtd' ),
-								value: '66'
-							}, {
-								label: __( 'Three Quarters', '__plugin_txtd' ),
-								value: '75'
-							}, {
-								label: __( 'Full Screen', '__plugin_txtd' ),
-								value: '100'
-							}]}
+							options={
+								[
+									{
+										label: __( 'Half the Screen', '__plugin_txtd' ),
+										value: '50'
+									}, {
+										label: __( 'Two Thirds', '__plugin_txtd' ),
+										value: '66'
+									}, {
+										label: __( 'Three Quarters', '__plugin_txtd' ),
+										value: '75'
+									}, {
+										label: __( 'Full Screen', '__plugin_txtd' ),
+										value: '100'
+									}
+								]
+							}
 						/>
 					</Fragment> }
 				</PanelBody>
