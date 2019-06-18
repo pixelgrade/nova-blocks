@@ -149,6 +149,12 @@ html body {
     border-width: 4px 3px 0;
     border-top-color: currentColor;
     margin-left: 4px; }
+:root {
+  --box-shadow-radius: 128px; }
+
+body[class] {
+  --light-gray: red; }
+
 .nova-media {
   position: relative;
   display: -ms-grid;
@@ -235,14 +241,19 @@ html body {
     color: var(--text-color); }
 
 .nova-media__aside {
-  grid-area: image; }
+  grid-area: image;
+  -ms-grid-column: span 12;
+      grid-column: span 12; }
 
 .nova-media__content {
-  grid-area: content; }
+  grid-area: content;
+  z-index: 2;
+  -ms-grid-column: span 12;
+      grid-column: span 12; }
   .content-is-moderate .nova-media__content {
     padding: var(--box-padding);
     background-color: var(--content-bg-color);
-    box-shadow: 0px 32px 128px rgba(42, 54, 52, 0.1), 0px 16px 64px rgba(42, 54, 52, 0.1), 0px 8px 16px rgba(42, 54, 52, 0.1); }
+    box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1), 0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1); }
 
 .nova-media__aside {
   display: -ms-grid;

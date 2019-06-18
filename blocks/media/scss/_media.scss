@@ -1,5 +1,13 @@
 @import "../../../assets/scss/mixins";
 
+
+:root {
+  --box-shadow-radius: 128px;
+}
+body[class] {
+  --light-gray: red;
+}
+
 .nova-media {
   position: relative;
 
@@ -139,10 +147,13 @@
 
 .nova-media__aside {
   grid-area: image;
+  grid-column: span 12;
 }
 
 .nova-media__content {
   grid-area: content;
+  z-index: 2;
+  grid-column: span 12;
 
   .content-is-moderate & {
     padding: var(--box-padding);
