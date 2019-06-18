@@ -1,12 +1,10 @@
 @import "../../../assets/scss/mixins";
 
 $light-gray: #EEF1F2;
-$box-shadow-radius: 100px;
 
 $headings-color: #323067;
-$text-color: #272743;
 $content-bg-color: #FFFFFF;
-$boxed-padding: 56px;
+
 
 .nova-media {
   position: relative;
@@ -14,17 +12,22 @@ $boxed-padding: 56px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas: "image content";
-  grid-column-gap: 56px;
+  grid-column-gap: 42px;
+
+  --light-gray: #EEF1F2;
+  --headings-color: #323067;
+  --content-bg-color: #FFFFFF;
+  --box-padding: 56px;
+
 
   .has-image-on-the-right & {
     grid-template-areas: "content image";
   }
 
   .content-is-highlighted & {
-    grid-column-gap: 0;
     .nova-media__content {
       background-color: $headings-color;
-      padding: $boxed-padding;
+      padding: var(--box-padding);
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -39,36 +42,40 @@ $boxed-padding: 56px;
   .content-is-highlighted.block-is-highlighted & {
     .nova-media__content {
       background-color: $content-bg-color;
-      padding: $boxed-padding;
+      padding: var(--box-padding);
     }
     h1, h2, h3, h4, h5, h6 {
       color: $headings-color;
     }
 
     p {
-      color: $text-color;
+      color: var(--text-color);
     }
   }
 
   .content-is-moderate.block-is-highlighted & {
 
       h1, h2, h3, h4, h5, h6 {
-        color: $headings-color;
+        color: $content-bg-color;
       }
 
       p {
-        color: $text-color;
+        color: $content-bg-color;
       }
+
+    .nova-media__content {
+      background-color: rgba(255, 255, 255, .2);
+    }
   }
 
   .content-is-highlighted.block-is-moderate & {
-    background-color: $headings-color;
 
      &:before,
      &:after {
-       background-color: $headings-color;
+       background-color: $light-gray;
      }
   }
+
 
   .block-is-moderate & {
     background-color: $light-gray;
@@ -143,7 +150,7 @@ $boxed-padding: 56px;
   }
 
   p {
-    color: $text-color;
+    color: var(--text-color);
   }
 }
 
@@ -155,7 +162,7 @@ $boxed-padding: 56px;
   grid-area: content;
 
   .content-is-moderate & {
-    padding: $boxed-padding;
+    padding: var(--box-padding);
     background-color: $content-bg-color;
     @include box-shadow(nova);
   }
@@ -163,11 +170,12 @@ $boxed-padding: 56px;
 
 .nova-media__aside {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-gap: 5%;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  grid-gap: 15px;
 
-  .is-simple-grid & {
+  .is-simple-grid &,
+  .is-overlap-grid & {
     img {
       @include image-cover;
     }
@@ -176,37 +184,37 @@ $boxed-padding: 56px;
 
 .nova-media__image {
   position: relative;
-  grid-column: span 3;
-  grid-row: span 2;
+  grid-column: span 6;
+  grid-row: span 6;
 }
 
 
 
 .nova-media__image:first-child:last-child,
 .nova-media__placeholder {
-  grid-column: span 6;
-  grid-row: span 4;
+  grid-column: span 12;
+  grid-row: span 12;
 }
 
 .nova-media__image:first-child:nth-last-child(2) ~ *,
 .nova-media__image:first-child:nth-last-child(2) {
-  grid-column: span 3;
-  grid-row: span 4;
+  grid-column: span 6;
+  grid-row: span 12;
 }
 
 .nova-media__image:nth-last-child(3):first-child {
-  grid-column: 1 / span 3;
-  grid-row: 1/ span 2;
+  grid-column: 1 / span 6;
+  grid-row: 1/ span 6;
 }
 
 .nova-media__image:nth-last-child(3):first-child~.nova-media__image:nth-child(2) {
-  grid-column: 4 / span 3;
-  grid-row: 1/ span 2;
+  grid-column: 7 / span 6;
+  grid-row: 1/ span 6;
 }
 
 .nova-media__image:nth-last-child(3):first-child~.nova-media__image:last-child {
-  grid-column: 1 / span 6;
-  grid-row: 3 / span 2;
+  grid-column: 1 / span 12;
+  grid-row: 7 / span 6;
 }
 
 
@@ -236,5 +244,4 @@ $boxed-padding: 56px;
   h1, h2, h3 {
     line-height: 1.2;
   }
-  
 }

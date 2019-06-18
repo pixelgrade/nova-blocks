@@ -42,7 +42,9 @@ export default class MediaPreview extends Component {
 			'block-is-moderate': 'moderate' === blockStyle,
 			'block-is-highlighted': 'highlighted' === blockStyle,
 			'is-simple-grid': 'simple-grid' === mediaStyle,
+			'is-overlap-grid': 'overlap-grid' === mediaStyle,
 			'is-selected': isSelected,
+			'has-multiple-images':  2 <= images.length
 		});
 
 		const galleryImages = images.map ( (image)  => JSON.parse(image));
@@ -82,7 +84,6 @@ export default class MediaPreview extends Component {
 		return (
 			<Fragment>
 				<div className = { classNames } >
-					<div className = "u-container-width">
 						<div className="nova-media">
 							<div className="nova-media__aside" >
 								{ displayImages(images) }
@@ -94,7 +95,6 @@ export default class MediaPreview extends Component {
 								/>
 							</div>
 						</div>
-					</div>
 				</div>
 			</Fragment>
 		)

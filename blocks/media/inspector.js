@@ -1,3 +1,5 @@
+import {AlignmentControls} from "../../components/alignment-controls";
+
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { InspectorControls, AlignmentToolbar } = wp.blockEditor;
@@ -58,15 +60,7 @@ class Inspector extends Component {
 							onChange = { contentStyle => setAttributes( { contentStyle } ) }
 						/>
 
-						<AlignmentToolbar
-							value={ alignment }
-							onChange={onChangeAlignment => {
-								wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map( block => {
-									wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { align: onChangeAlignment } );
-								} );
-								setAttributes( { onChangeAlignment } )
-							}}
-						/>
+						<AlignmentControls { ...this.props } />
 					</PanelBody>
 
 

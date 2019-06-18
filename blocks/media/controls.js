@@ -1,4 +1,4 @@
-import {AlignmentToolbar} from "../../components/alignment-controls";
+import * as icons from "../icons";
 
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
@@ -20,7 +20,7 @@ class Controls extends Component {
 
 		const {
 			mediaPosition,
-			images
+			images,
 		} = attributes;
 
 		const galleryImages = images.map ( (image)  => JSON.parse(image));
@@ -31,38 +31,46 @@ class Controls extends Component {
 			});
 		}
 
+		const hasImages = !! images.length;
+
+		const MEDIA_ALIGNMENTS_CONTROLS = {
+			left: {
+				icon: 'align-pull-left',
+				title: __( 'Show Media on Left Side', '__plugin_txtd' ),
+			},
+			right: {
+				icon: 'align-pull-right',
+				title: __( 'Show Media on Right Side', '__plugin_txtd' ),
+			},
+		};
+
 		const toolbarControls = (
 			<BlockControls>
-				<Toolbar>
-					<IconButton
-						label = {__('Show Media on Left Side', '__plugin_txtd')}
-						icon = 'align-pull-left'
-						isActive= { mediaPosition === 'left' }
-						onClick={ () => setAttributes({ mediaPosition: 'left' }) }
-					/>
-					<IconButton
-						label = {__('Show Media on Right Side', '__plugin_txtd')}
-						icon = 'align-pull-right'
-						isActive = { mediaPosition === 'right' }
-						onClick = { () => setAttributes({ mediaPosition: 'right' }) }
-					/>
-					{ !! images.length && (
-							<MediaUpload
-								type = "image"
-								multiple
-								gallery
-								value = { galleryImages.map( ( image ) => image.id ) }
-								onSelect = { updateImages }
-								render = {({open}) => (
-									<IconButton
-										icon="edit"
-										onClick={open}>
-									</IconButton>
-								)}
+				<Toolbar
+					controls={ Object.keys(MEDIA_ALIGNMENTS_CONTROLS).map(control => {
+						return {
+							...MEDIA_ALIGNMENTS_CONTROLS[control],
+							onClick: () => { setAttributes({ mediaPosition: control } )},
+							isActive: mediaPosition === control
+						}
+					}) }
+				/>
+				{ hasImages && <Toolbar>
+					<MediaUpload
+						onSelect = { updateImages }
+						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						multiple
+						gallery
+						value = { galleryImages.map( ( image ) => image.id ) }
+						render = { ( { open } ) => (
+							<IconButton
+								label={ __( 'Edit gallery', '__plugin_txtd' ) }
+								icon="edit"
+								onClick= { open }
 							/>
-					) }
-				</Toolbar>
-				<AlignmentToolbar {...this.props} />
+						)}
+					/>
+				</Toolbar> }
 			</BlockControls>
 		);
 
