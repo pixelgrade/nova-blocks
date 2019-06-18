@@ -46,7 +46,6 @@ class OverlayControls extends Component {
 		return <Fragment>
 			<RadioControl
 				label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
-				value={ overlayFilterStyle }
 				selected={ overlayFilterStyle }
 				options={ [
 					{ label: __( 'None', '__plugin_txtd' ), value: 'none' },
@@ -108,7 +107,8 @@ class ColorPanel extends Component {
 					label: __( 'Content Color', '__plugin_txtd' ),
 				},
 			] }
-			colors={ colors } >
+			colors={ colors } 
+			initialOpen={ false }>
 			<OverlayControls { ...this.props } />
 		</PanelColorSettings>
 	}

@@ -48,7 +48,7 @@ class GalleryPlaceholder extends Component {
 			setAttributes
 		} = this.props;
 
-		const chasImages = !! galleryImages.length;
+		const hasImages = !! galleryImages.length;
 
 		return (
 			<MediaPlaceholder

@@ -10,7 +10,7 @@
     },
     "contentWidth":  {
       "type": "string",
-      "default": "full"
+      "default": "large"
     },
     "contentWidthCustom":  {
       "type": "number",
@@ -45,13 +45,11 @@
     },
     "applyMinimumHeight": {
       "type": "string",
-      "default": "first",
       "source": "meta",
       "meta": "nova_hero_apply_minimum_height"
     },
     "minHeight": {
       "type": "number",
-      "default": "75",
       "source": "meta",
       "meta": "nova_hero_minimum_height"
     },
@@ -61,7 +59,6 @@
     },
     "scrollIndicator": {
       "type": "boolean",
-      "default": true,
       "source": "meta",
       "meta": "nova_hero_scroll_indicator"
     },

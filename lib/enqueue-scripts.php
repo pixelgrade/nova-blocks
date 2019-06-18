@@ -13,11 +13,6 @@ function nova_enqueue_block_editor_assets() {
 		filemtime( nova_get_plugin_directory() . $block_path )
 	);
 
-	global $content_width;
-	wp_localize_script('nova-blocks-js', 'nova-blocks', array(
-		'contentWidth' => isset( $content_width ) ? $content_width : 1100,
-	));
-
 	// Enqueue optional editor only styles
 	wp_enqueue_style(
 		'nova-blocks-editor-css',

@@ -320,12 +320,12 @@ html body {
   --nova-spacing-small: 5%;
   --nova-spacing-medium: 10%;
   --nova-spacing-large: 15%;
-  --nova-content-width: 50%;
   --nova-content-width-full: 100%;
   --nova-content-width-large: 50%;
   --nova-content-width-narrow: 30%; }
 
 .nova-u-content-width {
+  --nova-content-width: var(--nova-content-width-full);
   max-width: var(--nova-content-width); }
   .nova-u-content-width-full .nova-u-content-width {
     --nova-content-width: var(--nova-content-width-full); }
@@ -581,7 +581,7 @@ body[class] {
 
 .u-container-width {
   width: 95%;
-  max-width: 1300px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto; }
 
