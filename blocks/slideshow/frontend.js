@@ -74,8 +74,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 		} );
 
-		console.log( sliderMinHeight, slideMaxHeight, mediaMinHeight );
-
 		return Math.max( sliderMinHeight, slideMaxHeight, mediaMinHeight );
 	}
 

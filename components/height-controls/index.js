@@ -8,7 +8,7 @@ const {
 
 const {
 	PanelBody,
-	SelectControl,
+	RadioControl,
 	ToggleControl,
 } = wp.components;
 
@@ -62,54 +62,48 @@ class HeightPanel extends Component {
 	render() {
 
 		const {
-			attributes: {
-				applyMinimumHeight,
-				minHeight,
-			},
+			attributes,
 			setAttributes
 		} = this.props;
 
+		const applyMinimumHeight = !! attributes.applyMinimumHeight ? attributes.applyMinimumHeight : 'first';
+		const minHeight = !! attributes.minHeight ? attributes.minHeight : 75;
+
 		return (
 			<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
-				<SelectControl
+				<RadioControl
 					label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
-					value={ applyMinimumHeight }
+					selected={ applyMinimumHeight }
 					onChange={ applyMinimumHeight => {
 						setAttributes( { applyMinimumHeight } );
 						updateBlocks( { applyMinimumHeight } );
 					} }
-					options={[{
-						label: __( 'None', '__plugin_txtd' ),
-						value: 'none'
-					}, {
-						label: __( 'First Block Only', '__plugin_txtd' ),
-						value: 'first'
-					}, {
-						label: __( 'All Blocks', '__plugin_txtd' ),
-						value: 'all'
-					}]}
+					options={
+						[
+							{ label: __( 'None', '__plugin_txtd' ), value: 'none' },
+							{ label: __( 'First Hero Block Only', '__plugin_txtd' ), value: 'first' },
+							{ label: __( 'All Hero Blocks', '__plugin_txtd' ), value: 'all' }
+						]
+					}
 				/>
-				{ 'none' !== applyMinimumHeight && <SelectControl
-					label={ __( 'Minimum Height', '__plugin_txtd' ) }
-					value={ minHeight }
-					onChange={ minHeight => {
-						setAttributes( { minHeight } );
-						updateBlocks( { minHeight } );
-					} }
-					options={[{
-						label: __( 'Half', '__plugin_txtd' ),
-						value: 50
-					}, {
-						label: __( 'Two Thirds', '__plugin_txtd' ),
-						value: 66
-					}, {
-						label: __( 'Three Quarters', '__plugin_txtd' ),
-						value: 75
-					}, {
-						label: __( 'Full', '__plugin_txtd' ),
-						value: 100
-					}]}
-				/> }
+				{ 'none' !== applyMinimumHeight &&
+				    <RadioControl
+						label={ __( 'Minimum Height', '__plugin_txtd' ) }
+						selected={ minHeight }
+						onChange={ minHeight => {
+							setAttributes( { minHeight } );
+							updateBlocks( { minHeight } );
+						} }
+						options={
+							[
+								{ label: __( 'Half', '__plugin_txtd' ), value: 50 },
+								{ label: __( 'Two Thirds', '__plugin_txtd' ), value: 66 },
+								{ label: __( 'Three Quarters', '__plugin_txtd' ), value: 75 },
+								{ label: __( 'Full', '__plugin_txtd' ), value: 100 }
+							]
+						}
+					/>
+			    }
 			</PanelBody>
 		)
 	}
