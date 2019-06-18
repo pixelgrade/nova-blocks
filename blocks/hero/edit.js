@@ -245,7 +245,7 @@ export default class Edit extends Component {
 		const heightControls = () => {
 
 			return (
-				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
 					<RadioControl
 						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
 						value={ applyMinimumHeight }
@@ -319,7 +319,7 @@ export default class Edit extends Component {
 			</Fragment>,
 			<InspectorControls>
 
-				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
+				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ false }>
 					<AlignmentControls { ...this.props } />
 				</PanelBody>
 

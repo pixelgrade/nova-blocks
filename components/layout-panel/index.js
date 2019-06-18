@@ -17,7 +17,8 @@ export default class LayoutPanel extends Component {
 
 		return <PanelBody
 			className="pixelgrade-hero-button-group-wrapper"
-			title={ __( 'Layout', '__plugin_txtd' ) }>
+			title={ __( 'Layout', '__plugin_txtd' ) }
+			initialOpen={ false }>
 
 			<PaddingControls { ...this.props } />
 			<WidthControls { ...this.props } />
