@@ -22,8 +22,8 @@ export default class MediaPreview extends Component {
 		const {
 			attributes,
 			className,
-			setAttributes,
 			isSelected,
+			updateImages
 		} = this.props;
 
 		const {
@@ -67,34 +67,30 @@ export default class MediaPreview extends Component {
 					galleryImages.map( (image) => {
 						return (
 							<div className ='nova-media__image'>
-								<img src={ image.url } />
+								<img alt={ image.alt } src={ image.url } />
 							</div>
 						)
 					})
 				)
 			}
-		}
-
-		function updateImages( media ) {
-			setAttributes({
-				images: media.map( ( image ) => JSON.stringify({ url: image.url, alt: image.alt }) )
-			});
-		}
+		};
 
 		return (
 			<Fragment>
-				<div className = { classNames } >
+				<div className={classNames}>
+					<div className="u-container-width">
 						<div className="nova-media">
-							<div className="nova-media__aside" >
-								{ displayImages(images) }
+							<div className="nova-media__aside">
+								{displayImages( images )}
 							</div>
-							<div className="nova-media__content" style={ {textAlign:  alignment } }>
+							<div className="nova-media__content" style={{textAlign: alignment}}>
 								<InnerBlocks
 									allowedBlocks={ALLOWED_BLOCKS}
 									template={TEMPLATE}
 								/>
 							</div>
 						</div>
+					</div>
 				</div>
 			</Fragment>
 		)

@@ -1,5 +1,3 @@
-const {__} = wp.i18n;
-
 const { Component, Fragment } = wp.element;
 
 import Controls from './controls';
@@ -12,11 +10,18 @@ export default class Edit extends Component {
 		super( {...arguments} );
 	}
 
+	updateImages( media ) {
+		this.props.setAttributes({
+			images: media.map( ( image ) => JSON.stringify({ id: image.id, url: image.url, alt: image.alt }) )
+		});
+	}
+
 	render() {
+
 		return [
 			<Fragment>
-				<MediaPreview { ...this.props } />
-				<Controls { ...this.props } />
+				<MediaPreview { ...this.props } updateImages={ this.updateImages.bind( this ) } />
+				<Controls { ...this.props } updateImages={ this.updateImages.bind( this ) } />
 				<Inspector { ...this.props } />
 			</Fragment>
 		]

@@ -45,7 +45,7 @@ export default class Save extends Component {
 				galleryImages.map( (image) => {
 					return (
 						<div className ='nova-media__image'>
-							<img src={ image.url } />
+							<img alt={ image.alt } src={ image.url } />
 						</div>
 					)
 				})

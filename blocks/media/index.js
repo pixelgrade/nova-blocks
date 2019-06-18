@@ -25,11 +25,11 @@ export default registerBlockType( 'pixelgrade/media',
 		...attributes,
 		edit,
 		save,
-//		getEditWrapperProps() {
-//			const settings = wp.data.select( 'core/block-editor' ).getSettings();
-//			return settings.alignWide ? {
-//				'data-align': 'full'
-//			} : {}
-//		},
+		getEditWrapperProps() {
+			const settings = wp.data.select( 'core/block-editor' ).getSettings();
+			return settings.alignWide ? {
+				'data-align': 'full'
+			} : {}
+		},
 	}
 )

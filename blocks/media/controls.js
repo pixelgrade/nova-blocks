@@ -1,11 +1,7 @@
-import * as icons from "../icons";
-
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { MediaUpload, BlockControls } = wp.blockEditor;
 const { IconButton, Toolbar } = wp.components;
-
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 class Controls extends Component {
 	constructor( props ) {
@@ -16,20 +12,15 @@ class Controls extends Component {
 		const {
 			attributes,
 			setAttributes,
+			updateImages
 		} = this.props;
 
 		const {
 			mediaPosition,
-			images,
+			images = [],
 		} = attributes;
 
 		const galleryImages = images.map ( (image)  => JSON.parse(image));
-
-		function updateImages( media ) {
-			setAttributes({
-				images: media.map( ( image ) => JSON.stringify({ url: image.url, alt: image.alt }) )
-			});
-		}
 
 		const hasImages = !! images.length;
 
@@ -57,16 +48,19 @@ class Controls extends Component {
 				/>
 				{ hasImages && <Toolbar>
 					<MediaUpload
-						onSelect = { updateImages }
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
+						type = "image"
 						multiple
 						gallery
 						value = { galleryImages.map( ( image ) => image.id ) }
+						onSelect = { updateImages }
 						render = { ( { open } ) => (
 							<IconButton
+								className='components-icon-button components-toolbar__control'
 								label={ __( 'Edit gallery', '__plugin_txtd' ) }
 								icon="edit"
-								onClick= { open }
+								onClick= { () => {
+									open();
+								} }
 							/>
 						)}
 					/>
