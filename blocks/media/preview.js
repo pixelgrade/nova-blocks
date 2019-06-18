@@ -31,7 +31,8 @@ export default class MediaPreview extends Component {
 			contentStyle,
 			blockStyle,
 			mediaPosition,
-			images
+			images,
+			alignment
 		} = attributes;
 
 		const classNames = classnames(className, {
@@ -86,7 +87,7 @@ export default class MediaPreview extends Component {
 							<div className="nova-media__aside" >
 								{ displayImages(images) }
 							</div>
-							<div className="nova-media__content">
+							<div className="nova-media__content" style={ {textAlign:  alignment } }>
 								<InnerBlocks
 									allowedBlocks={ALLOWED_BLOCKS}
 									template={TEMPLATE}
