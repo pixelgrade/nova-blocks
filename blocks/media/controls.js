@@ -56,7 +56,7 @@ class Controls extends Component {
 						render = { ( { open } ) => (
 							<IconButton
 								className='components-icon-button components-toolbar__control'
-								label={ __( 'Edit gallery', '__plugin_txtd' ) }
+								label={ __( 'Edit Media', '__plugin_txtd' ) }
 								icon="edit"
 								onClick= { () => {
 									open();
