@@ -63,7 +63,7 @@
     },
     "overlayFilterStrength": {
       "type": "number",
-      "default": 30
+      "default": 0
     }
   }
 }

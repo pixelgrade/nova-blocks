@@ -6,7 +6,7 @@
     },
     "contentPaddingCustom":  {
       "type": "number",
-      "default": 50
+      "default": 75
     },
     "contentWidth":  {
       "type": "string",

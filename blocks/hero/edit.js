@@ -251,7 +251,7 @@ export default class Edit extends Component {
 			</Fragment>,
 			<InspectorControls>
 
-				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ false }>
+				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ true }>
 					<AlignmentControls { ...this.props } />
 				</PanelBody>
 
