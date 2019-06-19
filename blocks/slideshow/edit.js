@@ -30,9 +30,7 @@ const {
 
 const defaultGalleryImages = [{
 	"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
-	"alt": "This is a catchy image title",
 	"id": -1,
-	"caption": "A brilliant caption to explain its catchiness",
 	"sizes": {
 		"thumbnail": {
 			"url": "https://source.unsplash.com/_nqApgG-QrY/150x150"
@@ -45,6 +43,8 @@ const defaultGalleryImages = [{
 	}
 }, {
 	"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
+	"alt": "This is a catchy image title",
+	"caption": "A brilliant caption to explain its catchiness",
 	"id": -2,
 	"sizes": {
 		"thumbnail": {

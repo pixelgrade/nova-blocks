@@ -70,7 +70,7 @@ class HeightPanel extends Component {
 		const minHeight = !! attributes.minHeight ? attributes.minHeight : 75;
 
 		return (
-			<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
 				<RadioControl
 					label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
 					selected={ applyMinimumHeight }
