@@ -28,9 +28,6 @@
 			frameRendered = false;
 		}
 
-		onResize();
-		onScroll();
-
 		$.fn.rellax = function( options ) {
 			return this.each( function() {
 				var element = $.data( this, "plugin_" + Rellax ),
@@ -255,9 +252,11 @@
 
 		var restart = debounce( badRestart, 300 );
 
-		$( window ).on( 'resize', onResize );
+		$( window ).on( 'resize', restart );
 		$( window ).on( 'scroll', onScroll );
 
+		onResize();
+		onScroll();
 		render();
 	}
 )( jQuery, window, document );
