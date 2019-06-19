@@ -396,7 +396,7 @@ html body {
   --media-card-box-padding: 56px; }
   @media not screen and (min-width: 1024px) {
     :root {
-      --box-padding: 28px; } }
+      --media-card-box-padding: 28px; } }
 
 .nova-media {
   position: relative;

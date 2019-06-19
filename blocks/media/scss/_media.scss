@@ -10,7 +10,7 @@
   --media-card-box-padding: 56px;
 
   @include below($desktop-width) {
-    --box-padding: 28px;
+    --media-card-box-padding: 28px;
   }
 }
 
