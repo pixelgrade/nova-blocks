@@ -70,6 +70,14 @@
 
   .content-is-highlighted.block-is-moderate & {
 
+    .nova-media__content {
+      margin-bottom: 0;
+
+      @include below($tablet-width) {
+        margin-bottom: var(--media-card-box-padding);
+      }
+    }
+
      &:before,
      &:after {
        background-color: var(--media-card-light-gray);
@@ -181,6 +189,10 @@
   position: relative;
   grid-column: span 6;
   grid-row: span 6;
+
+  &:nth-child(n+5) {
+    display: none;
+  }
 }
 
 
@@ -212,6 +224,48 @@
   grid-row: 7 / span 6;
 }
 
+.wp-block-pixelgrade-media[class][class] {
+  margin: 0;
+}
+
+.content-is-highlighted {
+  .nova-media__content {
+    @include below($desktop-width) {
+      margin-top: var(--media-card-box-padding);
+    }
+  }
+}
+
+[class*="block-is"] {
+  + [class*="block-is"] {
+    .nova-media {
+      padding-top: 0;
+    }
+  }
+}
+
+.wp-block-pixelgrade-media:not([class*="block-is"]) {
+  + .wp-block-pixelgrade-media:not([class*="block-is"]) {
+      .nova-media {
+        margin-top: var(--media-card-box-padding);
+      }
+  }
+
+  + [class*="block-is"] {
+    margin-top: var(--media-card-box-padding);
+  }
+}
+
+[class*="block-is-moderate"] {
+  + [class*="block-is-highlighted"] {
+    .nova-media {
+      padding-top: var(--media-card-box-padding);
+    }
+  }
+}
+
+
+
 
 // ---------------------------------------
 // Themes Use Cases
@@ -227,7 +281,7 @@
 }
 
 @media only screen and (min-width: 1168px) {
-  .entry .entry-content > .wp-block-pixelgrade-media, 
+  .entry .entry-content > .wp-block-pixelgrade-media,
   .entry .entry-summary > * {
         max-width: 100%;
         margin-left: auto;
