@@ -9,14 +9,18 @@
     overflow: hidden;
 }
 
-.editor-block-list__block-edit {
+.editor-block-list__block-edit[class][class] {
 
-    .nova-slideshow {
-        padding-top: 75%;
+    .nova-slideshow__slider,
+    .nova-slideshow__slide,
+    .nova-slideshow__content {
+        position: static;
+    }
 
-        .nova-slideshow__slide {
-            @include cover;
-        }
+    .nova-slideshow__slider {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }
 

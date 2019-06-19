@@ -171,11 +171,15 @@ export default class Edit extends Component {
 						</PanelBody>
 
 						<ColorPanel { ...this.props } />
-						<LayoutPanel { ...this.props }>
+
+						<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
 							<RadioControl
 								label={ __( 'Minimum Height', '__plugin_txtd' ) }
 								selected={ minHeight }
-								onChange={ minHeight => { setAttributes( { minHeight } ) } }
+								onChange={ minHeight => {
+									console.log( minHeight );
+									setAttributes( { minHeight } )
+								} }
 								options={[{
 									label: __( 'Auto', '__plugin_txtd' ),
 									value: 0
@@ -193,7 +197,9 @@ export default class Edit extends Component {
 									value: 100
 								}]}
 							/>
-						</LayoutPanel>
+						</PanelBody>
+
+						<LayoutPanel { ...this.props } />
 
 						<ParallaxPanel { ...this.props } />
 
