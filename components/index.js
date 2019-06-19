@@ -7,6 +7,7 @@ import {
 } from './gallery-options';
 
 import {
+	ColorControls,
 	ColorPanel,
 	ColorToolbar,
 	OverlayControls

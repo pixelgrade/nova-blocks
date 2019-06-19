@@ -19,6 +19,7 @@ const {
 
 const {
 	PanelBody,
+	RadioControl,
 	SelectControl,
 } = wp.components;
 
@@ -159,7 +160,7 @@ export default class Edit extends Component {
 
 					{ 'gallery' === slideshowType && <Fragment>
 
-						<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) }>
+						<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ false }>
 							<AlignmentControls { ...{
 								...this.props,
 								attributes: {
@@ -171,9 +172,9 @@ export default class Edit extends Component {
 
 						<ColorPanel { ...this.props } />
 						<LayoutPanel { ...this.props }>
-							<SelectControl
+							<RadioControl
 								label={ __( 'Minimum Height', '__plugin_txtd' ) }
-								value={ minHeight }
+								selected={ minHeight }
 								onChange={ minHeight => { setAttributes( { minHeight } ) } }
 								options={[{
 									label: __( 'Auto', '__plugin_txtd' ),

@@ -8,7 +8,7 @@ const {
 const {
 	PanelBody,
 	RangeControl,
-	SelectControl,
+	RadioControl,
 	ToggleControl,
 } = wp.components;
 
@@ -33,9 +33,9 @@ export default class ParallaxPanel extends Component {
 					onChange={ () => setAttributes( { enableParallax: ! enableParallax } ) }
 				/>
 				{ !! enableParallax &&
-				  <SelectControl
+				  <RadioControl
 					  label={ __( 'Parallax Orbital Speed', '__plugin_txtd' ) }
-					  value={parallaxAmount}
+					  selected={ parallaxAmount }
 					  onChange={ parallaxAmount => {
 
 						  if ( parallaxAmount === 'custom' ) {
@@ -50,13 +50,13 @@ export default class ParallaxPanel extends Component {
 					  options={[
 						  {
 							  label: __( 'Fast as Mercure', '__plugin_txtd' ),
-							  value: 20
+							  value: '20'
 						  }, {
 							  label: __( 'Natural as Earth', '__plugin_txtd' ),
-							  value: 50
+							  value: '50'
 						  }, {
 							  label: __( 'Slow as Neptune', '__plugin_txtd' ),
-							  value: 70
+							  value: '70'
 						  }, {
 							  label: __( 'Custom', '__plugin_txtd' ),
 							  value: 'custom'
