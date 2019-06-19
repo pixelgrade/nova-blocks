@@ -31,7 +31,9 @@ class GalleryPlaceholder extends Component {
 		} );
 
 		Promise.all( promises ).then( () => {
-			this.props.setAttributes( { galleryImages } );
+			this.props.setAttributes( { galleryImages: galleryImages.filter( image => {
+				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
+			} ) } );
 		} );
 
 	}
@@ -59,7 +61,7 @@ class GalleryPlaceholder extends Component {
 					title: '',
 					instructions: __( 'Drag images, upload new ones or select files from your library.', '__plugin_txtd' ),
 				} }
-				onSelect={ galleryImages => { setAttributes( { galleryImages } ) } }
+				onSelect={ this.onChangeGallery.bind( this ) }
 				accept="image/*"
 				allowedTypes={ ALLOWED_MEDIA_TYPES }
 				multiple

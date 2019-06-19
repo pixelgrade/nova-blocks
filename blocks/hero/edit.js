@@ -3,11 +3,13 @@ import * as icons from '../icons';
 
 import {
 	AlignmentControls,
+	HeightPanel,
 	LayoutPanel,
 	ColorControls,
 	ColorPanel,
 	OverlayControls,
-	ParallaxPanel
+	ParallaxPanel,
+	ScrollIndicatorPanel,
 } from "../../components";
 
 const { __ } = wp.i18n;
@@ -242,82 +244,6 @@ export default class Edit extends Component {
 			</div>
 		}
 
-		const heightControls = () => {
-
-			return (
-				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-					<RadioControl
-						label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
-						selected={ applyMinimumHeight }
-						onChange={ applyMinimumHeight => {
-							setAttributes( { applyMinimumHeight } );
-							updateBlocks( { applyMinimumHeight } );
-						} }
-						options={
-							[
-								{
-									label: __( 'None', '__plugin_txtd' ),
-									value: 'none'
-								}, {
-									label: __( 'First Hero Block Only', '__plugin_txtd' ),
-									value: 'first'
-								}, {
-									label: __( 'All Hero Blocks', '__plugin_txtd' ),
-									value: 'all'
-								}
-							]
-						}
-					/>
-					{ 'none' !== applyMinimumHeight && <Fragment>
-						<RadioControl
-							label={ __( 'Minimum Height', '__plugin_txtd' ) }
-							selected={ minHeight }
-							onChange={ minHeight => {
-								setAttributes( { minHeight } );
-								updateBlocks( { minHeight } );
-							} }
-							options={
-								[
-									{
-										label: __( 'Half the Screen', '__plugin_txtd' ),
-										value: '50'
-									}, {
-										label: __( 'Two Thirds', '__plugin_txtd' ),
-										value: '66'
-									}, {
-										label: __( 'Three Quarters', '__plugin_txtd' ),
-										value: '75'
-									}, {
-										label: __( 'Full Screen', '__plugin_txtd' ),
-										value: '100'
-									}
-								]
-							}
-						/>
-					</Fragment> }
-				</PanelBody>
-			)
-		}
-
-		const scrollIndicatorControl = () => {
-			const heroBlocks = editorData.getBlocks().filter( block => {
-				return block.name === 'pixelgrade/hero';
-			} );
-
-			const index = heroBlocks.findIndex( block => block.clientId === editorData.getSelectedBlockClientId() );
-
-			return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
-				<ToggleControl
-					label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
-					checked={ scrollIndicator }
-					onChange={ scrollIndicator => {
-						setAttributes( { scrollIndicator } );
-						updateBlocks( { scrollIndicator } );
-					} }
-				/>
-			</PanelBody>
-		}
-
 		return [
 			<Fragment>
 				{ hero() }
@@ -331,10 +257,8 @@ export default class Edit extends Component {
 
 				<ColorPanel { ...this.props } />
 				<LayoutPanel { ...this.props } />
-
-				{ heightControls() }
-				{ scrollIndicatorControl() }
-
+				<HeightPanel { ...this.props } />
+				<ScrollIndicatorPanel { ...this.props } />
 				<ParallaxPanel { ...this.props } />
 
 			</InspectorControls>

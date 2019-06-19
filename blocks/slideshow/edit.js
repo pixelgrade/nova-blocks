@@ -30,6 +30,7 @@ const {
 const defaultGalleryImages = [{
 	"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
 	"alt": "This is a catchy image title",
+	"id": -1,
 	"caption": "A brilliant caption to explain its catchiness",
 	"sizes": {
 		"thumbnail": {
@@ -43,6 +44,7 @@ const defaultGalleryImages = [{
 	}
 }, {
 	"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
+	"id": -2,
 	"sizes": {
 		"thumbnail": {
 			"url": "https://source.unsplash.com/Gt_4iMB7hY0/150x150"
@@ -55,6 +57,7 @@ const defaultGalleryImages = [{
 	}
 }, {
 	"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
+	"id": -3,
 	"sizes": {
 		"thumbnail": {
 			"url": "https://source.unsplash.com/1vKTnwLMdqs/150x150"
