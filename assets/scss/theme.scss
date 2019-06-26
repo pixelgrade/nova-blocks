@@ -1,0 +1,77 @@
+@import "setup";
+
+@import 'blocks/button';
+
+@import '../../blocks/hero/scss/theme';
+@import '../../blocks/media/scss/theme';
+@import '../../blocks/slideshow/scss/theme';
+
+// ---------------------------------------
+// Themes Use Cases
+// Status: Work-in-progress
+// ---------------------------------------
+
+:root {
+    --blocks-spacing: -2em;
+}
+
+// Remove space between
+// two consecutives Hero blocks
+@mixin remove-consecutive-blocks-spacing {
+    .alignfull {
+        &.nova-hero + &.nova-hero {
+            margin-top: var(--blocks-spacing);
+        }
+    }
+}
+@include remove-consecutive-blocks-spacing();
+
+// Theme: Twenty Nineteen
+.entry {
+
+    .entry-content {
+        @media only screen and (min-width: 768px) {
+            --blocks-spacing: calc(-2 * 1rem);
+            @include remove-consecutive-blocks-spacing();
+        }
+    }
+}
+
+// Theme Changes
+@mixin theme-content-changes {
+
+    .nova-hero {
+        h1 {
+            margin-bottom: 0;
+            @media only screen and (min-width: 768px) {
+                font-size: 3.5em;
+            }
+
+        }
+        p {
+            font-size: 1.2em;
+        }
+    }
+
+    h1:before,
+    h2:before {
+        display: none;
+    }
+}
+
+
+
+// Frontend
+html body {
+    @include theme-font;
+}
+.content-area .entry .entry-content {
+    @include theme-content-changes;
+}
+
+
+// Editor
+.editor-styles-wrapper.editor-styles-wrapper {
+    @include theme-content-changes;
+    @include theme-font;
+}

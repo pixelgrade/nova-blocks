@@ -1,296 +1,225 @@
-@import "../../../assets/scss/mixins";
-
+@import "../../../assets/scss/setup";
 
 :root {
-  --media-card-light-gray: #EEF1F2;
-  --media-card-headings-color: #323067;
-  --media-card-secondary-headings-color: #203AB6;
-  --media-card-content-bg-color: #FFFFFF;
-  --media-card-highlighted-bg-color: #000043;
-  --media-card-box-padding: 56px;
+    --nova-media-white: #FFFFFF;
+    --nova-media-gray: #EEF1F2;
+    --nova-media-gray-darkest: #272743;
 
-  @include below($desktop-width) {
-    --media-card-box-padding: 28px;
-  }
+    --nova-media-blue: #203AB6;
+    --nova-media-blue-dark: #323067;
+    --nova-media-blue-darker: #000043;
+
+    --nova-media-spacing-unit: 56px;
+
+    @include below( desktop ) {
+        --nova-media-mobile-spacing-unit: 28px;
+    }
 }
 
+.wp-block-pixelgrade-media {
+    --nova-media-text-color: var(--nova-media-gray-darkest);
+    --nova-media-titles-color: var(--nova-media-blue-dark);
+    --nova-media-subtitles-color: var(--nova-media-blue);
+    --nova-media-background-color: transparent;
+
+    --nova-media-padding: 0;
+    --nova-media-content-padding: 0;
+    --nova-media-content-background-color: transparent;
+    --nova-media-content-box-shadow: none;
+}
+
+// #wpwrap temporary hack to make sure everything works just fine
 .nova-media {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-column-gap: var(--media-card-box-padding);
+    position: relative;
 
-  .content-is-highlighted & {
-    .nova-media__content {
-      background-color: var(--media-card-highlighted-bg-color);
-      padding: var(--media-card-box-padding);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-column-gap: var(--nova-media-spacing-unit);
+
+    padding-top: var(--nova-media-padding);
+    padding-bottom: var(--nova-media-padding);
+
+    h1, h3, h3 {
+        color: var(--nova-media-titles-color);
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--media-card-content-bg-color);
-    }
-
-    p {
-      color: var(--media-card-content-bg-color);
-    }
-  }
-
-  .content-is-highlighted.block-is-highlighted & {
-    .nova-media__content {
-      background-color: var(--media-card-content-bg-color);
-      padding: var(--media-card-box-padding);
-
-      @include below($desktop-width) {
-        margin-bottom: var(--media-card-box-padding);
-      }
-    }
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--media-card-headings-color);
+    h4, h5, h6 {
+        color: var(--nova-media-subtitles-color);
     }
 
     p {
-      color: var(--media-card-text-color);
+        color: var(--nova-media-text-color);
     }
-  }
-
-  .content-is-moderate.block-is-highlighted & {
-
-      h1, h2, h3, h4, h5, h6 {
-        color: var(--media-card-content-bg-color);
-      }
-
-      p {
-        color: var(--media-card-content-bg-color);
-      }
-
-    .nova-media__content {
-      background-color: rgba(255, 255, 255, .2);
-    }
-  }
-
-  .content-is-highlighted.block-is-moderate & {
-
-    .nova-media__content {
-      margin-bottom: 0;
-
-      @include below($tablet-width) {
-        margin-bottom: var(--media-card-box-padding);
-      }
-    }
-
-     &:before,
-     &:after {
-       background-color: var(--media-card-light-gray);
-     }
-  }
-
-
-  .block-is-moderate & {
-    background-color: var(--media-card-light-gray);
-    padding-top: var(--media-card-box-padding);
-    padding-bottom: var(--media-card-box-padding);
 
     &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      display: block;
-      width: 200vw;
-      height: 100%;
-      background-color: var(--media-card-light-gray);
-      z-index: -1;
-      left: -100vw;
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: -50vw;
+        right: -50vw;
+        z-index: -1;
+
+        display: block;
+        height: 100%;
+
+        background-color: var(--nova-media-background-color);
     }
-  }
-
-  .block-is-highlighted & {
-    background-color: var(--media-card-highlighted-bg-color);
-    padding-top: var(--media-card-box-padding);
-    padding-bottom: var(--media-card-box-padding);
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      display: block;
-      width: 200vw;
-      height: 100%;
-      background-color: var(--media-card-highlighted-bg-color);
-      z-index: -1;
-      left: -100vw;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--media-card-content-bg-color);
-    }
-
-    p {
-      color: var(--media-card-content-bg-color);
-    }
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--media-card-headings-color);
-  }
-
-  p {
-    color: var(--media-card-text-color);
-  }
 }
 
-.nova-media__aside {
-  @include below($desktop-width) {
-    grid-column: span 2;
+.block-is-moderate,
+.block-is-highlighted {
+    --nova-media-padding: var(--nova-media-spacing-unit);
+}
 
-    min-height: 400px;
-    order: 2;
-  }
+.block-is-moderate {
+    --nova-media-background-color: var(--nova-media-gray);
+}
+
+.block-is-highlighted {
+    --nova-media-background-color: var(--nova-media-blue-darker);
+}
+
+.content-is-moderate,
+.content-is-highlighted {
+    --nova-media-content-padding: var(--nova-media-spacing-unit);
+}
+
+.content-is-moderate,
+.content-is-highlighted.block-is-highlighted {
+    --nova-media-content-background-color: var(--nova-media-white);
+    --nova-media-content-box-shadow: #{$nova-box-shadow-nova};
+}
+
+.content-is-moderate.block-is-highlighted {
+    --nova-media-content-background-color: #{rgba(#FFFFFF, .2)};
+}
+
+.block-is-highlighted:not(.content-is-highlighted),
+.content-is-highlighted:not(.block-is-highlighted) {
+    --nova-media-text-color: var(--nova-media-white);
+    --nova-media-titles-color: var(--nova-media-text-color);
+    --nova-media-subtitles-color: var(--nova-media-text-color);
+}
+
+.content-is-highlighted:not(.block-is-highlighted) {
+    --nova-media-content-background-color: var(--nova-media-blue-darker);
 }
 
 .nova-media__content {
-  z-index: 2;
+    padding: var(--nova-media-content-padding);
+    background-color: var(--nova-media-content-background-color);
+    box-shadow: var(--nova-media-content-box-shadow);
+    z-index: 2;
 
-  @include below($desktop-width) {
-    grid-column: span 2;
-  }
-
-  .content-is-moderate & {
-    padding: var(--media-card-box-padding);
-    background-color: var(--media-card-content-bg-color);
-    @include box-shadow(nova);
-
-    @include below($desktop-width) {
-      margin-bottom: var(--media-card-box-padding);
+    .content-is-moderate & {
+        margin-bottom: var(--nova-media-mobile-spacing-unit);
     }
-  }
+
+    .content-is-highlighted & {
+        margin-top: var(--nova-media-mobile-spacing-unit);
+    }
 }
 
 .nova-media__aside {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
-  grid-gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    grid-gap: 15px;
 
-  .is-simple-grid &,
-  .is-overlap-grid & {
-    img {
-      @include image-cover;
-    }
-  }
+    min-height: 400px;
 
-  .has-image-on-the-right & {
-    @include above($desktop-width) {
-      order: 2;
+    .is-simple-grid &,
+    .is-overlap-grid & {
+        img {
+            @include image-cover;
+        }
     }
-  }
+
+    .has-image-on-the-right & {
+        @include above( desktop ) {
+            order: 2;
+        }
+    }
 }
 
 .nova-media__image {
-  position: relative;
-  grid-column: span 6;
-  grid-row: span 6;
+    position: relative;
+    grid-column: span 6;
+    grid-row: span 6;
 
-  &:nth-child(n+5) {
-    display: none;
-  }
+    &:nth-child(n+5) {
+        display: none;
+    }
 }
 
+@include below( desktop ) {
 
+    .nova-media__content {
+        grid-column: span 2;
+    }
+
+    .nova-media__aside {
+        grid-column: span 2;
+        order: 2;
+    }
+}
 
 .nova-media__image:first-child:last-child,
 .nova-media__placeholder {
-  grid-column: span 12;
-  grid-row: span 12;
+    grid-column: span 12;
+    grid-row: span 12;
 }
 
 .nova-media__image:first-child:nth-last-child(2) ~ *,
 .nova-media__image:first-child:nth-last-child(2) {
-  grid-column: span 6;
-  grid-row: span 12;
+    grid-column: span 6;
+    grid-row: span 12;
 }
 
 .nova-media__image:nth-last-child(3):first-child {
-  grid-column: 1 / span 6;
-  grid-row: 1/ span 6;
+    grid-column: 1 / span 6;
+    grid-row: 1/ span 6;
 }
 
-.nova-media__image:nth-last-child(3):first-child~.nova-media__image:nth-child(2) {
-  grid-column: 7 / span 6;
-  grid-row: 1/ span 6;
+.nova-media__image:nth-last-child(3):first-child ~ .nova-media__image:nth-child(2) {
+    grid-column: 7 / span 6;
+    grid-row: 1/ span 6;
 }
 
-.nova-media__image:nth-last-child(3):first-child~.nova-media__image:last-child {
-  grid-column: 1 / span 12;
-  grid-row: 7 / span 6;
+.nova-media__image:nth-last-child(3):first-child ~ .nova-media__image:last-child {
+    grid-column: 1 / span 12;
+    grid-row: 7 / span 6;
 }
 
 .wp-block-pixelgrade-media[class][class] {
-  margin: 0;
-}
-
-.content-is-highlighted {
-  .nova-media__content {
-    @include below($desktop-width) {
-      margin-top: var(--media-card-box-padding);
-    }
-  }
+    margin: 0;
 }
 
 [class*="block-is"] {
-  + [class*="block-is"] {
-    .nova-media {
-      padding-top: 0;
+    + [class*="block-is"] {
+        .nova-media {
+            padding-top: 0;
+        }
     }
-  }
 }
 
 .wp-block-pixelgrade-media:not([class*="block-is"]) {
-  + .wp-block-pixelgrade-media:not([class*="block-is"]) {
-      .nova-media {
-        margin-top: var(--media-card-box-padding);
-      }
-  }
+    + .wp-block-pixelgrade-media:not([class*="block-is"]) {
+        .nova-media {
+            margin-top: var(--nova-media-spacing-unit);
+        }
+    }
 
-  + [class*="block-is"] {
-    margin-top: var(--media-card-box-padding);
-  }
+    + [class*="block-is"] {
+        margin-top: var(--nova-media-spacing-unit);
+    }
 }
 
 [class*="block-is-moderate"] {
-  + [class*="block-is-highlighted"] {
-    .nova-media {
-      padding-top: var(--media-card-box-padding);
+    + [class*="block-is-highlighted"] {
+        .nova-media {
+            padding-top: var(--nova-media-spacing-unit);
+        }
     }
-  }
-}
-
-
-
-
-// ---------------------------------------
-// Themes Use Cases
-// Status: Work-in-progress
-// ---------------------------------------
-
-// Theme: Twenty Nineteen
-.u-container-width {
-  width: 95%;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-@media only screen and (min-width: 1168px) {
-  .entry .entry-content > .wp-block-pixelgrade-media,
-  .entry .entry-summary > * {
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-  }
-}
-
-.editor-styles-wrapper {
-  h1, h2, h3 {
-    line-height: 1.2;
-  }
 }

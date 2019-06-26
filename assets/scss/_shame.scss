@@ -1,0 +1,27 @@
+// ---------------------------------------
+// Themes Use Cases
+// Status: Work-in-progress
+// ---------------------------------------
+
+// Theme: Twenty Nineteen
+.u-container-width {
+    width: 95%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (min-width: 1168px) {
+    .entry .entry-content > .wp-block-pixelgrade-media,
+    .entry .entry-summary > * {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.editor-styles-wrapper {
+    h1, h2, h3 {
+        line-height: 1.2;
+    }
+}

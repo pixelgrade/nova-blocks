@@ -1,0 +1,32 @@
+$nova-breakpoints: (
+    tablet: 768px,
+    desktop: 1024px,
+) !default;
+
+@mixin above( $value ) {
+    $breakpoint: map-get( $nova-breakpoints, $value );
+
+    @if ( $breakpoint != null ) {
+        $value: $breakpoint;
+    }
+
+    @if ( unitless( $value ) == false ) {
+        @media only screen and (min-width: $value) {
+            @content;
+        }
+    }
+}
+
+@mixin below( $value ) {
+    $breakpoint: map-get( $nova-breakpoints, $value );
+
+    @if ( $breakpoint != null ) {
+        $value: $breakpoint;
+    }
+
+    @if ( unitless( $value ) == false ) {
+        @media not screen and (min-width: $value) {
+            @content;
+        }
+    }
+}

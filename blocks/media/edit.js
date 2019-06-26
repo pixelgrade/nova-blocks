@@ -7,7 +7,7 @@ import MediaPreview from './preview';
 export default class Edit extends Component {
 
 	constructor() {
-		super( {...arguments} );
+		super( ...arguments );
 	}
 
 	updateImages( media ) {

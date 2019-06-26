@@ -9,6 +9,9 @@ const blocksCSSPlugin = new ExtractTextPlugin( {
 const editBlocksCSSPlugin = new ExtractTextPlugin( {
   filename: './assets/css/blocks.editor.css',
 } );
+const themeBlocksCSSPlugin = new ExtractTextPlugin( {
+  filename: './assets/css/blocks.theme.css',
+} );
 
 // Configuration for the ExtractTextPlugin.
 const extractConfig = {
@@ -35,13 +38,14 @@ module.exports = {
   entry: {
     './assets/js/editor.blocks' : './blocks/index.js',
     './assets/js/frontend.blocks' : './blocks/frontend.js',
+    './assets/js/theme.blocks' : './blocks/theme.js',
   },
   output: {
     path: path.resolve( __dirname ),
     filename: '[name].js',
   },
   watch: 'production' !== process.env.NODE_ENV,
-  devtool: 'cheap-eval-source-map',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -59,10 +63,15 @@ module.exports = {
         test: /editor\.s?css$/,
         use: editBlocksCSSPlugin.extract( extractConfig ),
       },
+      {
+        test: /theme\.s?css$/,
+        use: themeBlocksCSSPlugin.extract( extractConfig ),
+      },
     ],
   },
   plugins: [
     blocksCSSPlugin,
     editBlocksCSSPlugin,
+    themeBlocksCSSPlugin,
   ],
 };

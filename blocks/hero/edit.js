@@ -41,7 +41,6 @@ const {
 const editorData = wp.data.select( 'core/editor' );
 
 const updateBlocks = ( attributes ) => {
-
 	editorData.getBlocks().filter( block => {
 		return block.name === 'pixelgrade/hero';
 	} ).filter( ( block, index ) => {
@@ -103,6 +102,7 @@ export default class Edit extends Component {
 				minHeight,
 				scrollIndicator,
 				scrollIndicatorBlock,
+				positionIndicator,
 				// colors
 				contentColor,
 				overlayFilterStyle,
@@ -192,15 +192,9 @@ export default class Edit extends Component {
 				hero: {
 					color: contentColor,
 				},
-				foreground: {
-
-				},
-				content: {
-
-				},
-				image: {
-
-				}
+				foreground: {},
+				content: {},
+				image: {}
 			}
 
 			if ( !! applyMinimumHeightBlock ) {
@@ -259,6 +253,16 @@ export default class Edit extends Component {
 				<LayoutPanel { ...this.props } />
 				<HeightPanel { ...this.props } />
 				<ScrollIndicatorPanel { ...this.props } />
+				<PanelBody title={ __( 'Position Indicators', '__plugin_txtd' ) } initialOpen={ true }>
+					<ToggleControl
+						label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
+						checked={ positionIndicator }
+						onChange={ positionIndicator => {
+							setAttributes( { positionIndicator } );
+							updateBlocks( { positionIndicator } );
+						} }
+					/>
+				</PanelBody>
 				<ParallaxPanel { ...this.props } />
 
 			</InspectorControls>

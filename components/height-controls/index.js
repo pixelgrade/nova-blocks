@@ -92,7 +92,7 @@ class HeightPanel extends Component {
 						selected={ minHeight }
 						onChange={ minHeight => {
 							setAttributes( { minHeight } );
-							updateBlocks( { minHeight } );
+//							updateBlocks( { minHeight } );
 						} }
 						options={
 							[

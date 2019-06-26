@@ -33,7 +33,8 @@ export default class PaddingControls extends Component {
 			<label>{ __( 'Content Padding', '__plugin_txtd') }</label>
 			<ButtonGroup>
 				{ contentPaddingOptions.map( option =>
-					<Button isDefault={ option.value !== contentPadding }
+					<Button key={ option.value }
+							isDefault={ option.value !== contentPadding }
 					        isPrimary={ option.value === contentPadding }
 					        onClick={ () => { setAttributes( { contentPadding: option.value } ) } }>
 						{ option.label }

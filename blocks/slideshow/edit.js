@@ -74,7 +74,7 @@ const defaultGalleryImages = [{
 export default class Edit extends Component {
 
 	constructor() {
-		super( { ...arguments } );
+		super( ...arguments );
 
 		this.state = {
 			selectedIndex: 0
@@ -177,7 +177,6 @@ export default class Edit extends Component {
 								label={ __( 'Minimum Height', '__plugin_txtd' ) }
 								selected={ minHeight }
 								onChange={ minHeight => {
-									console.log( minHeight );
 									setAttributes( { minHeight } )
 								} }
 								options={[{

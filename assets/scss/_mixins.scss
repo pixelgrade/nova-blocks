@@ -1,3 +1,10 @@
+@import "mixins/_media-queries.scss";
+
+// Theme Font
+@mixin theme-font {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
 @mixin cover {
     position: absolute;
     top: 0;
@@ -61,31 +68,7 @@
     }
 }
 
-
-$tablet-width: 768px;
-$desktop-width: 1024px;
-
-@mixin above( $value ) {
-    @media only screen and (min-width: $value) {
-        @content;
-    }
-}
-
-@mixin below( $value ) {
-    @media not screen and (min-width: $value) {
-        @content;
-    }
-}
-
-@mixin tablet {
-    @include above( $tablet-width ) {
-        @content;
-    }
-}
-
-@mixin desktop {
-    @include above( $desktop-width ) {
-        @content;
-    }
-}
-
+$nova-box-shadow-nova:
+    0 32px 128px rgba(42, 54, 52, 0.1),
+    0 16px 64px rgba(42, 54, 52, 0.1),
+    0 8px 16px rgba(42, 54, 52, 0.1) !default;

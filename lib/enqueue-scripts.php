@@ -48,7 +48,19 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-rellax',
 		nova_get_plugin_url() . $rellax_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $rellax_path )
+		filemtime( nova_get_plugin_directory() . $rellax_path ),
+		true
+	);
+
+	// @todo check if bully is needed or already used?
+	// components handle: 'pixelgrade_multipage-scripts'
+	$bully_path = '/assets/js/jquery.bully.js';
+	wp_register_script(
+		'nova-blocks-bully',
+		nova_get_plugin_url() . $bully_path,
+		array( 'jquery' ),
+		filemtime( nova_get_plugin_directory() . $bully_path ),
+		true
 	);
 
 	$slick_path = '/assets/js/jquery.slick.js';
@@ -56,7 +68,8 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-slick',
 		nova_get_plugin_url() . $slick_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $slick_path )
+		filemtime( nova_get_plugin_directory() . $slick_path ),
+		true
 	);
 
 	$velocity_path = '/assets/js/jquery.velocity.js';
@@ -64,16 +77,28 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-velocity',
 		nova_get_plugin_url() . $velocity_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $slick_path )
+		filemtime( nova_get_plugin_directory() . $slick_path ),
+		true
 	);
 
 	$block_path = '/assets/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		nova_get_plugin_url() . $block_path,
-		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
+		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-bully', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
 		filemtime( nova_get_plugin_directory() . $block_path ),
 		true
 	);
 }
 add_action( 'enqueue_block_assets', 'nova_enqueue_frontend_assets' );
+
+function nova_deregister_gutenberg_styles() {
+	// Overwrite Core block styles with empty styles.
+	wp_deregister_style( 'wp-block-library' );
+	wp_register_style( 'wp-block-library', nova_get_plugin_url() . '/assets/css/blocks.theme.css' );
+
+	// Overwrite Core theme styles with empty styles.
+	wp_deregister_style( 'wp-block-library-theme' );
+	wp_register_style( 'wp-block-library-theme', '' );
+}
+add_action( 'enqueue_block_assets', 'nova_deregister_gutenberg_styles', 30 );

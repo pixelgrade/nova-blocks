@@ -1,11 +1,20 @@
+/**
+ * Internal dependencies
+ */
 import * as icons from '../icons';
 import attributes from './attributes.json';
 import edit from './edit';
 import save from './save';
 
+/**
+ * Block styles
+ */
 import './scss/style.scss';
 import './scss/editor.scss';
 
+/**
+ * wp API
+ */
 const { __ } = wp.i18n;
 
 const {
