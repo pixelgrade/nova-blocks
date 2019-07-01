@@ -1,6 +1,29 @@
 // Theme Button
-$nova-yellow:               #FFE42E         !default;
-$nova-blue:                 #2B2BBA         !default;
 $nova-border-radius:        20px 16px 18px  !default;
 $nova-transition-duration:  0.5s            !default;
 $nova-transition-easing:    ease            !default;
+
+// Branding
+$nova-blue:                 #203AB6         !default;
+$nova-blue-dark:            #323067         !default;
+$nova-blue-darker:          #000043         !default;
+
+$nova-yellow:               #FFE42E         !default;
+$nova-gray:                 #EEF1F2         !default;
+$nova-text-color:           #272743         !default;
+
+:root {
+    --nova-color-1: #{$nova-blue};
+    --nova-color-2: #{$nova-yellow};
+    --nova-color-3: #{$nova-yellow};
+
+    --nova-dark-1: #{$nova-blue-darker};
+    --nova-dark-2: #{$nova-text-color};
+    --nova-dark-3: #{$nova-blue-dark};
+
+    --nova-light-1: #FFFFFF;
+    --nova-light-2: #EEF1F2;
+    --nova-light-3: #EEF1F2;
+
+    --nova-spacing-unit: 56px;
+}

@@ -18,10 +18,10 @@ const {
 	subscribe,
 } = wp.data;
 
-let blockList = select( 'core/editor' ).getBlocks();
+let blockList = select( 'core/block-editor' ).getBlocks();
 
 let debouncedOnSubscribe = debounce(() => {
-	let newBlockList = select( 'core/editor' ).getBlocks();
+	let newBlockList = select( 'core/block-editor' ).getBlocks();
 	let blockListChanged = blockList.length !== newBlockList.length;
 
 	if ( ! blockListChanged ) {
@@ -40,14 +40,14 @@ subscribe( debouncedOnSubscribe );
 
 const updateBlocks = ( attributes ) => {
 
-	select( 'core/editor' ).getBlocks().filter( block => {
-		return block.name === 'pixelgrade/hero';
+	select( 'core/block-editor' ).getBlocks().filter( block => {
+		return block.name === 'nova/hero';
 	} ).filter( ( block, index ) => {
 		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
 		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
 		const scrollIndicatorBlock = scrollIndicator === true && index === 0;
 
-		dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, {
+		dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
 			applyMinimumHeightBlock,
 			scrollIndicatorBlock
 		} );
@@ -120,11 +120,11 @@ class ScrollIndicatorPanel extends Component {
 			setAttributes
 		} = this.props;
 
-		const heroBlocks = select( 'core/editor' ).getBlocks().filter( block => {
-			return block.name === 'pixelgrade/hero';
+		const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( block => {
+			return block.name === 'nova/hero';
 		} );
 
-		const index = heroBlocks.findIndex( block => block.clientId === select( 'core/editor' ).getSelectedBlockClientId() );
+		const index = heroBlocks.findIndex( block => block.clientId === select( 'core/block-editor' ).getSelectedBlockClientId() );
 
 		return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
 			<ToggleControl

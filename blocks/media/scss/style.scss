@@ -1,1 +1,105 @@
-@import 'media';
+.wp-block-pixelgrade-media {
+    margin-left: auto;
+    margin-right: auto;
+
+    --nova-media-padding: 0;
+}
+
+// media layout
+.nova-media {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-column-gap: var(--nova-spacing-unit);
+
+    padding-top: var(--nova-media-padding);
+    padding-bottom: var(--nova-media-padding);
+}
+
+.wp-block-pixelgrade-media {
+    --nova-media-text-color: var(--nova-dark-2);
+    --nova-media-titles-color: var(--nova-dark-3);
+    --nova-media-subtitles-color: var(--nova-color-1);
+    --nova-media-background-color: transparent;
+
+    --nova-media-content-padding: 0;
+    --nova-media-content-background-color: transparent;
+    --nova-media-content-box-shadow: none;
+}
+
+// typography colors
+.nova-media {
+    color: var(--nova-media-text-color);
+
+    h1, h3, h3 {
+        color: var(--nova-media-titles-color);
+    }
+
+    h4, h5, h6 {
+        color: var(--nova-media-subtitles-color);
+    }
+}
+
+// media background strip
+.nova-media {
+    position: relative;
+    transform: translateZ(0);
+
+    &:before {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: -50vw;
+        right: -50vw;
+        z-index: -1;
+
+        display: block;
+        height: 100%;
+
+        background-color: var(--nova-media-background-color);
+    }
+}
+
+// block variations
+.block-is-moderate,
+.block-is-highlighted {
+    --nova-media-padding: var(--nova-spacing-unit);
+}
+
+.block-is-moderate {
+    --nova-media-background-color: var(--nova-light-2);
+}
+
+.block-is-highlighted {
+    --nova-media-background-color: var(--nova-dark-1);
+}
+
+.content-is-moderate,
+.content-is-highlighted {
+    --nova-media-content-padding: var(--nova-spacing-unit);
+}
+
+.content-is-moderate,
+.content-is-highlighted.block-is-highlighted {
+    --nova-media-content-background-color: var(--nova-light-1);
+    --nova-media-content-box-shadow: #{$nova-box-shadow-nova};
+}
+
+.content-is-moderate.block-is-highlighted {
+    --nova-media-content-background-color: #{rgba(#FFFFFF, .2)};
+}
+
+.block-is-highlighted:not(.content-is-highlighted),
+.content-is-highlighted:not(.block-is-highlighted) {
+    --nova-media-text-color: var(--nova-light-1);
+    --nova-media-titles-color: var(--nova-media-text-color);
+    --nova-media-subtitles-color: var(--nova-media-text-color);
+}
+
+.content-is-highlighted:not(.block-is-highlighted) {
+    --nova-media-content-background-color: var(--nova-dark-1);
+}
+
+@import "content";
+@import "aside";
+@import "spacing";

@@ -11,7 +11,7 @@
       "default": "left"
     },
     "mediaStyle": {
-      "default": "simple-grid"
+      "default": "simple"
     },
     "contentStyle": {
       "default": "basic"

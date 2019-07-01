@@ -7,12 +7,6 @@ import edit from './edit';
 import save from './save';
 
 /**
- * Block styles
- */
-import './scss/style.scss';
-import './scss/editor.scss';
-
-/**
  * wp API
  */
 const { __ } = wp.i18n;
@@ -22,7 +16,7 @@ const {
 } = wp.blocks;
 
 
-export default registerBlockType( 'pixelgrade/media',
+export default registerBlockType( 'nova/media',
 	{
 		title: __( 'Media Card Constellation', '__plugin_txtd' ),
 		description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
@@ -34,7 +28,7 @@ export default registerBlockType( 'pixelgrade/media',
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? {
-				'data-align': 'full'
+				'data-align': 'wide'
 			} : {}
 		},
 	}

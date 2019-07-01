@@ -33,9 +33,8 @@ class Inspector extends Component {
 							value = { mediaStyle }
 							selected = { mediaStyle }
 							options = { [
-								{ label: __( 'Natural Layout', '__plugin_txtd' ), value: 'natural' },
-								{ label: __( 'Well-organized Grid', '__plugin_txtd' ), value: 'simple-grid' },
-								{ label: __( 'Overlap Layered Grid', '__plugin_txtd' ), value: 'overlap-grid' }
+								{ label: __( 'Well-organized Grid', '__plugin_txtd' ), value: 'simple' },
+								{ label: __( 'Overlap Layered Grid', '__plugin_txtd' ), value: 'overlap' }
 							] }
 							help={ __( 'Automatically crop and scale images to fill the block container.', '__plugin_txtd' ) }
 							onChange = { mediaStyle => setAttributes( { mediaStyle } ) }

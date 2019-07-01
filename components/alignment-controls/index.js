@@ -70,8 +70,8 @@ class AlignmentControls extends Component {
 					<BlockHorizontalAlignmentToolbar
 						value={horizontalAlignment}
 						onChange={horizontalAlignment => {
-							wp.data.select('core/editor').getSelectedBlock().innerBlocks.map( block => {
-								wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, { align: horizontalAlignment } );
+							wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map( block => {
+								wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { align: horizontalAlignment } );
 							} );
 							setAttributes( { horizontalAlignment } )
 						}}

@@ -38,17 +38,21 @@ const {
 	Toolbar,
 } = wp.components;
 
-const editorData = wp.data.select( 'core/editor' );
+const editorData = wp.data.select( 'core/block-editor' );
 
 const updateBlocks = ( attributes ) => {
-	editorData.getBlocks().filter( block => {
-		return block.name === 'pixelgrade/hero';
-	} ).filter( ( block, index ) => {
-		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
-		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
-		const scrollIndicatorBlock = scrollIndicator === true && index === 0;
+	const blocks = editorData.getBlocks();
 
-		wp.data.dispatch( 'core/editor' ).updateBlockAttributes( block.clientId, {
+	blocks.filter( block => {
+		return block.name === 'nova/hero';
+	} ).filter( ( block, heroBlockIndex ) => {
+		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
+		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && heroBlockIndex === 0 || applyMinimumHeight === 'all';
+		const scrollIndicatorBlock = scrollIndicator === true && heroBlockIndex === 0;
+		const blockIndex = blocks.findIndex( testBlock => block === testBlock );
+
+		wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
+			blockIndex,
 			applyMinimumHeightBlock,
 			scrollIndicatorBlock
 		} );
@@ -225,7 +229,7 @@ export default class Edit extends Component {
 				</div>
 				<div className='nova-hero__foreground nova-u-content-padding' style={ styles.foreground }>
 					<div className='nova-u-content-align'>
-						<div className='nova-hero__content nova-u-content-width' style={ styles.content }>
+						<div className='nova-hero__inner-container nova-u-content-width' style={ styles.content }>
 							<InnerBlocks template={[
 								[ 'core/heading', { content: 'This is a catchy title', align: 'center', level: 1 } ],
 								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],

@@ -1,3 +1,12 @@
+@import "variables";
+@import "mixins";
+
+@import "../../blocks/hero/scss/style";
+@import "../../blocks/media/scss/style";
+@import "../../blocks/slideshow/scss/style";
+
+@import "vendor/slick";
+@import "vendor/slick-theme";
 
 .pixelgrade-hero-button-group-wrapper {
 

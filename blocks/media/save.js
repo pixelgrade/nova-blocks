@@ -1,6 +1,8 @@
 import classnames from "classnames";
 
-const {InnerBlocks} = wp.blockEditor;
+const {
+	InnerBlocks
+} = wp.blockEditor;
 
 const {
 	Component
@@ -15,28 +17,28 @@ export default class Save extends Component {
 	render() {
 
 		const {
-			attributes,
-			className,
-			isSelected,
+			attributes: {
+				className,
+				mediaStyle,
+				contentStyle,
+				blockStyle,
+				mediaPosition,
+				images
+			}
 		} = this.props;
 
-		const {
-			mediaStyle,
-			contentStyle,
-			blockStyle,
-			mediaPosition,
-			images
-		} = attributes;
+		const settings = wp.data.select( 'core/block-editor' ).getSettings();
 
-		const classNames = classnames( className, {
-			'has-image-on-the-right': 'right' === mediaPosition,
-			'content-is-moderate': 'moderate' === contentStyle,
-			'content-is-highlighted': 'highlighted' === contentStyle,
-			'block-is-moderate': 'moderate' === blockStyle,
-			'block-is-highlighted': 'highlighted' === blockStyle,
-			'is-simple-grid': 'simple-grid' === mediaStyle,
-			'is-selected': isSelected,
-		} );
+		const classNames = classnames(
+			className,
+			`nova-media`,
+			`has-image-on-the-${mediaPosition}`,
+			`content-is-${contentStyle}`,
+			`block-is-${blockStyle}`,
+			`grid-is-${mediaStyle}`,
+			`alignwide`
+		);
+
 
 		const galleryImages = images.map( ( image ) => JSON.parse( image ) );
 
@@ -52,17 +54,15 @@ export default class Save extends Component {
 			)
 		};
 
-		return <div className={classNames}>
-			<div className="u-container-width">
-				<div className="nova-media">
-					<div className="nova-media__aside">
-						{displayImages( images )}
-					</div>
-					<div className="nova-media__content">
-						<InnerBlocks.Content/>
-					</div>
+		return (
+			<div className={classNames}>
+				<div className="nova-media__aside">
+					{displayImages( images )}
+				</div>
+				<div className="nova-media__content">
+					<InnerBlocks.Content/>
 				</div>
 			</div>
-		</div>
+		)
 	}
 }

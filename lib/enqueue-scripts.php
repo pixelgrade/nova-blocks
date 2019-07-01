@@ -101,4 +101,4 @@ function nova_deregister_gutenberg_styles() {
 	wp_deregister_style( 'wp-block-library-theme' );
 	wp_register_style( 'wp-block-library-theme', '' );
 }
-add_action( 'enqueue_block_assets', 'nova_deregister_gutenberg_styles', 30 );
+//add_action( 'enqueue_block_assets', 'nova_deregister_gutenberg_styles', 20 );

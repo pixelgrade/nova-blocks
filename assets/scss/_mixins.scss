@@ -1,4 +1,5 @@
-@import "mixins/_media-queries.scss";
+@import "mixins/media-queries";
+@import "mixins/box-shadow";
 
 // Theme Font
 @mixin theme-font {
@@ -38,37 +39,3 @@
         transform: none;
     }
 }
-
-@mixin box-shadow($shadow: toaca) {
-    @if $shadow == toaca {
-        box-shadow: 0 1px 3px rgba(42, 54, 52, 0.1),
-        0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    @if $shadow == montblanc {
-        box-shadow: 0 64px 128px rgba(42, 54, 52, 0.1),
-        0 16px 32px rgba(42, 54, 52, 0.1);
-    }
-    @if $shadow == kilimanjaro {
-        box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1),
-        0 16px 64px rgba(42, 54, 52, 0.1),
-        0 8px 16px rgba(42, 54, 52, 0.1);
-    }
-    @if $shadow == everest {
-        box-shadow: 0 64px 128px rgba(42, 54, 52, 0.1),
-        0 32px 64px rgba(42, 54, 52, 0.1),
-        0 16px 32px rgba(42, 54, 52, 0.1),
-        0 16px 16px rgba(42, 54, 52, 0.1),
-        0 8px 8px rgba(42, 54, 52, 0.1),
-        0 4px 4px rgba(42, 54, 52, 0.1);
-    }
-    @if $shadow == nova {
-        box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1),
-                    0 16px 64px rgba(42, 54, 52, 0.1),
-                    0 8px 16px rgba(42, 54, 52, 0.1);
-    }
-}
-
-$nova-box-shadow-nova:
-    0 32px 128px rgba(42, 54, 52, 0.1),
-    0 16px 64px rgba(42, 54, 52, 0.1),
-    0 8px 16px rgba(42, 54, 52, 0.1) !default;

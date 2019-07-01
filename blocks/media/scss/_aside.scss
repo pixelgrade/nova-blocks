@@ -1,0 +1,52 @@
+.nova-media__aside {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 15px;
+
+    min-height: 400px;
+
+    .has-image-on-the-right & {
+        @include above( desktop ) {
+            order: 2;
+        }
+    }
+
+    @include below( desktop ) {
+        grid-column: span 2;
+        order: 2;
+    }
+}
+
+// fit images
+.nova-media__image {
+    position: relative;
+    grid-column: span 6;
+
+    img {
+        @include image-cover;
+    }
+}
+
+// gallery with 1 item
+.nova-media__image:first-child:last-child,
+.nova-media__placeholder {
+    grid-column: span 12;
+}
+
+// gallery with 3 items
+.nova-media__image:first-child:nth-last-child(3) {
+    grid-column: 1 / span 6;
+
+    & ~ .nova-media__image:nth-child(2) {
+        grid-column: 7 / span 6;
+    }
+
+    & ~ .nova-media__image:last-child {
+        grid-column: 1 / span 12;
+    }
+}
+
+// gallery with more than 4 items
+.nova-media__image:nth-child(n+5) {
+    display: none;
+}
