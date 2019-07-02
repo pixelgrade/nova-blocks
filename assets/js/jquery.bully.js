@@ -17,8 +17,10 @@
 			inversed = false,
 			frameRendered = true;
 
-		$bully = $( '<div class="c-bully">' ).appendTo( 'body' );
-		$current = $( '<div class="c-bully__bullet c-bully__bullet--active">' ).appendTo( $bully );
+		$(function() {
+			$bully = $( '<div class="c-bully">' ).appendTo( 'body' );
+			$current = $( '<div class="c-bully__bullet c-bully__bullet--active">' ).appendTo( $bully );
+		});
 
 		function renderLoop() {
 			if ( frameRendered !== true ) {

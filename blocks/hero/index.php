@@ -80,7 +80,6 @@ if ( ! function_exists( 'nova_hero_block_init' ) ) {
 					'source' => 'meta',
 					'meta'   => 'nova_hero_minimum_height'
 				),
-
 				'applyMinimumHeightBlock' => array(
 					'type'    => 'boolean',
 					'default' => false
@@ -184,8 +183,7 @@ if ( ! function_exists( 'nova_render_hero_block' ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - $attributes['overlayFilterStrength'] / 100 );
 		}
 
-		ob_start();
-		?>
+		ob_start(); ?>
 
 		<?php do_action( 'nova_hero:before' ) ?>
 

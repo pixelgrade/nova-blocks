@@ -76,4 +76,6 @@ add_filter( 'block_categories', 'nova_add_blocks_category', 10, 2 );
 
 include __DIR__ . '/lib/enqueue-scripts.php';
 include __DIR__ . '/lib/customify.php';
+
 include __DIR__ . '/blocks/hero/index.php';
+include __DIR__ . '/blocks/slideshow/index.php';

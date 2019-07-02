@@ -15,6 +15,10 @@ const {
 	registerBlockType,
 } = wp.blocks;
 
+const {
+	InnerBlocks
+} = wp.blockEditor;
+
 export default registerBlockType( 'nova/slideshow',
 	{
 		title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
@@ -23,7 +27,9 @@ export default registerBlockType( 'nova/slideshow',
 		category: 'nova-by-pixelgrade',
 		...attributes,
 		edit,
-		save,
+		save() {
+			return <InnerBlocks.Content/>
+		},
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? {

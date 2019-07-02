@@ -28,6 +28,7 @@
 
     --nova-media-content-padding: 0;
     --nova-media-content-background-color: transparent;
+    --nova-media-content-background-opacity: 1;
     --nova-media-content-box-shadow: none;
 }
 
@@ -70,7 +71,8 @@
 }
 
 .content-is-moderate.block-is-highlighted {
-    --nova-media-content-background-color: #{rgba(#FFFFFF, .2)};
+    --nova-media-content-background-color: var(--nova-light-1);
+    --nova-media-content-background-opacity: 0.2;
 }
 
 .block-is-highlighted:not(.content-is-highlighted),

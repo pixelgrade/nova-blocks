@@ -89,7 +89,6 @@ export default class Save extends Component {
 
 		return (
 			<div className={classes.join( ' ' )} style={styles.slideshow} data-min-height={ minHeight }>
-
 				<div className="nova-slideshow__mask">
 					<div className="nova-slideshow__slider" data-rellax-amount={ actualParallaxAmount }>
 						{ galleryImages.map( image => {

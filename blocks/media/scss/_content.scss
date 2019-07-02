@@ -1,7 +1,6 @@
 .nova-media__content {
     padding: var(--nova-media-content-padding);
     color: var(--nova-media-content-color);
-    background-color: var(--nova-media-content-background-color);
     box-shadow: var(--nova-media-content-box-shadow);
 
     margin-top: auto;
@@ -10,5 +9,23 @@
 
     @include below( desktop ) {
         grid-column: span 2;
+    }
+}
+
+.nova-media__content {
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+
+        display: block;
+        background-color: var(--nova-media-content-background-color);
+        opacity: var(--nova-media-content-background-opacity);
     }
 }

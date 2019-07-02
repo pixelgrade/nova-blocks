@@ -4,12 +4,14 @@
     grid-gap: 15px;
     min-height: 400px;
 
-    order: 2;
-
     @include above( desktop ) {
         .has-image-on-the-left & {
             order: -1;
         }
+    }
+
+    @include below( desktop ) {
+        grid-column: span 2;
     }
 }
 
