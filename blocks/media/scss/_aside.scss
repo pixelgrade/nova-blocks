@@ -2,18 +2,14 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: 15px;
-
     min-height: 400px;
 
-    .has-image-on-the-right & {
-        @include above( desktop ) {
-            order: 2;
-        }
-    }
+    order: 2;
 
-    @include below( desktop ) {
-        grid-column: span 2;
-        order: 2;
+    @include above( desktop ) {
+        .has-image-on-the-left & {
+            order: -1;
+        }
     }
 }
 

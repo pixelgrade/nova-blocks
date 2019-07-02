@@ -1,6 +1,6 @@
 <?php
 
-function nova_enqueue_block_editor_assets() {
+function nova_blocks_enqueue_block_editor_assets() {
 	// Make paths variables so we don't write em twice ;)
 	$block_path = '/assets/js/editor.blocks.js';
 	$style_path = '/assets/css/blocks.editor.css';
@@ -9,19 +9,16 @@ function nova_enqueue_block_editor_assets() {
 	wp_enqueue_script(
 		'nova-blocks-js',
 		nova_get_plugin_url() . $block_path,
-		[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ],
-		filemtime( nova_get_plugin_directory() . $block_path )
+		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' )
 	);
 
 	// Enqueue optional editor only styles
 	wp_enqueue_style(
 		'nova-blocks-editor-css',
-		nova_get_plugin_url() . $style_path,
-		[ ],
-		filemtime( nova_get_plugin_directory() . $style_path )
+		nova_get_plugin_url() . $style_path
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'nova_enqueue_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'nova_blocks_enqueue_block_editor_assets' );
 
 
 function nova_enqueue_assets() {
@@ -29,8 +26,7 @@ function nova_enqueue_assets() {
 	wp_enqueue_style(
 		'nova-blocks',
 		nova_get_plugin_url() . $style_path,
-		null,
-		filemtime( nova_get_plugin_directory() . $style_path )
+		array()
 	);
 }
 add_action( 'enqueue_block_assets', 'nova_enqueue_assets' );
@@ -48,7 +44,6 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-rellax',
 		nova_get_plugin_url() . $rellax_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $rellax_path ),
 		true
 	);
 
@@ -59,7 +54,6 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-bully',
 		nova_get_plugin_url() . $bully_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $bully_path ),
 		true
 	);
 
@@ -68,7 +62,6 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-slick',
 		nova_get_plugin_url() . $slick_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $slick_path ),
 		true
 	);
 
@@ -77,7 +70,6 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-velocity',
 		nova_get_plugin_url() . $velocity_path,
 		array( 'jquery' ),
-		filemtime( nova_get_plugin_directory() . $slick_path ),
 		true
 	);
 
@@ -86,19 +78,8 @@ function nova_enqueue_frontend_assets() {
 		'nova-blocks-frontend',
 		nova_get_plugin_url() . $block_path,
 		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-bully', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
-		filemtime( nova_get_plugin_directory() . $block_path ),
+		false,
 		true
 	);
 }
 add_action( 'enqueue_block_assets', 'nova_enqueue_frontend_assets' );
-
-function nova_deregister_gutenberg_styles() {
-	// Overwrite Core block styles with empty styles.
-	wp_deregister_style( 'wp-block-library' );
-	wp_register_style( 'wp-block-library', nova_get_plugin_url() . '/assets/css/blocks.theme.css' );
-
-	// Overwrite Core theme styles with empty styles.
-	wp_deregister_style( 'wp-block-library-theme' );
-	wp_register_style( 'wp-block-library-theme', '' );
-}
-//add_action( 'enqueue_block_assets', 'nova_deregister_gutenberg_styles', 20 );

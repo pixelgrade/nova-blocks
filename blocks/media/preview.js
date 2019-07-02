@@ -35,17 +35,13 @@ export default class MediaPreview extends Component {
 			alignment
 		} = attributes;
 
-		const classNames = classnames(className, {
-			'has-image-on-the-right': 'right' === mediaPosition,
-			'content-is-moderate': 'moderate' === contentStyle,
-			'content-is-highlighted': 'highlighted' === contentStyle,
-			'block-is-moderate': 'moderate' === blockStyle,
-			'block-is-highlighted': 'highlighted' === blockStyle,
-			'is-simple-grid': 'simple-grid' === mediaStyle,
-			'is-overlap-grid': 'overlap-grid' === mediaStyle,
-			'is-selected': isSelected,
-			'has-multiple-images':  2 <= images.length
-		});
+		const classNames = classnames(
+			className,
+			`nova-media`,
+			`has-image-on-the-${mediaPosition}`,
+			`content-is-${contentStyle}`,
+			`grid-is-${mediaStyle}`
+		);
 
 		const galleryImages = images.map ( (image)  => JSON.parse(image));
 
@@ -76,23 +72,23 @@ export default class MediaPreview extends Component {
 		};
 
 		return (
-			<Fragment>
-				<div className={classNames}>
-					<div className="u-container-width">
-						<div className="nova-media">
-							<div className="nova-media__aside">
-								{displayImages( images )}
-							</div>
-							<div className="nova-media__content" style={{textAlign: alignment}}>
+			<div className={classNames}>
+				<div className={`block-is-${blockStyle} nova-media__inner-container`}>
+					<div className="wp-block" data-align="wide">
+						<div className="nova-media__layout">
+							<div className="nova-media__content nova-media__inner-container">
 								<InnerBlocks
 									allowedBlocks={ALLOWED_BLOCKS}
 									template={TEMPLATE}
 								/>
 							</div>
+							<div className="nova-media__aside">
+								{displayImages( images )}
+							</div>
 						</div>
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		)
 	}
 }

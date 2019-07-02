@@ -107,7 +107,7 @@ export default class Save extends Component {
 									<div className="nova-slideshow__foreground">
 										<div className="nova-slideshow__content nova-u-content-padding">
 											<div className="nova-u-content-align">
-												<div className="nova-u-content-width">
+												<div className="nova-slideshow__inner-container nova-u-content-width">
 													<h2>{ image.alt }</h2>
 													<p>{ image.caption }</p>
 												</div>

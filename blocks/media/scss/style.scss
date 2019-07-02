@@ -1,4 +1,4 @@
-.wp-block-pixelgrade-media {
+.wp-block-nova-media {
     margin-left: auto;
     margin-right: auto;
 
@@ -7,19 +7,24 @@
 
 // media layout
 .nova-media {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-column-gap: var(--nova-spacing-unit);
-
     padding-top: var(--nova-media-padding);
     padding-bottom: var(--nova-media-padding);
+    background-color: var(--nova-media-background-color);
+
+    --nova-media-spacing: calc( 7 * var(--nova-spacing-unit) )
 }
 
-.wp-block-pixelgrade-media {
+.nova-media__layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: var(--nova-media-spacing);
+}
+
+.wp-block-nova-media {
     --nova-media-text-color: var(--nova-dark-2);
     --nova-media-titles-color: var(--nova-dark-3);
     --nova-media-subtitles-color: var(--nova-color-1);
-    --nova-media-background-color: transparent;
+    --nova-media-background-color: var(--nova-light-1);
 
     --nova-media-content-padding: 0;
     --nova-media-content-background-color: transparent;
@@ -39,31 +44,10 @@
     }
 }
 
-// media background strip
-.nova-media {
-    position: relative;
-    transform: translateZ(0);
-
-    &:before {
-        content: '';
-
-        position: absolute;
-        top: 0;
-        left: -50vw;
-        right: -50vw;
-        z-index: -1;
-
-        display: block;
-        height: 100%;
-
-        background-color: var(--nova-media-background-color);
-    }
-}
-
 // block variations
 .block-is-moderate,
 .block-is-highlighted {
-    --nova-media-padding: var(--nova-spacing-unit);
+    --nova-media-padding: var(--nova-media-spacing);
 }
 
 .block-is-moderate {
@@ -76,7 +60,7 @@
 
 .content-is-moderate,
 .content-is-highlighted {
-    --nova-media-content-padding: var(--nova-spacing-unit);
+    --nova-media-content-padding: var(--nova-media-spacing);
 }
 
 .content-is-moderate,
@@ -102,4 +86,3 @@
 
 @import "content";
 @import "aside";
-@import "spacing";

@@ -1,0 +1,43 @@
+.wp-block-nova-hero, .wp-block-nova-hero * {
+  transition: all 0.4s ease; }
+
+.pixelgrade-hero-block-toolbar svg {
+  width: 20px;
+  height: 20px; }
+
+.pixelgrade-hero-block-toolbar-dropdown button {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center; }
+  .pixelgrade-hero-block-toolbar-dropdown button:after {
+    content: "";
+    border: 0 solid transparent;
+    border-width: 4px 3px 0;
+    border-top-color: currentColor;
+    margin-left: 4px; }
+
+.nova-media__placeholder {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  height: 100%;
+  background-color: #EEEEEE; }
+
+.wp-block-nova-media * {
+  transition: all 0.4s ease; }
+
+.nova-media__inner-container {
+  padding-left: var(--content-side-spacing);
+  padding-right: var(--content-side-spacing); }
+  .nova-media__inner-container > * {
+    margin-left: auto;
+    margin-right: auto; }
+  .nova-media__inner-container > [data-align="full"] {
+    margin-left: calc( -1 * var(--content-side-spacing));
+    margin-right: calc( -1 * var(--content-side-spacing)); }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuL2Fzc2V0cy9jc3MvYmxvY2tzLmVkaXRvci5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

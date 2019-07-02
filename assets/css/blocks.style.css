@@ -8,8 +8,7 @@
   --nova-dark-3: #323067;
   --nova-light-1: #FFFFFF;
   --nova-light-2: #EEF1F2;
-  --nova-light-3: #EEF1F2;
-  --nova-spacing-unit: 56px; }
+  --nova-light-3: #EEF1F2; }
 
 .nova-hero {
   position: relative;
@@ -88,25 +87,30 @@
 .components-nova--popover.components-popover:not(.is-mobile) .components-popover__content {
   padding: 16px; }
 
-.wp-block-pixelgrade-media {
+.wp-block-nova-media {
   margin-left: auto;
   margin-right: auto;
   --nova-media-padding: 0; }
 
 .nova-media {
+  padding-top: var(--nova-media-padding);
+  padding-bottom: var(--nova-media-padding);
+  background-color: var(--nova-media-background-color);
+  --nova-media-spacing: calc( 7 * var(--nova-spacing-unit) )
+; }
+
+.nova-media__layout {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (minmax(280px, 1fr))[auto-fit];
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-column-gap: var(--nova-spacing-unit);
-  padding-top: var(--nova-media-padding);
-  padding-bottom: var(--nova-media-padding); }
+  grid-gap: var(--nova-media-spacing); }
 
-.wp-block-pixelgrade-media {
+.wp-block-nova-media {
   --nova-media-text-color: var(--nova-dark-2);
   --nova-media-titles-color: var(--nova-dark-3);
   --nova-media-subtitles-color: var(--nova-color-1);
-  --nova-media-background-color: transparent;
+  --nova-media-background-color: var(--nova-light-1);
   --nova-media-content-padding: 0;
   --nova-media-content-background-color: transparent;
   --nova-media-content-box-shadow: none; }
@@ -118,23 +122,9 @@
   .nova-media h4, .nova-media h5, .nova-media h6 {
     color: var(--nova-media-subtitles-color); }
 
-.nova-media {
-  position: relative;
-  transform: translateZ(0); }
-  .nova-media:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -50vw;
-    right: -50vw;
-    z-index: -1;
-    display: block;
-    height: 100%;
-    background-color: var(--nova-media-background-color); }
-
 .block-is-moderate,
 .block-is-highlighted {
-  --nova-media-padding: var(--nova-spacing-unit); }
+  --nova-media-padding: var(--nova-media-spacing); }
 
 .block-is-moderate {
   --nova-media-background-color: var(--nova-light-2); }
@@ -144,7 +134,7 @@
 
 .content-is-moderate,
 .content-is-highlighted {
-  --nova-media-content-padding: var(--nova-spacing-unit); }
+  --nova-media-content-padding: var(--nova-media-spacing); }
 
 .content-is-moderate,
 .content-is-highlighted.block-is-highlighted {
@@ -165,6 +155,7 @@
 
 .nova-media__content {
   padding: var(--nova-media-content-padding);
+  color: var(--nova-media-content-color);
   background-color: var(--nova-media-content-background-color);
   box-shadow: var(--nova-media-content-box-shadow);
   margin-top: auto;
@@ -181,17 +172,13 @@
   -ms-grid-columns: (1fr)[12];
       grid-template-columns: repeat(12, 1fr);
   grid-gap: 15px;
-  min-height: 400px; }
+  min-height: 400px;
+  -ms-flex-order: 2;
+      order: 2; }
   @media only screen and (min-width: 1024px) {
-    .has-image-on-the-right .nova-media__aside {
-      -ms-flex-order: 2;
-          order: 2; } }
-  @media not screen and (min-width: 1024px) {
-    .nova-media__aside {
-      -ms-grid-column: span 2;
-          grid-column: span 2;
-      -ms-flex-order: 2;
-          order: 2; } }
+    .has-image-on-the-left .nova-media__aside {
+      -ms-flex-order: -1;
+          order: -1; } }
 
 .nova-media__image {
   position: relative;
@@ -241,18 +228,6 @@
 
 .nova-media__image:nth-child(n+5) {
   display: none; }
-
-[class*="block-is"] + [class*="block-is"] .nova-media {
-  padding-top: 0; }
-
-.wp-block-pixelgrade-media:not([class*="block-is"]) + .wp-block-pixelgrade-media:not([class*="block-is"]) .nova-media {
-  margin-top: var(--nova-media-spacing-unit); }
-
-.wp-block-pixelgrade-media:not([class*="block-is"]) + [class*="block-is"] {
-  margin-top: var(--nova-media-spacing-unit); }
-
-[class*="block-is-moderate"] + [class*="block-is-highlighted"] .nova-media {
-  padding-top: var(--nova-media-spacing-unit); }
 
 .nova-slideshow {
   position: relative; }

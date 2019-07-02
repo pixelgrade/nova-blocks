@@ -1,17 +1,7 @@
 <?php
 
-//add_filter( 'customify_filter_fields', 'nova_add_customify_options', 21, 1 );
-add_filter( 'customify_filter_fields', 'nova_add_customify_section', 30, 2 );
-add_filter( 'customify_filter_fields', 'nova_add_customify_style_manager_section', 32, 1 );
-
-function nova_add_customify_options( $options ) {
-	$options['opt-name'] = 'nova_options';
-
-	//start with a clean slate - no Customify default sections
-	$options['sections'] = array();
-
-	return $options;
-}
+add_filter( 'customify_filter_fields', 'nova_add_customify_section', 20, 1 );
+add_filter( 'customify_filter_fields', 'nova_add_customify_style_manager_section', 20, 1 );
 
 define( 'THEME_COLOR_PRIMARY', '#203AB6' ); // nova blue
 define( 'THEME_COLOR_SECONDARY', '#FFE42E' ); // nova yellow
@@ -163,7 +153,7 @@ function nova_add_customify_style_manager_section( $options ) {
 	}
 
 	// The section might be already defined, thus we merge, not replace the entire section config.
-	$options['sections']['style_manager_section'] = Pixelgrade_Config::merge( $options['sections']['style_manager_section'], array(
+	$options['sections']['style_manager_section'] = array_replace_recursive( $options['sections']['style_manager_section'], array(
 			'options' => array(
 				'sm_color_primary'   => array(
 					'default'          => THEME_COLOR_PRIMARY,

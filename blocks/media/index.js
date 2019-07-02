@@ -28,7 +28,7 @@ export default registerBlockType( 'nova/media',
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? {
-				'data-align': 'wide'
+				'data-align': 'full'
 			} : {}
 		},
 	}
