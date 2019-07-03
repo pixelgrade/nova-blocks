@@ -124,6 +124,9 @@
     }
 }
 
+
+$button-component-text-color: #555;
+
 .nova-blocks-slideshow-type-panel .block-editor-media-placeholder {
 
     .components-placeholder__label,
@@ -135,9 +138,29 @@
         padding-left: 12px;
         text-indent: -999em;
 
+        display: flex;
+        align-items: center;
+        height: auto;
+
+        &,
+        &:focus:enabled {
+            color: transparent;
+        }
+
+        &:before,
+        &:after {
+            color: $button-component-text-color;
+            text-indent: 0;
+        }
+
+        &:before {
+            @include dashicon;
+            content: "\f464"; // edit / pencil icon
+            margin-right: 0.2em;
+        }
+
         &:after {
             content: 'Edit Gallery';
-            text-indent: 0;
         }
     }
 }
