@@ -7,8 +7,11 @@ import {
 	ParallaxPanel,
 	AlignmentToolbar,
 	ColorToolbar,
-	GalleryPreview, GalleryPlaceholder,
+	GalleryPreview,
+	GalleryPlaceholder,
 } from "../../components";
+
+import { shuffleArray } from "../../components/util";
 
 import SlideshowPreview from './preview';
 
@@ -81,6 +84,21 @@ export default class Edit extends Component {
 		};
 	}
 
+	componentWillMount() {
+		const {
+			attributes: {
+				galleryImages
+			},
+			clientId
+		} = this.props;
+
+		if ( ! galleryImages.length ) {
+			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
+				galleryImages: shuffleArray( defaultGalleryImages.slice(0) )
+			} );
+		}
+	}
+
 	onPrevArrowClick() {
 		const { attributes: { galleryImages } } = this.props;
 		const { selectedIndex } = this.state;
@@ -109,10 +127,6 @@ export default class Edit extends Component {
 		} = this.props;
 
 		let { selectedIndex } = this.state;
-
-		if ( ! galleryImages.length ) {
-			defaultGalleryImages.map( image => galleryImages.push( image ) )
-		}
 
 		if ( selectedIndex >= galleryImages.length ) {
 			selectedIndex = galleryImages.length - 1;
@@ -171,6 +185,7 @@ export default class Edit extends Component {
 						</PanelBody>
 
 						<ColorPanel { ...this.props } />
+						<LayoutPanel { ...this.props } />
 
 						<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
 							<RadioControl
@@ -197,8 +212,6 @@ export default class Edit extends Component {
 								}]}
 							/>
 						</PanelBody>
-
-						<LayoutPanel { ...this.props } />
 
 						<ParallaxPanel { ...this.props } />
 

@@ -107,7 +107,7 @@ export default class Edit extends Component {
 				<LayoutPanel { ...this.props } />
 				<HeightPanel { ...this.props } />
 				<ScrollIndicatorPanel { ...this.props } />
-				<PanelBody title={ __( 'Position Indicators', '__plugin_txtd' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Position Indicators', '__plugin_txtd' ) }>
 					<ToggleControl
 						label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
 						checked={ positionIndicator }

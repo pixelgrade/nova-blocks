@@ -71,6 +71,22 @@
   border-color: #0085BA;
   padding: 3px; }
 
+.editor-block-list__block-edit[class][class] .nova-slideshow__slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.editor-block-list__block-edit[class][class] .nova-slideshow__slider {
+  position: static;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: center;
+      justify-content: center; }
+
 .nova-mask {
   position: absolute;
   top: 0;

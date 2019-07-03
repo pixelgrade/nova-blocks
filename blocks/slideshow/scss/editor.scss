@@ -31,3 +31,17 @@
     border-color: #0085BA;
     padding: 3px;
 }
+
+.editor-block-list__block-edit[class][class] {
+
+    .nova-slideshow__slide {
+        @include cover;
+    }
+
+    .nova-slideshow__slider {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

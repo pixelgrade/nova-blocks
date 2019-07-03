@@ -16,13 +16,21 @@ const withParallax = function( WrappedComponent ) {
 				windowHeight: window.innerHeight,
 				progress: 0.5,
 			}
+
+			this.updateHandler = this.updateDimensions.bind( this );
 		}
 
 		componentDidMount() {
 			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
-			window.addEventListener("resize", this.updateDimensions.bind( this ) );
-			scrollContainer.addEventListener("scroll", this.updateDimensions.bind( this ) );
+			window.addEventListener("resize", this.updateHandler );
+			scrollContainer.addEventListener("scroll", this.updateHandler );
 			this.updateDimensions();
+		}
+
+		componentWillUnmount() {
+			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
+			window.removeEventListener( "resize", this.updateHandler );
+			scrollContainer.removeEventListener( "scroll", this.updateHandler );
 		}
 
 		updateDimensions() {

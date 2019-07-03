@@ -156,6 +156,15 @@
 				if ( this.options.scaleY ) {
 					this.height *= scale;
 					this.offset.top += offsetY;
+
+					var childrenHeight = this.height + 2 * offsetY;
+
+					this.children.$el.each( function( i, obj ) {
+						$( obj ).css( {
+							marginTop: -1 * offsetY,
+							height: childrenHeight
+						} )
+					} );
 				}
 
 				if ( this.options.scaleX ) {

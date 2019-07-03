@@ -12,14 +12,15 @@ const TRANSITION_EASING = "easeInOutCirc";
 (function($, window, undefined) {
 
 	const $blocks = $( BLOCK_SELECTOR );
-
-	const $rellaxTarget = $blocks.filter( '.nova-slideshow--parallax' ).find( SLIDER_SELECTOR );
+	const $rellaxTarget = $( '.nova-slideshow--parallax' ).find( SLIDER_SELECTOR );
 
 	// initialize parallax effect
-	$rellaxTarget.rellax({
-		container: '.nova-slideshow__mask',
-		children: CONTENT_SELECTOR,
-	});
+	if ( typeof $.fn.rellax !== "undefined" ) {
+		$rellaxTarget.rellax( {
+			container: '.nova-slideshow__mask',
+			children: CONTENT_SELECTOR,
+		} );
+	}
 
 	$blocks.each( function( index, block ) {
 		var $block = $( block ),
@@ -45,6 +46,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 			});
 		}
 	});
+
+	$( window ).on( 'resize', debounce( onResize, 300 ) );
 
 	function resetBlockMinHeight( $block ) {
 		$block.css( 'minHeight', '' );
@@ -79,12 +82,19 @@ const TRANSITION_EASING = "easeInOutCirc";
 	}
 
 	function onResize() {
+
 		$blocks.each( function( index, block ) {
 			var $block = $( block );
-			resetBlockMinHeight( $block )
-			$block.find( SLIDER_SELECTOR ).slick( 'refresh' );
+			var $slider = $block.find( SLIDER_SELECTOR );
+
+			resetBlockMinHeight( $block );
 			$rellaxTarget.rellax( 'refresh' );
+
+			if ( $slider.is( '.slick-initialized' ) ) {
+				$slider.slick( 'setPosition' );
+			}
 		});
+
 	}
 
 	function onBeforeSlideChange( event, slick, currentSlide, nextSlide ) {
@@ -137,7 +147,5 @@ const TRANSITION_EASING = "easeInOutCirc";
 		}
 		return direction;
 	}
-
-	$( window ).on( 'resize', debounce( onResize, 300 ) );
 
 })(jQuery, window);

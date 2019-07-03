@@ -2,9 +2,7 @@
  * Internal dependencies
  */
 import * as icons from '../icons';
-import attributes from './attributes.json';
 import edit from './edit';
-import save from './save';
 
 /**
  * wp API
@@ -25,7 +23,6 @@ export default registerBlockType( 'nova/slideshow',
 		description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 		icon: icons.slideshow,
 		category: 'nova-by-pixelgrade',
-		...attributes,
 		edit,
 		save() {
 			return <InnerBlocks.Content/>
