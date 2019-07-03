@@ -91,7 +91,7 @@ class HeightPanel extends Component {
 						label={ __( 'Minimum Height', '__plugin_txtd' ) }
 						selected={ minHeight }
 						onChange={ minHeight => {
-							setAttributes( { minHeight } );
+							setAttributes( { minHeight: parseInt( minHeight, 10 ) } )
 //							updateBlocks( { minHeight } );
 						} }
 						options={

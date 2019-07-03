@@ -177,7 +177,7 @@ export default class Edit extends Component {
 								label={ __( 'Minimum Height', '__plugin_txtd' ) }
 								selected={ minHeight }
 								onChange={ minHeight => {
-									setAttributes( { minHeight } )
+									setAttributes( { minHeight: parseInt( minHeight, 10 ) } )
 								} }
 								options={[{
 									label: __( 'Auto', '__plugin_txtd' ),
