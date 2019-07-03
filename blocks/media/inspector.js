@@ -40,7 +40,7 @@ class Inspector extends Component {
 			<Fragment>
 				<InspectorControls>
 
-					<PanelBody title={ __( 'Media Area', '__plugin_txtd' ) }  initialOpen={ true }>
+					{ false && <PanelBody title={ __( 'Media Area', '__plugin_txtd' ) }  initialOpen={ true }>
 						<RadioControl
 							label = { __( 'Media Style', '__plugin_txtd' ) }
 							value = { mediaStyle }
@@ -52,7 +52,7 @@ class Inspector extends Component {
 							help={ __( 'Automatically crop and scale images to fill the block container.', '__plugin_txtd' ) }
 							onChange = { mediaStyle => setAttributes( { mediaStyle } ) }
 						/>
-					</PanelBody>
+					</PanelBody> }
 
 					<PanelBody title={ __('Content Area', '__plugin_txtd') } initialOpen = { true }>
 						<RadioControl

@@ -33,6 +33,7 @@ export default class Save extends Component {
 			className,
 			`nova-media`,
 			`has-image-on-the-${mediaPosition}`,
+			`block-is-${blockStyle}`,
 			`content-is-${contentStyle}`,
 			`grid-is-${mediaStyle}`,
 			`alignfull`
@@ -55,7 +56,7 @@ export default class Save extends Component {
 
 		return (
 			<div className={classNames}>
-				<div className={`block-is-${blockStyle} nova-media__inner-container`}>
+				<div className="nova-media__inner-container">
 					<div className="nova-media__layout alignwide">
 						<div className="nova-media__content nova-media__inner-container">
 							<InnerBlocks.Content/>

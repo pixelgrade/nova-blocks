@@ -32,19 +32,6 @@
     --nova-media-content-box-shadow: none;
 }
 
-// typography colors
-.nova-media {
-    color: var(--nova-media-text-color);
-
-    h1, h3, h3 {
-        color: var(--nova-media-titles-color);
-    }
-
-    h4, h5, h6 {
-        color: var(--nova-media-subtitles-color);
-    }
-}
-
 // block variations
 .block-is-moderate,
 .block-is-highlighted {
