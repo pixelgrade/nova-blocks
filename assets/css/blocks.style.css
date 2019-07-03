@@ -10,6 +10,18 @@
   --nova-light-2: #EEF1F2;
   --nova-light-3: #EEF1F2; }
 
+:root {
+  --content-width-normal: 900px;
+  --content-width-wide: 1200px;
+  --nova-spacing-unit: 2px;
+  --content-side-spacing: calc( 7 * var(--nova-spacing-unit) ); }
+  @media only screen and (min-width: 768px) {
+    :root {
+      --nova-spacing-unit: 4px; } }
+  @media only screen and (min-width: 1024px) {
+    :root {
+      --nova-spacing-unit: 8px; } }
+
 .nova-hero {
   position: relative;
   display: -ms-flexbox;
