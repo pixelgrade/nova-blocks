@@ -12,6 +12,9 @@ import {
 	ScrollIndicatorPanel,
 } from "../../components";
 
+import HeroPreview from './preview';
+import HeroBlockControls from './controls';
+
 const { __ } = wp.i18n;
 
 const {
@@ -39,6 +42,7 @@ const {
 } = wp.components;
 
 const editorData = wp.data.select( 'core/block-editor' );
+const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const updateBlocks = ( attributes ) => {
 	const blocks = editorData.getBlocks();
@@ -84,168 +88,19 @@ wp.data.subscribe( debouncedOnSubscribe );
 
 export default class Edit extends Component {
 
-	constructor() {
-		super( ...arguments );
-	}
-
 	render() {
 
 		const {
 			attributes: {
-				// layout
-				contentPadding,
-				contentPaddingCustom,
-				contentWidth,
-				contentWidthCustom,
-				// alignment
-				verticalAlignment,
-				horizontalAlignment,
-				// height
-				applyMinimumHeight,
-				applyMinimumHeightBlock,
-				minHeight,
-				scrollIndicator,
-				scrollIndicatorBlock,
 				positionIndicator,
-				// colors
-				contentColor,
-				overlayFilterStyle,
-				overlayFilterStrength,
-				// media
-				media,
 			},
-			className,
 			setAttributes,
-			isSelected
 		} = this.props;
-
-		const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
-
-		const blockControls = (
-			<BlockControls>
-				<Toolbar className='pixelgrade-hero-block-toolbar'>
-					<Dropdown
-						position='bottom'
-						className='pixelgrade-hero-block-toolbar-dropdown'
-						contentClassName='components-nova--popover'
-						renderToggle={ ( { isOpen, onToggle } ) => (
-							<IconButton
-								onClick={ onToggle }
-								icon={ icons.alignment }
-								aria-expanded={ isOpen }
-								label={ __( 'Content alignment', '__plugin_txtd' ) }
-								labelPosition='bottom'
-							/>
-						) }
-						focusOnMount={ false }
-						renderContent={ ( { onClose } ) => <Fragment>
-							<AlignmentControls { ...this.props } />
-						</Fragment> }
-					/>
-				</Toolbar>
-				<Toolbar className='pixelgrade-hero-block-toolbar'>
-					<Dropdown
-						position='bottom'
-						className='pixelgrade-hero-block-toolbar-dropdown'
-						contentClassName='components-nova--popover'
-						renderToggle={ ( { isOpen, onToggle } ) => (
-							<IconButton
-								onClick={ onToggle }
-								icon={ icons.invert }
-								aria-expanded={ isOpen }
-								label={ __( 'Invert colors', '__plugin_txtd' ) }
-								labelPosition='bottom'
-							/>
-						) }
-						focusOnMount={ false }
-						renderContent={ ( { onClose } ) => <Fragment>
-							<ColorControls { ...this.props } />
-							<OverlayControls { ...this.props } />
-						</Fragment> }
-					/>
-				</Toolbar>
-				<Toolbar>
-					<MediaUpload
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
-						onSelect={ media => setAttributes( { media } ) }
-						render={ ( { open } ) => {
-							return <IconButton
-								label={ __( 'Swap Media', '__plugin_txtd' ) }
-								icon='format-image'
-								onClick={ open }
-							/>
-						}}
-					/>
-				</Toolbar>
-			</BlockControls>
-		);
-
-		const hero = () => {
-			const classes = [
-				className,
-				'nova-hero',
-				`nova-u-valign-${verticalAlignment}`,
-				`nova-u-halign-${horizontalAlignment}`,
-				`nova-u-spacing-${contentPadding}`,
-				`nova-u-content-width-${contentWidth}`,
-				`nova-u-background`,
-				`nova-u-background-${overlayFilterStyle}`
-			]
-
-			const styles = {
-				hero: {
-					color: contentColor,
-				},
-				foreground: {},
-				content: {},
-				image: {}
-			}
-
-			if ( !! applyMinimumHeightBlock ) {
-				styles.hero.minHeight = minHeight + 'vh'
-			}
-
-			if ( contentPadding === 'custom' ) {
-				styles.foreground.paddingTop = `${contentPaddingCustom}%`
-				styles.foreground.paddingBottom = `${contentPaddingCustom}%`
-			}
-
-			if ( contentWidth === 'custom' ) {
-				styles.content.maxWidth = `${contentWidthCustom}%`
-			}
-
-			if ( overlayFilterStyle !== 'none' ) {
-				styles.image.opacity = 1 - overlayFilterStrength / 100
-			}
-
-			return <div className={classes.join(' ')} style={styles.hero}>
-				<div className='nova-hero__mask'>
-					<div className='nova-hero__background'>
-						{ media.type === 'image' && typeof media.sizes !== 'undefined'
-						  && <img className='nova-hero__media' src={ media.sizes.full.url } style={ styles.image }/> }
-						{ media.type === 'video'
-						  && <video muted autoplay loop className='nova-hero__media' src={ media.url } style={ styles.image }/> }
-					</div>
-				</div>
-				<div className='nova-hero__foreground nova-u-content-padding' style={ styles.foreground }>
-					<div className='nova-u-content-align'>
-						<div className='nova-hero__inner-container nova-u-content-width' style={ styles.content }>
-							<InnerBlocks template={[
-								[ 'core/heading', { content: 'This is a catchy title', align: 'center', level: 1 } ],
-								[ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', align: 'center' } ],
-								[ 'core/button', { text: 'Discover more', align: 'center' } ],
-							]} />
-						</div>
-						{ scrollIndicatorBlock && <div className='nova-hero__indicator'></div> }
-					</div>
-				</div>
-			</div>
-		}
 
 		return [
 			<Fragment>
-				{ hero() }
-				{ blockControls }
+				<HeroPreview { ...this.props } />
+				<BlockControls />
 			</Fragment>,
 			<InspectorControls>
 

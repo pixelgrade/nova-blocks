@@ -1,9 +1,22 @@
-import {AlignmentControls} from "../../components/alignment-controls";
+import {
+	AlignmentControls
+} from "../../components/alignment-controls";
 
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { InspectorControls } = wp.blockEditor;
-const { PanelBody, RadioControl } = wp.components;
+
+const {
+	Component,
+	Fragment
+} = wp.element;
+
+const {
+	InspectorControls
+} = wp.blockEditor;
+
+const {
+	PanelBody,
+	RadioControl
+} = wp.components;
 
 
 class Inspector extends Component {

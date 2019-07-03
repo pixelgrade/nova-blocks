@@ -1,9 +1,21 @@
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { MediaUpload, BlockControls } = wp.blockEditor;
-const { IconButton, Toolbar } = wp.components;
 
-class Controls extends Component {
+const {
+	Component,
+	Fragment
+} = wp.element;
+
+const {
+	MediaUpload,
+	BlockControls
+} = wp.blockEditor;
+
+const {
+	IconButton,
+	Toolbar
+} = wp.components;
+
+export default class Controls extends Component {
 	constructor( props ) {
 		super( ...arguments );
 	}
@@ -75,5 +87,3 @@ class Controls extends Component {
 		);
 	}
 }
-
-export default Controls;

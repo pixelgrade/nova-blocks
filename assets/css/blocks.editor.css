@@ -1,6 +1,9 @@
 .wp-block-nova-hero, .wp-block-nova-hero * {
   transition: all 0.4s ease; }
 
+.nova-hero__mask {
+  overflow: hidden; }
+
 .pixelgrade-hero-block-toolbar svg {
   width: 20px;
   height: 20px; }
