@@ -1,14 +1,29 @@
 import * as icons from "../icons";
 
+const { __ } = wp.i18n;
+
 const {
 	Component,
 } = wp.element;
+
+const {
+	BlockControls,
+	MediaUpload,
+} = wp.blockEditor;
+
+const {
+	Dropdown,
+	IconButton,
+	Toolbar,
+} = wp.components;
 
 import {
 	AlignmentControls,
 	ColorControls,
 	OverlayControls,
 } from "../../components";
+
+const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 export default class HeroBlockControls extends Component {
 	render() {

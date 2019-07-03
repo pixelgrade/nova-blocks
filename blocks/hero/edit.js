@@ -19,9 +19,6 @@ const { __ } = wp.i18n;
 
 const {
 	InspectorControls,
-	BlockControls,
-	MediaUpload,
-	InnerBlocks
 } = wp.blockEditor;
 
 const {
@@ -38,11 +35,9 @@ const {
 	SelectControl,
 	RadioControl,
 	ToggleControl,
-	Toolbar,
 } = wp.components;
 
 const editorData = wp.data.select( 'core/block-editor' );
-const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const updateBlocks = ( attributes ) => {
 	const blocks = editorData.getBlocks();
@@ -100,7 +95,7 @@ export default class Edit extends Component {
 		return [
 			<Fragment>
 				<HeroPreview { ...this.props } />
-				<BlockControls />
+				<HeroBlockControls />
 			</Fragment>,
 			<InspectorControls>
 
