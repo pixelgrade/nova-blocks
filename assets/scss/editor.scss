@@ -1,3 +1,10 @@
+@import "mixins";
+
 @import "../../blocks/hero/scss/editor";
 @import "../../blocks/media/scss/editor";
 @import "../../blocks/slideshow/scss/editor";
+
+.nova-mask {
+    @include cover;
+    overflow: hidden;
+}

@@ -71,4 +71,12 @@
   border-color: #0085BA;
   padding: 3px; }
 
+.nova-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden; }
+
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuL2Fzc2V0cy9jc3MvYmxvY2tzLmVkaXRvci5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

@@ -35,7 +35,7 @@
 
 .nova-slideshow__background,
 .nova-slideshow__foreground {
-    will-color: transform;
+    will-change: transform;
 }
 
 .nova-slideshow__media {

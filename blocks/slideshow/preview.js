@@ -3,7 +3,11 @@ const {
 	Fragment,
 } = wp.element;
 
-import { GalleryPlaceholder } from '../../components';
+import {
+	GalleryPlaceholder
+} from '../../components';
+
+import SlideshowBackground from './background';
 
 const {
 	MediaUpload,
@@ -71,11 +75,6 @@ export default class SlideshowPreview extends Component {
 
 		const styles = {
 			slideshow: { color: contentColor },
-			image: {}
-		}
-
-		if ( overlayFilterStyle !== 'none' ) {
-			styles.image.opacity = 1 - overlayFilterStrength / 100
 		}
 
 		if ( !! applyMinimumHeightBlock ) {
@@ -104,7 +103,7 @@ export default class SlideshowPreview extends Component {
 					<div className="nova-slideshow__slider" style={ styles.slider }>
 						<div className="nova-slideshow__slide">
 							{ previewImage && <Fragment>
-								<img className="nova-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles.image } />
+								<SlideshowBackground { ...this.props } />
 								<div className="nova-slideshow__content nova-u-content-padding">
 									<div className="nova-u-content-align">
 										<div className="nova-u-content-width">
