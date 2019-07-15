@@ -1,3 +1,5 @@
+import * as icons from "../icons";
+
 const { __ } = wp.i18n;
 
 const {
@@ -68,8 +70,8 @@ export default class Controls extends Component {
 						render = { ( { open } ) => (
 							<IconButton
 								className='components-icon-button components-toolbar__control'
-								label={ __( 'Edit Media', '__plugin_txtd' ) }
-								icon="edit"
+								label={ __( 'Change Media', '__plugin_txtd' ) }
+								icon={ icons.swap }
 								onClick= { () => {
 									open();
 								} }

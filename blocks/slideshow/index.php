@@ -103,12 +103,6 @@ if ( ! function_exists( 'nova_render_slideshow_block' ) ) {
 			$contentStyle .= 'max-width: ' . $attributes['contentWidth'] . '%';
 		}
 
-		$foregroundStyle = '';
-		if ( $attributes['applyMinimumHeightBlock'] ) {
-			$minHeight       = get_post_meta( get_the_ID(), 'nova_hero_minimum_height', true );
-			$foregroundStyle .= 'min-height: ' . $minHeight . 'vh';
-		}
-
 		$mediaStyle = '';
 		if ( $attributes['overlayFilterStyle'] !== 'none' ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - $attributes['overlayFilterStrength'] / 100 );
@@ -147,8 +141,14 @@ if ( ! function_exists( 'nova_render_slideshow_block' ) ) {
                                         <div class="nova-u-content-align">
                                             <div class="nova-slideshow__inner-container nova-u-content-width"
                                                  style="<?php echo $contentStyle; ?>">
-                                                <h2><?php echo $image['alt']; ?></h2>
-                                                <p><?php echo $image['caption']; ?></p>
+                                                <?php
+                                                if ( ! empty( $image['alt'] ) ) {
+                                                    echo '<h2>' . $image['alt'] . '</h2>';
+                                                }
+                                                if ( ! empty( $image['caption'] ) ) {
+                                                    echo '<p>' . $image['caption'] . '</p>';
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
