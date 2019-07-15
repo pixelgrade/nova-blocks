@@ -95,7 +95,7 @@ export default class Edit extends Component {
 		return [
 			<Fragment>
 				<HeroPreview { ...this.props } />
-				<HeroBlockControls />
+				<HeroBlockControls { ...this.props } />
 			</Fragment>,
 			<InspectorControls>
 
@@ -107,7 +107,7 @@ export default class Edit extends Component {
 				<LayoutPanel { ...this.props } />
 				<HeightPanel { ...this.props } />
 				<ScrollIndicatorPanel { ...this.props } />
-				<PanelBody title={ __( 'Position Indicators', '__plugin_txtd' ) }>
+				{ false && <PanelBody title={ __( 'Position Indicators', '__plugin_txtd' ) }>
 					<ToggleControl
 						label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
 						checked={ positionIndicator }
@@ -116,7 +116,7 @@ export default class Edit extends Component {
 							updateBlocks( { positionIndicator } );
 						} }
 					/>
-				</PanelBody>
+				</PanelBody> }
 				<ParallaxPanel { ...this.props } />
 
 			</InspectorControls>

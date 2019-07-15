@@ -56,10 +56,15 @@ const withParallax = function( WrappedComponent ) {
 
 			const {
 				attributes: {
+					enableParallax,
 					parallaxAmount,
 					parallaxCustomAmount,
 				}
 			} = this.props;
+
+			if ( ! enableParallax ) {
+				return {};
+			}
 
 			let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parseInt( parallaxAmount, 10 );
 			actualParallaxAmount = Math.max( Math.min( 1, actualParallaxAmount / 100 ), 0 );
