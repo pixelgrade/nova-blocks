@@ -1,8 +1,16 @@
 <?php
+/**
+ * Handle the Slideshow block server logic.
+ */
 
-if ( ! function_exists( 'nova_slideshow_block_init' ) ) {
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	function nova_slideshow_block_init() {
+if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
+
+	function novablocks_slideshow_block_init() {
 		register_block_type( 'nova/slideshow', array(
 			'attributes'      => array(
 				'contentPadding'        => array(
@@ -66,15 +74,19 @@ if ( ! function_exists( 'nova_slideshow_block_init' ) ) {
 					'default' => array()
 				),
 			),
-			'render_callback' => 'nova_render_slideshow_block'
+			'render_callback' => 'novablocks_render_slideshow_block'
 		) );
 	}
 }
-add_action( 'init', 'nova_slideshow_block_init' );
+add_action( 'init', 'novablocks_slideshow_block_init' );
 
-if ( ! function_exists( 'nova_render_slideshow_block' ) ) {
+if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
-	function nova_render_slideshow_block( $attributes, $content ) {
+	function novablocks_render_slideshow_block( $attributes, $content ) {
+
+		if ( empty( $attributes['galleryImages'] ) ) {
+			return '';
+		}
 
 		$classes = array();
 
@@ -89,64 +101,67 @@ if ( ! function_exists( 'nova_render_slideshow_block' ) ) {
 		$classes[] = $attributes['className'];
 		$classes[] = 'alignfull';
 
-		if ( $attributes['enableParallax'] ) {
+		if ( ! empty( $attributes['enableParallax'] ) ) {
 			$classes[] = 'nova-slideshow--parallax';
 		}
 
 		$className = join( ' ', $classes );
 
-		$actualParallaxAmount = $attributes['parallaxAmount'] === 'custom' ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
-		$actualParallaxAmount = max( min( 1, $actualParallaxAmount / 100 ), 0 );
+		$actualParallaxAmount = ( ! empty( $attributes['parallaxAmount'] ) && $attributes['parallaxAmount'] === 'custom' ) ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
+		$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
 
 		$contentStyle = '';
-		if ( $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . $attributes['contentWidth'] . '%';
+		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' && isset( $attributes['contentWidthCustom'] ) ) {
+			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
 		}
 
 		$mediaStyle = '';
-		if ( $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - $attributes['overlayFilterStrength'] / 100 );
+		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 );
 		}
 
-		if ( empty( $attributes['galleryImages'] ) ) {
-		    return '';
-        }
 
-		ob_start(); ?>
 
-		<?php do_action( 'nova_slideshow:before' ) ?>
+		ob_start();
 
-        <div class="<?php echo $className ?>"
-             style="<?php echo 'color: ' . $attributes['contentColor']; ?>"
-             data-min-height=<?php echo $attributes['minHeight']; ?>>
+		do_action( 'nova_slideshow:before' ); ?>
 
-			<?php do_action( 'nova_hero:after_opening_tag' ) ?>
+        <div class="<?php echo esc_attr( $className ); ?>"
+             style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>"
+             data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
+
+			<?php do_action( 'nova_hero:after_opening_tag' ); ?>
 
             <div class="nova-slideshow__mask">
-                <div class="nova-slideshow__slider" data-rellax-amount="<?php echo $actualParallaxAmount ?>">
-					<?php foreach ( $attributes['galleryImages'] as $image ) { ?>
+                <div class="nova-slideshow__slider" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
+
+					<?php foreach ( $attributes['galleryImages'] as $image ) {
+						if ( empty( $image['sizes']['large'] ) ) {
+							continue;
+						}
+						?>
                         <div class="nova-slideshow__slide">
                             <div class="nova-slideshow__mask">
                                 <div class="nova-slideshow__background nova-u-background">
                                     <img
                                             class="nova-slideshow__media"
-                                            src="<?php echo $image['sizes']['large']['url']; ?>"
-                                            style="<?php echo $mediaStyle; ?>"
-                                            data-width="<?php echo $image['sizes']['large']['width']; ?>"
-                                            data-height="<?php echo $image['sizes']['large']['height']; ?>"
+                                            src="<?php echo esc_url( $image['sizes']['large']['url'] ); ?>"
+                                            style="<?php echo esc_attr( $mediaStyle ); ?>"
+                                            data-width="<?php echo esc_attr( $image['sizes']['large']['width'] ); ?>"
+                                            data-height="<?php echo esc_attr( $image['sizes']['large']['height'] ); ?>"
                                     >
                                 </div>
-                                <div class="nova-slideshow__foreground" style="<?php echo $foregroundStyle; ?>">
+                                <div class="nova-slideshow__foreground">
                                     <div class="nova-slideshow__content nova-u-content-padding">
                                         <div class="nova-u-content-align">
                                             <div class="nova-slideshow__inner-container nova-u-content-width"
-                                                 style="<?php echo $contentStyle; ?>">
+                                                 style="<?php echo esc_attr( $contentStyle ); ?>">
                                                 <?php
                                                 if ( ! empty( $image['alt'] ) ) {
-                                                    echo '<h2>' . $image['alt'] . '</h2>';
+                                                    echo '<h2>' . wp_kses_post( $image['alt'] ) . '</h2>';
                                                 }
                                                 if ( ! empty( $image['caption'] ) ) {
-                                                    echo '<p>' . $image['caption'] . '</p>';
+                                                    echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';
                                                 }
                                                 ?>
                                             </div>
@@ -156,6 +171,7 @@ if ( ! function_exists( 'nova_render_slideshow_block' ) ) {
                             </div>
                         </div>
 					<?php } ?>
+
                 </div>
             </div>
 
@@ -163,8 +179,8 @@ if ( ! function_exists( 'nova_render_slideshow_block' ) ) {
 
         </div>
 
-		<?php do_action( 'nova_slideshow:after' ) ?>
+		<?php do_action( 'nova_slideshow:after' );
 
-		<?php return ob_get_clean();
+		return ob_get_clean();
 	}
 }

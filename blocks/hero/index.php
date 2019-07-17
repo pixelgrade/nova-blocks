@@ -1,8 +1,16 @@
 <?php
+/**
+ * Handle the Hero block server logic.
+ */
 
-if ( ! function_exists( 'nova_hero_block_init' ) ) {
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	function nova_hero_block_init() {
+if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
+
+	function novablocks_hero_block_init() {
 
 		register_meta( 'post', 'nova_hero_minimum_height', array(
 			'type'         => 'number',
@@ -126,15 +134,15 @@ if ( ! function_exists( 'nova_hero_block_init' ) ) {
 					'default' => array()
 				),
 			),
-			'render_callback' => 'nova_render_hero_block'
+			'render_callback' => 'novablocks_render_hero_block'
 		) );
 	}
 }
-add_action( 'init', 'nova_hero_block_init' );
+add_action( 'init', 'novablocks_hero_block_init' );
 
-if ( ! function_exists( 'nova_render_hero_block' ) ) {
+if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
-	function nova_render_hero_block( $attributes, $content ) {
+	function novablocks_render_hero_block( $attributes, $content ) {
 
 		$classes = array();
 
@@ -149,63 +157,71 @@ if ( ! function_exists( 'nova_render_hero_block' ) ) {
 		$classes[] = $attributes['className'];
 		$classes[] = 'alignfull';
 
-		if ( $attributes['enableParallax'] ) {
+		if ( ! empty( $attributes['enableParallax'] ) ) {
 			$classes[] = 'nova-hero--parallax';
 		}
 
 		$className = join( ' ', $classes );
 
-		$actualParallaxAmount = $attributes['parallaxAmount'] === 'custom' ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
-		$actualParallaxAmount = max( min( 1, $actualParallaxAmount / 100 ), 0 );
+		$actualParallaxAmount = ( ! empty( $attributes['parallaxAmount'] ) && $attributes['parallaxAmount'] === 'custom' ) ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
+		$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
 
-		$media = $attributes['media'];
+		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
+			$media = [];
+		} else {
+			$media = $attributes['media'];
+		}
+
+		// Make sure the media defaults are in place.
+		$media = wp_parse_args( $media, [ 'type' => '', 'url' => '', 'sizes' => [] ] );
 
 		$heroStyle = 'color: ' . $attributes['contentColor'];
 
 		$contentStyle = '';
-		if ( $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . $attributes['contentWidth'] . '%';
+		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
+			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
 		}
 
 		$foregroundStyle = '';
-		if ( $attributes['applyMinimumHeightBlock'] ) {
+		if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
 			$minHeight       = get_post_meta( get_the_ID(), 'nova_hero_minimum_height', true );
-			$foregroundStyle .= 'min-height: ' . $minHeight . 'vh';
+			$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
 		}
 
 		$mediaStyle = '';
-		if ( $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - $attributes['overlayFilterStrength'] / 100 );
+		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 );
 		}
 
-		ob_start(); ?>
+		ob_start();
 
-		<?php do_action( 'nova_hero:before' ) ?>
+		do_action( 'nova_hero:before' ); ?>
 
-        <div class="<?php echo $className ?>" style="<?php echo 'color: ' . $attributes['contentColor']; ?>">
+        <div class="<?php echo esc_attr( $className ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
 
-			<?php do_action( 'nova_hero:after_opening_tag' ) ?>
+			<?php do_action( 'nova_hero:after_opening_tag' ); ?>
 
             <div class="nova-hero__mask">
-                <div class="nova-hero__background" data-rellax-amount="<?php echo $actualParallaxAmount ?>">
-					<?php if ( $media['type'] === 'image' && ! empty( $media['sizes'] ) ) { ?>
+                <div class="nova-hero__background" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
+					<?php if ( $media['type'] === 'image' && ! empty( $media['sizes']['full']['url'] ) ) { ?>
                         <img class="nova-hero__media"
-                             src="<?php echo $media['sizes']['full']['url']; ?>"
-                             style="<?php echo $mediaStyle; ?>"/>
-					<?php } ?>
-					<?php if ( $media['type'] === 'video' ) { ?>
+                             src="<?php echo esc_url( $media['sizes']['full']['url'] ); ?>"
+                             style="<?php echo esc_attr( $mediaStyle ); ?>"/>
+					<?php }
+
+					if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
                         <video muted autoplay loop class="nova-hero__media"
-                               src="<?php echo $media['url']; ?>"
-                               style="<?php echo $mediaStyle ?>"/>
+                               src="<?php echo esc_url( $media['url'] ); ?>"
+                               style="<?php echo esc_attr( $mediaStyle ); ?>"/>
 					<?php } ?>
                 </div>
             </div>
-            <div class="nova-hero__foreground nova-u-content-padding" style="<?php echo $foregroundStyle; ?>">
+            <div class="nova-hero__foreground nova-u-content-padding" style="<?php echo esc_attr( $foregroundStyle ); ?>">
                 <div class="nova-u-content-align">
-                    <div class="nova-hero__inner-container nova-u-content-width" style="<?php echo $contentStyle; ?>">
-						<?php echo $content; ?>
+                    <div class="nova-hero__inner-container nova-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
+						<?php echo wp_kses_post( $content ); ?>
                     </div>
-					<?php if ( $attributes['scrollIndicatorBlock'] ) { ?>
+					<?php if ( ! empty( $attributes['scrollIndicatorBlock'] ) ) { ?>
                         <div class="nova-hero__indicator"></div>
 					<?php } ?>
                 </div>
@@ -215,8 +231,8 @@ if ( ! function_exists( 'nova_render_hero_block' ) ) {
 
         </div>
 
-		<?php do_action( 'nova_hero:after' ) ?>
+		<?php do_action( 'nova_hero:after' );
 
-		<?php return ob_get_clean();
+		return ob_get_clean();
 	}
 }

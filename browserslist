@@ -1,0 +1,5 @@
+# Browsers that we support
+
+Last 2 versions
+> 1% 				# decent thereshold for marketshare
+not ie <= 11 		# many flexbox bugs
