@@ -47,16 +47,6 @@ function nova_enqueue_frontend_assets() {
 		true
 	);
 
-	// @todo check if bully is needed or already used?
-	// components handle: 'pixelgrade_multipage-scripts'
-	$bully_path = '/assets/js/jquery.bully.js';
-	wp_register_script(
-		'nova-blocks-bully',
-		nova_get_plugin_url() . $bully_path,
-		array( 'jquery' ),
-		true
-	);
-
 	$slick_path = '/assets/js/jquery.slick.js';
 	wp_register_script(
 		'nova-blocks-slick',
@@ -77,7 +67,7 @@ function nova_enqueue_frontend_assets() {
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		nova_get_plugin_url() . $block_path,
-		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-bully', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
+		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
 		false,
 		true
 	);

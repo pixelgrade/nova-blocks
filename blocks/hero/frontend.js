@@ -9,9 +9,5 @@ import { debounce } from '../utils';
 		});
 	}
 
-	if ( typeof $.fn.bully !== "undefined" ) {
-//		$( '.nova-hero-bullets' ).find( '.nova-hero' ).bully();
-	}
-
 })(jQuery, window);
 

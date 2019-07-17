@@ -89,11 +89,6 @@ if ( ! function_exists( 'nova_hero_block_init' ) ) {
 					'source' => 'meta',
 					'meta'   => 'nova_hero_scroll_indicator'
 				),
-				'positionIndicator'       => array(
-					'default' => true,
-					'source'  => 'meta',
-					'meta'    => 'nova_hero_position_indicators'
-				),
 				'scrollIndicatorBlock'    => array(
 					'type'    => 'boolean',
 					'default' => false
