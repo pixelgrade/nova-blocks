@@ -1,13 +1,8 @@
 import { debounce } from '../../utils';
-import * as icons from '../../icons';
 
 import {
-	AlignmentControls,
 	HeightPanel,
 	LayoutPanel,
-	ColorControls,
-	ColorPanel,
-	OverlayControls,
 	ParallaxPanel,
 	ScrollIndicatorPanel,
 } from "../../components";
@@ -25,17 +20,6 @@ const {
 	Component,
 	Fragment
 } = wp.element;
-
-const {
-	Button,
-	Dropdown,
-	IconButton,
-	PanelBody,
-	PanelRow,
-	SelectControl,
-	RadioControl,
-	ToggleControl,
-} = wp.components;
 
 const editorData = wp.data.select( 'core/block-editor' );
 

@@ -2,7 +2,6 @@ import classnames from "classnames";
 
 const {
 	Component,
-	Fragment
 } = wp.element;
 
 const {
@@ -28,7 +27,6 @@ export default class MediaPreview extends Component {
 		const {
 			attributes,
 			className,
-			isSelected,
 			updateImages
 		} = this.props;
 
@@ -38,7 +36,6 @@ export default class MediaPreview extends Component {
 			blockStyle,
 			mediaPosition,
 			images,
-			alignment
 		} = attributes;
 
 		const classNames = classnames(

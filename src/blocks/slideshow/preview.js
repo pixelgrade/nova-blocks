@@ -75,10 +75,21 @@ export default class SlideshowPreview extends Component {
 
 		const styles = {
 			slideshow: { color: contentColor },
+			content: {},
+			foreground: {},
+		}
+
+		if ( contentPadding === 'custom' ) {
+			styles.foreground.paddingTop = `${contentPaddingCustom}%`
+			styles.foreground.paddingBottom = `${contentPaddingCustom}%`
 		}
 
 		if ( !! applyMinimumHeightBlock ) {
 			styles.slideshow.minHeight = minHeight + 'vh'
+		}
+
+		if ( contentWidth === 'custom' ) {
+			styles.content.maxWidth = `${contentWidthCustom}%`
 		}
 
 		let maxAspectRatio = 0;
@@ -104,9 +115,9 @@ export default class SlideshowPreview extends Component {
 						<div className="nova-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="nova-slideshow__content nova-u-content-padding">
+								<div className="nova-slideshow__content nova-u-content-padding" style={ styles.foreground }>
 									<div className="nova-u-content-align">
-										<div className="nova-u-content-width">
+										<div className="nova-u-content-width" style={ styles.content }>
 											<h2>{ previewImage.alt }</h2>
 											<p>{ previewImage.caption }</p>
 										</div>
