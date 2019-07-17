@@ -8,6 +8,7 @@
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
  * Tested up to: 5.2.2
+ * Requires PHP: 5.4.0
  *
  * Nova Blocks is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +16,7 @@
  * any later version.
  *
  * You should have received a copy of the GNU General Public License
- * along with Nova Blocks. If not, see <http://www.gnu.org/licenses/>.
+ * along with Nova Blocks. If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.
  */
 
 // If this file is called directly, abort.
@@ -65,8 +66,8 @@ function novablocks_add_blocks_category( $categories, $post ) {
 }
 add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 
-include __DIR__ . '/lib/enqueue-scripts.php';
-include __DIR__ . '/lib/customify.php';
+require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
+require_once dirname( __FILE__ ) . '/lib/customify.php';
 
-include __DIR__ . '/blocks/hero/index.php';
-include __DIR__ . '/blocks/slideshow/index.php';
+require_once dirname( __FILE__ ) . '/blocks/hero/index.php';
+require_once dirname( __FILE__ ) . '/blocks/slideshow/index.php';
