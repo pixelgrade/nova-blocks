@@ -1,0 +1,60 @@
+@import "variables";
+@import "mixins";
+
+:root {
+    --content-width-normal: 900px;
+    --content-width-wide: 1200px;
+
+    --nova-spacing-unit: 2px;
+    --content-side-spacing: calc( 7 * var(--nova-spacing-unit) );
+
+    @include above(tablet) {
+        --nova-spacing-unit: 4px;
+    }
+
+    @include above(desktop) {
+        --nova-spacing-unit: 8px;
+    }
+}
+
+@import "../blocks/hero/scss/style";
+@import "../blocks/media/scss/style";
+@import "../blocks/slideshow/scss/style";
+
+@import "vendor/slick";
+@import "vendor/slick-theme";
+
+.pixelgrade-hero-button-group-wrapper {
+
+    label + .components-button-group {
+        margin-top: 5px;
+    }
+
+    .components-button-group {
+        display: flex;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        .components-button {
+            padding: 1px 5px 3px;
+            height: auto;
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+    }
+}
+
+.pixelgrade-hero-horizontal-alignment-button {
+    svg {
+        transform: rotate(-90deg);
+    }
+}
+
+.u-container-width {
+    margin-left: auto;
+    margin-right: auto;
+}

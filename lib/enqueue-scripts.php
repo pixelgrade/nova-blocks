@@ -10,8 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_enqueue_block_editor_assets() {
 	// Make paths variables so we don't write em twice ;)
-	$block_path = '/assets/js/editor.blocks.js';
-	$style_path = '/assets/css/blocks.editor.css';
+	$block_path = '/dist/js/editor.blocks.js';
+	$style_path = '/dist/css/blocks.editor.css';
 
 	// Enqueue the bundled block JS file
 	wp_enqueue_script(
@@ -30,7 +30,7 @@ add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_block_editor_asse
 
 
 function novablocks_enqueue_assets() {
-	$style_path = '/assets/css/blocks.style.css';
+	$style_path = '/dist/css/blocks.style.css';
 	wp_enqueue_style(
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
@@ -46,7 +46,7 @@ function novablocks_enqueue_frontend_assets() {
 		return;
 	}
 
-	$rellax_path = '/assets/js/jquery.rellax.js';
+	$rellax_path = '/dist/js/jquery.rellax.js';
 	wp_register_script(
 		'nova-blocks-rellax',
 		novablocks_get_plugin_url() . $rellax_path,
@@ -54,7 +54,7 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	$slick_path = '/assets/js/jquery.slick.js';
+	$slick_path = '/dist/js/jquery.slick.js';
 	wp_register_script(
 		'nova-blocks-slick',
 		novablocks_get_plugin_url() . $slick_path,
@@ -62,7 +62,7 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	$velocity_path = '/assets/js/jquery.velocity.js';
+	$velocity_path = '/dist/js/jquery.velocity.js';
 	wp_register_script(
 		'nova-blocks-velocity',
 		novablocks_get_plugin_url() . $velocity_path,
@@ -70,10 +70,10 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	$block_path = '/assets/js/frontend.blocks.js';
+	$block_path = '/dist/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'nova-blocks-frontend',
-		nova_get_plugin_url() . $block_path,
+		novablocks_get_plugin_url() . $block_path,
 		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
 		false,
 		true
