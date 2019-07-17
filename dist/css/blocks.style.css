@@ -361,7 +361,7 @@
 .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .block-editor-media-placeholder__button {
   display: none; }
 
-.nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button {
+.nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button {
   padding-left: 12px;
   text-indent: -999em;
   display: -ms-flexbox;
@@ -369,12 +369,12 @@
   -ms-flex-align: center;
       align-items: center;
   height: auto; }
-  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button, .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button:focus:enabled {
+  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button, .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button:focus:enabled {
     color: transparent; }
-  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button:before, .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button:after {
+  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button:before, .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button:after {
     color: #555;
     text-indent: 0; }
-  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button:before {
+  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button:before {
     display: inline-block;
     font-family: dashicons;
     line-height: 1;
@@ -394,7 +394,7 @@
     transition: color .1s ease-in;
     content: "\f464";
     margin-right: 0.2em; }
-  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .editor-media-placeholder__media-library-button:after {
+  .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__fieldset > .block-editor-media-placeholder__button:after {
     content: 'Edit Gallery'; }
 
 /* Slider */

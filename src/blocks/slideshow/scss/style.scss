@@ -119,33 +119,36 @@ $button-component-text-color: #555;
         display: none;
     }
 
-    .editor-media-placeholder__media-library-button {
-        padding-left: 12px;
-        text-indent: -999em;
+    .components-placeholder__fieldset {
+        > .block-editor-media-placeholder__button {
+            padding-left: 12px;
+            text-indent: -999em;
 
-        display: flex;
-        align-items: center;
-        height: auto;
+            display: flex;
+            align-items: center;
+            height: auto;
 
-        &,
-        &:focus:enabled {
-            color: transparent;
-        }
+            &,
+            &:focus:enabled {
+                color: transparent;
+            }
 
-        &:before,
-        &:after {
-            color: $button-component-text-color;
-            text-indent: 0;
-        }
+            &:before,
+            &:after {
+                color: $button-component-text-color;
+                text-indent: 0;
+            }
 
-        &:before {
-            @include dashicon;
-            content: "\f464"; // edit / pencil icon
-            margin-right: 0.2em;
-        }
+            &:before {
+                @include dashicon;
+                content: "\f464"; // edit / pencil icon
+                margin-right: 0.2em;
+            }
 
-        &:after {
-            content: 'Edit Gallery';
+            &:after {
+                content: 'Edit Gallery';
+            }
         }
     }
+
 }
