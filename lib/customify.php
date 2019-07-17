@@ -1,4 +1,12 @@
 <?php
+/**
+ * Handle the Customify integration logic.
+ */
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 add_filter( 'customify_filter_fields', 'novablocks_add_customify_section', 20, 1 );
 add_filter( 'customify_filter_fields', 'novablocks_add_customify_style_manager_section', 20, 1 );

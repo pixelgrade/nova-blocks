@@ -1,4 +1,12 @@
 <?php
+/**
+ * Handle the the scripts enqueue.
+ */
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 function novablocks_enqueue_block_editor_assets() {
 	// Make paths variables so we don't write em twice ;)
@@ -46,8 +54,6 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	// @todo check if bully is needed or already used?
-	// components handle: 'pixelgrade_multipage-scripts'
 	$bully_path = '/assets/js/jquery.bully.js';
 	wp_register_script(
 		'nova-blocks-bully',
