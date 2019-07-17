@@ -20,7 +20,7 @@ function nova_add_customify_section( $config ) {
 	$nova_section = array(
 		// Header
 		'nova_section' => array(
-			'title'   => esc_html__( 'Nova', '__components_txtd' ),
+			'title'   => esc_html__( 'Nova', '__plugin_txtd' ),
 			'options' => array(
 				'nova_color_1'       => array(
 					'type'    => 'color',

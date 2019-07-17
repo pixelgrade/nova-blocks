@@ -31,7 +31,6 @@ function nova_enqueue_assets() {
 }
 add_action( 'enqueue_block_assets', 'nova_enqueue_assets' );
 
-
 function nova_enqueue_frontend_assets() {
 
 	// If in the backend, bail out.

@@ -56,6 +56,6 @@ A manually curated list that include all the valuable people that have contribut
 [![](https://github.com/razwan.png?size=64)](https://github.com/razwan) [![](https://github.com/georgeolaru.png?size=64)](https://github.com/georgeolaru) [![](https://github.com/oanafilip.png?size=64)](https://github.com/oanafilip) [![](https://github.com/vladolaru.png?size=64)](https://github.com/vladolaru)  [![](https://github.com/madalingorbanescu.png?size=64)](https://github.com/madalingorbanescu) 
 
 ## License
-Nova Blocks source code is released under the [GNU GPL v3 license](https://www.gnu.org/licenses/gpl-3.0.html). This is so you have the freedom to create something beautiful and share it back with us.
+Nova Blocks source code is released under the [GNU GPL v2 license](https://www.gnu.org/licenses/gpl-2.0.html) or later. This is so you have the freedom to create something beautiful and share it back with us.
 
 2019 © Pixelgrade.
