@@ -28,7 +28,7 @@
 }
 
 .nova-u-content-padding {
-    padding: var(--nova-spacing) var(--nova-spacing-small);
+    padding: var(--nova-spacing);
 
     .nova-u-spacing-small & {
         --nova-spacing: var(--nova-spacing-small);

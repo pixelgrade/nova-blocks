@@ -626,7 +626,7 @@
     --nova-content-width: var(--nova-content-width-narrow); }
 
 .nova-u-content-padding {
-  padding: var(--nova-spacing) var(--nova-spacing-small); }
+  padding: var(--nova-spacing); }
   .nova-u-spacing-small .nova-u-content-padding {
     --nova-spacing: var(--nova-spacing-small); }
   .nova-u-spacing-medium .nova-u-content-padding {
