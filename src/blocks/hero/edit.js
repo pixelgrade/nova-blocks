@@ -91,17 +91,10 @@ export default class Edit extends Component {
 				<HeroBlockControls { ...this.props } />
 			</Fragment>,
 			<InspectorControls>
-
-				<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ true }>
-					<AlignmentControls { ...this.props } />
-				</PanelBody>
-
-				<ColorPanel { ...this.props } />
 				<LayoutPanel { ...this.props } />
 				<HeightPanel { ...this.props } />
 				<ScrollIndicatorPanel { ...this.props } />
 				<ParallaxPanel { ...this.props } />
-
 			</InspectorControls>
 		]
 	}
