@@ -1,8 +1,9 @@
 <img width="100" alt="nova-icon" src="https://user-images.githubusercontent.com/1632775/58468221-d0f5b180-8145-11e9-9c5f-21a7eb902dcb.png">
 
-# Nova Blocks for Gutenberg Space 🌌
+# Nova Blocks for Gutenberg Space
 ### Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.  It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
 
+[Download for Free](https://downloads.wordpress.org/plugins/nova-blocks.latest-stable.zip)
 
 [![](https://img.shields.io/github/issues-closed/pixelgrade/nova-blocks.svg?color=6cc644&label=Issues)](https://github.com/pixelgrade/nova-blocks/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aclosed+) [![](https://img.shields.io/github/issues/pixelgrade/nova-blocks.svg?color=4078c0&label=%20)](https://github.com/pixelgrade/nova-blocks/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen)
 
