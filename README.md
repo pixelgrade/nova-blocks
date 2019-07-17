@@ -45,9 +45,6 @@ Yes! Nova Block’s core features are free to use.
 - [Storefront](https://wordpress.org/themes/storefront/) _by Automattic_
 - [Osteria](https://pixelgrade.com/themes/osteria/) _by Pixelgrade_
 
-## Development
-If you catch up any issues or have suggestions for improving the blocks, please open an issue and give us your thoughts. We’re would love to hear your input!
-
 ## Contributing
 The essence of **open source** is that by freely sharing the code, you have the freedom to use it for any purpose, study how it works and adapt it to your needs, improve the program and **share your improvements** with the community so that we all benefit. 🙏
 
