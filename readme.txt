@@ -12,7 +12,7 @@ A collection of distinctive Gutenberg blocks, committed to making your site shin
 
 == Description ==
 
-Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.  It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
+Nova Blocks is a collection of **distinctive Gutenberg blocks,** committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
 
 = Positioning =
 

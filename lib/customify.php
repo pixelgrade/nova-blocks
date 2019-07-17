@@ -1,7 +1,7 @@
 <?php
 
-add_filter( 'customify_filter_fields', 'nova_add_customify_section', 20, 1 );
-add_filter( 'customify_filter_fields', 'nova_add_customify_style_manager_section', 20, 1 );
+add_filter( 'customify_filter_fields', 'novablocks_add_customify_section', 20, 1 );
+add_filter( 'customify_filter_fields', 'novablocks_add_customify_style_manager_section', 20, 1 );
 
 define( 'THEME_COLOR_PRIMARY', '#203AB6' ); // nova blue
 define( 'THEME_COLOR_SECONDARY', '#FFE42E' ); // nova yellow
@@ -15,7 +15,7 @@ define( 'THEME_LIGHT_PRIMARY', '#FFFFFF' );
 define( 'THEME_LIGHT_SECONDARY', '#EEF1F2' ); // nova gray
 define( 'THEME_LIGHT_TERTIARY', '#EEF1F2' ); // nova gray
 
-function nova_add_customify_section( $config ) {
+function novablocks_add_customify_section( $config ) {
 
 	$nova_section = array(
 		// Header
@@ -146,7 +146,7 @@ function nova_add_customify_section( $config ) {
 	return $config;
 }
 
-function nova_add_customify_style_manager_section( $options ) {
+function novablocks_add_customify_style_manager_section( $options ) {
 
 	if ( ! isset( $options['sections']['style_manager_section'] ) ) {
 		$options['sections']['style_manager_section'] = array();

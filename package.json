@@ -23,6 +23,11 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.19.1",
-    "webpack": "^3.11.0"
+    "webpack": "^3.11.0",
+    "del": "^4.1.0",
+    "gulp-exec": "^3.0.2",
+    "gulp-load-plugins": "^1.6.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-rsync": "0.0.8"
   }
 }

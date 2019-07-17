@@ -20,19 +20,6 @@
  */
 
 /**
- * Gets this plugin's absolute directory path.
- *
- * @since  1.0.0
- * @ignore
- * @access private
- *
- * @return string
- */
-function nova_get_plugin_directory() {
-	return __DIR__;
-}
-
-/**
  * Gets this plugin's URL.
  *
  * @since  1.0.0
@@ -41,7 +28,7 @@ function nova_get_plugin_directory() {
  *
  * @return string
  */
-function nova_get_plugin_url() {
+function novablocks_get_plugin_url() {
 	static $plugin_url;
 
 	if ( empty( $plugin_url ) ) {
@@ -51,7 +38,7 @@ function nova_get_plugin_url() {
 	return $plugin_url;
 }
 
-function nova_body_class( $classes ) {
+function novablocks_body_class( $classes ) {
 	$bullets = get_post_meta( get_the_ID(), 'nova_hero_position_indicators', true );
     if ( $bullets ) {
 		$classes[] = 'nova-hero-bullets';
@@ -59,9 +46,9 @@ function nova_body_class( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'nova_body_class' );
+add_filter( 'body_class', 'novablocks_body_class' );
 
-function nova_add_blocks_category( $categories, $post ) {
+function novablocks_add_blocks_category( $categories, $post ) {
 	return array_merge(
 		array(
 			array(
@@ -72,7 +59,7 @@ function nova_add_blocks_category( $categories, $post ) {
 		$categories
 	);
 }
-add_filter( 'block_categories', 'nova_add_blocks_category', 10, 2 );
+add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 
 include __DIR__ . '/lib/enqueue-scripts.php';
 include __DIR__ . '/lib/customify.php';
