@@ -174,17 +174,6 @@ export default class Edit extends Component {
 
 					{ 'gallery' === slideshowType && <Fragment>
 
-						<PanelBody title={ __( 'Content Position', '__plugin_txtd' ) } initialOpen={ false }>
-							<AlignmentControls { ...{
-								...this.props,
-								attributes: {
-									...this.props.attributes,
-									applyMinimumHeightBlock: true
-								}
-							} } />
-						</PanelBody>
-
-						<ColorPanel { ...this.props } />
 						<LayoutPanel { ...this.props } />
 
 						<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
