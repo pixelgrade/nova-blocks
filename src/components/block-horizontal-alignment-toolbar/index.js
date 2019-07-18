@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 const { Toolbar } = wp.components;
 const { withViewportMatch } = wp.viewport;

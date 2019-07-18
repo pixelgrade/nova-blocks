@@ -1,3 +1,9 @@
+:root {
+    --nova-media-transition-duration: 0.4s;
+    --nova-media-transition-easing: ease-out;
+    --nova-media-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+}
+
 .nova-media__placeholder {
     display: flex;
     align-items: center;
@@ -9,16 +15,23 @@
 }
 
 .wp-block-nova-media {
-    transition: all 0.4s ease;
+    transition: var(--nova-media-transition);
     transition-property: background-color, padding;
 
     h1, h2, h3, h4, h5, h6 {
-        transition: color 0.4s ease-out;
+        transition: var(--nova-media-transition);
+        transition-property: color;
     }
 }
 
 .nova-media__content {
-    transition: padding 0.4s ease;
+    transition: var(--nova-media-transition);
+    transition-property: padding, box-shadow;
+
+    &:after {
+        transition: var(--nova-media-transition);
+        transition-property: background-color;
+    }
 }
 
 .nova-media__inner-container {

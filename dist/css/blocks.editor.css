@@ -20,6 +20,11 @@
     border-top-color: currentColor;
     margin-left: 4px; }
 
+:root {
+  --nova-media-transition-duration: 0.4s;
+  --nova-media-transition-easing: ease-out;
+  --nova-media-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing); }
+
 .nova-media__placeholder {
   display: -ms-flexbox;
   display: flex;
@@ -31,13 +36,18 @@
   background-color: #EEEEEE; }
 
 .wp-block-nova-media {
-  transition: all 0.4s ease;
+  transition: var(--nova-media-transition);
   transition-property: background-color, padding; }
   .wp-block-nova-media h1, .wp-block-nova-media h2, .wp-block-nova-media h3, .wp-block-nova-media h4, .wp-block-nova-media h5, .wp-block-nova-media h6 {
-    transition: color 0.4s ease-out; }
+    transition: var(--nova-media-transition);
+    transition-property: color; }
 
 .nova-media__content {
-  transition: padding 0.4s ease; }
+  transition: var(--nova-media-transition);
+  transition-property: padding, box-shadow; }
+  .nova-media__content:after {
+    transition: var(--nova-media-transition);
+    transition-property: background-color; }
 
 .nova-media__inner-container {
   padding-left: var(--content-side-spacing);

@@ -31,7 +31,6 @@ class Inspector extends Component {
 		} = this.props;
 
 		const {
-			mediaStyle,
 			contentStyle,
 			blockStyle,
 		} = attributes;
@@ -40,21 +39,7 @@ class Inspector extends Component {
 			<Fragment>
 				<InspectorControls>
 
-					{ false && <PanelBody title={ __( 'Media Area', '__plugin_txtd' ) }  initialOpen={ true }>
-						<RadioControl
-							label = { __( 'Media Style', '__plugin_txtd' ) }
-							value = { mediaStyle }
-							selected = { mediaStyle }
-							options = { [
-								{ label: __( 'Well-organized Grid', '__plugin_txtd' ), value: 'simple' },
-								{ label: __( 'Overlap Layered Grid', '__plugin_txtd' ), value: 'overlap' }
-							] }
-							help={ __( 'Automatically crop and scale images to fill the block container.', '__plugin_txtd' ) }
-							onChange = { mediaStyle => setAttributes( { mediaStyle } ) }
-						/>
-					</PanelBody> }
-
-					<PanelBody title={ __('Content Area', '__plugin_txtd') } initialOpen = { true }>
+					<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen = { true }>
 						<RadioControl
 							label = { __( 'Emphasis Level', '__plugin_txtd' ) }
 							value = { contentStyle }
@@ -71,7 +56,7 @@ class Inspector extends Component {
 					</PanelBody>
 
 
-					<PanelBody title={ __('Block Area', '__plugin_txtd') } initialOpen = { true }>
+					<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen = { true }>
 						<RadioControl
 							label = { __( 'Emphasis Level', '__plugin_txtd' ) }
 							value = { blockStyle }

@@ -70,4 +70,5 @@ require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 require_once dirname( __FILE__ ) . '/lib/customify.php';
 
 require_once dirname( __FILE__ ) . '/src/blocks/hero/init.php';
+require_once dirname( __FILE__ ) . '/src/blocks/media/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/slideshow/init.php';

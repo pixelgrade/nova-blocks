@@ -1,30 +1,26 @@
 /**
  * Internal dependencies
  */
-import { media } from '../../icons';
-import attributes from './attributes.json';
+import * as icons from '../../icons';
 import edit from './edit';
-import save from './save';
 
 /**
- * wp API
+ * WordPress dependencies
  */
 const { __ } = wp.i18n;
-
-const {
-	registerBlockType,
-} = wp.blocks;
-
+const { registerBlockType, } = wp.blocks;
+const { InnerBlocks } = wp.blockEditor;
 
 export default registerBlockType( 'nova/media',
 	{
 		title: __( 'Media Card Constellation', '__plugin_txtd' ),
 		description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
-		icon: media,
 		category: 'nova-by-pixelgrade',
-		...attributes,
+		icon: icons.media,
 		edit,
-		save,
+		save() {
+			return <InnerBlocks.Content/>
+		},
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? {

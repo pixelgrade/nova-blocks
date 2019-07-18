@@ -31,7 +31,6 @@ export default class MediaPreview extends Component {
 		} = this.props;
 
 		const {
-			mediaStyle,
 			contentStyle,
 			blockStyle,
 			mediaPosition,
@@ -44,7 +43,6 @@ export default class MediaPreview extends Component {
 			`has-image-on-the-${mediaPosition}`,
 			`block-is-${blockStyle}`,
 			`content-is-${contentStyle}`,
-			`grid-is-${mediaStyle}`
 		);
 
 		const galleryImages = images.map ( (image)  => JSON.parse(image));
