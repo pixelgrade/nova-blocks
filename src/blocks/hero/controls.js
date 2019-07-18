@@ -19,8 +19,8 @@ const {
 } = wp.components;
 
 import {
-	AlignmentControls,
-	ColorControls,
+	AlignmentControls, AlignmentToolbar,
+	ColorControls, ColorToolbar,
 	OverlayControls,
 } from "../../components";
 
@@ -33,47 +33,8 @@ export default class HeroBlockControls extends Component {
 		} = this.props;
 
 		return <BlockControls>
-			<Toolbar className='pixelgrade-hero-block-toolbar'>
-				<Dropdown
-					position='bottom'
-					className='pixelgrade-hero-block-toolbar-dropdown'
-					contentClassName='components-nova--popover'
-					renderToggle={ ( { isOpen, onToggle } ) => (
-						<IconButton
-							onClick={ onToggle }
-							icon={ icons.alignment }
-							aria-expanded={ isOpen }
-							label={ __( 'Content alignment', '__plugin_txtd' ) }
-							labelPosition='bottom'
-						/>
-					) }
-					focusOnMount={ false }
-					renderContent={ ( { onClose } ) => <Fragment>
-						<AlignmentControls { ...this.props } />
-					</Fragment> }
-				/>
-			</Toolbar>
-			<Toolbar className='pixelgrade-hero-block-toolbar'>
-				<Dropdown
-					position='bottom'
-					className='pixelgrade-hero-block-toolbar-dropdown'
-					contentClassName='components-nova--popover'
-					renderToggle={ ( { isOpen, onToggle } ) => (
-						<IconButton
-							onClick={ onToggle }
-							icon={ icons.invert }
-							aria-expanded={ isOpen }
-							label={ __( 'Invert colors', '__plugin_txtd' ) }
-							labelPosition='bottom'
-						/>
-					) }
-					focusOnMount={ false }
-					renderContent={ ( { onClose } ) => <Fragment>
-						<ColorControls { ...this.props } />
-						<OverlayControls { ...this.props } />
-					</Fragment> }
-				/>
-			</Toolbar>
+			<AlignmentToolbar { ...this.props } />
+			<ColorToolbar { ...this.props } />
 			<Toolbar>
 				<MediaUpload
 					allowedTypes={ ALLOWED_MEDIA_TYPES }

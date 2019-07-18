@@ -635,7 +635,8 @@
     --nova-spacing: var(--nova-spacing-large); }
 :root {
   --bg-master-dark: #000000;
-  --bg-master-light: #FFFFFF; }
+  --bg-master-light: #FFFFFF;
+  --bg-master-none: transparent; }
 
 .nova-u-background-dark {
   --element-background: var(--bg-master-dark); }
@@ -643,8 +644,12 @@
 .nova-u-background-light {
   --element-background: var(--bg-master-light); }
 
+.nova-u-background-none {
+  --element-background: var(--bg-master-none); }
+
 .nova-u-background {
-  background: var(--element-background); }
+  background-color: var(--element-background);
+  transition: background-color 0.4s ease-out; }
 
 .nova-hide-clear-color .components-color-palette__custom-color {
   margin-right: 0; }

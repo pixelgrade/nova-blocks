@@ -14,7 +14,9 @@ class HeroBackground extends Component {
 			}
 		} = this.props;
 
-		const styles = {};
+		const styles = {
+			opacity: 1
+		};
 
 		if ( overlayFilterStyle !== 'none' ) {
 			styles.opacity = 1 - overlayFilterStrength / 100

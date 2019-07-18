@@ -1,3 +1,19 @@
+:root {
+    --nova-slideshow-transition-duration: 0.4s;
+    --nova-slideshow-transition-easing: ease-out;
+    --nova-slideshow-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+}
+
+.wp-block-nova-slideshow {
+    transition: var(--nova-hero-transition);
+    transition-property: color;
+}
+
+.nova-slideshow__media {
+    transition: var(--nova-hero-transition);
+    transition-property: opacity;
+}
+
 .nova-slideshow__gallery-edit {
     --gallery-spacing: 10px;
 

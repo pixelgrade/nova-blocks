@@ -1,9 +1,10 @@
 :root {
     --bg-master-dark: #000000;
     --bg-master-light: #FFFFFF;
+    --bg-master-none: transparent;
 }
 
-@each $color in dark, light {
+@each $color in dark, light, none {
 
     .nova-u-background-#{$color} {
         --element-background: var(--bg-master-#{$color});
@@ -11,7 +12,8 @@
 }
 
 .nova-u-background {
-    background: var(--element-background);
+    background-color: var(--element-background);
+    transition: background-color 0.4s ease-out;
 }
 
 .nova-hide-clear-color {

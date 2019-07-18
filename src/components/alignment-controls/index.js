@@ -32,7 +32,7 @@ class AlignmentToolbar extends Component {
 							onClick={ onToggle }
 							icon={ icons.alignment }
 							aria-expanded={ isOpen }
-							label={ __( 'Content alignment', '__plugin_txtd' ) }
+							label={ __( 'Content Alignment', '__plugin_txtd' ) }
 							labelPosition='bottom'
 						/>
 					) }

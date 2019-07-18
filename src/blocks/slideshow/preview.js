@@ -118,8 +118,8 @@ export default class SlideshowPreview extends Component {
 								<div className="nova-slideshow__content nova-u-content-padding" style={ styles.foreground }>
 									<div className="nova-u-content-align">
 										<div className="nova-u-content-width" style={ styles.content }>
-											<h2>{ previewImage.alt }</h2>
-											<p>{ previewImage.caption }</p>
+											{ !! previewImage.alt && <h2>{ previewImage.alt }</h2> }
+											{ !! previewImage.caption && <p>{ previewImage.caption }</p> }
 										</div>
 									</div>
 								</div>
