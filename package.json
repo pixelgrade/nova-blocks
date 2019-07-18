@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env webpack --watch",
     "prebuild": "cross-env NODE_ENV=production webpack -p",
-    "build": "gulp build"
+    "build": "gulp zip"
   },
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.2.0",
