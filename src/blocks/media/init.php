@@ -48,7 +48,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$classes[] = $attributes['className'];
 		$classes[] = 'nova-media';
-		$classes[] = 'has-image-on-the-' . $attributes['mediaPositions'];
+		$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
 		$classes[] = 'block-is-' . $attributes['blockStyle'];
 		$classes[] = 'content-is-' . $attributes['contentStyle'];
 

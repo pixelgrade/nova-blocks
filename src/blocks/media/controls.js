@@ -27,11 +27,29 @@ const {
 } = wp.components;
 
 export default class Controls extends Component {
+
 	constructor( props ) {
 		super( ...arguments );
 	}
 
+	onChangeGallery( galleryImages ) {
+
+		const promises = galleryImages.map( (image, index) => {
+			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
+				galleryImages[index] = { ...newImage, ...image };
+			} );
+		} );
+
+		Promise.all( promises ).then( () => {
+			this.props.setAttributes( { galleryImages: galleryImages.filter( image => {
+					return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
+				} ) } );
+		} );
+
+	}
+
 	render() {
+
 		const {
 			attributes,
 			setAttributes,
@@ -43,7 +61,7 @@ export default class Controls extends Component {
 			images = [],
 		} = attributes;
 
-		const galleryImages = images.map ( (image)  => JSON.parse(image));
+		const galleryImages = images.map( ( image ) => JSON.parse( image ) );
 
 		const hasImages = !! images.length;
 
@@ -58,7 +76,7 @@ export default class Controls extends Component {
 			},
 		};
 
-		const toolbarControls = (
+		return (
 			<BlockControls>
 
 				<Toolbar
@@ -94,12 +112,6 @@ export default class Controls extends Component {
 				</Toolbar> }
 
 			</BlockControls>
-		);
-
-		return (
-			<Fragment>
-				{ toolbarControls }
-			</Fragment>
 		);
 	}
 }

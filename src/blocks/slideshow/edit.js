@@ -1,3 +1,5 @@
+import * as icons from "../../icons";
+
 const { __ } = wp.i18n;
 
 import {
@@ -8,7 +10,6 @@ import {
 	AlignmentToolbar,
 	ColorToolbar,
 	GalleryPreview,
-	GalleryPlaceholder,
 } from "../../components";
 
 import { shuffleArray } from "../../components/util";
@@ -16,6 +17,7 @@ import { shuffleArray } from "../../components/util";
 import SlideshowPreview from './preview';
 
 const {
+	MediaUpload,
 	BlockControls,
 	InspectorControls,
 } = wp.blockEditor;
@@ -24,6 +26,8 @@ const {
 	PanelBody,
 	RadioControl,
 	SelectControl,
+	IconButton,
+	Toolbar,
 } = wp.components;
 
 const {
@@ -99,6 +103,22 @@ export default class Edit extends Component {
 		}
 	}
 
+	onChangeGallery( galleryImages ) {
+
+		const promises = galleryImages.map( (image, index) => {
+			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
+				galleryImages[index] = { ...newImage, ...image };
+			} );
+		} );
+
+		Promise.all( promises ).then( () => {
+			this.props.setAttributes( { galleryImages: galleryImages.filter( image => {
+					return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
+				} ) } );
+		} );
+
+	}
+
 	onPrevArrowClick() {
 		const { attributes: { galleryImages } } = this.props;
 		const { selectedIndex } = this.state;
@@ -126,6 +146,8 @@ export default class Edit extends Component {
 			className
 		} = this.props;
 
+		const onChangeGallery = this.onChangeGallery.bind( this );
+
 		let { selectedIndex } = this.state;
 
 		if ( selectedIndex >= galleryImages.length ) {
@@ -146,30 +168,13 @@ export default class Edit extends Component {
 
 					<PanelBody
 						className={ 'nova-blocks-slideshow-type-panel' }
-						title={ __( 'Slideshow Type', '__plugin_txtd' ) }>
-						<SelectControl
-							value={ slideshowType }
-							onChange={ slideshowType => setAttributes( { slideshowType } ) }
-							options={[
-								{
-									label: __( 'Gallery', '__plugin_txtd' ),
-									value: 'gallery'
-								}, {
-									label: __( 'Custom', '__plugin_txtd' ),
-									value: 'custom'
-								}, {
-									label: __( 'Projects', '__plugin_txtd' ),
-									value: 'projects'
-								}
-							]}
-						/>
+						title={ __( 'Slides', '__plugin_txtd' ) }>
 						{ !! galleryImages.length && <GalleryPreview
 							galleryImages={ galleryImages }
 							onSelectImage={ selectedIndex => { this.setState( { selectedIndex } ) } }
 							isSelected={ isSelected }
 							selected={ selectedIndex }
 						/> }
-						<GalleryPlaceholder { ...this.props } />
 					</PanelBody>
 
 					{ 'gallery' === slideshowType && <Fragment>
@@ -215,6 +220,25 @@ export default class Edit extends Component {
 				<BlockControls>
 					<AlignmentToolbar { ...this.props } />
 					<ColorToolbar { ...this.props } />
+					<Toolbar>
+						<MediaUpload
+							type = "image"
+							multiple
+							gallery
+							value = { galleryImages.map( ( image ) => image.id ) }
+							onSelect = { onChangeGallery }
+							render = { ( { open } ) => (
+								<IconButton
+									className='components-icon-button components-toolbar__control'
+									label={ __( 'Change Media', '__plugin_txtd' ) }
+									icon={ icons.swap }
+									onClick= { () => {
+										open();
+									} }
+								/>
+							)}
+						/>
+					</Toolbar>
 				</BlockControls>
 
 			</Fragment>
