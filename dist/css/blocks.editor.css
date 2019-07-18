@@ -4,21 +4,27 @@
   --nova-hero-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing); }
 
 .wp-block-nova-hero {
+  -webkit-transition: var(--nova-hero-transition);
   transition: var(--nova-hero-transition);
+  -webkit-transition-property: color;
   transition-property: color; }
 
 .nova-hero__media {
+  -webkit-transition: var(--nova-hero-transition);
   transition: var(--nova-hero-transition);
+  -webkit-transition-property: opacity;
   transition-property: opacity; }
 
 .nova-hero__mask {
   overflow: hidden; }
 
 .pixelgrade-hero-block-toolbar-dropdown button {
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center; }
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
   .pixelgrade-hero-block-toolbar-dropdown button:after {
     content: "";
     border: 0 solid transparent;
@@ -32,27 +38,40 @@
   --nova-media-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing); }
 
 .nova-media__placeholder {
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   height: 100%;
   background-color: #EEEEEE; }
 
 .wp-block-nova-media {
+  -webkit-transition: var(--nova-media-transition);
   transition: var(--nova-media-transition);
+  -webkit-transition-property: background-color, padding;
   transition-property: background-color, padding; }
   .wp-block-nova-media h1, .wp-block-nova-media h2, .wp-block-nova-media h3, .wp-block-nova-media h4, .wp-block-nova-media h5, .wp-block-nova-media h6 {
+    -webkit-transition: var(--nova-media-transition);
     transition: var(--nova-media-transition);
+    -webkit-transition-property: color;
     transition-property: color; }
 
 .nova-media__content {
+  -webkit-transition: var(--nova-media-transition);
   transition: var(--nova-media-transition);
-  transition-property: padding, box-shadow; }
+  -webkit-transition-property: padding, -webkit-box-shadow;
+  transition-property: padding, -webkit-box-shadow;
+  transition-property: padding, box-shadow;
+  transition-property: padding, box-shadow, -webkit-box-shadow; }
   .nova-media__content:after {
+    -webkit-transition: var(--nova-media-transition);
     transition: var(--nova-media-transition);
+    -webkit-transition-property: background-color;
     transition-property: background-color; }
 
 .nova-media__inner-container {
@@ -71,15 +90,20 @@
   --nova-slideshow-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing); }
 
 .wp-block-nova-slideshow {
+  -webkit-transition: var(--nova-hero-transition);
   transition: var(--nova-hero-transition);
+  -webkit-transition-property: color;
   transition-property: color; }
 
 .nova-slideshow__media {
+  -webkit-transition: var(--nova-hero-transition);
   transition: var(--nova-hero-transition);
+  -webkit-transition-property: opacity;
   transition-property: opacity; }
 
 .nova-slideshow__gallery-edit {
   --gallery-spacing: 10px;
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -115,12 +139,16 @@
 
 .editor-block-list__block-edit[class][class] .nova-slideshow__slider {
   position: static;
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  -ms-flex-pack: center;
-      justify-content: center; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
 
 .nova-mask {
   position: absolute;
