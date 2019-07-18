@@ -2,6 +2,7 @@ import * as icons from "../../icons";
 import "./style.scss";
 
 import BlockHorizontalAlignmentToolbar from '../block-horizontal-alignment-toolbar';
+import BlockVerticalAlignmentToolbar from '../block-vertical-alignment-toolbar';
 
 const { __ } = wp.i18n;
 
@@ -9,10 +10,6 @@ const {
 	Component,
 	Fragment
 } = wp.element;
-
-const {
-	BlockVerticalAlignmentToolbar,
-} = wp.blockEditor;
 
 const {
 	Dropdown,

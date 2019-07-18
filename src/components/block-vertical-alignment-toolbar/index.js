@@ -1,4 +1,7 @@
-const { __ } = wp.i18n;
+/**
+ * WordPress dependencies
+ */
+const { _x } = wp.i18n;
 const { Toolbar } = wp.components;
 const { withViewportMatch } = wp.viewport;
 const { withSelect } = wp.data;
@@ -18,24 +21,24 @@ const { Consumer, Provider } = createContext( {
 import * as icons from "../../icons";
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
-	left: {
+	top: {
 		icon: icons.alignTop,
-		title: __( 'Align Left', '__plugin_txtd' ),
+		title: _x( 'Vertically Align Top', 'Block vertical alignment setting' ),
 	},
 	center: {
 		icon: icons.alignCenter,
-		title: __( 'Align Middle', '__plugin_txtd' ),
+		title: _x( 'Vertically Align Middle', 'Block vertical alignment setting' ),
 	},
-	right: {
+	bottom: {
 		icon: icons.alignBottom,
-		title: __( 'Align Right', '__plugin_txtd' ),
+		title: _x( 'Vertically Align Bottom', 'Block vertical alignment setting' ),
 	},
 };
 
-const DEFAULT_CONTROLS = [ 'left', 'center', 'right' ];
-const DEFAULT_CONTROL = 'center';
+const DEFAULT_CONTROLS = [ 'top', 'center', 'bottom' ];
+const DEFAULT_CONTROL = 'top';
 
-export function BlockHorizontalAlignmentToolbar( { isCollapsed, value, onChange, controls = DEFAULT_CONTROLS } ) {
+export function BlockVerticalAlignmentToolbar( { isCollapsed, value, onChange, controls = DEFAULT_CONTROLS } ) {
 	function applyOrUnset( align ) {
 		return () => onChange( value === align ? undefined : align );
 	}
@@ -47,18 +50,18 @@ export function BlockHorizontalAlignmentToolbar( { isCollapsed, value, onChange,
 		<Toolbar
 			isCollapsed={ isCollapsed }
 			icon={ activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon }
+			label={ _x( 'Change Alignment', 'Block vertical alignment setting label' ) }
 			controls={
 				controls.map( ( control ) => {
 					return {
 						...BLOCK_ALIGNMENTS_CONTROLS[ control ],
 						isActive: value === control,
-						onClick: applyOrUnset(control),
-						className: "pixelgrade-hero-horizontal-alignment-button"
+						onClick: applyOrUnset( control ),
 					};
 				} )
 			}
 		/>
-	)
+	);
 }
 
 // @todo remove function declaration and use core method when exposed through the api
@@ -75,6 +78,9 @@ const withBlockEditContext = ( mapContextToProps ) => createHigherOrderComponent
 	);
 }, 'withBlockEditContext' );
 
+/**
+ * @see https://github.com/WordPress/gutenberg/blob/master/packages/block-editor/src/components/block-vertical-alignment-toolbar/README.md
+ */
 export default compose(
 	withBlockEditContext( ( { clientId } ) => {
 		return {
@@ -91,4 +97,4 @@ export default compose(
 			),
 		};
 	} ),
-)( BlockHorizontalAlignmentToolbar );
+)( BlockVerticalAlignmentToolbar );

@@ -80,6 +80,7 @@ export default class HeroBlockControls extends Component {
 					onSelect={ media => setAttributes( { media } ) }
 					render={ ( { open } ) => {
 						return <IconButton
+							className='components-icon-button components-toolbar__control'
 							label={ __( 'Change Media', '__plugin_txtd' ) }
 							icon={ icons.swap }
 							onClick={ open }
