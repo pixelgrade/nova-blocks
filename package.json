@@ -1,10 +1,11 @@
 {
   "name": "nova",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "blocks/index.js",
   "scripts": {
     "dev": "cross-env webpack --watch",
-    "build": "cross-env NODE_ENV=production webpack -p"
+    "prebuild": "cross-env NODE_ENV=production webpack -p",
+    "build": "gulp build"
   },
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.2.0",

@@ -51,7 +51,13 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$classes[] = 'has-image-on-the-' . $attributes['mediaPositions'];
 		$classes[] = 'block-is-' . $attributes['blockStyle'];
 		$classes[] = 'content-is-' . $attributes['contentStyle'];
+
+		$classes[] = 'wp-block-group';
 		$classes[] = 'alignfull';
+
+		if ( $attributes['blockStyle'] !== 'basic' ) {
+			$classes[] = 'has-background';
+		}
 
 		$className = join( ' ', $classes );
 

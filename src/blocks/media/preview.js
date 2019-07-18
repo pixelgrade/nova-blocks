@@ -45,30 +45,30 @@ export default class MediaPreview extends Component {
 			`content-is-${contentStyle}`,
 		);
 
-		const galleryImages = images.map ( (image)  => JSON.parse(image));
+		const galleryImages = images.map( ( image ) => JSON.parse( image ) );
 
-		const displayImages = (images) => {
+		const displayImages = ( images ) => {
 
 			if ( 0 === images.length ) {
 				return (
-						<MediaPlaceholder
-							icon = "format-gallery"
-							className = "nova-media__placeholder"
-							onSelect = { updateImages }
-							accept = "image/*"
-							allowedTypes = { [ 'image' ] }
-							multiple
-						/>
+					<MediaPlaceholder
+						icon="format-gallery"
+						className="nova-media__placeholder"
+						onSelect={updateImages}
+						accept="image/*"
+						allowedTypes={['image']}
+						multiple
+					/>
 				);
 			} else {
 				return (
-					galleryImages.map( (image) => {
+					galleryImages.map( ( image ) => {
 						return (
-							<div className ='nova-media__image'>
-								<img alt={ image.alt } src={ image.url } />
+							<div className='nova-media__image'>
+								<img alt={image.alt} src={image.url}/>
 							</div>
 						)
-					})
+					} )
 				)
 			}
 		};

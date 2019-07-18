@@ -1,5 +1,14 @@
+/**
+ * Internal dependencies
+ */
 import * as icons from "../../icons";
+import {
+	AlignmentToolbar
+} from "../../components/alignment-controls";
 
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
 const {
@@ -51,6 +60,7 @@ export default class Controls extends Component {
 
 		const toolbarControls = (
 			<BlockControls>
+
 				<Toolbar
 					controls={ Object.keys(MEDIA_ALIGNMENTS_CONTROLS).map(control => {
 						return {
@@ -60,6 +70,9 @@ export default class Controls extends Component {
 						}
 					}) }
 				/>
+
+				<AlignmentToolbar { ...this.props } />
+
 				{ hasImages && <Toolbar>
 					<MediaUpload
 						type = "image"
@@ -79,6 +92,7 @@ export default class Controls extends Component {
 						)}
 					/>
 				</Toolbar> }
+
 			</BlockControls>
 		);
 

@@ -55,7 +55,6 @@ class GalleryPlaceholder extends Component {
 		return (
 			<MediaPlaceholder
 				addToGallery={ hasImages }
-				isAppender={ hasImages }
 				className=""
 				labels={ {
 					title: '',

@@ -1,7 +1,3 @@
-import {
-	AlignmentControls
-} from "../../components/alignment-controls";
-
 const { __ } = wp.i18n;
 
 const {
@@ -51,8 +47,6 @@ class Inspector extends Component {
 							] }
 							onChange = { contentStyle => setAttributes( { contentStyle } ) }
 						/>
-
-						<AlignmentControls { ...this.props } />
 					</PanelBody>
 
 
