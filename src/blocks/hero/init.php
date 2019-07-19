@@ -129,10 +129,6 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 					'type'    => 'number',
 					'default' => 30
 				),
-				'images'                  => array(
-					'type'    => 'array',
-					'default' => array()
-				),
 			),
 			'render_callback' => 'novablocks_render_hero_block'
 		) );
@@ -147,21 +143,31 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$classes = array();
 
 		$classes[] = 'nova-hero';
-		$classes[] = 'nova-u-valign-' . $attributes['verticalAlignment'];
-		$classes[] = 'nova-u-halign-' . $attributes['horizontalAlignment'];
-		$classes[] = 'nova-u-spacing-' . $attributes['contentPadding'];
-		$classes[] = 'nova-u-content-width-' . $attributes['contentWidth'];
+		if ( ! empty( $attributes['verticalAlignment'] ) ) {
+			$classes[] = 'nova-u-valign-' . $attributes['verticalAlignment'];
+		}
+		if ( ! empty( $attributes['horizontalAlignment'] ) ) {
+			$classes[] = 'nova-u-halign-' . $attributes['horizontalAlignment'];
+		}
+		if ( ! empty( $attributes['contentPadding'] ) ) {
+			$classes[] = 'nova-u-spacing-' . $attributes['contentPadding'];
+		}
+		if ( ! empty( $attributes['contentWidth'] ) ) {
+			$classes[] = 'nova-u-content-width-' . $attributes['contentWidth'];
+		}
 		$classes[] = 'nova-u-background';
-		$classes[] = 'nova-u-background-' . $attributes['overlayFilterStyle'];
+		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
+			$classes[] = 'nova-u-background-' . $attributes['overlayFilterStyle'];
+		}
 
-		$classes[] = $attributes['className'];
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 		$classes[] = 'alignfull';
 
 		if ( ! empty( $attributes['enableParallax'] ) ) {
 			$classes[] = 'nova-hero--parallax';
 		}
-
-		$className = join( ' ', $classes );
 
 		$actualParallaxAmount = ( ! empty( $attributes['parallaxAmount'] ) && $attributes['parallaxAmount'] === 'custom' ) ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
 		$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
@@ -197,7 +203,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		do_action( 'nova_hero:before' ); ?>
 
-        <div class="<?php echo esc_attr( $className ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
 
 			<?php do_action( 'nova_hero:after_opening_tag' ); ?>
 

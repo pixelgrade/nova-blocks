@@ -31,7 +31,10 @@ if ( ! function_exists( 'novablocks_media_block_init' ) ) {
 				),
 				'images'              => array(
 					'type'    => 'array',
-					'default' => array()
+					'items'   => [
+						'type' => 'string',
+					],
+					'default' => [],
 				),
 			),
 			'render_callback' => 'novablocks_render_media_block'
@@ -46,35 +49,44 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 	function novablocks_render_media_block( $attributes, $content ) {
 		$classes = array();
 
-		$classes[] = $attributes['className'];
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 		$classes[] = 'nova-media';
-		$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
-		$classes[] = 'block-is-' . $attributes['blockStyle'];
-		$classes[] = 'content-is-' . $attributes['contentStyle'];
+		if ( ! empty( $attributes['mediaPosition'] ) ) {
+			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
+		}
+		if ( ! empty( $attributes['blockStyle'] ) ) {
+			$classes[] = 'block-is-' . $attributes['blockStyle'];
+
+			if ( $attributes['blockStyle'] !== 'basic' ) {
+				$classes[] = 'has-background';
+			}
+		}
+		if ( ! empty( $attributes['contentStyle'] ) ) {
+			$classes[] = 'content-is-' . $attributes['contentStyle'];
+		}
 
 		$classes[] = 'wp-block-group';
 		$classes[] = 'alignfull';
 
-		if ( $attributes['blockStyle'] !== 'basic' ) {
-			$classes[] = 'has-background';
-		}
-
-		$className = join( ' ', $classes );
-
 		ob_start(); ?>
 
-        <div class="<?php echo esc_attr( $className ); ?>">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
             <div class="wp-block-group__inner-container nova-media__inner-container">
                 <div class="nova-media__layout alignwide">
                     <div class="nova-media__content nova-media__inner-container">
 						<?php echo $content; ?>
                     </div>
                     <div class="nova-media__aside">
-						<?php foreach ( $attributes['images'] as $image ) {
-							$image = json_decode( $image );
-							echo '<div class="nova-media__image">';
-							echo wp_get_attachment_image( $image->id, 'large' );
-							echo '</div>';
+						<?php
+						if ( ! empty( $attributes['images'] ) && is_array( $attributes['images'] ) ) {
+							foreach ( $attributes['images'] as $image ) {
+								$image = json_decode( $image );
+								echo '<div class="nova-media__image">';
+								echo wp_get_attachment_image( $image->id, 'large' );
+								echo '</div>';
+							}
 						} ?>
                     </div>
                 </div>
