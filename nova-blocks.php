@@ -9,6 +9,7 @@
  * Text Domain: __plugin_txtd
  * Tested up to: 5.2.2
  * Requires PHP: 5.4.0
+ * License: GPLv2 or later
  *
  * Nova Blocks is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
