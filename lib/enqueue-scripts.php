@@ -19,6 +19,7 @@ function novablocks_enqueue_block_editor_assets() {
 		novablocks_get_plugin_url() . $block_path,
 		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' )
 	);
+	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );
 
 	// Enqueue optional editor only styles
 	wp_enqueue_style(

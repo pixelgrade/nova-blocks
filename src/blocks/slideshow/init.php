@@ -120,8 +120,6 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 );
 		}
 
-
-
 		ob_start();
 
 		do_action( 'nova_slideshow:before' ); ?>
@@ -136,7 +134,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                 <div class="nova-slideshow__slider" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
 
 					<?php foreach ( $attributes['galleryImages'] as $image ) {
-						if ( empty( $image['sizes']['large'] ) ) {
+						if ( empty( $image['sizes']['large']['url'] ) ) {
 							continue;
 						}
 						?>
