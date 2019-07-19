@@ -112,7 +112,6 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 						'sizes' => array(
 							'full' => array(
 								'url'  => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-								'url1' => 'https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
 							),
 						),
 					),
