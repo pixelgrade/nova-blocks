@@ -25,7 +25,7 @@ Open a terminal and run the `git clone` command followed by the url you have jus
 ```
 git clone https://github.com/your-username/nova-blocks
 ```
-Change the working
+Change the working directory inside the plugin
 ```
 cd nova-blocks
 ```
@@ -33,9 +33,13 @@ The Nova Blocks build system uses NodeJS. To set up it up, you first need to mak
 ```
 npm install
 ```
-#### Create a branch
+Create a branch
 ```
 git checkout -b your-branch-name
+```
+Run the development script and start working
+```
+npm run dev
 ```
 Commit your local changes
 ```
