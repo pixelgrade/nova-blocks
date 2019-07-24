@@ -58,7 +58,7 @@ function novablocks_add_blocks_category( $categories, $post ) {
 	return array_merge(
 		array(
 			array(
-				'slug'  => 'nova-by-pixelgrade',
+				'slug'  => 'nova-blocks',
 				'title' => 'Nova Blocks',
 			),
 		),

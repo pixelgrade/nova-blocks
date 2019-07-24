@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_media_block_init' ) ) {
 
 	function novablocks_media_block_init() {
-		register_block_type( 'nova/media', array(
+		register_block_type( 'novablocks/media', array(
 			'attributes'      => array(
 				'mediaPosition'       => array(
 					'type'    => 'string',

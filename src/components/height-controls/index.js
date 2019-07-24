@@ -41,7 +41,7 @@ subscribe( debouncedOnSubscribe );
 const updateBlocks = ( attributes ) => {
 
 	select( 'core/block-editor' ).getBlocks().filter( block => {
-		return block.name === 'nova/hero';
+		return block.name === 'novablocks/hero';
 	} ).filter( ( block, index ) => {
 		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
 		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
@@ -121,7 +121,7 @@ class ScrollIndicatorPanel extends Component {
 		} = this.props;
 
 		const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( block => {
-			return block.name === 'nova/hero';
+			return block.name === 'novablocks/hero';
 		} );
 
 		const index = heroBlocks.findIndex( block => block.clientId === select( 'core/block-editor' ).getSelectedBlockClientId() );

@@ -27,7 +27,7 @@ const updateBlocks = ( attributes ) => {
 	const blocks = editorData.getBlocks();
 
 	blocks.filter( block => {
-		return block.name === 'nova/hero';
+		return block.name === 'novablocks/hero';
 	} ).filter( ( block, heroBlockIndex ) => {
 		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
 		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && heroBlockIndex === 0 || applyMinimumHeight === 'all';

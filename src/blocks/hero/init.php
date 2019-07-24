@@ -36,7 +36,7 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 			'show_in_rest' => true,
 		) );
 
-		register_block_type( 'nova/hero', array(
+		register_block_type( 'novablocks/hero', array(
 			'attributes'      => array(
 				'blockIndex'           => array(
 					'type'    => 'number',

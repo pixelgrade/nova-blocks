@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle the the scripts enqueue.
+ * Handle the scripts enqueue.
  */
 
 // If this file is called directly, abort.

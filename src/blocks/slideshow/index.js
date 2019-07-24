@@ -11,11 +11,11 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 
-export default registerBlockType( 'nova/slideshow',
+export default registerBlockType( 'novablocks/slideshow',
 	{
 		title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
 		description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
-		category: 'nova-by-pixelgrade',
+		category: 'nova-blocks',
 		icon: icons.slideshow,
 		edit,
 		save() {

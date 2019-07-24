@@ -11,17 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_filter( 'customify_filter_fields', 'novablocks_add_customify_section', 20, 1 );
 add_filter( 'customify_filter_fields', 'novablocks_add_customify_style_manager_section', 20, 1 );
 
-define( 'THEME_COLOR_PRIMARY', '#203AB6' ); // nova blue
-define( 'THEME_COLOR_SECONDARY', '#FFE42E' ); // nova yellow
-define( 'THEME_COLOR_TERTIARY', '#FFE42E' ); // nova yellow
+define( 'NOVABLOCKS_THEME_COLOR_PRIMARY', '#203AB6' ); // blue
+define( 'NOVABLOCKS_THEME_COLOR_SECONDARY', '#FFE42E' ); // yellow
+define( 'NOVABLOCKS_THEME_COLOR_TERTIARY', '#FFE42E' ); // yellow
 
-define( 'THEME_DARK_PRIMARY', '#000043' ); // nova blue darker
-define( 'THEME_DARK_SECONDARY', '#272743' ); // nova text color
-define( 'THEME_DARK_TERTIARY', '#323067' ); // nova blue dark
+define( 'NOVABLOCKS_THEME_DARK_PRIMARY', '#000043' ); // blue darker
+define( 'NOVABLOCKS_THEME_DARK_SECONDARY', '#272743' ); // text color
+define( 'NOVABLOCKS_THEME_DARK_TERTIARY', '#323067' ); // blue dark
 
-define( 'THEME_LIGHT_PRIMARY', '#FFFFFF' );
-define( 'THEME_LIGHT_SECONDARY', '#EEF1F2' ); // nova gray
-define( 'THEME_LIGHT_TERTIARY', '#EEF1F2' ); // nova gray
+define( 'NOVABLOCKS_THEME_LIGHT_PRIMARY', '#FFFFFF' ); // white
+define( 'NOVABLOCKS_THEME_LIGHT_SECONDARY', '#EEF1F2' ); // gray
+define( 'NOVABLOCKS_THEME_LIGHT_TERTIARY', '#EEF1F2' ); // gray
 
 function novablocks_add_customify_section( $config ) {
 
@@ -34,7 +34,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Primary Color', '__plugin_txtd' ),
-					'default' => THEME_COLOR_PRIMARY,
+					'default' => NOVABLOCKS_THEME_COLOR_PRIMARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -46,7 +46,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Primary Color', '__plugin_txtd' ),
-					'default' => THEME_COLOR_SECONDARY,
+					'default' => NOVABLOCKS_THEME_COLOR_SECONDARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -58,7 +58,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Primary Color', '__plugin_txtd' ),
-					'default' => THEME_COLOR_TERTIARY,
+					'default' => NOVABLOCKS_THEME_COLOR_TERTIARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -70,7 +70,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Primary Dark Color', '__plugin_txtd' ),
-					'default' => THEME_DARK_PRIMARY,
+					'default' => NOVABLOCKS_THEME_DARK_PRIMARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -82,7 +82,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Secondary Dark Color', '__plugin_txtd' ),
-					'default' => THEME_DARK_SECONDARY,
+					'default' => NOVABLOCKS_THEME_DARK_SECONDARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -94,7 +94,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Tertiary Dark Color', '__plugin_txtd' ),
-					'default' => THEME_DARK_TERTIARY,
+					'default' => NOVABLOCKS_THEME_DARK_TERTIARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -106,7 +106,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Primary Light Color', '__plugin_txtd' ),
-					'default' => THEME_LIGHT_PRIMARY,
+					'default' => NOVABLOCKS_THEME_LIGHT_PRIMARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -118,7 +118,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Secondary Light Color', '__plugin_txtd' ),
-					'default' => THEME_LIGHT_SECONDARY,
+					'default' => NOVABLOCKS_THEME_LIGHT_SECONDARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -130,7 +130,7 @@ function novablocks_add_customify_section( $config ) {
 					'type'    => 'color',
 					'live'    => true,
 					'label'   => esc_html__( 'Nova Tertiary Light Color', '__plugin_txtd' ),
-					'default' => THEME_LIGHT_TERTIARY,
+					'default' => NOVABLOCKS_THEME_LIGHT_TERTIARY,
 					'css'     => array(
 						array(
 							'selector' => ':root',
@@ -164,55 +164,55 @@ function novablocks_add_customify_style_manager_section( $options ) {
 	$options['sections']['style_manager_section'] = array_replace_recursive( $options['sections']['style_manager_section'], array(
 			'options' => array(
 				'sm_color_primary'   => array(
-					'default'          => THEME_COLOR_PRIMARY,
+					'default'          => NOVABLOCKS_THEME_COLOR_PRIMARY,
 					'connected_fields' => array(
 						'nova_color_1'
 					),
 				),
 				'sm_color_secondary' => array(
-					'default'          => THEME_COLOR_PRIMARY,
+					'default'          => NOVABLOCKS_THEME_COLOR_PRIMARY,
 					'connected_fields' => array(
 						'nova_color_2'
 					),
 				),
 				'sm_color_tertiary'  => array(
-					'default'          => THEME_COLOR_PRIMARY,
+					'default'          => NOVABLOCKS_THEME_COLOR_PRIMARY,
 					'connected_fields' => array(
 						'nova_color_3'
 					),
 				),
 				'sm_dark_primary'    => array(
-					'default'          => THEME_DARK_PRIMARY,
+					'default'          => NOVABLOCKS_THEME_DARK_PRIMARY,
 					'connected_fields' => array(
 						'nova_color_dark_1'
 					),
 				),
 				'sm_dark_secondary'  => array(
-					'default'          => THEME_DARK_SECONDARY,
+					'default'          => NOVABLOCKS_THEME_DARK_SECONDARY,
 					'connected_fields' => array(
 						'nova_color_dark_2'
 					),
 				),
 				'sm_dark_tertiary'   => array(
-					'default'          => THEME_DARK_TERTIARY,
+					'default'          => NOVABLOCKS_THEME_DARK_TERTIARY,
 					'connected_fields' => array(
 						'nova_color_dark_3'
 					),
 				),
 				'sm_light_primary'   => array(
-					'default'          => THEME_LIGHT_PRIMARY,
+					'default'          => NOVABLOCKS_THEME_LIGHT_PRIMARY,
 					'connected_fields' => array(
 						'nova_color_light_1'
 					),
 				),
 				'sm_light_secondary' => array(
-					'default'          => THEME_LIGHT_SECONDARY,
+					'default'          => NOVABLOCKS_THEME_LIGHT_SECONDARY,
 					'connected_fields' => array(
 						'nova_color_light_2'
 					),
 				),
 				'sm_light_tertiary'  => array(
-					'default'          => THEME_LIGHT_TERTIARY,
+					'default'          => NOVABLOCKS_THEME_LIGHT_TERTIARY,
 					'connected_fields' => array(
 						'nova_color_light_3'
 					),

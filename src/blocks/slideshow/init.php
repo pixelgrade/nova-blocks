@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 
 	function novablocks_slideshow_block_init() {
-		register_block_type( 'nova/slideshow', array(
+		register_block_type( 'novablocks/slideshow', array(
 			'attributes'      => array(
 				'contentPadding'        => array(
 					'type'    => 'string',
