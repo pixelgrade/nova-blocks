@@ -41,7 +41,6 @@ module.exports = {
     filename: '[name].js',
   },
   watch: 'production' !== process.env.NODE_ENV,
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {

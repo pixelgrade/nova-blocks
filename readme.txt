@@ -60,7 +60,6 @@ Unless otherwise specified, all the plugins files, scripts and images are licens
 
 The Nova Blocks plugin bundles the following third-party resources:
 
-* [jQuery Bully plugin](https://github.com/pixelgrade/rellax) Copyright (c) 2016 Pixelgrade - License: MIT
 * [jQuery Rellax plugin](https://github.com/pixelgrade/rellax) Copyright (c) 2016 Pixelgrade - License: MIT
 * [jQuery Slick plugin](http://kenwheeler.github.io) Copyright (c) 2017 Ken Wheeler - License: MIT
 * [jQuery Velocity plugin](http://velocityjs.org/) Copyright (c) 2014-2017 Julian Shapiro - License: MIT

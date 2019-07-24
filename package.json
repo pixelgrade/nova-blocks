@@ -1,5 +1,5 @@
 {
-  "name": "nova",
+  "name": "nova-blocks",
   "version": "1.0.0",
   "main": "blocks/index.js",
   "scripts": {
