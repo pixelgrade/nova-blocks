@@ -1,5 +1,5 @@
 === Nova Blocks by Pixelgrade ===
-Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei
+Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
 Tested up to: 5.2.2
@@ -84,10 +84,11 @@ Yes! Nova Block’s core features are free to use.
 
 == Screenshots ==
 
-1. Product Launch Page Layout
+1. Hero of the Galaxy block options
+2. Media Card Constellation block options
+3. Slideshow Me the Way block options
 
 == Changelog ==
 
 = 1.0 =
-
 * Initial release
