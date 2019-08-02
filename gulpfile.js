@@ -181,4 +181,4 @@ function zipSequence(cb) {
   return gulp.series( 'build', 'make-zip' )(cb);
 }
 zipSequence.description = 'Creates the zip file';
-gulp.task( 'zip', zipSequence  );
+gulp.task( 'zip', zipSequence );
