@@ -1,0 +1,14 @@
+.site-branding {
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    img {
+        display: block;
+    }
+}
+
+.site-logo + .site-info {
+    margin-left: 1em;
+}

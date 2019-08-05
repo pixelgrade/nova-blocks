@@ -1,0 +1,29 @@
+.header {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+
+    background: #FFF;
+}
+
+.header__inner-container[class] {
+    margin-top: 3.5em;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 0;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+
+    .site-branding {
+        padding: 1em;
+        order: -1;
+    }
+}
+
+.c-menu-toggle__checkbox:not(:checked) ~ .header {
+    transform: translateX(-100%);
+}

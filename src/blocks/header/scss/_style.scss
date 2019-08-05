@@ -1,5 +1,25 @@
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+@media only screen and (min-width: 1000px) {
+
+    .header {
+        @import "menu";
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .c-menu-toggle__checkbox,
+    .c-menu-toggle {
+        display: none;
+    }
+}
+
+@import "menu-toggle";
+
+@media not screen and (min-width: 1000px) {
+    @import "mobile";
+    @import "mobile-transitions";
 }

@@ -1,0 +1,42 @@
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu-item-has-children {
+    position: relative;
+
+    &[class] > a {
+        display: flex;
+        align-items: center;
+
+        &:after {
+            content: "";
+            display: block;
+            width: 7px;
+            height: 7px;
+            border: 1px solid transparent;
+            border-right-color: currentColor;
+            border-bottom-color: currentColor;
+            transform: rotate(45deg);
+            margin-left: 0.5em;
+        }
+    }
+}
+
+.sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background: #FFF;
+
+    .sub-menu {
+        top: 0;
+        left: 100%;
+    }
+}
+
+:not(:hover) > .sub-menu {
+    display: none;
+}

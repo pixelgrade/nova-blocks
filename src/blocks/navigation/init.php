@@ -32,13 +32,13 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 		ob_start();
 
-		do_action( 'nova_navigation:before' );
+		do_action( 'nova_navigation:before' ); ?>
 
-		wp_nav_menu( array(
-            'menu' => $attributes['slug']
-        ) );
+		<div class="wp-block-novablocks-navigation">
+		<?php wp_nav_menu( array( 'menu' => $attributes['slug'] ) ); ?>
+		</div>
 
-		do_action( 'nova_navigation:after' );
+		<?php do_action( 'nova_navigation:after' );
 
 		return ob_get_clean();
 	}

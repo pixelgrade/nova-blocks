@@ -158,15 +158,11 @@
       -ms-flex-pack: center;
           justify-content: center; }
 
-.wp-block[data-type="novablocks/navigation"] .menu {
-  list-style: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap; }
+.wp-block[data-type="novablocks/navigation"] .menu,
+.wp-block[data-type="novablocks/navigation"] .sub-menu {
+  list-style: none; }
 
-.wp-block[data-type="novablocks/navigation"] .menu-item a {
+.wp-block[data-type="novablocks/navigation"] .menu a {
   display: block;
   padding: 1em;
   color: inherit;

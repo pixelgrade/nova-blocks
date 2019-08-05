@@ -29,8 +29,25 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		do_action( 'nova_header:before' ); ?>
 
+        <input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
+
+        <label class="c-menu-toggle" for="nova-menu-toggle">
+            <span class="c-menu-toggle__wrap">
+                <span class="c-menu-toggle__icon">
+                    <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>
+                    <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
+                    <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
+                </span>
+                <span class="c-menu-toggle__label">Menu</span>
+            </span>
+        </label>
+
 		<div class="header">
-			<?php echo $content; ?>
+            <div class="header__inner-container">
+                <div class="header-content">
+                    <?php echo $content; ?>
+                </div>
+            </div>
 		</div>
 
 		<?php do_action( 'nova_header:after' );

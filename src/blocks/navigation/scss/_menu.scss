@@ -1,10 +1,9 @@
-.menu {
+.menu,
+.sub-menu {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
 }
 
-.menu-item {
+.menu {
 
     a {
         display: block;
