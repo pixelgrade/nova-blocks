@@ -1,0 +1,15 @@
+.menu {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu-item {
+
+    a {
+        display: block;
+        padding: 1em;
+        color: inherit;
+        text-decoration: none;
+    }
+}
