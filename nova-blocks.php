@@ -75,7 +75,6 @@ function register_custom_nav_menus() {
 add_action( 'after_setup_theme', 'register_custom_nav_menus' );
 
 require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
-require_once dirname( __FILE__ ) . '/lib/customify.php';
 
 require_once dirname( __FILE__ ) . '/src/blocks/header/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/hero/init.php';
