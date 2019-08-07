@@ -18,6 +18,12 @@ export default registerBlockType( 'novablocks/header',
 		description: __( 'Outputs custom header markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
+		getEditWrapperProps( attributes ) {
+			const { align } = attributes;
+			if ( 'center' === align || 'wide' === align || 'full' === align ) {
+				return { 'data-align': align };
+			}
+		},
 		edit,
 		save: function() {
 			return <InnerBlocks.Content />

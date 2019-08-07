@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_enqueue_block_editor_assets() {
+function novablocks_enqueue_plugin_block_editor_assets() {
 	// Make paths variables so we don't write em twice ;)
 	$block_path = '/dist/js/editor.blocks.js';
 	$style_path = '/dist/css/blocks.editor.css';
@@ -27,7 +27,7 @@ function novablocks_enqueue_block_editor_assets() {
 		novablocks_get_plugin_url() . $style_path
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_plugin_block_editor_assets' );
 
 
 function novablocks_enqueue_assets() {

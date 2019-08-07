@@ -12,7 +12,16 @@ if ( ! function_exists( 'novablocks_header_block_init' ) ) {
 
 	function novablocks_header_block_init() {
 		register_block_type( 'novablocks/header', array(
-			'attributes'      => array(),
+			'attributes'      => array(
+                'align' => array(
+                    'type' => 'string',
+                    'default' => 'center',
+                ),
+                'layout' => array(
+                    'type' => 'string',
+                    'default' => 'logo-left',
+                ),
+            ),
 			'render_callback' => 'novablocks_render_header_block'
 		) );
 	}
@@ -27,30 +36,38 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		ob_start();
 
-		do_action( 'nova_header:before' ); ?>
+		do_action( 'novablocks_header:before' );
 
-        <input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
+		global $novablocks_responsive_navigation_outputted;
 
-        <label class="c-menu-toggle" for="nova-menu-toggle">
-            <span class="c-menu-toggle__wrap">
-                <span class="c-menu-toggle__icon">
-                    <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>
-                    <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
-                    <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
+		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
+
+            <input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
+
+            <label class="c-menu-toggle" for="nova-menu-toggle">
+                <span class="c-menu-toggle__wrap">
+                    <span class="c-menu-toggle__icon">
+                        <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>
+                        <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
+                        <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
+                    </span>
+                    <span class="c-menu-toggle__label"><?php _e( 'Menu', '__plugin_txtd' ); ?></span>
                 </span>
-                <span class="c-menu-toggle__label">Menu</span>
-            </span>
-        </label>
+            </label>
 
-		<div class="header">
-            <div class="header__inner-container">
-                <div class="header-content">
+			<?php $novablocks_responsive_navigation_outputted = true;
+
+		} ?>
+
+        <header id="masthead" class="site-header alignfull <?php echo 'site-header--' . $attributes['layout']; ?>">
+            <div class="site-header__inner-container">
+                <div class="site-header__content <?php echo 'align' . $attributes['align']; ?>">
                     <?php echo $content; ?>
                 </div>
             </div>
-		</div>
+		</header>
 
-		<?php do_action( 'nova_header:after' );
+		<?php do_action( 'novablocks_header:after' );
 
 		return ob_get_clean();
 	}

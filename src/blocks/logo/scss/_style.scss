@@ -1,6 +1,7 @@
 .site-branding {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .site-logo {

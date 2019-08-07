@@ -15,10 +15,9 @@
             display: block;
             width: 7px;
             height: 7px;
-            border: 1px solid transparent;
-            border-right-color: currentColor;
-            border-bottom-color: currentColor;
-            transform: rotate(45deg);
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: translateY(-30%) rotate(45deg);
             margin-left: 0.5em;
         }
     }
@@ -29,11 +28,18 @@
     top: 100%;
     left: 0;
 
-    background: #FFF;
+    width: 10em;
+
+    background: var(--nova-dark-2);
+    color: var(--nova-light-1);
 
     .sub-menu {
         top: 0;
         left: 100%;
+    }
+
+    .menu-item-has-children > a:after {
+        transform: translateY(-10%) rotate(-45deg);
     }
 }
 

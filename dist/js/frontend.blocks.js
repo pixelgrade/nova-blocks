@@ -60,25 +60,25 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 158);
+/******/ 	return __webpack_require__(__webpack_require__.s = 165);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 158:
+/***/ 165:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_slideshow_frontend__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_slideshow_frontend__ = __webpack_require__(167);
 
 
 
 /***/ }),
 
-/***/ 159:
+/***/ 166:
 /***/ (function(module, exports) {
 
 (function ($, window, undefined) {
@@ -93,11 +93,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 160:
+/***/ 167:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(33);
 
 
 var BLOCK_SELECTOR = '.nova-slideshow';
@@ -253,7 +253,7 @@ var TRANSITION_EASING = "easeInOutCirc";
 
 /***/ }),
 
-/***/ 31:
+/***/ 33:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

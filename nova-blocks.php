@@ -45,7 +45,7 @@ function novablocks_get_plugin_url() {
 }
 
 function novablocks_body_class( $classes ) {
-	$bullets = get_post_meta( get_the_ID(), 'nova_hero_position_indicators', true );
+	$bullets = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
     if ( $bullets ) {
 		$classes[] = 'nova-hero-bullets';
 	}
@@ -67,13 +67,6 @@ function novablocks_add_blocks_category( $categories, $post ) {
 }
 add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 
-function register_custom_nav_menus() {
-	register_nav_menus( array(
-		'novablocks_dummy_menu' => 'Dummy Menu Location',
-	) );
-}
-add_action( 'after_setup_theme', 'register_custom_nav_menus' );
-
 require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 
 require_once dirname( __FILE__ ) . '/src/blocks/header/init.php';
@@ -83,7 +76,7 @@ require_once dirname( __FILE__ ) . '/src/blocks/media/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/navigation/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/slideshow/init.php';
 
-function my_test_allowed_block_types( $allowed_block_types, $post ) {
+function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 	if ( $post->post_type === 'block_area' ) {
 		return array( 'novablocks/header' );
 	} else {
@@ -98,5 +91,5 @@ function my_test_allowed_block_types( $allowed_block_types, $post ) {
 	}
 }
 
-add_filter( 'allowed_block_types', 'my_test_allowed_block_types', 10, 2 );
+add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 

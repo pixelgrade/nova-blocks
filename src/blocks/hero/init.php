@@ -12,25 +12,25 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 
 	function novablocks_hero_block_init() {
 
-		register_meta( 'post', 'nova_hero_minimum_height', array(
+		register_meta( 'post', 'novablocks_hero_minimum_height', array(
 			'type'         => 'number',
 			'single'       => true,
 			'show_in_rest' => true,
 		) );
 
-		register_meta( 'post', 'nova_hero_apply_minimum_height', array(
+		register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
 			'type'         => 'string',
 			'single'       => true,
 			'show_in_rest' => true,
 		) );
 
-		register_meta( 'post', 'nova_hero_scroll_indicator', array(
+		register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
 			'type'         => 'boolean',
 			'single'       => true,
 			'show_in_rest' => true,
 		) );
 
-		register_meta( 'post', 'nova_hero_position_indicators', array(
+		register_meta( 'post', 'novablocks_hero_position_indicators', array(
 			'type'         => 'boolean',
 			'single'       => true,
 			'show_in_rest' => true,
@@ -81,12 +81,12 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 				'applyMinimumHeight'   => array(
 					'type'   => 'string',
 					'source' => 'meta',
-					'meta'   => 'nova_hero_apply_minimum_height'
+					'meta'   => 'novablocks_hero_apply_minimum_height'
 				),
 				'minHeight'            => array(
 					'type'   => 'number',
 					'source' => 'meta',
-					'meta'   => 'nova_hero_minimum_height'
+					'meta'   => 'novablocks_hero_minimum_height'
 				),
 				'applyMinimumHeightBlock' => array(
 					'type'    => 'boolean',
@@ -95,7 +95,7 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 				'scrollIndicator'         => array(
 					'type'   => 'boolean',
 					'source' => 'meta',
-					'meta'   => 'nova_hero_scroll_indicator'
+					'meta'   => 'novablocks_hero_scroll_indicator'
 				),
 				'scrollIndicatorBlock'    => array(
 					'type'    => 'boolean',
@@ -189,7 +189,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$foregroundStyle = '';
 		if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
-			$minHeight       = get_post_meta( get_the_ID(), 'nova_hero_minimum_height', true );
+			$minHeight       = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
 			$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
 		}
 
@@ -200,11 +200,11 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		ob_start();
 
-		do_action( 'nova_hero:before' ); ?>
+		do_action( 'novablocks_hero:before' ); ?>
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
 
-			<?php do_action( 'nova_hero:after_opening_tag' ); ?>
+			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
             <div class="nova-hero__mask">
                 <div class="nova-hero__background" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
@@ -232,11 +232,11 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
                 </div>
             </div>
 
-			<?php do_action( 'nova_hero:before_closing_tag', array( 'blockIndex' => $attributes['blockIndex'] ) ) ?>
+			<?php do_action( 'novablocks_hero:before_closing_tag', array( 'blockIndex' => $attributes['blockIndex'] ) ) ?>
 
         </div>
 
-		<?php do_action( 'nova_hero:after' );
+		<?php do_action( 'novablocks_hero:after' );
 
 		return ob_get_clean();
 	}

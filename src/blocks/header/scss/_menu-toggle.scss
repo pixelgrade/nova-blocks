@@ -1,9 +1,13 @@
+.c-menu-toggle {
+    font-size: 1rem;
+}
+
 .c-menu-toggle__wrap {
     display: flex;
     align-items: center;
 
     position: fixed;
-    top: 0;
+    @include wp-offset(top, 0, true);
     left: 0;
     z-index: 1100;
 
