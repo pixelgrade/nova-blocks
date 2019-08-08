@@ -1,3 +1,5 @@
+import {debounce} from "../../utils";
+
 const {
 	Component
 } = wp.element;
@@ -25,6 +27,8 @@ const withParallax = function( WrappedComponent ) {
 			window.addEventListener("resize", this.updateHandler );
 			scrollContainer.addEventListener("scroll", this.updateHandler );
 			this.updateDimensions();
+
+			wp.data.subscribe( this.updateHandler );
 		}
 
 		componentWillUnmount() {

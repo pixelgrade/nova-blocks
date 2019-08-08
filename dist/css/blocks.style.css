@@ -1,4 +1,15 @@
 @charset "UTF-8";
+:root {
+  --nova-color-1: #203AB6;
+  --nova-color-2: #FFE42E;
+  --nova-color-3: #FFE42E;
+  --nova-dark-1: #000043;
+  --nova-dark-2: #272743;
+  --nova-dark-3: #323067;
+  --nova-light-1: #FFFFFF;
+  --nova-light-2: #EEF1F2;
+  --nova-light-3: #EEF1F2; }
+
 @media only screen and (min-width: 1000px) {
   .site-header {
     font-size: 1rem; }
@@ -303,21 +314,6 @@
 .wp-block-pixelgrade-media {
   margin-left: auto;
   margin-right: auto;
-  --nova-media-padding: 0; }
-
-.nova-media {
-  padding-top: var(--nova-media-padding);
-  padding-bottom: var(--nova-media-padding);
-  background-color: var(--nova-media-background-color);
-  --nova-media-spacing: calc( 7 * var(--nova-spacing-unit) )
-; }
-
-.nova-media__layout {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-gap: var(--nova-media-spacing); }
-
-.wp-block-pixelgrade-media {
   --nova-media-text-color: var(--nova-dark-2);
   --nova-media-titles-color: var(--nova-dark-3);
   --nova-media-subtitles-color: var(--nova-color-1);
@@ -326,6 +322,17 @@
   --nova-media-content-background-color: transparent;
   --nova-media-content-background-opacity: 1;
   --nova-media-content-box-shadow: none; }
+
+.nova-media {
+  background-color: var(--nova-media-background-color);
+  --nova-media-spacing: 56px; }
+  .nova-media.has-background {
+    padding: var(--nova-media-padding) 0; }
+
+.nova-media__layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: var(--nova-media-spacing); }
 
 .block-is-moderate,
 .block-is-highlighted {
@@ -361,11 +368,16 @@
 
 .nova-media__content {
   padding: var(--nova-media-content-padding);
+  color: var(--nova-media-text-color);
   -webkit-box-shadow: var(--nova-media-content-box-shadow);
           box-shadow: var(--nova-media-content-box-shadow);
   margin-top: auto;
   margin-bottom: auto;
   z-index: 2; }
+  .nova-media__content h1, .nova-media__content h2, .nova-media__content h3 {
+    color: var(--nova-media-titles-color); }
+  .nova-media__content h4, .nova-media__content h5, .nova-media__content h6 {
+    color: var(--nova-media-subtitles-color); }
   @media not screen and (min-width: 1024px) {
     .nova-media__content {
       grid-column: span 2; } }

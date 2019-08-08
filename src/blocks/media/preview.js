@@ -43,6 +43,9 @@ export default class MediaPreview extends Component {
 			`has-image-on-the-${mediaPosition}`,
 			`block-is-${blockStyle}`,
 			`content-is-${contentStyle}`,
+			{
+				'has-background': blockStyle !== 'basic'
+			}
 		);
 
 		const galleryImages = images.map( ( image ) => JSON.parse( image ) );

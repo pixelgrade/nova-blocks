@@ -1574,6 +1574,9 @@ var AlignmentControls = function (_Component2) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(33);
+
+
 
 
 
@@ -1612,6 +1615,8 @@ var withParallax = function withParallax(WrappedComponent) {
 				window.addEventListener("resize", this.updateHandler);
 				scrollContainer.addEventListener("scroll", this.updateHandler);
 				this.updateDimensions();
+
+				wp.data.subscribe(this.updateHandler);
 			}
 		}, {
 			key: "componentWillUnmount",
@@ -5448,7 +5453,9 @@ var MediaPreview = function (_Component) {
 			    images = attributes.images;
 
 
-			var classNames = __WEBPACK_IMPORTED_MODULE_5_classnames___default()(className, 'nova-media', 'has-image-on-the-' + mediaPosition, 'block-is-' + blockStyle, 'content-is-' + contentStyle);
+			var classNames = __WEBPACK_IMPORTED_MODULE_5_classnames___default()(className, 'nova-media', 'has-image-on-the-' + mediaPosition, 'block-is-' + blockStyle, 'content-is-' + contentStyle, {
+				'has-background': blockStyle !== 'basic'
+			});
 
 			var galleryImages = images.map(function (image) {
 				return JSON.parse(image);

@@ -1,19 +1,19 @@
 .nova-media__content {
     padding: var(--nova-media-content-padding);
-    //color: var(--nova-media-text-color);
+    color: var(--nova-media-text-color);
     box-shadow: var(--nova-media-content-box-shadow);
 
     margin-top: auto;
     margin-bottom: auto;
     z-index: 2;
 
-    //h1, h3, h3 {
-    //    color: var(--nova-media-titles-color);
-    //}
-    //
-    //h4, h5, h6 {
-    //    color: var(--nova-media-subtitles-color);
-    //}
+    h1, h2, h3 {
+        color: var(--nova-media-titles-color);
+    }
+
+    h4, h5, h6 {
+        color: var(--nova-media-subtitles-color);
+    }
 
     @include below( desktop ) {
         grid-column: span 2;
