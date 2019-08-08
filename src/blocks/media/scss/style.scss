@@ -17,7 +17,15 @@
 .nova-media {
     background-color: var(--nova-media-background-color);
 
-    --nova-media-spacing: 56px;
+    --nova-media-spacing: 24px;
+
+    @include above(lap) {
+        --nova-media-spacing: 48px;
+    }
+
+    @include above(desktop) {
+        --nova-media-spacing: 56px;
+    }
 
     &.has-background {
         padding: var(--nova-media-padding) 0;

@@ -1,5 +1,4 @@
 :root {
-    --nova-spacing: 10%;
     --nova-spacing-small: 5%;
     --nova-spacing-medium: 10%;
     --nova-spacing-large: 15%;
@@ -12,10 +11,6 @@
 .nova-u-content-width {
     --nova-content-width: var(--nova-content-width-full);
 
-    .nova-u-content-width-full & {
-        --nova-content-width: var(--nova-content-width-full);
-    }
-
     .nova-u-content-width-large & {
         --nova-content-width: var(--nova-content-width-large);
     }
@@ -24,21 +19,24 @@
         --nova-content-width: var(--nova-content-width-narrow);
     }
 
-    max-width: var(--nova-content-width);
+    @media only screen and (min-width: 1000px) {
+        max-width: var(--nova-content-width);
+    }
 }
 
 .nova-u-content-padding {
-    padding: var(--nova-spacing);
+    --nova-content-padding: var(--nova-spacing-small);
 
-    .nova-u-spacing-small & {
-        --nova-spacing: var(--nova-spacing-small);
-    }
+    padding: var(--nova-content-padding);
 
-    .nova-u-spacing-medium & {
-        --nova-spacing: var(--nova-spacing-medium);
-    }
+    @media only screen and (min-width: 1000px) {
 
-    .nova-u-spacing-large & {
-        --nova-spacing: var(--nova-spacing-large);
+        .nova-u-spacing-medium & {
+            --nova-content-padding: var(--nova-spacing-medium);
+        }
+
+        .nova-u-spacing-large & {
+            --nova-content-padding: var(--nova-spacing-large);
+        }
     }
 }

@@ -1,3 +1,4 @@
+@import "menu-toggle";
 
 @media only screen and (min-width: 1000px) {
 
@@ -39,8 +40,6 @@
         display: none;
     }
 }
-
-@import "menu-toggle";
 
 @media not screen and (min-width: 1000px) {
     @import "mobile";
