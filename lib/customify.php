@@ -161,7 +161,7 @@ function novablocks_add_customify_style_manager_section( $options ) {
 	}
 
 	// The section might be already defined, thus we merge, not replace the entire section config.
-	$options['sections']['style_manager_section'] = array_replace_recursive( $options['sections']['style_manager_section'], array(
+	$options['sections']['style_manager_section'] = Customify_Array::array_merge_recursive_distinct( $options['sections']['style_manager_section'], array(
 			'options' => array(
 				'sm_color_primary'   => array(
 					'default'          => NOVABLOCKS_THEME_COLOR_PRIMARY,
