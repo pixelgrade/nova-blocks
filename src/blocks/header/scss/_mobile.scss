@@ -1,13 +1,16 @@
 .site-header {
     display: none;
+    overflow-y: auto;
 
     position: fixed;
-    @include wp-offset(top, 0, true);
+    top: 0;
     bottom: 0;
     left: 0;
     z-index: 1000;
 
     background: #FFF;
+
+    @include wp-offset(top, 0, true);
 
     .c-menu-toggle__checkbox ~ & {
         display: block;
