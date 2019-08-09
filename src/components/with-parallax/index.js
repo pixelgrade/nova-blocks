@@ -39,6 +39,11 @@ const withParallax = function( WrappedComponent ) {
 
 		updateDimensions() {
 			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
+
+			if ( ! this.container ) {
+				return;
+			}
+
 			const containerBox = this.container.getBoundingClientRect();
 			const progress = ( this.state.windowHeight - containerBox.y ) / ( this.state.windowHeight + this.container.offsetHeight );
 			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );

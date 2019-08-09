@@ -1,13 +1,13 @@
 :root {
   --nova-color-1: #203AB6;
   --nova-color-2: #FFE42E;
-  --nova-color-3: #FFE42E;
-  --nova-dark-1: #000043;
+  --nova-color-3: #323067;
+  --nova-dark-1: #323067;
   --nova-dark-2: #272743;
-  --nova-dark-3: #323067;
+  --nova-dark-3: #000043;
   --nova-light-1: #FFFFFF;
-  --nova-light-2: #EEF1F2;
-  --nova-light-3: #EEF1F2; }
+  --nova-light-2: #EDF0F1;
+  --nova-light-3: #EDF0F1; }
 
 .wp-block[data-type="novablocks/header"] .wp-block[data-type="novablocks/navigation"] .menu {
   display: -webkit-box;
