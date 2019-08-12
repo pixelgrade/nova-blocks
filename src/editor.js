@@ -7,3 +7,5 @@ import "./blocks/logo";
 import "./blocks/media";
 import "./blocks/slideshow";
 import "./blocks/navigation";
+
+import "./core/heading";
