@@ -67,6 +67,7 @@ function novablocks_add_blocks_category( $categories, $post ) {
 }
 add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 
+require_once dirname( __FILE__ ) . '/lib/settings.php';
 require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 require_once dirname( __FILE__ ) . '/lib/customify.php';
 

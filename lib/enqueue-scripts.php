@@ -8,24 +8,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_enqueue_block_editor_assets() {
+function novablocks_admin_init() {
 	// Make paths variables so we don't write em twice ;)
-	$block_path = '/dist/js/editor.blocks.js';
 	$style_path = '/dist/css/blocks.editor.css';
+	$block_path = '/dist/js/editor.blocks.js';
 
 	// Enqueue the bundled block JS file
-	wp_enqueue_script(
+	wp_register_script(
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
 		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' )
 	);
+
 	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );
 
 	// Enqueue optional editor only styles
-	wp_enqueue_style(
+	wp_register_style(
 		'nova-blocks-editor-css',
 		novablocks_get_plugin_url() . $style_path
 	);
+}
+add_action( 'admin_init', 'novablocks_admin_init' );
+
+function novablocks_enqueue_block_editor_assets() {
+	wp_enqueue_script( 'nova-blocks-js' );
+	wp_enqueue_style( 'nova-blocks-editor-css' );
 }
 add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_block_editor_assets' );
 

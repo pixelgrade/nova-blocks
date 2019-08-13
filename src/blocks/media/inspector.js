@@ -1,3 +1,5 @@
+import {STORE_NAME} from "../../store";
+
 const { __ } = wp.i18n;
 
 const {
@@ -14,7 +16,6 @@ const {
 	RadioControl
 } = wp.components;
 
-
 class Inspector extends Component {
 	constructor ( props ) {
 		super( ...arguments );
@@ -24,6 +25,7 @@ class Inspector extends Component {
 		const {
 			attributes,
 			setAttributes,
+			settings
 		} = this.props;
 
 		const {
@@ -40,11 +42,7 @@ class Inspector extends Component {
 							label = { __( 'Emphasis Level', '__plugin_txtd' ) }
 							value = { contentStyle }
 							selected = { contentStyle }
-							options = { [
-								{ label: __( 'Basic', '__plugin_txtd' ), value: 'basic' },
-								{ label: __( 'Moderate', '__plugin_txtd' ), value: 'moderate' },
-								{ label: __( 'Highlighted', '__plugin_txtd' ), value: 'highlighted' }
-							] }
+							options = { settings['content-area-options'] }
 							onChange = { contentStyle => setAttributes( { contentStyle } ) }
 						/>
 					</PanelBody>
@@ -55,11 +53,7 @@ class Inspector extends Component {
 							label = { __( 'Emphasis Level', '__plugin_txtd' ) }
 							value = { blockStyle }
 							selected = { blockStyle }
-							options = { [
-								{ label: __( 'Basic', '__plugin_txtd' ), value: 'basic' },
-								{ label: __( 'Moderate', '__plugin_txtd' ), value: 'moderate' },
-								{ label: __( 'Highlighted', '__plugin_txtd' ), value: 'highlighted' }
-							] }
+							options = { settings['block-area-options'] }
 							onChange = { blockStyle => setAttributes( { blockStyle } ) }
 						/>
 					</PanelBody>
