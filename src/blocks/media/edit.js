@@ -1,4 +1,4 @@
-import { STORE_NAME } from "../../store";
+import withSettings from "../../components/with-settings";
 
 const {
 	Component,
@@ -9,39 +9,27 @@ const {
 	withSelect
 } = wp.data;
 
-import Controls from './controls';
-import Inspector from './inspector';
+import BlockControls from './block-controls';
+import InspectorControls from './inspector-controls';
 import MediaPreview from './preview';
 
-const Edit = class extends Component {
+const MediaEdit = function( props ) {
 
-	constructor() {
-		super( ...arguments );
-	}
-
-	updateImages( media ) {
-		this.props.setAttributes({
+	function updateImages( media ) {
+		props.setAttributes({
 			images: media.map( ( image ) => JSON.stringify({ id: image.id, url: image.url, alt: image.alt }) )
 		});
 	}
 
-	render() {
-
-		return [
-			<Fragment>
-				<MediaPreview { ...this.props } updateImages={ this.updateImages.bind( this ) } />
-				<Controls { ...this.props } updateImages={ this.updateImages.bind( this ) } />
-				<Inspector { ...this.props } />
-			</Fragment>
-		]
-	}
+	return (
+		<Fragment>
+			<MediaPreview { ...{ ...props, updateImages } } />
+			<BlockControls { ...{ ...props, updateImages } } />
+			<InspectorControls { ...props } />
+		</Fragment>
+	)
 }
 
-export default withSelect( ( select, ownProps ) => {
-	const { getSettings } = select( STORE_NAME );
+export default withSettings( MediaEdit );
 
-	return {
-		settings: getSettings().media,
-	};
 
-} )( Edit );

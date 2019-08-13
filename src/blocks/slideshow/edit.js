@@ -1,84 +1,65 @@
+import withSettings from "../../components/with-settings";
 import * as icons from "../../icons";
 
 const { __ } = wp.i18n;
 
-import {
-	AlignmentControls,
-	ColorPanel,
-	LayoutPanel,
-	ParallaxPanel,
-	AlignmentToolbar,
-	ColorToolbar,
-	GalleryPreview,
-} from "../../components";
-
 import { shuffleArray } from "../../components/util";
 
 import SlideshowPreview from './preview';
-
-const {
-	MediaUpload,
-	BlockControls,
-	InspectorControls,
-} = wp.blockEditor;
-
-const {
-	PanelBody,
-	RadioControl,
-	SelectControl,
-	IconButton,
-	Toolbar,
-} = wp.components;
+import InspectorControls from './inspector-controls';
+import BlockControls from './block-controls';
 
 const {
 	Component,
 	Fragment,
 } = wp.element;
 
-const defaultGalleryImages = [{
-	"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
-	"id": -1,
-	"sizes": {
-		"thumbnail": {
-			"url": "https://source.unsplash.com/_nqApgG-QrY/150x150"
-		},
-		"large": {
-			"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
-			"width": 1600,
-			"height": 900
+const defaultGalleryImages = [
+	{
+		"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
+		"id": - 1,
+		"sizes": {
+			"thumbnail": {
+				"url": "https://source.unsplash.com/_nqApgG-QrY/150x150"
+			},
+			"large": {
+				"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
+				"width": 1600,
+				"height": 900
+			}
+		}
+	}, {
+		"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
+		"alt": "This is a catchy image title",
+		"caption": "A brilliant caption to explain its catchiness",
+		"id": - 2,
+		"sizes": {
+			"thumbnail": {
+				"url": "https://source.unsplash.com/Gt_4iMB7hY0/150x150"
+			},
+			"large": {
+				"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
+				"width": 1600,
+				"height": 900
+			}
+		}
+	}, {
+		"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
+		"id": - 3,
+		"sizes": {
+			"thumbnail": {
+				"url": "https://source.unsplash.com/1vKTnwLMdqs/150x150"
+			},
+			"large": {
+				"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
+				"width": 1600,
+				"height": 900
+			}
 		}
 	}
-}, {
-	"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
-	"alt": "This is a catchy image title",
-	"caption": "A brilliant caption to explain its catchiness",
-	"id": -2,
-	"sizes": {
-		"thumbnail": {
-			"url": "https://source.unsplash.com/Gt_4iMB7hY0/150x150"
-		},
-		"large": {
-			"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
-			"width": 1600,
-			"height": 900
-		}
-	}
-}, {
-	"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
-	"id": -3,
-	"sizes": {
-		"thumbnail": {
-			"url": "https://source.unsplash.com/1vKTnwLMdqs/150x150"
-		},
-		"large": {
-			"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
-			"width": 1600,
-			"height": 900
-		}
-	}
-}];
+];
 
-export default class Edit extends Component {
+const Edit = class extends Component {
 
 	constructor() {
 		super( ...arguments );
@@ -88,7 +69,7 @@ export default class Edit extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const {
 			attributes: {
 				galleryImages
@@ -101,22 +82,6 @@ export default class Edit extends Component {
 				galleryImages: shuffleArray( defaultGalleryImages.slice(0) )
 			} );
 		}
-	}
-
-	onChangeGallery( galleryImages ) {
-
-		const promises = galleryImages.map( (image, index) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
-				galleryImages[index] = { ...newImage, ...image };
-			} );
-		} );
-
-		Promise.all( promises ).then( () => {
-			this.props.setAttributes( { galleryImages: galleryImages.filter( image => {
-					return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
-				} ) } );
-		} );
-
 	}
 
 	onPrevArrowClick() {
@@ -133,20 +98,19 @@ export default class Edit extends Component {
 		this.setState( { selectedIndex: newIndex } );
 	}
 
+	setIndex( selectedIndex ) {
+		this.setState( { selectedIndex } );
+	}
+
 	render() {
 
 		const {
 			attributes: {
-				slideshowType,
 				galleryImages,
-				minHeight,
 			},
-			setAttributes,
-			isSelected,
-			className
 		} = this.props;
 
-		const onChangeGallery = this.onChangeGallery.bind( this );
+		const setIndex = this.setIndex.bind( this );
 
 		let { selectedIndex } = this.state;
 
@@ -164,84 +128,12 @@ export default class Edit extends Component {
 					onNextArrowClick={ this.onNextArrowClick.bind( this ) }
 				/>
 
-				<InspectorControls>
-
-					<PanelBody
-						className={ 'nova-blocks-slideshow-type-panel' }
-						title={ __( 'Slides', '__plugin_txtd' ) }>
-						{ !! galleryImages.length && <GalleryPreview
-							galleryImages={ galleryImages }
-							onSelectImage={ selectedIndex => { this.setState( { selectedIndex } ) } }
-							isSelected={ isSelected }
-							selected={ selectedIndex }
-						/> }
-					</PanelBody>
-
-					{ 'gallery' === slideshowType && <Fragment>
-
-						<LayoutPanel { ...this.props } />
-
-						<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-							<RadioControl
-								label={ __( 'Minimum Height', '__plugin_txtd' ) }
-								selected={ minHeight }
-								onChange={ minHeight => {
-									setAttributes( { minHeight: parseInt( minHeight, 10 ) } )
-								} }
-								options={[{
-									label: __( 'Auto', '__plugin_txtd' ),
-									value: 0
-								}, {
-									label: __( 'Half', '__plugin_txtd' ),
-									value: 50
-								}, {
-									label: __( 'Two Thirds', '__plugin_txtd' ),
-									value: 66
-								}, {
-									label: __( 'Three Quarters', '__plugin_txtd' ),
-									value: 75
-								}, {
-									label: __( 'Full Height', '__plugin_txtd' ),
-									value: 100
-								}]}
-							/>
-						</PanelBody>
-
-						<ParallaxPanel { ...this.props } />
-
-					</Fragment> }
-
-					{ 'gallery' !== slideshowType && <PanelBody>
-						{ __( 'Coming Soon', '__plugin_txtd' ) }
-					</PanelBody> }
-
-				</InspectorControls>
-
-				<BlockControls>
-					<AlignmentToolbar { ...this.props } />
-					<ColorToolbar { ...this.props } />
-					<Toolbar>
-						<MediaUpload
-							type = "image"
-							multiple
-							gallery
-							value = { galleryImages.map( ( image ) => image.id ) }
-							onSelect = { onChangeGallery }
-							render = { ( { open } ) => (
-								<IconButton
-									className='components-icon-button components-toolbar__control'
-									label={ __( 'Change Media', '__plugin_txtd' ) }
-									icon={ icons.swap }
-									onClick= { () => {
-										open();
-									} }
-								/>
-							)}
-						/>
-					</Toolbar>
-				</BlockControls>
+				<InspectorControls { ...{ ...this.props, setIndex, selectedIndex } } />
+				<BlockControls { ...this.props } />
 
 			</Fragment>
 		)
 	}
 }
+
+export default withSettings( Edit );

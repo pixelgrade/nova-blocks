@@ -78,11 +78,10 @@ class GalleryPreview extends Component {
 			galleryImages,
 			selected,
 			onSelectImage,
-			isSelected
 		} = this.props;
 
 		return (
-			<ul class="nova-slideshow__gallery-edit">
+			<ul className="nova-slideshow__gallery-edit">
 				{ galleryImages.map( ( img, index ) => {
 
 					const classes = [

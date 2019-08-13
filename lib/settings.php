@@ -6,7 +6,7 @@ function novablocks_settings_init() {
 
     $nova_editor_settings = array(
         'media' => array(
-            'content-area-options' => array(
+            'contentAreaOptions' => array(
                 array(
                     'label' => __( 'Basic', '__plugin_txtd' ),
                     'value' => 'basic',
@@ -20,7 +20,7 @@ function novablocks_settings_init() {
                     'value' => 'highlighted',
                 ),
             ),
-            'block-area-options' => array(
+            'blockAreaOptions' => array(
                 array(
                     'label' => __( 'Basic', '__plugin_txtd' ),
                     'value' => 'basic',
@@ -34,7 +34,31 @@ function novablocks_settings_init() {
                     'value' => 'highlighted',
                 ),
             )
-        )
+        ),
+	    'slideshow' => array(
+	    	'minHeightOptions' => array(
+				array(
+					'label' => __( 'Auto', '__plugin_txtd' ),
+					'value' => 0,
+				),
+				array(
+					'label' => __( 'Half', '__plugin_txtd' ),
+					'value' => 50,
+				),
+				array(
+					'label' => __( 'Two Thirds', '__plugin_txtd' ),
+					'value' => 66,
+				),
+				array(
+					'label' => __( 'Three Quarters', '__plugin_txtd' ),
+					'value' => 75,
+				),
+				array(
+					'label' => __( 'Full Height', '__plugin_txtd' ),
+					'value' => 100,
+			    ),
+			),
+		),
     );
 
     $nova_editor_settings = apply_filters( 'novablocks_block_editor_settings', $nova_editor_settings, $post );
