@@ -1,65 +1,63 @@
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
 const {
-	Component,
-	Fragment
+	Fragment,
 } = wp.element;
 
 const {
-	InspectorControls
+	InspectorControls,
 } = wp.blockEditor;
 
 const {
 	PanelBody,
-	RadioControl
+	RadioControl,
 } = wp.components;
 
 const MediaInspectorControls = function( props ) {
-
 	const {
-		attributes,
+		attributes: {
+			contentStyle,
+			blockStyle,
+		},
 		setAttributes,
 		settings: {
 			media: {
 				contentAreaOptions,
-				blockAreaOptions
-			}
-		}
+				blockAreaOptions,
+			},
+		},
 	} = props;
-
-	const {
-		contentStyle,
-		blockStyle,
-	} = attributes;
 
 	return (
 		<Fragment>
 			<InspectorControls>
 
-				<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen = { true }>
+				<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen={ true }>
 					<RadioControl
-						label = { __( 'Emphasis Level', '__plugin_txtd' ) }
-						value = { contentStyle }
-						selected = { contentStyle }
-						options = { contentAreaOptions }
-						onChange = { contentStyle => setAttributes( { contentStyle } ) }
+						label={ __( 'Emphasis Level', '__plugin_txtd' ) }
+						value={ contentStyle }
+						selected={ contentStyle }
+						options={ contentAreaOptions }
+						onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
 					/>
 				</PanelBody>
 
-
-				<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen = { true }>
+				<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ true }>
 					<RadioControl
-						label = { __( 'Emphasis Level', '__plugin_txtd' ) }
-						value = { blockStyle }
-						selected = { blockStyle }
-						options = { blockAreaOptions }
-						onChange = { blockStyle => setAttributes( { blockStyle } ) }
+						label={ __( 'Emphasis Level', '__plugin_txtd' ) }
+						value={ blockStyle }
+						selected={ blockStyle }
+						options={ blockAreaOptions }
+						onChange={ ( nextBlockStyle ) => setAttributes( { blockStyle: nextBlockStyle } ) }
 					/>
 				</PanelBody>
 
 			</InspectorControls>
 		</Fragment>
 	);
-}
+};
 
 export default MediaInspectorControls;

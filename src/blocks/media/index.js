@@ -19,13 +19,11 @@ export default registerBlockType( 'novablocks/media',
 		icon: icons.media,
 		edit,
 		save() {
-			return <InnerBlocks.Content/>
+			return <InnerBlocks.Content />;
 		},
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
-			return settings.alignWide ? {
-				'data-align': 'full'
-			} : {}
+			return settings.alignWide ? { 'data-align': 'full' } : {};
 		},
 	}
 )

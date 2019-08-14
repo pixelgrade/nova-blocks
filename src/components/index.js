@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import LayoutPanel from './layout-panel';
 import ParallaxPanel from './parallax-panel';
 
@@ -10,17 +13,17 @@ import {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
-	OverlayControls
+	OverlayControls,
 } from './color-controls';
 
 import {
 	AlignmentControls,
-	AlignmentToolbar
+	AlignmentToolbar,
 } from './alignment-controls';
 
 import {
 	HeightPanel,
-	ScrollIndicatorPanel
+	ScrollIndicatorPanel,
 } from './height-controls';
 
 export {

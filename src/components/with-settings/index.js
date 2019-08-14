@@ -1,14 +1,14 @@
-import { STORE_NAME } from "../../store";
+import { STORE_NAME } from '../../store';
 
 const {
-	createHigherOrderComponent
+	createHigherOrderComponent,
 } = wp.compose;
 
 const {
-	withSelect
+	withSelect,
 } = wp.data;
 
-export default createHigherOrderComponent( Component => {
+export default createHigherOrderComponent( ( Component ) => {
 	return withSelect( ( select, ownProps ) => {
 		const { getSettings } = select( STORE_NAME );
 

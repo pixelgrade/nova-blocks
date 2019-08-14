@@ -1,24 +1,21 @@
-import withSettings from "../../components/with-settings";
-
-const {
-	Component,
-	Fragment
-} = wp.element;
-
-const {
-	withSelect
-} = wp.data;
-
+/**
+ * Internal dependencies
+ */
+import withSettings from '../../components/with-settings';
 import BlockControls from './block-controls';
 import InspectorControls from './inspector-controls';
 import MediaPreview from './preview';
 
-const MediaEdit = function( props ) {
+/**
+ * WordPress dependencies
+ */
+const { Fragment } = wp.element;
 
+const MediaEdit = function( props ) {
 	function updateImages( media ) {
-		props.setAttributes({
-			images: media.map( ( image ) => JSON.stringify({ id: image.id, url: image.url, alt: image.alt }) )
-		});
+		props.setAttributes( {
+			images: media.map( ( image ) => JSON.stringify( { id: image.id, url: image.url, alt: image.alt } ) ),
+		} );
 	}
 
 	return (
@@ -27,9 +24,7 @@ const MediaEdit = function( props ) {
 			<BlockControls { ...{ ...props, updateImages } } />
 			<InspectorControls { ...props } />
 		</Fragment>
-	)
-}
+	);
+};
 
 export default withSettings( MediaEdit );
-
-

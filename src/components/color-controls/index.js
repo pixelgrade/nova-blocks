@@ -1,13 +1,14 @@
-import "./style.scss";
-import * as icons from "../../icons";
-import {AlignmentControls} from "../index";
+/**
+ * Internal dependencies
+ */
+import './style.scss';
+import * as icons from '../../icons';
 
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
-
-const {
-	Component,
-	Fragment
-} = wp.element;
+const { Fragment } = wp.element;
 
 const {
 	ColorPalette,
@@ -15,7 +16,6 @@ const {
 	IconButton,
 	RadioControl,
 	RangeControl,
-	SelectControl,
 	Toolbar,
 } = wp.components;
 
@@ -25,126 +25,119 @@ const {
 
 const colors = [ {
 	name: __( 'Dark', '__plugin_txtd' ),
-	color: '#000'
+	color: '#000',
 }, {
 	name: __( 'Light', '__plugin_txtd' ),
-	color: '#FFF'
+	color: '#FFF',
 } ];
 
-class OverlayControls extends Component {
+const OverlayControls = function( props ) {
+	const {
+		attributes: {
+			overlayFilterStyle,
+			overlayFilterStrength,
+		},
+		setAttributes,
+	} = props;
 
-	render() {
-
-		const {
-			attributes: {
-				overlayFilterStyle,
-				overlayFilterStrength
-			},
-			setAttributes
-		} = this.props;
-
-		return <Fragment>
+	return (
+		<Fragment>
 			<RadioControl
 				label={ __( 'Overlay Filter Style', '__plugin_txtd' ) }
 				selected={ overlayFilterStyle }
 				options={ [
 					{ label: __( 'None', '__plugin_txtd' ), value: 'none' },
 					{ label: __( 'Dark', '__plugin_txtd' ), value: 'dark' },
-					{ label: __( 'Light', '__plugin_txtd' ), value: 'light' }
+					{ label: __( 'Light', '__plugin_txtd' ), value: 'light' },
 				] }
-				onChange={ overlayFilterStyle => setAttributes( { overlayFilterStyle } ) }
+				onChange={ ( nextOverlayFilterStyle ) => setAttributes( { overlayFilterStyle: nextOverlayFilterStyle } ) }
 			/>
 			{ overlayFilterStyle !== 'none' && <RangeControl
 				label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
 				value={ overlayFilterStrength }
-				onChange={ overlayFilterStrength => setAttributes( { overlayFilterStrength } ) }
-				min={0}
-				max={100}
-				step={10}
+				onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
+				min={ 0 }
+				max={ 100 }
+				step={ 10 }
 			/> }
 		</Fragment>
-	}
-}
+	);
+};
 
-class ColorControls extends Component {
-	render() {
+const ColorControls = function( props ) {
+	const {
+		attributes: {
+			contentColor,
+		},
+		setAttributes,
+	} = props;
 
-		const {
-			attributes: {
-				contentColor,
-			},
-			setAttributes
-		} = this.props;
+	return <ColorPalette
+		className="nova-hide-clear-color"
+		value={ contentColor }
+		colors={ colors }
+		onChange={ ( nextContentColor ) => setAttributes( { contentColor: nextContentColor } ) }
+		disableCustomColors
+	/>;
+};
 
-		return <ColorPalette
-			className="nova-hide-clear-color"
-			value={ contentColor }
-			colors={ colors }
-			onChange={ contentColor => setAttributes( { contentColor } ) }
-			disableCustomColors
-		/>
-	}
-}
+const ColorPanel = function( props ) {
+	const {
+		attributes: {
+			contentColor,
+		},
+		setAttributes,
+	} = props;
 
-class ColorPanel extends Component {
-
-	render() {
-
-		const {
-			attributes: {
-				contentColor,
-			},
-			setAttributes
-		} = this.props;
-
-		return <PanelColorSettings
+	return (
+		<PanelColorSettings
 			className="nova-hide-clear-color"
 			title={ __( 'Color Settings', '__plugin_txtd' ) }
 			colorSettings={ [
 				{
 					value: contentColor,
-					onChange: contentColor => setAttributes( { contentColor } ),
+					onChange: ( nextContentColor ) => setAttributes( { contentColor: nextContentColor } ),
 					label: __( 'Content Color', '__plugin_txtd' ),
 				},
 			] }
-			colors={ colors } 
+			colors={ colors }
 			initialOpen={ false }>
-			<OverlayControls { ...this.props } />
+			<OverlayControls { ...props } />
 		</PanelColorSettings>
-	}
-}
+	);
+};
 
-class ColorToolbar extends Component {
-	render() {
-		return (
-			<Toolbar className='pixelgrade-hero-block-toolbar'>
-				<Dropdown
-					position='bottom'
-					className='pixelgrade-hero-block-toolbar-dropdown'
-					contentClassName='components-nova--popover'
-					renderToggle={ ( { isOpen, onToggle } ) => (
-						<IconButton
-							onClick={ onToggle }
-							icon={ icons.invert }
-							aria-expanded={ isOpen }
-							label={ __( 'Color Options', '__plugin_txtd' ) }
-							labelPosition='bottom'
-						/>
-					) }
-					focusOnMount={ false }
-					renderContent={ ( { onClose } ) => <Fragment>
-						<ColorControls { ...this.props } />
-						<OverlayControls { ...this.props } />
-					</Fragment> }
-				/>
-			</Toolbar>
-		)
-	}
-}
+const ColorToolbar = function( props ) {
+	return (
+		<Toolbar className="pixelgrade-hero-block-toolbar">
+			<Dropdown
+				position="bottom"
+				className="pixelgrade-hero-block-toolbar-dropdown"
+				contentClassName="components-nova--popover"
+				renderToggle={ ( { isOpen, onToggle } ) => (
+					<IconButton
+						onClick={ onToggle }
+						icon={ icons.invert }
+						aria-expanded={ isOpen }
+						label={ __( 'Color Options', '__plugin_txtd' ) }
+						labelPosition="bottom"
+					/>
+				) }
+				focusOnMount={ false }
+				renderContent={ () => (
+					<Fragment>
+						<ColorControls { ...props } />
+						<OverlayControls { ...props } />
+					</Fragment>
+				) }
+			/>
+		</Toolbar>
+	);
+};
 
 export {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
 	OverlayControls,
-}
+};

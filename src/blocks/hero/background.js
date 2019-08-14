@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import withParallax from '../../components/with-parallax';
 
 const HeroBackground = function( props ) {
@@ -5,27 +8,27 @@ const HeroBackground = function( props ) {
 		attributes: {
 			overlayFilterStyle,
 			overlayFilterStrength,
-			media
+			media,
 		},
-		style
+		style,
 	} = props;
 
 	const styles = {
-		opacity: 1
+		opacity: 1,
 	};
 
 	if ( overlayFilterStyle !== 'none' ) {
-		styles.opacity = 1 - overlayFilterStrength / 100
+		styles.opacity = 1 - ( overlayFilterStrength / 100 );
 	}
 
 	return (
-		<div className='nova-hero__background' style={ style }>
-			{media.type === 'image' && typeof media.sizes !== 'undefined'
-			 && <img className='nova-hero__media' src={media.sizes.full.url} style={styles}/>}
-			{media.type === 'video'
-			 && <video muted autoPlay loop className='nova-hero__media' src={media.url} style={styles}/>}
+		<div className="nova-hero__background" style={ style }>
+			{ media.type === 'image' && typeof media.sizes !== 'undefined' &&
+				<img className="nova-hero__media" src={ media.sizes.full.url } style={ styles } alt={ media.alt } /> }
+			{ media.type === 'video' &&
+				<video muted autoPlay loop className="nova-hero__media" src={ media.url } style={ styles } /> }
 		</div>
-	)
+	);
 };
 
 export default withParallax( HeroBackground );

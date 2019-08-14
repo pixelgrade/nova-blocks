@@ -1,5 +1,8 @@
+/**
+ * WordPress dependencies
+ */
 const {
-	Component
+	Component,
 } = wp.element;
 
 // Take in a component as argument WrappedComponent
@@ -7,7 +10,6 @@ const withParallax = function( WrappedComponent ) {
 
 	// And return a new anonymous component
 	return class extends Component {
-
 		constructor() {
 			super( ...arguments );
 
@@ -15,31 +17,31 @@ const withParallax = function( WrappedComponent ) {
 				windowWidth: window.innerWidth,
 				windowHeight: window.innerHeight,
 				progress: 0.5,
-			}
+			};
 
 			this.updateHandler = this.updateDimensions.bind( this );
 		}
 
 		componentDidMount() {
-			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
-			window.addEventListener("resize", this.updateHandler );
-			scrollContainer.addEventListener("scroll", this.updateHandler );
+			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
+			window.addEventListener( 'resize', this.updateHandler );
+			scrollContainer.addEventListener( 'scroll', this.updateHandler );
 			this.updateDimensions();
 		}
 
 		componentWillUnmount() {
-			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
-			window.removeEventListener( "resize", this.updateHandler );
-			scrollContainer.removeEventListener( "scroll", this.updateHandler );
+			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
+			window.removeEventListener( 'resize', this.updateHandler );
+			scrollContainer.removeEventListener( 'scroll', this.updateHandler );
 		}
 
 		updateDimensions() {
-			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
+			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
 			const containerBox = this.container.getBoundingClientRect();
 			const progress = ( this.state.windowHeight - containerBox.y ) / ( this.state.windowHeight + this.container.offsetHeight );
 			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );
 
-			this.setState({
+			this.setState( {
 				windowWidth: window.innerWidth,
 				windowHeight: window.innerHeight,
 				scrollTop: scrollContainer.scrollTop,
@@ -49,17 +51,16 @@ const withParallax = function( WrappedComponent ) {
 					height: this.container.offsetHeight,
 					top: containerBox.y,
 				},
-			});
+			} );
 		}
 
 		getParallaxStyles() {
-
 			const {
 				attributes: {
 					enableParallax,
 					parallaxAmount,
 					parallaxCustomAmount,
-				}
+				},
 			} = this.props;
 
 			if ( ! enableParallax ) {
@@ -72,10 +73,10 @@ const withParallax = function( WrappedComponent ) {
 			const {
 				dimensions,
 				windowHeight,
-				progress
+				progress,
 			} = this.state;
 
-			const newHeight = dimensions.height * (1 - actualParallaxAmount) + windowHeight * actualParallaxAmount;
+			const newHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
 			const scale = newHeight / dimensions.height;
 			const offsetY = dimensions.height * ( 1 - scale ) / 2;
 			const move = ( windowHeight + dimensions.height ) * ( progress - 0.5 ) * actualParallaxAmount;
@@ -83,19 +84,18 @@ const withParallax = function( WrappedComponent ) {
 			return {
 				height: newHeight,
 				transition: 'none',
-				transform: 'translate(0,' + ( move + offsetY ) + 'px)'
+				transform: 'translate(0,' + ( move + offsetY ) + 'px)',
 			};
 		}
 
 		render() {
-
 			return (
-				<div className="nova-mask" ref={ el => ( this.container = el ) }>
+				<div className="nova-mask" ref={ ( el ) => ( this.container = el ) }>
 					{ this.state.dimensions && <WrappedComponent { ...this.props } style={ this.getParallaxStyles() } /> }
 				</div>
-			)
+			);
 		}
-	}
-}
+	};
+};
 
 export default withParallax;

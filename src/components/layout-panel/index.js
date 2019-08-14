@@ -1,29 +1,32 @@
-import PaddingControls from "./padding";
-import WidthControls from "./width";
-import "./style.scss";
+/**
+ * Internal dependencies
+ */
+import PaddingControls from './padding';
+import WidthControls from './width';
+import './style.scss';
 
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
-
-const {
-	Component,
-} = wp.element;
 
 const {
 	PanelBody,
 } = wp.components;
 
-export default class LayoutPanel extends Component {
-	render() {
-
-		return <PanelBody
+const LayoutPanel = function( props ) {
+	return (
+		<PanelBody
 			className="pixelgrade-hero-button-group-wrapper"
 			title={ __( 'Layout', '__plugin_txtd' ) }
 			initialOpen={ true }>
 
-			<PaddingControls { ...this.props } />
-			<WidthControls { ...this.props } />
+			<PaddingControls { ...props } />
+			<WidthControls { ...props } />
 
-			{ this.props.children }
+			{ props.children }
 		</PanelBody>
-	}
-}
+	);
+};
+
+export default LayoutPanel;

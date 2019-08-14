@@ -1,14 +1,20 @@
-import { debounce } from '../../utils';
-
+/**
+ * Internal dependencies
+ */
 import {
 	HeightPanel,
 	LayoutPanel,
 	ParallaxPanel,
 	ScrollIndicatorPanel,
-} from "../../components";
+} from '../../components';
 
+import withSettings from '../../components/with-settings';
+
+/**
+ * WordPress dependencies
+ */
 import HeroPreview from './preview';
-import HeroBlockControls from './controls';
+import BlockControls from './block-controls';
 
 const { __ } = wp.i18n;
 
@@ -17,69 +23,22 @@ const {
 } = wp.blockEditor;
 
 const {
-	Component,
-	Fragment
+	Fragment,
 } = wp.element;
 
-const editorData = wp.data.select( 'core/block-editor' );
-
-const updateBlocks = ( attributes ) => {
-	const blocks = editorData.getBlocks();
-
-	blocks.filter( block => {
-		return block.name === 'novablocks/hero';
-	} ).filter( ( block, heroBlockIndex ) => {
-		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
-		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && heroBlockIndex === 0 || applyMinimumHeight === 'all';
-		const scrollIndicatorBlock = scrollIndicator === true && heroBlockIndex === 0;
-		const blockIndex = blocks.findIndex( testBlock => block === testBlock );
-
-		wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
-			blockIndex,
-			applyMinimumHeightBlock,
-			scrollIndicatorBlock
-		} );
-
-		return true;
-	} );
-
-}
-
-let blockList = editorData.getBlocks();
-let debouncedOnSubscribe = debounce(() => {
-
-	const newBlockList = editorData.getBlocks();
-	let blockListChanged = blockList.length !== newBlockList.length;
-
-	if ( ! blockListChanged ) {
-		blockListChanged = blockList.some( ( block, index ) => {
-			return ( blockList[index].clientId !== newBlockList[index].clientId );
-		} );
-	}
-
-	if ( blockListChanged ) {
-		blockList = newBlockList;
-		updateBlocks();
-	}
-}, 30);
-
-wp.data.subscribe( debouncedOnSubscribe );
-
-export default class Edit extends Component {
-
-	render() {
-
-		return [
-			<Fragment>
-				<HeroPreview { ...this.props } />
-				<HeroBlockControls { ...this.props } />
-			</Fragment>,
+const HeroEdit = function( props ) {
+	return (
+		<Fragment>
+			<HeroPreview { ...props } />
+			<BlockControls { ...props } />
 			<InspectorControls>
-				<LayoutPanel { ...this.props } />
-				<HeightPanel { ...this.props } />
-				<ScrollIndicatorPanel { ...this.props } />
-				<ParallaxPanel { ...this.props } />
+				<LayoutPanel { ...props } />
+				<HeightPanel { ...props } />
+				<ScrollIndicatorPanel { ...props } />
+				<ParallaxPanel { ...props } />
 			</InspectorControls>
-		]
-	}
-}
+		</Fragment>
+	);
+};
+
+export default withSettings( HeroEdit );

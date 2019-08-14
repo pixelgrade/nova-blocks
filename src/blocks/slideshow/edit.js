@@ -1,85 +1,48 @@
-import withSettings from "../../components/with-settings";
-import * as icons from "../../icons";
-
-const { __ } = wp.i18n;
-
-import { shuffleArray } from "../../components/util";
+/**
+ * Internal dependencies
+ */
+import withSettings from '../../components/with-settings';
+import { shuffleArray } from '../../components/util';
 
 import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
+
+/**
+ * WordPress dependencies
+ */
+const { __ } = wp.i18n;
 
 const {
 	Component,
 	Fragment,
 } = wp.element;
 
-const defaultGalleryImages = [
-	{
-		"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
-		"id": - 1,
-		"sizes": {
-			"thumbnail": {
-				"url": "https://source.unsplash.com/_nqApgG-QrY/150x150"
-			},
-			"large": {
-				"url": "https://source.unsplash.com/_nqApgG-QrY/1600x900",
-				"width": 1600,
-				"height": 900
-			}
-		}
-	}, {
-		"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
-		"alt": "This is a catchy image title",
-		"caption": "A brilliant caption to explain its catchiness",
-		"id": - 2,
-		"sizes": {
-			"thumbnail": {
-				"url": "https://source.unsplash.com/Gt_4iMB7hY0/150x150"
-			},
-			"large": {
-				"url": "https://source.unsplash.com/Gt_4iMB7hY0/1600x900",
-				"width": 1600,
-				"height": 900
-			}
-		}
-	}, {
-		"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
-		"id": - 3,
-		"sizes": {
-			"thumbnail": {
-				"url": "https://source.unsplash.com/1vKTnwLMdqs/150x150"
-			},
-			"large": {
-				"url": "https://source.unsplash.com/1vKTnwLMdqs/1600x900",
-				"width": 1600,
-				"height": 900
-			}
-		}
-	}
-];
-
-const Edit = class extends Component {
-
+class Edit extends Component {
 	constructor() {
 		super( ...arguments );
 
 		this.state = {
-			selectedIndex: 0
+			selectedIndex: 0,
 		};
 	}
 
 	componentDidMount() {
 		const {
 			attributes: {
-				galleryImages
+				galleryImages,
 			},
-			clientId
+			clientId,
+			settings: {
+				slideshow: {
+					defaultImages,
+				},
+			},
 		} = this.props;
 
 		if ( ! galleryImages.length ) {
 			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
-				galleryImages: shuffleArray( defaultGalleryImages.slice(0) )
+				galleryImages: shuffleArray( defaultImages.slice( 0 ) ),
 			} );
 		}
 	}
@@ -132,7 +95,7 @@ const Edit = class extends Component {
 				<BlockControls { ...this.props } />
 
 			</Fragment>
-		)
+		);
 	}
 }
 

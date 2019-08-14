@@ -1,24 +1,19 @@
-import "./scss/style.scss";
-import "./scss/editor.scss";
+import './scss/style.scss';
+import './scss/editor.scss';
 
-import "./blocks/hero";
-import "./blocks/media";
-import "./blocks/slideshow";
+import './blocks/hero';
+import './blocks/media';
+import './blocks/slideshow';
 
-import store, { STORE_NAME } from "./store";
+import { STORE_NAME } from './store';
 
 const {
-	dispatch
+	dispatch,
 } = wp.data;
 
 class novaBlocks {
-
-	constructor() {
-
-	}
-
 	initialize( settings ) {
-		dispatch( STORE_NAME ).updateSettings( JSON.parse( settings ) );
+		dispatch( STORE_NAME ).updateSettings( settings );
 	}
 }
 

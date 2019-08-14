@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import * as icons from '../../icons';
+
+/**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
@@ -7,18 +12,13 @@ const { withViewportMatch } = wp.viewport;
 const { withSelect } = wp.data;
 const { compose, createHigherOrderComponent } = wp.compose;
 const { createContext } = wp.element;
-const { Consumer, Provider } = createContext( {
+const { Consumer } = createContext( {
 	name: '',
 	isSelected: false,
 	focusedElement: null,
 	setFocusedElement: () => {},
 	clientId: null,
 } );
-
-/**
- * Internal dependencies
- */
-import * as icons from "../../icons";
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
 	left: {
@@ -55,13 +55,13 @@ export function BlockHorizontalAlignmentToolbar( { isCollapsed, value, onChange,
 					return {
 						...BLOCK_ALIGNMENTS_CONTROLS[ control ],
 						isActive: value === control,
-						onClick: applyOrUnset(control),
-						className: "pixelgrade-hero-horizontal-alignment-button"
+						onClick: applyOrUnset( control ),
+						className: 'pixelgrade-hero-horizontal-alignment-button'
 					};
 				} )
 			}
 		/>
-	)
+	);
 }
 
 // @todo remove function declaration and use core method when exposed through the api

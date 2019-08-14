@@ -1,10 +1,13 @@
-import {debounce} from "../../utils";
+/**
+ * Internal dependencies
+ */
+import { debounce } from '../../utils';
+import withSettings from '../with-settings';
 
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
-
-const {
-	Component,
-} = wp.element;
 
 const {
 	PanelBody,
@@ -20,13 +23,13 @@ const {
 
 let blockList = select( 'core/block-editor' ).getBlocks();
 
-let debouncedOnSubscribe = debounce(() => {
-	let newBlockList = select( 'core/block-editor' ).getBlocks();
+const debouncedOnSubscribe = debounce( () => {
+	const newBlockList = select( 'core/block-editor' ).getBlocks();
 	let blockListChanged = blockList.length !== newBlockList.length;
 
 	if ( ! blockListChanged ) {
 		blockListChanged = blockList.some( ( block, index ) => {
-			return ( blockList[index].clientId !== newBlockList[index].clientId );
+			return ( blockList[ index ].clientId !== newBlockList[ index ].clientId );
 		} );
 	}
 
@@ -34,110 +37,90 @@ let debouncedOnSubscribe = debounce(() => {
 		blockList = newBlockList;
 		updateBlocks();
 	}
-}, 30);
+}, 30 );
 
 subscribe( debouncedOnSubscribe );
 
 const updateBlocks = ( attributes ) => {
-
-	select( 'core/block-editor' ).getBlocks().filter( block => {
+	select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 		return block.name === 'novablocks/hero';
 	} ).filter( ( block, index ) => {
 		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
-		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
+		const applyMinimumHeightBlock = ( applyMinimumHeight === 'first' && index === 0 ) || applyMinimumHeight === 'all';
 		const scrollIndicatorBlock = scrollIndicator === true && index === 0;
 
 		dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
 			applyMinimumHeightBlock,
-			scrollIndicatorBlock
+			scrollIndicatorBlock,
 		} );
 
 		return true;
 	} );
+};
 
-}
+const HeightPanel = withSettings( function( props ) {
+	const {
+		attributes,
+		setAttributes,
+		settings,
+	} = props;
 
-class HeightPanel extends Component {
+	const applyMinimumHeight = !! attributes.applyMinimumHeight ? attributes.applyMinimumHeight : 'first';
+	const minHeight = !! attributes.minHeight ? attributes.minHeight : 75;
 
-	render() {
-
-		const {
-			attributes,
-			setAttributes
-		} = this.props;
-
-		const applyMinimumHeight = !! attributes.applyMinimumHeight ? attributes.applyMinimumHeight : 'first';
-		const minHeight = !! attributes.minHeight ? attributes.minHeight : 75;
-
-		return (
-			<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
+	return (
+		<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
+			<RadioControl
+				label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
+				selected={ applyMinimumHeight }
+				onChange={ ( nextMinimumHeight ) => {
+					setAttributes( { applyMinimumHeight: nextMinimumHeight } );
+					updateBlocks( { applyMinimumHeight: nextMinimumHeight } );
+				} }
+				options={ settings.applyMinimumHeightOptions }
+			/>
+			{ 'none' !== applyMinimumHeight &&
 				<RadioControl
-					label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
-					selected={ applyMinimumHeight }
-					onChange={ applyMinimumHeight => {
-						setAttributes( { applyMinimumHeight } );
-						updateBlocks( { applyMinimumHeight } );
+					label={ __( 'Minimum Height', '__plugin_txtd' ) }
+					selected={ minHeight }
+					onChange={ ( nextMinHeight ) => {
+						setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
+						updateBlocks( { minHeight: parseInt( nextMinHeight, 10 ) } );
 					} }
-					options={
-						[
-							{ label: __( 'None', '__plugin_txtd' ), value: 'none' },
-							{ label: __( 'First Hero Block Only', '__plugin_txtd' ), value: 'first' },
-							{ label: __( 'All Hero Blocks', '__plugin_txtd' ), value: 'all' }
-						]
-					}
+					options={ settings.minimumHeightOptions }
 				/>
-				{ 'none' !== applyMinimumHeight &&
-				    <RadioControl
-						label={ __( 'Minimum Height', '__plugin_txtd' ) }
-						selected={ minHeight }
-						onChange={ minHeight => {
-							setAttributes( { minHeight: parseInt( minHeight, 10 ) } )
-//							updateBlocks( { minHeight } );
-						} }
-						options={
-							[
-								{ label: __( 'Half', '__plugin_txtd' ), value: 50 },
-								{ label: __( 'Two Thirds', '__plugin_txtd' ), value: 66 },
-								{ label: __( 'Three Quarters', '__plugin_txtd' ), value: 75 },
-								{ label: __( 'Full', '__plugin_txtd' ), value: 100 }
-							]
-						}
-					/>
-			    }
-			</PanelBody>
-		)
-	}
-}
+			}
+		</PanelBody>
+	);
+} );
 
-class ScrollIndicatorPanel extends Component {
+const ScrollIndicatorPanel = withSettings( function( props ) {
+	const {
+		attributes: {
+			scrollIndicator,
+		},
+		setAttributes,
+	} = props;
 
-	render() {
+	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
+		return block.name === 'novablocks/hero';
+	} );
 
-		const {
-			attributes: {
-				scrollIndicator,
-			},
-			setAttributes
-		} = this.props;
+	const index = heroBlocks.findIndex( ( block ) => block.clientId === select( 'core/block-editor' ).getSelectedBlockClientId() );
 
-		const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( block => {
-			return block.name === 'novablocks/hero';
-		} );
-
-		const index = heroBlocks.findIndex( block => block.clientId === select( 'core/block-editor' ).getSelectedBlockClientId() );
-
-		return <PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
+	return (
+		<PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
 			<ToggleControl
 				label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
 				checked={ scrollIndicator }
-				onChange={ scrollIndicator => {
-					setAttributes( { scrollIndicator } );
-					updateBlocks( { scrollIndicator } );
+				onChange={ ( nextScrollIndicator ) => {
+					setAttributes( { scrollIndicator: nextScrollIndicator } );
+					updateBlocks( { scrollIndicator: nextScrollIndicator } );
 				} }
 			/>
 		</PanelBody>
-	}
-}
+	);
+} );
 
 export {
 	HeightPanel,

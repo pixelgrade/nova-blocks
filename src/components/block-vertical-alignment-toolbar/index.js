@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import * as icons from '../../icons';
+
+/**
  * WordPress dependencies
  */
 const { _x } = wp.i18n;
@@ -7,18 +12,13 @@ const { withViewportMatch } = wp.viewport;
 const { withSelect } = wp.data;
 const { compose, createHigherOrderComponent } = wp.compose;
 const { createContext } = wp.element;
-const { Consumer, Provider } = createContext( {
+const { Consumer } = createContext( {
 	name: '',
 	isSelected: false,
 	focusedElement: null,
 	setFocusedElement: () => {},
 	clientId: null,
 } );
-
-/**
- * Internal dependencies
- */
-import * as icons from "../../icons";
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
 	top: {
@@ -83,9 +83,7 @@ const withBlockEditContext = ( mapContextToProps ) => createHigherOrderComponent
  */
 export default compose(
 	withBlockEditContext( ( { clientId } ) => {
-		return {
-			clientId,
-		};
+		return { clientId };
 	} ),
 	withViewportMatch( { isLargeViewport: 'medium' } ),
 	withSelect( ( select, { clientId, isLargeViewport, isCollapsed } ) => {

@@ -1,7 +1,13 @@
-import { AlignmentToolbar } from "../../components/alignment-controls";
-import { ColorToolbar } from "../../components/color-controls";
-import * as icons from "../../icons";
+/**
+ * Internal dependencies
+ */
+import * as icons from '../../icons';
+import { AlignmentToolbar } from '../../components/alignment-controls';
+import { ColorToolbar } from '../../components/color-controls';
 
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
 const {
@@ -17,7 +23,7 @@ const {
 	MediaUpload,
 } = wp.blockEditor;
 
-export default function( props ) {
+const SlideshowBlockControls = function( props ) {
 
 	const {
 		attributes: {
@@ -26,21 +32,19 @@ export default function( props ) {
 		setAttributes,
 	} = props;
 
-	const onChangeGallery = function( galleryImages ) {
-
-		const promises = galleryImages.map( (image, index) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
-				galleryImages[index] = { ...newImage, ...image };
+	const onChangeGallery = function( newGalleryImages ) {
+		const promises = newGalleryImages.map( ( image, index ) => {
+			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( ( newImage ) => {
+				newGalleryImages[ index ] = { ...newImage, ...image };
 			} );
 		} );
 
 		Promise.all( promises ).then( () => {
-			setAttributes( { galleryImages: galleryImages.filter( image => {
-					return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
-				} ) } );
+			setAttributes( { galleryImages: newGalleryImages.filter( ( image ) => {
+				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
+			} ) } );
 		} );
-
-	}
+	};
 
 	return (
 		<BlockControls>
@@ -48,23 +52,23 @@ export default function( props ) {
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
-					type = "image"
+					type="image"
 					multiple
 					gallery
-					value = { galleryImages.map( ( image ) => image.id ) }
-					onSelect = { onChangeGallery }
-					render = { ( { open } ) => (
+					value={ galleryImages.map( ( image ) => image.id ) }
+					onSelect={ onChangeGallery }
+					render={ ( { open } ) => (
 						<IconButton
-							className='components-icon-button components-toolbar__control'
+							className="components-icon-button components-toolbar__control"
 							label={ __( 'Change Media', '__plugin_txtd' ) }
 							icon={ icons.swap }
-							onClick= { () => {
-								open();
-							} }
+							onClick={ open }
 						/>
-					)}
+					) }
 				/>
 			</Toolbar>
 		</BlockControls>
-	)
-}
+	);
+};
+
+export default SlideshowBlockControls;
