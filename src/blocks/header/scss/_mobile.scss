@@ -1,0 +1,38 @@
+.site-header {
+    display: none;
+    overflow-y: auto;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+
+    background: #FFF;
+
+    @include wp-offset(top, 0, true);
+
+    .c-menu-toggle__checkbox ~ & {
+        display: block;
+    }
+
+    .c-menu-toggle__checkbox:not(:checked) ~ & {
+        transform: translateX(-100%);
+    }
+}
+
+.site-header__inner-container[class] {
+    margin-top: 3.5em;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 0;
+}
+
+.site-header__content {
+    display: flex;
+    flex-direction: column;
+
+    .site-branding {
+        padding: 1em;
+        order: -1;
+    }
+}

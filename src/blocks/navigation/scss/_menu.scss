@@ -1,0 +1,16 @@
+.menu,
+.sub-menu {
+    padding-left: 0;
+
+    list-style: none;
+}
+
+.menu {
+
+    a {
+        display: block;
+        padding: 1em;
+        color: inherit;
+        text-decoration: none;
+    }
+}

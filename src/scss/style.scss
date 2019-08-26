@@ -1,25 +1,12 @@
 @import "variables";
 @import "mixins";
 
-:root {
-    --content-width-normal: 900px;
-    --content-width-wide: 1200px;
-
-    --nova-spacing-unit: 2px;
-    --content-side-spacing: calc( 7 * var(--nova-spacing-unit) );
-
-    @include above(tablet) {
-        --nova-spacing-unit: 4px;
-    }
-
-    @include above(desktop) {
-        --nova-spacing-unit: 8px;
-    }
-}
-
+@import "../blocks/header/scss/style";
 @import "../blocks/hero/scss/style";
+@import "../blocks/logo/scss/style";
 @import "../blocks/media/scss/style";
 @import "../blocks/slideshow/scss/style";
+@import "../blocks/navigation/scss/style";
 
 @import "vendor/slick";
 @import "vendor/slick-theme";

@@ -1,12 +1,9 @@
 @import "mixins/dashicon";
 @import "mixins/media-queries";
 @import "mixins/box-shadow";
+@import "mixins/wp-offset";
 
 // Theme Font
-@mixin theme-font {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-}
-
 @mixin cover {
     position: absolute;
     top: 0;

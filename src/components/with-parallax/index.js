@@ -27,6 +27,8 @@ const withParallax = function( WrappedComponent ) {
 			window.addEventListener( 'resize', this.updateHandler );
 			scrollContainer.addEventListener( 'scroll', this.updateHandler );
 			this.updateDimensions();
+
+			wp.data.subscribe( this.updateHandler );
 		}
 
 		componentWillUnmount() {
@@ -36,7 +38,12 @@ const withParallax = function( WrappedComponent ) {
 		}
 
 		updateDimensions() {
-			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
+			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
+
+			if ( ! this.container ) {
+				return;
+			}
+
 			const containerBox = this.container.getBoundingClientRect();
 			const progress = ( this.state.windowHeight - containerBox.y ) / ( this.state.windowHeight + this.container.offsetHeight );
 			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );

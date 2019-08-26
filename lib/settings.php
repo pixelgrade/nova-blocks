@@ -1,8 +1,7 @@
 <?php
 
-global $post;
-
 function novablocks_settings_init() {
+	global $post;
 
     $nova_editor_settings = array(
     	'hero' => array(

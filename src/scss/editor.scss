@@ -1,8 +1,11 @@
+@import "variables";
 @import "mixins";
 
+@import "../blocks/header/scss/editor";
 @import "../blocks/hero/scss/editor";
 @import "../blocks/media/scss/editor";
 @import "../blocks/slideshow/scss/editor";
+@import "../blocks/navigation/scss/editor";
 
 .nova-mask {
     @include cover;

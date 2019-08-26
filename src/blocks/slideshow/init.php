@@ -134,13 +134,13 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 		ob_start();
 
-		do_action( 'nova_slideshow:before' ); ?>
+		do_action( 'novablocks_slideshow:before' ); ?>
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
              style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>"
              data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
 
-			<?php do_action( 'nova_hero:after_opening_tag' ); ?>
+			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
             <div class="nova-slideshow__mask">
                 <div class="nova-slideshow__slider" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
@@ -181,11 +181,11 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                 </div>
             </div>
 
-			<?php do_action( 'nova_hero:before_closing_tag' ) ?>
+			<?php do_action( 'novablocks_hero:before_closing_tag' ) ?>
 
         </div>
 
-		<?php do_action( 'nova_slideshow:after' );
+		<?php do_action( 'novablocks_slideshow:after' );
 
 		return ob_get_clean();
 	}

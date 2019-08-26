@@ -1,0 +1,37 @@
+// WP Offset Mixin
+//
+// this is a mixin used to increase the value of a specific property with
+// the height of the .admin-bar added by WordPress
+//
+// @params
+// $property    - the property that depends on the .admin-bar height
+// $value       - initial value of the property above [px]
+// $fixed       - tells if the element is set to fixed and it should become static when the .admin-bar does
+// $sign        - there mey be times when you want to substract the .admin-bar height instead of adding it
+//              it shoulb be 1 or -1 but you can use it as any multiplicator
+// $bodyclass   - class on the body element that your styling depends on
+
+@mixin wp-offset($property: top, $value: 0px, $fixed: false, $sign: 1, $bodyclass: null) {
+
+    #{$bodyclass}.admin-bar &            { #{$property}: $value + 32px * $sign; }
+    #{$bodyclass}.demo-site &            { #{$property}: $value + 80px * $sign; }
+    #{$bodyclass}.admin-bar.demo-site &  { #{$property}: $value + 112px * $sign; }
+
+    @media (max-width: 782px) {
+        #{$bodyclass}.admin-bar &            { #{$property}: $value + 46px * $sign; }
+        #{$bodyclass}.admin-bar.demo-site &  { #{$property}: $value + 126px * $sign; }
+    }
+
+    // the .demosite-activate bar extends to 100px at 620px
+    // but it was probably intended at 700px when it changes its layout
+    // this may be changed accordingly when deployed to WP.com
+    @media (max-width: 700px) {
+        #{$bodyclass}.admin-bar.demo-site & { #{$property}: $value + 146px * $sign; }
+    }
+
+    @if $fixed != false {
+        @media screen and (max-width: 600px) {
+            #{$bodyclass}.admin-bar & { position: absolute; }
+        }
+    }
+}
