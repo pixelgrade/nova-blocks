@@ -8,6 +8,8 @@ import "./blocks/media";
 import "./blocks/slideshow";
 import "./blocks/navigation";
 
+import "./components/with-font-size-picker";
+
 import { STORE_NAME } from './store';
 
 const {
