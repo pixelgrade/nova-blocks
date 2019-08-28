@@ -671,21 +671,24 @@
   text-align: left; }
 
 .item-price--sale {
-  margin-left: 16px; }
+  margin-left: 16px;
+  background-color: #000000;
+  padding: 5px 10px;
+  color: #FFFFFF; }
 
 .nova-food-menu-item--highlight {
   display: block;
-  margin: 0 -20px 15px;
-  width: calc(100% + 40px);
-  padding: 3px 20px 2px 20px;
+  margin: 0 -1.35em 15px;
+  width: calc(100% + 2.7em);
+  padding: 3px 1.25em 2px 1.25em;
   text-transform: uppercase;
   color: white;
   background-color: #000000; }
 
 .nova-food-menu-item--highlighted {
-  margin-left: -22px;
-  margin-right: -22px;
-  padding: 0 20px 12px 20px;
+  margin-left: -1.35em;
+  margin-right: -1.35em;
+  padding: 0 1.35em 0.75em 1.35em;
   border: 2px solid #000000; }
 
 /* Slider */
