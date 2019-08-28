@@ -227,6 +227,18 @@
 .wp-block[data-type="novablocks/navigation"] .menu {
   pointer-events: none; }
 
+.nova-food-menu-item--highlighted[class] {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0 1.35em 0.75em 1.35em; }
+
+.nova-food-menu-item:not(.nova-food-menu-item--highlighted) {
+  padding-left: 1.35em;
+  padding-right: 1.35em; }
+
+.nova-food-menu__header {
+  padding-left: 1.35em; }
+
 .nova-mask {
   position: absolute;
   top: 0;

@@ -1,14 +1,10 @@
-.nova-food-menu {
-
-}
-
 .nova-food-menu-item {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   flex-wrap: wrap;
 
-  margin-bottom: 16px;
+  margin-bottom: 1em;
 }
 
 .nova-food-menu-item__title {

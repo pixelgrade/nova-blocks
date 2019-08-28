@@ -641,7 +641,7 @@
           align-items: baseline;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin-bottom: 16px; }
+  margin-bottom: 1em; }
 
 .nova-food-menu-item__title {
   position: relative;
