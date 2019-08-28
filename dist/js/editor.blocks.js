@@ -5956,9 +5956,11 @@ var Edit = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save__ = __webpack_require__(190);
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -5971,11 +5973,17 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food', {
 	title: __('Food Menu', '__plugin_txtd'),
-	description: __('Display Food Menu', '__plugin_txtd'),
+	description: __('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	attributes: {
+		sectionTitle: {
+			type: 'string',
+			default: 'Starters'
+		}
+	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
-	save: function save() {}
+	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */]
 }));
 
 /***/ }),
@@ -6007,33 +6015,32 @@ var FoodMenuEdit = function FoodMenuEdit(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty__ = __webpack_require__(176);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
 /**
  * External dependencies
  */
 
 
 var __ = wp.i18n.__;
-var InnerBlocks = wp.blockEditor.InnerBlocks;
+var _wp$blockEditor = wp.blockEditor,
+    InnerBlocks = _wp$blockEditor.InnerBlocks,
+    RichText = _wp$blockEditor.RichText;
 var createBlock = wp.blocks.createBlock;
 var IconButton = wp.components.IconButton;
 
 
 var ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
-var TEMPLATE = [['core/heading', { level: 5, placeholder: __('Menu title') }], ['novablocks/menu-food-item']];
+var TEMPLATE = [['novablocks/menu-food-item']];
 
 /**
  * Internal dependencies.
  */
 
 var FoodMenuPreview = function FoodMenuPreview(props) {
-	__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default()(props.attributes);
-
-	var clientId = props.clientId,
+	var sectionTitle = props.attributes.sectionTitle,
+	    setAttributes = props.setAttributes,
+	    clientId = props.clientId,
 	    className = props.className;
 
 
@@ -6043,16 +6050,32 @@ var FoodMenuPreview = function FoodMenuPreview(props) {
 		wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
 	};
 
-	var classNames = __WEBPACK_IMPORTED_MODULE_1_classnames___default()(className, 'nova-food-menu');
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-food-menu');
 
 	return wp.element.createElement(
 		'div',
 		{ className: classNames },
-		wp.element.createElement(InnerBlocks, {
-			allowedBlocks: ALLOWED_BLOCKS,
-			template: TEMPLATE,
-			renderAppender: false
-		}),
+		wp.element.createElement(
+			'header',
+			{ className: 'nova-food-menu__header' },
+			wp.element.createElement(RichText, {
+				tagName: 'h4',
+				className: 'section-title',
+				value: sectionTitle,
+				onChange: function onChange(sectionTitle) {
+					return setAttributes({ sectionTitle: sectionTitle });
+				}
+			})
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu__items' },
+			wp.element.createElement(InnerBlocks, {
+				allowedBlocks: ALLOWED_BLOCKS,
+				template: TEMPLATE,
+				renderAppender: false
+			})
+		),
 		wp.element.createElement(IconButton, {
 			className: 'components-button block-editor-button-block-appender',
 			label: __('Add New Menu Item'),
@@ -6065,28 +6088,18 @@ var FoodMenuPreview = function FoodMenuPreview(props) {
 /* harmony default export */ __webpack_exports__["a"] = (FoodMenuPreview);
 
 /***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (obj) {
-  if (obj == null) throw new TypeError("Cannot destructure undefined");
-};
-
-/***/ }),
+/* 176 */,
 /* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save__ = __webpack_require__(189);
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -6098,12 +6111,43 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food-item', {
-	title: __('Menu Food Item', '__plugin_txtd'),
-	description: __('Outputs menu food item.', '__plugin_txtd'),
+	title: __('Menu Item', '__plugin_txtd'),
+	description: __('A food or drink item contained in a menu.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
 	parent: ['novablocks/menu-food'],
-	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */]
+	attributes: {
+		title: {
+			type: 'string',
+			default: 'Sweet Shrimp Salad'
+		},
+		description: {
+			type: 'string',
+			default: 'Tomatillo, Baja Crema, Cabbage, Fried Okra'
+		},
+		price: {
+			type: 'string',
+			default: '$7.95'
+		},
+		salePrice: {
+			type: 'string',
+			default: '$9.50'
+		},
+		highlightLabel: {
+			type: 'string',
+			default: 'Our top pick'
+		},
+		enableHighlightFoodItem: {
+			type: 'boolean',
+			default: false
+		},
+		enableSalePrice: {
+			type: 'boolean',
+			default: false
+		}
+	},
+	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
+	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */]
 }));
 
 /***/ }),
@@ -6166,8 +6210,8 @@ var __ = wp.i18n.__;
 
 var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 	var _props$attributes = props.attributes,
-	    enableFeaturedFoodItem = _props$attributes.enableFeaturedFoodItem,
-	    isFeatured = _props$attributes.isFeatured,
+	    enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
+	    highlightLabel = _props$attributes.highlightLabel,
 	    enableSalePrice = _props$attributes.enableSalePrice,
 	    salePrice = _props$attributes.salePrice,
 	    price = _props$attributes.price,
@@ -6178,52 +6222,66 @@ var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 
 
 	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-food-menu-item', {
-		'is-featured': enableFeaturedFoodItem === true
+		'nova-food-menu-item--highlighted': enableHighlightFoodItem === true,
+		'has-sale-price': enableSalePrice === true
 	});
 
 	return wp.element.createElement(
 		'div',
 		{ className: classNames },
-		enableFeaturedFoodItem && wp.element.createElement(
+		enableHighlightFoodItem && wp.element.createElement(
 			'span',
-			{ className: 'nova-item-menu__title' },
+			{ className: 'nova-food-menu-item--highlight' },
 			' ',
-			isFeatured,
+			highlightLabel,
 			' '
 		),
-		wp.element.createElement(RichText, {
-			value: title,
-			tagName: 'p',
-			wrapperClassName: 'nova-item-menu__title',
-			placeholder: __('Product Title'),
-			onChange: function onChange(title) {
-				return setAttributes({ title: title });
-			}
-		}),
-		wp.element.createElement(RichText, {
-			value: description,
-			tagName: 'p',
-			wrapperClassName: 'nova-item-menu__description',
-			placeholder: __('Product Description'),
-			onChange: function onChange(description) {
-				return setAttributes({ description: description });
-			}
-		}),
-		wp.element.createElement(RichText, {
-			value: price,
-			tagName: 'p',
-			wrapperClassName: 'nova-item-menu__price',
-			placeholder: __('$0.00'),
-			onChange: function onChange(price) {
-				return setAttributes({ price: price });
-			}
-		}),
-		enableSalePrice && wp.element.createElement(
-			'span',
-			{ className: 'nova-item-menu__price--reduced' },
-			' ',
-			salePrice,
-			' '
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu-item__title' },
+			wp.element.createElement(RichText, {
+				value: title,
+				tagName: 'h4',
+				className: 'item-title',
+				placeholder: __('Product Title'),
+				onChange: function onChange(title) {
+					return setAttributes({ title: title });
+				}
+			}),
+			wp.element.createElement('span', { className: 'dots' })
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu-item__prices' },
+			wp.element.createElement(RichText, {
+				value: price,
+				tagName: 'span',
+				className: 'item-price',
+				placeholder: __('$0.00'),
+				onChange: function onChange(price) {
+					return setAttributes({ price: price });
+				}
+			}),
+			enableSalePrice && wp.element.createElement(
+				'span',
+				{ className: 'item-price--sale' },
+				' ',
+				salePrice,
+				' '
+			)
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu-item__description' },
+			wp.element.createElement(RichText, {
+				value: description,
+				tagName: 'p',
+				className: 'item-description',
+				placeholder: __('Product Description'),
+				onChange: function onChange(description) {
+					return setAttributes({ description: description });
+				}
+			})
 		)
 	);
 };
@@ -6246,8 +6304,8 @@ var _wp$components = wp.components,
 
 var FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props) {
 	var _props$attributes = props.attributes,
-	    enableFeaturedFoodItem = _props$attributes.enableFeaturedFoodItem,
-	    isFeatured = _props$attributes.isFeatured,
+	    enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
+	    highlightLabel = _props$attributes.highlightLabel,
 	    enableSalePrice = _props$attributes.enableSalePrice,
 	    salePrice = _props$attributes.salePrice,
 	    setAttributes = props.setAttributes;
@@ -6263,19 +6321,20 @@ var FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props
 				PanelBody,
 				{ title: __('Menu Item', '__plugin_txtd'), initialOpen: true },
 				wp.element.createElement(ToggleControl, {
-					label: __('Featured', '__plugin_txtd'),
-					checked: enableFeaturedFoodItem,
+					label: __('Highlight item', '__plugin_txtd'),
+					help: __('Use it if you want to highlight some of the menu items and make them stand out.', '__plugin_txtd'),
+					checked: enableHighlightFoodItem,
 					onChange: function onChange() {
-						return setAttributes({ enableFeaturedFoodItem: !enableFeaturedFoodItem });
+						return setAttributes({ enableHighlightFoodItem: !enableHighlightFoodItem });
 					}
 				}),
-				!!enableFeaturedFoodItem && wp.element.createElement(TextControl, {
+				!!enableHighlightFoodItem && wp.element.createElement(TextControl, {
 					label: 'Label',
 					placeholder: __('Chef selection'),
 					help: 'Short description',
-					value: isFeatured,
+					value: highlightLabel,
 					onChange: function onChange(featured) {
-						return setAttributes({ isFeatured: featured });
+						return setAttributes({ highlightLabel: featured });
 					}
 				}),
 				wp.element.createElement(ToggleControl, {
@@ -6299,6 +6358,163 @@ var FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (FoodMenuItemInspectorControls);
+
+/***/ }),
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
+
+
+/**
+ * WordPress dependencies.
+ */
+var __ = wp.i18n.__;
+var RichText = wp.blockEditor.RichText;
+
+
+var FoodMenuItemSave = function FoodMenuItemSave(props) {
+	var _props$attributes = props.attributes,
+	    enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
+	    highlightLabel = _props$attributes.highlightLabel,
+	    enableSalePrice = _props$attributes.enableSalePrice,
+	    salePrice = _props$attributes.salePrice,
+	    price = _props$attributes.price,
+	    description = _props$attributes.description,
+	    title = _props$attributes.title,
+	    setAttributes = props.setAttributes,
+	    className = props.className;
+
+
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-food-menu-item', {
+		'nova-food-menu-item--highlighted': enableHighlightFoodItem === true,
+		'has-sale-price': enableSalePrice === true
+	});
+
+	return wp.element.createElement(
+		'div',
+		{ className: classNames, itemscope: true, itemtype: 'http://schema.org/MenuItem' },
+		enableHighlightFoodItem && wp.element.createElement(
+			'span',
+			{ className: 'nova-food-menu-item--highlight' },
+			' ',
+			highlightLabel,
+			' '
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu-item__title' },
+			wp.element.createElement(RichText.Content, {
+				value: title,
+				tagName: 'h4',
+				className: 'item-title',
+				onChange: function onChange(title) {
+					return setAttributes({ title: title });
+				},
+				itemprop: 'name'
+			}),
+			wp.element.createElement('span', { className: 'dots' })
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu-item__prices' },
+			wp.element.createElement(RichText.Content, {
+				value: price,
+				tagName: 'span',
+				className: 'item-price',
+				onChange: function onChange(price) {
+					return setAttributes({ price: price });
+				},
+				itemprop: 'price'
+			}),
+			enableSalePrice && wp.element.createElement(
+				'span',
+				{ className: 'item-price--sale' },
+				' ',
+				salePrice,
+				' '
+			)
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu-item__description' },
+			wp.element.createElement(RichText.Content, {
+				value: description,
+				tagName: 'p',
+				className: 'item-description',
+				onChange: function onChange(description) {
+					return setAttributes({ description: description });
+				},
+				itemprop: 'description'
+			})
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuItemSave);
+
+/***/ }),
+/* 190 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
+
+
+/**
+ * External dependencies
+ */
+
+var __ = wp.i18n.__;
+var _wp$blockEditor = wp.blockEditor,
+    InnerBlocks = _wp$blockEditor.InnerBlocks,
+    RichText = _wp$blockEditor.RichText;
+
+
+var FoodMenuSave = function FoodMenuSave(props) {
+	var sectionTitle = props.attributes.sectionTitle,
+	    setAttributes = props.setAttributes,
+	    className = props.className;
+
+
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, "nova-food-menu");
+
+	return wp.element.createElement(
+		"div",
+		{ className: classNames, itemScope: true, itemType: "http://schema.org/MenuSection" },
+		wp.element.createElement(
+			"header",
+			{ className: "nova-food-menu__header" },
+			wp.element.createElement(RichText.Content, {
+				tagName: "h4",
+				className: "section-title",
+				value: sectionTitle,
+				onChange: function onChange(sectionTitle) {
+					return setAttributes({ sectionTitle: sectionTitle });
+				},
+				itemprop: "name"
+			})
+		),
+		wp.element.createElement(
+			"div",
+			{ className: "nova-food-menu__items" },
+			wp.element.createElement(InnerBlocks.Content, null)
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuSave);
 
 /***/ })
 /******/ ]);

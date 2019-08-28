@@ -3,6 +3,7 @@
  */
 import * as icons from '../../icons';
 import edit from './edit';
+import save from './save';
 
 /**
  * WordPress dependencies
@@ -12,11 +13,42 @@ const { registerBlockType, } = wp.blocks;
 
 export default registerBlockType( 'novablocks/menu-food-item',
 	{
-		title: __( 'Menu Food Item', '__plugin_txtd' ),
-		description: __( 'Outputs menu food item.', '__plugin_txtd' ),
+		title: __( 'Menu Item', '__plugin_txtd' ),
+		description: __( 'A food or drink item contained in a menu.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
 		parent: ['novablocks/menu-food'],
+		attributes: {
+			title: {
+				type: 'string',
+				default: 'Sweet Shrimp Salad'
+			},
+			description: {
+				type: 'string',
+				default: 'Tomatillo, Baja Crema, Cabbage, Fried Okra'
+			},
+			price: {
+				type: 'string',
+				default: '$7.95'
+			},
+			salePrice: {
+				type: 'string',
+				default: '$9.50'
+			},
+			highlightLabel: {
+				type: 'string',
+				default: 'Our top pick'
+			},
+			enableHighlightFoodItem: {
+				type: 'boolean',
+				default: false
+			},
+			enableSalePrice: {
+				type: 'boolean',
+				default: false
+			}
+		},
 		edit,
+		save
 	}
 )

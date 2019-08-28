@@ -17,8 +17,8 @@ const {
 const FoodMenuItemInspectorControls = function( props ) {
 	const {
 		attributes: {
-			enableFeaturedFoodItem,
-			isFeatured,
+			enableHighlightFoodItem,
+			highlightLabel,
 			enableSalePrice,
 			salePrice
 		},
@@ -31,18 +31,19 @@ const FoodMenuItemInspectorControls = function( props ) {
 					<PanelBody title={ __( 'Menu Item', '__plugin_txtd' ) } initialOpen={ true }>
 
 					<ToggleControl
-						label = { __( 'Featured', '__plugin_txtd' ) }
-						checked = { enableFeaturedFoodItem }
-						onChange = { () => setAttributes( { enableFeaturedFoodItem: ! enableFeaturedFoodItem } ) }
+						label = { __( 'Highlight item', '__plugin_txtd' ) }
+						help = { __( 'Use it if you want to highlight some of the menu items and make them stand out.',  '__plugin_txtd') }
+						checked = { enableHighlightFoodItem }
+						onChange = { () => setAttributes( { enableHighlightFoodItem: ! enableHighlightFoodItem } ) }
 					/>
 
-						{ !! enableFeaturedFoodItem &&
+						{ !! enableHighlightFoodItem &&
 						  <TextControl
 							  label="Label"
 							  placeholder={ __( 'Chef selection' ) }
 							  help="Short description"
-							  value={ isFeatured }
-							  onChange = { ( featured ) => setAttributes( { isFeatured: featured } ) }
+							  value={ highlightLabel }
+							  onChange = { ( featured ) => setAttributes( { highlightLabel: featured } ) }
 						  />
 						}
 

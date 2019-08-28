@@ -1,17 +1,12 @@
-/**
- * External dependencies
- */
-import classnames from 'classnames';
+import classnames from "classnames";
 
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
+const { __ } = wp.i18n;
 const { RichText } = wp.blockEditor;
 
-const { __ } = wp.i18n;
-
-
-const FoodMenuItemPreview = function( props) {
+const FoodMenuItemSave = function ( props ) {
 	const {
 		attributes: {
 			enableHighlightFoodItem,
@@ -36,46 +31,48 @@ const FoodMenuItemPreview = function( props) {
 	);
 
 	return (
-		<div className={ classNames } >
+		<div className={ classNames } itemscope itemtype="http://schema.org/MenuItem">
 
-			{enableHighlightFoodItem &&  <span className="nova-food-menu-item--highlight"> { highlightLabel } </span>}
+			{ enableHighlightFoodItem &&  <span className="nova-food-menu-item--highlight"> { highlightLabel } </span> }
 
 			<div className = "nova-food-menu-item__title">
-				<RichText
+				<RichText.Content
 					value={ title }
 					tagName="h4"
 					className="item-title"
-					placeholder={ __( 'Product Title' ) }
 					onChange={ title => setAttributes( { title } ) }
+					itemprop="name"
 				/>
 
 				<span className = "dots"></span>
 			</div>
 
 			<div className = "nova-food-menu-item__prices">
-				<RichText
-					value={ price }
-					tagName="span"
+				<RichText.Content
+					value = { price }
+					tagName = "span"
 					className = "item-price"
-					placeholder={ __( '$0.00' ) }
-					onChange={ price => setAttributes( { price } ) }
+					onChange = { price => setAttributes( { price } ) }
+					itemprop="price"
 				/>
 
-				{enableSalePrice && <span className="item-price--sale"> { salePrice } </span> }
+				{enableSalePrice && <span className="item-price--sale"> { salePrice } </span>}
+
 			</div>
 
 			<div className = "nova-food-menu-item__description">
-				<RichText
-					value={ description }
-					tagName="p"
+				<RichText.Content
+					value = { description }
+					tagName = "p"
 					className = "item-description"
-					placeholder={ __( 'Product Description' ) }
-					onChange={ description => setAttributes( { description } ) }
+					onChange = { description => setAttributes( { description } ) }
+					itemprop="description"
 				/>
 			</div>
+
 
 		</div>
 	);
 };
 
-export default FoodMenuItemPreview;
+export default FoodMenuItemSave;

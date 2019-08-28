@@ -4,14 +4,13 @@
 import classnames from 'classnames';
 
 const { __ } = wp.i18n;
-const { InnerBlocks } = wp.blockEditor;
+const { InnerBlocks, RichText } = wp.blockEditor;
 const { createBlock } = wp.blocks;
 
 const { IconButton } = wp.components;
 
 const ALLOWED_BLOCKS = [ 'novablocks/menu-food-item' ];
 const TEMPLATE = [
-	['core/heading', { level: 5, placeholder: __( 'Menu title' ) } ],
 	['novablocks/menu-food-item'],
 ];
 
@@ -22,8 +21,9 @@ const TEMPLATE = [
 const FoodMenuPreview = function( props ) {
 	const {
 		attributes: {
-
+			sectionTitle
 		},
+		setAttributes,
 		clientId,
 		className,
 	} = props;
@@ -41,12 +41,22 @@ const FoodMenuPreview = function( props ) {
 
 	return (
 		<div className={ classNames }>
+			<header className="nova-food-menu__header">
+				<RichText
+					tagName="h4"
+					className="section-title"
+					value={sectionTitle}
+					onChange={ ( sectionTitle ) => setAttributes( { sectionTitle } ) }
+				/>
+			</header>
 
-			<InnerBlocks
-				allowedBlocks={ ALLOWED_BLOCKS }
-				template = { TEMPLATE }
-				renderAppender={ false }
-			/>
+			<div className="nova-food-menu__items">
+				<InnerBlocks
+					allowedBlocks={ ALLOWED_BLOCKS }
+					template = { TEMPLATE }
+					renderAppender={ false }
+				/>
+			</div>
 
 			<IconButton
 				className="components-button block-editor-button-block-appender"

@@ -1,0 +1,64 @@
+.nova-food-menu {
+
+}
+
+.nova-food-menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+
+  margin-bottom: 16px;
+}
+
+.nova-food-menu-item__title {
+  position: relative;
+
+  flex: 1 0 auto;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  text-align: left;
+}
+
+.nova-food-menu-item__prices {
+  display: flex;
+  align-items: baseline;
+  margin-left: auto;
+  position: relative;
+  z-index: 5;
+}
+
+.nova-food-menu-item__description {
+  position: relative;
+
+  flex-basis: 100%;
+
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.item-price--sale {
+  margin-left: 16px;
+}
+
+.nova-food-menu-item--highlight {
+  display: block;
+
+  margin: 0 -20px 15px;
+  width: calc(100% + 40px);
+
+  padding: 3px 20px 2px 20px;
+
+  text-transform: uppercase;
+
+  color: white;
+  background-color: #000000;
+}
+
+.nova-food-menu-item--highlighted {
+  margin-left: -22px;
+  margin-right: -22px;
+  padding: 0 20px 12px 20px;
+  border: 2px solid #000000;
+}

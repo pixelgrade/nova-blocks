@@ -15,7 +15,7 @@ const {
 	BlockControls
 } = wp.blockEditor;
 
-const FoodMenuItem =function( props ) {
+const FoodMenuItem = function( props ) {
 	return (
 		<Fragment>
 			<FoodMenuItemPreview { ...props }/>
