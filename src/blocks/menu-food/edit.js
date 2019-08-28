@@ -3,12 +3,12 @@
  */
 import FoodMenuPreview from "./preview";
 
-const { Fragment } = wp.element;
+const {Fragment} = wp.element;
 
-const FoodMenuEdit = function( props) {
+const FoodMenuEdit = function( props ) {
 	return (
 		<Fragment>
-			<FoodMenuPreview { ...props }/>
+			<FoodMenuPreview {...props}/>
 		</Fragment>
 	);
 };

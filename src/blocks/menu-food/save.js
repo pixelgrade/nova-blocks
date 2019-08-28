@@ -4,8 +4,8 @@ import classnames from "classnames";
  * External dependencies
  */
 
-const { __ } = wp.i18n;
-const { InnerBlocks, RichText } = wp.blockEditor;
+const {__} = wp.i18n;
+const {InnerBlocks, RichText} = wp.blockEditor;
 
 
 const FoodMenuSave = function( props ) {
@@ -22,7 +22,7 @@ const FoodMenuSave = function( props ) {
 		`nova-food-menu`
 	);
 
-	return(
+	return (
 		<div className={classNames} itemScope itemType="http://schema.org/MenuSection">
 
 			<header className="nova-food-menu__header">
@@ -30,7 +30,7 @@ const FoodMenuSave = function( props ) {
 					tagName="h4"
 					className="section-title"
 					value={sectionTitle}
-					onChange={ ( sectionTitle ) => setAttributes( { sectionTitle } ) }
+					onChange={( sectionTitle ) => setAttributes( {sectionTitle} )}
 					itemprop="name"
 				/>
 			</header>

@@ -8,8 +8,8 @@ import save from './save';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-const { registerBlockType, } = wp.blocks;
+const {__} = wp.i18n;
+const {registerBlockType,} = wp.blocks;
 
 export default registerBlockType( 'novablocks/menu-food-item',
 	{

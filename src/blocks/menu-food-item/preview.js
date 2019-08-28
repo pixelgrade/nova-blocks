@@ -6,12 +6,12 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { RichText } = wp.blockEditor;
+const {RichText} = wp.blockEditor;
 
-const { __ } = wp.i18n;
+const {__} = wp.i18n;
 
 
-const FoodMenuItemPreview = function( props) {
+const FoodMenuItemPreview = function( props ) {
 	const {
 		attributes: {
 			enableHighlightFoodItem,
@@ -36,41 +36,41 @@ const FoodMenuItemPreview = function( props) {
 	);
 
 	return (
-		<div className={ classNames } >
+		<div className={classNames}>
 
-			{enableHighlightFoodItem &&  <span className="nova-food-menu-item--highlight"> { highlightLabel } </span>}
+			{enableHighlightFoodItem && <span className="nova-food-menu-item--highlight"> {highlightLabel} </span>}
 
-			<div className = "nova-food-menu-item__title">
+			<div className="nova-food-menu-item__title">
 				<RichText
-					value={ title }
+					value={title}
 					tagName="h4"
 					className="item-title"
-					placeholder={ __( 'Product Title' ) }
-					onChange={ title => setAttributes( { title } ) }
+					placeholder={__( 'Product Title' )}
+					onChange={title => setAttributes( {title} )}
 				/>
 
-				<span className = "dots"></span>
+				<span className="dots"></span>
 			</div>
 
-			<div className = "nova-food-menu-item__prices">
+			<div className="nova-food-menu-item__prices">
 				<RichText
-					value={ price }
+					value={price}
 					tagName="span"
-					className = "item-price"
-					placeholder={ __( '$0.00' ) }
-					onChange={ price => setAttributes( { price } ) }
+					className="item-price"
+					placeholder={__( '$0.00' )}
+					onChange={price => setAttributes( {price} )}
 				/>
 
-				{enableSalePrice && <span className="item-price--sale"> { salePrice } </span> }
+				{enableSalePrice && <span className="item-price--sale"> {salePrice} </span>}
 			</div>
 
-			<div className = "nova-food-menu-item__description">
+			<div className="nova-food-menu-item__description">
 				<RichText
-					value={ description }
+					value={description}
 					tagName="p"
-					className = "item-description"
-					placeholder={ __( 'Product Description' ) }
-					onChange={ description => setAttributes( { description } ) }
+					className="item-description"
+					placeholder={__( 'Product Description' )}
+					onChange={description => setAttributes( {description} )}
 				/>
 			</div>
 

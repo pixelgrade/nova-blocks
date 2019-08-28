@@ -36,7 +36,7 @@
 
 .item-price--sale {
   margin-left: 16px;
-  background-color: #000000;
+  background-color: $nova-blue;
   padding: 5px 10px;
   color: #FFFFFF;
 }
@@ -52,12 +52,12 @@
   text-transform: uppercase;
 
   color: white;
-  background-color: #000000;
+  background-color: $nova-blue;
 }
 
 .nova-food-menu-item--highlighted {
   margin-left: -1.35em;
   margin-right: -1.35em;
   padding: 0 1.35em 0.75em 1.35em;
-  border: 2px solid #000000;
+  border: 2px solid $nova-blue;
 }
