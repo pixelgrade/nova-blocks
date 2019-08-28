@@ -17,7 +17,7 @@ function novablocks_admin_init() {
 	wp_register_script(
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
-		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' )
+		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor', 'wp-dom' )
 	);
 
 	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );

@@ -46,6 +46,7 @@ const enableFontSizeControlOnBlocks = [
 	'core/heading',
 	'core/quote',
 	'core/list',
+	'novablocks/headline'
 ];
 
 function withFontSizePicker( WrappedComponent ) {
@@ -112,22 +113,15 @@ const withFontSizeControl = createHigherOrderComponent(OriginalComponent => {
 });
 addFilter( 'editor.BlockEdit', 'novablocks/with-inspector-controls', withFontSizeControl );
 
-function addFontSizeClass( props, block, attributes ) {
+function addFontSizeAttribute( block ) {
+
 	if ( ! enableFontSizeControlOnBlocks.includes( block.name ) ) {
-		return props;
+		return block;
 	}
 
-	return lodash.assign( props, {
-		className: getFontSizeClass( attributes.fontSize )
-	} );
-}
-addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/add-font-size-class', addFontSizeClass );
+	if ( typeof block.attributes !== 'undefined' ){
 
-function addFontSizeAttribute( settings ) {
-
-	if ( typeof settings.attributes !== 'undefined' ){
-
-		settings.attributes = Object.assign( settings.attributes, {
+		block.attributes = Object.assign( block.attributes, {
 			fontSize: {
 				type: 'string',
 				default: '',
@@ -136,6 +130,6 @@ function addFontSizeAttribute( settings ) {
 
 	}
 
-	return settings;
+	return block;
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute );

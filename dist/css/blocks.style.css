@@ -265,10 +265,11 @@
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%; }
-  .nova-hero__foreground h1, .nova-hero__foreground h2, .nova-hero__foreground h3, .nova-hero__foreground h4, .nova-hero__foreground h5, .nova-hero__foreground h6,
-  .nova-hero__foreground ul, .nova-hero__foreground ol, .nova-hero__foreground dl,
-  .nova-hero__foreground .editor-block-list__block[class] {
-    color: inherit; }
+
+.nova-hero__foreground[class] h1, .nova-hero__foreground[class] h2, .nova-hero__foreground[class] h3, .nova-hero__foreground[class] h4, .nova-hero__foreground[class] h5, .nova-hero__foreground[class] h6,
+.nova-hero__foreground[class] ul, .nova-hero__foreground[class] ol, .nova-hero__foreground[class] dl,
+.nova-hero__foreground[class] .editor-block-list__block {
+  color: inherit; }
 
 .nova-hero__indicator {
   position: absolute;

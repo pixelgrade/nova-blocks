@@ -18,6 +18,7 @@ export default registerBlockType( 'novablocks/navigation',
 		category: 'nova-blocks',
 		icon: icons.media,
 		parent: 'novablocks/header',
+		save: function() {},
 		edit,
 	}
 )
