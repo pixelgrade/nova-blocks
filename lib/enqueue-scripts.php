@@ -82,7 +82,7 @@ function novablocks_enqueue_frontend_assets() {
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
-		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
+		array( 'jquery', 'imagesloaded', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
 		false,
 		true
 	);

@@ -9,6 +9,11 @@
     @include cover;
 }
 
+.nova-hero__background {
+	opacity: 0;
+	transition: opacity .3s ease-out;
+}
+
 .nova-hero__media[class] {
     @include image-cover;
 }

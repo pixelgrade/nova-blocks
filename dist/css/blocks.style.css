@@ -227,6 +227,11 @@
   bottom: 0;
   left: 0; }
 
+.nova-hero__background {
+  opacity: 0;
+  -webkit-transition: opacity .3s ease-out;
+  transition: opacity .3s ease-out; }
+
 .nova-hero__media[class] {
   position: absolute;
   top: 0;
