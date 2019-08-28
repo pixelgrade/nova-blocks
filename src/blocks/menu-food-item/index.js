@@ -9,15 +9,14 @@ import edit from './edit';
  */
 const { __ } = wp.i18n;
 const { registerBlockType, } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
 
-export default registerBlockType( 'novablocks/navigation',
+export default registerBlockType( 'novablocks/menu-food-item',
 	{
-		title: __( 'Space Navigation', '__plugin_txtd' ),
-		description: __( 'Outputs chosen navigaiton menu markup.', '__plugin_txtd' ),
+		title: __( 'Menu Food Item', '__plugin_txtd' ),
+		description: __( 'Outputs menu food item.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
-		parent: ['novablocks/header'],
+		parent: ['novablocks/menu-food'],
 		edit,
 	}
 )
