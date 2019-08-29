@@ -6209,7 +6209,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	attributes: {
 		sectionTitle: {
 			type: 'string',
-			default: 'Starters'
+			default: 'Drinks'
 		}
 	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
@@ -6621,23 +6621,22 @@ var FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props
 				}),
 				!!enableHighlightFoodItem && wp.element.createElement(TextControl, {
 					label: 'Label',
-					placeholder: __('Chef selection'),
-					help: 'Short description',
+					placeholder: __('Add a label...'),
 					value: highlightLabel,
 					onChange: function onChange(featured) {
 						return setAttributes({ highlightLabel: featured });
 					}
 				}),
 				wp.element.createElement(ToggleControl, {
-					label: __('Sale Price', '__plugin_txtd'),
+					label: __('On sale', '__plugin_txtd'),
 					checked: enableSalePrice,
 					onChange: function onChange() {
 						return setAttributes({ enableSalePrice: !enableSalePrice });
 					}
 				}),
 				!!enableSalePrice && wp.element.createElement(TextControl, {
-					label: __('Price'),
-					placeholder: __('$2.00'),
+					label: __('Sale Price'),
+					placeholder: __('Add a sale price..'),
 					value: salePrice,
 					onChange: function onChange(price) {
 						return setAttributes({ salePrice: price });

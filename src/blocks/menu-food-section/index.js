@@ -21,7 +21,7 @@ export default registerBlockType( 'novablocks/menu-food-section',
 		attributes: {
 			sectionTitle: {
 				type: 'string',
-				default: 'Starters'
+				default: 'Drinks'
 			}
 		},
 		edit,
