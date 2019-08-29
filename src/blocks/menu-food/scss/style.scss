@@ -47,10 +47,9 @@
 .nova-food-menu-item--highlight[class][class] {
   display: block;
 
-  margin: 0 -1em 1em;
-  width: calc(100% + 2em);
-
-  padding: .2em 1em;
+  margin: 0 -20px 15px;
+  width: calc(100% + 40px);
+  padding: .18em .8em .12em;
 
   color: white;
   background-color: $nova-blue;
@@ -63,7 +62,7 @@
 
   margin-left: -1em;
   margin-right: -1em;
-  padding: 0 1em 0.75em;
+  padding: 0 20px 12px;
   border: 2px solid $nova-blue;
 }
 

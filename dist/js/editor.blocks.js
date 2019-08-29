@@ -77,15 +77,16 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 "use strict";
 /* unused harmony export nova */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hero; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return media; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return slideshow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return hero; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return media; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return slideshow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return foodmenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alignBottom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return alignCenter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return alignTop; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return alignment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return invert; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return swap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return invert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return swap; });
 var _wp$components = wp.components,
     SVG = _wp$components.SVG,
     Path = _wp$components.Path;
@@ -145,6 +146,23 @@ var slideshow = wp.element.createElement(
         wp.element.createElement("path", { d: "M7 18.2751C7 18.8033 7.42818 19.2314 7.95637 19.2314H8.2172C8.7774 19.2314 9.23154 18.7773 9.23154 18.2171V17.8582C9.23154 17.3842 8.84727 16.9999 8.37325 16.9999H8.27517C7.57091 16.9999 7 17.5708 7 18.2751V18.2751Z", fill: "#FFE42E" }),
         wp.element.createElement("path", { d: "M10.7192 18.2751C10.7192 18.8033 11.1474 19.2314 11.6756 19.2314H11.9364C12.4966 19.2314 12.9508 18.7773 12.9508 18.2171V17.8582C12.9508 17.3842 12.5665 16.9999 12.0925 16.9999H11.9944C11.2901 16.9999 10.7192 17.5708 10.7192 18.2751V18.2751Z", fill: "#FFE42E" }),
         wp.element.createElement("path", { d: "M14.4385 18.2751C14.4385 18.8033 14.8667 19.2314 15.3948 19.2314H15.6557C16.2159 19.2314 16.67 18.7773 16.67 18.2171V17.8582C16.67 17.3842 16.2857 16.9999 15.8117 16.9999H15.7136C15.0094 16.9999 14.4385 17.5708 14.4385 18.2751V18.2751Z", fill: "#FFE42E" })
+    )
+);
+
+var foodmenu = wp.element.createElement(
+    "svg",
+    { width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+    wp.element.createElement(
+        "mask",
+        { id: "mask0", "mask-type": "alpha", maskUnits: "userSpaceOnUse", x: "0", y: "0", width: "24", height: "24" },
+        wp.element.createElement("path", { d: "M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12Z", fill: "#6565F2" })
+    ),
+    wp.element.createElement(
+        "g",
+        { mask: "url(#mask0)" },
+        wp.element.createElement("path", { d: "M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z", fill: "#6565F2" }),
+        wp.element.createElement("path", { d: "M18.0001 9.73684C19.1047 9.73684 20.0394 8.81569 19.7116 7.76087C17.739 1.41304 6.26117 1.41304 4.28861 7.76087C3.96084 8.81569 4.89552 9.73684 6.00009 9.73684H18.0001Z", fill: "white" }),
+        wp.element.createElement("path", { d: "M5 13.1429C5 13.6162 5.38376 14 5.85714 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H6.14286C5.51167 12 5 12.5117 5 13.1429ZM5 17.1429C5 17.6162 5.38376 18 5.85714 18H15C15.5523 18 16 17.5523 16 17C16 16.4477 15.5523 16 15 16H6.14286C5.51167 16 5 16.5117 5 17.1429ZM18 13.1429C18 13.6162 18.3838 14 18.8571 14H19.0909C19.593 14 20 13.593 20 13.0909V12.7692C20 12.3444 19.6556 12 19.2308 12H19.1429C18.5117 12 18 12.5117 18 13.1429ZM18 17.1429C18 17.6162 18.3838 18 18.8571 18H19.0909C19.593 18 20 17.593 20 17.0909V16.7692C20 16.3444 19.6556 16 19.2308 16H19.1429C18.5117 16 18 16.5117 18 17.1429Z", fill: "#FFE42E" })
     )
 );
 
@@ -1746,7 +1764,7 @@ var ColorToolbar = function ColorToolbar(props) {
 				    onToggle = _ref.onToggle;
 				return wp.element.createElement(IconButton, {
 					onClick: onToggle,
-					icon: __WEBPACK_IMPORTED_MODULE_1__icons__["f" /* invert */],
+					icon: __WEBPACK_IMPORTED_MODULE_1__icons__["g" /* invert */],
 					'aria-expanded': isOpen,
 					label: __('Color Options', '__plugin_txtd'),
 					labelPosition: 'bottom'
@@ -2037,7 +2055,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Header', '__plugin_txtd'),
 	description: __('Outputs custom header markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* media */],
 	getEditWrapperProps: function getEditWrapperProps(attributes) {
 		var align = attributes.align;
 
@@ -2536,7 +2554,7 @@ var select = wp.data.select;
 	title: __('Hero of the Galaxy', '__plugin_txtd'),
 	description: __('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* hero */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["f" /* hero */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -4753,7 +4771,7 @@ var HeroBlockControls = function HeroBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_0__icons__["i" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* swap */],
 						onClick: open
 					});
 				}
@@ -4787,7 +4805,7 @@ var ServerSideRender = wp.components.ServerSideRender;
 	title: __('Logo', '__plugin_txtd'),
 	description: __('Outputs custom logo markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* media */],
 	parent: ['novablocks/header'],
 	edit: function edit(props) {
 		return wp.element.createElement(ServerSideRender, {
@@ -4822,7 +4840,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Media Card Constellation', '__plugin_txtd'),
 	description: __('Display media objects alongside short pieces of content.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* media */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -4985,7 +5003,7 @@ var MediaBlockControls = function MediaBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["i" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["j" /* swap */],
 						onClick: open
 					});
 				}
@@ -5207,7 +5225,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Slideshow Me the Way', '__plugin_txtd'),
 	description: __('Display more than one piece of content in a single, coveted space.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* slideshow */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["i" /* slideshow */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -5763,7 +5781,7 @@ var SlideshowBlockControls = function SlideshowBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["i" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["j" /* swap */],
 						onClick: open
 					});
 				}
@@ -5799,7 +5817,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Space Navigation', '__plugin_txtd'),
 	description: __('Outputs chosen navigaiton menu markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* media */],
 	parent: ['novablocks/header'],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */]
 }));
@@ -5977,7 +5995,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Food Menu', '__plugin_txtd'),
 	description: __('Can be used as navigation through multiple menus.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* foodmenu */],
 	attributes: {
 		enableTwoColumns: {
 			type: 'boolean',
@@ -6105,7 +6123,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Menu Item', '__plugin_txtd'),
 	description: __('A food or drink item contained in a menu.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* foodmenu */],
 	parent: ['novablocks/menu-food-section'],
 	attributes: {
 		title: {
@@ -6517,7 +6535,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Food Menu Section', '__plugin_txtd'),
 	description: __('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* foodmenu */],
 	parent: ['novablocks/menu-food'],
 	attributes: {
 		sectionTitle: {

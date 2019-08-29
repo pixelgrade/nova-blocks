@@ -16,7 +16,7 @@ export default registerBlockType( 'novablocks/menu-food-section',
 		title: __( 'Food Menu Section', '__plugin_txtd' ),
 		description: __( 'Display a list of food or drink items available at your venue.', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
+		icon: icons.foodmenu,
 		parent: ['novablocks/menu-food'],
 		attributes: {
 			sectionTitle: {

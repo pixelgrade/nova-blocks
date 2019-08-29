@@ -230,14 +230,14 @@
 .nova-food-menu-item--highlighted[class] {
   margin-left: 0;
   margin-right: 0;
-  padding: 0 1.35em 0.75em 1.35em; }
+  padding: 0 1em 0.75em 1em; }
 
 .nova-food-menu-item:not(.nova-food-menu-item--highlighted) {
-  padding-left: 1.35em;
-  padding-right: 1.35em; }
+  padding-left: 1em;
+  padding-right: 1em; }
 
 .nova-food-menu__header {
-  padding-left: 1.35em; }
+  padding-left: 1em; }
 
 .nova-food-menu--layout > .block-editor-inner-blocks > .block-editor-block-list__layout {
   -webkit-column-count: 2;

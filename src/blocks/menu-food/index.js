@@ -16,7 +16,7 @@ export default registerBlockType( 'novablocks/menu-food',
 		title: __( 'Food Menu', '__plugin_txtd' ),
 		description: __( 'Can be used as navigation through multiple menus.', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
+		icon: icons.foodmenu,
 		attributes: {
 			enableTwoColumns : {
 				type: 'boolean',
