@@ -33,7 +33,7 @@ const FoodMenuItemSave = function( props ) {
 	return (
 		<div className={classNames} itemscope itemtype="http://schema.org/MenuItem">
 
-			{enableHighlightFoodItem && <span className="nova-food-menu-item--highlight"> {highlightLabel} </span>}
+			{enableHighlightFoodItem && <h5 className="nova-food-menu-item--highlight"> {highlightLabel} </h5>}
 
 			<div className="nova-food-menu-item__title">
 				<RichText.Content
@@ -47,7 +47,7 @@ const FoodMenuItemSave = function( props ) {
 				<span className="dots"></span>
 			</div>
 
-			<div className="nova-food-menu-item__prices">
+			<div className="nova-food-menu-item__prices" itemscope itemtype="http://schema.org/offers">
 				<RichText.Content
 					value={price}
 					tagName="span"

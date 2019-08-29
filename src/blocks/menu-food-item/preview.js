@@ -38,7 +38,7 @@ const FoodMenuItemPreview = function( props ) {
 	return (
 		<div className={classNames}>
 
-			{enableHighlightFoodItem && <span className="nova-food-menu-item--highlight"> {highlightLabel} </span>}
+			{enableHighlightFoodItem && <h5 className="nova-food-menu-item--highlight"> {highlightLabel} </h5>}
 
 			<div className="nova-food-menu-item__title">
 				<RichText

@@ -27,7 +27,7 @@ const FoodMenuSectionSave = function( props ) {
 
 			<header className="nova-food-menu__header">
 				<RichText.Content
-					tagName="h4"
+					tagName="h3"
 					className="section-title"
 					value={sectionTitle}
 					onChange={( sectionTitle ) => setAttributes( {sectionTitle} )}

@@ -6220,7 +6220,7 @@ var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 		'div',
 		{ className: classNames },
 		enableHighlightFoodItem && wp.element.createElement(
-			'span',
+			'h5',
 			{ className: 'nova-food-menu-item--highlight' },
 			' ',
 			highlightLabel,
@@ -6398,7 +6398,7 @@ var FoodMenuItemSave = function FoodMenuItemSave(props) {
 		'div',
 		{ className: classNames, itemscope: true, itemtype: 'http://schema.org/MenuItem' },
 		enableHighlightFoodItem && wp.element.createElement(
-			'span',
+			'h5',
 			{ className: 'nova-food-menu-item--highlight' },
 			' ',
 			highlightLabel,
@@ -6420,7 +6420,7 @@ var FoodMenuItemSave = function FoodMenuItemSave(props) {
 		),
 		wp.element.createElement(
 			'div',
-			{ className: 'nova-food-menu-item__prices' },
+			{ className: 'nova-food-menu-item__prices', itemscope: true, itemtype: 'http://schema.org/offers' },
 			wp.element.createElement(RichText.Content, {
 				value: price,
 				tagName: 'span',
@@ -6605,7 +6605,7 @@ var FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
 			'header',
 			{ className: 'nova-food-menu__header' },
 			wp.element.createElement(RichText, {
-				tagName: 'h4',
+				tagName: 'h3',
 				className: 'section-title',
 				value: sectionTitle,
 				onChange: function onChange(sectionTitle) {
@@ -6671,7 +6671,7 @@ var FoodMenuSectionSave = function FoodMenuSectionSave(props) {
 			"header",
 			{ className: "nova-food-menu__header" },
 			wp.element.createElement(RichText.Content, {
-				tagName: "h4",
+				tagName: "h3",
 				className: "section-title",
 				value: sectionTitle,
 				onChange: function onChange(sectionTitle) {

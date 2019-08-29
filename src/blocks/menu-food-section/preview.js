@@ -41,7 +41,7 @@ const FoodMenuSectionPreview = function( props ) {
 		<div className={classNames}>
 			<header className="nova-food-menu__header">
 				<RichText
-					tagName="h4"
+					tagName="h3"
 					className="section-title"
 					value={sectionTitle}
 					onChange={( sectionTitle ) => setAttributes( {sectionTitle} )}
