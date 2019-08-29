@@ -7,6 +7,7 @@ import "./blocks/logo";
 import "./blocks/media";
 import "./blocks/slideshow";
 import "./blocks/navigation";
+import "./blocks/opentable";
 
 import { STORE_NAME } from './store';
 
