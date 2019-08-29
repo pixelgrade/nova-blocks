@@ -207,6 +207,11 @@
 .nova-food-menu--layout > .block-editor-inner-blocks > .block-editor-block-list__layout {
   column-count: 2; }
 
+.nova-food-menu[class] .item-title,
+.nova-food-menu[class] .item-description {
+  margin-top: 0;
+  margin-bottom: 0; }
+
 .nova-mask {
   position: absolute;
   top: 0;

@@ -641,7 +641,7 @@
 .nova-food-menu-item--highlight[class][class] {
   display: block;
   margin: 0 -20px 15px;
-  width: calc(100% + 40px);
+  width: calc(100% + 42px);
   padding: .18em .8em .12em;
   color: white;
   background-color: #203AB6; }
@@ -679,7 +679,7 @@
 
 .dots {
   position: absolute;
-  bottom: .3em;
+  bottom: .5em;
   left: 0;
   right: 0;
   z-index: 1;
