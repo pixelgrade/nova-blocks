@@ -34,6 +34,10 @@
   text-align: left;
 }
 
+.item-price {
+  margin-right: 10px;
+}
+
 .item-price--sale {
   margin-left: 16px;
   background-color: $nova-blue;
@@ -60,4 +64,14 @@
   margin-right: -1.35em;
   padding: 0 1.35em 0.75em 1.35em;
   border: 2px solid $nova-blue;
+}
+
+.entry-content .nova-food-menu--layout {
+  @include above(tablet) {
+    column-count: 2;
+    column-gap: 2em;
+  }
+}
+.nova-blocks-appender {
+  flex-direction: row;
 }

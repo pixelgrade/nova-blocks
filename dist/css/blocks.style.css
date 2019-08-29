@@ -670,6 +670,9 @@
   margin-bottom: 0;
   text-align: left; }
 
+.item-price {
+  margin-right: 10px; }
+
 .item-price--sale {
   margin-left: 16px;
   background-color: #203AB6;
@@ -690,6 +693,21 @@
   margin-right: -1.35em;
   padding: 0 1.35em 0.75em 1.35em;
   border: 2px solid #203AB6; }
+
+@media only screen and (min-width: 768px) {
+  .entry-content .nova-food-menu--layout {
+    -webkit-column-count: 2;
+       -moz-column-count: 2;
+            column-count: 2;
+    -webkit-column-gap: 2em;
+       -moz-column-gap: 2em;
+            column-gap: 2em; } }
+
+.nova-blocks-appender {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row; }
 
 /* Slider */
 .slick-slider {

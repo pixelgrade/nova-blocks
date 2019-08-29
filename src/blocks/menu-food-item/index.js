@@ -17,7 +17,7 @@ export default registerBlockType( 'novablocks/menu-food-item',
 		description: __( 'A food or drink item contained in a menu.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
-		parent: ['novablocks/menu-food'],
+		parent: ['novablocks/menu-food-section'],
 		attributes: {
 			title: {
 				type: 'string',

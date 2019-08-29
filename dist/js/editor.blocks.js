@@ -1935,8 +1935,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__blocks_slideshow__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__blocks_navigation__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__blocks_menu_food__ = __webpack_require__(173);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__blocks_menu_food_item__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__store__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__blocks_menu_food_section__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__blocks_menu_food_item__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__store__ = __webpack_require__(59);
+
 
 
 
@@ -1963,7 +1965,7 @@ var novaBlocks = function () {
 	__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(novaBlocks, [{
 		key: 'initialize',
 		value: function initialize(settings) {
-			dispatch(__WEBPACK_IMPORTED_MODULE_12__store__["a" /* STORE_NAME */]).updateSettings(settings);
+			dispatch(__WEBPACK_IMPORTED_MODULE_13__store__["a" /* STORE_NAME */]).updateSettings(settings);
 		}
 	}]);
 
@@ -5973,13 +5975,13 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food', {
 	title: __('Food Menu', '__plugin_txtd'),
-	description: __('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
+	description: __('Can be used as navigation through multiple menus.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
 	attributes: {
-		sectionTitle: {
-			type: 'string',
-			default: 'Starters'
+		enableTwoColumns: {
+			type: 'boolean',
+			default: false
 		}
 	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
@@ -5991,20 +5993,26 @@ var registerBlockType = wp.blocks.registerBlockType;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__preview__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__inspector_controls__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__preview__ = __webpack_require__(175);
 /**
  * WordPress dependencies
  */
-
-
 var Fragment = wp.element.Fragment;
+
+/**
+ * Internal dependencies
+ */
+
+
 
 
 var FoodMenuEdit = function FoodMenuEdit(props) {
 	return wp.element.createElement(
 		Fragment,
 		null,
-		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__preview__["a" /* default */], props)
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__preview__["a" /* default */], props),
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__inspector_controls__["a" /* default */], props)
 	);
 };
 
@@ -6023,65 +6031,48 @@ var FoodMenuEdit = function FoodMenuEdit(props) {
 
 
 var __ = wp.i18n.__;
-var _wp$blockEditor = wp.blockEditor,
-    InnerBlocks = _wp$blockEditor.InnerBlocks,
-    RichText = _wp$blockEditor.RichText;
+var InnerBlocks = wp.blockEditor.InnerBlocks;
 var createBlock = wp.blocks.createBlock;
 var IconButton = wp.components.IconButton;
 
 
-var ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
-var TEMPLATE = [['novablocks/menu-food-item']];
-
-/**
- * Internal dependencies.
- */
+var ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
+var TEMPLATE = [['novablocks/menu-food-section', { sectionTitle: 'Starters' }, [['novablocks/menu-food-item', { title: 'Pea & Mint Soup', description: 'Server with focaccia bread', price: '$8.00', enableSalePrice: true, salePrice: '$5.00' }], ['novablocks/menu-food-item', { title: 'Beaf Meatballs', description: 'In a spicy tomato sauce', price: '$10.50' }], ['novablocks/menu-food-item', { title: 'Hummus & Baba Ganoush Dip', description: 'Olive & grilled flatbread', price: '$12.00' }]]], ['novablocks/menu-food-section', { sectionTitle: 'Desserts' }, [['novablocks/menu-food-item', { title: 'Dark Chocolate & Brownie Delice', description: 'Fudge bits & salted caramel ice cream', price: '$6.50' }], ['novablocks/menu-food-item', { title: 'Berry Cheesecake Trifle', description: 'Fresh raspberries & strawberries, sable cookie', price: '$6.50', enableHighlightFoodItem: true, highlightLabel: 'New' }], ['novablocks/menu-food-item', { title: 'Caramelised Lemon Tart', description: 'Meringue crisps, gin & tonic ice cream', price: '$6.50' }]]], ['novablocks/menu-food-section', { sectionTitle: 'Main Course' }, [['novablocks/menu-food-item', { title: 'The Classic Burger', description: 'Chargrilled, with or without bacon, on a brioche bun & fries', price: '$15.50' }], ['novablocks/menu-food-item', { title: 'Roast Salmon', description: 'Hollandaise sauce, green beans & potato galette', price: '$19.50' }], ['novablocks/menu-food-item', { title: 'Tagliatelle Pesto Chicken', description: 'Roasted Mediterranean vegetables, tomato and herb sauce', price: '$15.00', enableHighlightFoodItem: true, highlightLabel: 'Chef Selection' }], ['novablocks/menu-food-item', { title: 'Confit de Canard ', description: 'Duck confit, white bean & ham cassoulet, wilted spinach', price: '$12.15' }], ['novablocks/menu-food-item', { title: 'Roasted Steak Roulade', description: 'Mint parsley with apple cider vinegar, salt, sugar & spices', price: '$14.95' }], ['novablocks/menu-food-item', { title: 'Cornish-mackerel', description: 'Marinated tomatoes, fragrant curry, tamarillo', price: '$10.45' }], ['novablocks/menu-food-item', { title: 'Lobster & Cucumber Soup', description: 'Lobster salad, smoked onion, rock samphire & sorrel', price: '$24.95' }]]]];
 
 var FoodMenuPreview = function FoodMenuPreview(props) {
-	var sectionTitle = props.attributes.sectionTitle,
-	    setAttributes = props.setAttributes,
+	var enableTwoColumns = props.attributes.enableTwoColumns,
 	    clientId = props.clientId,
 	    className = props.className;
 
 
-	var addFoodMenuItem = function addFoodMenuItem() {
-		var block = createBlock('novablocks/menu-food-item');
+	var addFoodMenuSection = function addFoodMenuSection() {
+		var block = createBlock('novablocks/menu-food-section');
 		var index = wp.data.select('core/block-editor').getBlocksByClientId(clientId)[0].innerBlocks.length;
 		wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
 	};
 
-	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-food-menu');
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-food-menu', {
+		'nova-food-menu--layout': enableTwoColumns === true
+	});
 
 	return wp.element.createElement(
 		'div',
 		{ className: classNames },
+		wp.element.createElement(InnerBlocks, {
+			allowedBlocks: ALLOWED_BLOCKS,
+			template: TEMPLATE,
+			renderAppender: false
+		}),
 		wp.element.createElement(
-			'header',
-			{ className: 'nova-food-menu__header' },
-			wp.element.createElement(RichText, {
-				tagName: 'h4',
-				className: 'section-title',
-				value: sectionTitle,
-				onChange: function onChange(sectionTitle) {
-					return setAttributes({ sectionTitle: sectionTitle });
-				}
-			})
-		),
-		wp.element.createElement(
-			'div',
-			{ className: 'nova-food-menu__items' },
-			wp.element.createElement(InnerBlocks, {
-				allowedBlocks: ALLOWED_BLOCKS,
-				template: TEMPLATE,
-				renderAppender: false
-			})
-		),
-		wp.element.createElement(IconButton, {
-			className: 'components-button block-editor-button-block-appender',
-			label: __('Add New Menu Item'),
-			icon: 'insert',
-			onClick: addFoodMenuItem
-		})
+			IconButton,
+			{
+				className: 'components-button block-editor-button-block-appender nova-blocks-appender',
+				label: __('Add New Menu Section'),
+				icon: 'insert',
+				onClick: addFoodMenuSection
+			},
+			__('Add Menu Section')
+		)
 	);
 };
 
@@ -6115,7 +6106,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	description: __('A food or drink item contained in a menu.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
-	parent: ['novablocks/menu-food'],
+	parent: ['novablocks/menu-food-section'],
 	attributes: {
 		title: {
 			type: 'string',
@@ -6161,7 +6152,6 @@ var registerBlockType = wp.blocks.registerBlockType;
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -6293,6 +6283,9 @@ var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/**
+ * WordPress dependencies
+ */
 var __ = wp.i18n.__;
 var Fragment = wp.element.Fragment;
 var InspectorControls = wp.blockEditor.InspectorControls;
@@ -6477,18 +6470,199 @@ var FoodMenuItemSave = function FoodMenuItemSave(props) {
  */
 
 var __ = wp.i18n.__;
+var InnerBlocks = wp.blockEditor.InnerBlocks;
+
+
+var FoodMenuSave = function FoodMenuSave(props) {
+	var enableTwoColumns = props.attributes.enableTwoColumns,
+	    className = props.className;
+
+
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, "nova-food-menu", {
+		'nova-food-menu--layout': enableTwoColumns === true
+	});
+
+	return wp.element.createElement(
+		"div",
+		{ className: classNames, itemScope: true, itemType: "http://schema.org/Menu" },
+		wp.element.createElement(InnerBlocks.Content, null)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuSave);
+
+/***/ }),
+/* 191 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save__ = __webpack_require__(194);
+/**
+ * Internal dependencies
+ */
+
+
+
+
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType;
+
+
+/* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food-section', {
+	title: __('Food Menu Section', '__plugin_txtd'),
+	description: __('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
+	category: 'nova-blocks',
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
+	parent: ['novablocks/menu-food'],
+	attributes: {
+		sectionTitle: {
+			type: 'string',
+			default: 'Starters'
+		}
+	},
+	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
+	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */]
+}));
+
+/***/ }),
+/* 192 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__preview__ = __webpack_require__(193);
+/**
+ * WordPress dependencies
+ */
+
+var Fragment = wp.element.Fragment;
+
+/**
+ * Internal dependencies
+ */
+
+
+
+var FoodMenuSectionEdit = function FoodMenuSectionEdit(props) {
+	return wp.element.createElement(
+		Fragment,
+		null,
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__preview__["a" /* default */], props)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuSectionEdit);
+
+/***/ }),
+/* 193 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
+/**
+ * WordPress dependencies
+ */
+
+
+var __ = wp.i18n.__;
+var _wp$blockEditor = wp.blockEditor,
+    InnerBlocks = _wp$blockEditor.InnerBlocks,
+    RichText = _wp$blockEditor.RichText;
+var createBlock = wp.blocks.createBlock;
+var IconButton = wp.components.IconButton;
+
+/**
+ * Internal dependencies.
+ */
+
+var ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
+var TEMPLATE = [['novablocks/menu-food-item']];
+
+var FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
+	var sectionTitle = props.attributes.sectionTitle,
+	    setAttributes = props.setAttributes,
+	    clientId = props.clientId,
+	    className = props.className;
+
+
+	var addFoodMenuItem = function addFoodMenuItem() {
+		var block = createBlock('novablocks/menu-food-item');
+		var index = wp.data.select('core/block-editor').getBlocksByClientId(clientId)[0].innerBlocks.length;
+		wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
+	};
+
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-food-menu__section');
+
+	return wp.element.createElement(
+		'div',
+		{ className: classNames },
+		wp.element.createElement(
+			'header',
+			{ className: 'nova-food-menu__header' },
+			wp.element.createElement(RichText, {
+				tagName: 'h4',
+				className: 'section-title',
+				value: sectionTitle,
+				onChange: function onChange(sectionTitle) {
+					return setAttributes({ sectionTitle: sectionTitle });
+				}
+			})
+		),
+		wp.element.createElement(
+			'div',
+			{ className: 'nova-food-menu__items' },
+			wp.element.createElement(InnerBlocks, {
+				allowedBlocks: ALLOWED_BLOCKS,
+				template: TEMPLATE,
+				renderAppender: false
+			})
+		),
+		wp.element.createElement(
+			IconButton,
+			{
+				className: 'components-button block-editor-button-block-appender nova-blocks-appender',
+				label: __('Add New Menu Item'),
+				icon: 'insert',
+				onClick: addFoodMenuItem
+			},
+			__('Add Menu Item')
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuSectionPreview);
+
+/***/ }),
+/* 194 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
+
+
+/**
+ * WordPress dependencies
+ */
+
+var __ = wp.i18n.__;
 var _wp$blockEditor = wp.blockEditor,
     InnerBlocks = _wp$blockEditor.InnerBlocks,
     RichText = _wp$blockEditor.RichText;
 
 
-var FoodMenuSave = function FoodMenuSave(props) {
+var FoodMenuSectionSave = function FoodMenuSectionSave(props) {
 	var sectionTitle = props.attributes.sectionTitle,
 	    setAttributes = props.setAttributes,
 	    className = props.className;
 
 
-	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, "nova-food-menu");
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, "nova-food-menu__section");
 
 	return wp.element.createElement(
 		"div",
@@ -6514,7 +6688,51 @@ var FoodMenuSave = function FoodMenuSave(props) {
 	);
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (FoodMenuSave);
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuSectionSave);
+
+/***/ }),
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
+var Fragment = wp.element.Fragment;
+var InspectorControls = wp.blockEditor.InspectorControls;
+var _wp$components = wp.components,
+    PanelBody = _wp$components.PanelBody,
+    ToggleControl = _wp$components.ToggleControl;
+
+
+var FoodMenuInspectorControls = function FoodMenuInspectorControls(props) {
+	var enableTwoColumns = props.attributes.enableTwoColumns,
+	    setAttributes = props.setAttributes;
+
+
+	return wp.element.createElement(
+		Fragment,
+		null,
+		wp.element.createElement(
+			InspectorControls,
+			null,
+			wp.element.createElement(
+				PanelBody,
+				{ title: __('Layout', '__plugin_txtd'), initialOpen: true },
+				wp.element.createElement(ToggleControl, {
+					label: __('2 columns', '__plugin_txtd'),
+					checked: enableTwoColumns,
+					onChange: function onChange() {
+						return setAttributes({ enableTwoColumns: !enableTwoColumns });
+					}
+				})
+			)
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FoodMenuInspectorControls);
 
 /***/ })
 /******/ ]);

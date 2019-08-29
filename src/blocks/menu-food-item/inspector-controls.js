@@ -1,18 +1,10 @@
+/**
+ * WordPress dependencies
+ */
 const {__} = wp.i18n;
-
-const {
-	Fragment,
-} = wp.element;
-
-const {
-	InspectorControls,
-} = wp.blockEditor;
-
-const {
-	PanelBody,
-	ToggleControl,
-	TextControl,
-} = wp.components;
+const {Fragment} = wp.element;
+const {InspectorControls} = wp.blockEditor;
+const {PanelBody, ToggleControl, TextControl} = wp.components;
 
 const FoodMenuItemInspectorControls = function( props ) {
 	const {

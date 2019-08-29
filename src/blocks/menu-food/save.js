@@ -5,40 +5,27 @@ import classnames from "classnames";
  */
 
 const {__} = wp.i18n;
-const {InnerBlocks, RichText} = wp.blockEditor;
-
+const {InnerBlocks} = wp.blockEditor;
 
 const FoodMenuSave = function( props ) {
 	const {
 		attributes: {
-			sectionTitle
+			enableTwoColumns
 		},
-		setAttributes,
 		className,
 	} = props;
 
 	const classNames = classnames(
 		className,
-		`nova-food-menu`
+		`nova-food-menu`,
+		{
+			'nova-food-menu--layout' : enableTwoColumns === true
+		}
 	);
 
 	return (
-		<div className={classNames} itemScope itemType="http://schema.org/MenuSection">
-
-			<header className="nova-food-menu__header">
-				<RichText.Content
-					tagName="h4"
-					className="section-title"
-					value={sectionTitle}
-					onChange={( sectionTitle ) => setAttributes( {sectionTitle} )}
-					itemprop="name"
-				/>
-			</header>
-
-			<div className="nova-food-menu__items">
-				<InnerBlocks.Content/>
-			</div>
-
+		<div className={classNames} itemScope itemType="http://schema.org/Menu">
+			<InnerBlocks.Content/>
 		</div>
 	)
 };

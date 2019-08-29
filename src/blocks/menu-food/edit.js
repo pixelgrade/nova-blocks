@@ -1,14 +1,19 @@
 /**
  * WordPress dependencies
  */
-import FoodMenuPreview from "./preview";
-
 const {Fragment} = wp.element;
+
+/**
+ * Internal dependencies
+ */
+import InspectorControls from "./inspector-controls";
+import FoodMenuPreview from "./preview";
 
 const FoodMenuEdit = function( props ) {
 	return (
 		<Fragment>
-			<FoodMenuPreview {...props}/>
+			<FoodMenuPreview {...props} />
+			<InspectorControls {...props} />
 		</Fragment>
 	);
 };
