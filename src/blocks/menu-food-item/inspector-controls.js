@@ -32,23 +32,22 @@ const FoodMenuItemInspectorControls = function( props ) {
 					{! ! enableHighlightFoodItem &&
 					 <TextControl
 						 label="Label"
-						 placeholder={__( 'Chef selection' )}
-						 help="Short description"
+						 placeholder={__( 'Add a label...' )}
 						 value={highlightLabel}
 						 onChange={( featured ) => setAttributes( {highlightLabel: featured} )}
 					 />
 					}
 
 					<ToggleControl
-						label={__( 'Sale Price', '__plugin_txtd' )}
+						label={__( 'On sale', '__plugin_txtd' )}
 						checked={enableSalePrice}
 						onChange={() => setAttributes( {enableSalePrice: ! enableSalePrice} )}
 					/>
 
 					{! ! enableSalePrice &&
 					 <TextControl
-						 label={__( 'Price' )}
-						 placeholder={__( '$2.00' )}
+						 label={__( 'Sale Price' )}
+						 placeholder={__( 'Add a sale price..' )}
 						 value={salePrice}
 						 onChange={( price ) => setAttributes( {salePrice: price} )}
 					 />
