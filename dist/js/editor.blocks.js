@@ -6002,6 +6002,9 @@ var registerBlockType = wp.blocks.registerBlockType;
 			default: true
 		}
 	},
+	supports: {
+		align: ["wide"]
+	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */]
 }));

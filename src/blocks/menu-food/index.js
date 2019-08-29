@@ -23,6 +23,9 @@ export default registerBlockType( 'novablocks/menu-food',
 				default: true
 			}
 		},
+		supports: {
+			align: ["wide"]
+		},
 		edit,
 		save
 	}

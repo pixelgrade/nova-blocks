@@ -24,3 +24,7 @@
     margin-bottom: 0;
   }
 }
+
+[data-type*=menu-food-section]:not(:first-child) .nova-food-menu__section {
+  margin-top: 1.5em;
+}

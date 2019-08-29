@@ -7,6 +7,9 @@
   margin-bottom: 1em;
 }
 
+.nova-food-menu__section:not(:first-child) {
+  margin-top: 1.5em;
+}
 
 .nova-food-menu-item__title {
   position: relative;
@@ -100,13 +103,13 @@
 
 .dots {
   position: absolute;
-  bottom: .5em;
+  bottom: .3em;
   left: 0;
   right: 0;
   z-index: 1;
   margin: 0;
   border: 0;
-  height: .18em;
+  height: .25em;
   display: block;
   background-image: radial-gradient(circle closest-side, currentColor 99%, transparent 1%);
   background-position: bottom;
