@@ -20,7 +20,7 @@ export default registerBlockType( 'novablocks/menu-food',
 		attributes: {
 			enableTwoColumns : {
 				type: 'boolean',
-				default: false
+				default: true
 			}
 		},
 		edit,

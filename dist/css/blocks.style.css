@@ -633,7 +633,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr) -webkit-min-content;
   grid-template-columns: repeat(3, 1fr) min-content;
-  grid-template-areas: "title title title prices" "description description description prices";
+  grid-template-areas: "title title title prices" "description description description description";
   margin-bottom: 1em; }
 
 .nova-food-menu-item__title {
@@ -649,6 +649,9 @@
           justify-content: flex-end;
   position: relative;
   z-index: 5;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   grid-area: prices; }
 
 .nova-food-menu-item__description {
@@ -676,7 +679,7 @@
   background-color: #203AB6; }
 
 .nova-food-menu-item--highlighted {
-  grid-template-areas: "label label label label" "title title title prices" "description description description prices";
+  grid-template-areas: "label label label label" "title title title prices" "description description description description";
   margin-left: -1em;
   margin-right: -1em;
   padding: 0 20px 12px;

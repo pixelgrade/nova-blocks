@@ -5999,7 +5999,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	attributes: {
 		enableTwoColumns: {
 			type: 'boolean',
-			default: false
+			default: true
 		}
 	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
