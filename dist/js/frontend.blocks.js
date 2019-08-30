@@ -60,25 +60,28 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 173);
+/******/ 	return __webpack_require__(__webpack_require__.s = 174);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 173:
+/***/ 174:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__blocks_hero_frontend__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_slideshow_frontend__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_slideshow_frontend__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_opentable_frontend__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_opentable_frontend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__blocks_opentable_frontend__);
+
 
 
 
 /***/ }),
 
-/***/ 174:
+/***/ 175:
 /***/ (function(module, exports) {
 
 (function ($, window, undefined) {
@@ -93,7 +96,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 175:
+/***/ 176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -249,6 +252,29 @@ var TRANSITION_EASING = "easeInOutCirc";
 		}
 		return direction;
 	}
+})(jQuery, window);
+
+/***/ }),
+
+/***/ 182:
+/***/ (function(module, exports) {
+
+(function ($, window, undefined) {
+
+	$("#datepicker").datepicker({
+		firstDay: 1,
+		dateFormat: "mm/dd/yy",
+		maxDate: "+3m",
+		minDate: "0",
+		dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+		dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+		monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		nextText: ">",
+		prevText: "<",
+		beforeShow: function beforeShow() {
+			$("#ui-datepicker-div").addClass("nova-blocks-datepicker");
+		}
+	});
 })(jQuery, window);
 
 /***/ }),

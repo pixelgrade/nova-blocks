@@ -1,17 +1,21 @@
 /**
- * WordPress dependencies.
+ * WordPress dependencies
  */
+
 const {__} = wp.i18n;
 
-const OpenTableSave = function( props ) {
+const {RichText} = wp.blockEditor;
+
+const OpenTablePreview = function( props ) {
 	const {
 		attributes: {
 			restaurantId,
 			dateLabel,
-			timeLabel,
 			partySizeLabel,
-			submitButtonText
+			timeLabel,
+			submitButtonText,
 		},
+		setAttributes,
 	} = props;
 
 	return (
@@ -20,11 +24,21 @@ const OpenTableSave = function( props ) {
 			<form method="get" className="nova-opentable__form" action="//www.opentable.com/restaurant-search.aspx" target="_blank">
 				<div className="nova-opentable__wrapper">
 					<div className="nova-opentable__date nova-opentable__input-wrap">
-						<label>{dateLabel}</label>
-						<input id="datepicker" name="startDate" className="otb-date otb-input" type="text" value="8/30/2019" readOnly="" autoComplete="off"/>
+						<RichText
+							tagName="label"
+							value={dateLabel}
+							onChange={( dateLabel ) => setAttributes( {dateLabel} )}
+						/>
+
+						<input name="startDate" className="otb-date otb-input" type="text" value="8/30/2019" readOnly="" autoComplete="off"/>
+
 					</div>
 					<div className="nova-opentable__time nova-opentable__input-wrap">
-						<label>{timeLabel}</label>
+						<RichText
+							tagName="label"
+							value={timeLabel}
+							onChange={( timeLabel ) => setAttributes( {timeLabel} )}
+						/>
 						<select className="otb-time" name="ResTime" aria-label="Reservation Time">
 							<option value="9:00am">9:00 am</option>
 							<option value="9:30am">9:30 am</option>
@@ -59,7 +73,11 @@ const OpenTableSave = function( props ) {
 						</select>
 					</div>
 					<div className="nova-opentable__size nova-opentable__input-wrap">
-						<label>{partySizeLabel}</label>
+						<RichText
+							tagName="label"
+							value={partySizeLabel}
+							onChange={( partySizeLabel ) => setAttributes( {partySizeLabel} )}
+						/>
 						<select id="party-size" name="partySize" className="otb-people otb-input">
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -76,11 +94,16 @@ const OpenTableSave = function( props ) {
 							<option value="13">13</option>
 							<option value="14">14</option>
 							<option value="15">15</option>
-					</select>
+						</select>
 					</div>
-					<div className="nova-opentable__button-wrap">
-						<button type="submit" className="nova-opentable__button">
-							<span>{submitButtonText}</span></button>
+					<div className="nova-opentable__button-wrap wp-block-button">
+						<RichText
+							placeholder={ __( 'Find a table' ) }
+							value={ submitButtonText }
+							className = "nova-opentable__button wp-block-button__link"
+							onChange={( submitButtonText ) => setAttributes( {submitButtonText} )}
+							keepPlaceholderOnFocus
+						/>
 					</div>
 				</div>
 				<input type="hidden" name="RestaurantID" className="RestaurantID" value={restaurantId}/>
@@ -90,8 +113,8 @@ const OpenTableSave = function( props ) {
 				<input type="hidden" name="RestaurantReferralID" className="RestaurantReferralID" value={restaurantId}/>
 			</form>
 		</div>
+	)
 
-	);
 };
 
-export default OpenTableSave;
+export default OpenTablePreview;

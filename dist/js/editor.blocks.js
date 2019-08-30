@@ -85,23 +85,6 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(40)('wks');
-var uid = __webpack_require__(29);
-var Symbol = __webpack_require__(1).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -219,6 +202,23 @@ var swap = wp.element.createElement(
     wp.element.createElement("path", { d: "M14 20H4V10H7V8H4C3.46957 8 2.96086 8.21071 2.58579 8.58579C2.21071 8.96086 2 9.46957 2 10V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H14C14.5304 22 15.0391 21.7893 15.4142 21.4142C15.7893 21.0391 16 20.5304 16 20V17H14V20Z", fill: "currentColor" }),
     wp.element.createElement("path", { d: "M5 19H13L11.41 17H9.24L8.4 18.1L7 16.3L5 19Z", fill: "currentColor" })
 );
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(40)('wks');
+var uid = __webpack_require__(29);
+var Symbol = __webpack_require__(1).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
 
 /***/ }),
 /* 4 */
@@ -667,7 +667,7 @@ __webpack_require__(82);
 var global = __webpack_require__(1);
 var hide = __webpack_require__(10);
 var Iterators = __webpack_require__(16);
-var TO_STRING_TAG = __webpack_require__(2)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(3)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -701,7 +701,7 @@ module.exports = function (key) {
 
 var def = __webpack_require__(8).f;
 var has = __webpack_require__(11);
-var TAG = __webpack_require__(2)('toStringTag');
+var TAG = __webpack_require__(3)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -924,7 +924,7 @@ module.exports = (
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(19);
-var TAG = __webpack_require__(2)('toStringTag');
+var TAG = __webpack_require__(3)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -958,7 +958,7 @@ exports.f = Object.getOwnPropertySymbols;
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(2);
+exports.f = __webpack_require__(3);
 
 
 /***/ }),
@@ -1008,7 +1008,7 @@ module.exports.f = function (C) {
 "use strict";
 /* unused harmony export AlignmentControls */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AlignmentToolbar; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__block_horizontal_alignment_toolbar__ = __webpack_require__(146);
@@ -1168,7 +1168,7 @@ var Iterators = __webpack_require__(16);
 var $iterCreate = __webpack_require__(85);
 var setToStringTag = __webpack_require__(30);
 var getPrototypeOf = __webpack_require__(56);
-var ITERATOR = __webpack_require__(2)('iterator');
+var ITERATOR = __webpack_require__(3)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -1304,7 +1304,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(42);
-var ITERATOR = __webpack_require__(2)('iterator');
+var ITERATOR = __webpack_require__(3)('iterator');
 var Iterators = __webpack_require__(16);
 module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
@@ -1434,7 +1434,7 @@ module.exports = { "default": __webpack_require__(130), __esModule: true };
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(6);
 var aFunction = __webpack_require__(26);
-var SPECIES = __webpack_require__(2)('species');
+var SPECIES = __webpack_require__(3)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
   var S;
@@ -1574,7 +1574,7 @@ module.exports = function (C, x) {
 /* unused harmony export OverlayControls */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__style_scss__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__style_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(2);
 /**
  * Internal dependencies
  */
@@ -1875,7 +1875,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__blocks_media__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__blocks_slideshow__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__blocks_navigation__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__blocks_opentable__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__blocks_opentable__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__store__ = __webpack_require__(58);
 
 
@@ -1954,7 +1954,7 @@ $export($export.S + $export.F * !__webpack_require__(7), 'Object', { definePrope
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(78);
 /**
  * Internal dependencies
@@ -2236,7 +2236,7 @@ var setToStringTag = __webpack_require__(30);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(10)(IteratorPrototype, __webpack_require__(2)('iterator'), function () { return this; });
+__webpack_require__(10)(IteratorPrototype, __webpack_require__(3)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -2333,7 +2333,7 @@ module.exports = function (TO_STRING) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(42);
-var ITERATOR = __webpack_require__(2)('iterator');
+var ITERATOR = __webpack_require__(3)('iterator');
 var Iterators = __webpack_require__(16);
 module.exports = __webpack_require__(0).isIterable = function (it) {
   var O = Object(it);
@@ -2452,7 +2452,7 @@ var logoCenter = wp.element.createElement(
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(96);
 /**
  * Internal dependencies
@@ -3099,7 +3099,7 @@ var $fails = __webpack_require__(15);
 var shared = __webpack_require__(40);
 var setToStringTag = __webpack_require__(30);
 var uid = __webpack_require__(29);
-var wks = __webpack_require__(2);
+var wks = __webpack_require__(3);
 var wksExt = __webpack_require__(44);
 var wksDefine = __webpack_require__(45);
 var enumKeys = __webpack_require__(118);
@@ -3595,7 +3595,7 @@ var USE_NATIVE = !!function () {
   try {
     // correct subclassing with @@species support
     var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[__webpack_require__(2)('species')] = function (exec) {
+    var FakePromise = (promise.constructor = {})[__webpack_require__(3)('species')] = function (exec) {
       exec(empty, empty);
     };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
@@ -3917,7 +3917,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 // check on default Array iterator
 var Iterators = __webpack_require__(16);
-var ITERATOR = __webpack_require__(2)('iterator');
+var ITERATOR = __webpack_require__(3)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -4055,7 +4055,7 @@ var global = __webpack_require__(1);
 var core = __webpack_require__(0);
 var dP = __webpack_require__(8);
 var DESCRIPTORS = __webpack_require__(7);
-var SPECIES = __webpack_require__(2)('species');
+var SPECIES = __webpack_require__(3)('species');
 
 module.exports = function (KEY) {
   var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -4070,7 +4070,7 @@ module.exports = function (KEY) {
 /* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(2)('iterator');
+var ITERATOR = __webpack_require__(3)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -4160,7 +4160,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 /* unused harmony export BlockHorizontalAlignmentToolbar */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(2);
 
 /**
  * Internal dependencies
@@ -4278,7 +4278,7 @@ var withBlockEditContext = function withBlockEditContext(mapContextToProps) {
 /* unused harmony export BlockVerticalAlignmentToolbar */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(2);
 
 /**
  * Internal dependencies
@@ -4645,7 +4645,7 @@ var HeroBackground = function HeroBackground(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components__ = __webpack_require__(32);
 /**
  * Internal dependencies
@@ -4706,7 +4706,7 @@ var HeroBlockControls = function HeroBlockControls(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /**
  * Internal dependencies
  */
@@ -4739,7 +4739,7 @@ var ServerSideRender = wp.components.ServerSideRender;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(154);
 /**
  * Internal dependencies
@@ -4845,7 +4845,7 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_keys__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_alignment_controls__ = __webpack_require__(47);
 
 
@@ -5183,7 +5183,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(165);
 /**
  * Internal dependencies
@@ -5696,7 +5696,7 @@ var SlideshowInspectorControls = function SlideshowInspectorControls(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_alignment_controls__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_color_controls__ = __webpack_require__(69);
 
@@ -5775,7 +5775,7 @@ var SlideshowBlockControls = function SlideshowBlockControls(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(172);
 /**
  * Internal dependencies
@@ -5948,17 +5948,13 @@ var Edit = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Edit);
 
 /***/ }),
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */
+/* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__save__);
 /**
  * Internal dependencies
  */
@@ -5971,26 +5967,55 @@ var Edit = function (_Component) {
  */
 var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
+var select = wp.data.select;
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/opentable', {
-	title: __('OpenTable Reservartion Form', '__plugin_txtd'),
+	title: __('OpenTable Reservation Form', '__plugin_txtd'),
 	description: __('Short description', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* media */],
-	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */]
+	attributes: {
+		restaurantId: {
+			type: 'number',
+			default: 80221
+		},
+		dateLabel: {
+			type: 'string',
+			default: 'Date'
+		},
+		timeLabel: {
+			type: 'string',
+			default: 'Time'
+		},
+		partySizeLabel: {
+			type: 'string',
+			default: 'Party Size'
+		},
+		submitButtonText: {
+			type: 'string',
+			default: 'Find a table'
+		}
+	},
+	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
+	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */],
+	getEditWrapperProps: function getEditWrapperProps() {
+		var settings = select('core/block-editor').getSettings();
+		return settings.alignWide ? { 'data-align': 'wide' } : {};
+	}
 }));
 
 /***/ }),
+/* 174 */,
+/* 175 */,
+/* 176 */,
 /* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = Edit;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty__ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__preview__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__inspector_controls__ = __webpack_require__(181);
+
 
 
 
@@ -5998,63 +6023,705 @@ var registerBlockType = wp.blocks.registerBlockType;
  * WordPress dependencies
  */
 var Fragment = wp.element.Fragment;
-var _wp$components = wp.components,
-    TextControl = _wp$components.TextControl,
-    SelectControl = _wp$components.SelectControl,
-    Button = _wp$components.Button;
 
 
-function Edit(props) {
-	__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectDestructuringEmpty___default()(props.attributes);
+var OpenTable = function OpenTable(props) {
+	return wp.element.createElement(
+		Fragment,
+		null,
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__preview__["a" /* default */], props),
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__inspector_controls__["a" /* default */], props)
+	);
+};
 
-	var className = props.className;
+/* harmony default export */ __webpack_exports__["a"] = (OpenTable);
+
+/***/ }),
+/* 178 */,
+/* 179 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * WordPress dependencies.
+ */
+var __ = wp.i18n.__;
+
+
+var OpenTableSave = function OpenTableSave(props) {
+	var _props$attributes = props.attributes,
+	    restaurantId = _props$attributes.restaurantId,
+	    dateLabel = _props$attributes.dateLabel,
+	    timeLabel = _props$attributes.timeLabel,
+	    partySizeLabel = _props$attributes.partySizeLabel,
+	    submitButtonText = _props$attributes.submitButtonText;
 
 
 	return wp.element.createElement(
 		"div",
-		null,
-		wp.element.createElement(TextControl, {
-			label: "Date",
-			value: "8/29/2019",
-			readonly: "readonly",
-			autocomplete: "off"
-		}),
-		wp.element.createElement(SelectControl, {
-			label: "Time",
-			value: "13:00PM",
-			options: [{ label: '13:00', value: '13:00' }]
-		}),
-		wp.element.createElement(SelectControl, {
-			label: "Party Size",
-			value: "13:00PM",
-			options: [{ label: '1', value: '1' }, { label: '2', value: '2' }, { label: '3', value: '3' }]
-		}),
+		{ className: "nova-opentable" },
 		wp.element.createElement(
-			Button,
-			null,
-			"Find a table"
+			"form",
+			{ method: "get", className: "nova-opentable__form", action: "//www.opentable.com/restaurant-search.aspx", target: "_blank" },
+			wp.element.createElement(
+				"div",
+				{ className: "nova-opentable__wrapper" },
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__date nova-opentable__input-wrap" },
+					wp.element.createElement(
+						"label",
+						null,
+						dateLabel
+					),
+					wp.element.createElement("input", { id: "datepicker", name: "startDate", className: "otb-date otb-input", type: "text", value: "8/30/2019", readOnly: "", autoComplete: "off" })
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__time nova-opentable__input-wrap" },
+					wp.element.createElement(
+						"label",
+						null,
+						timeLabel
+					),
+					wp.element.createElement(
+						"select",
+						{ className: "otb-time", name: "ResTime", "aria-label": "Reservation Time" },
+						wp.element.createElement(
+							"option",
+							{ value: "9:00am" },
+							"9:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:30am" },
+							"9:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:00am" },
+							"10:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:30am" },
+							"10:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:00am" },
+							"11:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:30am" },
+							"11:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12:00pm" },
+							"12:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12:30pm" },
+							"12:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "1:00pm" },
+							"1:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "1:30pm" },
+							"1:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2:00pm" },
+							"2:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2:30pm" },
+							"2:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3:00pm" },
+							"3:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3:30pm" },
+							"3:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4:00pm" },
+							"4:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4:30pm" },
+							"4:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5:00pm" },
+							"5:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5:30pm" },
+							"5:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6:00pm" },
+							"6:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6:30pm" },
+							"6:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7:00pm", selected: "" },
+							"7:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7:30pm" },
+							"7:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8:00pm" },
+							"8:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8:30pm" },
+							"8:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:00pm" },
+							"9:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:30pm" },
+							"9:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:00pm" },
+							"10:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:30pm" },
+							"10:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:00pm" },
+							"11:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:30pm" },
+							"11:30 pm"
+						)
+					)
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__size nova-opentable__input-wrap" },
+					wp.element.createElement(
+						"label",
+						null,
+						partySizeLabel
+					),
+					wp.element.createElement(
+						"select",
+						{ id: "party-size", name: "partySize", className: "otb-people otb-input" },
+						wp.element.createElement(
+							"option",
+							{ value: "1" },
+							"1"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2" },
+							"2"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3" },
+							"3"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4" },
+							"4"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5" },
+							"5"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6" },
+							"6"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7" },
+							"7"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8" },
+							"8"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9" },
+							"9"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10" },
+							"10"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11" },
+							"11"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12" },
+							"12"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "13" },
+							"13"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "14" },
+							"14"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "15" },
+							"15"
+						)
+					)
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__button-wrap" },
+					wp.element.createElement(
+						"button",
+						{ type: "submit", className: "nova-opentable__button" },
+						wp.element.createElement(
+							"span",
+							null,
+							submitButtonText
+						)
+					)
+				)
+			),
+			wp.element.createElement("input", { type: "hidden", name: "RestaurantID", className: "RestaurantID", value: restaurantId }),
+			wp.element.createElement("input", { type: "hidden", name: "rid", className: "rid", value: restaurantId }),
+			wp.element.createElement("input", { type: "hidden", name: "GeoID", className: "GeoID", value: "15" }),
+			wp.element.createElement("input", { type: "hidden", name: "txtDateFormat", className: "txtDateFormat", value: "MM/dd/yyyy" }),
+			wp.element.createElement("input", { type: "hidden", name: "RestaurantReferralID", className: "RestaurantReferralID", value: restaurantId })
 		)
 	);
-}
-
-/***/ }),
-/* 178 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (obj) {
-  if (obj == null) throw new TypeError("Cannot destructure undefined");
 };
 
+/* harmony default export */ __webpack_exports__["a"] = (OpenTableSave);
+
 /***/ }),
-/* 179 */
-/***/ (function(module, exports) {
+/* 180 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * WordPress dependencies
+ */
+
+var __ = wp.i18n.__;
+var RichText = wp.blockEditor.RichText;
 
 
+var OpenTablePreview = function OpenTablePreview(props) {
+	var _props$attributes = props.attributes,
+	    restaurantId = _props$attributes.restaurantId,
+	    dateLabel = _props$attributes.dateLabel,
+	    partySizeLabel = _props$attributes.partySizeLabel,
+	    timeLabel = _props$attributes.timeLabel,
+	    submitButtonText = _props$attributes.submitButtonText,
+	    setAttributes = props.setAttributes;
+
+
+	return wp.element.createElement(
+		"div",
+		{ className: "nova-opentable" },
+		wp.element.createElement(
+			"form",
+			{ method: "get", className: "nova-opentable__form", action: "//www.opentable.com/restaurant-search.aspx", target: "_blank" },
+			wp.element.createElement(
+				"div",
+				{ className: "nova-opentable__wrapper" },
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__date nova-opentable__input-wrap" },
+					wp.element.createElement(RichText, {
+						tagName: "label",
+						value: dateLabel,
+						onChange: function onChange(dateLabel) {
+							return setAttributes({ dateLabel: dateLabel });
+						}
+					}),
+					wp.element.createElement("input", { name: "startDate", className: "otb-date otb-input", type: "text", value: "8/30/2019", readOnly: "", autoComplete: "off" })
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__time nova-opentable__input-wrap" },
+					wp.element.createElement(RichText, {
+						tagName: "label",
+						value: timeLabel,
+						onChange: function onChange(timeLabel) {
+							return setAttributes({ timeLabel: timeLabel });
+						}
+					}),
+					wp.element.createElement(
+						"select",
+						{ className: "otb-time", name: "ResTime", "aria-label": "Reservation Time" },
+						wp.element.createElement(
+							"option",
+							{ value: "9:00am" },
+							"9:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:30am" },
+							"9:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:00am" },
+							"10:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:30am" },
+							"10:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:00am" },
+							"11:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:30am" },
+							"11:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12:00pm" },
+							"12:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12:30pm" },
+							"12:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "1:00pm" },
+							"1:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "1:30pm" },
+							"1:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2:00pm" },
+							"2:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2:30pm" },
+							"2:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3:00pm" },
+							"3:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3:30pm" },
+							"3:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4:00pm" },
+							"4:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4:30pm" },
+							"4:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5:00pm" },
+							"5:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5:30pm" },
+							"5:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6:00pm" },
+							"6:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6:30pm" },
+							"6:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7:00pm", selected: "" },
+							"7:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7:30pm" },
+							"7:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8:00pm" },
+							"8:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8:30pm" },
+							"8:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:00pm" },
+							"9:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:30pm" },
+							"9:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:00pm" },
+							"10:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:30pm" },
+							"10:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:00pm" },
+							"11:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:30pm" },
+							"11:30 pm"
+						)
+					)
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__size nova-opentable__input-wrap" },
+					wp.element.createElement(RichText, {
+						tagName: "label",
+						value: partySizeLabel,
+						onChange: function onChange(partySizeLabel) {
+							return setAttributes({ partySizeLabel: partySizeLabel });
+						}
+					}),
+					wp.element.createElement(
+						"select",
+						{ id: "party-size", name: "partySize", className: "otb-people otb-input" },
+						wp.element.createElement(
+							"option",
+							{ value: "1" },
+							"1"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2" },
+							"2"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3" },
+							"3"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4" },
+							"4"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5" },
+							"5"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6" },
+							"6"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7" },
+							"7"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8" },
+							"8"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9" },
+							"9"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10" },
+							"10"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11" },
+							"11"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12" },
+							"12"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "13" },
+							"13"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "14" },
+							"14"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "15" },
+							"15"
+						)
+					)
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__button-wrap wp-block-button" },
+					wp.element.createElement(RichText, {
+						placeholder: __('Find a table'),
+						value: submitButtonText,
+						className: "nova-opentable__button wp-block-button__link",
+						onChange: function onChange(submitButtonText) {
+							return setAttributes({ submitButtonText: submitButtonText });
+						},
+						keepPlaceholderOnFocus: true
+					})
+				)
+			),
+			wp.element.createElement("input", { type: "hidden", name: "RestaurantID", className: "RestaurantID", value: restaurantId }),
+			wp.element.createElement("input", { type: "hidden", name: "rid", className: "rid", value: restaurantId }),
+			wp.element.createElement("input", { type: "hidden", name: "GeoID", className: "GeoID", value: "15" }),
+			wp.element.createElement("input", { type: "hidden", name: "txtDateFormat", className: "txtDateFormat", value: "MM/dd/yyyy" }),
+			wp.element.createElement("input", { type: "hidden", name: "RestaurantReferralID", className: "RestaurantReferralID", value: restaurantId })
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (OpenTablePreview);
+
+/***/ }),
+/* 181 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
+var Fragment = wp.element.Fragment;
+var InspectorControls = wp.blockEditor.InspectorControls;
+var _wp$components = wp.components,
+    PanelBody = _wp$components.PanelBody,
+    TextControl = _wp$components.TextControl;
+
+
+var OpenTableInspectorControls = function OpenTableInspectorControls(props) {
+	var restaurantId = props.attributes.restaurantId,
+	    setAttributes = props.setAttributes;
+
+
+	return wp.element.createElement(
+		Fragment,
+		null,
+		wp.element.createElement(
+			InspectorControls,
+			null,
+			wp.element.createElement(
+				PanelBody,
+				{ title: __('Settings', '__plugin_txtd'), initialOpen: true },
+				wp.element.createElement(TextControl, {
+					label: 'Restaurant ID',
+					placeholder: __('895621'),
+					help: 'Restaurant Id',
+					type: 'number',
+					value: restaurantId,
+					onChange: function onChange(restaurantId) {
+						return setAttributes({ restaurantId: restaurantId });
+					}
+				})
+			)
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (OpenTableInspectorControls);
 
 /***/ })
 /******/ ]);
