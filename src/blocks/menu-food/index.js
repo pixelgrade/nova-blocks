@@ -11,6 +11,8 @@ import save from './save';
 const {__} = wp.i18n;
 const {registerBlockType} = wp.blocks;
 
+const { select } = wp.data;
+
 export default registerBlockType( 'novablocks/menu-food',
 	{
 		title: __( 'Food Menu', '__plugin_txtd' ),
@@ -23,8 +25,9 @@ export default registerBlockType( 'novablocks/menu-food',
 				default: true
 			}
 		},
-		supports: {
-			align: ["wide"]
+		getEditWrapperProps() {
+			const settings = select( 'core/block-editor' ).getSettings();
+			return settings.alignWide ? { 'data-align': 'wide' } : {};
 		},
 		edit,
 		save

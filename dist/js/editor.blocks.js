@@ -5989,6 +5989,7 @@ var Edit = function (_Component) {
  */
 var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
+var select = wp.data.select;
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food', {
@@ -6002,9 +6003,11 @@ var registerBlockType = wp.blocks.registerBlockType;
 			default: true
 		}
 	},
-	supports: {
-		align: ["wide"]
+	getEditWrapperProps: function getEditWrapperProps() {
+		var settings = select('core/block-editor').getSettings();
+		return settings.alignWide ? { 'data-align': 'wide' } : {};
 	},
+
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */]
 }));
@@ -6535,8 +6538,7 @@ var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 				onChange: function onChange(title) {
 					return setAttributes({ title: title });
 				}
-			}),
-			wp.element.createElement('span', { className: 'dots' })
+			})
 		),
 		wp.element.createElement(
 			'div',
@@ -6704,8 +6706,7 @@ var FoodMenuItemSave = function FoodMenuItemSave(props) {
 					return setAttributes({ title: title });
 				},
 				itemprop: 'name'
-			}),
-			wp.element.createElement('span', { className: 'dots' })
+			})
 		),
 		wp.element.createElement(
 			'div',

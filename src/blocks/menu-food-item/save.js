@@ -43,8 +43,6 @@ const FoodMenuItemSave = function( props ) {
 					onChange={title => setAttributes( {title} )}
 					itemprop="name"
 				/>
-
-				<span className="dots"></span>
 			</div>
 
 			<div className="nova-food-menu-item__prices" itemscope itemtype="http://schema.org/offers">

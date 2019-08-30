@@ -48,8 +48,6 @@ const FoodMenuItemPreview = function( props ) {
 					placeholder={__( 'Product Title' )}
 					onChange={title => setAttributes( {title} )}
 				/>
-
-				<span className="dots"></span>
 			</div>
 
 			<div className="nova-food-menu-item__prices">
