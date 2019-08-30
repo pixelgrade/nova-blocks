@@ -629,17 +629,18 @@
   color: inherit;
   text-decoration: none; }
 
-.nova-opentable__wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap; }
+@media only screen and (min-width: 480px) {
+  .nova-opentable__wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap; } }
 
 .nova-opentable input,
 .nova-opentable select {
@@ -658,7 +659,7 @@
 
 .nova-opentable .otb-input,
 .nova-opentable select {
-  width: 9.5em;
+  width: 100%;
   height: 2.5em;
   padding: .375em;
   line-height: 1;
@@ -666,6 +667,10 @@
   border: 1px solid #d8d8d8;
   border-radius: 3px;
   color: inherit; }
+  @media only screen and (min-width: 480px) {
+    .nova-opentable .otb-input,
+    .nova-opentable select {
+      width: 9.5em; } }
 
 .nova-opentable__button-wrap {
   display: -webkit-box;
