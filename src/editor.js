@@ -3,6 +3,7 @@ import './scss/editor.scss';
 
 import "./filters/with-font-size-picker";
 
+import "./blocks/google-map";
 import "./blocks/header";
 import "./blocks/headline";
 import "./blocks/hero";

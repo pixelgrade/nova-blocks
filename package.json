@@ -8,6 +8,7 @@
     "build": "gulp zip"
   },
   "devDependencies": {
+    "@react-google-maps/api": "^1.6.0",
     "@wordpress/babel-preset-default": "^1.2.0",
     "@wordpress/eslint-plugin": "^2.4.0",
     "autoprefixer": "^9.6.1",
@@ -35,11 +36,12 @@
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
     "raw-loader": "^0.5.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-google-maps": "^9.4.5",
+    "recompose": "^0.30.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.19.1",
     "webpack": "^3.11.0"
-  },
-  "dependencies": {
-    "react": "^16.8.6"
   }
 }

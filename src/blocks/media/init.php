@@ -31,10 +31,10 @@ if ( ! function_exists( 'novablocks_media_block_init' ) ) {
 				),
 				'images'              => array(
 					'type'    => 'array',
-					'items'   => [
+					'items'   => array(
 						'type' => 'string',
-					],
-					'default' => [],
+					),
+					'default' => array(),
 				),
 			),
 			'render_callback' => 'novablocks_render_media_block'
