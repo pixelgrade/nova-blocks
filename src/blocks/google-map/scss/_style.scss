@@ -1,3 +1,16 @@
-.wp-block-novablocks-google-map {
-	height: 100vh;
+.novablocks-map__map-container {
+	position: relative;
+	padding-top: 100%;
+
+	@include above( tablet ) {
+		padding-top: percentage(3/4);
+	}
+
+	@include above( desktop ) {
+		padding-top: percentage(9/16);
+	}
+}
+
+.novablocks-map__map {
+	@include cover;
 }

@@ -49,7 +49,7 @@ export default [
 		"elementType": "geometry.fill",
 		"stylers": [
 			{
-				"color": "#9660c6"
+				"color": "%ACCENT_COLOR%"
 			},
 			{
 				"lightness": 90
@@ -88,7 +88,7 @@ export default [
 		"elementType": "geometry.fill",
 		"stylers": [
 			{
-				"color": "#9660c6"
+				"color": "%ACCENT_COLOR%"
 			},
 			{
 				"saturation": -25
@@ -130,7 +130,7 @@ export default [
 		"elementType": "geometry.fill",
 		"stylers": [
 			{
-				"color": "#9660c6"
+				"color": "%ACCENT_COLOR%"
 			},
 			{
 				"lightness": 60

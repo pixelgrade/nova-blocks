@@ -7263,7 +7263,9 @@ var Edit = function (_Component) {
 			apiKey: ''
 		};
 
-		_this.settings = new Settings();
+		wp.api.loadPromise.done(function () {
+			_this.settings = new Settings();
+		});
 		return _this;
 	}
 
@@ -7272,21 +7274,23 @@ var Edit = function (_Component) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			this.settings.on('change:' + API_KEY_SETTING_ID, function (model) {
-				var apiKey = model.get(API_KEY_SETTING_ID);
+			wp.api.loadPromise.done(function () {
+				_this2.settings.on('change:' + API_KEY_SETTING_ID, function (model) {
+					var apiKey = model.get(API_KEY_SETTING_ID);
 
-				_this2.setState({
-					fetchedApiKey: true,
-					savedApiKey: apiKey,
-					apiKey: apiKey
+					_this2.setState({
+						fetchedApiKey: true,
+						savedApiKey: apiKey,
+						apiKey: apiKey
+					});
+
+					if (apiKey !== '') {
+						_this2.loadGoogleMapsScript();
+					}
 				});
 
-				if (apiKey !== '') {
-					_this2.loadGoogleMapsScript();
-				}
+				_this2.settings.fetch();
 			});
-
-			this.settings.fetch();
 		}
 	}, {
 		key: 'loadGoogleMapsScript',
@@ -7322,9 +7326,11 @@ var Edit = function (_Component) {
 		value: function saveApiKey(apiKey) {
 			var _this4 = this;
 
-			var key = new Settings(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()({}, API_KEY_SETTING_ID, apiKey));
-			key.save().then(function () {
-				_this4.settings.fetch();
+			wp.api.loadPromise.done(function () {
+				var key = new Settings(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()({}, API_KEY_SETTING_ID, apiKey));
+				key.save().then(function () {
+					_this4.settings.fetch();
+				});
 			});
 		}
 	}, {
@@ -10426,24 +10432,31 @@ var Map = function (_Component) {
 		value: function createMarkersForPlaces(places) {
 			var _this2 = this;
 
+			var attributes = this.props.attributes;
+			var styleLabel = attributes.styleLabel;
+
+			var accentColor = styleLabel === 'theme' ? __WEBPACK_IMPORTED_MODULE_8__utils__["b" /* getMapAccentColor */].call(this) : '#222222';
+
 			places.forEach(function (marker) {
 
 				if (!marker.geometry) {
 					return;
 				}
 
+				var pinMarkupString = __WEBPACK_IMPORTED_MODULE_5_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_7__pin__["a" /* default */]).replace('%ACCENT_COLOR%', accentColor);
+
 				_this2.markers.push(new google.maps.Marker({
 					map: _this2.map,
 					icon: {
-						url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(__WEBPACK_IMPORTED_MODULE_5_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_7__pin__["a" /* default */]))
+						url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkupString)
 					},
 					title: marker.name,
 					position: marker.geometry.location
 				}));
 			});
 
-			var markersCenter = Object(__WEBPACK_IMPORTED_MODULE_8__utils__["b" /* getMarkersCenter */])(places);
-			this.map.setCenter(Object(__WEBPACK_IMPORTED_MODULE_8__utils__["b" /* getMarkersCenter */])(places));
+			var markersCenter = Object(__WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getMarkersCenter */])(places);
+			this.map.setCenter(Object(__WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getMarkersCenter */])(places));
 		}
 	}, {
 		key: 'initializeMap',
@@ -10531,12 +10544,19 @@ var Map = function (_Component) {
 			var zoom = attributes.zoom,
 			    showLabels = attributes.showLabels,
 			    showControls = attributes.showControls,
-			    styleData = attributes.styleData;
+			    styleData = attributes.styleData,
+			    markers = attributes.markers;
 
 
 			options.zoom = zoom;
 			options.disableDefaultUI = !showControls;
 			options.styles = __WEBPACK_IMPORTED_MODULE_8__utils__["a" /* compileStyles */].call(this, styleData);
+
+			if (markers.length) {
+				var places = this.prepareMarkers(markers);
+				this.clearMarkers();
+				this.createMarkersForPlaces(places);
+			}
 
 			this.map.setOptions(options);
 		}
@@ -10547,10 +10567,10 @@ var Map = function (_Component) {
 
 			return wp.element.createElement(
 				'div',
-				{ className: 'editor-novablocks-map' },
+				{ className: 'novablocks-map' },
 				wp.element.createElement(
 					'div',
-					{ className: 'editor-novablocks-map__search-box' },
+					{ className: 'novablocks-map__search-box' },
 					wp.element.createElement(
 						Placeholder,
 						null,
@@ -10563,8 +10583,8 @@ var Map = function (_Component) {
 				),
 				wp.element.createElement(
 					'div',
-					{ className: 'editor-novablocks-map__map-container' },
-					wp.element.createElement('div', { className: 'editor-novablocks-map__map', id: 'novablocks-google-map-' + this.props.clientId })
+					{ className: 'novablocks-map__map-container' },
+					wp.element.createElement('div', { className: 'novablocks-map__map', id: 'novablocks-google-map-' + this.props.clientId })
 				)
 			);
 		}
@@ -10684,7 +10704,9 @@ var MapPlaceholder = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__api_key_panel_body__ = __webpack_require__(449);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__map_style_select__ = __webpack_require__(452);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__styles__ = __webpack_require__(451);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__styles__ = __webpack_require__(451);
+
 
 
 
@@ -10716,6 +10738,8 @@ var ButtonInspectorControls = function (_Component) {
 	__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(ButtonInspectorControls, [{
 		key: 'render',
 		value: function render() {
+			var _this2 = this;
+
 			var _props = this.props,
 			    _props$attributes = _props.attributes,
 			    styleLabel = _props$attributes.styleLabel,
@@ -10740,13 +10764,15 @@ var ButtonInspectorControls = function (_Component) {
 					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__map_style_select__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, this.props, {
 						apiKey: savedApiKey,
 						value: styleLabel,
-						options: __WEBPACK_IMPORTED_MODULE_8__styles__["a" /* default */],
+						options: __WEBPACK_IMPORTED_MODULE_9__styles__["a" /* default */],
 						onChange: function onChange(styleSlug) {
+							var mapStyles = __WEBPACK_IMPORTED_MODULE_9__styles__["a" /* default */].find(function (style) {
+								return style.slug === styleSlug;
+							}).styles;
 							setAttributes({
 								styleLabel: styleSlug,
-								styleData: __WEBPACK_IMPORTED_MODULE_8__styles__["a" /* default */].find(function (style) {
-									return style.slug === styleSlug;
-								}).styles
+								styleData: __WEBPACK_IMPORTED_MODULE_8__utils__["a" /* compileStyles */].call(_this2, mapStyles),
+								pinColor: styleSlug === 'theme' ? __WEBPACK_IMPORTED_MODULE_8__utils__["b" /* getMapAccentColor */].call(_this2) : '#222222'
 							});
 						}
 					})),
@@ -10854,17 +10880,10 @@ var ApiKeyPanelBody = function (_Component) {
 				}),
 				wp.element.createElement(
 					Button,
-					{ isPrimary: true, onClick: function onClick() {
-							onSaveApiKey('');
-						} },
-					__('Remove API Key')
-				),
-				wp.element.createElement(
-					Button,
 					{ isDefault: true, onClick: function onClick() {
 							onSaveApiKey(apiKey);
 						} },
-					__('Set API Key')
+					__('Update API Key')
 				)
 			);
 		}
@@ -10977,7 +10996,7 @@ var MapStyleSelect = function (_Component) {
 			    zoom = attributes.zoom;
 
 
-			var center = markers.length ? Object(__WEBPACK_IMPORTED_MODULE_7__utils__["b" /* getMarkersCenter */])(markers) : __WEBPACK_IMPORTED_MODULE_8__default_map_center__["a" /* default */];
+			var center = markers.length ? Object(__WEBPACK_IMPORTED_MODULE_7__utils__["c" /* getMarkersCenter */])(markers) : __WEBPACK_IMPORTED_MODULE_8__default_map_center__["a" /* default */];
 			var compileTheseStyles = __WEBPACK_IMPORTED_MODULE_7__utils__["a" /* compileStyles */].bind(this);
 
 			return wp.element.createElement(
@@ -11056,7 +11075,7 @@ var MapStyleSelect = function (_Component) {
 	"featureType": "road.arterial",
 	"elementType": "geometry.fill",
 	"stylers": [{
-		"color": "#9660c6"
+		"color": "%ACCENT_COLOR%"
 	}, {
 		"lightness": 90
 	}]
@@ -11082,7 +11101,7 @@ var MapStyleSelect = function (_Component) {
 	"featureType": "road.local",
 	"elementType": "geometry.fill",
 	"stylers": [{
-		"color": "#9660c6"
+		"color": "%ACCENT_COLOR%"
 	}, {
 		"saturation": -25
 	}, {
@@ -11110,7 +11129,7 @@ var MapStyleSelect = function (_Component) {
 	"featureType": "water",
 	"elementType": "geometry.fill",
 	"stylers": [{
-		"color": "#9660c6"
+		"color": "%ACCENT_COLOR%"
 	}, {
 		"lightness": 60
 	}]
@@ -11292,7 +11311,7 @@ var MapStyleSelect = function (_Component) {
 		"g",
 		{ fill: "none", fillRule: "evenodd" },
 		wp.element.createElement("use", { fill: "#000", filter: "url(#a)", xlinkHref: "#b", style: { display: 'none' } }),
-		wp.element.createElement("use", { fill: "#9660C6", xlinkHref: "#b" })
+		wp.element.createElement("use", { fill: "%ACCENT_COLOR%", xlinkHref: "#b" })
 	)
 ));
 
@@ -15402,17 +15421,21 @@ module.exports = server_browser;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return compileStyles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getMarkersCenter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getMapAccentColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getMarkersCenter; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
 
 var compileStyles = function compileStyles(styleData) {
 	var _props$attributes = this.props.attributes,
 	    showLabels = _props$attributes.showLabels,
-	    showIcons = _props$attributes.showIcons;
+	    showIcons = _props$attributes.showIcons,
+	    styleLabel = _props$attributes.styleLabel;
 
 
-	var newStyles = JSON.parse(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(styleData));
+	var accentColor = getMapAccentColor.call(this);
+	var styleDataString = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
+	var newStyles = JSON.parse(styleDataString);
 
 	if (!showLabels) {
 		newStyles.unshift({
@@ -15429,6 +15452,42 @@ var compileStyles = function compileStyles(styleData) {
 	}
 
 	return newStyles;
+};
+
+var getMapAccentColor = function getMapAccentColor() {
+	var settings = this.props.settings;
+	var colors = settings.colors;
+
+	var fallbackColor = '#222222';
+
+	if (colors && colors.length) {
+
+		var primary = colors.find(function (color) {
+			return color.slug === 'sm-color-primary';
+		});
+		var secondary = colors.find(function (color) {
+			return color.slug === 'sm-color-secondary';
+		});
+		var tertiary = colors.find(function (color) {
+			return color.slug === 'sm-color-tertiary';
+		});
+
+		if (primary) {
+			return primary.color;
+		}
+
+		if (secondary) {
+			return secondary.color;
+		}
+
+		if (tertiary) {
+			return tertiary.color;
+		}
+
+		return colors[0].color;
+	}
+
+	return fallbackColor;
 };
 
 var getMarkersCenter = function getMarkersCenter(markers) {

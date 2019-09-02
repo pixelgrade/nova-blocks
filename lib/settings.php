@@ -267,4 +267,4 @@ JS;
 }
 
 
-add_action( 'admin_init', 'novablocks_settings_init', 11 );
+add_action( 'admin_init', 'novablocks_settings_init', 30 );

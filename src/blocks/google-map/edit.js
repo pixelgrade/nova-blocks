@@ -39,26 +39,30 @@ class Edit extends Component {
 			apiKey: '',
 		}
 
-		this.settings = new Settings();
+		wp.api.loadPromise.done( () => {
+			this.settings = new Settings();
+		} );
 	}
 
 	componentDidMount() {
 
-		this.settings.on( `change:${ API_KEY_SETTING_ID }`, model => {
-			const apiKey = model.get( API_KEY_SETTING_ID );
+		wp.api.loadPromise.done( () => {
+			this.settings.on( `change:${ API_KEY_SETTING_ID }`, model => {
+				const apiKey = model.get( API_KEY_SETTING_ID );
 
-			this.setState( {
-				fetchedApiKey: true,
-				savedApiKey: apiKey,
-				apiKey,
+				this.setState( {
+					fetchedApiKey: true,
+					savedApiKey: apiKey,
+					apiKey,
+				} );
+
+				if ( apiKey !== '' ) {
+					this.loadGoogleMapsScript();
+				}
 			} );
 
-			if ( apiKey !== '' ) {
-				this.loadGoogleMapsScript();
-			}
+			this.settings.fetch();
 		} );
-
-		this.settings.fetch();
 	}
 
 	loadGoogleMapsScript() {
@@ -87,10 +91,12 @@ class Edit extends Component {
 	}
 
 	saveApiKey( apiKey ) {
-		const key = new Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
-		key.save().then(() => {
-			this.settings.fetch();
-		});
+		wp.api.loadPromise.done( () => {
+			const key = new Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
+			key.save().then(() => {
+				this.settings.fetch();
+			} );
+		} );
 	}
 
 	renderPreview() {

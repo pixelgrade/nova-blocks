@@ -3,10 +3,13 @@ export const compileStyles = function( styleData ) {
 		attributes: {
 			showLabels,
 			showIcons,
+			styleLabel,
 		}
 	} = this.props;
 
-	const newStyles = JSON.parse( JSON.stringify( styleData ) );
+	const accentColor = getMapAccentColor.call( this );
+	const styleDataString = JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, accentColor );
+	const newStyles = JSON.parse( styleDataString );
 
 	if ( ! showLabels ) {
 		newStyles.unshift( {
@@ -23,6 +26,35 @@ export const compileStyles = function( styleData ) {
 	}
 
 	return newStyles;
+}
+
+export const getMapAccentColor = function() {
+	const { settings } = this.props;
+	const { colors } = settings;
+	const fallbackColor = '#222222';
+
+	if ( colors && colors.length ) {
+
+		const primary = colors.find( color => color.slug === 'sm-color-primary' );
+		const secondary = colors.find( color => color.slug === 'sm-color-secondary' );
+		const tertiary = colors.find( color => color.slug === 'sm-color-tertiary' );
+
+		if ( primary ) {
+			return primary.color;
+		}
+
+		if ( secondary ) {
+			return secondary.color;
+		}
+
+		if ( tertiary ) {
+			return tertiary.color;
+		}
+
+		return colors[0].color;
+	}
+
+	return fallbackColor;
 }
 
 export const getMarkersCenter = function( markers ) {

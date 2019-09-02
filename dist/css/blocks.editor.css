@@ -87,35 +87,25 @@
 .c-map-style-select__item--active {
   border-color: currentColor; }
 
-.editor-novablocks-map__search-box .components-placeholder {
-  min-height: 0;
-  margin-bottom: 5px; }
-
-.editor-novablocks-map__search-box .components-placeholder__label:empty {
-  display: none; }
-
-.editor-novablocks-map__search-box .components-placeholder__fieldset input {
-  display: block;
-  width: 100%; }
-
-.editor-novablocks-map__map-container {
-  position: relative;
-  padding-top: 56.25%; }
-  .editor-novablocks-map__map-container:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 5; }
-
-.editor-novablocks-map__map {
+.novablocks-map__map-container:after {
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  left: 0; }
+  left: 0;
+  z-index: 5; }
+
+.novablocks-map__search-box .components-placeholder {
+  min-height: 0;
+  margin-bottom: 5px; }
+
+.novablocks-map__search-box .components-placeholder__label:empty {
+  display: none; }
+
+.novablocks-map__search-box .components-placeholder__fieldset input {
+  display: block;
+  width: 100%; }
 
 :root {
   --nova-hero-transition-duration: 0.4s;

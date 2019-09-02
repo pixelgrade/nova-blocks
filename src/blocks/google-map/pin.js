@@ -32,6 +32,6 @@ export default <svg
 	</defs>
 	<g fill="none" fillRule="evenodd">
 		<use fill="#000" filter="url(#a)" xlinkHref="#b" style={ { display: 'none' } }/>
-		<use fill="#9660C6" xlinkHref="#b" />
+		<use fill="%ACCENT_COLOR%" xlinkHref="#b" />
 	</g>
 </svg>

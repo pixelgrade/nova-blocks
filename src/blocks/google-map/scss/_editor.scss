@@ -24,7 +24,16 @@
 	border-color: currentColor;
 }
 
-.editor-novablocks-map__search-box {
+.novablocks-map__map-container {
+
+	&:after {
+		content: "";
+		@include cover;
+		z-index: 5;
+	}
+}
+
+.novablocks-map__search-box {
 
 	.components-placeholder {
 		min-height: 0;
@@ -42,19 +51,4 @@
 			width: 100%;
 		}
 	}
-}
-
-.editor-novablocks-map__map-container {
-	position: relative;
-	padding-top: percentage(9/16);
-
-	&:after {
-		content: "";
-		@include cover;
-		z-index: 5;
-	}
-}
-
-.editor-novablocks-map__map {
-	@include cover;
 }

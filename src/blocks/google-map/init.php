@@ -17,9 +17,13 @@ if ( ! function_exists( 'novablocks_google_maps_block_init' ) ) {
 					'type' => 'string',
 					'default' => 'center',
 				),
+				'pinColor' => array(
+					'type' => 'string',
+					'default' => '#222222',
+				),
 				'zoom' => array(
 					'type' => 'number',
-					'default' => 13,
+					'default' => 17,
 				),
 				'styleLabel' => array(
 					'type' => 'string',
@@ -64,16 +68,25 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 
 		$classes = array();
 
+		$classes[] = 'novablocks-map';
+		$classes[] = 'align' . $attributes['align'];
+
 		ob_start();
 
 		do_action( 'novablocks_google_maps:before' ); ?>
 
-		<div
-			class="wp-block-novablocks-google-map js-novablocks-google-map"
-			data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
-			data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
-			data-zoom="<?php echo $attributes['zoom']; ?>"
-		>
+		<div class="<?php echo join( ' ', $classes ); ?>">
+			<div class="novablocks-map__map-container">
+				<div
+					class="novablocks-map__map js-novablocks-google-map"
+					data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
+					data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
+					data-zoom="<?php echo $attributes['zoom']; ?>"
+					data-controls="<?php echo $attributes['showControls']; ?>"
+					data-pin-color="<?php echo $attributes['pinColor']; ?>"
+				>
+				</div>
+			</div>
 		</div>
 
 		<?php do_action( 'novablocks_google_maps:after' );

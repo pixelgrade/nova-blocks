@@ -35,11 +35,8 @@ class ApiKeyPanelBody extends Component {
 					value={ apiKey }
 					onChange={ onChangeApiKey }
 				/>
-				<Button isPrimary onClick={ () => { onSaveApiKey( '' ) } }>
-					{ __( 'Remove API Key' ) }
-				</Button>
 				<Button isDefault onClick={ () => { onSaveApiKey( apiKey ) } }>
-					{ __( 'Set API Key' ) }
+					{ __( 'Update API Key' ) }
 				</Button>
 			</PanelBody>
 		)

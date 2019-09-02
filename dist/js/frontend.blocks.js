@@ -3018,7 +3018,7 @@ module.exports = react;
 		"g",
 		{ fill: "none", fillRule: "evenodd" },
 		wp.element.createElement("use", { fill: "#000", filter: "url(#a)", xlinkHref: "#b", style: { display: 'none' } }),
-		wp.element.createElement("use", { fill: "#9660C6", xlinkHref: "#b" })
+		wp.element.createElement("use", { fill: "%ACCENT_COLOR%", xlinkHref: "#b" })
 	)
 ));
 
@@ -7165,6 +7165,8 @@ module.exports = server_browser;
 		    markers = $obj.data('markers'),
 		    styles = $obj.data('styles'),
 		    zoom = $obj.data('zoom'),
+		    hideControls = !$obj.data('controls'),
+		    pinColor = $obj.data('pin-color'),
 		    bounds = getBoundsFromMarkers(markers),
 		    mapOptions = {
 			mapTypeId: 'roadmap',
@@ -7172,10 +7174,10 @@ module.exports = server_browser;
 			zoom: zoom,
 			styles: styles,
 
+			disableDefaultUI: hideControls,
 			clickableIcons: false,
-			disableDefaultUI: true,
-			disableDoubleClickZoom: true,
-			draggable: false,
+			//				disableDoubleClickZoom: true,
+			//				draggable: false,
 			gestureHandling: 'none',
 			keyboardShortcuts: false,
 			scrollwheel: false
@@ -7187,7 +7189,7 @@ module.exports = server_browser;
 				position: marker.geometry.location,
 				title: marker.title,
 				icon: {
-					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_1__pin__["a" /* default */]))
+					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_1__pin__["a" /* default */]).replace(/%ACCENT_COLOR%/g, pinColor))
 				},
 				map: map
 			});

@@ -29,6 +29,8 @@ import pin from "./pin";
 			markers = $obj.data( 'markers' ),
 			styles = $obj.data( 'styles' ),
 			zoom = $obj.data( 'zoom' ),
+			hideControls = ! $obj.data( 'controls' ),
+			pinColor = $obj.data( 'pin-color' ),
 			bounds = getBoundsFromMarkers( markers ),
 			mapOptions = {
 				mapTypeId: 'roadmap',
@@ -36,10 +38,10 @@ import pin from "./pin";
 				zoom: zoom,
 				styles: styles,
 
+				disableDefaultUI: hideControls,
 				clickableIcons: false,
-				disableDefaultUI: true,
-				disableDoubleClickZoom: true,
-				draggable: false,
+//				disableDoubleClickZoom: true,
+//				draggable: false,
 				gestureHandling: 'none',
 				keyboardShortcuts: false,
 				scrollwheel: false,
@@ -51,7 +53,7 @@ import pin from "./pin";
 				position: marker.geometry.location,
 				title: marker.title,
 				icon: {
-					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( ReactDOMServer.renderToStaticMarkup( pin ) )
+					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( ReactDOMServer.renderToStaticMarkup( pin ).replace( /%ACCENT_COLOR%/g, pinColor ) )
 				},
 				map: map
 			} );

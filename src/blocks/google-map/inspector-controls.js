@@ -1,5 +1,6 @@
 import ApiKeyPanelBody from './api-key-panel-body';
 import MapStyleSelectControl from './map-style-select';
+import {compileStyles, getMapAccentColor} from './utils';
 import styles from './styles';
 
 const { __ } = wp.i18n;
@@ -52,9 +53,11 @@ class ButtonInspectorControls extends Component {
 						value={ styleLabel }
 						options={ styles }
 						onChange={ styleSlug => {
+							const mapStyles = styles.find( style => style.slug === styleSlug ).styles;
 							setAttributes( {
 								styleLabel: styleSlug,
-								styleData: styles.find( style => style.slug === styleSlug ).styles
+								styleData: compileStyles.call( this, mapStyles ),
+								pinColor: styleSlug === 'theme' ? getMapAccentColor.call( this ) : '#222222',
 							} );
 						} }
 					/>

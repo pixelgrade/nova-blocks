@@ -1,7 +1,7 @@
 import ReactDOMServer from 'react-dom/server';
 import styles from './styles';
 import pin from './pin';
-import { compileStyles, getMarkersCenter } from './utils';
+import { compileStyles, getMarkersCenter, getMapAccentColor } from './utils';
 import defaultMapCenter from './default-map-center';
 
 const { __ } = wp.i18n;
@@ -52,16 +52,22 @@ class Map extends Component {
 
 	createMarkersForPlaces( places ) {
 
+		const { attributes } = this.props;
+		const { styleLabel } = attributes;
+		const accentColor = styleLabel === 'theme' ? getMapAccentColor.call( this ) : '#222222';
+
 		places.forEach( marker => {
 
 			if ( ! marker.geometry ) {
 				return;
 			}
 
+			let pinMarkupString = ReactDOMServer.renderToStaticMarkup( pin ).replace( '%ACCENT_COLOR%', accentColor );
+
 			this.markers.push( new google.maps.Marker( {
 				map: this.map,
 				icon: {
-					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( ReactDOMServer.renderToStaticMarkup(pin) )
+					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkupString )
 				},
 				title: marker.name,
 				position: marker.geometry.location
@@ -147,11 +153,17 @@ class Map extends Component {
 
 		const options = {};
 		const { attributes } = this.props;
-		const { zoom, showLabels, showControls, styleData } = attributes;
+		const { zoom, showLabels, showControls, styleData, markers } = attributes;
 
 		options.zoom = zoom;
 		options.disableDefaultUI = ! showControls;
 		options.styles = compileStyles.call( this, styleData );
+
+		if ( markers.length ) {
+			const places = this.prepareMarkers( markers );
+			this.clearMarkers();
+			this.createMarkersForPlaces( places );
+		}
 
 		this.map.setOptions( options );
 	}
@@ -160,8 +172,8 @@ class Map extends Component {
 		this.updateMapOptions();
 
 		return (
-			<div className="editor-novablocks-map">
-				<div className="editor-novablocks-map__search-box">
+			<div className="novablocks-map">
+				<div className="novablocks-map__search-box">
 					<Placeholder>
 						<input
 							type="text"
@@ -170,8 +182,8 @@ class Map extends Component {
 						/>
 					</Placeholder>
 				</div>
-				<div className="editor-novablocks-map__map-container">
-					<div className="editor-novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` }></div>
+				<div className="novablocks-map__map-container">
+					<div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` }></div>
 				</div>
 			</div>
 	   )
