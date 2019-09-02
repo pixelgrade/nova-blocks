@@ -3,6 +3,7 @@ import Map from './map';
 import InspectorControls from './inspector-controls';
 
 import withSettings from '../../components/with-settings';
+import withParallax from '../../components/with-parallax';
 
 const { __ } = wp.i18n;
 
@@ -22,6 +23,11 @@ const {
 	BlockAlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor;
+
+const {
+	compose,
+	createHigherOrderComponent,
+} = wp.compose;
 
 const {
 	Settings
@@ -160,4 +166,7 @@ class Edit extends Component {
 	}
 }
 
-export default withSettings( Edit );
+export default createHigherOrderComponent(compose([
+	withSettings,
+	withParallax,
+]))( Edit );

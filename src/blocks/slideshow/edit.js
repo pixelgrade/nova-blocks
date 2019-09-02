@@ -1,12 +1,14 @@
 /**
  * Internal dependencies
  */
-import withSettings from '../../components/with-settings';
 import { shuffleArray } from '../../components/util';
 
 import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
+
+import withSettings from '../../components/with-settings';
+import withParallax from '../../components/with-parallax';
 
 /**
  * WordPress dependencies
@@ -17,6 +19,11 @@ const {
 	Component,
 	Fragment,
 } = wp.element;
+
+const {
+	compose,
+	createHigherOrderComponent,
+} = wp.compose;
 
 class Edit extends Component {
 	constructor() {
@@ -99,4 +106,7 @@ class Edit extends Component {
 	}
 }
 
-export default withSettings( Edit );
+export default createHigherOrderComponent(compose([
+	withSettings,
+	withParallax,
+]))( Edit );

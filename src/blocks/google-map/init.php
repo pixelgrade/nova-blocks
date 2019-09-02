@@ -12,50 +12,6 @@ if ( ! function_exists( 'novablocks_google_maps_block_init' ) ) {
 
 	function novablocks_google_maps_block_init() {
 		register_block_type( 'novablocks/google-map', array(
-			'attributes'      => array(
-				'align' => array(
-					'type' => 'string',
-					'default' => 'center',
-				),
-				'pinColor' => array(
-					'type' => 'string',
-					'default' => '#222222',
-				),
-				'zoom' => array(
-					'type' => 'number',
-					'default' => 17,
-				),
-				'styleLabel' => array(
-					'type' => 'string',
-					'default' => 'regular',
-				),
-				'styleData' => array(
-					'type' => 'array',
-					'default' => array(),
-					'items' => array(
-						'type' => array(),
-					),
-				),
-				'markers' => array(
-					'type' => 'array',
-					'default' => array(),
-					'items' => array(
-						'type' => array(),
-					),
-				),
-				'showLabels' => array(
-					'type' => 'boolean',
-					'default' => true,
-				),
-				'showIcons' => array(
-					'type' => 'boolean',
-					'default' => true,
-				),
-				'showControls' => array(
-					'type' => 'boolean',
-					'default' => false,
-				),
-			),
 			'render_callback' => 'novablocks_render_google_maps_block'
 		) );
 	}

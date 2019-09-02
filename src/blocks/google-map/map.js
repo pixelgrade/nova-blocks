@@ -3,6 +3,7 @@ import styles from './styles';
 import pin from './pin';
 import { compileStyles, getMarkersCenter, getMapAccentColor } from './utils';
 import defaultMapCenter from './default-map-center';
+import { withParallaxContext } from '../../components/with-parallax';
 
 const { __ } = wp.i18n;
 
@@ -183,11 +184,17 @@ class Map extends Component {
 					</Placeholder>
 				</div>
 				<div className="novablocks-map__map-container">
-					<div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` }></div>
+					<div className="nova-mask">
+						<div
+							className="novablocks-map__map"
+							id={ `novablocks-google-map-${ this.props.clientId }` }
+							style={ this.props.parallax.style }
+						></div>
+					</div>
 				</div>
 			</div>
 	   )
 	}
 }
 
-export default Map;
+export default withParallaxContext( Map );

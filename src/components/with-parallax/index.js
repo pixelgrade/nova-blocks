@@ -1,14 +1,46 @@
+import { createContext } from 'react';
+
+import ParallaxPanel from "../../components/parallax-panel";
+
 /**
  * WordPress dependencies
  */
 const {
 	Component,
+	Fragment,
 } = wp.element;
 
-// Take in a component as argument WrappedComponent
+const {
+	InspectorControls
+} = wp.blockEditor;
+
+const {
+	createSlotFill
+} = wp.components;
+
+const {
+	addFilter
+} = wp.hooks;
+
+const parallaxAttributes = {
+	enableParallax: {
+		type: 'boolean',
+		default: true,
+	},
+	parallaxAmount: {
+		type: 'string',
+		default: '50',
+	},
+	parallaxCustomAmount: {
+		type: 'number',
+		default: 50,
+	},
+}
+
+const ParallaxContext = createContext();
+
 const withParallax = function( WrappedComponent ) {
 
-	// And return a new anonymous component
 	return class extends Component {
 		constructor() {
 			super( ...arguments );
@@ -62,6 +94,11 @@ const withParallax = function( WrappedComponent ) {
 		}
 
 		getParallaxStyles() {
+
+			if ( ! this.state.dimensions ) {
+				return {};
+			}
+
 			const {
 				attributes: {
 					enableParallax,
@@ -97,12 +134,38 @@ const withParallax = function( WrappedComponent ) {
 
 		render() {
 			return (
-				<div className="nova-mask" ref={ ( el ) => ( this.container = el ) }>
-					{ this.state.dimensions && <WrappedComponent { ...this.props } style={ this.getParallaxStyles() } /> }
-				</div>
+				<Fragment>
+					<div ref={ ( el ) => ( this.container = el ) }>
+						<ParallaxContext.Provider value={ { style: this.getParallaxStyles() } }>
+							<WrappedComponent { ...this.props } />
+						</ParallaxContext.Provider>
+					</div>
+					<InspectorControls>
+						<ParallaxPanel { ...this.props } />
+					</InspectorControls>
+				</Fragment>
 			);
 		}
 	};
 };
+
+const withParallaxContext = function( WrappedComponent ) {
+	return class extends Component {
+		render() {
+			return(
+				<ParallaxContext.Consumer>
+					{ context => (
+						<WrappedComponent
+							parallax={ context }
+							{ ...this.props }
+						/>
+					) }
+				</ParallaxContext.Consumer>
+			)
+		}
+	}
+}
+
+export { parallaxAttributes, withParallaxContext };
 
 export default withParallax;
