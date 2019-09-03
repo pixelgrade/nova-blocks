@@ -45,14 +45,19 @@ class Edit extends Component {
 			apiKey: '',
 		}
 
-		wp.api.loadPromise.done( () => {
-			this.settings = new Settings();
-		} );
+		this.onChangeMarkers = this.onChangeMarkers.bind( this );
+		this.settings = null;
+	}
+
+	onChangeMarkers( markers ) {
+		this.props.setAttributes( { markers } );
 	}
 
 	componentDidMount() {
 
 		wp.api.loadPromise.done( () => {
+			this.settings = new wp.api.models.Settings();
+
 			this.settings.on( `change:${ API_KEY_SETTING_ID }`, model => {
 				const apiKey = model.get( API_KEY_SETTING_ID );
 
@@ -97,45 +102,44 @@ class Edit extends Component {
 	}
 
 	saveApiKey( apiKey ) {
-		wp.api.loadPromise.done( () => {
-			const key = new Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
-			key.save().then(() => {
-				this.settings.fetch();
-			} );
+		const key = new wp.api.models.Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
+
+		key.save().then(() => {
+			this.settings.fetch();
 		} );
 	}
 
 	renderPreview() {
 
-		if ( ! this.state.fetchedApiKey ) {
+		const { fetchedApiKey, fetchedScript, savedApiKey } = this.state;
+
+		if ( ! fetchedApiKey ) {
 			return <Spinner />
 		}
 
-		if ( ! this.state.fetchedScript || '' === this.state.savedApiKey ) {
-			return <MapPlaceholder saveApiKey={ this.saveApiKey.bind( this ) } />
+		if ( ! fetchedScript || '' === savedApiKey ) {
+			return <MapPlaceholder
+				saveApiKey={ this.saveApiKey.bind( this ) }
+				apiKeyInstructions={ this.getInstructions() }
+			/>
 		}
 
 		return (
 			<Fragment>
 				<Map
 					{ ...this.props }
-					onChange={ markers => {
-						this.props.setAttributes( {
-							markers: markers.map( marker => {
-								return {
-									title: marker.name,
-									geometry: {
-										location: {
-											lat: marker.geometry.location.lat(),
-											lng: marker.geometry.location.lng(),
-										}
-									}
-								}
-							} ) } );
-					} }
+					onChange={ this.onChangeMarkers }
 				/>
 			</Fragment>
 		)
+	}
+
+	getInstructions() {
+		const url = '//developers.google.com/maps/documentation/javascript/get-api-key';
+		const hyperlink = <a target="_blank" href={ url }>{ __( 'register a Google Maps API Key ' ) }</a>;
+		const instructions = <Fragment>{ __( 'To display the map, you need to' ) } { hyperlink } { __( 'and include it in the block settings' ) }</Fragment>;
+
+		return instructions;
 	}
 
 	render() {
@@ -159,6 +163,7 @@ class Edit extends Component {
 						this.setState( { apiKey } );
 					} }
 					onSaveApiKey={ this.saveApiKey.bind( this ) }
+					apiKeyInstructions={ this.getInstructions() }
 				/>
 				{ this.renderPreview() }
 			</Fragment>

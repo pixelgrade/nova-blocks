@@ -91,7 +91,7 @@ export const swap = (
 );
 
 export const map = (
-	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+	<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
 		<path
 			fill="#6565F2"
 			fillRule="evenodd"

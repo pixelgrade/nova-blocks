@@ -16,6 +16,8 @@ class MapStyleSelect extends Component {
 		this.state = {
 			active: this.props.value
 		}
+
+		this.compileStyles = compileStyles.bind( this );
 	}
 
 	getStaticStyle( styles ) {
@@ -49,39 +51,50 @@ class MapStyleSelect extends Component {
 
 		const { markers, zoom } = attributes;
 
-		const center = markers.length ? getMarkersCenter( markers ) : defualtMapCenter;
-		const compileTheseStyles = compileStyles.bind( this );
+		const center = markers.length ? getMarkersCenter.call( this ) : new google.maps.LatLng( defualtMapCenter );
+		const latitude = center.lat();
+		const longitude = center.lng();
 
 		return (
-			<div className="components-base-control c-map-style-select">
-				{ options.map( option => {
-					const style = this.getStaticStyle( compileTheseStyles( option.styles ) );
-					const size = '200x200';
-					const mapType = 'roadmap';
-					const url = 'https://maps.googleapis.com/maps/api/staticmap';
-					const src = `${url}?center=${center.lat},${center.lng}&zoom=${zoom}&size=${size}&maptype=${mapType}&${style}&key=${apiKey}`;
+			<div className="components-base-control">
+				<div className="editor-block-styles block-editor-block-styles novablocks-block-editor-map-styles">
+					{ options.map( option => {
+						const style = this.getStaticStyle( this.compileStyles( option.styles ) );
+						const size = '200x200';
+						const mapType = 'roadmap';
+						const url = 'https://maps.googleapis.com/maps/api/staticmap';
+						const src = `${url}?center=${latitude},${longitude}&zoom=${zoom}&size=${size}&maptype=${mapType}&${style}&key=${apiKey}`;
 
-					const className = classnames( 'c-map-style-select__item', {
-						'c-map-style-select__item--active': option.slug === this.state.active,
-					} );
-
-					return (
-						<div
-							key={ option.slug }
-							className={ className }>
-							<img
-								src={ src }
-								alt={ `${ option.label } map style preview` }
+						return (
+							<div
+								key={ option.slug }
+								className={ classnames( 'editor-block-styles__item block-editor-block-styles__item', {
+									'is-active': option.slug === this.state.active,
+								} ) }
 								onClick={ () => {
 									this.setState( { active: option.slug } )
 									onChange( option.slug );
 								} }
-							/>
-						</div>
-					)
-				} ) }
+								role="button"
+								tabIndex="0"
+								aria-label={ option.label }>
+
+								<div className="editor-block-styles__item-preview block-editor-block-styles__item-preview">
+									<img
+										src={ src }
+										alt={ `${ option.label } map style preview` }
+									/>
+								</div>
+								<div className="editor-block-styles__item-label block-editor-block-styles__item-label">
+									{ option.label }
+								</div>
+
+							</div>
+						)
+					} ) }
+				</div>
 			</div>
-       )
+		)
 	}
 }
 

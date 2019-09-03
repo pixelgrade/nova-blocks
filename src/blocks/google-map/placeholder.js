@@ -1,7 +1,10 @@
+import * as icons from "../../icons";
+
 const { __ } = wp.i18n;
 
 const {
-	Component
+	Component,
+	Fragment,
 } = wp.element;
 
 const {
@@ -29,22 +32,25 @@ class MapPlaceholder extends Component {
 	}
 
 	render() {
+
+		const { apiKeyInstructions } = this.props;
+		const icon = <div className="editor-block-icon block-editor-block-icon">{ icons.map }</div>
+
 		return (
 			<Placeholder
-				icon={ 'admin-site' }
-				label={ __( 'Google Maps' ) }
-				instructions={ __(
-					'To use the Maps JavaScript API you must have an API key.'
-				) }
-			>
+				icon={ icon }
+				label={ __( 'Location Map of The World' ) }>
+				{ apiKeyInstructions && <div className="components-placeholder__instructions">
+					{ apiKeyInstructions }
+				</div> }
 				<TextControl
 					className="components-placeholder__input"
 					placeholder={ __( 'Paste API key here' ) }
 					onChange={ ( apiKey ) => { this.setState( { apiKey } ) } }
 					onKeyDown={ ( { keyCode } ) => { this.handleKeyDown( keyCode ) } }
 				/>
-				<Button isLarge type="button" onClick={ () => { this.props.saveApiKey( this.state.apiKey ) } }>
-					{ __( 'Set API Key' ) }
+				<Button isLarge disabled={ ! this.state.apiKey } type="button" onClick={ () => { this.props.saveApiKey( this.state.apiKey ) } }>
+					{ __( 'Save' ) }
 				</Button>
 			</Placeholder>
 		)

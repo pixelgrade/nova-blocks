@@ -1,9 +1,12 @@
+import defualtMapCenter from "./default-map-center";
+import styles from "./styles";
+
 export const compileStyles = function( styleData ) {
 	const {
 		attributes: {
 			showLabels,
 			showIcons,
-			styleLabel,
+			styleSlug,
 		}
 	} = this.props;
 
@@ -26,6 +29,15 @@ export const compileStyles = function( styleData ) {
 	}
 
 	return newStyles;
+}
+
+export const getMapStyles = function() {
+	const { attributes } = this.props;
+	const { styleData, styleSlug } = attributes;
+	const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
+	const styleDataBySlug = styles.find( style => style.slug === styleSlug ).styles;
+	const mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
+	return compileStyles.call( this, mapStyles );
 }
 
 export const getMapAccentColor = function() {
@@ -57,32 +69,30 @@ export const getMapAccentColor = function() {
 	return fallbackColor;
 }
 
-export const getMarkersCenter = function( markers ) {
+export const getMarkersCenter = function() {
+	const { attributes } = this.props;
+	const { markers } = attributes;
+	const bounds = new google.maps.LatLngBounds();
 
+	// when there is only one marker bounds aren't accurate at great zoom levels
 	if ( markers.length === 1 ) {
-		return markers[0].geometry.location;
+		const center = JSON.parse( markers[0] );
+		return new google.maps.LatLng( center.geometry.location );
 	}
 
-	// For each place, get the icon, name and location.
-	var bounds = new google.maps.LatLngBounds();
+	markers.forEach( markerString => {
+		const marker = JSON.parse( markerString );
 
-	markers.forEach( marker => {
 		if ( ! marker.geometry ) {
 			return;
 		}
 
 		if ( marker.geometry.viewport ) {
-			// Only geocodes have viewport.
 			bounds.union( marker.geometry.viewport );
 		} else {
 			bounds.extend( marker.geometry.location );
 		}
 	} );
 
-	const center = bounds.getCenter();
-
-	return {
-		lat: center.lat(),
-		lng: center.lng()
-	};
+	return bounds.getCenter();
 }

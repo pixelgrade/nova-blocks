@@ -1,9 +1,8 @@
-import theme from './theme';
-import light from './light';
+import customized from './customized';
 
 const styles = [
-	{ slug: 'regular', label: 'Regular', styles: [] },
-	{ slug: 'theme', label: 'Theme', styles: theme },
+	{ slug: 'customized', label: 'Customized', styles: customized },
+	{ slug: 'original', label: 'Original', styles: [] },
 ];
 
 export default styles;

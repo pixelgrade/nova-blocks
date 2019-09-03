@@ -5,6 +5,7 @@ import * as icons from "../../icons";
 import edit from "./edit";
 
 import { parallaxAttributes } from '../../components/with-parallax';
+import styles from "./styles";
 
 /**
  * WordPress dependencies
@@ -15,7 +16,7 @@ const { registerBlockType } = wp.blocks;
 export default registerBlockType( 'novablocks/google-map',
 	{
 		title: __( 'Map of the World', '__plugin_txtd' ),
-		description: __( 'Outputs custom map.', '__plugin_txtd' ),
+		description: __( 'Display an interactive map to show the location of your venue.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.map,
 		attributes: {
@@ -31,9 +32,9 @@ export default registerBlockType( 'novablocks/google-map',
 				type: 'number',
 				default: 17,
 			},
-			styleLabel: {
+			styleSlug: {
 				type: 'string',
-				default: 'regular',
+				default: 'customized',
 			},
 			styleData: {
 				type: 'array',

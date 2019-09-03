@@ -24,13 +24,15 @@ class ButtonInspectorControls extends Component {
 
 	constructor() {
 		super( ...arguments );
+
+		this.compileStyles = compileStyles.bind( this );
 	}
 
 	render() {
 
 		const {
 			attributes: {
-				styleLabel,
+				styleSlug,
 				zoom,
 				showLabels,
 				showControls,
@@ -46,18 +48,18 @@ class ButtonInspectorControls extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Map Style' ) }>
+				<PanelBody title={ __( 'Map Design' ) }>
 					<MapStyleSelectControl
 						{ ...this.props }
 						apiKey={ savedApiKey }
-						value={ styleLabel }
+						value={ styleSlug }
 						options={ styles }
-						onChange={ styleSlug => {
-							const mapStyles = styles.find( style => style.slug === styleSlug ).styles;
+						onChange={ newStyleSlug => {
+							const mapStyles = styles.find( style => style.slug === newStyleSlug ).styles;
 							setAttributes( {
-								styleLabel: styleSlug,
-								styleData: compileStyles.call( this, mapStyles ),
-								pinColor: styleSlug === 'theme' ? getMapAccentColor.call( this ) : '#222222',
+								styleSlug: newStyleSlug,
+								styleData: this.compileStyles( mapStyles ),
+								pinColor: newStyleSlug === 'theme' ? getMapAccentColor.call( this ) : '#222222',
 							} );
 						} }
 					/>

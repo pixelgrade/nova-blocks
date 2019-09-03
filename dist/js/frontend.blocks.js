@@ -60,206 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 174);
+/******/ 	return __webpack_require__(__webpack_require__.s = 223);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 174:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_google_map_frontend__ = __webpack_require__(227);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_slideshow_frontend__ = __webpack_require__(176);
-
-
-
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, exports) {
-
-(function ($, window, undefined) {
-
-	// initialize parallax effect
-	if (typeof $.fn.rellax !== "undefined") {
-		$('.nova-hero--parallax').find('.nova-hero__background').rellax({
-			container: '.nova-hero__mask'
-		});
-
-		setTimeout(function () {
-			$('.nova-hero--parallax').find('.nova-hero__background').css('opacity', 1);
-		}, 300);
-	}
-})(jQuery, window);
-
-/***/ }),
-
-/***/ 176:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(48);
-
-
-var BLOCK_SELECTOR = '.nova-slideshow';
-var SLIDER_SELECTOR = '.nova-slideshow__slider';
-var SLIDE_SELECTOR = '.nova-slideshow__slide';
-var CONTENT_SELECTOR = '.nova-slideshow__content';
-var BACKGROUND_SELECTOR = '.nova-slideshow__background';
-var FOREGROUND_SELECTOR = '.nova-slideshow__foreground';
-var TRANSITION_DURATION = 1000;
-var TRANSITION_EASING = "easeInOutCirc";
-
-(function ($, window, undefined) {
-
-	var $blocks = $(BLOCK_SELECTOR);
-	var $rellaxTarget = $('.nova-slideshow--parallax').find(SLIDER_SELECTOR);
-
-	// initialize parallax effect
-	if (typeof $.fn.rellax !== "undefined") {
-		$rellaxTarget.rellax({
-			container: '.nova-slideshow__mask',
-			children: CONTENT_SELECTOR
-		});
-	}
-
-	$blocks.each(function (index, block) {
-		var $block = $(block),
-		    $slider = $block.find(SLIDER_SELECTOR),
-		    $arrowContainer;
-
-		if ($slider.children().length > 1) {
-			$arrowContainer = $('<div class="nova-slideshow__controls">').appendTo($block);
-
-			resetBlockMinHeight($block);
-			$block.addClass('is-ready');
-
-			$slider.on('beforeChange', onBeforeSlideChange);
-
-			$slider.slick({
-				rows: 0,
-				// for simpler reveal transitions between slides
-				fade: true,
-				prevArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--prev"></div>',
-				nextArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--next"></div>',
-				appendArrows: $arrowContainer,
-				speed: TRANSITION_DURATION
-			});
-		}
-	});
-
-	$(window).on('resize', Object(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* debounce */])(onResize, 300));
-
-	function resetBlockMinHeight($block) {
-		$block.css('minHeight', '');
-		$block.css('minHeight', getBlockMinHeight($block));
-	}
-
-	function getBlockMinHeight($block) {
-		var windowWidth = window.innerWidth;
-		var $slider = $block.find(SLIDER_SELECTOR);
-		var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();
-		var windowHeight = window.innerHeight;
-		var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;
-		var mediaMinHeight = 0;
-		var slideMaxHeight = 0;
-		var maxAspectRatio = 0;
-
-		$block.find(SLIDE_SELECTOR).each(function (i, obj) {
-			var $slide = $(obj),
-			    $media = $slide.find('.nova-slideshow__media'),
-			    width = $media.data('width'),
-			    height = $media.data('height'),
-			    aspectRatio = width / height,
-			    slideHeight = $slide.outerHeight();
-
-			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
-			mediaMinHeight = sliderWidth / maxAspectRatio;
-			slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
-		});
-
-		return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);
-	}
-
-	function onResize() {
-
-		$blocks.each(function (index, block) {
-			var $block = $(block);
-			var $slider = $block.find(SLIDER_SELECTOR);
-
-			resetBlockMinHeight($block);
-			$rellaxTarget.rellax('refresh');
-
-			if ($slider.is('.slick-initialized')) {
-				$slider.slick('setPosition');
-			}
-		});
-	}
-
-	function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
-		var $currentSlide = $(slick.$slides[currentSlide]);
-		var $nextSlide = $(slick.$slides[nextSlide]);
-
-		$(slick.$slides).css('zIndex', 800);
-
-		transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
-	}
-
-	function transition($current, $next) {
-		var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
-		var slideWidth = $current.outerWidth();
-		var move = 300;
-
-		$current.velocity({
-			tween: [0, 1]
-		}, {
-			duration: TRANSITION_DURATION,
-			easing: TRANSITION_EASING,
-			progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
-				var next = $next.get(0);
-				var nextBg = $next.find(BACKGROUND_SELECTOR).get(0);
-				var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
-				var current = $current.get(0);
-				var currentBg = $current.find(BACKGROUND_SELECTOR).get(0);
-				var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
-
-				var moveX = function moveX(x) {
-					return 'translateX(' + sign * x + 'px)';
-				};
-
-				next.style.transform = moveX(slideWidth * tweenValue);
-				nextBg.style.transform = moveX((move - slideWidth) * tweenValue);
-				nextFg.style.transform = moveX(slideWidth * -tweenValue);
-
-				current.style.transform = moveX(-move * (1 - tweenValue));
-				currentFg.style.transform = moveX(move * (1 - tweenValue));
-			}
-		});
-	}
-
-	function getDirection(slick, currentSlide, nextSlide) {
-		var direction = 1;
-		if (slick.slideCount > 2) {
-			if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {
-				direction = -1;
-			}
-			if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {
-				direction = -1;
-			}
-		}
-		return direction;
-	}
-})(jQuery, window);
-
-/***/ }),
-
-/***/ 177:
+/***/ 10:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -450,7 +256,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 178:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -548,23 +354,286 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 179:
+/***/ 223:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_google_map_frontend__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_slideshow_frontend__ = __webpack_require__(226);
+
+
+
+
+/***/ }),
+
+/***/ 224:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom_server__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pin__ = __webpack_require__(62);
+
+
+
+(function ($, window, undefined) {
+
+	function getBoundsFromMarkers(markers) {
+		// For each place, get the icon, name and location.
+		var bounds = new google.maps.LatLngBounds();
+
+		markers.forEach(function (marker) {
+			if (!marker.geometry) {
+				return;
+			}
+
+			if (marker.geometry.viewport) {
+				// Only geocodes have viewport.
+				bounds.union(marker.geometry.viewport);
+			} else {
+				bounds.extend(marker.geometry.location);
+			}
+		});
+
+		return bounds;
+	}
+
+	$('.js-novablocks-google-map').each(function (i, obj) {
+
+		var $obj = $(obj),
+		    markers = $obj.data('markers'),
+		    styles = $obj.data('styles'),
+		    zoom = $obj.data('zoom'),
+		    hideControls = !$obj.data('controls'),
+		    pinColor = $obj.data('pin-color'),
+		    bounds = getBoundsFromMarkers(markers),
+		    mapOptions = {
+			mapTypeId: 'roadmap',
+			center: bounds.getCenter(),
+			zoom: zoom,
+			styles: styles,
+			disableDefaultUI: hideControls,
+			clickableIcons: false,
+			keyboardShortcuts: false
+		},
+		    map = new google.maps.Map(obj, mapOptions);
+
+		var pinMarkup = __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_1__pin__["a" /* default */]).replace(/%ACCENT_COLOR%/g, pinColor);
+
+		markers.forEach(function (marker) {
+			new google.maps.Marker({
+				position: marker.geometry.location,
+				title: marker.title,
+				icon: {
+					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+				},
+				map: map
+			});
+		});
+	});
+})(jQuery, window);
+
+/***/ }),
+
+/***/ 225:
+/***/ (function(module, exports) {
+
+(function ($, window, undefined) {
+
+	// initialize parallax effect
+	if (typeof $.fn.rellax !== "undefined") {
+		$('.nova-hero--parallax').find('.nova-hero__background').rellax({
+			container: '.nova-hero__mask'
+		});
+
+		setTimeout(function () {
+			$('.nova-hero--parallax').find('.nova-hero__background').css('opacity', 1);
+		}, 300);
+	}
+})(jQuery, window);
+
+/***/ }),
+
+/***/ 226:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(66);
+
+
+var BLOCK_SELECTOR = '.nova-slideshow';
+var SLIDER_SELECTOR = '.nova-slideshow__slider';
+var SLIDE_SELECTOR = '.nova-slideshow__slide';
+var CONTENT_SELECTOR = '.nova-slideshow__content';
+var BACKGROUND_SELECTOR = '.nova-slideshow__background';
+var FOREGROUND_SELECTOR = '.nova-slideshow__foreground';
+var TRANSITION_DURATION = 1000;
+var TRANSITION_EASING = "easeInOutCirc";
+
+(function ($, window, undefined) {
+
+	var $blocks = $(BLOCK_SELECTOR);
+	var $rellaxTarget = $('.nova-slideshow--parallax').find(SLIDER_SELECTOR);
+
+	// initialize parallax effect
+	if (typeof $.fn.rellax !== "undefined") {
+		$rellaxTarget.rellax({
+			container: '.nova-slideshow__mask',
+			children: CONTENT_SELECTOR
+		});
+	}
+
+	$blocks.each(function (index, block) {
+		var $block = $(block),
+		    $slider = $block.find(SLIDER_SELECTOR),
+		    $arrowContainer;
+
+		if ($slider.children().length > 1) {
+			$arrowContainer = $('<div class="nova-slideshow__controls">').appendTo($block);
+
+			resetBlockMinHeight($block);
+			$block.addClass('is-ready');
+
+			$slider.on('beforeChange', onBeforeSlideChange);
+
+			$slider.slick({
+				rows: 0,
+				// for simpler reveal transitions between slides
+				fade: true,
+				prevArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--prev"></div>',
+				nextArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--next"></div>',
+				appendArrows: $arrowContainer,
+				speed: TRANSITION_DURATION
+			});
+		}
+	});
+
+	$(window).on('resize', Object(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* debounce */])(onResize, 300));
+
+	function resetBlockMinHeight($block) {
+		$block.css('minHeight', '');
+		$block.css('minHeight', getBlockMinHeight($block));
+	}
+
+	function getBlockMinHeight($block) {
+		var windowWidth = window.innerWidth;
+		var $slider = $block.find(SLIDER_SELECTOR);
+		var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();
+		var windowHeight = window.innerHeight;
+		var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;
+		var mediaMinHeight = 0;
+		var slideMaxHeight = 0;
+		var maxAspectRatio = 0;
+
+		$block.find(SLIDE_SELECTOR).each(function (i, obj) {
+			var $slide = $(obj),
+			    $media = $slide.find('.nova-slideshow__media'),
+			    width = $media.data('width'),
+			    height = $media.data('height'),
+			    aspectRatio = width / height,
+			    slideHeight = $slide.outerHeight();
+
+			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+			mediaMinHeight = sliderWidth / maxAspectRatio;
+			slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
+		});
+
+		return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);
+	}
+
+	function onResize() {
+
+		$blocks.each(function (index, block) {
+			var $block = $(block);
+			var $slider = $block.find(SLIDER_SELECTOR);
+
+			resetBlockMinHeight($block);
+			$rellaxTarget.rellax('refresh');
+
+			if ($slider.is('.slick-initialized')) {
+				$slider.slick('setPosition');
+			}
+		});
+	}
+
+	function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
+		var $currentSlide = $(slick.$slides[currentSlide]);
+		var $nextSlide = $(slick.$slides[nextSlide]);
+
+		$(slick.$slides).css('zIndex', 800);
+
+		transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
+	}
+
+	function transition($current, $next) {
+		var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+		var slideWidth = $current.outerWidth();
+		var move = 300;
+
+		$current.velocity({
+			tween: [0, 1]
+		}, {
+			duration: TRANSITION_DURATION,
+			easing: TRANSITION_EASING,
+			progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
+				var next = $next.get(0);
+				var nextBg = $next.find(BACKGROUND_SELECTOR).get(0);
+				var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
+				var current = $current.get(0);
+				var currentBg = $current.find(BACKGROUND_SELECTOR).get(0);
+				var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
+
+				var moveX = function moveX(x) {
+					return 'translateX(' + sign * x + 'px)';
+				};
+
+				next.style.transform = moveX(slideWidth * tweenValue);
+				nextBg.style.transform = moveX((move - slideWidth) * tweenValue);
+				nextFg.style.transform = moveX(slideWidth * -tweenValue);
+
+				current.style.transform = moveX(-move * (1 - tweenValue));
+				currentFg.style.transform = moveX(move * (1 - tweenValue));
+			}
+		});
+	}
+
+	function getDirection(slick, currentSlide, nextSlide) {
+		var direction = 1;
+		if (slick.slideCount > 2) {
+			if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {
+				direction = -1;
+			}
+			if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {
+				direction = -1;
+			}
+		}
+		return direction;
+	}
+})(jQuery, window);
+
+/***/ }),
+
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(184);
+  module.exports = __webpack_require__(57);
 } else {
-  module.exports = __webpack_require__(185);
+  module.exports = __webpack_require__(58);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(177)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 
-/***/ 180:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -580,7 +649,7 @@ if (process.env.NODE_ENV === 'production') {
 var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret = __webpack_require__(186);
+  var ReactPropTypesSecret = __webpack_require__(59);
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -671,27 +740,27 @@ checkPropTypes.resetWarningCache = function() {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(177)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 
-/***/ 182:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(183);
+  module.exports = __webpack_require__(56);
 } else {
-  module.exports = __webpack_require__(187);
+  module.exports = __webpack_require__(60);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(177)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 
-/***/ 183:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -704,7 +773,7 @@ if (process.env.NODE_ENV === 'production') {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(178),m=__webpack_require__(179);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
+var l=__webpack_require__(14),m=__webpack_require__(24);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
 var t="function"===typeof Symbol&&Symbol.for,aa=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,ba=t?Symbol.for("react.strict_mode"):60108,ca=t?Symbol.for("react.profiler"):60114,x=t?Symbol.for("react.provider"):60109,da=t?Symbol.for("react.context"):60110,ea=t?Symbol.for("react.concurrent_mode"):60111,fa=t?Symbol.for("react.forward_ref"):60112,A=t?Symbol.for("react.suspense"):60113,ha=t?Symbol.for("react.suspense_list"):60120,ia=t?Symbol.for("react.memo"):60115,ja=t?Symbol.for("react.lazy"):
 60116,ka=t?Symbol.for("react.fundamental"):60117;
 function B(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case v:return"Fragment";case aa:return"Portal";case ca:return"Profiler";case ba:return"StrictMode";case A:return"Suspense";case ha:return"SuspenseList"}if("object"===typeof a)switch(a.$$typeof){case da:return"Context.Consumer";case x:return"Context.Provider";case fa:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
@@ -753,7 +822,7 @@ Wa;module.exports=Xa.default||Xa;
 
 /***/ }),
 
-/***/ 184:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -766,7 +835,7 @@ Wa;module.exports=Xa.default||Xa;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(178),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(14),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -786,7 +855,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 
 /***/ }),
 
-/***/ 185:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -807,8 +876,8 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(178);
-var checkPropTypes = __webpack_require__(180);
+var _assign = __webpack_require__(14);
+var checkPropTypes = __webpack_require__(31);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3026,11 +3095,11 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(177)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 
-/***/ 186:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3050,7 +3119,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 187:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3071,9 +3140,9 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(178);
-var React = __webpack_require__(179);
-var checkPropTypes = __webpack_require__(180);
+var _assign = __webpack_require__(14);
+var React = __webpack_require__(24);
+var checkPropTypes = __webpack_require__(31);
 
 // Do not require this module directly! Use normal `invariant` calls with
 // template literal strings. The messages will be converted to ReactError during
@@ -7071,11 +7140,11 @@ module.exports = server_browser;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(177)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 
-/***/ 189:
+/***/ 62:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7127,79 +7196,7 @@ module.exports = server_browser;
 
 /***/ }),
 
-/***/ 227:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server__ = __webpack_require__(182);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom_server__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pin__ = __webpack_require__(189);
-
-
-
-(function ($, window, undefined) {
-
-	function getBoundsFromMarkers(markers) {
-		// For each place, get the icon, name and location.
-		var bounds = new google.maps.LatLngBounds();
-
-		markers.forEach(function (marker) {
-			if (!marker.geometry) {
-				return;
-			}
-
-			if (marker.geometry.viewport) {
-				// Only geocodes have viewport.
-				bounds.union(marker.geometry.viewport);
-			} else {
-				bounds.extend(marker.geometry.location);
-			}
-		});
-
-		return bounds;
-	}
-
-	$('.js-novablocks-google-map').each(function (i, obj) {
-
-		var $obj = $(obj),
-		    markers = $obj.data('markers'),
-		    styles = $obj.data('styles'),
-		    zoom = $obj.data('zoom'),
-		    hideControls = !$obj.data('controls'),
-		    pinColor = $obj.data('pin-color'),
-		    bounds = getBoundsFromMarkers(markers),
-		    mapOptions = {
-			mapTypeId: 'roadmap',
-			center: bounds.getCenter(),
-			zoom: zoom,
-			styles: styles,
-
-			disableDefaultUI: hideControls,
-			clickableIcons: false,
-			//				disableDoubleClickZoom: true,
-			//				draggable: false,
-			gestureHandling: 'none',
-			keyboardShortcuts: false,
-			scrollwheel: false
-		},
-		    map = new google.maps.Map(obj, mapOptions);
-
-		markers.forEach(function (marker) {
-			new google.maps.Marker({
-				position: marker.geometry.location,
-				title: marker.title,
-				icon: {
-					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(__WEBPACK_IMPORTED_MODULE_0_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_1__pin__["a" /* default */]).replace(/%ACCENT_COLOR%/g, pinColor))
-				},
-				map: map
-			});
-		});
-	});
-})(jQuery, window);
-
-/***/ }),
-
-/***/ 48:
+/***/ 66:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -19,6 +19,7 @@ class ApiKeyPanelBody extends Component {
 	render() {
 		const {
 			apiKey,
+			apiKeyInstructions,
 			savedApiKey,
 			onChangeApiKey,
 			onSaveApiKey,
@@ -34,9 +35,10 @@ class ApiKeyPanelBody extends Component {
 					placeholder={ __( 'Paste API key here' ) }
 					value={ apiKey }
 					onChange={ onChangeApiKey }
+					help={ apiKeyInstructions }
 				/>
 				<Button isDefault onClick={ () => { onSaveApiKey( apiKey ) } }>
-					{ __( 'Update API Key' ) }
+					{ __( 'Save' ) }
 				</Button>
 			</PanelBody>
 		)

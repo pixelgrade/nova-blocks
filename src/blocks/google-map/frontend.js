@@ -37,23 +37,20 @@ import pin from "./pin";
 				center: bounds.getCenter(),
 				zoom: zoom,
 				styles: styles,
-
 				disableDefaultUI: hideControls,
 				clickableIcons: false,
-//				disableDoubleClickZoom: true,
-//				draggable: false,
-				gestureHandling: 'none',
 				keyboardShortcuts: false,
-				scrollwheel: false,
 			},
 			map = new google.maps.Map( obj, mapOptions );
+
+		var pinMarkup = ReactDOMServer.renderToStaticMarkup( pin ).replace( /%ACCENT_COLOR%/g, pinColor );
 
 		markers.forEach( marker => {
 			new google.maps.Marker( {
 				position: marker.geometry.location,
 				title: marker.title,
 				icon: {
-					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( ReactDOMServer.renderToStaticMarkup( pin ).replace( /%ACCENT_COLOR%/g, pinColor ) )
+					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup )
 				},
 				map: map
 			} );
