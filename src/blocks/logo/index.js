@@ -16,7 +16,7 @@ export default registerBlockType( 'novablocks/logo',
 		description: __( 'Outputs custom logo markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
-		parent: 'novablocks/header',
+		parent: ['novablocks/header'],
 		save: function() {},
 		edit: function( props ) {
 			return (

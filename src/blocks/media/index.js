@@ -8,7 +8,7 @@ import edit from './edit';
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { registerBlockType, } = wp.blocks;
+const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 
 export default registerBlockType( 'novablocks/media',

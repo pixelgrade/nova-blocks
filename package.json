@@ -45,6 +45,7 @@
     "webpack": "^3.11.0"
   },
   "dependencies": {
+    "webpack-bundle-analyzer": "^3.4.1",
     "why-did-you-update": "^1.0.6"
   }
 }

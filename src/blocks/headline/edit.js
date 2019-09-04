@@ -46,14 +46,6 @@ export default function HeadlineEdit( props ) {
 			<InspectorControls>
 				<p>{ __( 'Level' ) }</p>
 				<HeadingToolbar minLevel={ 1 } maxLevel={ 7 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
-				<p>{ __( 'Text Alignment' ) }</p>
-				<AlignmentToolbar
-					isCollapsed={ false }
-					value={ align }
-					onChange={ ( nextAlign ) => {
-						setAttributes( { align: nextAlign } );
-					} }
-				/>
 			</InspectorControls>
 
 			<TagName
@@ -67,7 +59,8 @@ export default function HeadlineEdit( props ) {
 					tagName="span"
 					value={ secondary }
 					onChange={ ( value ) => setAttributes( { secondary: value } ) }
-					placeholder={ __( 'Secondary…', '__plugin_txtd' ) }
+					placeholder={ __( 'Subtitle…', '__plugin_txtd' ) }
+					allowedFormats={ [] }
 				/>
 				<RichText
 					className="c-headline__primary"
@@ -75,7 +68,8 @@ export default function HeadlineEdit( props ) {
 					tagName="span"
 					value={ primary }
 					onChange={ ( value ) => setAttributes( { primary: value } ) }
-					placeholder={ __( 'Primary…', '__plugin_txtd' ) }
+					placeholder={ __( 'Write title…', '__plugin_txtd' ) }
+					allowedFormats={ [] }
 				/>
 
 			</TagName>

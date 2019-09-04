@@ -265,6 +265,42 @@
 .wp-block[data-type="novablocks/navigation"] .menu {
   pointer-events: none; }
 
+.nova-food-menu-item--highlighted[class] {
+  margin-left: 0;
+  margin-right: 0; }
+
+.nova-food-menu-item:not(.nova-food-menu-item--highlighted) {
+  padding-left: 1em;
+  padding-right: 1em; }
+
+.nova-food-menu__header {
+  padding-left: 1em; }
+
+@media only screen and (min-width: 768px) {
+  .nova-food-menu--layout > .block-editor-inner-blocks > .block-editor-block-list__layout {
+    -webkit-column-count: 2;
+       -moz-column-count: 2;
+            column-count: 2;
+    -webkit-column-gap: 3em;
+       -moz-column-gap: 3em;
+            column-gap: 3em; } }
+
+.nova-food-menu[class] .item-title,
+.nova-food-menu[class] .item-description {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+[data-type*=menu-food-section]:not(:first-child) .nova-food-menu__section {
+  margin-top: 1.5em; }
+
+.editor-styles-wrapper .nova-food-menu-item--highlight[class][class] {
+  margin: 0 -1em 1em;
+  width: calc(100% + 2em); }
+
+.nova-food-menu-item__label {
+  margin: 0 !important;
+  color: white !important; }
+
 .nova-mask {
   position: absolute;
   top: 0;

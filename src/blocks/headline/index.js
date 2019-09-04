@@ -23,10 +23,12 @@ export default registerBlockType( 'novablocks/headline',
 				default: "center"
 			},
 			primary: {
-				type: "string"
+				type: "string",
+				default: "Our Story"
 			},
 			secondary: {
-				type: "string"
+				type: "string",
+				default: "Discover"
 			},
 			level: {
 				type: "number",

@@ -11,6 +11,9 @@ import "./blocks/logo";
 import "./blocks/media";
 import "./blocks/slideshow";
 import "./blocks/navigation";
+import "./blocks/menu-food";
+import "./blocks/menu-food-section";
+import "./blocks/menu-food-item";
 
 import { STORE_NAME } from './store';
 

@@ -652,6 +652,110 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   color: inherit;
   text-decoration: none; }
 
+.nova-food-menu-item {
+  display: grid;
+  grid-template-columns: 1fr -webkit-min-content;
+  grid-template-columns: 1fr min-content;
+  grid-template-areas: "title prices" "description description";
+  margin-bottom: 1em;
+  -webkit-column-break-inside: avoid;
+     -moz-column-break-inside: avoid;
+          break-inside: avoid; }
+
+.nova-food-menu__section:not(:first-child) {
+  margin-top: 1.5em; }
+
+.nova-food-menu-item__title {
+  position: relative;
+  grid-area: title; }
+
+.nova-food-menu-item__prices {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  position: relative;
+  z-index: 5;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  grid-area: prices; }
+
+.nova-food-menu-item__description {
+  position: relative;
+  grid-area: description; }
+
+.item-price--sale {
+  font-weight: 700;
+  margin-left: 10px; }
+
+.has-sale-price .item-price {
+  text-decoration: line-through;
+  opacity: .6; }
+
+.nova-food-menu-item--highlighted {
+  grid-template-areas: "label label" "title prices" "description description";
+  margin-left: -1em;
+  margin-right: -1em;
+  padding: 0 1.25em .75em;
+  border: 2px solid #203AB6; }
+
+@media only screen and (min-width: 768px) {
+  .entry-content .nova-food-menu--layout {
+    -webkit-column-count: 2;
+       -moz-column-count: 2;
+            column-count: 2;
+    -webkit-column-gap: 3em;
+       -moz-column-gap: 3em;
+            column-gap: 3em; } }
+
+.nova-blocks-appender {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+
+.item-title,
+.item-description {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.item-title {
+  display: inline-block;
+  position: relative;
+  z-index: 5;
+  line-height: 1.25;
+  margin-bottom: 0 !important;
+  background-color: #FFFFFF; }
+
+.item-description {
+  line-height: 1.5; }
+
+.nova-food-menu-item__title:before {
+  content: '';
+  position: absolute;
+  bottom: .3em;
+  width: 100%;
+  height: 0;
+  line-height: 0;
+  border-bottom: .2em dotted currentColor; }
+
+.nova-food-menu-item__highlight-label {
+  grid-area: label;
+  display: block;
+  margin-left: -1.25em;
+  margin-right: -1.25em;
+  margin-bottom: .75em;
+  width: calc(100% + 2.5em);
+  padding: .5em 1.25em;
+  background-color: #203AB6; }
+
+.nova-food-menu-item__label {
+  color: white;
+  margin: 0; }
+
 /* Slider */
 .slick-slider {
   position: relative;

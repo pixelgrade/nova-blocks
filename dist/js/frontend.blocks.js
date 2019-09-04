@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 227);
+/******/ 	return __webpack_require__(__webpack_require__.s = 220);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -74,7 +74,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 /***/ }),
 
-/***/ 11:
+/***/ 12:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -265,7 +265,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -363,146 +363,29 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 162:
-/***/ (function(module, exports, __webpack_require__) {
-
-var core = __webpack_require__(0);
-var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
-module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
-  return $JSON.stringify.apply($JSON, arguments);
-};
-
-
-/***/ }),
-
-/***/ 165:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ([{
-	"elementType": "geometry",
-	"stylers": [{
-		"color": "#f5f5f5"
-	}]
-}, {
-	"elementType": "labels.icon",
-	"stylers": [{
-		"saturation": -100
-	}, {
-		"lightness": 60
-	}]
-}, {
-	"elementType": "labels.text.stroke",
-	"stylers": [{
-		"color": "#f5f5f5"
-	}]
-}, {
-	"featureType": "poi",
-	"elementType": "geometry",
-	"stylers": [{
-		"color": "#eeeeee"
-	}]
-}, {
-	"featureType": "poi",
-	"elementType": "labels.text.fill",
-	"stylers": [{
-		"color": "#757575"
-	}]
-}, {
-	"featureType": "road.arterial",
-	"elementType": "geometry.fill",
-	"stylers": [{
-		"color": "%ACCENT_COLOR%"
-	}, {
-		"lightness": 90
-	}]
-}, {
-	"featureType": "road.arterial",
-	"elementType": "labels.text.fill",
-	"stylers": [{
-		"color": "#757575"
-	}]
-}, {
-	"featureType": "road.highway",
-	"elementType": "geometry",
-	"stylers": [{
-		"color": "#dadada"
-	}]
-}, {
-	"featureType": "road.highway",
-	"elementType": "labels.text.fill",
-	"stylers": [{
-		"color": "#616161"
-	}]
-}, {
-	"featureType": "road.local",
-	"elementType": "geometry.fill",
-	"stylers": [{
-		"color": "%ACCENT_COLOR%"
-	}, {
-		"saturation": -25
-	}, {
-		"lightness": 70
-	}]
-}, {
-	"featureType": "road.local",
-	"elementType": "labels.text.fill",
-	"stylers": [{
-		"lightness": 30
-	}]
-}, {
-	"featureType": "transit.line",
-	"elementType": "geometry",
-	"stylers": [{
-		"color": "#e5e5e5"
-	}]
-}, {
-	"featureType": "water",
-	"elementType": "geometry",
-	"stylers": [{
-		"color": "#c9c9c9"
-	}]
-}, {
-	"featureType": "water",
-	"elementType": "geometry.fill",
-	"stylers": [{
-		"color": "%ACCENT_COLOR%"
-	}, {
-		"lightness": 60
-	}]
-}, {
-	"featureType": "water",
-	"elementType": "labels.text.fill",
-	"stylers": [{
-		"saturation": -100
-	}]
-}]);
-
-/***/ }),
-
-/***/ 227:
+/***/ 220:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_google_map_frontend__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_slideshow_frontend__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_google_map_frontend__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_slideshow_frontend__ = __webpack_require__(223);
 
 
 
 
 /***/ }),
 
-/***/ 228:
+/***/ 221:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom_server__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pin__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pin__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(24);
 
 
 
@@ -548,11 +431,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 229:
+/***/ 222:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(24);
 
 
 (function ($, window, undefined) {
@@ -562,11 +445,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 230:
+/***/ 223:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(24);
 
 
 var BLOCK_SELECTOR = '.novablocks-slideshow';
@@ -722,23 +605,92 @@ var TRANSITION_EASING = "easeInOutCirc";
 
 /***/ }),
 
-/***/ 25:
+/***/ 23:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__customized__ = __webpack_require__(68);
+
+
+var styles = [{ slug: 'customized', label: 'Customized', styles: __WEBPACK_IMPORTED_MODULE_0__customized__["a" /* default */] }, { slug: 'original', label: 'Original', styles: [] }];
+
+/* harmony default export */ __webpack_exports__["a"] = (styles);
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return range; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return parallaxInit; });
+var debounce = function debounce(func, wait) {
+	var timeout = null;
+
+	return function () {
+		var context = this;
+		var args = arguments;
+
+		var later = function later() {
+			func.apply(context, args);
+		};
+
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+	};
+};
+
+var range = function range(min, max) {
+	var array = [];
+	for (var i = 0; i < max - min; i++) {
+		array.push(i + min);
+	}
+	return array;
+};
+
+var parallaxInit = function parallaxInit(BLOCK_NAME) {
+
+	(function ($) {
+
+		var $target = $('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax');
+		$target.rellax({ container: '.' + BLOCK_NAME + '__mask' });
+
+		$target.each(function (i, obj) {
+			var $obj = $(obj);
+			$obj.imagesLoaded(function () {
+				$obj.css('opacity', 1);
+			});
+		});
+	})(jQuery);
+};
+
+/***/ }),
+
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(61);
+  module.exports = __webpack_require__(64);
 } else {
-  module.exports = __webpack_require__(62);
+  module.exports = __webpack_require__(65);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 
-/***/ 32:
+/***/ 34:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(60), __esModule: true };
+
+/***/ }),
+
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -754,7 +706,7 @@ if (process.env.NODE_ENV === 'production') {
 var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret = __webpack_require__(63);
+  var ReactPropTypesSecret = __webpack_require__(66);
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -845,96 +797,178 @@ checkPropTypes.resetWarningCache = function() {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 
-/***/ 33:
+/***/ 36:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__customized__ = __webpack_require__(165);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return compileStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getMapStyles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getMapAccentColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getCenterFromMarkers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getMarkersCenter; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__default_map_center__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__styles__ = __webpack_require__(23);
 
 
-var styles = [{ slug: 'customized', label: 'Customized', styles: __WEBPACK_IMPORTED_MODULE_0__customized__["a" /* default */] }, { slug: 'original', label: 'Original', styles: [] }];
 
-/* harmony default export */ __webpack_exports__["a"] = (styles);
 
-/***/ }),
+var compileStyles = function compileStyles(styleData) {
+	var _props$attributes = this.props.attributes,
+	    showLabels = _props$attributes.showLabels,
+	    showIcons = _props$attributes.showIcons,
+	    styleSlug = _props$attributes.styleSlug;
 
-/***/ 40:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return range; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return parallaxInit; });
-var debounce = function debounce(func, wait) {
-	var timeout = null;
+	var accentColor = getMapAccentColor.call(this);
+	var styleDataString = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
+	var newStyles = JSON.parse(styleDataString);
 
-	return function () {
-		var context = this;
-		var args = arguments;
-
-		var later = function later() {
-			func.apply(context, args);
-		};
-
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-	};
-};
-
-var range = function range(min, max) {
-	var array = [];
-	for (var i = 0; i < max - min; i++) {
-		array.push(i + min);
-	}
-	return array;
-};
-
-var parallaxInit = function parallaxInit(BLOCK_NAME) {
-
-	(function ($) {
-
-		var $target = $('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax');
-		$target.rellax({ container: '.' + BLOCK_NAME + '__mask' });
-
-		$target.each(function (i, obj) {
-			var $obj = $(obj);
-			$obj.imagesLoaded(function () {
-				$obj.css('opacity', 1);
-			});
+	if (!showLabels) {
+		newStyles.unshift({
+			"elementType": "labels.text",
+			"stylers": [{ "visibility": "off" }]
 		});
-	})(jQuery);
+	}
+
+	if (!showIcons) {
+		newStyles.unshift({
+			"elementType": "labels.icon",
+			"stylers": [{ "visibility": "off" }]
+		});
+	}
+
+	return newStyles;
+};
+
+var getMapStyles = function getMapStyles() {
+	var attributes = this.props.attributes;
+	var styleData = attributes.styleData,
+	    styleSlug = attributes.styleSlug;
+
+	var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
+	var styleDataBySlug = __WEBPACK_IMPORTED_MODULE_2__styles__["a" /* default */].find(function (style) {
+		return style.slug === styleSlug;
+	}).styles;
+	var mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
+	return compileStyles.call(this, mapStyles);
+};
+
+var getMapAccentColor = function getMapAccentColor() {
+	var settings = this.props.settings;
+	var colors = settings.colors;
+
+	var fallbackColor = '#222222';
+
+	if (colors && colors.length) {
+
+		var primary = colors.find(function (color) {
+			return color.slug === 'sm-color-primary';
+		});
+		var secondary = colors.find(function (color) {
+			return color.slug === 'sm-color-secondary';
+		});
+		var tertiary = colors.find(function (color) {
+			return color.slug === 'sm-color-tertiary';
+		});
+
+		if (primary) {
+			return primary.color;
+		}
+
+		if (secondary) {
+			return secondary.color;
+		}
+
+		if (tertiary) {
+			return tertiary.color;
+		}
+
+		return colors[0].color;
+	}
+
+	return fallbackColor;
+};
+
+var getCenterFromMarkers = function getCenterFromMarkers(markers) {
+	var bounds = new google.maps.LatLngBounds();
+
+	// when there is only one marker bounds aren't accurate at great zoom levels
+	if (markers.length === 1) {
+		var center = JSON.parse(markers[0]);
+		return new google.maps.LatLng(center.geometry.location);
+	}
+
+	markers.forEach(function (markerString) {
+		var marker = JSON.parse(markerString);
+
+		if (!marker.geometry) {
+			return;
+		}
+
+		if (marker.geometry.viewport) {
+			bounds.union(marker.geometry.viewport);
+		} else {
+			bounds.extend(marker.geometry.location);
+		}
+	});
+
+	return bounds.getCenter();
+};
+
+var getMarkersCenter = function getMarkersCenter() {
+	return getCenterFromMarkers(this.props.attributes.markers);
 };
 
 /***/ }),
 
-/***/ 57:
+/***/ 37:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var defaultMapCenter = {
+	lat: 47.1665264,
+	lng: 27.58285479999995
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (defaultMapCenter);
+
+/***/ }),
+
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(162), __esModule: true };
+var core = __webpack_require__(0);
+var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
+module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
+  return $JSON.stringify.apply($JSON, arguments);
+};
+
 
 /***/ }),
 
-/***/ 59:
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(60);
+  module.exports = __webpack_require__(63);
 } else {
-  module.exports = __webpack_require__(64);
+  module.exports = __webpack_require__(67);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 
-/***/ 60:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -947,7 +981,7 @@ if (process.env.NODE_ENV === 'production') {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(14),m=__webpack_require__(25);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
+var l=__webpack_require__(15),m=__webpack_require__(28);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
 var t="function"===typeof Symbol&&Symbol.for,aa=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,ba=t?Symbol.for("react.strict_mode"):60108,ca=t?Symbol.for("react.profiler"):60114,x=t?Symbol.for("react.provider"):60109,da=t?Symbol.for("react.context"):60110,ea=t?Symbol.for("react.concurrent_mode"):60111,fa=t?Symbol.for("react.forward_ref"):60112,A=t?Symbol.for("react.suspense"):60113,ha=t?Symbol.for("react.suspense_list"):60120,ia=t?Symbol.for("react.memo"):60115,ja=t?Symbol.for("react.lazy"):
 60116,ka=t?Symbol.for("react.fundamental"):60117;
 function B(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case v:return"Fragment";case aa:return"Portal";case ca:return"Profiler";case ba:return"StrictMode";case A:return"Suspense";case ha:return"SuspenseList"}if("object"===typeof a)switch(a.$$typeof){case da:return"Context.Consumer";case x:return"Context.Provider";case fa:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
@@ -996,7 +1030,7 @@ Wa;module.exports=Xa.default||Xa;
 
 /***/ }),
 
-/***/ 61:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1009,7 +1043,7 @@ Wa;module.exports=Xa.default||Xa;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(14),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(15),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -1029,7 +1063,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 
 /***/ }),
 
-/***/ 62:
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1050,8 +1084,8 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(14);
-var checkPropTypes = __webpack_require__(32);
+var _assign = __webpack_require__(15);
+var checkPropTypes = __webpack_require__(35);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3269,11 +3303,11 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 
-/***/ 63:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3293,7 +3327,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 64:
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3314,9 +3348,9 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(14);
-var React = __webpack_require__(25);
-var checkPropTypes = __webpack_require__(32);
+var _assign = __webpack_require__(15);
+var React = __webpack_require__(28);
+var checkPropTypes = __webpack_require__(35);
 
 // Do not require this module directly! Use normal `invariant` calls with
 // template literal strings. The messages will be converted to ReactError during
@@ -7314,11 +7348,116 @@ module.exports = server_browser;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 
-/***/ 65:
+/***/ 68:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ([{
+	"elementType": "geometry",
+	"stylers": [{
+		"color": "#f5f5f5"
+	}]
+}, {
+	"elementType": "labels.icon",
+	"stylers": [{
+		"saturation": -100
+	}, {
+		"lightness": 60
+	}]
+}, {
+	"elementType": "labels.text.stroke",
+	"stylers": [{
+		"color": "#f5f5f5"
+	}]
+}, {
+	"featureType": "poi",
+	"elementType": "geometry",
+	"stylers": [{
+		"color": "#eeeeee"
+	}]
+}, {
+	"featureType": "poi",
+	"elementType": "labels.text.fill",
+	"stylers": [{
+		"color": "#757575"
+	}]
+}, {
+	"featureType": "road.arterial",
+	"elementType": "geometry.fill",
+	"stylers": [{
+		"color": "%ACCENT_COLOR%"
+	}, {
+		"lightness": 90
+	}]
+}, {
+	"featureType": "road.arterial",
+	"elementType": "labels.text.fill",
+	"stylers": [{
+		"color": "#757575"
+	}]
+}, {
+	"featureType": "road.highway",
+	"elementType": "geometry",
+	"stylers": [{
+		"color": "#dadada"
+	}]
+}, {
+	"featureType": "road.highway",
+	"elementType": "labels.text.fill",
+	"stylers": [{
+		"color": "#616161"
+	}]
+}, {
+	"featureType": "road.local",
+	"elementType": "geometry.fill",
+	"stylers": [{
+		"color": "%ACCENT_COLOR%"
+	}, {
+		"saturation": -25
+	}, {
+		"lightness": 70
+	}]
+}, {
+	"featureType": "road.local",
+	"elementType": "labels.text.fill",
+	"stylers": [{
+		"lightness": 30
+	}]
+}, {
+	"featureType": "transit.line",
+	"elementType": "geometry",
+	"stylers": [{
+		"color": "#e5e5e5"
+	}]
+}, {
+	"featureType": "water",
+	"elementType": "geometry",
+	"stylers": [{
+		"color": "#c9c9c9"
+	}]
+}, {
+	"featureType": "water",
+	"elementType": "geometry.fill",
+	"stylers": [{
+		"color": "%ACCENT_COLOR%"
+	}, {
+		"lightness": 60
+	}]
+}, {
+	"featureType": "water",
+	"elementType": "labels.text.fill",
+	"stylers": [{
+		"saturation": -100
+	}]
+}]);
+
+/***/ }),
+
+/***/ 69:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7367,145 +7506,6 @@ module.exports = server_browser;
 		wp.element.createElement("use", { fill: "%ACCENT_COLOR%", xlinkHref: "#b" })
 	)
 ));
-
-/***/ }),
-
-/***/ 66:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return compileStyles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getMapStyles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getMapAccentColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getCenterFromMarkers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getMarkersCenter; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__default_map_center__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__styles__ = __webpack_require__(33);
-
-
-
-
-var compileStyles = function compileStyles(styleData) {
-	var _props$attributes = this.props.attributes,
-	    showLabels = _props$attributes.showLabels,
-	    showIcons = _props$attributes.showIcons,
-	    styleSlug = _props$attributes.styleSlug;
-
-
-	var accentColor = getMapAccentColor.call(this);
-	var styleDataString = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
-	var newStyles = JSON.parse(styleDataString);
-
-	if (!showLabels) {
-		newStyles.unshift({
-			"elementType": "labels.text",
-			"stylers": [{ "visibility": "off" }]
-		});
-	}
-
-	if (!showIcons) {
-		newStyles.unshift({
-			"elementType": "labels.icon",
-			"stylers": [{ "visibility": "off" }]
-		});
-	}
-
-	return newStyles;
-};
-
-var getMapStyles = function getMapStyles() {
-	var attributes = this.props.attributes;
-	var styleData = attributes.styleData,
-	    styleSlug = attributes.styleSlug;
-
-	var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
-	var styleDataBySlug = __WEBPACK_IMPORTED_MODULE_2__styles__["a" /* default */].find(function (style) {
-		return style.slug === styleSlug;
-	}).styles;
-	var mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
-	return compileStyles.call(this, mapStyles);
-};
-
-var getMapAccentColor = function getMapAccentColor() {
-	var settings = this.props.settings;
-	var colors = settings.colors;
-
-	var fallbackColor = '#222222';
-
-	if (colors && colors.length) {
-
-		var primary = colors.find(function (color) {
-			return color.slug === 'sm-color-primary';
-		});
-		var secondary = colors.find(function (color) {
-			return color.slug === 'sm-color-secondary';
-		});
-		var tertiary = colors.find(function (color) {
-			return color.slug === 'sm-color-tertiary';
-		});
-
-		if (primary) {
-			return primary.color;
-		}
-
-		if (secondary) {
-			return secondary.color;
-		}
-
-		if (tertiary) {
-			return tertiary.color;
-		}
-
-		return colors[0].color;
-	}
-
-	return fallbackColor;
-};
-
-var getCenterFromMarkers = function getCenterFromMarkers(markers) {
-	var bounds = new google.maps.LatLngBounds();
-
-	// when there is only one marker bounds aren't accurate at great zoom levels
-	if (markers.length === 1) {
-		var center = JSON.parse(markers[0]);
-		return new google.maps.LatLng(center.geometry.location);
-	}
-
-	markers.forEach(function (markerString) {
-		var marker = JSON.parse(markerString);
-
-		if (!marker.geometry) {
-			return;
-		}
-
-		if (marker.geometry.viewport) {
-			bounds.union(marker.geometry.viewport);
-		} else {
-			bounds.extend(marker.geometry.location);
-		}
-	});
-
-	return bounds.getCenter();
-};
-
-var getMarkersCenter = function getMarkersCenter() {
-	return getCenterFromMarkers(this.props.attributes.markers);
-};
-
-/***/ }),
-
-/***/ 67:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var defaultMapCenter = {
-	lat: 47.1665264,
-	lng: 27.58285479999995
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (defaultMapCenter);
 
 /***/ })
 
