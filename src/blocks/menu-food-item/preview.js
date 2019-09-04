@@ -38,7 +38,16 @@ const FoodMenuItemPreview = function( props ) {
 	return (
 		<div className={classNames}>
 
-			{enableHighlightFoodItem && <h5 className="nova-food-menu-item--highlight"> {highlightLabel} </h5>}
+			{enableHighlightFoodItem &&
+			 <div className="nova-food-menu-item__highlight-label">
+				 <RichText
+					 tagName="h5"
+					 className="nova-food-menu-item--highlight"
+					 value={highlightLabel}
+					 onChange={( highlightLabel ) => setAttributes( {highlightLabel} )}
+				 />
+			 </div>
+			}
 
 			<div className="nova-food-menu-item__title">
 				<RichText
@@ -59,7 +68,16 @@ const FoodMenuItemPreview = function( props ) {
 					onChange={price => setAttributes( {price} )}
 				/>
 
-				{enableSalePrice && <span className="item-price--sale"> {salePrice} </span>}
+				{enableSalePrice &&
+				 <div className="nova-food-menu-item__price--sale">
+					 <RichText
+						 tagName="span"
+						 className="item-price--sale"
+						 value={salePrice}
+						 onChange={( salePrice ) => setAttributes( {salePrice} )}
+					 />
+				 </div>
+				 }
 			</div>
 
 			<div className="nova-food-menu-item__description">
