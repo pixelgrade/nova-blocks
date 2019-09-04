@@ -24,8 +24,8 @@ const SlideshowBackground = function( props ) {
 
 	return (
 		<div className="nova-mask">
-			<div className="nova-slideshow__background" style={ style }>
-				<img className="nova-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
+			<div className="novablocks-slideshow__background" style={ style }>
+				<img className="novablocks-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
 			</div>
 		</div>
 	);

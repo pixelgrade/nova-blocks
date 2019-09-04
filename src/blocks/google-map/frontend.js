@@ -1,27 +1,9 @@
 import ReactDOMServer from "react-dom/server";
 import pin from "./pin";
+import { getCenterFromMarkers } from "./utils";
+import { parallaxInit } from "../../utils";
 
 (function( $, window, undefined ) {
-
-	function getBoundsFromMarkers( markers ) {
-		// For each place, get the icon, name and location.
-		var bounds = new google.maps.LatLngBounds();
-
-		markers.forEach( marker => {
-			if ( ! marker.geometry ) {
-				return;
-			}
-
-			if ( marker.geometry.viewport ) {
-				// Only geocodes have viewport.
-				bounds.union( marker.geometry.viewport );
-			} else {
-				bounds.extend( marker.geometry.location );
-			}
-		} );
-
-		return bounds;
-	}
 
 	$( '.js-novablocks-google-map' ).each( function( i, obj ) {
 
@@ -31,10 +13,9 @@ import pin from "./pin";
 			zoom = $obj.data( 'zoom' ),
 			hideControls = ! $obj.data( 'controls' ),
 			pinColor = $obj.data( 'pin-color' ),
-			bounds = getBoundsFromMarkers( markers ),
 			mapOptions = {
 				mapTypeId: 'roadmap',
-				center: bounds.getCenter(),
+				center: getCenterFromMarkers( markers ),
 				zoom: zoom,
 				styles: styles,
 				disableDefaultUI: hideControls,
@@ -45,16 +26,19 @@ import pin from "./pin";
 
 		var pinMarkup = ReactDOMServer.renderToStaticMarkup( pin ).replace( /%ACCENT_COLOR%/g, pinColor );
 
-		markers.forEach( marker => {
+		markers.forEach( markerString => {
+			const marker = JSON.parse( markerString );
+
 			new google.maps.Marker( {
-				position: marker.geometry.location,
+				map: map,
+				icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
 				title: marker.title,
-				icon: {
-					url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup )
-				},
-				map: map
+				position: marker.geometry.location,
 			} );
 		} );
+
 	} );
+
+	parallaxInit( 'novablocks-map' );
 
 })( jQuery, window );

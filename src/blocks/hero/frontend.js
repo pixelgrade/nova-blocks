@@ -2,12 +2,12 @@
 
 	// initialize parallax effect
 	if ( typeof $.fn.rellax !== "undefined" ) {
-		$( '.nova-hero--parallax' ).find( '.nova-hero__background' ).rellax({
-			container: '.nova-hero__mask',
+		$( '.novablocks-hero--parallax' ).find( '.novablocks-hero__background' ).rellax({
+			container: '.novablocks-hero__mask',
 		});
 
 		setTimeout(function() {
-			$( '.nova-hero--parallax' ).find( '.nova-hero__background' ).css( 'opacity', 1 );
+			$( '.novablocks-hero--parallax' ).find( '.novablocks-hero__background' ).css( 'opacity', 1 );
 		}, 300)
 	}
 

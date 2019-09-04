@@ -1,24 +1,24 @@
-.nova-hero {
+.novablocks-hero {
     position: relative;
     display: flex;
 }
 
-.nova-hero__mask,
-.nova-hero__background,
-.nova-hero__slider {
+.novablocks-hero__mask,
+.novablocks-hero__background,
+.novablocks-hero__slider {
     @include cover;
 }
 
-body:not(.wp-admin) .nova-hero__background {
+body:not(.wp-admin) .novablocks-hero__background {
 	opacity: 0;
 	transition: opacity .3s ease-out;
 }
 
-.nova-hero__media[class] {
+.novablocks-hero__media[class] {
     @include image-cover;
 }
 
-.nova-hero__foreground {
+.novablocks-hero__foreground {
     position: relative;
 
     display: flex;
@@ -27,7 +27,7 @@ body:not(.wp-admin) .nova-hero__background {
     width: 100%;
 }
 
-.nova-hero__foreground[class] {
+.novablocks-hero__foreground[class] {
 
 	h1, h2, h3, h4, h5, h6,
 	ul, ol, dl,
@@ -36,7 +36,7 @@ body:not(.wp-admin) .nova-hero__background {
 	}
 }
 
-.nova-hero__indicator {
+.novablocks-hero__indicator {
     position: absolute;
     bottom: 0;
     left: 0;

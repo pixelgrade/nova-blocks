@@ -69,9 +69,7 @@ export const getMapAccentColor = function() {
 	return fallbackColor;
 }
 
-export const getMarkersCenter = function() {
-	const { attributes } = this.props;
-	const { markers } = attributes;
+export const getCenterFromMarkers = function( markers ) {
 	const bounds = new google.maps.LatLngBounds();
 
 	// when there is only one marker bounds aren't accurate at great zoom levels
@@ -95,4 +93,8 @@ export const getMarkersCenter = function() {
 	} );
 
 	return bounds.getCenter();
+}
+
+export const getMarkersCenter = function() {
+	return getCenterFromMarkers( this.props.attributes.markers );
 }

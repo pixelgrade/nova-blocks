@@ -11,11 +11,12 @@
 	}
 }
 
-.novablocks-map__map-parallax {
-	@include cover;
+.novablocks-map__parallax {
 	will-change: transform;
 }
 
-.novablocks-map__map {
+.novablocks-map__map,
+.novablocks-map__mask,
+.novablocks-map__parallax {
 	@include cover;
 }

@@ -20,15 +20,12 @@
     .novablocks-map__map-container {
       padding-top: 56.25%; } }
 
-.novablocks-map__map-parallax {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.novablocks-map__parallax {
   will-change: transform; }
 
-.novablocks-map__map {
+.novablocks-map__map,
+.novablocks-map__mask,
+.novablocks-map__parallax {
   position: absolute;
   top: 0;
   right: 0;
@@ -237,27 +234,27 @@
     -webkit-transform: rotate(-45deg);
             transform: rotate(-45deg); } }
 
-.nova-hero {
+.novablocks-hero {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
 
-.nova-hero__mask,
-.nova-hero__background,
-.nova-hero__slider {
+.novablocks-hero__mask,
+.novablocks-hero__background,
+.novablocks-hero__slider {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
 
-body:not(.wp-admin) .nova-hero__background {
+body:not(.wp-admin) .novablocks-hero__background {
   opacity: 0;
   -webkit-transition: opacity .3s ease-out;
   transition: opacity .3s ease-out; }
 
-.nova-hero__media[class] {
+.novablocks-hero__media[class] {
   position: absolute;
   top: 0;
   left: 0;
@@ -267,13 +264,13 @@ body:not(.wp-admin) .nova-hero__background {
   width: auto;
   height: auto; }
   @supports (transform: translate(-50%, -50%)) {
-    .nova-hero__media[class] {
+    .novablocks-hero__media[class] {
       top: 50%;
       left: 50%;
       -webkit-transform: translate(-50%, -50%);
               transform: translate(-50%, -50%); } }
   @supports ((-o-object-fit: cover) or (object-fit: cover)) {
-    .nova-hero__media[class] {
+    .novablocks-hero__media[class] {
       width: 100%;
       height: 100%;
       -o-object-fit: cover;
@@ -283,7 +280,7 @@ body:not(.wp-admin) .nova-hero__background {
       -webkit-transform: none;
               transform: none; } }
 
-.nova-hero__foreground {
+.novablocks-hero__foreground {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -296,12 +293,12 @@ body:not(.wp-admin) .nova-hero__background {
           justify-content: center;
   width: 100%; }
 
-.nova-hero__foreground[class] h1, .nova-hero__foreground[class] h2, .nova-hero__foreground[class] h3, .nova-hero__foreground[class] h4, .nova-hero__foreground[class] h5, .nova-hero__foreground[class] h6,
-.nova-hero__foreground[class] ul, .nova-hero__foreground[class] ol, .nova-hero__foreground[class] dl,
-.nova-hero__foreground[class] .editor-block-list__block {
+.novablocks-hero__foreground[class] h1, .novablocks-hero__foreground[class] h2, .novablocks-hero__foreground[class] h3, .novablocks-hero__foreground[class] h4, .novablocks-hero__foreground[class] h5, .novablocks-hero__foreground[class] h6,
+.novablocks-hero__foreground[class] ul, .novablocks-hero__foreground[class] ol, .novablocks-hero__foreground[class] dl,
+.novablocks-hero__foreground[class] .editor-block-list__block {
   color: inherit; }
 
-.nova-hero__indicator {
+.novablocks-hero__indicator {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -313,7 +310,7 @@ body:not(.wp-admin) .nova-hero__background {
       -ms-flex-pack: center;
           justify-content: center;
   color: inherit; }
-  .nova-hero__indicator:after {
+  .novablocks-hero__indicator:after {
     content: "";
     position: absolute;
     top: 50%;
@@ -493,29 +490,29 @@ body:not(.wp-admin) .nova-hero__background {
 .nova-media__image:nth-child(n+5) {
   display: none; }
 
-.nova-slideshow {
+.novablocks-slideshow {
   position: relative; }
 
-.nova-slideshow__slide {
+.novablocks-slideshow__slide {
   position: relative;
   overflow: hidden; }
 
-.nova-slideshow.is-ready .nova-slideshow__slider,
-.nova-slideshow.is-ready .nova-slideshow__mask,
-.nova-slideshow.is-ready .nova-slideshow__foreground,
-.nova-slideshow.is-ready .nova-slideshow__content,
-.nova-slideshow.is-ready .nova-slideshow__background {
+.novablocks-slideshow.is-ready .novablocks-slideshow__slider,
+.novablocks-slideshow.is-ready .novablocks-slideshow__mask,
+.novablocks-slideshow.is-ready .novablocks-slideshow__foreground,
+.novablocks-slideshow.is-ready .novablocks-slideshow__content,
+.novablocks-slideshow.is-ready .novablocks-slideshow__background {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0; }
 
-.nova-slideshow__background,
-.nova-slideshow__foreground {
+.novablocks-slideshow__background,
+.novablocks-slideshow__foreground {
   will-change: transform; }
 
-.nova-slideshow__media {
+.novablocks-slideshow__media {
   position: absolute;
   top: 0;
   left: 0;
@@ -525,13 +522,13 @@ body:not(.wp-admin) .nova-hero__background {
   width: auto;
   height: auto; }
   @supports (transform: translate(-50%, -50%)) {
-    .nova-slideshow__media {
+    .novablocks-slideshow__media {
       top: 50%;
       left: 50%;
       -webkit-transform: translate(-50%, -50%);
               transform: translate(-50%, -50%); } }
   @supports ((-o-object-fit: cover) or (object-fit: cover)) {
-    .nova-slideshow__media {
+    .novablocks-slideshow__media {
       width: 100%;
       height: 100%;
       -o-object-fit: cover;
@@ -541,13 +538,13 @@ body:not(.wp-admin) .nova-hero__background {
       -webkit-transform: none;
               transform: none; } }
 
-.nova-slideshow__slider {
+.novablocks-slideshow__slider {
   z-index: 100; }
 
-.nova-slideshow__controls {
+.novablocks-slideshow__controls {
   z-index: 200; }
 
-.nova-slideshow__arrow {
+.novablocks-slideshow__arrow {
   --arrow-width: 2px;
   --arrow-color: #555555;
   --arrow-background: #FFFFFF;
@@ -558,9 +555,9 @@ body:not(.wp-admin) .nova-hero__background {
   height: 24px;
   background: var(--arrow-background);
   border-radius: 3px; }
-  .nova-slideshow__arrow:not(.nova-slideshow__arrow--disabled) {
+  .novablocks-slideshow__arrow:not(.novablocks-slideshow__arrow--disabled) {
     cursor: pointer; }
-  .nova-slideshow__arrow:before {
+  .novablocks-slideshow__arrow:before {
     content: "";
     display: block;
     position: absolute;
@@ -569,34 +566,34 @@ body:not(.wp-admin) .nova-hero__background {
     width: 8px;
     height: 8px; }
 
-.nova-slideshow__arrow--prev {
+.novablocks-slideshow__arrow--prev {
   left: 10px; }
-  .nova-slideshow__arrow--prev:before {
+  .novablocks-slideshow__arrow--prev:before {
     border-top: var(--arrow-width) solid var(--arrow-color);
     border-left: var(--arrow-width) solid var(--arrow-color);
     -webkit-transform: translate(-30%, -50%) rotate(-45deg);
             transform: translate(-30%, -50%) rotate(-45deg); }
 
-.nova-slideshow__arrow--next {
+.novablocks-slideshow__arrow--next {
   right: 10px; }
-  .nova-slideshow__arrow--next:before {
+  .novablocks-slideshow__arrow--next:before {
     border-top: var(--arrow-width) solid var(--arrow-color);
     border-right: var(--arrow-width) solid var(--arrow-color);
     -webkit-transform: translate(-70%, -50%) rotate(45deg);
             transform: translate(-70%, -50%) rotate(45deg); }
 
-.nova-slideshow .slick-list {
+.novablocks-slideshow .slick-list {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%; }
 
-.nova-slideshow .slick-list,
-.nova-slideshow .slick-track {
+.novablocks-slideshow .slick-list,
+.novablocks-slideshow .slick-track {
   height: 100%; }
 
-.nova-slideshow .slick-slide {
+.novablocks-slideshow .slick-slide {
   opacity: 1 !important; }
 
 .nova-blocks-slideshow-type-panel .block-editor-media-placeholder .components-placeholder__label,

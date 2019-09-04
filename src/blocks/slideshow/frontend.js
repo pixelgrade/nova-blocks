@@ -1,23 +1,23 @@
 import { debounce } from '../../utils';
 
-const BLOCK_SELECTOR = '.nova-slideshow';
-const SLIDER_SELECTOR = '.nova-slideshow__slider';
-const SLIDE_SELECTOR = '.nova-slideshow__slide';
-const CONTENT_SELECTOR = '.nova-slideshow__content';
-const BACKGROUND_SELECTOR = '.nova-slideshow__background';
-const FOREGROUND_SELECTOR = '.nova-slideshow__foreground';
+const BLOCK_SELECTOR = '.novablocks-slideshow';
+const SLIDER_SELECTOR = '.novablocks-slideshow__slider';
+const SLIDE_SELECTOR = '.novablocks-slideshow__slide';
+const CONTENT_SELECTOR = '.novablocks-slideshow__content';
+const BACKGROUND_SELECTOR = '.novablocks-slideshow__background';
+const FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
 const TRANSITION_DURATION = 1000;
 const TRANSITION_EASING = "easeInOutCirc";
 
 (function($, window, undefined) {
 
 	const $blocks = $( BLOCK_SELECTOR );
-	const $rellaxTarget = $( '.nova-slideshow--parallax' ).find( SLIDER_SELECTOR );
+	const $rellaxTarget = $( '.novablocks-slideshow--parallax' ).find( SLIDER_SELECTOR );
 
 	// initialize parallax effect
 	if ( typeof $.fn.rellax !== "undefined" ) {
 		$rellaxTarget.rellax( {
-			container: '.nova-slideshow__mask',
+			container: '.novablocks-slideshow__mask',
 			children: CONTENT_SELECTOR,
 		} );
 	}
@@ -28,7 +28,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 			$arrowContainer;
 
 		if ( $slider.children().length > 1 ) {
-			$arrowContainer = $( '<div class="nova-slideshow__controls">' ).appendTo( $block );
+			$arrowContainer = $( '<div class="novablocks-slideshow__controls">' ).appendTo( $block );
 
 			resetBlockMinHeight( $block );
 			$block.addClass( 'is-ready' );
@@ -39,8 +39,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 				rows: 0,
 				// for simpler reveal transitions between slides
 				fade: true,
-				prevArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--prev"></div>',
-				nextArrow: '<div class="nova-slideshow__arrow nova-slideshow__arrow--next"></div>',
+				prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
+				nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
 				appendArrows: $arrowContainer,
 				speed: TRANSITION_DURATION,
 			});
@@ -66,7 +66,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 		$block.find( SLIDE_SELECTOR ).each( function( i, obj ) {
 			var $slide = $( obj ),
-				$media = $slide.find( '.nova-slideshow__media' ),
+				$media = $slide.find( '.novablocks-slideshow__media' ),
 				width = $media.data( 'width' ),
 				height = $media.data( 'height' ),
 				aspectRatio = width / height,

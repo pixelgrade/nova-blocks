@@ -15,6 +15,10 @@
 	}
 }
 
+.novablocks-map {
+	position: relative;
+}
+
 .novablocks-map__map-container {
 
 	&:after {
@@ -25,10 +29,16 @@
 }
 
 .novablocks-map__search-box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
 
 	.components-placeholder {
 		min-height: 0;
-		margin-bottom: 5px;
+		border-bottom: 5px solid var(--theme-background-color);
+		background-color: rgba(240,240,240,0.9);
 	}
 
 	.components-placeholder__label:empty {

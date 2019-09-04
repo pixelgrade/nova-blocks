@@ -47,7 +47,7 @@ function novablocks_get_plugin_url() {
 function novablocks_body_class( $classes ) {
 	$bullets = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
     if ( $bullets ) {
-		$classes[] = 'nova-hero-bullets';
+		$classes[] = 'novablocks-hero-bullets';
 	}
 
 	return $classes;

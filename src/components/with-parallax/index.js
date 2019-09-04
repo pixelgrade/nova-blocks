@@ -23,18 +23,7 @@ const {
 } = wp.hooks;
 
 const parallaxAttributes = {
-	enableParallax: {
-		type: 'boolean',
-		default: true,
-	},
-	parallaxAmount: {
-		type: 'string',
-		default: '50',
-	},
-	parallaxCustomAmount: {
-		type: 'number',
-		default: 50,
-	},
+
 }
 
 const ParallaxContext = createContext();
