@@ -8,14 +8,14 @@
     --nova-content-width-narrow: 30%;
 }
 
-.nova-u-content-width {
+.novablocks-u-content-width {
     --nova-content-width: var(--nova-content-width-full);
 
-    .nova-u-content-width-large & {
+    .novablocks-u-content-width-large & {
         --nova-content-width: var(--nova-content-width-large);
     }
 
-    .nova-u-content-width-narrow & {
+    .novablocks-u-content-width-narrow & {
         --nova-content-width: var(--nova-content-width-narrow);
     }
 
@@ -24,18 +24,18 @@
     }
 }
 
-.nova-u-content-padding {
+.novablocks-u-content-padding {
     --nova-content-padding: var(--nova-spacing-small);
 
     padding: var(--nova-content-padding);
 
     @media only screen and (min-width: 1000px) {
 
-        .nova-u-spacing-medium & {
+        .novablocks-u-spacing-medium & {
             --nova-content-padding: var(--nova-spacing-medium);
         }
 
-        .nova-u-spacing-large & {
+        .novablocks-u-spacing-large & {
             --nova-content-padding: var(--nova-spacing-large);
         }
     }

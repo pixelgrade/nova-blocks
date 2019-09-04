@@ -1,14 +1,16 @@
 import './scss/style.scss';
 import './scss/editor.scss';
 
+import "./filters/with-font-size-picker";
+
+import "./blocks/google-map";
 import "./blocks/header";
+import "./blocks/headline";
 import "./blocks/hero";
 import "./blocks/logo";
 import "./blocks/media";
 import "./blocks/slideshow";
 import "./blocks/navigation";
-
-import "./components/with-font-size-picker";
 
 import { STORE_NAME } from './store';
 

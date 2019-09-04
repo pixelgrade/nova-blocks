@@ -17,6 +17,7 @@ export default registerBlockType( 'novablocks/logo',
 		category: 'nova-blocks',
 		icon: icons.media,
 		parent: 'novablocks/header',
+		save: function() {},
 		edit: function( props ) {
 			return (
 				<ServerSideRender

@@ -3,7 +3,6 @@
  */
 import {
 	LayoutPanel,
-	ParallaxPanel,
 	GalleryPreview,
 } from '../../components';
 
@@ -70,8 +69,6 @@ const SlideshowInspectorControls = function( props ) {
 						options={ minHeightOptions }
 					/>
 				</PanelBody>
-
-				<ParallaxPanel { ...props } />
 
 			</Fragment> }
 

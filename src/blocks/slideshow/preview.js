@@ -59,13 +59,13 @@ const SlideshowPreview = class extends Component {
 
 		const classes = [
 			className,
-			'nova-slideshow is-ready',
-			`nova-u-valign-${ verticalAlignment }`,
-			`nova-u-halign-${ horizontalAlignment }`,
-			`nova-u-spacing-${ contentPadding }`,
-			`nova-u-content-width-${ contentWidth }`,
-			`nova-u-background`,
-			`nova-u-background-${ overlayFilterStyle }`,
+			'novablocks-slideshow is-ready',
+			`novablocks-u-valign-${ verticalAlignment }`,
+			`novablocks-u-halign-${ horizontalAlignment }`,
+			`novablocks-u-spacing-${ contentPadding }`,
+			`novablocks-u-content-width-${ contentWidth }`,
+			`novablocks-u-background`,
+			`novablocks-u-background-${ overlayFilterStyle }`,
 		];
 
 		const styles = {
@@ -102,13 +102,13 @@ const SlideshowPreview = class extends Component {
 		return (
 			<Fragment>
 				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
-					<div className="nova-slideshow__slider" style={ styles.slider }>
-						<div className="nova-slideshow__slide">
+					<div className="novablocks-slideshow__slider" style={ styles.slider }>
+						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="nova-slideshow__content nova-u-content-padding" style={ styles.foreground }>
-									<div className="nova-u-content-align">
-										<div className="nova-u-content-width" style={ styles.content }>
+								<div className="novablocks-slideshow__content novablocks-u-content-padding" style={ styles.foreground }>
+									<div className="novablocks-u-content-align">
+										<div className="novablocks-u-content-width" style={ styles.content }>
 											{ !! previewImage.alt && <h2>{ previewImage.alt }</h2> }
 											{ !! previewImage.caption && <p>{ previewImage.caption }</p> }
 										</div>
@@ -117,17 +117,17 @@ const SlideshowPreview = class extends Component {
 							</Fragment> }
 						</div>
 					</div>
-					<div className="nova-slideshow__controls">
-						<div className="nova-slideshow__arrow nova-slideshow__arrow--prev nova-slideshow__arrow--disabled" onClick={ this.props.onPrevArrowClick }></div>
-						<div className="nova-slideshow__arrow nova-slideshow__arrow--next nova-slideshow__arrow--disabled" onClick={ this.props.onNextArrowClick }></div>
+					<div className="novablocks-slideshow__controls">
+						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled" onClick={ this.props.onPrevArrowClick }></div>
+						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled" onClick={ this.props.onNextArrowClick }></div>
 					</div>
 				</div> }
 				{ ! galleryImages.length &&
 					<Fragment>
 						<GalleryPlaceholder { ...this.props } />
-						<div className="nova-slideshow__controls">
-							<div className="nova-slideshow__arrow nova-slideshow__arrow--prev nova-slideshow__arrow--disabled"></div>
-							<div className="nova-slideshow__arrow nova-slideshow__arrow--next nova-slideshow__arrow--disabled"></div>
+						<div className="novablocks-slideshow__controls">
+							<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled"></div>
+							<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled"></div>
 						</div>
 					</Fragment> }
 			</Fragment>

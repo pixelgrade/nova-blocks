@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import withParallax from '../../components/with-parallax';
+import { withParallaxContext } from '../../components/with-parallax';
 
 const SlideshowBackground = function( props ) {
 	const {
@@ -14,6 +14,7 @@ const SlideshowBackground = function( props ) {
 	} = props;
 
 	const styles = {
+		...props.parallax.style,
 		opacity: 1,
 	};
 
@@ -22,10 +23,12 @@ const SlideshowBackground = function( props ) {
 	}
 
 	return (
-		<div className="nova-slideshow__background" style={ style }>
-			<img className="nova-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
+		<div className="nova-mask">
+			<div className="novablocks-slideshow__background" style={ style }>
+				<img className="novablocks-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
+			</div>
 		</div>
 	);
 };
 
-export default withParallax( SlideshowBackground );
+export default withParallaxContext( SlideshowBackground );

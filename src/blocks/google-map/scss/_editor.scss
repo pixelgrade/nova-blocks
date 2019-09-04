@@ -1,0 +1,55 @@
+.novablocks-block-editor-map-styles {
+
+	.block-editor-block-styles__item {
+		padding: 6px;
+	}
+
+	.block-editor-block-styles__item-preview {
+		padding: 0;
+		margin: 0;
+
+		img {
+			display: block;
+			max-width: 100%;
+		}
+	}
+}
+
+.novablocks-map {
+	position: relative;
+}
+
+.novablocks-map__map-container {
+
+	&:after {
+		content: "";
+		@include cover;
+		z-index: 5;
+	}
+}
+
+.novablocks-map__search-box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+
+	.components-placeholder {
+		min-height: 0;
+		border-bottom: 5px solid var(--theme-background-color);
+		background-color: rgba(240,240,240,0.9);
+	}
+
+	.components-placeholder__label:empty {
+		display: none;
+	}
+
+	.components-placeholder__fieldset {
+
+		input {
+			display: block;
+			width: 100%;
+		}
+	}
+}

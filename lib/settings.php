@@ -245,6 +245,13 @@ function novablocks_settings_init() {
 			),
 		),
     );
+
+	list( $color_palette, ) = (array) get_theme_support( 'editor-color-palette' );
+
+	if ( false !== $color_palette ) {
+		$nova_editor_settings['colors'] = $color_palette;
+	}
+
     $nova_editor_settings = apply_filters( 'novablocks_block_editor_settings', $nova_editor_settings, $post );
 
     $script = <<<JS
@@ -260,4 +267,4 @@ JS;
 }
 
 
-add_action( 'admin_init', 'novablocks_settings_init', 11 );
+add_action( 'admin_init', 'novablocks_settings_init', 30 );
