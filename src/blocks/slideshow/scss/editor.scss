@@ -1,20 +1,20 @@
 :root {
-    --nova-slideshow-transition-duration: 0.4s;
-    --nova-slideshow-transition-easing: ease-out;
-    --nova-slideshow-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+    --novablocks-slideshow-transition-duration: 0.4s;
+    --novablocks-slideshow-transition-easing: ease-out;
+    --novablocks-slideshow-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
 }
 
 .wp-block-pixelgrade-slideshow {
-    transition: var(--nova-hero-transition);
+    transition: var(--novablocks-hero-transition);
     transition-property: color;
 }
 
-.nova-slideshow__media {
-    transition: var(--nova-hero-transition);
+.novablocks-slideshow__media {
+    transition: var(--novablocks-hero-transition);
     transition-property: opacity;
 }
 
-.nova-slideshow__gallery-edit {
+.novablocks-slideshow__gallery-edit {
     --gallery-spacing: 10px;
 
     display: flex;
@@ -30,7 +30,7 @@
     }
 }
 
-.nova-slideshow__gallery-item {
+.novablocks-slideshow__gallery-item {
     border-radius: 4px;
     border: 1px solid #EBEBEB;
     padding: 4px;
@@ -42,7 +42,7 @@
     }
 }
 
-.nova-slideshow__gallery-item--active {
+.novablocks-slideshow__gallery-item--active {
     border-width: 2px;
     border-color: #0085BA;
     padding: 3px;
@@ -50,11 +50,11 @@
 
 .editor-block-list__block-edit[class][class] {
 
-    .nova-slideshow__slide {
+    .novablocks-slideshow__slide {
         @include cover;
     }
 
-    .nova-slideshow__slider {
+    .novablocks-slideshow__slider {
         position: static;
         display: flex;
         flex-direction: column;

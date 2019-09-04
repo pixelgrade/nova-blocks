@@ -13,11 +13,27 @@ function novablocks_admin_init() {
 	$style_path = '/dist/css/blocks.editor.css';
 	$block_path = '/dist/js/editor.blocks.js';
 
+	$script_dependencies = array(
+		'wp-i18n',
+		'wp-api',
+		'wp-blocks',
+		'wp-components',
+		'wp-dom',
+		'wp-editor',
+		'wp-element',
+	);
+
+	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+	wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places' );
+	if ( $google_maps_api_key !== '' ) {
+		$script_dependencies[] = 'google-maps';
+	}
+
 	// Enqueue the bundled block JS file
 	wp_register_script(
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
-		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' )
+		$script_dependencies
 	);
 
 	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );
@@ -78,11 +94,26 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
+	$script_dependencies = array(
+		'jquery',
+		'imagesloaded',
+		'nova-blocks-rellax',
+		'nova-blocks-slick',
+		'nova-blocks-velocity',
+		'wp-data'
+	);
+
+	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+	wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places' );
+	if ( $google_maps_api_key !== '' ) {
+		$script_dependencies[] = 'google-maps';
+	}
+
 	$block_path = '/dist/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
-		array( 'jquery', 'jquery-ui-datepicker', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
+		$script_dependencies,
 		false,
 		true
 	);

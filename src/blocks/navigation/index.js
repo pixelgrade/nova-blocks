@@ -17,7 +17,8 @@ export default registerBlockType( 'novablocks/navigation',
 		description: __( 'Outputs chosen navigaiton menu markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
-		parent: 'novablocks/header',
+		parent: ['novablocks/header'],
+		save: function() {},
 		edit,
 	}
 )

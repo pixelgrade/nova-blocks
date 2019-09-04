@@ -62,14 +62,14 @@ class GalleryPreview extends Component {
 		} = this.props;
 
 		return (
-			<ul className="nova-slideshow__gallery-edit">
+			<ul className="novablocks-slideshow__gallery-edit">
 				{ galleryImages.map( ( img, index ) => {
 					const classes = [
-						'nova-slideshow__gallery-item',
+						'novablocks-slideshow__gallery-item',
 					];
 
 					if ( selected === index ) {
-						classes.push( 'nova-slideshow__gallery-item--active' );
+						classes.push( 'novablocks-slideshow__gallery-item--active' );
 					}
 
 					return (

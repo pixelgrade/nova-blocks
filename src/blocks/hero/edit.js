@@ -9,6 +9,7 @@ import {
 } from '../../components';
 
 import withSettings from '../../components/with-settings';
+import withParallax from '../../components/with-parallax';
 
 /**
  * WordPress dependencies
@@ -26,6 +27,11 @@ const {
 	Fragment,
 } = wp.element;
 
+const {
+	compose,
+	createHigherOrderComponent,
+} = wp.compose;
+
 const HeroEdit = function( props ) {
 	return (
 		<Fragment>
@@ -35,10 +41,12 @@ const HeroEdit = function( props ) {
 				<LayoutPanel { ...props } />
 				<HeightPanel { ...props } />
 				<ScrollIndicatorPanel { ...props } />
-				<ParallaxPanel { ...props } />
 			</InspectorControls>
 		</Fragment>
 	);
 };
 
-export default withSettings( HeroEdit );
+export default createHigherOrderComponent(compose([
+	withSettings,
+	withParallax,
+]))( HeroEdit );
