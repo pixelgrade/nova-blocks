@@ -60,12 +60,12 @@ const SlideshowPreview = class extends Component {
 		const classes = [
 			className,
 			'novablocks-slideshow is-ready',
-			`nova-u-valign-${ verticalAlignment }`,
-			`nova-u-halign-${ horizontalAlignment }`,
-			`nova-u-spacing-${ contentPadding }`,
-			`nova-u-content-width-${ contentWidth }`,
-			`nova-u-background`,
-			`nova-u-background-${ overlayFilterStyle }`,
+			`novablocks-u-valign-${ verticalAlignment }`,
+			`novablocks-u-halign-${ horizontalAlignment }`,
+			`novablocks-u-spacing-${ contentPadding }`,
+			`novablocks-u-content-width-${ contentWidth }`,
+			`novablocks-u-background`,
+			`novablocks-u-background-${ overlayFilterStyle }`,
 		];
 
 		const styles = {
@@ -106,9 +106,9 @@ const SlideshowPreview = class extends Component {
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="novablocks-slideshow__content nova-u-content-padding" style={ styles.foreground }>
-									<div className="nova-u-content-align">
-										<div className="nova-u-content-width" style={ styles.content }>
+								<div className="novablocks-slideshow__content novablocks-u-content-padding" style={ styles.foreground }>
+									<div className="novablocks-u-content-align">
+										<div className="novablocks-u-content-width" style={ styles.content }>
 											{ !! previewImage.alt && <h2>{ previewImage.alt }</h2> }
 											{ !! previewImage.caption && <p>{ previewImage.caption }</p> }
 										</div>

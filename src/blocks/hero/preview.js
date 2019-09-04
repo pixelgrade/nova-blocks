@@ -35,12 +35,12 @@ const HeroPreview = function( props ) {
 	const classes = [
 		className,
 		'novablocks-hero',
-		`nova-u-valign-${ verticalAlignment }`,
-		`nova-u-halign-${ horizontalAlignment }`,
-		`nova-u-spacing-${ contentPadding }`,
-		`nova-u-content-width-${ contentWidth }`,
-		`nova-u-background`,
-		`nova-u-background-${ overlayFilterStyle }`,
+		`novablocks-u-valign-${ verticalAlignment }`,
+		`novablocks-u-halign-${ horizontalAlignment }`,
+		`novablocks-u-spacing-${ contentPadding }`,
+		`novablocks-u-content-width-${ contentWidth }`,
+		`novablocks-u-background`,
+		`novablocks-u-background-${ overlayFilterStyle }`,
 	];
 
 	const styles = {
@@ -67,9 +67,9 @@ const HeroPreview = function( props ) {
 	return (
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>
 			<HeroBackground { ...props } />
-			<div className="novablocks-hero__foreground nova-u-content-padding" style={ styles.foreground }>
-				<div className="nova-u-content-align">
-					<div className="novablocks-hero__inner-container nova-u-content-width" style={ styles.content }>
+			<div className="novablocks-hero__foreground novablocks-u-content-padding" style={ styles.foreground }>
+				<div className="novablocks-u-content-align">
+					<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
 						<InnerBlocks template={ settings.hero.template } />
 					</div>
 					{ scrollIndicatorBlock && <div className="novablocks-hero__indicator"></div> }

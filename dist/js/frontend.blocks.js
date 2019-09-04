@@ -487,7 +487,6 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_google_map_frontend__ = __webpack_require__(228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_slideshow_frontend__ = __webpack_require__(230);
 
 
@@ -550,20 +549,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ }),
 
 /***/ 229:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(40);
+
 
 (function ($, window, undefined) {
 
-	// initialize parallax effect
-	if (typeof $.fn.rellax !== "undefined") {
-		$('.novablocks-hero--parallax').find('.novablocks-hero__background').rellax({
-			container: '.novablocks-hero__mask'
-		});
-
-		setTimeout(function () {
-			$('.novablocks-hero--parallax').find('.novablocks-hero__background').css('opacity', 1);
-		}, 300);
-	}
+	Object(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* parallaxInit */])('novablocks-hero');
 })(jQuery, window);
 
 /***/ }),
@@ -587,7 +581,7 @@ var TRANSITION_EASING = "easeInOutCirc";
 (function ($, window, undefined) {
 
 	var $blocks = $(BLOCK_SELECTOR);
-	var $rellaxTarget = $('.novablocks-slideshow--parallax').find(SLIDER_SELECTOR);
+	var $rellaxTarget = $blocks.filter('.has-parallax').find(SLIDER_SELECTOR);
 
 	// initialize parallax effect
 	if (typeof $.fn.rellax !== "undefined") {
@@ -900,9 +894,19 @@ var range = function range(min, max) {
 };
 
 var parallaxInit = function parallaxInit(BLOCK_NAME) {
-	jQuery('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax').rellax({
-		container: '.' + BLOCK_NAME + '__mask'
-	});
+
+	(function ($) {
+
+		var $target = $('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax');
+		$target.rellax({ container: '.' + BLOCK_NAME + '__mask' });
+
+		$target.each(function (i, obj) {
+			var $obj = $(obj);
+			$obj.imagesLoaded(function () {
+				$obj.css('opacity', 1);
+			});
+		});
+	})(jQuery);
 };
 
 /***/ }),

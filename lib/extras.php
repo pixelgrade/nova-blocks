@@ -117,24 +117,24 @@ function novablocks_get_block_extra_classes( $attributes ) {
 	$classes = array();
 
 	if ( ! empty( $attributes['verticalAlignment'] ) ) {
-		$classes[] = 'nova-u-valign-' . $attributes['verticalAlignment'];
+		$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
 	}
 
 	if ( ! empty( $attributes['horizontalAlignment'] ) ) {
-		$classes[] = 'nova-u-halign-' . $attributes['horizontalAlignment'];
+		$classes[] = 'novablocks-u-halign-' . $attributes['horizontalAlignment'];
 	}
 
 	if ( ! empty( $attributes['contentPadding'] ) ) {
-		$classes[] = 'nova-u-spacing-' . $attributes['contentPadding'];
+		$classes[] = 'novablocks-u-spacing-' . $attributes['contentPadding'];
 	}
 
 	if ( ! empty( $attributes['contentWidth'] ) ) {
-		$classes[] = 'nova-u-content-width-' . $attributes['contentWidth'];
+		$classes[] = 'novablocks-u-content-width-' . $attributes['contentWidth'];
 	}
 
-	$classes[] = 'nova-u-background';
+	$classes[] = 'novablocks-u-background';
 	if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
-		$classes[] = 'nova-u-background-' . $attributes['overlayFilterStyle'];
+		$classes[] = 'novablocks-u-background-' . $attributes['overlayFilterStyle'];
 	}
 
 	if ( ! novablocks_is_parallax_enabled( $attributes ) ) {
@@ -144,4 +144,144 @@ function novablocks_get_block_extra_classes( $attributes ) {
 	return $classes;
 }
 
+function novablocks_get_hero_attributes() {
+	return array_merge(
+		array(
+			'blockIndex'              => array(
+				'type'    => 'number',
+				'default' => - 1
+			),
+			'applyMinimumHeight'      => array(
+				'type'   => 'string',
+				'source' => 'meta',
+				'meta'   => 'novablocks_hero_apply_minimum_height'
+			),
+			'minHeight'               => array(
+				'type'   => 'number',
+				'source' => 'meta',
+				'meta'   => 'novablocks_hero_minimum_height'
+			),
+			'applyMinimumHeightBlock' => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'scrollIndicator'         => array(
+				'type'   => 'boolean',
+				'source' => 'meta',
+				'meta'   => 'novablocks_hero_scroll_indicator'
+			),
+			'scrollIndicatorBlock'    => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'backgroundType'          => array(
+				'type'    => 'string',
+				'default' => 'image'
+			),
+			'media'                   => array(
+				'type'    => 'object',
+				'default' => array(
+					'type'  => 'image',
+					'sizes' => array(
+						'full' => array(
+							'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
+						),
+					),
+				),
+			),
+		),
+		novablocks_get_alignment_attributes(),
+		novablocks_get_color_attributes(),
+		novablocks_get_content_padding_attributes(),
+		novablocks_get_content_width_attributes(),
+		novablocks_get_parallax_attributes()
+	);
+}
 
+function novablocks_get_slideshow_attributes() {
+	return array_merge(
+		array(
+			'galleryImages'         => array(
+				'type'    => 'array',
+				'items'   => [
+					'type' => 'object',
+				],
+				'default' => array()
+			),
+			'slideshowType'         => array(
+				'type'    => 'string',
+				'default' => 'gallery'
+			),
+			'minHeight'             => array(
+				'type'    => 'number',
+				'default' => 75,
+			),
+		),
+		novablocks_get_alignment_attributes(),
+		novablocks_get_color_attributes(),
+		novablocks_get_content_padding_attributes(),
+		novablocks_get_content_width_attributes(),
+		novablocks_get_parallax_attributes()
+	);
+}
+
+function novablocks_get_google_map_attributes() {
+	return array_merge(
+		array(
+			'align' => array(
+				'type' => 'string',
+				'default' => 'center',
+			),
+			'markers' => array(
+				'type' => 'array',
+				'default' => array(),
+				'items' => array(
+					'type' => array(),
+				),
+			),
+			'pinColor' => array(
+				'type' => 'string',
+				'default' => '#222222',
+			),
+			'showControls' => array(
+				'type' => 'boolean',
+				'default' => false,
+			),
+			'showIcons' => array(
+				'type' => 'boolean',
+				'default' => true,
+			),
+			'showLabels' => array(
+				'type' => 'boolean',
+				'default' => true,
+			),
+			'styleData' => array(
+				'type' => 'array',
+				'default' => array(),
+				'items' => array(
+					'type' => array(),
+				),
+			),
+			'styleSlug' => array(
+				'type' => 'string',
+				'default' => 'regular',
+			),
+			'zoom' => array(
+				'type' => 'number',
+				'default' => 17,
+			),
+		),
+		novablocks_get_parallax_attributes()
+	);
+}
+
+function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
+
+    foreach ( $attributes_config as $key => $value ) {
+	    if ( ! isset( $attributes[ $key ] ) ) {
+		    $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
+	    }
+    }
+
+    return $attributes;
+}

@@ -46,3 +46,13 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.novablocks-foreground[class] {
+
+	h1, h2, h3, h4, h5, h6,
+	ul, ol, dl,
+	.editor-block-list__block {
+		color: inherit;
+	}
+}
+

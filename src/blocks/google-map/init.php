@@ -11,57 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_google_maps_block_init' ) ) {
 
 	function novablocks_google_maps_block_init() {
-
-		$attributes = array_merge(
-			array(
-				'align' => array(
-					'type' => 'string',
-					'default' => 'center',
-				),
-				'markers' => array(
-					'type' => 'array',
-					'default' => array(),
-					'items' => array(
-						'type' => array(),
-					),
-				),
-				'pinColor' => array(
-					'type' => 'string',
-					'default' => '#222222',
-				),
-				'showControls' => array(
-					'type' => 'boolean',
-					'default' => false,
-				),
-				'showIcons' => array(
-					'type' => 'boolean',
-					'default' => true,
-				),
-				'showLabels' => array(
-					'type' => 'boolean',
-					'default' => true,
-				),
-				'styleData' => array(
-					'type' => 'array',
-					'default' => array(),
-					'items' => array(
-						'type' => array(),
-					),
-				),
-				'styleSlug' => array(
-					'type' => 'string',
-					'default' => 'regular',
-				),
-				'zoom' => array(
-					'type' => 'number',
-					'default' => 17,
-				),
-			),
-			novablocks_get_parallax_attributes()
-		);
-
 		register_block_type( 'novablocks/google-map', array(
-			'attributes'      => $attributes,
+			'attributes'      => novablocks_get_google_map_attributes(),
 			'render_callback' => 'novablocks_render_google_maps_block',
 		) );
 	}
@@ -71,6 +22,9 @@ add_action( 'init', 'novablocks_google_maps_block_init', 20 );
 if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 
 	function novablocks_render_google_maps_block( $attributes, $content ) {
+
+		$attributes_config = novablocks_get_google_map_attributes();
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(
 			array( 'novablocks-map' ),

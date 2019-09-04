@@ -12,7 +12,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 (function($, window, undefined) {
 
 	const $blocks = $( BLOCK_SELECTOR );
-	const $rellaxTarget = $( '.novablocks-slideshow--parallax' ).find( SLIDER_SELECTOR );
+	const $rellaxTarget = $blocks.filter( '.has-parallax' ).find( SLIDER_SELECTOR );
 
 	// initialize parallax effect
 	if ( typeof $.fn.rellax !== "undefined" ) {

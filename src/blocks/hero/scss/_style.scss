@@ -4,12 +4,12 @@
 }
 
 .novablocks-hero__mask,
-.novablocks-hero__background,
+.novablocks-hero__parallax,
 .novablocks-hero__slider {
     @include cover;
 }
 
-body:not(.wp-admin) .novablocks-hero__background {
+body:not(.wp-admin) .novablocks-hero__parallax {
 	opacity: 0;
 	transition: opacity .3s ease-out;
 }
@@ -25,15 +25,6 @@ body:not(.wp-admin) .novablocks-hero__background {
     align-items: center;
     justify-content: center;
     width: 100%;
-}
-
-.novablocks-hero__foreground[class] {
-
-	h1, h2, h3, h4, h5, h6,
-	ul, ol, dl,
-	.editor-block-list__block {
-		color: inherit;
-	}
 }
 
 .novablocks-hero__indicator {

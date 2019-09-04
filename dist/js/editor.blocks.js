@@ -1481,9 +1481,19 @@ var range = function range(min, max) {
 };
 
 var parallaxInit = function parallaxInit(BLOCK_NAME) {
-	jQuery('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax').rellax({
-		container: '.' + BLOCK_NAME + '__mask'
-	});
+
+	(function ($) {
+
+		var $target = $('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax');
+		$target.rellax({ container: '.' + BLOCK_NAME + '__mask' });
+
+		$target.each(function (i, obj) {
+			var $obj = $(obj);
+			$obj.imagesLoaded(function () {
+				$obj.css('opacity', 1);
+			});
+		});
+	})(jQuery);
 };
 
 /***/ }),
@@ -13445,7 +13455,7 @@ var HeroPreview = function HeroPreview(props) {
 	    settings = props.settings;
 
 
-	var classes = [className, 'novablocks-hero', 'nova-u-valign-' + verticalAlignment, 'nova-u-halign-' + horizontalAlignment, 'nova-u-spacing-' + contentPadding, 'nova-u-content-width-' + contentWidth, 'nova-u-background', 'nova-u-background-' + overlayFilterStyle];
+	var classes = [className, 'novablocks-hero', 'novablocks-u-valign-' + verticalAlignment, 'novablocks-u-halign-' + horizontalAlignment, 'novablocks-u-spacing-' + contentPadding, 'novablocks-u-content-width-' + contentWidth, 'novablocks-u-background', 'novablocks-u-background-' + overlayFilterStyle];
 
 	var styles = {
 		hero: {
@@ -13474,13 +13484,13 @@ var HeroPreview = function HeroPreview(props) {
 		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__background__["a" /* default */], props),
 		wp.element.createElement(
 			'div',
-			{ className: 'novablocks-hero__foreground nova-u-content-padding', style: styles.foreground },
+			{ className: 'novablocks-hero__foreground novablocks-u-content-padding', style: styles.foreground },
 			wp.element.createElement(
 				'div',
-				{ className: 'nova-u-content-align' },
+				{ className: 'novablocks-u-content-align' },
 				wp.element.createElement(
 					'div',
-					{ className: 'novablocks-hero__inner-container nova-u-content-width', style: styles.content },
+					{ className: 'novablocks-hero__inner-container novablocks-u-content-width', style: styles.content },
 					wp.element.createElement(InnerBlocks, { template: settings.hero.template })
 				),
 				scrollIndicatorBlock && wp.element.createElement('div', { className: 'novablocks-hero__indicator' })
@@ -14260,7 +14270,7 @@ var SlideshowPreview = function (_Component) {
 			    className = _props.className;
 
 
-			var classes = [className, 'novablocks-slideshow is-ready', 'nova-u-valign-' + verticalAlignment, 'nova-u-halign-' + horizontalAlignment, 'nova-u-spacing-' + contentPadding, 'nova-u-content-width-' + contentWidth, 'nova-u-background', 'nova-u-background-' + overlayFilterStyle];
+			var classes = [className, 'novablocks-slideshow is-ready', 'novablocks-u-valign-' + verticalAlignment, 'novablocks-u-halign-' + horizontalAlignment, 'novablocks-u-spacing-' + contentPadding, 'novablocks-u-content-width-' + contentWidth, 'novablocks-u-background', 'novablocks-u-background-' + overlayFilterStyle];
 
 			var styles = {
 				slideshow: { color: contentColor },
@@ -14311,13 +14321,13 @@ var SlideshowPreview = function (_Component) {
 								wp.element.createElement(__WEBPACK_IMPORTED_MODULE_5__background__["a" /* default */], this.props),
 								wp.element.createElement(
 									'div',
-									{ className: 'novablocks-slideshow__content nova-u-content-padding', style: styles.foreground },
+									{ className: 'novablocks-slideshow__content novablocks-u-content-padding', style: styles.foreground },
 									wp.element.createElement(
 										'div',
-										{ className: 'nova-u-content-align' },
+										{ className: 'novablocks-u-content-align' },
 										wp.element.createElement(
 											'div',
-											{ className: 'nova-u-content-width', style: styles.content },
+											{ className: 'novablocks-u-content-width', style: styles.content },
 											!!previewImage.alt && wp.element.createElement(
 												'h2',
 												null,

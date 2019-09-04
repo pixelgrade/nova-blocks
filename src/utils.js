@@ -23,7 +23,18 @@ export const range = function( min, max ) {
 }
 
 export const parallaxInit = function( BLOCK_NAME ) {
-	jQuery( `.${BLOCK_NAME}` ).filter( '.has-parallax' ).find( `.${BLOCK_NAME}__parallax` ).rellax({
-		container: `.${BLOCK_NAME}__mask`,
-	});
+
+	(function($) {
+
+		const $target = $( `.${BLOCK_NAME}` ).filter( '.has-parallax' ).find( `.${BLOCK_NAME}__parallax` )
+		$target.rellax( { container: `.${BLOCK_NAME}__mask`, } );
+
+		$target.each( ( i, obj ) => {
+			const $obj = $( obj );
+			$obj.imagesLoaded(() => {
+				$obj.css( 'opacity', 1 );
+			});
+		} );
+
+	})( jQuery )
 }

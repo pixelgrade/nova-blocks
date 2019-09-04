@@ -36,60 +36,8 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 			'show_in_rest' => true,
 		) );
 
-		$attributes = array_merge(
-			array(
-				'blockIndex'              => array(
-					'type'    => 'number',
-					'default' => - 1
-				),
-				'applyMinimumHeight'      => array(
-					'type'   => 'string',
-					'source' => 'meta',
-					'meta'   => 'novablocks_hero_apply_minimum_height'
-				),
-				'minHeight'               => array(
-					'type'   => 'number',
-					'source' => 'meta',
-					'meta'   => 'novablocks_hero_minimum_height'
-				),
-				'applyMinimumHeightBlock' => array(
-					'type'    => 'boolean',
-					'default' => false
-				),
-				'scrollIndicator'         => array(
-					'type'   => 'boolean',
-					'source' => 'meta',
-					'meta'   => 'novablocks_hero_scroll_indicator'
-				),
-				'scrollIndicatorBlock'    => array(
-					'type'    => 'boolean',
-					'default' => false
-				),
-				'backgroundType'          => array(
-					'type'    => 'string',
-					'default' => 'image'
-				),
-				'media'                   => array(
-					'type'    => 'object',
-					'default' => array(
-						'type'  => 'image',
-						'sizes' => array(
-							'full' => array(
-								'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-							),
-						),
-					),
-				),
-			),
-			novablocks_get_alignment_attributes(),
-			novablocks_get_color_attributes(),
-			novablocks_get_content_padding_attributes(),
-			novablocks_get_content_width_attributes(),
-			novablocks_get_parallax_attributes()
-		);
-
 		register_block_type( 'novablocks/hero', array(
-			'attributes' => $attributes,
+			'attributes' => novablocks_get_hero_attributes(),
 			'render_callback' => 'novablocks_render_hero_block',
 		) );
 	}
@@ -100,11 +48,14 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 	function novablocks_render_hero_block( $attributes, $content ) {
 
+
+	    $attributes_config = novablocks_get_hero_attributes();
+	    $attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
 		$classes = array_merge(
 			array( 'novablocks-hero', 'alignfull' ),
 			novablocks_get_block_extra_classes( $attributes )
 		);
-
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
@@ -146,7 +97,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
             <div class="novablocks-hero__mask">
-                <div class="novablocks-hero__background" data-rellax-amount="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
+                <div class="novablocks-hero__parallax" data-rellax-amount="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
 					<?php if ( $media['type'] === 'image' && ! empty( $media['sizes']['full']['url'] ) ) { ?>
                         <img class="novablocks-hero__media"
                              src="<?php echo esc_url( $media['sizes']['full']['url'] ); ?>"
@@ -160,9 +111,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 					<?php } ?>
                 </div>
             </div>
-            <div class="novablocks-hero__foreground nova-u-content-padding" style="<?php echo esc_attr( $foregroundStyle ); ?>">
-                <div class="nova-u-content-align">
-                    <div class="novablocks-hero__inner-container nova-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
+            <div class="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding" style="<?php echo esc_attr( $foregroundStyle ); ?>">
+                <div class="novablocks-u-content-align">
+                    <div class="novablocks-hero__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
 						<?php echo wp_kses_post( $content ); ?>
                     </div>
 					<?php if ( ! empty( $attributes['scrollIndicatorBlock'] ) ) { ?>

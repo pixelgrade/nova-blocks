@@ -241,7 +241,7 @@
   display: flex; }
 
 .novablocks-hero__mask,
-.novablocks-hero__background,
+.novablocks-hero__parallax,
 .novablocks-hero__slider {
   position: absolute;
   top: 0;
@@ -249,7 +249,7 @@
   bottom: 0;
   left: 0; }
 
-body:not(.wp-admin) .novablocks-hero__background {
+body:not(.wp-admin) .novablocks-hero__parallax {
   opacity: 0;
   -webkit-transition: opacity .3s ease-out;
   transition: opacity .3s ease-out; }
@@ -292,11 +292,6 @@ body:not(.wp-admin) .novablocks-hero__background {
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%; }
-
-.novablocks-hero__foreground[class] h1, .novablocks-hero__foreground[class] h2, .novablocks-hero__foreground[class] h3, .novablocks-hero__foreground[class] h4, .novablocks-hero__foreground[class] h5, .novablocks-hero__foreground[class] h6,
-.novablocks-hero__foreground[class] ul, .novablocks-hero__foreground[class] ol, .novablocks-hero__foreground[class] dl,
-.novablocks-hero__foreground[class] .editor-block-list__block {
-  color: inherit; }
 
 .novablocks-hero__indicator {
   position: absolute;
@@ -873,6 +868,11 @@ body:not(.wp-admin) .novablocks-hero__background {
 .u-container-width {
   margin-left: auto;
   margin-right: auto; }
+
+.novablocks-foreground[class] h1, .novablocks-foreground[class] h2, .novablocks-foreground[class] h3, .novablocks-foreground[class] h4, .novablocks-foreground[class] h5, .novablocks-foreground[class] h6,
+.novablocks-foreground[class] ul, .novablocks-foreground[class] ol, .novablocks-foreground[class] dl,
+.novablocks-foreground[class] .editor-block-list__block {
+  color: inherit; }
 :root {
   --nova-spacing-small: 5%;
   --nova-spacing-medium: 10%;
@@ -881,39 +881,39 @@ body:not(.wp-admin) .novablocks-hero__background {
   --nova-content-width-large: 70%;
   --nova-content-width-narrow: 30%; }
 
-.nova-u-content-width {
+.novablocks-u-content-width {
   --nova-content-width: var(--nova-content-width-full); }
-  .nova-u-content-width-large .nova-u-content-width {
+  .novablocks-u-content-width-large .novablocks-u-content-width {
     --nova-content-width: var(--nova-content-width-large); }
-  .nova-u-content-width-narrow .nova-u-content-width {
+  .novablocks-u-content-width-narrow .novablocks-u-content-width {
     --nova-content-width: var(--nova-content-width-narrow); }
   @media only screen and (min-width: 1000px) {
-    .nova-u-content-width {
+    .novablocks-u-content-width {
       max-width: var(--nova-content-width); } }
 
-.nova-u-content-padding {
+.novablocks-u-content-padding {
   --nova-content-padding: var(--nova-spacing-small);
   padding: var(--nova-content-padding); }
   @media only screen and (min-width: 1000px) {
-    .nova-u-spacing-medium .nova-u-content-padding {
+    .novablocks-u-spacing-medium .novablocks-u-content-padding {
       --nova-content-padding: var(--nova-spacing-medium); }
-    .nova-u-spacing-large .nova-u-content-padding {
+    .novablocks-u-spacing-large .novablocks-u-content-padding {
       --nova-content-padding: var(--nova-spacing-large); } }
 :root {
   --bg-master-dark: #000000;
   --bg-master-light: #FFFFFF;
   --bg-master-none: transparent; }
 
-.nova-u-background-dark {
+.novablocks-u-background-dark {
   --element-background: var(--bg-master-dark); }
 
-.nova-u-background-light {
+.novablocks-u-background-light {
   --element-background: var(--bg-master-light); }
 
-.nova-u-background-none {
+.novablocks-u-background-none {
   --element-background: var(--bg-master-none); }
 
-.nova-u-background {
+.novablocks-u-background {
   background-color: var(--element-background);
   -webkit-transition: background-color 0.4s ease-out;
   transition: background-color 0.4s ease-out; }
@@ -923,37 +923,37 @@ body:not(.wp-admin) .novablocks-hero__background {
 
 .nova-hide-clear-color .components-color-palette__clear {
   display: none; }
-.nova-u-content-align {
+.novablocks-u-content-align {
   position: relative;
   width: 100%;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
-  .nova-u-halign-left .nova-u-content-align {
+  .novablocks-u-halign-left .novablocks-u-content-align {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
     text-align: left; }
-  .nova-u-halign-center .nova-u-content-align {
+  .novablocks-u-halign-center .novablocks-u-content-align {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
     text-align: center; }
-  .nova-u-halign-right .nova-u-content-align {
+  .novablocks-u-halign-right .novablocks-u-content-align {
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;
     text-align: right; }
-  .nova-u-valign-top .nova-u-content-align {
+  .novablocks-u-valign-top .novablocks-u-content-align {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start; }
-  .nova-u-valign-center .nova-u-content-align {
+  .novablocks-u-valign-center .novablocks-u-content-align {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center; }
-  .nova-u-valign-bottom .nova-u-content-align {
+  .novablocks-u-valign-bottom .novablocks-u-content-align {
     -webkit-box-align: end;
         -ms-flex-align: end;
             align-items: flex-end; }
