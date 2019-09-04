@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import withParallax from '../../components/with-parallax';
+import { withParallaxContext } from '../../components/with-parallax';
 
 const HeroBackground = function( props ) {
 	const {
@@ -14,6 +14,7 @@ const HeroBackground = function( props ) {
 	} = props;
 
 	const styles = {
+		...props.parallax.style,
 		opacity: 1,
 	};
 
@@ -22,13 +23,15 @@ const HeroBackground = function( props ) {
 	}
 
 	return (
-		<div className="nova-hero__background" style={ style }>
-			{ media.type === 'image' && typeof media.sizes !== 'undefined' &&
-				<img className="nova-hero__media" src={ media.sizes.full.url } style={ styles } alt={ media.alt } /> }
-			{ media.type === 'video' &&
-				<video muted autoPlay loop className="nova-hero__media" src={ media.url } style={ styles } /> }
+		<div className="nova-mask">
+			<div className="novablocks-hero__background" style={ style }>
+				{ media.type === 'image' && typeof media.sizes !== 'undefined' &&
+					<img className="novablocks-hero__media" src={ media.sizes.full.url } style={ styles } alt={ media.alt } /> }
+				{ media.type === 'video' &&
+					<video muted autoPlay loop className="novablocks-hero__media" src={ media.url } style={ styles } /> }
+			</div>
 		</div>
 	);
 };
 
-export default withParallax( HeroBackground );
+export default withParallaxContext( HeroBackground );

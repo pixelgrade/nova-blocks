@@ -47,7 +47,7 @@ function novablocks_get_plugin_url() {
 function novablocks_body_class( $classes ) {
 	$bullets = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
     if ( $bullets ) {
-		$classes[] = 'nova-hero-bullets';
+		$classes[] = 'novablocks-hero-bullets';
 	}
 
 	return $classes;
@@ -67,9 +67,11 @@ function novablocks_add_blocks_category( $categories, $post ) {
 }
 add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 
+require_once dirname( __FILE__ ) . '/lib/extras.php';
 require_once dirname( __FILE__ ) . '/lib/settings.php';
 require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 
+require_once dirname( __FILE__ ) . '/src/blocks/google-map/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/header/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/hero/init.php';
 require_once dirname( __FILE__ ) . '/src/blocks/logo/init.php';

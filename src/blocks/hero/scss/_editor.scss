@@ -1,21 +1,21 @@
 :root {
-    --nova-hero-transition-duration: 0.4s;
-    --nova-hero-transition-easing: ease-out;
-    --nova-hero-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+    --novablocks-hero-transition-duration: 0.4s;
+    --novablocks-hero-transition-easing: ease-out;
+    --novablocks-hero-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
 }
 
 .wp-block-pixelgrade-hero {
-    transition: var(--nova-hero-transition);
+    transition: var(--novablocks-hero-transition);
     transition-property: color;
 }
 
-.nova-hero__media {
-    transition: var(--nova-hero-transition);
+.novablocks-hero__media {
+    transition: var(--novablocks-hero-transition);
     transition-property: opacity;
 }
 
-.nova-hero__mask {
-    overflow: hidden;
+.novablocks-hero__mask {
+	overflow: hidden;
 }
 
 .pixelgrade-hero-block-toolbar-dropdown {

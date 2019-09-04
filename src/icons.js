@@ -102,3 +102,14 @@ export const swap = (
         <path d='M5 19H13L11.41 17H9.24L8.4 18.1L7 16.3L5 19Z' fill='currentColor' />
     </svg>
 );
+
+export const map = (
+	<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+		<path
+			fill="#6565F2"
+			fillRule="evenodd"
+			d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM5.45 10.55a6.55 6.55 0 1113.1 0c0 2.236-2.504 5.893-4.416 8.359a2.677 2.677 0 01-4.268 0c-1.912-2.466-4.415-6.123-4.415-8.36zm3.4-.186a3.15 3.15 0 106.301 0 3.15 3.15 0 00-6.301 0z"
+			clipRule="evenodd"
+		/>
+	</svg>
+);

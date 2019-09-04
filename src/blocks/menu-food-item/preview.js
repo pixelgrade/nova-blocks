@@ -45,7 +45,7 @@ const FoodMenuItemPreview = function( props ) {
 					 className="nova-food-menu-item__label"
 					 value={highlightLabel}
 					 onChange={( highlightLabel ) => setAttributes( {highlightLabel} )}
-					 formattingControls={ [] }
+					 allowedFormats={ [] }
 				 />
 			 </div>
 			}
@@ -76,7 +76,7 @@ const FoodMenuItemPreview = function( props ) {
 						 className="item-price--sale"
 						 value={salePrice}
 						 onChange={( salePrice ) => setAttributes( {salePrice} )}
-						 formattingControls={ [] }
+						 allowedFormats={ [] }
 					 />
 				 </div>
 				 }

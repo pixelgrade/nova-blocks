@@ -4,6 +4,8 @@
 import * as icons from '../../icons';
 import edit from './edit';
 
+import { parallaxAttributes } from '../../components/with-parallax';
+
 /**
  * WordPress dependencies
  */

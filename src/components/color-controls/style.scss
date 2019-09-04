@@ -6,12 +6,12 @@
 
 @each $color in dark, light, none {
 
-    .nova-u-background-#{$color} {
+    .novablocks-u-background-#{$color} {
         --element-background: var(--bg-master-#{$color});
     }
 }
 
-.nova-u-background {
+.novablocks-u-background {
     background-color: var(--element-background);
     transition: background-color 0.4s ease-out;
 }
