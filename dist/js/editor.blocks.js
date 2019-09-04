@@ -5953,8 +5953,8 @@ var Edit = function (_Component) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icons__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__edit__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__save__ = __webpack_require__(177);
 /**
  * Internal dependencies
  */
@@ -5998,23 +5998,16 @@ var select = wp.data.select;
 		}
 	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
-	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */],
-	getEditWrapperProps: function getEditWrapperProps() {
-		var settings = select('core/block-editor').getSettings();
-		return settings.alignWide ? { 'data-align': 'wide' } : {};
-	}
+	save: __WEBPACK_IMPORTED_MODULE_2__save__["a" /* default */]
 }));
 
 /***/ }),
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */
+/* 174 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__preview__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__inspector_controls__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__preview__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__inspector_controls__ = __webpack_require__(176);
 
 
 
@@ -6037,8 +6030,382 @@ var OpenTable = function OpenTable(props) {
 /* harmony default export */ __webpack_exports__["a"] = (OpenTable);
 
 /***/ }),
-/* 178 */,
-/* 179 */
+/* 175 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * WordPress dependencies
+ */
+
+var __ = wp.i18n.__;
+var RichText = wp.blockEditor.RichText;
+
+
+var OpenTablePreview = function OpenTablePreview(props) {
+	var _props$attributes = props.attributes,
+	    restaurantId = _props$attributes.restaurantId,
+	    dateLabel = _props$attributes.dateLabel,
+	    partySizeLabel = _props$attributes.partySizeLabel,
+	    timeLabel = _props$attributes.timeLabel,
+	    submitButtonText = _props$attributes.submitButtonText,
+	    setAttributes = props.setAttributes;
+
+
+	return wp.element.createElement(
+		"div",
+		{ className: "nova-opentable" },
+		wp.element.createElement(
+			"form",
+			{ method: "get", className: "nova-opentable__form", action: "//www.opentable.com/restaurant-search.aspx", target: "_blank" },
+			wp.element.createElement(
+				"div",
+				{ className: "nova-opentable__wrapper" },
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__date nova-opentable__input-wrap" },
+					wp.element.createElement(RichText, {
+						tagName: "label",
+						value: dateLabel,
+						onChange: function onChange(dateLabel) {
+							return setAttributes({ dateLabel: dateLabel });
+						},
+						allowedFormats: []
+					}),
+					wp.element.createElement("input", { name: "startDate", className: "otb-date otb-input", type: "text", value: "8/30/2019", readOnly: "", autoComplete: "off" })
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__time nova-opentable__input-wrap" },
+					wp.element.createElement(RichText, {
+						tagName: "label",
+						value: timeLabel,
+						onChange: function onChange(timeLabel) {
+							return setAttributes({ timeLabel: timeLabel });
+						},
+						allowedFormats: []
+					}),
+					wp.element.createElement(
+						"select",
+						{ className: "otb-time", name: "ResTime", "aria-label": "Reservation Time" },
+						wp.element.createElement(
+							"option",
+							{ value: "9:00am" },
+							"9:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:30am" },
+							"9:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:00am" },
+							"10:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:30am" },
+							"10:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:00am" },
+							"11:00 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:30am" },
+							"11:30 am"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12:00pm" },
+							"12:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12:30pm" },
+							"12:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "1:00pm" },
+							"1:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "1:30pm" },
+							"1:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2:00pm" },
+							"2:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2:30pm" },
+							"2:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3:00pm" },
+							"3:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3:30pm" },
+							"3:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4:00pm" },
+							"4:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4:30pm" },
+							"4:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5:00pm" },
+							"5:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5:30pm" },
+							"5:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6:00pm" },
+							"6:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6:30pm" },
+							"6:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7:00pm", selected: "" },
+							"7:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7:30pm" },
+							"7:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8:00pm" },
+							"8:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8:30pm" },
+							"8:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:00pm" },
+							"9:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9:30pm" },
+							"9:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:00pm" },
+							"10:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10:30pm" },
+							"10:30 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:00pm" },
+							"11:00 pm"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11:30pm" },
+							"11:30 pm"
+						)
+					)
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__size nova-opentable__input-wrap" },
+					wp.element.createElement(RichText, {
+						tagName: "label",
+						value: partySizeLabel,
+						onChange: function onChange(partySizeLabel) {
+							return setAttributes({ partySizeLabel: partySizeLabel });
+						},
+						allowedFormats: []
+					}),
+					wp.element.createElement(
+						"select",
+						{ id: "party-size", name: "partySize", className: "otb-people otb-input" },
+						wp.element.createElement(
+							"option",
+							{ value: "1" },
+							"1"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "2" },
+							"2"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "3" },
+							"3"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "4" },
+							"4"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "5" },
+							"5"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "6" },
+							"6"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "7" },
+							"7"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "8" },
+							"8"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "9" },
+							"9"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "10" },
+							"10"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "11" },
+							"11"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "12" },
+							"12"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "13" },
+							"13"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "14" },
+							"14"
+						),
+						wp.element.createElement(
+							"option",
+							{ value: "15" },
+							"15"
+						)
+					)
+				),
+				wp.element.createElement(
+					"div",
+					{ className: "nova-opentable__button-wrap wp-block-button" },
+					wp.element.createElement(RichText, {
+						placeholder: __('Find a table'),
+						value: submitButtonText,
+						className: "nova-opentable__button wp-block-button__link",
+						onChange: function onChange(submitButtonText) {
+							return setAttributes({ submitButtonText: submitButtonText });
+						},
+						allowedFormats: [],
+						keepPlaceholderOnFocus: true
+					})
+				)
+			),
+			wp.element.createElement("input", { type: "hidden", name: "RestaurantID", className: "RestaurantID", value: restaurantId }),
+			wp.element.createElement("input", { type: "hidden", name: "rid", className: "rid", value: restaurantId }),
+			wp.element.createElement("input", { type: "hidden", name: "GeoID", className: "GeoID", value: "15" }),
+			wp.element.createElement("input", { type: "hidden", name: "txtDateFormat", className: "txtDateFormat", value: "MM/dd/yyyy" }),
+			wp.element.createElement("input", { type: "hidden", name: "RestaurantReferralID", className: "RestaurantReferralID", value: restaurantId })
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (OpenTablePreview);
+
+/***/ }),
+/* 176 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
+var Fragment = wp.element.Fragment;
+var InspectorControls = wp.blockEditor.InspectorControls;
+var _wp$components = wp.components,
+    PanelBody = _wp$components.PanelBody,
+    TextControl = _wp$components.TextControl;
+
+
+var OpenTableInspectorControls = function OpenTableInspectorControls(props) {
+	var restaurantId = props.attributes.restaurantId,
+	    setAttributes = props.setAttributes;
+
+
+	return wp.element.createElement(
+		Fragment,
+		null,
+		wp.element.createElement(
+			InspectorControls,
+			null,
+			wp.element.createElement(
+				PanelBody,
+				{ title: __('Settings', '__plugin_txtd'), initialOpen: true },
+				wp.element.createElement(TextControl, {
+					label: 'Restaurant ID',
+					placeholder: __('895621'),
+					help: 'Restaurant Id',
+					type: 'number',
+					value: restaurantId,
+					onChange: function onChange(restaurantId) {
+						return setAttributes({ restaurantId: restaurantId });
+					}
+				})
+			)
+		)
+	);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (OpenTableInspectorControls);
+
+/***/ }),
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6351,377 +6718,6 @@ var OpenTableSave = function OpenTableSave(props) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (OpenTableSave);
-
-/***/ }),
-/* 180 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * WordPress dependencies
- */
-
-var __ = wp.i18n.__;
-var RichText = wp.blockEditor.RichText;
-
-
-var OpenTablePreview = function OpenTablePreview(props) {
-	var _props$attributes = props.attributes,
-	    restaurantId = _props$attributes.restaurantId,
-	    dateLabel = _props$attributes.dateLabel,
-	    partySizeLabel = _props$attributes.partySizeLabel,
-	    timeLabel = _props$attributes.timeLabel,
-	    submitButtonText = _props$attributes.submitButtonText,
-	    setAttributes = props.setAttributes;
-
-
-	return wp.element.createElement(
-		"div",
-		{ className: "nova-opentable" },
-		wp.element.createElement(
-			"form",
-			{ method: "get", className: "nova-opentable__form", action: "//www.opentable.com/restaurant-search.aspx", target: "_blank" },
-			wp.element.createElement(
-				"div",
-				{ className: "nova-opentable__wrapper" },
-				wp.element.createElement(
-					"div",
-					{ className: "nova-opentable__date nova-opentable__input-wrap" },
-					wp.element.createElement(RichText, {
-						tagName: "label",
-						value: dateLabel,
-						onChange: function onChange(dateLabel) {
-							return setAttributes({ dateLabel: dateLabel });
-						}
-					}),
-					wp.element.createElement("input", { name: "startDate", className: "otb-date otb-input", type: "text", value: "8/30/2019", readOnly: "", autoComplete: "off" })
-				),
-				wp.element.createElement(
-					"div",
-					{ className: "nova-opentable__time nova-opentable__input-wrap" },
-					wp.element.createElement(RichText, {
-						tagName: "label",
-						value: timeLabel,
-						onChange: function onChange(timeLabel) {
-							return setAttributes({ timeLabel: timeLabel });
-						}
-					}),
-					wp.element.createElement(
-						"select",
-						{ className: "otb-time", name: "ResTime", "aria-label": "Reservation Time" },
-						wp.element.createElement(
-							"option",
-							{ value: "9:00am" },
-							"9:00 am"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "9:30am" },
-							"9:30 am"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "10:00am" },
-							"10:00 am"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "10:30am" },
-							"10:30 am"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "11:00am" },
-							"11:00 am"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "11:30am" },
-							"11:30 am"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "12:00pm" },
-							"12:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "12:30pm" },
-							"12:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "1:00pm" },
-							"1:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "1:30pm" },
-							"1:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "2:00pm" },
-							"2:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "2:30pm" },
-							"2:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "3:00pm" },
-							"3:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "3:30pm" },
-							"3:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "4:00pm" },
-							"4:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "4:30pm" },
-							"4:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "5:00pm" },
-							"5:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "5:30pm" },
-							"5:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "6:00pm" },
-							"6:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "6:30pm" },
-							"6:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "7:00pm", selected: "" },
-							"7:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "7:30pm" },
-							"7:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "8:00pm" },
-							"8:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "8:30pm" },
-							"8:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "9:00pm" },
-							"9:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "9:30pm" },
-							"9:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "10:00pm" },
-							"10:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "10:30pm" },
-							"10:30 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "11:00pm" },
-							"11:00 pm"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "11:30pm" },
-							"11:30 pm"
-						)
-					)
-				),
-				wp.element.createElement(
-					"div",
-					{ className: "nova-opentable__size nova-opentable__input-wrap" },
-					wp.element.createElement(RichText, {
-						tagName: "label",
-						value: partySizeLabel,
-						onChange: function onChange(partySizeLabel) {
-							return setAttributes({ partySizeLabel: partySizeLabel });
-						}
-					}),
-					wp.element.createElement(
-						"select",
-						{ id: "party-size", name: "partySize", className: "otb-people otb-input" },
-						wp.element.createElement(
-							"option",
-							{ value: "1" },
-							"1"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "2" },
-							"2"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "3" },
-							"3"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "4" },
-							"4"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "5" },
-							"5"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "6" },
-							"6"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "7" },
-							"7"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "8" },
-							"8"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "9" },
-							"9"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "10" },
-							"10"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "11" },
-							"11"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "12" },
-							"12"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "13" },
-							"13"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "14" },
-							"14"
-						),
-						wp.element.createElement(
-							"option",
-							{ value: "15" },
-							"15"
-						)
-					)
-				),
-				wp.element.createElement(
-					"div",
-					{ className: "nova-opentable__button-wrap wp-block-button" },
-					wp.element.createElement(RichText, {
-						placeholder: __('Find a table'),
-						value: submitButtonText,
-						className: "nova-opentable__button wp-block-button__link",
-						onChange: function onChange(submitButtonText) {
-							return setAttributes({ submitButtonText: submitButtonText });
-						},
-						keepPlaceholderOnFocus: true
-					})
-				)
-			),
-			wp.element.createElement("input", { type: "hidden", name: "RestaurantID", className: "RestaurantID", value: restaurantId }),
-			wp.element.createElement("input", { type: "hidden", name: "rid", className: "rid", value: restaurantId }),
-			wp.element.createElement("input", { type: "hidden", name: "GeoID", className: "GeoID", value: "15" }),
-			wp.element.createElement("input", { type: "hidden", name: "txtDateFormat", className: "txtDateFormat", value: "MM/dd/yyyy" }),
-			wp.element.createElement("input", { type: "hidden", name: "RestaurantReferralID", className: "RestaurantReferralID", value: restaurantId })
-		)
-	);
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (OpenTablePreview);
-
-/***/ }),
-/* 181 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * WordPress dependencies
- */
-var __ = wp.i18n.__;
-var Fragment = wp.element.Fragment;
-var InspectorControls = wp.blockEditor.InspectorControls;
-var _wp$components = wp.components,
-    PanelBody = _wp$components.PanelBody,
-    TextControl = _wp$components.TextControl;
-
-
-var OpenTableInspectorControls = function OpenTableInspectorControls(props) {
-	var restaurantId = props.attributes.restaurantId,
-	    setAttributes = props.setAttributes;
-
-
-	return wp.element.createElement(
-		Fragment,
-		null,
-		wp.element.createElement(
-			InspectorControls,
-			null,
-			wp.element.createElement(
-				PanelBody,
-				{ title: __('Settings', '__plugin_txtd'), initialOpen: true },
-				wp.element.createElement(TextControl, {
-					label: 'Restaurant ID',
-					placeholder: __('895621'),
-					help: 'Restaurant Id',
-					type: 'number',
-					value: restaurantId,
-					onChange: function onChange(restaurantId) {
-						return setAttributes({ restaurantId: restaurantId });
-					}
-				})
-			)
-		)
-	);
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (OpenTableInspectorControls);
 
 /***/ })
 /******/ ]);

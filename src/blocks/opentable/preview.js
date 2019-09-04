@@ -28,6 +28,7 @@ const OpenTablePreview = function( props ) {
 							tagName="label"
 							value={dateLabel}
 							onChange={( dateLabel ) => setAttributes( {dateLabel} )}
+							allowedFormats={ [] }
 						/>
 
 						<input name="startDate" className="otb-date otb-input" type="text" value="8/30/2019" readOnly="" autoComplete="off"/>
@@ -38,6 +39,7 @@ const OpenTablePreview = function( props ) {
 							tagName="label"
 							value={timeLabel}
 							onChange={( timeLabel ) => setAttributes( {timeLabel} )}
+							allowedFormats={ [] }
 						/>
 						<select className="otb-time" name="ResTime" aria-label="Reservation Time">
 							<option value="9:00am">9:00 am</option>
@@ -77,6 +79,7 @@ const OpenTablePreview = function( props ) {
 							tagName="label"
 							value={partySizeLabel}
 							onChange={( partySizeLabel ) => setAttributes( {partySizeLabel} )}
+							allowedFormats={ [] }
 						/>
 						<select id="party-size" name="partySize" className="otb-people otb-input">
 							<option value="1">1</option>
@@ -102,6 +105,7 @@ const OpenTablePreview = function( props ) {
 							value={ submitButtonText }
 							className = "nova-opentable__button wp-block-button__link"
 							onChange={( submitButtonText ) => setAttributes( {submitButtonText} )}
+							allowedFormats={ [] }
 							keepPlaceholderOnFocus
 						/>
 					</div>

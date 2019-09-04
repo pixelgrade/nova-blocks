@@ -43,10 +43,6 @@ export default registerBlockType( 'novablocks/opentable',
 			}
 		},
 		edit,
-		save,
-		getEditWrapperProps() {
-			const settings = select( 'core/block-editor' ).getSettings();
-			return settings.alignWide ? { 'data-align': 'wide' } : {};
-		},
+		save
 	}
 )
