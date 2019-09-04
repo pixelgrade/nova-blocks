@@ -42,9 +42,10 @@ const FoodMenuItemPreview = function( props ) {
 			 <div className="nova-food-menu-item__highlight-label">
 				 <RichText
 					 tagName="h5"
-					 className="nova-food-menu-item--highlight"
+					 className="nova-food-menu-item__label"
 					 value={highlightLabel}
 					 onChange={( highlightLabel ) => setAttributes( {highlightLabel} )}
+					 formattingControls={ [] }
 				 />
 			 </div>
 			}
@@ -75,6 +76,7 @@ const FoodMenuItemPreview = function( props ) {
 						 className="item-price--sale"
 						 value={salePrice}
 						 onChange={( salePrice ) => setAttributes( {salePrice} )}
+						 formattingControls={ [] }
 					 />
 				 </div>
 				 }

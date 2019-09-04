@@ -35,7 +35,7 @@ const FoodMenuItemSave = function( props ) {
 
 			{enableHighlightFoodItem &&
 			 <div className="nova-food-menu-item__highlight-label">
-			 <h5 className="nova-food-menu-item--highlight"> {highlightLabel} </h5>
+			 <h5 className="nova-food-menu-item__label"> {highlightLabel} </h5>
 			 </div>
 			}
 

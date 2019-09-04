@@ -4,15 +4,13 @@
 const {__} = wp.i18n;
 const {Fragment} = wp.element;
 const {InspectorControls} = wp.blockEditor;
-const {PanelBody, ToggleControl, TextControl} = wp.components;
+const {PanelBody, ToggleControl} = wp.components;
 
 const FoodMenuItemInspectorControls = function( props ) {
 	const {
 		attributes: {
 			enableHighlightFoodItem,
-			highlightLabel,
-			enableSalePrice,
-			salePrice
+			enableSalePrice
 		},
 		setAttributes,
 	} = props;
@@ -29,30 +27,11 @@ const FoodMenuItemInspectorControls = function( props ) {
 						onChange={() => setAttributes( {enableHighlightFoodItem: ! enableHighlightFoodItem} )}
 					/>
 
-					{! ! enableHighlightFoodItem &&
-					 <TextControl
-						 label="Label"
-						 placeholder={__( 'Add a label...' )}
-						 value={highlightLabel}
-						 onChange={( featured ) => setAttributes( {highlightLabel: featured} )}
-					 />
-					}
-
 					<ToggleControl
 						label={__( 'On sale', '__plugin_txtd' )}
 						checked={enableSalePrice}
 						onChange={() => setAttributes( {enableSalePrice: ! enableSalePrice} )}
 					/>
-
-					{! ! enableSalePrice &&
-					 <TextControl
-						 label={__( 'Sale Price' )}
-						 placeholder={__( 'Add a sale price..' )}
-						 value={salePrice}
-						 onChange={( price ) => setAttributes( {salePrice: price} )}
-					 />
-
-					}
 
 				</PanelBody>
 			</InspectorControls>

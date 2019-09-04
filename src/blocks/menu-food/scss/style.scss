@@ -34,12 +34,6 @@
   grid-area: description;
 }
 
-.nova-food-menu-item--highlight {
-  grid-area: label;
-
-  font-size: 1em;
-}
-
 .item-price--sale {
   font-weight: 700;
   margin-left: 10px;
@@ -50,17 +44,6 @@
   opacity: .6;
 }
 
-.nova-food-menu-item--highlight[class][class] {
-  display: block;
-
-  margin: 0 -1.25em 1em;
-  width: calc(100% + 2.5em);
-  padding: .18em .8em .12em;
-
-  color: white;
-  background-color: $nova-blue;
-}
-
 .nova-food-menu-item--highlighted {
   grid-template-areas: "label label"
   "title prices"
@@ -68,7 +51,7 @@
 
   margin-left: -1em;
   margin-right: -1em;
-  padding: 0 1.25em 1.33em;
+  padding: 0 1.25em .75em;
   border: 2px solid $nova-blue;
 }
 
@@ -113,4 +96,21 @@
   height: 0;
   line-height: 0;
   border-bottom: .2em dotted currentColor;
+}
+
+.nova-food-menu-item__highlight-label {
+  grid-area: label;
+  display: block;
+  margin-left: -1.25em;
+  margin-right: -1.25em;
+  margin-bottom: .75em;
+  width: calc(100% + 2.5em);
+  padding: .5em 1.25em;
+  background-color: $nova-blue;
+}
+
+.nova-food-menu-item__label {
+  color: white;
+
+  margin: 0;
 }

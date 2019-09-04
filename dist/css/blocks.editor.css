@@ -229,8 +229,7 @@
 
 .nova-food-menu-item--highlighted[class] {
   margin-left: 0;
-  margin-right: 0;
-  padding: 0 1em 0.75em 1em; }
+  margin-right: 0; }
 
 .nova-food-menu-item:not(.nova-food-menu-item--highlighted) {
   padding-left: 1em;
@@ -259,6 +258,10 @@
 .editor-styles-wrapper .nova-food-menu-item--highlight[class][class] {
   margin: 0 -1em 1em;
   width: calc(100% + 2em); }
+
+.nova-food-menu-item__label {
+  margin: 0 !important;
+  color: white !important; }
 
 .nova-mask {
   position: absolute;

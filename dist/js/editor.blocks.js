@@ -6449,11 +6449,9 @@ var registerBlockType = wp.blocks.registerBlockType;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__preview__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__inspector_controls__ = __webpack_require__(185);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_alignment_controls__ = __webpack_require__(35);
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -6469,12 +6467,7 @@ var FoodMenuItem = function FoodMenuItem(props) {
 		Fragment,
 		null,
 		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__preview__["a" /* default */], props),
-		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__inspector_controls__["a" /* default */], props),
-		wp.element.createElement(
-			BlockControls,
-			null,
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_2__components_alignment_controls__["a" /* AlignmentToolbar */], props)
-		)
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__inspector_controls__["a" /* default */], props)
 	);
 };
 
@@ -6525,11 +6518,12 @@ var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 			{ className: 'nova-food-menu-item__highlight-label' },
 			wp.element.createElement(RichText, {
 				tagName: 'h5',
-				className: 'nova-food-menu-item--highlight',
+				className: 'nova-food-menu-item__label',
 				value: highlightLabel,
 				onChange: function onChange(highlightLabel) {
 					return setAttributes({ highlightLabel: highlightLabel });
-				}
+				},
+				formattingControls: []
 			})
 		),
 		wp.element.createElement(
@@ -6566,7 +6560,8 @@ var FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 					value: salePrice,
 					onChange: function onChange(salePrice) {
 						return setAttributes({ salePrice: salePrice });
-					}
+					},
+					formattingControls: []
 				})
 			)
 		),
@@ -6601,16 +6596,13 @@ var Fragment = wp.element.Fragment;
 var InspectorControls = wp.blockEditor.InspectorControls;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
-    ToggleControl = _wp$components.ToggleControl,
-    TextControl = _wp$components.TextControl;
+    ToggleControl = _wp$components.ToggleControl;
 
 
 var FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props) {
 	var _props$attributes = props.attributes,
 	    enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
-	    highlightLabel = _props$attributes.highlightLabel,
 	    enableSalePrice = _props$attributes.enableSalePrice,
-	    salePrice = _props$attributes.salePrice,
 	    setAttributes = props.setAttributes;
 
 
@@ -6631,27 +6623,11 @@ var FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props
 						return setAttributes({ enableHighlightFoodItem: !enableHighlightFoodItem });
 					}
 				}),
-				!!enableHighlightFoodItem && wp.element.createElement(TextControl, {
-					label: 'Label',
-					placeholder: __('Add a label...'),
-					value: highlightLabel,
-					onChange: function onChange(featured) {
-						return setAttributes({ highlightLabel: featured });
-					}
-				}),
 				wp.element.createElement(ToggleControl, {
 					label: __('On sale', '__plugin_txtd'),
 					checked: enableSalePrice,
 					onChange: function onChange() {
 						return setAttributes({ enableSalePrice: !enableSalePrice });
-					}
-				}),
-				!!enableSalePrice && wp.element.createElement(TextControl, {
-					label: __('Sale Price'),
-					placeholder: __('Add a sale price..'),
-					value: salePrice,
-					onChange: function onChange(price) {
-						return setAttributes({ salePrice: price });
 					}
 				})
 			)
@@ -6703,7 +6679,7 @@ var FoodMenuItemSave = function FoodMenuItemSave(props) {
 			{ className: 'nova-food-menu-item__highlight-label' },
 			wp.element.createElement(
 				'h5',
-				{ className: 'nova-food-menu-item--highlight' },
+				{ className: 'nova-food-menu-item__label' },
 				' ',
 				highlightLabel,
 				' '
