@@ -78,6 +78,14 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
+	$bully_path = '/dist/js/jquery.bully.js';
+	wp_register_script(
+		'nova-blocks-bully',
+		novablocks_get_plugin_url() . $bully_path,
+		array( 'jquery' ),
+		true
+	);
+
 	$slick_path = '/dist/js/jquery.slick.js';
 	wp_register_script(
 		'nova-blocks-slick',
@@ -102,6 +110,11 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-velocity',
 		'wp-data'
 	);
+
+	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
+	if ( ! empty( $position_indicators ) ) {
+		$script_dependencies[] = 'nova-blocks-bully';
+	}
 
 	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
 	wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places' );

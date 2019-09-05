@@ -12,30 +12,6 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 
 	function novablocks_hero_block_init() {
 
-		register_meta( 'post', 'novablocks_hero_minimum_height', array(
-			'type'         => 'number',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
-		register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
-			'type'         => 'string',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
-		register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
-			'type'         => 'boolean',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
-		register_meta( 'post', 'novablocks_hero_position_indicators', array(
-			'type'         => 'boolean',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
 		register_block_type( 'novablocks/hero', array(
 			'attributes' => novablocks_get_hero_attributes(),
 			'render_callback' => 'novablocks_render_hero_block',

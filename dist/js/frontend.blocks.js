@@ -440,7 +440,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 (function ($, window, undefined) {
 
-	Object(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* parallaxInit */])('novablocks-hero');
+	$(function () {
+		var $body = $('body');
+		Object(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* parallaxInit */])('novablocks-hero');
+
+		if ($body.is('.novablocks-has-position-indicators') && typeof $.fn.bully !== 'undefined') {
+			$('.novablocks-hero').bully();
+		}
+	});
 })(jQuery, window);
 
 /***/ }),

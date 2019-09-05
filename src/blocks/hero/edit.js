@@ -6,6 +6,7 @@ import {
 	LayoutPanel,
 	ParallaxPanel,
 	ScrollIndicatorPanel,
+	PositionIndicatorsPanel
 } from '../../components';
 
 import withSettings from '../../components/with-settings';
@@ -41,6 +42,7 @@ const HeroEdit = function( props ) {
 				<LayoutPanel { ...props } />
 				<HeightPanel { ...props } />
 				<ScrollIndicatorPanel { ...props } />
+				<PositionIndicatorsPanel { ...props } />
 			</InspectorControls>
 		</Fragment>
 	);
