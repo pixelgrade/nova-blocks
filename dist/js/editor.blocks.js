@@ -15635,33 +15635,48 @@ var OpenTablePreview = function OpenTablePreview(props) {
 	    setAttributes = props.setAttributes;
 
 
+	var currentTime = new Date(),
+	    month = currentTime.getMonth() + 1,
+	    day = currentTime.getDate(),
+	    year = currentTime.getFullYear();
+
+	if (day < 10) {
+		day = '0' + day;
+	}
+
+	if (month < 10) {
+		month = '0' + month;
+	}
+
+	var today = day + "/" + month + "/" + year;
+
 	return wp.element.createElement(
-		"div",
-		{ className: "novablocks-opentable" },
+		'div',
+		{ className: 'novablocks-opentable' },
 		wp.element.createElement(
-			"form",
-			{ method: "get", className: "novablocks-opentable__form", action: "//www.opentable.com/restaurant-search.aspx", target: "_blank" },
+			'form',
+			{ method: 'get', className: 'novablocks-opentable__form', action: '//www.opentable.com/restaurant-search.aspx', target: '_blank' },
 			wp.element.createElement(
-				"div",
-				{ className: "novablocks-opentable__wrapper" },
+				'div',
+				{ className: 'novablocks-opentable__wrapper' },
 				wp.element.createElement(
-					"div",
-					{ className: "novablocks-opentable__date novablocks-opentable__input-wrap" },
+					'div',
+					{ className: 'novablocks-opentable__date novablocks-opentable__input-wrap' },
 					wp.element.createElement(RichText, {
-						tagName: "label",
+						tagName: 'label',
 						value: dateLabel,
 						onChange: function onChange(dateLabel) {
 							return setAttributes({ dateLabel: dateLabel });
 						},
 						allowedFormats: []
 					}),
-					wp.element.createElement("input", { name: "startDate", className: "otb-date otb-input", type: "text", value: "8/30/2019", disabled: true })
+					wp.element.createElement('input', { name: 'startDate', className: 'otb-date otb-input', type: 'text', value: today, disabled: true })
 				),
 				wp.element.createElement(
-					"div",
-					{ className: "novablocks-opentable__time novablocks-opentable__input-wrap" },
+					'div',
+					{ className: 'novablocks-opentable__time novablocks-opentable__input-wrap' },
 					wp.element.createElement(RichText, {
-						tagName: "label",
+						tagName: 'label',
 						value: timeLabel,
 						onChange: function onChange(timeLabel) {
 							return setAttributes({ timeLabel: timeLabel });
@@ -15669,20 +15684,20 @@ var OpenTablePreview = function OpenTablePreview(props) {
 						allowedFormats: []
 					}),
 					wp.element.createElement(
-						"select",
-						{ className: "otb-time", name: "ResTime", "aria-label": "Reservation Time", disabled: true },
+						'select',
+						{ className: 'otb-time', name: 'ResTime', 'aria-label': 'Reservation Time', disabled: true },
 						wp.element.createElement(
-							"option",
-							{ value: "9:00am" },
-							"9:00 am"
+							'option',
+							{ value: '12:00am' },
+							'12:00 AM'
 						)
 					)
 				),
 				wp.element.createElement(
-					"div",
-					{ className: "novablocks-opentable__size novablocks-opentable__input-wrap" },
+					'div',
+					{ className: 'novablocks-opentable__size novablocks-opentable__input-wrap' },
 					wp.element.createElement(RichText, {
-						tagName: "label",
+						tagName: 'label',
 						value: partySizeLabel,
 						onChange: function onChange(partySizeLabel) {
 							return setAttributes({ partySizeLabel: partySizeLabel });
@@ -15690,22 +15705,22 @@ var OpenTablePreview = function OpenTablePreview(props) {
 						allowedFormats: []
 					}),
 					wp.element.createElement(
-						"select",
-						{ id: "party-size", name: "partySize", className: "otb-people otb-input", disabled: true },
+						'select',
+						{ id: 'party-size', name: 'partySize', className: 'otb-people otb-input', disabled: true },
 						wp.element.createElement(
-							"option",
-							{ value: "1" },
-							"1"
+							'option',
+							{ value: '1' },
+							'1'
 						)
 					)
 				),
 				wp.element.createElement(
-					"div",
-					{ className: "novablocks-opentable__button-wrap wp-block-button" },
+					'div',
+					{ className: 'novablocks-opentable__button-wrap wp-block-button' },
 					wp.element.createElement(RichText, {
 						placeholder: __('Find a table'),
 						value: submitButtonText,
-						className: "novablocks-opentable__button wp-block-button__link",
+						className: 'wp-block-button__link novablocks-opentable__button',
 						onChange: function onChange(submitButtonText) {
 							return setAttributes({ submitButtonText: submitButtonText });
 						},
@@ -15878,10 +15893,10 @@ var OpenTableSave = function OpenTableSave(props) {
 				),
 				wp.element.createElement(
 					'div',
-					{ className: 'novablocks-opentable__button-wrap' },
+					{ className: 'novablocks-opentable__button-wrap wp-block-button' },
 					wp.element.createElement(
 						'button',
-						{ type: 'submit', className: 'novablocks-opentable__button' },
+						{ type: 'submit', className: 'wp-block-button__link novablocks-opentable__button' },
 						wp.element.createElement(
 							'span',
 							null,

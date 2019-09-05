@@ -62,9 +62,10 @@ const OpenTableSave = function( props ) {
 							{partySizeOptions}
 					</select>
 					</div>
-					<div className="novablocks-opentable__button-wrap">
-						<button type="submit" className="novablocks-opentable__button">
-							<span>{submitButtonText}</span></button>
+					<div className="novablocks-opentable__button-wrap wp-block-button">
+						<button type="submit" className="wp-block-button__link novablocks-opentable__button">
+							<span>{submitButtonText}</span>
+						</button>
 					</div>
 				</div>
 				<input type="hidden" name="RestaurantID" className="RestaurantID" value={restaurantId}/>

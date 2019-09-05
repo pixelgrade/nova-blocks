@@ -17,6 +17,21 @@ const OpenTablePreview = function( props ) {
 		setAttributes,
 	} = props;
 
+	let currentTime = new Date(),
+		month = currentTime.getMonth() + 1,
+		day = currentTime.getDate(),
+		year = currentTime.getFullYear();
+
+	if ( day < 10) {
+		day = '0' + day;
+	}
+
+	if ( month < 10 ) {
+		month = '0' + month;
+	}
+
+	let today = day + "/" + month + "/" + year;
+
 	return (
 
 		<div className="novablocks-opentable">
@@ -30,7 +45,7 @@ const OpenTablePreview = function( props ) {
 							allowedFormats={ [] }
 						/>
 
-						<input name="startDate" className="otb-date otb-input" type="text" value="8/30/2019" disabled/>
+						<input name="startDate" className="otb-date otb-input" type="text" value={today} disabled/>
 
 					</div>
 					<div className="novablocks-opentable__time novablocks-opentable__input-wrap">
@@ -41,7 +56,7 @@ const OpenTablePreview = function( props ) {
 							allowedFormats={ [] }
 						/>
 						<select className="otb-time" name="ResTime" aria-label="Reservation Time" disabled>
-							<option value="9:00am">9:00 am</option>
+							<option value="12:00am">12:00 AM</option>
 						</select>
 					</div>
 					<div className="novablocks-opentable__size novablocks-opentable__input-wrap">
@@ -59,7 +74,7 @@ const OpenTablePreview = function( props ) {
 						<RichText
 							placeholder={ __( 'Find a table' ) }
 							value={ submitButtonText }
-							className = "novablocks-opentable__button wp-block-button__link"
+							className = "wp-block-button__link novablocks-opentable__button"
 							onChange={( submitButtonText ) => setAttributes( {submitButtonText} )}
 							allowedFormats={ [] }
 							keepPlaceholderOnFocus
