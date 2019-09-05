@@ -100,7 +100,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-rellax',
 		'nova-blocks-slick',
 		'nova-blocks-velocity',
-		'wp-data'
+		'wp-element'
 	);
 
 	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );

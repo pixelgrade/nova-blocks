@@ -1,33 +1,21 @@
 (function($, window, undefined) {
 
-	$( "#datepicker" ).datepicker(
-		{
-			firstDay: 1,
-			dateFormat: "mm/dd/yy",
-			maxDate: "+3m",
-			minDate: "0",
-			dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-			dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-			monthNames: [
-				"January",
-				"February",
-				"March",
-				"April",
-				"May",
-				"June",
-				"July",
-				"August",
-				"September",
-				"October",
-				"November",
-				"December"
-			],
-			nextText: ">",
-			prevText: "<",
-			beforeShow: function() {
-				$( "#ui-datepicker-div" ).addClass( "nova-blocks-datepicker" )
-			}
-		}
-	);
+	let currentTime = new Date(),
+		month = currentTime.getMonth() + 1,
+		day = currentTime.getDate(),
+		year = currentTime.getFullYear();
+
+	if ( day < 10) {
+		day = '0' + day;
+	}
+
+	if ( month < 10 ) {
+		month = '0' + month;
+	}
+
+	let today = year + "-" + month + "-" + day;
+
+	let $inputDate = $('.startdate-picker');
+	$inputDate.val(today);
 
 })(jQuery, window);

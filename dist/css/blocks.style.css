@@ -757,7 +757,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   margin: 0; }
 
 @media only screen and (min-width: 480px) {
-  .nova-opentable__wrapper {
+  .novablocks-opentable__wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -769,37 +769,12 @@ body:not(.wp-admin) .novablocks-hero__parallax {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap; } }
 
-.nova-opentable input,
-.nova-opentable select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  vertical-align: middle;
-  text-align: left;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  position: relative; }
+@media only screen and (min-width: 480px) {
+  .novablocks-opentable .otb-input,
+  .novablocks-opentable select {
+    width: 9.5em; } }
 
-.nova-opentable .otb-date[class] {
-  margin-top: 0; }
-
-.nova-opentable .otb-input,
-.nova-opentable select {
-  width: 100%;
-  height: 2.5em;
-  padding: .375em;
-  line-height: 1;
-  background: none;
-  border: 1px solid #d8d8d8;
-  border-radius: 3px;
-  color: inherit; }
-  @media only screen and (min-width: 480px) {
-    .nova-opentable .otb-input,
-    .nova-opentable select {
-      width: 9.5em; } }
-
-.nova-opentable__button-wrap {
+.novablocks-opentable__button-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -813,80 +788,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
           justify-content: center;
   margin-top: 1em; }
 
-.nova-blocks-datepicker {
-  background-color: #FFFFFF;
-  -webkit-box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1), 0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1);
-          box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1), 0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1);
-  border-radius: 4px; }
-
-.nova-blocks-datepicker td,
-.nova-blocks-datepicker th {
-  border: 0;
-  padding: 0; }
-
-.nova-blocks-datepicker a {
-  text-decoration: none; }
-
-.nova-blocks-datepicker .ui-datepicker-header {
-  background-color: #203AB6;
-  color: #FFFFFF;
-  border-radius: 4px 4px 0 0; }
-
-.nova-blocks-datepicker .ui-datepicker-prev,
-.nova-blocks-datepicker .ui-datepicker-next {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  cursor: pointer;
-  color: #FFFFFF; }
-
-.nova-blocks-datepicker .ui-datepicker-prev {
-  left: .5em; }
-
-.nova-blocks-datepicker .ui-datepicker-next {
-  right: .5em; }
-
-.nova-blocks-datepicker .ui-datepicker-calendar {
-  border-collapse: inherit;
-  padding: .5em; }
-
-.nova-blocks-datepicker .ui-datepicker-header {
-  position: relative;
-  padding: .5em; }
-
-.nova-blocks-datepicker .ui-datepicker-title {
-  text-align: center; }
-
-.nova-blocks-datepicker td a,
-.nova-blocks-datepicker td span {
-  display: block;
-  padding: 5px;
-  text-align: center;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  -webkit-transition: border-color .25s ease;
-  transition: border-color .25s ease; }
-  .nova-blocks-datepicker td a:not(.ui-state-active):hover,
-  .nova-blocks-datepicker td span:not(.ui-state-active):hover {
-    border-color: currentColor; }
-
-.nova-blocks-datepicker .ui-state-active {
-  background-color: #203AB6;
-  color: #FFFFFF; }
-
-.nova-opentable__input-wrap {
+.novablocks-opentable__input-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

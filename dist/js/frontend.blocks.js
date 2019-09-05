@@ -613,20 +613,23 @@ var TRANSITION_EASING = "easeInOutCirc";
 
 (function ($, window, undefined) {
 
-	$("#datepicker").datepicker({
-		firstDay: 1,
-		dateFormat: "mm/dd/yy",
-		maxDate: "+3m",
-		minDate: "0",
-		dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-		dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-		monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-		nextText: ">",
-		prevText: "<",
-		beforeShow: function beforeShow() {
-			$("#ui-datepicker-div").addClass("nova-blocks-datepicker");
-		}
-	});
+	var currentTime = new Date(),
+	    month = currentTime.getMonth() + 1,
+	    day = currentTime.getDate(),
+	    year = currentTime.getFullYear();
+
+	if (day < 10) {
+		day = '0' + day;
+	}
+
+	if (month < 10) {
+		month = '0' + month;
+	}
+
+	var today = year + "-" + month + "-" + day;
+
+	var $inputDate = $('.startdate-picker');
+	$inputDate.val(today);
 })(jQuery, window);
 
 /***/ }),

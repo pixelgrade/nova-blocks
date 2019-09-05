@@ -11,8 +11,6 @@ import save from './save';
 const {__} = wp.i18n;
 const {registerBlockType} = wp.blocks;
 
-const { select } = wp.data;
-
 
 export default registerBlockType( 'novablocks/opentable',
 	{
