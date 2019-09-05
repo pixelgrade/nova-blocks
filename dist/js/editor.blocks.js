@@ -15655,7 +15655,8 @@ var OpenTablePreview = function OpenTablePreview(props) {
 		{ className: 'novablocks-opentable' },
 		wp.element.createElement(
 			'form',
-			{ method: 'get', className: 'novablocks-opentable__form', action: '//www.opentable.com/restaurant-search.aspx', target: '_blank' },
+			{ method: 'get', className: 'novablocks-opentable__form',
+				action: '//www.opentable.com/restaurant-search.aspx', target: '_blank' },
 			wp.element.createElement(
 				'div',
 				{ className: 'novablocks-opentable__wrapper' },
@@ -15849,7 +15850,8 @@ var OpenTableSave = function OpenTableSave(props) {
 		{ className: 'novablocks-opentable' },
 		wp.element.createElement(
 			'form',
-			{ method: 'get', className: 'novablocks-opentable__form', action: '//www.opentable.com/restaurant-search.aspx', target: '_blank' },
+			{ method: 'get', className: 'novablocks-opentable__form',
+				action: '//www.opentable.com/restaurant-search.aspx', target: '_blank' },
 			wp.element.createElement(
 				'div',
 				{ className: 'novablocks-opentable__wrapper' },

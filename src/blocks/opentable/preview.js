@@ -22,7 +22,7 @@ const OpenTablePreview = function( props ) {
 		day = currentTime.getDate(),
 		year = currentTime.getFullYear();
 
-	if ( day < 10) {
+	if ( day < 10 ) {
 		day = '0' + day;
 	}
 
@@ -35,14 +35,15 @@ const OpenTablePreview = function( props ) {
 	return (
 
 		<div className="novablocks-opentable">
-			<form method="get" className="novablocks-opentable__form" action="//www.opentable.com/restaurant-search.aspx" target="_blank">
+			<form method="get" className="novablocks-opentable__form"
+			      action="//www.opentable.com/restaurant-search.aspx" target="_blank">
 				<div className="novablocks-opentable__wrapper">
 					<div className="novablocks-opentable__date novablocks-opentable__input-wrap">
 						<RichText
 							tagName="label"
 							value={dateLabel}
 							onChange={( dateLabel ) => setAttributes( {dateLabel} )}
-							allowedFormats={ [] }
+							allowedFormats={[]}
 						/>
 
 						<input name="startDate" className="otb-date otb-input" type="text" value={today} disabled/>
@@ -53,7 +54,7 @@ const OpenTablePreview = function( props ) {
 							tagName="label"
 							value={timeLabel}
 							onChange={( timeLabel ) => setAttributes( {timeLabel} )}
-							allowedFormats={ [] }
+							allowedFormats={[]}
 						/>
 						<select className="otb-time" name="ResTime" aria-label="Reservation Time" disabled>
 							<option value="12:00am">12:00 AM</option>
@@ -64,7 +65,7 @@ const OpenTablePreview = function( props ) {
 							tagName="label"
 							value={partySizeLabel}
 							onChange={( partySizeLabel ) => setAttributes( {partySizeLabel} )}
-							allowedFormats={ [] }
+							allowedFormats={[]}
 						/>
 						<select id="party-size" name="partySize" className="otb-people otb-input" disabled>
 							<option value="1">1</option>
@@ -72,11 +73,11 @@ const OpenTablePreview = function( props ) {
 					</div>
 					<div className="novablocks-opentable__button-wrap wp-block-button">
 						<RichText
-							placeholder={ __( 'Find a table' ) }
-							value={ submitButtonText }
-							className = "wp-block-button__link novablocks-opentable__button"
+							placeholder={__( 'Find a table' )}
+							value={submitButtonText}
+							className="wp-block-button__link novablocks-opentable__button"
 							onChange={( submitButtonText ) => setAttributes( {submitButtonText} )}
-							allowedFormats={ [] }
+							allowedFormats={[]}
 							keepPlaceholderOnFocus
 						/>
 					</div>

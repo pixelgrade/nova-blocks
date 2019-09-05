@@ -8,7 +8,7 @@ import InspectorControls from "./inspector-controls";
 const {Fragment} = wp.element;
 
 const OpenTable = function( props ) {
-	return(
+	return (
 		<Fragment>
 			<OpenTablePreview {...props}/>
 			<InspectorControls {...props}/>
