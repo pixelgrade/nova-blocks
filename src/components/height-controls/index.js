@@ -39,7 +39,12 @@ const debouncedOnSubscribe = debounce( () => {
 	}
 }, 30 );
 
+const debouncedUpdateBlocks = debounce( () => {
+	updateBlocks();
+}, 30 );
+
 subscribe( debouncedOnSubscribe );
+
 
 const updateBlocks = ( attributes ) => {
 	select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
@@ -66,7 +71,6 @@ const HeightPanel = withSettings( function( props ) {
 	} = props;
 
 	const applyMinimumHeight = !! attributes.applyMinimumHeight ? attributes.applyMinimumHeight : 'first';
-	const minHeight = !! attributes.minHeight ? attributes.minHeight : 75;
 
 	return (
 		<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
@@ -75,17 +79,17 @@ const HeightPanel = withSettings( function( props ) {
 				selected={ applyMinimumHeight }
 				onChange={ ( nextMinimumHeight ) => {
 					setAttributes( { applyMinimumHeight: nextMinimumHeight } );
-					updateBlocks( { applyMinimumHeight: nextMinimumHeight } );
+					debouncedUpdateBlocks();
 				} }
 				options={ settings.applyMinimumHeightOptions }
 			/>
 			{ 'none' !== applyMinimumHeight &&
 				<RadioControl
 					label={ __( 'Minimum Height', '__plugin_txtd' ) }
-					selected={ minHeight }
-					onChange={ ( nextMinHeight ) => {
-						setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
-						updateBlocks( { minHeight: parseInt( nextMinHeight, 10 ) } );
+					selected={ attributes.minHeight }
+					onChange={ minHeight => {
+						setAttributes( { minHeight: parseInt( minHeight, 10 ) } );
+						debouncedUpdateBlocks();
 					} }
 					options={ settings.minimumHeightOptions }
 				/>
@@ -115,7 +119,7 @@ const ScrollIndicatorPanel = withSettings( function( props ) {
 				checked={ scrollIndicator }
 				onChange={ ( nextScrollIndicator ) => {
 					setAttributes( { scrollIndicator: nextScrollIndicator } );
-					updateBlocks( { scrollIndicator: nextScrollIndicator } );
+					debouncedUpdateBlocks();
 				} }
 			/>
 		</PanelBody>

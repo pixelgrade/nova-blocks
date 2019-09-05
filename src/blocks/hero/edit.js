@@ -25,6 +25,7 @@ const {
 } = wp.blockEditor;
 
 const {
+	Component,
 	Fragment,
 } = wp.element;
 

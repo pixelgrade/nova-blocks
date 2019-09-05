@@ -11884,7 +11884,6 @@ var ButtonInspectorControls = function (_Component) {
 							var mapStyles = __WEBPACK_IMPORTED_MODULE_9__styles__["a" /* default */].find(function (style) {
 								return style.slug === newStyleSlug;
 							}).styles;
-							console.log(newStyleSlug === 'customized' ? __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getMapAccentColor */].call(_this2) : '#222222');
 							setAttributes({
 								styleSlug: newStyleSlug,
 								styleData: _this2.compileStyles(mapStyles),
@@ -12587,7 +12586,6 @@ var HeadingToolbar = function (_Component) {
 			    selectedLevel = _props.selectedLevel,
 			    onChange = _props.onChange;
 
-			console.log(Object(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* range */])(minLevel, maxLevel));
 			return wp.element.createElement(Toolbar, { controls: Object(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* range */])(minLevel, maxLevel).map(function (index) {
 					return _this2.createLevelControl(index, selectedLevel, onChange);
 				}) });
@@ -12707,7 +12705,9 @@ var select = wp.data.select;
 
 var __ = wp.i18n.__;
 var InspectorControls = wp.blockEditor.InspectorControls;
-var Fragment = wp.element.Fragment;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
 var _wp$compose = wp.compose,
     compose = _wp$compose.compose,
     createHigherOrderComponent = _wp$compose.createHigherOrderComponent;
@@ -13334,6 +13334,10 @@ var debouncedOnSubscribe = Object(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* de
 	}
 }, 30);
 
+var debouncedUpdateBlocks = Object(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* debounce */])(function () {
+	updateBlocks();
+}, 30);
+
 subscribe(debouncedOnSubscribe);
 
 var updateBlocks = function updateBlocks(attributes) {
@@ -13363,7 +13367,6 @@ var HeightPanel = Object(__WEBPACK_IMPORTED_MODULE_2__with_settings__["a" /* def
 
 
 	var applyMinimumHeight = !!attributes.applyMinimumHeight ? attributes.applyMinimumHeight : 'first';
-	var minHeight = !!attributes.minHeight ? attributes.minHeight : 75;
 
 	return wp.element.createElement(
 		PanelBody,
@@ -13373,16 +13376,16 @@ var HeightPanel = Object(__WEBPACK_IMPORTED_MODULE_2__with_settings__["a" /* def
 			selected: applyMinimumHeight,
 			onChange: function onChange(nextMinimumHeight) {
 				setAttributes({ applyMinimumHeight: nextMinimumHeight });
-				updateBlocks({ applyMinimumHeight: nextMinimumHeight });
+				debouncedUpdateBlocks();
 			},
 			options: settings.applyMinimumHeightOptions
 		}),
 		'none' !== applyMinimumHeight && wp.element.createElement(RadioControl, {
 			label: __('Minimum Height', '__plugin_txtd'),
-			selected: minHeight,
-			onChange: function onChange(nextMinHeight) {
-				setAttributes({ minHeight: parseInt(nextMinHeight, 10) });
-				updateBlocks({ minHeight: parseInt(nextMinHeight, 10) });
+			selected: attributes.minHeight,
+			onChange: function onChange(minHeight) {
+				setAttributes({ minHeight: parseInt(minHeight, 10) });
+				debouncedUpdateBlocks();
 			},
 			options: settings.minimumHeightOptions
 		})
@@ -13410,7 +13413,7 @@ var ScrollIndicatorPanel = Object(__WEBPACK_IMPORTED_MODULE_2__with_settings__["
 			checked: scrollIndicator,
 			onChange: function onChange(nextScrollIndicator) {
 				setAttributes({ scrollIndicator: nextScrollIndicator });
-				updateBlocks({ scrollIndicator: nextScrollIndicator });
+				debouncedUpdateBlocks();
 			}
 		})
 	);

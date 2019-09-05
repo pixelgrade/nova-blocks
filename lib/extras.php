@@ -284,7 +284,12 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
 
     foreach ( $attributes_config as $key => $value ) {
 	    if ( ! isset( $attributes[ $key ] ) ) {
-		    $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
+
+	    	if ( $attributes_config[ $key ][ 'source' ] === 'meta' ) {
+			    $attributes[ $key ] = get_post_meta( get_the_ID(), $attributes_config[ $key ][ 'meta' ], true );
+		    } else {
+		        $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
+		    }
 	    }
     }
 
