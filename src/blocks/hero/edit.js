@@ -6,6 +6,7 @@ import {
 	LayoutPanel,
 	ParallaxPanel,
 	ScrollIndicatorPanel,
+	PositionIndicatorsPanel
 } from '../../components';
 
 import withSettings from '../../components/with-settings';
@@ -24,6 +25,7 @@ const {
 } = wp.blockEditor;
 
 const {
+	Component,
 	Fragment,
 } = wp.element;
 
@@ -41,6 +43,7 @@ const HeroEdit = function( props ) {
 				<LayoutPanel { ...props } />
 				<HeightPanel { ...props } />
 				<ScrollIndicatorPanel { ...props } />
+				<PositionIndicatorsPanel { ...props } />
 			</InspectorControls>
 		</Fragment>
 	);

@@ -1,42 +1,28 @@
 /**
  * Internal dependencies
  */
-import LayoutPanel from './layout-panel';
-import ParallaxPanel from './parallax-panel';
+export { default as LayoutPanel } from './layout-panel';
+export { default as ParallaxPanel } from './parallax-panel';
+export { default as PositionIndicatorsPanel } from './position-indicators-panel';
 
-import {
+export {
 	GalleryPreview,
 	GalleryPlaceholder,
 } from './gallery-options';
 
-import {
+export {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
 	OverlayControls,
 } from './color-controls';
 
-import {
+export {
 	AlignmentControls,
 	AlignmentToolbar,
 } from './alignment-controls';
 
-import {
+export {
 	HeightPanel,
 	ScrollIndicatorPanel,
 } from './height-controls';
-
-export {
-	AlignmentControls,
-	AlignmentToolbar,
-	ColorControls,
-	ColorPanel,
-	ColorToolbar,
-	GalleryPreview,
-	GalleryPlaceholder,
-	HeightPanel,
-	LayoutPanel,
-	OverlayControls,
-	ParallaxPanel,
-	ScrollIndicatorPanel,
-};

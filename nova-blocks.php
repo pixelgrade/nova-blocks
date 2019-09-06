@@ -45,9 +45,9 @@ function novablocks_get_plugin_url() {
 }
 
 function novablocks_body_class( $classes ) {
-	$bullets = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
-    if ( $bullets ) {
-		$classes[] = 'novablocks-hero-bullets';
+	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
+	if ( ! empty( $position_indicators ) ) {
+		$classes[] = 'novablocks-has-position-indicators';
 	}
 
 	return $classes;

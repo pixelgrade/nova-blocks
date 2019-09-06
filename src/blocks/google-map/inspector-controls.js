@@ -56,7 +56,6 @@ class ButtonInspectorControls extends Component {
 						options={ styles }
 						onChange={ newStyleSlug => {
 							const mapStyles = styles.find( style => style.slug === newStyleSlug ).styles;
-							console.log( newStyleSlug === 'customized' ? getMapAccentColor.call( this ) : '#222222' );
 							setAttributes( {
 								styleSlug: newStyleSlug,
 								styleData: this.compileStyles( mapStyles ),

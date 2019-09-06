@@ -149,7 +149,7 @@ function novablocks_get_hero_attributes() {
 		array(
 			'blockIndex'              => array(
 				'type'    => 'number',
-				'default' => - 1
+				'default' => -1
 			),
 			'applyMinimumHeight'      => array(
 				'type'   => 'string',
@@ -173,6 +173,11 @@ function novablocks_get_hero_attributes() {
 			'scrollIndicatorBlock'    => array(
 				'type'    => 'boolean',
 				'default' => false
+			),
+			'positionIndicators'      => array(
+				'type'   => 'boolean',
+				'source' => 'meta',
+				'meta'   => 'novablocks_hero_position_indicators',
 			),
 			'backgroundType'          => array(
 				'type'    => 'string',
@@ -279,9 +284,42 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
 
     foreach ( $attributes_config as $key => $value ) {
 	    if ( ! isset( $attributes[ $key ] ) ) {
-		    $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
+
+	    	if ( $attributes_config[ $key ][ 'source' ] === 'meta' ) {
+			    $attributes[ $key ] = get_post_meta( get_the_ID(), $attributes_config[ $key ][ 'meta' ], true );
+		    } else {
+		        $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
+		    }
 	    }
     }
 
     return $attributes;
 }
+
+function nova_blocks_register_meta() {
+
+	register_meta( 'post', 'novablocks_hero_minimum_height', array(
+		'type'         => 'number',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
+		'type'         => 'string',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
+		'type'         => 'boolean',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'novablocks_hero_position_indicators', array(
+		'type'         => 'boolean',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+}
+add_action( 'init', 'nova_blocks_register_meta' );
