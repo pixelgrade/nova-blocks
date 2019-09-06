@@ -6,6 +6,8 @@ const {__} = wp.i18n;
 
 const {RichText} = wp.blockEditor;
 
+import { todayDate } from "../../utils";
+
 const OpenTablePreview = function( props ) {
 	const {
 		attributes: {
@@ -17,20 +19,7 @@ const OpenTablePreview = function( props ) {
 		setAttributes,
 	} = props;
 
-	let currentTime = new Date(),
-		month = currentTime.getMonth() + 1,
-		day = currentTime.getDate(),
-		year = currentTime.getFullYear();
-
-	if ( day < 10 ) {
-		day = '0' + day;
-	}
-
-	if ( month < 10 ) {
-		month = '0' + month;
-	}
-
-	let today = day + "/" + month + "/" + year;
+	let today = todayDate("/", false);
 
 	return (
 
