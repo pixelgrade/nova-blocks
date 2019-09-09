@@ -14832,7 +14832,7 @@ var select = wp.data.select;
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food', {
 	title: __('Food Menu', '__plugin_txtd'),
-	description: __('Can be used as navigation through multiple menus.', '__plugin_txtd'),
+	description: __('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* foodmenu */],
 	attributes: {
@@ -15048,7 +15048,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food-section', {
 	title: __('Food Menu Section', '__plugin_txtd'),
-	description: __('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
+	description: __('A subgrouping of the Menu.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* foodmenu */],
 	parent: ['novablocks/menu-food'],
@@ -15247,7 +15247,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/menu-food-item', {
 	title: __('Menu Item', '__plugin_txtd'),
-	description: __('A food or drink item contained in a menu.', '__plugin_txtd'),
+	description: __('A food or drink item contained in a menu or menu section.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["e" /* foodmenu */],
 	parent: ['novablocks/menu-food-section'],
