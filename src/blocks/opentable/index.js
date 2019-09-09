@@ -14,14 +14,18 @@ const {registerBlockType} = wp.blocks;
 
 export default registerBlockType( 'novablocks/opentable',
 	{
-		title: __( 'OpenTable Reservation Form', '__plugin_txtd' ),
-		description: __( 'Short description', '__plugin_txtd' ),
+		title: __( 'OpenTable Reservation', '__plugin_txtd' ),
+		description: __( 'Add OpenTable online reservation booking to your site.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.opentable,
 		attributes: {
 			restaurantId: {
 				type: 'number',
-				default: 80221
+				default: 1
+			},
+			language: {
+				type: 'string',
+				default: 'en-US'
 			},
 			showOpenTableLogo: {
 				type: 'boolean',
@@ -30,6 +34,10 @@ export default registerBlockType( 'novablocks/opentable',
 			layoutForm: {
 				type: 'string',
 				default: 'wide'
+			},
+			example: {
+				type: 'boolean',
+				default: true
 			}
 		},
 		edit,

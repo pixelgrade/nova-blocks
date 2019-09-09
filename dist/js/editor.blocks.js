@@ -15621,14 +15621,18 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/opentable', {
-	title: __('OpenTable Reservation Form', '__plugin_txtd'),
-	description: __('Short description', '__plugin_txtd'),
+	title: __('OpenTable Reservation', '__plugin_txtd'),
+	description: __('Add OpenTable online reservation booking to your site.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* opentable */],
 	attributes: {
 		restaurantId: {
 			type: 'number',
-			default: 80221
+			default: 1
+		},
+		language: {
+			type: 'string',
+			default: 'en-US'
 		},
 		showOpenTableLogo: {
 			type: 'boolean',
@@ -15637,6 +15641,10 @@ var registerBlockType = wp.blocks.registerBlockType;
 		layoutForm: {
 			type: 'string',
 			default: 'wide'
+		},
+		example: {
+			type: 'boolean',
+			default: true
 		}
 	},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
@@ -15726,6 +15734,7 @@ var OpenTablePreview = function (_Component) {
 			var _props = this.props,
 			    _props$attributes = _props.attributes,
 			    restaurantId = _props$attributes.restaurantId,
+			    language = _props$attributes.language,
 			    layoutForm = _props$attributes.layoutForm,
 			    showOpenTableLogo = _props$attributes.showOpenTableLogo,
 			    className = _props.className;
@@ -15739,7 +15748,7 @@ var OpenTablePreview = function (_Component) {
 				return wp.element.createElement(SandBox, props);
 			};
 
-			var html = '<div class="novablocks-opentable ' + classNames + '">' + ('<script type=\'text/javascript\' src=\'//www.opentable.com/widget/reservation/loader?rid=' + restaurantId + '&type=standard&theme=' + layoutForm + '&iframe=false&overlay=false&domain=com&lang=en-US\'></script>') + ('<link rel="stylesheet" href="' + novablocks_urls.frontend_blocks_stylesheet + '" type="text/css"/>') + ('<link rel="stylesheet" href="' + novablocks_urls.editor_blocks_stylesheet + '" type="text/css"/>') + '</div>';
+			var html = '<div class="novablocks-opentable ' + classNames + '">' + ('<script type=\'text/javascript\' src=\'//www.opentable.com/widget/reservation/loader?rid=' + restaurantId + '&type=standard&theme=' + layoutForm + '&iframe=false&overlay=false&domain=com&lang=' + language + '\'></script>') + ('<link rel="stylesheet" href="' + novablocks_urls.frontend_blocks_stylesheet + '" type="text/css"/>') + ('<link rel="stylesheet" href="' + novablocks_urls.editor_blocks_stylesheet + '" type="text/css"/>') + '</div>';
 
 			return wp.element.createElement(OpenTable, {
 				html: html,
@@ -15769,14 +15778,16 @@ var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     TextControl = _wp$components.TextControl,
     ToggleControl = _wp$components.ToggleControl,
-    RadioControl = _wp$components.RadioControl;
+    RadioControl = _wp$components.RadioControl,
+    SelectControl = _wp$components.SelectControl;
 
 
 var OpenTableInspectorControls = function OpenTableInspectorControls(props) {
 	var _props$attributes = props.attributes,
 	    restaurantId = _props$attributes.restaurantId,
-	    showOpenTableLogo = _props$attributes.showOpenTableLogo,
+	    language = _props$attributes.language,
 	    layoutForm = _props$attributes.layoutForm,
+	    showOpenTableLogo = _props$attributes.showOpenTableLogo,
 	    setAttributes = props.setAttributes;
 
 
@@ -15791,19 +15802,20 @@ var OpenTableInspectorControls = function OpenTableInspectorControls(props) {
 				{ title: __('Settings', '__plugin_txtd'), initialOpen: true },
 				wp.element.createElement(TextControl, {
 					label: 'Restaurant ID',
-					placeholder: __('895621'),
-					help: 'Restaurant Id',
+					placeholder: __('1'),
+					help: 'You can find your restaurant ID on the OpenTable website.',
 					type: 'number',
 					value: restaurantId,
 					onChange: function onChange(restaurantId) {
 						return setAttributes({ restaurantId: restaurantId });
 					}
 				}),
-				wp.element.createElement(ToggleControl, {
-					label: __('Show OpenTable Logo', '__plugin_txtd'),
-					checked: showOpenTableLogo,
-					onChange: function onChange() {
-						return setAttributes({ showOpenTableLogo: !showOpenTableLogo });
+				wp.element.createElement(SelectControl, {
+					label: 'Language',
+					value: language,
+					options: [{ label: 'English-EN', value: 'en-US' }, { label: 'Français-CA', value: 'fr-CA' }, { label: 'Deutsch-DE', value: 'de-DE' }, { label: 'Español-MX', value: 'es-MX' }, { label: '日本語-JP', value: 'ja-JP' }, { label: 'Nederlands-NL', value: 'nl-NL' }, { label: 'Italiano-IT', value: 'it-IT' }],
+					onChange: function onChange(nextLanguage) {
+						return setAttributes({ language: nextLanguage });
 					}
 				}),
 				wp.element.createElement(RadioControl, {
@@ -15813,6 +15825,13 @@ var OpenTableInspectorControls = function OpenTableInspectorControls(props) {
 					options: [{ label: 'Horizontal', value: 'wide' }, { label: 'Vertical', value: 'standard' }],
 					onChange: function onChange(nextLayout) {
 						return setAttributes({ layoutForm: nextLayout });
+					}
+				}),
+				wp.element.createElement(ToggleControl, {
+					label: __('Show OpenTable Logo', '__plugin_txtd'),
+					checked: showOpenTableLogo,
+					onChange: function onChange() {
+						return setAttributes({ showOpenTableLogo: !showOpenTableLogo });
 					}
 				})
 			)
@@ -15840,12 +15859,13 @@ var __ = wp.i18n.__;
 var OpenTableSave = function OpenTableSave(props) {
 	var _props$attributes = props.attributes,
 	    restaurantId = _props$attributes.restaurantId,
+	    language = _props$attributes.language,
 	    showOpenTableLogo = _props$attributes.showOpenTableLogo,
 	    layoutForm = _props$attributes.layoutForm,
 	    className = props.className;
 
 
-	var formSrc = "//www.opentable.com/widget/reservation/loader?rid=" + restaurantId + "&domain=com&type=standard&theme=" + layoutForm + "&lang=en&overlay=false&iframe=false";
+	var formSrc = "//www.opentable.com/widget/reservation/loader?rid=" + restaurantId + "&domain=com&type=standard&theme=" + layoutForm + "&iframe=false&overlay=false&domain=com&lang=" + language;
 
 	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, "novablocks-opentable", "novablocks-opentable__" + layoutForm, {
 		'has-opentable-logo': showOpenTableLogo === true
