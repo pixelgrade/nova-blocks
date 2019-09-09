@@ -2,45 +2,50 @@
     margin-left: auto;
     margin-right: auto;
 
-    --nova-media-text-color: var(--nova-dark-2);
-    --nova-media-titles-color: var(--nova-dark-3);
-    --nova-media-subtitles-color: var(--nova-color-1);
-    --nova-media-background-color: var(--nova-light-1);
+    --novablocks-media-text-color: var(--novablocks-dark-2);
+    --novablocks-media-titles-color: var(--novablocks-dark-3);
+    --novablocks-media-subtitles-color: var(--novablocks-color-1);
+    --novablocks-media-background-color: var(--novablocks-light-1);
 
-    --nova-media-content-padding: 0;
-    --nova-media-content-background-color: transparent;
-    --nova-media-content-background-opacity: 1;
-    --nova-media-content-box-shadow: none;
+    --novablocks-media-content-padding: 0;
+    --novablocks-media-content-background-color: transparent;
+    --novablocks-media-content-background-opacity: 1;
+    --novablocks-media-content-box-shadow: none;
 }
 
 // media layout
-.nova-media {
-    background-color: var(--nova-media-background-color);
+.novablocks-media {
+    background-color: var(--novablocks-media-background-color);
 
-    --nova-media-spacing: 24px;
+    --novablocks-media-spacing: 24px;
 
     @include above(lap) {
-        --nova-media-spacing: 48px;
+        --novablocks-media-spacing: 48px;
     }
 
     @include above(desktop) {
-        --nova-media-spacing: 56px;
+        --novablocks-media-spacing: 56px;
     }
 
     &.has-background {
-        padding: var(--nova-media-padding) 0;
+        padding: var(--novablocks-media-padding) 0;
     }
+
+	.wp-block-group__inner-container > * {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
-.nova-media__layout {
+.novablocks-media__layout {
 	display: flex;
 	flex-wrap: wrap;
 
-	margin-left: calc(-1 * var(--nova-media-spacing));
+	margin-left: calc(-1 * var(--novablocks-media-spacing));
 
 	> * {
 		min-width: 300px;
-		padding-left: var(--nova-media-spacing);
+		padding-left: var(--novablocks-media-spacing);
 		flex: 1 0 50%;
 	}
 }
@@ -48,42 +53,42 @@
 // block variations
 .block-is-moderate,
 .block-is-highlighted {
-    --nova-media-padding: var(--nova-media-spacing);
+    --novablocks-media-padding: var(--novablocks-media-spacing);
 }
 
 .block-is-moderate {
-    --nova-media-background-color: var(--nova-light-2);
+    --novablocks-media-background-color: var(--novablocks-light-2);
 }
 
 .block-is-highlighted {
-    --nova-media-background-color: var(--nova-dark-3);
+    --novablocks-media-background-color: var(--novablocks-dark-3);
 }
 
 .content-is-moderate,
 .content-is-highlighted {
-    --nova-media-content-padding: var(--nova-media-spacing);
+    --novablocks-media-content-padding: var(--novablocks-media-spacing);
 }
 
 .content-is-moderate,
 .content-is-highlighted.block-is-highlighted {
-    --nova-media-content-background-color: var(--nova-light-1);
-    --nova-media-content-box-shadow: #{$nova-box-shadow-nova};
+    --novablocks-media-content-background-color: var(--novablocks-light-1);
+    --novablocks-media-content-box-shadow: #{$nova-box-shadow-nova};
 }
 
 .content-is-moderate.block-is-highlighted {
-    --nova-media-content-background-color: var(--nova-light-1);
-    --nova-media-content-background-opacity: 0.2;
+    --novablocks-media-content-background-color: var(--novablocks-light-1);
+    --novablocks-media-content-background-opacity: 0.2;
 }
 
 .block-is-highlighted:not(.content-is-highlighted),
 .content-is-highlighted:not(.block-is-highlighted) {
-    --nova-media-text-color: var(--nova-light-1);
-    --nova-media-titles-color: var(--nova-media-text-color);
-    --nova-media-subtitles-color: var(--nova-media-text-color);
+    --novablocks-media-text-color: var(--novablocks-light-1);
+    --novablocks-media-titles-color: var(--novablocks-media-text-color);
+    --novablocks-media-subtitles-color: var(--novablocks-media-text-color);
 }
 
 .content-is-highlighted:not(.block-is-highlighted) {
-    --nova-media-content-background-color: var(--nova-dark-1);
+    --novablocks-media-content-background-color: var(--novablocks-dark-1);
 }
 
 @import "content";

@@ -1,10 +1,10 @@
 :root {
-    --nova-media-transition-duration: 0.4s;
-    --nova-media-transition-easing: ease-out;
-    --nova-media-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+    --novablocks-media-transition-duration: 0.4s;
+    --novablocks-media-transition-easing: ease-out;
+    --novablocks-media-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
 }
 
-.nova-media__placeholder {
+.novablocks-media__placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,28 +15,28 @@
 }
 
 .wp-block-pixelgrade-media {
-    transition: var(--nova-media-transition);
+    transition: var(--novablocks-media-transition);
     transition-property: background-color, padding;
 
     h1, h2, h3, h4, h5, h6 {
-        transition: var(--nova-media-transition);
+        transition: var(--novablocks-media-transition);
         transition-property: color;
     }
 }
 
-.nova-media__inner-content {
-    transition: var(--nova-media-transition);
+.novablocks-media__content {
+    transition: var(--novablocks-media-transition);
     transition-property: padding, box-shadow;
 
     &:after {
-        transition: var(--nova-media-transition);
+        transition: var(--novablocks-media-transition);
         transition-property: background-color;
     }
 }
 
-.nova-media__inner-container {
-    padding-left: var(--nova-media-spacing);
-    padding-right: var(--nova-media-spacing);
+.novablocks-media__inner-container {
+    padding-left: var(--novablocks-media-spacing);
+    padding-right: var(--novablocks-media-spacing);
 
     > * {
         margin-left: auto;
@@ -44,7 +44,7 @@
     }
 
     > [data-align="full"] {
-        margin-left: calc(-1 * var(--nova-media-spacing));
-        margin-right: calc(-1 * var(--nova-media-spacing));
+        margin-left: calc(-1 * var(--novablocks-media-spacing));
+        margin-right: calc(-1 * var(--novablocks-media-spacing));
     }
 }

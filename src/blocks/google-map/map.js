@@ -200,7 +200,7 @@ const MapWrapper = ( Map ) => {
 					</Placeholder>
 				</div>
 				<div className="novablocks-map__map-container">
-					<div className="nova-mask">
+					<div className="novablocks-mask">
 						<div className="novablocks-map__map-parallax" style={ parallax.style }>
 							<Map { ...otherProps }></Map>
 						</div>

@@ -9,15 +9,15 @@ $nova-white:                #FFFFFF         !default;
 $nova-gray:                 #EDF0F1         !default;
 
 :root {
-    --nova-color-1: #{$nova-blue};
-    --nova-color-2: #{$nova-yellow};
-    --nova-color-3: #{$nova-blue-dark};
+    --novablocks-color-1: #{$nova-blue};
+    --novablocks-color-2: #{$nova-yellow};
+    --novablocks-color-3: #{$nova-blue-dark};
 
-    --nova-dark-1: #{$nova-blue-dark};
-    --nova-dark-2: #{$nova-text-color};
-    --nova-dark-3: #{$nova-blue-darker};
+    --novablocks-dark-1: #{$nova-blue-dark};
+    --novablocks-dark-2: #{$nova-text-color};
+    --novablocks-dark-3: #{$nova-blue-darker};
 
-    --nova-light-1: #{$nova-white};
-    --nova-light-2: #{$nova-gray};
-    --nova-light-3: #{$nova-gray};
+    --novablocks-light-1: #{$nova-white};
+    --novablocks-light-2: #{$nova-gray};
+    --novablocks-light-3: #{$nova-gray};
 }

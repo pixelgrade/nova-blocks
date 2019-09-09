@@ -1,7 +1,7 @@
 :root {
     --novablocks-hero-transition-duration: 0.4s;
     --novablocks-hero-transition-easing: ease-out;
-    --novablocks-hero-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+    --novablocks-hero-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
 }
 
 .wp-block-pixelgrade-hero {

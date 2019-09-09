@@ -26,7 +26,7 @@ const MediaPreview = function( props ) {
 
 	const classNames = classnames(
 		className,
-		`nova-media`,
+		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
@@ -42,7 +42,7 @@ const MediaPreview = function( props ) {
 			return (
 				<MediaPlaceholder
 					icon="format-gallery"
-					className="nova-media__placeholder"
+					className="novablocks-media__placeholder"
 					onSelect={ updateImages }
 					accept="image/*"
 					allowedTypes={ [ 'image' ] }
@@ -54,7 +54,7 @@ const MediaPreview = function( props ) {
 		return (
 			galleryImages.map( ( image ) => {
 				return (
-					<div key={ image.id } className="nova-media__image">
+					<div key={ image.id } className="novablocks-media__image">
 						<img alt={ image.alt } src={ image.url } />
 					</div>
 				);
@@ -64,18 +64,18 @@ const MediaPreview = function( props ) {
 
 	return (
 		<div className={ classNames }>
-			<div className="nova-group__inner-container">
+			<div className="wp-block-group__inner-container">
 				<div className="wp-block" data-align="wide">
-					<div className="nova-media__layout">
-						<div className="nova-media__content">
-							<div className="nova-media__inner-container">
+					<div className="novablocks-media__layout">
+						<div className="novablocks-media__content">
+							<div className="novablocks-media__inner-container">
 								<InnerBlocks
 									allowedBlocks={ settings.media.allowedBlocks }
 									template={ settings.media.template }
 								/>
 							</div>
 						</div>
-						<div className="nova-media__aside">
+						<div className="novablocks-media__aside">
 							{ displayImages( images ) }
 						</div>
 					</div>

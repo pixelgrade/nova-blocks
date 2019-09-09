@@ -309,6 +309,34 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
     return $attributes;
 }
 
+function novablocks_get_media_attributes() {
+	return array(
+		'mediaPosition'       => array(
+			'type'    => 'string',
+			'default' => 'left',
+		),
+		'blockStyle'          => array(
+			'type'    => 'string',
+			'default' => 'basic'
+		),
+		'contentStyle'        => array(
+			'type'    => 'string',
+			'default' => 'basic',
+		),
+		'horizontalAlignment' => array(
+			'type'    => 'string',
+			'default' => 'left',
+		),
+		'images'              => array(
+			'type'    => 'array',
+			'items'   => array(
+				'type' => 'string',
+			),
+			'default' => array(),
+		),
+	);
+}
+
 function nova_blocks_register_meta() {
 
 	register_meta( 'post', 'novablocks_hero_minimum_height', array(

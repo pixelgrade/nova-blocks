@@ -13401,7 +13401,7 @@ var MapWrapper = function MapWrapper(Map) {
 				{ className: 'novablocks-map__map-container' },
 				wp.element.createElement(
 					'div',
-					{ className: 'nova-mask' },
+					{ className: 'novablocks-mask' },
 					wp.element.createElement(
 						'div',
 						{ className: 'novablocks-map__map-parallax', style: parallax.style },
@@ -15395,7 +15395,7 @@ var HeroBackground = function HeroBackground(props) {
 
 	return wp.element.createElement(
 		'div',
-		{ className: 'nova-mask' },
+		{ className: 'novablocks-mask' },
 		wp.element.createElement(
 			'div',
 			{ className: 'novablocks-hero__background', style: style },
@@ -15779,7 +15779,7 @@ var MediaPreview = function MediaPreview(props) {
 	    settings = props.settings;
 
 
-	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'nova-media', 'has-image-on-the-' + mediaPosition, 'block-is-' + blockStyle, 'content-is-' + contentStyle, {
+	var classNames = __WEBPACK_IMPORTED_MODULE_0_classnames___default()(className, 'novablocks-media', 'has-image-on-the-' + mediaPosition, 'block-is-' + blockStyle, 'content-is-' + contentStyle, {
 		'has-background': blockStyle !== 'basic'
 	});
 
@@ -15791,7 +15791,7 @@ var MediaPreview = function MediaPreview(props) {
 		if (0 === imagesArray.length) {
 			return wp.element.createElement(MediaPlaceholder, {
 				icon: 'format-gallery',
-				className: 'nova-media__placeholder',
+				className: 'novablocks-media__placeholder',
 				onSelect: updateImages,
 				accept: 'image/*',
 				allowedTypes: ['image'],
@@ -15802,7 +15802,7 @@ var MediaPreview = function MediaPreview(props) {
 		return galleryImages.map(function (image) {
 			return wp.element.createElement(
 				'div',
-				{ key: image.id, className: 'nova-media__image' },
+				{ key: image.id, className: 'novablocks-media__image' },
 				wp.element.createElement('img', { alt: image.alt, src: image.url })
 			);
 		});
@@ -15813,19 +15813,19 @@ var MediaPreview = function MediaPreview(props) {
 		{ className: classNames },
 		wp.element.createElement(
 			'div',
-			{ className: 'nova-group__inner-container' },
+			{ className: 'wp-block-group__inner-container' },
 			wp.element.createElement(
 				'div',
 				{ className: 'wp-block', 'data-align': 'wide' },
 				wp.element.createElement(
 					'div',
-					{ className: 'nova-media__layout' },
+					{ className: 'novablocks-media__layout' },
 					wp.element.createElement(
 						'div',
-						{ className: 'nova-media__content' },
+						{ className: 'novablocks-media__content' },
 						wp.element.createElement(
 							'div',
-							{ className: 'nova-media__inner-container' },
+							{ className: 'novablocks-media__inner-container' },
 							wp.element.createElement(InnerBlocks, {
 								allowedBlocks: settings.media.allowedBlocks,
 								template: settings.media.template
@@ -15834,7 +15834,7 @@ var MediaPreview = function MediaPreview(props) {
 					),
 					wp.element.createElement(
 						'div',
-						{ className: 'nova-media__aside' },
+						{ className: 'novablocks-media__aside' },
 						displayImages(images)
 					)
 				)
@@ -16284,7 +16284,7 @@ var SlideshowBackground = function SlideshowBackground(props) {
 
 	return wp.element.createElement(
 		'div',
-		{ className: 'nova-mask' },
+		{ className: 'novablocks-mask' },
 		wp.element.createElement(
 			'div',
 			{ className: 'novablocks-slideshow__background', style: style },

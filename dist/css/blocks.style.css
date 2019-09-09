@@ -1,14 +1,14 @@
 @charset "UTF-8";
 :root {
-  --nova-color-1: #203AB6;
-  --nova-color-2: #FFE42E;
-  --nova-color-3: #323067;
-  --nova-dark-1: #323067;
-  --nova-dark-2: #272743;
-  --nova-dark-3: #000043;
-  --nova-light-1: #FFFFFF;
-  --nova-light-2: #EDF0F1;
-  --nova-light-3: #EDF0F1; }
+  --novablocks-color-1: #203AB6;
+  --novablocks-color-2: #FFE42E;
+  --novablocks-color-3: #323067;
+  --novablocks-dark-1: #323067;
+  --novablocks-dark-2: #272743;
+  --novablocks-dark-3: #000043;
+  --novablocks-light-1: #FFFFFF;
+  --novablocks-light-2: #EDF0F1;
+  --novablocks-light-3: #EDF0F1; }
 
 .novablocks-map__map-container {
   position: relative;
@@ -130,8 +130,8 @@
       top: 100%;
       left: 0;
       width: 10em;
-      background: var(--nova-dark-2);
-      color: var(--nova-light-1); }
+      background: var(--novablocks-dark-2);
+      color: var(--novablocks-light-1); }
       .site-header .sub-menu .sub-menu {
         top: 0;
         left: 100%; }
@@ -217,6 +217,7 @@
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 999;
     background: #000;
     opacity: 0.2;
     -webkit-transition: opacity .3s ease-out;
@@ -453,92 +454,106 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .wp-block-pixelgrade-media {
   margin-left: auto;
   margin-right: auto;
-  --nova-media-text-color: var(--nova-dark-2);
-  --nova-media-titles-color: var(--nova-dark-3);
-  --nova-media-subtitles-color: var(--nova-color-1);
-  --nova-media-background-color: var(--nova-light-1);
-  --nova-media-content-padding: 0;
-  --nova-media-content-background-color: transparent;
-  --nova-media-content-background-opacity: 1;
-  --nova-media-content-box-shadow: none; }
+  --novablocks-media-text-color: var(--novablocks-dark-2);
+  --novablocks-media-titles-color: var(--novablocks-dark-3);
+  --novablocks-media-subtitles-color: var(--novablocks-color-1);
+  --novablocks-media-background-color: var(--novablocks-light-1);
+  --novablocks-media-content-padding: 0;
+  --novablocks-media-content-background-color: transparent;
+  --novablocks-media-content-background-opacity: 1;
+  --novablocks-media-content-box-shadow: none; }
 
-.nova-media {
-  background-color: var(--nova-media-background-color);
-  --nova-media-spacing: 24px; }
+.novablocks-media {
+  background-color: var(--novablocks-media-background-color);
+  --novablocks-media-spacing: 24px; }
   @media only screen and (min-width: 1024px) {
-    .nova-media {
-      --nova-media-spacing: 48px; } }
+    .novablocks-media {
+      --novablocks-media-spacing: 48px; } }
   @media only screen and (min-width: 1366px) {
-    .nova-media {
-      --nova-media-spacing: 56px; } }
-  .nova-media.has-background {
-    padding: var(--nova-media-padding) 0; }
+    .novablocks-media {
+      --novablocks-media-spacing: 56px; } }
+  .novablocks-media.has-background {
+    padding: var(--novablocks-media-padding) 0; }
+  .novablocks-media .wp-block-group__inner-container > * {
+    margin-left: auto;
+    margin-right: auto; }
 
-.nova-media__layout {
+.novablocks-media__layout {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin-left: calc(-1 * var(--nova-media-spacing)); }
-  .nova-media__layout > * {
+  margin-left: calc(-1 * var(--novablocks-media-spacing)); }
+  .novablocks-media__layout > * {
     min-width: 300px;
-    padding-left: var(--nova-media-spacing);
+    padding-left: var(--novablocks-media-spacing);
     -webkit-box-flex: 1;
         -ms-flex: 1 0 50%;
             flex: 1 0 50%; }
 
 .block-is-moderate,
 .block-is-highlighted {
-  --nova-media-padding: var(--nova-media-spacing); }
+  --novablocks-media-padding: var(--novablocks-media-spacing); }
 
 .block-is-moderate {
-  --nova-media-background-color: var(--nova-light-2); }
+  --novablocks-media-background-color: var(--novablocks-light-2); }
 
 .block-is-highlighted {
-  --nova-media-background-color: var(--nova-dark-3); }
+  --novablocks-media-background-color: var(--novablocks-dark-3); }
 
 .content-is-moderate,
 .content-is-highlighted {
-  --nova-media-content-padding: var(--nova-media-spacing); }
+  --novablocks-media-content-padding: var(--novablocks-media-spacing); }
 
 .content-is-moderate,
 .content-is-highlighted.block-is-highlighted {
-  --nova-media-content-background-color: var(--nova-light-1);
-  --nova-media-content-box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1), 0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1); }
+  --novablocks-media-content-background-color: var(--novablocks-light-1);
+  --novablocks-media-content-box-shadow: 0 32px 128px rgba(42, 54, 52, 0.1), 0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1); }
 
 .content-is-moderate.block-is-highlighted {
-  --nova-media-content-background-color: var(--nova-light-1);
-  --nova-media-content-background-opacity: 0.2; }
+  --novablocks-media-content-background-color: var(--novablocks-light-1);
+  --novablocks-media-content-background-opacity: 0.2; }
 
 .block-is-highlighted:not(.content-is-highlighted),
 .content-is-highlighted:not(.block-is-highlighted) {
-  --nova-media-text-color: var(--nova-light-1);
-  --nova-media-titles-color: var(--nova-media-text-color);
-  --nova-media-subtitles-color: var(--nova-media-text-color); }
+  --novablocks-media-text-color: var(--novablocks-light-1);
+  --novablocks-media-titles-color: var(--novablocks-media-text-color);
+  --novablocks-media-subtitles-color: var(--novablocks-media-text-color); }
 
 .content-is-highlighted:not(.block-is-highlighted) {
-  --nova-media-content-background-color: var(--nova-dark-1); }
+  --novablocks-media-content-background-color: var(--novablocks-dark-1); }
 
-.nova-media__inner-container {
-  padding: var(--nova-media-content-padding);
-  color: var(--nova-media-text-color);
-  -webkit-box-shadow: var(--nova-media-content-box-shadow);
-          box-shadow: var(--nova-media-content-box-shadow);
+.novablocks-media__inner-container {
+  padding: var(--novablocks-media-content-padding);
+  color: var(--novablocks-media-text-color);
+  -webkit-box-shadow: var(--novablocks-media-content-box-shadow);
+          box-shadow: var(--novablocks-media-content-box-shadow);
   margin-top: auto;
   margin-bottom: auto;
   z-index: 2; }
-  .nova-media__inner-container h1, .nova-media__inner-container h2, .nova-media__inner-container h3 {
-    color: var(--nova-media-titles-color); }
-  .nova-media__inner-container h4, .nova-media__inner-container h5, .nova-media__inner-container h6 {
-    color: var(--nova-media-subtitles-color); }
+  .novablocks-media__inner-container h1, .novablocks-media__inner-container h2, .novablocks-media__inner-container h3 {
+    color: var(--novablocks-media-titles-color); }
+  .novablocks-media__inner-container h4, .novablocks-media__inner-container h5, .novablocks-media__inner-container h6 {
+    color: var(--novablocks-media-subtitles-color); }
   @media not screen and (min-width: 1366px) {
-    .nova-media__inner-container {
+    .novablocks-media__inner-container {
       grid-column: span 2; } }
 
-.nova-media__inner-container {
-  position: relative; }
-  .nova-media__inner-container:after {
+.novablocks-media__inner-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+  .novablocks-media__inner-container:after {
     content: "";
     position: absolute;
     top: 0;
@@ -547,27 +562,27 @@ body:not(.wp-admin) .novablocks-hero__parallax {
     left: 0;
     z-index: -1;
     display: block;
-    background-color: var(--nova-media-content-background-color);
-    opacity: var(--nova-media-content-background-opacity); }
+    background-color: var(--novablocks-media-content-background-color);
+    opacity: var(--novablocks-media-content-background-opacity); }
 
-.nova-media__aside {
+.novablocks-media__aside {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 15px;
   min-height: 400px; }
   @media only screen and (min-width: 1366px) {
-    .has-image-on-the-left .nova-media__aside {
+    .has-image-on-the-left .novablocks-media__aside {
       -webkit-box-ordinal-group: 0;
           -ms-flex-order: -1;
               order: -1; } }
   @media not screen and (min-width: 1366px) {
-    .nova-media__aside {
+    .novablocks-media__aside {
       grid-column: span 2; } }
 
-.nova-media__image {
+.novablocks-media__image {
   position: relative;
   grid-column: span 6; }
-  .nova-media__image img {
+  .novablocks-media__image img {
     position: absolute;
     top: 0;
     left: 0;
@@ -577,13 +592,13 @@ body:not(.wp-admin) .novablocks-hero__parallax {
     width: auto;
     height: auto; }
     @supports (transform: translate(-50%, -50%)) {
-      .nova-media__image img {
+      .novablocks-media__image img {
         top: 50%;
         left: 50%;
         -webkit-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%); } }
     @supports ((-o-object-fit: cover) or (object-fit: cover)) {
-      .nova-media__image img {
+      .novablocks-media__image img {
         width: 100%;
         height: 100%;
         -o-object-fit: cover;
@@ -593,18 +608,18 @@ body:not(.wp-admin) .novablocks-hero__parallax {
         -webkit-transform: none;
                 transform: none; } }
 
-.nova-media__image:first-child:last-child,
-.nova-media__placeholder {
+.novablocks-media__image:first-child:last-child,
+.novablocks-media__placeholder {
   grid-column: span 12; }
 
-.nova-media__image:first-child:nth-last-child(3) {
+.novablocks-media__image:first-child:nth-last-child(3) {
   grid-column: 1 / span 6; }
-  .nova-media__image:first-child:nth-last-child(3) ~ .nova-media__image:nth-child(2) {
+  .novablocks-media__image:first-child:nth-last-child(3) ~ .novablocks-media__image:nth-child(2) {
     grid-column: 7 / span 6; }
-  .nova-media__image:first-child:nth-last-child(3) ~ .nova-media__image:last-child {
+  .novablocks-media__image:first-child:nth-last-child(3) ~ .novablocks-media__image:last-child {
     grid-column: 1 / span 12; }
 
-.nova-media__image:nth-child(n+5) {
+.novablocks-media__image:nth-child(n+5) {
   display: none; }
 
 .novablocks-slideshow {
@@ -880,7 +895,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 
 .novablocks-opentable .ot-title[class][class] {
   line-height: 1;
-  margin-bottom: var(--nova-spacing-small); }
+  margin-bottom: var(--novablocks-content-padding-small); }
 
 .novablocks-opentable .ot-button[class] {
   border: 0;
@@ -897,7 +912,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .novablocks-opentable .picker__day--selected, .novablocks-opentable .picker__day--highlighted,
 .novablocks-opentable .picker__day--selected:hover, .novablocks-opentable .picker__day--infocus:hover,
 .novablocks-opentable .picker__day--outfocus:hover {
-  border-color: var(--nova-dark-1); }
+  border-color: var(--novablocks-dark-1); }
 
 .novablocks-opentable .picker__day {
   height: 26px;
@@ -910,9 +925,9 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   border-color: #CCC; }
 
 .novablocks-opentable .picker__close {
-  color: var(--nova-dark-1); }
+  color: var(--novablocks-dark-1); }
   .novablocks-opentable .picker__close:hover {
-    color: var(--nova-dark-2); }
+    color: var(--novablocks-dark-2); }
 
 .novablocks-opentable .picker__nav--next,
 .novablocks-opentable .picker__nav--prev {
@@ -920,7 +935,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   transition: border-color 0.15s cubic-bezier(0, 0, 0.58, 1); }
   .novablocks-opentable .picker__nav--next:hover,
   .novablocks-opentable .picker__nav--prev:hover {
-    border-color: var(--nova-dark-1); }
+    border-color: var(--novablocks-dark-1); }
 
 .novablocks-opentable .ot-dtp-picker .ot-dtp-picker-form {
   background: transparent;
@@ -983,12 +998,12 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .novablocks-opentable.novablocks-opentable__wide[class] {
   width: 100%; }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-dtp-picker-selector[class][class] {
-    border: 1px solid var(--nova-light-2); }
+    border: 1px solid var(--novablocks-light-2); }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-title {
     font-size: 1.5rem;
     text-align: center; }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-dtp-picker-form .ot-dtp-picker-button {
-    margin-top: var(--nova-spacing-small) !important; }
+    margin-top: var(--novablocks-content-padding-small) !important; }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-dtp-picker-form .ot-dtp-picker-selector {
     width: 100%;
     border-bottom: none;
@@ -997,17 +1012,17 @@ body:not(.wp-admin) .novablocks-hero__parallax {
     @media only screen and (min-width: 768px) {
       .novablocks-opentable.novablocks-opentable__wide[class] .ot-dtp-picker-form .ot-dtp-picker-selector {
         width: 10rem;
-        margin-left: var(--nova-spacing-small);
+        margin-left: var(--novablocks-content-padding-small);
         margin-bottom: 0; } }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-dtp-picker-form input[type="hidden"] + .ot-dtp-picker-selector {
     margin-left: 0; }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-powered-by[class] {
     margin-top: 1rem; }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-button {
-    background-color: var(--nova-color-3);
-    color: var(--nova-light-1); }
+    background-color: var(--novablocks-color-3);
+    color: var(--novablocks-light-1); }
     .novablocks-opentable.novablocks-opentable__wide[class] .ot-button:hover {
-      background-color: var(--nova-color-1); }
+      background-color: var(--novablocks-color-1); }
   .novablocks-opentable.novablocks-opentable__wide[class] .picker .picker__holder {
     height: auto; }
   .novablocks-opentable.novablocks-opentable__wide[class] .ot-date-label {
@@ -1016,29 +1031,29 @@ body:not(.wp-admin) .novablocks-hero__parallax {
     text-overflow: ellipsis; }
 
 .novablocks-opentable.novablocks-opentable__standard[class] {
-  background-color: var(--nova-dark-1);
-  color: var(--nova-light-1);
+  background-color: var(--novablocks-dark-1);
+  color: var(--novablocks-light-1);
   padding: 3rem; }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-dtp-picker-selector .ot-dtp-picker-selector-link {
     padding-left: 1.5rem;
-    color: var(--nova-light-1);
+    color: var(--novablocks-light-1);
     border-bottom: 2px solid currentColor; }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-dtp-picker-selector .ot-dtp-picker-selector-link:before {
     left: 0;
-    color: var(--nova-light-1); }
+    color: var(--novablocks-light-1); }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-dtp-picker-selector .ot-dtp-picker-selector-link:after {
     content: none; }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-dtp-picker-selector {
-    margin-bottom: var(--nova-spacing-small); }
+    margin-bottom: var(--novablocks-content-padding-small); }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-title {
     font-size: 2rem;
     text-align: left; }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-button {
-    background-color: var(--nova-light-1);
-    color: var(--nova-dark-1);
+    background-color: var(--novablocks-light-1);
+    color: var(--novablocks-dark-1);
     padding: 20px 0; }
     .novablocks-opentable.novablocks-opentable__standard[class] .ot-button:hover {
-      background-color: var(--nova-light-3); }
+      background-color: var(--novablocks-light-3); }
   .novablocks-opentable.novablocks-opentable__standard[class] .ot-powered-by {
     -webkit-filter: invert(1) saturate(0);
     mix-blend-mode: lighten; }
@@ -1049,7 +1064,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 
 .ot-powered-by[class] {
   display: none;
-  margin-top: var(--nova-spacing-small); }
+  margin-top: var(--novablocks-content-padding-small); }
   .has-opentable-logo .ot-powered-by[class] {
     display: block; }
 
@@ -1275,31 +1290,31 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .novablocks-foreground[class] .editor-block-list__block {
   color: inherit; }
 :root {
-  --nova-spacing-small: 5%;
-  --nova-spacing-medium: 10%;
-  --nova-spacing-large: 15%;
-  --nova-content-width-full: 100%;
-  --nova-content-width-large: 70%;
-  --nova-content-width-narrow: 30%; }
+  --novablocks-content-padding-small: 5%;
+  --novablocks-content-padding-medium: 10%;
+  --novablocks-content-padding-large: 15%;
+  --novablocks-content-width-full: 100%;
+  --novablocks-content-width-large: 70%;
+  --novablocks-content-width-narrow: 30%; }
 
 .novablocks-u-content-width {
-  --nova-content-width: var(--nova-content-width-full); }
+  --novablocks-content-width: var(--novablocks-content-width-full); }
   .novablocks-u-content-width-large .novablocks-u-content-width {
-    --nova-content-width: var(--nova-content-width-large); }
+    --novablocks-content-width: var(--novablocks-content-width-large); }
   .novablocks-u-content-width-narrow .novablocks-u-content-width {
-    --nova-content-width: var(--nova-content-width-narrow); }
+    --novablocks-content-width: var(--novablocks-content-width-narrow); }
   @media only screen and (min-width: 1000px) {
     .novablocks-u-content-width {
-      max-width: var(--nova-content-width); } }
+      max-width: var(--novablocks-content-width); } }
 
 .novablocks-u-content-padding {
-  --nova-content-padding: var(--nova-spacing-small);
-  padding: var(--nova-content-padding); }
+  --novablocks-content-padding: var(--novablocks-content-padding-small);
+  padding: var(--novablocks-content-padding); }
   @media only screen and (min-width: 1000px) {
     .novablocks-u-spacing-medium .novablocks-u-content-padding {
-      --nova-content-padding: var(--nova-spacing-medium); }
+      --novablocks-content-padding: var(--novablocks-content-padding-medium); }
     .novablocks-u-spacing-large .novablocks-u-content-padding {
-      --nova-content-padding: var(--nova-spacing-large); } }
+      --novablocks-content-padding: var(--novablocks-content-padding-large); } }
 :root {
   --bg-master-dark: #000000;
   --bg-master-light: #FFFFFF;

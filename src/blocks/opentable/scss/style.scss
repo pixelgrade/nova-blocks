@@ -2,7 +2,7 @@
 
   .ot-title[class][class] {
     line-height: 1;
-    margin-bottom: var(--nova-spacing-small);
+    margin-bottom: var(--novablocks-content-padding-small);
   }
 
   .ot-button[class] {
@@ -22,7 +22,7 @@
   .picker__day--selected, .picker__day--highlighted,
   .picker__day--selected:hover, .picker__day--infocus:hover,
   .picker__day--outfocus:hover {
-    border-color: var(--nova-dark-1);
+    border-color: var(--novablocks-dark-1);
   }
 
   .picker__day {
@@ -39,10 +39,10 @@
   }
 
   .picker__close {
-    color: var(--nova-dark-1);
+    color: var(--novablocks-dark-1);
 
     &:hover {
-      color: var(--nova-dark-2);
+      color: var(--novablocks-dark-2);
     }
   }
 
@@ -51,7 +51,7 @@
     transition: border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
 
     &:hover {
-      border-color: var(--nova-dark-1);
+      border-color: var(--novablocks-dark-1);
     }
   }
 
@@ -126,7 +126,7 @@
     width: 100%;
 
     .ot-dtp-picker-selector[class][class] {
-      border: 1px solid var(--nova-light-2);
+      border: 1px solid var(--novablocks-light-2);
     }
 
     .ot-title {
@@ -135,7 +135,7 @@
     }
 
     .ot-dtp-picker-form .ot-dtp-picker-button {
-      margin-top: var(--nova-spacing-small) !important;
+      margin-top: var(--novablocks-content-padding-small) !important;
     }
 
     .ot-dtp-picker-form .ot-dtp-picker-selector {
@@ -146,7 +146,7 @@
 
       @include above(tablet) {
         width: 10rem;
-        margin-left: var(--nova-spacing-small);
+        margin-left: var(--novablocks-content-padding-small);
         margin-bottom: 0;
       }
     }
@@ -160,11 +160,11 @@
     }
 
     .ot-button {
-      background-color: var(--nova-color-3);
-      color: var(--nova-light-1);
+      background-color: var(--novablocks-color-3);
+      color: var(--novablocks-light-1);
 
       &:hover {
-        background-color: var(--nova-color-1);
+        background-color: var(--novablocks-color-1);
       }
     }
 
@@ -180,21 +180,21 @@
   }
 
   &.novablocks-opentable__standard[class] {
-    background-color: var(--nova-dark-1);
-    color: var(--nova-light-1);
+    background-color: var(--novablocks-dark-1);
+    color: var(--novablocks-light-1);
 
     padding: 3rem;
 
     .ot-dtp-picker-selector .ot-dtp-picker-selector-link {
       padding-left: 1.5rem;
 
-      color: var(--nova-light-1);
+      color: var(--novablocks-light-1);
       border-bottom: 2px solid currentColor;
     }
 
     .ot-dtp-picker-selector .ot-dtp-picker-selector-link:before {
       left: 0;
-      color: var(--nova-light-1);
+      color: var(--novablocks-light-1);
     }
 
     .ot-dtp-picker-selector .ot-dtp-picker-selector-link:after {
@@ -202,7 +202,7 @@
     }
 
     .ot-dtp-picker-selector {
-      margin-bottom: var(--nova-spacing-small);
+      margin-bottom: var(--novablocks-content-padding-small);
     }
 
     .ot-title {
@@ -211,13 +211,13 @@
     }
 
     .ot-button {
-      background-color: var(--nova-light-1);
-      color: var(--nova-dark-1);
+      background-color: var(--novablocks-light-1);
+      color: var(--novablocks-dark-1);
 
       padding: 20px 0;
 
       &:hover {
-        background-color: var(--nova-light-3);
+        background-color: var(--novablocks-light-3);
       }
     }
 
@@ -239,7 +239,7 @@
 .ot-powered-by[class] {
   display: none;
 
-  margin-top: var(--nova-spacing-small);
+  margin-top: var(--novablocks-content-padding-small);
 
   .has-opentable-logo & {
     display: block;

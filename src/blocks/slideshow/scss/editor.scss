@@ -1,7 +1,7 @@
 :root {
     --novablocks-slideshow-transition-duration: 0.4s;
     --novablocks-slideshow-transition-easing: ease-out;
-    --novablocks-slideshow-transition: all var(--nova-media-transition-duration) var(--nova-media-transition-easing);
+    --novablocks-slideshow-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
 }
 
 .wp-block-pixelgrade-slideshow {
