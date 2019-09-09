@@ -95,14 +95,14 @@
       @include above(tablet) {
         flex-direction: row;
       }
+    }
 
-      .ot-powered-by {
-        background-position: center;
-      }
+    .ot-powered-by {
+      background-position: center;
+    }
 
-      .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
-        border-left: 0;
-      }
+    .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
+      border-left: 0;
     }
 
     .ot-select-label[class],

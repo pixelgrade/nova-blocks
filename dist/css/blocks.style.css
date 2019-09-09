@@ -956,10 +956,10 @@ body:not(.wp-admin) .novablocks-hero__parallax {
         -webkit-box-direction: normal;
             -ms-flex-direction: row;
                 flex-direction: row; } }
-    .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form .ot-powered-by {
-      background-position: center; }
-    .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
-      border-left: 0; }
+  .novablocks-opentable .ot-dtp-picker.wide .ot-powered-by {
+    background-position: center; }
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
+    border-left: 0; }
   .novablocks-opentable .ot-dtp-picker.wide .ot-select-label[class],
   .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-label[class] {
     text-decoration: none; }
