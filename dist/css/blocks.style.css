@@ -932,49 +932,44 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   width: 100%;
   margin-left: auto;
   margin-right: auto; }
-
-.novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  border: 0;
-  height: auto; }
-  @media only screen and (min-width: 768px) {
-    .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form {
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: row;
-              flex-direction: row; } }
-
-.novablocks-opentable .ot-select-label[class],
-.novablocks-opentable .ot-dtp-picker-label[class] {
-  text-decoration: none; }
-
-.novablocks-opentable .ot-dtp-picker.wide .ot-powered-by {
-  background-position: center; }
-
-.novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
-  border-left: 0; }
-
-.novablocks-opentable .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
-.novablocks-opentable .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-select-label.highlighted,
-.novablocks-opentable .ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
-.novablocks-opentable .ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-select-label.highlighted {
-  outline: 0;
-  -webkit-box-shadow: none;
-          box-shadow: none; }
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    border: 0;
+    height: auto; }
+    @media only screen and (min-width: 768px) {
+      .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row; } }
+    .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form .ot-powered-by {
+      background-position: center; }
+    .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-form .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
+      border-left: 0; }
+  .novablocks-opentable .ot-dtp-picker.wide .ot-select-label[class],
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker-label[class] {
+    text-decoration: none; }
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-select-label.highlighted,
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
+  .novablocks-opentable .ot-dtp-picker.wide .ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-select-label.highlighted {
+    outline: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none; }
 
 .novablocks-opentable.novablocks-opentable__wide[class] {
   width: 100%; }

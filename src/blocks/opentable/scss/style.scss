@@ -49,6 +49,7 @@
   .picker__nav--next,
   .picker__nav--prev {
     transition: border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
+
     &:hover {
       border-color: var(--nova-dark-1);
     }
@@ -78,44 +79,47 @@
 
     margin-left: auto;
     margin-right: auto;
-  }
 
-  .ot-dtp-picker.wide .ot-dtp-picker-form {
+    .ot-dtp-picker-form {
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
 
-    border: 0;
+      border: 0;
 
-    height: auto;
+      height: auto;
 
-    @include above(tablet) {
-      flex-direction: row;
+      @include above(tablet) {
+        flex-direction: row;
+      }
+
+      .ot-powered-by {
+        background-position: center;
+      }
+
+      .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
+        border-left: 0;
+      }
     }
-  }
 
-  .ot-select-label[class],
-  .ot-dtp-picker-label[class] {
-    text-decoration: none;
-  }
+    .ot-select-label[class],
+    .ot-dtp-picker-label[class] {
+      text-decoration: none;
+    }
 
-  .ot-dtp-picker.wide .ot-powered-by {
-    background-position: center;
-  }
+    .ot-dtp-picker {
+      .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
+      .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-select-label.highlighted,
+      .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
+      .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-select-label.highlighted {
+        outline: 0;
+        box-shadow: none;
+      }
+    }
 
-  .ot-dtp-picker.wide .ot-dtp-picker-form .ot-dtp-picker-selector + .ot-dtp-picker-selector {
-    border-left: 0;
-  }
-
-  .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
-  .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link.ot-select-label.highlighted,
-  .ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-date-label.menu-opened,
-  .ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link.ot-select-label.highlighted {
-    outline: 0;
-    box-shadow: none;
   }
 
   &.novablocks-opentable__wide[class] {
