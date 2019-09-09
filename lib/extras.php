@@ -269,7 +269,7 @@ function novablocks_get_google_map_attributes() {
 			),
 			'styleSlug' => array(
 				'type' => 'string',
-				'default' => 'regular',
+				'default' => 'original',
 			),
 			'zoom' => array(
 				'type' => 'number',
@@ -277,6 +277,19 @@ function novablocks_get_google_map_attributes() {
 			),
 		),
 		novablocks_get_parallax_attributes()
+	);
+}
+
+function novablocks_get_header_attributes() {
+	return array(
+		'align' => array(
+			'type' => 'string',
+			'default' => 'wide',
+		),
+		'layout' => array(
+			'type' => 'string',
+			'default' => 'logo-left',
+		),
 	);
 }
 

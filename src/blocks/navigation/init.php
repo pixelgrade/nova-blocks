@@ -35,10 +35,14 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 		do_action( 'novablocks_navigation:before' ); ?>
 
 		<div class="wp-block-novablocks-navigation">
-            <?php wp_nav_menu( array(
-                    'menu' => $attributes['slug'],
-                    'container' => ''
-            ) ); ?>
+			<?php
+			if ( ! empty( $attributes['slug'] ) ) {
+				wp_nav_menu( array(
+	                    'menu' => $attributes['slug'],
+	                    'container' => ''
+	            ) );
+			}
+			?>
 		</div>
 
 		<?php do_action( 'novablocks_navigation:after' );

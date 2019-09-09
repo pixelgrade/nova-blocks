@@ -33,9 +33,16 @@
 }
 
 .nova-media__layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-gap: var(--nova-media-spacing);
+	display: flex;
+	flex-wrap: wrap;
+
+	margin-left: calc(-1 * var(--nova-media-spacing));
+
+	> * {
+		min-width: 300px;
+		padding-left: var(--nova-media-spacing);
+		flex: 1 0 50%;
+	}
 }
 
 // block variations

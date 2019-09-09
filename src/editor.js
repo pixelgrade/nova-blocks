@@ -3,6 +3,8 @@ import './scss/editor.scss';
 
 import "./filters/with-font-size-picker";
 
+import "./blocks/core/separator";
+
 import "./blocks/google-map";
 import "./blocks/header";
 import "./blocks/headline";
@@ -18,13 +20,17 @@ import "./blocks/opentable";
 
 import { STORE_NAME } from './store';
 
+import { addSeparatorFilters } from "./blocks/core/separator";
+
 const {
 	dispatch,
 } = wp.data;
 
 class novaBlocks {
 	initialize( settings ) {
-		dispatch( STORE_NAME ).updateSettings( settings );
+		dispatch( STORE_NAME ).updateSettings( settings ).then(() => {
+			addSeparatorFilters( settings ); 
+		}); 
 	}
 }
 

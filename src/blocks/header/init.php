@@ -12,17 +12,8 @@ if ( ! function_exists( 'novablocks_header_block_init' ) ) {
 
 	function novablocks_header_block_init() {
 		register_block_type( 'novablocks/header', array(
-			'attributes'      => array(
-                'align' => array(
-                    'type' => 'string',
-                    'default' => 'center',
-                ),
-                'layout' => array(
-                    'type' => 'string',
-                    'default' => 'logo-left',
-                ),
-            ),
-			'render_callback' => 'novablocks_render_header_block'
+			'attributes'      => novablocks_get_header_attributes(),
+			'render_callback' => 'novablocks_render_header_block',
 		) );
 	}
 }
@@ -37,6 +28,9 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		ob_start();
 
 		do_action( 'novablocks_header:before' );
+
+		$attributes_config = novablocks_get_header_attributes();
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		global $novablocks_responsive_navigation_outputted;
 

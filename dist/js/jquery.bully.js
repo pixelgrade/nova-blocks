@@ -1,5 +1,5 @@
 /*!
- * jQuery Bully Plugin v0.1.3
+ * jQuery Bully Plugin v0.2.0
  * Examples and documentation at http://pixelgrade.github.io/rellax/
  * Copyright (c) 2016 PixelGrade http://www.pixelgrade.com
  * Licensed under MIT http://www.opensource.org/licenses/mit-license.php/
@@ -69,7 +69,9 @@
 			if ( frameRendered !== true ) {
 
 				var count = 0,
-					inverse = false;
+					inverse = false,
+					eventData = {},
+					shouldTriggerEvent = false;
 
 				$.each( elements, function( i, element ) {
 					if ( lastScrollY >= element.offset.top - windowHeight / 2 ) {
@@ -81,6 +83,8 @@
 				if ( inversed !== inverse ) {
 					inversed = inverse;
 					$bully.toggleClass( 'c-bully--inversed', inversed );
+					eventData.inversed = inversed;
+					shouldTriggerEvent = true;
 				}
 
 				if ( count !== current ) {
@@ -93,6 +97,12 @@
 					} );
 					$current.css( 'top', offset );
 					current = count;
+					eventData.current = count;
+					shouldTriggerEvent = true;
+				}
+
+				if ( shouldTriggerEvent ) {
+					$window.trigger( 'bully', eventData );
 				}
 			}
 

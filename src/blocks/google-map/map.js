@@ -76,7 +76,9 @@ class Map extends Component {
 			} ) );
 		} );
 
-		this.map.setCenter( getMarkersCenter.call( this ) );
+		if ( this.markers.length ) {
+			this.map.setCenter( getMarkersCenter.call( this ) );
+		}
 	}
 
 

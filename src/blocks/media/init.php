@@ -73,23 +73,27 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		ob_start(); ?>
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-            <div class="wp-block-group__inner-container nova-media__inner-container">
-                <div class="nova-media__layout alignwide">
-                    <div class="nova-media__content nova-media__inner-container">
-						<?php echo $content; ?>
-                    </div>
-                    <div class="nova-media__aside">
-						<?php
-						if ( ! empty( $attributes['images'] ) && is_array( $attributes['images'] ) ) {
-							foreach ( $attributes['images'] as $image ) {
-								$image = json_decode( $image );
-								echo '<div class="nova-media__image">';
-								echo wp_get_attachment_image( $image->id, 'large' );
-								echo '</div>';
-							}
-						} ?>
-                    </div>
-                </div>
+            <div class="wp-block-group__inner-container">
+	            <div class="wp-block alignwide">
+	                <div class="nova-media__layout">
+	                    <div class="nova-media__content">
+		                    <div class="nova-media__inner-container">
+								<?php echo $content; ?>
+		                    </div>
+	                    </div>
+	                    <div class="nova-media__aside">
+							<?php
+							if ( ! empty( $attributes['images'] ) && is_array( $attributes['images'] ) ) {
+								foreach ( $attributes['images'] as $image ) {
+									$image = json_decode( $image );
+									echo '<div class="nova-media__image">';
+									echo wp_get_attachment_image( $image->id, 'large' );
+									echo '</div>';
+								}
+							} ?>
+	                    </div>
+	                </div>
+	            </div>
             </div>
         </div>
 

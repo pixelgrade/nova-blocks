@@ -35,7 +35,8 @@ export const getMapStyles = function() {
 	const { attributes } = this.props;
 	const { styleData, styleSlug } = attributes;
 	const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
-	const styleDataBySlug = styles.find( style => style.slug === styleSlug ).styles;
+	const selectedStyles = styles.find( style => style.slug === styleSlug );
+	const styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
 	const mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
 	return compileStyles.call( this, mapStyles );
 }

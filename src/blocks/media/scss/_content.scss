@@ -1,4 +1,4 @@
-.nova-media__content {
+.nova-media__inner-container {
     padding: var(--nova-media-content-padding);
     color: var(--nova-media-text-color);
     box-shadow: var(--nova-media-content-box-shadow);
@@ -20,7 +20,7 @@
     }
 }
 
-.nova-media__content {
+.nova-media__inner-container {
     position: relative;
 
     &:after {

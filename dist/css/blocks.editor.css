@@ -162,14 +162,14 @@
     -webkit-transition-property: color;
     transition-property: color; }
 
-.nova-media__content {
+.nova-media__inner-content {
   -webkit-transition: var(--nova-media-transition);
   transition: var(--nova-media-transition);
   -webkit-transition-property: padding, -webkit-box-shadow;
   transition-property: padding, -webkit-box-shadow;
   transition-property: padding, box-shadow;
   transition-property: padding, box-shadow, -webkit-box-shadow; }
-  .nova-media__content:after {
+  .nova-media__inner-content:after {
     -webkit-transition: var(--nova-media-transition);
     transition: var(--nova-media-transition);
     -webkit-transition-property: background-color;

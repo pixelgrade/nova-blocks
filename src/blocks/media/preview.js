@@ -64,14 +64,16 @@ const MediaPreview = function( props ) {
 
 	return (
 		<div className={ classNames }>
-			<div className="nova-media__inner-container">
+			<div className="nova-group__inner-container">
 				<div className="wp-block" data-align="wide">
 					<div className="nova-media__layout">
-						<div className="nova-media__content nova-media__inner-container">
-							<InnerBlocks
-								allowedBlocks={ settings.media.allowedBlocks }
-								template={ settings.media.template }
-							/>
+						<div className="nova-media__content">
+							<div className="nova-media__inner-container">
+								<InnerBlocks
+									allowedBlocks={ settings.media.allowedBlocks }
+									template={ settings.media.template }
+								/>
+							</div>
 						</div>
 						<div className="nova-media__aside">
 							{ displayImages( images ) }

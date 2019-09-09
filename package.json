@@ -34,6 +34,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-rsync": "0.0.8",
     "gulp-zip": "^5.0.0",
+    "html-react-parser": "^0.9.1",
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
     "raw-loader": "^0.5.1",
