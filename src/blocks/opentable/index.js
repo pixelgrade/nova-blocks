@@ -34,15 +34,6 @@ export default registerBlockType( 'novablocks/opentable',
 			layoutForm: {
 				type: 'string',
 				default: 'wide'
-			},
-			example: {
-				type: 'boolean',
-				default: true
-			}
-		},
-		example: {
-			attributes: {
-				example: false
 			}
 		},
 		edit,

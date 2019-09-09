@@ -24,15 +24,6 @@ export default registerBlockType( 'novablocks/menu-food',
 				type: 'boolean',
 				default: true
 			},
-			example: {
-				type: 'boolean',
-				default: true
-			}
-		},
-		example: {
-			attributes: {
-				example: false
-			}
 		},
 		getEditWrapperProps() {
 			const settings = select( 'core/block-editor' ).getSettings();

@@ -34,15 +34,9 @@ const {
 	createHigherOrderComponent,
 } = wp.compose;
 
-import * as images from '../../images';
-
 const HeroEdit = function( props ) {
 
-	const { attributes } = props;
-	const { example } = attributes;
-
 	return (
-		example ?
 		<Fragment>
 			<HeroPreview { ...props } />
 			<BlockControls { ...props } />
@@ -52,7 +46,7 @@ const HeroEdit = function( props ) {
 				<ScrollIndicatorPanel { ...props } />
 				<PositionIndicatorsPanel { ...props } />
 			</InspectorControls>
-		</Fragment> : images.hero
+		</Fragment>
 	);
 };
 

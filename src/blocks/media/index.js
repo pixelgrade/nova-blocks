@@ -17,17 +17,6 @@ export default registerBlockType( 'novablocks/media',
 		description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
-		attributes: {
-			example: {
-				type: 'boolean',
-				default: true
-			}
-		},
-		example: {
-			attributes: {
-				example: false
-			}
-		},
 		edit,
 		save() {
 			return <InnerBlocks.Content />;
