@@ -58,7 +58,7 @@ module.exports = {
       {
         test: /editor\.s?css$/,
         use: editBlocksCSSPlugin.extract( extractConfig ),
-      },
+      }
     ],
   },
   plugins: [

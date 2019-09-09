@@ -11,6 +11,7 @@
     "@react-google-maps/api": "^1.6.0",
     "@wordpress/babel-preset-default": "^1.2.0",
     "@wordpress/eslint-plugin": "^2.4.0",
+    "@wordpress/is-shallow-equal": "^1.6.0",
     "autoprefixer": "^9.6.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -42,6 +43,7 @@
     "recompose": "^0.30.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.19.1",
+    "url-loader": "^2.1.0",
     "webpack": "^3.11.0"
   },
   "dependencies": {

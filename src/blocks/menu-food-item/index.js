@@ -14,7 +14,7 @@ const {registerBlockType,} = wp.blocks;
 export default registerBlockType( 'novablocks/menu-food-item',
 	{
 		title: __( 'Menu Item', '__plugin_txtd' ),
-		description: __( 'A food or drink item contained in a menu.', '__plugin_txtd' ),
+		description: __( 'A food or drink item contained in a menu or menu section.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.foodmenu,
 		parent: ['novablocks/menu-food-section'],

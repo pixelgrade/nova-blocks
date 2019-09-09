@@ -35,6 +35,7 @@ const {
 } = wp.compose;
 
 const HeroEdit = function( props ) {
+
 	return (
 		<Fragment>
 			<HeroPreview { ...props } />

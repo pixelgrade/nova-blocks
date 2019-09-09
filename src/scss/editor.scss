@@ -7,9 +7,16 @@
 @import "../blocks/media/scss/editor";
 @import "../blocks/slideshow/scss/editor";
 @import "../blocks/navigation/scss/editor";
+@import "../blocks/opentable/scss/editor";
 @import "../blocks/menu-food/scss/editor";
 
 .nova-mask {
     @include cover;
+    overflow: hidden;
+}
+
+.block-editor-inserter__preview {
+    transform: scale(.8);
+    max-height: 300px;
     overflow: hidden;
 }
