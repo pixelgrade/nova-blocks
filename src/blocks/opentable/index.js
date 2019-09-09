@@ -17,27 +17,19 @@ export default registerBlockType( 'novablocks/opentable',
 		title: __( 'OpenTable Reservation Form', '__plugin_txtd' ),
 		description: __( 'Short description', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
+		icon: icons.opentable,
 		attributes: {
 			restaurantId: {
 				type: 'number',
 				default: 80221
 			},
-			dateLabel: {
-				type: 'string',
-				default: 'Date'
+			showOpenTableLogo: {
+				type: 'boolean',
+				default: true
 			},
-			timeLabel: {
+			layoutForm: {
 				type: 'string',
-				default: 'Time'
-			},
-			partySizeLabel: {
-				type: 'string',
-				default: 'Party Size'
-			},
-			submitButtonText: {
-				type: 'string',
-				default: 'Find a table'
+				default: 'wide'
 			}
 		},
 		edit,

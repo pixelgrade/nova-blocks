@@ -1,80 +1,62 @@
+import classnames from "classnames";
+import isShallowEqual from '@wordpress/is-shallow-equal';
+
 /**
  * WordPress dependencies
  */
 
 const {__} = wp.i18n;
+const {Component} = wp.element;
+const {SandBox} = wp.components;
 
-const {RichText} = wp.blockEditor;
 
-import { todayDate } from "../../utils";
+class OpenTablePreview extends Component {
 
-const OpenTablePreview = function( props ) {
-	const {
-		attributes: {
-			dateLabel,
-			partySizeLabel,
-			timeLabel,
-			submitButtonText,
-		},
-		setAttributes,
-	} = props;
+	shouldComponentUpdate( prevProps ) {
+		return ! isShallowEqual( prevProps.attributes, this.props.attributes );
+	}
 
-	let today = todayDate("/", false);
+	render() {
 
-	return (
+		const {
+			attributes: {
+				restaurantId,
+				layoutForm,
+				showOpenTableLogo
+			},
+			className,
+		} = this.props;
 
-		<div className="novablocks-opentable">
-			<form method="get" className="novablocks-opentable__form"
-			      action="//www.opentable.com/restaurant-search.aspx" target="_blank">
-				<div className="novablocks-opentable__wrapper">
-					<div className="novablocks-opentable__date novablocks-opentable__input-wrap">
-						<RichText
-							tagName="label"
-							value={dateLabel}
-							onChange={( dateLabel ) => setAttributes( {dateLabel} )}
-							allowedFormats={[]}
-						/>
+		const classNames = classnames(
+			className,
+			`novablocks-opentable`,
+			`novablocks-opentable__${layoutForm}`,
 
-						<input name="startDate" className="otb-date otb-input" type="text" value={today} disabled/>
+			{
+				'has-opentable-logo': showOpenTableLogo === true
+			}
+		);
 
-					</div>
-					<div className="novablocks-opentable__time novablocks-opentable__input-wrap">
-						<RichText
-							tagName="label"
-							value={timeLabel}
-							onChange={( timeLabel ) => setAttributes( {timeLabel} )}
-							allowedFormats={[]}
-						/>
-						<select className="otb-time" name="ResTime" aria-label="Reservation Time" disabled>
-							<option value="12:00am">12:00 AM</option>
-						</select>
-					</div>
-					<div className="novablocks-opentable__size novablocks-opentable__input-wrap">
-						<RichText
-							tagName="label"
-							value={partySizeLabel}
-							onChange={( partySizeLabel ) => setAttributes( {partySizeLabel} )}
-							allowedFormats={[]}
-						/>
-						<select id="party-size" name="partySize" className="otb-people otb-input" disabled>
-							<option value="1">1</option>
-						</select>
-					</div>
-					<div className="novablocks-opentable__button-wrap wp-block-button">
-						<RichText
-							placeholder={__( 'Find a table' )}
-							value={submitButtonText}
-							className="wp-block-button__link novablocks-opentable__button"
-							onChange={( submitButtonText ) => setAttributes( {submitButtonText} )}
-							allowedFormats={[]}
-							keepPlaceholderOnFocus
-						/>
-					</div>
-				</div>
-			</form>
-		</div>
-	)
+		const OpenTable = ( props ) => {
+			return <SandBox {...props} />
+		};
 
-};
+		const html = `<div class="novablocks-opentable ${classNames}">` +
+		             `<script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=${restaurantId}&type=standard&theme=${layoutForm}&iframe=false&overlay=false&domain=com&lang=en-US'></script>` +
+		             `<link rel="stylesheet" href="${novablocks_urls.frontend_blocks_stylesheet}" type="text/css"/>` +
+		             `<link rel="stylesheet" href="${novablocks_urls.editor_blocks_stylesheet}" type="text/css"/>` +
+		             '</div>';
+
+		return (
+			<OpenTable
+				html={html}
+				title="Sandbox"
+				type="embed"
+			/>
+		)
+
+	}
+}
+
 
 export default OpenTablePreview;

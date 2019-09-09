@@ -265,6 +265,14 @@
 .wp-block[data-type="novablocks/navigation"] .menu {
   pointer-events: none; }
 
+.novablocks-opentable,
+.novablocks-opentable * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+.novablocks-opentable {
+  pointer-events: none; }
+
 .nova-food-menu-item--highlighted[class] {
   margin-left: 0;
   margin-right: 0; }

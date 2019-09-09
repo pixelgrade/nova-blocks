@@ -36,6 +36,11 @@ function novablocks_admin_init() {
 		$script_dependencies
 	);
 
+	wp_localize_script( 'nova-blocks-js', 'novablocks_urls', array(
+		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/blocks.style.css',
+		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
+	) );
+
 	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );
 
 	// Enqueue optional editor only styles
