@@ -11702,7 +11702,7 @@ var Edit = function (_Component) {
 				return wp.element.createElement(Spinner, null);
 			}
 
-			if (!fetchedScript || '' === savedApiKey) {
+			if (!fetchedScript || !savedApiKey) {
 				return wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__placeholder__["a" /* default */], {
 					saveApiKey: this.saveApiKey.bind(this),
 					apiKeyInstructions: this.getInstructions()
@@ -13694,7 +13694,7 @@ var ButtonInspectorControls = function (_Component) {
 			    setAttributes = _props.setAttributes;
 
 
-			if ('' === savedApiKey) {
+			if (!savedApiKey) {
 				return null;
 			}
 
@@ -13860,7 +13860,6 @@ var ApiKeyPanelBody = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__default_map_center__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__styles__ = __webpack_require__(24);
 
 
 
@@ -13872,9 +13871,6 @@ var ApiKeyPanelBody = function (_Component) {
 
 
 var Component = wp.element.Component;
-
-
-
 
 var MapStyleSelect = function (_Component) {
 	__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(MapStyleSelect, _Component);
