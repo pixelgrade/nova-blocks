@@ -320,5 +320,8 @@
   left: 0;
   overflow: hidden; }
 
-.block-editor-inserter__menu-help-panel img {
-  width: 100%; }
+.block-editor-inserter__preview {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  max-height: 300px;
+  overflow: hidden; }

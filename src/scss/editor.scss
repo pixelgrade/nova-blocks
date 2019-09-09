@@ -15,6 +15,8 @@
     overflow: hidden;
 }
 
-.block-editor-inserter__menu-help-panel img {
-    width: 100%;
+.block-editor-inserter__preview {
+    transform: scale(.8);
+    max-height: 300px;
+    overflow: hidden;
 }

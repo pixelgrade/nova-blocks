@@ -12701,6 +12701,7 @@ var select = wp.data.select;
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["f" /* hero */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
+	example: {},
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
 	},
@@ -14860,6 +14861,11 @@ var select = wp.data.select;
 		enableTwoColumns: {
 			type: 'boolean',
 			default: true
+		}
+	},
+	example: {
+		attributes: {
+			enableTwoColumns: false
 		}
 	},
 	getEditWrapperProps: function getEditWrapperProps() {

@@ -25,6 +25,11 @@ export default registerBlockType( 'novablocks/menu-food',
 				default: true
 			},
 		},
+		example: {
+			attributes: {
+				enableTwoColumns: false
+			}
+		},
 		getEditWrapperProps() {
 			const settings = select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'wide' } : {};

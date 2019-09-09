@@ -21,6 +21,7 @@ export default registerBlockType( 'novablocks/hero',
 		category: 'nova-blocks',
 		icon: icons.hero,
 		edit,
+		example: {},
 		save() {
 			return <InnerBlocks.Content />;
 		},
