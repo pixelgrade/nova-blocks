@@ -273,6 +273,9 @@
 .novablocks-opentable {
   pointer-events: none; }
 
+.block-editor-inserter__menu-help-panel img {
+  max-width: 100%; }
+
 .nova-food-menu-item--highlighted[class] {
   margin-left: 0;
   margin-right: 0; }
@@ -316,3 +319,6 @@
   bottom: 0;
   left: 0;
   overflow: hidden; }
+
+.block-editor-inserter__menu-help-panel img {
+  width: 100%; }

@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import isShallowEqual from '@wordpress/is-shallow-equal';
 
+
 /**
  * WordPress dependencies
  */
@@ -54,7 +55,7 @@ class OpenTablePreview extends Component {
 				title="Sandbox"
 				type="embed"
 			/>
-		)
+		);
 
 	}
 }

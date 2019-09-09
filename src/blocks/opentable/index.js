@@ -40,6 +40,11 @@ export default registerBlockType( 'novablocks/opentable',
 				default: true
 			}
 		},
+		example: {
+			attributes: {
+				example: false
+			}
+		},
 		edit,
 		save
 	}

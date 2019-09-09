@@ -11,6 +11,8 @@ import MediaPreview from './preview';
  */
 const { Fragment } = wp.element;
 
+import * as images from '../../images';
+
 const MediaEdit = function( props ) {
 	function updateImages( media ) {
 		props.setAttributes( {
@@ -18,12 +20,16 @@ const MediaEdit = function( props ) {
 		} );
 	}
 
+	const { attributes } = props;
+	const { example } = attributes;
+
 	return (
+		example ?
 		<Fragment>
 			<MediaPreview { ...{ ...props, updateImages } } />
 			<BlockControls { ...{ ...props, updateImages } } />
 			<InspectorControls { ...props } />
-		</Fragment>
+		</Fragment> : images.media
 	);
 };
 

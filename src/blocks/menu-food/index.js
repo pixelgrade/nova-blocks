@@ -23,6 +23,15 @@ export default registerBlockType( 'novablocks/menu-food',
 			enableTwoColumns : {
 				type: 'boolean',
 				default: true
+			},
+			example: {
+				type: 'boolean',
+				default: true
+			}
+		},
+		example: {
+			attributes: {
+				example: false
 			}
 		},
 		getEditWrapperProps() {
