@@ -58,16 +58,7 @@ module.exports = {
       {
         test: /editor\.s?css$/,
         use: editBlocksCSSPlugin.extract( extractConfig ),
-      },
-      {
-        test: /\.(jpg|png)$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 150000,
-          },
-        },
-      },
+      }
     ],
   },
   plugins: [

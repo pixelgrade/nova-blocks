@@ -22,27 +22,6 @@ export const range = function( min, max ) {
 	return array;
 }
 
-export const todayDate = function( separator, isValid ) {
-	let currentTime = new Date(),
-		month = currentTime.getMonth() + 1,
-		day = currentTime.getDate(),
-		year = currentTime.getFullYear();
-
-	if ( day < 10 ) {
-		day = '0' + day;
-	}
-
-	if ( month < 10 ) {
-		month = '0' + month;
-	}
-
-	if ( isValid === true) {
-		return year + separator + month + separator + day;
-	} else {
-		return day + separator + month + separator + year;
-	}
-}
-
 export const parallaxInit = function( BLOCK_NAME ) {
 
 	(function($) {

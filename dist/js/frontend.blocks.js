@@ -631,7 +631,6 @@ var TRANSITION_EASING = "easeInOutCirc";
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return range; });
-/* unused harmony export todayDate */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return parallaxInit; });
 var debounce = function debounce(func, wait) {
 	var timeout = null;
@@ -655,27 +654,6 @@ var range = function range(min, max) {
 		array.push(i + min);
 	}
 	return array;
-};
-
-var todayDate = function todayDate(separator, isValid) {
-	var currentTime = new Date(),
-	    month = currentTime.getMonth() + 1,
-	    day = currentTime.getDate(),
-	    year = currentTime.getFullYear();
-
-	if (day < 10) {
-		day = '0' + day;
-	}
-
-	if (month < 10) {
-		month = '0' + month;
-	}
-
-	if (isValid === true) {
-		return year + separator + month + separator + day;
-	} else {
-		return day + separator + month + separator + year;
-	}
 };
 
 var parallaxInit = function parallaxInit(BLOCK_NAME) {
