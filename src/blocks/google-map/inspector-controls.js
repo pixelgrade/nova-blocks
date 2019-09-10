@@ -42,7 +42,7 @@ class ButtonInspectorControls extends Component {
 			setAttributes,
 		} = this.props;
 
-		if ( '' === savedApiKey ) {
+		if ( ! savedApiKey ) {
 			return null;
 		}
 

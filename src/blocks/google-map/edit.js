@@ -117,7 +117,7 @@ class Edit extends Component {
 			return <Spinner />
 		}
 
-		if ( ! fetchedScript || '' === savedApiKey ) {
+		if ( ! fetchedScript || ! savedApiKey ) {
 			return <MapPlaceholder
 				saveApiKey={ this.saveApiKey.bind( this ) }
 				apiKeyInstructions={ this.getInstructions() }

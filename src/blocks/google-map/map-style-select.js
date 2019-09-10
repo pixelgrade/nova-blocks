@@ -1,12 +1,10 @@
 import classnames from 'classnames';
 import { compileStyles, getMarkersCenter } from "./utils";
-import defualtMapCenter from './default-map-center';
+import defaultMapCenter from './default-map-center';
 
 const {
 	Component
 } = wp.element;
-
-import styles from './styles';
 
 class MapStyleSelect extends Component {
 
@@ -15,7 +13,7 @@ class MapStyleSelect extends Component {
 
 		this.state = {
 			active: this.props.value
-		}
+		};
 
 		this.compileStyles = compileStyles.bind( this );
 	}
@@ -51,7 +49,7 @@ class MapStyleSelect extends Component {
 
 		const { markers, zoom } = attributes;
 
-		const center = markers.length ? getMarkersCenter.call( this ) : new google.maps.LatLng( defualtMapCenter );
+		const center = markers.length ? getMarkersCenter.call( this ) : new google.maps.LatLng( defaultMapCenter );
 		const latitude = center.lat();
 		const longitude = center.lng();
 
