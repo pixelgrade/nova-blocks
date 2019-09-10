@@ -24,7 +24,7 @@
 		}
 
 		function onScroll() {
-			lastScrollY = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
+			lastScrollY = window.scrollY;
 			frameRendered = false;
 		}
 

@@ -842,7 +842,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export parallaxAttributes */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return withParallaxContext; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
@@ -879,8 +878,6 @@ var InspectorControls = wp.blockEditor.InspectorControls;
 var createSlotFill = wp.components.createSlotFill;
 var addFilter = wp.hooks.addFilter;
 
-
-var parallaxAttributes = {};
 
 var ParallaxContext = Object(__WEBPACK_IMPORTED_MODULE_6_react__["createContext"])();
 

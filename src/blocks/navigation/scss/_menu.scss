@@ -1,11 +1,13 @@
-.menu,
-.sub-menu {
+ul.menu,
+.menu > ul,
+.sub-menu,
+.children {
     padding-left: 0;
-
     list-style: none;
 }
 
-.menu {
+ul.menu,
+.menu > ul {
 
     a {
         display: block;

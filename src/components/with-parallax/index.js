@@ -22,10 +22,6 @@ const {
 	addFilter
 } = wp.hooks;
 
-const parallaxAttributes = {
-
-}
-
 const ParallaxContext = createContext();
 
 const withParallax = function( WrappedComponent ) {
@@ -155,6 +151,6 @@ const withParallaxContext = function( WrappedComponent ) {
 	}
 }
 
-export { parallaxAttributes, withParallaxContext };
+export { withParallaxContext };
 
 export default withParallax;
