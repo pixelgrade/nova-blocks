@@ -1,10 +1,12 @@
 import './scss/style.scss';
 import './scss/editor.scss';
 
+import "./filters/with-block-id";
 import "./filters/with-font-size-picker";
 
 import "./blocks/core/separator";
 
+import "./blocks/announcement-bar";
 import "./blocks/google-map";
 import "./blocks/header";
 import "./blocks/headline";

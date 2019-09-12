@@ -119,8 +119,6 @@ function addFontSizeAttribute( block ) {
 			}
 		});
 
-		console.log( block.attributes );
-
 	}
 
 	return block;
