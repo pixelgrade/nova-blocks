@@ -120,3 +120,14 @@ export const map = (
 		/>
 	</svg>
 );
+
+export const announcement = (
+	<svg width="20" height="20" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="none">
+		<path
+			fill="#6565F2"
+			fillRule="evenodd"
+			d="M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z"
+			clipRule="evenodd"
+		/>
+	</svg>
+);
