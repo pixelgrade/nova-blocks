@@ -10669,12 +10669,14 @@ var defaultFontSize = 'normal';
 
 function replaceActiveFontSize(className, fontSize, nextFontSize) {
 
-	if (fontSize) {
+	if (className) {
 		var regex = new RegExp('has-[a-z]+-font-size', 'gi');
 		className = className.replace(regex, '').trim();
 	}
 
-	return className + ' has-' + nextFontSize + '-font-size';
+	var nextClassName = 'has-' + nextFontSize + '-font-size';
+
+	return className ? className + ' ' + nextClassName : nextClassName;
 }
 
 function withFontSizePicker(WrappedComponent) {

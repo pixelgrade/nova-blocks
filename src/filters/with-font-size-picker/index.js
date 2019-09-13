@@ -44,12 +44,14 @@ const defaultFontSize = 'normal';
 
 function replaceActiveFontSize( className, fontSize, nextFontSize ) {
 
-	if ( fontSize ) {
+	if ( className ) {
 		const regex = new RegExp( 'has-[a-z]+-font-size', 'gi' );
 		className = className.replace( regex, '' ).trim();
 	}
 
-	return className + ' has-' + nextFontSize + '-font-size';
+	const nextClassName = 'has-' + nextFontSize + '-font-size';
+
+	return className ? className + ' ' + nextClassName : nextClassName;
 }
 
 function withFontSizePicker( WrappedComponent ) {
@@ -62,7 +64,7 @@ function withFontSizePicker( WrappedComponent ) {
 				level,
 			},
 			setAttributes,
-		} = props;
+		} = props; 
 
 		const selectValue = fontSizeOptions.find( x => x.value === fontSize ) ? fontSize : defaultFontSize;
 
