@@ -16,7 +16,10 @@ if ( ! function_exists( 'novablocks_navigation_block_init' ) ) {
 				'slug' => array(
 					'type' => 'string',
 					'default' => ''
-				)
+				),
+				'className'         => array(
+					'type' => 'string',
+				),
 			),
 			'render_callback' => 'novablocks_render_navigation_block'
 		) );
@@ -30,11 +33,16 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 		$classes = array();
 
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
+		$classes[] = 'wp-block-novablocks-navigation';
+
 		ob_start();
 
 		do_action( 'novablocks_navigation:before' ); ?>
 
-		<div class="wp-block-novablocks-navigation">
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php
 			if ( ! empty( $attributes['slug'] ) ) {
 				wp_nav_menu( array(
