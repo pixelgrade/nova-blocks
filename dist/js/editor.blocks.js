@@ -14245,17 +14245,12 @@ var TEMPLATE_OPTIONS = [{
 	title: __('Logo on the left side and one navigation menu'),
 	name: 'logo-left',
 	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["b" /* logoLeft */],
-	template: [['novablocks/logo'], ['novablocks/navigation']]
-}, {
-	title: __('Logo on the right side and one navigation menu'),
-	name: 'logo-right',
-	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["c" /* logoRight */],
-	template: [['novablocks/navigation'], ['novablocks/logo']]
+	template: [['novablocks/logo'], ['novablocks/navigation', { className: "site-header__menu--primary" }]]
 }, {
 	title: __('Logo centered and one navigation menu on each side'),
 	name: 'logo-center',
 	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["a" /* logoCenter */],
-	template: [['novablocks/navigation'], ['novablocks/logo'], ['novablocks/navigation']]
+	template: [['novablocks/navigation', { className: "site-header__menu--secondary" }], ['novablocks/logo'], ['novablocks/navigation', { className: "site-header__menu--primary" }]]
 }];
 
 function Edit(props) {
@@ -14326,7 +14321,7 @@ function Edit(props) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logoLeft; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return logoRight; });
+/* unused harmony export logoRight */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return logoCenter; });
 var _wp$components = wp.components,
     SVG = _wp$components.SVG,

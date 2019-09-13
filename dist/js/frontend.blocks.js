@@ -60,7 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
+<<<<<<< HEAD
 /******/ 	return __webpack_require__(__webpack_require__.s = 246);
+=======
+/******/ 	return __webpack_require__(__webpack_require__.s = 244);
+>>>>>>> 1.1.0
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -708,9 +712,15 @@ module.exports = function (it) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
+<<<<<<< HEAD
   module.exports = __webpack_require__(75);
 } else {
   module.exports = __webpack_require__(76);
+=======
+  module.exports = __webpack_require__(53);
+} else {
+  module.exports = __webpack_require__(54);
+>>>>>>> 1.1.0
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
@@ -826,11 +836,22 @@ var parallaxInit = function parallaxInit(BLOCK_NAME) {
 /* 38 */
 /***/ (function(module, exports) {
 
+<<<<<<< HEAD
 module.exports = function (it) {
   if (typeof it != 'function') throw TypeError(it + ' is not a function!');
   return it;
 };
 
+=======
+/***/ 244:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_google_map_frontend__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_hero_frontend__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_slideshow_frontend__ = __webpack_require__(247);
+>>>>>>> 1.1.0
 
 /***/ }),
 /* 39 */
@@ -849,6 +870,7 @@ module.exports = function (it) {
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 var core = __webpack_require__(0);
 var global = __webpack_require__(3);
 var SHARED = '__core-js_shared__';
@@ -861,6 +883,10 @@ var store = global[SHARED] || (global[SHARED] = {});
   mode: __webpack_require__(27) ? 'pure' : 'global',
   copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 });
+=======
+/***/ 245:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+>>>>>>> 1.1.0
 
 
 /***/ }),
@@ -913,6 +939,7 @@ var styles = [{ slug: 'customized', label: 'Customized', styles: __WEBPACK_IMPOR
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 // 7.1.1 ToPrimitive(input [, PreferredType])
 var isObject = __webpack_require__(16);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
@@ -925,6 +952,10 @@ module.exports = function (it, S) {
   if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
   throw TypeError("Can't convert object to primitive value");
 };
+=======
+/***/ 246:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+>>>>>>> 1.1.0
 
 
 /***/ }),
@@ -978,17 +1009,30 @@ module.exports = Object.create || function create(O, Properties) {
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 // 7.1.15 ToLength
 var toInteger = __webpack_require__(35);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
+=======
+/***/ 247:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(24);
+>>>>>>> 1.1.0
 
 
 /***/ }),
+<<<<<<< HEAD
 /* 47 */,
 /* 48 */
+=======
+
+/***/ 34:
+>>>>>>> 1.1.0
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1004,7 +1048,11 @@ module.exports = function (it) {
 var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
+<<<<<<< HEAD
   var ReactPropTypesSecret = __webpack_require__(77);
+=======
+  var ReactPropTypesSecret = __webpack_require__(55);
+>>>>>>> 1.1.0
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -1271,7 +1319,12 @@ var defaultMapCenter = {
 /* harmony default export */ __webpack_exports__["a"] = (defaultMapCenter);
 
 /***/ }),
+<<<<<<< HEAD
 /* 53 */
+=======
+
+/***/ 53:
+>>>>>>> 1.1.0
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = { "default": __webpack_require__(64), __esModule: true };
@@ -1289,6 +1342,7 @@ module.exports = !__webpack_require__(6) && !__webpack_require__(21)(function ()
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(17);
 var toObject = __webpack_require__(26);
@@ -1306,6 +1360,9 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 /***/ }),
 /* 56 */
+=======
+/***/ 54:
+>>>>>>> 1.1.0
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1387,9 +1444,14 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 module.exports = __webpack_require__(15);
 
 
+<<<<<<< HEAD
 /***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
+=======
+var _assign = __webpack_require__(15);
+var checkPropTypes = __webpack_require__(34);
+>>>>>>> 1.1.0
 
 var has = __webpack_require__(17);
 var toIObject = __webpack_require__(20);
@@ -3850,7 +3912,12 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
+<<<<<<< HEAD
 /* 77 */
+=======
+
+/***/ 55:
+>>>>>>> 1.1.0
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4041,9 +4108,15 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
+<<<<<<< HEAD
 var _assign = __webpack_require__(22);
 var React = __webpack_require__(30);
 var checkPropTypes = __webpack_require__(48);
+=======
+var _assign = __webpack_require__(15);
+var React = __webpack_require__(19);
+var checkPropTypes = __webpack_require__(34);
+>>>>>>> 1.1.0
 
 // Do not require this module directly! Use normal `invariant` calls with
 // template literal strings. The messages will be converted to ReactError during

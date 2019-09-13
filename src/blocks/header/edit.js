@@ -27,16 +27,7 @@ const TEMPLATE_OPTIONS = [
 		icon: icons.logoLeft,
 		template: [
 			[ 'novablocks/logo' ],
-			[ 'novablocks/navigation' ],
-		],
-	},
-	{
-		title: __( 'Logo on the right side and one navigation menu' ),
-		name: 'logo-right',
-		icon: icons.logoRight,
-		template: [
-			[ 'novablocks/navigation' ],
-			[ 'novablocks/logo' ],
+			[ 'novablocks/navigation', { className: "site-header__menu--primary" } ],
 		],
 	},
 	{
@@ -44,9 +35,9 @@ const TEMPLATE_OPTIONS = [
 		name: 'logo-center',
 		icon: icons.logoCenter,
 		template: [
-			[ 'novablocks/navigation' ],
+			[ 'novablocks/navigation', { className: "site-header__menu--secondary" }],
 			[ 'novablocks/logo' ],
-			[ 'novablocks/navigation' ],
+			[ 'novablocks/navigation', { className: "site-header__menu--primary" } ],
 		],
 	}
 ];
