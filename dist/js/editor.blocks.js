@@ -14040,12 +14040,18 @@ var TEMPLATE_OPTIONS = [{
 	title: __('Logo on the left side and one navigation menu'),
 	name: 'logo-left',
 	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["b" /* logoLeft */],
-	template: [['novablocks/logo'], ['novablocks/navigation', { className: "site-header__menu--primary" }]]
+	template: [['novablocks/logo'], ['novablocks/navigation', {
+		className: "site-header__menu--primary",
+		hasCartMenuItem: true
+	}]]
 }, {
 	title: __('Logo centered and one navigation menu on each side'),
 	name: 'logo-center',
 	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["a" /* logoCenter */],
-	template: [['novablocks/navigation', { className: "site-header__menu--secondary" }], ['novablocks/logo'], ['novablocks/navigation', { className: "site-header__menu--primary" }]]
+	template: [['novablocks/navigation', { className: "site-header__menu--secondary" }], ['novablocks/logo'], ['novablocks/navigation', {
+		className: "site-header__menu--primary",
+		hasCartMenuItem: true
+	}]]
 }];
 
 function Edit(props) {

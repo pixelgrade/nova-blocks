@@ -13,12 +13,15 @@ if ( ! function_exists( 'novablocks_navigation_block_init' ) ) {
 	function novablocks_navigation_block_init() {
 		register_block_type( 'novablocks/navigation', array(
 			'attributes'      => array(
-				'slug' => array(
-					'type' => 'string',
+				'slug'            => array(
+					'type'    => 'string',
 					'default' => ''
 				),
-				'className'         => array(
+				'className'       => array(
 					'type' => 'string',
+				),
+				'hasCartMenuItem' => array(
+					'type' => 'boolean',
 				),
 			),
 			'render_callback' => 'novablocks_render_navigation_block'
@@ -46,8 +49,9 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 			<?php
 			if ( ! empty( $attributes['slug'] ) ) {
 				wp_nav_menu( array(
-	                    'menu' => $attributes['slug'],
-	                    'container' => ''
+                    'menu' => $attributes['slug'],
+                    'container' => '',
+                    'hasCartMenuItem' => $attributes[ 'hasCartMenuItem' ],
 	            ) );
 			}
 			?>

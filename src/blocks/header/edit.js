@@ -27,7 +27,10 @@ const TEMPLATE_OPTIONS = [
 		icon: icons.logoLeft,
 		template: [
 			[ 'novablocks/logo' ],
-			[ 'novablocks/navigation', { className: "site-header__menu--primary" } ],
+			[ 'novablocks/navigation', {
+				className: "site-header__menu--primary",
+				hasCartMenuItem: true
+			} ],
 		],
 	},
 	{
@@ -37,7 +40,10 @@ const TEMPLATE_OPTIONS = [
 		template: [
 			[ 'novablocks/navigation', { className: "site-header__menu--secondary" }],
 			[ 'novablocks/logo' ],
-			[ 'novablocks/navigation', { className: "site-header__menu--primary" } ],
+			[ 'novablocks/navigation', {
+				className: "site-header__menu--primary" ,
+				hasCartMenuItem: true
+			} ],
 		],
 	}
 ];
