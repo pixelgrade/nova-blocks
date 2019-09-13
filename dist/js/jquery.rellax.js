@@ -30,11 +30,11 @@
 
 		$.fn.rellax = function( options ) {
 			return this.each( function() {
-				var element = $.data( this, "plugin_" + Rellax ),
+				var element = $.data( this, 'rellax' ),
 					idx;
 
 				if ( typeof options !== "string" && typeof element === "undefined" ) {
-					$.data( this, "plugin_" + Rellax, new Rellax( this, options ) );
+					$.data( this, 'rellax', new Rellax( this, options ) );
 				} else {
 					if ( options === "destroy" ) {
 						idx = elements.indexOf( element );
