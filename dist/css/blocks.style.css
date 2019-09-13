@@ -435,6 +435,8 @@ body:not(.wp-admin) .novablocks-hero__parallax {
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%; }
+  .novablocks-hero__foreground .novablocks-hero__inner-container h1, .novablocks-hero__foreground .novablocks-hero__inner-container h2, .novablocks-hero__foreground .novablocks-hero__inner-container h3, .novablocks-hero__foreground .novablocks-hero__inner-container h4, .novablocks-hero__foreground .novablocks-hero__inner-container h5, .novablocks-hero__foreground .novablocks-hero__inner-container h6 {
+    color: inherit; }
 
 .novablocks-hero__indicator {
   position: absolute;

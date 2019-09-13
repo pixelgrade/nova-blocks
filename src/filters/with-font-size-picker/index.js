@@ -14,14 +14,11 @@ const {
 
 const {
 	PanelBody,
-	withFallbackStyles,
+	SelectControl,
 } = wp.components;
 
 const {
 	InspectorControls,
-	FontSizePicker,
-	getFontSizeClass,
-	withFontSizes
 } = wp.blockEditor;
 
 const {
@@ -32,75 +29,69 @@ const {
 	addFilter
 } = wp.hooks;
 
-const applyFallbackStyles = withFallbackStyles( ( node, ownProps ) => {
-	const { fontSize, customFontSize } = ownProps.attributes;
-	const editableNode = node.querySelector( '[contenteditable="true"]' );
-	//verify if editableNode is available, before using getComputedStyle.
-	const computedStyles = editableNode ? getComputedStyle( editableNode ) : null;
-	return {
-		fallbackFontSize: fontSize || customFontSize || ! computedStyles ? undefined : parseInt( computedStyles.fontSize ) || undefined,
-	};
-} );
-
 const enableFontSizeControlOnBlocks = [
 	'core/heading',
-	'core/quote',
-	'core/list',
 	'novablocks/headline'
 ];
+
+const fontSizeOptions = [
+	{ value: 'smaller', label: __( 'Smaller' ) },
+	{ value: 'normal', label: __( 'Normal' ) },
+	{ value: 'larger', label: __( 'Larger' ) },
+];
+
+const defaultFontSize = 'normal';
+
+function replaceActiveFontSize( className, fontSize, nextFontSize ) {
+
+	if ( fontSize ) {
+		const regex = new RegExp( 'has-[a-z]+-font-size', 'gi' );
+		className = className.replace( regex, '' ).trim();
+	}
+
+	return className + ' has-' + nextFontSize + '-font-size';
+}
 
 function withFontSizePicker( WrappedComponent ) {
 	return ( props ) => {
 
 		const {
-			fallbackFontSize,
-			fontSize,
-			setFontSize,
+			attributes: {
+				className,
+				fontSize,
+				level,
+			},
 			setAttributes,
-			fontSizes,
 		} = props;
+
+		const selectValue = fontSizeOptions.find( x => x.value === fontSize ) ? fontSize : defaultFontSize;
 
 		return [
 			<WrappedComponent { ...props } />,
 			<InspectorControls>
-				<PanelBody title={ __( 'Text Settings', '__plugin_txtd' ) } className="blocks-font-size">
-					<FontSizePicker
-						fallbackFontSize={ fallbackFontSize }
-						value={ fontSize.size }
-						onChange={ nextFontSize => {
-							const fontSizeObject = fontSizes.find( fontSizeObj => {
-								return fontSizeObj.size === nextFontSize
-							} );
-							setAttributes( { className: `has-${fontSizeObject.slug}-font-size` } );
-							setFontSize( nextFontSize );
-						} }
-					/>
-				</PanelBody>
+				{ level && level < 4 &&
+					<PanelBody title={ __( 'Text Settings', '__plugin_txtd' ) } className="blocks-custom-font-size">
+						<SelectControl
+							label={ __( 'Font Size' ) }
+							value={ selectValue }
+							options={ fontSizeOptions }
+							onChange={ nextFontSize => {
+								setAttributes( {
+									fontSize: nextFontSize,
+									className: replaceActiveFontSize( className, fontSize, nextFontSize )
+								} );
+							} }
+						/>
+					</PanelBody>
+				}
 			</InspectorControls>
 		]
 	}
 }
 
-const withBetterFontSizes = compose( [
-	withFontSizes( 'fontSize' ),
-	applyFallbackStyles,
-	withSelect( select => {
-		const {
-			disableCustomFontSizes,
-			fontSizes,
-		} = select( 'core/block-editor' ).getSettings();
-
-		return {
-			disableCustomFontSizes,
-			fontSizes,
-		};
-	} ),
-	withFontSizePicker,
-] );
-
 const withFontSizeControl = createHigherOrderComponent(OriginalComponent => {
 
-	const BetterComponent = withBetterFontSizes(OriginalComponent);
+	const BetterComponent = withFontSizePicker(OriginalComponent);
 
 	return ( props ) => {
 
@@ -124,9 +115,11 @@ function addFontSizeAttribute( block ) {
 		block.attributes = Object.assign( block.attributes, {
 			fontSize: {
 				type: 'string',
-				default: '',
+				default: defaultFontSize,
 			}
 		});
+
+		console.log( block.attributes );
 
 	}
 
