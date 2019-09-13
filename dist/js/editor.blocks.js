@@ -12346,7 +12346,8 @@ var _wp$blockEditor = wp.blockEditor,
 					value: content,
 					onChange: function onChange(content) {
 						setAttributes({ content: content });
-					}
+					},
+					allowedFormats: ['core/link', 'core/bold', 'core/italic']
 				})
 			),
 			isSelected && wp.element.createElement(

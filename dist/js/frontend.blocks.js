@@ -8360,9 +8360,9 @@ module.exports = server_browser;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__blocks_announcement_bar_frontend__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_google_map_frontend__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_hero_frontend__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blocks_slideshow_frontend__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__blocks_google_map_frontend__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__blocks_hero_frontend__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__blocks_slideshow_frontend__ = __webpack_require__(255);
 
 
 
@@ -8474,7 +8474,7 @@ module.exports = function (object, index, value) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_js_cookie__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_js_cookie__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_js_cookie___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_js_cookie__);
 
 
@@ -8531,6 +8531,238 @@ var AnnouncementBar = function () {
 
 /***/ }),
 /* 253 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom_server__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pin__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(37);
+
+
+
+
+
+(function ($, window, undefined) {
+
+	$('.js-novablocks-google-map').each(function (i, obj) {
+
+		var $obj = $(obj),
+		    markers = $obj.data('markers'),
+		    styles = $obj.data('styles'),
+		    zoom = $obj.data('zoom'),
+		    hideControls = !$obj.data('controls'),
+		    pinColor = $obj.data('pin-color'),
+		    mapOptions = {
+			mapTypeId: 'roadmap',
+			center: Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getCenterFromMarkers */])(markers),
+			zoom: zoom,
+			styles: styles,
+			disableDefaultUI: hideControls,
+			clickableIcons: false,
+			keyboardShortcuts: false
+		},
+		    map = new google.maps.Map(obj, mapOptions);
+
+		var pinMarkup = __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_1__pin__["a" /* default */]).replace(/%ACCENT_COLOR%/g, pinColor);
+
+		markers.forEach(function (markerString) {
+			var marker = JSON.parse(markerString);
+
+			new google.maps.Marker({
+				map: map,
+				icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup) },
+				title: marker.title,
+				position: marker.geometry.location
+			});
+		});
+	});
+
+	Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* parallaxInit */])('novablocks-map');
+})(jQuery, window);
+
+/***/ }),
+/* 254 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(37);
+
+
+(function ($, window, undefined) {
+
+	$(function () {
+		var $body = $('body');
+		Object(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* parallaxInit */])('novablocks-hero');
+
+		if ($body.is('.novablocks-has-position-indicators') && typeof $.fn.bully !== 'undefined') {
+			$('.novablocks-hero').bully();
+		}
+	});
+})(jQuery, window);
+
+/***/ }),
+/* 255 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(37);
+
+
+var BLOCK_SELECTOR = '.novablocks-slideshow';
+var SLIDER_SELECTOR = '.novablocks-slideshow__slider';
+var SLIDE_SELECTOR = '.novablocks-slideshow__slide';
+var CONTENT_SELECTOR = '.novablocks-slideshow__content';
+var BACKGROUND_SELECTOR = '.novablocks-slideshow__background';
+var FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
+var TRANSITION_DURATION = 1000;
+var TRANSITION_EASING = "easeInOutCirc";
+
+(function ($, window, undefined) {
+
+	var $blocks = $(BLOCK_SELECTOR);
+	var $rellaxTarget = $blocks.filter('.has-parallax').find(SLIDER_SELECTOR);
+
+	// initialize parallax effect
+	if (typeof $.fn.rellax !== "undefined") {
+		$rellaxTarget.rellax({
+			container: '.novablocks-slideshow__mask',
+			children: CONTENT_SELECTOR
+		});
+	}
+
+	$blocks.each(function (index, block) {
+		var $block = $(block),
+		    $slider = $block.find(SLIDER_SELECTOR),
+		    $arrowContainer;
+
+		if ($slider.children().length > 1) {
+			$arrowContainer = $('<div class="novablocks-slideshow__controls">').appendTo($block);
+
+			resetBlockMinHeight($block);
+			$block.addClass('is-ready');
+
+			$slider.on('beforeChange', onBeforeSlideChange);
+
+			$slider.slick({
+				rows: 0,
+				// for simpler reveal transitions between slides
+				fade: true,
+				prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
+				nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
+				appendArrows: $arrowContainer,
+				speed: TRANSITION_DURATION
+			});
+		}
+	});
+
+	$(window).on('resize', Object(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* debounce */])(onResize, 300));
+
+	function resetBlockMinHeight($block) {
+		$block.css('minHeight', '');
+		$block.css('minHeight', getBlockMinHeight($block));
+	}
+
+	function getBlockMinHeight($block) {
+		var windowWidth = window.innerWidth;
+		var $slider = $block.find(SLIDER_SELECTOR);
+		var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();
+		var windowHeight = window.innerHeight;
+		var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;
+		var mediaMinHeight = 0;
+		var slideMaxHeight = 0;
+		var maxAspectRatio = 0;
+
+		$block.find(SLIDE_SELECTOR).each(function (i, obj) {
+			var $slide = $(obj),
+			    $media = $slide.find('.novablocks-slideshow__media'),
+			    width = $media.data('width'),
+			    height = $media.data('height'),
+			    aspectRatio = width / height,
+			    slideHeight = $slide.outerHeight();
+
+			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+			mediaMinHeight = sliderWidth / maxAspectRatio;
+			slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
+		});
+
+		return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);
+	}
+
+	function onResize() {
+
+		$blocks.each(function (index, block) {
+			var $block = $(block);
+			var $slider = $block.find(SLIDER_SELECTOR);
+
+			resetBlockMinHeight($block);
+			$rellaxTarget.rellax('refresh');
+
+			if ($slider.is('.slick-initialized')) {
+				$slider.slick('setPosition');
+			}
+		});
+	}
+
+	function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
+		var $currentSlide = $(slick.$slides[currentSlide]);
+		var $nextSlide = $(slick.$slides[nextSlide]);
+
+		$(slick.$slides).css('zIndex', 800);
+
+		transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
+	}
+
+	function transition($current, $next) {
+		var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+		var slideWidth = $current.outerWidth();
+		var move = 300;
+
+		$current.velocity({
+			tween: [0, 1]
+		}, {
+			duration: TRANSITION_DURATION,
+			easing: TRANSITION_EASING,
+			progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
+				var next = $next.get(0);
+				var nextBg = $next.find(BACKGROUND_SELECTOR).get(0);
+				var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
+				var current = $current.get(0);
+				var currentBg = $current.find(BACKGROUND_SELECTOR).get(0);
+				var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
+
+				var moveX = function moveX(x) {
+					return 'translateX(' + sign * x + 'px)';
+				};
+
+				next.style.transform = moveX(slideWidth * tweenValue);
+				nextBg.style.transform = moveX((move - slideWidth) * tweenValue);
+				nextFg.style.transform = moveX(slideWidth * -tweenValue);
+
+				current.style.transform = moveX(-move * (1 - tweenValue));
+				currentFg.style.transform = moveX(move * (1 - tweenValue));
+			}
+		});
+	}
+
+	function getDirection(slick, currentSlide, nextSlide) {
+		var direction = 1;
+		if (slick.slideCount > 2) {
+			if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {
+				direction = -1;
+			}
+			if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {
+				direction = -1;
+			}
+		}
+		return direction;
+	}
+})(jQuery, window);
+
+/***/ }),
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -8701,238 +8933,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	return init(function () {});
 }));
 
-
-/***/ }),
-/* 254 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom_server__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pin__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(37);
-
-
-
-
-
-(function ($, window, undefined) {
-
-	$('.js-novablocks-google-map').each(function (i, obj) {
-
-		var $obj = $(obj),
-		    markers = $obj.data('markers'),
-		    styles = $obj.data('styles'),
-		    zoom = $obj.data('zoom'),
-		    hideControls = !$obj.data('controls'),
-		    pinColor = $obj.data('pin-color'),
-		    mapOptions = {
-			mapTypeId: 'roadmap',
-			center: Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getCenterFromMarkers */])(markers),
-			zoom: zoom,
-			styles: styles,
-			disableDefaultUI: hideControls,
-			clickableIcons: false,
-			keyboardShortcuts: false
-		},
-		    map = new google.maps.Map(obj, mapOptions);
-
-		var pinMarkup = __WEBPACK_IMPORTED_MODULE_0_react_dom_server___default.a.renderToStaticMarkup(__WEBPACK_IMPORTED_MODULE_1__pin__["a" /* default */]).replace(/%ACCENT_COLOR%/g, pinColor);
-
-		markers.forEach(function (markerString) {
-			var marker = JSON.parse(markerString);
-
-			new google.maps.Marker({
-				map: map,
-				icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup) },
-				title: marker.title,
-				position: marker.geometry.location
-			});
-		});
-	});
-
-	Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* parallaxInit */])('novablocks-map');
-})(jQuery, window);
-
-/***/ }),
-/* 255 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(37);
-
-
-(function ($, window, undefined) {
-
-	$(function () {
-		var $body = $('body');
-		Object(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* parallaxInit */])('novablocks-hero');
-
-		if ($body.is('.novablocks-has-position-indicators') && typeof $.fn.bully !== 'undefined') {
-			$('.novablocks-hero').bully();
-		}
-	});
-})(jQuery, window);
-
-/***/ }),
-/* 256 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(37);
-
-
-var BLOCK_SELECTOR = '.novablocks-slideshow';
-var SLIDER_SELECTOR = '.novablocks-slideshow__slider';
-var SLIDE_SELECTOR = '.novablocks-slideshow__slide';
-var CONTENT_SELECTOR = '.novablocks-slideshow__content';
-var BACKGROUND_SELECTOR = '.novablocks-slideshow__background';
-var FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
-var TRANSITION_DURATION = 1000;
-var TRANSITION_EASING = "easeInOutCirc";
-
-(function ($, window, undefined) {
-
-	var $blocks = $(BLOCK_SELECTOR);
-	var $rellaxTarget = $blocks.filter('.has-parallax').find(SLIDER_SELECTOR);
-
-	// initialize parallax effect
-	if (typeof $.fn.rellax !== "undefined") {
-		$rellaxTarget.rellax({
-			container: '.novablocks-slideshow__mask',
-			children: CONTENT_SELECTOR
-		});
-	}
-
-	$blocks.each(function (index, block) {
-		var $block = $(block),
-		    $slider = $block.find(SLIDER_SELECTOR),
-		    $arrowContainer;
-
-		if ($slider.children().length > 1) {
-			$arrowContainer = $('<div class="novablocks-slideshow__controls">').appendTo($block);
-
-			resetBlockMinHeight($block);
-			$block.addClass('is-ready');
-
-			$slider.on('beforeChange', onBeforeSlideChange);
-
-			$slider.slick({
-				rows: 0,
-				// for simpler reveal transitions between slides
-				fade: true,
-				prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
-				nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
-				appendArrows: $arrowContainer,
-				speed: TRANSITION_DURATION
-			});
-		}
-	});
-
-	$(window).on('resize', Object(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* debounce */])(onResize, 300));
-
-	function resetBlockMinHeight($block) {
-		$block.css('minHeight', '');
-		$block.css('minHeight', getBlockMinHeight($block));
-	}
-
-	function getBlockMinHeight($block) {
-		var windowWidth = window.innerWidth;
-		var $slider = $block.find(SLIDER_SELECTOR);
-		var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();
-		var windowHeight = window.innerHeight;
-		var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;
-		var mediaMinHeight = 0;
-		var slideMaxHeight = 0;
-		var maxAspectRatio = 0;
-
-		$block.find(SLIDE_SELECTOR).each(function (i, obj) {
-			var $slide = $(obj),
-			    $media = $slide.find('.novablocks-slideshow__media'),
-			    width = $media.data('width'),
-			    height = $media.data('height'),
-			    aspectRatio = width / height,
-			    slideHeight = $slide.outerHeight();
-
-			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
-			mediaMinHeight = sliderWidth / maxAspectRatio;
-			slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
-		});
-
-		return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);
-	}
-
-	function onResize() {
-
-		$blocks.each(function (index, block) {
-			var $block = $(block);
-			var $slider = $block.find(SLIDER_SELECTOR);
-
-			resetBlockMinHeight($block);
-			$rellaxTarget.rellax('refresh');
-
-			if ($slider.is('.slick-initialized')) {
-				$slider.slick('setPosition');
-			}
-		});
-	}
-
-	function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
-		var $currentSlide = $(slick.$slides[currentSlide]);
-		var $nextSlide = $(slick.$slides[nextSlide]);
-
-		$(slick.$slides).css('zIndex', 800);
-
-		transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
-	}
-
-	function transition($current, $next) {
-		var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-
-		var slideWidth = $current.outerWidth();
-		var move = 300;
-
-		$current.velocity({
-			tween: [0, 1]
-		}, {
-			duration: TRANSITION_DURATION,
-			easing: TRANSITION_EASING,
-			progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
-				var next = $next.get(0);
-				var nextBg = $next.find(BACKGROUND_SELECTOR).get(0);
-				var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
-				var current = $current.get(0);
-				var currentBg = $current.find(BACKGROUND_SELECTOR).get(0);
-				var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
-
-				var moveX = function moveX(x) {
-					return 'translateX(' + sign * x + 'px)';
-				};
-
-				next.style.transform = moveX(slideWidth * tweenValue);
-				nextBg.style.transform = moveX((move - slideWidth) * tweenValue);
-				nextFg.style.transform = moveX(slideWidth * -tweenValue);
-
-				current.style.transform = moveX(-move * (1 - tweenValue));
-				currentFg.style.transform = moveX(move * (1 - tweenValue));
-			}
-		});
-	}
-
-	function getDirection(slick, currentSlide, nextSlide) {
-		var direction = 1;
-		if (slick.slideCount > 2) {
-			if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {
-				direction = -1;
-			}
-			if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {
-				direction = -1;
-			}
-		}
-		return direction;
-	}
-})(jQuery, window);
 
 /***/ })
 /******/ ]);

@@ -63,6 +63,7 @@ export default registerBlockType( 'novablocks/announcement-bar',
 							onChange={ content => {
 								setAttributes( { content } );
 							} }
+							allowedFormats={ ['core/link', 'core/bold', 'core/italic'] }
 						/>
 					</div>
 					{ isSelected &&
