@@ -11,7 +11,7 @@
   --novablocks-light-3: #EDF0F1; }
 
 .novablocks-announcement-bar {
-  --novablocks-announcement-bar-padding: 10px;
+  --novablocks-announcement-bar-padding: 11px;
   --novablocks-announcement-bar-close-width: 15px;
   --novablocks-announcement-color: var(--novablocks-light-1);
   --novablocks-announcement-background-color: var(--novablocks-color-1);
@@ -40,21 +40,26 @@
 .novablocks-announcement-bar__content a {
   position: relative;
   z-index: 200;
-  color: inherit; }
+  color: inherit;
+  text-decoration: underline; }
 
 .novablocks-announcement-bar__close {
   position: absolute;
   top: 50%;
-  right: var(--novablocks-announcement-bar-padding);
+  right: calc( 2 * var(--novablocks-announcement-bar-padding));
   -webkit-transform: translate(0, -50%);
           transform: translate(0, -50%);
   z-index: 100;
   width: var(--novablocks-announcement-bar-close-width);
-  cursor: pointer; }
+  cursor: pointer;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease; }
   .novablocks-announcement-bar__close svg {
     display: block;
     max-width: 100%;
     height: auto; }
+  .novablocks-announcement-bar__close:hover {
+    opacity: 0.5; }
 
 .novablocks-announcement-bar__link {
   position: absolute;
