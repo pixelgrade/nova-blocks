@@ -29,6 +29,16 @@
 	padding: var(--novablocks-announcement-bar-padding) calc( 2 * var(--novablocks-announcement-bar-padding) + var(--novablocks-announcement-bar-close-width) );
 }
 
+.novablocks-announcement-bar__content {
+	a {
+	    position: relative;
+	    z-index: 10;
+	    
+		color: inherit;
+		text-decoration: underline;
+	}
+}
+
 .novablocks-announcement-bar__close {
 	position: absolute;
 	top: 50%;
