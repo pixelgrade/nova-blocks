@@ -8722,8 +8722,9 @@ var AnnouncementBar = function () {
 		this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';
 
 		var disabled = __WEBPACK_IMPORTED_MODULE_2_js_cookie___default.a.get(this.cookieName);
+		var loggedIn = jQuery('body').hasClass('logged-in');
 
-		if (disabled) {
+		if (disabled && !loggedIn) {
 			return;
 		}
 

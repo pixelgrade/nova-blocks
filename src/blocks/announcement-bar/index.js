@@ -10,7 +10,10 @@ import classnames from "classnames";
 const { __ } = wp.i18n;
 const { registerBlockType, } = wp.blocks;
 const { Fragment } = wp.element;
-const { BaseControl } = wp.components;
+const {
+	BaseControl,
+	ToggleControl
+} = wp.components;
 const {
 	RichText,
 	URLInput,
@@ -42,6 +45,7 @@ export default registerBlockType( 'novablocks/announcement-bar',
 				attributes: {
 					content,
 					url,
+					opensInNewTab
 				},
 				setAttributes,
 				isSelected,
@@ -80,7 +84,15 @@ export default registerBlockType( 'novablocks/announcement-bar',
 								  hasBorder
 							  />
 						  </BaseControl>
+						  <ToggleControl
+							  checked={ opensInNewTab }
+							  onChange={ ( opensInNewTab ) => {
+								  setAttributes( { opensInNewTab } );
+							  } }
+							  label={ __( 'Open in new tab' ) }
+						  />
 					  </div> }
+
 				</Fragment>
 			)
 		},

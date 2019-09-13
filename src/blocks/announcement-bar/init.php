@@ -36,6 +36,11 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		$target = '';
+		if ( ! empty( $attributes['opensInNewTab'] ) ) {
+			$target = 'target="_blank"';
+		}
+
 		ob_start();
 
 		do_action( 'novablocks_announcement_bar:before' ); ?>
@@ -54,7 +59,7 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 					</svg>
 				</div>
 				<?php if ( ! empty( $attributes['url'] ) ) { ?>
-					<a href="<?php echo $attributes['url']; ?>" class="novablocks-announcement-bar__link"></a>
+					<a href="<?php echo $attributes['url']; ?>" <?php echo $target; ?> class="novablocks-announcement-bar__link"></a>
 				<?php } ?>
 			</div>
 		</div>

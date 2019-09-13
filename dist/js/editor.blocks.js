@@ -12239,7 +12239,9 @@ module.exports = {
 var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
 var Fragment = wp.element.Fragment;
-var BaseControl = wp.components.BaseControl;
+var _wp$components = wp.components,
+    BaseControl = _wp$components.BaseControl,
+    ToggleControl = _wp$components.ToggleControl;
 var _wp$blockEditor = wp.blockEditor,
     RichText = _wp$blockEditor.RichText,
     URLInput = _wp$blockEditor.URLInput;
@@ -12268,6 +12270,7 @@ var _wp$blockEditor = wp.blockEditor,
 		    _props$attributes = props.attributes,
 		    content = _props$attributes.content,
 		    url = _props$attributes.url,
+		    opensInNewTab = _props$attributes.opensInNewTab,
 		    setAttributes = props.setAttributes,
 		    isSelected = props.isSelected;
 
@@ -12308,7 +12311,14 @@ var _wp$blockEditor = wp.blockEditor,
 						isFullWidth: true,
 						hasBorder: true
 					})
-				)
+				),
+				wp.element.createElement(ToggleControl, {
+					checked: opensInNewTab,
+					onChange: function onChange(opensInNewTab) {
+						setAttributes({ opensInNewTab: opensInNewTab });
+					},
+					label: __('Open in new tab')
+				})
 			)
 		);
 	},

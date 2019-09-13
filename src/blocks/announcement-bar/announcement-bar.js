@@ -9,8 +9,9 @@ export default class AnnouncementBar {
 		this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';
 
 		const disabled = Cookies.get( this.cookieName );
+		const loggedIn = jQuery( 'body' ).hasClass( 'logged-in' );
 
-		if ( disabled ) {
+		if ( disabled && ! loggedIn ) {
 			return;
 		}
 

@@ -17,6 +17,11 @@
   margin-left: auto;
   margin-right: auto; }
 
+.novablocks-announcement-bar__url-field-wrapper .components-toggle-control .components-base-control__field {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
 .wp-block[data-type="novablocks/header"] .wp-block[data-type="novablocks/navigation"] ul.menu,
 .wp-block[data-type="novablocks/header"] .wp-block[data-type="novablocks/navigation"] .menu > ul {
   display: -webkit-box;

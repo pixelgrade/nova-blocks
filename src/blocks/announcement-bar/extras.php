@@ -11,6 +11,10 @@ if ( ! function_exists( 'novablocks_get_announcement_bar_attributes') ) {
 				'type' => 'string',
 				'default' => '',
 			),
+			'opensInNewTab' => array(
+				'type' => 'boolean',
+				'default' => false,
+			),
 		);
 	}
 }
