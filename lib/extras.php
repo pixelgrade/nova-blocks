@@ -284,7 +284,7 @@ function novablocks_get_header_attributes() {
 	return array(
 		'align' => array(
 			'type' => 'string',
-			'default' => 'wide',
+			'default' => 'full',
 		),
 		'layout' => array(
 			'type' => 'string',

@@ -14202,14 +14202,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	description: __('Outputs custom header markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
 	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
-	getEditWrapperProps: function getEditWrapperProps(attributes) {
-		var align = attributes.align;
-
-		if ('center' === align || 'wide' === align || 'full' === align) {
-			return { 'data-align': align };
-		}
-	},
-
+	supports: { align: ["wide", "full"], default: "full" },
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -14294,13 +14287,6 @@ function Edit(props) {
 	return [wp.element.createElement(
 		BlockControls,
 		null,
-		wp.element.createElement(BlockAlignmentToolbar, {
-			value: align,
-			onChange: function onChange(align) {
-				return setAttributes({ align: align });
-			},
-			controls: ['center', 'wide', 'full']
-		}),
 		wp.element.createElement(
 			Toolbar,
 			null,

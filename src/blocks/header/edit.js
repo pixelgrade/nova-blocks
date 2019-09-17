@@ -76,11 +76,6 @@ export default function Edit( props ) {
 	return (
 		[
 			<BlockControls>
-				<BlockAlignmentToolbar
-					value={ align }
-					onChange={ align => setAttributes( { align } ) }
-					controls={ [ 'center', 'wide', 'full' ] }
-				/>
 				<Toolbar>
 					<IconButton
 						className="components-icon-button components-toolbar__control"
