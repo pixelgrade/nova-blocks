@@ -39,12 +39,15 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .novablocks-hero__indicator {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
     right: 0;
 
     display: flex;
     justify-content: center;
     color: inherit;
+
+	transform: translate(-50%, 0);
+	cursor: pointer;
 
     &:after {
         content: "";
@@ -54,11 +57,11 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 
         width: 12px;
         height: 12px;
-        border: 2px solid transparent;
-        border-right-color: currentColor;
-        border-bottom-color: currentColor;
+        border: 2px solid currentColor;
+        border-left: 0;
+        border-top: 0;
 
-        transform: translateY(-100%) rotate(45deg);
+        transform: translate(-50%, -70%) rotate(45deg);
     }
 }
 

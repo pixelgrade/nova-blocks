@@ -85,13 +85,15 @@
 			}
 
 			elements.push( this );
-			restart();
+			debouncedRestart();
 		}
 
 		$.extend( Rellax.prototype, {
 			constructor: Rellax,
 
 			_reset: function() {
+				this.ready = false;
+
 				this.$el.css({
 					position: '',
 					top: '',
@@ -100,19 +102,16 @@
 					height: '',
 					transform: '',
 				});
-				this.ready = false;
 			},
 
 			_cachePosition: function() {
-				this.offset = this.$el.offset();
 				this.width = this.$el.outerWidth();
 				this.height = this.$el.outerHeight();
+				this.offset = this.$el.offset();
 
 				this.parent.width = this.parent.$el.outerWidth();
 				this.parent.height = this.parent.$el.outerHeight();
 				this.parent.offset = this.parent.$el.offset();
-
-				this.ready = true;
 			},
 
 			_prepareElement: function() {
@@ -143,6 +142,8 @@
 					});
 
 				}
+
+				this.ready = true;
 			},
 
 			_scale: function() {
@@ -202,8 +203,6 @@
 			_getProgress: function() {
 				return ( lastScrollY - this.parent.offset.top + windowHeight ) / ( windowHeight + this.parent.height );
 			}
-
-
 		} );
 
 		function render() {
@@ -247,21 +246,22 @@
 			});
 		}
 
-		function badRestart() {
-			onResize();
+		function restart() {
 			resetAll();
 			cacheAll();
-			requestAnimationFrame( function() {
-				$.each(elements, function(i, element) {
-					element._prepareElement();
-					element._updatePosition();
-				});
+			$.each(elements, function(i, element) {
+				element._prepareElement();
+				element._updatePosition();
 			});
 		}
 
-		var restart = debounce( badRestart, 300 );
+		var debouncedRestart = debounce( restart, 300 );
 
-		$( window ).on( 'resize', restart );
+		$( window ).on( 'resize', function() {
+			onResize();
+			debouncedRestart();
+		} );
+
 		$( window ).on( 'scroll', onScroll );
 
 		onResize();

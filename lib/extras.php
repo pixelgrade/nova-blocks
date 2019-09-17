@@ -154,12 +154,12 @@ function novablocks_get_hero_attributes() {
 			'applyMinimumHeight'      => array(
 				'type'   => 'string',
 				'source' => 'meta',
-				'meta'   => 'novablocks_hero_apply_minimum_height'
+				'meta'   => 'novablocks_hero_apply_minimum_height',
 			),
-			'minHeight'               => array(
-				'type'   => 'number',
-				'source' => 'meta',
-				'meta'   => 'novablocks_hero_minimum_height'
+			'minHeight' => array(
+				'type'    => 'number',
+				'source'  => 'meta',
+				'meta'    => 'novablocks_hero_minimum_height',
 			),
 			'applyMinimumHeightBlock' => array(
 				'type'    => 'boolean',
@@ -310,7 +310,7 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
 }
 
 function novablocks_get_media_attributes() {
-	$novablocks_block_editor_settings = get_novablocks_block_editor_settings();
+	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
 	return $novablocks_block_editor_settings['media']['attributes'];
 }
 
@@ -342,7 +342,7 @@ function nova_blocks_register_meta() {
 }
 add_action( 'init', 'nova_blocks_register_meta' );
 
-function get_novablocks_block_editor_settings() {
+function novablocks_get_block_editor_settings() {
 	$novablocks_block_editor_settings = array(
 		'hero' => array(
 			'template' => array(

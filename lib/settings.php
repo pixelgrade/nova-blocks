@@ -3,7 +3,7 @@
 function novablocks_settings_init() {
 	global $post;
 
-    $nova_editor_settings = get_novablocks_block_editor_settings();
+    $nova_editor_settings = novablocks_get_block_editor_settings();
 
 	list( $color_palette, ) = (array) get_theme_support( 'editor-color-palette' );
 

@@ -505,7 +505,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .novablocks-hero__indicator {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
   right: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -513,7 +513,10 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  color: inherit; }
+  color: inherit;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  cursor: pointer; }
   .novablocks-hero__indicator:after {
     content: "";
     position: absolute;
@@ -521,11 +524,11 @@ body:not(.wp-admin) .novablocks-hero__parallax {
     left: 50%;
     width: 12px;
     height: 12px;
-    border: 2px solid transparent;
-    border-right-color: currentColor;
-    border-bottom-color: currentColor;
-    -webkit-transform: translateY(-100%) rotate(45deg);
-            transform: translateY(-100%) rotate(45deg); }
+    border: 2px solid currentColor;
+    border-left: 0;
+    border-top: 0;
+    -webkit-transform: translate(-50%, -70%) rotate(45deg);
+            transform: translate(-50%, -70%) rotate(45deg); }
 
 .components-nova--popover.components-popover:not(.is-mobile) .components-popover__content {
   padding: 16px; }

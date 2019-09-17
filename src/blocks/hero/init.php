@@ -27,6 +27,8 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 	    $attributes_config = novablocks_get_hero_attributes();
 	    $attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
+	    $novablocks_settings = novablocks_get_block_editor_settings();
+
 		$classes = array_merge(
 			array( 'novablocks-hero', 'alignfull' ),
 			novablocks_get_block_extra_classes( $attributes )
@@ -92,7 +94,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 						<?php echo wp_kses_post( $content ); ?>
                     </div>
 					<?php if ( ! empty( $attributes['scrollIndicatorBlock'] ) ) { ?>
-                        <div class="novablocks-hero__indicator"></div>
+                        <div class="novablocks-hero__indicator">
+	                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
+                        </div>
 					<?php } ?>
                 </div>
             </div>
