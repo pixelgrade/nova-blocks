@@ -33,7 +33,7 @@ class Block_Areas {
 	 *     @type string $after  Additional markup to render after the block area. Default empty string.
 	 * }
 	 */
-	public function render( string $slug, array $args = [] ) {
+	public function render( $slug, $args = [] ) {
 		global $post;
 
 		$id = $this->get_by_slug( $slug );
@@ -73,7 +73,7 @@ class Block_Areas {
 	 * @param string $slug Block area slug.
 	 * @return bool True if the block area exists, false otherwise.
 	 */
-	public function exists( string $slug ) : bool {
+	public function exists( $slug ) {
 		$id = $this->get_by_slug( $slug );
 		return ! empty( $id );
 	}
@@ -86,7 +86,7 @@ class Block_Areas {
 	 * @param string $slug Block area slug.
 	 * @return int Block area ID, or 0 if not found.
 	 */
-	private function get_by_slug( string $slug ) {
+	private function get_by_slug( $slug ) {
 		$posts = get_posts(
 			array(
 				'fields'                 => 'ids',

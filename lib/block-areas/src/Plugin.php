@@ -49,7 +49,7 @@ class Plugin {
 	 *
 	 * @param string $main_file Absolute path to the plugin main file.
 	 */
-	public function __construct( string $main_file ) {
+	public function __construct( $main_file ) {
 		$this->main_file   = $main_file;
 		$this->block_areas = new Block_Areas();
 	}
@@ -82,7 +82,7 @@ class Plugin {
 	 *
 	 * @return string Plugin basename.
 	 */
-	public function basename() : string {
+	public function basename() {
 		return plugin_basename( $this->main_file );
 	}
 
@@ -94,7 +94,7 @@ class Plugin {
 	 * @param string $relative_path Optional. Relative path. Default '/'.
 	 * @return string Absolute path.
 	 */
-	public function path( string $relative_path = '/' ) : string {
+	public function path( $relative_path = '/' ) {
 		return plugin_dir_path( $this->main_file ) . ltrim( $relative_path, '/' );
 	}
 
@@ -106,7 +106,7 @@ class Plugin {
 	 * @param string $relative_path Optional. Relative path. Default '/'.
 	 * @return string Full URL.
 	 */
-	public function url( string $relative_path = '/' ) : string {
+	public function url( $relative_path = '/' ) {
 		return plugin_dir_url( $this->main_file ) . ltrim( $relative_path, '/' );
 	}
 
@@ -117,7 +117,7 @@ class Plugin {
 	 *
 	 * @return Plugin Plugin main instance.
 	 */
-	public static function instance() : Plugin {
+	public static function instance() {
 		return static::$instance;
 	}
 
@@ -129,7 +129,7 @@ class Plugin {
 	 * @param string $main_file Absolute path to the plugin main file.
 	 * @return bool True if the plugin main instance could be loaded, false otherwise.
 	 */
-	public static function load( string $main_file ) : bool {
+	public static function load( $main_file ) {
 		if ( null !== static::$instance ) {
 			return false;
 		}

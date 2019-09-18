@@ -33,7 +33,7 @@ class Block_Areas_Post_Type {
 
 		add_filter(
 			'user_has_cap',
-			function( array $allcaps ) : array {
+			function( array $allcaps ) {
 				return $this->filter_post_type_user_caps( $allcaps );
 			}
 		);
@@ -48,13 +48,13 @@ class Block_Areas_Post_Type {
 		$slug = self::SLUG;
 		add_filter(
 			"manage_{$slug}_posts_columns",
-			function( array $columns ) : array {
+			function( array $columns ) {
 				return $this->filter_post_type_columns( $columns );
 			}
 		);
 		add_action(
 			"manage_{$slug}_posts_custom_column",
-			function( string $column_name, int $post_id ) {
+			function( $column_name, $post_id ) {
 				$this->render_post_type_column( $column_name, $post_id );
 			},
 			10,
@@ -154,7 +154,7 @@ class Block_Areas_Post_Type {
 	 * @param array $allcaps A user's capabilities.
 	 * @return array Filtered $allcaps.
 	 */
-	private function filter_post_type_user_caps( array $allcaps ) : array {
+	private function filter_post_type_user_caps( $allcaps ) {
 		if ( isset( $allcaps['edit_theme_options'] ) ) {
 			$allcaps['edit_block_areas']             = $allcaps['edit_theme_options'];
 			$allcaps['edit_others_block_areas']      = $allcaps['edit_theme_options'];
@@ -200,7 +200,7 @@ class Block_Areas_Post_Type {
 	 * @param array $columns Columns to display.
 	 * @return array Filtered $columns.
 	 */
-	private function filter_post_type_columns( array $columns ) : array {
+	private function filter_post_type_columns( $columns ) {
 		$columns['slug'] = __( 'Slug', 'block-areas' );
 		if ( isset( $columns['date'] ) ) {
 			unset( $columns['date'] );
@@ -216,7 +216,7 @@ class Block_Areas_Post_Type {
 	 * @param string $column_name Column name to render.
 	 * @param int    $post_id     Post ID.
 	 */
-	private function render_post_type_column( string $column_name, int $post_id ) {
+	private function render_post_type_column( $column_name, $post_id ) {
 		if ( 'slug' !== $column_name ) {
 			return;
 		}
