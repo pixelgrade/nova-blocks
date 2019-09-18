@@ -11,9 +11,45 @@ function novablocks_register_settings() {
 		)
 	);
 }
-
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
+
+function nova_blocks_register_meta() {
+
+	register_meta( 'post', 'novablocks_hero_minimum_height', array(
+		'type'         => 'number',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
+		'type'         => 'string',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
+		'type'         => 'boolean',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+
+	register_meta( 'post', 'novablocks_hero_position_indicators', array(
+		'type'         => 'boolean',
+		'single'       => true,
+		'show_in_rest' => true,
+	) );
+}
+add_action( 'init', 'nova_blocks_register_meta' );
+
+function novablocks_allowed_block_types( $allowed_block_types, $post ) {
+	if ( $post->post_type === 'block_area' ) {
+		$allowed_block_types = array( 'novablocks/header', 'novablocks/announcement-bar' );
+	}
+
+	return $allowed_block_types;
+}
+add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
 function novablocks_get_parallax_attributes() {
 	return array(
@@ -239,6 +275,11 @@ function novablocks_get_header_attributes() {
 	);
 }
 
+function novablocks_get_media_attributes() {
+	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
+	return $novablocks_block_editor_settings['media']['attributes'];
+}
+
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
 
     foreach ( $attributes_config as $key => $value ) {
@@ -254,39 +295,6 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
 
     return $attributes;
 }
-
-function novablocks_get_media_attributes() {
-	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
-	return $novablocks_block_editor_settings['media']['attributes'];
-}
-
-function nova_blocks_register_meta() {
-
-	register_meta( 'post', 'novablocks_hero_minimum_height', array(
-		'type'         => 'number',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
-
-	register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
-		'type'         => 'string',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
-
-	register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
-		'type'         => 'boolean',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
-
-	register_meta( 'post', 'novablocks_hero_position_indicators', array(
-		'type'         => 'boolean',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
-}
-add_action( 'init', 'nova_blocks_register_meta' );
 
 function novablocks_get_block_editor_settings() {
 	$novablocks_block_editor_settings = array(

@@ -1,0 +1,37 @@
+---
+engines:
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - ruby
+        - javascript
+        - python
+        - php
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+      standard: "phpcs.xml.dist"
+      ignore_warnings: true
+      encoding: utf-8
+  phpmd:
+    enabled: true
+    config:
+      file_extensions: "php"
+      rulesets: "phpmd.xml.dist"
+ratings:
+  paths:
+    - "**.css"
+    - "**.js"
+    - "**.php"
+exclude_paths:
+  - "_config/*"
+  - "_templates/*"
+  - "_vendor/*"
