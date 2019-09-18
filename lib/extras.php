@@ -145,62 +145,8 @@ function novablocks_get_block_extra_classes( $attributes ) {
 }
 
 function novablocks_get_hero_attributes() {
-	return array_merge(
-		array(
-			'blockIndex'              => array(
-				'type'    => 'number',
-				'default' => -1
-			),
-			'applyMinimumHeight'      => array(
-				'type'   => 'string',
-				'source' => 'meta',
-				'meta'   => 'novablocks_hero_apply_minimum_height',
-			),
-			'minHeight' => array(
-				'type'    => 'number',
-				'source'  => 'meta',
-				'meta'    => 'novablocks_hero_minimum_height',
-			),
-			'applyMinimumHeightBlock' => array(
-				'type'    => 'boolean',
-				'default' => false
-			),
-			'scrollIndicator'         => array(
-				'type'   => 'boolean',
-				'source' => 'meta',
-				'meta'   => 'novablocks_hero_scroll_indicator'
-			),
-			'scrollIndicatorBlock'    => array(
-				'type'    => 'boolean',
-				'default' => false
-			),
-			'positionIndicators'      => array(
-				'type'   => 'boolean',
-				'source' => 'meta',
-				'meta'   => 'novablocks_hero_position_indicators',
-			),
-			'backgroundType'          => array(
-				'type'    => 'string',
-				'default' => 'image'
-			),
-			'media'                   => array(
-				'type'    => 'object',
-				'default' => array(
-					'type'  => 'image',
-					'sizes' => array(
-						'full' => array(
-							'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-						),
-					),
-				),
-			),
-		),
-		novablocks_get_alignment_attributes(),
-		novablocks_get_color_attributes(),
-		novablocks_get_content_padding_attributes(),
-		novablocks_get_content_width_attributes(),
-		novablocks_get_parallax_attributes()
-	);
+	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
+	return $novablocks_block_editor_settings['hero']['attributes'];
 }
 
 function novablocks_get_slideshow_attributes() {
@@ -368,6 +314,65 @@ function novablocks_get_block_editor_settings() {
 						'align' => 'center',
 					),
 				),
+			),
+			'attributes' => array_merge(
+				array(
+					'blockIndex'              => array(
+						'type'    => 'number',
+						'default' => -1
+					),
+					'applyMinimumHeight' => array(
+						'type'    => 'string',
+						'source'  => 'meta',
+						'meta'    => 'novablocks_hero_apply_minimum_height',
+						'default' => 'first',
+					),
+					'minHeight'          => array(
+						'type'    => 'number',
+						'source'  => 'meta',
+						'meta'    => 'novablocks_hero_minimum_height',
+						'default' => 100,
+					),
+					'applyMinimumHeightBlock' => array(
+						'type'    => 'boolean',
+						'default' => false
+					),
+					'scrollIndicator'         => array(
+						'type'     => 'boolean',
+						'source'   => 'meta',
+						'meta'     => 'novablocks_hero_scroll_indicator',
+						'default'  => false,
+					),
+					'scrollIndicatorBlock'    => array(
+						'type'    => 'boolean',
+						'default' => false
+					),
+					'positionIndicators'      => array(
+						'type'   => 'boolean',
+						'source' => 'meta',
+						'meta'   => 'novablocks_hero_position_indicators',
+					),
+					'backgroundType'          => array(
+						'type'    => 'string',
+						'default' => 'image'
+					),
+					'media'                   => array(
+						'type'    => 'object',
+						'default' => array(
+							'type'  => 'image',
+							'sizes' => array(
+								'full' => array(
+									'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
+								),
+							),
+						),
+					),
+				),
+				novablocks_get_alignment_attributes(),
+				novablocks_get_color_attributes(),
+				novablocks_get_content_padding_attributes(),
+				novablocks_get_content_width_attributes(),
+				novablocks_get_parallax_attributes()
 			),
 		),
 		'media' => array(

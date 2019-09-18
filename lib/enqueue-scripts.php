@@ -19,6 +19,7 @@ function novablocks_admin_init() {
 		'wp-blocks',
 		'wp-components',
 		'wp-dom',
+		'wp-dom-ready',
 		'wp-editor',
 		'wp-element',
 	);

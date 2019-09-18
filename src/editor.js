@@ -30,9 +30,8 @@ const {
 
 class novaBlocks {
 	initialize( settings ) {
-		dispatch( STORE_NAME ).updateSettings( settings ).then(() => {
-			addSeparatorFilters( settings );
-		});
+		dispatch( STORE_NAME ).updateSettings( settings );
+		addSeparatorFilters( settings );
 	}
 }
 

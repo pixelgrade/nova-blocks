@@ -9951,9 +9951,8 @@ var novaBlocks = function () {
 	__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(novaBlocks, [{
 		key: 'initialize',
 		value: function initialize(settings) {
-			dispatch(__WEBPACK_IMPORTED_MODULE_20__store__["a" /* STORE_NAME */]).updateSettings(settings).then(function () {
-				Object(__WEBPACK_IMPORTED_MODULE_6__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
-			});
+			dispatch(__WEBPACK_IMPORTED_MODULE_20__store__["a" /* STORE_NAME */]).updateSettings(settings);
+			Object(__WEBPACK_IMPORTED_MODULE_6__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
 		}
 	}]);
 
@@ -14692,11 +14691,33 @@ var select = wp.data.select;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_with_settings__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_with_parallax__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__preview__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__block_controls__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__wordpress_is_shallow_equal__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__wordpress_is_shallow_equal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__wordpress_is_shallow_equal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_with_settings__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_with_parallax__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__preview__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__block_controls__ = __webpack_require__(208);
+
+
+
+
+
+
+
+
 /**
  * Internal dependencies
  */
@@ -14705,9 +14726,6 @@ var select = wp.data.select;
 
 
 
-/**
- * WordPress dependencies
- */
 
 
 
@@ -14719,27 +14737,123 @@ var _wp$element = wp.element,
 var _wp$compose = wp.compose,
     compose = _wp$compose.compose,
     createHigherOrderComponent = _wp$compose.createHigherOrderComponent;
+var _wp$data = wp.data,
+    select = _wp$data.select,
+    dispatch = _wp$data.dispatch;
+
+var HeroEdit = function (_Component) {
+	__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(HeroEdit, _Component);
+
+	function HeroEdit() {
+		__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, HeroEdit);
+
+		return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (HeroEdit.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(HeroEdit)).apply(this, arguments));
+	}
+
+	__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(HeroEdit, [{
+		key: 'getDefaults',
+		value: function getDefaults(attributes) {
+			var settings = this.props.settings;
+			var minHeight = attributes.minHeight,
+			    applyMinimumHeight = attributes.applyMinimumHeight,
+			    scrollIndicator = attributes.scrollIndicator;
+
+			var defaults = {};
+
+			if (!minHeight) {
+				defaults.minHeight = settings.hero.attributes.minHeight.default;
+			}
+
+			if (!applyMinimumHeight) {
+				defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
+			}
+
+			if (!scrollIndicator) {
+				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+			}
+
+			return defaults;
+		}
+	}, {
+		key: 'getNewAttributes',
+		value: function getNewAttributes(attributes) {
+			var _this2 = this;
+
+			var minHeight = attributes.minHeight,
+			    applyMinimumHeight = attributes.applyMinimumHeight,
+			    scrollIndicator = attributes.scrollIndicator;
 
 
-var HeroEdit = function HeroEdit(props) {
+			var index = select('core/block-editor').getBlocks().filter(function (block) {
+				return block.name === 'novablocks/hero';
+			}).findIndex(function (block) {
+				return block.clientId === _this2.props.clientId;
+			});
 
-	return wp.element.createElement(
-		Fragment,
-		null,
-		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_3__preview__["a" /* default */], props),
-		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_4__block_controls__["a" /* default */], props),
-		wp.element.createElement(
-			InspectorControls,
-			null,
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__components__["f" /* LayoutPanel */], props),
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__components__["e" /* HeightPanel */], props),
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__components__["h" /* ScrollIndicatorPanel */], props),
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__components__["g" /* PositionIndicatorsPanel */], props)
-		)
-	);
-};
+			var newApplyMinimumHeightBlock = index === 0 && applyMinimumHeight === 'first' || applyMinimumHeight === 'all';
+			var newScrollIndicatorBlock = index === 0 && scrollIndicator;
 
-/* harmony default export */ __webpack_exports__["a"] = (createHigherOrderComponent(compose([__WEBPACK_IMPORTED_MODULE_1__components_with_settings__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__components_with_parallax__["a" /* default */]]))(HeroEdit));
+			return {
+				applyMinimumHeight: applyMinimumHeight,
+				applyMinimumHeightBlock: newApplyMinimumHeightBlock,
+				minHeight: minHeight,
+				scrollIndicatorBlock: newScrollIndicatorBlock
+			};
+		}
+	}, {
+		key: 'updateAttributes',
+		value: function updateAttributes() {
+			var _props = this.props,
+			    attributes = _props.attributes,
+			    setAttributes = _props.setAttributes;
+
+			var defaults = this.getDefaults(attributes);
+			var newAttributes = this.getNewAttributes(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, attributes, defaults));
+
+			setAttributes(newAttributes);
+		}
+	}, {
+		key: 'shouldComponentUpdate',
+		value: function shouldComponentUpdate(nextProps) {
+			return !__WEBPACK_IMPORTED_MODULE_6__wordpress_is_shallow_equal___default()(nextProps.attributes, this.props.attributes);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.updateAttributes();
+		}
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			this.updateAttributes();
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+
+			return wp.element.createElement(
+				Fragment,
+				null,
+				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_10__preview__["a" /* default */], this.props),
+				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_11__block_controls__["a" /* default */], this.props),
+				wp.element.createElement(
+					InspectorControls,
+					null,
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["f" /* LayoutPanel */], this.props),
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["e" /* HeightPanel */], this.props),
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["h" /* ScrollIndicatorPanel */], this.props),
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["g" /* PositionIndicatorsPanel */], this.props)
+				)
+			);
+		}
+	}]);
+
+	return HeroEdit;
+}(Component);
+
+;
+
+/* harmony default export */ __webpack_exports__["a"] = (createHigherOrderComponent(compose([__WEBPACK_IMPORTED_MODULE_8__components_with_settings__["a" /* default */], __WEBPACK_IMPORTED_MODULE_9__components_with_parallax__["a" /* default */]]))(HeroEdit));
 
 /***/ }),
 /* 195 */
@@ -15332,15 +15446,25 @@ var withBlockEditContext = function withBlockEditContext(mapContextToProps) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HeightPanel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ScrollIndicatorPanel; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__with_settings__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__with_settings__ = __webpack_require__(31);
+
+
+
+
 
 /**
  * Internal dependencies
  */
-
 
 
 /**
@@ -15351,89 +15475,60 @@ var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     RadioControl = _wp$components.RadioControl,
     ToggleControl = _wp$components.ToggleControl;
-var _wp$data = wp.data,
-    dispatch = _wp$data.dispatch,
-    select = _wp$data.select,
-    subscribe = _wp$data.subscribe;
+var select = wp.data.select;
+var Component = wp.element.Component;
 
+var HeightControls = function (_Component) {
+	__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(HeightControls, _Component);
 
-var blockList = select('core/block-editor').getBlocks();
+	function HeightControls() {
+		__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, HeightControls);
 
-var debouncedOnSubscribe = Object(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* debounce */])(function () {
-	var newBlockList = select('core/block-editor').getBlocks();
-	var blockListChanged = blockList.length !== newBlockList.length;
-
-	if (!blockListChanged) {
-		blockListChanged = blockList.some(function (block, index) {
-			return blockList[index].clientId !== newBlockList[index].clientId;
-		});
+		return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (HeightControls.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(HeightControls)).apply(this, arguments));
 	}
 
-	if (blockListChanged) {
-		blockList = newBlockList;
-		updateBlocks();
-	}
-}, 30);
-
-var debouncedUpdateBlocks = Object(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* debounce */])(function () {
-	updateBlocks();
-}, 30);
-
-subscribe(debouncedOnSubscribe);
-
-var updateBlocks = function updateBlocks(attributes) {
-	select('core/block-editor').getBlocks().filter(function (block) {
-		return block.name === 'novablocks/hero';
-	}).filter(function (block, index) {
-		var _block$attributes$att = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, block.attributes, attributes),
-		    applyMinimumHeight = _block$attributes$att.applyMinimumHeight,
-		    scrollIndicator = _block$attributes$att.scrollIndicator;
-
-		var applyMinimumHeightBlock = applyMinimumHeight === 'first' && index === 0 || applyMinimumHeight === 'all';
-		var scrollIndicatorBlock = scrollIndicator === true && index === 0;
-
-		dispatch('core/block-editor').updateBlockAttributes(block.clientId, {
-			applyMinimumHeightBlock: applyMinimumHeightBlock,
-			scrollIndicatorBlock: scrollIndicatorBlock
-		});
-
-		return true;
-	});
-};
-
-var HeightPanel = Object(__WEBPACK_IMPORTED_MODULE_2__with_settings__["a" /* default */])(function (props) {
-	var attributes = props.attributes,
-	    setAttributes = props.setAttributes,
-	    settings = props.settings;
+	__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(HeightControls, [{
+		key: 'render',
+		value: function render() {
+			var _props = this.props,
+			    attributes = _props.attributes,
+			    setAttributes = _props.setAttributes,
+			    settings = _props.settings;
+			var minHeight = attributes.minHeight,
+			    applyMinimumHeight = attributes.applyMinimumHeight;
 
 
-	var applyMinimumHeight = !!attributes.applyMinimumHeight ? attributes.applyMinimumHeight : 'first';
+			return wp.element.createElement(
+				PanelBody,
+				{ title: __('Height', '__plugin_txtd'), initialOpen: false },
+				wp.element.createElement(RadioControl, {
+					label: __('Apply Minimum Height', '__plugin_txtd'),
+					selected: applyMinimumHeight,
+					onChange: function onChange(nextMinimumHeight) {
+						setAttributes({ applyMinimumHeight: nextMinimumHeight });
+					},
+					options: settings.applyMinimumHeightOptions
+				}),
+				'none' !== applyMinimumHeight && wp.element.createElement(RadioControl, {
+					label: __('Minimum Height', '__plugin_txtd'),
+					selected: minHeight,
+					onChange: function onChange(minHeight) {
+						setAttributes({ minHeight: parseInt(minHeight, 10) });
+					},
+					options: settings.minimumHeightOptions
+				})
+			);
+		}
+	}]);
 
-	return wp.element.createElement(
-		PanelBody,
-		{ title: __('Height', '__plugin_txtd'), initialOpen: false },
-		wp.element.createElement(RadioControl, {
-			label: __('Apply Minimum Height', '__plugin_txtd'),
-			selected: applyMinimumHeight,
-			onChange: function onChange(nextMinimumHeight) {
-				setAttributes({ applyMinimumHeight: nextMinimumHeight });
-				debouncedUpdateBlocks();
-			},
-			options: settings.applyMinimumHeightOptions
-		}),
-		'none' !== applyMinimumHeight && wp.element.createElement(RadioControl, {
-			label: __('Minimum Height', '__plugin_txtd'),
-			selected: attributes.minHeight,
-			onChange: function onChange(minHeight) {
-				setAttributes({ minHeight: parseInt(minHeight, 10) });
-				debouncedUpdateBlocks();
-			},
-			options: settings.minimumHeightOptions
-		})
-	);
-});
+	return HeightControls;
+}(Component);
 
-var ScrollIndicatorPanel = Object(__WEBPACK_IMPORTED_MODULE_2__with_settings__["a" /* default */])(function (props) {
+;
+
+var HeightPanel = Object(__WEBPACK_IMPORTED_MODULE_5__with_settings__["a" /* default */])(HeightControls);
+
+var ScrollIndicatorPanel = Object(__WEBPACK_IMPORTED_MODULE_5__with_settings__["a" /* default */])(function (props) {
 	var scrollIndicator = props.attributes.scrollIndicator,
 	    setAttributes = props.setAttributes;
 
@@ -15454,7 +15549,6 @@ var ScrollIndicatorPanel = Object(__WEBPACK_IMPORTED_MODULE_2__with_settings__["
 			checked: scrollIndicator,
 			onChange: function onChange(nextScrollIndicator) {
 				setAttributes({ scrollIndicator: nextScrollIndicator });
-				debouncedUpdateBlocks();
 			}
 		})
 	);
