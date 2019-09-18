@@ -8773,7 +8773,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		if ($body.is('.novablocks-has-position-indicators') && typeof $.fn.bully !== 'undefined') {
 			$('.novablocks-hero').bully();
 		}
-<<<<<<< HEAD
 
 		scrollButtonInit();
 	});
@@ -8794,9 +8793,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 			});
 		}
 	}
-=======
-	});
->>>>>>> dd2063670a60069d37da310d889d041ec7f675a2
 })(jQuery, window);
 
 /***/ }),

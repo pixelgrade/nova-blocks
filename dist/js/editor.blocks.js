@@ -9145,11 +9145,11 @@ var addSeparatorFilters = function addSeparatorFilters(settings) {
 	}, "replaceSeparatorEdit");
 
 	var replaceSeparatorSave = function replaceSeparatorSave(element, blockType, attributes) {
-		if ('core/separator' === blockType.name) {
-			return wp.element.createElement(Separator, { className: attributes.className });
-		} else {
+		if ('core/separator' !== blockType.name) {
 			return element;
 		}
+
+		return null;
 	};
 
 	wp.hooks.addFilter('editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit);

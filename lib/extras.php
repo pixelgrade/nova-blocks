@@ -523,6 +523,9 @@ function novablocks_get_block_editor_settings() {
 				),
 			),
 		),
+		'separator' => array(
+			'markup' => '<hr />'
+		),
 		'applyMinimumHeightOptions' => array(
 			array(
 				'label' => __( 'None', '__plugin_txtd' ),

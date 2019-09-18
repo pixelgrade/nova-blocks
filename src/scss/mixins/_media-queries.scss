@@ -7,7 +7,6 @@ $nova-breakpoints: (
 
 
 @mixin above( $value ) {
-    @debug $value;
     $breakpoint: map-get( $nova-breakpoints, $value );
 
     @if ( $breakpoint != null ) {
@@ -22,8 +21,6 @@ $nova-breakpoints: (
 }
 
 @mixin below( $value ) {
-    @debug $value;
-
     $breakpoint: map-get( $nova-breakpoints, $value );
 
     @if ( $breakpoint != null ) {

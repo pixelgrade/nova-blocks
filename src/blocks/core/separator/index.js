@@ -27,11 +27,11 @@ export const addSeparatorFilters = ( settings ) => {
 	}, "replaceSeparatorEdit" );
 
 	const replaceSeparatorSave = ( element, blockType, attributes ) => {
-		if ( 'core/separator' === blockType.name ) {
-			return <Separator className={ attributes.className } />;
-		} else {
+		if ( 'core/separator' !== blockType.name ) {
 			return element;
 		}
+
+		return null;
 	}
 
 	wp.hooks.addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );

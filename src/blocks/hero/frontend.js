@@ -11,7 +11,7 @@ import { parallaxInit } from "../../utils";
 			$( '.novablocks-hero' ).bully();
 		}
 
-		scrollButtonInit()
+		scrollButtonInit();
 	})
 
 	function scrollButtonInit() {
