@@ -71,24 +71,10 @@ require_once dirname( __FILE__ ) . '/lib/extras.php';
 require_once dirname( __FILE__ ) . '/lib/settings.php';
 require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 
-require_once dirname( __FILE__ ) . '/src/blocks/announcement-bar/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/google-map/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/header/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/hero/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/logo/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/media/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/navigation/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/slideshow/init.php';
+// register block types
+require_once dirname( __FILE__ ) . '/src/blocks/init.php';
 
-require_once dirname( __FILE__ ) . '/src/blocks/core/separator/init.php';
+// load block areas functionality
+require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
 
-function novablocks_allowed_block_types( $allowed_block_types, $post ) {
-	if ( $post->post_type === 'block_area' ) {
-		$allowed_block_types = array( 'novablocks/header', 'novablocks/announcement-bar' );
-	}
-
-	return $allowed_block_types;
-}
-
-add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 

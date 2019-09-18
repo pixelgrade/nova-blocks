@@ -64,6 +64,9 @@ The Nova Blocks plugin bundles the following third-party resources:
 * [jQuery Slick plugin](http://kenwheeler.github.io) Copyright (c) 2017 Ken Wheeler - License: MIT
 * [jQuery Velocity plugin](http://velocityjs.org/) Copyright (c) 2014-2017 Julian Shapiro - License: MIT
 
+* [WP-REST-API V2 Menus](https://wordpress.org/plugins/wp-rest-api-v2-menus/) - License GPLv2
+* [Block Areas](https://wordpress.org/plugins/block-areas/) - License GPLv2
+
 == Installation ==
 
 Installing "Nova Blocks" can be done either by searching for "Nova Blocks" via the `Plugins → Add New` screen in your WordPress dashboard, or by using the following steps:
