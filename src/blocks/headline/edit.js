@@ -18,7 +18,8 @@ const {
 } = wp.blockEditor;
 
 const {
-	PanelBody
+	PanelBody,
+	Toolbar
 } = wp.components;
 
 export default function HeadlineEdit( props ) {
@@ -42,6 +43,12 @@ export default function HeadlineEdit( props ) {
 		<Fragment>
 			<BlockControls>
 				<HeadingToolbar minLevel={ 2 } maxLevel={ 5 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				<AlignmentToolbar
+					value={ align }
+					onChange={ ( nextAlign ) => {
+						setAttributes( { align: nextAlign } );
+					} }
+				/>
 			</BlockControls>
 			<InspectorControls>
 				<p>{ __( 'Level' ) }</p>
