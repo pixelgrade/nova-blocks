@@ -627,5 +627,5 @@ function novablocks_get_block_editor_settings() {
 		),
 	);
 
-	return apply_filters( 'novablocks_block_editor_settings', $novablocks_block_editor_settings, $post );
+	return apply_filters( 'novablocks_block_editor_settings', $novablocks_block_editor_settings );
 }
