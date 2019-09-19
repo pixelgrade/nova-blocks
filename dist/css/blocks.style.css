@@ -542,8 +542,14 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 .site-logo img {
   display: block; }
 
+.site-info {
+  text-align: center; }
+
 .site-logo + .site-info {
-  margin-left: 1em; }
+  text-align: left; }
+  .site-logo + .site-info .site-title,
+  .site-logo + .site-info .site-description {
+    margin-left: 1em; }
 
 .wp-block-pixelgrade-media {
   margin-left: auto;
