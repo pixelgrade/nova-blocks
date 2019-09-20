@@ -129,21 +129,18 @@
     width: 100%; }
 
 :root {
-  --novablocks-hero-transition-duration: 0.4s;
-  --novablocks-hero-transition-easing: ease-out;
+  --novablocks-hero-transition-duration: 0.5s;
+  --novablocks-hero-transition-easing: ease;
   --novablocks-hero-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing); }
 
-.wp-block-pixelgrade-hero {
+.wp-block-novablocks-hero.novablocks-hero {
   -webkit-transition: var(--novablocks-hero-transition);
-  transition: var(--novablocks-hero-transition);
-  -webkit-transition-property: color;
-  transition-property: color; }
+  transition: var(--novablocks-hero-transition); }
 
-.novablocks-hero__media {
+.novablocks-hero__media,
+.novablocks-hero__foreground {
   -webkit-transition: var(--novablocks-hero-transition);
-  transition: var(--novablocks-hero-transition);
-  -webkit-transition-property: opacity;
-  transition-property: opacity; }
+  transition: var(--novablocks-hero-transition); }
 
 .novablocks-hero__mask {
   overflow: hidden; }
@@ -163,8 +160,8 @@
     margin-left: 4px; }
 
 :root {
-  --novablocks-media-transition-duration: 0.4s;
-  --novablocks-media-transition-easing: ease-out;
+  --novablocks-media-transition-duration: 0.5s;
+  --novablocks-media-transition-easing: ease;
   --novablocks-media-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing); }
 
 .novablocks-media__placeholder {
