@@ -191,28 +191,30 @@
     -webkit-transition-property: color;
     transition-property: color; }
 
-.novablocks-media__content {
+.novablocks-media {
+  -webkit-transition: var(--novablocks-media-transition);
+  transition: var(--novablocks-media-transition); }
+
+.novablocks-media__inner-container {
+  padding-left: var(--novablocks-media-spacing);
+  padding-right: var(--novablocks-media-spacing);
   -webkit-transition: var(--novablocks-media-transition);
   transition: var(--novablocks-media-transition);
   -webkit-transition-property: padding, -webkit-box-shadow;
   transition-property: padding, -webkit-box-shadow;
   transition-property: padding, box-shadow;
   transition-property: padding, box-shadow, -webkit-box-shadow; }
-  .novablocks-media__content:after {
-    -webkit-transition: var(--novablocks-media-transition);
-    transition: var(--novablocks-media-transition);
-    -webkit-transition-property: background-color;
-    transition-property: background-color; }
-
-.novablocks-media__inner-container {
-  padding-left: var(--novablocks-media-spacing);
-  padding-right: var(--novablocks-media-spacing); }
   .novablocks-media__inner-container > * {
     margin-left: auto;
     margin-right: auto; }
   .novablocks-media__inner-container > [data-align="full"] {
     margin-left: calc(-1 * var(--novablocks-media-spacing));
     margin-right: calc(-1 * var(--novablocks-media-spacing)); }
+  .novablocks-media__inner-container:after {
+    -webkit-transition: var(--novablocks-media-transition);
+    transition: var(--novablocks-media-transition);
+    -webkit-transition-property: background-color;
+    transition-property: background-color; }
 
 :root {
   --novablocks-slideshow-transition-duration: 0.4s;
