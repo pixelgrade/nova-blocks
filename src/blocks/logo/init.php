@@ -31,7 +31,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 
         <div class="c-branding site-branding">
 
-			<?php if ( has_custom_logo() || rosa_has_custom_logo_transparent() ) { ?>
+			<?php if ( has_custom_logo() || rosa2_has_custom_logo_transparent() ) { ?>
 
                 <div class="c-logo site-logo">
 					<?php if ( has_custom_logo() ) { ?>
@@ -40,9 +40,9 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
                         </div>
 					<?php } ?>
 
-	                <?php if ( rosa_has_custom_logo_transparent() ) { ?>
+	                <?php if ( rosa2_has_custom_logo_transparent() ) { ?>
                         <div class="c-logo__inverted">
-			                <?php rosa_the_custom_logo_transparent(); ?>
+			                <?php rosa2_the_custom_logo_transparent(); ?>
                         </div>
 	                <?php } ?>
                 </div>
