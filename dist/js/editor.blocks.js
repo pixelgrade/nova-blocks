@@ -17036,10 +17036,10 @@ var Edit = function (_Component) {
 						icon: 'edit'
 					})
 				)
-			), !!slug ? wp.element.createElement(ServerSideRender, {
+			), wp.element.createElement(ServerSideRender, {
 				block: 'novablocks/navigation',
 				attributes: this.props.attributes
-			}) : this.state.menus.length ? this.renderNavigationPlaceholder() : wp.element.createElement(Spinner, null)];
+			})];
 		}
 	}]);
 

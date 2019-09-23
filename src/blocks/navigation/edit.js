@@ -102,10 +102,10 @@ export default class Edit extends Component {
 					/>
 				</Toolbar>
 			</BlockControls>,
-			!! slug ? <ServerSideRender
+			<ServerSideRender
 					block="novablocks/navigation"
 					attributes={ this.props.attributes }
-				/> : this.state.menus.length ? this.renderNavigationPlaceholder() : <Spinner />
+				/>
 		]
 	}
 }

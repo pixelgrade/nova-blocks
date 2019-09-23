@@ -71,7 +71,7 @@ export default function Edit( props ) {
 		const activeTemplateName = activeTemplate.name;
 		setAttributes( { layout: activeTemplateName } )
 		setTemplate( template );
-	}
+	};
 
 	return (
 		[
