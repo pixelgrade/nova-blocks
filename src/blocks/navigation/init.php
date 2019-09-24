@@ -48,7 +48,7 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php
 				wp_nav_menu( array(
-                    'menu' => $attributes['slug'],
+                    'theme_location' => $attributes['slug'],
                     'container' => '',
                     'hasCartMenuItem' => $attributes[ 'hasCartMenuItem' ],
 	            ) );

@@ -94,19 +94,22 @@ $exports.store = store;
 
 "use strict";
 /* unused harmony export nova */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return hero; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return media; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return slideshow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return hero; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return media; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return slideshow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return foodmenu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return opentable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return opentable; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alignBottom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return alignCenter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return alignTop; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return alignment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return invert; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return swap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return map; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return invert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return swap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return map; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return announcement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return header; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return logo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return navigation; });
 var _wp$components = wp.components,
     SVG = _wp$components.SVG,
     Path = _wp$components.Path;
@@ -255,6 +258,24 @@ var announcement = wp.element.createElement(
         d: "M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z",
         clipRule: "evenodd"
     })
+);
+
+var header = wp.element.createElement(
+    "svg",
+    { width: "24", height: "24", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+    wp.element.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M0 12C0 5.37258 5.37258 0 12 0c6.6274 0 12 5.37258 12 12 0 6.6274-5.3726 12-12 12-6.62742 0-12-5.3726-12-12zm10 7c-.55228 0-1-.4477-1-1s.44772-1 1-1h4c.5523 0 1 .4477 1 1s-.4477 1-1 1h-4zm0 2c-1.65685 0-3-1.3431-3-3s1.34315-3 3-3h4c1.6569 0 3 1.3431 3 3s-1.3431 3-3 3h-4zM8 4C5.79086 4 4 5.79086 4 8v3c0 1.1046.89543 2 2 2h12c1.1046 0 2-.8954 2-2V8c0-2.20914-1.7909-4-4-4H8z", fill: "#6565F2" })
+);
+
+var logo = wp.element.createElement(
+    "svg",
+    { width: "24", height: "24", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+    wp.element.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zm0 7c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5 2.7614 0 5-2.2386 5-5 0-2.76142-2.2386-5-5-5zm-7 5c0 3.866 3.13401 7 7 7 3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7-3.86599 0-7 3.13401-7 7z", fill: "#6565F2" })
+);
+
+var navigation = wp.element.createElement(
+    "svg",
+    { width: "24", height: "24", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+    wp.element.createElement("path", { fillRule: "evenodd", clipRule: "evenodd", d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z", fill: "#6565F2" })
 );
 
 /***/ }),
@@ -9902,7 +9923,7 @@ var ColorToolbar = function ColorToolbar(props) {
 				    onToggle = _ref.onToggle;
 				return wp.element.createElement(IconButton, {
 					onClick: onToggle,
-					icon: __WEBPACK_IMPORTED_MODULE_1__icons__["h" /* invert */],
+					icon: __WEBPACK_IMPORTED_MODULE_1__icons__["i" /* invert */],
 					'aria-expanded': isOpen,
 					label: __('Color Options', '__plugin_txtd'),
 					labelPosition: 'bottom'
@@ -12459,7 +12480,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Map of the World', '__plugin_txtd'),
 	description: __('Display an interactive map to show the location of your venue.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["i" /* map */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* map */],
 	getEditWrapperProps: function getEditWrapperProps(attributes) {
 		var align = attributes.align;
 
@@ -13314,7 +13335,7 @@ var MapPlaceholder = function (_Component) {
 			var icon = wp.element.createElement(
 				"div",
 				{ className: "editor-block-icon block-editor-block-icon" },
-				__WEBPACK_IMPORTED_MODULE_5__icons__["i" /* map */]
+				__WEBPACK_IMPORTED_MODULE_5__icons__["k" /* map */]
 			);
 
 			return wp.element.createElement(
@@ -14241,7 +14262,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Header', '__plugin_txtd'),
 	description: __('Outputs custom header markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* header */],
 	supports: { align: ["wide", "full"], default: "full" },
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
@@ -14262,16 +14283,11 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 
 
 var __ = wp.i18n.__;
-var _wp$element = wp.element,
-    Component = _wp$element.Component,
-    useState = _wp$element.useState;
+var useState = wp.element.useState;
 var _wp$components = wp.components,
-    SVG = _wp$components.SVG,
-    Path = _wp$components.Path,
     Toolbar = _wp$components.Toolbar,
     IconButton = _wp$components.IconButton;
 var _wp$blockEditor = wp.blockEditor,
-    BlockAlignmentToolbar = _wp$blockEditor.BlockAlignmentToolbar,
     BlockControls = _wp$blockEditor.BlockControls,
     InnerBlocks = _wp$blockEditor.InnerBlocks;
 
@@ -14282,27 +14298,27 @@ var TEMPLATE_OPTIONS = [{
 	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["b" /* logoLeft */],
 	template: [['novablocks/logo'], ['novablocks/navigation', {
 		className: "site-header__menu--primary",
-		hasCartMenuItem: true
+		slug: "primary"
 	}]]
 }, {
 	title: __('Logo centered and one navigation menu on each side'),
 	name: 'logo-center',
 	icon: __WEBPACK_IMPORTED_MODULE_1__icons__["a" /* logoCenter */],
-	template: [['novablocks/navigation', { className: "site-header__menu--secondary" }], ['novablocks/logo'], ['novablocks/navigation', {
+	template: [['novablocks/navigation', {
+		className: "site-header__menu--secondary",
+		slug: "secondary"
+	}], ['novablocks/logo'], ['novablocks/navigation', {
 		className: "site-header__menu--primary",
-		hasCartMenuItem: true
+		slug: "primary"
 	}]]
 }];
 
 function Edit(props) {
 	var clientId = props.clientId;
-	var _props$attributes = props.attributes,
-	    align = _props$attributes.align,
-	    layout = _props$attributes.layout,
+	var layout = props.attributes.layout,
 	    setAttributes = props.setAttributes;
 
 
-	var count = wp.data.select('core/block-editor').getBlockCount(clientId);
 	var block = wp.data.select('core/block-editor').getBlock(clientId);
 	var innerBlocks = block.innerBlocks;
 
@@ -14450,7 +14466,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Headline', '__plugin_txtd'),
 	description: __('Advanced heading block with a fancier display', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["l" /* media */],
 	attributes: {
 		align: {
 			type: "string",
@@ -14723,7 +14739,7 @@ var select = wp.data.select;
 	title: __('Hero of the Galaxy', '__plugin_txtd'),
 	description: __('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* hero */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* hero */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	example: {},
 	save: function save() {
@@ -15875,7 +15891,7 @@ var HeroBlockControls = function HeroBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_0__icons__["m" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_0__icons__["p" /* swap */],
 						onClick: open
 					});
 				}
@@ -15909,7 +15925,7 @@ var ServerSideRender = wp.components.ServerSideRender;
 	title: __('Logo', '__plugin_txtd'),
 	description: __('Outputs custom logo markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* logo */],
 	parent: ['novablocks/header'],
 	save: function save() {},
 	edit: function edit(props) {
@@ -15945,7 +15961,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Media Card Constellation', '__plugin_txtd'),
 	description: __('Display media objects alongside short pieces of content.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["l" /* media */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -16091,7 +16107,7 @@ var MediaBlockControls = function MediaBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["m" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["p" /* swap */],
 						onClick: open
 					});
 				}
@@ -16291,7 +16307,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Slideshow Me the Way', '__plugin_txtd'),
 	description: __('Display more than one piece of content in a single, coveted space.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["l" /* slideshow */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["o" /* slideshow */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -16859,7 +16875,7 @@ var SlideshowBlockControls = function SlideshowBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["m" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["p" /* swap */],
 						onClick: open
 					});
 				}
@@ -16888,14 +16904,13 @@ var SlideshowBlockControls = function SlideshowBlockControls(props) {
  */
 var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
-var InnerBlocks = wp.blockEditor.InnerBlocks;
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/navigation', {
 	title: __('Space Navigation', '__plugin_txtd'),
 	description: __('Outputs chosen navigaiton menu markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["m" /* navigation */],
 	parent: ['novablocks/header'],
 	save: function save() {},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */]
@@ -16922,18 +16937,8 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 
 
 var __ = wp.i18n.__;
-var _wp$element = wp.element,
-    Component = _wp$element.Component,
-    Fragment = _wp$element.Fragment;
-var _wp$components = wp.components,
-    Placeholder = _wp$components.Placeholder,
-    SelectControl = _wp$components.SelectControl,
-    Spinner = _wp$components.Spinner,
-    ServerSideRender = _wp$components.ServerSideRender,
-    Button = _wp$components.Button,
-    Toolbar = _wp$components.Toolbar,
-    IconButton = _wp$components.IconButton;
-var BlockControls = wp.blockEditor.BlockControls;
+var Component = wp.element.Component;
+var ServerSideRender = wp.components.ServerSideRender;
 
 var Edit = function (_Component) {
 	__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Edit, _Component);
@@ -16951,7 +16956,7 @@ var Edit = function (_Component) {
 	}
 
 	__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Edit, [{
-		key: 'componentDidMount',
+		key: "componentDidMount",
 		value: function componentDidMount() {
 			var _this2 = this;
 
@@ -16963,81 +16968,13 @@ var Edit = function (_Component) {
 			});
 		}
 	}, {
-		key: 'renderNavigationPlaceholder',
-		value: function renderNavigationPlaceholder() {
-			var _this3 = this;
-
-			var _props = this.props,
-			    slug = _props.attributes.slug,
-			    setAttributes = _props.setAttributes;
-
-
-			var selectOptions = this.state.menus.map(function (menu) {
-				return {
-					label: menu.name,
-					value: menu.slug
-				};
-			});
-
-			var selectedMenuSlug = this.state.selectedMenuSlug;
-
-			return wp.element.createElement(
-				Placeholder,
-				{
-					icon: 'menu',
-					label: __('Choose Menu'),
-					instructions: __('Select one of the menus listed below or go to Appearance → Settings and create a new one.')
-				},
-				wp.element.createElement(
-					'form',
-					null,
-					wp.element.createElement(SelectControl, {
-						value: selectedMenuSlug,
-						options: selectOptions,
-						onChange: function onChange(selectedMenuSlug) {
-							_this3.setState({ selectedMenuSlug: selectedMenuSlug });
-						},
-						className: 'components-placeholder__input'
-					}),
-					wp.element.createElement(
-						Button,
-						{
-							type: 'button',
-							onClick: function onClick() {
-								setAttributes({ slug: selectedMenuSlug });
-							},
-							isDefault: true
-						},
-						__('Apply')
-					)
-				)
-			);
-		}
-	}, {
-		key: 'render',
+		key: "render",
 		value: function render() {
-			var _props2 = this.props,
-			    slug = _props2.attributes.slug,
-			    setAttributes = _props2.setAttributes;
+			var slug = this.props.attributes.slug;
 
 
-			return [wp.element.createElement(
-				BlockControls,
-				null,
-				wp.element.createElement(
-					Toolbar,
-					null,
-					wp.element.createElement(IconButton, {
-						className: 'components-icon-button components-toolbar__control',
-						label: __('Change Menu'),
-						onClick: function onClick() {
-							return setAttributes({ slug: null });
-						},
-						icon: 'edit'
-					})
-				)
-			), wp.element.createElement(ServerSideRender, {
-				block: 'novablocks/navigation',
+			return [wp.element.createElement(ServerSideRender, {
+				block: "novablocks/navigation",
 				attributes: this.props.attributes
 			})];
 		}
@@ -17850,7 +17787,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('OpenTable Reservation', '__plugin_txtd'),
 	description: __('Add OpenTable online reservation booking to your site.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* opentable */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["n" /* opentable */],
 	attributes: {
 		restaurantId: {
 			type: 'number',

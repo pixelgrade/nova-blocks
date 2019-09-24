@@ -1,5 +1,7 @@
-.wp-block[data-type="novablocks/logo"] {
-    a {
-        pointer-events: none;
-    }
+.site-branding {
+    pointer-events: none;
+}
+
+.c-logo__inverted {
+    display: none;
 }

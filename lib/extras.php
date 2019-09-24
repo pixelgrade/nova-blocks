@@ -43,8 +43,16 @@ function nova_blocks_register_meta() {
 add_action( 'init', 'nova_blocks_register_meta' );
 
 function novablocks_allowed_block_types( $allowed_block_types, $post ) {
+
 	if ( $post->post_type === 'block_area' ) {
-		$allowed_block_types = array( 'novablocks/header', 'novablocks/announcement-bar' );
+
+		if ( $post->post_name === 'header' ) {
+			return array( 'novablocks/header' );
+		}
+
+		if ( $post->post_name === 'promo-bar' ) {
+			return array( 'novablocks/announcement-bar' );
+		}
 	}
 
 	return $allowed_block_types;

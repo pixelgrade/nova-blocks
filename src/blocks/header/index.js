@@ -17,7 +17,7 @@ export default registerBlockType( 'novablocks/header',
 		title: __( 'Header', '__plugin_txtd' ),
 		description: __( 'Outputs custom header markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
+		icon: icons.header,
 		supports: { align: ["wide", "full"], default: "full" },
 		edit,
 		save: function() {

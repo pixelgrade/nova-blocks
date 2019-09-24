@@ -57,72 +57,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
             <div class="site-header__inner-container">
                 <div class="site-header__content <?php echo 'align' . $attributes['align']; ?>">
 
-                    <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-		                <?php
-			                wp_nav_menu( array(
-				                'menu' => 'secondary',
-				                'container' => '',
-				                'hasCartMenuItem' => $attributes[ 'hasCartMenuItem' ],
-			                ) );
-		                ?>
-                    </div>
-
-                    <div class="c-branding site-branding">
-
-		                <?php if ( has_custom_logo() || rosa2_has_custom_logo_transparent() ) { ?>
-
-                            <div class="c-logo site-logo">
-				                <?php if ( has_custom_logo() ) { ?>
-                                    <div class="c-logo__default">
-						                <?php the_custom_logo(); ?>
-                                    </div>
-				                <?php } ?>
-
-				                <?php if ( rosa2_has_custom_logo_transparent() ) { ?>
-                                    <div class="c-logo__inverted">
-						                <?php rosa2_the_custom_logo_transparent(); ?>
-                                    </div>
-				                <?php } ?>
-                            </div>
-
-		                <?php } ?>
-
-
-		                <?php
-		                $blog_info   = get_bloginfo( 'name' );
-		                $description = get_bloginfo( 'description', 'display' );
-
-		                if ( ! empty( $blog_info ) || ! empty( $description ) ) { ?>
-                            <div class="site-info">
-				                <?php if ( ! empty( $blog_info ) ) { ?>
-					                <?php if ( is_front_page() || is_home() ) { ?>
-                                        <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"
-                                                                  rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-					                <?php } else { ?>
-                                        <p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"
-                                                                 rel="home"><?php bloginfo( 'name' ); ?></a></p>
-					                <?php } ?>
-				                <?php } ?>
-
-				                <?php if ( $description || is_customize_preview() ) { ?>
-                                    <p class="site-description">
-						                <?php echo $description; ?>
-                                    </p>
-				                <?php } ?>
-                            </div>
-		                <?php } ?>
-
-                    </div>
-
-                    <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-		                <?php
-			                wp_nav_menu( array(
-				                'menu' => 'primary',
-				                'container' => '',
-				                'hasCartMenuItem' => $attributes[ 'hasCartMenuItem' ],
-			                ) );
-		                ?>
-                    </div>
+                   <?php echo $content ?>
 
                 </div>
             </div>

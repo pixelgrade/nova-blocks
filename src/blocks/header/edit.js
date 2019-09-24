@@ -3,19 +3,15 @@ import * as icons from './icons';
 const { __ } = wp.i18n;
 
 const {
-	Component,
 	useState
 } = wp.element;
 
 const {
-	SVG,
-	Path,
 	Toolbar,
 	IconButton,
 } = wp.components;
 
 const {
-	BlockAlignmentToolbar,
 	BlockControls,
 	InnerBlocks
 } = wp.blockEditor;
@@ -29,7 +25,7 @@ const TEMPLATE_OPTIONS = [
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
 				className: "site-header__menu--primary",
-				hasCartMenuItem: true
+				slug: "primary"
 			} ],
 		],
 	},
@@ -38,11 +34,14 @@ const TEMPLATE_OPTIONS = [
 		name: 'logo-center',
 		icon: icons.logoCenter,
 		template: [
-			[ 'novablocks/navigation', { className: "site-header__menu--secondary" }],
+			[ 'novablocks/navigation', {
+				className: "site-header__menu--secondary",
+				slug: "secondary"
+			} ],
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
-				className: "site-header__menu--primary" ,
-				hasCartMenuItem: true
+				className: "site-header__menu--primary",
+				slug: "primary"
 			} ],
 		],
 	}
@@ -53,13 +52,11 @@ export default function Edit( props ) {
 	const { clientId } = props;
 	const {
 		attributes: {
-			align,
 			layout
 		},
 		setAttributes
 	} = props;
 
-	const count = wp.data.select( 'core/block-editor' ).getBlockCount( clientId );
 	const block = wp.data.select( 'core/block-editor' ).getBlock( clientId );
 	const innerBlocks = block.innerBlocks;
 
