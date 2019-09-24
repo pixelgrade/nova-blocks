@@ -1,6 +1,6 @@
 :root {
-    --novablocks-media-transition-duration: 0.4s;
-    --novablocks-media-transition-easing: ease-out;
+    --novablocks-media-transition-duration: 0.5s;
+    --novablocks-media-transition-easing: ease;
     --novablocks-media-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
 }
 
@@ -24,19 +24,20 @@
     }
 }
 
-.novablocks-media__content {
+.novablocks-media {
     transition: var(--novablocks-media-transition);
-    transition-property: padding, box-shadow;
+}
 
-    &:after {
-        transition: var(--novablocks-media-transition);
-        transition-property: background-color;
-    }
+.novablocks-media__content {
+
 }
 
 .novablocks-media__inner-container {
     padding-left: var(--novablocks-media-spacing);
     padding-right: var(--novablocks-media-spacing);
+
+    transition: var(--novablocks-media-transition);
+    transition-property: padding, box-shadow;
 
     > * {
         margin-left: auto;
@@ -46,5 +47,10 @@
     > [data-align="full"] {
         margin-left: calc(-1 * var(--novablocks-media-spacing));
         margin-right: calc(-1 * var(--novablocks-media-spacing));
+    }
+
+    &:after {
+        transition: var(--novablocks-media-transition);
+        transition-property: background-color;
     }
 }

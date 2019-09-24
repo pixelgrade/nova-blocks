@@ -1,17 +1,16 @@
 :root {
-    --novablocks-hero-transition-duration: 0.4s;
-    --novablocks-hero-transition-easing: ease-out;
+    --novablocks-hero-transition-duration: 0.5s;
+    --novablocks-hero-transition-easing: ease;
     --novablocks-hero-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
 }
 
-.wp-block-pixelgrade-hero {
-    transition: var(--novablocks-hero-transition);
-    transition-property: color;
+.wp-block-novablocks-hero.novablocks-hero {
+    transition: var(--novablocks-hero-transition);  
 }
 
-.novablocks-hero__media {
+.novablocks-hero__media,
+.novablocks-hero__foreground {
     transition: var(--novablocks-hero-transition);
-    transition-property: opacity;
 }
 
 .novablocks-hero__mask {
@@ -33,3 +32,4 @@
         }
     }
 }
+
