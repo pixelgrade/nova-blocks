@@ -94,19 +94,20 @@ $exports.store = store;
 
 "use strict";
 /* unused harmony export nova */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return hero; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return media; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return slideshow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return hero; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return media; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return slideshow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return foodmenu; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return opentable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return opentable; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alignBottom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return alignCenter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return alignTop; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return alignment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return invert; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return swap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return map; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return invert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return swap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return map; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return announcement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return headline; });
 var _wp$components = wp.components,
     SVG = _wp$components.SVG,
     Path = _wp$components.Path;
@@ -253,6 +254,17 @@ var announcement = wp.element.createElement(
         fill: "#6565F2",
         fillRule: "evenodd",
         d: "M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z",
+        clipRule: "evenodd"
+    })
+);
+
+var headline = wp.element.createElement(
+    "svg",
+    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", fill: "none", viewBox: "0 0 24 24" },
+    wp.element.createElement("path", {
+        fill: "#6565F2",
+        fillRule: "evenodd",
+        d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.147 16.208a1 1 0 01-.978.792h-.762a1 1 0 01-.979-1.207l.428-2.023a1 1 0 00-.978-1.207h-2.333a1 1 0 00-.978.792l-.608 2.854A1 1 0 017.98 17h-.746a1 1 0 01-.978-1.208l1.915-9A1 1 0 019.15 6h.754a1 1 0 01.978 1.207l-.403 1.9a1 1 0 00.979 1.208h2.332a1 1 0 00.978-.791l.584-2.733a1 1 0 01.978-.79h.754a1 1 0 01.978 1.207l-1.915 9z",
         clipRule: "evenodd"
     })
 );
@@ -9902,7 +9914,7 @@ var ColorToolbar = function ColorToolbar(props) {
 				    onToggle = _ref.onToggle;
 				return wp.element.createElement(IconButton, {
 					onClick: onToggle,
-					icon: __WEBPACK_IMPORTED_MODULE_1__icons__["h" /* invert */],
+					icon: __WEBPACK_IMPORTED_MODULE_1__icons__["i" /* invert */],
 					'aria-expanded': isOpen,
 					label: __('Color Options', '__plugin_txtd'),
 					labelPosition: 'bottom'
@@ -12459,7 +12471,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Map of the World', '__plugin_txtd'),
 	description: __('Display an interactive map to show the location of your venue.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["i" /* map */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* map */],
 	getEditWrapperProps: function getEditWrapperProps(attributes) {
 		var align = attributes.align;
 
@@ -13314,7 +13326,7 @@ var MapPlaceholder = function (_Component) {
 			var icon = wp.element.createElement(
 				"div",
 				{ className: "editor-block-icon block-editor-block-icon" },
-				__WEBPACK_IMPORTED_MODULE_5__icons__["i" /* map */]
+				__WEBPACK_IMPORTED_MODULE_5__icons__["j" /* map */]
 			);
 
 			return wp.element.createElement(
@@ -14241,7 +14253,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Header', '__plugin_txtd'),
 	description: __('Outputs custom header markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* media */],
 	supports: { align: ["wide", "full"], default: "full" },
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
@@ -14450,7 +14462,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('Headline', '__plugin_txtd'),
 	description: __('Advanced heading block with a fancier display', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* headline */],
 	attributes: {
 		align: {
 			type: "string",
@@ -14723,7 +14735,7 @@ var select = wp.data.select;
 	title: __('Hero of the Galaxy', '__plugin_txtd'),
 	description: __('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["g" /* hero */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["h" /* hero */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	example: {},
 	save: function save() {
@@ -15875,7 +15887,7 @@ var HeroBlockControls = function HeroBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_0__icons__["m" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_0__icons__["n" /* swap */],
 						onClick: open
 					});
 				}
@@ -15909,7 +15921,7 @@ var ServerSideRender = wp.components.ServerSideRender;
 	title: __('Logo', '__plugin_txtd'),
 	description: __('Outputs custom logo markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* media */],
 	parent: ['novablocks/header'],
 	save: function save() {},
 	edit: function edit(props) {
@@ -15945,7 +15957,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Media Card Constellation', '__plugin_txtd'),
 	description: __('Display media objects alongside short pieces of content.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* media */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -16091,7 +16103,7 @@ var MediaBlockControls = function MediaBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["m" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["n" /* swap */],
 						onClick: open
 					});
 				}
@@ -16291,7 +16303,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Slideshow Me the Way', '__plugin_txtd'),
 	description: __('Display more than one piece of content in a single, coveted space.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["l" /* slideshow */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["m" /* slideshow */],
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */],
 	save: function save() {
 		return wp.element.createElement(InnerBlocks.Content, null);
@@ -16859,7 +16871,7 @@ var SlideshowBlockControls = function SlideshowBlockControls(props) {
 					return wp.element.createElement(IconButton, {
 						className: 'components-icon-button components-toolbar__control',
 						label: __('Change Media', '__plugin_txtd'),
-						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["m" /* swap */],
+						icon: __WEBPACK_IMPORTED_MODULE_2__icons__["n" /* swap */],
 						onClick: open
 					});
 				}
@@ -16895,7 +16907,7 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 	title: __('Space Navigation', '__plugin_txtd'),
 	description: __('Outputs chosen navigaiton menu markup.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["j" /* media */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* media */],
 	parent: ['novablocks/header'],
 	save: function save() {},
 	edit: __WEBPACK_IMPORTED_MODULE_1__edit__["a" /* default */]
@@ -17850,7 +17862,7 @@ var registerBlockType = wp.blocks.registerBlockType;
 	title: __('OpenTable Reservation', '__plugin_txtd'),
 	description: __('Add OpenTable online reservation booking to your site.', '__plugin_txtd'),
 	category: 'nova-blocks',
-	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["k" /* opentable */],
+	icon: __WEBPACK_IMPORTED_MODULE_0__icons__["l" /* opentable */],
 	attributes: {
 		restaurantId: {
 			type: 'number',
