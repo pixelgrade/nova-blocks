@@ -10,7 +10,8 @@ const {InnerBlocks} = wp.blockEditor;
 const FoodMenuSave = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			enableEquallyColumns
 		},
 		className,
 	} = props;
@@ -19,7 +20,8 @@ const FoodMenuSave = function( props ) {
 		className,
 		`nova-food-menu`,
 		{
-			'nova-food-menu--layout' : enableTwoColumns === true
+			'nova-food-menu--layout' : enableTwoColumns === true,
+			'nova-food-menu--equally' : enableEquallyColumns === true
 		}
 	);
 

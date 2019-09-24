@@ -44,7 +44,8 @@ const TEMPLATE = [
 const FoodMenuPreview = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			enableEquallyColumns
 		},
 		clientId,
 		className,
@@ -60,7 +61,8 @@ const FoodMenuPreview = function( props ) {
 		className,
 		`nova-food-menu`,
 		{
-			'nova-food-menu--layout' : enableTwoColumns === true
+			'nova-food-menu--layout' : enableTwoColumns === true,
+			'nova-food-menu--equally' : enableEquallyColumns === true
 		}
 	);
 

@@ -10,7 +10,8 @@ const {PanelBody, ToggleControl} = wp.components;
 const FoodMenuInspectorControls = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			enableEquallyColumns
 		},
 		setAttributes,
 	} = props;
@@ -25,6 +26,12 @@ const FoodMenuInspectorControls = function( props ) {
 						checked={enableTwoColumns}
 						onChange={() => setAttributes( {enableTwoColumns: ! enableTwoColumns} )}
 					/>
+
+					{ true === enableTwoColumns && <ToggleControl
+					label={__( 'Equally Columns', '__plugin_txtd' )}
+					checked={enableEquallyColumns}
+					onChange={() => setAttributes( {enableEquallyColumns: ! enableEquallyColumns} )}
+				/> }
 
 				</PanelBody>
 			</InspectorControls>
