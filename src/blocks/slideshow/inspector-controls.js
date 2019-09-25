@@ -4,6 +4,7 @@
 import {
 	LayoutPanel,
 	GalleryPreview,
+	ParallaxPanel,
 } from '../../components';
 
 /**
@@ -75,6 +76,8 @@ const SlideshowInspectorControls = function( props ) {
 			{ 'gallery' !== slideshowType && <PanelBody>
 				{ __( 'Coming Soon', '__plugin_txtd' ) }
 			</PanelBody> }
+
+			<ParallaxPanel { ...props } parallaxFocalPointImage={ galleryImages[ selectedIndex ] } />
 
 		</InspectorControls>
 	);

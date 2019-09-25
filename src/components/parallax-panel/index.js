@@ -9,6 +9,7 @@ import withSettings from '../with-settings';
 const { __ } = wp.i18n;
 
 const {
+	FocalPointPicker,
 	PanelBody,
 	RangeControl,
 	RadioControl,
@@ -22,7 +23,9 @@ const ParallaxPanel = function( props ) {
 			enableParallax,
 			parallaxAmount,
 			parallaxCustomAmount,
+			focalPoint
 		},
+		parallaxFocalPointImage,
 		setAttributes,
 		settings: {
 			parallaxOptions,
@@ -65,6 +68,17 @@ const ParallaxPanel = function( props ) {
 					step={ 10 }
 					help={ __( 'It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.', '__plugin_txtd' ) }
 				/> }
+			{ !! enableParallax && parallaxFocalPointImage &&
+			  <FocalPointPicker
+				  url={ parallaxFocalPointImage.url }
+				  dimensions={ {
+					  width: parallaxFocalPointImage.width,
+					  height: parallaxFocalPointImage.height,
+				  } }
+				  value={ focalPoint }
+				  onChange={ focalPoint => setAttributes( { focalPoint } ) }
+			  />
+			}
 		</PanelBody>
 	);
 };

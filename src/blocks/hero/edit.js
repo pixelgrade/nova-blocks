@@ -8,7 +8,7 @@ import {
 	LayoutPanel,
 	ParallaxPanel,
 	ScrollIndicatorPanel,
-	PositionIndicatorsPanel
+	PositionIndicatorsPanel,
 } from '../../components';
 
 import withSettings from '../../components/with-settings';
@@ -101,6 +101,9 @@ class HeroEdit extends Component {
 	}
 
 	render() {
+		const { attributes } = this.props;
+		const { media } = attributes;
+		const parallaxFocalPointImage = media ? media.sizes.full : false;
 
 		return (
 			<Fragment>
@@ -111,6 +114,7 @@ class HeroEdit extends Component {
 					<HeightPanel { ...this.props } />
 					<ScrollIndicatorPanel { ...this.props } />
 					<PositionIndicatorsPanel { ...this.props } />
+					<ParallaxPanel { ...this.props } parallaxFocalPointImage={ parallaxFocalPointImage } />
 				</InspectorControls>
 			</Fragment>
 		);

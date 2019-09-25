@@ -201,6 +201,13 @@ function novablocks_get_slideshow_attributes() {
 				],
 				'default' => array()
 			),
+			'focalPoint' => array(
+				'type'    => 'object',
+				'default' => array(
+					'x' => 0.5,
+					'y' => 0.5
+				),
+			),
 			'slideshowType'         => array(
 				'type'    => 'string',
 				'default' => 'gallery'
@@ -302,6 +309,13 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
     return $attributes;
 }
 
+function novablocks_get_focal_point_style( $attributes ) {
+	$focalPoint = $attributes['focalPoint'];
+	$focalPointX = intval( $focalPoint['x'] * 10000 ) / 100 . '%';
+	$focalPointY = intval( $focalPoint['y'] * 10000 ) / 100 . '%';
+	return 'object-position: ' . $focalPointX . ' ' . $focalPointY . ';';
+}
+
 function novablocks_get_block_editor_settings() {
 	$novablocks_block_editor_settings = array(
 		'hero' => array(
@@ -350,6 +364,13 @@ function novablocks_get_block_editor_settings() {
 					'applyMinimumHeightBlock' => array(
 						'type'    => 'boolean',
 						'default' => false
+					),
+					'focalPoint' => array(
+						'type'    => 'object',
+						'default' => array(
+							'x' => 0.5,
+							'y' => 0.5
+						),
 					),
 					'scrollIndicator'         => array(
 						'type'     => 'boolean',

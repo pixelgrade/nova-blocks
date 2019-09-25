@@ -1131,11 +1131,6 @@ var withParallax = function withParallax(WrappedComponent) {
 							{ value: { style: this.getParallaxStyles() } },
 							wp.element.createElement(WrappedComponent, this.props)
 						)
-					),
-					wp.element.createElement(
-						InspectorControls,
-						null,
-						wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components_parallax_panel__["a" /* default */], this.props)
 					)
 				);
 			}
@@ -2072,9 +2067,9 @@ module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layout_panel__ = __webpack_require__(198);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_0__layout_panel__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__parallax_panel__ = __webpack_require__(105);
-/* unused harmony reexport ParallaxPanel */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__parallax_panel__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__position_indicators_panel__ = __webpack_require__(202);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_2__position_indicators_panel__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_2__position_indicators_panel__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__gallery_options__ = __webpack_require__(203);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__gallery_options__["b"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__gallery_options__["a"]; });
@@ -2088,7 +2083,7 @@ module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_5__alignment_controls__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__height_controls__ = __webpack_require__(208);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_6__height_controls__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_6__height_controls__["b"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_6__height_controls__["b"]; });
 /**
  * Internal dependencies
  */
@@ -9690,6 +9685,7 @@ exports.default = function () {
  */
 var __ = wp.i18n.__;
 var _wp$components = wp.components,
+    FocalPointPicker = _wp$components.FocalPointPicker,
     PanelBody = _wp$components.PanelBody,
     RangeControl = _wp$components.RangeControl,
     RadioControl = _wp$components.RadioControl,
@@ -9701,6 +9697,8 @@ var ParallaxPanel = function ParallaxPanel(props) {
 	    enableParallax = _props$attributes.enableParallax,
 	    parallaxAmount = _props$attributes.parallaxAmount,
 	    parallaxCustomAmount = _props$attributes.parallaxCustomAmount,
+	    focalPoint = _props$attributes.focalPoint,
+	    parallaxFocalPointImage = props.parallaxFocalPointImage,
 	    setAttributes = props.setAttributes,
 	    parallaxOptions = props.settings.parallaxOptions;
 
@@ -9742,6 +9740,17 @@ var ParallaxPanel = function ParallaxPanel(props) {
 			max: 100,
 			step: 10,
 			help: __('It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.', '__plugin_txtd')
+		}),
+		!!enableParallax && parallaxFocalPointImage && wp.element.createElement(FocalPointPicker, {
+			url: parallaxFocalPointImage.url,
+			dimensions: {
+				width: parallaxFocalPointImage.width,
+				height: parallaxFocalPointImage.height
+			},
+			value: focalPoint,
+			onChange: function onChange(focalPoint) {
+				return setAttributes({ focalPoint: focalPoint });
+			}
 		})
 	);
 };
@@ -13923,7 +13932,8 @@ function updateSettings(settings) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__api_key_panel_body__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__map_style_select__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__styles__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__styles__ = __webpack_require__(42);
 
 
 
@@ -13931,6 +13941,12 @@ function updateSettings(settings) {
 
 
 
+
+
+
+/**
+ * Internal dependencies
+ */
 
 
 
@@ -13985,9 +14001,9 @@ var ButtonInspectorControls = function (_Component) {
 					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__map_style_select__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, this.props, {
 						apiKey: savedApiKey,
 						value: styleSlug,
-						options: __WEBPACK_IMPORTED_MODULE_9__styles__["a" /* default */],
+						options: __WEBPACK_IMPORTED_MODULE_10__styles__["a" /* default */],
 						onChange: function onChange(newStyleSlug) {
-							var mapStyles = __WEBPACK_IMPORTED_MODULE_9__styles__["a" /* default */].find(function (style) {
+							var mapStyles = __WEBPACK_IMPORTED_MODULE_10__styles__["a" /* default */].find(function (style) {
 								return style.slug === newStyleSlug;
 							}).styles;
 							setAttributes({
@@ -14031,6 +14047,7 @@ var ButtonInspectorControls = function (_Component) {
 						max: 20
 					})
 				),
+				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_9__components__["g" /* ParallaxPanel */], this.props),
 				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__api_key_panel_body__["a" /* default */], this.props)
 			);
 		}
@@ -14916,6 +14933,10 @@ var HeroEdit = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+			var attributes = this.props.attributes;
+			var media = attributes.media;
+
+			var parallaxFocalPointImage = media ? media.sizes.full : false;
 
 			return wp.element.createElement(
 				Fragment,
@@ -14927,8 +14948,9 @@ var HeroEdit = function (_Component) {
 					null,
 					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["f" /* LayoutPanel */], this.props),
 					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["e" /* HeightPanel */], this.props),
-					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["h" /* ScrollIndicatorPanel */], this.props),
-					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["g" /* PositionIndicatorsPanel */], this.props)
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["i" /* ScrollIndicatorPanel */], this.props),
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["h" /* PositionIndicatorsPanel */], this.props),
+					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["g" /* ParallaxPanel */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, this.props, { parallaxFocalPointImage: parallaxFocalPointImage }))
 				)
 			);
 		}
@@ -16755,7 +16777,10 @@ var SlideshowBackground = function SlideshowBackground(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components__ = __webpack_require__(63);
+
 /**
  * Internal dependencies
  */
@@ -16791,7 +16816,7 @@ var SlideshowInspectorControls = function SlideshowInspectorControls(props) {
 			{
 				className: 'nova-blocks-slideshow-type-panel',
 				title: __('Slides', '__plugin_txtd') },
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__components__["d" /* GalleryPreview */], {
+			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__components__["d" /* GalleryPreview */], {
 				galleryImages: galleryImages,
 				onSelectImage: setIndex,
 				selected: selectedIndex
@@ -16800,7 +16825,7 @@ var SlideshowInspectorControls = function SlideshowInspectorControls(props) {
 		'gallery' === slideshowType && wp.element.createElement(
 			Fragment,
 			null,
-			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_0__components__["f" /* LayoutPanel */], props),
+			wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__components__["f" /* LayoutPanel */], props),
 			wp.element.createElement(
 				PanelBody,
 				{ title: __('Height', '__plugin_txtd'), initialOpen: false },
@@ -16818,7 +16843,8 @@ var SlideshowInspectorControls = function SlideshowInspectorControls(props) {
 			PanelBody,
 			null,
 			__('Coming Soon', '__plugin_txtd')
-		)
+		),
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_1__components__["g" /* ParallaxPanel */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, props, { parallaxFocalPointImage: galleryImages[selectedIndex] }))
 	);
 };
 

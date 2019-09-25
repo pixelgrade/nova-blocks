@@ -50,8 +50,10 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 		$mediaStyle = '';
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 );
+			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
 		}
+
+		$mediaStyle .= novablocks_get_focal_point_style( $attributes );
 
 		ob_start();
 
