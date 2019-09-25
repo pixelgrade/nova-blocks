@@ -999,11 +999,6 @@ body:not(.wp-admin) .novablocks-hero__parallax {
   color: white;
   margin: 0; }
 
-.nova-food-menu--layout:not(.nova-food-menu--equally) .nova-food-menu__section {
-  -webkit-column-break-inside: avoid;
-     -moz-column-break-inside: avoid;
-          break-inside: avoid; }
-
 .novablocks-opentable {
   overflow: hidden;
   -webkit-transform: translateZ(0);

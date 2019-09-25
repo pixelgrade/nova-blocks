@@ -119,11 +119,3 @@
 
   margin: 0;
 }
-
-
-.nova-food-menu--layout:not(.nova-food-menu--equally) {
-  .nova-food-menu__section {
-    break-inside: avoid;
-  }
-
-}
