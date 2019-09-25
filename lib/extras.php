@@ -309,8 +309,7 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
     return $attributes;
 }
 
-function novablocks_get_focal_point_style( $attributes ) {
-	$focalPoint = $attributes['focalPoint'];
+function novablocks_get_focal_point_style( $focalPoint ) {
 	$focalPointX = intval( $focalPoint['x'] * 10000 ) / 100 . '%';
 	$focalPointY = intval( $focalPoint['y'] * 10000 ) / 100 . '%';
 	return 'object-position: ' . $focalPointX . ' ' . $focalPointY . ';';

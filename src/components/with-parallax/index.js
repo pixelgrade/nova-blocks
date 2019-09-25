@@ -125,6 +125,7 @@ const withParallax = function( WrappedComponent ) {
 							<WrappedComponent { ...this.props } />
 						</ParallaxContext.Provider>
 					</div>
+					<ParallaxPanel { ...this.props } />
 				</Fragment>
 			);
 		}

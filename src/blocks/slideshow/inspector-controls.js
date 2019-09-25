@@ -4,7 +4,6 @@
 import {
 	LayoutPanel,
 	GalleryPreview,
-	ParallaxPanel,
 } from '../../components';
 
 /**
@@ -13,6 +12,7 @@ import {
 const { __ } = wp.i18n;
 
 const {
+	FocalPointPicker,
 	PanelBody,
 	RadioControl,
 } = wp.components;
@@ -26,6 +26,7 @@ const {
 } = wp.element;
 
 const SlideshowInspectorControls = function( props ) {
+
 	const {
 		attributes: {
 			galleryImages,
@@ -42,6 +43,9 @@ const SlideshowInspectorControls = function( props ) {
 		},
 	} = props;
 
+	const parallaxFocalPointImage = galleryImages[ selectedIndex ];
+	const focalPoint = galleryImages[ selectedIndex ].focalPoint || { x: 0.5, y: 0.5 };
+
 	return (
 		<InspectorControls>
 
@@ -54,6 +58,19 @@ const SlideshowInspectorControls = function( props ) {
 						onSelectImage={ setIndex }
 						selected={ selectedIndex }
 					/>
+					{ parallaxFocalPointImage && <FocalPointPicker
+						url={ parallaxFocalPointImage.url }
+						dimensions={ {
+							width: parallaxFocalPointImage.width,
+							height: parallaxFocalPointImage.height,
+						} }
+						value={ focalPoint }
+						onChange={ focalPoint => {
+							const newGalleryImages = galleryImages;
+							newGalleryImages[ selectedIndex ].focalPoint = focalPoint;
+							setAttributes( { galleryImages: newGalleryImages } );
+						} }
+					/> }
 				</PanelBody> }
 
 			{ 'gallery' === slideshowType && <Fragment>
@@ -76,8 +93,6 @@ const SlideshowInspectorControls = function( props ) {
 			{ 'gallery' !== slideshowType && <PanelBody>
 				{ __( 'Coming Soon', '__plugin_txtd' ) }
 			</PanelBody> }
-
-			<ParallaxPanel { ...props } parallaxFocalPointImage={ galleryImages[ selectedIndex ] } />
 
 		</InspectorControls>
 	);

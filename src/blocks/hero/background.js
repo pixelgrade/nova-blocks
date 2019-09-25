@@ -9,6 +9,7 @@ const HeroBackground = function( props ) {
 			overlayFilterStyle,
 			overlayFilterStrength,
 			media,
+			focalPoint,
 		},
 		style,
 	} = props;
@@ -16,6 +17,7 @@ const HeroBackground = function( props ) {
 	const styles = {
 		...props.parallax.style,
 		opacity: 1,
+		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 	};
 
 	if ( overlayFilterStyle !== 'none' ) {

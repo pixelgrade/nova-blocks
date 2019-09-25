@@ -53,8 +53,6 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
 		}
 
-		$mediaStyle .= novablocks_get_focal_point_style( $attributes );
-
 		ob_start();
 
 		do_action( 'novablocks_slideshow:before' ); ?>
@@ -75,9 +73,14 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                         <div class="novablocks-slideshow__slide">
                             <div class="novablocks-slideshow__mask">
                                 <div class="novablocks-slideshow__background novablocks-u-background">
+	                                <?php
+	                                $thisMediaStyle = $mediaStyle;
+	                                if ( ! empty( $image['focalPoint'] ) ) {
+                                        $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $image['focalPoint'] );
+                                    } ?>
                                     <img class="novablocks-slideshow__media"
                                         src="<?php echo esc_url( $image['sizes']['large']['url'] ); ?>"
-                                        style="<?php echo esc_attr( $mediaStyle ); ?>"
+                                        style="<?php echo esc_attr( $thisMediaStyle ); ?>"
                                         data-width="<?php echo esc_attr( $image['sizes']['large']['width'] ); ?>"
                                         data-height="<?php echo esc_attr( $image['sizes']['large']['height'] ); ?>"
                                     >

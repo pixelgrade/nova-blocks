@@ -2,13 +2,6 @@ import ApiKeyPanelBody from './api-key-panel-body';
 import MapStyleSelectControl from './map-style-select';
 import { compileStyles, getMapAccentColor } from './utils';
 
-/**
- * Internal dependencies
- */
-import {
-	ParallaxPanel,
-} from '../../components';
-
 import styles from './styles';
 
 const { __ } = wp.i18n;
@@ -95,7 +88,6 @@ class ButtonInspectorControls extends Component {
 						max={ 20 }
 					/>
 				</PanelBody>
-				<ParallaxPanel { ...this.props } />
 				<ApiKeyPanelBody { ...this.props } />
 			</InspectorControls>
 		)

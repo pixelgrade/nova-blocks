@@ -13,9 +13,12 @@ const SlideshowBackground = function( props ) {
 		style,
 	} = props;
 
+	const focalPoint = previewImage.focalPoint || { x: 0.5, y: 0.5 };
+
 	const styles = {
 		...props.parallax.style,
 		opacity: 1,
+		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 	};
 
 	if ( overlayFilterStyle !== 'none' ) {

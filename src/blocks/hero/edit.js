@@ -6,7 +6,6 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
 import {
 	HeightPanel,
 	LayoutPanel,
-	ParallaxPanel,
 	ScrollIndicatorPanel,
 	PositionIndicatorsPanel,
 } from '../../components';
@@ -22,6 +21,11 @@ const { __ } = wp.i18n;
 const {
 	InspectorControls,
 } = wp.blockEditor;
+
+const {
+	FocalPointPicker,
+	PanelBody,
+} = wp.components;
 
 const {
 	Component,
@@ -101,8 +105,8 @@ class HeroEdit extends Component {
 	}
 
 	render() {
-		const { attributes } = this.props;
-		const { media } = attributes;
+		const { attributes, setAttributes } = this.props;
+		const { media, focalPoint } = attributes;
 		const parallaxFocalPointImage = media ? media.sizes.full : false;
 
 		return (
@@ -110,11 +114,23 @@ class HeroEdit extends Component {
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<InspectorControls>
+					{ parallaxFocalPointImage && <PanelBody
+						title={ __( 'Focal Point', '__plugin_txtd' ) }
+						initialOpen={ true }>
+						<FocalPointPicker
+							url={ parallaxFocalPointImage.url }
+							dimensions={ {
+								width: parallaxFocalPointImage.width,
+								height: parallaxFocalPointImage.height,
+							} }
+							value={ focalPoint }
+							onChange={ focalPoint => setAttributes( { focalPoint } ) }
+						/>
+					</PanelBody> }
 					<LayoutPanel { ...this.props } />
 					<HeightPanel { ...this.props } />
 					<ScrollIndicatorPanel { ...this.props } />
 					<PositionIndicatorsPanel { ...this.props } />
-					<ParallaxPanel { ...this.props } parallaxFocalPointImage={ parallaxFocalPointImage } />
 				</InspectorControls>
 			</Fragment>
 		);

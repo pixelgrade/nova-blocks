@@ -65,7 +65,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) .'; ';
 		}
 
-		$mediaStyle .= novablocks_get_focal_point_style( $attributes );
+		$mediaStyle .= novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
 		ob_start();
 
