@@ -16946,28 +16946,10 @@ var Edit = function (_Component) {
 	function Edit() {
 		__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Edit);
 
-		var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Edit.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(Edit)).apply(this, arguments));
-
-		_this.state = {
-			menus: [],
-			selectedMenuSlug: null
-		};
-		return _this;
+		return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Edit.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(Edit)).apply(this, arguments));
 	}
 
 	__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Edit, [{
-		key: "componentDidMount",
-		value: function componentDidMount() {
-			var _this2 = this;
-
-			wp.apiRequest({ path: '/menus/v1/menus' }).then(function (menus) {
-				_this2.setState({
-					menus: menus,
-					selectedMenuSlug: menus[0].slug
-				});
-			});
-		}
-	}, {
 		key: "render",
 		value: function render() {
 			var slug = this.props.attributes.slug;

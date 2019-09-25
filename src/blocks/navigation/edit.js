@@ -12,22 +12,6 @@ export default class Edit extends Component {
 
 	constructor() {
 		super( ...arguments );
-
-		this.state = {
-			menus: [],
-			selectedMenuSlug: null
-		}
-	}
-
-	componentDidMount() {
-
-		wp.apiRequest( { path: '/menus/v1/menus' } ).then( menus => {
-			this.setState( {
-				menus,
-				selectedMenuSlug: menus[0].slug
-			} );
-		} );
-
 	}
 
 	render() {
