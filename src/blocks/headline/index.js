@@ -16,7 +16,7 @@ export default registerBlockType( 'novablocks/headline',
 		title: __( 'Headline', '__plugin_txtd' ),
 		description: __( 'Advanced heading block with a fancier display', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
+		icon: icons.headline,
 		attributes: {
 			align: {
 				type: "string",

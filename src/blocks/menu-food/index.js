@@ -23,7 +23,7 @@ export default registerBlockType( 'novablocks/menu-food',
 			enableTwoColumns : {
 				type: 'boolean',
 				default: true
-			},
+			}
 		},
 		example: {
 			attributes: {

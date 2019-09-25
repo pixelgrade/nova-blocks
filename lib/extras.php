@@ -133,18 +133,16 @@ function novablocks_get_alignment_attributes() {
 }
 
 function novablocks_is_parallax_enabled( $attributes ) {
-	$parallaxEnabled = $attributes[ 'parallaxEnabled' ];
+	$enableParallax = $attributes[ 'enableParallax' ];
 	$parallaxAttributes = novablocks_get_parallax_attributes();
 
-	if ( ! empty( $parallaxEnabled ) ) {
-		return $parallaxEnabled;
-	}
-
-	if ( $parallaxEnabled === false ) {
+	if ( ! empty( $enableParallax ) ) {
+		return $enableParallax;
+	} elseif ( $enableParallax === false ) {
 		return false;
 	}
 
-	return $parallaxAttributes[ 'parallaxEnabled' ][ 'default' ];
+	return $parallaxAttributes[ 'enableParallax' ][ 'default' ];
 }
 
 function novablocks_get_parallax_amount( $attributes ) {

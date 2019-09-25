@@ -59,7 +59,7 @@ function novablocks_add_blocks_category( $categories, $post ) {
 		array(
 			array(
 				'slug'  => 'nova-blocks',
-				'title' => 'Nova Blocks',
+				'title' => 'Nova Blocks'
 			),
 		),
 		$categories
