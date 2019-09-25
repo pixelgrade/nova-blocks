@@ -1,6 +1,6 @@
 .nova-food-menu-item {
   display: grid;
-  grid-template-columns: 1fr min-content;
+  grid-template-columns: 1fr auto;
   grid-template-areas: "title prices"
   "description description";
 
@@ -89,13 +89,18 @@
 }
 
 .nova-food-menu-item__title:before {
-  content: '';
-  position: absolute;
-  bottom: .3em;
-  width: 100%;
-  height: 0;
-  line-height: 0;
-  border-bottom: .2em dotted currentColor;
+
+  content: none;
+
+  @include above(tablet) {
+    content: '';
+    position: absolute;
+    bottom: .3em;
+    width: 100%;
+    height: 0;
+    line-height: 0;
+    border-bottom: .2em dotted currentColor;
+  }
 }
 
 .nova-food-menu-item__highlight-label {

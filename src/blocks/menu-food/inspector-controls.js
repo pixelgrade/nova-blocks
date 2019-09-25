@@ -19,13 +19,11 @@ const FoodMenuInspectorControls = function( props ) {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__( 'Layout', '__plugin_txtd' )} initialOpen={true}>
-
 					<ToggleControl
 						label={__( '2 columns', '__plugin_txtd' )}
 						checked={enableTwoColumns}
 						onChange={() => setAttributes( {enableTwoColumns: ! enableTwoColumns} )}
 					/>
-
 				</PanelBody>
 			</InspectorControls>
 		</Fragment>
