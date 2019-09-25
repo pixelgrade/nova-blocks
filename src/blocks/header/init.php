@@ -45,7 +45,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
                     </span>
-                    <span class="c-menu-toggle__label"><?php _e( 'Menu', '__plugin_txtd' ); ?></span>
+                    <span class="c-menu-toggle__label"><?php esc_html_e( 'Menu', '__theme_txtd' ); ?></span>
                 </span>
             </label>
 
@@ -53,9 +53,9 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		} ?>
 
-        <header id="masthead" class="site-header alignfull <?php echo 'site-header--' . $attributes['layout']; ?>">
+        <header id="masthead" class="site-header alignfull <?php echo esc_attr( 'site-header--' . $attributes['layout'] ); ?>">
             <div class="site-header__inner-container">
-                <div class="site-header__content <?php echo 'align' . $attributes['align']; ?>">
+                <div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
                     <?php echo $content; ?>
                 </div>
             </div>
