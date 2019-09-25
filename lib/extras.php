@@ -179,7 +179,7 @@ function novablocks_get_block_extra_classes( $attributes ) {
 		$classes[] = 'novablocks-u-background-' . $attributes['overlayFilterStyle'];
 	}
 
-	if ( ! novablocks_is_parallax_enabled( $attributes ) ) {
+	if ( novablocks_is_parallax_enabled( $attributes ) ) {
 		$classes[] = 'has-parallax';
 	}
 

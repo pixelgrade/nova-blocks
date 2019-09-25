@@ -26,14 +26,16 @@ export const parallaxInit = function( BLOCK_NAME ) {
 
 	(function($) {
 
-		const $target = $( `.${BLOCK_NAME}` ).filter( '.has-parallax' ).find( `.${BLOCK_NAME}__parallax` )
-		$target.rellax( { container: `.${BLOCK_NAME}__mask`, } );
+		const $blocks = $( `.${BLOCK_NAME}` );
+		const $targets = $blocks.filter( '.has-parallax' );
 
-		$target.each( ( i, obj ) => {
+		$targets.find( `.${BLOCK_NAME}__parallax` ).rellax( { container: `.${BLOCK_NAME}__mask`, } );
+
+		$blocks.find( `.${BLOCK_NAME}__parallax` ).each( ( i, obj ) => {
 			const $obj = $( obj );
-			$obj.imagesLoaded(() => {
+			$obj.imagesLoaded( () => {
 				$obj.css( 'opacity', 1 );
-			});
+			} );
 		} );
 
 	})( jQuery )

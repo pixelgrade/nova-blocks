@@ -1484,10 +1484,12 @@ var parallaxInit = function parallaxInit(BLOCK_NAME) {
 
 	(function ($) {
 
-		var $target = $('.' + BLOCK_NAME).filter('.has-parallax').find('.' + BLOCK_NAME + '__parallax');
-		$target.rellax({ container: '.' + BLOCK_NAME + '__mask' });
+		var $blocks = $('.' + BLOCK_NAME);
+		var $targets = $blocks.filter('.has-parallax');
 
-		$target.each(function (i, obj) {
+		$targets.find('.' + BLOCK_NAME + '__parallax').rellax({ container: '.' + BLOCK_NAME + '__mask' });
+
+		$blocks.find('.' + BLOCK_NAME + '__parallax').each(function (i, obj) {
 			var $obj = $(obj);
 			$obj.imagesLoaded(function () {
 				$obj.css('opacity', 1);
