@@ -9,14 +9,13 @@ import edit from './edit';
  */
 const { __ } = wp.i18n;
 const { registerBlockType, } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
 
 export default registerBlockType( 'novablocks/navigation',
 	{
 		title: __( 'Space Navigation', '__plugin_txtd' ),
 		description: __( 'Outputs chosen navigaiton menu markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
+		icon: icons.navigation,
 		parent: ['novablocks/header'],
 		save: function() {},
 		edit,

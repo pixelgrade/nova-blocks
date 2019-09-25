@@ -56,7 +56,9 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
         <header id="masthead" class="site-header alignfull <?php echo 'site-header--' . $attributes['layout']; ?>">
             <div class="site-header__inner-container">
                 <div class="site-header__content <?php echo 'align' . $attributes['align']; ?>">
-                    <?php echo $content; ?>
+
+                   <?php echo $content ?>
+
                 </div>
             </div>
 		</header>

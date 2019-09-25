@@ -59,7 +59,7 @@ function novablocks_add_blocks_category( $categories, $post ) {
 		array(
 			array(
 				'slug'  => 'nova-blocks',
-				'title' => 'Nova Blocks',
+				'title' => 'Nova Blocks'
 			),
 		),
 		$categories
@@ -73,9 +73,6 @@ require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 
 // register block types
 require_once dirname( __FILE__ ) . '/src/blocks/init.php';
-
-// extend rest api
-require_once dirname( __FILE__ ) . '/lib/api.php';
 
 // load block areas functionality
 require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';

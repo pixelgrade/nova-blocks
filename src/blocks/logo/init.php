@@ -31,25 +31,21 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 
         <div class="c-branding site-branding">
 
-			<?php if ( has_custom_logo() || rosa2_has_custom_logo_transparent() ) { ?>
+			<?php
 
-                <div class="c-logo site-logo">
-					<?php if ( has_custom_logo() ) { ?>
-                        <div class="c-logo__default">
-							<?php the_custom_logo(); ?>
-                        </div>
-					<?php } ?>
+			$logo_markup = '';
 
-	                <?php if ( rosa2_has_custom_logo_transparent() ) { ?>
-                        <div class="c-logo__inverted">
-			                <?php rosa2_the_custom_logo_transparent(); ?>
-                        </div>
-	                <?php } ?>
-                </div>
+			if ( has_custom_logo() ) {
+				$logo_markup .= '<div class="c-logo site-logo">';
+				$logo_markup .= '<div class="c-logo__default">';
+				$logo_markup .= get_custom_logo();
+				$logo_markup .= '</div>';
+				$logo_markup .= '</div>';
+			}
 
-			<?php } ?>
+			echo apply_filters( 'novablocks_logo_markup', $logo_markup );
 
-
+			?>
 
 			<?php
 			$blog_info   = get_bloginfo( 'name' );

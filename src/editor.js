@@ -22,6 +22,8 @@ import "./blocks/opentable";
 
 import { STORE_NAME } from './store';
 
+import { nova } from './icons';
+
 import { addSeparatorFilters } from "./blocks/core/separator";
 
 const {
@@ -34,5 +36,9 @@ class novaBlocks {
 		addSeparatorFilters( settings );
 	}
 }
+
+( function() {
+	wp.blocks.updateCategory( 'nova-blocks', { icon: nova } );
+} )();
 
 wp.novaBlocks = new novaBlocks();
