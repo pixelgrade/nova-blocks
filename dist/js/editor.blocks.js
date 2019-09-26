@@ -1132,7 +1132,11 @@ var withParallax = function withParallax(WrappedComponent) {
 							wp.element.createElement(WrappedComponent, this.props)
 						)
 					),
-					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components_parallax_panel__["a" /* default */], this.props)
+					wp.element.createElement(
+						InspectorControls,
+						null,
+						wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components_parallax_panel__["a" /* default */], this.props)
+					)
 				);
 			}
 		}]);
