@@ -1456,6 +1456,7 @@ var styles = [{ slug: 'customized', label: 'Customized', styles: __WEBPACK_IMPOR
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return range; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return parallaxInit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return withFirstBlockConditions; });
 var debounce = function debounce(func, wait) {
 	var timeout = null;
 
@@ -1496,6 +1497,24 @@ var parallaxInit = function parallaxInit(BLOCK_NAME) {
 			});
 		});
 	})(jQuery);
+};
+
+var withFirstBlockConditions = function withFirstBlockConditions(Component) {
+
+	return function (props) {
+		var _wp$data$select = wp.data.select('core/block-editor'),
+		    getBlocks = _wp$data$select.getBlocks,
+		    getSelectedBlockClientId = _wp$data$select.getSelectedBlockClientId;
+
+		var blocks = getBlocks();
+		var selectedBlockClientId = getSelectedBlockClientId();
+		var index = blocks.findIndex(function (block) {
+			return block.clientId === selectedBlockClientId;
+		});
+		var show = index === 0 && props.clientId === selectedBlockClientId;
+
+		return show && wp.element.createElement(Component, props);
+	};
 };
 
 /***/ }),
@@ -14796,8 +14815,9 @@ var select = wp.data.select;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_with_settings__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_with_parallax__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__preview__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__block_controls__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__preview__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__block_controls__ = __webpack_require__(211);
 
 
 
@@ -14809,6 +14829,7 @@ var select = wp.data.select;
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -14831,6 +14852,17 @@ var _wp$compose = wp.compose,
 var _wp$data = wp.data,
     select = _wp$data.select,
     dispatch = _wp$data.dispatch;
+
+
+var FirstBlockControls = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["d" /* withFirstBlockConditions */])(function (props) {
+	return wp.element.createElement(
+		Fragment,
+		null,
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["e" /* HeightPanel */], props),
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["h" /* ScrollIndicatorPanel */], props),
+		wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["g" /* PositionIndicatorsPanel */], props)
+	);
+});
 
 var HeroEdit = function (_Component) {
 	__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(HeroEdit, _Component);
@@ -14932,8 +14964,8 @@ var HeroEdit = function (_Component) {
 			return wp.element.createElement(
 				Fragment,
 				null,
-				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_10__preview__["a" /* default */], this.props),
-				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_11__block_controls__["a" /* default */], this.props),
+				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_11__preview__["a" /* default */], this.props),
+				wp.element.createElement(__WEBPACK_IMPORTED_MODULE_12__block_controls__["a" /* default */], this.props),
 				wp.element.createElement(
 					InspectorControls,
 					null,
@@ -14955,9 +14987,7 @@ var HeroEdit = function (_Component) {
 						})
 					),
 					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["f" /* LayoutPanel */], this.props),
-					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["e" /* HeightPanel */], this.props),
-					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["h" /* ScrollIndicatorPanel */], this.props),
-					wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__components__["g" /* PositionIndicatorsPanel */], this.props)
+					wp.element.createElement(FirstBlockControls, this.props)
 				)
 			);
 		}

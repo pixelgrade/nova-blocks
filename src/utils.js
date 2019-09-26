@@ -38,5 +38,22 @@ export const parallaxInit = function( BLOCK_NAME ) {
 			} );
 		} );
 
-	})( jQuery )
+	})( jQuery );
+
+}
+
+export const withFirstBlockConditions = function( Component ) {
+
+	return function( props ) {
+
+		const { getBlocks, getSelectedBlockClientId } = wp.data.select( 'core/block-editor' );
+		const blocks = getBlocks();
+		const selectedBlockClientId = getSelectedBlockClientId();
+		const index = blocks.findIndex( block => block.clientId === selectedBlockClientId );
+		const show = index === 0 && props.clientId === selectedBlockClientId;
+
+		return show && <Component { ...props } />;
+
+	}
+
 }

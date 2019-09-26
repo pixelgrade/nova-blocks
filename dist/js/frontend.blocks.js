@@ -869,6 +869,7 @@ var styles = [{ slug: 'customized', label: 'Customized', styles: __WEBPACK_IMPOR
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return range; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return parallaxInit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return withFirstBlockConditions; });
 var debounce = function debounce(func, wait) {
 	var timeout = null;
 
@@ -909,6 +910,24 @@ var parallaxInit = function parallaxInit(BLOCK_NAME) {
 			});
 		});
 	})(jQuery);
+};
+
+var withFirstBlockConditions = function withFirstBlockConditions(Component) {
+
+	return function (props) {
+		var _wp$data$select = wp.data.select('core/block-editor'),
+		    getBlocks = _wp$data$select.getBlocks,
+		    getSelectedBlockClientId = _wp$data$select.getSelectedBlockClientId;
+
+		var blocks = getBlocks();
+		var selectedBlockClientId = getSelectedBlockClientId();
+		var index = blocks.findIndex(function (block) {
+			return block.clientId === selectedBlockClientId;
+		});
+		var show = index === 0 && props.clientId === selectedBlockClientId;
+
+		return show && wp.element.createElement(Component, props);
+	};
 };
 
 /***/ }),

@@ -12,6 +12,7 @@ import {
 
 import withSettings from '../../components/with-settings';
 import withParallax from '../../components/with-parallax';
+import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';
 import BlockControls from './block-controls';
@@ -41,6 +42,16 @@ const {
 	select,
 	dispatch
 } = wp.data;
+
+const FirstBlockControls = withFirstBlockConditions( function( props ) {
+	return (
+		<Fragment>
+			<HeightPanel { ...props } />
+			<ScrollIndicatorPanel { ...props } />
+			<PositionIndicatorsPanel { ...props } />
+		</Fragment>
+	);
+} );
 
 class HeroEdit extends Component {
 
@@ -128,9 +139,7 @@ class HeroEdit extends Component {
 						/>
 					</PanelBody> }
 					<LayoutPanel { ...this.props } />
-					<HeightPanel { ...this.props } />
-					<ScrollIndicatorPanel { ...this.props } />
-					<PositionIndicatorsPanel { ...this.props } />
+					<FirstBlockControls { ...this.props } />
 				</InspectorControls>
 			</Fragment>
 		);
