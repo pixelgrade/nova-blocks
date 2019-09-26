@@ -41,6 +41,9 @@ const SlideshowBlockControls = function( props ) {
 
 		Promise.all( promises ).then( () => {
 			setAttributes( { galleryImages: newGalleryImages.filter( ( image ) => {
+				if ( ! image.sizes.large ) {
+					image.sizes.large = image.sizes.full;
+				}
 				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
 			} ) } );
 		} );

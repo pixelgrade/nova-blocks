@@ -43,8 +43,7 @@ const SlideshowInspectorControls = function( props ) {
 		},
 	} = props;
 
-	const parallaxFocalPointImage = galleryImages[ selectedIndex ];
-	const focalPoint = galleryImages[ selectedIndex ].focalPoint || { x: 0.5, y: 0.5 };
+	const selectedImage = galleryImages[ selectedIndex ];
 
 	return (
 		<InspectorControls>
@@ -58,13 +57,13 @@ const SlideshowInspectorControls = function( props ) {
 						onSelectImage={ setIndex }
 						selected={ selectedIndex }
 					/>
-					{ parallaxFocalPointImage && <FocalPointPicker
-						url={ parallaxFocalPointImage.url }
+					{ selectedImage && <FocalPointPicker
+						url={ selectedImage.url }
 						dimensions={ {
-							width: parallaxFocalPointImage.width,
-							height: parallaxFocalPointImage.height,
+							width: selectedImage.width,
+							height: selectedImage.height,
 						} }
-						value={ focalPoint }
+						value={ selectedImage.focalPoint || { x: 0.5, y: 0.5 } }
 						onChange={ focalPoint => {
 							const newGalleryImages = galleryImages;
 							newGalleryImages[ selectedIndex ].focalPoint = focalPoint;

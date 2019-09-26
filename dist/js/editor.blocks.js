@@ -16848,8 +16848,7 @@ var SlideshowInspectorControls = function SlideshowInspectorControls(props) {
 	    minHeightOptions = props.settings.slideshow.minHeightOptions;
 
 
-	var parallaxFocalPointImage = galleryImages[selectedIndex];
-	var focalPoint = galleryImages[selectedIndex].focalPoint || { x: 0.5, y: 0.5 };
+	var selectedImage = galleryImages[selectedIndex];
 
 	return wp.element.createElement(
 		InspectorControls,
@@ -16864,13 +16863,13 @@ var SlideshowInspectorControls = function SlideshowInspectorControls(props) {
 				onSelectImage: setIndex,
 				selected: selectedIndex
 			}),
-			parallaxFocalPointImage && wp.element.createElement(FocalPointPicker, {
-				url: parallaxFocalPointImage.url,
+			selectedImage && wp.element.createElement(FocalPointPicker, {
+				url: selectedImage.url,
 				dimensions: {
-					width: parallaxFocalPointImage.width,
-					height: parallaxFocalPointImage.height
+					width: selectedImage.width,
+					height: selectedImage.height
 				},
-				value: focalPoint,
+				value: selectedImage.focalPoint || { x: 0.5, y: 0.5 },
 				onChange: function onChange(focalPoint) {
 					var newGalleryImages = galleryImages;
 					newGalleryImages[selectedIndex].focalPoint = focalPoint;
@@ -16951,6 +16950,9 @@ var SlideshowBlockControls = function SlideshowBlockControls(props) {
 
 		__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a.all(promises).then(function () {
 			setAttributes({ galleryImages: newGalleryImages.filter(function (image) {
+					if (!image.sizes.large) {
+						image.sizes.large = image.sizes.full;
+					}
 					return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
 				}) });
 		});
