@@ -1,29 +1,30 @@
-const { Component, Fragment } = wp.element;
-
-import Controls from './controls';
-import Inspector from './inspector';
+/**
+ * Internal dependencies
+ */
+import withSettings from '../../components/with-settings';
+import BlockControls from './block-controls';
+import InspectorControls from './inspector-controls';
 import MediaPreview from './preview';
 
-export default class Edit extends Component {
+/**
+ * WordPress dependencies
+ */
+const { Fragment } = wp.element;
 
-	constructor() {
-		super( ...arguments );
+const MediaEdit = function( props ) {
+	function updateImages( media ) {
+		props.setAttributes( {
+			images: media.map( ( image ) => JSON.stringify( { id: image.id, url: image.url, alt: image.alt } ) ),
+		} );
 	}
 
-	updateImages( media ) {
-		this.props.setAttributes({
-			images: media.map( ( image ) => JSON.stringify({ id: image.id, url: image.url, alt: image.alt }) )
-		});
-	}
+	return (
+		<Fragment>
+			<MediaPreview { ...{ ...props, updateImages } } />
+			<BlockControls { ...{ ...props, updateImages } } />
+			<InspectorControls { ...props } />
+		</Fragment>
+	);
+};
 
-	render() {
-
-		return [
-			<Fragment>
-				<MediaPreview { ...this.props } updateImages={ this.updateImages.bind( this ) } />
-				<Controls { ...this.props } updateImages={ this.updateImages.bind( this ) } />
-				<Inspector { ...this.props } />
-			</Fragment>
-		]
-	}
-}
+export default withSettings( MediaEdit );

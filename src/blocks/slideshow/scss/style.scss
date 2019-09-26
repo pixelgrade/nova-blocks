@@ -1,41 +1,41 @@
-.nova-slideshow {
+.novablocks-slideshow {
     position: relative;
 }
 
-.nova-slideshow__slide {
+.novablocks-slideshow__slide {
     position: relative;
     overflow: hidden;
 }
 
-.nova-slideshow.is-ready {
+.novablocks-slideshow.is-ready {
 
-    .nova-slideshow__slider,
-    .nova-slideshow__mask,
-    .nova-slideshow__foreground,
-    .nova-slideshow__content,
-    .nova-slideshow__background {
+    .novablocks-slideshow__slider,
+    .novablocks-slideshow__mask,
+    .novablocks-slideshow__foreground,
+    .novablocks-slideshow__content,
+    .novablocks-slideshow__background {
         @include cover;
     }
 }
 
-.nova-slideshow__background,
-.nova-slideshow__foreground {
+.novablocks-slideshow__background,
+.novablocks-slideshow__foreground {
     will-change: transform;
 }
 
-.nova-slideshow__media {
+.novablocks-slideshow__media {
     @include image-cover;
 }
 
-.nova-slideshow__slider {
+.novablocks-slideshow__slider {
     z-index: 100;
 }
 
-.nova-slideshow__controls {
+.novablocks-slideshow__controls {
     z-index: 200;
 }
 
-.nova-slideshow__arrow {
+.novablocks-slideshow__arrow {
     --arrow-width: 2px;
     --arrow-color: #555555;
     --arrow-background: #FFFFFF;
@@ -50,7 +50,7 @@
     background: var(--arrow-background);
     border-radius: 3px;
 
-    &:not(.nova-slideshow__arrow--disabled) {
+    &:not(.novablocks-slideshow__arrow--disabled) {
         cursor: pointer;
     }
 
@@ -67,7 +67,7 @@
     }
 }
 
-.nova-slideshow__arrow--prev {
+.novablocks-slideshow__arrow--prev {
     left: 10px;
 
     &:before {
@@ -77,7 +77,7 @@
     }
 }
 
-.nova-slideshow__arrow--next {
+.novablocks-slideshow__arrow--next {
     right: 10px;
 
     &:before {
@@ -87,7 +87,7 @@
     }
 }
 
-.nova-slideshow {
+.novablocks-slideshow {
 
     .slick-list {
         position: absolute;

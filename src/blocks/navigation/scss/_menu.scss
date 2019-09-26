@@ -1,0 +1,18 @@
+ul.menu,
+.menu > ul,
+.sub-menu,
+.children {
+    padding-left: 0;
+    list-style: none;
+}
+
+ul.menu,
+.menu > ul {
+
+    a {
+        display: block;
+        padding: 1em;
+        color: inherit;
+        text-decoration: none;
+    }
+}

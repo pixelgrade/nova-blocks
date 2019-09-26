@@ -4,12 +4,15 @@
 import * as icons from '../../icons';
 import edit from './edit';
 
+import { parallaxAttributes } from '../../components/with-parallax';
+
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { registerBlockType, } = wp.blocks;
+const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
+const { select } = wp.data;
 
 export default registerBlockType( 'novablocks/hero',
 	{
@@ -18,14 +21,13 @@ export default registerBlockType( 'novablocks/hero',
 		category: 'nova-blocks',
 		icon: icons.hero,
 		edit,
+		example: {},
 		save() {
-			return <InnerBlocks.Content/>
+			return <InnerBlocks.Content />;
 		},
 		getEditWrapperProps() {
-			const settings = wp.data.select( 'core/block-editor' ).getSettings();
-			return settings.alignWide ? {
-				'data-align': 'full'
-			} : {}
+			const settings = select( 'core/block-editor' ).getSettings();
+			return settings.alignWide ? { 'data-align': 'full' } : {};
 		},
 	}
-)
+);

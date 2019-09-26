@@ -1,0 +1,121 @@
+.nova-food-menu-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "title prices"
+  "description description";
+
+  margin-bottom: 1em;
+
+  break-inside: avoid;
+}
+
+.nova-food-menu__section:not(:first-child) {
+  margin-top: 1.5em;
+}
+
+.nova-food-menu-item__title {
+  position: relative;
+  grid-area: title;
+}
+
+.nova-food-menu-item__prices {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 5;
+  align-items: center;
+
+  grid-area: prices;
+}
+
+.nova-food-menu-item__description {
+  position: relative;
+
+  grid-area: description;
+}
+
+.item-price--sale {
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.has-sale-price .item-price {
+  text-decoration: line-through;
+  opacity: .6;
+}
+
+.nova-food-menu-item--highlighted {
+  grid-template-areas: "label label"
+  "title prices"
+  "description description";
+
+  margin-left: -1em;
+  margin-right: -1em;
+  padding: 0 1.25em .75em;
+  border: 2px solid $nova-blue;
+}
+
+.entry-content .nova-food-menu--layout {
+  @include above(tablet) {
+    column-count: 2;
+    column-gap: 3em;
+  }
+}
+.nova-blocks-appender {
+  flex-direction: row;
+}
+
+.item-title,
+.item-description {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.item-title {
+  display: inline-block;
+
+  position: relative;
+  z-index: 5;
+
+  line-height: 1.25;
+
+  margin-bottom: 0 !important;
+
+  background-color: $nova-white;
+}
+
+.item-description {
+  line-height: 1.5;
+}
+
+.nova-food-menu-item__title:before {
+
+  content: none;
+
+  @include above(tablet) {
+    content: '';
+    position: absolute;
+    bottom: .3em;
+    width: 100%;
+    height: 0;
+    line-height: 0;
+    border-bottom: .2em dotted currentColor;
+  }
+}
+
+.nova-food-menu-item__highlight-label {
+  grid-area: label;
+  display: block;
+  margin-left: -1.25em;
+  margin-right: -1.25em;
+  margin-bottom: .75em;
+  width: calc(100% + 2.5em);
+  padding: .5em 1.25em;
+  background-color: $nova-blue;
+}
+
+.nova-food-menu-item__label {
+  color: white;
+
+  margin: 0;
+}

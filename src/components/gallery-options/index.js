@@ -1,100 +1,81 @@
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
 const {
 	Component,
-	Fragment,
 } = wp.element;
 
 const {
-	Button,
-	IconButton,
-	FormFileUpload,
-	SelectControl,
-} = wp.components;
-
-const {
-	MediaUpload,
 	MediaPlaceholder,
 } = wp.blockEditor;
 
-
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
-class GalleryPlaceholder extends Component {
+const GalleryPlaceholder = function( props ) {
+	const {
+		attributes: {
+			galleryImages,
+		},
+	} = props;
 
-	onChangeGallery( galleryImages ) {
+	const hasImages = !! galleryImages.length;
 
-		const promises = galleryImages.map( (image, index) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( newImage => {
-				galleryImages[index] = { ...newImage, ...image };
+	function onChangeGallery( newGalleryImages ) {
+		const promises = newGalleryImages.map( ( image, index ) => {
+			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( ( newImage ) => {
+				newGalleryImages[ index ] = { ...newImage, ...image };
 			} );
 		} );
 
 		Promise.all( promises ).then( () => {
-			this.props.setAttributes( { galleryImages: galleryImages.filter( image => {
+			props.setAttributes( { galleryImages: newGalleryImages.filter( ( image ) => {
 				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
 			} ) } );
 		} );
-
 	}
 
-	render() {
-
-		const {
-			attributes: {
-				galleryImages,
-				selected,
-				onSelectImage,
-				onChange,
-			},
-			setAttributes
-		} = this.props;
-
-		const hasImages = !! galleryImages.length;
-
-		return (
-			<MediaPlaceholder
-				addToGallery={ hasImages }
-				className=""
-				labels={ {
-					title: '',
-					instructions: __( 'Drag images, upload new ones or select files from your library.', '__plugin_txtd' ),
-				} }
-				onSelect={ this.onChangeGallery.bind( this ) }
-				accept="image/*"
-				allowedTypes={ ALLOWED_MEDIA_TYPES }
-				multiple
-				value={ hasImages ? galleryImages : undefined }
-			/>
-		)
-	}
-}
+	return (
+		<MediaPlaceholder
+			addToGallery={ hasImages }
+			className=""
+			labels={ {
+				title: '',
+				instructions: __( 'Drag images, upload new ones or select files from your library.', '__plugin_txtd' ),
+			} }
+			onSelect={ onChangeGallery }
+			accept="image/*"
+			allowedTypes={ ALLOWED_MEDIA_TYPES }
+			multiple
+			value={ hasImages ? galleryImages : undefined }
+		/>
+	);
+};
 
 class GalleryPreview extends Component {
-
 	render() {
-
 		const {
 			galleryImages,
 			selected,
 			onSelectImage,
-			isSelected
 		} = this.props;
 
 		return (
-			<ul class="nova-slideshow__gallery-edit">
+			<ul className="novablocks-slideshow__gallery-edit">
 				{ galleryImages.map( ( img, index ) => {
-
 					const classes = [
-						'nova-slideshow__gallery-item',
+						'novablocks-slideshow__gallery-item',
 					];
 
 					if ( selected === index ) {
-						classes.push( 'nova-slideshow__gallery-item--active' );
+						classes.push( 'novablocks-slideshow__gallery-item--active' );
 					}
 
 					return (
-						<li key={ img.id || img.url } onClick={ () => { onSelectImage( index ) } }>
+						<li key={ img.id || img.url } onClick={ () => {
+							onSelectImage( index );
+						} }>
 							<div className={ classes.join( ' ' ) }>
 								<img src={ img.sizes.thumbnail.url } alt="" />
 							</div>
@@ -102,11 +83,11 @@ class GalleryPreview extends Component {
 					);
 				} ) }
 			</ul>
-		)
+		);
 	}
 }
 
 export {
 	GalleryPlaceholder,
-	GalleryPreview
-}
+	GalleryPreview,
+};

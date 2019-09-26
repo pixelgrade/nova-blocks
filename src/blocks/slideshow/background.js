@@ -1,32 +1,37 @@
-import withParallax from '../../components/with-parallax';
+/**
+ * Internal dependencies
+ */
+import { withParallaxContext } from '../../components/with-parallax';
 
-const {
-	Component,
-} = wp.element;
+const SlideshowBackground = function( props ) {
+	const {
+		attributes: {
+			overlayFilterStyle,
+			overlayFilterStrength,
+		},
+		previewImage,
+		style,
+	} = props;
 
-class SlideshowBackground extends Component {
-	render() {
-		const {
-			attributes: {
-				overlayFilterStyle,
-				overlayFilterStrength,
-			}
-		} = this.props;
+	const focalPoint = previewImage.focalPoint || { x: 0.5, y: 0.5 };
 
-		const styles = {
-			opacity: 1
-		};
+	const styles = {
+		...props.parallax.style,
+		opacity: 1,
+		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+	};
 
-		if ( overlayFilterStyle !== 'none' ) {
-			styles.opacity = 1 - overlayFilterStrength / 100
-		}
-
-		return (
-			<div className="nova-slideshow__background" style={ this.props.style }>
-				<img className="nova-slideshow__media" src={ this.props.previewImage.sizes.large.url } alt="" style={ styles } />
-			</div>
-		)
+	if ( overlayFilterStyle !== 'none' ) {
+		styles.opacity = 1 - ( overlayFilterStrength / 100 );
 	}
-}
 
-export default withParallax( SlideshowBackground );
+	return (
+		<div className="novablocks-mask">
+			<div className="novablocks-slideshow__background" style={ style }>
+				<img className="novablocks-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
+			</div>
+		</div>
+	);
+};
+
+export default withParallaxContext( SlideshowBackground );

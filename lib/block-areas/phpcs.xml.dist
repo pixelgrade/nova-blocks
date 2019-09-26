@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Plugin">
+    <description>Ruleset for a WordPress plugin.</description>
+
+    <file>./block-areas.php</file>
+    <file>./src</file>
+
+    <exclude-pattern type="relative">^/vendor/*</exclude-pattern>
+
+    <arg name="colors"/>
+    <arg value="vs"/>
+
+    <!-- WordPress Coding Standard -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.VIP.RestrictedFunctions"/>
+        <exclude name="WordPress.Files.FileName"/>
+    </rule>
+
+    <!-- Selected WordPress Coding Standards tweaks -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="string" value="block-areas"/>
+        </properties>
+    </rule>
+</ruleset>

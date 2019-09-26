@@ -1,14 +1,21 @@
-import { debounce } from '../../utils';
+import isShallowEqual from '@wordpress/is-shallow-equal';
 
+/**
+ * Internal dependencies
+ */
 import {
 	HeightPanel,
 	LayoutPanel,
-	ParallaxPanel,
 	ScrollIndicatorPanel,
-} from "../../components";
+	PositionIndicatorsPanel,
+} from '../../components';
+
+import withSettings from '../../components/with-settings';
+import withParallax from '../../components/with-parallax';
+import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';
-import HeroBlockControls from './controls';
+import BlockControls from './block-controls';
 
 const { __ } = wp.i18n;
 
@@ -17,69 +24,129 @@ const {
 } = wp.blockEditor;
 
 const {
+	FocalPointPicker,
+	PanelBody,
+} = wp.components;
+
+const {
 	Component,
-	Fragment
+	Fragment,
 } = wp.element;
 
-const editorData = wp.data.select( 'core/block-editor' );
+const {
+	compose,
+	createHigherOrderComponent,
+} = wp.compose;
 
-const updateBlocks = ( attributes ) => {
-	const blocks = editorData.getBlocks();
+const {
+	select,
+	dispatch
+} = wp.data;
 
-	blocks.filter( block => {
-		return block.name === 'novablocks/hero';
-	} ).filter( ( block, heroBlockIndex ) => {
-		const { applyMinimumHeight, scrollIndicator } = { ...block.attributes, ...attributes };
-		const applyMinimumHeightBlock = applyMinimumHeight === 'first' && heroBlockIndex === 0 || applyMinimumHeight === 'all';
-		const scrollIndicatorBlock = scrollIndicator === true && heroBlockIndex === 0;
-		const blockIndex = blocks.findIndex( testBlock => block === testBlock );
+const FirstBlockControls = withFirstBlockConditions( function( props ) {
+	return (
+		<Fragment>
+			<HeightPanel { ...props } />
+			<ScrollIndicatorPanel { ...props } />
+			<PositionIndicatorsPanel { ...props } />
+		</Fragment>
+	);
+} );
 
-		wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
-			blockIndex,
-			applyMinimumHeightBlock,
-			scrollIndicatorBlock
-		} );
+class HeroEdit extends Component {
 
-		return true;
-	} );
+	getDefaults( attributes ) {
+		const { settings } = this.props;
+		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
+		const defaults = {};
 
-}
+		if ( ! minHeight ) {
+			defaults.minHeight = settings.hero.attributes.minHeight.default;
+		}
 
-let blockList = editorData.getBlocks();
-let debouncedOnSubscribe = debounce(() => {
+		if ( ! applyMinimumHeight ) {
+			defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
+		}
 
-	const newBlockList = editorData.getBlocks();
-	let blockListChanged = blockList.length !== newBlockList.length;
+		if ( ! scrollIndicator ) {
+			defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+		}
 
-	if ( ! blockListChanged ) {
-		blockListChanged = blockList.some( ( block, index ) => {
-			return ( blockList[index].clientId !== newBlockList[index].clientId );
-		} );
+		return defaults;
 	}
 
-	if ( blockListChanged ) {
-		blockList = newBlockList;
-		updateBlocks();
+	getNewAttributes( attributes ) {
+		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
+
+		const index = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
+			return block.name === 'novablocks/hero';
+		} ).findIndex( block => {
+			return block.clientId === this.props.clientId
+		} );
+
+		const newApplyMinimumHeightBlock = ( index === 0 && applyMinimumHeight === 'first' ) || applyMinimumHeight === 'all';
+		const newScrollIndicatorBlock = index === 0 && scrollIndicator;
+
+		return {
+			applyMinimumHeight: applyMinimumHeight,
+			applyMinimumHeightBlock: newApplyMinimumHeightBlock,
+			minHeight: minHeight,
+			scrollIndicatorBlock: newScrollIndicatorBlock,
+		};
 	}
-}, 30);
 
-wp.data.subscribe( debouncedOnSubscribe );
+	updateAttributes() {
+		const { attributes, setAttributes } = this.props;
+		const defaults = this.getDefaults( attributes );
+		const newAttributes = this.getNewAttributes( { ...attributes, ...defaults } );
 
-export default class Edit extends Component {
+		setAttributes( newAttributes );
+	}
+
+	shouldComponentUpdate( nextProps ) {
+		return ! isShallowEqual( nextProps.attributes, this.props.attributes );
+	}
+
+	componentDidMount() {
+		this.updateAttributes();
+	}
+
+	componentDidUpdate() {
+		this.updateAttributes();
+	}
 
 	render() {
+		const { attributes, setAttributes } = this.props;
+		const { media, focalPoint } = attributes;
+		const parallaxFocalPointImage = media ? media.sizes.full : false;
 
-		return [
+		return (
 			<Fragment>
 				<HeroPreview { ...this.props } />
-				<HeroBlockControls { ...this.props } />
-			</Fragment>,
-			<InspectorControls>
-				<LayoutPanel { ...this.props } />
-				<HeightPanel { ...this.props } />
-				<ScrollIndicatorPanel { ...this.props } />
-				<ParallaxPanel { ...this.props } />
-			</InspectorControls>
-		]
+				<BlockControls { ...this.props } />
+				<InspectorControls>
+					{ parallaxFocalPointImage && <PanelBody
+						title={ __( 'Focal Point', '__plugin_txtd' ) }
+						initialOpen={ true }>
+						<FocalPointPicker
+							url={ parallaxFocalPointImage.url }
+							dimensions={ {
+								width: parallaxFocalPointImage.width,
+								height: parallaxFocalPointImage.height,
+							} }
+							value={ focalPoint }
+							onChange={ focalPoint => setAttributes( { focalPoint } ) }
+						/>
+					</PanelBody> }
+					<LayoutPanel { ...this.props } />
+					<FirstBlockControls { ...this.props } />
+				</InspectorControls>
+			</Fragment>
+		);
 	}
-}
+};
+
+export default createHigherOrderComponent(compose([
+	withSettings,
+	withParallax,
+]))( HeroEdit );

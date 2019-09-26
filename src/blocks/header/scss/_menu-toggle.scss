@@ -1,0 +1,56 @@
+.c-menu-toggle {
+    font-size: 1rem;
+}
+
+.c-menu-toggle__wrap {
+    display: flex;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+
+    padding: 1em;
+
+    cursor: pointer;
+
+    @include wp-offset(top, 0, true);
+}
+
+.c-menu-toggle__checkbox {
+    display: none;
+}
+
+.c-menu-toggle__label {
+    margin-left: 0.5em;
+}
+
+.c-menu-toggle__icon {
+    position: relative;
+
+    display: block;
+    width: 1em;
+}
+
+.c-menu-toggle__slice {
+    display: block;
+    width: 1em;
+    height: 3px;
+    background: currentColor;
+}
+
+.c-menu-toggle__slice--top,
+.c-menu-toggle__slice--bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.c-menu-toggle__slice--top {
+    transform: translate3d(0, -(6em/16), 0);
+}
+
+.c-menu-toggle__slice--bottom {
+    transform: translate3d(0, (6em/16), 0);
+}

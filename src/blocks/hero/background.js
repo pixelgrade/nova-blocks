@@ -1,36 +1,39 @@
-import withParallax from '../../components/with-parallax';
+/**
+ * Internal dependencies
+ */
+import { withParallaxContext } from '../../components/with-parallax';
 
-const {
-	Component,
-} = wp.element;
+const HeroBackground = function( props ) {
+	const {
+		attributes: {
+			overlayFilterStyle,
+			overlayFilterStrength,
+			media,
+			focalPoint,
+		},
+		style,
+	} = props;
 
-class HeroBackground extends Component {
-	render() {
-		const {
-			attributes: {
-				overlayFilterStyle,
-				overlayFilterStrength,
-				media
-			}
-		} = this.props;
+	const styles = {
+		...props.parallax.style,
+		opacity: 1,
+		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+	};
 
-		const styles = {
-			opacity: 1
-		};
-
-		if ( overlayFilterStyle !== 'none' ) {
-			styles.opacity = 1 - overlayFilterStrength / 100
-		}
-
-		return (
-			<div className='nova-hero__background' style={ this.props.style }>
-				{media.type === 'image' && typeof media.sizes !== 'undefined'
-				 && <img className='nova-hero__media' src={media.sizes.full.url} style={styles}/>}
-				{media.type === 'video'
-				 && <video muted autoPlay loop className='nova-hero__media' src={media.url} style={styles}/>}
-			</div>
-		)
+	if ( overlayFilterStyle !== 'none' ) {
+		styles.opacity = 1 - ( overlayFilterStrength / 100 );
 	}
+
+	return (
+		<div className="novablocks-mask">
+			<div className="novablocks-hero__background" style={ style }>
+				{ media.type === 'image' && typeof media.sizes !== 'undefined' &&
+					<img className="novablocks-hero__media" src={ media.sizes.full.url } style={ styles } alt={ media.alt } /> }
+				{ media.type === 'video' &&
+					<video muted autoPlay loop className="novablocks-hero__media" src={ media.url } style={ styles } /> }
+			</div>
+		</div>
+	);
 };
 
-export default withParallax( HeroBackground );
+export default withParallaxContext( HeroBackground );

@@ -1,0 +1,35 @@
+:root {
+    --novablocks-hero-transition-duration: 0.5s;
+    --novablocks-hero-transition-easing: ease;
+    --novablocks-hero-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
+}
+
+.wp-block-novablocks-hero.novablocks-hero {
+    transition: var(--novablocks-hero-transition);  
+}
+
+.novablocks-hero__media,
+.novablocks-hero__foreground {
+    transition: var(--novablocks-hero-transition);
+}
+
+.novablocks-hero__mask {
+	overflow: hidden;
+}
+
+.pixelgrade-hero-block-toolbar-dropdown {
+
+    button {
+        display: flex;
+        align-items: center;
+
+        &:after {
+            content: "";
+            border: 0 solid transparent;
+            border-width: 4px 3px 0;
+            border-top-color: currentColor;
+            margin-left: 4px;
+        }
+    }
+}
+

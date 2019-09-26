@@ -1,44 +1,42 @@
 :root {
-    --nova-spacing: 10%;
-    --nova-spacing-small: 5%;
-    --nova-spacing-medium: 10%;
-    --nova-spacing-large: 15%;
+    --novablocks-content-padding-small: 5%;
+    --novablocks-content-padding-medium: 10%;
+    --novablocks-content-padding-large: 15%;
 
-    --nova-content-width-full: 100%;
-    --nova-content-width-large: 70%;
-    --nova-content-width-narrow: 30%;
+    --novablocks-content-width-full: 100%;
+    --novablocks-content-width-large: 70%;
+    --novablocks-content-width-narrow: 30%;
 }
 
-.nova-u-content-width {
-    --nova-content-width: var(--nova-content-width-full);
+.novablocks-u-content-width {
+    --novablocks-content-width: var(--novablocks-content-width-full);
 
-    .nova-u-content-width-full & {
-        --nova-content-width: var(--nova-content-width-full);
+    .novablocks-u-content-width-large & {
+        --novablocks-content-width: var(--novablocks-content-width-large);
     }
 
-    .nova-u-content-width-large & {
-        --nova-content-width: var(--nova-content-width-large);
+    .novablocks-u-content-width-narrow & {
+        --novablocks-content-width: var(--novablocks-content-width-narrow);
     }
 
-    .nova-u-content-width-narrow & {
-        --nova-content-width: var(--nova-content-width-narrow);
+    @media only screen and (min-width: 1000px) {
+        max-width: var(--novablocks-content-width);
     }
-
-    max-width: var(--nova-content-width);
 }
 
-.nova-u-content-padding {
-    padding: var(--nova-spacing);
+.novablocks-u-content-padding {
+    --novablocks-content-padding: var(--novablocks-content-padding-small);
 
-    .nova-u-spacing-small & {
-        --nova-spacing: var(--nova-spacing-small);
-    }
+    padding: var(--novablocks-content-padding);
 
-    .nova-u-spacing-medium & {
-        --nova-spacing: var(--nova-spacing-medium);
-    }
+    @media only screen and (min-width: 1000px) {
 
-    .nova-u-spacing-large & {
-        --nova-spacing: var(--nova-spacing-large);
+        .novablocks-u-spacing-medium & {
+            --novablocks-content-padding: var(--novablocks-content-padding-medium);
+        }
+
+        .novablocks-u-spacing-large & {
+            --novablocks-content-padding: var(--novablocks-content-padding-large);
+        }
     }
 }

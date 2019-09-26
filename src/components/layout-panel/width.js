@@ -1,8 +1,15 @@
+/**
+ * Internal dependencies
+ */
+import withSettings from '../with-settings';
+
+/**
+ * WordPress dependencies
+ */
 const { __ } = wp.i18n;
 
 const {
-	Component,
-	Fragment
+	Fragment,
 } = wp.element;
 
 const {
@@ -11,42 +18,43 @@ const {
 	RangeControl,
 } = wp.components;
 
-export default class WidthControls extends Component {
-	render() {
+const WidthControls = function( props ) {
+	const {
+		attributes: {
+			contentWidth,
+			contentWidthCustom,
+		},
+		setAttributes,
+		settings: {
+			contentWidthOptions,
+		},
+	} = props;
 
-		const {
-			attributes: {
-				contentWidth,
-				contentWidthCustom,
-			},
-			setAttributes
-		} = this.props;
-
-		const contentWidthOptions = [
-			{ label: __( 'Full', '__plugin_txtd' ), value: 'full' },
-			{ label: __( 'Large', '__plugin_txtd' ), value: 'large' },
-			{ label: __( 'Narrow', '__plugin_txtd' ), value: 'narrow' },
-			{ label: __( 'Custom', '__plugin_txtd' ), value: 'custom' },
-		];
-
-		return <Fragment>
-			<label>{ __( 'Content Width', '__plugin_txtd') }</label>
+	return (
+		<Fragment>
+			<label>{ __( 'Content Width', '__plugin_txtd' ) }</label>
 			<ButtonGroup label="Content Width">
-				{ contentWidthOptions.map( option =>
-					<Button isDefault={ option.value !== contentWidth }
-					        isPrimary={ option.value === contentWidth }
-					        onClick={ () => { setAttributes( { contentWidth: option.value} ) } }>
+				{ contentWidthOptions.map( ( option ) =>
+					<Button
+						key={ option.value }
+						isDefault={ option.value !== contentWidth }
+						isPrimary={ option.value === contentWidth }
+						onClick={ () => {
+							setAttributes( { contentWidth: option.value } );
+						} }>
 						{ option.label }
 					</Button>
 				) }
 			</ButtonGroup>
 			{ 'custom' === contentWidth && <RangeControl
 				value={ contentWidthCustom }
-				onChange={ contentWidthCustom => setAttributes( { contentWidthCustom } ) }
-				min={20}
-				max={90}
-				step={10}
+				onChange={ ( newContentWidth ) => setAttributes( { contentWidthCustom: newContentWidth } ) }
+				min={ 20 }
+				max={ 90 }
+				step={ 10 }
 			/> }
 		</Fragment>
-	}
-}
+	);
+};
+
+export default withSettings( WidthControls );

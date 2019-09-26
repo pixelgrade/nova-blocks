@@ -45,9 +45,9 @@ function novablocks_get_plugin_url() {
 }
 
 function novablocks_body_class( $classes ) {
-	$bullets = get_post_meta( get_the_ID(), 'nova_hero_position_indicators', true );
-    if ( $bullets ) {
-		$classes[] = 'nova-hero-bullets';
+	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
+	if ( ! empty( $position_indicators ) ) {
+		$classes[] = 'novablocks-has-position-indicators';
 	}
 
 	return $classes;
@@ -59,7 +59,7 @@ function novablocks_add_blocks_category( $categories, $post ) {
 		array(
 			array(
 				'slug'  => 'nova-blocks',
-				'title' => 'Nova Blocks',
+				'title' => 'Nova Blocks'
 			),
 		),
 		$categories
@@ -67,9 +67,14 @@ function novablocks_add_blocks_category( $categories, $post ) {
 }
 add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 
+require_once dirname( __FILE__ ) . '/lib/extras.php';
+require_once dirname( __FILE__ ) . '/lib/settings.php';
 require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
-require_once dirname( __FILE__ ) . '/lib/customify.php';
 
-require_once dirname( __FILE__ ) . '/src/blocks/hero/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/media/init.php';
-require_once dirname( __FILE__ ) . '/src/blocks/slideshow/init.php';
+// register block types
+require_once dirname( __FILE__ ) . '/src/blocks/init.php';
+
+// load block areas functionality
+require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
+
+

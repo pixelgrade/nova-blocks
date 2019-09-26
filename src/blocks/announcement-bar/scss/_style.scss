@@ -1,0 +1,71 @@
+.novablocks-announcement-bar {
+	--novablocks-announcement-bar-padding: #{11/16 * 1em};
+	--novablocks-announcement-bar-close-width: #{15/16 * 1em};
+	--novablocks-announcement-color: var(--novablocks-light-1);
+	--novablocks-announcement-background-color: var(--novablocks-color-1);
+
+	position: relative;
+	overflow: hidden;
+	transform: translateZ(0);
+
+	color: var(--novablocks-announcement-color);
+	background-color: var(--novablocks-announcement-background-color);
+	text-align: center;
+
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.novablocks-announcement-bar__wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: var(--novablocks-announcement-bar-padding) calc( 2 * var(--novablocks-announcement-bar-padding) + var(--novablocks-announcement-bar-close-width) );
+}
+
+.novablocks-announcement-bar__content {
+	a {
+		position: relative;
+		z-index: 200;
+
+		color: inherit;
+		text-decoration: underline;
+	}
+}
+
+.novablocks-announcement-bar__close {
+	position: absolute;
+	top: 50%;
+	right: calc( 2 * var(--novablocks-announcement-bar-padding));
+	transform: translate(0,-50%);
+	z-index: 100;
+
+	width: var(--novablocks-announcement-bar-close-width);
+	cursor: pointer;
+
+	transition: opacity .3s ease;
+
+	svg {
+		display: block;
+		max-width: 100%;
+		height: auto;
+	}
+
+	&:hover {
+		opacity: 0.5;
+	}
+}
+
+.novablocks-announcement-bar__link {
+	@include cover;
+}
+
+.is-style-alternative {
+	--novablocks-announcement-background-color: var(--novablocks-color-2);
+}
+
+.is-style-alert {
+	--novablocks-announcement-background-color: #DE1651;
+}

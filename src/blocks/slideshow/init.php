@@ -11,73 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 
 	function novablocks_slideshow_block_init() {
+
 		register_block_type( 'novablocks/slideshow', array(
-			'attributes'      => array(
-				'contentPadding'        => array(
-					'type'    => 'string',
-					'default' => 'small',
-				),
-				'contentPaddingCustom'  => array(
-					'type'    => 'number',
-					'default' => 50
-				),
-				'contentWidth'          => array(
-					'type'    => 'string',
-					'default' => 'large'
-				),
-				'contentWidthCustom'    => array(
-					'type'    => 'number',
-					'default' => 100
-				),
-				'horizontalAlignment'   => array(
-					'type'    => 'string',
-					'default' => 'left',
-				),
-				'verticalAlignment'     => array(
-					'type'    => 'string',
-					'default' => 'bottom'
-				),
-				'enableParallax'        => array(
-					'type'    => 'boolean',
-					'default' => true
-				),
-				'parallaxAmount'        => array(
-					'type'    => 'string',
-					'default' => '50'
-				),
-				'parallaxCustomAmount'  => array(
-					'type'    => 'number',
-					'default' => 50
-				),
-				'minHeight'             => array(
-					'type'    => 'number',
-					'default' => 75,
-				),
-				'contentColor'          => array(
-					'type'    => 'string',
-					'default' => '#FFF'
-				),
-				'overlayFilterStyle'    => array(
-					'type'    => 'string',
-					'default' => 'none'
-				),
-				'overlayFilterStrength' => array(
-					'type'    => 'number',
-					'default' => 30
-				),
-				'slideshowType'         => array(
-					'type'    => 'string',
-					'default' => 'gallery'
-				),
-				'galleryImages'         => array(
-					'type'    => 'array',
-					'items'   => [
-						'type' => 'object',
-					],
-					'default' => array()
-				),
-			),
-			'render_callback' => 'novablocks_render_slideshow_block'
+			'attributes' => novablocks_get_slideshow_attributes(),
+			'render_callback' => 'novablocks_render_slideshow_block',
 		) );
 	}
 }
@@ -87,36 +24,20 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 	function novablocks_render_slideshow_block( $attributes, $content ) {
 
+		$attributes_config = novablocks_get_slideshow_attributes();
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
 		if ( empty( $attributes['galleryImages'] ) ) {
 			return '';
 		}
 
-		$classes = array();
+		$classes = array_merge(
+			array( 'novablocks-slideshow', 'alignfull' ),
+			novablocks_get_block_extra_classes( $attributes )
+		);
 
-		$classes[] = 'nova-slideshow';
-		if ( ! empty( $attributes['verticalAlignment'] ) ) {
-			$classes[] = 'nova-u-valign-' . $attributes['verticalAlignment'];
-		}
-		if ( ! empty( $attributes['horizontalAlignment'] ) ) {
-			$classes[] = 'nova-u-halign-' . $attributes['horizontalAlignment'];
-		}
-		if ( ! empty( $attributes['contentPadding'] ) ) {
-		$classes[] = 'nova-u-spacing-' . $attributes['contentPadding'];
-		}
-		if ( ! empty( $attributes['contentWidth'] ) ) {
-			$classes[] = 'nova-u-content-width-' . $attributes['contentWidth'];
-		}
-		$classes[] = 'nova-u-background';
-		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
-			$classes[] = 'nova-u-background-' . $attributes['overlayFilterStyle'];
-		}
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
-		}
-		$classes[] = 'alignfull';
-
-		if ( ! empty( $attributes['enableParallax'] ) ) {
-			$classes[] = 'nova-slideshow--parallax';
 		}
 
 		$actualParallaxAmount = ( ! empty( $attributes['parallaxAmount'] ) && $attributes['parallaxAmount'] === 'custom' ) ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
@@ -129,40 +50,45 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 		$mediaStyle = '';
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 );
+			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
 		}
 
 		ob_start();
 
-		do_action( 'nova_slideshow:before' ); ?>
+		do_action( 'novablocks_slideshow:before' ); ?>
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
              style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>"
              data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
 
-			<?php do_action( 'nova_hero:after_opening_tag' ); ?>
+			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
-            <div class="nova-slideshow__mask">
-                <div class="nova-slideshow__slider" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
+            <div class="novablocks-slideshow__mask">
+                <div class="novablocks-slideshow__slider" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
 
 					<?php foreach ( $attributes['galleryImages'] as $image ) {
 						if ( empty( $image['sizes']['large']['url'] ) ) {
 							continue;
 						} ?>
-                        <div class="nova-slideshow__slide">
-                            <div class="nova-slideshow__mask">
-                                <div class="nova-slideshow__background nova-u-background">
-                                    <img class="nova-slideshow__media"
+                        <div class="novablocks-slideshow__slide">
+                            <div class="novablocks-slideshow__mask">
+                                <div class="novablocks-slideshow__background novablocks-u-background">
+	                                <?php
+	                                $thisMediaStyle = $mediaStyle;
+	                                if ( ! empty( $image['focalPoint'] ) ) {
+                                        $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $image['focalPoint'] );
+                                    } ?>
+                                    <img class="novablocks-slideshow__media"
                                         src="<?php echo esc_url( $image['sizes']['large']['url'] ); ?>"
-                                        style="<?php echo esc_attr( $mediaStyle ); ?>"
+                                        style="<?php echo esc_attr( $thisMediaStyle ); ?>"
                                         data-width="<?php echo esc_attr( $image['sizes']['large']['width'] ); ?>"
                                         data-height="<?php echo esc_attr( $image['sizes']['large']['height'] ); ?>"
                                     >
                                 </div>
-                                <div class="nova-slideshow__foreground">
-                                    <div class="nova-slideshow__content nova-u-content-padding">
-                                        <div class="nova-u-content-align">
-                                            <div class="nova-slideshow__inner-container nova-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
+                                <div class="novablocks-slideshow__foreground novablocks-foreground">
+                                    <div class="novablocks-slideshow__content novablocks-u-content-padding">
+                                        <div class="novablocks-u-content-align">
+                                            <div class="novablocks-slideshow__inner-container novablocks-u-content-width" style="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
                                                 <?php
                                                 if ( ! empty( $image['alt'] ) ) {
                                                     echo '<h2>' . wp_kses_post( $image['alt'] ) . '</h2>';
@@ -181,11 +107,11 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                 </div>
             </div>
 
-			<?php do_action( 'nova_hero:before_closing_tag' ) ?>
+			<?php do_action( 'novablocks_hero:before_closing_tag' ) ?>
 
         </div>
 
-		<?php do_action( 'nova_slideshow:after' );
+		<?php do_action( 'novablocks_slideshow:after' );
 
 		return ob_get_clean();
 	}

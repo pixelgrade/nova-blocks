@@ -8,24 +8,53 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_enqueue_block_editor_assets() {
+function novablocks_admin_init() {
 	// Make paths variables so we don't write em twice ;)
-	$block_path = '/dist/js/editor.blocks.js';
 	$style_path = '/dist/css/blocks.editor.css';
+	$block_path = '/dist/js/editor.blocks.js';
+
+	$script_dependencies = array(
+		'wp-i18n',
+		'wp-api',
+		'wp-blocks',
+		'wp-components',
+		'wp-dom',
+		'wp-dom-ready',
+		'wp-editor',
+		'wp-element',
+	);
+
+	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+	wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places' );
+	if ( $google_maps_api_key !== '' ) {
+		$script_dependencies[] = 'google-maps';
+	}
 
 	// Enqueue the bundled block JS file
-	wp_enqueue_script(
+	wp_register_script(
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
-		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' )
+		$script_dependencies
 	);
+
+	wp_localize_script( 'nova-blocks-js', 'novablocks_urls', array(
+		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/blocks.style.css',
+		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
+	) );
+
 	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );
 
 	// Enqueue optional editor only styles
-	wp_enqueue_style(
+	wp_register_style(
 		'nova-blocks-editor-css',
 		novablocks_get_plugin_url() . $style_path
 	);
+}
+add_action( 'admin_init', 'novablocks_admin_init' );
+
+function novablocks_enqueue_block_editor_assets() {
+	wp_enqueue_script( 'nova-blocks-js' );
+	wp_enqueue_style( 'nova-blocks-editor-css' );
 }
 add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_block_editor_assets' );
 
@@ -55,6 +84,14 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
+	$bully_path = '/dist/js/jquery.bully.js';
+	wp_register_script(
+		'nova-blocks-bully',
+		novablocks_get_plugin_url() . $bully_path,
+		array( 'jquery' ),
+		true
+	);
+
 	$slick_path = '/dist/js/jquery.slick.js';
 	wp_register_script(
 		'nova-blocks-slick',
@@ -71,11 +108,31 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
+	$script_dependencies = array(
+		'jquery',
+		'imagesloaded',
+		'nova-blocks-rellax',
+		'nova-blocks-slick',
+		'nova-blocks-velocity',
+		'wp-element'
+	);
+
+	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
+	if ( ! empty( $position_indicators ) ) {
+		$script_dependencies[] = 'nova-blocks-bully';
+	}
+
+	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+	wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places' );
+	if ( $google_maps_api_key !== '' ) {
+		$script_dependencies[] = 'google-maps';
+	}
+
 	$block_path = '/dist/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
-		array( 'jquery', 'nova-blocks-rellax', 'nova-blocks-slick', 'nova-blocks-velocity', 'wp-data' ),
+		$script_dependencies,
 		false,
 		true
 	);
