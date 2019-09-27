@@ -8,7 +8,6 @@ import * as icons from '../../icons';
  */
 const { __ } = wp.i18n;
 const { registerBlockType, } = wp.blocks;
-const { ServerSideRender } = wp.components;
 
 export default registerBlockType( 'novablocks/logo',
 	{
@@ -20,7 +19,7 @@ export default registerBlockType( 'novablocks/logo',
 		save: function() {},
 		edit: function( props ) {
 			return (
-				<ServerSideRender
+				<wp.serverSideRender
 					block="novablocks/logo"
 					attributes={ props.attributes }
 				/>

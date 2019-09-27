@@ -1,6 +1,10 @@
 import classnames from 'classnames';
 import HTMLReactParser from 'html-react-parser';
 
+const {
+	Component
+} = wp.element;
+
 export const addSeparatorFilters = ( settings ) => {
 
 	const Separator = ( props ) => {
@@ -17,11 +21,15 @@ export const addSeparatorFilters = ( settings ) => {
 	};
 
 	const replaceSeparatorEdit = wp.compose.createHigherOrderComponent( ( BlockEdit ) => {
-		return ( props ) => {
-			if ( 'core/separator' === props.name ) {
-				return <Separator className={ props.attributes.className } />;
-			} else {
-				return <BlockEdit { ...props } />;
+		return class extends Component {
+			render() {
+				const props = this.props;
+
+				if ( 'core/separator' === props.name ) {
+					return <Separator className={ props.attributes.className } />;
+				} else {
+					return <BlockEdit { ...props } />;
+				}
 			}
 		}
 	}, "replaceSeparatorEdit" );

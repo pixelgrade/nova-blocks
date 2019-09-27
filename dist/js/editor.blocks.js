@@ -9169,33 +9169,68 @@ exports.f = __webpack_require__(6) ? gOPD : function getOwnPropertyDescriptor(O,
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addSeparatorFilters; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_html_react_parser__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_html_react_parser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_html_react_parser__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_classnames__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_classnames__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_html_react_parser__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_html_react_parser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_html_react_parser__);
 
+
+
+
+
+
+
+
+var Component = wp.element.Component;
 
 
 var addSeparatorFilters = function addSeparatorFilters(settings) {
 
 	var Separator = function Separator(props) {
-		var className = __WEBPACK_IMPORTED_MODULE_0_classnames___default()('wp-block-separator', props.className);
+		var className = __WEBPACK_IMPORTED_MODULE_5_classnames___default()('wp-block-separator', props.className);
 
 		return wp.element.createElement(
 			'div',
 			{ className: className },
-			settings.separator && __WEBPACK_IMPORTED_MODULE_1_html_react_parser___default()(settings.separator.markup)
+			settings.separator && __WEBPACK_IMPORTED_MODULE_6_html_react_parser___default()(settings.separator.markup)
 		);
 	};
 
 	var replaceSeparatorEdit = wp.compose.createHigherOrderComponent(function (BlockEdit) {
-		return function (props) {
-			if ('core/separator' === props.name) {
-				return wp.element.createElement(Separator, { className: props.attributes.className });
-			} else {
-				return wp.element.createElement(BlockEdit, props);
+		return function (_Component) {
+			__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(_class, _Component);
+
+			function _class() {
+				__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, _class);
+
+				return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (_class.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(_class)).apply(this, arguments));
 			}
-		};
+
+			__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(_class, [{
+				key: 'render',
+				value: function render() {
+					var props = this.props;
+
+					if ('core/separator' === props.name) {
+						return wp.element.createElement(Separator, { className: props.attributes.className });
+					} else {
+						return wp.element.createElement(BlockEdit, props);
+					}
+				}
+			}]);
+
+			return _class;
+		}(Component);
 	}, "replaceSeparatorEdit");
 
 	var replaceSeparatorSave = function replaceSeparatorSave(element, blockType, attributes) {
@@ -16000,7 +16035,6 @@ var HeroBlockControls = function HeroBlockControls(props) {
  */
 var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
-var ServerSideRender = wp.components.ServerSideRender;
 
 
 /* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('novablocks/logo', {
@@ -16011,7 +16045,7 @@ var ServerSideRender = wp.components.ServerSideRender;
 	parent: ['novablocks/header'],
 	save: function save() {},
 	edit: function edit(props) {
-		return wp.element.createElement(ServerSideRender, {
+		return wp.element.createElement(wp.serverSideRender, {
 			block: 'novablocks/logo',
 			attributes: props.attributes
 		});
@@ -17042,7 +17076,6 @@ var registerBlockType = wp.blocks.registerBlockType;
 
 var __ = wp.i18n.__;
 var Component = wp.element.Component;
-var ServerSideRender = wp.components.ServerSideRender;
 
 var Edit = function (_Component) {
 	__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Edit, _Component);
@@ -17059,7 +17092,7 @@ var Edit = function (_Component) {
 			var slug = this.props.attributes.slug;
 
 
-			return [wp.element.createElement(ServerSideRender, {
+			return [wp.element.createElement(wp.serverSideRender, {
 				block: "novablocks/navigation",
 				attributes: this.props.attributes
 			})];

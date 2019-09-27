@@ -1,7 +1,7 @@
 const path = require( 'path' );
-const webpack = require( 'webpack' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // Set different CSS extraction for editor only and common block styles
 const blocksCSSPlugin = new ExtractTextPlugin( {
@@ -34,8 +34,8 @@ const extractConfig = {
 
 module.exports = {
   entry: {
-    './dist/js/editor.blocks' : './src/editor.js',
-    './dist/js/frontend.blocks' : './src/frontend.js',
+		'./dist/js/editor.blocks' : './src/editor.js',
+		'./dist/js/frontend.blocks' : './src/frontend.js',
   },
   output: {
     path: path.resolve( __dirname ),
@@ -64,5 +64,6 @@ module.exports = {
   plugins: [
     blocksCSSPlugin,
     editBlocksCSSPlugin,
+		new OptimizeCSSAssetsPlugin({})
   ],
 };

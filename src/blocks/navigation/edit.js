@@ -4,10 +4,6 @@ const {
 	Component,
 } = wp.element;
 
-const {
-	ServerSideRender,
-} = wp.components;
-
 export default class Edit extends Component {
 
 	constructor() {
@@ -22,7 +18,7 @@ export default class Edit extends Component {
 		} = this.props;
 
 		return [
-			<ServerSideRender
+			<wp.serverSideRender
 					block="novablocks/navigation"
 					attributes={ this.props.attributes }
 				/>
