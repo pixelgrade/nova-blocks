@@ -24,7 +24,7 @@ const TEMPLATE_OPTIONS = [
 		template: [
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
-				className: "site-header__menu--primary",
+				className: "site-header__menu site-header__menu--primary",
 				slug: "primary"
 			} ],
 		],
@@ -35,12 +35,12 @@ const TEMPLATE_OPTIONS = [
 		icon: icons.logoCenter,
 		template: [
 			[ 'novablocks/navigation', {
-				className: "site-header__menu--secondary",
+				className: "site-header__menu site-header__menu--secondary",
 				slug: "secondary"
 			} ],
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
-				className: "site-header__menu--primary",
+				className: "site-header__menu site-header__menu--primary",
 				slug: "primary"
 			} ],
 		],
