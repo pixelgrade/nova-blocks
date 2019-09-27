@@ -20,9 +20,6 @@ if ( ! function_exists( 'novablocks_navigation_block_init' ) ) {
 				'className'       => array(
 					'type' => 'string',
 				),
-				'hasCartMenuItem' => array(
-					'type' => 'boolean',
-				),
 			),
 			'render_callback' => 'novablocks_render_navigation_block'
 		) );
@@ -50,7 +47,6 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 				wp_nav_menu( array(
                     'theme_location' => $attributes['slug'],
                     'container' => '',
-                    'hasCartMenuItem' => $attributes[ 'hasCartMenuItem' ],
 	            ) );
 			?>
 		</div>
