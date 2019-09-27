@@ -1,4 +1,4 @@
 {
 	"plugins": [ "lodash" ],
-	"presets": [ "@wordpress/default" ]
+	"presets": [ ["@wordpress/default", { "modules": true } ] ]
 }
