@@ -34,10 +34,7 @@ class novaBlocks {
 
 	initialize( settings ) {
 		addSeparatorFilters( settings );
-
-		wp.domReady( function() {
-			dispatch( STORE_NAME ).updateSettings( settings );
-		} );
+		dispatch( STORE_NAME ).updateSettings( settings );
 	}
 }
 

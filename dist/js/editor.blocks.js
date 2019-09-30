@@ -10051,10 +10051,7 @@ var novaBlocks = function () {
 		key: 'initialize',
 		value: function initialize(settings) {
 			Object(__WEBPACK_IMPORTED_MODULE_6__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
-
-			wp.domReady(function () {
-				dispatch(__WEBPACK_IMPORTED_MODULE_20__store__["a" /* STORE_NAME */]).updateSettings(settings);
-			});
+			dispatch(__WEBPACK_IMPORTED_MODULE_20__store__["a" /* STORE_NAME */]).updateSettings(settings);
 		}
 	}]);
 
