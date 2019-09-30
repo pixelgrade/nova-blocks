@@ -1,5 +1,7 @@
 import * as icons from './icons';
 
+import classnames from 'classnames';
+
 const { __ } = wp.i18n;
 
 const {
@@ -54,6 +56,7 @@ export default function Edit( props ) {
 		attributes: {
 			layout
 		},
+		className,
 		setAttributes
 	} = props;
 
@@ -70,6 +73,13 @@ export default function Edit( props ) {
 		setTemplate( template );
 	};
 
+	const classNames = classnames(
+		className,
+		`site-header`,
+		`site-header-${layout}`
+	);
+
+
 	return (
 		[
 			<BlockControls>
@@ -82,14 +92,16 @@ export default function Edit( props ) {
 					/>
 				</Toolbar>
 			</BlockControls>,
-			<InnerBlocks
-				__experimentalTemplateOptions={ TEMPLATE_OPTIONS }
-				__experimentalOnSelectTemplateOption={ nextTemplate => {
-					applyTemplate( nextTemplate );
-				} }
-				template={ template }
-				templateLock="all"
-			/>
+			<div className={classNames}>
+				<InnerBlocks
+					__experimentalTemplateOptions={ TEMPLATE_OPTIONS }
+					__experimentalOnSelectTemplateOption={ nextTemplate => {
+						applyTemplate( nextTemplate );
+					} }
+					template={ template }
+					templateLock="all"
+				/>
+			</div>
 		]
 	)
 }

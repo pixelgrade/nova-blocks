@@ -14356,6 +14356,10 @@ var InnerBlocks = wp.blockEditor.InnerBlocks;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_slicedToArray__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icons__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
+
+
 
 
 
@@ -14393,6 +14397,7 @@ var TEMPLATE_OPTIONS = [{
 function Edit(props) {
 	var clientId = props.clientId;
 	var layout = props.attributes.layout,
+	    className = props.className,
 	    setAttributes = props.setAttributes;
 
 
@@ -14417,6 +14422,8 @@ function Edit(props) {
 		setTemplate(template);
 	};
 
+	var classNames = __WEBPACK_IMPORTED_MODULE_2_classnames___default()(className, 'site-header', 'site-header-' + layout);
+
 	return [wp.element.createElement(
 		BlockControls,
 		null,
@@ -14432,14 +14439,18 @@ function Edit(props) {
 				icon: 'edit'
 			})
 		)
-	), wp.element.createElement(InnerBlocks, {
-		__experimentalTemplateOptions: TEMPLATE_OPTIONS,
-		__experimentalOnSelectTemplateOption: function __experimentalOnSelectTemplateOption(nextTemplate) {
-			applyTemplate(nextTemplate);
-		},
-		template: template,
-		templateLock: 'all'
-	})];
+	), wp.element.createElement(
+		'div',
+		{ className: classNames },
+		wp.element.createElement(InnerBlocks, {
+			__experimentalTemplateOptions: TEMPLATE_OPTIONS,
+			__experimentalOnSelectTemplateOption: function __experimentalOnSelectTemplateOption(nextTemplate) {
+				applyTemplate(nextTemplate);
+			},
+			template: template,
+			templateLock: 'all'
+		})
+	)];
 }
 
 /***/ }),
