@@ -6,10 +6,6 @@
     .site-header {
 		// styles from Nova Blocks should only affect blocks created by it
         @import "menu";
-
-		// being inside the content, we want the header block
-		// to have the font size set on body and not on the content
-        font-size: 1rem;
     }
 
     .site-header__content {
@@ -30,7 +26,7 @@
 		}
 
 		> .wp-block-novablocks-navigation {
-			> ul.menu,
+			> .menu,
 			> .menu > ul {
 				justify-content: inherit;
 			}
