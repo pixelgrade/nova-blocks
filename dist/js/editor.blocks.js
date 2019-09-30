@@ -10041,6 +10041,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var dispatch = wp.data.dispatch;
+var updateCategory = wp.blocks.updateCategory;
 
 var novaBlocks = function () {
 	function novaBlocks() {
@@ -10052,15 +10053,16 @@ var novaBlocks = function () {
 		value: function initialize(settings) {
 			Object(__WEBPACK_IMPORTED_MODULE_6__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
 			dispatch(__WEBPACK_IMPORTED_MODULE_20__store__["a" /* STORE_NAME */]).updateSettings(settings);
+			updateCategory('nova-blocks', {
+				icon: __WEBPACK_IMPORTED_MODULE_21__icons__["o" /* nova */]
+			});
 		}
 	}]);
 
 	return novaBlocks;
 }();
 
-(function () {
-	wp.blocks.updateCategory('nova-blocks', { icon: __WEBPACK_IMPORTED_MODULE_21__icons__["o" /* nova */] });
-})();
+(function () {})();
 
 wp.novaBlocks = new novaBlocks();
 
