@@ -18,6 +18,8 @@ export default registerBlockType( 'novablocks/header',
 		description: __( 'Outputs custom header markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.header,
+		// Additional search terms
+		keywords: [ __( 'logo' ), __( 'menu' ) ],
 		supports: { align: ["wide", "full"], default: "full" },
 		edit,
 		save: function() {

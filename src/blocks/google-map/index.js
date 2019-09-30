@@ -19,6 +19,8 @@ export default registerBlockType( 'novablocks/google-map',
 		description: __( 'Display an interactive map to show the location of your venue.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.map,
+		// Additional search terms
+		keywords: [ __( 'google' ), __( 'maps' ), __( 'google maps' ), __( 'location' ) ],
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
 			if ( 'center' === align || 'full' === align ) {

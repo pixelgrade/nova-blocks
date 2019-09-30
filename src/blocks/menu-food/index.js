@@ -19,6 +19,8 @@ export default registerBlockType( 'novablocks/menu-food',
 		description: __( 'Display a list of food or drink items available at your venue.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.foodmenu,
+		// Additional search terms
+		keywords: [ __( 'food menu' ), __( 'restaurant menu' ), __( 'dishes' ), __( 'eats' ), __( 'menu list') ],
 		attributes: {
 			enableTwoColumns : {
 				type: 'boolean',

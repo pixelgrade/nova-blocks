@@ -19,6 +19,8 @@ export default registerBlockType( 'novablocks/slideshow',
 		description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.slideshow,
+		// Additional search terms
+		keywords: [ __( 'slider' ), __( 'carousel' ), __( 'images' ), __( 'cover' ) ],
 		edit,
 		save() {
 			return <InnerBlocks.Content />;
