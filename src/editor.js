@@ -31,9 +31,13 @@ const {
 } = wp.data;
 
 class novaBlocks {
+
 	initialize( settings ) {
-		dispatch( STORE_NAME ).updateSettings( settings );
 		addSeparatorFilters( settings );
+
+		wp.domReady( function() {
+			dispatch( STORE_NAME ).updateSettings( settings );
+		} );
 	}
 }
 

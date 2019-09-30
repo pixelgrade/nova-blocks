@@ -13,9 +13,7 @@ function novablocks_settings_init() {
 
     $script = <<<JS
     ( function() {
-        wp.domReady( function() {
-            wp.novaBlocks.initialize( %s );
-        } );
+        wp.novaBlocks.initialize( %s );
     } )();
 JS;
 
