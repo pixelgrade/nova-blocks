@@ -51,7 +51,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 			$blog_info   = get_bloginfo( 'name' );
 			$description = get_bloginfo( 'description', 'display' );
 
-			if ( ! empty( $blog_info ) || ! empty( $description ) ) { ?>
+			if ( (! empty( $blog_info ) || ! empty( $description ) ) & get_theme_mod( 'header_text', true ) ) { ?>
                 <div class="site-info">
 					<?php if ( ! empty( $blog_info ) ) { ?>
 						<?php if ( is_front_page() || is_home() ) { ?>
