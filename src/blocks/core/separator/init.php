@@ -15,7 +15,7 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
 	function novablocks_render_separator_block( $attributes, $content ) {
 		ob_start(); ?>
-			<div class="wp-block-separator <?php echo $attributes['className']; ?>">
+			<div class="wp-block-separator <?php echo ! empty( $attributes['className'] ) ? $attributes['className'] : ''; ?>">
                 <?php
                     $novablocks_settings = novablocks_get_block_editor_settings();
                     if ( ! empty( $novablocks_settings['separator'] && ! empty( $novablocks_settings['separator']['markup'] ) ) ) {

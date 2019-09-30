@@ -23,14 +23,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 	function novablocks_render_header_block( $attributes, $content ) {
 
-		$classes = array();
-
 		ob_start();
 
 		do_action( 'novablocks_header:before' );
 
-		$attributes_config = novablocks_get_header_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
 		global $novablocks_responsive_navigation_outputted;
 

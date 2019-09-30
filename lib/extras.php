@@ -134,15 +134,14 @@ function novablocks_get_alignment_attributes() {
 
 function novablocks_is_parallax_enabled( $attributes ) {
 	$enableParallax = $attributes[ 'enableParallax' ];
-	$parallaxAttributes = novablocks_get_parallax_attributes();
-
 	if ( ! empty( $enableParallax ) ) {
 		return $enableParallax;
 	} elseif ( $enableParallax === false ) {
 		return false;
 	}
 
-	return $parallaxAttributes[ 'enableParallax' ][ 'default' ];
+	$parallaxAttributes = novablocks_get_parallax_attributes();
+	return isset( $parallaxAttributes[ 'enableParallax' ][ 'default' ] ) ? $parallaxAttributes[ 'enableParallax' ][ 'default' ] : false;
 }
 
 function novablocks_get_parallax_amount( $attributes ) {
@@ -300,8 +299,11 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
 
 	    	if ( $attributes_config[ $key ][ 'source' ] === 'meta' ) {
 			    $attributes[ $key ] = get_post_meta( get_the_ID(), $attributes_config[ $key ][ 'meta' ], true );
-		    } else {
+		    } elseif ( isset( $attributes_config[ $key ][ 'default' ] ) ) {
 		        $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
+		    } else {
+	    		// Put some value since some might use it. We should not get here, but do our best if we do.
+			    $attributes[ $key ] = '';
 		    }
 	    }
     }

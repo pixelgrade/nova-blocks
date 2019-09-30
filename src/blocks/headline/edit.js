@@ -42,7 +42,7 @@ export default function HeadlineEdit( props ) {
 	return (
 		<Fragment>
 			<BlockControls>
-				<HeadingToolbar minLevel={ 2 } maxLevel={ 5 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 				<AlignmentToolbar
 					value={ align }
 					onChange={ ( nextAlign ) => {
@@ -52,7 +52,7 @@ export default function HeadlineEdit( props ) {
 			</BlockControls>
 			<InspectorControls>
 				<p>{ __( 'Level' ) }</p>
-				<HeadingToolbar minLevel={ 1 } maxLevel={ 7 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 			</InspectorControls>
 
 			<TagName

@@ -16,7 +16,7 @@ export const debounce = (func, wait) => {
 
 export const range = function( min, max ) {
 	const array = [];
-	for ( let i = 0; i < max - min; i++ ) {
+	for ( let i = 0; i <= max - min; i++ ) {
 		array.push( i + min );
 	}
 	return array;
