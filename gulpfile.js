@@ -134,7 +134,7 @@ gulp.task( 'fix-line-endings', maybeFixIncorrectLineEndings );
 // Replace the plugin's text domain with the actual text domain
 // -----------------------------------------------------------------------------
 function pluginTextdomainReplace() {
-  return gulp.src( ['../build/' + plugin + '/**/*.php', '../build/' + plugin + '/**/*.js', '../build/' + plugin + '/languages/*.pot'] )
+  return gulp.src( ['../build/' + plugin + '/**/*.php', '../build/' + plugin + '/**/*.js', '../build/' + plugin + '/**/*.pot'] )
     .pipe( plugins.replace( /__plugin_txtd/g, plugin ) )
     .pipe( gulp.dest( '../build/' + plugin ) );
 }
