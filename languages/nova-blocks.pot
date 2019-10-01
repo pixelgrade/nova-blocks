@@ -1,0 +1,769 @@
+# Copyright (C) 2019 Pixelgrade
+# This file is distributed under the same license as the Nova Blocks plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Nova Blocks 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/nova-blocks\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-10-01T11:43:22+03:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.3.0\n"
+"X-Domain: __plugin_txtd\n"
+
+#. Plugin Name of the plugin
+msgid "Nova Blocks"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/pixelgrade/nova-blocks/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape."
+msgstr ""
+
+#. Author of the plugin
+msgid "Pixelgrade"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.pixelgrade.com"
+msgstr ""
+
+#: lib/extras.php:470
+#: lib/extras.php:484
+msgid "Basic"
+msgstr ""
+
+#: lib/extras.php:474
+#: lib/extras.php:488
+msgid "Moderate"
+msgstr ""
+
+#: lib/extras.php:478
+#: lib/extras.php:492
+msgid "Highlighted"
+msgstr ""
+
+#: lib/extras.php:548
+msgid "Auto"
+msgstr ""
+
+#: lib/extras.php:552
+#: lib/extras.php:588
+msgid "Half"
+msgstr ""
+
+#: lib/extras.php:556
+#: lib/extras.php:592
+msgid "Two Thirds"
+msgstr ""
+
+#: lib/extras.php:560
+#: lib/extras.php:596
+msgid "Three Quarters"
+msgstr ""
+
+#: lib/extras.php:564
+msgid "Full Height"
+msgstr ""
+
+#: lib/extras.php:574
+#: src/components/color-controls/index.js:49
+msgid "None"
+msgstr ""
+
+#: lib/extras.php:578
+msgid "First Hero Block Only"
+msgstr ""
+
+#: lib/extras.php:582
+msgid "All Hero Blocks"
+msgstr ""
+
+#: lib/extras.php:600
+#: lib/extras.php:624
+msgid "Full"
+msgstr ""
+
+#: lib/extras.php:606
+msgid "Small"
+msgstr ""
+
+#: lib/extras.php:610
+msgid "Medium"
+msgstr ""
+
+#: lib/extras.php:614
+#: lib/extras.php:628
+msgid "Large"
+msgstr ""
+
+#: lib/extras.php:618
+#: lib/extras.php:636
+#: lib/extras.php:654
+msgid "Custom"
+msgstr ""
+
+#: lib/extras.php:632
+msgid "Narrow"
+msgstr ""
+
+#: lib/extras.php:642
+msgid "Fast as Mercure"
+msgstr ""
+
+#: lib/extras.php:646
+msgid "Natural as Earth"
+msgstr ""
+
+#: lib/extras.php:650
+msgid "Slow as Neptune"
+msgstr ""
+
+#: src/blocks/header/init.php:45
+msgid "Menu"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:24
+msgid "Announcement Bar"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:25
+msgid "Display a featured message through a banner across the top of your site."
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:28
+msgid "Promo Bar"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:28
+msgid "Welcome Header Bar"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:28
+msgid "Top Bar"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:31
+msgid "Accent"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:35
+msgid "Alternative"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:38
+msgid "Alert"
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:76
+msgid "Add a link to make the whole Announcement Bar clickable."
+msgstr ""
+
+#: src/blocks/announcement-bar/index.js:93
+msgid "Open in new tab"
+msgstr ""
+
+#: src/blocks/google-map/api-key-panel-body.js:33
+msgid "Google Maps API Key"
+msgstr ""
+
+#: src/blocks/google-map/api-key-panel-body.js:35
+#: src/blocks/google-map/placeholder.js:48
+msgid "Paste API key here"
+msgstr ""
+
+#: src/blocks/google-map/api-key-panel-body.js:41
+#: src/blocks/google-map/placeholder.js:54
+msgid "Save"
+msgstr ""
+
+#: src/blocks/google-map/edit.js:160
+msgid "register a Google Maps API Key"
+msgstr ""
+
+#: src/blocks/google-map/edit.js:164
+msgid "It seems that your Google Maps API key is INVALID. Please double check that you pasted it correctly and that it is a valid API key. More information about how to"
+msgstr ""
+
+#: src/blocks/google-map/edit.js:169
+msgid "To display the map, you need to"
+msgstr ""
+
+#: src/blocks/google-map/edit.js:169
+msgid "and include it bellow."
+msgstr ""
+
+#: src/blocks/google-map/index.js:18
+msgid "Map of the World"
+msgstr ""
+
+#: src/blocks/google-map/index.js:19
+msgid "Display an interactive map to show the location of your venue."
+msgstr ""
+
+#: src/blocks/google-map/index.js:23
+msgid "google"
+msgstr ""
+
+#: src/blocks/google-map/index.js:23
+msgid "maps"
+msgstr ""
+
+#: src/blocks/google-map/index.js:23
+msgid "google maps"
+msgstr ""
+
+#: src/blocks/google-map/index.js:23
+msgid "location"
+msgstr ""
+
+#: src/blocks/google-map/inspector-controls.js:52
+msgid "Map Design"
+msgstr ""
+
+#: src/blocks/google-map/inspector-controls.js:68
+msgid "Show Nearby Venues"
+msgstr ""
+
+#: src/blocks/google-map/inspector-controls.js:73
+msgid "Show Street Labels"
+msgstr ""
+
+#: src/blocks/google-map/inspector-controls.js:78
+msgid "Show Controls"
+msgstr ""
+
+#: src/blocks/google-map/inspector-controls.js:83
+msgid "Zoom Level"
+msgstr ""
+
+#: src/blocks/google-map/map.js:198
+msgid "Enter an address to drop a pin on this map"
+msgstr ""
+
+#: src/blocks/google-map/placeholder.js:42
+msgid "Location Map of The World"
+msgstr ""
+
+#: src/blocks/header/edit.js:23
+msgid "Logo on the left side and one navigation menu"
+msgstr ""
+
+#: src/blocks/header/edit.js:35
+msgid "Logo centered and one navigation menu on each side"
+msgstr ""
+
+#: src/blocks/header/edit.js:89
+msgid "Change Layout"
+msgstr ""
+
+#: src/blocks/header/index.js:17
+msgid "Header"
+msgstr ""
+
+#: src/blocks/header/index.js:18
+msgid "Outputs custom header markup."
+msgstr ""
+
+#: src/blocks/header/index.js:22
+msgid "logo"
+msgstr ""
+
+#: src/blocks/header/index.js:22
+#: src/blocks/navigation/index.js:20
+msgid "menu"
+msgstr ""
+
+#: src/blocks/headline/edit.js:49
+msgid "Level"
+msgstr ""
+
+#: src/blocks/headline/edit.js:64
+msgid "Subtitle…"
+msgstr ""
+
+#: src/blocks/headline/edit.js:74
+msgid "Write title…"
+msgstr ""
+
+#. translators: %s: heading level e.g: "1", "2", "3"
+#: src/blocks/headline/heading-toolbar.js:19
+msgid "Heading %d"
+msgstr ""
+
+#: src/blocks/headline/index.js:16
+msgid "Headline"
+msgstr ""
+
+#: src/blocks/headline/index.js:17
+msgid "Advanced heading block with a fancier display"
+msgstr ""
+
+#: src/blocks/headline/index.js:21
+msgid "heading"
+msgstr ""
+
+#: src/blocks/headline/index.js:21
+msgid "title"
+msgstr ""
+
+#: src/blocks/headline/index.js:21
+msgid "cta"
+msgstr ""
+
+#: src/blocks/headline/index.js:21
+msgid "call to action"
+msgstr ""
+
+#: src/blocks/headline/index.js:29
+msgid "Our Story"
+msgstr ""
+
+#: src/blocks/headline/index.js:33
+msgid "Discover"
+msgstr ""
+
+#: src/blocks/hero/block-controls.js:40
+#: src/blocks/media/block-controls.js:75
+#: src/blocks/slideshow/block-controls.js:66
+msgid "Change Media"
+msgstr ""
+
+#: src/blocks/hero/edit.js:129
+msgid "Focal Point"
+msgstr ""
+
+#: src/blocks/hero/index.js:19
+msgid "Hero of the Galaxy"
+msgstr ""
+
+#: src/blocks/hero/index.js:20
+msgid "A great way to get your visitors acquainted with your content."
+msgstr ""
+
+#: src/blocks/hero/index.js:24
+#: src/blocks/slideshow/index.js:23
+msgid "cover"
+msgstr ""
+
+#: src/blocks/hero/index.js:24
+msgid "full width"
+msgstr ""
+
+#: src/blocks/hero/index.js:24
+msgid "hero image"
+msgstr ""
+
+#: src/blocks/hero/index.js:24
+msgid "cover section"
+msgstr ""
+
+#: src/blocks/logo/index.js:14
+msgid "Logo"
+msgstr ""
+
+#: src/blocks/logo/index.js:15
+msgid "Outputs custom logo markup."
+msgstr ""
+
+#: src/blocks/logo/index.js:19
+msgid "branding"
+msgstr ""
+
+#: src/blocks/media/block-controls.js:25
+msgid "Show Media on Left Side"
+msgstr ""
+
+#: src/blocks/media/block-controls.js:29
+msgid "Show Media on Right Side"
+msgstr ""
+
+#: src/blocks/media/index.js:16
+msgid "Media Card Constellation"
+msgstr ""
+
+#: src/blocks/media/index.js:17
+msgid "Display media objects alongside short pieces of content."
+msgstr ""
+
+#: src/blocks/media/index.js:21
+msgid "image with text"
+msgstr ""
+
+#: src/blocks/media/index.js:21
+msgid "columns"
+msgstr ""
+
+#: src/blocks/media/index.js:21
+msgid "side text"
+msgstr ""
+
+#: src/blocks/media/inspector-controls.js:38
+msgid "Content Area"
+msgstr ""
+
+#: src/blocks/media/inspector-controls.js:40
+#: src/blocks/media/inspector-controls.js:50
+msgid "Emphasis Level"
+msgstr ""
+
+#: src/blocks/media/inspector-controls.js:48
+msgid "Block Area"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:16
+#: src/blocks/menu-food-item/inspector-controls.js:21
+msgid "Menu Item"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:17
+msgid "A food or drink item contained in a menu or menu section."
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:21
+msgid "menu item"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:21
+msgid "food item"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:21
+msgid "dish"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:21
+msgid "list item"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:26
+msgid "Sweet Shrimp Salad"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:30
+msgid "Tomatillo, Baja Crema, Cabbage, Fried Okra"
+msgstr ""
+
+#: src/blocks/menu-food-item/index.js:42
+msgid "Our top pick"
+msgstr ""
+
+#: src/blocks/menu-food-item/inspector-controls.js:24
+msgid "Highlight item"
+msgstr ""
+
+#: src/blocks/menu-food-item/inspector-controls.js:25
+msgid "Use it if you want to highlight some of the menu items and make them stand out."
+msgstr ""
+
+#: src/blocks/menu-food-item/inspector-controls.js:31
+msgid "On sale"
+msgstr ""
+
+#: src/blocks/menu-food-item/preview.js:58
+msgid "Product Title"
+msgstr ""
+
+#: src/blocks/menu-food-item/preview.js:68
+msgid "$0.00"
+msgstr ""
+
+#: src/blocks/menu-food-item/preview.js:90
+msgid "Product Description"
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:16
+msgid "Food Menu Section"
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:17
+msgid "A subgrouping of the Menu."
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:21
+msgid "menu section"
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:21
+msgid "food section"
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:21
+msgid "list section"
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:21
+msgid "dishes section"
+msgstr ""
+
+#: src/blocks/menu-food-section/index.js:26
+msgid "Drinks"
+msgstr ""
+
+#: src/blocks/menu-food-section/preview.js:61
+msgid "Add New Menu Item"
+msgstr ""
+
+#: src/blocks/menu-food-section/preview.js:65
+msgid "Add Menu Item"
+msgstr ""
+
+#: src/blocks/menu-food/index.js:18
+msgid "Food Menu"
+msgstr ""
+
+#: src/blocks/menu-food/index.js:19
+msgid "Display a list of food or drink items available at your venue."
+msgstr ""
+
+#: src/blocks/menu-food/index.js:23
+msgid "food menu"
+msgstr ""
+
+#: src/blocks/menu-food/index.js:23
+msgid "restaurant menu"
+msgstr ""
+
+#: src/blocks/menu-food/index.js:23
+msgid "dishes"
+msgstr ""
+
+#: src/blocks/menu-food/index.js:23
+msgid "eats"
+msgstr ""
+
+#: src/blocks/menu-food/index.js:23
+msgid "menu list"
+msgstr ""
+
+#: src/blocks/menu-food/inspector-controls.js:21
+#: src/blocks/opentable/inspector-controls.js:50
+#: src/components/layout-panel/index.js:21
+msgid "Layout"
+msgstr ""
+
+#: src/blocks/menu-food/inspector-controls.js:23
+msgid "2 columns"
+msgstr ""
+
+#: src/blocks/menu-food/preview.js:77
+msgid "Add New Menu Section"
+msgstr ""
+
+#: src/blocks/menu-food/preview.js:81
+msgid "Add Menu Section"
+msgstr ""
+
+#: src/blocks/navigation/index.js:15
+msgid "Space Navigation"
+msgstr ""
+
+#: src/blocks/navigation/index.js:16
+msgid "Outputs chosen navigaiton menu markup."
+msgstr ""
+
+#: src/blocks/navigation/index.js:20
+msgid "site menu"
+msgstr ""
+
+#: src/blocks/navigation/index.js:20
+msgid "primary"
+msgstr ""
+
+#: src/blocks/navigation/index.js:20
+msgid "secondary"
+msgstr ""
+
+#: src/blocks/opentable/index.js:17
+msgid "OpenTable Reservation"
+msgstr ""
+
+#: src/blocks/opentable/index.js:18
+msgid "Add OpenTable online reservation booking to your site."
+msgstr ""
+
+#: src/blocks/opentable/index.js:22
+msgid "reservations"
+msgstr ""
+
+#: src/blocks/opentable/index.js:22
+msgid "bookings"
+msgstr ""
+
+#: src/blocks/opentable/inspector-controls.js:23
+msgid "Settings"
+msgstr ""
+
+#: src/blocks/opentable/inspector-controls.js:61
+msgid "Show OpenTable Logo"
+msgstr ""
+
+#: src/blocks/slideshow/index.js:18
+msgid "Slideshow Me the Way"
+msgstr ""
+
+#: src/blocks/slideshow/index.js:19
+msgid "Display more than one piece of content in a single, coveted space."
+msgstr ""
+
+#: src/blocks/slideshow/index.js:23
+msgid "slider"
+msgstr ""
+
+#: src/blocks/slideshow/index.js:23
+msgid "carousel"
+msgstr ""
+
+#: src/blocks/slideshow/index.js:23
+msgid "images"
+msgstr ""
+
+#: src/blocks/slideshow/inspector-controls.js:54
+msgid "Slides"
+msgstr ""
+
+#: src/blocks/slideshow/inspector-controls.js:79
+#: src/components/height-controls/index.js:41
+msgid "Height"
+msgstr ""
+
+#: src/blocks/slideshow/inspector-controls.js:81
+#: src/components/height-controls/index.js:52
+msgid "Minimum Height"
+msgstr ""
+
+#: src/blocks/slideshow/inspector-controls.js:93
+msgid "Coming Soon"
+msgstr ""
+
+#: src/components/alignment-controls/index.js:35
+msgid "Content Alignment"
+msgstr ""
+
+#: src/components/alignment-controls/index.js:59
+msgid "Horizontal"
+msgstr ""
+
+#: src/components/alignment-controls/index.js:72
+msgid "Vertical"
+msgstr ""
+
+#: src/components/block-horizontal-alignment-toolbar/index.js:26
+msgid "Align Left"
+msgstr ""
+
+#: src/components/block-horizontal-alignment-toolbar/index.js:30
+msgid "Align Middle"
+msgstr ""
+
+#: src/components/block-horizontal-alignment-toolbar/index.js:34
+msgid "Align Right"
+msgstr ""
+
+#: src/components/color-controls/index.js:27
+#: src/components/color-controls/index.js:50
+msgid "Dark"
+msgstr ""
+
+#: src/components/color-controls/index.js:30
+#: src/components/color-controls/index.js:51
+msgid "Light"
+msgstr ""
+
+#: src/components/color-controls/index.js:46
+msgid "Overlay Filter Style"
+msgstr ""
+
+#: src/components/color-controls/index.js:56
+msgid "Overlay Filter Strength"
+msgstr ""
+
+#: src/components/color-controls/index.js:95
+msgid "Color Settings"
+msgstr ""
+
+#: src/components/color-controls/index.js:100
+msgid "Content Color"
+msgstr ""
+
+#: src/components/color-controls/index.js:122
+msgid "Color Options"
+msgstr ""
+
+#: src/components/gallery-options/index.js:45
+msgid "Drag images, upload new ones or select files from your library."
+msgstr ""
+
+#: src/components/height-controls/index.js:43
+msgid "Apply Minimum Height"
+msgstr ""
+
+#: src/components/height-controls/index.js:82
+msgid "Scroll Indicator"
+msgstr ""
+
+#: src/components/height-controls/index.js:84
+msgid "Enable Scroll Indicator"
+msgstr ""
+
+#: src/components/layout-panel/padding.js:35
+msgid "Content Padding"
+msgstr ""
+
+#: src/components/layout-panel/width.js:35
+msgid "Content Width"
+msgstr ""
+
+#: src/components/parallax-panel/index.js:34
+msgid "Parallax"
+msgstr ""
+
+#: src/components/parallax-panel/index.js:36
+msgid "Enable Parallax Scrolling"
+msgstr ""
+
+#: src/components/parallax-panel/index.js:42
+msgid "Parallax Orbital Speed"
+msgstr ""
+
+#: src/components/parallax-panel/index.js:57
+msgid "The speed at which the parallax effect runs."
+msgstr ""
+
+#: src/components/parallax-panel/index.js:67
+msgid "It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place."
+msgstr ""
+
+#: src/components/position-indicators-panel/index.js:14
+msgid "Position Indicators"
+msgstr ""
+
+#: src/components/position-indicators-panel/index.js:16
+msgid "Enable Position Indicators"
+msgstr ""
+
+#: src/filters/with-font-size-picker/index.js:38
+msgid "Smaller"
+msgstr ""
+
+#: src/filters/with-font-size-picker/index.js:39
+msgid "Normal"
+msgstr ""
+
+#: src/filters/with-font-size-picker/index.js:40
+msgid "Larger"
+msgstr ""
+
+#: src/filters/with-font-size-picker/index.js:75
+msgid "Text Settings"
+msgstr ""
+
+#: src/filters/with-font-size-picker/index.js:77
+msgid "Font Size"
+msgstr ""

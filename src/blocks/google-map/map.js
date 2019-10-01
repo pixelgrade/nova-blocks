@@ -195,7 +195,7 @@ const MapWrapper = ( Map ) => {
 						<input
 							type="text"
 							id={ `novablocks-google-map-search-input-${ props.clientId }` }
-							placeholder={ __( 'Enter an address to drop a pin on this map' ) }
+							placeholder={ __( 'Enter an address to drop a pin on this map', '__plugin_txtd' ) }
 						/>
 					</Placeholder>
 				</div>

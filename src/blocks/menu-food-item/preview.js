@@ -55,7 +55,7 @@ const FoodMenuItemPreview = function( props ) {
 					value={title}
 					tagName="h4"
 					className="item-title"
-					placeholder={__( 'Product Title' )}
+					placeholder={__( 'Product Title', '__plugin_txtd' )}
 					onChange={title => setAttributes( {title} )}
 				/>
 			</div>
@@ -65,7 +65,7 @@ const FoodMenuItemPreview = function( props ) {
 					value={price}
 					tagName="span"
 					className="item-price"
-					placeholder={__( '$0.00' )}
+					placeholder={__( '$0.00', '__plugin_txtd' )}
 					onChange={price => setAttributes( {price} )}
 				/>
 
@@ -87,7 +87,7 @@ const FoodMenuItemPreview = function( props ) {
 					value={description}
 					tagName="p"
 					className="item-description"
-					placeholder={__( 'Product Description' )}
+					placeholder={__( 'Product Description', '__plugin_txtd' )}
 					onChange={description => setAttributes( {description} )}
 				/>
 			</div>

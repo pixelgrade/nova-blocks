@@ -16,7 +16,7 @@ class HeadingToolbar extends Component {
 		return {
 			icon: 'heading',
 			// translators: %s: heading level e.g: "1", "2", "3"
-			title: sprintf( __( 'Heading %d' ), targetLevel ),
+			title: sprintf( __( 'Heading %d', '__plugin_txtd' ), targetLevel ),
 			isActive: targetLevel === selectedLevel,
 			onClick: () => onChange( targetLevel ),
 			subscript: String( targetLevel ),

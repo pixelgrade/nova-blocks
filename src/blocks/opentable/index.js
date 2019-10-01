@@ -19,7 +19,7 @@ export default registerBlockType( 'novablocks/opentable',
 		category: 'nova-blocks',
 		icon: icons.opentable,
 		// Additional search terms
-		keywords: [ __( 'reservations' ), __( 'bookings' ) ],
+		keywords: [ __( 'reservations', '__plugin_txtd' ), __( 'bookings', '__plugin_txtd' ) ],
 		attributes: {
 			restaurantId: {
 				type: 'number',

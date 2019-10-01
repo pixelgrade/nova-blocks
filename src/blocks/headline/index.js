@@ -18,7 +18,7 @@ export default registerBlockType( 'novablocks/headline',
 		category: 'nova-blocks',
 		icon: icons.headline,
 		// Additional search terms
-		keywords: [ __( 'heading' ), __( 'title' ), __( 'cta' ), __( 'call to action' ) ],
+		keywords: [ __( 'heading', '__plugin_txtd' ), __( 'title', '__plugin_txtd' ), __( 'cta', '__plugin_txtd' ), __( 'call to action', '__plugin_txtd' ) ],
 		attributes: {
 			align: {
 				type: "string",
@@ -26,11 +26,11 @@ export default registerBlockType( 'novablocks/headline',
 			},
 			primary: {
 				type: "string",
-				default: "Our Story"
+				default: __( "Our Story", '__plugin_txtd' )
 			},
 			secondary: {
 				type: "string",
-				default: "Discover"
+				default: __( "Discover", '__plugin_txtd' )
 			},
 			level: {
 				type: "number",

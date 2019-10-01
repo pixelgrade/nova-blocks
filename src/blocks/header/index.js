@@ -19,7 +19,7 @@ export default registerBlockType( 'novablocks/header',
 		category: 'nova-blocks',
 		icon: icons.header,
 		// Additional search terms
-		keywords: [ __( 'logo' ), __( 'menu' ) ],
+		keywords: [ __( 'logo', '__plugin_txtd' ), __( 'menu', '__plugin_txtd' ) ],
 		supports: { align: ["wide", "full"], default: "full" },
 		edit,
 		save: function() {

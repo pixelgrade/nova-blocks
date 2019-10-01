@@ -20,7 +20,7 @@ const {
 
 const TEMPLATE_OPTIONS = [
 	{
-		title: __( 'Logo on the left side and one navigation menu' ),
+		title: __( 'Logo on the left side and one navigation menu', '__plugin_txtd' ),
 		name: 'logo-left',
 		icon: icons.logoLeft,
 		template: [
@@ -32,7 +32,7 @@ const TEMPLATE_OPTIONS = [
 		],
 	},
 	{
-		title: __( 'Logo centered and one navigation menu on each side' ),
+		title: __( 'Logo centered and one navigation menu on each side', '__plugin_txtd' ),
 		name: 'logo-center',
 		icon: icons.logoCenter,
 		template: [
@@ -86,7 +86,7 @@ export default function Edit( props ) {
 				<Toolbar>
 					<IconButton
 						className="components-icon-button components-toolbar__control"
-						label={ __( 'Change Layout' ) }
+						label={ __( 'Change Layout', '__plugin_txtd' ) }
 						onClick={ () => setTemplate( null ) }
 						icon="edit"
 					/>

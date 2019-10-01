@@ -17,7 +17,7 @@ export default registerBlockType( 'novablocks/navigation',
 		category: 'nova-blocks',
 		icon: icons.navigation,
 		// Additional search terms
-		keywords: [ __( 'menu' ), __( 'site menu' ), __( 'primary' ), __( 'secondary' ) ],
+		keywords: [ __( 'menu', '__plugin_txtd' ), __( 'site menu', '__plugin_txtd' ), __( 'primary', '__plugin_txtd' ), __( 'secondary', '__plugin_txtd' ) ],
 		parent: ['novablocks/header'],
 		save: function() {},
 		edit,

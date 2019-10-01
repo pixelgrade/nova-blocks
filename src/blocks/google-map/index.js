@@ -20,7 +20,7 @@ export default registerBlockType( 'novablocks/google-map',
 		category: 'nova-blocks',
 		icon: icons.map,
 		// Additional search terms
-		keywords: [ __( 'google' ), __( 'maps' ), __( 'google maps' ), __( 'location' ) ],
+		keywords: [ __( 'google', '__plugin_txtd' ), __( 'maps', '__plugin_txtd' ), __( 'google maps', '__plugin_txtd' ), __( 'location', '__plugin_txtd' ) ],
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
 			if ( 'center' === align || 'full' === align ) {

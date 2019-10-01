@@ -25,17 +25,17 @@ export default registerBlockType( 'novablocks/announcement-bar',
 		description: __( 'Display a featured message through a banner across the top of your site.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.announcement,
-		keywords: [ __( 'Promo Bar' ), __( 'Welcome Header Bar' ), __( 'Top Bar' ) ],
+		keywords: [ __( 'Promo Bar', '__plugin_txtd' ), __( 'Welcome Header Bar', '__plugin_txtd' ), __( 'Top Bar', '__plugin_txtd' ) ],
 		styles: [ {
 			name: 'accent',
-			label: __( 'Accent' ),
+			label: __( 'Accent', '__plugin_txtd' ),
 			isDefault: true
 		}, {
 			name: 'alternative',
-			label: __( 'Alternative' )
+			label: __( 'Alternative', '__plugin_txtd' )
 		}, {
 			name: 'alert',
-			label: __( 'Alert' )
+			label: __( 'Alert', '__plugin_txtd' )
 		} ],
 		save: function() {},
 		edit: function( props ) {
@@ -73,7 +73,7 @@ export default registerBlockType( 'novablocks/announcement-bar',
 					{ isSelected &&
 					  <div className="novablocks-announcement-bar__url-field-wrapper">
 						  <BaseControl
-							  label={ __( 'Add a link to make the whole Announcement Bar clickable.' ) }
+							  label={ __( 'Add a link to make the whole Announcement Bar clickable.', '__plugin_txtd' ) }
 							  className="wp-block-button__inline-link">
 							  <URLInput
 								  className="wp-block-button__inline-link-input"
@@ -90,7 +90,7 @@ export default registerBlockType( 'novablocks/announcement-bar',
 							  onChange={ ( opensInNewTab ) => {
 								  setAttributes( { opensInNewTab } );
 							  } }
-							  label={ __( 'Open in new tab' ) }
+							  label={ __( 'Open in new tab', '__plugin_txtd' ) }
 						  />
 					  </div> }
 

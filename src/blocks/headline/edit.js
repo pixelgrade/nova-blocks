@@ -46,7 +46,7 @@ export default function HeadlineEdit( props ) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<p>{ __( 'Level' ) }</p>
+				<p>{ __( 'Level', '__plugin_txtd' ) }</p>
 				<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 			</InspectorControls>
 

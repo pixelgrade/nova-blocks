@@ -20,7 +20,7 @@ export default registerBlockType( 'novablocks/slideshow',
 		category: 'nova-blocks',
 		icon: icons.slideshow,
 		// Additional search terms
-		keywords: [ __( 'slider' ), __( 'carousel' ), __( 'images' ), __( 'cover' ) ],
+		keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
 		edit,
 		save() {
 			return <InnerBlocks.Content />;

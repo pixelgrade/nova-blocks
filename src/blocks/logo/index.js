@@ -16,7 +16,7 @@ export default registerBlockType( 'novablocks/logo',
 		category: 'nova-blocks',
 		icon: icons.logo,
 		// Additional search terms
-		keywords: [ __( 'branding' ) ],
+		keywords: [ __( 'branding', '__plugin_txtd' ) ],
 		parent: ['novablocks/header'],
 		save: function() {},
 		edit: function( props ) {

@@ -18,12 +18,12 @@ export default registerBlockType( 'novablocks/menu-food-section',
 		category: 'nova-blocks',
 		icon: icons.foodmenu,
 		// Additional search terms
-		keywords: [ __( 'menu section' ), __( 'food section' ), __( 'list section' ), __( 'dishes section' ) ],
+		keywords: [ __( 'menu section', '__plugin_txtd' ), __( 'food section', '__plugin_txtd' ), __( 'list section', '__plugin_txtd' ), __( 'dishes section', '__plugin_txtd' ) ],
 		parent: ['novablocks/menu-food'],
 		attributes: {
 			sectionTitle: {
 				type: 'string',
-				default: 'Drinks'
+				default: __( 'Drinks', '__plugin_txtd' )
 			}
 		},
 		edit,

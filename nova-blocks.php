@@ -26,6 +26,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Gets this plugin's directory file path.
+ *
+ * @since  1.0.0
+ * @ignore
+ * @access private
+ *
+ * @return string
+ */
+function novablocks_get_plugin_path() {
+	static $novablocks_plugin_path;
+
+	if ( empty( $novablocks_plugin_path ) ) {
+		$novablocks_plugin_path = plugin_dir_path( __FILE__ );
+	}
+
+	return $novablocks_plugin_path;
+}
+
+/**
  * Gets this plugin's URL.
  *
  * @since  1.0.0
@@ -35,13 +54,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function novablocks_get_plugin_url() {
-	static $plugin_url;
+	static $novablocks_plugin_url;
 
-	if ( empty( $plugin_url ) ) {
-		$plugin_url = plugins_url( null, __FILE__ );
+	if ( empty( $novablocks_plugin_url ) ) {
+		$novablocks_plugin_url = plugins_url( null, __FILE__ );
 	}
 
-	return $plugin_url;
+	return $novablocks_plugin_url;
 }
 
 function novablocks_body_class( $classes ) {

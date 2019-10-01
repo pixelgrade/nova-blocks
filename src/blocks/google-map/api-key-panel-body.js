@@ -30,15 +30,15 @@ class ApiKeyPanelBody extends Component {
 		}
 
 		return (
-			<PanelBody title={ __( 'Google Maps API Key' ) }>
+			<PanelBody title={ __( 'Google Maps API Key', '__plugin_txtd' ) }>
 				<TextControl
-					placeholder={ __( 'Paste API key here' ) }
+					placeholder={ __( 'Paste API key here', '__plugin_txtd' ) }
 					value={ apiKey }
 					onChange={ onChangeApiKey }
 					help={ apiKeyInstructions }
 				/>
 				<Button isDefault onClick={ () => { onSaveApiKey( apiKey ) } }>
-					{ __( 'Save' ) }
+					{ __( 'Save', '__plugin_txtd' ) }
 				</Button>
 			</PanelBody>
 		)

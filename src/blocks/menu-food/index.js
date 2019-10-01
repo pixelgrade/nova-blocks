@@ -20,7 +20,7 @@ export default registerBlockType( 'novablocks/menu-food',
 		category: 'nova-blocks',
 		icon: icons.foodmenu,
 		// Additional search terms
-		keywords: [ __( 'food menu' ), __( 'restaurant menu' ), __( 'dishes' ), __( 'eats' ), __( 'menu list') ],
+		keywords: [ __( 'food menu', '__plugin_txtd' ), __( 'restaurant menu', '__plugin_txtd' ), __( 'dishes', '__plugin_txtd' ), __( 'eats', '__plugin_txtd' ), __( 'menu list', '__plugin_txtd' ) ],
 		attributes: {
 			enableTwoColumns : {
 				type: 'boolean',

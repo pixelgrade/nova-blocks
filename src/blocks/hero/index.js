@@ -21,7 +21,7 @@ export default registerBlockType( 'novablocks/hero',
 		category: 'nova-blocks',
 		icon: icons.hero,
 		// Additional search terms
-		keywords: [ __( 'cover' ), __( 'full width' ), __( 'hero image' ), __( 'cover section' ) ],
+		keywords: [ __( 'cover', '__plugin_txtd' ), __( 'full width', '__plugin_txtd' ), __( 'hero image', '__plugin_txtd' ), __( 'cover section', '__plugin_txtd' ) ],
 		edit,
 		example: {},
 		save() {

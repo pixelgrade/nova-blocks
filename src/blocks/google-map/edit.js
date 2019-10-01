@@ -157,16 +157,16 @@ class Edit extends Component {
 	getInstructions() {
 		const { gmAuthFailure } = this.state;
 		const url = '//developers.google.com/maps/documentation/javascript/get-api-key';
-		const hyperlink = <a target="_blank" href={ url }>{ __( 'register a Google Maps API Key' ) }</a>;
+		const hyperlink = <a target="_blank" href={ url }>{ __( 'register a Google Maps API Key', '__plugin_txtd' ) }</a>;
 
 		if ( gmAuthFailure ) {
 			return (
-				<Fragment>{ __( 'It seems that your Google Maps API key is INVALID. Please double check that you pasted it correctly and that it is a valid API key. More information about how to' ) } { hyperlink }</Fragment>
+				<Fragment>{ __( 'It seems that your Google Maps API key is INVALID. Please double check that you pasted it correctly and that it is a valid API key. More information about how to', '__plugin_txtd' ) } { hyperlink }</Fragment>
 			)
 		}
 
 		return (
-			<Fragment>{ __( 'To display the map, you need to' ) } { hyperlink } { __( 'and include it bellow.' ) }</Fragment>
+			<Fragment>{ __( 'To display the map, you need to', '__plugin_txtd' ) } { hyperlink } { __( 'and include it bellow.', '__plugin_txtd' ) }</Fragment>
 		)
 	}
 
