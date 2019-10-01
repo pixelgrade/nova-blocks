@@ -92,6 +92,8 @@ function removeUnneededFiles() {
     'assets/scss',
 		'src/**/scss',
 
+		'src/**/*.js',
+
     'bin',
   ];
 
@@ -103,6 +105,40 @@ function removeUnneededFiles() {
 }
 removeUnneededFiles.description = 'Remove unneeded files and folders from the build folder';
 gulp.task( 'remove-unneeded-files', removeUnneededFiles );
+
+function removeEmptyFolders(done) {
+	function cleanEmptyFoldersRecursively(folder) {
+		var fs = require('fs');
+		var path = require('path');
+
+		var isDir = fs.statSync(folder).isDirectory();
+		if (!isDir) {
+			return;
+		}
+		var files = fs.readdirSync(folder);
+		if (files.length > 0) {
+			files.forEach(function(file) {
+				var fullPath = path.join(folder, file);
+				cleanEmptyFoldersRecursively(fullPath);
+			});
+
+			// re-evaluate files; after deleting subfolder
+			// we may have parent folder empty now
+			files = fs.readdirSync(folder);
+		}
+
+		if (files.length == 0) {
+			console.log("removing: ", folder);
+			fs.rmdirSync(folder);
+			return;
+		}
+	}
+	cleanEmptyFoldersRecursively('./../build/');
+
+	return done();
+}
+removeEmptyFolders.description = 'Remove empty folders from the build folder';
+gulp.task( 'remove-empty-folders', removeEmptyFolders );
 
 function maybeFixBuildDirPermissions(done) {
 
@@ -142,7 +178,7 @@ function pluginTextdomainReplace() {
 gulp.task( 'txtdomain-replace', pluginTextdomainReplace );
 
 function buildSequence(cb) {
-  return gulp.series( 'copy-folder', 'remove-unneeded-files', 'fix-build-dir-permissions', 'fix-build-file-permissions', 'fix-line-endings', 'txtdomain-replace' )(cb);
+  return gulp.series( 'copy-folder', 'remove-unneeded-files', 'remove-empty-folders', 'fix-build-dir-permissions', 'fix-build-file-permissions', 'fix-line-endings', 'txtdomain-replace' )(cb);
 }
 buildSequence.description = 'Sets up the build folder';
 gulp.task( 'build', buildSequence );
