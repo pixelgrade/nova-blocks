@@ -69,6 +69,7 @@ function removeUnneededFiles() {
     '**/__MACOSX',
     'README.md',
     '**/README.md',
+		'CONTRIBUTING.md',
     '.csscomb',
     '.csscomb.json',
     '.codeclimate.yml',
@@ -130,7 +131,7 @@ maybeFixIncorrectLineEndings.description = 'Make sure that all line endings in t
 gulp.task( 'fix-line-endings', maybeFixIncorrectLineEndings );
 
 // -----------------------------------------------------------------------------
-// Replace the themes' text domain with the actual text domain (think variations)
+// Replace the plugin's text domain with the actual text domain
 // -----------------------------------------------------------------------------
 function pluginTextdomainReplace() {
   return gulp.src( ['../build/' + plugin + '/**/*.php', '../build/' + plugin + '/**/*.js', '../build/' + plugin + '/languages/*.pot'] )
@@ -147,7 +148,7 @@ gulp.task( 'build', buildSequence );
 
 
 // -----------------------------------------------------------------------------
-// Create the theme installer archive and delete the build folder
+// Create the plugin installer archive and delete the build folder
 // -----------------------------------------------------------------------------
 function makeZip() {
   var versionString = '';
@@ -174,7 +175,7 @@ function makeZip() {
   return gulp.src('./')
     .pipe( plugins.exec('cd ./../; rm -rf ' + plugin[0].toUpperCase() + plugin.slice(1) + '*.zip; cd ./build/; zip -r -X ./../' + plugin[0].toUpperCase() + plugin.slice(1) + versionString + '.zip ./; cd ./../; rm -rf build'));
 }
-makeZip.description = 'Create the theme installer archive and delete the build folder';
+makeZip.description = 'Create the plugin installer archive and delete the build folder';
 gulp.task( 'make-zip', makeZip );
 
 function zipSequence(cb) {
