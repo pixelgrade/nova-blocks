@@ -28,6 +28,10 @@ const SlideshowPreview = class extends Component {
 	}
 
 	updateDimensions() {
+		if ( !this.container ) {
+			return;
+		}
+
 		this.setState( {
 			dimensions: {
 				width: this.container.offsetWidth,

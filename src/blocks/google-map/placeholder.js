@@ -46,6 +46,7 @@ class MapPlaceholder extends Component {
 				<TextControl
 					className="components-placeholder__input"
 					placeholder={ __( 'Paste API key here' ) }
+					value={ this.state.apiKey }
 					onChange={ ( apiKey ) => { this.setState( { apiKey } ) } }
 					onKeyDown={ ( { keyCode } ) => { this.handleKeyDown( keyCode ) } }
 				/>

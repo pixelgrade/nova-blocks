@@ -33,6 +33,11 @@ const {
 	Settings
 } = wp.api.models;
 
+window.gm_authFailure = function() {
+	// This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
+	window.dispatchEvent( new Event('novablock.googlemaps_authfailure') );
+}
+
 class Edit extends Component {
 
 	constructor() {
@@ -43,10 +48,18 @@ class Edit extends Component {
 			fetchedApiKey: false,
 			savedApiKey: '',
 			apiKey: '',
+			gmAuthFailure: false,
 		}
 
 		this.onChangeMarkers = this.onChangeMarkers.bind( this );
+		this.onGoogleMapsAuthFailure = this.onGoogleMapsAuthFailure.bind( this );
 		this.settings = null;
+	}
+
+	onGoogleMapsAuthFailure(event) {
+		this.setState( {
+			gmAuthFailure: true,
+		} );
 	}
 
 	onChangeMarkers( markers ) {
@@ -54,6 +67,8 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
+
+		window.addEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
 
 		wp.api.loadPromise.done( () => {
 			this.settings = new wp.api.models.Settings();
@@ -67,13 +82,17 @@ class Edit extends Component {
 					apiKey,
 				} );
 
-				if ( apiKey !== '' ) {
+				if ( !!apiKey ) {
 					this.loadGoogleMapsScript();
 				}
 			} );
 
 			this.settings.fetch();
 		} );
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
 	}
 
 	loadGoogleMapsScript() {
@@ -111,15 +130,16 @@ class Edit extends Component {
 
 	renderPreview() {
 
-		const { fetchedApiKey, fetchedScript, savedApiKey } = this.state;
+		const { fetchedApiKey, fetchedScript, savedApiKey, gmAuthFailure } = this.state;
 
 		if ( ! fetchedApiKey ) {
 			return <Spinner />
 		}
 
-		if ( ! fetchedScript || ! savedApiKey ) {
+		if ( ! fetchedScript || ! savedApiKey || gmAuthFailure ) {
 			return <MapPlaceholder
 				saveApiKey={ this.saveApiKey.bind( this ) }
+				apiKey={ savedApiKey }
 				apiKeyInstructions={ this.getInstructions() }
 			/>
 		}
@@ -135,14 +155,23 @@ class Edit extends Component {
 	}
 
 	getInstructions() {
+		const { gmAuthFailure } = this.state;
 		const url = '//developers.google.com/maps/documentation/javascript/get-api-key';
-		const hyperlink = <a target="_blank" href={ url }>{ __( 'register a Google Maps API Key ' ) }</a>;
-		const instructions = <Fragment>{ __( 'To display the map, you need to' ) } { hyperlink } { __( 'and include it in the block settings' ) }</Fragment>;
+		const hyperlink = <a target="_blank" href={ url }>{ __( 'register a Google Maps API Key' ) }</a>;
 
-		return instructions;
+		if ( gmAuthFailure ) {
+			return (
+				<Fragment>{ __( 'It seems that your Google Maps API key is INVALID. Please double check that you pasted it correctly and that it is a valid API key. More information about how to' ) } { hyperlink }</Fragment>
+			)
+		}
+
+		return (
+			<Fragment>{ __( 'To display the map, you need to' ) } { hyperlink } { __( 'and include it bellow.' ) }</Fragment>
+		)
 	}
 
 	render() {
+		const { fetchedApiKey, fetchedScript, savedApiKey, gmAuthFailure } = this.state;
 		const { attributes, setAttributes } = this.props;
 		const { align } = attributes;
 
@@ -155,7 +184,7 @@ class Edit extends Component {
 						controls={ [ 'center', 'full' ] }
 					/>
 				</BlockControls>
-				<InspectorControls
+				{ !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && <InspectorControls
 					{ ...this.props }
 					apiKey={ this.state.apiKey }
 					savedApiKey={ this.state.savedApiKey }
@@ -164,7 +193,7 @@ class Edit extends Component {
 					} }
 					onSaveApiKey={ this.saveApiKey.bind( this ) }
 					apiKeyInstructions={ this.getInstructions() }
-				/>
+				/> }
 				{ this.renderPreview() }
 			</Fragment>
        )
