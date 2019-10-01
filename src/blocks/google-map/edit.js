@@ -33,8 +33,9 @@ const {
 	Settings
 } = wp.api.models;
 
+// This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
 window.gm_authFailure = function() {
-	// This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
+	window.googlemaps_authfailure = true;
 	window.dispatchEvent( new Event('novablock.googlemaps_authfailure') );
 }
 
@@ -48,7 +49,7 @@ class Edit extends Component {
 			fetchedApiKey: false,
 			savedApiKey: '',
 			apiKey: '',
-			gmAuthFailure: false,
+			gmAuthFailure: ( typeof window.googlemaps_authfailure === 'undefined' ) ? false : !!window.googlemaps_authfailure,
 		}
 
 		this.onChangeMarkers = this.onChangeMarkers.bind( this );
@@ -124,6 +125,7 @@ class Edit extends Component {
 		const key = new wp.api.models.Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
 
 		key.save().then(() => {
+			this.setState( { gmAuthFailure: false } );
 			this.settings.fetch();
 		} );
 	}
@@ -161,7 +163,7 @@ class Edit extends Component {
 
 		if ( gmAuthFailure ) {
 			return (
-				<Fragment>{ __( 'It seems that your Google Maps API key is INVALID. Please double check that you pasted it correctly and that it is a valid API key. More information about how to', '__plugin_txtd' ) } { hyperlink }</Fragment>
+				<Fragment>{ __( 'It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to', '__plugin_txtd' ) } { hyperlink }</Fragment>
 			)
 		}
 
