@@ -91,6 +91,7 @@ function removeUnneededFiles() {
 
     'assets/scss',
 		'src/**/scss',
+		'src/**/*.scss',
 
 		'src/**/*.js',
 
@@ -133,7 +134,7 @@ function removeEmptyFolders(done) {
 			return;
 		}
 	}
-	cleanEmptyFoldersRecursively('./../build/');
+	cleanEmptyFoldersRecursively('./../build/' + plugin + '/');
 
 	return done();
 }
