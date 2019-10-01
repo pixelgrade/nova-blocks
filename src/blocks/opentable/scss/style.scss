@@ -1,6 +1,6 @@
 .novablocks-opentable {
-	overflow: hidden;
-	transform: translateZ(0);
+
+	z-index: 9999;
 
 	.ot-title[class][class] {
 		line-height: 1;
@@ -83,8 +83,6 @@
 			margin-right: auto;
 
 			display: block;
-
-			overflow: auto;
 
 			@include above(tablet) {
 				display: grid;
