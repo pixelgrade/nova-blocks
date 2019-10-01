@@ -33,9 +33,10 @@ Nova Blocks is a collection of **distinctive Gutenberg blocks,** committed to ma
 
 * [Twenty Nineteen](https://wordpress.org/themes/twentynineteen/) _by WordPress team_
 * [Storefront](https://wordpress.org/themes/storefront/) _by Automattic_
-* [Osteria](https://pixelgrade.com/themes/osteria/) _by Pixelgrade_
+* [Osteria](https://pixelgrade.com/themes/restaurants/osteria/) _by Pixelgrade_
+* [Rosa2](https://pixelgrade.com/themes/restaurants/rosa2/) _by Pixelgrade_
 
-**Made with love by [Pixelgrade](https://pixelgrade.com)**
+**Made with love by [Pixelgrade](https://pixelgrade.com/)**
 
 == Contributing ==
 
@@ -94,11 +95,12 @@ Yes! Nova Block’s core features are free to use.
 == Changelog ==
 
 = 1.1.0 =
-* New block: Headline
-* New block: Map
-* New block: Food Menu
-* New block: Announcement Bar
-* Overall improvements to block controls and behavior
+* New block: **Headline**
+* New block: **Map** (Google Map)
+* New block: **Food Menu**
+* New block: **Announcement Bar**
+* Significant **improvements** to block controls and behavior.
+* Updated translation file.
 
 = 1.0 =
 * Initial release
