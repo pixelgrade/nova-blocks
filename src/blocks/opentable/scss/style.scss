@@ -8,8 +8,6 @@
 	}
 
 	.ot-button[class] {
-		border: 0;
-		transition: all .2s cubic-bezier(0, 0, 0.58, 1);
 		box-shadow: none;
 
 		height: auto;
@@ -76,23 +74,34 @@
 	}
 
 	.ot-dtp-picker.wide {
-		max-width: 750px;
 		width: 100%;
-
-		margin-left: auto;
-		margin-right: auto;
 
 		.ot-dtp-picker-form {
 
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
+			max-width: 750px;
+			margin-left: auto;
+			margin-right: auto;
+
+			display: block;
+
+			overflow: auto;
+
+			@include above(tablet) {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				grid-template-areas:
+					"picker picker picker"
+					". button . ";
+
+				grid-gap: 1em;
+			}
 
 			border: 0;
-
 			height: auto;
+
+			.ot-dtp-picker-button {
+				grid-area: button;
+			}
 
 			@include above(tablet) {
 				flex-direction: row;
@@ -137,7 +146,8 @@
 		}
 
 		.ot-dtp-picker-form .ot-dtp-picker-button {
-			margin-top: var(--novablocks-content-padding-small) !important;
+			margin-top: 0 !important;
+			width: 100%;
 		}
 
 		.ot-dtp-picker-form .ot-dtp-picker-selector {
@@ -147,8 +157,6 @@
 			margin-bottom: 1rem;
 
 			@include above(tablet) {
-				width: 10rem;
-				margin-left: var(--novablocks-content-padding-small);
 				margin-bottom: 0;
 			}
 		}

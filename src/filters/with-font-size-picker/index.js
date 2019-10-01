@@ -35,9 +35,9 @@ const enableFontSizeControlOnBlocks = [
 ];
 
 const fontSizeOptions = [
-	{ value: 'smaller', label: __( 'Smaller' ) },
-	{ value: 'normal', label: __( 'Normal' ) },
-	{ value: 'larger', label: __( 'Larger' ) },
+	{ value: 'smaller', label: __( 'Smaller', '__plugin_txtd' ) },
+	{ value: 'normal', label: __( 'Normal', '__plugin_txtd' ) },
+	{ value: 'larger', label: __( 'Larger', '__plugin_txtd' ) },
 ];
 
 const defaultFontSize = 'normal';
@@ -64,7 +64,7 @@ function withFontSizePicker( WrappedComponent ) {
 				level,
 			},
 			setAttributes,
-		} = props; 
+		} = props;
 
 		const selectValue = fontSizeOptions.find( x => x.value === fontSize ) ? fontSize : defaultFontSize;
 
@@ -74,7 +74,7 @@ function withFontSizePicker( WrappedComponent ) {
 				{ level && level < 4 &&
 					<PanelBody title={ __( 'Text Settings', '__plugin_txtd' ) } className="blocks-custom-font-size">
 						<SelectControl
-							label={ __( 'Font Size' ) }
+							label={ __( 'Font Size', '__plugin_txtd' ) }
 							value={ selectValue }
 							options={ fontSizeOptions }
 							onChange={ nextFontSize => {

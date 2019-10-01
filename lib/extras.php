@@ -498,7 +498,7 @@ function novablocks_get_block_editor_settings() {
 			'defaultImages' => array(
 				array(
 					'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
-					'id' => - 1,
+					'id' => -1,
 					'sizes' => array(
 						'thumbnail' => array(
 							'url' => 'https://source.unsplash.com/_nqApgG-QrY/150x150',
@@ -512,9 +512,11 @@ function novablocks_get_block_editor_settings() {
 				),
 				array(
 					'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
-					'alt' => 'This is a catchy image title',
+					'title' => array(
+						'rendered' => 'This is a catchy image title'
+					),
 					'caption' => 'A brilliant caption to explain its catchiness',
-					'id' => - 2,
+					'id' => -2,
 					'sizes' => array(
 						'thumbnail' => array(
 							'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/150x150',
@@ -528,7 +530,7 @@ function novablocks_get_block_editor_settings() {
 				),
 				array(
 					'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
-					'id' => - 3,
+					'id' => -3,
 					'sizes' => array(
 						'thumbnail' => array(
 							'url' => 'https://source.unsplash.com/1vKTnwLMdqs/150x150',

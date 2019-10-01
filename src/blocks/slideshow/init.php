@@ -90,8 +90,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                                         <div class="novablocks-u-content-align">
                                             <div class="novablocks-slideshow__inner-container novablocks-u-content-width" style="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
                                                 <?php
-                                                if ( ! empty( $image['alt'] ) ) {
-                                                    echo '<h2>' . wp_kses_post( $image['alt'] ) . '</h2>';
+                                                if ( ! empty( $image['title']['rendered'] ) ) {
+                                                    echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';
                                                 }
                                                 if ( ! empty( $image['caption'] ) ) {
                                                     echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';

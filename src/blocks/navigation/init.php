@@ -31,12 +31,13 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 	function novablocks_render_navigation_block( $attributes, $content ) {
 
-		$classes = array();
+		$classes = array(
+			'wp-block-novablocks-navigation',
+		);
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
-		$classes[] = 'wp-block-novablocks-navigation';
 
 		ob_start();
 

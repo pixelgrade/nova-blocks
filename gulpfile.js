@@ -133,8 +133,8 @@ gulp.task( 'fix-line-endings', maybeFixIncorrectLineEndings );
 // Replace the themes' text domain with the actual text domain (think variations)
 // -----------------------------------------------------------------------------
 function pluginTextdomainReplace() {
-  return gulp.src( ['../build/' + plugin + '/**/*.php', '../build/' + plugin + '/**/*.js'] )
-    .pipe( plugins.replace( /['|"]__plugin_txtd['|"]/g, '\'' + plugin + '\'' ) )
+  return gulp.src( ['../build/' + plugin + '/**/*.php', '../build/' + plugin + '/**/*.js', '../build/' + plugin + '/languages/*.pot'] )
+    .pipe( plugins.replace( /__plugin_txtd/g, plugin ) )
     .pipe( gulp.dest( '../build/' + plugin ) );
 }
 gulp.task( 'txtdomain-replace', pluginTextdomainReplace );

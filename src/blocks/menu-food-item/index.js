@@ -17,15 +17,17 @@ export default registerBlockType( 'novablocks/menu-food-item',
 		description: __( 'A food or drink item contained in a menu or menu section.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.foodmenu,
+		// Additional search terms
+		keywords: [ __( 'menu item', '__plugin_txtd' ), __( 'food item', '__plugin_txtd' ), __( 'dish', '__plugin_txtd' ), __( 'list item', '__plugin_txtd' ) ],
 		parent: ['novablocks/menu-food-section'],
 		attributes: {
 			title: {
 				type: 'string',
-				default: 'Sweet Shrimp Salad'
+				default: __( 'Sweet Shrimp Salad', '__plugin_txtd' )
 			},
 			description: {
 				type: 'string',
-				default: 'Tomatillo, Baja Crema, Cabbage, Fried Okra'
+				default: __( 'Tomatillo, Baja Crema, Cabbage, Fried Okra', '__plugin_txtd' )
 			},
 			price: {
 				type: 'string',
@@ -37,7 +39,7 @@ export default registerBlockType( 'novablocks/menu-food-item',
 			},
 			highlightLabel: {
 				type: 'string',
-				default: 'Our top pick'
+				default: __( 'Our top pick', '__plugin_txtd' )
 			},
 			enableHighlightFoodItem: {
 				type: 'boolean',

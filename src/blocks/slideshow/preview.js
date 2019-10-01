@@ -28,6 +28,10 @@ const SlideshowPreview = class extends Component {
 	}
 
 	updateDimensions() {
+		if ( !this.container ) {
+			return;
+		}
+
 		this.setState( {
 			dimensions: {
 				width: this.container.offsetWidth,
@@ -109,7 +113,7 @@ const SlideshowPreview = class extends Component {
 								<div className="novablocks-slideshow__content novablocks-u-content-padding" style={ styles.foreground }>
 									<div className="novablocks-u-content-align">
 										<div className="novablocks-u-content-width" style={ styles.content }>
-											{ !! previewImage.alt && <h2>{ previewImage.alt }</h2> }
+											{ !! previewImage.title && !! previewImage.title.rendered && <h2>{ previewImage.title.rendered }</h2> }
 											{ !! previewImage.caption && <p>{ previewImage.caption }</p> }
 										</div>
 									</div>

@@ -12,7 +12,12 @@ if ( ! function_exists( 'novablocks_logo_block_init' ) ) {
 
 	function novablocks_logo_block_init() {
 		register_block_type( 'novablocks/logo', array(
-			'attributes'      => array(),
+			'attributes'      => array(
+				'className' => array(
+					'type'    => 'string',
+					'default' => '',
+				),
+			),
 			'render_callback' => 'novablocks_render_logo_block'
 		) );
 	}
@@ -23,13 +28,20 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 
 	function novablocks_render_logo_block( $attributes, $content ) {
 
-		$classes = array();
+		$classes = array(
+			'c-branding',
+			'site-branding',
+		);
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		ob_start();
 
 		do_action( 'novablocks_logo:before' ); ?>
 
-        <div class="c-branding site-branding">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ) ?>">
 
 			<?php
 

@@ -44,7 +44,7 @@ function novablocks_admin_init() {
 		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
 	) );
 
-	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd' );
+	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );
 
 	// Enqueue optional editor only styles
 	wp_register_style(

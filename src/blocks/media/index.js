@@ -17,6 +17,8 @@ export default registerBlockType( 'novablocks/media',
 		description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
+		// Additional search terms
+		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 		edit,
 		save() {
 			return <InnerBlocks.Content />;

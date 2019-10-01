@@ -42,7 +42,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
                     </span>
-                    <span class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__theme_txtd' ); ?></span>
+                    <span class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
                 </span>
             </label>
 

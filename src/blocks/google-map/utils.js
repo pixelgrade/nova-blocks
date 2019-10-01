@@ -1,4 +1,4 @@
-import defualtMapCenter from "./default-map-center";
+import defaultMapCenter from "./default-map-center";
 import styles from "./styles";
 
 export const compileStyles = function( styleData ) {

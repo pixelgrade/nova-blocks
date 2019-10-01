@@ -20,6 +20,8 @@ export default registerBlockType( 'novablocks/hero',
 		description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.hero,
+		// Additional search terms
+		keywords: [ __( 'cover', '__plugin_txtd' ), __( 'full width', '__plugin_txtd' ), __( 'hero image', '__plugin_txtd' ), __( 'cover section', '__plugin_txtd' ) ],
 		edit,
 		example: {},
 		save() {

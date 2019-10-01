@@ -39,18 +39,19 @@ class MapPlaceholder extends Component {
 		return (
 			<Placeholder
 				icon={ icon }
-				label={ __( 'Location Map of The World' ) }>
+				label={ __( 'Location Map of The World', '__plugin_txtd' ) }>
 				{ apiKeyInstructions && <div className="components-placeholder__instructions">
 					{ apiKeyInstructions }
 				</div> }
 				<TextControl
 					className="components-placeholder__input"
-					placeholder={ __( 'Paste API key here' ) }
+					placeholder={ __( 'Paste API key here', '__plugin_txtd' ) }
+					value={ this.state.apiKey }
 					onChange={ ( apiKey ) => { this.setState( { apiKey } ) } }
 					onKeyDown={ ( { keyCode } ) => { this.handleKeyDown( keyCode ) } }
 				/>
 				<Button isLarge disabled={ ! this.state.apiKey } type="button" onClick={ () => { this.props.saveApiKey( this.state.apiKey ) } }>
-					{ __( 'Save' ) }
+					{ __( 'Save', '__plugin_txtd' ) }
 				</Button>
 			</Placeholder>
 		)

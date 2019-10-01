@@ -18,6 +18,8 @@ export default registerBlockType( 'novablocks/opentable',
 		description: __( 'Add OpenTable online reservation booking to your site.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.opentable,
+		// Additional search terms
+		keywords: [ __( 'reservations', '__plugin_txtd' ), __( 'bookings', '__plugin_txtd' ) ],
 		attributes: {
 			restaurantId: {
 				type: 'number',

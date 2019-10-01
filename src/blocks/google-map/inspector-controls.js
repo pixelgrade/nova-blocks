@@ -49,7 +49,7 @@ class ButtonInspectorControls extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Map Design' ) }>
+				<PanelBody title={ __( 'Map Design', '__plugin_txtd' ) }>
 					<MapStyleSelectControl
 						{ ...this.props }
 						apiKey={ savedApiKey }
@@ -80,7 +80,7 @@ class ButtonInspectorControls extends Component {
 						onChange={ () => setAttributes( { showControls: ! showControls } ) }
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Zoom Level' ) }>
+				<PanelBody title={ __( 'Zoom Level', '__plugin_txtd' ) }>
 					<RangeControl
 						value={ zoom }
 						onChange={ ( newZoom ) => setAttributes( { zoom: newZoom } ) }
