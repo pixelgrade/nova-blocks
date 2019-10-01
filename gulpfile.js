@@ -90,6 +90,7 @@ function removeUnneededFiles() {
     'phpunit.xml.dist',
 
     'assets/scss',
+		'src/**/scss',
 
     'bin',
   ];
