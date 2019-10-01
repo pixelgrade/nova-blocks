@@ -30,16 +30,22 @@ const {
 	dispatch,
 } = wp.data;
 
+const {
+	updateCategory
+} = wp.blocks;
+
 class novaBlocks {
 
 	initialize( settings ) {
 		addSeparatorFilters( settings );
 		dispatch( STORE_NAME ).updateSettings( settings );
+		updateCategory( 'nova-blocks', {
+			icon: nova
+		} );
 	}
 }
 
 ( function() {
-	wp.blocks.updateCategory( 'nova-blocks', { icon: nova } );
 } )();
 
 wp.novaBlocks = new novaBlocks();
