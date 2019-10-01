@@ -66,7 +66,12 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 								foreach ( $attributes['images'] as $image ) {
 									$image = json_decode( $image );
 									echo '<div class="novablocks-media__image">';
-									echo wp_get_attachment_image( $image->id, 'large' );
+									$image_markup = wp_get_attachment_image( $image->id, 'large' );
+									// Falback to URL is present
+									if ( empty( $image_markup ) && ! empty( $image->url ) ) {
+										$image_markup = '<img src="' . esc_url( $image->url ) . '" alt="" />';
+									}
+									echo $image_markup;
 									echo '</div>';
 								}
 							} ?>
