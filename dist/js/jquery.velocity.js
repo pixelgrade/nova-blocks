@@ -1,6 +1,8 @@
 /**
  * velocity-animate (C) 2014-2017 Julian Shapiro.
  *
+ * Version: 1.0.0
+ *
  * http://velocityjs.org/
  *
  * Licensed under the MIT license. See LICENSE file in the project root for details.

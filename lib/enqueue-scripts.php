@@ -35,7 +35,7 @@ function novablocks_admin_init() {
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.1.0',
+		'1.1.1',
 		true
 	);
 
@@ -49,7 +49,9 @@ function novablocks_admin_init() {
 	// Enqueue optional editor only styles
 	wp_register_style(
 		'nova-blocks-editor-css',
-		novablocks_get_plugin_url() . $style_path
+		novablocks_get_plugin_url() . $style_path,
+		array(),
+		'1.1.1'
 	);
 }
 add_action( 'admin_init', 'novablocks_admin_init' );
@@ -66,7 +68,8 @@ function novablocks_enqueue_assets() {
 	wp_enqueue_style(
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
-		array()
+		array(),
+		'1.1.1'
 	);
 }
 add_action( 'enqueue_block_assets', 'novablocks_enqueue_assets' );
@@ -85,6 +88,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-rellax',
 		novablocks_get_plugin_url() . $rellax_path,
 		array( 'jquery' ),
+		'1.0.0',
 		true
 	);
 
@@ -93,6 +97,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-bully',
 		novablocks_get_plugin_url() . $bully_path,
 		array( 'jquery' ),
+		'0.2.0',
 		true
 	);
 
@@ -101,6 +106,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-slick',
 		novablocks_get_plugin_url() . $slick_path,
 		array( 'jquery' ),
+		'1.8.1',
 		true
 	);
 
@@ -109,6 +115,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-velocity',
 		novablocks_get_plugin_url() . $velocity_path,
 		array( 'jquery' ),
+		'1.0.0',
 		true
 	);
 
@@ -128,7 +135,7 @@ function novablocks_enqueue_frontend_assets() {
 
 	$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
 	if ( $google_maps_api_key !== '' ) {
-		wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places' );
+		wp_register_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places', array(), null );
 		$script_dependencies[] = 'google-maps';
 	}
 
@@ -137,7 +144,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.1.0',
+		'1.1.1',
 		true
 	);
 }
