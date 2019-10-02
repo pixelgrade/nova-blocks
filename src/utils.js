@@ -29,7 +29,10 @@ export const parallaxInit = function( BLOCK_NAME ) {
 		const $blocks = $( `.${BLOCK_NAME}` );
 		const $targets = $blocks.filter( '.has-parallax' );
 
-		$targets.find( `.${BLOCK_NAME}__parallax` ).rellax( { container: `.${BLOCK_NAME}__mask`, } );
+		$targets.find( `.${BLOCK_NAME}__parallax` ).rellax( {
+			container: `.${BLOCK_NAME}__mask`,
+			absolute: isSafari,
+		} );
 
 		$blocks.find( `.${BLOCK_NAME}__parallax` ).each( ( i, obj ) => {
 			const $obj = $( obj );
@@ -56,4 +59,7 @@ export const withFirstBlockConditions = function( Component ) {
 
 	}
 
-}
+};
+
+export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+

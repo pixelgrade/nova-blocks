@@ -1,4 +1,4 @@
-import { debounce } from '../../utils';
+import {debounce, isSafari} from '../../utils';
 
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';
@@ -18,6 +18,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 	if ( typeof $.fn.rellax !== "undefined" ) {
 		$rellaxTarget.rellax( {
 			container: '.novablocks-slideshow__mask',
+			absolute: isSafari,
 			children: CONTENT_SELECTOR,
 		} );
 	}
