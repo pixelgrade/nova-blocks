@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.2.2
 Tested up to: 5.2.3
 Requires PHP: 5.4.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,9 @@ Yes! Nova Block’s core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.1.2 =
+* Quick fix for parallax on Safari 13.
 
 = 1.1.1 =
 * Minor fix for the Media Card block.
