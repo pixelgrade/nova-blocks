@@ -70,7 +70,7 @@ function novablocks_get_plugin_url() {
 
 function novablocks_body_class( $classes ) {
 	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
-	if ( ! empty( $position_indicators ) ) {
+	if ( ! empty( $position_indicators ) || ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 		$classes[] = 'novablocks-has-position-indicators';
 	}
 
