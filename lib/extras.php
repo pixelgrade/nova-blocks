@@ -16,7 +16,7 @@ add_action( 'rest_api_init', 'novablocks_register_settings' );
 
 function nova_blocks_register_meta() {
 
-	if ( NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 
 		register_meta( 'post', 'novablocks_hero_minimum_height', array(
 			'type'         => 'number',
@@ -327,7 +327,7 @@ function novablocks_add_hero_settings( $settings ) {
 			array(
 				'core/heading',
 				array(
-					'content' => 'This is a catchy title',
+					'content' => esc_html__( 'This is a catchy title', '__plugin_txtd' ),
 					'align' => 'center',
 					'level' => 1,
 				),
@@ -335,14 +335,14 @@ function novablocks_add_hero_settings( $settings ) {
 			array(
 				'core/paragraph',
 				array(
-					'content' => 'A brilliant subtitle to explain its catchiness',
+					'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
 					'align' => 'center',
 				),
 			),
 			array(
 				'core/button',
 				array(
-					'text' => 'Discover more',
+					'text' => esc_html__( 'Discover more', '__plugin_txtd' ),
 					'align' => 'center',
 				),
 			),
@@ -462,55 +462,55 @@ function novablocks_add_media_settings( $settings ) {
 			array(
 				'core/heading',
 				array(
-					'content' => 'Shoot for the moon, Even if You Miss it',
+					'content' => esc_html__( 'Shoot for the moon, Even if You Miss it', '__plugin_txtd' ),
 					'level'   => 4,
 				),
 			),
 			array(
 				'core/heading',
 				array(
-					'content' => 'Welcome to our planet, look and feel matters!',
+					'content' => esc_html__( 'Welcome to our planet, look and feel matters!', '__plugin_txtd' ),
 					'level'   => 2,
 				),
 			),
 			array(
 				'core/paragraph',
 				array(
-					'content' => "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known.",
+					'content' => esc_html__( "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known.", '__plugin_txtd' ),
 				),
 			),
 			array(
 				'core/button',
 				array(
-					'text' => 'Discover More'
+					'text' => esc_html__( 'Discover More', '__plugin_txtd' ),
 				),
 			),
 		),
 		'contentAreaOptions' => array(
 			array(
-				'label' => __( 'Basic', '__plugin_txtd' ),
+				'label' => esc_html__( 'Basic', '__plugin_txtd' ),
 				'value' => 'basic',
 			),
 			array(
-				'label' => __( 'Moderate', '__plugin_txtd' ),
+				'label' => esc_html__( 'Moderate', '__plugin_txtd' ),
 				'value' => 'moderate',
 			),
 			array(
-				'label' => __( 'Highlighted', '__plugin_txtd' ),
+				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
 				'value' => 'highlighted',
 			),
 		),
 		'blockAreaOptions'   => array(
 			array(
-				'label' => __( 'Basic', '__plugin_txtd' ),
+				'label' => esc_html__( 'Basic', '__plugin_txtd' ),
 				'value' => 'basic',
 			),
 			array(
-				'label' => __( 'Moderate', '__plugin_txtd' ),
+				'label' => esc_html__( 'Moderate', '__plugin_txtd' ),
 				'value' => 'moderate',
 			),
 			array(
-				'label' => __( 'Highlighted', '__plugin_txtd' ),
+				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
 				'value' => 'highlighted',
 			),
 		)
@@ -543,9 +543,9 @@ function novablocks_add_slideshow_settings( $settings ) {
 			array(
 				'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
 				'title' => array(
-					'rendered' => 'This is a catchy image title'
+					'rendered' => esc_html__( 'This is a catchy image title', '__plugin_txtd' ),
 				),
-				'caption' => 'A brilliant caption to explain its catchiness',
+				'caption' => esc_html__( 'A brilliant caption to explain its catchiness', '__plugin_txtd' ),
 				'id' => -2,
 				'sizes' => array(
 					'thumbnail' => array(
@@ -575,23 +575,23 @@ function novablocks_add_slideshow_settings( $settings ) {
 		),
 		'minHeightOptions' => array(
 			array(
-				'label' => __( 'Auto', '__plugin_txtd' ),
+				'label' => esc_html__( 'Auto', '__plugin_txtd' ),
 				'value' => 0,
 			),
 			array(
-				'label' => __( 'Half', '__plugin_txtd' ),
+				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
 			),
 			array(
-				'label' => __( 'Two Thirds', '__plugin_txtd' ),
+				'label' => esc_html__( 'Two Thirds', '__plugin_txtd' ),
 				'value' => 66,
 			),
 			array(
-				'label' => __( 'Three Quarters', '__plugin_txtd' ),
+				'label' => esc_html__( 'Three Quarters', '__plugin_txtd' ),
 				'value' => 75,
 			),
 			array(
-				'label' => __( 'Full Height', '__plugin_txtd' ),
+				'label' => esc_html__( 'Full Height', '__plugin_txtd' ),
 				'value' => 100,
 			),
 		),
@@ -620,87 +620,87 @@ function novablocks_get_block_editor_settings() {
 		'usePostMetaAttributes' => NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'applyMinimumHeightOptions' => array(
 			array(
-				'label' => __( 'None', '__plugin_txtd' ),
+				'label' => esc_html__( 'None', '__plugin_txtd' ),
 				'value' => 'none',
 			),
 			array(
-				'label' => __( 'First Hero Block Only', '__plugin_txtd' ),
+				'label' => esc_html__( 'First Hero Block Only', '__plugin_txtd' ),
 				'value' => 'first',
 			),
 			array(
-				'label' => __( 'All Hero Blocks', '__plugin_txtd' ),
+				'label' => esc_html__( 'All Hero Blocks', '__plugin_txtd' ),
 				'value' => 'all',
 			),
 		),
 		'minimumHeightOptions' => array(
 			array(
-				'label' => __( 'Half', '__plugin_txtd' ),
+				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
 			),
 			array(
-				'label' => __( 'Two Thirds', '__plugin_txtd' ),
+				'label' => esc_html__( 'Two Thirds', '__plugin_txtd' ),
 				'value' => 66,
 			),
 			array(
-				'label' => __( 'Three Quarters', '__plugin_txtd' ),
+				'label' => esc_html__( 'Three Quarters', '__plugin_txtd' ),
 				'value' => 75,
 			),
 			array(
-				'label' => __( 'Full', '__plugin_txtd' ),
+				'label' => esc_html__( 'Full', '__plugin_txtd' ),
 				'value' => 100,
 			),
 		),
 		'contentPaddingOptions' => array(
 			array(
-				'label' => __( 'Small', '__plugin_txtd' ),
+				'label' => esc_html__( 'Small', '__plugin_txtd' ),
 				'value' => 'small',
 			),
 			array(
-				'label' => __( 'Medium', '__plugin_txtd' ),
+				'label' => esc_html__( 'Medium', '__plugin_txtd' ),
 				'value' => 'medium',
 			),
 			array(
-				'label' => __( 'Large', '__plugin_txtd' ),
+				'label' => esc_html__( 'Large', '__plugin_txtd' ),
 				'value' => 'large',
 			),
 			array(
-				'label' => __( 'Custom', '__plugin_txtd' ),
+				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
 				'value' => 'custom',
 			),
 		),
 		'contentWidthOptions' => array(
 			array(
-				'label' => __( 'Full', '__plugin_txtd' ),
+				'label' => esc_html__( 'Full', '__plugin_txtd' ),
 				'value' => 'full',
 			),
 			array(
-				'label' => __( 'Large', '__plugin_txtd' ),
+				'label' => esc_html__( 'Large', '__plugin_txtd' ),
 				'value' => 'large',
 			),
 			array(
-				'label' => __( 'Narrow', '__plugin_txtd' ),
+				'label' => esc_html__( 'Narrow', '__plugin_txtd' ),
 				'value' => 'narrow',
 			),
 			array(
-				'label' => __( 'Custom', '__plugin_txtd' ),
+				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
 				'value' => 'custom',
 			),
 		),
 		'parallaxOptions' => array(
 			array(
-				'label' => __( 'Fast as Mercure', '__plugin_txtd' ),
+				'label' => esc_html__( 'Fast as Mercure', '__plugin_txtd' ),
 				'value' => '20'
 			),
 			array(
-				'label' => __( 'Natural as Earth', '__plugin_txtd' ),
+				'label' => esc_html__( 'Natural as Earth', '__plugin_txtd' ),
 				'value' => '50'
 			),
 			array(
-				'label' => __( 'Slow as Neptune', '__plugin_txtd' ),
+				'label' => esc_html__( 'Slow as Neptune', '__plugin_txtd' ),
 				'value' => '70'
 			),
 			array(
-				'label' => __( 'Custom', '__plugin_txtd' ),
+				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
 				'value' => 'custom'
 			),
 		),
