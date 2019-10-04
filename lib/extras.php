@@ -388,7 +388,7 @@ function novablocks_add_hero_settings( $settings ) {
 		),
 	);
 
-	if ( NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
 			'applyMinimumHeight' => array(
 				'type'    => 'string',
