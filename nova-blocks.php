@@ -25,6 +25,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' )  ) {
+	// @todo Gutenberg version condition
+	define( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES', false );
+}
+
 /**
  * Gets this plugin's directory file path.
  *

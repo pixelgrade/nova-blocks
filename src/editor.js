@@ -37,6 +37,7 @@ const {
 class novaBlocks {
 
 	initialize( settings ) {
+		console.log( settings );
 		addSeparatorFilters( settings );
 		dispatch( STORE_NAME ).updateSettings( settings );
 		updateCategory( 'nova-blocks', {

@@ -21,6 +21,7 @@ const HeroPreview = function( props ) {
 			horizontalAlignment,
 			// height
 			minHeight,
+			minHeightFallback,
 			applyMinimumHeightBlock,
 			// indicators
 			scrollIndicatorBlock,
@@ -51,8 +52,10 @@ const HeroPreview = function( props ) {
 		content: {},
 	};
 
+	const minimumHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
+
 	if ( !! applyMinimumHeightBlock ) {
-		styles.hero.minHeight = minHeight + 'vh';
+		styles.hero.minHeight = minimumHeight + 'vh';
 	}
 
 	if ( contentPadding === 'custom' ) {

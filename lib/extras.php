@@ -16,29 +16,32 @@ add_action( 'rest_api_init', 'novablocks_register_settings' );
 
 function nova_blocks_register_meta() {
 
-	register_meta( 'post', 'novablocks_hero_minimum_height', array(
-		'type'         => 'number',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
+	if ( NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 
-	register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
-		'type'         => 'string',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
+		register_meta( 'post', 'novablocks_hero_minimum_height', array(
+			'type'         => 'number',
+			'single'       => true,
+			'show_in_rest' => true,
+		) );
 
-	register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
-		'type'         => 'boolean',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
+		register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
+			'type'         => 'string',
+			'single'       => true,
+			'show_in_rest' => true,
+		) );
 
-	register_meta( 'post', 'novablocks_hero_position_indicators', array(
-		'type'         => 'boolean',
-		'single'       => true,
-		'show_in_rest' => true,
-	) );
+		register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
+			'type'         => 'boolean',
+			'single'       => true,
+			'show_in_rest' => true,
+		) );
+
+		register_meta( 'post', 'novablocks_hero_position_indicators', array(
+			'type'         => 'boolean',
+			'single'       => true,
+			'show_in_rest' => true,
+		) );
+	}
 }
 add_action( 'init', 'nova_blocks_register_meta' );
 
@@ -317,258 +320,308 @@ function novablocks_get_focal_point_style( $focalPoint ) {
 	return 'object-position: ' . $focalPointX . ' ' . $focalPointY . ';';
 }
 
-function novablocks_get_block_editor_settings() {
-	$novablocks_block_editor_settings = array(
-		'hero' => array(
-			'template' => array(
+function novablocks_add_hero_settings( $settings ) {
+
+	$hero_settings = array(
+		'template' => array(
+			array(
+				'core/heading',
 				array(
-					'core/heading',
-					array(
-						'content' => 'This is a catchy title',
-						'align' => 'center',
-						'level' => 1,
-					),
-				),
-				array(
-					'core/paragraph',
-					array(
-						'content' => 'A brilliant subtitle to explain its catchiness',
-						'align' => 'center',
-					),
-				),
-				array(
-					'core/button',
-					array(
-						'text' => 'Discover more',
-						'align' => 'center',
-					),
+					'content' => 'This is a catchy title',
+					'align' => 'center',
+					'level' => 1,
 				),
 			),
-			'attributes' => array_merge(
+			array(
+				'core/paragraph',
 				array(
-					'blockIndex'              => array(
-						'type'    => 'number',
-						'default' => -1
+					'content' => 'A brilliant subtitle to explain its catchiness',
+					'align' => 'center',
+				),
+			),
+			array(
+				'core/button',
+				array(
+					'text' => 'Discover more',
+					'align' => 'center',
+				),
+			),
+		),
+		'attributes' => array_merge(
+			array(
+				'blockIndex'              => array(
+					'type'    => 'number',
+					'default' => -1
+				),
+				'applyMinimumHeightBlock' => array(
+					'type'    => 'boolean',
+					'default' => false
+				),
+				'focalPoint' => array(
+					'type'    => 'object',
+					'default' => array(
+						'x' => 0.5,
+						'y' => 0.5
 					),
-					'applyMinimumHeight' => array(
-						'type'    => 'string',
-						'source'  => 'meta',
-						'meta'    => 'novablocks_hero_apply_minimum_height',
-						'default' => 'first',
-					),
-					'minHeight'          => array(
-						'type'    => 'number',
-						'source'  => 'meta',
-						'meta'    => 'novablocks_hero_minimum_height',
-						'default' => 100,
-					),
-					'applyMinimumHeightBlock' => array(
-						'type'    => 'boolean',
-						'default' => false
-					),
-					'focalPoint' => array(
-						'type'    => 'object',
-						'default' => array(
-							'x' => 0.5,
-							'y' => 0.5
-						),
-					),
-					'scrollIndicator'         => array(
-						'type'     => 'boolean',
-						'source'   => 'meta',
-						'meta'     => 'novablocks_hero_scroll_indicator',
-						'default'  => false,
-					),
-					'scrollIndicatorBlock'    => array(
-						'type'    => 'boolean',
-						'default' => false
-					),
-					'positionIndicators'      => array(
-						'type'   => 'boolean',
-						'source' => 'meta',
-						'meta'   => 'novablocks_hero_position_indicators',
-					),
-					'backgroundType'          => array(
-						'type'    => 'string',
-						'default' => 'image'
-					),
-					'media'                   => array(
-						'type'    => 'object',
-						'default' => array(
-							'type'  => 'image',
-							'sizes' => array(
-								'full' => array(
-									'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-								),
+				),
+				'scrollIndicatorBlock'    => array(
+					'type'    => 'boolean',
+					'default' => false
+				),
+				'backgroundType'          => array(
+					'type'    => 'string',
+					'default' => 'image'
+				),
+				'media'                   => array(
+					'type'    => 'object',
+					'default' => array(
+						'type'  => 'image',
+						'sizes' => array(
+							'full' => array(
+								'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
 							),
 						),
 					),
 				),
-				novablocks_get_alignment_attributes(),
-				novablocks_get_color_attributes(),
-				novablocks_get_content_padding_attributes(),
-				novablocks_get_content_width_attributes(),
-				novablocks_get_parallax_attributes()
+			),
+			novablocks_get_alignment_attributes(),
+			novablocks_get_color_attributes(),
+			novablocks_get_content_padding_attributes(),
+			novablocks_get_content_width_attributes(),
+			novablocks_get_parallax_attributes()
+		),
+	);
+
+	if ( NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
+			'applyMinimumHeight' => array(
+				'type'    => 'string',
+				'source'  => 'meta',
+				'meta'    => 'novablocks_hero_apply_minimum_height',
+				'default' => 'first',
+			),
+			'minHeight'          => array(
+				'type'    => 'number',
+				'source'  => 'meta',
+				'meta'    => 'novablocks_hero_minimum_height',
+				'default' => 100,
+			),
+			'scrollIndicator'    => array(
+				'type'    => 'boolean',
+				'source'  => 'meta',
+				'meta'    => 'novablocks_hero_scroll_indicator',
+				'default' => false,
+			),
+			'positionIndicators' => array(
+				'type'   => 'boolean',
+				'source' => 'meta',
+				'meta'   => 'novablocks_hero_position_indicators',
+				'default' => true,
+			),
+		) );
+	} else {
+		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
+			'minHeightFallback' => array(
+				'type'    => 'number',
+				'default' => 100,
+			),
+		) );
+	}
+
+	$settings['hero'] = $hero_settings;
+
+	return $settings;
+}
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
+
+function novablocks_add_media_settings( $settings ) {
+
+	$media_settings = array(
+		'attributes'         => array(
+			'mediaPosition'       => array(
+				'type'    => 'string',
+				'default' => 'left',
+			),
+			'blockStyle'          => array(
+				'type'    => 'string',
+				'default' => 'basic'
+			),
+			'contentStyle'        => array(
+				'type'    => 'string',
+				'default' => 'basic',
+			),
+			'horizontalAlignment' => array(
+				'type'    => 'string',
+				'default' => 'left',
+			),
+			'images'              => array(
+				'type'    => 'array',
+				'items'   => array(
+					'type' => 'string',
+				),
+				'default' => array(),
 			),
 		),
-		'media' => array(
-			'attributes' => array(
-				'mediaPosition'       => array(
-					'type'    => 'string',
-					'default' => 'left',
-				),
-				'blockStyle'          => array(
-					'type'    => 'string',
-					'default' => 'basic'
-				),
-				'contentStyle'        => array(
-					'type'    => 'string',
-					'default' => 'basic',
-				),
-				'horizontalAlignment' => array(
-					'type'    => 'string',
-					'default' => 'left',
-				),
-				'images'              => array(
-					'type'    => 'array',
-					'items'   => array(
-						'type' => 'string',
-					),
-					'default' => array(),
+		'template'           => array(
+			array(
+				'core/heading',
+				array(
+					'content' => 'Shoot for the moon, Even if You Miss it',
+					'level'   => 4,
 				),
 			),
-			'template' => array(
+			array(
+				'core/heading',
 				array(
-					'core/heading',
-					array(
-						'content' => 'Shoot for the moon, Even if You Miss it',
-						'level' => 4,
-					),
-				),
-				array(
-					'core/heading',
-					array(
-						'content' => 'Welcome to our planet, look and feel matters!',
-						'level' => 2,
-					),
-				),
-				array(
-					'core/paragraph',
-					array(
-						'content' => "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known.",
-					),
-				),
-				array(
-					'core/button',
-					array(
-						'text' => 'Discover More'
-					),
+					'content' => 'Welcome to our planet, look and feel matters!',
+					'level'   => 2,
 				),
 			),
-			'contentAreaOptions' => array(
+			array(
+				'core/paragraph',
 				array(
-					'label' => __( 'Basic', '__plugin_txtd' ),
-					'value' => 'basic',
-				),
-				array(
-					'label' => __( 'Moderate', '__plugin_txtd' ),
-					'value' => 'moderate',
-				),
-				array(
-					'label' => __( 'Highlighted', '__plugin_txtd' ),
-					'value' => 'highlighted',
+					'content' => "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known.",
 				),
 			),
-			'blockAreaOptions' => array(
+			array(
+				'core/button',
 				array(
-					'label' => __( 'Basic', '__plugin_txtd' ),
-					'value' => 'basic',
-				),
-				array(
-					'label' => __( 'Moderate', '__plugin_txtd' ),
-					'value' => 'moderate',
-				),
-				array(
-					'label' => __( 'Highlighted', '__plugin_txtd' ),
-					'value' => 'highlighted',
-				),
-			)
-		),
-		'slideshow' => array(
-			'defaultImages' => array(
-				array(
-					'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
-					'id' => -1,
-					'sizes' => array(
-						'thumbnail' => array(
-							'url' => 'https://source.unsplash.com/_nqApgG-QrY/150x150',
-						),
-						'large' => array(
-							'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
-							"width" => 1600,
-							"height" => 900
-						),
-					),
-				),
-				array(
-					'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
-					'title' => array(
-						'rendered' => 'This is a catchy image title'
-					),
-					'caption' => 'A brilliant caption to explain its catchiness',
-					'id' => -2,
-					'sizes' => array(
-						'thumbnail' => array(
-							'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/150x150',
-						),
-						'large' => array(
-							'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
-							'width' => 1600,
-							'height' => 900,
-						),
-					),
-				),
-				array(
-					'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
-					'id' => -3,
-					'sizes' => array(
-						'thumbnail' => array(
-							'url' => 'https://source.unsplash.com/1vKTnwLMdqs/150x150',
-						),
-						'large' => array(
-							'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
-							'width' => 1600,
-							'height' => 900,
-						),
-					),
-				),
-			),
-			'minHeightOptions' => array(
-				array(
-					'label' => __( 'Auto', '__plugin_txtd' ),
-					'value' => 0,
-				),
-				array(
-					'label' => __( 'Half', '__plugin_txtd' ),
-					'value' => 50,
-				),
-				array(
-					'label' => __( 'Two Thirds', '__plugin_txtd' ),
-					'value' => 66,
-				),
-				array(
-					'label' => __( 'Three Quarters', '__plugin_txtd' ),
-					'value' => 75,
-				),
-				array(
-					'label' => __( 'Full Height', '__plugin_txtd' ),
-					'value' => 100,
+					'text' => 'Discover More'
 				),
 			),
 		),
-		'separator' => array(
-			'markup' => '<hr />'
+		'contentAreaOptions' => array(
+			array(
+				'label' => __( 'Basic', '__plugin_txtd' ),
+				'value' => 'basic',
+			),
+			array(
+				'label' => __( 'Moderate', '__plugin_txtd' ),
+				'value' => 'moderate',
+			),
+			array(
+				'label' => __( 'Highlighted', '__plugin_txtd' ),
+				'value' => 'highlighted',
+			),
 		),
+		'blockAreaOptions'   => array(
+			array(
+				'label' => __( 'Basic', '__plugin_txtd' ),
+				'value' => 'basic',
+			),
+			array(
+				'label' => __( 'Moderate', '__plugin_txtd' ),
+				'value' => 'moderate',
+			),
+			array(
+				'label' => __( 'Highlighted', '__plugin_txtd' ),
+				'value' => 'highlighted',
+			),
+		)
+	);
+
+	$settings['media'] = $media_settings;
+
+	return $settings;
+}
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
+
+function novablocks_add_slideshow_settings( $settings ) {
+
+	$slideshow_settings = array(
+		'defaultImages' => array(
+			array(
+				'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
+				'id' => -1,
+				'sizes' => array(
+					'thumbnail' => array(
+						'url' => 'https://source.unsplash.com/_nqApgG-QrY/150x150',
+					),
+					'large' => array(
+						'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
+						"width" => 1600,
+						"height" => 900
+					),
+				),
+			),
+			array(
+				'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
+				'title' => array(
+					'rendered' => 'This is a catchy image title'
+				),
+				'caption' => 'A brilliant caption to explain its catchiness',
+				'id' => -2,
+				'sizes' => array(
+					'thumbnail' => array(
+						'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/150x150',
+					),
+					'large' => array(
+						'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
+						'width' => 1600,
+						'height' => 900,
+					),
+				),
+			),
+			array(
+				'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
+				'id' => -3,
+				'sizes' => array(
+					'thumbnail' => array(
+						'url' => 'https://source.unsplash.com/1vKTnwLMdqs/150x150',
+					),
+					'large' => array(
+						'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
+						'width' => 1600,
+						'height' => 900,
+					),
+				),
+			),
+		),
+		'minHeightOptions' => array(
+			array(
+				'label' => __( 'Auto', '__plugin_txtd' ),
+				'value' => 0,
+			),
+			array(
+				'label' => __( 'Half', '__plugin_txtd' ),
+				'value' => 50,
+			),
+			array(
+				'label' => __( 'Two Thirds', '__plugin_txtd' ),
+				'value' => 66,
+			),
+			array(
+				'label' => __( 'Three Quarters', '__plugin_txtd' ),
+				'value' => 75,
+			),
+			array(
+				'label' => __( 'Full Height', '__plugin_txtd' ),
+				'value' => 100,
+			),
+		),
+	);
+
+	$settings['slideshow'] = $slideshow_settings;
+
+	return $settings;
+}
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_slideshow_settings', 0 );
+
+function novablocks_add_separator_settings( $settings ) {
+	$separator_settings = array(
+		'markup' => '<hr />'
+	);
+
+	$settings['separator'] = $separator_settings;
+
+	return $settings;
+}
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separator_settings', 0 );
+
+function novablocks_get_block_editor_settings() {
+
+	$settings = array(
+		'usePostMetaAttributes' => NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'applyMinimumHeightOptions' => array(
 			array(
 				'label' => __( 'None', '__plugin_txtd' ),
@@ -657,5 +710,7 @@ function novablocks_get_block_editor_settings() {
 		),
 	);
 
-	return apply_filters( 'novablocks_block_editor_settings', $novablocks_block_editor_settings );
+	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
+
+	return apply_filters( 'novablocks_block_editor_settings', $settings );
 }

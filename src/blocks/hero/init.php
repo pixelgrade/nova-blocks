@@ -48,24 +48,29 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$media = wp_parse_args( $media, [ 'type' => '', 'url' => '', 'sizes' => [] ] );
 
 		$heroStyle = 'color: ' . $attributes['contentColor'];
-
 		$contentStyle = '';
-		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
-		}
-
 		$foregroundStyle = '';
-		if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
-			$minHeight       = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
+		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
+
+		if ( NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+
+			if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
+				$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+			}
+
+			if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
+				$minHeight = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
+				$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
+			}
+
+			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+				$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
+			}
+		} else {
+			$minHeight = $attributes['minHeightFallback'];
 			$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
 		}
 
-		$mediaStyle = '';
-		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) .'; ';
-		}
-
-		$mediaStyle .= novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
 		ob_start();
 

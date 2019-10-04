@@ -25,6 +25,7 @@ const {
 
 const {
 	FocalPointPicker,
+	RadioControl,
 	PanelBody,
 } = wp.components;
 
@@ -44,6 +45,7 @@ const {
 } = wp.data;
 
 const FirstBlockControls = withFirstBlockConditions( function( props ) {
+
 	return (
 		<Fragment>
 			<HeightPanel { ...props } />
@@ -53,6 +55,30 @@ const FirstBlockControls = withFirstBlockConditions( function( props ) {
 	);
 } );
 
+const BlockHeightControls = function( props ) {
+
+	const {
+		attributes,
+		setAttributes,
+		settings,
+	} = props;
+
+	const { minHeightFallback } = attributes;
+
+	return (
+		<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
+			<RadioControl
+				label={ __( 'Minimum Height', '__plugin_txtd' ) }
+				selected={ minHeightFallback }
+				onChange={ minHeightFallback => {
+					setAttributes( { minHeightFallback: parseFloat( minHeightFallback ) } );
+				} }
+				options={ settings.minimumHeightOptions }
+			/>
+		</PanelBody>
+	);
+}
+
 class HeroEdit extends Component {
 
 	getDefaults( attributes ) {
@@ -60,19 +86,28 @@ class HeroEdit extends Component {
 		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
 		const defaults = {};
 
-		if ( ! minHeight ) {
-			defaults.minHeight = settings.hero.attributes.minHeight.default;
+		if ( settings.usePostMetaAttributes ) {
+
+			if ( ! minHeight ) {
+				defaults.minHeight = settings.hero.attributes.minHeight.default;
+			}
+
+			if ( ! applyMinimumHeight ) {
+				defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
+			}
+
+			if ( ! scrollIndicator ) {
+				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+			}
+
+			return defaults;
 		}
 
-		if ( ! applyMinimumHeight ) {
-			defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
-		}
-
-		if ( ! scrollIndicator ) {
-			defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
-		}
-
-		return defaults;
+		return {
+			minHeight: 100,
+			applyMinimumHeight: 'all',
+			scrollIndicator: false,
+		};
 	}
 
 	getNewAttributes( attributes ) {
@@ -116,9 +151,10 @@ class HeroEdit extends Component {
 	}
 
 	render() {
-		const { attributes, setAttributes } = this.props;
+		const { settings, attributes, setAttributes } = this.props;
 		const { media, focalPoint } = attributes;
 		const parallaxFocalPointImage = media ? media.sizes.full : false;
+		const { usePostMetaAttributes } = settings;
 
 		return (
 			<Fragment>
@@ -139,7 +175,8 @@ class HeroEdit extends Component {
 						/>
 					</PanelBody> }
 					<LayoutPanel { ...this.props } />
-					<FirstBlockControls { ...this.props } />
+					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } /> }
+					{ ! usePostMetaAttributes && <BlockHeightControls { ...this.props } /> }
 				</InspectorControls>
 			</Fragment>
 		);
