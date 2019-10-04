@@ -48,24 +48,34 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$media = wp_parse_args( $media, [ 'type' => '', 'url' => '', 'sizes' => [] ] );
 
 		$heroStyle = 'color: ' . $attributes['contentColor'];
-
 		$contentStyle = '';
-		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
-		}
-
 		$foregroundStyle = '';
-		if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
-			$minHeight       = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
+		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
+
+		if ( ! defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) || NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+
+			if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
+				$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+			}
+
+			if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
+				$minHeight = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
+				$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
+			}
+
+			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+				$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
+			}
+		} else {
+			$minHeight = $attributes['minHeightFallback'];
 			$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
 		}
 
-		$mediaStyle = '';
-		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) .'; ';
-		}
+		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
 
-		$mediaStyle .= novablocks_get_focal_point_style( $attributes['focalPoint'] );
+		if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+			$scrollIndicator = $attributes['blockIndex'] === 0;
+		}
 
 		ob_start();
 
@@ -73,7 +83,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
 
-			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
+			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 
             <div class="novablocks-hero__mask">
                 <div class="novablocks-hero__parallax" data-rellax-amount="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
@@ -95,7 +105,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
                     <div class="novablocks-hero__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
 						<?php echo $content ?>
                     </div>
-					<?php if ( ! empty( $attributes['scrollIndicatorBlock'] ) ) { ?>
+					<?php if ( $scrollIndicator ) { ?>
                         <div class="novablocks-hero__indicator">
 	                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
                         </div>
@@ -103,7 +113,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
                 </div>
             </div>
 
-			<?php do_action( 'novablocks_hero:before_closing_tag', array( 'blockIndex' => $attributes['blockIndex'] ) ) ?>
+			<?php do_action( 'novablocks_hero:before_closing_tag', $attributes ) ?>
 
         </div>
 

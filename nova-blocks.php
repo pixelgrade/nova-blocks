@@ -25,6 +25,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_plugin_setup() {
+	// Set up a constant that will tell the rest of the plugin whether to use post meta attributes or not.
+	// This is needed since Gutenberg 6.6.0 introduced an issue with them causing a crash in the editor.
+	if ( ! defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) ) {
+		if ( defined( 'GUTENBERG_VERSION' ) && version_compare( GUTENBERG_VERSION, '6.6.0', '>=' ) ) {
+			define( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES', false );
+		} else {
+			define( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES', true );
+		}
+	}
+}
+// We will do this just after themes so we give them a chance to intervene.
+add_action( 'after_setup_theme', 'novablocks_plugin_setup', 20 );
+
 /**
  * Gets this plugin's directory file path.
  *
@@ -65,7 +79,7 @@ function novablocks_get_plugin_url() {
 
 function novablocks_body_class( $classes ) {
 	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
-	if ( ! empty( $position_indicators ) ) {
+	if ( ! empty( $position_indicators ) || ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) ) {
 		$classes[] = 'novablocks-has-position-indicators';
 	}
 

@@ -129,7 +129,7 @@ function novablocks_enqueue_frontend_assets() {
 	);
 
 	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
-	if ( ! empty( $position_indicators ) ) {
+	if ( ! empty( $position_indicators ) || ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) ) {
 		$script_dependencies[] = 'nova-blocks-bully';
 	}
 
