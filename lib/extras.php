@@ -190,7 +190,12 @@ function novablocks_get_block_extra_classes( $attributes ) {
 
 function novablocks_get_hero_attributes() {
 	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
-	return $novablocks_block_editor_settings['hero']['attributes'];
+
+	if ( ! empty( $novablocks_block_editor_settings['hero']['attributes'] ) ) {
+		return $novablocks_block_editor_settings['hero']['attributes'];
+	}
+
+	return array();
 }
 
 function novablocks_get_slideshow_attributes() {
@@ -292,7 +297,12 @@ function novablocks_get_header_attributes() {
 
 function novablocks_get_media_attributes() {
 	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
-	return $novablocks_block_editor_settings['media']['attributes'];
+
+	if ( ! empty( $novablocks_block_editor_settings['media']['attributes'] ) ) {
+		return $novablocks_block_editor_settings['media']['attributes'];
+	}
+
+	return array();
 }
 
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
@@ -617,7 +627,7 @@ add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separato
 function novablocks_get_block_editor_settings() {
 
 	$settings = array(
-		'usePostMetaAttributes' => NOVABLOCKS_USE_POST_META_ATTRIBUTES,
+		'usePostMetaAttributes' => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'applyMinimumHeightOptions' => array(
 			array(
 				'label' => esc_html__( 'None', '__plugin_txtd' ),
