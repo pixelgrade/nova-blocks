@@ -15037,9 +15037,12 @@ var HeroEdit = function (_Component) {
 			var defaults = this.getDefaults(attributes);
 			var newAttributes = this.getNewAttributes(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, attributes, defaults));
 
-			if (!__WEBPACK_IMPORTED_MODULE_6__wordpress_is_shallow_equal___default()(newAttributes, this.props.attributes)) {
-				setAttributes(newAttributes);
-			}
+			setAttributes(newAttributes);
+		}
+	}, {
+		key: 'shouldComponentUpdate',
+		value: function shouldComponentUpdate(nextProps) {
+			return !__WEBPACK_IMPORTED_MODULE_6__wordpress_is_shallow_equal___default()(nextProps.attributes, this.props.attributes);
 		}
 	}, {
 		key: 'componentDidMount',
