@@ -10059,7 +10059,6 @@ var novaBlocks = function () {
 	__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(novaBlocks, [{
 		key: 'initialize',
 		value: function initialize(settings) {
-			console.log(settings);
 			Object(__WEBPACK_IMPORTED_MODULE_7__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
 			dispatch(__WEBPACK_IMPORTED_MODULE_21__store__["a" /* STORE_NAME */]).updateSettings(settings);
 			updateCategory('nova-blocks', {
