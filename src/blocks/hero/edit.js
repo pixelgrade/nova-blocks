@@ -25,8 +25,9 @@ const {
 
 const {
 	FocalPointPicker,
-	RadioControl,
 	PanelBody,
+	RadioControl,
+	ToggleControl,
 } = wp.components;
 
 const {
