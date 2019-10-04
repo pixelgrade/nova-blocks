@@ -9999,23 +9999,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__scss_editor_scss__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__scss_editor_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__scss_editor_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__filters_with_block_id__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__filters_with_font_size_picker__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__blocks_core_separator__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__blocks_announcement_bar__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__blocks_google_map__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__blocks_header__ = __webpack_require__(187);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__blocks_headline__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__blocks_hero__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__blocks_logo__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__blocks_media__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__blocks_slideshow__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__blocks_navigation__ = __webpack_require__(225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__blocks_menu_food__ = __webpack_require__(227);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__blocks_menu_food_section__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__blocks_menu_food_item__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__blocks_opentable__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__store__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__icons__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__filters_with_block_index__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__filters_with_font_size_picker__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__blocks_core_separator__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__blocks_announcement_bar__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__blocks_google_map__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__blocks_header__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__blocks_headline__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__blocks_hero__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__blocks_logo__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__blocks_media__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__blocks_slideshow__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__blocks_navigation__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__blocks_menu_food__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__blocks_menu_food_section__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__blocks_menu_food_item__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__blocks_opentable__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__store__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__icons__ = __webpack_require__(2);
+
 
 
 
@@ -10057,10 +10059,10 @@ var novaBlocks = function () {
 	__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(novaBlocks, [{
 		key: 'initialize',
 		value: function initialize(settings) {
-			Object(__WEBPACK_IMPORTED_MODULE_6__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
-			dispatch(__WEBPACK_IMPORTED_MODULE_20__store__["a" /* STORE_NAME */]).updateSettings(settings);
+			Object(__WEBPACK_IMPORTED_MODULE_7__blocks_core_separator__["a" /* addSeparatorFilters */])(settings);
+			dispatch(__WEBPACK_IMPORTED_MODULE_21__store__["a" /* STORE_NAME */]).updateSettings(settings);
 			updateCategory('nova-blocks', {
-				icon: __WEBPACK_IMPORTED_MODULE_21__icons__["o" /* nova */]
+				icon: __WEBPACK_IMPORTED_MODULE_22__icons__["o" /* nova */]
 			});
 		}
 	}]);
@@ -14909,8 +14911,9 @@ var __ = wp.i18n.__;
 var InspectorControls = wp.blockEditor.InspectorControls;
 var _wp$components = wp.components,
     FocalPointPicker = _wp$components.FocalPointPicker,
+    PanelBody = _wp$components.PanelBody,
     RadioControl = _wp$components.RadioControl,
-    PanelBody = _wp$components.PanelBody;
+    ToggleControl = _wp$components.ToggleControl;
 var _wp$element = wp.element,
     Component = _wp$element.Component,
     Fragment = _wp$element.Fragment;
@@ -15915,6 +15918,7 @@ var ScrollIndicatorPanel = Object(__WEBPACK_IMPORTED_MODULE_5__with_settings__["
  * WordPress dependencies
  */
 var InnerBlocks = wp.blockEditor.InnerBlocks;
+var select = wp.data.select;
 
 
 var HeroPreview = function HeroPreview(props) {
@@ -15932,6 +15936,7 @@ var HeroPreview = function HeroPreview(props) {
 	    contentColor = _props$attributes.contentColor,
 	    overlayFilterStyle = _props$attributes.overlayFilterStyle,
 	    className = props.className,
+	    clientId = props.clientId,
 	    settings = props.settings;
 
 
@@ -15946,6 +15951,16 @@ var HeroPreview = function HeroPreview(props) {
 	};
 
 	var minimumHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
+
+	var heroBlocks = select('core/block-editor').getBlocks().filter(function (block) {
+		return block.name === 'novablocks/hero';
+	});
+
+	var index = heroBlocks.findIndex(function (block) {
+		return block.clientId === clientId;
+	});
+	var scrollIndicatorFallback = index === 0 && minimumHeight === 100;
+	var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
 	if (!!applyMinimumHeightBlock) {
 		styles.hero.minHeight = minimumHeight + 'vh';
@@ -15975,7 +15990,7 @@ var HeroPreview = function HeroPreview(props) {
 					{ className: 'novablocks-hero__inner-container novablocks-u-content-width', style: styles.content },
 					wp.element.createElement(InnerBlocks, { template: settings.hero.template })
 				),
-				scrollIndicatorBlock && wp.element.createElement('div', { className: 'novablocks-hero__indicator' })
+				scrollIndicator && wp.element.createElement('div', { className: 'novablocks-hero__indicator' })
 			)
 		)
 	);
@@ -18247,6 +18262,112 @@ var OpenTableSave = function OpenTableSave(props) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (OpenTableSave);
+
+/***/ }),
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_assign__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_assign__);
+
+
+
+
+
+
+var createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var addFilter = wp.hooks.addFilter;
+var Component = wp.element.Component;
+var select = wp.data.select;
+
+
+var enableBlockIndexAttributeOnBlocks = ['novablocks/hero'];
+
+function addBlockIndexAttribute(block) {
+
+	if (!enableBlockIndexAttributeOnBlocks.includes(block.name)) {
+		return block;
+	}
+
+	if (typeof block.attributes !== 'undefined') {
+		block.attributes = __WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_assign___default()(block.attributes, {
+			blockIndex: {
+				type: 'number',
+				default: -1
+			}
+		});
+	}
+
+	return block;
+}
+addFilter('blocks.registerBlockType', 'novablocks/add-blockIndex-attribute', addBlockIndexAttribute);
+
+var withBlockIndexAttribute = createHigherOrderComponent(function (BlockEdit) {
+
+	return function (_Component) {
+		__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(BetterBlockEdit, _Component);
+
+		function BetterBlockEdit() {
+			__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, BetterBlockEdit);
+
+			return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (BetterBlockEdit.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(BetterBlockEdit)).apply(this, arguments));
+		}
+
+		__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(BetterBlockEdit, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.updateIndex();
+			}
+		}, {
+			key: 'updateIndex',
+			value: function updateIndex() {
+				var _this2 = this;
+
+				if (enableBlockIndexAttributeOnBlocks.includes(this.props.name)) {
+					var oldIndex = this.props.attributes.blockIndex;
+					var newIndex = select('core/block-editor').getBlocks().findIndex(function (block) {
+						return block.clientId === _this2.props.clientId;
+					});
+
+					if (oldIndex !== newIndex) {
+						this.props.setAttributes({ blockIndex: newIndex });
+					}
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return wp.element.createElement(BlockEdit, this.props);
+			}
+		}]);
+
+		return BetterBlockEdit;
+	}(Component);
+}, "withBlockIndexAttribute");
+
+addFilter('editor.BlockEdit', 'novablocks/with-blockIndex-attribute', withBlockIndexAttribute);
 
 /***/ })
 /******/ ]);

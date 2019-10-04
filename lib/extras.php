@@ -359,10 +359,6 @@ function novablocks_add_hero_settings( $settings ) {
 		),
 		'attributes' => array_merge(
 			array(
-				'blockIndex'              => array(
-					'type'    => 'number',
-					'default' => -1
-				),
 				'applyMinimumHeightBlock' => array(
 					'type'    => 'boolean',
 					'default' => false

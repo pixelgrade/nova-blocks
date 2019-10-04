@@ -8,6 +8,10 @@ import HeroBackground from './background';
  */
 const { InnerBlocks } = wp.blockEditor;
 
+const {
+	select,
+} = wp.data;
+
 const HeroPreview = function( props ) {
 	const {
 		attributes: {
@@ -30,6 +34,7 @@ const HeroPreview = function( props ) {
 			overlayFilterStyle,
 		},
 		className,
+		clientId,
 		settings,
 	} = props;
 
@@ -54,6 +59,14 @@ const HeroPreview = function( props ) {
 
 	const minimumHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
 
+	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
+		return block.name === 'novablocks/hero';
+	} );
+
+	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
+	const scrollIndicatorFallback = index === 0 && minimumHeight === 100;
+	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
+
 	if ( !! applyMinimumHeightBlock ) {
 		styles.hero.minHeight = minimumHeight + 'vh';
 	}
@@ -75,7 +88,7 @@ const HeroPreview = function( props ) {
 					<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
 						<InnerBlocks template={ settings.hero.template } />
 					</div>
-					{ scrollIndicatorBlock && <div className="novablocks-hero__indicator"></div> }
+					{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }
 				</div>
 			</div>
 		</div>

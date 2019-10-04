@@ -83,7 +83,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
 
-			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
+			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 
             <div class="novablocks-hero__mask">
                 <div class="novablocks-hero__parallax" data-rellax-amount="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
@@ -105,7 +105,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
                     <div class="novablocks-hero__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
 						<?php echo $content ?>
                     </div>
-					<?php if ( ! empty( $attributes['scrollIndicatorBlock'] ) ) { ?>
+					<?php if ( $scrollIndicator ) { ?>
                         <div class="novablocks-hero__indicator">
 	                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
                         </div>
@@ -113,7 +113,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
                 </div>
             </div>
 
-			<?php do_action( 'novablocks_hero:before_closing_tag', array( 'blockIndex' => $attributes['blockIndex'] ) ) ?>
+			<?php do_action( 'novablocks_hero:before_closing_tag', $attributes ) ?>
 
         </div>
 
