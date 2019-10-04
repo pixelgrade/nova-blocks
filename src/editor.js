@@ -2,7 +2,6 @@ import './scss/style.scss';
 import './scss/editor.scss';
 
 import "./filters/with-block-id";
-import "./filters/with-block-index";
 import "./filters/with-font-size-picker";
 
 import "./blocks/core/separator";
