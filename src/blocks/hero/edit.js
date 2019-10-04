@@ -136,11 +136,9 @@ class HeroEdit extends Component {
 		const defaults = this.getDefaults( attributes );
 		const newAttributes = this.getNewAttributes( { ...attributes, ...defaults } );
 
-		setAttributes( newAttributes );
-	}
-
-	shouldComponentUpdate( nextProps ) {
-		return ! isShallowEqual( nextProps.attributes, this.props.attributes );
+		if ( ! isShallowEqual( newAttributes, this.props.attributes ) ) {
+			setAttributes( newAttributes );
+		}
 	}
 
 	componentDidMount() {
