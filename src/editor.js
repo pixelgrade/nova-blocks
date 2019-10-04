@@ -46,7 +46,4 @@ class novaBlocks {
 	}
 }
 
-( function() {
-} )();
-
 wp.novaBlocks = new novaBlocks();

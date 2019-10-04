@@ -52,7 +52,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
-		if ( NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+		if ( ! defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) || NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 
 			if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
 				$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
@@ -73,7 +73,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
 
-		if ( ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+		if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 			$scrollIndicator = $attributes['blockIndex'] === 0;
 		}
 
