@@ -74,14 +74,14 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
 
 		if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-			$scrollIndicator = $attributes['blockIndex'] === 0;
+			$scrollIndicator = ( isset( $attributes['blockIndex'] ) && $attributes['blockIndex'] === 0 );
 		}
 
 		ob_start();
 
 		do_action( 'novablocks_hero:before' ); ?>
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $heroStyle ); ?>">
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 
