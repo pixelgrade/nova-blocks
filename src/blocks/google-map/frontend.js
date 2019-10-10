@@ -1,4 +1,3 @@
-import ReactDOMServer from "react-dom/server";
 import pin from "./pin";
 import { getCenterFromMarkers } from "./utils";
 import { parallaxInit } from "../../utils";
@@ -24,7 +23,7 @@ import { parallaxInit } from "../../utils";
 			},
 			map = new google.maps.Map( obj, mapOptions );
 
-		var pinMarkup = ReactDOMServer.renderToStaticMarkup( pin ).replace( /%ACCENT_COLOR%/g, pinColor );
+		var pinMarkup = pin.replace( /%ACCENT_COLOR%/g, pinColor );
 
 		markers.forEach( markerString => {
 			const marker = JSON.parse( markerString );

@@ -125,7 +125,6 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-rellax',
 		'nova-blocks-slick',
 		'nova-blocks-velocity',
-		'wp-element'
 	);
 
 	$position_indicators = get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true );
