@@ -64,7 +64,6 @@ module.exports = {
   plugins: [
     blocksCSSPlugin,
     editBlocksCSSPlugin,
-    new BundleAnalyzerPlugin(),
 	new OptimizeCSSAssetsPlugin({}),
   ],
 };
