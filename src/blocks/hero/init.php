@@ -60,7 +60,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 			if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
 				$minHeight = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
-				$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
+				$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
 			}
 
 			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
@@ -68,7 +68,11 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			}
 		} else {
 			$minHeight = $attributes['minHeightFallback'];
-			$foregroundStyle .= 'min-height: ' . floatval( $minHeight ) . 'vh';
+			$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
+
+			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+				$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
+			}
 		}
 
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );

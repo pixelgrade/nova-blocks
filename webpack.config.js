@@ -41,6 +41,9 @@ module.exports = {
     path: path.resolve( __dirname ),
     filename: '[name].js',
   },
+  externals: {
+    jquery: 'jQuery'
+  },
   watch: 'production' !== process.env.NODE_ENV,
   module: {
     rules: [
