@@ -15,7 +15,7 @@
 .nova-food-menu--layout > .block-editor-inner-blocks > .block-editor-block-list__layout {
   @include above(tablet) {
     column-count: 2;
-    column-gap: 3em;
+    column-gap: 4em;
   }
 }
 
