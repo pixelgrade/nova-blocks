@@ -2008,8 +2008,11 @@ var TRANSITION_EASING = "easeInOutCirc";
 
 (function ($, window, undefined) {
 
+	var $window = $(window);
 	var $blocks = $(BLOCK_SELECTOR);
 	var $rellaxTarget = $blocks.filter('.has-parallax').find(SLIDER_SELECTOR);
+	var useOrientation = Object(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* hasTouchScreen */])() && 'orientation' in window;
+	var onDebouncedResize = Object(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* debounce */])(onResize, 300);
 
 	// initialize parallax effect
 	if (typeof $.fn.rellax !== "undefined") {
@@ -2045,7 +2048,13 @@ var TRANSITION_EASING = "easeInOutCirc";
 		}
 	});
 
-	$(window).on('resize', Object(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* debounce */])(onResize, 300));
+	if (useOrientation) {
+		$window.on('orientationchange', function () {
+			$window.one('resize', onResize);
+		});
+	} else {
+		$window.on('resize', onDebouncedResize);
+	}
 
 	function resetBlockMinHeight($block) {
 		$block.css('minHeight', '');
@@ -2177,27 +2186,28 @@ var viewportObserver = function () {
 	__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(viewportObserver, [{
 		key: 'bindEvents',
 		value: function bindEvents() {
-			var getWindowSize = this.getWindowSize.bind(this);
-			var updateViewportUnits = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* debounce */])(this.updateViewportUnits.bind(this), 100);
+			var $window = __WEBPACK_IMPORTED_MODULE_2_jquery___default()(window);
+			var updateViewportUnits = this.updateViewportUnits.bind(this);
+			var useOrientation = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* hasTouchScreen */])() && 'orientation' in window;
 
-			getWindowSize();
 			updateViewportUnits();
 
-			__WEBPACK_IMPORTED_MODULE_2_jquery___default()(window).on('resize', getWindowSize);
-			__WEBPACK_IMPORTED_MODULE_2_jquery___default()(window).on(Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* hasTouchScreen */])() ? 'orientationchange' : 'resize', updateViewportUnits);
-		}
-	}, {
-		key: 'getWindowSize',
-		value: function getWindowSize() {
-			this.windowWidth = window.innerWidth;
-			this.windowHeight = window.innerHeight;
+			if (useOrientation) {
+				$window.on('orientationchange', function () {
+					$window.one('resize', updateViewportUnits);
+				});
+			} else {
+				$window.on('resize', updateViewportUnits);
+			}
 		}
 	}, {
 		key: 'updateViewportUnits',
 		value: function updateViewportUnits() {
 			var root = document.documentElement;
-			var vw = this.windowWidth / 100 + 'px';
-			var vh = this.windowHeight / 100 + 'px';
+			var windowWidth = window.screen && window.screen.availWidth || window.innerWidth;
+			var windowHeight = window.screen && window.screen.availHeight || window.innerHeight;
+			var vw = windowWidth / 100 + 'px';
+			var vh = windowHeight / 100 + 'px';
 
 			root.style.setProperty('--novablocks-1vw', vw);
 			root.style.setProperty('--novablocks-1vh', vh);

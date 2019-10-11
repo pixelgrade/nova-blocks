@@ -1,4 +1,4 @@
-import {debounce, isSafari} from '../../utils';
+import { debounce, isSafari, hasTouchScreen } from '../../utils';
 
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';
@@ -11,8 +11,11 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 (function($, window, undefined) {
 
+	const $window = $( window );
 	const $blocks = $( BLOCK_SELECTOR );
 	const $rellaxTarget = $blocks.filter( '.has-parallax' ).find( SLIDER_SELECTOR );
+	const useOrientation = hasTouchScreen() && 'orientation' in window;
+	const onDebouncedResize = debounce( onResize, 300 );
 
 	// initialize parallax effect
 	if ( typeof $.fn.rellax !== "undefined" ) {
@@ -48,7 +51,13 @@ const TRANSITION_EASING = "easeInOutCirc";
 		}
 	});
 
-	$( window ).on( 'resize', debounce( onResize, 300 ) );
+	if ( useOrientation ) {
+		$window.on( 'orientationchange', function() {
+			$window.one( 'resize', onResize );
+		} );
+	} else {
+		$window.on( 'resize', onDebouncedResize );
+	}
 
 	function resetBlockMinHeight( $block ) {
 		$block.css( 'minHeight', '' );

@@ -16,7 +16,8 @@
 			windowHeight,
 			lastScrollY,
 			frameRendered = true,
-			elements = [];
+			elements = [],
+			useOrientation = hasTouchScreen() && 'orientation' in window;
 
 		function hasTouchScreen() {
 			var hasTouchScreen = false;
@@ -43,8 +44,8 @@
 		}
 
 		function onResize() {
-			windowWidth = window.innerWidth;
-			windowHeight = window.innerHeight;
+			windowWidth = window.screen && window.screen.availWidth || window.innerWidth;
+			windowHeight = window.screen && window.screen.availHeight ||window.innerHeight;
 		}
 
 		function onScroll() {
@@ -273,20 +274,25 @@
 		function restart() {
 			resetAll();
 			cacheAll();
+
 			$.each(elements, function(i, element) {
 				element._prepareElement();
 				element._updatePosition();
 			});
 		}
 
-		var debouncedRestart = debounce( restart, 300 );
+		var debouncedRestart = debounce( restart, 100 );
 
-		$( window ).on( hasTouchScreen() ? 'orientationchange' : 'resize', function() {
-			onResize();
-			debouncedRestart();
-		} );
+		$window.on( 'scroll', onScroll );
+		$window.on( 'resize', onResize );
 
-		$( window ).on( 'scroll', onScroll );
+		if ( useOrientation ) {
+			$window.on( 'orientationchange', function() {
+				$window.one( 'resize', debouncedRestart );
+			} );
+		} else {
+			$window.on( 'resize', debouncedRestart );
+		}
 
 		onResize();
 		onScroll();
