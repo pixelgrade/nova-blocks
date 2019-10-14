@@ -1,56 +1,62 @@
 :root {
-    --novablocks-media-transition-duration: 0.5s;
-    --novablocks-media-transition-easing: ease;
-    --novablocks-media-transition: all var(--novablocks-media-transition-duration) var(--novablocks-media-transition-easing);
+	--novablocks-media-transition-duration: 0.5s;
+	--novablocks-media-transition-easing: ease;
+	--novablocks-media-transition: all
+		var(--novablocks-media-transition-duration)
+		var(--novablocks-media-transition-easing);
 }
 
 .novablocks-media__placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-    height: 100%;
+	height: 100%;
 
-    background-color: #EEEEEE;
+	background-color: #eeeeee;
 }
 
 .wp-block-pixelgrade-media {
-    transition: var(--novablocks-media-transition);
-    transition-property: background-color, padding;
+	transition: var(--novablocks-media-transition);
+	transition-property: background-color, padding;
 
-    h1, h2, h3, h4, h5, h6 {
-        transition: var(--novablocks-media-transition);
-        transition-property: color;
-    }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		transition: var(--novablocks-media-transition);
+		transition-property: color;
+	}
 }
 
 .novablocks-media {
-    transition: var(--novablocks-media-transition);
+	transition: var(--novablocks-media-transition);
 }
 
 .novablocks-media__content {
-
 }
 
 .novablocks-media__inner-container {
-    padding-left: var(--novablocks-media-spacing);
-    padding-right: var(--novablocks-media-spacing);
+	padding-left: var(--novablocks-media-spacing);
+	padding-right: var(--novablocks-media-spacing);
 
-    transition: var(--novablocks-media-transition);
-    transition-property: padding, box-shadow;
+	transition: var(--novablocks-media-transition);
+	transition-property: padding, box-shadow;
 
-    > * {
-        margin-left: auto;
-        margin-right: auto;
-    }
+	> * {
+		margin-left: auto;
+		margin-right: auto;
+	}
 
-    > [data-align="full"] {
-        margin-left: calc(-1 * var(--novablocks-media-spacing));
-        margin-right: calc(-1 * var(--novablocks-media-spacing));
-    }
+	> [data-align='full'] {
+		margin-left: calc(-1 * var(--novablocks-media-spacing));
+		margin-right: calc(-1 * var(--novablocks-media-spacing));
+	}
 
-    &:after {
-        transition: var(--novablocks-media-transition);
-        transition-property: background-color;
-    }
+	&:after {
+		transition: var(--novablocks-media-transition);
+		transition-property: background-color;
+	}
 }

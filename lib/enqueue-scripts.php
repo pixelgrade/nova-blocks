@@ -10,8 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_admin_init() {
 	// Make paths variables so we don't write em twice ;)
-	$style_path = '/dist/css/blocks.editor.css';
-	$block_path = '/dist/js/editor.blocks.js';
+	$style_path = '/dist/css/editor.css';
+	$block_path = '/dist/js/editor.js';
 
 	$script_dependencies = array(
 		'wp-i18n',
@@ -40,7 +40,7 @@ function novablocks_admin_init() {
 	);
 
 	wp_localize_script( 'nova-blocks-js', 'novablocks_urls', array(
-		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/blocks.style.css',
+		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/frontend.style.css',
 		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
 	) );
 
@@ -64,7 +64,7 @@ add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_block_editor_asse
 
 
 function novablocks_enqueue_assets() {
-	$style_path = '/dist/css/blocks.style.css';
+	$style_path = '/dist/css/frontend.css';
 	wp_enqueue_style(
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
@@ -83,7 +83,7 @@ function novablocks_enqueue_frontend_assets() {
 
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-	$rellax_path = '/dist/js/jquery.rellax.js';
+	$rellax_path = '/dist/js/vendor/jquery.rellax' . $suffix . '.js';
 	wp_register_script(
 		'nova-blocks-rellax',
 		novablocks_get_plugin_url() . $rellax_path,
@@ -92,7 +92,7 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	$bully_path = '/dist/js/jquery.bully.js';
+	$bully_path = '/dist/js/vendor/jquery.bully' . $suffix . '.js';
 	wp_register_script(
 		'nova-blocks-bully',
 		novablocks_get_plugin_url() . $bully_path,
@@ -101,7 +101,7 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	$slick_path = '/dist/js/jquery.slick.js';
+	$slick_path = '/dist/js/vendor/jquery.slick' . $suffix . '.js';
 	wp_register_script(
 		'nova-blocks-slick',
 		novablocks_get_plugin_url() . $slick_path,
@@ -110,7 +110,7 @@ function novablocks_enqueue_frontend_assets() {
 		true
 	);
 
-	$velocity_path = '/dist/js/jquery.velocity.js';
+	$velocity_path = '/dist/js/vendor/jquery.velocity' . $suffix . '.js';
 	wp_register_script(
 		'nova-blocks-velocity',
 		novablocks_get_plugin_url() . $velocity_path,
@@ -138,7 +138,7 @@ function novablocks_enqueue_frontend_assets() {
 		$script_dependencies[] = 'google-maps';
 	}
 
-	$block_path = '/dist/js/frontend.blocks.js';
+	$block_path = '/dist/js/frontend.js';
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,

@@ -1,8 +1,10 @@
-import ReactDOMServer from 'react-dom/server';
+import styles from './styles';
 import pin from './pin';
 import { getMapStyles, getMarkersCenter, getMapAccentColor } from './utils';
 import defaultMapCenter from './default-map-center';
 import { withParallaxContext } from '../../components/with-parallax';
+
+import { useTraceUpdate } from '../../utils';
 
 const { __ } = wp.i18n;
 
@@ -41,11 +43,11 @@ class Map extends Component {
 		this.props.onChange( this.searchBox.getPlaces().map( place => {
 			const keepProps = [ 'name', 'geometry' ];
 			const filtered = Object.keys( place )
-               .filter( key => keepProps.includes( key ) )
-               .reduce( ( obj, key ) => {
-                   obj[ key ] = place[ key ];
-                   return obj;
-               }, {} );
+			                       .filter( key => keepProps.includes( key ) )
+			                       .reduce( ( obj, key ) => {
+				                       obj[ key ] = place[ key ];
+				                       return obj;
+			                       }, {} );
 
 			return JSON.stringify( filtered );
 		} ) );
@@ -56,7 +58,7 @@ class Map extends Component {
 		const { markers, styleSlug } = attributes;
 
 		const accentColor = styleSlug === 'theme' ? getMapAccentColor.call( this ) : '#222222';
-		const pinMarkup = ReactDOMServer.renderToStaticMarkup( pin ).replace( '%ACCENT_COLOR%', accentColor );
+		const pinMarkup = pin.replace( '%ACCENT_COLOR%', accentColor );
 
 		markers.forEach( markerString => {
 			const marker = JSON.parse( markerString );
@@ -192,7 +194,7 @@ const MapWrapper = ( Map ) => {
 						<input
 							type="text"
 							id={ `novablocks-google-map-search-input-${ props.clientId }` }
-							placeholder={ __( 'Enter an address to drop a pin on this map' ) }
+							placeholder={ __( 'Enter an address to drop a pin on this map', '__plugin_txtd' ) }
 						/>
 					</Placeholder>
 				</div>

@@ -1,5 +1,4 @@
 .novablocks-block-editor-map-styles {
-
 	.block-editor-block-styles__item {
 		padding: 6px;
 	}
@@ -20,9 +19,8 @@
 }
 
 .novablocks-map__map-container {
-
 	&:after {
-		content: "";
+		content: '';
 		@include cover;
 		z-index: 5;
 	}
@@ -41,7 +39,7 @@
 		// but seems the best option to ensure that this border
 		// blends properly with the block editor background
 		border-bottom: 5px solid var(--theme-background-color);
-		background-color: rgba(240,240,240,0.9);
+		background-color: rgba(240, 240, 240, 0.9);
 	}
 
 	.components-placeholder__label:empty {
@@ -49,7 +47,6 @@
 	}
 
 	.components-placeholder__fieldset {
-
 		input {
 			display: block;
 			width: 100%;

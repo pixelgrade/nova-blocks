@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import './style.scss';
 import * as icons from '../../icons';
 
 /**

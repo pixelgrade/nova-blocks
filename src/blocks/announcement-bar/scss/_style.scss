@@ -22,7 +22,11 @@
 	align-items: center;
 	justify-content: center;
 
-	padding: var(--novablocks-announcement-bar-padding) calc( 2 * var(--novablocks-announcement-bar-padding) + var(--novablocks-announcement-bar-close-width) );
+	padding: var(--novablocks-announcement-bar-padding)
+		calc(
+			2 * var(--novablocks-announcement-bar-padding) +
+				var(--novablocks-announcement-bar-close-width)
+		);
 }
 
 .novablocks-announcement-bar__content {
@@ -38,14 +42,14 @@
 .novablocks-announcement-bar__close {
 	position: absolute;
 	top: 50%;
-	right: calc( 2 * var(--novablocks-announcement-bar-padding));
-	transform: translate(0,-50%);
+	right: calc(2 * var(--novablocks-announcement-bar-padding));
+	transform: translate(0, -50%);
 	z-index: 100;
 
 	width: var(--novablocks-announcement-bar-close-width);
 	cursor: pointer;
 
-	transition: opacity .3s ease;
+	transition: opacity 0.3s ease;
 
 	svg {
 		display: block;
@@ -67,5 +71,5 @@
 }
 
 .is-style-alert {
-	--novablocks-announcement-background-color: #DE1651;
+	--novablocks-announcement-background-color: #de1651;
 }

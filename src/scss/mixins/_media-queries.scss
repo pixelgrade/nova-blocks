@@ -1,35 +1,34 @@
 $nova-breakpoints: (
-    mobile: 480px,
-    tablet: 768px,
-    lap: 1024px,
-    desktop: 1366px,
+	mobile: 480px,
+	tablet: 768px,
+	lap: 1024px,
+	desktop: 1366px,
 );
 
+@mixin above($value) {
+	$breakpoint: map-get($nova-breakpoints, $value);
 
-@mixin above( $value ) {
-    $breakpoint: map-get( $nova-breakpoints, $value );
+	@if ($breakpoint != null) {
+		$value: $breakpoint;
+	}
 
-    @if ( $breakpoint != null ) {
-        $value: $breakpoint;
-    }
-
-    @if ( unitless( $value ) == false ) {
-        @media only screen and (min-width: $value) {
-            @content;
-        }
-    }
+	@if (unitless($value) == false) {
+		@media only screen and (min-width: $value) {
+			@content;
+		}
+	}
 }
 
-@mixin below( $value ) {
-    $breakpoint: map-get( $nova-breakpoints, $value );
+@mixin below($value) {
+	$breakpoint: map-get($nova-breakpoints, $value);
 
-    @if ( $breakpoint != null ) {
-        $value: $breakpoint;
-    }
+	@if ($breakpoint != null) {
+		$value: $breakpoint;
+	}
 
-    @if ( unitless( $value ) == false ) {
-        @media not screen and (min-width: $value) {
-            @content;
-        }
-    }
+	@if (unitless($value) == false) {
+		@media not screen and (min-width: $value) {
+			@content;
+		}
+	}
 }

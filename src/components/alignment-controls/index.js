@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import * as icons from '../../icons';
-import './style.scss';
 
 import BlockHorizontalAlignmentToolbar from '../block-horizontal-alignment-toolbar';
 import BlockVerticalAlignmentToolbar from '../block-vertical-alignment-toolbar';
