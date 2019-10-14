@@ -5,6 +5,7 @@
 	"license": "GPL-3.0+",
 	"scripts": {
 		"dev": "cross-env webpack --watch",
+		"watch": "cross-env NODE_ENV=production webpack --watch -p",
 		"prebuild": "cross-env NODE_ENV=production webpack -p",
 		"build": "gulp zip"
 	},
