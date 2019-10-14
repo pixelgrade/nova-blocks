@@ -78,13 +78,13 @@ Installing "Nova Blocks" can be done either by searching for "Nova Blocks" via t
 
 == Frequently Asked Questions ==
 
-= Can I use the Nova blocks with my own theme? =
+= Can I use the Nova Blocks with my own theme? =
 
-Yes! Nova Blocks are build to inherit your theme style as much as possible.
+Yes! The editor blocks in Nova Blocks are build to inherit your theme style as much as possible.
 
 = Is Nova Blocks free? =
 
-Yes! Nova Block’s core features are free to use.
+Yes! Nova Block's core features are free to use.
 
 == Screenshots ==
 
