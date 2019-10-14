@@ -1,28 +1,26 @@
 :root {
-    --bg-master-dark: #000000;
-    --bg-master-light: #FFFFFF;
-    --bg-master-none: transparent;
+	--bg-master-dark: #000000;
+	--bg-master-light: #ffffff;
+	--bg-master-none: transparent;
 }
 
 @each $color in dark, light, none {
-
-    .novablocks-u-background-#{$color} {
-        --element-background: var(--bg-master-#{$color});
-    }
+	.novablocks-u-background-#{$color} {
+		--element-background: var(--bg-master-#{$color});
+	}
 }
 
 .novablocks-u-background {
-    background-color: var(--element-background);
-    transition: background-color 0.4s ease-out;
+	background-color: var(--element-background);
+	transition: background-color 0.4s ease-out;
 }
 
 .nova-hide-clear-color {
+	.components-color-palette__custom-color {
+		margin-right: 0;
+	}
 
-    .components-color-palette__custom-color {
-        margin-right: 0;
-    }
-
-    .components-color-palette__clear {
-        display: none;
-    }
+	.components-color-palette__clear {
+		display: none;
+	}
 }

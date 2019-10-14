@@ -1,7 +1,7 @@
 /*!
  * jQuery Bully Plugin v0.2.0
  * Examples and documentation at http://pixelgrade.github.io/rellax/
- * Copyright (c) 2016 PixelGrade http://www.pixelgrade.com
+ * Copyright (c) 2016 Pixelgrade https://pixelgrade.com
  * Licensed under MIT http://www.opensource.org/licenses/mit-license.php/
  */
 ;(

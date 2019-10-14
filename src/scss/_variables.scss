@@ -1,23 +1,23 @@
-$nova-blue:                 #203AB6         !default;
-$nova-blue-dark:            #323067         !default;
-$nova-blue-darker:          #000043         !default;
+$nova-blue: #203ab6 !default;
+$nova-blue-dark: #323067 !default;
+$nova-blue-darker: #000043 !default;
 
-$nova-yellow:               #FFE42E         !default;
-$nova-text-color:           #272743         !default;
+$nova-yellow: #ffe42e !default;
+$nova-text-color: #272743 !default;
 
-$nova-white:                #FFFFFF         !default;
-$nova-gray:                 #EDF0F1         !default;
+$nova-white: #ffffff !default;
+$nova-gray: #edf0f1 !default;
 
 :root {
-    --novablocks-color-1: #{$nova-blue};
-    --novablocks-color-2: #{$nova-yellow};
-    --novablocks-color-3: #{$nova-blue-dark};
+	--novablocks-color-1: #{$nova-blue};
+	--novablocks-color-2: #{$nova-yellow};
+	--novablocks-color-3: #{$nova-blue-dark};
 
-    --novablocks-dark-1: #{$nova-blue-dark};
-    --novablocks-dark-2: #{$nova-text-color};
-    --novablocks-dark-3: #{$nova-blue-darker};
+	--novablocks-dark-1: #{$nova-blue-dark};
+	--novablocks-dark-2: #{$nova-text-color};
+	--novablocks-dark-3: #{$nova-blue-darker};
 
-    --novablocks-light-1: #{$nova-white};
-    --novablocks-light-2: #{$nova-gray};
-    --novablocks-light-3: #{$nova-gray};
+	--novablocks-light-1: #{$nova-white};
+	--novablocks-light-2: #{$nova-gray};
+	--novablocks-light-3: #{$nova-gray};
 }

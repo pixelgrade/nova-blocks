@@ -3,7 +3,6 @@
  */
 import PaddingControls from './padding';
 import WidthControls from './width';
-import './style.scss';
 
 /**
  * WordPress dependencies

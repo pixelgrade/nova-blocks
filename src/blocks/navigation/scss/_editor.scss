@@ -1,8 +1,7 @@
+.wp-block[data-type='novablocks/navigation'] {
+	@import 'menu';
 
-.wp-block[data-type="novablocks/navigation"] {
-    @import "menu";
-
-    .menu {
-        pointer-events: none;
-    }
+	.menu {
+		pointer-events: none;
+	}
 }

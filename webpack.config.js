@@ -1,72 +1,180 @@
 const path = require( 'path' );
-const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
-const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const chalk = require( 'chalk' );
 
-// Set different CSS extraction for editor only and common block styles
-const blocksCSSPlugin = new ExtractTextPlugin( {
-  filename: './dist/css/blocks.style.css',
-} );
-const editBlocksCSSPlugin = new ExtractTextPlugin( {
-  filename: './dist/css/blocks.editor.css',
-} );
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const WebpackRTLPlugin = require( 'webpack-rtl-plugin' );
+const ProgressBarPlugin = require( 'progress-bar-webpack-plugin' );
 
-// Configuration for the ExtractTextPlugin.
-const extractConfig = {
-  use: [
-    { loader: 'raw-loader' },
-    {
-      loader: 'postcss-loader',
-      options: {
-        plugins: [ require( 'autoprefixer' ) ],
-      },
-    },
-    {
-      loader: 'sass-loader',
-      query: {
-        outputStyle:
-          'production' === process.env.NODE_ENV ? 'compressed' : 'nested',
-      },
-    },
-  ],
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const devMode = NODE_ENV !== 'production';
+
+const baseConfig = {
+	mode: NODE_ENV,
+	watch: devMode,
+	performance: {
+		hints: false,
+	},
+	stats: {
+		all: false,
+		assets: true,
+		builtAt: true,
+		colors: true,
+		errors: true,
+		hash: true,
+		timings: true,
+	},
+	externals: {
+		jquery: 'jQuery',
+		lodash : {
+ 			commonjs: 'lodash',
+ 			amd: 'lodash',
+ 		},
+	},
+	output: {
+		// Add /* filename */ comments to generated require()s in the output.
+		pathinfo: devMode,
+		path: path.resolve( __dirname ),
+	},
 };
 
-
-module.exports = {
-  entry: {
-		'./dist/js/editor.blocks' : './src/editor.js',
-		'./dist/js/frontend.blocks' : './src/frontend.js',
-  },
-  output: {
-    path: path.resolve( __dirname ),
-    filename: '[name].js',
-  },
-  externals: {
-    jquery: 'jQuery'
-  },
-  watch: 'production' !== process.env.NODE_ENV,
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
-      {
-        test: /style\.s?css$/,
-        use: blocksCSSPlugin.extract( extractConfig ),
-      },
-      {
-        test: /editor\.s?css$/,
-        use: editBlocksCSSPlugin.extract( extractConfig ),
-      }
-    ],
-  },
-  plugins: [
-    blocksCSSPlugin,
-    editBlocksCSSPlugin,
-	new OptimizeCSSAssetsPlugin({}),
-  ],
+const minimizeConfig = {
+	minimize: devMode,
+	minimizer: [
+		new TerserPlugin( {
+			include: /\.min\.js$/,
+		} )
+	],
 };
+
+/**
+ * Config for compiling Vendors.
+ */
+const VendorConfig = {
+	...baseConfig,
+	entry: {
+		'./dist/js/vendor/jquery.bully.min' : './dist/js/vendor/jquery.bully.js',
+		'./dist/js/vendor/jquery.rellax.min' : './dist/js/vendor/jquery.rellax.js',
+		'./dist/js/vendor/jquery.slick.min' : './dist/js/vendor/jquery.slick.js',
+		'./dist/js/vendor/jquery.velocity.min' : './dist/js/vendor/jquery.velocity.js',
+	},
+	optimization: {
+		...minimizeConfig,
+	},
+}
+
+const StylesConfig = {
+	mode: 'development',
+	watch: devMode,
+	output: {
+		// Add /* filename */ comments to generated require()s in the output.
+		pathinfo: devMode,
+		path: path.resolve( __dirname ),
+	},
+	module: {
+		rules: [
+			{
+				test: /\.s?css$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader,
+					},
+					{
+						loader: 'css-loader',
+						options: {
+							sourceMap: true,
+							importLoaders: 1,
+							url: false
+						}
+					},
+					{
+						loader: 'postcss-loader',
+					},
+					{
+						loader: 'sass-loader',
+						options: {
+							sourceMap: true
+						}
+					},
+				],
+			},
+		]
+	},
+	entry: {
+		'./dist/css/editor' : './src/scss/editor.scss',
+		'./dist/css/frontend' : './src/scss/style.scss',
+	},
+	plugins: [
+		new WebpackRTLPlugin( {
+			filename: '[name]-rtl.css',
+			minify: {
+				safe: true,
+			},
+		} ),
+		new MiniCssExtractPlugin( {
+			filename: '[name].css',
+		} ),
+	]
+};
+
+/**
+ * Config for compiling Gutenberg blocks JS.
+ */
+const GutenbergBlocksConfig = {
+	...baseConfig,
+	entry: {
+		'./dist/js/editor' : './src/editor.js',
+		'./dist/js/editor.min' : './src/editor.js',
+	},
+	optimization: {
+		...minimizeConfig
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+				},
+			},
+		],
+	},
+	plugins: [ new ProgressBarPlugin( {
+		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
+	} ) ],
+};
+
+const BlocksFrontendConfig = {
+	...baseConfig,
+	entry: {
+		'./dist/js/frontend' : './src/frontend.js',
+		'./dist/js/frontend.min' : './src/frontend.js',
+	},
+	optimization: {
+		...minimizeConfig
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+				},
+			},
+		],
+	},
+	plugins: [ new ProgressBarPlugin( {
+		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
+	} ) ],
+};
+
+module.exports = [
+	GutenbergBlocksConfig,
+	BlocksFrontendConfig,
+	VendorConfig,
+	StylesConfig,
+];

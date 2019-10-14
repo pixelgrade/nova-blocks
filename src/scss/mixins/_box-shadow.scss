@@ -1,43 +1,34 @@
-$nova-box-shadow-nova:
-    0 32px 128px rgba(42, 54, 52, 0.1),
-    0 16px 64px rgba(42, 54, 52, 0.1),
-    0 8px 16px rgba(42, 54, 52, 0.1) !default;
+$nova-box-shadow-nova: 0 32px 128px rgba(42, 54, 52, 0.1),
+	0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1) !default;
 
-$nova-box-shadow-everest:
-    0 64px 128px rgba(42, 54, 52, 0.1),
-    0 32px 64px rgba(42, 54, 52, 0.1),
-    0 16px 32px rgba(42, 54, 52, 0.1),
-    0 16px 16px rgba(42, 54, 52, 0.1),
-    0 8px 8px rgba(42, 54, 52, 0.1),
-    0 4px 4px rgba(42, 54, 52, 0.1) !default;
+$nova-box-shadow-everest: 0 64px 128px rgba(42, 54, 52, 0.1),
+	0 32px 64px rgba(42, 54, 52, 0.1), 0 16px 32px rgba(42, 54, 52, 0.1),
+	0 16px 16px rgba(42, 54, 52, 0.1), 0 8px 8px rgba(42, 54, 52, 0.1),
+	0 4px 4px rgba(42, 54, 52, 0.1) !default;
 
-$nova-box-shadow-kilimanjaro:
-    0 32px 128px rgba(42, 54, 52, 0.1),
-    0 16px 64px rgba(42, 54, 52, 0.1),
-    0 8px 16px rgba(42, 54, 52, 0.1) !default;
+$nova-box-shadow-kilimanjaro: 0 32px 128px rgba(42, 54, 52, 0.1),
+	0 16px 64px rgba(42, 54, 52, 0.1), 0 8px 16px rgba(42, 54, 52, 0.1) !default;
 
-$nova-box-shadow-montblanc:
-    0 64px 128px rgba(42, 54, 52, 0.1),
-    0 16px 32px rgba(42, 54, 52, 0.1) !default;
+$nova-box-shadow-montblanc: 0 64px 128px rgba(42, 54, 52, 0.1),
+	0 16px 32px rgba(42, 54, 52, 0.1) !default;
 
-$nova-box-shadow-toaca:
-    0 1px 3px rgba(42, 54, 52, 0.1),
-    0 1px 2px rgba(0, 0, 0, 0.1) !default;
+$nova-box-shadow-toaca: 0 1px 3px rgba(42, 54, 52, 0.1),
+	0 1px 2px rgba(0, 0, 0, 0.1) !default;
 
 @mixin box-shadow($shadow: toaca) {
-    @if $shadow == toaca {
-        box-shadow: $nova-box-shadow-toaca;
-    }
-    @if $shadow == montblanc {
-        box-shadow: $nova-box-shadow-montblanc;
-    }
-    @if $shadow == kilimanjaro {
-        box-shadow: $nova-box-shadow-kilimanjaro;
-    }
-    @if $shadow == everest {
-        box-shadow: $nova-box-shadow-everest;
-    }
-    @if $shadow == nova {
-        box-shadow: $nova-box-shadow-nova;
-    }
+	@if $shadow == toaca {
+		box-shadow: $nova-box-shadow-toaca;
+	}
+	@if $shadow == montblanc {
+		box-shadow: $nova-box-shadow-montblanc;
+	}
+	@if $shadow == kilimanjaro {
+		box-shadow: $nova-box-shadow-kilimanjaro;
+	}
+	@if $shadow == everest {
+		box-shadow: $nova-box-shadow-everest;
+	}
+	@if $shadow == nova {
+		box-shadow: $nova-box-shadow-nova;
+	}
 }

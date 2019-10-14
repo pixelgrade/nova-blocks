@@ -1,7 +1,7 @@
 /*!
  * jQuery Rellax Plugin v1.0.0
- * Examples and documentation at http://pixelgrade.github.io/rellax/
- * Copyright (c) 2019 PixelGrade http://www.pixelgrade.com
+ * Examples and documentation at https://pixelgrade.github.io/rellax/
+ * Copyright (c) 2019 Pixelgrade https://pixelgrade.com
  * Licensed under MIT http://www.opensource.org/licenses/mit-license.php/
  */
 ;(
@@ -16,36 +16,11 @@
 			windowHeight,
 			lastScrollY,
 			frameRendered = true,
-			elements = [],
-			useOrientation = hasTouchScreen() && 'orientation' in window;
-
-		function hasTouchScreen() {
-			var hasTouchScreen = false;
-
-			if ( "maxTouchPoints" in navigator ) {
-				hasTouchScreen = navigator.maxTouchPoints > 0;
-			} else if ( "msMaxTouchPoints" in navigator ) {
-				hasTouchScreen = navigator.msMaxTouchPoints > 0;
-			} else {
-				var mQ = window.matchMedia && matchMedia( "(pointer:coarse)" );
-				if ( mQ && mQ.media === "(pointer:coarse)" ) {
-					hasTouchScreen = !!mQ.matches;
-				} else if ( 'orientation' in window ) {
-					hasTouchScreen = true;
-				} else {
-					var UA = navigator.userAgent;
-					hasTouchScreen = (
-						/\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test( UA ) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test( UA )
-					);
-				}
-			}
-
-			return hasTouchScreen;
-		}
+			elements = [];
 
 		function onResize() {
-			windowWidth = window.screen && window.screen.availWidth || window.innerWidth;
-			windowHeight = window.screen && window.screen.availHeight ||window.innerHeight;
+			windowWidth = window.innerWidth;
+			windowHeight = window.innerHeight;
 		}
 
 		function onScroll() {
@@ -274,25 +249,20 @@
 		function restart() {
 			resetAll();
 			cacheAll();
-
 			$.each(elements, function(i, element) {
 				element._prepareElement();
 				element._updatePosition();
 			});
 		}
 
-		var debouncedRestart = debounce( restart, 100 );
+		var debouncedRestart = debounce( restart, 300 );
 
-		$window.on( 'scroll', onScroll );
-		$window.on( 'resize', onResize );
+		$( window ).on( 'resize', function() {
+			onResize();
+			debouncedRestart();
+		} );
 
-		if ( useOrientation ) {
-			$window.on( 'orientationchange', function() {
-				$window.one( 'resize', debouncedRestart );
-			} );
-		} else {
-			$window.on( 'resize', debouncedRestart );
-		}
+		$( window ).on( 'scroll', onScroll );
 
 		onResize();
 		onScroll();

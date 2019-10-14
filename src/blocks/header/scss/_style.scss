@@ -1,15 +1,14 @@
-@import "menu-toggle";
+@import 'menu-toggle';
 
 @media only screen and (min-width: 1000px) {
-
 	// Nova Blocks hacks
-    .site-header {
+	.site-header {
 		// styles from Nova Blocks should only affect blocks created by it
-        @import "menu";
-    }
+		@import 'menu';
+	}
 
-    .site-header__content {
-        display: grid;
+	.site-header__content {
+		display: grid;
 		align-items: center;
 		grid-gap: 1em;
 
@@ -44,19 +43,19 @@
 			grid-template-columns: 1fr auto;
 		}
 
-        &.alignfull[class] {
-            margin-left: 0;
-            margin-right: 0;
-        }
-    }
+		&.alignfull[class] {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
 
-    .c-menu-toggle__checkbox,
-    .c-menu-toggle {
-        display: none;
-    }
+	.c-menu-toggle__checkbox,
+	.c-menu-toggle {
+		display: none;
+	}
 }
 
 @media not screen and (min-width: 1000px) {
-    @import "mobile";
-    @import "mobile-transitions";
+	@import 'mobile';
+	@import 'mobile-transitions';
 }

@@ -1,24 +1,23 @@
-@import "variables";
-@import "mixins";
+@import 'style';
 
-@import "../blocks/announcement-bar/scss/editor";
-@import "../blocks/header/scss/editor";
-@import "../blocks/logo/scss/editor";
-@import "../blocks/google-map/scss/editor";
-@import "../blocks/hero/scss/editor";
-@import "../blocks/media/scss/editor";
-@import "../blocks/slideshow/scss/editor";
-@import "../blocks/navigation/scss/editor";
-@import "../blocks/opentable/scss/editor";
-@import "../blocks/menu-food/scss/editor";
+@import '../blocks/announcement-bar/scss/editor';
+@import '../blocks/header/scss/editor';
+@import '../blocks/logo/scss/editor';
+@import '../blocks/google-map/scss/editor';
+@import '../blocks/hero/scss/editor';
+@import '../blocks/media/scss/editor';
+@import '../blocks/slideshow/scss/editor';
+@import '../blocks/navigation/scss/editor';
+@import '../blocks/opentable/scss/editor';
+@import '../blocks/menu-food/scss/editor';
 
 .novablocks-mask {
-    @include cover;
-    overflow: hidden;
+	@include cover;
+	overflow: hidden;
 }
 
 .block-editor-inserter__preview {
-    transform: scale(.8);
-    max-height: 300px;
-    overflow: hidden;
+	transform: scale(0.8);
+	max-height: 300px;
+	overflow: hidden;
 }

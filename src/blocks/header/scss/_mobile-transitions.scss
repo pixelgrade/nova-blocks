@@ -1,49 +1,45 @@
 .site-header,
 .c-menu-toggle__slice {
-    transition: transform .3s ease-out;
+	transition: transform 0.3s ease-out;
 }
 
 .c-menu-toggle:before {
-    content: "";
+	content: '';
 
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	z-index: 999;
 
-    background: #000;
-    opacity: 0.2;
-    transition: opacity .3s ease-out;
-    cursor: default;
+	background: #000;
+	opacity: 0.2;
+	transition: opacity 0.3s ease-out;
+	cursor: default;
 }
 
 .c-menu-toggle__checkbox {
+	&:not(:checked) {
+		~ .c-menu-toggle:before {
+			pointer-events: none;
+			opacity: 0;
+		}
+	}
 
-    &:not(:checked) {
+	&:checked {
+		~ .c-menu-toggle {
+			.c-menu-toggle__slice--top {
+				transform: rotate(45deg);
+			}
 
-        ~ .c-menu-toggle:before {
-            pointer-events: none;
-            opacity: 0;
-        }
-    }
+			.c-menu-toggle__slice--middle {
+				opacity: 0;
+			}
 
-    &:checked  {
-
-        ~ .c-menu-toggle {
-
-            .c-menu-toggle__slice--top {
-                transform: rotate(45deg);
-            }
-
-            .c-menu-toggle__slice--middle {
-                opacity: 0;
-            }
-
-            .c-menu-toggle__slice--bottom {
-                transform: rotate(-45deg);
-            }
-        }
-    }
+			.c-menu-toggle__slice--bottom {
+				transform: rotate(-45deg);
+			}
+		}
+	}
 }
