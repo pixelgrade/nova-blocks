@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import HTMLReactParser from 'html-react-parser';
 
 export const addSeparatorFilters = ( settings ) => {
 
@@ -10,8 +9,9 @@ export const addSeparatorFilters = ( settings ) => {
 		);
 
 		return (
-			<div className={ className }>
-				{ settings.separator && HTMLReactParser( settings.separator.markup ) }
+			<div className={ className } dangerouslySetInnerHTML={ {
+				__html: settings.separator && settings.separator.markup
+			} }>
 			</div>
 		);
 	};

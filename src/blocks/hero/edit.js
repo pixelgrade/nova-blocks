@@ -139,10 +139,6 @@ class HeroEdit extends Component {
 		setAttributes( newAttributes );
 	}
 
-	shouldComponentUpdate( nextProps ) {
-		return ! isShallowEqual( nextProps.attributes, this.props.attributes );
-	}
-
 	componentDidMount() {
 		this.updateAttributes();
 	}

@@ -1,6 +1,6 @@
 {
   "name": "nova-blocks",
-  "version": "1.1.0",
+  "version": "1.1.4",
   "main": "blocks/index.js",
   "scripts": {
     "dev": "cross-env webpack --watch",
@@ -33,10 +33,9 @@
     "gulp-replace": "^1.0.0",
     "gulp-rsync": "0.0.8",
     "gulp-zip": "^5.0.0",
-    "html-react-parser": "^0.9.1",
     "js-cookie": "^2.2.1",
     "node-sass": "^4.12.0",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "optimize-css-assets-webpack-plugin": "^3.2.1",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^0.5.1",
     "react": "^16.9.0",
