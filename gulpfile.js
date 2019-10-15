@@ -88,6 +88,8 @@ function removeUnneededFiles() {
     '.jshintignore',
     'phpcs.xml.dist',
     'phpunit.xml.dist',
+		'bundlesize.config.json',
+		'postcss.config.js',
 
     'assets/scss',
 		'src/**/scss',
