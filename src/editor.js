@@ -81,6 +81,10 @@ class novaBlocks {
 		if ( supports[ 'opentable' ] ) {
 			opentableInit();
 		}
+
+		if ( supports[ 'slideshow' ] ) {
+			slideshowInit();
+		}
 	}
 }
 

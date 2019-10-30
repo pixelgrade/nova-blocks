@@ -732,7 +732,11 @@ function novablocks_get_theme_support() {
 		'slideshow' => true,
 	);
 
-	$theme_support = array_merge_recursive( $default, $theme_support );
+	if ( is_array( $theme_support ) ) {
+		$theme_support = array_merge_recursive( $default, $theme_support );
+	} else {
+		$theme_support = $default;
+	}
 
 	return $theme_support;
 }

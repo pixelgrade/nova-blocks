@@ -11,14 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 
 	function novablocks_slideshow_block_init() {
-		$slideshow = novablocks_get_theme_support( 'slideshow' );
-
-		if ( $slideshow ) {
-			register_block_type( 'novablocks/slideshow', array(
-				'attributes' => novablocks_get_slideshow_attributes(),
-				'render_callback' => 'novablocks_render_slideshow_block',
-			) );
-		}
+		register_block_type( 'novablocks/slideshow', array(
+			'attributes' => novablocks_get_slideshow_attributes(),
+			'render_callback' => 'novablocks_render_slideshow_block',
+		) );
 	}
 }
 add_action( 'init', 'novablocks_slideshow_block_init' );

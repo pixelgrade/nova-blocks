@@ -11,14 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 
 	function novablocks_hero_block_init() {
-		$hero = novablocks_get_theme_support( 'hero' );
-
-		if ( $hero ) {
-			register_block_type( 'novablocks/hero', array(
-				'attributes' => novablocks_get_hero_attributes(),
-				'render_callback' => 'novablocks_render_hero_block',
-			) );
-		}
+		register_block_type( 'novablocks/hero', array(
+			'attributes' => novablocks_get_hero_attributes(),
+			'render_callback' => 'novablocks_render_hero_block',
+		) );
 	}
 }
 add_action( 'init', 'novablocks_hero_block_init' );
