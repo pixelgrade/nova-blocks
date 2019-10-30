@@ -13,8 +13,8 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 
-export default registerBlockType( 'novablocks/slideshow',
-	{
+function init() {
+	registerBlockType( 'novablocks/slideshow', {
 		title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
 		description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -29,5 +29,7 @@ export default registerBlockType( 'novablocks/slideshow',
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'full' } : {};
 		},
-	}
-);
+	} );
+}
+
+export default init;

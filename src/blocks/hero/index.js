@@ -14,8 +14,8 @@ const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 const { select } = wp.data;
 
-export default registerBlockType( 'novablocks/hero',
-	{
+function init() {
+	registerBlockType( 'novablocks/hero', {
 		title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
 		description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -31,5 +31,7 @@ export default registerBlockType( 'novablocks/hero',
 			const settings = select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'full' } : {};
 		},
-	}
-);
+	} );
+}
+
+export default  init;

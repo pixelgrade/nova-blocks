@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 
 	function novablocks_slideshow_block_init() {
-
 		register_block_type( 'novablocks/slideshow', array(
 			'attributes' => novablocks_get_slideshow_attributes(),
 			'render_callback' => 'novablocks_render_slideshow_block',

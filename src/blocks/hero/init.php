@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 
 	function novablocks_hero_block_init() {
-
 		register_block_type( 'novablocks/hero', array(
 			'attributes' => novablocks_get_hero_attributes(),
 			'render_callback' => 'novablocks_render_hero_block',
@@ -78,7 +77,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
 
 		if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-			$scrollIndicator = ( isset( $attributes['blockIndex'] ) && $attributes['blockIndex'] === 0 );
+			$scrollIndicator = ( isset( $attributes['blockIndex'] ) && $attributes['blockIndex'] === 0 && floatval( $attributes['minHeightFallback'] ) === 100 );
 		}
 
 		ob_start();

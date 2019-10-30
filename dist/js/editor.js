@@ -2833,78 +2833,83 @@ var announcement_bar_wp$components = wp.components,
 var _wp$blockEditor = wp.blockEditor,
     RichText = _wp$blockEditor.RichText,
     URLInput = _wp$blockEditor.URLInput;
-/* harmony default export */ var announcement_bar = (registerBlockType('novablocks/announcement-bar', {
-  title: announcement_bar_('Announcement Bar', '__plugin_txtd'),
-  description: announcement_bar_('Display a featured message through a banner across the top of your site.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: announcement,
-  keywords: [announcement_bar_('Promo Bar', '__plugin_txtd'), announcement_bar_('Welcome Header Bar', '__plugin_txtd'), announcement_bar_('Top Bar', '__plugin_txtd')],
-  styles: [{
-    name: 'accent',
-    label: announcement_bar_('Accent', '__plugin_txtd'),
-    isDefault: true
-  }, {
-    name: 'alternative',
-    label: announcement_bar_('Alternative', '__plugin_txtd')
-  }, {
-    name: 'alert',
-    label: announcement_bar_('Alert', '__plugin_txtd')
-  }],
-  save: function save() {},
-  edit: function edit(props) {
-    var className = props.className,
-        _props$attributes = props.attributes,
-        content = _props$attributes.content,
-        url = _props$attributes.url,
-        opensInNewTab = _props$attributes.opensInNewTab,
-        setAttributes = props.setAttributes,
-        isSelected = props.isSelected;
-    var classNames = classnames_default()(className, 'novablocks-announcement-bar');
-    return Object(react["createElement"])(announcement_bar_Fragment, null, Object(react["createElement"])("div", {
-      className: classNames
-    }, Object(react["createElement"])(RichText, {
-      tagName: "p",
-      className: "novablocks-announcement-bar__content",
-      value: content,
-      onChange: function onChange(content) {
-        setAttributes({
-          content: content
-        });
-      },
-      allowedFormats: ['core/link', 'core/bold', 'core/italic']
-    })), isSelected && Object(react["createElement"])("div", {
-      className: "novablocks-announcement-bar__url-field-wrapper"
-    }, Object(react["createElement"])(BaseControl, {
-      label: announcement_bar_('Add a link to make the whole Announcement Bar clickable.', '__plugin_txtd'),
-      className: "wp-block-button__inline-link"
-    }, Object(react["createElement"])(URLInput, {
-      className: "wp-block-button__inline-link-input",
-      value: url,
-      autoFocus: false,
-      onChange: function onChange(value) {
-        return setAttributes({
-          url: value
-        });
-      },
-      disableSuggestions: !isSelected,
-      isFullWidth: true,
-      hasBorder: true
-    })), Object(react["createElement"])(ToggleControl, {
-      checked: opensInNewTab,
-      onChange: function onChange(opensInNewTab) {
-        setAttributes({
-          opensInNewTab: opensInNewTab
-        });
-      },
-      label: announcement_bar_('Open in new tab', '__plugin_txtd')
-    })));
-  },
-  getEditWrapperProps: function getEditWrapperProps(attributes) {
-    return {
-      'data-align': 'full'
-    };
-  }
-}));
+
+function init() {
+  registerBlockType('novablocks/announcement-bar', {
+    title: announcement_bar_('Announcement Bar', '__plugin_txtd'),
+    description: announcement_bar_('Display a featured message through a banner across the top of your site.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: announcement,
+    keywords: [announcement_bar_('Promo Bar', '__plugin_txtd'), announcement_bar_('Welcome Header Bar', '__plugin_txtd'), announcement_bar_('Top Bar', '__plugin_txtd')],
+    styles: [{
+      name: 'accent',
+      label: announcement_bar_('Accent', '__plugin_txtd'),
+      isDefault: true
+    }, {
+      name: 'alternative',
+      label: announcement_bar_('Alternative', '__plugin_txtd')
+    }, {
+      name: 'alert',
+      label: announcement_bar_('Alert', '__plugin_txtd')
+    }],
+    save: function save() {},
+    edit: function edit(props) {
+      var className = props.className,
+          _props$attributes = props.attributes,
+          content = _props$attributes.content,
+          url = _props$attributes.url,
+          opensInNewTab = _props$attributes.opensInNewTab,
+          setAttributes = props.setAttributes,
+          isSelected = props.isSelected;
+      var classNames = classnames_default()(className, 'novablocks-announcement-bar');
+      return Object(react["createElement"])(announcement_bar_Fragment, null, Object(react["createElement"])("div", {
+        className: classNames
+      }, Object(react["createElement"])(RichText, {
+        tagName: "p",
+        className: "novablocks-announcement-bar__content",
+        value: content,
+        onChange: function onChange(content) {
+          setAttributes({
+            content: content
+          });
+        },
+        allowedFormats: ['core/link', 'core/bold', 'core/italic']
+      })), isSelected && Object(react["createElement"])("div", {
+        className: "novablocks-announcement-bar__url-field-wrapper"
+      }, Object(react["createElement"])(BaseControl, {
+        label: announcement_bar_('Add a link to make the whole Announcement Bar clickable.', '__plugin_txtd'),
+        className: "wp-block-button__inline-link"
+      }, Object(react["createElement"])(URLInput, {
+        className: "wp-block-button__inline-link-input",
+        value: url,
+        autoFocus: false,
+        onChange: function onChange(value) {
+          return setAttributes({
+            url: value
+          });
+        },
+        disableSuggestions: !isSelected,
+        isFullWidth: true,
+        hasBorder: true
+      })), Object(react["createElement"])(ToggleControl, {
+        checked: opensInNewTab,
+        onChange: function onChange(opensInNewTab) {
+          setAttributes({
+            opensInNewTab: opensInNewTab
+          });
+        },
+        label: announcement_bar_('Open in new tab', '__plugin_txtd')
+      })));
+    },
+    getEditWrapperProps: function getEditWrapperProps(attributes) {
+      return {
+        'data-align': 'full'
+      };
+    }
+  });
+}
+
+/* harmony default export */ var announcement_bar = (init);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
 var helpers_extends = __webpack_require__(9);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
@@ -4308,25 +4313,30 @@ function (_Component) {
 
 var google_map_ = wp.i18n.__;
 var google_map_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var google_map = (google_map_registerBlockType('novablocks/google-map', {
-  title: google_map_('Map of the World', '__plugin_txtd'),
-  description: google_map_('Display an interactive map to show the location of your venue.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: map,
-  // Additional search terms
-  keywords: [google_map_('google', '__plugin_txtd'), google_map_('maps', '__plugin_txtd'), google_map_('google maps', '__plugin_txtd'), google_map_('location', '__plugin_txtd')],
-  getEditWrapperProps: function getEditWrapperProps(attributes) {
-    var align = attributes.align;
 
-    if ('center' === align || 'full' === align) {
-      return {
-        'data-align': align
-      };
-    }
-  },
-  edit: google_map_edit,
-  save: function save() {}
-}));
+function google_map_init() {
+  google_map_registerBlockType('novablocks/google-map', {
+    title: google_map_('Map of the World', '__plugin_txtd'),
+    description: google_map_('Display an interactive map to show the location of your venue.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: map,
+    // Additional search terms
+    keywords: [google_map_('google', '__plugin_txtd'), google_map_('maps', '__plugin_txtd'), google_map_('google maps', '__plugin_txtd'), google_map_('location', '__plugin_txtd')],
+    getEditWrapperProps: function getEditWrapperProps(attributes) {
+      var align = attributes.align;
+
+      if ('center' === align || 'full' === align) {
+        return {
+          'data-align': align
+        };
+      }
+    },
+    edit: google_map_edit,
+    save: function save() {}
+  });
+}
+
+/* harmony default export */ var google_map = (google_map_init);
 // CONCATENATED MODULE: ./src/blocks/header/icons.js
 
 var header_icons_wp$components = wp.components,
@@ -4498,22 +4508,27 @@ function header_edit_Edit(props) {
 var header_ = wp.i18n.__;
 var header_registerBlockType = wp.blocks.registerBlockType;
 var header_InnerBlocks = wp.blockEditor.InnerBlocks;
-/* harmony default export */ var blocks_header = (header_registerBlockType('novablocks/header', {
-  title: header_('Header', '__plugin_txtd'),
-  description: header_('Outputs custom header markup.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: header,
-  // Additional search terms
-  keywords: [header_('logo', '__plugin_txtd'), header_('menu', '__plugin_txtd')],
-  supports: {
-    align: ["wide", "full"],
-    default: "full"
-  },
-  edit: header_edit_Edit,
-  save: function save() {
-    return Object(react["createElement"])(header_InnerBlocks.Content, null);
-  }
-}));
+
+function header_init() {
+  header_registerBlockType('novablocks/header', {
+    title: header_('Header', '__plugin_txtd'),
+    description: header_('Outputs custom header markup.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: header,
+    // Additional search terms
+    keywords: [header_('logo', '__plugin_txtd'), header_('menu', '__plugin_txtd')],
+    supports: {
+      align: ["wide", "full"],
+      default: "full"
+    },
+    edit: header_edit_Edit,
+    save: function save() {
+      return Object(react["createElement"])(header_InnerBlocks.Content, null);
+    }
+  });
+}
+
+/* harmony default export */ var blocks_header = (header_init);
 // CONCATENATED MODULE: ./src/utils.js
 
 var debounce = function debounce(func, wait) {
@@ -4778,40 +4793,46 @@ function save_save(props) {
 
 
 
+
 /**
  * WordPress dependencies
  */
 
 var headline_ = wp.i18n.__;
 var headline_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var blocks_headline = (headline_registerBlockType('novablocks/headline', {
-  title: headline_('Headline', '__plugin_txtd'),
-  description: headline_('Advanced heading block with a fancier display', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: headline,
-  // Additional search terms
-  keywords: [headline_('heading', '__plugin_txtd'), headline_('title', '__plugin_txtd'), headline_('cta', '__plugin_txtd'), headline_('call to action', '__plugin_txtd')],
-  attributes: {
-    align: {
-      type: "string",
-      default: "center"
+
+function headline_init() {
+  headline_registerBlockType('novablocks/headline', {
+    title: headline_('Headline', '__plugin_txtd'),
+    description: headline_('Advanced heading block with a fancier display', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: headline,
+    // Additional search terms
+    keywords: [headline_('heading', '__plugin_txtd'), headline_('title', '__plugin_txtd'), headline_('cta', '__plugin_txtd'), headline_('call to action', '__plugin_txtd')],
+    attributes: {
+      align: {
+        type: "string",
+        default: "center"
+      },
+      primary: {
+        type: "string",
+        default: headline_("Our Story", '__plugin_txtd')
+      },
+      secondary: {
+        type: "string",
+        default: headline_("Discover", '__plugin_txtd')
+      },
+      level: {
+        type: "number",
+        default: 2
+      }
     },
-    primary: {
-      type: "string",
-      default: headline_("Our Story", '__plugin_txtd')
-    },
-    secondary: {
-      type: "string",
-      default: headline_("Discover", '__plugin_txtd')
-    },
-    level: {
-      type: "number",
-      default: 2
-    }
-  },
-  save: save_save,
-  edit: HeadlineEdit
-}));
+    save: save_save,
+    edit: HeadlineEdit
+  });
+}
+
+/* harmony default export */ var blocks_headline = (headline_init);
 // EXTERNAL MODULE: ./node_modules/@wordpress/is-shallow-equal/index.js
 var is_shallow_equal = __webpack_require__(14);
 var is_shallow_equal_default = /*#__PURE__*/__webpack_require__.n(is_shallow_equal);
@@ -5977,25 +5998,30 @@ var hero_ = wp.i18n.__;
 var hero_registerBlockType = wp.blocks.registerBlockType;
 var hero_InnerBlocks = wp.blockEditor.InnerBlocks;
 var hero_select = wp.data.select;
-/* harmony default export */ var blocks_hero = (hero_registerBlockType('novablocks/hero', {
-  title: hero_('Hero of the Galaxy', '__plugin_txtd'),
-  description: hero_('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: hero,
-  // Additional search terms
-  keywords: [hero_('cover', '__plugin_txtd'), hero_('full width', '__plugin_txtd'), hero_('hero image', '__plugin_txtd'), hero_('cover section', '__plugin_txtd')],
-  edit: hero_edit,
-  example: {},
-  save: function save() {
-    return Object(react["createElement"])(hero_InnerBlocks.Content, null);
-  },
-  getEditWrapperProps: function getEditWrapperProps() {
-    var settings = hero_select('core/block-editor').getSettings();
-    return settings.alignWide ? {
-      'data-align': 'full'
-    } : {};
-  }
-}));
+
+function hero_init() {
+  hero_registerBlockType('novablocks/hero', {
+    title: hero_('Hero of the Galaxy', '__plugin_txtd'),
+    description: hero_('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: hero,
+    // Additional search terms
+    keywords: [hero_('cover', '__plugin_txtd'), hero_('full width', '__plugin_txtd'), hero_('hero image', '__plugin_txtd'), hero_('cover section', '__plugin_txtd')],
+    edit: hero_edit,
+    example: {},
+    save: function save() {
+      return Object(react["createElement"])(hero_InnerBlocks.Content, null);
+    },
+    getEditWrapperProps: function getEditWrapperProps() {
+      var settings = hero_select('core/block-editor').getSettings();
+      return settings.alignWide ? {
+        'data-align': 'full'
+      } : {};
+    }
+  });
+}
+
+/* harmony default export */ var blocks_hero = (hero_init);
 // CONCATENATED MODULE: ./src/blocks/logo/index.js
 
 
@@ -6009,22 +6035,27 @@ var hero_select = wp.data.select;
 
 var logo_ = wp.i18n.__;
 var logo_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var blocks_logo = (logo_registerBlockType('novablocks/logo', {
-  title: logo_('Logo', '__plugin_txtd'),
-  description: logo_('Outputs custom logo markup.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: logo,
-  // Additional search terms
-  keywords: [logo_('branding', '__plugin_txtd')],
-  parent: ['novablocks/header'],
-  save: function save() {},
-  edit: function edit(props) {
-    return Object(react["createElement"])(wp.serverSideRender, {
-      block: "novablocks/logo",
-      attributes: props.attributes
-    });
-  }
-}));
+
+function logo_init() {
+  logo_registerBlockType('novablocks/logo', {
+    title: logo_('Logo', '__plugin_txtd'),
+    description: logo_('Outputs custom logo markup.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: logo,
+    // Additional search terms
+    keywords: [logo_('branding', '__plugin_txtd')],
+    parent: ['novablocks/header'],
+    save: function save() {},
+    edit: function edit(props) {
+      return Object(react["createElement"])(wp.serverSideRender, {
+        block: "novablocks/logo",
+        attributes: props.attributes
+      });
+    }
+  });
+}
+
+/* harmony default export */ var blocks_logo = (logo_init);
 // CONCATENATED MODULE: ./src/blocks/media/block-controls.js
 
 
@@ -6287,24 +6318,29 @@ var edit_MediaEdit = function MediaEdit(props) {
 var media_ = wp.i18n.__;
 var media_registerBlockType = wp.blocks.registerBlockType;
 var media_InnerBlocks = wp.blockEditor.InnerBlocks;
-/* harmony default export */ var blocks_media = (media_registerBlockType('novablocks/media', {
-  title: media_('Media Card Constellation', '__plugin_txtd'),
-  description: media_('Display media objects alongside short pieces of content.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: icons_media,
-  // Additional search terms
-  keywords: [media_('image with text', '__plugin_txtd'), media_('columns', '__plugin_txtd'), media_('side text', '__plugin_txtd')],
-  edit: media_edit,
-  save: function save() {
-    return Object(react["createElement"])(media_InnerBlocks.Content, null);
-  },
-  getEditWrapperProps: function getEditWrapperProps() {
-    var settings = wp.data.select('core/block-editor').getSettings();
-    return settings.alignWide ? {
-      'data-align': 'full'
-    } : {};
-  }
-}));
+
+function media_init() {
+  media_registerBlockType('novablocks/media', {
+    title: media_('Media Card Constellation', '__plugin_txtd'),
+    description: media_('Display media objects alongside short pieces of content.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: icons_media,
+    // Additional search terms
+    keywords: [media_('image with text', '__plugin_txtd'), media_('columns', '__plugin_txtd'), media_('side text', '__plugin_txtd')],
+    edit: media_edit,
+    save: function save() {
+      return Object(react["createElement"])(media_InnerBlocks.Content, null);
+    },
+    getEditWrapperProps: function getEditWrapperProps() {
+      var settings = wp.data.select('core/block-editor').getSettings();
+      return settings.alignWide ? {
+        'data-align': 'full'
+      } : {};
+    }
+  });
+}
+
+/* harmony default export */ var blocks_media = (media_init);
 // CONCATENATED MODULE: ./src/components/util.js
 // https://stackoverflow.com/a/2450976
 var shuffleArray = function shuffleArray(array) {
@@ -6805,24 +6841,29 @@ function (_Component) {
 var slideshow_ = wp.i18n.__;
 var slideshow_registerBlockType = wp.blocks.registerBlockType;
 var slideshow_InnerBlocks = wp.blockEditor.InnerBlocks;
-/* harmony default export */ var blocks_slideshow = (slideshow_registerBlockType('novablocks/slideshow', {
-  title: slideshow_('Slideshow Me the Way', '__plugin_txtd'),
-  description: slideshow_('Display more than one piece of content in a single, coveted space.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: slideshow,
-  // Additional search terms
-  keywords: [slideshow_('slider', '__plugin_txtd'), slideshow_('carousel', '__plugin_txtd'), slideshow_('images', '__plugin_txtd'), slideshow_('cover', '__plugin_txtd')],
-  edit: slideshow_edit,
-  save: function save() {
-    return Object(react["createElement"])(slideshow_InnerBlocks.Content, null);
-  },
-  getEditWrapperProps: function getEditWrapperProps() {
-    var settings = wp.data.select('core/block-editor').getSettings();
-    return settings.alignWide ? {
-      'data-align': 'full'
-    } : {};
-  }
-}));
+
+function slideshow_init() {
+  slideshow_registerBlockType('novablocks/slideshow', {
+    title: slideshow_('Slideshow Me the Way', '__plugin_txtd'),
+    description: slideshow_('Display more than one piece of content in a single, coveted space.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: slideshow,
+    // Additional search terms
+    keywords: [slideshow_('slider', '__plugin_txtd'), slideshow_('carousel', '__plugin_txtd'), slideshow_('images', '__plugin_txtd'), slideshow_('cover', '__plugin_txtd')],
+    edit: slideshow_edit,
+    save: function save() {
+      return Object(react["createElement"])(slideshow_InnerBlocks.Content, null);
+    },
+    getEditWrapperProps: function getEditWrapperProps() {
+      var settings = wp.data.select('core/block-editor').getSettings();
+      return settings.alignWide ? {
+        'data-align': 'full'
+      } : {};
+    }
+  });
+}
+
+/* harmony default export */ var blocks_slideshow = (slideshow_init);
 // CONCATENATED MODULE: ./src/blocks/navigation/edit.js
 
 
@@ -6871,17 +6912,22 @@ function (_Component) {
 
 var navigation_ = wp.i18n.__;
 var navigation_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var blocks_navigation = (navigation_registerBlockType('novablocks/navigation', {
-  title: navigation_('Space Navigation', '__plugin_txtd'),
-  description: navigation_('Outputs chosen navigaiton menu markup.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: navigation,
-  // Additional search terms
-  keywords: [navigation_('menu', '__plugin_txtd'), navigation_('site menu', '__plugin_txtd'), navigation_('primary', '__plugin_txtd'), navigation_('secondary', '__plugin_txtd')],
-  parent: ['novablocks/header'],
-  save: function save() {},
-  edit: navigation_edit_Edit
-}));
+
+function navigation_init() {
+  navigation_registerBlockType('novablocks/navigation', {
+    title: navigation_('Space Navigation', '__plugin_txtd'),
+    description: navigation_('Outputs chosen navigaiton menu markup.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: navigation,
+    // Additional search terms
+    keywords: [navigation_('menu', '__plugin_txtd'), navigation_('site menu', '__plugin_txtd'), navigation_('primary', '__plugin_txtd'), navigation_('secondary', '__plugin_txtd')],
+    parent: ['novablocks/header'],
+    save: function save() {},
+    edit: navigation_edit_Edit
+  });
+}
+
+/* harmony default export */ var blocks_navigation = (navigation_init);
 // CONCATENATED MODULE: ./src/blocks/menu-food/inspector-controls.js
 
 
@@ -7077,33 +7123,38 @@ var save_FoodMenuSave = function FoodMenuSave(props) {
 var menu_food_ = wp.i18n.__;
 var menu_food_registerBlockType = wp.blocks.registerBlockType;
 var menu_food_select = wp.data.select;
-/* harmony default export */ var menu_food = (menu_food_registerBlockType('novablocks/menu-food', {
-  title: menu_food_('Food Menu', '__plugin_txtd'),
-  description: menu_food_('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: foodmenu,
-  // Additional search terms
-  keywords: [menu_food_('food menu', '__plugin_txtd'), menu_food_('restaurant menu', '__plugin_txtd'), menu_food_('dishes', '__plugin_txtd'), menu_food_('eats', '__plugin_txtd'), menu_food_('menu list', '__plugin_txtd')],
-  attributes: {
-    enableTwoColumns: {
-      type: 'boolean',
-      default: true
-    }
-  },
-  example: {
+
+function menu_food_init() {
+  menu_food_registerBlockType('novablocks/menu-food', {
+    title: menu_food_('Food Menu', '__plugin_txtd'),
+    description: menu_food_('Display a list of food or drink items available at your venue.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: foodmenu,
+    // Additional search terms
+    keywords: [menu_food_('food menu', '__plugin_txtd'), menu_food_('restaurant menu', '__plugin_txtd'), menu_food_('dishes', '__plugin_txtd'), menu_food_('eats', '__plugin_txtd'), menu_food_('menu list', '__plugin_txtd')],
     attributes: {
-      enableTwoColumns: false
-    }
-  },
-  getEditWrapperProps: function getEditWrapperProps() {
-    var settings = menu_food_select('core/block-editor').getSettings();
-    return settings.alignWide ? {
-      'data-align': 'wide'
-    } : {};
-  },
-  edit: menu_food_edit,
-  save: menu_food_save
-}));
+      enableTwoColumns: {
+        type: 'boolean',
+        default: true
+      }
+    },
+    example: {
+      attributes: {
+        enableTwoColumns: false
+      }
+    },
+    getEditWrapperProps: function getEditWrapperProps() {
+      var settings = menu_food_select('core/block-editor').getSettings();
+      return settings.alignWide ? {
+        'data-align': 'wide'
+      } : {};
+    },
+    edit: menu_food_edit,
+    save: menu_food_save
+  });
+}
+
+/* harmony default export */ var menu_food = (menu_food_init);
 // CONCATENATED MODULE: ./src/blocks/menu-food-section/preview.js
 
 
@@ -7235,23 +7286,28 @@ var save_FoodMenuSectionSave = function FoodMenuSectionSave(props) {
 
 var menu_food_section_ = wp.i18n.__;
 var menu_food_section_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var menu_food_section = (menu_food_section_registerBlockType('novablocks/menu-food-section', {
-  title: menu_food_section_('Food Menu Section', '__plugin_txtd'),
-  description: menu_food_section_('A subgrouping of the Menu.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: foodmenu,
-  // Additional search terms
-  keywords: [menu_food_section_('menu section', '__plugin_txtd'), menu_food_section_('food section', '__plugin_txtd'), menu_food_section_('list section', '__plugin_txtd'), menu_food_section_('dishes section', '__plugin_txtd')],
-  parent: ['novablocks/menu-food'],
-  attributes: {
-    sectionTitle: {
-      type: 'string',
-      default: menu_food_section_('Drinks', '__plugin_txtd')
-    }
-  },
-  edit: menu_food_section_edit,
-  save: menu_food_section_save
-}));
+
+function menu_food_section_init() {
+  menu_food_section_registerBlockType('novablocks/menu-food-section', {
+    title: menu_food_section_('Food Menu Section', '__plugin_txtd'),
+    description: menu_food_section_('A subgrouping of the Menu.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: foodmenu,
+    // Additional search terms
+    keywords: [menu_food_section_('menu section', '__plugin_txtd'), menu_food_section_('food section', '__plugin_txtd'), menu_food_section_('list section', '__plugin_txtd'), menu_food_section_('dishes section', '__plugin_txtd')],
+    parent: ['novablocks/menu-food'],
+    attributes: {
+      sectionTitle: {
+        type: 'string',
+        default: menu_food_section_('Drinks', '__plugin_txtd')
+      }
+    },
+    edit: menu_food_section_edit,
+    save: menu_food_section_save
+  });
+}
+
+/* harmony default export */ var menu_food_section = (menu_food_section_init);
 // CONCATENATED MODULE: ./src/blocks/menu-food-item/preview.js
 
 
@@ -7501,47 +7557,52 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
 
 var menu_food_item_ = wp.i18n.__;
 var menu_food_item_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var menu_food_item = (menu_food_item_registerBlockType('novablocks/menu-food-item', {
-  title: menu_food_item_('Menu Item', '__plugin_txtd'),
-  description: menu_food_item_('A food or drink item contained in a menu or menu section.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: foodmenu,
-  // Additional search terms
-  keywords: [menu_food_item_('menu item', '__plugin_txtd'), menu_food_item_('food item', '__plugin_txtd'), menu_food_item_('dish', '__plugin_txtd'), menu_food_item_('list item', '__plugin_txtd')],
-  parent: ['novablocks/menu-food-section'],
-  attributes: {
-    title: {
-      type: 'string',
-      default: menu_food_item_('Sweet Shrimp Salad', '__plugin_txtd')
+
+function menu_food_item_init() {
+  menu_food_item_registerBlockType('novablocks/menu-food-item', {
+    title: menu_food_item_('Menu Item', '__plugin_txtd'),
+    description: menu_food_item_('A food or drink item contained in a menu or menu section.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: foodmenu,
+    // Additional search terms
+    keywords: [menu_food_item_('menu item', '__plugin_txtd'), menu_food_item_('food item', '__plugin_txtd'), menu_food_item_('dish', '__plugin_txtd'), menu_food_item_('list item', '__plugin_txtd')],
+    parent: ['novablocks/menu-food-section'],
+    attributes: {
+      title: {
+        type: 'string',
+        default: menu_food_item_('Sweet Shrimp Salad', '__plugin_txtd')
+      },
+      description: {
+        type: 'string',
+        default: menu_food_item_('Tomatillo, Baja Crema, Cabbage, Fried Okra', '__plugin_txtd')
+      },
+      price: {
+        type: 'string',
+        default: '$7.95'
+      },
+      salePrice: {
+        type: 'string',
+        default: '$9.50'
+      },
+      highlightLabel: {
+        type: 'string',
+        default: menu_food_item_('Our top pick', '__plugin_txtd')
+      },
+      enableHighlightFoodItem: {
+        type: 'boolean',
+        default: false
+      },
+      enableSalePrice: {
+        type: 'boolean',
+        default: false
+      }
     },
-    description: {
-      type: 'string',
-      default: menu_food_item_('Tomatillo, Baja Crema, Cabbage, Fried Okra', '__plugin_txtd')
-    },
-    price: {
-      type: 'string',
-      default: '$7.95'
-    },
-    salePrice: {
-      type: 'string',
-      default: '$9.50'
-    },
-    highlightLabel: {
-      type: 'string',
-      default: menu_food_item_('Our top pick', '__plugin_txtd')
-    },
-    enableHighlightFoodItem: {
-      type: 'boolean',
-      default: false
-    },
-    enableSalePrice: {
-      type: 'boolean',
-      default: false
-    }
-  },
-  edit: menu_food_item_edit,
-  save: menu_food_item_save
-}));
+    edit: menu_food_item_edit,
+    save: menu_food_item_save
+  });
+}
+
+/* harmony default export */ var menu_food_item = (menu_food_item_init);
 // CONCATENATED MODULE: ./src/blocks/opentable/preview.js
 
 
@@ -7758,34 +7819,39 @@ var save_OpenTableSave = function OpenTableSave(props) {
 
 var opentable_ = wp.i18n.__;
 var opentable_registerBlockType = wp.blocks.registerBlockType;
-/* harmony default export */ var blocks_opentable = (opentable_registerBlockType('novablocks/opentable', {
-  title: opentable_('OpenTable Reservation', '__plugin_txtd'),
-  description: opentable_('Add OpenTable online reservation booking to your site.', '__plugin_txtd'),
-  category: 'nova-blocks',
-  icon: opentable,
-  // Additional search terms
-  keywords: [opentable_('reservations', '__plugin_txtd'), opentable_('bookings', '__plugin_txtd')],
-  attributes: {
-    restaurantId: {
-      type: 'number',
-      default: 1
+
+function opentable_init() {
+  opentable_registerBlockType('novablocks/opentable', {
+    title: opentable_('OpenTable Reservation', '__plugin_txtd'),
+    description: opentable_('Add OpenTable online reservation booking to your site.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: opentable,
+    // Additional search terms
+    keywords: [opentable_('reservations', '__plugin_txtd'), opentable_('bookings', '__plugin_txtd')],
+    attributes: {
+      restaurantId: {
+        type: 'number',
+        default: 1
+      },
+      language: {
+        type: 'string',
+        default: 'en-US'
+      },
+      showOpenTableLogo: {
+        type: 'boolean',
+        default: true
+      },
+      layoutForm: {
+        type: 'string',
+        default: 'wide'
+      }
     },
-    language: {
-      type: 'string',
-      default: 'en-US'
-    },
-    showOpenTableLogo: {
-      type: 'boolean',
-      default: true
-    },
-    layoutForm: {
-      type: 'string',
-      default: 'wide'
-    }
-  },
-  edit: opentable_edit,
-  save: opentable_save
-}));
+    edit: opentable_edit,
+    save: opentable_save
+  });
+}
+
+/* harmony default export */ var blocks_opentable = (opentable_init);
 // CONCATENATED MODULE: ./src/editor.js
 
 
@@ -7827,6 +7893,50 @@ function () {
       updateCategory('nova-blocks', {
         icon: nova
       });
+      var supports = settings['theme_support'];
+
+      if (supports['announcement-bar']) {
+        announcement_bar();
+      }
+
+      if (supports['google-map']) {
+        google_map();
+      }
+
+      if (supports['header']) {
+        blocks_header();
+        blocks_logo();
+      }
+
+      if (supports['headline']) {
+        blocks_headline();
+      }
+
+      if (supports['hero']) {
+        blocks_hero();
+      }
+
+      if (supports['media']) {
+        blocks_media();
+      }
+
+      if (supports['navigation']) {
+        blocks_navigation();
+      }
+
+      if (supports['menu-food']) {
+        menu_food();
+        menu_food_section();
+        menu_food_item();
+      }
+
+      if (supports['opentable']) {
+        blocks_opentable();
+      }
+
+      if (supports['slideshow']) {
+        blocks_slideshow();
+      }
     }
   }]);
 

@@ -714,9 +714,43 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom'
 			),
 		),
+		'theme_support' => novablocks_get_theme_support( 'novablocks' ),
 	);
 
 	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
 
 	return apply_filters( 'novablocks_block_editor_settings', $settings );
+}
+
+function novablocks_get_theme_support() {
+	$theme_support = get_theme_support( 'novablocks' );
+	$theme_support = is_array( $theme_support ) ? $theme_support[0] : false;
+
+	$default = array(
+		'hero' => true,
+		'media' => true,
+		'slideshow' => true,
+	);
+
+	if ( is_array( $theme_support ) ) {
+		$theme_support = array_merge_recursive( $default, $theme_support );
+	} else {
+		$theme_support = $default;
+	}
+
+	return $theme_support;
+}
+
+function novablocks_get_feature_support( $feature, $default = false ) {
+	$theme_support = novablocks_get_theme_support();
+
+	if ( ! $theme_support ) {
+		return $default;
+	}
+
+	if ( isset( $theme_support[ $feature ] ) ) {
+		return $theme_support[ $feature ];
+	} else {
+		return $default;
+	}
 }

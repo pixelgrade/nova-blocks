@@ -8,12 +8,12 @@ import save from './save';
 /**
  * WordPress dependencies
  */
-const {__} = wp.i18n;
-const {registerBlockType} = wp.blocks;
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 
 
-export default registerBlockType( 'novablocks/opentable',
-	{
+function init() {
+	registerBlockType( 'novablocks/opentable', {
 		title: __( 'OpenTable Reservation', '__plugin_txtd' ),
 		description: __( 'Add OpenTable online reservation booking to your site.', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -40,5 +40,7 @@ export default registerBlockType( 'novablocks/opentable',
 		},
 		edit,
 		save
-	}
-)
+	} )
+}
+
+export default init;
