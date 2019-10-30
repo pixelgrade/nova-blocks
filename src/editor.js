@@ -4,19 +4,19 @@ import "./filters/with-font-size-picker";
 
 import "./blocks/core/separator";
 
-import "./blocks/announcement-bar";
-import "./blocks/google-map";
-import "./blocks/header";
-import "./blocks/headline";
-import "./blocks/hero";
-import "./blocks/logo";
-import "./blocks/media";
-import "./blocks/slideshow";
-import "./blocks/navigation";
-import "./blocks/menu-food";
-import "./blocks/menu-food-section";
-import "./blocks/menu-food-item";
-import "./blocks/opentable";
+import announcementBarBlockInit from "./blocks/announcement-bar";
+import googleMapBlockInit from "./blocks/google-map";
+import headerBlockInit from "./blocks/header";
+import headlineInit from "./blocks/headline";
+import heroInit from "./blocks/hero";
+import logoInit from "./blocks/logo";
+import mediaInit from "./blocks/media";
+import slideshowInit from "./blocks/slideshow";
+import navigationInit from "./blocks/navigation";
+import menuFoodInit from "./blocks/menu-food";
+import menuFoodSectionInit from "./blocks/menu-food-section";
+import menuFoodItemInit from "./blocks/menu-food-item";
+import opentableInit from "./blocks/opentable";
 
 import { STORE_NAME } from './store';
 
@@ -40,6 +40,47 @@ class novaBlocks {
 		updateCategory( 'nova-blocks', {
 			icon: nova
 		} );
+
+		const supports = settings[ 'theme_support' ];
+
+		if ( supports[ 'announcement-bar' ] ) {
+			announcementBarBlockInit();
+		}
+
+		if ( supports[ 'google-map' ] ) {
+			googleMapBlockInit();
+		}
+
+		if ( supports[ 'header' ] ) {
+			headerBlockInit();
+			logoInit();
+		}
+
+		if ( supports[ 'headline' ] ) {
+			headlineInit();
+		}
+
+		if ( supports[ 'hero' ] ) {
+			heroInit();
+		}
+
+		if ( supports[ 'media' ] ) {
+			mediaInit();
+		}
+
+		if ( supports[ 'navigation' ] ) {
+			navigationInit();
+		}
+
+		if ( supports[ 'menu-food' ] ) {
+			menuFoodInit();
+			menuFoodSectionInit();
+			menuFoodItemInit();
+		}
+
+		if ( supports[ 'opentable' ] ) {
+			opentableInit();
+		}
 	}
 }
 

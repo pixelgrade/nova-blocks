@@ -11,10 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_google_maps_block_init' ) ) {
 
 	function novablocks_google_maps_block_init() {
-		register_block_type( 'novablocks/google-map', array(
-			'attributes'      => novablocks_get_google_map_attributes(),
-			'render_callback' => 'novablocks_render_google_maps_block',
-		) );
+		$google_map = novablocks_get_feature_support( 'google-map' );
+
+		if ( $google_map ) {
+			register_block_type( 'novablocks/google-map', array(
+				'attributes'      => novablocks_get_google_map_attributes(),
+				'render_callback' => 'novablocks_render_google_maps_block',
+			) );
+		}
 	}
 }
 add_action( 'init', 'novablocks_google_maps_block_init', 20 );

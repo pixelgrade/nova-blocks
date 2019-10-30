@@ -13,8 +13,9 @@ import styles from "./styles";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-export default registerBlockType( 'novablocks/google-map',
-	{
+function init() {
+
+	registerBlockType( 'novablocks/google-map', {
 		title: __( 'Map of the World', '__plugin_txtd' ),
 		description: __( 'Display an interactive map to show the location of your venue.', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -29,5 +30,7 @@ export default registerBlockType( 'novablocks/google-map',
 		},
 		edit,
 		save: function() {}
-	}
-)
+	} )
+}
+
+export default init;

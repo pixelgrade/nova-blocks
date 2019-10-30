@@ -13,10 +13,12 @@ require_once dirname( __FILE__ ) . '/extras.php';
 if ( ! function_exists( 'novablocks_announcement_bar_block_init' ) ) {
 
 	function novablocks_announcement_bar_block_init() {
-		register_block_type( 'novablocks/announcement-bar', array(
-			'attributes'      => novablocks_get_announcement_bar_attributes(),
-			'render_callback' => 'novablocks_render_announcement_bar_block'
-		) );
+		$announcement_bar = novablocks_get_feature_support( 'announcement-bar' );
+
+			register_block_type( 'novablocks/announcement-bar', array(
+				'attributes'      => novablocks_get_announcement_bar_attributes(),
+				'render_callback' => 'novablocks_render_announcement_bar_block'
+			) );
 	}
 }
 add_action( 'init', 'novablocks_announcement_bar_block_init' );

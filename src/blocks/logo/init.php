@@ -11,15 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_logo_block_init' ) ) {
 
 	function novablocks_logo_block_init() {
-		register_block_type( 'novablocks/logo', array(
-			'attributes'      => array(
-				'className' => array(
-					'type'    => 'string',
-					'default' => '',
+		$header = novablocks_get_theme_support( 'header' );
+
+		if ( $header ) {
+			register_block_type( 'novablocks/logo', array(
+				'attributes'      => array(
+					'className' => array(
+						'type'    => 'string',
+						'default' => '',
+					),
 				),
-			),
-			'render_callback' => 'novablocks_render_logo_block'
-		) );
+				'render_callback' => 'novablocks_render_logo_block'
+			) );
+		}
 	}
 }
 add_action( 'init', 'novablocks_logo_block_init' );

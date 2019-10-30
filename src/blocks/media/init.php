@@ -11,10 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_media_block_init' ) ) {
 
 	function novablocks_media_block_init() {
-		register_block_type( 'novablocks/media', array(
-			'attributes'      => novablocks_get_media_attributes(),
-			'render_callback' => 'novablocks_render_media_block'
-		) );
+		$media = novablocks_get_theme_support( 'media' );
+
+		if ( $media ) {
+			register_block_type( 'novablocks/media', array(
+				'attributes'      => novablocks_get_media_attributes(),
+				'render_callback' => 'novablocks_render_media_block'
+			) );
+		}
 	}
 }
 
