@@ -2279,9 +2279,10 @@ var hasTouchScreen = function hasTouchScreen() {
     if ($hero.length) {
       $scrollButton.on('click', function () {
         var heroBox = $hero.get(0).getBoundingClientRect();
+        var heroBoxTop = heroBox.y || heroBox.top;
         var scrollY = window.scrollY;
         window.scrollTo({
-          top: heroBox.y + heroBox.height + scrollY,
+          top: heroBoxTop + heroBox.height + scrollY,
           behavior: 'smooth'
         });
       });

@@ -10,8 +10,6 @@ const ProgressBarPlugin = require( 'progress-bar-webpack-plugin' );
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const devMode = NODE_ENV !== 'production';
 
-console.log( NODE_ENV );
-
 const baseConfig = {
 	mode: NODE_ENV,
 	performance: {

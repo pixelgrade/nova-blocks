@@ -26,11 +26,11 @@ const HeroBackground = function( props ) {
 
 	return (
 		<div className="novablocks-mask">
-			<div className="novablocks-hero__background" style={ style }>
+			<div className="novablocks-hero__background" style={ styles }>
 				{ media.type === 'image' && typeof media.sizes !== 'undefined' &&
-					<img className="novablocks-hero__media" src={ media.sizes.full.url } style={ styles } alt={ media.alt } /> }
+					<img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } /> }
 				{ media.type === 'video' &&
-					<video muted autoPlay loop className="novablocks-hero__media" src={ media.url } style={ styles } /> }
+					<video muted autoPlay loop className="novablocks-hero__media" src={ media.url } /> }
 			</div>
 		</div>
 	);

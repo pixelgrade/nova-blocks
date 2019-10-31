@@ -3445,7 +3445,8 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
           }
 
           var containerBox = this.container.getBoundingClientRect();
-          var progress = (this.state.windowHeight - containerBox.y) / (this.state.windowHeight + this.container.offsetHeight);
+          var containerBoxTop = containerBox.y || containerBox.top;
+          var progress = (this.state.windowHeight - containerBoxTop) / (this.state.windowHeight + this.container.offsetHeight);
           var actualProgress = Math.max(Math.min(progress, 1), 0);
           this.setState({
             windowWidth: window.innerWidth,
@@ -3455,7 +3456,7 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
             dimensions: {
               width: this.container.offsetWidth,
               height: this.container.offsetHeight,
-              top: containerBox.y
+              top: containerBoxTop
             }
           });
         }
@@ -5660,19 +5661,17 @@ var background_HeroBackground = function HeroBackground(props) {
     className: "novablocks-mask"
   }, Object(react["createElement"])("div", {
     className: "novablocks-hero__background",
-    style: style
+    style: styles
   }, media.type === 'image' && typeof media.sizes !== 'undefined' && Object(react["createElement"])("img", {
     className: "novablocks-hero__media",
     src: media.sizes.full.url,
-    style: styles,
     alt: media.alt
   }), media.type === 'video' && Object(react["createElement"])("video", {
     muted: true,
     autoPlay: true,
     loop: true,
     className: "novablocks-hero__media",
-    src: media.url,
-    style: styles
+    src: media.url
   })));
 };
 

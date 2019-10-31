@@ -62,7 +62,8 @@ const withParallax = function( WrappedComponent ) {
 			}
 
 			const containerBox = this.container.getBoundingClientRect();
-			const progress = ( this.state.windowHeight - containerBox.y ) / ( this.state.windowHeight + this.container.offsetHeight );
+			const containerBoxTop = containerBox.y || containerBox.top;
+			const progress = ( this.state.windowHeight - containerBoxTop ) / ( this.state.windowHeight + this.container.offsetHeight );
 			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );
 
 			this.setState( {
@@ -73,7 +74,7 @@ const withParallax = function( WrappedComponent ) {
 				dimensions: {
 					width: this.container.offsetWidth,
 					height: this.container.offsetHeight,
-					top: containerBox.y,
+					top: containerBoxTop,
 				},
 			} );
 		}
