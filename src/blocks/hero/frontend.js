@@ -21,10 +21,11 @@ import { parallaxInit } from "../../utils";
 		if ( $hero.length ) {
 			$scrollButton.on( 'click', function() {
 				const heroBox = $hero.get(0).getBoundingClientRect();
+				const heroBoxTop = heroBox.y || heroBox.top;
 				const scrollY = window.scrollY;
 
 				window.scrollTo( {
-					top: heroBox.y + heroBox.height + scrollY,
+					top: heroBoxTop + heroBox.height + scrollY,
 					behavior: 'smooth'
 				} );
 			} );

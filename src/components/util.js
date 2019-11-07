@@ -18,3 +18,21 @@ export const shuffleArray = function( array ) {
 
 	return array;
 };
+
+export const findParents = ( target, query ) => {
+	let parents = [];
+
+	function traverse( item ) {
+		const parent = item.parentNode;
+		if ( parent instanceof HTMLElement ) {
+			if ( parent.matches( query ) ) {
+				parents.push( parent );
+			}
+			traverse( parent );
+		}
+	}
+
+	traverse( target );
+
+	return parents;
+};

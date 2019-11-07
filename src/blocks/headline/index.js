@@ -5,14 +5,16 @@ import * as icons from '../../icons';
 import edit from './edit';
 import save from './save';
 
+import { STORE_NAME } from '../../store';
+
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-export default registerBlockType( 'novablocks/headline',
-	{
+function init() {
+	registerBlockType( 'novablocks/headline', {
 		title: __( 'Headline', '__plugin_txtd' ),
 		description: __( 'Advanced heading block with a fancier display', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -39,5 +41,7 @@ export default registerBlockType( 'novablocks/headline',
 		},
 		save,
 		edit,
-	}
-)
+	} )
+}
+
+export default init;

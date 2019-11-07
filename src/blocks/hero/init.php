@@ -77,7 +77,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
 
 		if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-			$scrollIndicator = ( isset( $attributes['blockIndex'] ) && $attributes['blockIndex'] === 0 );
+			$scrollIndicator = ( isset( $attributes['blockIndex'] ) && $attributes['blockIndex'] === 0 && floatval( $attributes['minHeightFallback'] ) === 100 );
 		}
 
 		ob_start();

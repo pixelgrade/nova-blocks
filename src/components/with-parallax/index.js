@@ -2,6 +2,8 @@ import { createContext } from 'react';
 
 import ParallaxPanel from "../../components/parallax-panel";
 
+import { findParents } from '../util';
+
 /**
  * WordPress dependencies
  */
@@ -13,14 +15,6 @@ const {
 const {
 	InspectorControls
 } = wp.blockEditor;
-
-const {
-	createSlotFill
-} = wp.components;
-
-const {
-	addFilter
-} = wp.hooks;
 
 const ParallaxContext = createContext();
 
@@ -43,6 +37,28 @@ const withParallax = function( WrappedComponent ) {
 			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
 			window.addEventListener( 'resize', this.updateHandler );
 			scrollContainer.addEventListener( 'scroll', this.updateHandler );
+
+			this.observers = findParents( this.container, '.wp-block' ).map( block => {
+				const observer = new MutationObserver( movements => {
+					movements.forEach( movement => {
+						if ( 'style' === movement.attributeName ) {
+							if ( movement.oldValue.includes( 'transform: translate3d' ) ) {
+								this.updateDimensions();
+							}
+						}
+					} );
+				} );
+
+				observer.observe( block, {
+					attributes: true,
+					attributeOldValue: true,
+					childList: false,
+					subtree: false,
+				} );
+
+				return observer;
+			} );
+
 			this.updateDimensions();
 
 			wp.data.subscribe( this.updateHandler );
@@ -52,6 +68,7 @@ const withParallax = function( WrappedComponent ) {
 			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
 			window.removeEventListener( 'resize', this.updateHandler );
 			scrollContainer.removeEventListener( 'scroll', this.updateHandler );
+			this.observers.forEach( observer => observer.disconnect() );
 		}
 
 		updateDimensions() {
@@ -62,7 +79,8 @@ const withParallax = function( WrappedComponent ) {
 			}
 
 			const containerBox = this.container.getBoundingClientRect();
-			const progress = ( this.state.windowHeight - containerBox.y ) / ( this.state.windowHeight + this.container.offsetHeight );
+			const containerBoxTop = containerBox.y || containerBox.top;
+			const progress = ( this.state.windowHeight - containerBoxTop ) / ( this.state.windowHeight + this.container.offsetHeight );
 			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );
 
 			this.setState( {
@@ -73,7 +91,7 @@ const withParallax = function( WrappedComponent ) {
 				dimensions: {
 					width: this.container.offsetWidth,
 					height: this.container.offsetHeight,
-					top: containerBox.y,
+					top: containerBoxTop,
 				},
 			} );
 		}

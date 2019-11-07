@@ -10,17 +10,20 @@ import classnames from "classnames";
 const { __ } = wp.i18n;
 const { registerBlockType, } = wp.blocks;
 const { Fragment } = wp.element;
+
 const {
 	BaseControl,
 	ToggleControl
 } = wp.components;
+
 const {
 	RichText,
 	URLInput,
 } = wp.blockEditor;
 
-export default registerBlockType( 'novablocks/announcement-bar',
-	{
+function init() {
+
+	registerBlockType( 'novablocks/announcement-bar', {
 		title: __( 'Announcement Bar', '__plugin_txtd' ),
 		description: __( 'Display a featured message through a banner across the top of your site.', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -100,5 +103,7 @@ export default registerBlockType( 'novablocks/announcement-bar',
 		getEditWrapperProps( attributes ) {
 			return { 'data-align': 'full' };
 		},
-	}
-)
+	} );
+}
+
+export default init;

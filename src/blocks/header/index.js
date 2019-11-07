@@ -12,8 +12,9 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 
-export default registerBlockType( 'novablocks/header',
-	{
+function init() {
+
+	registerBlockType( 'novablocks/header', {
 		title: __( 'Header', '__plugin_txtd' ),
 		description: __( 'Outputs custom header markup.', '__plugin_txtd' ),
 		category: 'nova-blocks',
@@ -25,5 +26,7 @@ export default registerBlockType( 'novablocks/header',
 		save: function() {
 			return <InnerBlocks.Content />
 		}
-	}
-)
+	} )
+}
+
+export default init;
