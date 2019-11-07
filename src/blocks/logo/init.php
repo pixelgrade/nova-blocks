@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_logo_block_init' ) ) {
 
 	function novablocks_logo_block_init() {
+		if ( ! current_theme_supports( 'novablocks-logo' ) ) {
+			return;
+		}
+
 		register_block_type( 'novablocks/logo', array(
 			'attributes'      => array(
 				'className' => array(

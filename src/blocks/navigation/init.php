@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_navigation_block_init' ) ) {
 
 	function novablocks_navigation_block_init() {
+		if ( ! current_theme_supports( 'novablocks-navigation' ) ) {
+			return;
+		}
+
 		register_block_type( 'novablocks/navigation', array(
 			'attributes'      => array(
 				'slug'            => array(

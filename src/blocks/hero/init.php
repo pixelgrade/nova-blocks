@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 
 	function novablocks_hero_block_init() {
-
 		register_block_type( 'novablocks/hero', array(
 			'attributes' => novablocks_get_hero_attributes(),
 			'render_callback' => 'novablocks_render_hero_block',
