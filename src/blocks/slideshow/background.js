@@ -9,8 +9,7 @@ const SlideshowBackground = function( props ) {
 			overlayFilterStyle,
 			overlayFilterStrength,
 		},
-		previewImage,
-		style,
+		previewImage
 	} = props;
 
 	const focalPoint = previewImage.focalPoint || { x: 0.5, y: 0.5 };
@@ -27,7 +26,7 @@ const SlideshowBackground = function( props ) {
 
 	return (
 		<div className="novablocks-mask">
-			<div className="novablocks-slideshow__background" style={ style }>
+			<div className="novablocks-slideshow__background">
 				<img className="novablocks-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
 			</div>
 		</div>
