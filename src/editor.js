@@ -41,48 +41,46 @@ class novaBlocks {
 			icon: nova
 		} );
 
-		const supports = settings[ 'theme_support' ];
+		const supports = ( typeof settings[ 'theme_support' ] === 'object' ) ? Object.values( settings[ 'theme_support' ] ) : settings[ 'theme_support' ];
 
-		if ( supports[ 'announcement-bar' ] ) {
+		if ( supports.indexOf('announcement-bar') > -1 ) {
 			announcementBarBlockInit();
 		}
 
-		if ( supports[ 'google-map' ] ) {
+		if ( supports.indexOf('google-map') > -1 ) {
 			googleMapBlockInit();
 		}
 
-		if ( supports[ 'header' ] ) {
+		if ( supports.indexOf('header') > -1 ) {
 			headerBlockInit();
 			logoInit();
 		}
 
-		if ( supports[ 'headline' ] ) {
+		if ( supports.indexOf('headline') > -1 ) {
 			headlineInit();
 		}
 
-		if ( supports[ 'hero' ] ) {
-			heroInit();
-		}
+		// We always register the Hero block.
+		heroInit();
 
-		if ( supports[ 'media' ] ) {
-			mediaInit();
-		}
+		// We always register the Media block.
+		mediaInit();
 
-		if ( supports[ 'navigation' ] ) {
+		if ( supports.indexOf('navigation') > -1 ) {
 			navigationInit();
 		}
 
-		if ( supports[ 'menu-food' ] ) {
+		if ( supports.indexOf('menu-food') > -1 ) {
 			menuFoodInit();
 			menuFoodSectionInit();
 			menuFoodItemInit();
 		}
 
-		if ( supports[ 'opentable' ] ) {
+		if ( supports.indexOf('opentable') > -1 ) {
 			opentableInit();
 		}
 
-		if ( supports[ 'slideshow' ] ) {
+		if ( supports.indexOf('slideshow') > -1 ) {
 			slideshowInit();
 		}
 	}

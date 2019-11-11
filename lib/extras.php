@@ -1,5 +1,48 @@
 <?php
 
+/**
+ * Determine if a certain block is supported by the current theme.
+ *
+ * This way you can current_theme_supports() with a second parameter like so:
+ * current_theme_supports( 'novablocks', 'hero');
+ * current_theme_supports( 'novablocks', array( 'hero', 'media' ) );
+ *
+ * @param bool $supports
+ * @param string|array $args A single block or a list of blocks to search for.
+ *                           When multiple, we use AND among them, so all need to be supported.
+ * @param array|bool $theme_features The list of novablocks blocks (as strings) that the current theme supports.
+ *
+ * @return mixed
+ */
+function novablocks_handle_theme_supports( $supports, $args, $theme_features ) {
+	if ( empty( $args ) || empty( $theme_features ) ) {
+		return $supports;
+	}
+
+	if ( is_string( $args ) ) {
+		$args = array( $args );
+	}
+
+	if ( is_array( $theme_features ) ) {
+		$theme_features = reset( $theme_features );
+	}
+	if ( is_string( $theme_features ) ) {
+		$theme_features = array( $theme_features );
+	}
+	if ( ! is_array( $theme_features ) ) {
+		return $supports;
+	}
+
+	foreach ( $args as $arg ) {
+		if ( ! in_array( $arg, $theme_features ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+add_filter( 'current_theme_supports-novablocks', 'novablocks_handle_theme_supports', 10, 3 );
+
 function novablocks_register_settings() {
 	register_setting(
 		'novablocks',
@@ -14,7 +57,7 @@ function novablocks_register_settings() {
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
 
-function nova_blocks_register_meta() {
+function novablocks_register_meta() {
 
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 
@@ -43,7 +86,7 @@ function nova_blocks_register_meta() {
 		) );
 	}
 }
-add_action( 'init', 'nova_blocks_register_meta' );
+add_action( 'init', 'novablocks_register_meta' );
 
 function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 
@@ -714,7 +757,7 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom'
 			),
 		),
-		'theme_support' => novablocks_get_theme_support( 'novablocks' ),
+		'theme_support' => novablocks_get_theme_support(),
 	);
 
 	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
@@ -727,13 +770,13 @@ function novablocks_get_theme_support() {
 	$theme_support = is_array( $theme_support ) ? $theme_support[0] : false;
 
 	$default = array(
-		'hero' => true,
-		'media' => true,
-		'slideshow' => true,
+		'hero',
+		'media',
+		'slideshow',
 	);
 
 	if ( is_array( $theme_support ) ) {
-		$theme_support = array_merge_recursive( $default, $theme_support );
+		$theme_support = array_unique( array_merge( $default, $theme_support ) );
 	} else {
 		$theme_support = $default;
 	}

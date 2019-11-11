@@ -35,7 +35,7 @@ function novablocks_admin_init() {
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.1.1',
+		'1.1.4',
 		true
 	);
 
@@ -51,7 +51,7 @@ function novablocks_admin_init() {
 		'nova-blocks-editor-css',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.1.1'
+		'1.1.4'
 	);
 }
 add_action( 'admin_init', 'novablocks_admin_init' );
@@ -69,7 +69,7 @@ function novablocks_enqueue_assets() {
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.1.1'
+		'1.1.4'
 	);
 }
 add_action( 'enqueue_block_assets', 'novablocks_enqueue_assets' );
@@ -143,7 +143,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.1.1',
+		'1.1.4',
 		true
 	);
 }

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_google_maps_block_init' ) ) {
 
 	function novablocks_google_maps_block_init() {
-		if ( ! current_theme_supports( 'novablocks-google-map' ) ) {
+		if ( ! current_theme_supports( 'novablocks', 'google-map' ) ) {
 			return;
 		}
 
