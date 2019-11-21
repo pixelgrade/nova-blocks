@@ -175,7 +175,12 @@ class Edit extends Component {
 	render() {
 		const { fetchedApiKey, fetchedScript, savedApiKey, gmAuthFailure } = this.state;
 		const { attributes, setAttributes } = this.props;
-		const { align } = attributes;
+		const { align, styleData } = attributes;
+		const newProps = Object.assign( this.props );
+
+		if ( typeof styleData === "string" ) {
+			newProps.attributes.styleData = JSON.parse( styleData );
+		}
 
 		return (
 			<Fragment>
@@ -187,7 +192,7 @@ class Edit extends Component {
 					/>
 				</BlockControls>
 				{ !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && <InspectorControls
-					{ ...this.props }
+					{ ...newProps }
 					apiKey={ this.state.apiKey }
 					savedApiKey={ this.state.savedApiKey }
 					onChangeApiKey={ ( apiKey ) => {

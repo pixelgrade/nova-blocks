@@ -59,7 +59,7 @@ class ButtonInspectorControls extends Component {
 							const mapStyles = styles.find( style => style.slug === newStyleSlug ).styles;
 							setAttributes( {
 								styleSlug: newStyleSlug,
-								styleData: this.compileStyles( mapStyles ),
+								styleData: JSON.stringify( this.compileStyles( mapStyles ) ),
 								pinColor: newStyleSlug === 'customized' ? getMapAccentColor.call( this ) : '#222222',
 							} );
 						} }

@@ -286,7 +286,7 @@ function novablocks_get_google_map_attributes() {
 				'type' => 'array',
 				'default' => array(),
 				'items' => array(
-					'type' => array(),
+					'type' => 'string',
 				),
 			),
 			'pinColor' => array(
@@ -306,11 +306,8 @@ function novablocks_get_google_map_attributes() {
 				'default' => true,
 			),
 			'styleData' => array(
-				'type' => 'array',
-				'default' => array(),
-				'items' => array(
-					'type' => array(),
-				),
+				'type' => 'string',
+				'default' => '[]',
 			),
 			'styleSlug' => array(
 				'type' => 'string',

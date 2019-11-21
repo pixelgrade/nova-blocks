@@ -56,7 +56,7 @@ class Map extends Component {
 		const { markers, styleSlug } = attributes;
 
 		const accentColor = styleSlug === 'theme' ? getMapAccentColor.call( this ) : '#222222';
-		const pinMarkup = ReactDOMServer.renderToStaticMarkup( pin ).replace( '%ACCENT_COLOR%', accentColor );
+		const pinMarkup = pin.replace( '%ACCENT_COLOR%', accentColor );
 
 		markers.forEach( markerString => {
 			const marker = JSON.parse( markerString );
