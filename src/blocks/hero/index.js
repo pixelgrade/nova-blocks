@@ -4,8 +4,6 @@
 import * as icons from '../../icons';
 import edit from './edit';
 
-import { parallaxAttributes } from '../../components/with-parallax';
-
 /**
  * WordPress dependencies
  */
@@ -22,8 +20,11 @@ function init() {
 		icon: icons.hero,
 		// Additional search terms
 		keywords: [ __( 'cover', '__plugin_txtd' ), __( 'full width', '__plugin_txtd' ), __( 'hero image', '__plugin_txtd' ), __( 'cover section', '__plugin_txtd' ) ],
-		edit,
 		example: {},
+		supports: {
+			anchor: true,
+		},
+		edit,
 		save() {
 			return <InnerBlocks.Content />;
 		},

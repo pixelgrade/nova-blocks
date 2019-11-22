@@ -82,9 +82,14 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_hero:before' ); ?>
+		do_action( 'novablocks_hero:before' );
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $heroStyle ); ?>">
+		$id = '';
+		if ( ! empty( $attributes['anchor'] ) ) {
+			$id = 'id="' . $attributes['anchor'] . '"';
+		} ?>
+
+		<div <?php echo $id; ?> class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $heroStyle ); ?>">
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 

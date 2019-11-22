@@ -6075,7 +6075,6 @@ function (_Component) {
  */
 
 
-
 /**
  * WordPress dependencies
  */
@@ -6093,8 +6092,11 @@ function hero_init() {
     icon: hero,
     // Additional search terms
     keywords: [hero_('cover', '__plugin_txtd'), hero_('full width', '__plugin_txtd'), hero_('hero image', '__plugin_txtd'), hero_('cover section', '__plugin_txtd')],
-    edit: hero_edit,
     example: {},
+    supports: {
+      anchor: true
+    },
+    edit: hero_edit,
     save: function save() {
       return Object(react["createElement"])(hero_InnerBlocks.Content, null);
     },

@@ -399,11 +399,15 @@ function novablocks_add_hero_settings( $settings ) {
 		),
 		'attributes' => array_merge(
 			array(
+				'anchor'                  => array(
+					'type'    => 'string',
+					'default' => null,
+				),
 				'applyMinimumHeightBlock' => array(
 					'type'    => 'boolean',
 					'default' => false
 				),
-				'focalPoint' => array(
+				'focalPoint'              => array(
 					'type'    => 'object',
 					'default' => array(
 						'x' => 0.5,
