@@ -21,6 +21,7 @@ const ParallaxContext = createContext();
 const withParallax = function( WrappedComponent ) {
 
 	return class extends Component {
+
 		constructor() {
 			super( ...arguments );
 
@@ -31,13 +32,29 @@ const withParallax = function( WrappedComponent ) {
 			};
 
 			this.updateHandler = this.updateDimensions.bind( this );
+			this.scrollContainer = this.getScrollContainer();
+		}
+
+		getScrollContainer() {
+			const oldScrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];;
+			const newScrollContainer = document.getElementsByClassName( 'edit-post-editor-regions__content' )[ 0 ];
+
+			return oldScrollContainer || newScrollContainer;
 		}
 
 		componentDidMount() {
-			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
 			window.addEventListener( 'resize', this.updateHandler );
-			scrollContainer.addEventListener( 'scroll', this.updateHandler );
+			this.createBlockObservers();
+			this.unsubscribeUpdate = wp.data.subscribe( this.updateHandler );
 
+			if ( this.scrollContainer ) {
+				this.scrollContainer.addEventListener( 'scroll', this.updateHandler );
+			}
+
+			this.updateDimensions();
+		}
+
+		createBlockObservers() {
 			this.observers = findParents( this.container, '.wp-block' ).map( block => {
 				const observer = new MutationObserver( movements => {
 					movements.forEach( movement => {
@@ -58,23 +75,21 @@ const withParallax = function( WrappedComponent ) {
 
 				return observer;
 			} );
-
-			this.updateDimensions();
-
-			wp.data.subscribe( this.updateHandler );
 		}
 
 		componentWillUnmount() {
-			const scrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];
 			window.removeEventListener( 'resize', this.updateHandler );
-			scrollContainer.removeEventListener( 'scroll', this.updateHandler );
 			this.observers.forEach( observer => observer.disconnect() );
+			this.unsubscribeUpdate();
+
+			if ( this.scrollContainer ) {
+				this.scrollContainer.removeEventListener( 'scroll', this.updateHandler );
+			}
 		}
 
 		updateDimensions() {
-			const scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
 
-			if ( ! this.container ) {
+			if ( ! this.container || ! this.scrollContainer ) {
 				return;
 			}
 
@@ -86,7 +101,7 @@ const withParallax = function( WrappedComponent ) {
 			this.setState( {
 				windowWidth: window.innerWidth,
 				windowHeight: window.innerHeight,
-				scrollTop: scrollContainer.scrollTop,
+				scrollTop: this.scrollContainer.scrollTop,
 				progress: actualProgress,
 				dimensions: {
 					width: this.container.offsetWidth,

@@ -3455,17 +3455,36 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
           progress: 0.5
         };
         _this.updateHandler = _this.updateDimensions.bind(assertThisInitialized_default()(_this));
+        _this.scrollContainer = _this.getScrollContainer();
         return _this;
       }
 
       createClass_default()(_class, [{
+        key: "getScrollContainer",
+        value: function getScrollContainer() {
+          var oldScrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
+          ;
+          var newScrollContainer = document.getElementsByClassName('edit-post-editor-regions__content')[0];
+          return oldScrollContainer || newScrollContainer;
+        }
+      }, {
         key: "componentDidMount",
         value: function componentDidMount() {
+          window.addEventListener('resize', this.updateHandler);
+          this.createBlockObservers();
+          this.unsubscribeUpdate = wp.data.subscribe(this.updateHandler);
+
+          if (this.scrollContainer) {
+            this.scrollContainer.addEventListener('scroll', this.updateHandler);
+          }
+
+          this.updateDimensions();
+        }
+      }, {
+        key: "createBlockObservers",
+        value: function createBlockObservers() {
           var _this2 = this;
 
-          var scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
-          window.addEventListener('resize', this.updateHandler);
-          scrollContainer.addEventListener('scroll', this.updateHandler);
           this.observers = findParents(this.container, '.wp-block').map(function (block) {
             var observer = new MutationObserver(function (movements) {
               movements.forEach(function (movement) {
@@ -3484,25 +3503,24 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
             });
             return observer;
           });
-          this.updateDimensions();
-          wp.data.subscribe(this.updateHandler);
         }
       }, {
         key: "componentWillUnmount",
         value: function componentWillUnmount() {
-          var scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
           window.removeEventListener('resize', this.updateHandler);
-          scrollContainer.removeEventListener('scroll', this.updateHandler);
           this.observers.forEach(function (observer) {
             return observer.disconnect();
           });
+          this.unsubscribeUpdate();
+
+          if (this.scrollContainer) {
+            this.scrollContainer.removeEventListener('scroll', this.updateHandler);
+          }
         }
       }, {
         key: "updateDimensions",
         value: function updateDimensions() {
-          var scrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
-
-          if (!this.container) {
+          if (!this.container || !this.scrollContainer) {
             return;
           }
 
@@ -3513,7 +3531,7 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
           this.setState({
             windowWidth: window.innerWidth,
             windowHeight: window.innerHeight,
-            scrollTop: scrollContainer.scrollTop,
+            scrollTop: this.scrollContainer.scrollTop,
             progress: actualProgress,
             dimensions: {
               width: this.container.offsetWidth,
