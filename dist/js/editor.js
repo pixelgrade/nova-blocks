@@ -5732,8 +5732,7 @@ var background_HeroBackground = function HeroBackground(props) {
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
       overlayFilterStrength = _props$attributes.overlayFilterStrength,
       media = _props$attributes.media,
-      focalPoint = _props$attributes.focalPoint,
-      style = props.style;
+      focalPoint = _props$attributes.focalPoint;
 
   var styles = background_objectSpread({}, props.parallax.style, {
     opacity: 1,
@@ -5747,17 +5746,18 @@ var background_HeroBackground = function HeroBackground(props) {
   return Object(react["createElement"])("div", {
     className: "novablocks-mask"
   }, Object(react["createElement"])("div", {
-    className: "novablocks-hero__background",
-    style: styles
+    className: "novablocks-hero__background"
   }, media.type === 'image' && typeof media.sizes !== 'undefined' && Object(react["createElement"])("img", {
     className: "novablocks-hero__media",
     src: media.sizes.full.url,
-    alt: media.alt
+    alt: media.alt,
+    style: styles
   }), media.type === 'video' && Object(react["createElement"])("video", {
     muted: true,
     autoPlay: true,
     loop: true,
     className: "novablocks-hero__media",
+    style: styles,
     src: media.url
   })));
 };
@@ -6446,8 +6446,7 @@ var background_SlideshowBackground = function SlideshowBackground(props) {
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
       overlayFilterStrength = _props$attributes.overlayFilterStrength,
-      previewImage = props.previewImage,
-      style = props.style;
+      previewImage = props.previewImage;
   var focalPoint = previewImage.focalPoint || {
     x: 0.5,
     y: 0.5
@@ -6465,8 +6464,7 @@ var background_SlideshowBackground = function SlideshowBackground(props) {
   return Object(react["createElement"])("div", {
     className: "novablocks-mask"
   }, Object(react["createElement"])("div", {
-    className: "novablocks-slideshow__background",
-    style: style
+    className: "novablocks-slideshow__background"
   }, Object(react["createElement"])("img", {
     className: "novablocks-slideshow__media",
     src: previewImage.sizes.large.url,
