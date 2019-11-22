@@ -1,6 +1,6 @@
 :root {
 	--bg-master-dark: #000000;
-	--bg-master-light: #ffffff;
+	--bg-master-light: #FFFFFF;
 	--bg-master-none: transparent;
 }
 
@@ -13,9 +13,14 @@
 .novablocks-u-background {
 	background-color: var(--element-background);
 	transition: background-color 0.4s ease-out;
+
+	.block-editor-inserter__toggle {
+		background: #FFFFFF;
+	}
 }
 
 .nova-hide-clear-color {
+
 	.components-color-palette__custom-color {
 		margin-right: 0;
 	}
