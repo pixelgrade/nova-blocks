@@ -60,12 +60,6 @@ class novaBlocks {
 			headlineInit();
 		}
 
-		// We always register the Hero block.
-		heroInit();
-
-		// We always register the Media block.
-		mediaInit();
-
 		if ( supports.indexOf('navigation') > -1 ) {
 			navigationInit();
 		}
@@ -80,9 +74,9 @@ class novaBlocks {
 			opentableInit();
 		}
 
-		if ( supports.indexOf('slideshow') > -1 ) {
-			slideshowInit();
-		}
+		heroInit();
+		mediaInit();
+		slideshowInit();
 	}
 }
 

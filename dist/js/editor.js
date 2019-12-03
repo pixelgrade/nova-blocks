@@ -7978,12 +7978,7 @@ function () {
 
       if (supports.indexOf('headline') > -1) {
         blocks_headline();
-      } // We always register the Hero block.
-
-
-      blocks_hero(); // We always register the Media block.
-
-      blocks_media();
+      }
 
       if (supports.indexOf('navigation') > -1) {
         blocks_navigation();
@@ -7999,9 +7994,9 @@ function () {
         blocks_opentable();
       }
 
-      if (supports.indexOf('slideshow') > -1) {
-        blocks_slideshow();
-      }
+      blocks_hero();
+      blocks_media();
+      blocks_slideshow();
     }
   }]);
 

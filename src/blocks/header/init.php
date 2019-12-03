@@ -11,10 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'novablocks_header_block_init' ) ) {
 
 	function novablocks_header_block_init() {
-		if ( ! current_theme_supports( 'novablocks', 'header' ) ) {
-			return;
-		}
-
 		register_block_type( 'novablocks/header', array(
 			'attributes'      => novablocks_get_header_attributes(),
 			'render_callback' => 'novablocks_render_header_block',

@@ -13,10 +13,6 @@ require_once dirname( __FILE__ ) . '/extras.php';
 if ( ! function_exists( 'novablocks_announcement_bar_block_init' ) ) {
 
 	function novablocks_announcement_bar_block_init() {
-		if ( ! current_theme_supports( 'novablocks', 'announcement-bar' ) ) {
-			return;
-		}
-
 		register_block_type( 'novablocks/announcement-bar', array(
 			'attributes'      => novablocks_get_announcement_bar_attributes(),
 			'render_callback' => 'novablocks_render_announcement_bar_block'
