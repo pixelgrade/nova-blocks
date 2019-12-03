@@ -95,6 +95,10 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 1.1.5 =
+* Added anchor links for creating a one-page site.
+* Allow themes to declare support for more complex blocks.
+* Fix for Hero block background logic and focal point missing.
+* Bug fix for Slideshow block.
 * Minor refactoring and cleanup.
 
 = 1.1.4 =
