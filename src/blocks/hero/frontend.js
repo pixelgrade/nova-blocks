@@ -5,9 +5,10 @@ import { parallaxInit } from "../../utils";
 
 	$(function() {
 		const $body = $( 'body' );
+		const shouldHaveBullets = $body.is( '.novablocks-has-position-indicators' ) && $( '.novablocks-hero' ).length > 1;
 		parallaxInit( 'novablocks-hero' );
 
-		if ( $body.is( '.novablocks-has-position-indicators' ) && typeof $.fn.bully !== 'undefined' ) {
+		if ( shouldHaveBullets && typeof $.fn.bully !== 'undefined' ) {
 			$( '.novablocks-hero' ).bully();
 		}
 

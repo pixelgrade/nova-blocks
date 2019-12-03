@@ -2263,9 +2263,10 @@ var hasTouchScreen = function hasTouchScreen() {
 (function ($, window, undefined) {
   $(function () {
     var $body = $('body');
+    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;
     parallaxInit('novablocks-hero');
 
-    if ($body.is('.novablocks-has-position-indicators') && typeof $.fn.bully !== 'undefined') {
+    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {
       $('.novablocks-hero').bully();
     }
 
