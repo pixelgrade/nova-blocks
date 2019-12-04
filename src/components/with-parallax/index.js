@@ -55,25 +55,39 @@ const withParallax = function( WrappedComponent ) {
 		}
 
 		createBlockObservers() {
-			this.observers = findParents( this.container, '.wp-block' ).map( block => {
-				const observer = new MutationObserver( movements => {
-					movements.forEach( movement => {
-						if ( 'style' === movement.attributeName ) {
-							if ( movement.oldValue.includes( 'transform: translate3d' ) ) {
-								this.updateDimensions();
+			this.observers = [];
+
+			findParents( this.container, '.wp-block' ).map( block => {
+				if ( window.MutationObserver ) {
+					const mutationObserver = new MutationObserver( movements => {
+						movements.forEach( movement => {
+							if ( 'style' === movement.attributeName ) {
+								if ( movement.oldValue && movement.oldValue.includes( 'transform: translate3d' ) ) {
+									this.updateDimensions();
+								}
 							}
-						}
+						} );
 					} );
-				} );
 
-				observer.observe( block, {
-					attributes: true,
-					attributeOldValue: true,
-					childList: false,
-					subtree: false,
-				} );
+					mutationObserver.observe( block, {
+						attributes: true,
+						attributeOldValue: true,
+						childList: false,
+						subtree: false,
+					} );
 
-				return observer;
+					this.observers.push( mutationObserver );
+				}
+
+				if ( window.ResizeObserver ) {
+					const resizeObserver = new ResizeObserver( () => {
+						this.updateDimensions();
+					} );
+
+					resizeObserver.observe( block );
+
+					this.observers.push( resizeObserver );
+				}
 			} );
 		}
 

@@ -44,7 +44,12 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		}
 
 		// Make sure the media defaults are in place.
-		$media = wp_parse_args( $media, [ 'type' => '', 'url' => '', 'sizes' => [] ] );
+		$media_args = array(
+			'type' => '',
+			'url' => '',
+			'sizes' => array()
+		);
+		$media = wp_parse_args( $media, $media_args );
 
 		$heroStyle = 'color: ' . $attributes['contentColor'];
 		$contentStyle = '';

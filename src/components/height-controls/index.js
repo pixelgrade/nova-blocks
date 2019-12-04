@@ -28,14 +28,15 @@ class HeightControls extends Component {
 
 		const {
 			attributes,
-			setAttributes,
+			updateAttributes,
 			settings,
 		} = this.props;
 
-		const {
-			minHeight,
-			applyMinimumHeight
-		} = attributes;
+		const applyMinimumHeightDefault = settings.hero.attributes.applyMinimumHeight.default;
+		const applyMinimumHeight = !! attributes.applyMinimumHeight ? attributes.applyMinimumHeight : applyMinimumHeightDefault;
+
+		const minHeightDefault = settings.hero.attributes.minHeight.default;
+		const minHeight = !! attributes.minHeight ? attributes.minHeight : minHeightDefault;
 
 		return (
 			<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
@@ -43,7 +44,7 @@ class HeightControls extends Component {
 					label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
 					selected={ applyMinimumHeight }
 					onChange={ ( nextMinimumHeight ) => {
-						setAttributes( { applyMinimumHeight: nextMinimumHeight } );
+						updateAttributes( { ...attributes, applyMinimumHeight: nextMinimumHeight } );
 					} }
 					options={ settings.applyMinimumHeightOptions }
 				/>
@@ -52,7 +53,7 @@ class HeightControls extends Component {
 						label={ __( 'Minimum Height', '__plugin_txtd' ) }
 						selected={ minHeight }
 						onChange={ minHeight => {
-							setAttributes( { minHeight: parseInt( minHeight, 10 ) } );
+							updateAttributes( { ...attributes, minHeight: parseInt( minHeight, 10 ) } );
 						} }
 						options={ settings.minimumHeightOptions }
 					/>

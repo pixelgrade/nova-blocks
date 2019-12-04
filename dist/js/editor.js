@@ -186,6 +186,27 @@ if (true) {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -242,34 +263,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
 /* 8 */
-/***/ (function(module, exports) {
-
-module.exports = undefined;
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -291,6 +285,12 @@ function _extends() {
 }
 
 module.exports = _extends;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = undefined;
 
 /***/ }),
 /* 10 */
@@ -1274,7 +1274,7 @@ function _objectWithoutProperties(source, excluded) {
 var react = __webpack_require__(5);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","amd":"lodash"}
-var external_commonjs_lodash_amd_lodash_ = __webpack_require__(8);
+var external_commonjs_lodash_amd_lodash_ = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react.js
 
@@ -2369,7 +2369,7 @@ var withBlockIndexAttribute = with_block_index_createHigherOrderComponent(functi
 }, "withBlockIndexAttribute");
 with_block_index_addFilter('editor.BlockEdit', 'novablocks/with-blockIndex-attribute', withBlockIndexAttribute);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
-var classnames = __webpack_require__(6);
+var classnames = __webpack_require__(7);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
 // CONCATENATED MODULE: ./src/filters/with-font-size-picker/index.js
@@ -2915,11 +2915,11 @@ function init() {
 
 /* harmony default export */ var announcement_bar = (init);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(9);
+var helpers_extends = __webpack_require__(8);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(7);
+var defineProperty = __webpack_require__(6);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
@@ -3485,23 +3485,36 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
         value: function createBlockObservers() {
           var _this2 = this;
 
-          this.observers = findParents(this.container, '.wp-block').map(function (block) {
-            var observer = new MutationObserver(function (movements) {
-              movements.forEach(function (movement) {
-                if ('style' === movement.attributeName) {
-                  if (movement.oldValue.includes('transform: translate3d')) {
-                    _this2.updateDimensions();
+          this.observers = [];
+          findParents(this.container, '.wp-block').map(function (block) {
+            if (window.MutationObserver) {
+              var mutationObserver = new MutationObserver(function (movements) {
+                movements.forEach(function (movement) {
+                  if ('style' === movement.attributeName) {
+                    if (movement.oldValue && movement.oldValue.includes('transform: translate3d')) {
+                      _this2.updateDimensions();
+                    }
                   }
-                }
+                });
               });
-            });
-            observer.observe(block, {
-              attributes: true,
-              attributeOldValue: true,
-              childList: false,
-              subtree: false
-            });
-            return observer;
+              mutationObserver.observe(block, {
+                attributes: true,
+                attributeOldValue: true,
+                childList: false,
+                subtree: false
+              });
+
+              _this2.observers.push(mutationObserver);
+            }
+
+            if (window.ResizeObserver) {
+              var resizeObserver = new ResizeObserver(function () {
+                _this2.updateDimensions();
+              });
+              resizeObserver.observe(block);
+
+              _this2.observers.push(resizeObserver);
+            }
           });
         }
       }, {
@@ -5615,6 +5628,11 @@ var alignment_controls_AlignmentControls = function AlignmentControls(props) {
 
 
 
+
+function height_controls_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function height_controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { height_controls_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { height_controls_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * Internal dependencies
  */
@@ -5647,10 +5665,12 @@ function (_Component) {
     value: function render() {
       var _this$props = this.props,
           attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes,
+          updateAttributes = _this$props.updateAttributes,
           settings = _this$props.settings;
-      var minHeight = attributes.minHeight,
-          applyMinimumHeight = attributes.applyMinimumHeight;
+      var applyMinimumHeightDefault = settings.hero.attributes.applyMinimumHeight.default;
+      var applyMinimumHeight = !!attributes.applyMinimumHeight ? attributes.applyMinimumHeight : applyMinimumHeightDefault;
+      var minHeightDefault = settings.hero.attributes.minHeight.default;
+      var minHeight = !!attributes.minHeight ? attributes.minHeight : minHeightDefault;
       return Object(react["createElement"])(height_controls_PanelBody, {
         title: height_controls_('Height', '__plugin_txtd'),
         initialOpen: false
@@ -5658,18 +5678,18 @@ function (_Component) {
         label: height_controls_('Apply Minimum Height', '__plugin_txtd'),
         selected: applyMinimumHeight,
         onChange: function onChange(nextMinimumHeight) {
-          setAttributes({
+          updateAttributes(height_controls_objectSpread({}, attributes, {
             applyMinimumHeight: nextMinimumHeight
-          });
+          }));
         },
         options: settings.applyMinimumHeightOptions
       }), 'none' !== applyMinimumHeight && Object(react["createElement"])(height_controls_RadioControl, {
         label: height_controls_('Minimum Height', '__plugin_txtd'),
         selected: minHeight,
         onChange: function onChange(minHeight) {
-          setAttributes({
+          updateAttributes(height_controls_objectSpread({}, attributes, {
             minHeight: parseInt(minHeight, 10)
-          });
+          }));
         },
         options: settings.minimumHeightOptions
       }));
@@ -5782,22 +5802,21 @@ var preview_InnerBlocks = wp.blockEditor.InnerBlocks;
 var preview_select = wp.data.select;
 
 var preview_HeroPreview = function HeroPreview(props) {
-  var _props$attributes = props.attributes,
-      contentPadding = _props$attributes.contentPadding,
-      contentPaddingCustom = _props$attributes.contentPaddingCustom,
-      contentWidth = _props$attributes.contentWidth,
-      contentWidthCustom = _props$attributes.contentWidthCustom,
-      verticalAlignment = _props$attributes.verticalAlignment,
-      horizontalAlignment = _props$attributes.horizontalAlignment,
-      minHeight = _props$attributes.minHeight,
-      minHeightFallback = _props$attributes.minHeightFallback,
-      applyMinimumHeightBlock = _props$attributes.applyMinimumHeightBlock,
-      scrollIndicatorBlock = _props$attributes.scrollIndicatorBlock,
-      contentColor = _props$attributes.contentColor,
-      overlayFilterStyle = _props$attributes.overlayFilterStyle,
+  var attributes = props.attributes,
       className = props.className,
       clientId = props.clientId,
       settings = props.settings;
+  var contentPadding = attributes.contentPadding,
+      contentPaddingCustom = attributes.contentPaddingCustom,
+      contentWidth = attributes.contentWidth,
+      contentWidthCustom = attributes.contentWidthCustom,
+      verticalAlignment = attributes.verticalAlignment,
+      horizontalAlignment = attributes.horizontalAlignment,
+      minHeightFallback = attributes.minHeightFallback,
+      applyMinimumHeightBlock = attributes.applyMinimumHeightBlock,
+      scrollIndicatorBlock = attributes.scrollIndicatorBlock,
+      contentColor = attributes.contentColor,
+      overlayFilterStyle = attributes.overlayFilterStyle;
   var classes = [className, 'novablocks-hero', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
   var styles = {
     hero: {
@@ -5806,18 +5825,20 @@ var preview_HeroPreview = function HeroPreview(props) {
     foreground: {},
     content: {}
   };
-  var minimumHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
+  var minHeightDefault = settings.hero.attributes.minHeight.default;
+  var minHeight = !!attributes.minHeight ? attributes.minHeight : minHeightDefault;
+  var computedMinHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
   var heroBlocks = preview_select('core/block-editor').getBlocks().filter(function (block) {
     return block.name === 'novablocks/hero';
   });
   var index = heroBlocks.findIndex(function (block) {
     return block.clientId === clientId;
   });
-  var scrollIndicatorFallback = index === 0 && minimumHeight === 100;
+  var scrollIndicatorFallback = index === 0 && computedMinHeight === 100;
   var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
   if (!!applyMinimumHeightBlock) {
-    styles.hero.minHeight = minimumHeight + 'vh';
+    styles.hero.minHeight = computedMinHeight + 'vh';
   }
 
   if (contentPadding === 'custom') {
@@ -5892,6 +5913,7 @@ var block_controls_HeroBlockControls = function HeroBlockControls(props) {
 
 /* harmony default export */ var block_controls = (block_controls_HeroBlockControls);
 // CONCATENATED MODULE: ./src/blocks/hero/edit.js
+
 
 
 
@@ -5975,27 +5997,19 @@ function (_Component) {
           scrollIndicator = attributes.scrollIndicator;
       var defaults = {};
 
-      if (settings.usePostMetaAttributes) {
-        if (!minHeight) {
-          defaults.minHeight = settings.hero.attributes.minHeight.default;
-        }
-
-        if (!applyMinimumHeight) {
-          defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
-        }
-
-        if (!scrollIndicator) {
-          defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
-        }
-
-        return defaults;
+      if (!minHeight) {
+        defaults.minHeight = settings.hero.attributes.minHeight.default;
       }
 
-      return {
-        minHeight: 100,
-        applyMinimumHeight: 'all',
-        scrollIndicator: false
-      };
+      if (!applyMinimumHeight) {
+        defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
+      }
+
+      if (!scrollIndicator) {
+        defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+      }
+
+      return defaults;
     }
   }, {
     key: "getNewAttributes",
@@ -6022,19 +6036,18 @@ function (_Component) {
   }, {
     key: "updateAttributes",
     value: function updateAttributes() {
+      var newAttributes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var _this$props = this.props,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes;
       var defaults = this.getDefaults(attributes);
-      var newAttributes = this.getNewAttributes(edit_objectSpread({}, attributes, {}, defaults)); //		setAttributes( newAttributes );
+      var computedAttributes = this.getNewAttributes(edit_objectSpread({}, attributes, {}, defaults, {}, newAttributes));
+      setAttributes(computedAttributes);
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {//		this.updateAttributes();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {//		this.updateAttributes();
+    value: function componentDidMount() {
+      this.updateAttributes();
     }
   }, {
     key: "render",
@@ -6047,6 +6060,7 @@ function (_Component) {
           focalPoint = attributes.focalPoint;
       var parallaxFocalPointImage = media ? media.sizes.full : false;
       var usePostMetaAttributes = settings.usePostMetaAttributes;
+      var updateAttributes = this.updateAttributes.bind(this);
       return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(preview, this.props), Object(react["createElement"])(block_controls, this.props), Object(react["createElement"])(hero_edit_InspectorControls, null, parallaxFocalPointImage && Object(react["createElement"])(edit_PanelBody, {
         title: hero_edit_('Focal Point', '__plugin_txtd'),
         initialOpen: true
@@ -6062,7 +6076,9 @@ function (_Component) {
             focalPoint: focalPoint
           });
         }
-      })), Object(react["createElement"])(layout_panel, this.props), usePostMetaAttributes && Object(react["createElement"])(FirstBlockControls, this.props), !usePostMetaAttributes && Object(react["createElement"])(edit_BlockHeightControls, this.props)));
+      })), Object(react["createElement"])(layout_panel, this.props), usePostMetaAttributes && Object(react["createElement"])(FirstBlockControls, extends_default()({}, this.props, {
+        updateAttributes: updateAttributes
+      })), !usePostMetaAttributes && Object(react["createElement"])(edit_BlockHeightControls, this.props)));
     }
   }]);
 

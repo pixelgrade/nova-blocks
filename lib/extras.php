@@ -234,7 +234,7 @@ function novablocks_get_block_extra_classes( $attributes ) {
 function novablocks_get_hero_attributes() {
 	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
 
-	if ( ! empty( $novablocks_block_editor_settings['hero']['attributes'] ) ) {
+	if ( isset( $novablocks_block_editor_settings['hero']['attributes'] ) ) {
 		return $novablocks_block_editor_settings['hero']['attributes'];
 	}
 
@@ -244,25 +244,25 @@ function novablocks_get_hero_attributes() {
 function novablocks_get_slideshow_attributes() {
 	return array_merge(
 		array(
-			'galleryImages'         => array(
+			'galleryImages' => array(
 				'type'    => 'array',
-				'items'   => [
+				'items'   => array(
 					'type' => 'object',
-				],
-				'default' => array()
+				),
+				'default' => array(),
 			),
-			'focalPoint' => array(
+			'focalPoint'    => array(
 				'type'    => 'object',
 				'default' => array(
 					'x' => 0.5,
 					'y' => 0.5
 				),
 			),
-			'slideshowType'         => array(
+			'slideshowType' => array(
 				'type'    => 'string',
 				'default' => 'gallery'
 			),
-			'minHeight'             => array(
+			'minHeight'     => array(
 				'type'    => 'number',
 				'default' => 75,
 			),
@@ -278,31 +278,31 @@ function novablocks_get_slideshow_attributes() {
 function novablocks_get_google_map_attributes() {
 	return array_merge(
 		array(
-			'align' => array(
-				'type' => 'string',
+			'align'        => array(
+				'type'    => 'string',
 				'default' => 'center',
 			),
-			'markers' => array(
-				'type' => 'array',
+			'markers'      => array(
+				'type'    => 'array',
 				'default' => array(),
-				'items' => array(
+				'items'   => array(
 					'type' => 'string',
 				),
 			),
-			'pinColor' => array(
-				'type' => 'string',
+			'pinColor'     => array(
+				'type'    => 'string',
 				'default' => '#222222',
 			),
 			'showControls' => array(
-				'type' => 'boolean',
+				'type'    => 'boolean',
 				'default' => false,
 			),
-			'showIcons' => array(
-				'type' => 'boolean',
+			'showIcons'    => array(
+				'type'    => 'boolean',
 				'default' => true,
 			),
-			'showLabels' => array(
-				'type' => 'boolean',
+			'showLabels'   => array(
+				'type'    => 'boolean',
 				'default' => true,
 			),
 			'styleData' => array(
@@ -312,12 +312,12 @@ function novablocks_get_google_map_attributes() {
 					'type' => 'object'
 				),
 			),
-			'styleSlug' => array(
-				'type' => 'string',
+			'styleSlug'    => array(
+				'type'    => 'string',
 				'default' => 'original',
 			),
-			'zoom' => array(
-				'type' => 'number',
+			'zoom'         => array(
+				'type'    => 'number',
 				'default' => 17,
 			),
 		),
@@ -765,8 +765,9 @@ function novablocks_get_block_editor_settings() {
 	);
 
 	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
+	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
-	return apply_filters( 'novablocks_block_editor_settings', $settings );
+	return $settings;
 }
 
 function novablocks_get_theme_support() {

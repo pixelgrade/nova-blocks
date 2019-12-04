@@ -72,7 +72,9 @@ const BlockHeightControls = function( props ) {
 				label={ __( 'Minimum Height', '__plugin_txtd' ) }
 				selected={ minHeightFallback }
 				onChange={ minHeightFallback => {
-					setAttributes( { minHeightFallback: parseFloat( minHeightFallback ) } );
+					setAttributes( {
+						minHeightFallback: parseFloat( minHeightFallback )
+					} );
 				} }
 				options={ settings.minimumHeightOptions }
 			/>
@@ -87,28 +89,19 @@ class HeroEdit extends Component {
 		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
 		const defaults = {};
 
-		if ( settings.usePostMetaAttributes ) {
-
-			if ( ! minHeight ) {
-				defaults.minHeight = settings.hero.attributes.minHeight.default;
-			}
-
-			if ( ! applyMinimumHeight ) {
-				defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
-			}
-
-			if ( ! scrollIndicator ) {
-				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
-			}
-
-			return defaults;
+		if ( ! minHeight ) {
+			defaults.minHeight = settings.hero.attributes.minHeight.default;
 		}
 
-		return {
-			minHeight: 100,
-			applyMinimumHeight: 'all',
-			scrollIndicator: false,
-		};
+		if ( ! applyMinimumHeight ) {
+			defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
+		}
+
+		if ( ! scrollIndicator ) {
+			defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+		}
+
+		return defaults;
 	}
 
 	getNewAttributes( attributes ) {
@@ -131,20 +124,16 @@ class HeroEdit extends Component {
 		};
 	}
 
-	updateAttributes() {
+	updateAttributes( newAttributes = {} ) {
 		const { attributes, setAttributes } = this.props;
 		const defaults = this.getDefaults( attributes );
-		const newAttributes = this.getNewAttributes( { ...attributes, ...defaults } );
+		const computedAttributes = this.getNewAttributes( { ...attributes, ...defaults, ...newAttributes } );
 
-//		setAttributes( newAttributes );
+		setAttributes( computedAttributes );
 	}
 
 	componentDidMount() {
-//		this.updateAttributes();
-	}
-
-	componentDidUpdate() {
-//		this.updateAttributes();
+		this.updateAttributes();
 	}
 
 	render() {
@@ -152,6 +141,7 @@ class HeroEdit extends Component {
 		const { media, focalPoint } = attributes;
 		const parallaxFocalPointImage = media ? media.sizes.full : false;
 		const { usePostMetaAttributes } = settings;
+		const updateAttributes = this.updateAttributes.bind( this );
 
 		return (
 			<Fragment>
@@ -172,7 +162,7 @@ class HeroEdit extends Component {
 						/>
 					</PanelBody> }
 					<LayoutPanel { ...this.props } />
-					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } /> }
+					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } updateAttributes={ updateAttributes } /> }
 					{ ! usePostMetaAttributes && <BlockHeightControls { ...this.props } /> }
 				</InspectorControls>
 			</Fragment>
