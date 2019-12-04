@@ -3699,7 +3699,7 @@ function (_Component) {
       var attributes = this.props.attributes;
       var markers = attributes.markers,
           styleSlug = attributes.styleSlug;
-      var accentColor = styleSlug === 'theme' ? getMapAccentColor.call(this) : '#222222';
+      var accentColor = styleSlug === 'customized' ? getMapAccentColor.call(this) : '#222222';
       var pinMarkup = pin.replace('%ACCENT_COLOR%', accentColor);
       markers.forEach(function (markerString) {
         var marker = JSON.parse(markerString);
@@ -4100,10 +4100,14 @@ function (_Component) {
           var mapStyles = google_map_styles.find(function (style) {
             return style.slug === newStyleSlug;
           }).styles;
+
+          var newStyles = _this2.compileStyles(mapStyles);
+
+          var newPinColor = newStyleSlug === 'customized' ? getMapAccentColor.call(_this2) : '#222222';
           setAttributes({
             styleSlug: newStyleSlug,
-            styleData: JSON.stringify(_this2.compileStyles(mapStyles)),
-            pinColor: newStyleSlug === 'customized' ? getMapAccentColor.call(_this2) : '#222222'
+            styleData: newStyles,
+            pinColor: newPinColor
           });
         }
       })), Object(react["createElement"])(inspector_controls_ToggleControl, {

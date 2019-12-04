@@ -55,7 +55,7 @@ class Map extends Component {
 		const { attributes } = this.props;
 		const { markers, styleSlug } = attributes;
 
-		const accentColor = styleSlug === 'theme' ? getMapAccentColor.call( this ) : '#222222';
+		const accentColor = styleSlug === 'customized' ? getMapAccentColor.call( this ) : '#222222';
 		const pinMarkup = pin.replace( '%ACCENT_COLOR%', accentColor );
 
 		markers.forEach( markerString => {

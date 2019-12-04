@@ -306,8 +306,11 @@ function novablocks_get_google_map_attributes() {
 				'default' => true,
 			),
 			'styleData' => array(
-				'type' => 'string',
-				'default' => '[]',
+				'type' => 'array',
+				'default' => array(),
+				'items' => array(
+					'type' => 'object'
+				),
 			),
 			'styleSlug' => array(
 				'type' => 'string',
