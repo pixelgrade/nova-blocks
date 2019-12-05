@@ -29,6 +29,8 @@ export const parallaxInit = function( BLOCK_NAME ) {
 		const $blocks = $( `.${BLOCK_NAME}` );
 		const $targets = $blocks.filter( '.has-parallax' );
 
+		console.log( isSafari );
+
 		$targets.find( `.${BLOCK_NAME}__parallax` ).rellax( {
 			container: `.${BLOCK_NAME}__mask`,
 			absolute: isSafari,

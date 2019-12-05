@@ -417,6 +417,28 @@ function novablocks_add_hero_settings( $settings ) {
 						'y' => 0.5
 					),
 				),
+				'initialFocalPoint'       => array(
+					'type'    => 'object',
+					'default' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+				),
+				'initialBackgroundScale'  => array(
+					'type'    => 'number',
+					'default' => 1
+				),
+				'finalFocalPoint'         => array(
+					'type'    => 'object',
+					'default' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+				),
+				'finalBackgroundScale'    => array(
+					'type'    => 'number',
+					'default' => 1
+				),
 				'scrollIndicatorBlock'    => array(
 					'type'    => 'boolean',
 					'default' => false
@@ -447,6 +469,10 @@ function novablocks_add_hero_settings( $settings ) {
 
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
+			'enableFocusPointsTransitions' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
 			'applyMinimumHeight' => array(
 				'type'    => 'string',
 				'source'  => 'meta',

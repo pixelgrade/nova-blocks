@@ -51,7 +51,8 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		);
 		$media = wp_parse_args( $media, $media_args );
 
-		$heroStyle = 'color: ' . $attributes['contentColor'];
+		$heroStyle = 'color: ' . $attributes['contentColor'] . '; ';
+
 		$contentStyle = '';
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
@@ -64,7 +65,14 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 			if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
 				$minHeight = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
-				$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
+				$minHeight = floatval( $minHeight );
+
+				if ( $attributes['enableFocusPointsTransitions'] ) {
+					$heroStyle .= 'min-height: calc(' . 2 * $minHeight . '* var(--novablocks-1vh, 1vh)); ';
+					$heroStyle .= 'align-items: flex-start; ';
+				}
+
+				$foregroundStyle .= 'min-height: calc(' . $minHeight . '* var(--novablocks-1vh, 1vh)); ';
 			}
 
 			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
@@ -94,7 +102,22 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$id = 'id="' . $attributes['anchor'] . '"';
 		} ?>
 
-		<div <?php echo $id; ?> class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $heroStyle ); ?>">
+		<div <?php
+
+			echo $id;
+			echo "data-focal-point='" . json_encode( $attributes['focalPoint'] ) . "' ";
+			echo 'data-initial-background-scale="' . $attributes['initialBackgroundScale'] . '"';
+
+			if ( $attributes['enableFocusPointsTransitions'] ) {
+				echo 'data-enable-focus-points-transitions="true" ';
+				echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
+				echo 'data-final-background-scale="' . $attributes['finalBackgroundScale'] . '" ';
+			}
+
+			?>
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			style="<?php echo esc_attr( $heroStyle ); ?>"
+		>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 

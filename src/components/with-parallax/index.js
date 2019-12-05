@@ -107,9 +107,19 @@ const withParallax = function( WrappedComponent ) {
 				return;
 			}
 
+			const {
+				attributes
+			} = this.props;
+
+			const {
+				enableFocusPointsTransitions
+			} = attributes;
+
 			const containerBox = this.container.getBoundingClientRect();
 			const containerBoxTop = containerBox.y || containerBox.top;
-			const progress = ( this.state.windowHeight - containerBoxTop ) / ( this.state.windowHeight + this.container.offsetHeight );
+			const parallaxLength = enableFocusPointsTransitions ? this.container.offsetHeight : this.state.windowHeight + this.container.offsetHeight;
+			const parallaxStart = enableFocusPointsTransitions ? ( 2 * this.state.windowHeight - containerBoxTop ) : ( this.state.windowHeight - containerBoxTop );
+			const progress = ( this.state.windowHeight - containerBoxTop ) / parallaxLength;
 			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );
 
 			this.setState( {
@@ -136,6 +146,11 @@ const withParallax = function( WrappedComponent ) {
 					enableParallax,
 					parallaxAmount,
 					parallaxCustomAmount,
+					enableFocusPointsTransitions,
+					initialBackgroundScale,
+					finalBackgroundScale,
+					focalPoint,
+					finalFocalPoint,
 				},
 			} = this.props;
 
@@ -150,18 +165,48 @@ const withParallax = function( WrappedComponent ) {
 				dimensions,
 				windowHeight,
 				progress,
+				scrollTop,
 			} = this.state;
 
 			const newHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
 			const scale = newHeight / dimensions.height;
 			const offsetY = dimensions.height * ( 1 - scale ) / 2;
 			const move = ( windowHeight + dimensions.height ) * ( progress - 0.5 ) * actualParallaxAmount;
+			const transformY = ! enableFocusPointsTransitions ? ( move + offsetY ) + 'px' : '0';
 
-			return {
-				height: newHeight,
+			const parallaxLength = enableFocusPointsTransitions ? this.container.offsetHeight : this.state.windowHeight + this.container.offsetHeight;
+			const newTop = enableFocusPointsTransitions ? parallaxLength * progress - windowHeight : 0;
+
+			const newStyles = {
+				height: Math.min( newHeight, windowHeight ),
+				minHeight: 0,
 				transition: 'none',
-				transform: 'translate(0,' + ( move + offsetY ) + 'px)',
+				top: newTop,
+				transform: 'translate(0,' + transformY + ')',
 			};
+
+			let newFocalPoint = {};
+
+			if ( focalPoint ) {
+				newFocalPoint = focalPoint;
+
+				if ( enableFocusPointsTransitions && finalFocalPoint ) {
+					newFocalPoint = {
+						x: parseFloat( focalPoint.x ) + ( parseFloat( finalFocalPoint.x ) - parseFloat( focalPoint.x ) ) * progress,
+						y: parseFloat( focalPoint.y ) + ( parseFloat( finalFocalPoint.y ) - parseFloat( focalPoint.y ) ) * progress,
+					}
+				}
+
+				newStyles.objectPosition = newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%';
+				newStyles.transformOrigin = newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%';
+			}
+
+			if ( enableFocusPointsTransitions && initialBackgroundScale && finalBackgroundScale ) {
+				const newScale = initialBackgroundScale + ( finalBackgroundScale - initialBackgroundScale ) * progress;
+				newStyles.transform = newStyles.transform + ` scale(${newScale})`;
+			}
+
+			return newStyles;
 		}
 
 		render() {

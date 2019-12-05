@@ -37,6 +37,8 @@ const HeroPreview = function( props ) {
 		// colors
 		contentColor,
 		overlayFilterStyle,
+
+		enableFocusPointsTransitions,
 	} = attributes;
 
 	const classes = [
@@ -73,11 +75,20 @@ const HeroPreview = function( props ) {
 
 	if ( !! applyMinimumHeightBlock ) {
 		styles.hero.minHeight = computedMinHeight + 'vh';
+
+		if ( !! enableFocusPointsTransitions ) {
+			styles.hero.alignItems = 'flex-start';
+			styles.hero.minHeight = computedMinHeight * 2 + 'vh';
+		}
 	}
 
 	if ( contentPadding === 'custom' ) {
 		styles.foreground.paddingTop = `${ contentPaddingCustom }%`;
 		styles.foreground.paddingBottom = `${ contentPaddingCustom }%`;
+	}
+
+	if ( !! enableFocusPointsTransitions ) {
+		styles.foreground.minHeight = computedMinHeight + 'vh';
 	}
 
 	if ( contentWidth === 'custom' ) {

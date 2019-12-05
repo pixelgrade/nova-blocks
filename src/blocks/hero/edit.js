@@ -8,6 +8,7 @@ import {
 	LayoutPanel,
 	ScrollIndicatorPanel,
 	PositionIndicatorsPanel,
+	AdvancedScrollAnimationControls,
 } from '../../components';
 
 import withSettings from '../../components/with-settings';
@@ -148,19 +149,7 @@ class HeroEdit extends Component {
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<InspectorControls>
-					{ parallaxFocalPointImage && <PanelBody
-						title={ __( 'Focal Point', '__plugin_txtd' ) }
-						initialOpen={ true }>
-						<FocalPointPicker
-							url={ parallaxFocalPointImage.url }
-							dimensions={ {
-								width: parallaxFocalPointImage.width,
-								height: parallaxFocalPointImage.height,
-							} }
-							value={ focalPoint }
-							onChange={ focalPoint => setAttributes( { focalPoint } ) }
-						/>
-					</PanelBody> }
+					<AdvancedScrollAnimationControls { ...this.props } />
 					<LayoutPanel { ...this.props } />
 					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } updateAttributes={ updateAttributes } /> }
 					{ ! usePostMetaAttributes && <BlockHeightControls { ...this.props } /> }

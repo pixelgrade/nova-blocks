@@ -4,6 +4,7 @@
 export { default as LayoutPanel } from './layout-panel';
 export { default as ParallaxPanel } from './parallax-panel';
 export { default as PositionIndicatorsPanel } from './position-indicators-panel';
+export { default as AdvancedScrollAnimationControls } from './advanced-scroll-animation-controls';
 
 export {
 	GalleryPreview,
