@@ -168,21 +168,22 @@ const withParallax = function( WrappedComponent ) {
 				scrollTop,
 			} = this.state;
 
-			const newHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
+			const oldNewHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
+			const newNewHeight = Math.min( dimensions.height, windowHeight );
+			const newHeight = enableFocusPointsTransitions ? newNewHeight : oldNewHeight;
+
 			const scale = newHeight / dimensions.height;
 			const offsetY = dimensions.height * ( 1 - scale ) / 2;
-			const move = ( windowHeight + dimensions.height ) * ( progress - 0.5 ) * actualParallaxAmount;
-			const transformY = ! enableFocusPointsTransitions ? ( move + offsetY ) + 'px' : '0';
 
-			const parallaxLength = enableFocusPointsTransitions ? this.container.offsetHeight : this.state.windowHeight + this.container.offsetHeight;
-			const newTop = enableFocusPointsTransitions ? parallaxLength * progress - windowHeight : 0;
+			const oldMove = ( windowHeight + newHeight ) * ( progress - 0.5 ) * actualParallaxAmount + offsetY;
+			const newMove = dimensions.height * progress - windowHeight;
+			const move = enableFocusPointsTransitions ? newMove : oldMove;
 
 			const newStyles = {
 				height: Math.min( newHeight, windowHeight ),
-				minHeight: 0,
+				minHeight: enableFocusPointsTransitions ? 0 : '',
 				transition: 'none',
-				top: newTop,
-				transform: 'translate(0,' + transformY + ')',
+				transform: 'translate(0,' + move + 'px)',
 			};
 
 			let newFocalPoint = {};
