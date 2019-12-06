@@ -31,7 +31,9 @@ class AdvancedScrollAnimationControls extends Component {
 			initialBackgroundScale,
 			finalFocalPoint,
 			finalBackgroundScale,
-			enableFocusPointsTransitions
+			enableFocusPointsTransitions,
+			followThroughStart,
+			followThroughEnd,
 		} = attributes;
 
 		const parallaxFocalPointImage = media ? media.sizes.full : false;
@@ -46,6 +48,16 @@ class AdvancedScrollAnimationControls extends Component {
 				{
 					parallaxFocalPointImage &&
 					<Fragment>
+						<ToggleControl
+							label={ __( 'Follow through start', '__plugin_txtd' ) }
+							checked={ followThroughStart }
+							onChange={ () => setAttributes( { followThroughStart: ! followThroughStart } ) }
+						/>
+						<ToggleControl
+							label={ __( 'Follow through end', '__plugin_txtd' ) }
+							checked={ followThroughEnd }
+							onChange={ () => setAttributes( { followThroughEnd: ! followThroughEnd } ) }
+						/>
 						<FocalPointPicker
 							url={ parallaxFocalPointImage.url }
 							dimensions={ {

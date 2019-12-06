@@ -107,30 +107,22 @@ const withParallax = function( WrappedComponent ) {
 				return;
 			}
 
-			const {
-				attributes
-			} = this.props;
-
-			const {
-				enableFocusPointsTransitions
-			} = attributes;
-
 			const containerBox = this.container.getBoundingClientRect();
-			const containerBoxTop = containerBox.y || containerBox.top;
-			const parallaxLength = enableFocusPointsTransitions ? this.container.offsetHeight : this.state.windowHeight + this.container.offsetHeight;
-			const parallaxStart = enableFocusPointsTransitions ? ( 2 * this.state.windowHeight - containerBoxTop ) : ( this.state.windowHeight - containerBoxTop );
-			const progress = ( this.state.windowHeight - containerBoxTop ) / parallaxLength;
-			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );
+			const containerWidth = this.container.offsetWidth;
+			const containerHeight = this.container.offsetHeight;
+			const scrollTop = this.scrollContainer.scrollTop;
 
 			this.setState( {
 				windowWidth: window.innerWidth,
 				windowHeight: window.innerHeight,
-				scrollTop: this.scrollContainer.scrollTop,
-				progress: actualProgress,
+				scrollTop,
 				dimensions: {
-					width: this.container.offsetWidth,
-					height: this.container.offsetHeight,
-					top: containerBoxTop,
+					width: containerWidth,
+					height: containerHeight,
+					top: containerBox.top,
+					left: containerBox.left,
+					bottom: containerBox.top + containerHeight,
+					right: containerBox.left + containerWidth,
 				},
 			} );
 		}
@@ -146,11 +138,14 @@ const withParallax = function( WrappedComponent ) {
 					enableParallax,
 					parallaxAmount,
 					parallaxCustomAmount,
-					enableFocusPointsTransitions,
 					initialBackgroundScale,
 					finalBackgroundScale,
 					focalPoint,
 					finalFocalPoint,
+
+					enableFocusPointsTransitions,
+					followThroughStart,
+					followThroughEnd,
 				},
 			} = this.props;
 
@@ -158,15 +153,30 @@ const withParallax = function( WrappedComponent ) {
 				return {};
 			}
 
-			let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parseInt( parallaxAmount, 10 );
-			actualParallaxAmount = Math.max( Math.min( 1, actualParallaxAmount / 100 ), 0 );
-
 			const {
 				dimensions,
 				windowHeight,
-				progress,
 				scrollTop,
 			} = this.state;
+
+			let newParallaxLength = dimensions.height - windowHeight;
+			let newParallaxStart = -1 * dimensions.top;
+
+			if ( followThroughStart ) {
+				newParallaxStart += windowHeight;
+				newParallaxLength += windowHeight;
+			}
+
+			if ( followThroughEnd ) {
+				newParallaxLength += windowHeight;
+			}
+
+			const parallaxLength = enableFocusPointsTransitions ? newParallaxLength : windowHeight + dimensions.height;
+			const parallaxStart = enableFocusPointsTransitions ? newParallaxStart : ( windowHeight - dimensions.top );
+			const progress = Math.max( Math.min( parallaxStart / parallaxLength, 1 ), 0 );
+
+			let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parseInt( parallaxAmount, 10 );
+			actualParallaxAmount = Math.max( Math.min( 1, actualParallaxAmount / 100 ), 0 );
 
 			const oldNewHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
 			const newNewHeight = Math.min( dimensions.height, windowHeight );
@@ -176,7 +186,7 @@ const withParallax = function( WrappedComponent ) {
 			const offsetY = dimensions.height * ( 1 - scale ) / 2;
 
 			const oldMove = ( windowHeight + newHeight ) * ( progress - 0.5 ) * actualParallaxAmount + offsetY;
-			const newMove = dimensions.height * progress - windowHeight;
+			const newMove = followThroughStart ? parallaxLength * progress - windowHeight : parallaxLength * progress;
 			const move = enableFocusPointsTransitions ? newMove : oldMove;
 
 			const newStyles = {
@@ -184,6 +194,10 @@ const withParallax = function( WrappedComponent ) {
 				minHeight: enableFocusPointsTransitions ? 0 : '',
 				transition: 'none',
 				transform: 'translate(0,' + move + 'px)',
+				'--progress': progress,
+				'--parallaxStart': parallaxStart,
+				'--parallaxLength': parallaxLength,
+				'--scrollTop': scrollTop,
 			};
 
 			let newFocalPoint = {};

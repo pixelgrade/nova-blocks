@@ -473,6 +473,14 @@ function novablocks_add_hero_settings( $settings ) {
 				'type'    => 'boolean',
 				'default' => false,
 			),
+			'followThroughStart' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'followThroughEnd' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
 			'applyMinimumHeight' => array(
 				'type'    => 'string',
 				'source'  => 'meta',

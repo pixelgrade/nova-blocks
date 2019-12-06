@@ -96,11 +96,16 @@
 
 		var amount = this.$el.data('rellax-amount'),
 			bleed = this.$el.data('rellax-bleed'),
-			scale = this.$el.data('rellax-scale');
+			scale = this.$el.data('rellax-scale'),
+			from = this.$el.data('rellax-from'),
+			to = this.$el.data('rellax-to');
 
 		this.options.amount = amount !== undefined ? parseFloat(amount) : this.options.amount;
 		this.options.bleed = bleed !== undefined ? parseFloat(bleed) : this.options.bleed;
 		this.options.scale = scale !== undefined ? parseFloat(scale) : this.options.scale;
+		this.options.from = from !== undefined ? from : {};
+		this.options.to = to !== undefined ? to : {};
+
 
 		if (this.options.amount == 0) {
 			return;
@@ -128,7 +133,7 @@
 
 		_cachePosition: function _cachePosition() {
 			this.width = this.$el.outerWidth();
-			this.height = this.$el.outerHeight();
+			this.height = windowHeight;
 			this.offset = this.$el.offset();
 
 			this.parent.width = this.parent.$el.outerWidth();
@@ -199,7 +204,7 @@
 			if (this.ready !== true) return;
 
 			var progress = this._getProgress(),
-				move = (windowHeight + this.parent.height) * (progress - 0.5) * this.options.amount,
+				move = (windowHeight + this.parent.height) * progress * this.options.amount,
 				moveChildren = -1 * move,
 				scale = 1 + (this.options.scale - 1) * progress,
 				scaleTransform = scale >= 1 ? 'scale(' + scale + ')' : '',
