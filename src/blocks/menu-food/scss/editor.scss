@@ -12,9 +12,8 @@
 	padding-left: 1em;
 }
 
-.nova-food-menu--layout
-	> .block-editor-inner-blocks
-	> .block-editor-block-list__layout {
+.nova-food-menu--layout > .block-editor-inner-blocks > .block-editor-block-list__layout {
+
 	@include above(tablet) {
 		column-count: 2;
 		column-gap: 4em;
@@ -32,6 +31,7 @@
 [data-type*='menu-food-section']:not(:first-child) .nova-food-menu__section {
 	margin-top: 1.5em;
 }
+
 .editor-styles-wrapper .nova-food-menu-item--highlight[class][class] {
 	margin: 0 -1em 1em;
 	width: calc(100% + 2em);

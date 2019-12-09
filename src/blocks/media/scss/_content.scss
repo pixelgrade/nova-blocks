@@ -7,18 +7,6 @@
 	margin-bottom: auto;
 	z-index: 2;
 
-	h1,
-	h2,
-	h3 {
-		color: var(--novablocks-media-titles-color);
-	}
-
-	h4,
-	h5,
-	h6 {
-		color: var(--novablocks-media-subtitles-color);
-	}
-
 	@include below(desktop) {
 		grid-column: span 2;
 	}

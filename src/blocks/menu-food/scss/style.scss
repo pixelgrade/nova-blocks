@@ -1,12 +1,19 @@
+@at-root {
+
+	:root {
+		--nova-food-menu-item-highlight-color: var(--novablocks-color-1);
+	}
+}
+
 .nova-food-menu-item {
 	display: grid;
+	align-items: baseline;
 	grid-template-columns: 1fr auto;
 	grid-template-areas:
 		'title prices'
 		'description description';
 
 	margin-bottom: 1em;
-
 	break-inside: avoid;
 }
 
@@ -46,23 +53,61 @@
 }
 
 .nova-food-menu-item--highlighted {
+	--item-border-width: 2px;
+	--item-padding: 1.25em;
+	--item-overflow: calc( var(--item-padding) + var(--item-border-width) );
+	--item-border-radius: 0;
+
 	grid-template-areas:
 		'label label'
 		'title prices'
 		'description description';
 
-	margin-left: -1em;
-	margin-right: -1em;
-	padding: 0 1.25em 0.75em;
-	border: 2px solid $nova-blue;
+	margin-left: calc( -1 * var(--item-overflow) );
+	margin-right: calc( -1 * var(--item-overflow) );
+	padding: 0 var(--item-padding) 0.75em;
+	border: var(--item-border-width) solid var(--nova-food-menu-item-highlight-color);
+	border-top-width: 0;
+	border-radius: var(--item-border-radius);
+	overflow: hidden;
+}
+
+.nova-food-menu-item__highlight-label {
+	grid-area: label;
+
+	display: block;
+	margin-left: calc( -1 * var(--item-overflow) );
+	margin-right: calc( -1 * var(--item-overflow) );
+	padding: 0.25em var(--item-overflow) 1em;
+
+	position: relative;
+
+	background-color: var(--nova-food-menu-item-highlight-color);
+
+	&:after {
+		content: "";
+		position: absolute;
+		left: var(--item-border-width);
+		right: var(--item-border-width);
+		bottom: 0;
+
+		display: block;
+		height: 0.75em;
+
+		background-color: var(--theme-light-primary);
+		border-top-left-radius: var(--item-border-radius);
+		border-top-right-radius: var(--item-border-radius);
+	}
 }
 
 .entry-content .nova-food-menu--layout {
+
 	@include above(tablet) {
 		column-count: 2;
 		column-gap: 4em;
 	}
 }
+
 .nova-blocks-appender {
 	flex-direction: row;
 }
@@ -83,7 +128,7 @@
 
 	margin-bottom: 0 !important;
 
-	background-color: $nova-white;
+	background-color: var(--novablocks-light-1);
 }
 
 .item-description {
@@ -104,19 +149,8 @@
 	}
 }
 
-.nova-food-menu-item__highlight-label {
-	grid-area: label;
-	display: block;
-	margin-left: -1.25em;
-	margin-right: -1.25em;
-	margin-bottom: 0.75em;
-	width: calc(100% + 2.5em);
-	padding: 0.5em 1.25em;
-	background-color: $nova-blue;
-}
-
 .nova-food-menu-item__label {
-	color: white;
+	color: var(--novablocks-light-1);
 
 	margin: 0;
 }

@@ -55,8 +55,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		);
 		$media = wp_parse_args( $media, $media_args );
 
-		$heroStyle = 'color: ' . $attributes['contentColor'] . '; ';
-
+		$heroStyle = '--novablocks-hero-text-color: ' . $attributes['contentColor'];
 		$contentStyle = '';
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
