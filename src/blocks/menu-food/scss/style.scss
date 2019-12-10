@@ -54,8 +54,8 @@
 
 .nova-food-menu-item--highlighted {
 	--item-border-width: 2px;
-	--item-padding: 1.25em;
-	--item-overflow: calc( var(--item-padding) + var(--item-border-width) );
+	--item-padding: 1em;
+	--item-overflow: calc( 1.25 * var( --item-padding ) + var( --item-border-width ) );
 	--item-border-radius: 0;
 
 	grid-template-areas:
@@ -63,9 +63,9 @@
 		'title prices'
 		'description description';
 
-	margin-left: calc( -1 * var(--item-overflow) );
-	margin-right: calc( -1 * var(--item-overflow) );
-	padding: 0 var(--item-padding) 0.75em;
+	margin-left: calc( -1 * var( --item-overflow ) );
+	margin-right: calc( -1 * var( --item-overflow ) );
+	padding: 0 calc( 1.25 * var( --item-padding ) ) calc( 0.75 * var( --item-padding ) );
 	border: var(--item-border-width) solid var(--nova-food-menu-item-highlight-color);
 	border-top-width: 0;
 	border-radius: var(--item-border-radius);
@@ -78,7 +78,7 @@
 	display: block;
 	margin-left: calc( -1 * var(--item-overflow) );
 	margin-right: calc( -1 * var(--item-overflow) );
-	padding: 0.25em var(--item-overflow) 1em;
+	padding: calc( 0.25 * var( --item-overflow ) ) var( --item-overflow ) var( --item-padding );
 
 	position: relative;
 
@@ -92,7 +92,7 @@
 		bottom: 0;
 
 		display: block;
-		height: 0.75em;
+		height: calc( 0.75 * var( --item-padding ) );
 
 		background-color: var(--theme-light-primary);
 		border-top-left-radius: var(--item-border-radius);
