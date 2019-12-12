@@ -128,7 +128,10 @@ const StartFramePanel = ( props ) => {
 
 	const parallaxFocalPointImage = media ? media.sizes.full : false;
 
-	if ( ! parallaxFocalPointImage || scrollingEffect === 'static' ) {
+	if ( ! parallaxFocalPointImage ||
+	     scrollingEffect === 'static' ||
+	     ( scrollingEffect === 'doppler' && motionPreset !== 'custom' )
+	) {
 		return false;
 	}
 

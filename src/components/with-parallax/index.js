@@ -277,7 +277,7 @@ const withParallax = function( WrappedComponent ) {
 
 			let maxScale = Math.max( initialScale, finalScale );
 			initialScale = initialScale / maxScale;
-			initialScale = finalScale / maxScale;
+			finalScale = finalScale / maxScale;
 
 			if ( scrollingEffect === 'doppler' ) {
 				newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, outsideProgress );
