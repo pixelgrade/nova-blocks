@@ -118,7 +118,7 @@ const withParallax = function( WrappedComponent ) {
 			} = this.props;
 
 			const smoothStart = followThroughStart || scrollingEffect === 'parallax';
-			const smoothEnd = followThroughStart || scrollingEffect === 'parallax';
+			const smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
 
 			const containerWidth = this.container.offsetWidth;
 			const containerHeight = this.container.offsetHeight;

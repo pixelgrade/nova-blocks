@@ -44,21 +44,29 @@ const ScrollingEffectPanel = ( props ) => {
 		previewScrolling,
 		isScrolling,
 		isBusy,
+		attributes: {
+			scrollingEffect,
+			motionPreset,
+		},
 		settings: {
-			scrollingEffectOptions
+			scrollingEffectOptions,
+			motionPresetOptions,
 		}
 	} = props;
-
-	const {
-		scrollingEffect
-	} = attributes;
 
 	return (
 		<PanelBody title={ `Scrolling Effect:` }>
 			<RadioControl
 				selected={ scrollingEffect }
 				onChange={ ( scrollingEffect ) => {
-					setAttributes( { scrollingEffect } );
+					let newAttributes = { scrollingEffect };
+
+					if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
+						let newOption = motionPresetOptions.find( option => motionPreset === option.value );
+						newAttributes = Object.assign( newOption.preset, newAttributes );
+					}
+
+					setAttributes( newAttributes );
 				} }
 				options={ scrollingEffectOptions }
 			/>
@@ -69,6 +77,27 @@ const ScrollingEffectPanel = ( props ) => {
 				onClick={ previewScrolling }>Preview Scrolling</Button>
 		</PanelBody>
 	)
+}
+
+function maybeSnapFocalPoint( focalPoint ) {
+	let x = focalPoint.x;
+	let y = focalPoint.y;
+
+	if ( 0.4 < x && x < 0.6 ) {
+		x = 0.5;
+	}
+
+	if ( 0.9 < x ) { x = 1 }
+	if ( 0.1 > x ) { x = 0 }
+
+//	if ( 0.4 < y && y < 0.6 ) {
+//		y = 0.5;
+//	}
+
+	if ( 0.9 < y ) { y = 1 }
+	if ( 0.1 > y ) { y = 0 }
+
+	return { x, y }
 }
 
 const DopplerPresetsPanel = ( props ) => {
@@ -94,8 +123,8 @@ const DopplerPresetsPanel = ( props ) => {
 				label={ 'Motion Presets' }
 				selected={ motionPreset }
 				onChange={ ( motionPreset ) => {
-					let newOption = motionPresetOptions.find( option => motionPreset === option.value );
 					let newAttributes = { motionPreset };
+					let newOption = motionPresetOptions.find( option => motionPreset === option.value );
 
 					if ( newOption && newOption.preset ) {
 						newAttributes = Object.assign( newOption.preset, newAttributes );
@@ -128,10 +157,7 @@ const StartFramePanel = ( props ) => {
 
 	const parallaxFocalPointImage = media ? media.sizes.full : false;
 
-	if ( ! parallaxFocalPointImage ||
-	     scrollingEffect === 'static' ||
-	     ( scrollingEffect === 'doppler' && motionPreset !== 'custom' )
-	) {
+	if ( ! parallaxFocalPointImage || scrollingEffect === 'static' ) {
 		return false;
 	}
 
@@ -150,28 +176,36 @@ const StartFramePanel = ( props ) => {
 				value={ focalPoint }
 				onChange={ focalPoint => {
 					setAttributes( {
-						focalPoint,
-						finalFocalPoint: {
+						motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
+						focalPoint: maybeSnapFocalPoint( focalPoint ),
+						finalFocalPoint: maybeSnapFocalPoint( {
 							x: focalPoint.x,
 							y: finalFocalPoint.y,
-						},
+						} ),
 					} );
 				} }
 			/>
 			<RangeControl
 				label={ 'Zoom' }
 				value={ initialBackgroundScale }
-				onChange={ ( initialBackgroundScale ) => setAttributes( { initialBackgroundScale } ) }
+				onChange={ ( initialBackgroundScale ) => {
+					setAttributes( {
+						motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
+						initialBackgroundScale,
+					} );
+				} }
 				min={ 1 }
 				max={ 2 }
 				step={ 0.01 }
 			/>
 			{
-				scrollingEffect === 'doppler' && motionPreset === 'custom' &&
+				scrollingEffect === 'doppler' &&
 				<ToggleControl
 					label={ __( 'Smooth start transition', '__plugin_txtd' ) }
 					checked={ followThroughStart }
-					onChange={ () => setAttributes( { followThroughStart: ! followThroughStart } ) }
+					onChange={ () => setAttributes( {
+						followThroughStart: ! followThroughStart
+					} ) }
 				/>
 			}
 		</PanelBody>
@@ -197,7 +231,7 @@ const EndFramePanel = ( props ) => {
 
 	const parallaxFocalPointImage = media ? media.sizes.full : false;
 
-	if ( ! parallaxFocalPointImage || motionPreset !== 'custom' || scrollingEffect !== 'doppler' ) {
+	if ( ! parallaxFocalPointImage || scrollingEffect !== 'doppler' ) {
 		return false;
 	}
 
@@ -216,11 +250,12 @@ const EndFramePanel = ( props ) => {
 				value={ finalFocalPoint }
 				onChange={ finalFocalPoint => {
 					setAttributes( {
-						focalPoint: {
+						motionPreset: 'custom',
+						focalPoint: maybeSnapFocalPoint( {
 							x: finalFocalPoint.x,
 							y: focalPoint.y,
-						},
-						finalFocalPoint,
+						} ),
+						finalFocalPoint: maybeSnapFocalPoint( finalFocalPoint ),
 					} );
 				} }
 				disabled
@@ -228,7 +263,12 @@ const EndFramePanel = ( props ) => {
 			<RangeControl
 				label={ 'Zoom' }
 				value={ finalBackgroundScale }
-				onChange={ ( finalBackgroundScale ) => setAttributes( { finalBackgroundScale } ) }
+				onChange={ ( finalBackgroundScale ) => {
+					setAttributes( {
+						motionPreset: 'custom',
+						finalBackgroundScale,
+					} );
+				} }
 				min={ 1 }
 				max={ 2 }
 				step={ 0.01 }
@@ -236,7 +276,10 @@ const EndFramePanel = ( props ) => {
 			<ToggleControl
 				label={ __( 'Smooth end transition', '__plugin_txtd' ) }
 				checked={ followThroughEnd }
-				onChange={ () => setAttributes( { followThroughEnd: ! followThroughEnd } ) }
+				onChange={ () => setAttributes( {
+					motionPreset: 'custom',
+					followThroughEnd: ! followThroughEnd
+				} ) }
 			/>
 		</PanelBody>
 	)

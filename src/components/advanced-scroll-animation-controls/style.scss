@@ -15,15 +15,9 @@
 		content: "";
 		position: absolute;
 		left: -1px;
-		height: 200px;
+		height: 400px;
+		top: -200px;
 		border-left: 2px dashed #0085ba;
 	}
 
-	.doppler-focal-point-picker--start &:before {
-		top: 0;
-	}
-
-	.doppler-focal-point-picker--end &:before {
-		bottom: 100%;
-	}
 }
