@@ -417,13 +417,6 @@ function novablocks_add_hero_settings( $settings ) {
 						'y' => 0.5
 					),
 				),
-				'initialFocalPoint'       => array(
-					'type'    => 'object',
-					'default' => array(
-						'x' => 0.5,
-						'y' => 0.5
-					),
-				),
 				'initialBackgroundScale'  => array(
 					'type'    => 'number',
 					'default' => 1
@@ -457,6 +450,14 @@ function novablocks_add_hero_settings( $settings ) {
 							),
 						),
 					),
+				),
+				'scrollingEffect' => array(
+					'type' => 'string',
+					'default' => 'static',
+				),
+				'motionPreset' => array(
+					'type' => 'string',
+					'default' => 'standard-dynamic',
 				),
 			),
 			novablocks_get_alignment_attributes(),
@@ -793,6 +794,98 @@ function novablocks_get_block_editor_settings() {
 			array(
 				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
 				'value' => 'custom'
+			),
+		),
+		'parallaxOptions' => array(
+			array(
+				'label' => esc_html__( 'Fast as Mercure', '__plugin_txtd' ),
+				'value' => '20'
+			),
+			array(
+				'label' => esc_html__( 'Natural as Earth', '__plugin_txtd' ),
+				'value' => '50'
+			),
+			array(
+				'label' => esc_html__( 'Slow as Neptune', '__plugin_txtd' ),
+				'value' => '70'
+			),
+			array(
+				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
+				'value' => 'custom'
+			),
+		),
+		'scrollingEffectOptions' => array(
+			array(
+				'label' => esc_html__( 'Static', '__plugin_txtd' ),
+				'value' => 'static'
+			),
+			array(
+				'label' => esc_html__( 'Parallax', '__plugin_txtd' ),
+				'value' => 'parallax'
+			),
+			array(
+				'label' => esc_html__( 'Doppler', '__plugin_txtd' ),
+				'value' => 'doppler'
+			),
+		),
+		'motionPresetOptions' => array(
+			array (
+				'label' => 'Standard Dynamic',
+				'value' => 'standard-dynamic',
+				'preset' => array(
+					'focalPoint' => array(
+						'x' => 0.5,
+						'y' => 0
+					),
+					'finalFocalPoint' => array(
+						'x' => 0.5,
+						'y' => 1
+					),
+					'initialBackgroundScale' => 1.75,
+					'finalBackgroundScale' => 1,
+					'followThroughStart' => true,
+					'followThroughEnd' => true,
+				),
+			),
+			array (
+				'label' => 'Pull Focus',
+				'value' => 'pull-focus',
+				'preset' => array(
+					'focalPoint' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+					'finalFocalPoint' => array(
+						'x' => 0.5,
+						'y' => 1
+					),
+					'initialBackgroundScale' => 1,
+					'finalBackgroundScale' => 1.75,
+					'followThroughStart' => true,
+					'followThroughEnd' => true,
+				),
+			),
+			array (
+				'label' => 'Static Reveal',
+				'value' => 'static-reveal',
+				'preset' => array(
+					'focalPoint' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+					'finalFocalPoint' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+					'initialBackgroundScale' => 1.75,
+					'finalBackgroundScale' => 1,
+					'followThroughStart' => true,
+					'followThroughEnd' => true,
+				),
+			),
+			array (
+				'label' => 'Custom',
+				'value' => 'custom',
 			),
 		),
 		'theme_support' => novablocks_get_theme_support(),

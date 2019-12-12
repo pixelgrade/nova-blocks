@@ -149,7 +149,6 @@ class HeroEdit extends Component {
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<InspectorControls>
-					<AdvancedScrollAnimationControls { ...this.props } />
 					<LayoutPanel { ...this.props } />
 					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } updateAttributes={ updateAttributes } /> }
 					{ ! usePostMetaAttributes && <BlockHeightControls { ...this.props } /> }

@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 
-import ParallaxPanel from "../../components/parallax-panel";
-
-import { findParents } from '../util';
+import { findParents } from '../../utils';
+import { easeInOutQuint } from '../../easing';
+import { AdvancedScrollAnimationControls } from "../index";
 
 /**
  * WordPress dependencies
@@ -31,13 +31,14 @@ const withParallax = function( WrappedComponent ) {
 				progress: 0.5,
 			};
 
-			this.updateHandler = this.updateDimensions.bind( this );
+			this.updateHandler = this.updateState.bind( this );
 			this.scrollContainer = this.getScrollContainer();
+			this.previewScrolling = this.previewScrolling.bind( this );
 		}
 
 		getScrollContainer() {
-			const oldScrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];;
-			const newScrollContainer = document.getElementsByClassName( 'edit-post-editor-regions__content' )[ 0 ];
+			const oldScrollContainer = document.querySelector( '.edit-post-layout__content' );
+			const newScrollContainer = document.querySelector( '.edit-post-editor-regions__content' );
 
 			return oldScrollContainer || newScrollContainer;
 		}
@@ -51,7 +52,7 @@ const withParallax = function( WrappedComponent ) {
 				this.scrollContainer.addEventListener( 'scroll', this.updateHandler );
 			}
 
-			this.updateDimensions();
+			this.updateState();
 		}
 
 		createBlockObservers() {
@@ -63,7 +64,7 @@ const withParallax = function( WrappedComponent ) {
 						movements.forEach( movement => {
 							if ( 'style' === movement.attributeName ) {
 								if ( movement.oldValue && movement.oldValue.includes( 'transform: translate3d' ) ) {
-									this.updateDimensions();
+									this.updateState();
 								}
 							}
 						} );
@@ -81,7 +82,7 @@ const withParallax = function( WrappedComponent ) {
 
 				if ( window.ResizeObserver ) {
 					const resizeObserver = new ResizeObserver( () => {
-						this.updateDimensions();
+						this.updateState();
 					} );
 
 					resizeObserver.observe( block );
@@ -101,37 +102,130 @@ const withParallax = function( WrappedComponent ) {
 			}
 		}
 
-		updateDimensions() {
+		updateState() {
 
 			if ( ! this.container || ! this.scrollContainer ) {
 				return;
 			}
 
-			const containerBox = this.container.getBoundingClientRect();
+			const {
+				attributes: {
+					followThroughStart,
+					followThroughEnd,
+				}
+			} = this.props;
+
 			const containerWidth = this.container.offsetWidth;
 			const containerHeight = this.container.offsetHeight;
-			const scrollTop = this.scrollContainer.scrollTop;
+			const containerBox = this.container.getBoundingClientRect();
+			const containerTop = containerBox.top;
+			const windowHeight = window.innerHeight;
+
+			const imageHeight = Math.min( containerHeight, windowHeight );
+
+			const distance = containerHeight - window.innerHeight;
+
+			let progressStart = containerTop * -1;
+			let progressLength = distance;
+
+			let progress = progressStart / progressLength;
+
+			if ( followThroughStart ) {
+				progressStart += windowHeight;
+				progressLength += windowHeight;
+			}
+
+			if ( followThroughEnd ) {
+				progressLength += windowHeight;
+			}
+
+			let outsideProgress = progressStart / progressLength;
+
+			if ( ! followThroughStart ) {
+				progress = Math.max( 0, progress );
+				outsideProgress = Math.max( 0, outsideProgress );
+			}
+
+			if ( ! followThroughEnd ) {
+				progress = Math.min( 1, progress );
+				outsideProgress = Math.min( 1, outsideProgress );
+			}
 
 			this.setState( {
-				windowWidth: window.innerWidth,
-				windowHeight: window.innerHeight,
-				scrollTop,
-				dimensions: {
-					width: containerWidth,
-					height: containerHeight,
-					top: containerBox.top,
-					left: containerBox.left,
-					bottom: containerBox.top + containerHeight,
-					right: containerBox.left + containerWidth,
-				},
+				imageHeight,
+				containerHeight,
+				containerWidth,
+				containerTop,
+				windowHeight,
+				distance,
+				progress,
+				outsideProgress,
+				progressStart,
+				progressLength,
 			} );
+
+		}
+
+		getIntermediateFocalPoint( focalPoint1, focalPoint2, progress ) {
+
+			if ( ! focalPoint1 && ! focalPoint2 ) {
+				return {
+					x: 0.5,
+					y: 0.5,
+				}
+			}
+
+			if ( ! focalPoint1 ) {
+				return focalPoint2;
+			}
+
+			if ( ! focalPoint2 ) {
+				return focalPoint1;
+			}
+
+			return {
+				x: parseFloat( focalPoint1.x ) + ( parseFloat( focalPoint2.x ) - parseFloat( focalPoint1.x ) ) * progress,
+				y: parseFloat( focalPoint1.y ) + ( parseFloat( focalPoint2.y ) - parseFloat( focalPoint1.y ) ) * progress,
+			}
+		}
+
+		previewScrolling() {
+
+			if ( ! this.scrollContainer || ! this.container ) {
+				return;
+			}
+
+			const {
+				containerTop,
+				containerHeight,
+				windowHeight
+			} = this.state;
+
+			const scrollContainer = this.scrollContainer;
+			const scrollTop = scrollContainer.scrollTop;
+			const start = scrollTop + containerTop - windowHeight;
+			const length = containerHeight + windowHeight;
+			const duration = 5000;
+			const startTime = Date.now();
+
+			function updateScrollTopLoop() {
+				const currentTime = Date.now();
+				const timePassed = currentTime - startTime;
+				const progress = timePassed / duration;
+				const newScrollTop = start + length * easeInOutQuint( progress );
+				scrollContainer.scrollTop = newScrollTop;
+			}
+
+			const interval = setInterval( updateScrollTopLoop, 0 );
+			this.isScrolling = true;
+
+			setTimeout(() => {
+				clearInterval( interval );
+				this.isScrolling = false;
+			}, duration );
 		}
 
 		getParallaxStyles() {
-
-			if ( ! this.state.dimensions ) {
-				return {};
-			}
 
 			const {
 				attributes: {
@@ -142,84 +236,61 @@ const withParallax = function( WrappedComponent ) {
 					finalBackgroundScale,
 					focalPoint,
 					finalFocalPoint,
-
+					scrollingEffect,
 					enableFocusPointsTransitions,
-					followThroughStart,
-					followThroughEnd,
 				},
 			} = this.props;
 
-			if ( ! enableParallax ) {
-				return {};
-			}
-
 			const {
-				dimensions,
+				containerWidth,
+				containerHeight,
 				windowHeight,
-				scrollTop,
+				distance,
+				progress,
+				outsideProgress,
+				imageHeight,
 			} = this.state;
 
-			let newParallaxLength = dimensions.height - windowHeight;
-			let newParallaxStart = -1 * dimensions.top;
+			let newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, outsideProgress );
 
-			if ( followThroughStart ) {
-				newParallaxStart += windowHeight;
-				newParallaxLength += windowHeight;
+			let initialScale = initialBackgroundScale;
+			let finalScale = finalBackgroundScale;
+
+			// keep in sync with scroll
+			let move = distance * progress;
+
+			if ( scrollingEffect === 'parallax' ) {
+				newFocalPoint = focalPoint;
+				finalScale = initialScale;
+				move = ( distance + windowHeight * 0.5 ) * ( outsideProgress - 0.5 );
 			}
 
-			if ( followThroughEnd ) {
-				newParallaxLength += windowHeight;
-			}
 
-			const parallaxLength = enableFocusPointsTransitions ? newParallaxLength : windowHeight + dimensions.height;
-			const parallaxStart = enableFocusPointsTransitions ? newParallaxStart : ( windowHeight - dimensions.top );
-			const progress = Math.max( Math.min( parallaxStart / parallaxLength, 1 ), 0 );
+			const maxScale = Math.max( initialScale, finalScale );
+			initialScale = initialScale / maxScale;
+			finalScale = finalScale / maxScale;
 
-			let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parseInt( parallaxAmount, 10 );
-			actualParallaxAmount = Math.max( Math.min( 1, actualParallaxAmount / 100 ), 0 );
+			// since maxScale is 1 when scrollingEffect is 'parallax' this has no effect
+			move -= ( maxScale - 1 ) * imageHeight / 2;
 
-			const oldNewHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
-			const newNewHeight = Math.min( dimensions.height, windowHeight );
-			const newHeight = enableFocusPointsTransitions ? newNewHeight : oldNewHeight;
+			const scale = initialScale + ( finalScale - initialScale ) * outsideProgress;
 
-			const scale = newHeight / dimensions.height;
-			const offsetY = dimensions.height * ( 1 - scale ) / 2;
-
-			const oldMove = ( windowHeight + newHeight ) * ( progress - 0.5 ) * actualParallaxAmount + offsetY;
-			const newMove = followThroughStart ? parallaxLength * progress - windowHeight : parallaxLength * progress;
-			const move = enableFocusPointsTransitions ? newMove : oldMove;
-
-			const newStyles = {
-				height: Math.min( newHeight, windowHeight ),
-				minHeight: enableFocusPointsTransitions ? 0 : '',
-				transition: 'none',
-				transform: 'translate(0,' + move + 'px)',
-				'--progress': progress,
-				'--parallaxStart': parallaxStart,
-				'--parallaxLength': parallaxLength,
-				'--scrollTop': scrollTop,
+			let newTransformOrigin = {
+				x: newFocalPoint.x,
+				y: 0.5,
 			};
 
-			let newFocalPoint = {};
+			let offsetX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
 
-			if ( focalPoint ) {
-				newFocalPoint = focalPoint;
-
-				if ( enableFocusPointsTransitions && finalFocalPoint ) {
-					newFocalPoint = {
-						x: parseFloat( focalPoint.x ) + ( parseFloat( finalFocalPoint.x ) - parseFloat( focalPoint.x ) ) * progress,
-						y: parseFloat( focalPoint.y ) + ( parseFloat( finalFocalPoint.y ) - parseFloat( focalPoint.y ) ) * progress,
-					}
-				}
-
-				newStyles.objectPosition = newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%';
-				newStyles.transformOrigin = newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%';
-			}
-
-			if ( enableFocusPointsTransitions && initialBackgroundScale && finalBackgroundScale ) {
-				const newScale = initialBackgroundScale + ( finalBackgroundScale - initialBackgroundScale ) * progress;
-				newStyles.transform = newStyles.transform + ` scale(${newScale})`;
-			}
+			const newStyles = {
+				width: containerWidth * maxScale,
+				height: imageHeight * maxScale,
+				minHeight: 0,
+				transition: 'none',
+				transform: `translate(${ offsetX },${ move }) scale(${ scale })`,
+				objectPosition: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
+				transformOrigin: newTransformOrigin.x * 100 + '% ' + newTransformOrigin.y * 100 + '%',
+			};
 
 			return newStyles;
 		}
@@ -233,7 +304,7 @@ const withParallax = function( WrappedComponent ) {
 						</ParallaxContext.Provider>
 					</div>
 					<InspectorControls>
-						<ParallaxPanel { ...this.props } />
+						<AdvancedScrollAnimationControls { ...this.props } isScrolling={ this.isScrolling } previewScrolling={ this.previewScrolling } />
 					</InspectorControls>
 				</Fragment>
 			);

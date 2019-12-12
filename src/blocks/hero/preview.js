@@ -38,7 +38,7 @@ const HeroPreview = function( props ) {
 		contentColor,
 		overlayFilterStyle,
 
-		enableFocusPointsTransitions,
+		scrollingEffect,
 	} = attributes;
 
 	const classes = [
@@ -76,7 +76,7 @@ const HeroPreview = function( props ) {
 	if ( !! applyMinimumHeightBlock ) {
 		styles.hero.minHeight = computedMinHeight + 'vh';
 
-		if ( !! enableFocusPointsTransitions ) {
+		if ( scrollingEffect === 'doppler' ) {
 			styles.hero.alignItems = 'flex-start';
 			styles.hero.minHeight = computedMinHeight * 2 + 'vh';
 		}
@@ -87,7 +87,7 @@ const HeroPreview = function( props ) {
 		styles.foreground.paddingBottom = `${ contentPaddingCustom }%`;
 	}
 
-	if ( !! enableFocusPointsTransitions ) {
+	if ( scrollingEffect === 'doppler' ) {
 		styles.foreground.minHeight = computedMinHeight + 'vh';
 	}
 

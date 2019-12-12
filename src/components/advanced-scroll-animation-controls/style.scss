@@ -1,0 +1,29 @@
+.doppler-focal-point-picker {
+
+	.components-focal-point-picker_position-display-container {
+		display: none;
+	}
+
+	.components-focal-point-picker-wrapper {
+		overflow: hidden;
+	}
+}
+
+.components-focal-point-picker__icon_container {
+
+	.doppler-focal-point-picker &:before {
+		content: "";
+		position: absolute;
+		left: -1px;
+		height: 200px;
+		border-left: 2px dashed #0085ba;
+	}
+
+	.doppler-focal-point-picker--start &:before {
+		top: 0;
+	}
+
+	.doppler-focal-point-picker--end &:before {
+		bottom: 100%;
+	}
+}
