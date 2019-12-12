@@ -29,6 +29,7 @@ const withParallax = function( WrappedComponent ) {
 				windowWidth: window.innerWidth,
 				windowHeight: window.innerHeight,
 				progress: 0.5,
+				isScrolling: false,
 			};
 
 			this.updateHandler = this.updateState.bind( this );
@@ -112,8 +113,12 @@ const withParallax = function( WrappedComponent ) {
 				attributes: {
 					followThroughStart,
 					followThroughEnd,
+					scrollingEffect,
 				}
 			} = this.props;
+
+			const smoothStart = followThroughStart || scrollingEffect === 'parallax';
+			const smoothEnd = followThroughStart || scrollingEffect === 'parallax';
 
 			const containerWidth = this.container.offsetWidth;
 			const containerHeight = this.container.offsetHeight;
@@ -130,23 +135,23 @@ const withParallax = function( WrappedComponent ) {
 
 			let progress = progressStart / progressLength;
 
-			if ( followThroughStart ) {
+			if ( smoothStart ) {
 				progressStart += windowHeight;
 				progressLength += windowHeight;
 			}
 
-			if ( followThroughEnd ) {
+			if ( smoothEnd ) {
 				progressLength += windowHeight;
 			}
 
 			let outsideProgress = progressStart / progressLength;
 
-			if ( ! followThroughStart ) {
+			if ( ! smoothStart ) {
 				progress = Math.max( 0, progress );
 				outsideProgress = Math.max( 0, outsideProgress );
 			}
 
-			if ( ! followThroughEnd ) {
+			if ( ! smoothEnd ) {
 				progress = Math.min( 1, progress );
 				outsideProgress = Math.min( 1, outsideProgress );
 			}
@@ -217,28 +222,30 @@ const withParallax = function( WrappedComponent ) {
 			}
 
 			const interval = setInterval( updateScrollTopLoop, 0 );
-			this.isScrolling = true;
+
+			this.setState({
+				isScrolling: true
+			});
 
 			setTimeout(() => {
 				clearInterval( interval );
-				this.isScrolling = false;
+				this.setState({
+					isScrolling: false
+				});
+				scrollContainer.scrollTop = start + length;
 			}, duration );
 		}
 
-		getParallaxStyles() {
+		getStyles() {
 
-			const {
+			let {
 				attributes: {
-					enableParallax,
-					parallaxAmount,
-					parallaxCustomAmount,
-					initialBackgroundScale,
-					finalBackgroundScale,
+					scrollingEffect,
 					focalPoint,
 					finalFocalPoint,
-					scrollingEffect,
-					enableFocusPointsTransitions,
-				},
+					initialBackgroundScale,
+					finalBackgroundScale,
+				}
 			} = this.props;
 
 			const {
@@ -251,60 +258,63 @@ const withParallax = function( WrappedComponent ) {
 				imageHeight,
 			} = this.state;
 
-			let newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, outsideProgress );
+			if ( scrollingEffect === 'static' ) {
+				return;
+			}
+
+			let newFocalPoint;
+			let newTranslateY;
 
 			let initialScale = initialBackgroundScale;
 			let finalScale = finalBackgroundScale;
-
-			// keep in sync with scroll
-			let move = distance * progress;
+			let newScale;
 
 			if ( scrollingEffect === 'parallax' ) {
 				newFocalPoint = focalPoint;
-				finalScale = initialScale;
-				move = ( distance + windowHeight * 0.5 ) * ( outsideProgress - 0.5 );
+				newTranslateY = ( distance + windowHeight * 0.5 ) * ( outsideProgress - 0.5 );
+				initialScale = finalScale = initialBackgroundScale;
 			}
 
-
-			const maxScale = Math.max( initialScale, finalScale );
+			let maxScale = Math.max( initialScale, finalScale );
 			initialScale = initialScale / maxScale;
-			finalScale = finalScale / maxScale;
+			initialScale = finalScale / maxScale;
 
-			// since maxScale is 1 when scrollingEffect is 'parallax' this has no effect
-			move -= ( maxScale - 1 ) * imageHeight / 2;
+			if ( scrollingEffect === 'doppler' ) {
+				newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, outsideProgress );
+				newTranslateY = distance * progress - ( maxScale - 1 ) * imageHeight / 2;
+			}
 
-			const scale = initialScale + ( finalScale - initialScale ) * outsideProgress;
+			newScale = initialScale + ( finalScale - initialScale ) * outsideProgress;
 
 			let newTransformOrigin = {
 				x: newFocalPoint.x,
 				y: 0.5,
 			};
 
-			let offsetX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
+			let newTranslateX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
+			let newTransform = `translate(${ newTranslateX },${ newTranslateY }px) scale(${ newScale })`;
 
-			const newStyles = {
+			return {
 				width: containerWidth * maxScale,
 				height: imageHeight * maxScale,
 				minHeight: 0,
 				transition: 'none',
-				transform: `translate(${ offsetX },${ move }) scale(${ scale })`,
+				transform: newTransform,
 				objectPosition: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
 				transformOrigin: newTransformOrigin.x * 100 + '% ' + newTransformOrigin.y * 100 + '%',
 			};
-
-			return newStyles;
 		}
 
 		render() {
 			return (
 				<Fragment>
 					<div ref={ ( el ) => ( this.container = el ) }>
-						<ParallaxContext.Provider value={ { style: this.getParallaxStyles() } }>
+						<ParallaxContext.Provider value={ { style: this.getStyles() } }>
 							<WrappedComponent { ...this.props } />
 						</ParallaxContext.Provider>
 					</div>
 					<InspectorControls>
-						<AdvancedScrollAnimationControls { ...this.props } isScrolling={ this.isScrolling } previewScrolling={ this.previewScrolling } />
+						<AdvancedScrollAnimationControls { ...this.props } isScrolling={ this.state.isScrolling } previewScrolling={ this.previewScrolling } />
 					</InspectorControls>
 				</Fragment>
 			);

@@ -64,8 +64,7 @@ const ScrollingEffectPanel = ( props ) => {
 			/>
 			<Button
 				isLarge
-				isPrimary={ !! isScrolling }
-				isSecondary={ ! isScrolling }
+				isSecondary={ !! isScrolling }
 				disabled={ !! isScrolling }
 				onClick={ previewScrolling }>Preview Scrolling</Button>
 		</PanelBody>
@@ -119,6 +118,7 @@ const StartFramePanel = ( props ) => {
 
 	const {
 		media,
+		motionPreset,
 		focalPoint,
 		finalFocalPoint,
 		initialBackgroundScale,
@@ -164,7 +164,7 @@ const StartFramePanel = ( props ) => {
 				step={ 0.01 }
 			/>
 			{
-				scrollingEffect === 'doppler' &&
+				scrollingEffect === 'doppler' && motionPreset === 'custom' &&
 				<ToggleControl
 					label={ __( 'Smooth start transition', '__plugin_txtd' ) }
 					checked={ followThroughStart }
@@ -184,6 +184,7 @@ const EndFramePanel = ( props ) => {
 
 	const {
 		media,
+		motionPreset,
 		focalPoint,
 		finalFocalPoint,
 		finalBackgroundScale,
@@ -193,7 +194,7 @@ const EndFramePanel = ( props ) => {
 
 	const parallaxFocalPointImage = media ? media.sizes.full : false;
 
-	if ( ! parallaxFocalPointImage || scrollingEffect !== 'doppler' ) {
+	if ( ! parallaxFocalPointImage || motionPreset !== 'custom' || scrollingEffect !== 'doppler' ) {
 		return false;
 	}
 
