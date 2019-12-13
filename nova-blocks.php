@@ -7,7 +7,7 @@
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
- * Tested up to: 5.3.0
+ * Tested up to: 5.3.1
  * Requires PHP: 5.4.0
  * License: GPLv2 or later
  *
