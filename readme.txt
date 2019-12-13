@@ -95,8 +95,9 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 1.1.6 =
-* Fixed customized map style
-* Quick fix to avoid "Undefined index" PHP notice
+* Fixed customized map style.
+* Quick fix to avoid "Undefined index" PHP notice.
+* Fixed Scroll and Position Indicators on the latest version of Gutenberg.
 
 = 1.1.5 =
 * Added anchor links for creating a one-page site.
