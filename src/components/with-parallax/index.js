@@ -204,8 +204,6 @@ const withParallax = function( WrappedComponent ) {
 			const speed = 1000; // px per second
 			const startTime = Date.now();
 
-			console.log( scrollTop, containerBox.top, scrollContainerHeight );
-
 			let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
 			let length = containerHeight + scrollContainerHeight;
 
@@ -274,7 +272,9 @@ const withParallax = function( WrappedComponent ) {
 			} = this.state;
 
 			if ( scrollingEffect === 'static' || ! this.container || ! this.scrollContainer ) {
-				return;
+				return {
+					objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+				};
 			}
 
 			let newFocalPoint;
@@ -287,18 +287,17 @@ const withParallax = function( WrappedComponent ) {
 			newTranslateY = scrollContainerBox.top + scrollContainerHeight / 2 - containerBox.top - containerHeight / 2;
 
 			let parallaxAmount = 0;
+			let minImageHeight = scrollContainerHeight;
 
 			if ( scrollingEffect === 'parallax' ) {
-				parallaxAmount = 0.5;
+				parallaxAmount = 0.75;
 				newFocalPoint = focalPoint;
 				initialScale = finalScale = initialBackgroundScale;
+				minImageHeight += ( containerHeight - scrollContainerHeight ) * (1 - parallaxAmount);
 			}
 
-			newTranslateY = newTranslateY * (1 - parallaxAmount);
+			newTranslateY = newTranslateY * parallaxAmount;
 
-			let minImageHeight = containerHeight + ( scrollContainerHeight - containerHeight ) * ( 1 - parallaxAmount );
-			minImageHeight = Math.min( minImageHeight, scrollContainerHeight );
-			let minScale = Math.max( 1, minImageHeight / containerHeight );
 			let maxScale = Math.max( initialScale, finalScale );
 
 			initialScale = initialScale / maxScale;
@@ -311,12 +310,11 @@ const withParallax = function( WrappedComponent ) {
 			newScale = initialScale + ( finalScale - initialScale ) * progress;
 
 			let newTranslateX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
-			let newHeight = Math.min( containerHeight, scrollContainerHeight ) * minScale * maxScale;
 			let newTransform = `translate(${ newTranslateX },${ newTranslateY }px) translateY(-50%) scale(${ newScale })`;
 
 			return {
 				width: containerWidth * maxScale,
-				height: newHeight,
+				height: minImageHeight * maxScale,
 				top: '50%',
 				minHeight: 0,
 				transition: 'none',

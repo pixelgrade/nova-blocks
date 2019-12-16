@@ -436,7 +436,7 @@ function novablocks_add_hero_settings( $settings ) {
 				),
 				'scrollingEffect' => array(
 					'type' => 'string',
-					'default' => 'static',
+					'default' => 'parallax',
 				),
 				'motionPreset' => array(
 					'type' => 'string',

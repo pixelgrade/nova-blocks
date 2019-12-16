@@ -157,15 +157,34 @@ const StartFramePanel = ( props ) => {
 	} = attributes;
 
 	const parallaxFocalPointImage = media ? media.sizes.full : false;
+	const isDoppler = scrollingEffect === 'doppler';
 
-	if ( ! parallaxFocalPointImage || scrollingEffect === 'static' ) {
+	if ( ! parallaxFocalPointImage ) {
 		return false;
 	}
 
+	const staticPanelTitle = __( 'Static Scrolling Settings', '__plugin_txtd' );
+	const parallaxPanelTitle = __( 'Parallax Scrolling Settings', '__plugin_txtd' );
+	const dopplerPanelTitle = __( 'Start Frame position', '__plugin_txtd' );
+
+	let panelTitle = staticPanelTitle;
+
+	if ( 'parallax' === scrollingEffect ) {
+		panelTitle = parallaxPanelTitle;
+	}
+
+	if ( isDoppler ) {
+		panelTitle = dopplerPanelTitle;
+	}
+
+	const dopplerClassName = 'doppler-focal-point-picker  doppler-focal-point-picker--start';
+
+	const className = isDoppler ? dopplerClassName : '';
+
 	return (
 		<PanelBody
-			title={ __( 'Start Frame', '__plugin_txtd' ) }
-			className={ 'doppler-focal-point-picker  doppler-focal-point-picker--start' }
+			title={ panelTitle }
+			className={ className }
 		>
 			<FocalPointPicker
 				label={ 'Focal Point' }
@@ -186,28 +205,30 @@ const StartFramePanel = ( props ) => {
 					} );
 				} }
 			/>
-			<RangeControl
-				label={ 'Zoom' }
-				value={ initialBackgroundScale }
-				onChange={ ( initialBackgroundScale ) => {
-					setAttributes( {
-						motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
-						initialBackgroundScale,
-					} );
-				} }
-				min={ 1 }
-				max={ 2 }
-				step={ 0.01 }
-			/>
 			{
 				scrollingEffect === 'doppler' &&
-				<ToggleControl
-					label={ __( 'Smooth start transition', '__plugin_txtd' ) }
-					checked={ followThroughStart }
-					onChange={ () => setAttributes( {
-						followThroughStart: ! followThroughStart
-					} ) }
-				/>
+				<Fragment>
+					<RangeControl
+						label={ 'Zoom' }
+						value={ initialBackgroundScale }
+						onChange={ ( initialBackgroundScale ) => {
+							setAttributes( {
+								motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
+								initialBackgroundScale,
+							} );
+						} }
+						min={ 1 }
+						max={ 2 }
+						step={ 0.01 }
+					/>
+					<ToggleControl
+						label={ __( 'Smooth start transition', '__plugin_txtd' ) }
+						checked={ followThroughStart }
+						onChange={ () => setAttributes( {
+							followThroughStart: ! followThroughStart
+						} ) }
+					/>
+				</Fragment>
 			}
 		</PanelBody>
 	)
@@ -238,7 +259,7 @@ const EndFramePanel = ( props ) => {
 
 	return (
 		<PanelBody
-			title={ __( 'End Frame', '__plugin_txtd' ) }
+			title={ __( 'End Frame position', '__plugin_txtd' ) }
 			className={ 'doppler-focal-point-picker  doppler-focal-point-picker--end' }
 		>
 			<FocalPointPicker
