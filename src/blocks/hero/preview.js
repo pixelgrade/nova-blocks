@@ -31,7 +31,6 @@ const HeroPreview = function( props ) {
 		horizontalAlignment,
 		// height
 		minHeightFallback,
-		applyMinimumHeightBlock,
 		// indicators
 		scrollIndicatorBlock,
 		// colors
@@ -60,26 +59,19 @@ const HeroPreview = function( props ) {
 		content: {},
 	};
 
-	const minHeightDefault = settings.hero.attributes.minHeight.default;
-	const minHeight = !! attributes.minHeight ? attributes.minHeight : minHeightDefault;
-
-	const computedMinHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
-
 	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 		return block.name === 'novablocks/hero';
 	} );
 
 	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
-	const scrollIndicatorFallback = index === 0 && computedMinHeight === 100;
+	const scrollIndicatorFallback = index === 0 && minHeightFallback === 100;
 	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
-	if ( !! applyMinimumHeightBlock ) {
-		styles.hero.minHeight = computedMinHeight + 'vh';
+	styles.hero.minHeight = minHeightFallback + 'vh';
 
-		if ( scrollingEffect === 'doppler' ) {
-			styles.hero.alignItems = 'flex-start';
-			styles.hero.minHeight = computedMinHeight * 2 + 'vh';
-		}
+	if ( scrollingEffect === 'doppler' ) {
+		styles.hero.alignItems = 'flex-start';
+		styles.hero.minHeight = minHeightFallback * 2 + 'vh';
 	}
 
 	if ( contentPadding === 'custom' ) {
@@ -88,7 +80,7 @@ const HeroPreview = function( props ) {
 	}
 
 	if ( scrollingEffect === 'doppler' ) {
-		styles.foreground.minHeight = computedMinHeight + 'vh';
+		styles.foreground.minHeight = minHeightFallback + 'vh';
 	}
 
 	if ( contentWidth === 'custom' ) {

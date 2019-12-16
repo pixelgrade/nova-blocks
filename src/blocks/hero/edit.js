@@ -4,7 +4,6 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
  * Internal dependencies
  */
 import {
-	HeightPanel,
 	LayoutPanel,
 	ScrollIndicatorPanel,
 	PositionIndicatorsPanel,
@@ -50,7 +49,6 @@ const FirstBlockControls = withFirstBlockConditions( function( props ) {
 
 	return (
 		<Fragment>
-			<HeightPanel { ...props } />
 			<ScrollIndicatorPanel { ...props } />
 			<PositionIndicatorsPanel { ...props } />
 		</Fragment>
@@ -87,16 +85,8 @@ class HeroEdit extends Component {
 
 	getDefaults( attributes ) {
 		const { settings } = this.props;
-		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
+		const { scrollIndicator } = attributes;
 		const defaults = {};
-
-		if ( ! minHeight ) {
-			defaults.minHeight = settings.hero.attributes.minHeight.default;
-		}
-
-		if ( ! applyMinimumHeight ) {
-			defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
-		}
 
 		if ( ! scrollIndicator ) {
 			defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
@@ -106,7 +96,7 @@ class HeroEdit extends Component {
 	}
 
 	getNewAttributes( attributes ) {
-		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
+		const { scrollIndicator } = attributes;
 
 		const index = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 			return block.name === 'novablocks/hero';
@@ -114,13 +104,9 @@ class HeroEdit extends Component {
 			return block.clientId === this.props.clientId
 		} );
 
-		const newApplyMinimumHeightBlock = ( index === 0 && applyMinimumHeight === 'first' ) || applyMinimumHeight === 'all';
 		const newScrollIndicatorBlock = index === 0 && scrollIndicator;
 
 		return {
-			applyMinimumHeight: applyMinimumHeight,
-			applyMinimumHeightBlock: newApplyMinimumHeightBlock,
-			minHeight: minHeight,
 			scrollIndicatorBlock: newScrollIndicatorBlock,
 		};
 	}
@@ -149,9 +135,9 @@ class HeroEdit extends Component {
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<InspectorControls>
-					{ false && <LayoutPanel { ...this.props } /> }
+					<LayoutPanel { ...this.props } />
+					<BlockHeightControls { ...this.props } />
 					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } updateAttributes={ updateAttributes } /> }
-					{ ! usePostMetaAttributes && <BlockHeightControls { ...this.props } /> }
 				</InspectorControls>
 			</Fragment>
 		);

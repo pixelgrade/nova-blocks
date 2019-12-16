@@ -45,7 +45,6 @@ const AlignmentToolbar = function( props ) {
 const AlignmentControls = function( props ) {
 	const {
 		attributes: {
-			applyMinimumHeightBlock,
 			horizontalAlignment,
 			verticalAlignment,
 		},
@@ -67,13 +66,13 @@ const AlignmentControls = function( props ) {
 					} }
 				/>
 			</PanelRow>
-			{ applyMinimumHeightBlock && <PanelRow>
+			<PanelRow>
 				<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
 				<BlockVerticalAlignmentToolbar
 					value={ verticalAlignment }
 					onChange={ ( nextVerticalAlignment ) => setAttributes( { verticalAlignment: nextVerticalAlignment } ) }
 				/>
-			</PanelRow> }
+			</PanelRow>
 		</Fragment>
 	);
 };

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 import { findParents } from '../../utils';
-import { easeInOutQuint } from '../../easing';
+import { easeInOutCubic } from '../../easing';
 import { AdvancedScrollAnimationControls } from "../index";
 
 /**
@@ -26,8 +26,8 @@ const withParallax = function( WrappedComponent ) {
 			super( ...arguments );
 
 			this.state = {
-				windowWidth: window.innerWidth,
-				windowHeight: window.innerHeight,
+				scrollContainerWidth: 0,
+				scrollContainerHeight: 0,
 				progress: 0.5,
 				isScrolling: false,
 			};
@@ -105,7 +105,7 @@ const withParallax = function( WrappedComponent ) {
 
 		updateState() {
 
-			if ( ! this.container || ! this.scrollContainer ) {
+			if ( !this.container || !this.scrollContainer ) {
 				return;
 			}
 
@@ -117,56 +117,48 @@ const withParallax = function( WrappedComponent ) {
 				}
 			} = this.props;
 
-			const smoothStart = followThroughStart || scrollingEffect === 'parallax';
-			const smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
+			const scrollContainerHeight = this.scrollContainer.offsetHeight;
+			const scrollContainerBox = this.scrollContainer.getBoundingClientRect();
 
 			const containerWidth = this.container.offsetWidth;
 			const containerHeight = this.container.offsetHeight;
 			const containerBox = this.container.getBoundingClientRect();
-			const containerTop = containerBox.top;
-			const windowHeight = window.innerHeight;
 
-			const imageHeight = Math.min( containerHeight, windowHeight );
+			const smoothStart = followThroughStart || scrollingEffect === 'parallax';
+			const smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
 
-			const distance = containerHeight - window.innerHeight;
-
-			let progressStart = containerTop * -1;
-			let progressLength = distance;
-
-			let progress = progressStart / progressLength;
+			let current = scrollContainerBox.top - containerBox.top;
+			let distance = containerHeight - scrollContainerHeight;
 
 			if ( smoothStart ) {
-				progressStart += windowHeight;
-				progressLength += windowHeight;
+				current += scrollContainerHeight;
+				distance += scrollContainerHeight;
 			}
 
 			if ( smoothEnd ) {
-				progressLength += windowHeight;
+				distance += scrollContainerHeight;
 			}
 
-			let outsideProgress = progressStart / progressLength;
+			let progress = distance <= 0 ? 0.5 : current / distance;
 
 			if ( ! smoothStart ) {
 				progress = Math.max( 0, progress );
-				outsideProgress = Math.max( 0, outsideProgress );
 			}
 
 			if ( ! smoothEnd ) {
 				progress = Math.min( 1, progress );
-				outsideProgress = Math.min( 1, outsideProgress );
 			}
 
 			this.setState( {
-				imageHeight,
+				containerBox,
 				containerHeight,
 				containerWidth,
-				containerTop,
-				windowHeight,
+
 				distance,
 				progress,
-				outsideProgress,
-				progressStart,
-				progressLength,
+
+				scrollContainerHeight,
+				scrollContainerBox,
 			} );
 
 		}
@@ -201,26 +193,46 @@ const withParallax = function( WrappedComponent ) {
 			}
 
 			const {
-				containerTop,
+				containerBox,
 				containerHeight,
-				windowHeight
+				scrollContainerHeight,
+				scrollContainerBox,
 			} = this.state;
 
 			const scrollContainer = this.scrollContainer;
 			const scrollTop = scrollContainer.scrollTop;
-			const start = scrollTop + containerTop - windowHeight;
-			const length = containerHeight + windowHeight;
-			const duration = 5000;
+			const speed = 1000; // px per second
 			const startTime = Date.now();
+
+			console.log( scrollTop, containerBox.top, scrollContainerHeight );
+
+			let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
+			let length = containerHeight + scrollContainerHeight;
+
+			if ( start < 0 ) {
+				length = length + start;
+				start = 0;
+			}
+
+			let maxScroll = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+			let distanceToBottom = maxScroll - ( start + length );
+
+			if ( distanceToBottom < 0 ) {
+				length = length + distanceToBottom;
+			}
+
+			const duration = length * 1000 / speed;
 
 			function updateScrollTopLoop() {
 				const currentTime = Date.now();
 				const timePassed = currentTime - startTime;
 				const progress = timePassed / duration;
-				const newScrollTop = start + length * easeInOutQuint( progress );
+				const newScrollTop = start + length * easeInOutCubic( progress );
+
 				scrollContainer.scrollTop = newScrollTop;
 			}
 
+			scrollContainer.style.pointerEvents = 'none';
 			const interval = setInterval( updateScrollTopLoop, 0 );
 
 			this.setState({
@@ -233,6 +245,7 @@ const withParallax = function( WrappedComponent ) {
 					isScrolling: false
 				});
 				scrollContainer.scrollTop = start + length;
+				scrollContainer.style.removeProperty( 'pointer-events' );
 			}, duration );
 		}
 
@@ -249,16 +262,18 @@ const withParallax = function( WrappedComponent ) {
 			} = this.props;
 
 			const {
+				containerBox,
 				containerWidth,
 				containerHeight,
-				windowHeight,
+
 				distance,
 				progress,
-				outsideProgress,
-				imageHeight,
+
+				scrollContainerBox,
+				scrollContainerHeight,
 			} = this.state;
 
-			if ( scrollingEffect === 'static' ) {
+			if ( scrollingEffect === 'static' || ! this.container || ! this.scrollContainer ) {
 				return;
 			}
 
@@ -269,39 +284,45 @@ const withParallax = function( WrappedComponent ) {
 			let finalScale = finalBackgroundScale;
 			let newScale;
 
+			newTranslateY = scrollContainerBox.top + scrollContainerHeight / 2 - containerBox.top - containerHeight / 2;
+
+			let parallaxAmount = 0;
+
 			if ( scrollingEffect === 'parallax' ) {
+				parallaxAmount = 0.5;
 				newFocalPoint = focalPoint;
-				newTranslateY = ( distance + windowHeight * 0.5 ) * ( outsideProgress - 0.5 );
 				initialScale = finalScale = initialBackgroundScale;
 			}
 
+			newTranslateY = newTranslateY * (1 - parallaxAmount);
+
+			let minImageHeight = containerHeight + ( scrollContainerHeight - containerHeight ) * ( 1 - parallaxAmount );
+			minImageHeight = Math.min( minImageHeight, scrollContainerHeight );
+			let minScale = Math.max( 1, minImageHeight / containerHeight );
 			let maxScale = Math.max( initialScale, finalScale );
+
 			initialScale = initialScale / maxScale;
 			finalScale = finalScale / maxScale;
 
 			if ( scrollingEffect === 'doppler' ) {
-				newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, outsideProgress );
-				newTranslateY = distance * progress - ( maxScale - 1 ) * imageHeight / 2;
+				newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
 			}
 
-			newScale = initialScale + ( finalScale - initialScale ) * outsideProgress;
-
-			let newTransformOrigin = {
-				x: newFocalPoint.x,
-				y: 0.5,
-			};
+			newScale = initialScale + ( finalScale - initialScale ) * progress;
 
 			let newTranslateX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
-			let newTransform = `translate(${ newTranslateX },${ newTranslateY }px) scale(${ newScale })`;
+			let newHeight = Math.min( containerHeight, scrollContainerHeight ) * minScale * maxScale;
+			let newTransform = `translate(${ newTranslateX },${ newTranslateY }px) translateY(-50%) scale(${ newScale })`;
 
 			return {
 				width: containerWidth * maxScale,
-				height: imageHeight * maxScale,
+				height: newHeight,
+				top: '50%',
 				minHeight: 0,
 				transition: 'none',
 				transform: newTransform,
 				objectPosition: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
-				transformOrigin: newTransformOrigin.x * 100 + '% ' + newTransformOrigin.y * 100 + '%',
+				transformOrigin: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
 			};
 		}
 

@@ -22,49 +22,6 @@ const {
 	Component
 } = wp.element;
 
-class HeightControls extends Component {
-
-	render() {
-
-		const {
-			attributes,
-			updateAttributes,
-			settings,
-		} = this.props;
-
-		const applyMinimumHeightDefault = settings.hero.attributes.applyMinimumHeight.default;
-		const applyMinimumHeight = !! attributes.applyMinimumHeight ? attributes.applyMinimumHeight : applyMinimumHeightDefault;
-
-		const minHeightDefault = settings.hero.attributes.minHeight.default;
-		const minHeight = !! attributes.minHeight ? attributes.minHeight : minHeightDefault;
-
-		return (
-			<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-				<RadioControl
-					label={ __( 'Apply Minimum Height', '__plugin_txtd' ) }
-					selected={ applyMinimumHeight }
-					onChange={ ( nextMinimumHeight ) => {
-						updateAttributes( { ...attributes, applyMinimumHeight: nextMinimumHeight } );
-					} }
-					options={ settings.applyMinimumHeightOptions }
-				/>
-				{ 'none' !== applyMinimumHeight &&
-					<RadioControl
-						label={ __( 'Minimum Height', '__plugin_txtd' ) }
-						selected={ minHeight }
-						onChange={ minHeight => {
-							updateAttributes( { ...attributes, minHeight: parseInt( minHeight, 10 ) } );
-						} }
-						options={ settings.minimumHeightOptions }
-					/>
-				}
-			</PanelBody>
-		);
-	}
-};
-
-const HeightPanel = withSettings( HeightControls );
-
 const ScrollIndicatorPanel = withSettings( function( props ) {
 	const {
 		attributes: {
@@ -93,6 +50,5 @@ const ScrollIndicatorPanel = withSettings( function( props ) {
 } );
 
 export {
-	HeightPanel,
 	ScrollIndicatorPanel,
 };

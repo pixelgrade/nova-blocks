@@ -57,41 +57,18 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
-		if ( ! defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) || NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
+			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+		}
 
-			if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-				$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
-			}
+		$minHeight = $attributes['minHeightFallback'];
+		$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
 
-			if ( ! empty( $attributes['applyMinimumHeightBlock'] ) ) {
-				$minHeight = get_post_meta( get_the_ID(), 'novablocks_hero_minimum_height', true );
-				$minHeight = floatval( $minHeight );
-
-				if ( $attributes['enableFocusPointsTransitions'] ) {
-					$heroStyle .= 'min-height: calc(' . 2 * $minHeight . '* var(--novablocks-1vh, 1vh)); ';
-					$heroStyle .= 'align-items: flex-start; ';
-				}
-
-				$foregroundStyle .= 'min-height: calc(' . $minHeight . '* var(--novablocks-1vh, 1vh)); ';
-			}
-
-			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-				$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
-			}
-		} else {
-			$minHeight = $attributes['minHeightFallback'];
-			$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
-
-			if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-				$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
-			}
+		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
 		}
 
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
-
-		if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && ! NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-			$scrollIndicator = ( isset( $attributes['blockIndex'] ) && $attributes['blockIndex'] === 0 && floatval( $attributes['minHeightFallback'] ) === 100 );
-		}
 
 		ob_start();
 

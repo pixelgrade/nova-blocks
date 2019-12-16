@@ -60,19 +60,6 @@ add_action( 'rest_api_init', 'novablocks_register_settings' );
 function novablocks_register_meta() {
 
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-
-		register_meta( 'post', 'novablocks_hero_minimum_height', array(
-			'type'         => 'number',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
-		register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
-			'type'         => 'string',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
 		register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
 			'type'         => 'boolean',
 			'single'       => true,
@@ -406,10 +393,6 @@ function novablocks_add_hero_settings( $settings ) {
 					'type'    => 'string',
 					'default' => null,
 				),
-				'applyMinimumHeightBlock' => array(
-					'type'    => 'boolean',
-					'default' => false
-				),
 				'focalPoint'              => array(
 					'type'    => 'object',
 					'default' => array(
@@ -468,28 +451,23 @@ function novablocks_add_hero_settings( $settings ) {
 		),
 	);
 
+	$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
+		'followThroughStart' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'followThroughEnd' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'minHeightFallback' => array(
+			'type'    => 'number',
+			'default' => 100,
+		),
+	) );
+
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
-			'followThroughStart' => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'followThroughEnd' => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'applyMinimumHeight' => array(
-				'type'    => 'string',
-				'source'  => 'meta',
-				'meta'    => 'novablocks_hero_apply_minimum_height',
-				'default' => 'first',
-			),
-			'minHeight'          => array(
-				'type'    => 'number',
-				'source'  => 'meta',
-				'meta'    => 'novablocks_hero_minimum_height',
-				'default' => 100,
-			),
 			'scrollIndicator'    => array(
 				'type'    => 'boolean',
 				'source'  => 'meta',
@@ -501,13 +479,6 @@ function novablocks_add_hero_settings( $settings ) {
 				'source' => 'meta',
 				'meta'   => 'novablocks_hero_position_indicators',
 				'default' => true,
-			),
-		) );
-	} else {
-		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
-			'minHeightFallback' => array(
-				'type'    => 'number',
-				'default' => 100,
 			),
 		) );
 	}
@@ -706,20 +677,6 @@ function novablocks_get_block_editor_settings() {
 
 	$settings = array(
 		'usePostMetaAttributes' => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
-		'applyMinimumHeightOptions' => array(
-			array(
-				'label' => esc_html__( 'None', '__plugin_txtd' ),
-				'value' => 'none',
-			),
-			array(
-				'label' => esc_html__( 'First Hero Block Only', '__plugin_txtd' ),
-				'value' => 'first',
-			),
-			array(
-				'label' => esc_html__( 'All Hero Blocks', '__plugin_txtd' ),
-				'value' => 'all',
-			),
-		),
 		'minimumHeightOptions' => array(
 			array(
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
@@ -820,8 +777,8 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'parallax'
 			),
 			array(
-				'label' => esc_html__( 'Doppler', '__plugin_txtd' ),
-				'value' => 'doppler'
+				'label' => esc_html__( 'Doppler by Pixelgrade ®', '__plugin_txtd' ),
+				'value' => 'doppler',
 			),
 		),
 		'motionPresetOptions' => array(

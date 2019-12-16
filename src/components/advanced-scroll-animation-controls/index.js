@@ -27,12 +27,11 @@ const AdvancedScrollAnimationControls = function( props ) {
 	} = props;
 
 	return (
-		<Fragment>
-			<ScrollingEffectPanel { ...props } />
+		<ScrollingEffectPanel { ...props }>
 			<DopplerPresetsPanel { ...props } />
 			<StartFramePanel { ...props } />
 			<EndFramePanel { ...props } />
-		</Fragment>
+		</ScrollingEffectPanel>
 	);
 }
 
@@ -55,9 +54,10 @@ const ScrollingEffectPanel = ( props ) => {
 	} = props;
 
 	return (
-		<PanelBody title={ `Scrolling Effect:` }>
+		<PanelBody title={ `Scrolling Effect:` } className={ 'novablocks-scrolling-effect-panel' }>
 			<RadioControl
 				selected={ scrollingEffect }
+				className={ 'novablocks-scrolling-effect' }
 				onChange={ ( scrollingEffect ) => {
 					let newAttributes = { scrollingEffect };
 
@@ -75,6 +75,7 @@ const ScrollingEffectPanel = ( props ) => {
 				isSecondary={ !! isScrolling }
 				disabled={ !! isScrolling }
 				onClick={ previewScrolling }>Preview Scrolling</Button>
+			{ props.children }
 		</PanelBody>
 	)
 }

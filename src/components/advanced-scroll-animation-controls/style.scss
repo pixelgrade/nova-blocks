@@ -21,3 +21,34 @@
 	}
 
 }
+
+.novablocks-scrolling-effect-panel {
+	padding-bottom: 16px;
+
+	.components-panel__body {
+		margin-top: 16px;
+		margin-left: -16px;
+		margin-right: -16px;
+	}
+
+	.components-panel__body + .components-panel__body {
+		margin-top: 0;
+	}
+}
+
+@mixin pro-feature {
+
+	&:after {
+		content: "Pro";
+		display: inline-block;
+		padding: 0.05em 0.6em 0.13em;
+		margin: -0.05em 0 -0.13em 0.5em;
+		background: #4fb669;
+		color: #FFF;
+		border-radius: 999em;
+	}
+}
+
+.novablocks-scrolling-effect [value="doppler"] + label {
+	@include pro-feature;
+}
