@@ -111,14 +111,10 @@ const withParallax = function( WrappedComponent ) {
 			const scrollContainerHeight = this.scrollContainer.offsetHeight;
 			const scrollContainerBox = this.scrollContainer.getBoundingClientRect();
 
-			const config = Object.assign( {}, this.props.attributes, {
+			this.setState( {
 				scrollContainerBox,
 				scrollContainerHeight,
 			} );
-
-			const newState = getState( container, config );
-
-			this.setState( newState );
 		}
 
 		previewScrolling() {
@@ -182,21 +178,23 @@ const withParallax = function( WrappedComponent ) {
 			}, duration );
 		}
 
-		getStylesFromState() {
+		getStyles() {
 
-			if ( ! this.container || ! this.scrollContainer ){
+			if ( ! this.scrollContainer || ! this.container ) {
 				return {};
 			}
 
-			const config = Object.assign( {}, this.state, this.props.attributes );
-			return getStyles( config );
+			const state = getState( this.container, Object.assign( {}, this.state, this.props.attributes ) );
+			return getStyles( Object.assign( {}, state, this.props.attributes ) );
+
 		}
 
 		render() {
+
 			return (
 				<Fragment>
 					<div ref={ ( el ) => ( this.container = el ) }>
-						<ParallaxContext.Provider value={ { style: this.getStylesFromState() } }>
+						<ParallaxContext.Provider value={ { style: this.getStyles() } }>
 							<WrappedComponent { ...this.props } />
 						</ParallaxContext.Provider>
 					</div>
