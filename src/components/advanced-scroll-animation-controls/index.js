@@ -181,17 +181,21 @@ const StartFramePanel = ( props ) => {
 		panelTitle = dopplerPanelTitle;
 	}
 
-	const dopplerClassName = 'doppler-focal-point-picker doppler-focal-point-picker--start';
-
-	let className = isDoppler ? dopplerClassName : '';
+	let classNames = [
+		'novablocks-focal-point-picker',
+		`novablocks-focal-point-picker--${ scrollingEffect }`,
+		'novablocks-focal-point-picker--start',
+	]
 
 	if ( snapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
-		className += ' is-snapped-x';
+		classNames.push( 'is-snapped-x' );
 	}
 
 	if ( snapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
-		className += ' is-snapped-y';
+		classNames.push( 'is-snapped-y' );
 	}
+
+	let className = classNames.join( ' ' );
 
 	return (
 		<PanelBody
@@ -217,22 +221,21 @@ const StartFramePanel = ( props ) => {
 					} );
 				} }
 			/>
+			<RangeControl
+				label={ 'Zoom' }
+				value={ initialBackgroundScale }
+				onChange={ ( initialBackgroundScale ) => {
+					setAttributes( {
+						motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
+						initialBackgroundScale,
+					} );
+				} }
+				min={ 1 }
+				max={ 2 }
+				step={ 0.01 }
+			/>
 			{
 				scrollingEffect === 'doppler' &&
-				<Fragment>
-					<RangeControl
-						label={ 'Zoom' }
-						value={ initialBackgroundScale }
-						onChange={ ( initialBackgroundScale ) => {
-							setAttributes( {
-								motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
-								initialBackgroundScale,
-							} );
-						} }
-						min={ 1 }
-						max={ 2 }
-						step={ 0.01 }
-					/>
 					<ToggleControl
 						label={ __( 'Smooth start transition', '__plugin_txtd' ) }
 						checked={ followThroughStart }
@@ -240,7 +243,6 @@ const StartFramePanel = ( props ) => {
 							followThroughStart: ! followThroughStart
 						} ) }
 					/>
-				</Fragment>
 			}
 		</PanelBody>
 	)
@@ -269,15 +271,21 @@ const EndFramePanel = ( props ) => {
 		return false;
 	}
 
-	let className = 'doppler-focal-point-picker doppler-focal-point-picker--end';
+	let classNames = [
+		'novablocks-focal-point-picker',
+		`novablocks-focal-point-picker--${ scrollingEffect }`,
+		'novablocks-focal-point-picker--end',
+	]
 
 	if ( snapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
-		className += ' is-snapped-x';
+		classNames.push( 'is-snapped-x' );
 	}
 
 	if ( snapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
-		className += ' is-snapped-y';
+		classNames.push( 'is-snapped-y' );
 	}
+
+	let className = classNames.join( ' ' );
 
 	return (
 		<PanelBody

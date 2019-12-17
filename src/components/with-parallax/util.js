@@ -33,19 +33,22 @@ export const getStylesFromProps = function( props ) {
 		height,
 		moveX,
 		moveY,
+		offsetX,
+		offsetY,
 		scale,
 		focalPoint,
+		transformOrigin,
 	} = props;
 
 	return {
-		width,
-		height,
+		width: width || '',
+		height: height || '',
 		minHeight: 0,
 		maxWidth: 'none',
 		top: '50%',
-		transform: `translate(${ moveX },${ moveY * parallaxAmount }px) translateY(-50%) scale(${ scale })`,
+		transform: `translate(${ moveX },${ moveY * parallaxAmount }px) translateX(${ offsetX }) translateY(${ offsetY }) scale(${ scale })`,
 		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
-		transformOrigin: focalPoint.x * 100 + '% ' + '50%',
+		transformOrigin: transformOrigin.x * 100 + '% ' + transformOrigin.y * 100 + '%',
 	};
 }
 
@@ -70,51 +73,62 @@ export const getProps = function( config ) {
 
 	if ( scrollingEffect === 'static' ) {
 		return {
-			objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+			scale: initialBackgroundScale,
+			moveX: 0,
+			moveY: 0,
+			parallaxAmount: 0,
+			focalPoint,
+			transformOrigin: focalPoint,
 		};
 	}
 
+	let transformOrigin;
 	let newFocalPoint;
-	let newTranslateY;
 
 	let initialScale = initialBackgroundScale;
 	let finalScale = finalBackgroundScale;
 	let newScale;
 
-	newTranslateY = config.scrollContainerBox.top - config.containerBox.top + scrollContainerHeight / 2 - containerHeight / 2;
-
 	let parallaxAmount = 1;
 	let minImageHeight = scrollContainerHeight;
+	let offsetY = -0.5;
 
 	if ( scrollingEffect === 'parallax' ) {
 		parallaxAmount = 0.75;
 		newFocalPoint = focalPoint;
+		transformOrigin = newFocalPoint;
 		initialScale = finalScale = initialBackgroundScale;
 		minImageHeight += ( containerHeight - scrollContainerHeight ) * (1 - parallaxAmount);
+//		offsetY += (1 - initialScale) * 0.25 * newFocalPoint.y;
 	}
 
 	let maxScale = Math.max( initialScale, finalScale );
+
 
 	initialScale = initialScale / maxScale;
 	finalScale = finalScale / maxScale;
 
 	if ( scrollingEffect === 'doppler' ) {
-		newFocalPoint = getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
+		transformOrigin = newFocalPoint = getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
+		transformOrigin.y = 0.5;
 	}
 
 	newScale = initialScale + ( finalScale - initialScale ) * progress;
 
-	let newTranslateX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
+	let moveY = config.scrollContainerBox.top - config.containerBox.top + scrollContainerHeight / 2 - containerHeight / 2;
 
 	return {
 		parallaxAmount: parallaxAmount,
 		progress: progress,
 		width: containerWidth * maxScale,
 		height: minImageHeight * maxScale,
-		moveX: newTranslateX,
-		moveY: newTranslateY,
+		moveX: 0,
+		moveY: moveY,
+		offsetX: ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%',
+		offsetY: offsetY * 100 + '%',
 		scale: newScale,
 		focalPoint: newFocalPoint,
+		transformOrigin: transformOrigin,
 	};
 }
 
