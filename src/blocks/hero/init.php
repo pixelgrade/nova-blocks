@@ -62,6 +62,13 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		}
 
 		$minHeight = $attributes['minHeightFallback'];
+
+		if ( 'doppler' === $attributes['scrollingEffect'] ) {
+			$heroStyle .= 'min-height: calc(' . 2 * $minHeight . '* var(--novablocks-1vh, 1vh)); ';
+		} else {
+			$heroStyle .= 'min-height: calc(' . $minHeight . '* var(--novablocks-1vh, 1vh)); ';
+		}
+
 		$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
@@ -82,14 +89,13 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		<div <?php
 
 			echo $id;
+			echo "data-scrolling-effect='" . $attributes['scrollingEffect'] . "' ";
 			echo "data-focal-point='" . json_encode( $attributes['focalPoint'] ) . "' ";
+			echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
 			echo 'data-initial-background-scale="' . $attributes['initialBackgroundScale'] . '"';
-
-			if ( $attributes['enableFocusPointsTransitions'] ) {
-				echo 'data-enable-focus-points-transitions="true" ';
-				echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
-				echo 'data-final-background-scale="' . $attributes['finalBackgroundScale'] . '" ';
-			}
+			echo 'data-final-background-scale="' . $attributes['finalBackgroundScale'] . '" ';
+			echo 'data-smooth-start="' . $attributes['followThroughStart'] . '" ';
+			echo 'data-smooth-end="' . $attributes['followThroughEnd'] . '" ';
 
 			?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
@@ -99,19 +105,17 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 
             <div class="novablocks-hero__mask">
-                <div class="novablocks-hero__parallax" data-rellax-amount="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
-					<?php if ( $media['type'] === 'image' && ! empty( $media['sizes']['full']['url'] ) ) { ?>
-                        <img class="novablocks-hero__media"
-                             src="<?php echo esc_url( $media['sizes']['full']['url'] ); ?>"
-                             style="<?php echo esc_attr( $mediaStyle ); ?>"/>
-					<?php }
+				<?php if ( $media['type'] === 'image' && ! empty( $media['sizes']['full']['url'] ) ) { ?>
+                    <img class="novablocks-hero__parallax"
+                         src="<?php echo esc_url( $media['sizes']['full']['url'] ); ?>"
+                         style="<?php echo esc_attr( $mediaStyle ); ?>" />
+				<?php }
 
-					if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
-                        <video muted autoplay loop class="novablocks-hero__media"
-                               src="<?php echo esc_url( $media['url'] ); ?>"
-                               style="<?php echo esc_attr( $mediaStyle ); ?>"/>
-					<?php } ?>
-                </div>
+				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
+                    <video muted autoplay loop class="novablocks-hero__parallax"
+                           src="<?php echo esc_url( $media['url'] ); ?>"
+                           style="<?php echo esc_attr( $mediaStyle ); ?>" />
+				<?php } ?>
             </div>
             <div class="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding" style="<?php echo esc_attr( $foregroundStyle ); ?>">
                 <div class="novablocks-u-content-align">

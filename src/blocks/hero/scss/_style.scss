@@ -6,9 +6,15 @@
 }
 
 .novablocks-hero__mask,
-.novablocks-hero__parallax,
 .novablocks-hero__slider {
 	@include cover;
+}
+
+.novablocks-hero__parallax {
+	position: fixed;
+	top: 0;
+	left: 0;
+	object-fit: cover;
 }
 
 body:not(.wp-admin) .novablocks-hero__parallax {

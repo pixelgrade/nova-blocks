@@ -4,6 +4,8 @@ import { findParents } from '../../utils';
 import { easeInOutCubic } from '../../easing';
 import { AdvancedScrollAnimationControls } from "../index";
 
+import { getStyles, getState } from './util';
+
 /**
  * WordPress dependencies
  */
@@ -60,6 +62,7 @@ const withParallax = function( WrappedComponent ) {
 			this.observers = [];
 
 			findParents( this.container, '.wp-block' ).map( block => {
+
 				if ( window.MutationObserver ) {
 					const mutationObserver = new MutationObserver( movements => {
 						movements.forEach( movement => {
@@ -104,86 +107,18 @@ const withParallax = function( WrappedComponent ) {
 		}
 
 		updateState() {
-
-			if ( !this.container || !this.scrollContainer ) {
-				return;
-			}
-
-			const {
-				attributes: {
-					followThroughStart,
-					followThroughEnd,
-					scrollingEffect,
-				}
-			} = this.props;
-
+			const container = this.container;
 			const scrollContainerHeight = this.scrollContainer.offsetHeight;
 			const scrollContainerBox = this.scrollContainer.getBoundingClientRect();
 
-			const containerWidth = this.container.offsetWidth;
-			const containerHeight = this.container.offsetHeight;
-			const containerBox = this.container.getBoundingClientRect();
-
-			const smoothStart = followThroughStart || scrollingEffect === 'parallax';
-			const smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
-
-			let current = scrollContainerBox.top - containerBox.top;
-			let distance = containerHeight - scrollContainerHeight;
-
-			if ( smoothStart ) {
-				current += scrollContainerHeight;
-				distance += scrollContainerHeight;
-			}
-
-			if ( smoothEnd ) {
-				distance += scrollContainerHeight;
-			}
-
-			let progress = distance <= 0 ? 0.5 : current / distance;
-
-			if ( ! smoothStart ) {
-				progress = Math.max( 0, progress );
-			}
-
-			if ( ! smoothEnd ) {
-				progress = Math.min( 1, progress );
-			}
-
-			this.setState( {
-				containerBox,
-				containerHeight,
-				containerWidth,
-
-				distance,
-				progress,
-
-				scrollContainerHeight,
+			const config = Object.assign( {}, this.props.attributes, {
 				scrollContainerBox,
+				scrollContainerHeight,
 			} );
 
-		}
+			const newState = getState( container, config );
 
-		getIntermediateFocalPoint( focalPoint1, focalPoint2, progress ) {
-
-			if ( ! focalPoint1 && ! focalPoint2 ) {
-				return {
-					x: 0.5,
-					y: 0.5,
-				}
-			}
-
-			if ( ! focalPoint1 ) {
-				return focalPoint2;
-			}
-
-			if ( ! focalPoint2 ) {
-				return focalPoint1;
-			}
-
-			return {
-				x: parseFloat( focalPoint1.x ) + ( parseFloat( focalPoint2.x ) - parseFloat( focalPoint1.x ) ) * progress,
-				y: parseFloat( focalPoint1.y ) + ( parseFloat( focalPoint2.y ) - parseFloat( focalPoint1.y ) ) * progress,
-			}
+			this.setState( newState );
 		}
 
 		previewScrolling() {
@@ -247,88 +182,23 @@ const withParallax = function( WrappedComponent ) {
 			}, duration );
 		}
 
-		getStyles() {
+		getStylesFromState() {
 
-			let {
-				attributes: {
-					scrollingEffect,
-					focalPoint,
-					finalFocalPoint,
-					initialBackgroundScale,
-					finalBackgroundScale,
-				}
-			} = this.props;
-
-			const {
-				containerBox,
-				containerWidth,
-				containerHeight,
-
-				distance,
-				progress,
-
-				scrollContainerBox,
-				scrollContainerHeight,
-			} = this.state;
-
-			if ( scrollingEffect === 'static' || ! this.container || ! this.scrollContainer ) {
-				return {
-					objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
-				};
+			if ( ! this.container || ! this.scrollContainer ){
+				return {};
 			}
 
-			let newFocalPoint;
-			let newTranslateY;
+			const config = Object.assign( {}, this.state, this.props.attributes );
+			console.log( !! this.scrollContainer, config );
 
-			let initialScale = initialBackgroundScale;
-			let finalScale = finalBackgroundScale;
-			let newScale;
-
-			newTranslateY = scrollContainerBox.top + scrollContainerHeight / 2 - containerBox.top - containerHeight / 2;
-
-			let parallaxAmount = 0;
-			let minImageHeight = scrollContainerHeight;
-
-			if ( scrollingEffect === 'parallax' ) {
-				parallaxAmount = 0.75;
-				newFocalPoint = focalPoint;
-				initialScale = finalScale = initialBackgroundScale;
-				minImageHeight += ( containerHeight - scrollContainerHeight ) * (1 - parallaxAmount);
-			}
-
-			newTranslateY = newTranslateY * parallaxAmount;
-
-			let maxScale = Math.max( initialScale, finalScale );
-
-			initialScale = initialScale / maxScale;
-			finalScale = finalScale / maxScale;
-
-			if ( scrollingEffect === 'doppler' ) {
-				newFocalPoint = this.getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
-			}
-
-			newScale = initialScale + ( finalScale - initialScale ) * progress;
-
-			let newTranslateX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
-			let newTransform = `translate(${ newTranslateX },${ newTranslateY }px) translateY(-50%) scale(${ newScale })`;
-
-			return {
-				width: containerWidth * maxScale,
-				height: minImageHeight * maxScale,
-				top: '50%',
-				minHeight: 0,
-				transition: 'none',
-				transform: newTransform,
-				objectPosition: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
-				transformOrigin: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
-			};
+			return getStyles( config );
 		}
 
 		render() {
 			return (
 				<Fragment>
 					<div ref={ ( el ) => ( this.container = el ) }>
-						<ParallaxContext.Provider value={ { style: this.getStyles() } }>
+						<ParallaxContext.Provider value={ { style: this.getStylesFromState() } }>
 							<WrappedComponent { ...this.props } />
 						</ParallaxContext.Provider>
 					</div>
@@ -346,12 +216,7 @@ const withParallaxContext = function( WrappedComponent ) {
 		render() {
 			return(
 				<ParallaxContext.Consumer>
-					{ context => (
-						<WrappedComponent
-							parallax={ context }
-							{ ...this.props }
-						/>
-					) }
+					{ context => <WrappedComponent parallax={ context } { ...this.props } /> }
 				</ParallaxContext.Consumer>
 			)
 		}
