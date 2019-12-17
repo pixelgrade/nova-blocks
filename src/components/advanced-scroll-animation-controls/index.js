@@ -17,6 +17,11 @@ const {
 	ToggleControl,
 } = wp.components;
 
+const snapValues = {
+	x: [0, 0.5, 1],
+	y: [0, 0.5, 1]
+}
+
 const AdvancedScrollAnimationControls = function( props ) {
 
 	const {
@@ -81,22 +86,21 @@ const ScrollingEffectPanel = ( props ) => {
 }
 
 function maybeSnapFocalPoint( focalPoint ) {
-	let x = focalPoint.x;
-	let y = focalPoint.y;
+	let x = parseFloat( focalPoint.x );
+	let y = parseFloat( focalPoint.y );
+	let thereshold = 0.05;
 
-	if ( 0.4 < x && x < 0.6 ) {
-		x = 0.5;
-	}
+	snapValues.x.forEach( snapValue => {
+		if ( snapValue - thereshold < x && x < snapValue + thereshold ) {
+			x = snapValue;
+		}
+	} );
 
-	if ( 0.9 < x ) { x = 1 }
-	if ( 0.1 > x ) { x = 0 }
-
-//	if ( 0.4 < y && y < 0.6 ) {
-//		y = 0.5;
-//	}
-
-	if ( 0.9 < y ) { y = 1 }
-	if ( 0.1 > y ) { y = 0 }
+	snapValues.y.forEach( snapValue => {
+		if ( snapValue - thereshold < y && y < snapValue + thereshold ) {
+			y = snapValue;
+		}
+	} );
 
 	return { x, y }
 }
@@ -177,9 +181,17 @@ const StartFramePanel = ( props ) => {
 		panelTitle = dopplerPanelTitle;
 	}
 
-	const dopplerClassName = 'doppler-focal-point-picker  doppler-focal-point-picker--start';
+	const dopplerClassName = 'doppler-focal-point-picker doppler-focal-point-picker--start';
 
-	const className = isDoppler ? dopplerClassName : '';
+	let className = isDoppler ? dopplerClassName : '';
+
+	if ( snapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
+		className += ' is-snapped-x';
+	}
+
+	if ( snapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
+		className += ' is-snapped-y';
+	}
 
 	return (
 		<PanelBody
@@ -257,10 +269,20 @@ const EndFramePanel = ( props ) => {
 		return false;
 	}
 
+	let className = 'doppler-focal-point-picker doppler-focal-point-picker--end';
+
+	if ( snapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
+		className += ' is-snapped-x';
+	}
+
+	if ( snapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
+		className += ' is-snapped-y';
+	}
+
 	return (
 		<PanelBody
 			title={ __( 'End Frame position', '__plugin_txtd' ) }
-			className={ 'doppler-focal-point-picker  doppler-focal-point-picker--end' }
+			className={ className }
 		>
 			<FocalPointPicker
 				label={ 'Focal Point' }

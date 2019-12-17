@@ -13,13 +13,35 @@
 
 	.doppler-focal-point-picker &:before {
 		content: "";
+
 		position: absolute;
-		left: -1px;
-		height: 400px;
 		top: -200px;
+		left: 0;
+
+		height: 400px;
 		border-left: 2px dashed #0085ba;
+		transform: translateX(-50%);
 	}
 
+	.doppler-focal-point-picker &:after {
+		content: "";
+
+		position: absolute;
+		top: 0;
+		left: -248px;
+
+		width: 496px;
+		border-top: 1px solid transparent;
+		transform: translateY(-50%);
+	}
+
+	.doppler-focal-point-picker.is-snapped-x &.is-dragging:before {
+		border-left: 1px solid #00FFFF;
+	}
+
+	.doppler-focal-point-picker.is-snapped-y &.is-dragging:after {
+		border-top-color: #00FFFF;
+	}
 }
 
 .novablocks-scrolling-effect-panel {
