@@ -189,8 +189,6 @@ const withParallax = function( WrappedComponent ) {
 			}
 
 			const config = Object.assign( {}, this.state, this.props.attributes );
-			console.log( !! this.scrollContainer, config );
-
 			return getStyles( config );
 		}
 

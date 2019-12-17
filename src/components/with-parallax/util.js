@@ -22,6 +22,34 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 }
 
 export const getStyles = function( config ) {
+	return getStylesFromProps( getProps( config ) );
+}
+
+export const getStylesFromProps = function( props ) {
+
+	const {
+		parallaxAmount,
+		width,
+		height,
+		moveX,
+		moveY,
+		scale,
+		focalPoint,
+	} = props;
+
+	return {
+		width,
+		height,
+		minHeight: 0,
+		maxWidth: 'none',
+		top: '50%',
+		transform: `translate(${ moveX },${ moveY * parallaxAmount }px) translateY(-50%) scale(${ scale })`,
+		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+		transformOrigin: focalPoint.x * 100 + '% ' + '50%',
+	};
+}
+
+export const getProps = function( config ) {
 
 	const {
 		container,
@@ -53,7 +81,7 @@ export const getStyles = function( config ) {
 	let finalScale = finalBackgroundScale;
 	let newScale;
 
-	newTranslateY = scrollContainerHeight / 2 - containerHeight / 2;
+	newTranslateY = config.scrollContainerBox.top - config.containerBox.top + scrollContainerHeight / 2 - containerHeight / 2;
 
 	let parallaxAmount = 1;
 	let minImageHeight = scrollContainerHeight;
@@ -64,9 +92,6 @@ export const getStyles = function( config ) {
 		initialScale = finalScale = initialBackgroundScale;
 		minImageHeight += ( containerHeight - scrollContainerHeight ) * (1 - parallaxAmount);
 	}
-
-	newTranslateY = newTranslateY * parallaxAmount;
-	newTranslateY = 0;
 
 	let maxScale = Math.max( initialScale, finalScale );
 
@@ -80,17 +105,16 @@ export const getStyles = function( config ) {
 	newScale = initialScale + ( finalScale - initialScale ) * progress;
 
 	let newTranslateX = ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%';
-	let newTransform = `translate(${ newTranslateX },${ newTranslateY }px) translateY(-50%) scale(${ newScale })`;
 
 	return {
+		parallaxAmount: parallaxAmount,
+		progress: progress,
 		width: containerWidth * maxScale,
 		height: minImageHeight * maxScale,
-		minHeight: 0,
-		maxWidth: 'none',
-		top: '50%',
-		transform: newTransform,
-		objectPosition: newFocalPoint.x * 100 + '% ' + newFocalPoint.y * 100 + '%',
-		transformOrigin: newFocalPoint.x * 100 + '% ' + '50%',
+		moveX: newTranslateX,
+		moveY: newTranslateY,
+		scale: newScale,
+		focalPoint: newFocalPoint,
 	};
 }
 

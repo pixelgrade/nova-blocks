@@ -1,16 +1,18 @@
 import { parallaxInit } from "../../utils";
-import { getStyles, getState } from "../../components/with-parallax/util";
+import { getState, getProps, getStylesFromProps } from "../../components/with-parallax/util";
 
 (function($, window, undefined) {
 
+	let $heroes = $( '.novablocks-hero' );
+	let heroFrameRendered = false;
 
 	$(function() {
-		const $body = $( 'body' );
-		const shouldHaveBullets = $body.is( '.novablocks-has-position-indicators' ) && $( '.novablocks-hero' ).length > 1;
-		const $heroes = $( '.novablocks-hero' );
+		heroesInit();
+		bulletsInit();
+		scrollButtonInit();
+	})
 
-		let frameRendered = false;
-		let scrollY = 0;
+	function heroesInit() {
 
 		$heroes.each( function( i, container ) {
 			var $container = $( container );
@@ -51,41 +53,50 @@ import { getStyles, getState } from "../../components/with-parallax/util";
 
 			$( window ).on( 'scroll', function() {
 				var state = getState( container, config );
-				scrollY = window.scrollY;
 				$container.data( 'state', state );
-				frameRendered = false;
+				heroFrameRendered = false;
 			} );
 		} );
 
-		function updateLoop() {
-			if ( ! frameRendered ) {
-				$heroes.each( function( i, obj ) {
-					let $container = $( obj );
-					let state = $container.data( 'state' );
-					let config = $container.data( 'config' );
+		requestAnimationFrame( heroUpdateLoop );
+	}
 
-					config = Object.assign( {}, state, config );
+	function heroUpdateLoop() {
+		if ( ! heroFrameRendered ) {
+			$heroes.each( function( i, obj ) {
+				let $container = $( obj );
+				let state = $container.data( 'state' );
+				let config = $container.data( 'config' );
 
-					let styles = getStyles( config );
-					let { containerWidth, containerHeight } = config;
+				config = Object.assign( {}, state, config );
 
-					$container.data( 'parallax' ).css( styles );
-					$container.data( 'mask' ).css( {
-						clip: `rect(0 ${ containerWidth }px ${ containerHeight }px 0)`
-					} )
-				} );
-				frameRendered = true;
-			}
-			requestAnimationFrame( updateLoop );
+				let props = getProps( config );
+
+				// because of fixed positioning
+				props.parallaxAmount = 1 - props.parallaxAmount;
+				props.moveY = -1 * props.moveY;
+
+				let styles = getStylesFromProps( props );
+				let { containerWidth, containerHeight } = config;
+
+				$container.data( 'parallax' ).css( styles );
+				$container.data( 'mask' ).css( {
+					clip: `rect(0 ${ containerWidth }px ${ containerHeight }px 0)`
+				} )
+			} );
+			heroFrameRendered = true;
 		}
-		requestAnimationFrame( updateLoop );
+		requestAnimationFrame( heroUpdateLoop );
+	}
+
+	function bulletsInit() {
+		const $body = $( 'body' );
+		const shouldHaveBullets = $body.is( '.novablocks-has-position-indicators' ) && $( '.novablocks-hero' ).length > 1;
 
 		if ( shouldHaveBullets && typeof $.fn.bully !== 'undefined' ) {
 			$( '.novablocks-hero' ).bully();
 		}
-
-		scrollButtonInit();
-	})
+	}
 
 	function scrollButtonInit() {
 		const $scrollButton = $( '.novablocks-hero__indicator' );
