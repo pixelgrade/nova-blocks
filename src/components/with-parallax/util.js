@@ -37,7 +37,6 @@ export const getStylesFromProps = function( props ) {
 		offsetY,
 		scale,
 		focalPoint,
-		transformOrigin,
 	} = props;
 
 	return {
@@ -45,90 +44,152 @@ export const getStylesFromProps = function( props ) {
 		height: height || '',
 		minHeight: 0,
 		maxWidth: 'none',
-		top: '50%',
-		transform: `translate(${ moveX },${ moveY * parallaxAmount }px) translateX(${ offsetX }) translateY(${ offsetY }) scale(${ scale })`,
+		transform: `translate(${ moveX },${ moveY * parallaxAmount }px) translateX(${ offsetX }) translateY(${ offsetY }px) scale(${ scale })`,
 		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
-		transformOrigin: transformOrigin.x * 100 + '% ' + transformOrigin.y * 100 + '%',
+		transformOrigin: focalPoint.x * 100 + '% 50%',
 	};
 }
 
-export const getProps = function( config ) {
+function getIntermediateValue( initialValue, finalValue, progress ) {
+	return initialValue + ( finalValue - initialValue ) * progress;
+}
+
+function getScales( config ) {
+
+	let {
+		scrollingEffect,
+		initialBackgroundScale,
+		finalBackgroundScale,
+		progress,
+	} = config;
+
+	if ( scrollingEffect === 'parallax' ) {
+		finalBackgroundScale = initialBackgroundScale;
+	}
+
+	let maxScale = Math.max( initialBackgroundScale, finalBackgroundScale );
+
+	initialBackgroundScale = initialBackgroundScale / maxScale;
+	finalBackgroundScale = finalBackgroundScale / maxScale;
+
+	return {
+		maxScale: maxScale,
+		newScale: getIntermediateValue( initialBackgroundScale, finalBackgroundScale, progress ),
+	}
+}
+
+function getFocalPoint( config ) {
+
+	let {
+		scrollingEffect,
+		focalPoint,
+		finalFocalPoint,
+		progress,
+	} = config;
+
+	if ( scrollingEffect === 'parallax' ) {
+		return focalPoint;
+	}
+
+	if ( scrollingEffect === 'doppler' ) {
+		return getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
+	}
+}
+
+function getNewImageHeight( config, parallaxAmount ) {
 
 	const {
-		container,
-		scrollContainer,
+		scrollContainerHeight,
+		containerHeight,
+	} = config;
+
+	return containerHeight + ( scrollContainerHeight - containerHeight ) * parallaxAmount;
+}
+
+export const getProps = function( config, fixed ) {
+
+	const {
+		distance,
+		progress,
+		smoothStart,
+		smoothEnd,
 
 		scrollingEffect,
 		focalPoint,
 		finalFocalPoint,
 		initialBackgroundScale,
 		finalBackgroundScale,
+
+		container,
 		containerBox,
 		containerWidth,
 		containerHeight,
-		progress,
+
+		scrollContainer,
 		scrollContainerBox,
 		scrollContainerHeight,
 	} = config;
 
 	if ( scrollingEffect === 'static' ) {
 		return {
+			width: containerWidth,
+			height: containerHeight,
 			scale: initialBackgroundScale,
 			moveX: 0,
 			moveY: 0,
 			parallaxAmount: 0,
 			focalPoint,
-			transformOrigin: focalPoint,
 		};
 	}
 
-	let transformOrigin;
-	let newFocalPoint;
+	const parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+	const newFocalPoint = getFocalPoint( config );
+	const { maxScale, newScale } = getScales( config );
+	const newImageHeight = getNewImageHeight( config, parallaxAmount );
 
-	let initialScale = initialBackgroundScale;
-	let finalScale = finalBackgroundScale;
-	let newScale;
+	// keep in sync with scroll
+	let moveY = scrollContainerBox.top - containerBox.top;
+	let oldMoveY = moveY;
 
-	let parallaxAmount = 1;
-	let minImageHeight = scrollContainerHeight;
-	let offsetY = -0.5;
+	if ( ! smoothStart ) {
+		if ( !! fixed && containerBox.top < 0 ) {
+			moveY = scrollContainerBox.top;
+		}
 
-	if ( scrollingEffect === 'parallax' ) {
-		parallaxAmount = 0.75;
-		newFocalPoint = focalPoint;
-		transformOrigin = newFocalPoint;
-		initialScale = finalScale = initialBackgroundScale;
-		minImageHeight += ( containerHeight - scrollContainerHeight ) * (1 - parallaxAmount);
-//		offsetY += (1 - initialScale) * 0.25 * newFocalPoint.y;
+		if ( ! fixed && 0 > scrollContainerBox.top - containerBox.top ) {
+			moveY = 0;
+		}
 	}
 
-	let maxScale = Math.max( initialScale, finalScale );
+	if ( ! smoothEnd ) {
 
-
-	initialScale = initialScale / maxScale;
-	finalScale = finalScale / maxScale;
-
-	if ( scrollingEffect === 'doppler' ) {
-		transformOrigin = newFocalPoint = getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
-		transformOrigin.y = 0.5;
+		if ( scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight ) {
+			if ( !! fixed ) {
+				moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;
+			} else {
+				moveY = containerHeight - scrollContainerHeight;
+			}
+		}
 	}
 
-	newScale = initialScale + ( finalScale - initialScale ) * progress;
+	// align top
+	let offsetY = newImageHeight * maxScale * ( newScale - 1 ) * 0.5;
 
-	let moveY = config.scrollContainerBox.top - config.containerBox.top + scrollContainerHeight / 2 - containerHeight / 2;
+	// position according to focalPoint
+	offsetY += newImageHeight * ( 1 - maxScale * newScale ) * newFocalPoint.y;
 
 	return {
+		distance: distance,
 		parallaxAmount: parallaxAmount,
 		progress: progress,
 		width: containerWidth * maxScale,
-		height: minImageHeight * maxScale,
+		height: newImageHeight * maxScale,
 		moveX: 0,
 		moveY: moveY,
 		offsetX: ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%',
-		offsetY: offsetY * 100 + '%',
+		offsetY: offsetY,
 		scale: newScale,
 		focalPoint: newFocalPoint,
-		transformOrigin: transformOrigin,
 	};
 }
 
@@ -177,6 +238,9 @@ export const getState = function( container, config ) {
 
 	return {
 		progress,
+		distance,
+		smoothStart,
+		smoothEnd,
 
 		containerBox,
 		containerHeight,

@@ -85,6 +85,7 @@ const withParallax = function( WrappedComponent ) {
 				}
 
 				if ( window.ResizeObserver ) {
+
 					const resizeObserver = new ResizeObserver( () => {
 						this.updateState();
 					} );
@@ -192,9 +193,7 @@ const withParallax = function( WrappedComponent ) {
 
 			const state = getState( this.container, Object.assign( {}, this.state, attributes ) );
 			const config = Object.assign( {}, state, attributes );
-			const styles = getStyles( config )
-
-			console.log( config, styles );
+			const styles = getStyles( config );
 
 			return styles;
 		}

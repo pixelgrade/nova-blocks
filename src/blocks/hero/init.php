@@ -37,6 +37,10 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = 'novablock-hero--' . $attributes['scrollingEffect'];
+		}
+
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
 			$media = [];
 		} else {

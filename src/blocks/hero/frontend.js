@@ -5,11 +5,19 @@ import { getState, getProps, getStylesFromProps } from "../../components/with-pa
 
 	let $heroes = $( '.novablocks-hero' );
 	let heroFrameRendered = false;
+	let windowScrollY;
+
+	function updateScroll() {
+		windowScrollY = window.scrollY;
+	}
 
 	$(function() {
 		heroesInit();
 		bulletsInit();
 		scrollButtonInit();
+		updateScroll();
+
+		$( window ).on( 'scroll', updateScroll );
 	})
 
 	function heroesInit() {
@@ -70,10 +78,9 @@ import { getState, getProps, getStylesFromProps } from "../../components/with-pa
 
 				config = Object.assign( {}, state, config );
 
-				let props = getProps( config );
+				let props = getProps( config, true );
 
 				// because of fixed positioning
-				props.parallaxAmount = 1 - props.parallaxAmount;
 				props.moveY = -1 * props.moveY;
 
 				let styles = getStylesFromProps( props );
@@ -106,10 +113,9 @@ import { getState, getProps, getStylesFromProps } from "../../components/with-pa
 			$scrollButton.on( 'click', function() {
 				const heroBox = $hero.get(0).getBoundingClientRect();
 				const heroBoxTop = heroBox.y || heroBox.top;
-				const scrollY = window.scrollY;
 
 				window.scrollTo( {
-					top: heroBoxTop + heroBox.height + scrollY,
+					top: heroBoxTop + heroBox.height + windowScrollY,
 					behavior: 'smooth'
 				} );
 			} );
