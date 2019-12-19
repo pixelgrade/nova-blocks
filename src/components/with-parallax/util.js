@@ -149,7 +149,6 @@ export const getProps = function( config, fixed ) {
 
 	// keep in sync with scroll
 	let moveY = scrollContainerBox.top - containerBox.top;
-	let oldMoveY = moveY;
 
 	if ( ! smoothStart ) {
 		if ( !! fixed && containerBox.top < 0 ) {

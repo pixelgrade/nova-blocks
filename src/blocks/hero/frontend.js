@@ -83,6 +83,10 @@ import { getState, getProps, getStylesFromProps } from "../../components/with-pa
 				// because of fixed positioning
 				props.moveY = -1 * props.moveY;
 
+				if ( 0 < props.progress && props.progress < 1 ) {
+					props.parallaxAmount = 1 - props.parallaxAmount;
+				}
+
 				let styles = getStylesFromProps( props );
 				let { containerWidth, containerHeight } = config;
 
