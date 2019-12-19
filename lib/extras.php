@@ -841,26 +841,26 @@ function novablocks_add_scrolling_effect_options( $settings ) {
 	$support = novablocks_get_theme_support();
 
 	$options = array(
-		'scrollingEffectOptions' => array(
-			array(
-				'label' => esc_html__( 'Static', '__plugin_txtd' ),
-				'value' => 'static'
-			),
-			array(
-				'label' => esc_html__( 'Parallax', '__plugin_txtd' ),
-				'value' => 'parallax'
-			),
+		array(
+			'label' => esc_html__( 'Static', '__plugin_txtd' ),
+			'value' => 'static'
+		),
+		array(
+			'label' => esc_html__( 'Parallax', '__plugin_txtd' ),
+			'value' => 'parallax'
 		),
 	);
 
-	if ( isset( $support['doppler'] ) ) {
+	if ( array_search( 'doppler', $support ) ) {
 		$options[] = array(
 			'label' => esc_html__( 'Doppler by Pixelgrade ®', '__plugin_txtd' ),
 			'value' => 'doppler',
 		);
 	}
 
-	$settings = array_merge( $settings, $options );
+	$settings = array_merge( $settings, array(
+		'scrollingEffectOptions' => $options,
+	) );
 
 	return $settings;
 }
@@ -883,18 +883,4 @@ function novablocks_get_theme_support() {
 	}
 
 	return $theme_support;
-}
-
-function novablocks_get_feature_support( $feature, $default = false ) {
-	$theme_support = novablocks_get_theme_support();
-
-	if ( ! $theme_support ) {
-		return $default;
-	}
-
-	if ( isset( $theme_support[ $feature ] ) ) {
-		return $theme_support[ $feature ];
-	} else {
-		return $default;
-	}
 }

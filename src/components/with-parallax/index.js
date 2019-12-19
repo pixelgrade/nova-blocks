@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { findParents } from '../../utils';
 import { easeInOutCubic } from '../../easing';
-import { AdvancedScrollAnimationControls } from "../index";
+import { ScrollingEffectControls } from "../index";
 
 import { getStyles, getState } from './util';
 
@@ -208,7 +208,7 @@ const withParallax = function( WrappedComponent ) {
 						</ParallaxContext.Provider>
 					</div>
 					<InspectorControls>
-						<AdvancedScrollAnimationControls { ...this.props } isScrolling={ this.state.isScrolling } previewScrolling={ this.previewScrolling } />
+						<ScrollingEffectControls { ...this.props } isScrolling={ this.state.isScrolling } previewScrolling={ this.previewScrolling } />
 					</InspectorControls>
 				</Fragment>
 			);

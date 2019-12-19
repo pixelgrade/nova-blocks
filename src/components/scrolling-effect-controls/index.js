@@ -22,7 +22,7 @@ const snapValues = {
 	y: [0, 0.5, 1]
 }
 
-const AdvancedScrollAnimationControls = function( props ) {
+const ScrollingEffectControls = function( props ) {
 
 	const {
 		attributes: {
@@ -337,4 +337,4 @@ const EndFramePanel = ( props ) => {
 	)
 }
 
-export default AdvancedScrollAnimationControls;
+export default ScrollingEffectControls;
