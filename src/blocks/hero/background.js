@@ -8,8 +8,7 @@ const HeroBackground = function( props ) {
 		attributes: {
 			overlayFilterStyle,
 			overlayFilterStrength,
-			media,
-			focalPoint,
+			media
 		}
 	} = props;
 

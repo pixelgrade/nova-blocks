@@ -1,4 +1,3 @@
-import { parallaxInit } from "../../utils";
 import { getState, getProps, getStylesFromProps } from "../../components/with-parallax/util";
 
 (function($, window, undefined) {
