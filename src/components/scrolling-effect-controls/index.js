@@ -88,16 +88,16 @@ const ScrollingEffectPanel = ( props ) => {
 function maybeSnapFocalPoint( focalPoint ) {
 	let x = parseFloat( focalPoint.x );
 	let y = parseFloat( focalPoint.y );
-	let thereshold = 0.05;
+	let threshold = 0.05;
 
 	snapValues.x.forEach( snapValue => {
-		if ( snapValue - thereshold < x && x < snapValue + thereshold ) {
+		if ( snapValue - threshold < x && x < snapValue + threshold ) {
 			x = snapValue;
 		}
 	} );
 
 	snapValues.y.forEach( snapValue => {
-		if ( snapValue - thereshold < y && y < snapValue + thereshold ) {
+		if ( snapValue - threshold < y && y < snapValue + threshold ) {
 			y = snapValue;
 		}
 	} );
