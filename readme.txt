@@ -2,9 +2,9 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.2.3
+Tested up to: 5.3.1
 Requires PHP: 5.4.0
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.1.6 =
+* Fixed customized map style.
+* Quick fix to avoid "Undefined index" PHP notice.
+* Fixed Scroll and Position Indicators on the latest version of Gutenberg.
 
 = 1.1.5 =
 * Added anchor links for creating a one-page site.
