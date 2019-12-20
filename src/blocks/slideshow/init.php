@@ -80,7 +80,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
             <div class="novablocks-slideshow__mask">
-                <div class="novablocks-slideshow__slider" data-rellax-amount="<?php echo esc_attr( $actualParallaxAmount ); ?>">
+                <div class="novablocks-slideshow__slider">
 
 					<?php foreach ( $attributes['galleryImages'] as $image ) {
 						if ( empty( $image['sizes']['large']['url'] ) ) {
@@ -104,7 +104,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                                 <div class="novablocks-slideshow__foreground novablocks-foreground">
                                     <div class="novablocks-slideshow__content novablocks-u-content-padding">
                                         <div class="novablocks-u-content-align">
-                                            <div class="novablocks-slideshow__inner-container novablocks-u-content-width" style="<?php echo novablocks_get_parallax_amount( $attributes ); ?>">
+                                            <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
                                                 <?php
                                                 if ( ! empty( $image['title']['rendered'] ) ) {
                                                     echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';

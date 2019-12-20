@@ -83,15 +83,6 @@ function novablocks_enqueue_frontend_assets() {
 
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-	$rellax_path = '/dist/js/vendor/jquery.rellax' . $suffix . '.js';
-	wp_register_script(
-		'nova-blocks-rellax',
-		novablocks_get_plugin_url() . $rellax_path,
-		array( 'jquery' ),
-		'1.0.0',
-		true
-	);
-
 	$bully_path = '/dist/js/vendor/jquery.bully' . $suffix . '.js';
 	wp_register_script(
 		'nova-blocks-bully',
@@ -122,7 +113,6 @@ function novablocks_enqueue_frontend_assets() {
 	$script_dependencies = array(
 		'jquery',
 		'imagesloaded',
-		'nova-blocks-rellax',
 		'nova-blocks-slick',
 		'nova-blocks-velocity',
 	);

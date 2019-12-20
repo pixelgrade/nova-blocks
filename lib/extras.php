@@ -92,23 +92,6 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 }
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
-function novablocks_get_parallax_attributes() {
-	return array(
-		'enableParallax'       => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'parallaxAmount'       => array(
-			'type'    => 'string',
-			'default' => '50',
-		),
-		'parallaxCustomAmount' => array(
-			'type'    => 'number',
-			'default' => 50,
-		),
-	);
-}
-
 function novablocks_get_content_padding_attributes() {
 	return array(
 		'contentPadding'       => array(
@@ -193,28 +176,6 @@ function novablocks_get_doppler_attributes() {
 	);
 }
 
-function novablocks_is_parallax_enabled( $attributes ) {
-	$enableParallax = $attributes[ 'enableParallax' ];
-	if ( ! empty( $enableParallax ) ) {
-		return $enableParallax;
-	} elseif ( $enableParallax === false ) {
-		return false;
-	}
-
-	$parallaxAttributes = novablocks_get_parallax_attributes();
-	return isset( $parallaxAttributes[ 'enableParallax' ][ 'default' ] ) ? $parallaxAttributes[ 'enableParallax' ][ 'default' ] : false;
-}
-
-function novablocks_get_parallax_amount( $attributes ) {
-	$parallaxAmount = $attributes[ 'parallaxAmount' ];
-	$parallaxAmount = ! empty( $parallaxAmount ) ? $parallaxAmount : '50';
-	$customParallaxAmount = $attributes[ 'parallaxCustomAmount' ];
-	$actualParallaxAmount = $parallaxAmount === 'custom' ? $customParallaxAmount : intval( $parallaxAmount );
-	$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
-
-	return esc_attr( $actualParallaxAmount );
-}
-
 function novablocks_get_block_extra_classes( $attributes ) {
 	$classes = array();
 
@@ -237,10 +198,6 @@ function novablocks_get_block_extra_classes( $attributes ) {
 	$classes[] = 'novablocks-u-background';
 	if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
 		$classes[] = 'novablocks-u-background-' . $attributes['overlayFilterStyle'];
-	}
-
-	if ( novablocks_is_parallax_enabled( $attributes ) ) {
-		$classes[] = 'has-parallax';
 	}
 
 	return $classes;
@@ -286,8 +243,7 @@ function novablocks_get_slideshow_attributes() {
 		novablocks_get_alignment_attributes(),
 		novablocks_get_color_attributes(),
 		novablocks_get_content_padding_attributes(),
-		novablocks_get_content_width_attributes(),
-		novablocks_get_parallax_attributes()
+		novablocks_get_content_width_attributes()
 	);
 }
 
@@ -454,8 +410,7 @@ function novablocks_add_hero_settings( $settings ) {
 			novablocks_get_alignment_attributes(),
 			novablocks_get_color_attributes(),
 			novablocks_get_content_padding_attributes(),
-			novablocks_get_content_width_attributes(),
-			novablocks_get_parallax_attributes()
+			novablocks_get_content_width_attributes()
 		),
 	);
 

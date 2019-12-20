@@ -54,7 +54,7 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<div class="novablocks-map__map-container">
 				<div class="novablocks-mask">
-					<div class="novablocks-parallax" data-rellax-amount="<?php echo esc_attr( novablocks_get_parallax_amount( $attributes ) ); ?>">
+					<div class="novablocks-parallax">
 						<div
 							class="novablocks-map__map js-novablocks-google-map"
 							data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'

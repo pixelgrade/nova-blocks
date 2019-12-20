@@ -335,7 +335,6 @@ export const parallaxInit = function( $blocks ) {
 				let { containerWidth, containerHeight } = config;
 
 				$container.data( 'parallax' ).css( styles );
-				console.log( $container.data( 'parallax' ), styles );
 				$container.data( 'mask' ).css( {
 					clip: `rect(0 ${ containerWidth }px ${ containerHeight }px 0)`
 				} )
