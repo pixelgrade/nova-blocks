@@ -165,6 +165,34 @@ function novablocks_get_alignment_attributes() {
 	);
 }
 
+function novablocks_get_doppler_attributes() {
+	return array(
+		'finalFocalPoint'         => array(
+			'type'    => 'object',
+			'default' => array(
+				'x' => 0.5,
+				'y' => 0.5
+			),
+		),
+		'finalBackgroundScale'    => array(
+			'type'    => 'number',
+			'default' => 1
+		),
+		'scrollIndicatorBlock'    => array(
+			'type'    => 'boolean',
+			'default' => false
+		),
+		'scrollingEffect' => array(
+			'type' => 'string',
+			'default' => 'parallax',
+		),
+		'motionPreset' => array(
+			'type' => 'string',
+			'default' => 'standard-dynamic',
+		),
+	);
+}
+
 function novablocks_is_parallax_enabled( $attributes ) {
 	$enableParallax = $attributes[ 'enableParallax' ];
 	if ( ! empty( $enableParallax ) ) {
@@ -254,6 +282,7 @@ function novablocks_get_slideshow_attributes() {
 				'default' => 75,
 			),
 		),
+		novablocks_get_doppler_attributes(),
 		novablocks_get_alignment_attributes(),
 		novablocks_get_color_attributes(),
 		novablocks_get_content_padding_attributes(),
@@ -308,7 +337,7 @@ function novablocks_get_google_map_attributes() {
 				'default' => 17,
 			),
 		),
-		novablocks_get_parallax_attributes()
+		novablocks_get_doppler_attributes()
 	);
 }
 
@@ -405,21 +434,6 @@ function novablocks_add_hero_settings( $settings ) {
 					'type'    => 'number',
 					'default' => 1
 				),
-				'finalFocalPoint'         => array(
-					'type'    => 'object',
-					'default' => array(
-						'x' => 0.5,
-						'y' => 0.5
-					),
-				),
-				'finalBackgroundScale'    => array(
-					'type'    => 'number',
-					'default' => 1
-				),
-				'scrollIndicatorBlock'    => array(
-					'type'    => 'boolean',
-					'default' => false
-				),
 				'backgroundType'          => array(
 					'type'    => 'string',
 					'default' => 'image'
@@ -435,15 +449,8 @@ function novablocks_add_hero_settings( $settings ) {
 						),
 					),
 				),
-				'scrollingEffect' => array(
-					'type' => 'string',
-					'default' => 'parallax',
-				),
-				'motionPreset' => array(
-					'type' => 'string',
-					'default' => 'standard-dynamic',
-				),
 			),
+			novablocks_get_doppler_attributes(),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_color_attributes(),
 			novablocks_get_content_padding_attributes(),
@@ -850,13 +857,6 @@ function novablocks_add_scrolling_effect_options( $settings ) {
 			'value' => 'parallax'
 		),
 	);
-
-	if ( array_search( 'doppler', $support ) ) {
-		$options[] = array(
-			'label' => esc_html__( 'Doppler by Pixelgrade ®', '__plugin_txtd' ),
-			'value' => 'doppler',
-		);
-	}
 
 	$settings = array_merge( $settings, array(
 		'scrollingEffectOptions' => $options,

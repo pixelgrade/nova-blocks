@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, progress ) {
 
 	if ( ! focalPoint1 && ! focalPoint2 ) {
@@ -37,6 +39,7 @@ export const getStylesFromProps = function( props ) {
 		offsetY,
 		scale,
 		focalPoint,
+		containerBox,
 	} = props;
 
 	return {
@@ -63,6 +66,8 @@ function getScales( config ) {
 		progress,
 	} = config;
 
+	initialBackgroundScale = initialBackgroundScale || 1;
+
 	if ( scrollingEffect === 'parallax' ) {
 		finalBackgroundScale = initialBackgroundScale;
 	}
@@ -86,6 +91,13 @@ function getFocalPoint( config ) {
 		finalFocalPoint,
 		progress,
 	} = config;
+
+	if ( ! focalPoint ) {
+		return {
+			x: 0.5,
+			y: 0.5,
+		}
+	}
 
 	if ( scrollingEffect === 'parallax' ) {
 		return focalPoint;
@@ -142,6 +154,7 @@ export const getProps = function( config, fixed ) {
 		};
 	}
 
+
 	const parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
 	const newFocalPoint = getFocalPoint( config );
 	const { maxScale, newScale } = getScales( config );
@@ -171,6 +184,7 @@ export const getProps = function( config, fixed ) {
 		}
 	}
 
+
 	// align top
 	let offsetY = newImageHeight * maxScale * ( newScale - 1 ) * 0.5;
 
@@ -183,7 +197,7 @@ export const getProps = function( config, fixed ) {
 		progress: progress,
 		width: containerWidth * maxScale,
 		height: newImageHeight * maxScale,
-		moveX: 0,
+		moveX: `${ fixed ? containerBox.left - scrollContainerBox.left : 0 }px`,
 		moveY: moveY,
 		offsetX: ( 1 / maxScale - 1 ) * newFocalPoint.x * 100 + '%',
 		offsetY: offsetY,
@@ -248,4 +262,88 @@ export const getState = function( container, config ) {
 		scrollContainerHeight,
 		scrollContainerBox,
 	}
+}
+
+export const parallaxInit = function( $blocks ) {
+
+	let frameRendered = false;
+
+	$blocks.each( function( i, container ) {
+		var $container = $( container );
+		var followThroughStart = !! $container.data( 'smooth-start' );
+		var followThroughEnd = !! $container.data( 'smooth-end' );
+		var scrollingEffect = $container.data( 'scrolling-effect' );
+		var focalPoint = $container.data( 'focal-point' );
+		var finalFocalPoint = $container.data( 'final-focal-point' );
+		var initialBackgroundScale = $container.data( 'initial-background-scale' );
+		var finalBackgroundScale = $container.data( 'final-background-scale' );
+		var scrollContainerHeight = window.innerHeight;
+		var scrollContainerBox = {
+			top: 0,
+			left: 0,
+		};
+
+		var config = {
+			followThroughStart,
+			followThroughEnd,
+			scrollingEffect,
+			scrollContainerHeight,
+			scrollContainerBox,
+			focalPoint,
+			finalFocalPoint,
+			initialBackgroundScale,
+			finalBackgroundScale,
+		};
+
+		$container.data( {
+			state: getState( container, config ),
+			config: config,
+		} );
+
+		var $mask = $container.find( '.novablocks-mask' );
+		var $parallax = $container.find( '.novablocks-parallax' );
+
+		$container.data( 'mask', $mask );
+		$container.data( 'parallax', $parallax );
+
+		$( window ).on( 'scroll', function() {
+			var state = getState( container, config );
+			$container.data( 'state', state );
+			frameRendered = false;
+		} );
+	} );
+
+	function parallaxUpdateLoop() {
+		if ( ! frameRendered ) {
+			$blocks.each( function( i, obj ) {
+				let $container = $( obj );
+				let state = $container.data( 'state' );
+				let config = $container.data( 'config' );
+
+				config = Object.assign( {}, state, config );
+
+				let props = getProps( config, true );
+
+				// because of fixed positioning
+				props.moveY = -1 * props.moveY;
+
+				if ( 0 < props.progress && props.progress < 1 ) {
+					props.parallaxAmount = 1 - props.parallaxAmount;
+				}
+
+				let styles = getStylesFromProps( props );
+				let { containerWidth, containerHeight } = config;
+
+				$container.data( 'parallax' ).css( styles );
+				console.log( $container.data( 'parallax' ), styles );
+				$container.data( 'mask' ).css( {
+					clip: `rect(0 ${ containerWidth }px ${ containerHeight }px 0)`
+				} )
+			} );
+			frameRendered = true;
+		}
+		requestAnimationFrame( parallaxUpdateLoop );
+	}
+
+	requestAnimationFrame( parallaxUpdateLoop );
 }

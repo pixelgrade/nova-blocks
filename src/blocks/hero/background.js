@@ -34,4 +34,4 @@ const HeroBackground = function( props ) {
 	);
 };
 
-export default withParallaxContext( HeroBackground );
+export default HeroBackground;

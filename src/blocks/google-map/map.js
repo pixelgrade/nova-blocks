@@ -2,7 +2,7 @@ import ReactDOMServer from 'react-dom/server';
 import pin from './pin';
 import { getMapStyles, getMarkersCenter, getMapAccentColor } from './utils';
 import defaultMapCenter from './default-map-center';
-import { withParallaxContext } from '../../components/with-parallax';
+import { withParallax } from "../../components";
 
 const { __ } = wp.i18n;
 
@@ -198,7 +198,7 @@ const MapWrapper = ( Map ) => {
 				</div>
 				<div className="novablocks-map__map-container">
 					<div className="novablocks-mask">
-						<div className="novablocks-map__map-parallax" style={ parallax.style }>
+						<div style={ parallax.style }>
 							<Map { ...otherProps }></Map>
 						</div>
 					</div>
@@ -208,4 +208,4 @@ const MapWrapper = ( Map ) => {
 	}
 }
 
-export default withParallaxContext( MapWrapper( Map ) );
+export default MapWrapper( Map );

@@ -1,4 +1,10 @@
-import { debounce, isSafari, hasTouchScreen } from '../../utils';
+import { parallaxInit } from "../../components/with-parallax/util";
+
+import {
+	debounce,
+	isSafari,
+	hasTouchScreen
+} from '../../utils';
 
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';
@@ -13,18 +19,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 	const $window = $( window );
 	const $blocks = $( BLOCK_SELECTOR );
-	const $rellaxTarget = $blocks.filter( '.has-parallax' ).find( SLIDER_SELECTOR );
 	const useOrientation = hasTouchScreen() && 'orientation' in window;
 	const onDebouncedResize = debounce( onResize, 300 );
-
-	// initialize parallax effect
-	if ( typeof $.fn.rellax !== "undefined" ) {
-		$rellaxTarget.rellax( {
-			container: '.novablocks-slideshow__mask',
-			absolute: isSafari,
-			children: CONTENT_SELECTOR,
-		} );
-	}
 
 	$blocks.each( function( index, block ) {
 		var $block = $( block ),
@@ -50,6 +46,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 			});
 		}
 	});
+
+	parallaxInit( $blocks );
 
 	if ( useOrientation ) {
 		$window.on( 'orientationchange', function() {
@@ -98,7 +96,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 			var $slider = $block.find( SLIDER_SELECTOR );
 
 			resetBlockMinHeight( $block );
-			$rellaxTarget.rellax( 'refresh' );
 
 			if ( $slider.is( '.slick-initialized' ) ) {
 				$slider.slick( 'setPosition' );

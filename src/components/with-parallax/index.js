@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { findParents } from '../../utils';
 import { easeInOutCubic } from '../../easing';
-import { ScrollingEffectControls } from "../index";
+import { ScrollingEffectControls, withSettings } from "../index";
 
 import { getStyles, getState } from './util';
 
@@ -18,9 +18,13 @@ const {
 	InspectorControls
 } = wp.blockEditor;
 
+const {
+	compose,
+} = wp.compose;
+
 const ParallaxContext = createContext();
 
-const withParallax = function( WrappedComponent ) {
+const withParallaxProvider = function( WrappedComponent ) {
 
 	return class extends Component {
 
@@ -31,12 +35,10 @@ const withParallax = function( WrappedComponent ) {
 				scrollContainerWidth: 0,
 				scrollContainerHeight: 0,
 				progress: 0.5,
-				isScrolling: false,
 			};
 
 			this.updateHandler = this.updateState.bind( this );
 			this.scrollContainer = this.getScrollContainer();
-			this.previewScrolling = this.previewScrolling.bind( this );
 		}
 
 		getScrollContainer() {
@@ -120,20 +122,76 @@ const withParallax = function( WrappedComponent ) {
 			this.setState( getState( container, config ) );
 		}
 
-		previewScrolling() {
+		getElementStyle() {
+
+			const { attributes } = this.props;
+			const { scrollingEffect } = attributes;
 
 			if ( ! this.scrollContainer || ! this.container ) {
+				return {};
+			}
+
+
+			const state = getState( this.container, Object.assign( {}, this.state, attributes ) );
+			const config = Object.assign( {}, state, attributes );
+			const styles = getStyles( config );
+
+			return styles;
+		}
+
+		render() {
+
+			return (
+				<Fragment>
+					<div ref={ ( el ) => ( this.container = el ) }>
+						<ParallaxContext.Provider value={ {
+							style: this.getElementStyle(),
+							state: this.state,
+							container: this.container,
+							scrollContainer: this.scrollContainer,
+						} }>
+							<WrappedComponent { ...this.props } />
+						</ParallaxContext.Provider>
+					</div>
+				</Fragment>
+			);
+		}
+	};
+};
+
+const withParallaxControls = function( WrappedComponent ) {
+
+	return class extends Component {
+
+		constructor() {
+			super( ...arguments );
+
+			this.state = {
+				isScrolling: false,
+			}
+
+			this.previewScrolling = this.previewScrolling.bind( this );
+		}
+
+		previewScrolling() {
+
+			const {
+				parallax: {
+					scrollContainer,
+					container,
+					state: {
+						containerBox,
+						containerHeight,
+						scrollContainerHeight,
+						scrollContainerBox,
+					}
+				},
+			} = this.props;
+
+			if ( ! container || ! scrollContainer ) {
 				return;
 			}
 
-			const {
-				containerBox,
-				containerHeight,
-				scrollContainerHeight,
-				scrollContainerBox,
-			} = this.state;
-
-			const scrollContainer = this.scrollContainer;
 			const scrollTop = scrollContainer.scrollTop;
 			const speed = 1000; // px per second
 			const startTime = Date.now();
@@ -181,45 +239,25 @@ const withParallax = function( WrappedComponent ) {
 			}, duration );
 		}
 
-		getElementStyle() {
-
-			const { attributes } = this.props;
-			const { scrollingEffect } = attributes;
-
-			if ( ! this.scrollContainer || ! this.container ) {
-				return {};
-			}
-
-
-			const state = getState( this.container, Object.assign( {}, this.state, attributes ) );
-			const config = Object.assign( {}, state, attributes );
-			const styles = getStyles( config );
-
-			return styles;
-		}
-
 		render() {
-
 			return (
 				<Fragment>
-					<div ref={ ( el ) => ( this.container = el ) }>
-						<ParallaxContext.Provider value={ { style: this.getElementStyle() } }>
-							<WrappedComponent { ...this.props } />
-						</ParallaxContext.Provider>
-					</div>
 					<InspectorControls>
 						<ScrollingEffectControls { ...this.props } isScrolling={ this.state.isScrolling } previewScrolling={ this.previewScrolling } />
 					</InspectorControls>
+					<WrappedComponent { ...this.props } />
 				</Fragment>
-			);
+			)
 		}
-	};
-};
+	}
+}
 
 const withParallaxContext = function( WrappedComponent ) {
+
 	return class extends Component {
+
 		render() {
-			return(
+			return (
 				<ParallaxContext.Consumer>
 					{ context => <WrappedComponent parallax={ context } { ...this.props } /> }
 				</ParallaxContext.Consumer>
@@ -228,6 +266,16 @@ const withParallaxContext = function( WrappedComponent ) {
 	}
 }
 
-export { withParallaxContext };
+const withParallax = compose([
+	withParallaxProvider,
+	withParallaxContext,
+	withParallaxControls,
+]);
+
+export {
+	withParallaxProvider,
+	withParallaxContext,
+	withParallaxControls,
+};
 
 export default withParallax;

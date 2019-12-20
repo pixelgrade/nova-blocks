@@ -8,10 +8,10 @@ import {
 	ScrollIndicatorPanel,
 	PositionIndicatorsPanel,
 	AdvancedScrollAnimationControls,
+	withParallax,
+	withSettings,
 } from '../../components';
 
-import withSettings from '../../components/with-settings';
-import withParallax from '../../components/with-parallax';
 import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';

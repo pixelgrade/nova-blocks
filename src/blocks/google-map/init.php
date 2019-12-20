@@ -39,10 +39,22 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 
 		do_action( 'novablocks_google_maps:before' ); ?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+		<div <?php
+
+			echo $id;
+			echo "data-scrolling-effect='" . $attributes['scrollingEffect'] . "' ";
+			echo "data-focal-point='" . json_encode( $attributes['focalPoint'] ) . "' ";
+			echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
+			echo 'data-initial-background-scale="' . $attributes['initialBackgroundScale'] . '"';
+			echo 'data-final-background-scale="' . $attributes['finalBackgroundScale'] . '" ';
+			echo 'data-smooth-start="' . $attributes['followThroughStart'] . '" ';
+			echo 'data-smooth-end="' . $attributes['followThroughEnd'] . '" ';
+
+			?>
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<div class="novablocks-map__map-container">
-				<div class="novablocks-map__mask">
-					<div class="novablocks-map__parallax" data-rellax-amount="<?php echo esc_attr( novablocks_get_parallax_amount( $attributes ) ); ?>">
+				<div class="novablocks-mask">
+					<div class="novablocks-parallax" data-rellax-amount="<?php echo esc_attr( novablocks_get_parallax_amount( $attributes ) ); ?>">
 						<div
 							class="novablocks-map__map js-novablocks-google-map"
 							data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'

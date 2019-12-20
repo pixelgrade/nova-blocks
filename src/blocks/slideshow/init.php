@@ -54,11 +54,28 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_slideshow:before' ); ?>
+		do_action( 'novablocks_slideshow:before' );
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-             style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>"
-             data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
+		$id = '';
+		if ( ! empty( $attributes['anchor'] ) ) {
+			$id = 'id="' . $attributes['anchor'] . '"';
+		} ?>
+
+        <div <?php
+
+	        echo $id;
+	        echo "data-scrolling-effect='" . $attributes['scrollingEffect'] . "' ";
+	        echo "data-focal-point='" . json_encode( $attributes['focalPoint'] ) . "' ";
+	        echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
+	        echo 'data-initial-background-scale="' . $attributes['initialBackgroundScale'] . '"';
+	        echo 'data-final-background-scale="' . $attributes['finalBackgroundScale'] . '" ';
+	        echo 'data-smooth-start="' . $attributes['followThroughStart'] . '" ';
+	        echo 'data-smooth-end="' . $attributes['followThroughEnd'] . '" ';
+
+            ?>
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>"
+			data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
@@ -70,8 +87,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 							continue;
 						} ?>
                         <div class="novablocks-slideshow__slide">
-                            <div class="novablocks-slideshow__mask">
-                                <div class="novablocks-slideshow__background novablocks-u-background">
+                            <div class="novablocks-mask">
+                                <div class="novablocks-parallax novablocks-u-background">
 	                                <?php
 	                                $thisMediaStyle = $mediaStyle;
 	                                if ( ! empty( $image['focalPoint'] ) ) {

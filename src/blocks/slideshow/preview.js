@@ -48,6 +48,7 @@ const SlideshowPreview = class extends Component {
 				contentPaddingCustom,
 				contentWidth,
 				contentWidthCustom,
+				minHeight,
 				// alignment
 				verticalAlignment,
 				horizontalAlignment,
@@ -99,8 +100,10 @@ const SlideshowPreview = class extends Component {
 			return true;
 		} );
 
+		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
+
 		styles.slider = {
-			minHeight: Math.max( mediaMinHeight, maxAspectRatio ) + 'px',
+			minHeight: Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px',
 		};
 
 		return (

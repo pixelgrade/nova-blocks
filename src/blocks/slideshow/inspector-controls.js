@@ -6,6 +6,8 @@ import {
 	GalleryPreview,
 } from '../../components';
 
+import {getSnapClassname, maybeSnapFocalPoint} from "../../utils";
+
 /**
  * WordPress dependencies
  */
@@ -15,6 +17,7 @@ const {
 	FocalPointPicker,
 	PanelBody,
 	RadioControl,
+	RangeControl,
 } = wp.components;
 
 const {
@@ -45,6 +48,15 @@ const SlideshowInspectorControls = function( props ) {
 
 	const selectedImage = galleryImages[ selectedIndex ];
 
+	let focalPointPickerClassNames = [ 'novablocks-focal-point-picker' ];
+
+	if ( selectedImage ) {
+		let selectedImageFocalPoint = selectedImage.focalPoint || { x: 0.5, y: 0.5 };
+		focalPointPickerClassNames.push( getSnapClassname( selectedImageFocalPoint ) )
+	}
+
+	focalPointPickerClassNames = focalPointPickerClassNames.join( ' ' );
+
 	return (
 		<InspectorControls>
 
@@ -57,19 +69,25 @@ const SlideshowInspectorControls = function( props ) {
 						onSelectImage={ setIndex }
 						selected={ selectedIndex }
 					/>
-					{ selectedImage && <FocalPointPicker
-						url={ selectedImage.url }
-						dimensions={ {
-							width: selectedImage.width,
-							height: selectedImage.height,
-						} }
-						value={ selectedImage.focalPoint || { x: 0.5, y: 0.5 } }
-						onChange={ focalPoint => {
-							const newGalleryImages = galleryImages;
-							newGalleryImages[ selectedIndex ].focalPoint = focalPoint;
-							setAttributes( { galleryImages: newGalleryImages } );
-						} }
-					/> }
+					{
+						selectedImage &&
+						<Fragment>
+							<FocalPointPicker
+								className={ focalPointPickerClassNames }
+								url={ selectedImage.url }
+								dimensions={ {
+									width: selectedImage.width,
+									height: selectedImage.height,
+								} }
+								value={ selectedImage.focalPoint || { x: 0.5, y: 0.5 } }
+								onChange={ focalPoint => {
+									const newGalleryImages = galleryImages;
+									newGalleryImages[ selectedIndex ].focalPoint = maybeSnapFocalPoint( focalPoint );
+									setAttributes( { galleryImages: newGalleryImages } );
+								} }
+							/>
+						</Fragment>
+					}
 				</PanelBody> }
 
 			{ 'gallery' === slideshowType && <Fragment>

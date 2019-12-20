@@ -13,12 +13,11 @@
 	align-items: flex-start;
 }
 
-.novablocks-hero__mask,
 .novablocks-hero__slider {
 	@include cover;
 }
 
-.novablocks-hero__parallax {
+.novablocks-parallax {
 	position: fixed;
 	top: 0;
 	left: 0;

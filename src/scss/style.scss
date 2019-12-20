@@ -35,6 +35,10 @@
 	}
 }
 
+.novablocks-mask {
+	@include cover;
+}
+
 body:not(.wp-admin) .novablocks-hero__parallax {
 	opacity: 1;
 }

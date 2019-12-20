@@ -1,6 +1,8 @@
 /**
  * WordPress dependencies
  */
+
+
 const { __ } = wp.i18n;
 
 const {
@@ -17,10 +19,7 @@ const {
 	ToggleControl,
 } = wp.components;
 
-const snapValues = {
-	x: [0, 0.5, 1],
-	y: [0, 0.5, 1]
-}
+import {defaultSnapValues, getSnapClassname, maybeSnapFocalPoint} from "../../utils";
 
 const ScrollingEffectControls = function( props ) {
 
@@ -52,11 +51,25 @@ const ScrollingEffectPanel = ( props ) => {
 			scrollingEffect,
 			motionPreset,
 		},
-		settings: {
-			scrollingEffectOptions,
-			motionPresetOptions,
-		}
+		settings,
+		name,
 	} = props;
+
+	const {
+		motionPresetOptions,
+		theme_support: {
+			doppler
+		}
+	} = settings;
+
+	const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
+
+	if ( !! doppler && doppler.includes( name ) ) {
+		scrollingEffectOptions.push( {
+			label: __( 'Doppler by Pixelgrade ®' ),
+			value: 'doppler'
+		} );
+	}
 
 	return (
 		<PanelBody title={ `Scrolling Effect:` } className={ 'novablocks-scrolling-effect-panel' }>
@@ -83,26 +96,6 @@ const ScrollingEffectPanel = ( props ) => {
 			{ props.children }
 		</PanelBody>
 	)
-}
-
-function maybeSnapFocalPoint( focalPoint ) {
-	let x = parseFloat( focalPoint.x );
-	let y = parseFloat( focalPoint.y );
-	let thereshold = 0.05;
-
-	snapValues.x.forEach( snapValue => {
-		if ( snapValue - thereshold < x && x < snapValue + thereshold ) {
-			x = snapValue;
-		}
-	} );
-
-	snapValues.y.forEach( snapValue => {
-		if ( snapValue - thereshold < y && y < snapValue + thereshold ) {
-			y = snapValue;
-		}
-	} );
-
-	return { x, y }
 }
 
 const DopplerPresetsPanel = ( props ) => {
@@ -185,15 +178,8 @@ const StartFramePanel = ( props ) => {
 		'novablocks-focal-point-picker',
 		`novablocks-focal-point-picker--${ scrollingEffect }`,
 		'novablocks-focal-point-picker--start',
+		getSnapClassname( focalPoint )
 	]
-
-	if ( snapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
-		classNames.push( 'is-snapped-x' );
-	}
-
-	if ( snapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
-		classNames.push( 'is-snapped-y' );
-	}
 
 	let className = classNames.join( ' ' );
 
@@ -212,7 +198,7 @@ const StartFramePanel = ( props ) => {
 				value={ focalPoint }
 				onChange={ focalPoint => {
 					setAttributes( {
-						motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
+						motionPreset: 'custom',
 						focalPoint: maybeSnapFocalPoint( focalPoint ),
 						finalFocalPoint: maybeSnapFocalPoint( {
 							x: focalPoint.x,
@@ -226,7 +212,7 @@ const StartFramePanel = ( props ) => {
 				value={ initialBackgroundScale }
 				onChange={ ( initialBackgroundScale ) => {
 					setAttributes( {
-						motionPreset: scrollingEffect === 'parallax' ? motionPreset : 'custom',
+						motionPreset: 'custom',
 						initialBackgroundScale,
 					} );
 				} }
@@ -275,15 +261,8 @@ const EndFramePanel = ( props ) => {
 		'novablocks-focal-point-picker',
 		`novablocks-focal-point-picker--${ scrollingEffect }`,
 		'novablocks-focal-point-picker--end',
+		getSnapClassname( focalPoint ),
 	]
-
-	if ( snapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
-		classNames.push( 'is-snapped-x' );
-	}
-
-	if ( snapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
-		classNames.push( 'is-snapped-y' );
-	}
 
 	let className = classNames.join( ' ' );
 

@@ -106,15 +106,15 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 
-            <div class="novablocks-hero__mask">
+            <div class="novablocks-mask">
 				<?php if ( $media['type'] === 'image' && ! empty( $media['sizes']['full']['url'] ) ) { ?>
-                    <img class="novablocks-hero__parallax"
+                    <img class="novablocks-parallax"
                          src="<?php echo esc_url( $media['sizes']['full']['url'] ); ?>"
                          style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php }
 
 				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
-                    <video muted autoplay loop class="novablocks-hero__parallax"
+                    <video muted autoplay loop class="novablocks__parallax"
                            src="<?php echo esc_url( $media['url'] ); ?>"
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php } ?>
