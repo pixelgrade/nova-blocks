@@ -6,11 +6,6 @@
 const { __ } = wp.i18n;
 
 const {
-	Component,
-	Fragment,
-} = wp.element;
-
-const {
 	Button,
 	FocalPointPicker,
 	PanelBody,
@@ -24,10 +19,7 @@ import {defaultSnapValues, getSnapClassname, maybeSnapFocalPoint} from "../../ut
 const ScrollingEffectControls = function( props ) {
 
 	const {
-		attributes: {
-			motionPreset,
-			scrollingEffect,
-		}
+		attributes: { }
 	} = props;
 
 	return (
@@ -42,11 +34,9 @@ const ScrollingEffectControls = function( props ) {
 const ScrollingEffectPanel = ( props ) => {
 
 	const {
-		attributes,
 		setAttributes,
 		previewScrolling,
 		isScrolling,
-		isBusy,
 		attributes: {
 			scrollingEffect,
 			motionPreset,
@@ -243,7 +233,6 @@ const EndFramePanel = ( props ) => {
 
 	const {
 		media,
-		motionPreset,
 		focalPoint,
 		finalFocalPoint,
 		finalBackgroundScale,

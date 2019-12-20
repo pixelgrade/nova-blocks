@@ -1,5 +1,3 @@
-import isShallowEqual from '@wordpress/is-shallow-equal';
-
 /**
  * Internal dependencies
  */
@@ -24,10 +22,8 @@ const {
 } = wp.blockEditor;
 
 const {
-	FocalPointPicker,
 	PanelBody,
 	RadioControl,
-	ToggleControl,
 } = wp.components;
 
 const {
@@ -41,8 +37,7 @@ const {
 } = wp.compose;
 
 const {
-	select,
-	dispatch
+	select
 } = wp.data;
 
 const FirstBlockControls = withFirstBlockConditions( function( props ) {
@@ -124,9 +119,7 @@ class HeroEdit extends Component {
 	}
 
 	render() {
-		const { settings, attributes, setAttributes } = this.props;
-		const { media, focalPoint } = attributes;
-		const parallaxFocalPointImage = media ? media.sizes.full : false;
+		const { settings } = this.props;
 		const { usePostMetaAttributes } = settings;
 		const updateAttributes = this.updateAttributes.bind( this );
 
