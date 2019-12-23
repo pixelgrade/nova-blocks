@@ -264,7 +264,7 @@ export const getState = function( container, config ) {
 	}
 }
 
-export const parallaxInit = function( $blocks ) {
+export const parallaxInit = function( $blocks, foregroundSelector ) {
 
 	let frameRendered = false;
 
@@ -317,12 +317,16 @@ export const parallaxInit = function( $blocks ) {
 		if ( ! frameRendered ) {
 			$blocks.each( function( i, obj ) {
 				let $container = $( obj );
+				let $background = $container.data( 'parallax' );
+				let $foreground = $background.find( '.novablocks-foreground' );
 				let state = $container.data( 'state' );
 				let config = $container.data( 'config' );
 
 				config = Object.assign( {}, state, config );
 
 				let props = getProps( config, true );
+
+				$foreground.css( 'transform', `translate3d(0,${ -props.moveY * props.parallaxAmount }px,0)` );
 
 				// because of fixed positioning
 				props.moveY = -1 * props.moveY;
@@ -337,7 +341,7 @@ export const parallaxInit = function( $blocks ) {
 				$container.data( 'parallax' ).css( styles );
 				$container.data( 'mask' ).css( {
 					clip: `rect(0 ${ containerWidth }px ${ containerHeight }px 0)`
-				} )
+				} );
 			} );
 			frameRendered = true;
 		}

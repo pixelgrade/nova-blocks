@@ -79,16 +79,15 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
-            <div class="novablocks-slideshow__mask">
-                <div class="novablocks-slideshow__slider">
-
-					<?php foreach ( $attributes['galleryImages'] as $image ) {
-						if ( empty( $image['sizes']['large']['url'] ) ) {
-							continue;
-						} ?>
-                        <div class="novablocks-slideshow__slide">
-                            <div class="novablocks-mask">
-                                <div class="novablocks-parallax novablocks-u-background">
+            <div class="novablocks-mask">
+                <div class="novablocks-parallax">
+	                <div class="novablocks-slideshow__slider">
+						<?php foreach ( $attributes['galleryImages'] as $image ) {
+							if ( empty( $image['sizes']['large']['url'] ) ) {
+								continue;
+							} ?>
+	                        <div class="novablocks-slideshow__slide">
+                                <div class="novablocks-slideshow__background novablocks-u-background">
 	                                <?php
 	                                $thisMediaStyle = $mediaStyle;
 	                                if ( ! empty( $image['focalPoint'] ) ) {
@@ -116,11 +115,10 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-					<?php } ?>
-
-                </div>
+	                        </div>
+						<?php } ?>
+	                </div>
+	            </div>
             </div>
 
 			<?php do_action( 'novablocks_hero:before_closing_tag' ) ?>
