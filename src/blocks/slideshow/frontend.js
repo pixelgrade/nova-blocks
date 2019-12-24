@@ -112,9 +112,20 @@ const TRANSITION_EASING = "easeInOutCirc";
 		transition( $currentSlide, $nextSlide, getDirection( slick, currentSlide, nextSlide ) );
 	}
 
+	function hasFixedBackground( $slide ) {
+		let fixed = false;
+
+		if ( $slide.find( '.novablocks-parallax' ).css( 'position' ) === 'fixed' ) {
+			return true;
+		}
+
+		return fixed;
+	}
+
 	function transition( $current, $next, sign = 1 ) {
 		const slideWidth = $current.outerWidth();
 		const move = 300;
+		const isFixed = hasFixedBackground( $current );
 
 		$current.velocity( {
 			tween: [0, 1]
@@ -133,13 +144,17 @@ const TRANSITION_EASING = "easeInOutCirc";
 				const currentBg = $current.find( '.novablocks-slideshow__media' ).get(0);
 				const currentFg = $current.find( FOREGROUND_SELECTOR ).get(0);
 
-				const moveX = x => 'translateX(' + sign * x + 'px)';
-
-				next.style.left = slideWidth * tweenValue + 'px';
-				nextBg.style.left = move * tweenValue + 'px';
-				nextFg.style.left = slideWidth * -tweenValue + 'px';
-
-				currentBg.style.left =  -move * (1 - tweenValue) + 'px';
+				if ( isFixed ) {
+					next.style.left = slideWidth * tweenValue + 'px';
+					nextBg.style.left = move * tweenValue + 'px';
+					nextFg.style.left = slideWidth * -tweenValue + 'px';
+					currentBg.style.left =  move * (tweenValue - 1) + 'px';
+				} else {
+					next.style.left = slideWidth * tweenValue + 'px';
+					nextBg.style.left = (move - slideWidth) * tweenValue + 'px';
+					nextFg.style.left = (move - slideWidth) * tweenValue + 'px';
+					currentBg.style.left =  move * (tweenValue - 1) + 'px';
+				}
 			},
 			complete: function() {
 				$current.removeClass( 'novablocks-slideshow__slide--current' );
