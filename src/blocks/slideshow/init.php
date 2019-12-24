@@ -79,46 +79,48 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
-            <div class="novablocks-mask">
-                <div class="novablocks-parallax">
-	                <div class="novablocks-slideshow__slider">
-						<?php foreach ( $attributes['galleryImages'] as $image ) {
-							if ( empty( $image['sizes']['large']['url'] ) ) {
-								continue;
-							} ?>
-	                        <div class="novablocks-slideshow__slide">
-                                <div class="novablocks-slideshow__background novablocks-u-background">
-	                                <?php
-	                                $thisMediaStyle = $mediaStyle;
-	                                if ( ! empty( $image['focalPoint'] ) ) {
-                                        $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $image['focalPoint'] );
-                                    } ?>
-                                    <img class="novablocks-slideshow__media"
-                                        src="<?php echo esc_url( $image['sizes']['large']['url'] ); ?>"
-                                        style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-                                        data-width="<?php echo esc_attr( $image['sizes']['large']['width'] ); ?>"
-                                        data-height="<?php echo esc_attr( $image['sizes']['large']['height'] ); ?>"
-                                    >
-                                </div>
-                                <div class="novablocks-slideshow__foreground novablocks-foreground">
-                                    <div class="novablocks-slideshow__content novablocks-u-content-padding">
-                                        <div class="novablocks-u-content-align">
-                                            <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
-                                                <?php
-                                                if ( ! empty( $image['title']['rendered'] ) ) {
-                                                    echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';
-                                                }
-                                                if ( ! empty( $image['caption'] ) ) {
-                                                    echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';
-                                                } ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="novablocks-slideshow__slider">
+				<?php foreach ( $attributes['galleryImages'] as $image ) {
+					if ( empty( $image['sizes']['large']['url'] ) ) {
+						continue;
+					} ?>
+                    <div class="novablocks-slideshow__slide">
+                        <div class="novablocks-slideshow__slide-wrap">
+	                        <div class="novablocks-slideshow__background novablocks-u-background">
+								<div class="novablocks-mask">
+									<div class="novablocks-parallax">
+			                            <?php
+			                            $thisMediaStyle = $mediaStyle;
+			                            if ( ! empty( $image['focalPoint'] ) ) {
+			                                $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $image['focalPoint'] );
+			                            } ?>
+			                            <img class="novablocks-slideshow__media"
+			                                src="<?php echo esc_url( $image['sizes']['large']['url'] ); ?>"
+			                                style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+			                                data-width="<?php echo esc_attr( $image['sizes']['large']['width'] ); ?>"
+			                                data-height="<?php echo esc_attr( $image['sizes']['large']['height'] ); ?>"
+			                            >
+									</div>
+								</div>
 	                        </div>
-						<?php } ?>
-	                </div>
-	            </div>
+	                        <div class="novablocks-slideshow__foreground novablocks-foreground">
+	                            <div class="novablocks-slideshow__content novablocks-u-content-padding">
+	                                <div class="novablocks-u-content-align">
+	                                    <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
+	                                        <?php
+	                                        if ( ! empty( $image['title']['rendered'] ) ) {
+	                                            echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';
+	                                        }
+	                                        if ( ! empty( $image['caption'] ) ) {
+	                                            echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';
+	                                        } ?>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+                        </div>
+                    </div>
+				<?php } ?>
             </div>
 
 			<?php do_action( 'novablocks_hero:before_closing_tag' ) ?>

@@ -42,7 +42,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 				prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
 				nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
 				appendArrows: $arrowContainer,
-				speed: TRANSITION_DURATION,
+				speed: 0,
 			});
 		}
 	});
@@ -107,8 +107,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 	function onBeforeSlideChange( event, slick, currentSlide, nextSlide ) {
 		const $currentSlide = $( slick.$slides[currentSlide] );
 		const $nextSlide = $( slick.$slides[nextSlide] );
-
-		$( slick.$slides ).css( 'zIndex', 800 );
+		const $slides = $( slick.$slides );
 
 		transition( $currentSlide, $nextSlide, getDirection( slick, currentSlide, nextSlide ) );
 	}
@@ -122,22 +121,29 @@ const TRANSITION_EASING = "easeInOutCirc";
 		}, {
 			duration: TRANSITION_DURATION,
 			easing: TRANSITION_EASING,
+			begin: function() {
+				$current.addClass( 'novablocks-slideshow__slide--current' );
+				$next.addClass( 'novablocks-slideshow__slide--next' );
+			},
 			progress: function(elements, percentComplete, remaining, tweenValue, activeCall) {
-				const next = $next.get(0);
-				const nextBg = $next.find( BACKGROUND_SELECTOR ).get(0);
+				const next = $next.find( '.novablocks-slideshow__slide-wrap' ).get(0);
+				const nextBg = $next.find( '.novablocks-slideshow__media' ).get(0);
 				const nextFg = $next.find( FOREGROUND_SELECTOR ).get(0);
 				const current = $current.get(0);
-				const currentBg = $current.find( BACKGROUND_SELECTOR ).get(0);
+				const currentBg = $current.find( '.novablocks-slideshow__media' ).get(0);
 				const currentFg = $current.find( FOREGROUND_SELECTOR ).get(0);
 
 				const moveX = x => 'translateX(' + sign * x + 'px)';
 
-				next.style.transform = moveX(slideWidth * tweenValue );
-				nextBg.style.transform = moveX( (move - slideWidth) * tweenValue );
-				nextFg.style.transform = moveX( slideWidth * -tweenValue );
+				next.style.left = slideWidth * tweenValue + 'px';
+				nextBg.style.left = move * tweenValue + 'px';
+				nextFg.style.left = slideWidth * -tweenValue + 'px';
 
-				current.style.transform = moveX( -move * (1 - tweenValue) );
-				currentFg.style.transform = moveX( move * (1 - tweenValue) );
+				currentBg.style.left =  -move * (1 - tweenValue) + 'px';
+			},
+			complete: function() {
+				$current.removeClass( 'novablocks-slideshow__slide--current' );
+				$next.removeClass( 'novablocks-slideshow__slide--next' );
 			}
 		});
 	}
