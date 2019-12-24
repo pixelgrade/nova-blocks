@@ -37,7 +37,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
-		$classes[] = 'novablocks-hero--' . $attributes['scrollingEffect'];
+		if ( ! empty( $attributes['scrollingEffect'] ) ) {
+			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
+		}
 
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
 			$media = [];
@@ -114,7 +116,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php }
 
 				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
-                    <video muted autoplay loop class="novablocks__parallax"
+                    <video muted autoplay loop class="novablocks-parallax"
                            src="<?php echo esc_url( $media['url'] ); ?>"
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php } ?>

@@ -17,18 +17,6 @@
 	@include cover;
 }
 
-.novablocks-parallax {
-	position: fixed;
-	top: 0;
-	left: 0;
-	object-fit: cover;
-}
-
-body:not(.wp-admin) .novablocks-hero__parallax {
-	opacity: 0;
-	transition: opacity 0.3s ease-out;
-}
-
 .novablocks-hero__media[class] {
 	@include image-cover;
 }

@@ -39,6 +39,10 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		if ( ! empty( $attributes['scrollingEffect'] ) ) {
+			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
+		}
+
 		$actualParallaxAmount = ( ! empty( $attributes['parallaxAmount'] ) && $attributes['parallaxAmount'] === 'custom' ) ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
 		$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
 

@@ -24,7 +24,9 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 }
 
 export const getStyles = function( config ) {
-	return getStylesFromProps( getProps( config ) );
+	const props = getProps( config );
+	const styles = getStylesFromProps( props );
+	return styles;
 }
 
 export const getStylesFromProps = function( props ) {
@@ -93,19 +95,17 @@ function getFocalPoint( config ) {
 	} = config;
 
 	if ( ! focalPoint ) {
-		return {
+		focalPoint = {
 			x: 0.5,
 			y: 0.5,
 		}
 	}
 
-	if ( scrollingEffect === 'parallax' ) {
+	if ( scrollingEffect !== 'doppler' ) {
 		return focalPoint;
 	}
 
-	if ( scrollingEffect === 'doppler' ) {
-		return getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
-	}
+	return getIntermediateFocalPoint( focalPoint, finalFocalPoint, progress );
 }
 
 function getNewImageHeight( config, parallaxAmount ) {
@@ -142,6 +142,8 @@ export const getProps = function( config, fixed ) {
 		scrollContainerHeight,
 	} = config;
 
+	const newFocalPoint = getFocalPoint( config );
+
 	if ( scrollingEffect === 'static' ) {
 		return {
 			width: containerWidth,
@@ -150,13 +152,11 @@ export const getProps = function( config, fixed ) {
 			moveX: 0,
 			moveY: 0,
 			parallaxAmount: 0,
-			focalPoint,
+			focalPoint: newFocalPoint,
 		};
 	}
 
-
 	const parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
-	const newFocalPoint = getFocalPoint( config );
 	const { maxScale, newScale } = getScales( config );
 	const newImageHeight = getNewImageHeight( config, parallaxAmount );
 

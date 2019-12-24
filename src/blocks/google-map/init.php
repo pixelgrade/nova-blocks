@@ -35,6 +35,10 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 			$classes[] = 'align' . $attributes['align'];
 		}
 
+		if ( ! empty( $attributes['scrollingEffect'] ) ) {
+			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
+		}
+
 		ob_start();
 
 		do_action( 'novablocks_google_maps:before' ); ?>

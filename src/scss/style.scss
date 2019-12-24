@@ -39,6 +39,13 @@
 	@include cover;
 }
 
-body:not(.wp-admin) .novablocks-hero__parallax {
-	opacity: 1;
+.novablocks-parallax {
+	position: fixed;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+
+	.scrolling-effect-static & {
+		position: static;
+	}
 }

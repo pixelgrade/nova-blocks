@@ -14,7 +14,11 @@ const {
 	ToggleControl,
 } = wp.components;
 
-import {defaultSnapValues, getSnapClassname, maybeSnapFocalPoint} from "../../utils";
+const {
+	Fragment
+} = wp.element;
+
+import { defaultSnapValues, getSnapClassname, maybeSnapFocalPoint } from "../../utils";
 
 const ScrollingEffectControls = function( props ) {
 
@@ -23,11 +27,12 @@ const ScrollingEffectControls = function( props ) {
 	} = props;
 
 	return (
-		<ScrollingEffectPanel { ...props }>
+		<Fragment>
+			<ScrollingEffectPanel { ...props } />
 			<DopplerPresetsPanel { ...props } />
 			<StartFramePanel { ...props } />
 			<EndFramePanel { ...props } />
-		</ScrollingEffectPanel>
+		</Fragment>
 	);
 }
 
