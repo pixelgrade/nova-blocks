@@ -131,7 +131,6 @@ const withParallaxProvider = function( WrappedComponent ) {
 				return {};
 			}
 
-
 			const state = getState( this.container, Object.assign( {}, this.state, attributes ) );
 			const config = Object.assign( {}, state, attributes );
 			const styles = getStyles( config );

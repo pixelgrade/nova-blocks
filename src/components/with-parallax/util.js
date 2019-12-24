@@ -145,12 +145,15 @@ export const getProps = function( config, fixed ) {
 	const newFocalPoint = getFocalPoint( config );
 
 	if ( scrollingEffect === 'static' ) {
+
 		return {
 			width: containerWidth,
 			height: containerHeight,
-			scale: initialBackgroundScale,
+			scale: initialBackgroundScale || 1,
 			moveX: 0,
 			moveY: 0,
+			offsetX: 0,
+			offsetY: 0,
 			parallaxAmount: 0,
 			focalPoint: newFocalPoint,
 		};
