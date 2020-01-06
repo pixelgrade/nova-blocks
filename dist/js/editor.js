@@ -4119,12 +4119,12 @@ var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPan
       setAttributes(newAttributes);
     },
     options: scrollingEffectOptions
-  }), Object(react["createElement"])(scrolling_effect_controls_Button, {
+  }), Object(react["createElement"])("div", null, Object(react["createElement"])(scrolling_effect_controls_Button, {
     isLarge: true,
-    isSecondary: !!isScrolling,
+    isPrimary: true,
     disabled: !!isScrolling,
     onClick: previewScrolling
-  }, "Preview Scrolling"), props.children);
+  }, "Preview Scrolling")), props.children);
 };
 
 var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel(props) {

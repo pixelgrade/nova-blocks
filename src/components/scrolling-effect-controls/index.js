@@ -84,11 +84,13 @@ const ScrollingEffectPanel = ( props ) => {
 				} }
 				options={ scrollingEffectOptions }
 			/>
-			<Button
-				isLarge
-				isSecondary={ !! isScrolling }
-				disabled={ !! isScrolling }
-				onClick={ previewScrolling }>Preview Scrolling</Button>
+			<div>
+				<Button
+					isLarge
+					isPrimary
+					disabled={ !! isScrolling }
+					onClick={ previewScrolling }>Preview Scrolling</Button>
+			</div>
 			{ props.children }
 		</PanelBody>
 	)
