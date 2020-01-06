@@ -54,7 +54,6 @@ const VendorConfig = {
 	...baseConfig,
 	entry: {
 		'./dist/js/vendor/jquery.bully.min' : './dist/js/vendor/jquery.bully.js',
-		'./dist/js/vendor/jquery.rellax.min' : './dist/js/vendor/jquery.rellax.js',
 		'./dist/js/vendor/jquery.slick.min' : './dist/js/vendor/jquery.slick.js',
 		'./dist/js/vendor/jquery.velocity.min' : './dist/js/vendor/jquery.velocity.js',
 	},
