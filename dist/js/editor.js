@@ -2456,7 +2456,7 @@ var _wp$components = wp.components,
 var InspectorControls = wp.blockEditor.InspectorControls;
 var withSelect = wp.data.withSelect;
 var with_font_size_picker_addFilter = wp.hooks.addFilter;
-var enableFontSizeControlOnBlocks = ['core/heading', 'novablocks/headline'];
+var enableFontSizeControlOnBlocks = ['core/quote', 'core/pullquote', 'core/heading', 'novablocks/headline'];
 var fontSizeOptions = [{
   value: 'smaller',
   label: __('Smaller', '__plugin_txtd')
@@ -2489,7 +2489,7 @@ function withFontSizePicker(WrappedComponent) {
     var selectValue = fontSizeOptions.find(function (x) {
       return x.value === fontSize;
     }) ? fontSize : defaultFontSize;
-    return [Object(react["createElement"])(WrappedComponent, props), Object(react["createElement"])(InspectorControls, null, level && level < 4 && Object(react["createElement"])(PanelBody, {
+    return Object(react["createElement"])(Fragment, null, Object(react["createElement"])(WrappedComponent, props), Object(react["createElement"])(InspectorControls, null, Object(react["createElement"])(PanelBody, {
       title: __('Text Settings', '__plugin_txtd'),
       className: "blocks-custom-font-size"
     }, Object(react["createElement"])(SelectControl, {
@@ -2502,7 +2502,7 @@ function withFontSizePicker(WrappedComponent) {
           className: replaceActiveFontSize(className, fontSize, nextFontSize)
         });
       }
-    })))];
+    }))));
   };
 }
 
@@ -2523,15 +2523,16 @@ function addFontSizeAttribute(block) {
     return block;
   }
 
-  if (typeof block.attributes !== 'undefined') {
-    block.attributes = Object.assign(block.attributes, {
-      fontSize: {
-        type: 'string',
-        default: defaultFontSize
-      }
-    });
+  if (typeof block.attributes === 'undefined') {
+    block.attributes = {};
   }
 
+  block.attributes = Object.assign(block.attributes, {
+    fontSize: {
+      type: 'string',
+      default: defaultFontSize
+    }
+  });
   return block;
 }
 
@@ -6526,7 +6527,7 @@ var preview_HeroPreview = function HeroPreview(props) {
   var classes = [className, 'novablocks-hero', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
   var styles = {
     hero: {
-      color: contentColor
+      '--novablocks-hero-text-color': contentColor
     },
     foreground: {},
     content: {}

@@ -38,7 +38,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		}
 
 		if ( ! empty( $attributes['scrollingEffect'] ) ) {
-			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
+			$classes[] = 'novablocks-hero--' . $attributes['scrollingEffect'];
 		}
 
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
@@ -55,7 +55,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		);
 		$media = wp_parse_args( $media, $media_args );
 
-		$heroStyle = '--novablocks-hero-text-color: ' . $attributes['contentColor'];
+		$heroStyle = '--novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
 		$contentStyle = '';
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
