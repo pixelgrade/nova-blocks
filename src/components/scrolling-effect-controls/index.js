@@ -28,10 +28,11 @@ const ScrollingEffectControls = function( props ) {
 
 	return (
 		<Fragment>
-			<ScrollingEffectPanel { ...props } />
-			<DopplerPresetsPanel { ...props } />
-			<StartFramePanel { ...props } />
-			<EndFramePanel { ...props } />
+			<ScrollingEffectPanel { ...props }>
+				<DopplerPresetsPanel { ...props } />
+				<StartFramePanel { ...props } />
+				<EndFramePanel { ...props } />
+			</ScrollingEffectPanel>
 		</Fragment>
 	);
 }
