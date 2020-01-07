@@ -38,7 +38,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		}
 
 		if ( ! empty( $attributes['scrollingEffect'] ) ) {
-			$classes[] = 'novablocks-hero--' . $attributes['scrollingEffect'];
+			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
 		}
 
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
@@ -66,19 +66,31 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$minHeight = $attributes['minHeightFallback'];
 
-		if ( 'doppler' === $attributes['scrollingEffect'] ) {
-			$heroStyle .= 'min-height: calc(' . 2 * $minHeight . '* var(--novablocks-1vh, 1vh)); ';
-		} else {
-			$heroStyle .= 'min-height: calc(' . $minHeight . '* var(--novablocks-1vh, 1vh)); ';
-		}
+		if ( ! empty( $minHeight ) ) {
+			$contentHeight = floatval( $minHeight );
+			$heroHeight = $contentHeight;
 
-		$foregroundStyle .= 'min-height: calc(' . floatval( $minHeight ) . '* var(--novablocks-1vh, 1vh)); ';
+			if ( 'doppler' === $attributes['scrollingEffect'] ) {
+				$heroHeight = 2 * $contentHeight;
+			}
+
+			$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--novablocks-1vh, 1vh)); ';
+			$foregroundStyle .= 'min-height: calc(' . $contentHeight . '* var(--novablocks-1vh, 1vh)); ';
+		}
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
 		}
 
-		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
+		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] ) && 100 <= $heroHeight;
+
+		$scrollIndicatorClasses = array( 'novablocks-hero__indicator' );
+
+		if ( $heroHeight > 100 ) {
+			$scrollIndicatorClasses[] = 'novablocks-hero__indicator--middle';
+		}
+
+		$scrollIndicatorClass = join( ' ', $scrollIndicatorClasses );
 
 		ob_start();
 
@@ -126,7 +138,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 						<?php echo $content ?>
                     </div>
 					<?php if ( $scrollIndicator ) { ?>
-                        <div class="novablocks-hero__indicator">
+                        <div class="<?php echo $scrollIndicatorClass; ?>">
 	                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
                         </div>
 					<?php } ?>

@@ -1469,6 +1469,8 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 (function ($, window, undefined) {
   var $heroes = $('.novablocks-hero');
   var windowScrollY;
+  var scrollButtonHidden = false;
+  var $scrollButton = $('.novablocks-hero__indicator');
   util_parallaxInit($heroes);
   bulletsInit();
   scrollButtonInit();
@@ -1477,6 +1479,10 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 
   function updateScroll() {
     windowScrollY = window.scrollY;
+
+    if (windowScrollY > 200) {
+      hideScrollButton();
+    }
   }
 
   function bulletsInit() {
@@ -1488,8 +1494,16 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     }
   }
 
+  function hideScrollButton() {
+    if (scrollButtonHidden) {
+      return;
+    }
+
+    $scrollButton.filter('.novablocks-hero__indicator--middle').addClass('novablocks-hero__indicator--hidden');
+    scrollButtonHidden = true;
+  }
+
   function scrollButtonInit() {
-    var $scrollButton = $('.novablocks-hero__indicator');
     var $hero = $scrollButton.closest('.novablocks-hero');
 
     if ($hero.length) {

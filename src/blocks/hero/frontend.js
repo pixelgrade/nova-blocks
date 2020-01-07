@@ -4,6 +4,9 @@ import { parallaxInit } from "../../components/with-parallax/util";
 
 	let $heroes = $( '.novablocks-hero' );
 	let windowScrollY;
+	let scrollButtonHidden = false;
+
+	const $scrollButton = $( '.novablocks-hero__indicator' );
 
 	parallaxInit( $heroes );
 	bulletsInit();
@@ -14,6 +17,10 @@ import { parallaxInit } from "../../components/with-parallax/util";
 
 	function updateScroll() {
 		windowScrollY = window.scrollY;
+
+		if ( windowScrollY > 200 ) {
+			hideScrollButton();
+		}
 	}
 
 	function bulletsInit() {
@@ -25,8 +32,18 @@ import { parallaxInit } from "../../components/with-parallax/util";
 		}
 	}
 
+	function hideScrollButton() {
+
+		if ( scrollButtonHidden ) {
+			return;
+		}
+
+		$scrollButton.filter( '.novablocks-hero__indicator--middle' ).addClass( 'novablocks-hero__indicator--hidden' );
+		scrollButtonHidden = true;
+
+	}
+
 	function scrollButtonInit() {
-		const $scrollButton = $( '.novablocks-hero__indicator' );
 		const $hero = $scrollButton.closest( '.novablocks-hero' );
 
 		if ( $hero.length ) {
