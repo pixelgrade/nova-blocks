@@ -43,9 +43,6 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
 		}
 
-		$actualParallaxAmount = ( ! empty( $attributes['parallaxAmount'] ) && $attributes['parallaxAmount'] === 'custom' ) ? $attributes['parallaxCustomAmount'] : intval( $attributes['parallaxAmount'] );
-		$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
-
 		$contentStyle = '';
 		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' && isset( $attributes['contentWidthCustom'] ) ) {
 			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';

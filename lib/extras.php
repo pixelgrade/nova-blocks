@@ -150,12 +150,23 @@ function novablocks_get_alignment_attributes() {
 
 function novablocks_get_doppler_attributes() {
 	return array(
+		'focalPoint'    => array(
+			'type'    => 'object',
+			'default' => array(
+				'x' => 0.5,
+				'y' => 0.5
+			),
+		),
 		'finalFocalPoint'         => array(
 			'type'    => 'object',
 			'default' => array(
 				'x' => 0.5,
 				'y' => 0.5
 			),
+		),
+		'initialBackgroundScale'  => array(
+			'type'    => 'number',
+			'default' => 1
 		),
 		'finalBackgroundScale'    => array(
 			'type'    => 'number',
@@ -172,6 +183,14 @@ function novablocks_get_doppler_attributes() {
 		'motionPreset' => array(
 			'type' => 'string',
 			'default' => 'standard-dynamic',
+		),
+		'followThroughStart' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'followThroughEnd' => array(
+			'type'    => 'boolean',
+			'default' => true,
 		),
 	);
 }
@@ -222,13 +241,6 @@ function novablocks_get_slideshow_attributes() {
 					'type' => 'object',
 				),
 				'default' => array(),
-			),
-			'focalPoint'    => array(
-				'type'    => 'object',
-				'default' => array(
-					'x' => 0.5,
-					'y' => 0.5
-				),
 			),
 			'slideshowType' => array(
 				'type'    => 'string',
@@ -379,17 +391,6 @@ function novablocks_add_hero_settings( $settings ) {
 					'type'    => 'string',
 					'default' => null,
 				),
-				'focalPoint'              => array(
-					'type'    => 'object',
-					'default' => array(
-						'x' => 0.5,
-						'y' => 0.5
-					),
-				),
-				'initialBackgroundScale'  => array(
-					'type'    => 'number',
-					'default' => 1
-				),
 				'backgroundType'          => array(
 					'type'    => 'string',
 					'default' => 'image'
@@ -415,14 +416,6 @@ function novablocks_add_hero_settings( $settings ) {
 	);
 
 	$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
-		'followThroughStart' => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'followThroughEnd' => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
 		'minHeightFallback' => array(
 			'type'    => 'number',
 			'default' => 100,
@@ -694,42 +687,6 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'parallaxOptions' => array(
-			array(
-				'label' => esc_html__( 'Fast as Mercure', '__plugin_txtd' ),
-				'value' => '20'
-			),
-			array(
-				'label' => esc_html__( 'Natural as Earth', '__plugin_txtd' ),
-				'value' => '50'
-			),
-			array(
-				'label' => esc_html__( 'Slow as Neptune', '__plugin_txtd' ),
-				'value' => '70'
-			),
-			array(
-				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
-				'value' => 'custom'
-			),
-		),
-		'parallaxOptions' => array(
-			array(
-				'label' => esc_html__( 'Fast as Mercure', '__plugin_txtd' ),
-				'value' => '20'
-			),
-			array(
-				'label' => esc_html__( 'Natural as Earth', '__plugin_txtd' ),
-				'value' => '50'
-			),
-			array(
-				'label' => esc_html__( 'Slow as Neptune', '__plugin_txtd' ),
-				'value' => '70'
-			),
-			array(
-				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
-				'value' => 'custom'
-			),
-		),
 		'motionPresetOptions' => array(
 			array (
 				'label' => 'Standard Dynamic',
@@ -800,7 +757,6 @@ function novablocks_get_block_editor_settings() {
 }
 
 function novablocks_add_scrolling_effect_options( $settings ) {
-	$support = novablocks_get_theme_support();
 
 	$options = array(
 		array(
