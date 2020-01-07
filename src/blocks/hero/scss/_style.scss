@@ -6,11 +6,7 @@
 	color: var(--novablocks-hero-text-color);
 }
 
-.novablocks-hero--static {
-	position: static;
-}
-
-.novablocks-hero--doppler {
+.novablocks-hero.scrolling-effect-doppler {
 	align-items: flex-start;
 }
 
@@ -44,7 +40,7 @@
 
 .novablocks-hero__indicator {
 	position: absolute;
-	bottom: 0;
+	top: calc( 100 * var(--novablocks-1vh, 1vh) );
 	left: 50%;
 	right: 0;
 
@@ -52,7 +48,9 @@
 	justify-content: center;
 	color: inherit;
 
-	transform: translate(-50%, 0);
+	transition: all .3s ease-out;
+	transition-property: opacity;
+	transform: translate(-50%, -100%);
 	cursor: pointer;
 
 	&:after {
@@ -69,6 +67,10 @@
 
 		transform: translate(-50%, -70%) rotate(45deg);
 	}
+}
+
+.novablocks-hero__indicator--hidden {
+	opacity: 0;
 }
 
 .components-nova--popover {
