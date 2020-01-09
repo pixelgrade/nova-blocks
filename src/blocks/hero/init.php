@@ -67,15 +67,14 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$minHeight = $attributes['minHeightFallback'];
 
 		if ( ! empty( $minHeight ) ) {
-			$contentHeight = floatval( $minHeight );
-			$heroHeight = $contentHeight;
+			$minHeight = floatval( $minHeight );
 
 			if ( 'doppler' === $attributes['scrollingEffect'] ) {
-				$heroHeight = 2 * $contentHeight;
+				$heroHeight = 2 * $minHeight;
 			}
 
 			$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--novablocks-1vh, 1vh)); ';
-			$foregroundStyle .= 'min-height: calc(' . $contentHeight . '* var(--novablocks-1vh, 1vh)); ';
+			$foregroundStyle .= 'min-height: calc(100 * var(--novablocks-1vh, 1vh)); ';
 		}
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {

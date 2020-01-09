@@ -4079,8 +4079,6 @@ var scrolling_effect_controls_ScrollingEffectControls = function ScrollingEffect
 
 var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPanel(props) {
   var setAttributes = props.setAttributes,
-      previewScrolling = props.previewScrolling,
-      isScrolling = props.isScrolling,
       _props$attributes = props.attributes,
       scrollingEffect = _props$attributes.scrollingEffect,
       motionPreset = _props$attributes.motionPreset,
@@ -4114,17 +4112,13 @@ var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPan
           return motionPreset === option.value;
         });
         newAttributes = Object.assign(newOption.preset, newAttributes);
+        newAttributes.minHeightFallback = 75;
       }
 
       setAttributes(newAttributes);
     },
     options: scrollingEffectOptions
-  }), Object(react["createElement"])("div", null, Object(react["createElement"])(scrolling_effect_controls_Button, {
-    isLarge: true,
-    isPrimary: true,
-    disabled: !!isScrolling,
-    onClick: previewScrolling
-  }, "Preview Scrolling")), props.children);
+  }), props.children);
 };
 
 var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel(props) {
@@ -4132,7 +4126,9 @@ var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel
       motionPreset = _props$attributes2.motionPreset,
       scrollingEffect = _props$attributes2.scrollingEffect,
       setAttributes = props.setAttributes,
-      motionPresetOptions = props.settings.motionPresetOptions;
+      motionPresetOptions = props.settings.motionPresetOptions,
+      isScrolling = props.isScrolling,
+      previewScrolling = props.previewScrolling;
 
   if (scrollingEffect !== 'doppler') {
     return false;
@@ -4156,9 +4152,18 @@ var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel
       }
 
       setAttributes(newAttributes);
+
+      if ('custom' !== motionPreset && !isScrolling) {
+        previewScrolling();
+      }
     },
     options: motionPresetOptions
-  }));
+  }), Object(react["createElement"])("div", null, Object(react["createElement"])(scrolling_effect_controls_Button, {
+    isLarge: true,
+    isPrimary: true,
+    disabled: !!isScrolling,
+    onClick: previewScrolling
+  }, "Preview Scrolling")));
 };
 
 var scrolling_effect_controls_StartFramePanel = function StartFramePanel(props) {
@@ -6553,7 +6558,7 @@ var preview_HeroPreview = function HeroPreview(props) {
   }
 
   if (scrollingEffect === 'doppler') {
-    styles.foreground.minHeight = minHeightFallback + 'vh';
+    styles.foreground.minHeight = '100vh';
   }
 
   if (contentWidth === 'custom') {

@@ -80,7 +80,7 @@ const HeroPreview = function( props ) {
 	}
 
 	if ( scrollingEffect === 'doppler' ) {
-		styles.foreground.minHeight = minHeightFallback + 'vh';
+		styles.foreground.minHeight = '100vh';
 	}
 
 	if ( contentWidth === 'custom' ) {

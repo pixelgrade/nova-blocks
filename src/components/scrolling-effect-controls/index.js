@@ -41,8 +41,6 @@ const ScrollingEffectPanel = ( props ) => {
 
 	const {
 		setAttributes,
-		previewScrolling,
-		isScrolling,
 		attributes: {
 			scrollingEffect,
 			motionPreset,
@@ -78,19 +76,13 @@ const ScrollingEffectPanel = ( props ) => {
 					if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
 						let newOption = motionPresetOptions.find( option => motionPreset === option.value );
 						newAttributes = Object.assign( newOption.preset, newAttributes );
+						newAttributes.minHeightFallback = 75;
 					}
 
 					setAttributes( newAttributes );
 				} }
 				options={ scrollingEffectOptions }
 			/>
-			<div>
-				<Button
-					isLarge
-					isPrimary
-					disabled={ !! isScrolling }
-					onClick={ previewScrolling }>Preview Scrolling</Button>
-			</div>
 			{ props.children }
 		</PanelBody>
 	)
@@ -106,7 +98,9 @@ const DopplerPresetsPanel = ( props ) => {
 		setAttributes,
 		settings: {
 			motionPresetOptions
-		}
+		},
+		isScrolling,
+		previewScrolling,
 	} = props;
 
 	if ( scrollingEffect !== 'doppler' ) {
@@ -115,6 +109,7 @@ const DopplerPresetsPanel = ( props ) => {
 
 	return (
 		<PanelBody title={ `Doppler Scrolling Settings` }>
+
 			<RadioControl
 				label={ 'Motion Presets' }
 				selected={ motionPreset }
@@ -127,9 +122,22 @@ const DopplerPresetsPanel = ( props ) => {
 					}
 
 					setAttributes( newAttributes );
+
+					if ( 'custom' !== motionPreset && ! isScrolling ) {
+						previewScrolling();
+					}
 				} }
 				options={ motionPresetOptions }
 			/>
+
+			<div>
+				<Button
+					isLarge
+					isPrimary
+					disabled={ !! isScrolling }
+					onClick={ previewScrolling }>Preview Scrolling</Button>
+			</div>
+
 		</PanelBody>
 	)
 }
@@ -264,6 +272,7 @@ const EndFramePanel = ( props ) => {
 	let className = classNames.join( ' ' );
 
 	return (
+
 		<PanelBody
 			title={ __( 'End Frame position', '__plugin_txtd' ) }
 			className={ className }
