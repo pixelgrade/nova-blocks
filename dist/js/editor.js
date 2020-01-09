@@ -4166,6 +4166,25 @@ var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel
   }, "Preview Scrolling")));
 };
 
+var getParallaxFocalPointImage = function getParallaxFocalPointImage(media) {
+  var mediaType = media ? media.type : false;
+  var parallaxFocalPointImage = false;
+
+  if (mediaType === 'image') {
+    parallaxFocalPointImage = media.sizes.full;
+  }
+
+  if (mediaType === 'video') {
+    parallaxFocalPointImage = {
+      url: '//cloud.pixelgrade.com/wp-content/uploads/2020/01/Screenshot-2020-01-09-at-15.59.37.png',
+      width: 218,
+      height: 170
+    };
+  }
+
+  return parallaxFocalPointImage;
+};
+
 var scrolling_effect_controls_StartFramePanel = function StartFramePanel(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
@@ -4176,7 +4195,7 @@ var scrolling_effect_controls_StartFramePanel = function StartFramePanel(props) 
       initialBackgroundScale = attributes.initialBackgroundScale,
       followThroughStart = attributes.followThroughStart,
       scrollingEffect = attributes.scrollingEffect;
-  var parallaxFocalPointImage = media ? media.sizes.full : false;
+  var parallaxFocalPointImage = getParallaxFocalPointImage(media);
   var isDoppler = scrollingEffect === 'doppler';
 
   if (!parallaxFocalPointImage) {
@@ -4199,7 +4218,7 @@ var scrolling_effect_controls_StartFramePanel = function StartFramePanel(props) 
     panelTitle = dopplerPanelTitle;
   }
 
-  var classNames = ['novablocks-focal-point-picker', "novablocks-focal-point-picker--".concat(scrollingEffect), 'novablocks-focal-point-picker--start', getSnapClassname(focalPoint)];
+  var classNames = ['novablocks-focal-point-picker', "novablocks-focal-point-picker--".concat(scrollingEffect), "novablocks-focal-point-picker--start", getSnapClassname(focalPoint)];
   var className = classNames.join(' ');
   return Object(react["createElement"])(scrolling_effect_controls_PanelBody, {
     title: panelTitle,
@@ -4254,7 +4273,7 @@ var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
       finalBackgroundScale = attributes.finalBackgroundScale,
       followThroughEnd = attributes.followThroughEnd,
       scrollingEffect = attributes.scrollingEffect;
-  var parallaxFocalPointImage = media ? media.sizes.full : false;
+  var parallaxFocalPointImage = getParallaxFocalPointImage(media);
 
   if (!parallaxFocalPointImage || scrollingEffect !== 'doppler') {
     return false;

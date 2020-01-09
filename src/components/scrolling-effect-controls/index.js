@@ -142,6 +142,25 @@ const DopplerPresetsPanel = ( props ) => {
 	)
 }
 
+const getParallaxFocalPointImage = ( media ) => {
+	let mediaType = media ? media.type : false;
+	let parallaxFocalPointImage = false;
+
+	if ( mediaType === 'image' ) {
+		parallaxFocalPointImage = media.sizes.full;
+	}
+
+	if ( mediaType === 'video' ) {
+		parallaxFocalPointImage = {
+			url: '//cloud.pixelgrade.com/wp-content/uploads/2020/01/Screenshot-2020-01-09-at-15.59.37.png',
+			width: 218,
+			height: 170,
+		};
+	}
+
+	return parallaxFocalPointImage;
+}
+
 const StartFramePanel = ( props ) => {
 
 	const {
@@ -159,7 +178,7 @@ const StartFramePanel = ( props ) => {
 		scrollingEffect,
 	} = attributes;
 
-	const parallaxFocalPointImage = media ? media.sizes.full : false;
+	const parallaxFocalPointImage = getParallaxFocalPointImage( media );
 	const isDoppler = scrollingEffect === 'doppler';
 
 	if ( ! parallaxFocalPointImage ) {
@@ -183,7 +202,7 @@ const StartFramePanel = ( props ) => {
 	let classNames = [
 		'novablocks-focal-point-picker',
 		`novablocks-focal-point-picker--${ scrollingEffect }`,
-		'novablocks-focal-point-picker--start',
+		`novablocks-focal-point-picker--start`,
 		getSnapClassname( focalPoint )
 	]
 
@@ -256,7 +275,7 @@ const EndFramePanel = ( props ) => {
 		scrollingEffect,
 	} = attributes;
 
-	const parallaxFocalPointImage = media ? media.sizes.full : false;
+	const parallaxFocalPointImage = getParallaxFocalPointImage( media );
 
 	if ( ! parallaxFocalPointImage || scrollingEffect !== 'doppler' ) {
 		return false;

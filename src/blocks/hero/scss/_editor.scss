@@ -8,11 +8,13 @@
 
 .wp-block-novablocks-hero.novablocks-hero {
 	transition: var(--novablocks-hero-transition);
+	transition-property: color, background-color, opacity;
 }
 
 .novablocks-hero__media,
 .novablocks-hero__foreground {
 	transition: var(--novablocks-hero-transition);
+	transition-property: color, background-color, opacity;
 }
 
 .pixelgrade-hero-block-toolbar-dropdown {
