@@ -6564,10 +6564,8 @@ var preview_HeroPreview = function HeroPreview(props) {
     className: classes.join(' '),
     style: styles.hero
   }, Object(react["createElement"])(background, props), Object(react["createElement"])("div", {
-    className: "novablocks-hero__foreground novablocks-u-content-padding",
+    className: "novablocks-hero__foreground novablocks-u-content-padding novablocks-u-content-align",
     style: styles.foreground
-  }, Object(react["createElement"])("div", {
-    className: "novablocks-u-content-align"
   }, Object(react["createElement"])("div", {
     className: "novablocks-hero__inner-container novablocks-u-content-width",
     style: styles.content
@@ -6575,7 +6573,7 @@ var preview_HeroPreview = function HeroPreview(props) {
     template: settings.hero.template
   })), scrollIndicator && Object(react["createElement"])("div", {
     className: "novablocks-hero__indicator"
-  }))));
+  })));
 };
 
 /* harmony default export */ var preview = (preview_HeroPreview);

@@ -132,17 +132,15 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php } ?>
             </div>
-            <div class="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding" style="<?php echo esc_attr( $foregroundStyle ); ?>">
-                <div class="novablocks-u-content-align">
-                    <div class="novablocks-hero__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
-						<?php echo $content ?>
-                    </div>
-					<?php if ( $scrollIndicator ) { ?>
-                        <div class="<?php echo $scrollIndicatorClass; ?>">
-	                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
-                        </div>
-					<?php } ?>
+            <div class="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style="<?php echo esc_attr( $foregroundStyle ); ?>">
+                <div class="novablocks-hero__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
+					<?php echo $content ?>
                 </div>
+				<?php if ( $scrollIndicator ) { ?>
+                    <div class="<?php echo $scrollIndicatorClass; ?>">
+                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
+                    </div>
+				<?php } ?>
             </div>
 
 			<?php do_action( 'novablocks_hero:before_closing_tag', $attributes ) ?>
