@@ -68,19 +68,17 @@ const HeroPreview = function( props ) {
 	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
 	styles.hero.minHeight = minHeightFallback + 'vh';
+	styles.foreground.minHeight = minHeightFallback + 'vh';
 
 	if ( scrollingEffect === 'doppler' ) {
 		styles.hero.alignItems = 'flex-start';
 		styles.hero.minHeight = minHeightFallback * 2 + 'vh';
+		styles.foreground.minHeight = '100vh';
 	}
 
 	if ( contentPadding === 'custom' ) {
 		styles.foreground.paddingTop = `${ contentPaddingCustom }%`;
 		styles.foreground.paddingBottom = `${ contentPaddingCustom }%`;
-	}
-
-	if ( scrollingEffect === 'doppler' ) {
-		styles.foreground.minHeight = '100vh';
 	}
 
 	if ( contentWidth === 'custom' ) {

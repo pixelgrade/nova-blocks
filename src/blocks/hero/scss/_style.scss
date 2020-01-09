@@ -40,7 +40,7 @@
 
 .novablocks-hero__indicator {
 	position: absolute;
-	top: calc( 100 * var(--novablocks-1vh, 1vh) );
+	top: calc( 100% - var(--novablocks-content-padding) );
 	left: 50%;
 	right: 0;
 

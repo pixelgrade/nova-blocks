@@ -6546,19 +6546,17 @@ var preview_HeroPreview = function HeroPreview(props) {
   var scrollIndicatorFallback = index === 0 && minHeightFallback === 100;
   var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
   styles.hero.minHeight = minHeightFallback + 'vh';
+  styles.foreground.minHeight = minHeightFallback + 'vh';
 
   if (scrollingEffect === 'doppler') {
     styles.hero.alignItems = 'flex-start';
     styles.hero.minHeight = minHeightFallback * 2 + 'vh';
+    styles.foreground.minHeight = '100vh';
   }
 
   if (contentPadding === 'custom') {
     styles.foreground.paddingTop = "".concat(contentPaddingCustom, "%");
     styles.foreground.paddingBottom = "".concat(contentPaddingCustom, "%");
-  }
-
-  if (scrollingEffect === 'doppler') {
-    styles.foreground.minHeight = '100vh';
   }
 
   if (contentWidth === 'custom') {
