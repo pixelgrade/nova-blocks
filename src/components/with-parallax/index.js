@@ -1,8 +1,10 @@
 import { createContext } from 'react';
 
-import ParallaxPanel from "../../components/parallax-panel";
+import { findParents } from '../../utils';
+import { easeInOutCubic } from '../../easing';
+import { ScrollingEffectControls, withSettings } from "../index";
 
-import { findParents } from '../util';
+import { getStyles, getState } from './util';
 
 /**
  * WordPress dependencies
@@ -16,9 +18,13 @@ const {
 	InspectorControls
 } = wp.blockEditor;
 
+const {
+	compose,
+} = wp.compose;
+
 const ParallaxContext = createContext();
 
-const withParallax = function( WrappedComponent ) {
+const withParallaxProvider = function( WrappedComponent ) {
 
 	return class extends Component {
 
@@ -26,18 +32,18 @@ const withParallax = function( WrappedComponent ) {
 			super( ...arguments );
 
 			this.state = {
-				windowWidth: window.innerWidth,
-				windowHeight: window.innerHeight,
+				scrollContainerWidth: 0,
+				scrollContainerHeight: 0,
 				progress: 0.5,
 			};
 
-			this.updateHandler = this.updateDimensions.bind( this );
+			this.updateHandler = this.updateState.bind( this );
 			this.scrollContainer = this.getScrollContainer();
 		}
 
 		getScrollContainer() {
-			const oldScrollContainer = document.getElementsByClassName( 'edit-post-layout__content' )[ 0 ];;
-			const newScrollContainer = document.getElementsByClassName( 'edit-post-editor-regions__content' )[ 0 ];
+			const oldScrollContainer = document.querySelector( '.edit-post-layout__content' );
+			const newScrollContainer = document.querySelector( '.edit-post-editor-regions__content' );
 
 			return oldScrollContainer || newScrollContainer;
 		}
@@ -51,29 +57,45 @@ const withParallax = function( WrappedComponent ) {
 				this.scrollContainer.addEventListener( 'scroll', this.updateHandler );
 			}
 
-			this.updateDimensions();
+			this.updateState();
 		}
 
 		createBlockObservers() {
-			this.observers = findParents( this.container, '.wp-block' ).map( block => {
-				const observer = new MutationObserver( movements => {
-					movements.forEach( movement => {
-						if ( 'style' === movement.attributeName ) {
-							if ( movement.oldValue.includes( 'transform: translate3d' ) ) {
-								this.updateDimensions();
+			this.observers = [];
+
+			findParents( this.container, '.wp-block' ).map( block => {
+
+				if ( window.MutationObserver ) {
+					const mutationObserver = new MutationObserver( movements => {
+						movements.forEach( movement => {
+							if ( 'style' === movement.attributeName ) {
+								if ( movement.oldValue && movement.oldValue.includes( 'transform: translate3d' ) ) {
+									this.updateState();
+								}
 							}
-						}
+						} );
 					} );
-				} );
 
-				observer.observe( block, {
-					attributes: true,
-					attributeOldValue: true,
-					childList: false,
-					subtree: false,
-				} );
+					mutationObserver.observe( block, {
+						attributes: true,
+						attributeOldValue: true,
+						childList: false,
+						subtree: false,
+					} );
 
-				return observer;
+					this.observers.push( mutationObserver );
+				}
+
+				if ( window.ResizeObserver ) {
+
+					const resizeObserver = new ResizeObserver( () => {
+						this.updateState();
+					} );
+
+					resizeObserver.observe( block );
+
+					this.observers.push( resizeObserver );
+				}
 			} );
 		}
 
@@ -87,103 +109,172 @@ const withParallax = function( WrappedComponent ) {
 			}
 		}
 
-		updateDimensions() {
+		updateState() {
+			const container = this.container;
+			const scrollContainerHeight = this.scrollContainer.offsetHeight;
+			const scrollContainerBox = this.scrollContainer.getBoundingClientRect();
 
-			if ( ! this.container || ! this.scrollContainer ) {
-				return;
-			}
-
-			const containerBox = this.container.getBoundingClientRect();
-			const containerBoxTop = containerBox.y || containerBox.top;
-			const progress = ( this.state.windowHeight - containerBoxTop ) / ( this.state.windowHeight + this.container.offsetHeight );
-			const actualProgress = Math.max( Math.min( progress, 1 ), 0 );
-
-			this.setState( {
-				windowWidth: window.innerWidth,
-				windowHeight: window.innerHeight,
-				scrollTop: this.scrollContainer.scrollTop,
-				progress: actualProgress,
-				dimensions: {
-					width: this.container.offsetWidth,
-					height: this.container.offsetHeight,
-					top: containerBoxTop,
-				},
+			const config = Object.assign( {}, this.props.attributes, {
+				scrollContainerBox,
+				scrollContainerHeight,
 			} );
+
+			this.setState( getState( container, config ) );
 		}
 
-		getParallaxStyles() {
+		getElementStyle() {
 
-			if ( ! this.state.dimensions ) {
+			const { attributes } = this.props;
+			const { scrollingEffect } = attributes;
+
+			if ( ! this.scrollContainer || ! this.container ) {
 				return {};
 			}
 
-			const {
-				attributes: {
-					enableParallax,
-					parallaxAmount,
-					parallaxCustomAmount,
-				},
-			} = this.props;
+			const state = getState( this.container, Object.assign( {}, this.state, attributes ) );
+			const config = Object.assign( {}, state, attributes );
+			const styles = getStyles( config );
 
-			if ( ! enableParallax ) {
-				return {};
-			}
-
-			let actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parseInt( parallaxAmount, 10 );
-			actualParallaxAmount = Math.max( Math.min( 1, actualParallaxAmount / 100 ), 0 );
-
-			const {
-				dimensions,
-				windowHeight,
-				progress,
-			} = this.state;
-
-			const newHeight = ( dimensions.height * ( 1 - actualParallaxAmount ) ) + ( windowHeight * actualParallaxAmount );
-			const scale = newHeight / dimensions.height;
-			const offsetY = dimensions.height * ( 1 - scale ) / 2;
-			const move = ( windowHeight + dimensions.height ) * ( progress - 0.5 ) * actualParallaxAmount;
-
-			return {
-				height: newHeight,
-				transition: 'none',
-				transform: 'translate(0,' + ( move + offsetY ) + 'px)',
-			};
+			return styles;
 		}
 
 		render() {
+
 			return (
 				<Fragment>
 					<div ref={ ( el ) => ( this.container = el ) }>
-						<ParallaxContext.Provider value={ { style: this.getParallaxStyles() } }>
+						<ParallaxContext.Provider value={ {
+							style: this.getElementStyle(),
+							state: this.state,
+							container: this.container,
+							scrollContainer: this.scrollContainer,
+						} }>
 							<WrappedComponent { ...this.props } />
 						</ParallaxContext.Provider>
 					</div>
-					<InspectorControls>
-						<ParallaxPanel { ...this.props } />
-					</InspectorControls>
 				</Fragment>
 			);
 		}
 	};
 };
 
-const withParallaxContext = function( WrappedComponent ) {
+const withParallaxControls = function( WrappedComponent ) {
+
 	return class extends Component {
+
+		constructor() {
+			super( ...arguments );
+
+			this.state = {
+				isScrolling: false,
+			}
+
+			this.previewScrolling = this.previewScrolling.bind( this );
+		}
+
+		previewScrolling() {
+
+			const {
+				parallax: {
+					scrollContainer,
+					container,
+					state: {
+						containerBox,
+						containerHeight,
+						scrollContainerHeight,
+						scrollContainerBox,
+					}
+				},
+			} = this.props;
+
+			if ( ! container || ! scrollContainer ) {
+				return;
+			}
+
+			const scrollTop = scrollContainer.scrollTop;
+			const speed = 1000; // px per second
+			const startTime = Date.now();
+
+			let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
+			let length = containerHeight + scrollContainerHeight;
+
+			if ( start < 0 ) {
+				length = length + start;
+				start = 0;
+			}
+
+			let maxScroll = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+			let distanceToBottom = maxScroll - ( start + length );
+
+			if ( distanceToBottom < 0 ) {
+				length = length + distanceToBottom;
+			}
+
+			const duration = length * 1000 / speed;
+
+			function updateScrollTopLoop() {
+				const currentTime = Date.now();
+				const timePassed = currentTime - startTime;
+				const progress = timePassed / duration;
+				const newScrollTop = start + length * easeInOutCubic( progress );
+
+				scrollContainer.scrollTop = newScrollTop;
+			}
+
+			scrollContainer.style.pointerEvents = 'none';
+			const interval = setInterval( updateScrollTopLoop, 0 );
+
+			this.setState({
+				isScrolling: true
+			});
+
+			setTimeout(() => {
+				clearInterval( interval );
+				this.setState({
+					isScrolling: false
+				});
+				scrollContainer.scrollTop = start + length;
+				scrollContainer.style.removeProperty( 'pointer-events' );
+			}, duration );
+		}
+
 		render() {
-			return(
+			return (
+				<Fragment>
+					<InspectorControls>
+						<ScrollingEffectControls { ...this.props } isScrolling={ this.state.isScrolling } previewScrolling={ this.previewScrolling } />
+					</InspectorControls>
+					<WrappedComponent { ...this.props } />
+				</Fragment>
+			)
+		}
+	}
+}
+
+const withParallaxContext = function( WrappedComponent ) {
+
+	return class extends Component {
+
+		render() {
+			return (
 				<ParallaxContext.Consumer>
-					{ context => (
-						<WrappedComponent
-							parallax={ context }
-							{ ...this.props }
-						/>
-					) }
+					{ context => <WrappedComponent parallax={ context } { ...this.props } /> }
 				</ParallaxContext.Consumer>
 			)
 		}
 	}
 }
 
-export { withParallaxContext };
+const withParallax = compose([
+	withParallaxProvider,
+	withParallaxContext,
+	withParallaxControls,
+]);
+
+export {
+	withParallaxProvider,
+	withParallaxContext,
+	withParallaxControls,
+};
 
 export default withParallax;

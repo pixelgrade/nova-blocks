@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -122,7 +122,7 @@ module.exports = _createClass;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(14);
+var _typeof = __webpack_require__(15);
 
 var assertThisInitialized = __webpack_require__(10);
 
@@ -153,7 +153,7 @@ module.exports = _getPrototypeOf;
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var setPrototypeOf = __webpack_require__(17);
+var setPrototypeOf = __webpack_require__(20);
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -180,7 +180,7 @@ module.exports = _inherits;
 
 
 if (true) {
-  module.exports = __webpack_require__(18);
+  module.exports = __webpack_require__(21);
 } else {}
 
 
@@ -266,12 +266,6 @@ module.exports = _defineProperty;
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = undefined;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
 function _extends() {
   module.exports = _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -291,6 +285,12 @@ function _extends() {
 }
 
 module.exports = _extends;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = undefined;
 
 /***/ }),
 /* 10 */
@@ -336,7 +336,7 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(19);
+  module.exports = __webpack_require__(22);
 } else {}
 
 
@@ -344,11 +344,11 @@ if (true) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(23);
+var arrayWithHoles = __webpack_require__(26);
 
-var iterableToArrayLimit = __webpack_require__(24);
+var iterableToArrayLimit = __webpack_require__(27);
 
-var nonIterableRest = __webpack_require__(25);
+var nonIterableRest = __webpack_require__(28);
 
 function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
@@ -358,6 +358,12 @@ module.exports = _slicedToArray;
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -454,7 +460,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -476,7 +482,60 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 15 */
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(25);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(31);
+
+var iterableToArray = __webpack_require__(32);
+
+var nonIterableSpread = __webpack_require__(33);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+function _objectDestructuringEmpty(obj) {
+  if (obj == null) throw new TypeError("Cannot destructure undefined");
+}
+
+module.exports = _objectDestructuringEmpty;
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -485,8 +544,8 @@ module.exports = _typeof;
 /**
  * Internal dependencies;
  */
-var isShallowEqualObjects = __webpack_require__( 28 );
-var isShallowEqualArrays = __webpack_require__( 29 );
+var isShallowEqualObjects = __webpack_require__( 34 );
+var isShallowEqualArrays = __webpack_require__( 35 );
 
 var isArray = Array.isArray;
 
@@ -517,34 +576,7 @@ module.exports.isShallowEqualArrays = isShallowEqualArrays;
 
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var objectWithoutPropertiesLoose = __webpack_require__(22);
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutProperties;
-
-/***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports) {
 
 function _setPrototypeOf(o, p) {
@@ -559,7 +591,7 @@ function _setPrototypeOf(o, p) {
 module.exports = _setPrototypeOf;
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -572,7 +604,7 @@ module.exports = _setPrototypeOf;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(13),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(14),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -591,7 +623,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -607,7 +639,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(5),m=__webpack_require__(13),q=__webpack_require__(20);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
+var aa=__webpack_require__(5),m=__webpack_require__(14),q=__webpack_require__(23);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
 function da(){if(ba)for(var a in ca){var b=ca[a],c=ba.indexOf(a);if(!(-1<c))throw t(Error(96),a);if(!ea[c]){if(!b.extractEvents)throw t(Error(97),a);ea[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],h=b,g=d;if(fa.hasOwnProperty(g))throw t(Error(99),g);fa[g]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ha(k[e],h,g);e=!0}else f.registrationName?(ha(f.registrationName,h,g),e=!0):e=!1;if(!e)throw t(Error(98),d,a);}}}}
 function ha(a,b,c){if(ia[a])throw t(Error(100),a);ia[a]=b;ja[a]=b.eventTypes[c].dependencies}var ea=[],fa={},ia={},ja={};function ka(a,b,c,d,e,f,h,g,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(n){this.onError(n)}}var la=!1,ma=null,na=!1,oa=null,pa={onError:function(a){la=!0;ma=a}};function qa(a,b,c,d,e,f,h,g,k){la=!1;ma=null;ka.apply(pa,arguments)}
 function ra(a,b,c,d,e,f,h,g,k){qa.apply(this,arguments);if(la){if(la){var l=ma;la=!1;ma=null}else throw t(Error(198));na||(na=!0,oa=l)}}var sa=null,ta=null,va=null;function wa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=va(c);ra(d,b,void 0,a);a.currentTarget=null}function xa(a,b){if(null==b)throw t(Error(30));if(null==a)return b;if(Array.isArray(a)){if(Array.isArray(b))return a.push.apply(a,b),a;a.push(b);return a}return Array.isArray(b)?[a].concat(b):[a,b]}
@@ -876,19 +908,19 @@ rendererPackageName:"react-dom"});var Oj={default:Nj},Pj=Oj&&Nj||Oj;module.expor
 
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(21);
+  module.exports = __webpack_require__(24);
 } else {}
 
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -918,7 +950,7 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();U(a);return
 
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function _objectWithoutPropertiesLoose(source, excluded) {
@@ -939,7 +971,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -949,7 +981,7 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -985,7 +1017,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -995,19 +1027,19 @@ function _nonIterableRest() {
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(27);
+  module.exports = __webpack_require__(30);
 } else {}
 
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1020,7 +1052,7 @@ if (true) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(13),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
+var l=__webpack_require__(14),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
 var t="function"===typeof Symbol&&Symbol.for,aa=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,ba=t?Symbol.for("react.strict_mode"):60108,ca=t?Symbol.for("react.profiler"):60114,x=t?Symbol.for("react.provider"):60109,da=t?Symbol.for("react.context"):60110,ea=t?Symbol.for("react.concurrent_mode"):60111,fa=t?Symbol.for("react.forward_ref"):60112,A=t?Symbol.for("react.suspense"):60113,ha=t?Symbol.for("react.suspense_list"):60120,ia=t?Symbol.for("react.memo"):60115,ja=t?Symbol.for("react.lazy"):
 60116,ka=t?Symbol.for("react.fundamental"):60117;
 function B(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case v:return"Fragment";case aa:return"Portal";case ca:return"Profiler";case ba:return"StrictMode";case A:return"Suspense";case ha:return"SuspenseList"}if("object"===typeof a)switch(a.$$typeof){case da:return"Context.Consumer";case x:return"Context.Provider";case fa:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
@@ -1068,7 +1100,43 @@ Wa;module.exports=Xa.default||Xa;
 
 
 /***/ }),
-/* 28 */
+/* 31 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1126,7 +1194,7 @@ module.exports = isShallowEqualObjects;
 
 
 /***/ }),
-/* 29 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1164,7 +1232,7 @@ module.exports = isShallowEqualArrays;
 
 
 /***/ }),
-/* 30 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1177,7 +1245,7 @@ __webpack_require__.r(actions_namespaceObject);
 __webpack_require__.d(actions_namespaceObject, "updateSettings", function() { return updateSettings; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(14);
+var helpers_typeof = __webpack_require__(15);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -1274,7 +1342,7 @@ function _objectWithoutProperties(source, excluded) {
 var react = __webpack_require__(5);
 
 // EXTERNAL MODULE: external {"commonjs":"lodash","amd":"lodash"}
-var external_commonjs_lodash_amd_lodash_ = __webpack_require__(8);
+var external_commonjs_lodash_amd_lodash_ = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react.js
 
@@ -2388,7 +2456,7 @@ var _wp$components = wp.components,
 var InspectorControls = wp.blockEditor.InspectorControls;
 var withSelect = wp.data.withSelect;
 var with_font_size_picker_addFilter = wp.hooks.addFilter;
-var enableFontSizeControlOnBlocks = ['core/heading', 'novablocks/headline'];
+var enableFontSizeControlOnBlocks = ['core/quote', 'core/pullquote', 'core/heading', 'novablocks/headline'];
 var fontSizeOptions = [{
   value: 'smaller',
   label: __('Smaller', '__plugin_txtd')
@@ -2421,7 +2489,7 @@ function withFontSizePicker(WrappedComponent) {
     var selectValue = fontSizeOptions.find(function (x) {
       return x.value === fontSize;
     }) ? fontSize : defaultFontSize;
-    return [Object(react["createElement"])(WrappedComponent, props), Object(react["createElement"])(InspectorControls, null, level && level < 4 && Object(react["createElement"])(PanelBody, {
+    return Object(react["createElement"])(Fragment, null, Object(react["createElement"])(WrappedComponent, props), Object(react["createElement"])(InspectorControls, null, Object(react["createElement"])(PanelBody, {
       title: __('Text Settings', '__plugin_txtd'),
       className: "blocks-custom-font-size"
     }, Object(react["createElement"])(SelectControl, {
@@ -2434,7 +2502,7 @@ function withFontSizePicker(WrappedComponent) {
           className: replaceActiveFontSize(className, fontSize, nextFontSize)
         });
       }
-    })))];
+    }))));
   };
 }
 
@@ -2455,15 +2523,16 @@ function addFontSizeAttribute(block) {
     return block;
   }
 
-  if (typeof block.attributes !== 'undefined') {
-    block.attributes = Object.assign(block.attributes, {
-      fontSize: {
-        type: 'string',
-        default: defaultFontSize
-      }
-    });
+  if (typeof block.attributes === 'undefined') {
+    block.attributes = {};
   }
 
+  block.attributes = Object.assign(block.attributes, {
+    fontSize: {
+      type: 'string',
+      default: defaultFontSize
+    }
+  });
   return block;
 }
 
@@ -2915,7 +2984,7 @@ function init() {
 
 /* harmony default export */ var announcement_bar = (init);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(9);
+var helpers_extends = __webpack_require__(8);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
@@ -3020,7 +3089,7 @@ var slicedToArray = __webpack_require__(12);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/server.browser.js
-var server_browser = __webpack_require__(26);
+var server_browser = __webpack_require__(29);
 
 // CONCATENATED MODULE: ./src/blocks/google-map/pin.js
 /* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fill-rule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
@@ -3309,6 +3378,129 @@ var with_settings_withSelect = wp.data.withSelect;
     });
   })(Component);
 }));
+// CONCATENATED MODULE: ./src/components/layout-panel/padding.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var padding_ = wp.i18n.__;
+var padding_Fragment = wp.element.Fragment;
+var padding_wp$components = wp.components,
+    padding_Button = padding_wp$components.Button,
+    ButtonGroup = padding_wp$components.ButtonGroup,
+    RangeControl = padding_wp$components.RangeControl;
+
+var padding_PaddingControls = function PaddingControls(props) {
+  var _props$attributes = props.attributes,
+      contentPadding = _props$attributes.contentPadding,
+      contentPaddingCustom = _props$attributes.contentPaddingCustom,
+      setAttributes = props.setAttributes,
+      contentPaddingOptions = props.settings.contentPaddingOptions;
+  return Object(react["createElement"])(padding_Fragment, null, Object(react["createElement"])("label", null, padding_('Content Padding', '__plugin_txtd')), Object(react["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
+    return Object(react["createElement"])(padding_Button, {
+      key: option.value,
+      isDefault: option.value !== contentPadding,
+      isPrimary: option.value === contentPadding,
+      onClick: function onClick() {
+        setAttributes({
+          contentPadding: option.value
+        });
+      }
+    }, option.label);
+  })), 'custom' === contentPadding && Object(react["createElement"])(RangeControl, {
+    value: contentPaddingCustom,
+    onChange: function onChange(newContentPadding) {
+      return setAttributes({
+        contentPaddingCustom: newContentPadding
+      });
+    },
+    min: 0,
+    max: 25
+  }));
+};
+
+/* harmony default export */ var padding = (with_settings(padding_PaddingControls));
+// CONCATENATED MODULE: ./src/components/layout-panel/width.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var width_ = wp.i18n.__;
+var width_Fragment = wp.element.Fragment;
+var width_wp$components = wp.components,
+    width_Button = width_wp$components.Button,
+    width_ButtonGroup = width_wp$components.ButtonGroup,
+    width_RangeControl = width_wp$components.RangeControl;
+
+var width_WidthControls = function WidthControls(props) {
+  var _props$attributes = props.attributes,
+      contentWidth = _props$attributes.contentWidth,
+      contentWidthCustom = _props$attributes.contentWidthCustom,
+      setAttributes = props.setAttributes,
+      contentWidthOptions = props.settings.contentWidthOptions;
+  return Object(react["createElement"])(width_Fragment, null, Object(react["createElement"])("label", null, width_('Content Width', '__plugin_txtd')), Object(react["createElement"])(width_ButtonGroup, {
+    label: "Content Width"
+  }, contentWidthOptions.map(function (option) {
+    return Object(react["createElement"])(width_Button, {
+      key: option.value,
+      isDefault: option.value !== contentWidth,
+      isPrimary: option.value === contentWidth,
+      onClick: function onClick() {
+        setAttributes({
+          contentWidth: option.value
+        });
+      }
+    }, option.label);
+  })), 'custom' === contentWidth && Object(react["createElement"])(width_RangeControl, {
+    value: contentWidthCustom,
+    onChange: function onChange(newContentWidth) {
+      return setAttributes({
+        contentWidthCustom: newContentWidth
+      });
+    },
+    min: 20,
+    max: 90,
+    step: 10
+  }));
+};
+
+/* harmony default export */ var width = (with_settings(width_WidthControls));
+// CONCATENATED MODULE: ./src/components/layout-panel/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+var layout_panel_ = wp.i18n.__;
+var layout_panel_PanelBody = wp.components.PanelBody;
+
+var layout_panel_LayoutPanel = function LayoutPanel(props) {
+  return Object(react["createElement"])(layout_panel_PanelBody, {
+    className: "pixelgrade-hero-button-group-wrapper",
+    title: layout_panel_('Layout', '__plugin_txtd'),
+    initialOpen: false
+  }, Object(react["createElement"])(padding, props), Object(react["createElement"])(width, props), props.children);
+};
+
+/* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
 // CONCATENATED MODULE: ./src/components/parallax-panel/index.js
 
 
@@ -3323,7 +3515,7 @@ var with_settings_withSelect = wp.data.withSelect;
 var parallax_panel_ = wp.i18n.__;
 var parallax_panel_wp$components = wp.components,
     parallax_panel_PanelBody = parallax_panel_wp$components.PanelBody,
-    RangeControl = parallax_panel_wp$components.RangeControl,
+    parallax_panel_RangeControl = parallax_panel_wp$components.RangeControl,
     RadioControl = parallax_panel_wp$components.RadioControl,
     parallax_panel_ToggleControl = parallax_panel_wp$components.ToggleControl;
 
@@ -3363,7 +3555,7 @@ var parallax_panel_ParallaxPanel = function ParallaxPanel(props) {
     },
     options: parallaxOptions,
     help: parallax_panel_('The speed at which the parallax effect runs.', '__plugin_txtd')
-  }), !!enableParallax && 'custom' === parallaxAmount && Object(react["createElement"])(RangeControl, {
+  }), !!enableParallax && 'custom' === parallaxAmount && Object(react["createElement"])(parallax_panel_RangeControl, {
     value: parallaxCustomAmount,
     onChange: function onChange(nextParallaxAmount) {
       return setAttributes({
@@ -3378,24 +3570,414 @@ var parallax_panel_ParallaxPanel = function ParallaxPanel(props) {
 };
 
 /* harmony default export */ var parallax_panel = (with_settings(parallax_panel_ParallaxPanel));
-// CONCATENATED MODULE: ./src/components/util.js
-// https://stackoverflow.com/a/2450976
-var shuffleArray = function shuffleArray(array) {
-  var currentIndex = array.length,
-      temporaryValue,
-      randomIndex; // While there remain elements to shuffle...
+// CONCATENATED MODULE: ./src/components/position-indicators-panel/index.js
 
-  while (0 !== currentIndex) {
-    // eslint-disable-next-line no-restricted-syntax
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1; // And swap it with the current element.
+var position_indicators_panel_ = wp.i18n.__;
+var position_indicators_panel_wp$components = wp.components,
+    position_indicators_panel_PanelBody = position_indicators_panel_wp$components.PanelBody,
+    position_indicators_panel_ToggleControl = position_indicators_panel_wp$components.ToggleControl;
 
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+function PositionIndicatorsPanel(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes;
+  var positionIndicators = attributes.positionIndicators;
+  return Object(react["createElement"])(position_indicators_panel_PanelBody, {
+    title: position_indicators_panel_('Position Indicators', '__plugin_txtd'),
+    initialOpen: false
+  }, Object(react["createElement"])(position_indicators_panel_ToggleControl, {
+    label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
+    checked: positionIndicators,
+    onChange: function onChange() {
+      setAttributes({
+        positionIndicators: !positionIndicators
+      });
+    }
+  }));
+}
+
+/* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(17);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
+var objectDestructuringEmpty = __webpack_require__(18);
+var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
+
+// EXTERNAL MODULE: external "jQuery"
+var external_jQuery_ = __webpack_require__(13);
+var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
+
+// CONCATENATED MODULE: ./src/components/with-parallax/util.js
+
+var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
+  if (!focalPoint1 && !focalPoint2) {
+    return {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (!focalPoint1) {
+    return focalPoint2;
+  }
+
+  if (!focalPoint2) {
+    return focalPoint1;
+  }
+
+  return {
+    x: parseFloat(focalPoint1.x) + (parseFloat(focalPoint2.x) - parseFloat(focalPoint1.x)) * progress,
+    y: parseFloat(focalPoint1.y) + (parseFloat(focalPoint2.y) - parseFloat(focalPoint1.y)) * progress
+  };
+};
+var getStyles = function getStyles(config) {
+  var props = getProps(config);
+  var styles = getStylesFromProps(props);
+  return styles;
+};
+var getStylesFromProps = function getStylesFromProps(props) {
+  var parallaxAmount = props.parallaxAmount,
+      width = props.width,
+      height = props.height,
+      moveX = props.moveX,
+      moveY = props.moveY,
+      offsetX = props.offsetX,
+      offsetY = props.offsetY,
+      scale = props.scale,
+      focalPoint = props.focalPoint,
+      containerBox = props.containerBox;
+  return {
+    width: width || '',
+    height: height || '',
+    minHeight: 0,
+    maxWidth: 'none',
+    transform: "translate(".concat(moveX, ",").concat(moveY * parallaxAmount, "px) translateX(").concat(offsetX, ") translateY(").concat(offsetY, "px) scale(").concat(scale, ")"),
+    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+    transformOrigin: focalPoint.x * 100 + '% 50%'
+  };
+};
+
+function getIntermediateValue(initialValue, finalValue, progress) {
+  return initialValue + (finalValue - initialValue) * progress;
+}
+
+function getScales(config) {
+  var scrollingEffect = config.scrollingEffect,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      progress = config.progress;
+  initialBackgroundScale = initialBackgroundScale || 1;
+
+  if (scrollingEffect === 'parallax') {
+    finalBackgroundScale = initialBackgroundScale;
+  }
+
+  var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
+  initialBackgroundScale = initialBackgroundScale / maxScale;
+  finalBackgroundScale = finalBackgroundScale / maxScale;
+  return {
+    maxScale: maxScale,
+    newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
+  };
+}
+
+function getFocalPoint(config) {
+  var scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      progress = config.progress;
+
+  if (!focalPoint) {
+    focalPoint = {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (scrollingEffect !== 'doppler') {
+    return focalPoint;
+  }
+
+  return getIntermediateFocalPoint(focalPoint, finalFocalPoint, progress);
+}
+
+function getNewImageHeight(config, parallaxAmount) {
+  var scrollContainerHeight = config.scrollContainerHeight,
+      containerHeight = config.containerHeight;
+  return containerHeight + (scrollContainerHeight - containerHeight) * parallaxAmount;
+}
+
+var getProps = function getProps(config, fixed) {
+  var distance = config.distance,
+      progress = config.progress,
+      smoothStart = config.smoothStart,
+      smoothEnd = config.smoothEnd,
+      scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      container = config.container,
+      containerBox = config.containerBox,
+      containerWidth = config.containerWidth,
+      containerHeight = config.containerHeight,
+      scrollContainer = config.scrollContainer,
+      scrollContainerBox = config.scrollContainerBox,
+      scrollContainerHeight = config.scrollContainerHeight;
+  var newFocalPoint = getFocalPoint(config);
+
+  if (scrollingEffect === 'static') {
+    return {
+      width: containerWidth,
+      height: containerHeight,
+      scale: initialBackgroundScale || 1,
+      moveX: 0,
+      moveY: 0,
+      offsetX: 0,
+      offsetY: 0,
+      parallaxAmount: 0,
+      focalPoint: newFocalPoint
+    };
+  }
+
+  var parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+
+  var _getScales = getScales(config),
+      maxScale = _getScales.maxScale,
+      newScale = _getScales.newScale;
+
+  var newImageHeight = getNewImageHeight(config, parallaxAmount); // keep in sync with scroll
+
+  var moveY = scrollContainerBox.top - containerBox.top;
+
+  if (!smoothStart) {
+    if (!!fixed && containerBox.top < 0) {
+      moveY = scrollContainerBox.top;
+    }
+
+    if (!fixed && 0 > scrollContainerBox.top - containerBox.top) {
+      moveY = 0;
+    }
+  }
+
+  if (!smoothEnd) {
+    if (scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight) {
+      if (!!fixed) {
+        moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;
+      } else {
+        moveY = containerHeight - scrollContainerHeight;
+      }
+    }
+  } // align top
+
+
+  var offsetY = newImageHeight * maxScale * (newScale - 1) * 0.5; // position according to focalPoint
+
+  offsetY += newImageHeight * (1 - maxScale * newScale) * newFocalPoint.y;
+  return {
+    distance: distance,
+    parallaxAmount: parallaxAmount,
+    progress: progress,
+    width: containerWidth * maxScale,
+    height: newImageHeight * maxScale,
+    moveX: "".concat(fixed ? containerBox.left - scrollContainerBox.left : 0, "px"),
+    moveY: moveY,
+    offsetX: (1 / maxScale - 1) * newFocalPoint.x * 100 + '%',
+    offsetY: offsetY,
+    scale: newScale,
+    focalPoint: newFocalPoint
+  };
+};
+var getState = function getState(container, config) {
+  if (!container || !config) {
+    return {};
+  }
+
+  var followThroughStart = config.followThroughStart,
+      followThroughEnd = config.followThroughEnd,
+      scrollingEffect = config.scrollingEffect,
+      scrollContainerHeight = config.scrollContainerHeight,
+      scrollContainerBox = config.scrollContainerBox;
+  var containerWidth = container.offsetWidth;
+  var containerHeight = container.offsetHeight;
+  var containerBox = container.getBoundingClientRect();
+  var smoothStart = followThroughStart || scrollingEffect === 'parallax';
+  var smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
+  var current = scrollContainerBox.top - containerBox.top;
+  var distance = containerHeight - scrollContainerHeight;
+
+  if (smoothStart) {
+    current += scrollContainerHeight;
+    distance += scrollContainerHeight;
+  }
+
+  if (smoothEnd) {
+    distance += scrollContainerHeight;
+  }
+
+  var progress = distance <= 0 ? 0.5 : current / distance;
+
+  if (!smoothStart) {
+    progress = Math.max(0, progress);
+  }
+
+  if (!smoothEnd) {
+    progress = Math.min(1, progress);
+  }
+
+  return {
+    progress: progress,
+    distance: distance,
+    smoothStart: smoothStart,
+    smoothEnd: smoothEnd,
+    containerBox: containerBox,
+    containerHeight: containerHeight,
+    containerWidth: containerWidth,
+    scrollContainerHeight: scrollContainerHeight,
+    scrollContainerBox: scrollContainerBox
+  };
+};
+var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
+  var frameRendered = false;
+  $blocks.each(function (i, container) {
+    var $container = external_jQuery_default()(container);
+    var followThroughStart = !!$container.data('smooth-start');
+    var followThroughEnd = !!$container.data('smooth-end');
+    var scrollingEffect = $container.data('scrolling-effect');
+    var focalPoint = $container.data('focal-point');
+    var finalFocalPoint = $container.data('final-focal-point');
+    var initialBackgroundScale = $container.data('initial-background-scale');
+    var finalBackgroundScale = $container.data('final-background-scale');
+    var scrollContainerHeight = window.innerHeight;
+    var scrollContainerBox = {
+      top: 0,
+      left: 0
+    };
+    var config = {
+      followThroughStart: followThroughStart,
+      followThroughEnd: followThroughEnd,
+      scrollingEffect: scrollingEffect,
+      scrollContainerHeight: scrollContainerHeight,
+      scrollContainerBox: scrollContainerBox,
+      focalPoint: focalPoint,
+      finalFocalPoint: finalFocalPoint,
+      initialBackgroundScale: initialBackgroundScale,
+      finalBackgroundScale: finalBackgroundScale
+    };
+    $container.data({
+      state: getState(container, config),
+      config: config
+    });
+    var $mask = $container.find('.novablocks-mask');
+    var $parallax = $container.find('.novablocks-parallax');
+    $container.data('mask', $mask);
+    $container.data('parallax', $parallax);
+    external_jQuery_default()(window).on('scroll', function () {
+      var state = getState(container, config);
+      $container.data('state', state);
+      frameRendered = false;
+    });
+  });
+
+  function parallaxUpdateLoop() {
+    if (!frameRendered) {
+      $blocks.each(function (i, obj) {
+        var $container = external_jQuery_default()(obj);
+        var $background = $container.data('parallax');
+        var $foreground = $background.find('.novablocks-foreground');
+        var state = $container.data('state');
+        var config = $container.data('config');
+        config = Object.assign({}, state, config);
+        var props = getProps(config, true);
+        $foreground.css('transform', "translate3d(0,".concat(-props.moveY * props.parallaxAmount, "px,0)")); // because of fixed positioning
+
+        props.moveY = -1 * props.moveY;
+
+        if (0 < props.progress && props.progress < 1) {
+          props.parallaxAmount = 1 - props.parallaxAmount;
+        }
+
+        var styles = getStylesFromProps(props);
+        var _config = config,
+            containerWidth = _config.containerWidth,
+            containerHeight = _config.containerHeight;
+        $container.data('parallax').css(styles);
+        $container.data('mask').css({
+          clip: "rect(0 ".concat(containerWidth, "px ").concat(containerHeight, "px 0)")
+        });
+      });
+      frameRendered = true;
+    }
+
+    requestAnimationFrame(parallaxUpdateLoop);
+  }
+
+  requestAnimationFrame(parallaxUpdateLoop);
+};
+// CONCATENATED MODULE: ./src/utils.js
+
+
+var debounce = function debounce(func, wait) {
+  var timeout = null;
+  return function () {
+    var context = this;
+    var args = arguments;
+
+    var later = function later() {
+      func.apply(context, args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+var range = function range(min, max) {
+  var array = [];
+
+  for (var i = 0; i <= max - min; i++) {
+    array.push(i + min);
   }
 
   return array;
+};
+var utils_withFirstBlockConditions = function withFirstBlockConditions(Component) {
+  return function (props) {
+    var _wp$data$select = wp.data.select('core/block-editor'),
+        getBlocks = _wp$data$select.getBlocks,
+        getSelectedBlockClientId = _wp$data$select.getSelectedBlockClientId;
+
+    var blocks = getBlocks();
+    var selectedBlockClientId = getSelectedBlockClientId();
+    var index = blocks.findIndex(function (block) {
+      return block.clientId === selectedBlockClientId;
+    });
+    var show = index === 0 && props.clientId === selectedBlockClientId;
+    return show && Object(react["createElement"])(Component, props);
+  };
+};
+var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+var hasTouchScreen = function hasTouchScreen() {
+  var hasTouchScreen = false;
+
+  if ("maxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.maxTouchPoints > 0;
+  } else if ("msMaxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.msMaxTouchPoints > 0;
+  } else {
+    var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+
+    if (mQ && mQ.media === "(pointer:coarse)") {
+      hasTouchScreen = !!mQ.matches;
+    } else if ('orientation' in window) {
+      hasTouchScreen = true;
+    } else {
+      var UA = navigator.userAgent;
+      hasTouchScreen = /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+    }
+  }
+
+  return hasTouchScreen;
 };
 var findParents = function findParents(target, query) {
   var parents = [];
@@ -3414,8 +3996,381 @@ var findParents = function findParents(target, query) {
 
   traverse(target);
   return parents;
+}; // https://stackoverflow.com/a/2450976
+
+var shuffleArray = function shuffleArray(array) {
+  var currentIndex = array.length,
+      temporaryValue,
+      randomIndex; // While there remain elements to shuffle...
+
+  while (0 !== currentIndex) {
+    // eslint-disable-next-line no-restricted-syntax
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1; // And swap it with the current element.
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+var defaultSnapValues = {
+  x: [0, 0.5, 1],
+  y: [0, 0.5, 1]
+};
+var maybeSnapFocalPoint = function maybeSnapFocalPoint(focalPoint) {
+  var snapValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultSnapValues;
+  var x = parseFloat(focalPoint.x);
+  var y = parseFloat(focalPoint.y);
+  var thereshold = 0.05;
+  snapValues.x.forEach(function (snapValue) {
+    if (snapValue - thereshold < x && x < snapValue + thereshold) {
+      x = snapValue;
+    }
+  });
+  snapValues.y.forEach(function (snapValue) {
+    if (snapValue - thereshold < y && y < snapValue + thereshold) {
+      y = snapValue;
+    }
+  });
+  return {
+    x: x,
+    y: y
+  };
+};
+var getSnapClassname = function getSnapClassname(focalPoint) {
+  var classNames = [];
+
+  if (defaultSnapValues.x.includes(parseFloat(focalPoint.x))) {
+    classNames.push('is-snapped-x');
+  }
+
+  if (defaultSnapValues.y.includes(parseFloat(focalPoint.y))) {
+    classNames.push('is-snapped-y');
+  }
+
+  return classNames.join(' ');
+};
+// CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
+
+
+
+
+/**
+ * WordPress dependencies
+ */
+var scrolling_effect_controls_ = wp.i18n.__;
+var scrolling_effect_controls_wp$components = wp.components,
+    scrolling_effect_controls_Button = scrolling_effect_controls_wp$components.Button,
+    FocalPointPicker = scrolling_effect_controls_wp$components.FocalPointPicker,
+    scrolling_effect_controls_PanelBody = scrolling_effect_controls_wp$components.PanelBody,
+    scrolling_effect_controls_RadioControl = scrolling_effect_controls_wp$components.RadioControl,
+    scrolling_effect_controls_RangeControl = scrolling_effect_controls_wp$components.RangeControl,
+    scrolling_effect_controls_ToggleControl = scrolling_effect_controls_wp$components.ToggleControl;
+var scrolling_effect_controls_Fragment = wp.element.Fragment;
+
+
+var scrolling_effect_controls_ScrollingEffectControls = function ScrollingEffectControls(props) {
+  objectDestructuringEmpty_default()(props.attributes);
+
+  return Object(react["createElement"])(scrolling_effect_controls_Fragment, null, Object(react["createElement"])(scrolling_effect_controls_ScrollingEffectPanel, props, Object(react["createElement"])(scrolling_effect_controls_DopplerPresetsPanel, props), Object(react["createElement"])(scrolling_effect_controls_StartFramePanel, props), Object(react["createElement"])(scrolling_effect_controls_EndFramePanel, props)));
+};
+
+var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPanel(props) {
+  var setAttributes = props.setAttributes,
+      _props$attributes = props.attributes,
+      scrollingEffect = _props$attributes.scrollingEffect,
+      motionPreset = _props$attributes.motionPreset,
+      settings = props.settings,
+      name = props.name;
+  var motionPresetOptions = settings.motionPresetOptions,
+      doppler = settings.theme_support.doppler;
+
+  var scrollingEffectOptions = toConsumableArray_default()(settings.scrollingEffectOptions);
+
+  if (!!doppler && doppler.includes(name)) {
+    scrollingEffectOptions.push({
+      label: scrolling_effect_controls_('Doppler by Pixelgrade ®'),
+      value: 'doppler'
+    });
+  }
+
+  return Object(react["createElement"])(scrolling_effect_controls_PanelBody, {
+    title: "Scrolling Effect:",
+    className: 'novablocks-scrolling-effect-panel'
+  }, Object(react["createElement"])(scrolling_effect_controls_RadioControl, {
+    selected: scrollingEffect,
+    className: 'novablocks-scrolling-effect',
+    onChange: function onChange(scrollingEffect) {
+      var newAttributes = {
+        scrollingEffect: scrollingEffect
+      };
+
+      if (scrollingEffect === 'doppler' && motionPreset !== 'custom') {
+        var newOption = motionPresetOptions.find(function (option) {
+          return motionPreset === option.value;
+        });
+        newAttributes = Object.assign(newOption.preset, newAttributes);
+        newAttributes.minHeightFallback = 75;
+      }
+
+      setAttributes(newAttributes);
+    },
+    options: scrollingEffectOptions
+  }), props.children);
+};
+
+var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel(props) {
+  var _props$attributes2 = props.attributes,
+      motionPreset = _props$attributes2.motionPreset,
+      scrollingEffect = _props$attributes2.scrollingEffect,
+      setAttributes = props.setAttributes,
+      motionPresetOptions = props.settings.motionPresetOptions,
+      isScrolling = props.isScrolling,
+      previewScrolling = props.previewScrolling;
+
+  if (scrollingEffect !== 'doppler') {
+    return false;
+  }
+
+  return Object(react["createElement"])(scrolling_effect_controls_PanelBody, {
+    title: "Doppler Scrolling Settings"
+  }, Object(react["createElement"])(scrolling_effect_controls_RadioControl, {
+    label: 'Motion Presets',
+    selected: motionPreset,
+    onChange: function onChange(motionPreset) {
+      var newAttributes = {
+        motionPreset: motionPreset
+      };
+      var newOption = motionPresetOptions.find(function (option) {
+        return motionPreset === option.value;
+      });
+
+      if (newOption && newOption.preset) {
+        newAttributes = Object.assign(newOption.preset, newAttributes);
+      }
+
+      setAttributes(newAttributes);
+
+      if ('custom' !== motionPreset && !isScrolling) {
+        previewScrolling();
+      }
+    },
+    options: motionPresetOptions
+  }), Object(react["createElement"])("div", null, Object(react["createElement"])(scrolling_effect_controls_Button, {
+    isLarge: true,
+    isPrimary: true,
+    disabled: !!isScrolling,
+    onClick: previewScrolling
+  }, "Preview Scrolling")));
+};
+
+var getParallaxFocalPointImage = function getParallaxFocalPointImage(media) {
+  var mediaType = media ? media.type : false;
+  var parallaxFocalPointImage = false;
+
+  if (mediaType === 'image') {
+    parallaxFocalPointImage = media.sizes.full;
+  }
+
+  if (mediaType === 'video') {
+    parallaxFocalPointImage = {
+      url: '//cloud.pixelgrade.com/wp-content/uploads/2020/01/Screenshot-2020-01-09-at-15.59.37.png',
+      width: 218,
+      height: 170
+    };
+  }
+
+  return parallaxFocalPointImage;
+};
+
+var scrolling_effect_controls_StartFramePanel = function StartFramePanel(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes;
+  var media = attributes.media,
+      motionPreset = attributes.motionPreset,
+      focalPoint = attributes.focalPoint,
+      finalFocalPoint = attributes.finalFocalPoint,
+      initialBackgroundScale = attributes.initialBackgroundScale,
+      followThroughStart = attributes.followThroughStart,
+      scrollingEffect = attributes.scrollingEffect;
+  var parallaxFocalPointImage = getParallaxFocalPointImage(media);
+  var isDoppler = scrollingEffect === 'doppler';
+
+  if (!parallaxFocalPointImage) {
+    return false;
+  }
+
+  var staticPanelTitle = scrolling_effect_controls_('Static Scrolling Settings', '__plugin_txtd');
+
+  var parallaxPanelTitle = scrolling_effect_controls_('Parallax Scrolling Settings', '__plugin_txtd');
+
+  var dopplerPanelTitle = scrolling_effect_controls_('Start Frame position', '__plugin_txtd');
+
+  var panelTitle = staticPanelTitle;
+
+  if ('parallax' === scrollingEffect) {
+    panelTitle = parallaxPanelTitle;
+  }
+
+  if (isDoppler) {
+    panelTitle = dopplerPanelTitle;
+  }
+
+  var classNames = ['novablocks-focal-point-picker', "novablocks-focal-point-picker--".concat(scrollingEffect), "novablocks-focal-point-picker--start", getSnapClassname(focalPoint)];
+  var className = classNames.join(' ');
+  return Object(react["createElement"])(scrolling_effect_controls_PanelBody, {
+    title: panelTitle,
+    className: className
+  }, Object(react["createElement"])(FocalPointPicker, {
+    label: 'Focal Point',
+    url: parallaxFocalPointImage.url,
+    dimensions: {
+      width: parallaxFocalPointImage.width,
+      height: parallaxFocalPointImage.height
+    },
+    value: focalPoint,
+    onChange: function onChange(focalPoint) {
+      setAttributes({
+        motionPreset: 'custom',
+        focalPoint: maybeSnapFocalPoint(focalPoint),
+        finalFocalPoint: maybeSnapFocalPoint({
+          x: focalPoint.x,
+          y: finalFocalPoint.y
+        })
+      });
+    }
+  }), Object(react["createElement"])(scrolling_effect_controls_RangeControl, {
+    label: 'Zoom',
+    value: initialBackgroundScale,
+    onChange: function onChange(initialBackgroundScale) {
+      setAttributes({
+        motionPreset: 'custom',
+        initialBackgroundScale: initialBackgroundScale
+      });
+    },
+    min: 1,
+    max: 2,
+    step: 0.01
+  }), scrollingEffect === 'doppler' && Object(react["createElement"])(scrolling_effect_controls_ToggleControl, {
+    label: scrolling_effect_controls_('Smooth start transition', '__plugin_txtd'),
+    checked: followThroughStart,
+    onChange: function onChange() {
+      return setAttributes({
+        followThroughStart: !followThroughStart
+      });
+    }
+  }));
+};
+
+var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes;
+  var media = attributes.media,
+      focalPoint = attributes.focalPoint,
+      finalFocalPoint = attributes.finalFocalPoint,
+      finalBackgroundScale = attributes.finalBackgroundScale,
+      followThroughEnd = attributes.followThroughEnd,
+      scrollingEffect = attributes.scrollingEffect;
+  var parallaxFocalPointImage = getParallaxFocalPointImage(media);
+
+  if (!parallaxFocalPointImage || scrollingEffect !== 'doppler') {
+    return false;
+  }
+
+  var classNames = ['novablocks-focal-point-picker', "novablocks-focal-point-picker--".concat(scrollingEffect), 'novablocks-focal-point-picker--end', getSnapClassname(focalPoint)];
+  var className = classNames.join(' ');
+  return Object(react["createElement"])(scrolling_effect_controls_PanelBody, {
+    title: scrolling_effect_controls_('End Frame position', '__plugin_txtd'),
+    className: className
+  }, Object(react["createElement"])(FocalPointPicker, {
+    label: 'Focal Point',
+    url: parallaxFocalPointImage.url,
+    dimensions: {
+      width: parallaxFocalPointImage.width,
+      height: parallaxFocalPointImage.height
+    },
+    value: finalFocalPoint,
+    onChange: function onChange(finalFocalPoint) {
+      setAttributes({
+        motionPreset: 'custom',
+        focalPoint: maybeSnapFocalPoint({
+          x: finalFocalPoint.x,
+          y: focalPoint.y
+        }),
+        finalFocalPoint: maybeSnapFocalPoint(finalFocalPoint)
+      });
+    },
+    disabled: true
+  }), Object(react["createElement"])(scrolling_effect_controls_RangeControl, {
+    label: 'Zoom',
+    value: finalBackgroundScale,
+    onChange: function onChange(finalBackgroundScale) {
+      setAttributes({
+        motionPreset: 'custom',
+        finalBackgroundScale: finalBackgroundScale
+      });
+    },
+    min: 1,
+    max: 2,
+    step: 0.01
+  }), Object(react["createElement"])(scrolling_effect_controls_ToggleControl, {
+    label: scrolling_effect_controls_('Smooth end transition', '__plugin_txtd'),
+    checked: followThroughEnd,
+    onChange: function onChange() {
+      return setAttributes({
+        motionPreset: 'custom',
+        followThroughEnd: !followThroughEnd
+      });
+    }
+  }));
+};
+
+/* harmony default export */ var scrolling_effect_controls = (scrolling_effect_controls_ScrollingEffectControls);
+// CONCATENATED MODULE: ./src/easing.js
+var linear = function linear(t) {
+  return t;
+};
+var easeInQuad = function easeInQuad(t) {
+  return t * t;
+};
+var easeOutQuad = function easeOutQuad(t) {
+  return t * (2 - t);
+};
+var easeInOutQuad = function easeInOutQuad(t) {
+  return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+};
+var easeInCubic = function easeInCubic(t) {
+  return t * t * t;
+};
+var easeOutCubic = function easeOutCubic(t) {
+  return --t * t * t + 1;
+};
+var easeInOutCubic = function easeInOutCubic(t) {
+  return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+};
+var easeInQuart = function easeInQuart(t) {
+  return t * t * t * t;
+};
+var easeOutQuart = function easeOutQuart(t) {
+  return 1 - --t * t * t * t;
+};
+var easeInOutQuart = function easeInOutQuart(t) {
+  return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+};
+var easeInQuint = function easeInQuint(t) {
+  return t * t * t * t * t;
+};
+var easeOutQuint = function easeOutQuint(t) {
+  return 1 + --t * t * t * t * t;
+};
+var easeInOutQuint = function easeInOutQuint(t) {
+  return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
 };
 // CONCATENATED MODULE: ./src/components/with-parallax/index.js
+
+
 
 
 
@@ -3435,9 +4390,10 @@ var with_parallax_wp$element = wp.element,
     with_parallax_Component = with_parallax_wp$element.Component,
     with_parallax_Fragment = with_parallax_wp$element.Fragment;
 var with_parallax_InspectorControls = wp.blockEditor.InspectorControls;
+var with_parallax_compose = wp.compose.compose;
 var ParallaxContext = Object(react["createContext"])();
 
-var with_parallax_withParallax = function withParallax(WrappedComponent) {
+var with_parallax_withParallaxProvider = function withParallaxProvider(WrappedComponent) {
   return (
     /*#__PURE__*/
     function (_Component) {
@@ -3450,11 +4406,11 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
 
         _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class).apply(this, arguments));
         _this.state = {
-          windowWidth: window.innerWidth,
-          windowHeight: window.innerHeight,
+          scrollContainerWidth: 0,
+          scrollContainerHeight: 0,
           progress: 0.5
         };
-        _this.updateHandler = _this.updateDimensions.bind(assertThisInitialized_default()(_this));
+        _this.updateHandler = _this.updateState.bind(assertThisInitialized_default()(_this));
         _this.scrollContainer = _this.getScrollContainer();
         return _this;
       }
@@ -3462,9 +4418,8 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
       createClass_default()(_class, [{
         key: "getScrollContainer",
         value: function getScrollContainer() {
-          var oldScrollContainer = document.getElementsByClassName('edit-post-layout__content')[0];
-          ;
-          var newScrollContainer = document.getElementsByClassName('edit-post-editor-regions__content')[0];
+          var oldScrollContainer = document.querySelector('.edit-post-layout__content');
+          var newScrollContainer = document.querySelector('.edit-post-editor-regions__content');
           return oldScrollContainer || newScrollContainer;
         }
       }, {
@@ -3478,30 +4433,43 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
             this.scrollContainer.addEventListener('scroll', this.updateHandler);
           }
 
-          this.updateDimensions();
+          this.updateState();
         }
       }, {
         key: "createBlockObservers",
         value: function createBlockObservers() {
           var _this2 = this;
 
-          this.observers = findParents(this.container, '.wp-block').map(function (block) {
-            var observer = new MutationObserver(function (movements) {
-              movements.forEach(function (movement) {
-                if ('style' === movement.attributeName) {
-                  if (movement.oldValue.includes('transform: translate3d')) {
-                    _this2.updateDimensions();
+          this.observers = [];
+          findParents(this.container, '.wp-block').map(function (block) {
+            if (window.MutationObserver) {
+              var mutationObserver = new MutationObserver(function (movements) {
+                movements.forEach(function (movement) {
+                  if ('style' === movement.attributeName) {
+                    if (movement.oldValue && movement.oldValue.includes('transform: translate3d')) {
+                      _this2.updateState();
+                    }
                   }
-                }
+                });
               });
-            });
-            observer.observe(block, {
-              attributes: true,
-              attributeOldValue: true,
-              childList: false,
-              subtree: false
-            });
-            return observer;
+              mutationObserver.observe(block, {
+                attributes: true,
+                attributeOldValue: true,
+                childList: false,
+                subtree: false
+              });
+
+              _this2.observers.push(mutationObserver);
+            }
+
+            if (window.ResizeObserver) {
+              var resizeObserver = new ResizeObserver(function () {
+                _this2.updateState();
+              });
+              resizeObserver.observe(block);
+
+              _this2.observers.push(resizeObserver);
+            }
           });
         }
       }, {
@@ -3518,59 +4486,31 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
           }
         }
       }, {
-        key: "updateDimensions",
-        value: function updateDimensions() {
-          if (!this.container || !this.scrollContainer) {
-            return;
-          }
-
-          var containerBox = this.container.getBoundingClientRect();
-          var containerBoxTop = containerBox.y || containerBox.top;
-          var progress = (this.state.windowHeight - containerBoxTop) / (this.state.windowHeight + this.container.offsetHeight);
-          var actualProgress = Math.max(Math.min(progress, 1), 0);
-          this.setState({
-            windowWidth: window.innerWidth,
-            windowHeight: window.innerHeight,
-            scrollTop: this.scrollContainer.scrollTop,
-            progress: actualProgress,
-            dimensions: {
-              width: this.container.offsetWidth,
-              height: this.container.offsetHeight,
-              top: containerBoxTop
-            }
+        key: "updateState",
+        value: function updateState() {
+          var container = this.container;
+          var scrollContainerHeight = this.scrollContainer.offsetHeight;
+          var scrollContainerBox = this.scrollContainer.getBoundingClientRect();
+          var config = Object.assign({}, this.props.attributes, {
+            scrollContainerBox: scrollContainerBox,
+            scrollContainerHeight: scrollContainerHeight
           });
+          this.setState(getState(container, config));
         }
       }, {
-        key: "getParallaxStyles",
-        value: function getParallaxStyles() {
-          if (!this.state.dimensions) {
+        key: "getElementStyle",
+        value: function getElementStyle() {
+          var attributes = this.props.attributes;
+          var scrollingEffect = attributes.scrollingEffect;
+
+          if (!this.scrollContainer || !this.container) {
             return {};
           }
 
-          var _this$props$attribute = this.props.attributes,
-              enableParallax = _this$props$attribute.enableParallax,
-              parallaxAmount = _this$props$attribute.parallaxAmount,
-              parallaxCustomAmount = _this$props$attribute.parallaxCustomAmount;
-
-          if (!enableParallax) {
-            return {};
-          }
-
-          var actualParallaxAmount = parallaxAmount === 'custom' ? parallaxCustomAmount : parseInt(parallaxAmount, 10);
-          actualParallaxAmount = Math.max(Math.min(1, actualParallaxAmount / 100), 0);
-          var _this$state = this.state,
-              dimensions = _this$state.dimensions,
-              windowHeight = _this$state.windowHeight,
-              progress = _this$state.progress;
-          var newHeight = dimensions.height * (1 - actualParallaxAmount) + windowHeight * actualParallaxAmount;
-          var scale = newHeight / dimensions.height;
-          var offsetY = dimensions.height * (1 - scale) / 2;
-          var move = (windowHeight + dimensions.height) * (progress - 0.5) * actualParallaxAmount;
-          return {
-            height: newHeight,
-            transition: 'none',
-            transform: 'translate(0,' + (move + offsetY) + 'px)'
-          };
+          var state = getState(this.container, Object.assign({}, this.state, attributes));
+          var config = Object.assign({}, state, attributes);
+          var styles = getStyles(config);
+          return styles;
         }
       }, {
         key: "render",
@@ -3583,9 +4523,12 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
             }
           }, Object(react["createElement"])(ParallaxContext.Provider, {
             value: {
-              style: this.getParallaxStyles()
+              style: this.getElementStyle(),
+              state: this.state,
+              container: this.container,
+              scrollContainer: this.scrollContainer
             }
-          }, Object(react["createElement"])(WrappedComponent, this.props))), Object(react["createElement"])(with_parallax_InspectorControls, null, Object(react["createElement"])(parallax_panel, this.props)));
+          }, Object(react["createElement"])(WrappedComponent, this.props))));
         }
       }]);
 
@@ -3594,28 +4537,95 @@ var with_parallax_withParallax = function withParallax(WrappedComponent) {
   );
 };
 
-var with_parallax_withParallaxContext = function withParallaxContext(WrappedComponent) {
+var with_parallax_withParallaxControls = function withParallaxControls(WrappedComponent) {
   return (
     /*#__PURE__*/
     function (_Component2) {
       inherits_default()(_class2, _Component2);
 
       function _class2() {
+        var _this4;
+
         classCallCheck_default()(this, _class2);
 
-        return possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class2).apply(this, arguments));
+        _this4 = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class2).apply(this, arguments));
+        _this4.state = {
+          isScrolling: false
+        };
+        _this4.previewScrolling = _this4.previewScrolling.bind(assertThisInitialized_default()(_this4));
+        return _this4;
       }
 
       createClass_default()(_class2, [{
+        key: "previewScrolling",
+        value: function previewScrolling() {
+          var _this5 = this;
+
+          var _this$props$parallax = this.props.parallax,
+              scrollContainer = _this$props$parallax.scrollContainer,
+              container = _this$props$parallax.container,
+              _this$props$parallax$ = _this$props$parallax.state,
+              containerBox = _this$props$parallax$.containerBox,
+              containerHeight = _this$props$parallax$.containerHeight,
+              scrollContainerHeight = _this$props$parallax$.scrollContainerHeight,
+              scrollContainerBox = _this$props$parallax$.scrollContainerBox;
+
+          if (!container || !scrollContainer) {
+            return;
+          }
+
+          var scrollTop = scrollContainer.scrollTop;
+          var speed = 1000; // px per second
+
+          var startTime = Date.now();
+          var start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
+          var length = containerHeight + scrollContainerHeight;
+
+          if (start < 0) {
+            length = length + start;
+            start = 0;
+          }
+
+          var maxScroll = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+          var distanceToBottom = maxScroll - (start + length);
+
+          if (distanceToBottom < 0) {
+            length = length + distanceToBottom;
+          }
+
+          var duration = length * 1000 / speed;
+
+          function updateScrollTopLoop() {
+            var currentTime = Date.now();
+            var timePassed = currentTime - startTime;
+            var progress = timePassed / duration;
+            var newScrollTop = start + length * easeInOutCubic(progress);
+            scrollContainer.scrollTop = newScrollTop;
+          }
+
+          scrollContainer.style.pointerEvents = 'none';
+          var interval = setInterval(updateScrollTopLoop, 0);
+          this.setState({
+            isScrolling: true
+          });
+          setTimeout(function () {
+            clearInterval(interval);
+
+            _this5.setState({
+              isScrolling: false
+            });
+
+            scrollContainer.scrollTop = start + length;
+            scrollContainer.style.removeProperty('pointer-events');
+          }, duration);
+        }
+      }, {
         key: "render",
         value: function render() {
-          var _this4 = this;
-
-          return Object(react["createElement"])(ParallaxContext.Consumer, null, function (context) {
-            return Object(react["createElement"])(WrappedComponent, extends_default()({
-              parallax: context
-            }, _this4.props));
-          });
+          return Object(react["createElement"])(with_parallax_Fragment, null, Object(react["createElement"])(with_parallax_InspectorControls, null, Object(react["createElement"])(scrolling_effect_controls, extends_default()({}, this.props, {
+            isScrolling: this.state.isScrolling,
+            previewScrolling: this.previewScrolling
+          }))), Object(react["createElement"])(WrappedComponent, this.props));
         }
       }]);
 
@@ -3624,8 +4634,625 @@ var with_parallax_withParallaxContext = function withParallaxContext(WrappedComp
   );
 };
 
+var with_parallax_withParallaxContext = function withParallaxContext(WrappedComponent) {
+  return (
+    /*#__PURE__*/
+    function (_Component3) {
+      inherits_default()(_class3, _Component3);
 
-/* harmony default export */ var with_parallax = (with_parallax_withParallax);
+      function _class3() {
+        classCallCheck_default()(this, _class3);
+
+        return possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class3).apply(this, arguments));
+      }
+
+      createClass_default()(_class3, [{
+        key: "render",
+        value: function render() {
+          var _this6 = this;
+
+          return Object(react["createElement"])(ParallaxContext.Consumer, null, function (context) {
+            return Object(react["createElement"])(WrappedComponent, extends_default()({
+              parallax: context
+            }, _this6.props));
+          });
+        }
+      }]);
+
+      return _class3;
+    }(with_parallax_Component)
+  );
+};
+
+var withParallax = with_parallax_compose([with_parallax_withParallaxProvider, with_parallax_withParallaxContext, with_parallax_withParallaxControls]);
+
+/* harmony default export */ var with_parallax = (withParallax);
+// CONCATENATED MODULE: ./src/components/gallery-options/index.js
+
+
+
+
+
+
+
+
+function gallery_options_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { gallery_options_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { gallery_options_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * WordPress dependencies
+ */
+var gallery_options_ = wp.i18n.__;
+var gallery_options_Component = wp.element.Component;
+var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
+var ALLOWED_MEDIA_TYPES = ['image'];
+
+var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
+  var galleryImages = props.attributes.galleryImages;
+  var hasImages = !!galleryImages.length;
+
+  function onChangeGallery(newGalleryImages) {
+    var promises = newGalleryImages.map(function (image, index) {
+      return wp.apiRequest({
+        path: '/wp/v2/media/' + image.id
+      }).then(function (newImage) {
+        newGalleryImages[index] = gallery_options_objectSpread({}, newImage, {}, image);
+      });
+    });
+    Promise.all(promises).then(function () {
+      props.setAttributes({
+        galleryImages: newGalleryImages.filter(function (image) {
+          return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
+        })
+      });
+    });
+  }
+
+  return Object(react["createElement"])(MediaPlaceholder, {
+    addToGallery: hasImages,
+    className: "",
+    labels: {
+      title: '',
+      instructions: gallery_options_('Drag images, upload new ones or select files from your library.', '__plugin_txtd')
+    },
+    onSelect: onChangeGallery,
+    accept: "image/*",
+    allowedTypes: ALLOWED_MEDIA_TYPES,
+    multiple: true,
+    value: hasImages ? galleryImages : undefined
+  });
+};
+
+var gallery_options_GalleryPreview =
+/*#__PURE__*/
+function (_Component) {
+  inherits_default()(GalleryPreview, _Component);
+
+  function GalleryPreview() {
+    classCallCheck_default()(this, GalleryPreview);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(GalleryPreview).apply(this, arguments));
+  }
+
+  createClass_default()(GalleryPreview, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          galleryImages = _this$props.galleryImages,
+          selected = _this$props.selected,
+          onSelectImage = _this$props.onSelectImage;
+      return Object(react["createElement"])("ul", {
+        className: "novablocks-slideshow__gallery-edit"
+      }, galleryImages.map(function (img, index) {
+        var classes = ['novablocks-slideshow__gallery-item'];
+
+        if (selected === index) {
+          classes.push('novablocks-slideshow__gallery-item--active');
+        }
+
+        return Object(react["createElement"])("li", {
+          key: img.id || img.url,
+          onClick: function onClick() {
+            onSelectImage(index);
+          }
+        }, Object(react["createElement"])("div", {
+          className: classes.join(' ')
+        }, Object(react["createElement"])("img", {
+          src: img.sizes.thumbnail.url,
+          alt: ""
+        })));
+      }));
+    }
+  }]);
+
+  return GalleryPreview;
+}(gallery_options_Component);
+
+
+// CONCATENATED MODULE: ./src/components/color-controls/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var color_controls_ = wp.i18n.__;
+var color_controls_Fragment = wp.element.Fragment;
+var color_controls_wp$components = wp.components,
+    ColorPalette = color_controls_wp$components.ColorPalette,
+    Dropdown = color_controls_wp$components.Dropdown,
+    IconButton = color_controls_wp$components.IconButton,
+    color_controls_RadioControl = color_controls_wp$components.RadioControl,
+    color_controls_RangeControl = color_controls_wp$components.RangeControl,
+    Toolbar = color_controls_wp$components.Toolbar;
+var PanelColorSettings = wp.blockEditor.PanelColorSettings;
+var colors = [{
+  name: color_controls_('Dark', '__plugin_txtd'),
+  color: '#000'
+}, {
+  name: color_controls_('Light', '__plugin_txtd'),
+  color: '#FFF'
+}];
+
+var color_controls_OverlayControls = function OverlayControls(props) {
+  var _props$attributes = props.attributes,
+      overlayFilterStyle = _props$attributes.overlayFilterStyle,
+      overlayFilterStrength = _props$attributes.overlayFilterStrength,
+      setAttributes = props.setAttributes;
+  return Object(react["createElement"])(color_controls_Fragment, null, Object(react["createElement"])(color_controls_RadioControl, {
+    label: color_controls_('Overlay Filter Style', '__plugin_txtd'),
+    selected: overlayFilterStyle,
+    options: [{
+      label: color_controls_('None', '__plugin_txtd'),
+      value: 'none'
+    }, {
+      label: color_controls_('Dark', '__plugin_txtd'),
+      value: 'dark'
+    }, {
+      label: color_controls_('Light', '__plugin_txtd'),
+      value: 'light'
+    }],
+    onChange: function onChange(nextOverlayFilterStyle) {
+      return setAttributes({
+        overlayFilterStyle: nextOverlayFilterStyle
+      });
+    }
+  }), overlayFilterStyle !== 'none' && Object(react["createElement"])(color_controls_RangeControl, {
+    label: color_controls_('Overlay Filter Strength', '__plugin_txtd'),
+    value: overlayFilterStrength,
+    onChange: function onChange(nextOverlayFilterStrength) {
+      return setAttributes({
+        overlayFilterStrength: nextOverlayFilterStrength
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 10
+  }));
+};
+
+var color_controls_ColorControls = function ColorControls(props) {
+  var contentColor = props.attributes.contentColor,
+      setAttributes = props.setAttributes;
+  return Object(react["createElement"])(ColorPalette, {
+    className: "nova-hide-clear-color",
+    value: contentColor,
+    colors: colors,
+    onChange: function onChange(nextContentColor) {
+      return setAttributes({
+        contentColor: nextContentColor
+      });
+    },
+    disableCustomColors: true
+  });
+};
+
+var color_controls_ColorPanel = function ColorPanel(props) {
+  var contentColor = props.attributes.contentColor,
+      setAttributes = props.setAttributes;
+  return Object(react["createElement"])(PanelColorSettings, {
+    className: "nova-hide-clear-color",
+    title: color_controls_('Color Settings', '__plugin_txtd'),
+    colorSettings: [{
+      value: contentColor,
+      onChange: function onChange(nextContentColor) {
+        return setAttributes({
+          contentColor: nextContentColor
+        });
+      },
+      label: color_controls_('Content Color', '__plugin_txtd')
+    }],
+    colors: colors,
+    initialOpen: false
+  }, Object(react["createElement"])(color_controls_OverlayControls, props));
+};
+
+var color_controls_ColorToolbar = function ColorToolbar(props) {
+  return Object(react["createElement"])(Toolbar, {
+    className: "pixelgrade-hero-block-toolbar"
+  }, Object(react["createElement"])(Dropdown, {
+    position: "bottom",
+    className: "pixelgrade-hero-block-toolbar-dropdown",
+    contentClassName: "components-nova--popover",
+    renderToggle: function renderToggle(_ref) {
+      var isOpen = _ref.isOpen,
+          onToggle = _ref.onToggle;
+      return Object(react["createElement"])(IconButton, {
+        onClick: onToggle,
+        icon: invert,
+        "aria-expanded": isOpen,
+        label: color_controls_('Color Options', '__plugin_txtd'),
+        labelPosition: "bottom"
+      });
+    },
+    focusOnMount: false,
+    renderContent: function renderContent() {
+      return Object(react["createElement"])(color_controls_Fragment, null, Object(react["createElement"])(color_controls_ColorControls, props), Object(react["createElement"])(color_controls_OverlayControls, props));
+    }
+  }));
+};
+
+
+// CONCATENATED MODULE: ./src/components/block-horizontal-alignment-toolbar/index.js
+
+
+
+
+function block_horizontal_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function block_horizontal_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_horizontal_alignment_toolbar_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_horizontal_alignment_toolbar_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var block_horizontal_alignment_toolbar_ = wp.i18n.__;
+var block_horizontal_alignment_toolbar_Toolbar = wp.components.Toolbar;
+var withViewportMatch = wp.viewport.withViewportMatch;
+var block_horizontal_alignment_toolbar_withSelect = wp.data.withSelect;
+var block_horizontal_alignment_toolbar_wp$compose = wp.compose,
+    block_horizontal_alignment_toolbar_compose = block_horizontal_alignment_toolbar_wp$compose.compose,
+    block_horizontal_alignment_toolbar_createHigherOrderComponent = block_horizontal_alignment_toolbar_wp$compose.createHigherOrderComponent;
+var createContext = wp.element.createContext;
+
+var block_horizontal_alignment_toolbar_createContext = createContext({
+  name: '',
+  isSelected: false,
+  focusedElement: null,
+  setFocusedElement: function setFocusedElement() {},
+  clientId: null
+}),
+    block_horizontal_alignment_toolbar_Consumer = block_horizontal_alignment_toolbar_createContext.Consumer;
+
+var BLOCK_ALIGNMENTS_CONTROLS = {
+  left: {
+    icon: alignTop,
+    title: block_horizontal_alignment_toolbar_('Align Left', '__plugin_txtd')
+  },
+  center: {
+    icon: alignCenter,
+    title: block_horizontal_alignment_toolbar_('Align Middle', '__plugin_txtd')
+  },
+  right: {
+    icon: alignBottom,
+    title: block_horizontal_alignment_toolbar_('Align Right', '__plugin_txtd')
+  }
+};
+var DEFAULT_CONTROLS = ['left', 'center', 'right'];
+var DEFAULT_CONTROL = 'center';
+function BlockHorizontalAlignmentToolbar(_ref) {
+  var isCollapsed = _ref.isCollapsed,
+      value = _ref.value,
+      onChange = _ref.onChange,
+      _ref$controls = _ref.controls,
+      controls = _ref$controls === void 0 ? DEFAULT_CONTROLS : _ref$controls;
+
+  function applyOrUnset(align) {
+    return function () {
+      return onChange(value === align ? undefined : align);
+    };
+  }
+
+  var activeAlignment = BLOCK_ALIGNMENTS_CONTROLS[value];
+  var defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS[DEFAULT_CONTROL];
+  return Object(react["createElement"])(block_horizontal_alignment_toolbar_Toolbar, {
+    isCollapsed: isCollapsed,
+    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
+    controls: controls.map(function (control) {
+      return block_horizontal_alignment_toolbar_objectSpread({}, BLOCK_ALIGNMENTS_CONTROLS[control], {
+        isActive: value === control,
+        onClick: applyOrUnset(control),
+        className: 'pixelgrade-hero-horizontal-alignment-button'
+      });
+    })
+  });
+} // @todo remove function declaration and use core method when exposed through the api
+
+var block_horizontal_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
+  return block_horizontal_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
+    return function (props) {
+      return Object(react["createElement"])(block_horizontal_alignment_toolbar_Consumer, null, function (context) {
+        return Object(react["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
+      });
+    };
+  }, 'withBlockEditContext');
+};
+
+/* harmony default export */ var block_horizontal_alignment_toolbar = (block_horizontal_alignment_toolbar_compose(block_horizontal_alignment_toolbar_withBlockEditContext(function (_ref2) {
+  var clientId = _ref2.clientId;
+  return {
+    clientId: clientId
+  };
+}), withViewportMatch({
+  isLargeViewport: 'medium'
+}), block_horizontal_alignment_toolbar_withSelect(function (select, _ref3) {
+  var clientId = _ref3.clientId,
+      isLargeViewport = _ref3.isLargeViewport,
+      isCollapsed = _ref3.isCollapsed;
+
+  var _select = select('core/block-editor'),
+      getBlockRootClientId = _select.getBlockRootClientId,
+      getSettings = _select.getSettings;
+
+  return {
+    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
+  };
+}))(BlockHorizontalAlignmentToolbar));
+// CONCATENATED MODULE: ./src/components/block-vertical-alignment-toolbar/index.js
+
+
+
+
+function block_vertical_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function block_vertical_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_vertical_alignment_toolbar_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_vertical_alignment_toolbar_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var _x = wp.i18n._x;
+var block_vertical_alignment_toolbar_Toolbar = wp.components.Toolbar;
+var block_vertical_alignment_toolbar_withViewportMatch = wp.viewport.withViewportMatch;
+var block_vertical_alignment_toolbar_withSelect = wp.data.withSelect;
+var block_vertical_alignment_toolbar_wp$compose = wp.compose,
+    block_vertical_alignment_toolbar_compose = block_vertical_alignment_toolbar_wp$compose.compose,
+    block_vertical_alignment_toolbar_createHigherOrderComponent = block_vertical_alignment_toolbar_wp$compose.createHigherOrderComponent;
+var block_vertical_alignment_toolbar_createContext = wp.element.createContext;
+
+var components_block_vertical_alignment_toolbar_createContext = block_vertical_alignment_toolbar_createContext({
+  name: '',
+  isSelected: false,
+  focusedElement: null,
+  setFocusedElement: function setFocusedElement() {},
+  clientId: null
+}),
+    block_vertical_alignment_toolbar_Consumer = components_block_vertical_alignment_toolbar_createContext.Consumer;
+
+var block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS = {
+  top: {
+    icon: alignTop,
+    title: _x('Vertically Align Top', 'Block vertical alignment setting')
+  },
+  center: {
+    icon: alignCenter,
+    title: _x('Vertically Align Middle', 'Block vertical alignment setting')
+  },
+  bottom: {
+    icon: alignBottom,
+    title: _x('Vertically Align Bottom', 'Block vertical alignment setting')
+  }
+};
+var block_vertical_alignment_toolbar_DEFAULT_CONTROLS = ['top', 'center', 'bottom'];
+var block_vertical_alignment_toolbar_DEFAULT_CONTROL = 'top';
+function BlockVerticalAlignmentToolbar(_ref) {
+  var isCollapsed = _ref.isCollapsed,
+      value = _ref.value,
+      onChange = _ref.onChange,
+      _ref$controls = _ref.controls,
+      controls = _ref$controls === void 0 ? block_vertical_alignment_toolbar_DEFAULT_CONTROLS : _ref$controls;
+
+  function applyOrUnset(align) {
+    return function () {
+      return onChange(value === align ? undefined : align);
+    };
+  }
+
+  var activeAlignment = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[value];
+  var defaultAlignmentControl = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[block_vertical_alignment_toolbar_DEFAULT_CONTROL];
+  return Object(react["createElement"])(block_vertical_alignment_toolbar_Toolbar, {
+    isCollapsed: isCollapsed,
+    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
+    label: _x('Change Alignment', 'Block vertical alignment setting label'),
+    controls: controls.map(function (control) {
+      return block_vertical_alignment_toolbar_objectSpread({}, block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[control], {
+        isActive: value === control,
+        onClick: applyOrUnset(control)
+      });
+    })
+  });
+} // @todo remove function declaration and use core method when exposed through the api
+
+var block_vertical_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
+  return block_vertical_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
+    return function (props) {
+      return Object(react["createElement"])(block_vertical_alignment_toolbar_Consumer, null, function (context) {
+        return Object(react["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
+      });
+    };
+  }, 'withBlockEditContext');
+};
+/**
+ * @see https://github.com/WordPress/gutenberg/blob/master/packages/block-editor/src/components/block-vertical-alignment-toolbar/README.md
+ */
+
+
+/* harmony default export */ var block_vertical_alignment_toolbar = (block_vertical_alignment_toolbar_compose(block_vertical_alignment_toolbar_withBlockEditContext(function (_ref2) {
+  var clientId = _ref2.clientId;
+  return {
+    clientId: clientId
+  };
+}), block_vertical_alignment_toolbar_withViewportMatch({
+  isLargeViewport: 'medium'
+}), block_vertical_alignment_toolbar_withSelect(function (select, _ref3) {
+  var clientId = _ref3.clientId,
+      isLargeViewport = _ref3.isLargeViewport,
+      isCollapsed = _ref3.isCollapsed;
+
+  var _select = select('core/block-editor'),
+      getBlockRootClientId = _select.getBlockRootClientId,
+      getSettings = _select.getSettings;
+
+  return {
+    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
+  };
+}))(BlockVerticalAlignmentToolbar));
+// CONCATENATED MODULE: ./src/components/alignment-controls/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+var alignment_controls_ = wp.i18n.__;
+var alignment_controls_Fragment = wp.element.Fragment;
+var alignment_controls_wp$components = wp.components,
+    alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
+    alignment_controls_IconButton = alignment_controls_wp$components.IconButton,
+    PanelRow = alignment_controls_wp$components.PanelRow,
+    alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
+
+var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
+  return Object(react["createElement"])(alignment_controls_Toolbar, {
+    className: "pixelgrade-hero-block-toolbar"
+  }, Object(react["createElement"])(alignment_controls_Dropdown, {
+    position: "bottom",
+    className: "pixelgrade-hero-block-toolbar-dropdown",
+    contentClassName: "components-nova--popover",
+    renderToggle: function renderToggle(_ref) {
+      var isOpen = _ref.isOpen,
+          onToggle = _ref.onToggle;
+      return Object(react["createElement"])(alignment_controls_IconButton, {
+        onClick: onToggle,
+        icon: alignment,
+        "aria-expanded": isOpen,
+        label: alignment_controls_('Content Alignment', '__plugin_txtd'),
+        labelPosition: "bottom"
+      });
+    },
+    focusOnMount: false,
+    renderContent: function renderContent() {
+      return Object(react["createElement"])(alignment_controls_AlignmentControls, props);
+    }
+  }));
+};
+
+var alignment_controls_AlignmentControls = function AlignmentControls(props) {
+  var _props$attributes = props.attributes,
+      horizontalAlignment = _props$attributes.horizontalAlignment,
+      verticalAlignment = _props$attributes.verticalAlignment,
+      setAttributes = props.setAttributes;
+  return Object(react["createElement"])(alignment_controls_Fragment, null, Object(react["createElement"])(PanelRow, null, Object(react["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(react["createElement"])(block_horizontal_alignment_toolbar, {
+    value: horizontalAlignment,
+    onChange: function onChange(nextHorizontalAlignment) {
+      wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map(function (block) {
+        wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, {
+          align: nextHorizontalAlignment
+        });
+        return true;
+      });
+      setAttributes({
+        horizontalAlignment: nextHorizontalAlignment
+      });
+    }
+  })), Object(react["createElement"])(PanelRow, null, Object(react["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(react["createElement"])(block_vertical_alignment_toolbar, {
+    value: verticalAlignment,
+    onChange: function onChange(nextVerticalAlignment) {
+      return setAttributes({
+        verticalAlignment: nextVerticalAlignment
+      });
+    }
+  })));
+};
+
+
+// CONCATENATED MODULE: ./src/components/height-controls/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var height_controls_ = wp.i18n.__;
+var height_controls_wp$components = wp.components,
+    height_controls_PanelBody = height_controls_wp$components.PanelBody,
+    height_controls_RadioControl = height_controls_wp$components.RadioControl,
+    height_controls_ToggleControl = height_controls_wp$components.ToggleControl;
+var height_controls_select = wp.data.select;
+var height_controls_Component = wp.element.Component;
+var ScrollIndicatorPanel = with_settings(function (props) {
+  var scrollIndicator = props.attributes.scrollIndicator,
+      setAttributes = props.setAttributes;
+  var heroBlocks = height_controls_select('core/block-editor').getBlocks().filter(function (block) {
+    return block.name === 'novablocks/hero';
+  });
+  var index = heroBlocks.findIndex(function (block) {
+    return block.clientId === height_controls_select('core/block-editor').getSelectedBlockClientId();
+  });
+  return Object(react["createElement"])(height_controls_PanelBody, {
+    title: height_controls_('Scroll Indicator', '__plugin_txtd'),
+    style: {
+      display: index === 0 ? 'block' : 'none'
+    },
+    initialOpen: false
+  }, Object(react["createElement"])(height_controls_ToggleControl, {
+    label: height_controls_('Enable Scroll Indicator', '__plugin_txtd'),
+    checked: scrollIndicator,
+    onChange: function onChange(nextScrollIndicator) {
+      setAttributes({
+        scrollIndicator: nextScrollIndicator
+      });
+    }
+  }));
+});
+
+// CONCATENATED MODULE: ./src/components/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
 // CONCATENATED MODULE: ./src/blocks/google-map/map.js
 
 
@@ -3856,13 +5483,12 @@ var map_MapWrapper = function MapWrapper(Map) {
     }, Object(react["createElement"])("div", {
       className: "novablocks-mask"
     }, Object(react["createElement"])("div", {
-      className: "novablocks-map__map-parallax",
       style: parallax.style
     }, Object(react["createElement"])(Map, otherProps)))));
   };
 };
 
-/* harmony default export */ var google_map_map = (with_parallax_withParallaxContext(map_MapWrapper(map_Map)));
+/* harmony default export */ var google_map_map = (map_MapWrapper(map_Map));
 // CONCATENATED MODULE: ./src/blocks/google-map/api-key-panel-body.js
 
 
@@ -4154,7 +5780,6 @@ function (_Component) {
 
 /* harmony default export */ var inspector_controls = (inspector_controls_ButtonInspectorControls);
 // CONCATENATED MODULE: ./src/blocks/google-map/edit.js
-
 
 
 
@@ -4514,8 +6139,8 @@ var logoCenter = Object(react["createElement"])("svg", {
 var header_edit_ = wp.i18n.__;
 var useState = wp.element.useState;
 var header_edit_wp$components = wp.components,
-    Toolbar = header_edit_wp$components.Toolbar,
-    IconButton = header_edit_wp$components.IconButton;
+    edit_Toolbar = header_edit_wp$components.Toolbar,
+    edit_IconButton = header_edit_wp$components.IconButton;
 var header_edit_wp$blockEditor = wp.blockEditor,
     edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
     InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
@@ -4567,7 +6192,7 @@ function header_edit_Edit(props) {
   };
 
   var classNames = classnames_default()(className, "site-header", "site-header-".concat(layout));
-  return [Object(react["createElement"])(edit_BlockControls, null, Object(react["createElement"])(Toolbar, null, Object(react["createElement"])(IconButton, {
+  return [Object(react["createElement"])(edit_BlockControls, null, Object(react["createElement"])(edit_Toolbar, null, Object(react["createElement"])(edit_IconButton, {
     className: "components-icon-button components-toolbar__control",
     label: header_edit_('Change Layout', '__plugin_txtd'),
     onClick: function onClick() {
@@ -4621,85 +6246,6 @@ function header_init() {
 }
 
 /* harmony default export */ var blocks_header = (header_init);
-// CONCATENATED MODULE: ./src/utils.js
-
-var debounce = function debounce(func, wait) {
-  var timeout = null;
-  return function () {
-    var context = this;
-    var args = arguments;
-
-    var later = function later() {
-      func.apply(context, args);
-    };
-
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-var range = function range(min, max) {
-  var array = [];
-
-  for (var i = 0; i <= max - min; i++) {
-    array.push(i + min);
-  }
-
-  return array;
-};
-var parallaxInit = function parallaxInit(BLOCK_NAME) {
-  (function ($) {
-    var $blocks = $(".".concat(BLOCK_NAME));
-    var $targets = $blocks.filter('.has-parallax');
-    $targets.find(".".concat(BLOCK_NAME, "__parallax")).rellax({
-      container: ".".concat(BLOCK_NAME, "__mask"),
-      absolute: isSafari
-    });
-    $blocks.find(".".concat(BLOCK_NAME, "__parallax")).each(function (i, obj) {
-      var $obj = $(obj);
-      $obj.imagesLoaded(function () {
-        $obj.css('opacity', 1);
-      });
-    });
-  })(jQuery);
-};
-var utils_withFirstBlockConditions = function withFirstBlockConditions(Component) {
-  return function (props) {
-    var _wp$data$select = wp.data.select('core/block-editor'),
-        getBlocks = _wp$data$select.getBlocks,
-        getSelectedBlockClientId = _wp$data$select.getSelectedBlockClientId;
-
-    var blocks = getBlocks();
-    var selectedBlockClientId = getSelectedBlockClientId();
-    var index = blocks.findIndex(function (block) {
-      return block.clientId === selectedBlockClientId;
-    });
-    var show = index === 0 && props.clientId === selectedBlockClientId;
-    return show && Object(react["createElement"])(Component, props);
-  };
-};
-var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-var hasTouchScreen = function hasTouchScreen() {
-  var hasTouchScreen = false;
-
-  if ("maxTouchPoints" in navigator) {
-    hasTouchScreen = navigator.maxTouchPoints > 0;
-  } else if ("msMaxTouchPoints" in navigator) {
-    hasTouchScreen = navigator.msMaxTouchPoints > 0;
-  } else {
-    var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
-
-    if (mQ && mQ.media === "(pointer:coarse)") {
-      hasTouchScreen = !!mQ.matches;
-    } else if ('orientation' in window) {
-      hasTouchScreen = true;
-    } else {
-      var UA = navigator.userAgent;
-      hasTouchScreen = /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
-    }
-  }
-
-  return hasTouchScreen;
-};
 // CONCATENATED MODULE: ./src/blocks/headline/heading-toolbar.js
 
 
@@ -4925,799 +6471,6 @@ function headline_init() {
 }
 
 /* harmony default export */ var blocks_headline = (headline_init);
-// EXTERNAL MODULE: ./node_modules/@wordpress/is-shallow-equal/index.js
-var is_shallow_equal = __webpack_require__(15);
-var is_shallow_equal_default = /*#__PURE__*/__webpack_require__.n(is_shallow_equal);
-
-// CONCATENATED MODULE: ./src/components/layout-panel/padding.js
-
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var padding_ = wp.i18n.__;
-var padding_Fragment = wp.element.Fragment;
-var padding_wp$components = wp.components,
-    padding_Button = padding_wp$components.Button,
-    ButtonGroup = padding_wp$components.ButtonGroup,
-    padding_RangeControl = padding_wp$components.RangeControl;
-
-var padding_PaddingControls = function PaddingControls(props) {
-  var _props$attributes = props.attributes,
-      contentPadding = _props$attributes.contentPadding,
-      contentPaddingCustom = _props$attributes.contentPaddingCustom,
-      setAttributes = props.setAttributes,
-      contentPaddingOptions = props.settings.contentPaddingOptions;
-  return Object(react["createElement"])(padding_Fragment, null, Object(react["createElement"])("label", null, padding_('Content Padding', '__plugin_txtd')), Object(react["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
-    return Object(react["createElement"])(padding_Button, {
-      key: option.value,
-      isDefault: option.value !== contentPadding,
-      isPrimary: option.value === contentPadding,
-      onClick: function onClick() {
-        setAttributes({
-          contentPadding: option.value
-        });
-      }
-    }, option.label);
-  })), 'custom' === contentPadding && Object(react["createElement"])(padding_RangeControl, {
-    value: contentPaddingCustom,
-    onChange: function onChange(newContentPadding) {
-      return setAttributes({
-        contentPaddingCustom: newContentPadding
-      });
-    },
-    min: 0,
-    max: 25
-  }));
-};
-
-/* harmony default export */ var padding = (with_settings(padding_PaddingControls));
-// CONCATENATED MODULE: ./src/components/layout-panel/width.js
-
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var width_ = wp.i18n.__;
-var width_Fragment = wp.element.Fragment;
-var width_wp$components = wp.components,
-    width_Button = width_wp$components.Button,
-    width_ButtonGroup = width_wp$components.ButtonGroup,
-    width_RangeControl = width_wp$components.RangeControl;
-
-var width_WidthControls = function WidthControls(props) {
-  var _props$attributes = props.attributes,
-      contentWidth = _props$attributes.contentWidth,
-      contentWidthCustom = _props$attributes.contentWidthCustom,
-      setAttributes = props.setAttributes,
-      contentWidthOptions = props.settings.contentWidthOptions;
-  return Object(react["createElement"])(width_Fragment, null, Object(react["createElement"])("label", null, width_('Content Width', '__plugin_txtd')), Object(react["createElement"])(width_ButtonGroup, {
-    label: "Content Width"
-  }, contentWidthOptions.map(function (option) {
-    return Object(react["createElement"])(width_Button, {
-      key: option.value,
-      isDefault: option.value !== contentWidth,
-      isPrimary: option.value === contentWidth,
-      onClick: function onClick() {
-        setAttributes({
-          contentWidth: option.value
-        });
-      }
-    }, option.label);
-  })), 'custom' === contentWidth && Object(react["createElement"])(width_RangeControl, {
-    value: contentWidthCustom,
-    onChange: function onChange(newContentWidth) {
-      return setAttributes({
-        contentWidthCustom: newContentWidth
-      });
-    },
-    min: 20,
-    max: 90,
-    step: 10
-  }));
-};
-
-/* harmony default export */ var width = (with_settings(width_WidthControls));
-// CONCATENATED MODULE: ./src/components/layout-panel/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-var layout_panel_ = wp.i18n.__;
-var layout_panel_PanelBody = wp.components.PanelBody;
-
-var layout_panel_LayoutPanel = function LayoutPanel(props) {
-  return Object(react["createElement"])(layout_panel_PanelBody, {
-    className: "pixelgrade-hero-button-group-wrapper",
-    title: layout_panel_('Layout', '__plugin_txtd'),
-    initialOpen: true
-  }, Object(react["createElement"])(padding, props), Object(react["createElement"])(width, props), props.children);
-};
-
-/* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
-// CONCATENATED MODULE: ./src/components/position-indicators-panel/index.js
-
-var position_indicators_panel_ = wp.i18n.__;
-var position_indicators_panel_wp$components = wp.components,
-    position_indicators_panel_PanelBody = position_indicators_panel_wp$components.PanelBody,
-    position_indicators_panel_ToggleControl = position_indicators_panel_wp$components.ToggleControl;
-
-function PositionIndicatorsPanel(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes;
-  var positionIndicators = attributes.positionIndicators;
-  return Object(react["createElement"])(position_indicators_panel_PanelBody, {
-    title: position_indicators_panel_('Position Indicators', '__plugin_txtd'),
-    initialOpen: false
-  }, Object(react["createElement"])(position_indicators_panel_ToggleControl, {
-    label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
-    checked: positionIndicators,
-    onChange: function onChange() {
-      setAttributes({
-        positionIndicators: !positionIndicators
-      });
-    }
-  }));
-}
-
-/* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
-// CONCATENATED MODULE: ./src/components/gallery-options/index.js
-
-
-
-
-
-
-
-
-function gallery_options_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { gallery_options_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { gallery_options_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * WordPress dependencies
- */
-var gallery_options_ = wp.i18n.__;
-var gallery_options_Component = wp.element.Component;
-var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
-var ALLOWED_MEDIA_TYPES = ['image'];
-
-var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
-  var galleryImages = props.attributes.galleryImages;
-  var hasImages = !!galleryImages.length;
-
-  function onChangeGallery(newGalleryImages) {
-    var promises = newGalleryImages.map(function (image, index) {
-      return wp.apiRequest({
-        path: '/wp/v2/media/' + image.id
-      }).then(function (newImage) {
-        newGalleryImages[index] = gallery_options_objectSpread({}, newImage, {}, image);
-      });
-    });
-    Promise.all(promises).then(function () {
-      props.setAttributes({
-        galleryImages: newGalleryImages.filter(function (image) {
-          return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
-        })
-      });
-    });
-  }
-
-  return Object(react["createElement"])(MediaPlaceholder, {
-    addToGallery: hasImages,
-    className: "",
-    labels: {
-      title: '',
-      instructions: gallery_options_('Drag images, upload new ones or select files from your library.', '__plugin_txtd')
-    },
-    onSelect: onChangeGallery,
-    accept: "image/*",
-    allowedTypes: ALLOWED_MEDIA_TYPES,
-    multiple: true,
-    value: hasImages ? galleryImages : undefined
-  });
-};
-
-var gallery_options_GalleryPreview =
-/*#__PURE__*/
-function (_Component) {
-  inherits_default()(GalleryPreview, _Component);
-
-  function GalleryPreview() {
-    classCallCheck_default()(this, GalleryPreview);
-
-    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(GalleryPreview).apply(this, arguments));
-  }
-
-  createClass_default()(GalleryPreview, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          galleryImages = _this$props.galleryImages,
-          selected = _this$props.selected,
-          onSelectImage = _this$props.onSelectImage;
-      return Object(react["createElement"])("ul", {
-        className: "novablocks-slideshow__gallery-edit"
-      }, galleryImages.map(function (img, index) {
-        var classes = ['novablocks-slideshow__gallery-item'];
-
-        if (selected === index) {
-          classes.push('novablocks-slideshow__gallery-item--active');
-        }
-
-        return Object(react["createElement"])("li", {
-          key: img.id || img.url,
-          onClick: function onClick() {
-            onSelectImage(index);
-          }
-        }, Object(react["createElement"])("div", {
-          className: classes.join(' ')
-        }, Object(react["createElement"])("img", {
-          src: img.sizes.thumbnail.url,
-          alt: ""
-        })));
-      }));
-    }
-  }]);
-
-  return GalleryPreview;
-}(gallery_options_Component);
-
-
-// CONCATENATED MODULE: ./src/components/color-controls/index.js
-
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var color_controls_ = wp.i18n.__;
-var color_controls_Fragment = wp.element.Fragment;
-var color_controls_wp$components = wp.components,
-    ColorPalette = color_controls_wp$components.ColorPalette,
-    Dropdown = color_controls_wp$components.Dropdown,
-    color_controls_IconButton = color_controls_wp$components.IconButton,
-    color_controls_RadioControl = color_controls_wp$components.RadioControl,
-    color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    color_controls_Toolbar = color_controls_wp$components.Toolbar;
-var PanelColorSettings = wp.blockEditor.PanelColorSettings;
-var colors = [{
-  name: color_controls_('Dark', '__plugin_txtd'),
-  color: '#000'
-}, {
-  name: color_controls_('Light', '__plugin_txtd'),
-  color: '#FFF'
-}];
-
-var color_controls_OverlayControls = function OverlayControls(props) {
-  var _props$attributes = props.attributes,
-      overlayFilterStyle = _props$attributes.overlayFilterStyle,
-      overlayFilterStrength = _props$attributes.overlayFilterStrength,
-      setAttributes = props.setAttributes;
-  return Object(react["createElement"])(color_controls_Fragment, null, Object(react["createElement"])(color_controls_RadioControl, {
-    label: color_controls_('Overlay Filter Style', '__plugin_txtd'),
-    selected: overlayFilterStyle,
-    options: [{
-      label: color_controls_('None', '__plugin_txtd'),
-      value: 'none'
-    }, {
-      label: color_controls_('Dark', '__plugin_txtd'),
-      value: 'dark'
-    }, {
-      label: color_controls_('Light', '__plugin_txtd'),
-      value: 'light'
-    }],
-    onChange: function onChange(nextOverlayFilterStyle) {
-      return setAttributes({
-        overlayFilterStyle: nextOverlayFilterStyle
-      });
-    }
-  }), overlayFilterStyle !== 'none' && Object(react["createElement"])(color_controls_RangeControl, {
-    label: color_controls_('Overlay Filter Strength', '__plugin_txtd'),
-    value: overlayFilterStrength,
-    onChange: function onChange(nextOverlayFilterStrength) {
-      return setAttributes({
-        overlayFilterStrength: nextOverlayFilterStrength
-      });
-    },
-    min: 0,
-    max: 100,
-    step: 10
-  }));
-};
-
-var color_controls_ColorControls = function ColorControls(props) {
-  var contentColor = props.attributes.contentColor,
-      setAttributes = props.setAttributes;
-  return Object(react["createElement"])(ColorPalette, {
-    className: "nova-hide-clear-color",
-    value: contentColor,
-    colors: colors,
-    onChange: function onChange(nextContentColor) {
-      return setAttributes({
-        contentColor: nextContentColor
-      });
-    },
-    disableCustomColors: true
-  });
-};
-
-var color_controls_ColorPanel = function ColorPanel(props) {
-  var contentColor = props.attributes.contentColor,
-      setAttributes = props.setAttributes;
-  return Object(react["createElement"])(PanelColorSettings, {
-    className: "nova-hide-clear-color",
-    title: color_controls_('Color Settings', '__plugin_txtd'),
-    colorSettings: [{
-      value: contentColor,
-      onChange: function onChange(nextContentColor) {
-        return setAttributes({
-          contentColor: nextContentColor
-        });
-      },
-      label: color_controls_('Content Color', '__plugin_txtd')
-    }],
-    colors: colors,
-    initialOpen: false
-  }, Object(react["createElement"])(color_controls_OverlayControls, props));
-};
-
-var color_controls_ColorToolbar = function ColorToolbar(props) {
-  return Object(react["createElement"])(color_controls_Toolbar, {
-    className: "pixelgrade-hero-block-toolbar"
-  }, Object(react["createElement"])(Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref) {
-      var isOpen = _ref.isOpen,
-          onToggle = _ref.onToggle;
-      return Object(react["createElement"])(color_controls_IconButton, {
-        onClick: onToggle,
-        icon: invert,
-        "aria-expanded": isOpen,
-        label: color_controls_('Color Options', '__plugin_txtd'),
-        labelPosition: "bottom"
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(react["createElement"])(color_controls_Fragment, null, Object(react["createElement"])(color_controls_ColorControls, props), Object(react["createElement"])(color_controls_OverlayControls, props));
-    }
-  }));
-};
-
-
-// CONCATENATED MODULE: ./src/components/block-horizontal-alignment-toolbar/index.js
-
-
-
-
-function block_horizontal_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function block_horizontal_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_horizontal_alignment_toolbar_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_horizontal_alignment_toolbar_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var block_horizontal_alignment_toolbar_ = wp.i18n.__;
-var block_horizontal_alignment_toolbar_Toolbar = wp.components.Toolbar;
-var withViewportMatch = wp.viewport.withViewportMatch;
-var block_horizontal_alignment_toolbar_withSelect = wp.data.withSelect;
-var block_horizontal_alignment_toolbar_wp$compose = wp.compose,
-    block_horizontal_alignment_toolbar_compose = block_horizontal_alignment_toolbar_wp$compose.compose,
-    block_horizontal_alignment_toolbar_createHigherOrderComponent = block_horizontal_alignment_toolbar_wp$compose.createHigherOrderComponent;
-var createContext = wp.element.createContext;
-
-var block_horizontal_alignment_toolbar_createContext = createContext({
-  name: '',
-  isSelected: false,
-  focusedElement: null,
-  setFocusedElement: function setFocusedElement() {},
-  clientId: null
-}),
-    block_horizontal_alignment_toolbar_Consumer = block_horizontal_alignment_toolbar_createContext.Consumer;
-
-var BLOCK_ALIGNMENTS_CONTROLS = {
-  left: {
-    icon: alignTop,
-    title: block_horizontal_alignment_toolbar_('Align Left', '__plugin_txtd')
-  },
-  center: {
-    icon: alignCenter,
-    title: block_horizontal_alignment_toolbar_('Align Middle', '__plugin_txtd')
-  },
-  right: {
-    icon: alignBottom,
-    title: block_horizontal_alignment_toolbar_('Align Right', '__plugin_txtd')
-  }
-};
-var DEFAULT_CONTROLS = ['left', 'center', 'right'];
-var DEFAULT_CONTROL = 'center';
-function BlockHorizontalAlignmentToolbar(_ref) {
-  var isCollapsed = _ref.isCollapsed,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      _ref$controls = _ref.controls,
-      controls = _ref$controls === void 0 ? DEFAULT_CONTROLS : _ref$controls;
-
-  function applyOrUnset(align) {
-    return function () {
-      return onChange(value === align ? undefined : align);
-    };
-  }
-
-  var activeAlignment = BLOCK_ALIGNMENTS_CONTROLS[value];
-  var defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS[DEFAULT_CONTROL];
-  return Object(react["createElement"])(block_horizontal_alignment_toolbar_Toolbar, {
-    isCollapsed: isCollapsed,
-    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-    controls: controls.map(function (control) {
-      return block_horizontal_alignment_toolbar_objectSpread({}, BLOCK_ALIGNMENTS_CONTROLS[control], {
-        isActive: value === control,
-        onClick: applyOrUnset(control),
-        className: 'pixelgrade-hero-horizontal-alignment-button'
-      });
-    })
-  });
-} // @todo remove function declaration and use core method when exposed through the api
-
-var block_horizontal_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
-  return block_horizontal_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
-    return function (props) {
-      return Object(react["createElement"])(block_horizontal_alignment_toolbar_Consumer, null, function (context) {
-        return Object(react["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
-      });
-    };
-  }, 'withBlockEditContext');
-};
-
-/* harmony default export */ var block_horizontal_alignment_toolbar = (block_horizontal_alignment_toolbar_compose(block_horizontal_alignment_toolbar_withBlockEditContext(function (_ref2) {
-  var clientId = _ref2.clientId;
-  return {
-    clientId: clientId
-  };
-}), withViewportMatch({
-  isLargeViewport: 'medium'
-}), block_horizontal_alignment_toolbar_withSelect(function (select, _ref3) {
-  var clientId = _ref3.clientId,
-      isLargeViewport = _ref3.isLargeViewport,
-      isCollapsed = _ref3.isCollapsed;
-
-  var _select = select('core/block-editor'),
-      getBlockRootClientId = _select.getBlockRootClientId,
-      getSettings = _select.getSettings;
-
-  return {
-    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
-  };
-}))(BlockHorizontalAlignmentToolbar));
-// CONCATENATED MODULE: ./src/components/block-vertical-alignment-toolbar/index.js
-
-
-
-
-function block_vertical_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function block_vertical_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_vertical_alignment_toolbar_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_vertical_alignment_toolbar_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var _x = wp.i18n._x;
-var block_vertical_alignment_toolbar_Toolbar = wp.components.Toolbar;
-var block_vertical_alignment_toolbar_withViewportMatch = wp.viewport.withViewportMatch;
-var block_vertical_alignment_toolbar_withSelect = wp.data.withSelect;
-var block_vertical_alignment_toolbar_wp$compose = wp.compose,
-    block_vertical_alignment_toolbar_compose = block_vertical_alignment_toolbar_wp$compose.compose,
-    block_vertical_alignment_toolbar_createHigherOrderComponent = block_vertical_alignment_toolbar_wp$compose.createHigherOrderComponent;
-var block_vertical_alignment_toolbar_createContext = wp.element.createContext;
-
-var components_block_vertical_alignment_toolbar_createContext = block_vertical_alignment_toolbar_createContext({
-  name: '',
-  isSelected: false,
-  focusedElement: null,
-  setFocusedElement: function setFocusedElement() {},
-  clientId: null
-}),
-    block_vertical_alignment_toolbar_Consumer = components_block_vertical_alignment_toolbar_createContext.Consumer;
-
-var block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS = {
-  top: {
-    icon: alignTop,
-    title: _x('Vertically Align Top', 'Block vertical alignment setting')
-  },
-  center: {
-    icon: alignCenter,
-    title: _x('Vertically Align Middle', 'Block vertical alignment setting')
-  },
-  bottom: {
-    icon: alignBottom,
-    title: _x('Vertically Align Bottom', 'Block vertical alignment setting')
-  }
-};
-var block_vertical_alignment_toolbar_DEFAULT_CONTROLS = ['top', 'center', 'bottom'];
-var block_vertical_alignment_toolbar_DEFAULT_CONTROL = 'top';
-function BlockVerticalAlignmentToolbar(_ref) {
-  var isCollapsed = _ref.isCollapsed,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      _ref$controls = _ref.controls,
-      controls = _ref$controls === void 0 ? block_vertical_alignment_toolbar_DEFAULT_CONTROLS : _ref$controls;
-
-  function applyOrUnset(align) {
-    return function () {
-      return onChange(value === align ? undefined : align);
-    };
-  }
-
-  var activeAlignment = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[value];
-  var defaultAlignmentControl = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[block_vertical_alignment_toolbar_DEFAULT_CONTROL];
-  return Object(react["createElement"])(block_vertical_alignment_toolbar_Toolbar, {
-    isCollapsed: isCollapsed,
-    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-    label: _x('Change Alignment', 'Block vertical alignment setting label'),
-    controls: controls.map(function (control) {
-      return block_vertical_alignment_toolbar_objectSpread({}, block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[control], {
-        isActive: value === control,
-        onClick: applyOrUnset(control)
-      });
-    })
-  });
-} // @todo remove function declaration and use core method when exposed through the api
-
-var block_vertical_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
-  return block_vertical_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
-    return function (props) {
-      return Object(react["createElement"])(block_vertical_alignment_toolbar_Consumer, null, function (context) {
-        return Object(react["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
-      });
-    };
-  }, 'withBlockEditContext');
-};
-/**
- * @see https://github.com/WordPress/gutenberg/blob/master/packages/block-editor/src/components/block-vertical-alignment-toolbar/README.md
- */
-
-
-/* harmony default export */ var block_vertical_alignment_toolbar = (block_vertical_alignment_toolbar_compose(block_vertical_alignment_toolbar_withBlockEditContext(function (_ref2) {
-  var clientId = _ref2.clientId;
-  return {
-    clientId: clientId
-  };
-}), block_vertical_alignment_toolbar_withViewportMatch({
-  isLargeViewport: 'medium'
-}), block_vertical_alignment_toolbar_withSelect(function (select, _ref3) {
-  var clientId = _ref3.clientId,
-      isLargeViewport = _ref3.isLargeViewport,
-      isCollapsed = _ref3.isCollapsed;
-
-  var _select = select('core/block-editor'),
-      getBlockRootClientId = _select.getBlockRootClientId,
-      getSettings = _select.getSettings;
-
-  return {
-    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
-  };
-}))(BlockVerticalAlignmentToolbar));
-// CONCATENATED MODULE: ./src/components/alignment-controls/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * WordPress dependencies
- */
-
-var alignment_controls_ = wp.i18n.__;
-var alignment_controls_Fragment = wp.element.Fragment;
-var alignment_controls_wp$components = wp.components,
-    alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
-    alignment_controls_IconButton = alignment_controls_wp$components.IconButton,
-    PanelRow = alignment_controls_wp$components.PanelRow,
-    alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
-
-var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
-  return Object(react["createElement"])(alignment_controls_Toolbar, {
-    className: "pixelgrade-hero-block-toolbar"
-  }, Object(react["createElement"])(alignment_controls_Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref) {
-      var isOpen = _ref.isOpen,
-          onToggle = _ref.onToggle;
-      return Object(react["createElement"])(alignment_controls_IconButton, {
-        onClick: onToggle,
-        icon: alignment,
-        "aria-expanded": isOpen,
-        label: alignment_controls_('Content Alignment', '__plugin_txtd'),
-        labelPosition: "bottom"
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(react["createElement"])(alignment_controls_AlignmentControls, props);
-    }
-  }));
-};
-
-var alignment_controls_AlignmentControls = function AlignmentControls(props) {
-  var _props$attributes = props.attributes,
-      applyMinimumHeightBlock = _props$attributes.applyMinimumHeightBlock,
-      horizontalAlignment = _props$attributes.horizontalAlignment,
-      verticalAlignment = _props$attributes.verticalAlignment,
-      setAttributes = props.setAttributes;
-  return Object(react["createElement"])(alignment_controls_Fragment, null, Object(react["createElement"])(PanelRow, null, Object(react["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(react["createElement"])(block_horizontal_alignment_toolbar, {
-    value: horizontalAlignment,
-    onChange: function onChange(nextHorizontalAlignment) {
-      wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map(function (block) {
-        wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, {
-          align: nextHorizontalAlignment
-        });
-        return true;
-      });
-      setAttributes({
-        horizontalAlignment: nextHorizontalAlignment
-      });
-    }
-  })), applyMinimumHeightBlock && Object(react["createElement"])(PanelRow, null, Object(react["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(react["createElement"])(block_vertical_alignment_toolbar, {
-    value: verticalAlignment,
-    onChange: function onChange(nextVerticalAlignment) {
-      return setAttributes({
-        verticalAlignment: nextVerticalAlignment
-      });
-    }
-  })));
-};
-
-
-// CONCATENATED MODULE: ./src/components/height-controls/index.js
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var height_controls_ = wp.i18n.__;
-var height_controls_wp$components = wp.components,
-    height_controls_PanelBody = height_controls_wp$components.PanelBody,
-    height_controls_RadioControl = height_controls_wp$components.RadioControl,
-    height_controls_ToggleControl = height_controls_wp$components.ToggleControl;
-var height_controls_select = wp.data.select;
-var height_controls_Component = wp.element.Component;
-
-var height_controls_HeightControls =
-/*#__PURE__*/
-function (_Component) {
-  inherits_default()(HeightControls, _Component);
-
-  function HeightControls() {
-    classCallCheck_default()(this, HeightControls);
-
-    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(HeightControls).apply(this, arguments));
-  }
-
-  createClass_default()(HeightControls, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes,
-          settings = _this$props.settings;
-      var minHeight = attributes.minHeight,
-          applyMinimumHeight = attributes.applyMinimumHeight;
-      return Object(react["createElement"])(height_controls_PanelBody, {
-        title: height_controls_('Height', '__plugin_txtd'),
-        initialOpen: false
-      }, Object(react["createElement"])(height_controls_RadioControl, {
-        label: height_controls_('Apply Minimum Height', '__plugin_txtd'),
-        selected: applyMinimumHeight,
-        onChange: function onChange(nextMinimumHeight) {
-          setAttributes({
-            applyMinimumHeight: nextMinimumHeight
-          });
-        },
-        options: settings.applyMinimumHeightOptions
-      }), 'none' !== applyMinimumHeight && Object(react["createElement"])(height_controls_RadioControl, {
-        label: height_controls_('Minimum Height', '__plugin_txtd'),
-        selected: minHeight,
-        onChange: function onChange(minHeight) {
-          setAttributes({
-            minHeight: parseInt(minHeight, 10)
-          });
-        },
-        options: settings.minimumHeightOptions
-      }));
-    }
-  }]);
-
-  return HeightControls;
-}(height_controls_Component);
-
-;
-var HeightPanel = with_settings(height_controls_HeightControls);
-var ScrollIndicatorPanel = with_settings(function (props) {
-  var scrollIndicator = props.attributes.scrollIndicator,
-      setAttributes = props.setAttributes;
-  var heroBlocks = height_controls_select('core/block-editor').getBlocks().filter(function (block) {
-    return block.name === 'novablocks/hero';
-  });
-  var index = heroBlocks.findIndex(function (block) {
-    return block.clientId === height_controls_select('core/block-editor').getSelectedBlockClientId();
-  });
-  return Object(react["createElement"])(height_controls_PanelBody, {
-    title: height_controls_('Scroll Indicator', '__plugin_txtd'),
-    style: {
-      display: index === 0 ? 'block' : 'none'
-    },
-    initialOpen: false
-  }, Object(react["createElement"])(height_controls_ToggleControl, {
-    label: height_controls_('Enable Scroll Indicator', '__plugin_txtd'),
-    checked: scrollIndicator,
-    onChange: function onChange(nextScrollIndicator) {
-      setAttributes({
-        scrollIndicator: nextScrollIndicator
-      });
-    }
-  }));
-});
-
-// CONCATENATED MODULE: ./src/components/index.js
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
 // CONCATENATED MODULE: ./src/blocks/hero/background.js
 
 
@@ -5735,12 +6488,10 @@ var background_HeroBackground = function HeroBackground(props) {
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
       overlayFilterStrength = _props$attributes.overlayFilterStrength,
-      media = _props$attributes.media,
-      focalPoint = _props$attributes.focalPoint;
+      media = _props$attributes.media;
 
   var styles = background_objectSpread({}, props.parallax.style, {
-    opacity: 1,
-    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%'
+    opacity: 1
   });
 
   if (overlayFilterStyle !== 'none') {
@@ -5766,7 +6517,7 @@ var background_HeroBackground = function HeroBackground(props) {
   })));
 };
 
-/* harmony default export */ var background = (with_parallax_withParallaxContext(background_HeroBackground));
+/* harmony default export */ var background = (background_HeroBackground);
 // CONCATENATED MODULE: ./src/blocks/hero/preview.js
 
 
@@ -5782,42 +6533,44 @@ var preview_InnerBlocks = wp.blockEditor.InnerBlocks;
 var preview_select = wp.data.select;
 
 var preview_HeroPreview = function HeroPreview(props) {
-  var _props$attributes = props.attributes,
-      contentPadding = _props$attributes.contentPadding,
-      contentPaddingCustom = _props$attributes.contentPaddingCustom,
-      contentWidth = _props$attributes.contentWidth,
-      contentWidthCustom = _props$attributes.contentWidthCustom,
-      verticalAlignment = _props$attributes.verticalAlignment,
-      horizontalAlignment = _props$attributes.horizontalAlignment,
-      minHeight = _props$attributes.minHeight,
-      minHeightFallback = _props$attributes.minHeightFallback,
-      applyMinimumHeightBlock = _props$attributes.applyMinimumHeightBlock,
-      scrollIndicatorBlock = _props$attributes.scrollIndicatorBlock,
-      contentColor = _props$attributes.contentColor,
-      overlayFilterStyle = _props$attributes.overlayFilterStyle,
+  var attributes = props.attributes,
       className = props.className,
       clientId = props.clientId,
       settings = props.settings;
+  var contentPadding = attributes.contentPadding,
+      contentPaddingCustom = attributes.contentPaddingCustom,
+      contentWidth = attributes.contentWidth,
+      contentWidthCustom = attributes.contentWidthCustom,
+      verticalAlignment = attributes.verticalAlignment,
+      horizontalAlignment = attributes.horizontalAlignment,
+      minHeightFallback = attributes.minHeightFallback,
+      scrollIndicatorBlock = attributes.scrollIndicatorBlock,
+      contentColor = attributes.contentColor,
+      overlayFilterStyle = attributes.overlayFilterStyle,
+      scrollingEffect = attributes.scrollingEffect;
   var classes = [className, 'novablocks-hero', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
   var styles = {
     hero: {
-      color: contentColor
+      '--novablocks-hero-text-color': contentColor
     },
     foreground: {},
     content: {}
   };
-  var minimumHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
   var heroBlocks = preview_select('core/block-editor').getBlocks().filter(function (block) {
     return block.name === 'novablocks/hero';
   });
   var index = heroBlocks.findIndex(function (block) {
     return block.clientId === clientId;
   });
-  var scrollIndicatorFallback = index === 0 && minimumHeight === 100;
+  var scrollIndicatorFallback = index === 0 && minHeightFallback === 100;
   var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
+  styles.hero.minHeight = minHeightFallback + 'vh';
+  styles.foreground.minHeight = minHeightFallback + 'vh';
 
-  if (!!applyMinimumHeightBlock) {
-    styles.hero.minHeight = minimumHeight + 'vh';
+  if (scrollingEffect === 'doppler') {
+    styles.hero.alignItems = 'flex-start';
+    styles.hero.minHeight = minHeightFallback * 2 + 'vh';
+    styles.foreground.minHeight = '100vh';
   }
 
   if (contentPadding === 'custom') {
@@ -5833,10 +6586,8 @@ var preview_HeroPreview = function HeroPreview(props) {
     className: classes.join(' '),
     style: styles.hero
   }, Object(react["createElement"])(background, props), Object(react["createElement"])("div", {
-    className: "novablocks-hero__foreground novablocks-u-content-padding",
+    className: "novablocks-hero__foreground novablocks-u-content-padding novablocks-u-content-align",
     style: styles.foreground
-  }, Object(react["createElement"])("div", {
-    className: "novablocks-u-content-align"
   }, Object(react["createElement"])("div", {
     className: "novablocks-hero__inner-container novablocks-u-content-width",
     style: styles.content
@@ -5844,7 +6595,7 @@ var preview_HeroPreview = function HeroPreview(props) {
     template: settings.hero.template
   })), scrollIndicator && Object(react["createElement"])("div", {
     className: "novablocks-hero__indicator"
-  }))));
+  })));
 };
 
 /* harmony default export */ var preview = (preview_HeroPreview);
@@ -5900,10 +6651,10 @@ var block_controls_HeroBlockControls = function HeroBlockControls(props) {
 
 
 
+
 function edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { edit_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { edit_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 
 /**
  * Internal dependencies
@@ -5912,27 +6663,20 @@ function edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) 
 
 
 
-
-
-
 var hero_edit_ = wp.i18n.__;
 var hero_edit_InspectorControls = wp.blockEditor.InspectorControls;
 var hero_edit_wp$components = wp.components,
-    FocalPointPicker = hero_edit_wp$components.FocalPointPicker,
     edit_PanelBody = hero_edit_wp$components.PanelBody,
-    edit_RadioControl = hero_edit_wp$components.RadioControl,
-    edit_ToggleControl = hero_edit_wp$components.ToggleControl;
+    edit_RadioControl = hero_edit_wp$components.RadioControl;
 var hero_edit_wp$element = wp.element,
     hero_edit_Component = hero_edit_wp$element.Component,
     hero_edit_Fragment = hero_edit_wp$element.Fragment;
 var hero_edit_wp$compose = wp.compose,
     hero_edit_compose = hero_edit_wp$compose.compose,
     hero_edit_createHigherOrderComponent = hero_edit_wp$compose.createHigherOrderComponent;
-var _wp$data = wp.data,
-    edit_select = _wp$data.select,
-    dispatch = _wp$data.dispatch;
+var edit_select = wp.data.select;
 var FirstBlockControls = utils_withFirstBlockConditions(function (props) {
-  return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(HeightPanel, props), Object(react["createElement"])(ScrollIndicatorPanel, props), Object(react["createElement"])(position_indicators_panel, props));
+  return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(ScrollIndicatorPanel, props), Object(react["createElement"])(position_indicators_panel, props));
 });
 
 var edit_BlockHeightControls = function BlockHeightControls(props) {
@@ -5970,99 +6714,56 @@ function (_Component) {
     key: "getDefaults",
     value: function getDefaults(attributes) {
       var settings = this.props.settings;
-      var minHeight = attributes.minHeight,
-          applyMinimumHeight = attributes.applyMinimumHeight,
-          scrollIndicator = attributes.scrollIndicator;
+      var scrollIndicator = attributes.scrollIndicator;
       var defaults = {};
 
-      if (settings.usePostMetaAttributes) {
-        if (!minHeight) {
-          defaults.minHeight = settings.hero.attributes.minHeight.default;
-        }
-
-        if (!applyMinimumHeight) {
-          defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
-        }
-
-        if (!scrollIndicator) {
-          defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
-        }
-
-        return defaults;
+      if (!scrollIndicator) {
+        defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
       }
 
-      return {
-        minHeight: 100,
-        applyMinimumHeight: 'all',
-        scrollIndicator: false
-      };
+      return defaults;
     }
   }, {
     key: "getNewAttributes",
     value: function getNewAttributes(attributes) {
       var _this = this;
 
-      var minHeight = attributes.minHeight,
-          applyMinimumHeight = attributes.applyMinimumHeight,
-          scrollIndicator = attributes.scrollIndicator;
+      var scrollIndicator = attributes.scrollIndicator;
       var index = edit_select('core/block-editor').getBlocks().filter(function (block) {
         return block.name === 'novablocks/hero';
       }).findIndex(function (block) {
         return block.clientId === _this.props.clientId;
       });
-      var newApplyMinimumHeightBlock = index === 0 && applyMinimumHeight === 'first' || applyMinimumHeight === 'all';
       var newScrollIndicatorBlock = index === 0 && scrollIndicator;
       return {
-        applyMinimumHeight: applyMinimumHeight,
-        applyMinimumHeightBlock: newApplyMinimumHeightBlock,
-        minHeight: minHeight,
         scrollIndicatorBlock: newScrollIndicatorBlock
       };
     }
   }, {
     key: "updateAttributes",
     value: function updateAttributes() {
+      var newAttributes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var _this$props = this.props,
           attributes = _this$props.attributes,
           setAttributes = _this$props.setAttributes;
       var defaults = this.getDefaults(attributes);
-      var newAttributes = this.getNewAttributes(edit_objectSpread({}, attributes, {}, defaults)); //		setAttributes( newAttributes );
+      var computedAttributes = this.getNewAttributes(edit_objectSpread({}, attributes, {}, defaults, {}, newAttributes));
+      setAttributes(computedAttributes);
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {//		this.updateAttributes();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {//		this.updateAttributes();
+    value: function componentDidMount() {
+      this.updateAttributes();
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          settings = _this$props2.settings,
-          attributes = _this$props2.attributes,
-          setAttributes = _this$props2.setAttributes;
-      var media = attributes.media,
-          focalPoint = attributes.focalPoint;
-      var parallaxFocalPointImage = media ? media.sizes.full : false;
+      var settings = this.props.settings;
       var usePostMetaAttributes = settings.usePostMetaAttributes;
-      return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(preview, this.props), Object(react["createElement"])(block_controls, this.props), Object(react["createElement"])(hero_edit_InspectorControls, null, parallaxFocalPointImage && Object(react["createElement"])(edit_PanelBody, {
-        title: hero_edit_('Focal Point', '__plugin_txtd'),
-        initialOpen: true
-      }, Object(react["createElement"])(FocalPointPicker, {
-        url: parallaxFocalPointImage.url,
-        dimensions: {
-          width: parallaxFocalPointImage.width,
-          height: parallaxFocalPointImage.height
-        },
-        value: focalPoint,
-        onChange: function onChange(focalPoint) {
-          return setAttributes({
-            focalPoint: focalPoint
-          });
-        }
-      })), Object(react["createElement"])(layout_panel, this.props), usePostMetaAttributes && Object(react["createElement"])(FirstBlockControls, this.props), !usePostMetaAttributes && Object(react["createElement"])(edit_BlockHeightControls, this.props)));
+      var updateAttributes = this.updateAttributes.bind(this);
+      return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(preview, this.props), Object(react["createElement"])(block_controls, this.props), Object(react["createElement"])(hero_edit_InspectorControls, null, Object(react["createElement"])(layout_panel, this.props), Object(react["createElement"])(edit_BlockHeightControls, this.props), usePostMetaAttributes && Object(react["createElement"])(FirstBlockControls, extends_default()({}, this.props, {
+        updateAttributes: updateAttributes
+      }))));
     }
   }]);
 
@@ -6444,8 +7145,6 @@ function slideshow_background_objectSpread(target) { for (var i = 1; i < argumen
 /**
  * Internal dependencies
  */
-
-
 var background_SlideshowBackground = function SlideshowBackground(props) {
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
@@ -6477,7 +7176,7 @@ var background_SlideshowBackground = function SlideshowBackground(props) {
   })));
 };
 
-/* harmony default export */ var slideshow_background = (with_parallax_withParallaxContext(background_SlideshowBackground));
+/* harmony default export */ var slideshow_background = (background_SlideshowBackground);
 // CONCATENATED MODULE: ./src/blocks/slideshow/preview.js
 
 
@@ -6548,6 +7247,7 @@ function (_Component) {
           contentPaddingCustom = _this$props$attribute.contentPaddingCustom,
           contentWidth = _this$props$attribute.contentWidth,
           contentWidthCustom = _this$props$attribute.contentWidthCustom,
+          minHeight = _this$props$attribute.minHeight,
           verticalAlignment = _this$props$attribute.verticalAlignment,
           horizontalAlignment = _this$props$attribute.horizontalAlignment,
           contentColor = _this$props$attribute.contentColor,
@@ -6584,15 +7284,13 @@ function (_Component) {
 
         return true;
       });
-      styles.slider = {
-        minHeight: Math.max(mediaMinHeight, maxAspectRatio) + 'px'
-      };
+      var attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
+      styles.slideshow.minHeight = Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px';
       return Object(react["createElement"])(preview_Fragment, null, !!galleryImages.length && Object(react["createElement"])("div", {
         className: classes.join(' '),
         style: styles.slideshow
       }, Object(react["createElement"])("div", {
-        className: "novablocks-slideshow__slider",
-        style: styles.slider
+        className: "novablocks-slideshow__slider"
       }, Object(react["createElement"])("div", {
         className: "novablocks-slideshow__slide"
       }, previewImage && Object(react["createElement"])(preview_Fragment, null, Object(react["createElement"])(slideshow_background, this.props), Object(react["createElement"])("div", {
@@ -6644,6 +7342,7 @@ function (_Component) {
  * Internal dependencies
  */
 
+
 /**
  * WordPress dependencies
  */
@@ -6652,7 +7351,8 @@ var slideshow_inspector_controls_ = wp.i18n.__;
 var slideshow_inspector_controls_wp$components = wp.components,
     inspector_controls_FocalPointPicker = slideshow_inspector_controls_wp$components.FocalPointPicker,
     slideshow_inspector_controls_PanelBody = slideshow_inspector_controls_wp$components.PanelBody,
-    slideshow_inspector_controls_RadioControl = slideshow_inspector_controls_wp$components.RadioControl;
+    slideshow_inspector_controls_RadioControl = slideshow_inspector_controls_wp$components.RadioControl,
+    slideshow_inspector_controls_RangeControl = slideshow_inspector_controls_wp$components.RangeControl;
 var slideshow_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 var slideshow_inspector_controls_Fragment = wp.element.Fragment;
 
@@ -6666,6 +7366,17 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
       setAttributes = props.setAttributes,
       minHeightOptions = props.settings.slideshow.minHeightOptions;
   var selectedImage = galleryImages[selectedIndex];
+  var focalPointPickerClassNames = ['novablocks-focal-point-picker'];
+
+  if (selectedImage) {
+    var selectedImageFocalPoint = selectedImage.focalPoint || {
+      x: 0.5,
+      y: 0.5
+    };
+    focalPointPickerClassNames.push(getSnapClassname(selectedImageFocalPoint));
+  }
+
+  focalPointPickerClassNames = focalPointPickerClassNames.join(' ');
   return Object(react["createElement"])(slideshow_inspector_controls_InspectorControls, null, !!galleryImages.length && Object(react["createElement"])(slideshow_inspector_controls_PanelBody, {
     className: 'nova-blocks-slideshow-type-panel',
     title: slideshow_inspector_controls_('Slides', '__plugin_txtd')
@@ -6673,7 +7384,8 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
     galleryImages: galleryImages,
     onSelectImage: setIndex,
     selected: selectedIndex
-  }), selectedImage && Object(react["createElement"])(inspector_controls_FocalPointPicker, {
+  }), selectedImage && Object(react["createElement"])(slideshow_inspector_controls_Fragment, null, Object(react["createElement"])(inspector_controls_FocalPointPicker, {
+    className: focalPointPickerClassNames,
     url: selectedImage.url,
     dimensions: {
       width: selectedImage.width,
@@ -6685,12 +7397,12 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
     },
     onChange: function onChange(focalPoint) {
       var newGalleryImages = galleryImages;
-      newGalleryImages[selectedIndex].focalPoint = focalPoint;
+      newGalleryImages[selectedIndex].focalPoint = maybeSnapFocalPoint(focalPoint);
       setAttributes({
         galleryImages: newGalleryImages
       });
     }
-  })), 'gallery' === slideshowType && Object(react["createElement"])(slideshow_inspector_controls_Fragment, null, Object(react["createElement"])(layout_panel, props), Object(react["createElement"])(slideshow_inspector_controls_PanelBody, {
+  }))), 'gallery' === slideshowType && Object(react["createElement"])(slideshow_inspector_controls_Fragment, null, Object(react["createElement"])(layout_panel, props), Object(react["createElement"])(slideshow_inspector_controls_PanelBody, {
     title: slideshow_inspector_controls_('Height', '__plugin_txtd'),
     initialOpen: false
   }, Object(react["createElement"])(slideshow_inspector_controls_RadioControl, {
@@ -6794,7 +7506,6 @@ function slideshow_edit_objectSpread(target) { for (var i = 1; i < arguments.len
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -7674,6 +8385,10 @@ function menu_food_item_init() {
 }
 
 /* harmony default export */ var menu_food_item = (menu_food_item_init);
+// EXTERNAL MODULE: ./node_modules/@wordpress/is-shallow-equal/index.js
+var is_shallow_equal = __webpack_require__(19);
+var is_shallow_equal_default = /*#__PURE__*/__webpack_require__.n(is_shallow_equal);
+
 // CONCATENATED MODULE: ./src/blocks/opentable/preview.js
 
 
@@ -7947,7 +8662,7 @@ function opentable_init() {
 
 
 
-var editor_dispatch = wp.data.dispatch;
+var dispatch = wp.data.dispatch;
 var updateCategory = wp.blocks.updateCategory;
 
 var editor_novaBlocks =
@@ -7961,7 +8676,7 @@ function () {
     key: "initialize",
     value: function initialize(settings) {
       separator_addSeparatorFilters(settings);
-      editor_dispatch(STORE_NAME).updateSettings(settings);
+      dispatch(STORE_NAME).updateSettings(settings);
       updateCategory('nova-blocks', {
         icon: nova
       });

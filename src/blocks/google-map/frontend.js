@@ -1,8 +1,12 @@
 import pin from "./pin";
 import { getCenterFromMarkers } from "./utils";
-import { parallaxInit } from "../../utils";
+import { parallaxInit } from "../../components/with-parallax/util";
 
 (function( $, window, undefined ) {
+
+	const $blocks = $( '.novablocks-map' );
+
+	parallaxInit( $blocks );
 
 	$( '.js-novablocks-google-map' ).each( function( i, obj ) {
 
@@ -37,7 +41,5 @@ import { parallaxInit } from "../../utils";
 		} );
 
 	} );
-
-	parallaxInit( 'novablocks-map' );
 
 })( jQuery, window );

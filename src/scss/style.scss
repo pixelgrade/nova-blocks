@@ -1,10 +1,6 @@
 @import 'variables';
 @import 'mixins';
 
-@import '../components/alignment-controls/style';
-@import '../components/layout-panel/style';
-@import '../components/color-controls/style';
-
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
 @import '../blocks/header/scss/style';
@@ -36,5 +32,20 @@
 	dl,
 	.editor-block-list__block {
 		color: inherit;
+	}
+}
+
+.novablocks-mask {
+	@include cover;
+}
+
+.novablocks-parallax {
+	position: fixed;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+
+	.scrolling-effect-static & {
+		position: static;
 	}
 }

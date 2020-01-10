@@ -1,17 +1,15 @@
-import isShallowEqual from '@wordpress/is-shallow-equal';
-
 /**
  * Internal dependencies
  */
 import {
-	HeightPanel,
 	LayoutPanel,
 	ScrollIndicatorPanel,
 	PositionIndicatorsPanel,
+	AdvancedScrollAnimationControls,
+	withParallax,
+	withSettings,
 } from '../../components';
 
-import withSettings from '../../components/with-settings';
-import withParallax from '../../components/with-parallax';
 import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';
@@ -24,10 +22,8 @@ const {
 } = wp.blockEditor;
 
 const {
-	FocalPointPicker,
 	PanelBody,
 	RadioControl,
-	ToggleControl,
 } = wp.components;
 
 const {
@@ -41,15 +37,13 @@ const {
 } = wp.compose;
 
 const {
-	select,
-	dispatch
+	select
 } = wp.data;
 
 const FirstBlockControls = withFirstBlockConditions( function( props ) {
 
 	return (
 		<Fragment>
-			<HeightPanel { ...props } />
 			<ScrollIndicatorPanel { ...props } />
 			<PositionIndicatorsPanel { ...props } />
 		</Fragment>
@@ -72,7 +66,9 @@ const BlockHeightControls = function( props ) {
 				label={ __( 'Minimum Height', '__plugin_txtd' ) }
 				selected={ minHeightFallback }
 				onChange={ minHeightFallback => {
-					setAttributes( { minHeightFallback: parseFloat( minHeightFallback ) } );
+					setAttributes( {
+						minHeightFallback: parseFloat( minHeightFallback )
+					} );
 				} }
 				options={ settings.minimumHeightOptions }
 			/>
@@ -84,35 +80,18 @@ class HeroEdit extends Component {
 
 	getDefaults( attributes ) {
 		const { settings } = this.props;
-		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
+		const { scrollIndicator } = attributes;
 		const defaults = {};
 
-		if ( settings.usePostMetaAttributes ) {
-
-			if ( ! minHeight ) {
-				defaults.minHeight = settings.hero.attributes.minHeight.default;
-			}
-
-			if ( ! applyMinimumHeight ) {
-				defaults.applyMinimumHeight = settings.hero.attributes.applyMinimumHeight.default;
-			}
-
-			if ( ! scrollIndicator ) {
-				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
-			}
-
-			return defaults;
+		if ( ! scrollIndicator ) {
+			defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
 		}
 
-		return {
-			minHeight: 100,
-			applyMinimumHeight: 'all',
-			scrollIndicator: false,
-		};
+		return defaults;
 	}
 
 	getNewAttributes( attributes ) {
-		const { minHeight, applyMinimumHeight, scrollIndicator } = attributes;
+		const { scrollIndicator } = attributes;
 
 		const index = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 			return block.name === 'novablocks/hero';
@@ -120,60 +99,38 @@ class HeroEdit extends Component {
 			return block.clientId === this.props.clientId
 		} );
 
-		const newApplyMinimumHeightBlock = ( index === 0 && applyMinimumHeight === 'first' ) || applyMinimumHeight === 'all';
 		const newScrollIndicatorBlock = index === 0 && scrollIndicator;
 
 		return {
-			applyMinimumHeight: applyMinimumHeight,
-			applyMinimumHeightBlock: newApplyMinimumHeightBlock,
-			minHeight: minHeight,
 			scrollIndicatorBlock: newScrollIndicatorBlock,
 		};
 	}
 
-	updateAttributes() {
+	updateAttributes( newAttributes = {} ) {
 		const { attributes, setAttributes } = this.props;
 		const defaults = this.getDefaults( attributes );
-		const newAttributes = this.getNewAttributes( { ...attributes, ...defaults } );
+		const computedAttributes = this.getNewAttributes( { ...attributes, ...defaults, ...newAttributes } );
 
-//		setAttributes( newAttributes );
+		setAttributes( computedAttributes );
 	}
 
 	componentDidMount() {
-//		this.updateAttributes();
-	}
-
-	componentDidUpdate() {
-//		this.updateAttributes();
+		this.updateAttributes();
 	}
 
 	render() {
-		const { settings, attributes, setAttributes } = this.props;
-		const { media, focalPoint } = attributes;
-		const parallaxFocalPointImage = media ? media.sizes.full : false;
+		const { settings } = this.props;
 		const { usePostMetaAttributes } = settings;
+		const updateAttributes = this.updateAttributes.bind( this );
 
 		return (
 			<Fragment>
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<InspectorControls>
-					{ parallaxFocalPointImage && <PanelBody
-						title={ __( 'Focal Point', '__plugin_txtd' ) }
-						initialOpen={ true }>
-						<FocalPointPicker
-							url={ parallaxFocalPointImage.url }
-							dimensions={ {
-								width: parallaxFocalPointImage.width,
-								height: parallaxFocalPointImage.height,
-							} }
-							value={ focalPoint }
-							onChange={ focalPoint => setAttributes( { focalPoint } ) }
-						/>
-					</PanelBody> }
 					<LayoutPanel { ...this.props } />
-					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } /> }
-					{ ! usePostMetaAttributes && <BlockHeightControls { ...this.props } /> }
+					<BlockHeightControls { ...this.props } />
+					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } updateAttributes={ updateAttributes } /> }
 				</InspectorControls>
 			</Fragment>
 		);

@@ -104,6 +104,12 @@ module.exports = undefined;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -137,7 +143,7 @@ if (true) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 function _classCallCheck(instance, Constructor) {
@@ -149,7 +155,7 @@ function _classCallCheck(instance, Constructor) {
 module.exports = _classCallCheck;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 function _defineProperties(target, props) {
@@ -171,7 +177,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 module.exports = _createClass;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -344,7 +350,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -441,12 +447,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -460,7 +460,7 @@ module.exports = jQuery;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(6),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(7),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -495,7 +495,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),m=__webpack_require__(6),q=__webpack_require__(10);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
+var aa=__webpack_require__(0),m=__webpack_require__(7),q=__webpack_require__(10);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
 function da(){if(ba)for(var a in ca){var b=ca[a],c=ba.indexOf(a);if(!(-1<c))throw t(Error(96),a);if(!ea[c]){if(!b.extractEvents)throw t(Error(97),a);ea[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],h=b,g=d;if(fa.hasOwnProperty(g))throw t(Error(99),g);fa[g]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ha(k[e],h,g);e=!0}else f.registrationName?(ha(f.registrationName,h,g),e=!0):e=!1;if(!e)throw t(Error(98),d,a);}}}}
 function ha(a,b,c){if(ia[a])throw t(Error(100),a);ia[a]=b;ja[a]=b.eventTypes[c].dependencies}var ea=[],fa={},ia={},ja={};function ka(a,b,c,d,e,f,h,g,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(n){this.onError(n)}}var la=!1,ma=null,na=!1,oa=null,pa={onError:function(a){la=!0;ma=a}};function qa(a,b,c,d,e,f,h,g,k){la=!1;ma=null;ka.apply(pa,arguments)}
 function ra(a,b,c,d,e,f,h,g,k){qa.apply(this,arguments);if(la){if(la){var l=ma;la=!1;ma=null}else throw t(Error(198));na||(na=!0,oa=l)}}var sa=null,ta=null,va=null;function wa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=va(c);ra(d,b,void 0,a);a.currentTarget=null}function xa(a,b){if(null==b)throw t(Error(30));if(null==a)return b;if(Array.isArray(a)){if(Array.isArray(b))return a.push.apply(a,b),a;a.push(b);return a}return Array.isArray(b)?[a].concat(b):[a,b]}
@@ -813,15 +813,15 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();U(a);return
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(3);
+var classCallCheck = __webpack_require__(4);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(4);
+var createClass = __webpack_require__(5);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(5);
+var js_cookie = __webpack_require__(6);
 var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
 
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/announcement-bar.js
@@ -1113,6 +1113,411 @@ var getCenterFromMarkers = function getCenterFromMarkers(markers) {
 var getMarkersCenter = function getMarkersCenter() {
   return getCenterFromMarkers(this.props.attributes.markers);
 };
+// EXTERNAL MODULE: external "jQuery"
+var external_jQuery_ = __webpack_require__(2);
+var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
+
+// CONCATENATED MODULE: ./src/components/with-parallax/util.js
+
+var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
+  if (!focalPoint1 && !focalPoint2) {
+    return {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (!focalPoint1) {
+    return focalPoint2;
+  }
+
+  if (!focalPoint2) {
+    return focalPoint1;
+  }
+
+  return {
+    x: parseFloat(focalPoint1.x) + (parseFloat(focalPoint2.x) - parseFloat(focalPoint1.x)) * progress,
+    y: parseFloat(focalPoint1.y) + (parseFloat(focalPoint2.y) - parseFloat(focalPoint1.y)) * progress
+  };
+};
+var getStyles = function getStyles(config) {
+  var props = getProps(config);
+  var styles = getStylesFromProps(props);
+  return styles;
+};
+var getStylesFromProps = function getStylesFromProps(props) {
+  var parallaxAmount = props.parallaxAmount,
+      width = props.width,
+      height = props.height,
+      moveX = props.moveX,
+      moveY = props.moveY,
+      offsetX = props.offsetX,
+      offsetY = props.offsetY,
+      scale = props.scale,
+      focalPoint = props.focalPoint,
+      containerBox = props.containerBox;
+  return {
+    width: width || '',
+    height: height || '',
+    minHeight: 0,
+    maxWidth: 'none',
+    transform: "translate(".concat(moveX, ",").concat(moveY * parallaxAmount, "px) translateX(").concat(offsetX, ") translateY(").concat(offsetY, "px) scale(").concat(scale, ")"),
+    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+    transformOrigin: focalPoint.x * 100 + '% 50%'
+  };
+};
+
+function getIntermediateValue(initialValue, finalValue, progress) {
+  return initialValue + (finalValue - initialValue) * progress;
+}
+
+function getScales(config) {
+  var scrollingEffect = config.scrollingEffect,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      progress = config.progress;
+  initialBackgroundScale = initialBackgroundScale || 1;
+
+  if (scrollingEffect === 'parallax') {
+    finalBackgroundScale = initialBackgroundScale;
+  }
+
+  var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
+  initialBackgroundScale = initialBackgroundScale / maxScale;
+  finalBackgroundScale = finalBackgroundScale / maxScale;
+  return {
+    maxScale: maxScale,
+    newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
+  };
+}
+
+function getFocalPoint(config) {
+  var scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      progress = config.progress;
+
+  if (!focalPoint) {
+    focalPoint = {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (scrollingEffect !== 'doppler') {
+    return focalPoint;
+  }
+
+  return getIntermediateFocalPoint(focalPoint, finalFocalPoint, progress);
+}
+
+function getNewImageHeight(config, parallaxAmount) {
+  var scrollContainerHeight = config.scrollContainerHeight,
+      containerHeight = config.containerHeight;
+  return containerHeight + (scrollContainerHeight - containerHeight) * parallaxAmount;
+}
+
+var getProps = function getProps(config, fixed) {
+  var distance = config.distance,
+      progress = config.progress,
+      smoothStart = config.smoothStart,
+      smoothEnd = config.smoothEnd,
+      scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      container = config.container,
+      containerBox = config.containerBox,
+      containerWidth = config.containerWidth,
+      containerHeight = config.containerHeight,
+      scrollContainer = config.scrollContainer,
+      scrollContainerBox = config.scrollContainerBox,
+      scrollContainerHeight = config.scrollContainerHeight;
+  var newFocalPoint = getFocalPoint(config);
+
+  if (scrollingEffect === 'static') {
+    return {
+      width: containerWidth,
+      height: containerHeight,
+      scale: initialBackgroundScale || 1,
+      moveX: 0,
+      moveY: 0,
+      offsetX: 0,
+      offsetY: 0,
+      parallaxAmount: 0,
+      focalPoint: newFocalPoint
+    };
+  }
+
+  var parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+
+  var _getScales = getScales(config),
+      maxScale = _getScales.maxScale,
+      newScale = _getScales.newScale;
+
+  var newImageHeight = getNewImageHeight(config, parallaxAmount); // keep in sync with scroll
+
+  var moveY = scrollContainerBox.top - containerBox.top;
+
+  if (!smoothStart) {
+    if (!!fixed && containerBox.top < 0) {
+      moveY = scrollContainerBox.top;
+    }
+
+    if (!fixed && 0 > scrollContainerBox.top - containerBox.top) {
+      moveY = 0;
+    }
+  }
+
+  if (!smoothEnd) {
+    if (scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight) {
+      if (!!fixed) {
+        moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;
+      } else {
+        moveY = containerHeight - scrollContainerHeight;
+      }
+    }
+  } // align top
+
+
+  var offsetY = newImageHeight * maxScale * (newScale - 1) * 0.5; // position according to focalPoint
+
+  offsetY += newImageHeight * (1 - maxScale * newScale) * newFocalPoint.y;
+  return {
+    distance: distance,
+    parallaxAmount: parallaxAmount,
+    progress: progress,
+    width: containerWidth * maxScale,
+    height: newImageHeight * maxScale,
+    moveX: "".concat(fixed ? containerBox.left - scrollContainerBox.left : 0, "px"),
+    moveY: moveY,
+    offsetX: (1 / maxScale - 1) * newFocalPoint.x * 100 + '%',
+    offsetY: offsetY,
+    scale: newScale,
+    focalPoint: newFocalPoint
+  };
+};
+var getState = function getState(container, config) {
+  if (!container || !config) {
+    return {};
+  }
+
+  var followThroughStart = config.followThroughStart,
+      followThroughEnd = config.followThroughEnd,
+      scrollingEffect = config.scrollingEffect,
+      scrollContainerHeight = config.scrollContainerHeight,
+      scrollContainerBox = config.scrollContainerBox;
+  var containerWidth = container.offsetWidth;
+  var containerHeight = container.offsetHeight;
+  var containerBox = container.getBoundingClientRect();
+  var smoothStart = followThroughStart || scrollingEffect === 'parallax';
+  var smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
+  var current = scrollContainerBox.top - containerBox.top;
+  var distance = containerHeight - scrollContainerHeight;
+
+  if (smoothStart) {
+    current += scrollContainerHeight;
+    distance += scrollContainerHeight;
+  }
+
+  if (smoothEnd) {
+    distance += scrollContainerHeight;
+  }
+
+  var progress = distance <= 0 ? 0.5 : current / distance;
+
+  if (!smoothStart) {
+    progress = Math.max(0, progress);
+  }
+
+  if (!smoothEnd) {
+    progress = Math.min(1, progress);
+  }
+
+  return {
+    progress: progress,
+    distance: distance,
+    smoothStart: smoothStart,
+    smoothEnd: smoothEnd,
+    containerBox: containerBox,
+    containerHeight: containerHeight,
+    containerWidth: containerWidth,
+    scrollContainerHeight: scrollContainerHeight,
+    scrollContainerBox: scrollContainerBox
+  };
+};
+var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
+  var frameRendered = false;
+  $blocks.each(function (i, container) {
+    var $container = external_jQuery_default()(container);
+    var followThroughStart = !!$container.data('smooth-start');
+    var followThroughEnd = !!$container.data('smooth-end');
+    var scrollingEffect = $container.data('scrolling-effect');
+    var focalPoint = $container.data('focal-point');
+    var finalFocalPoint = $container.data('final-focal-point');
+    var initialBackgroundScale = $container.data('initial-background-scale');
+    var finalBackgroundScale = $container.data('final-background-scale');
+    var scrollContainerHeight = window.innerHeight;
+    var scrollContainerBox = {
+      top: 0,
+      left: 0
+    };
+    var config = {
+      followThroughStart: followThroughStart,
+      followThroughEnd: followThroughEnd,
+      scrollingEffect: scrollingEffect,
+      scrollContainerHeight: scrollContainerHeight,
+      scrollContainerBox: scrollContainerBox,
+      focalPoint: focalPoint,
+      finalFocalPoint: finalFocalPoint,
+      initialBackgroundScale: initialBackgroundScale,
+      finalBackgroundScale: finalBackgroundScale
+    };
+    $container.data({
+      state: getState(container, config),
+      config: config
+    });
+    var $mask = $container.find('.novablocks-mask');
+    var $parallax = $container.find('.novablocks-parallax');
+    $container.data('mask', $mask);
+    $container.data('parallax', $parallax);
+    external_jQuery_default()(window).on('scroll', function () {
+      var state = getState(container, config);
+      $container.data('state', state);
+      frameRendered = false;
+    });
+  });
+
+  function parallaxUpdateLoop() {
+    if (!frameRendered) {
+      $blocks.each(function (i, obj) {
+        var $container = external_jQuery_default()(obj);
+        var $background = $container.data('parallax');
+        var $foreground = $background.find('.novablocks-foreground');
+        var state = $container.data('state');
+        var config = $container.data('config');
+        config = Object.assign({}, state, config);
+        var props = getProps(config, true);
+        $foreground.css('transform', "translate3d(0,".concat(-props.moveY * props.parallaxAmount, "px,0)")); // because of fixed positioning
+
+        props.moveY = -1 * props.moveY;
+
+        if (0 < props.progress && props.progress < 1) {
+          props.parallaxAmount = 1 - props.parallaxAmount;
+        }
+
+        var styles = getStylesFromProps(props);
+        var _config = config,
+            containerWidth = _config.containerWidth,
+            containerHeight = _config.containerHeight;
+        $container.data('parallax').css(styles);
+        $container.data('mask').css({
+          clip: "rect(0 ".concat(containerWidth, "px ").concat(containerHeight, "px 0)")
+        });
+      });
+      frameRendered = true;
+    }
+
+    requestAnimationFrame(parallaxUpdateLoop);
+  }
+
+  requestAnimationFrame(parallaxUpdateLoop);
+};
+// CONCATENATED MODULE: ./src/blocks/google-map/frontend.js
+
+
+
+
+(function ($, window, undefined) {
+  var $blocks = $('.novablocks-map');
+  util_parallaxInit($blocks);
+  $('.js-novablocks-google-map').each(function (i, obj) {
+    var $obj = $(obj),
+        markers = $obj.data('markers'),
+        styles = $obj.data('styles'),
+        zoom = $obj.data('zoom'),
+        hideControls = !$obj.data('controls'),
+        pinColor = $obj.data('pin-color'),
+        mapOptions = {
+      mapTypeId: 'roadmap',
+      center: getCenterFromMarkers(markers),
+      zoom: zoom,
+      styles: styles,
+      disableDefaultUI: hideControls,
+      clickableIcons: false,
+      keyboardShortcuts: false
+    },
+        map = new google.maps.Map(obj, mapOptions);
+    var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
+    markers.forEach(function (markerString) {
+      var marker = JSON.parse(markerString);
+      new google.maps.Marker({
+        map: map,
+        icon: {
+          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+        },
+        title: marker.title,
+        position: marker.geometry.location
+      });
+    });
+  });
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/hero/frontend.js
+
+
+(function ($, window, undefined) {
+  var $heroes = $('.novablocks-hero');
+  var windowScrollY;
+  var scrollButtonHidden = false;
+  var $scrollButton = $('.novablocks-hero__indicator');
+  util_parallaxInit($heroes);
+  bulletsInit();
+  scrollButtonInit();
+  updateScroll();
+  $(window).on('scroll', updateScroll);
+
+  function updateScroll() {
+    windowScrollY = window.scrollY;
+
+    if (windowScrollY > 200) {
+      hideScrollButton();
+    }
+  }
+
+  function bulletsInit() {
+    var $body = $('body');
+    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;
+
+    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {
+      $('.novablocks-hero').bully();
+    }
+  }
+
+  function hideScrollButton() {
+    if (scrollButtonHidden) {
+      return;
+    }
+
+    $scrollButton.filter('.novablocks-hero__indicator--middle').addClass('novablocks-hero__indicator--hidden');
+    scrollButtonHidden = true;
+  }
+
+  function scrollButtonInit() {
+    var $hero = $scrollButton.closest('.novablocks-hero');
+
+    if ($hero.length) {
+      $scrollButton.on('click', function () {
+        var heroBox = $hero.get(0).getBoundingClientRect();
+        var heroBoxTop = heroBox.y || heroBox.top;
+        window.scrollTo({
+          top: heroBoxTop + heroBox.height + windowScrollY,
+          behavior: 'smooth'
+        });
+      });
+    }
+  }
+})(jQuery, window);
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1401,7 +1806,7 @@ function switchChildrenNodeName(children, nodeName) {
 }
 //# sourceMappingURL=react.js.map
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(2);
+var react_dom = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react-platform.js
 /**
@@ -2142,6 +2547,7 @@ function renderStyle(style) {
 //# sourceMappingURL=index.js.map
 // CONCATENATED MODULE: ./src/utils.js
 
+
 var debounce = function debounce(func, wait) {
   var timeout = null;
   return function () {
@@ -2164,22 +2570,6 @@ var range = function range(min, max) {
   }
 
   return array;
-};
-var parallaxInit = function parallaxInit(BLOCK_NAME) {
-  (function ($) {
-    var $blocks = $(".".concat(BLOCK_NAME));
-    var $targets = $blocks.filter('.has-parallax');
-    $targets.find(".".concat(BLOCK_NAME, "__parallax")).rellax({
-      container: ".".concat(BLOCK_NAME, "__mask"),
-      absolute: isSafari
-    });
-    $blocks.find(".".concat(BLOCK_NAME, "__parallax")).each(function (i, obj) {
-      var $obj = $(obj);
-      $obj.imagesLoaded(function () {
-        $obj.css('opacity', 1);
-      });
-    });
-  })(jQuery);
 };
 var utils_withFirstBlockConditions = function withFirstBlockConditions(Component) {
   return function (props) {
@@ -2219,78 +2609,81 @@ var hasTouchScreen = function hasTouchScreen() {
 
   return hasTouchScreen;
 };
-// CONCATENATED MODULE: ./src/blocks/google-map/frontend.js
+var findParents = function findParents(target, query) {
+  var parents = [];
 
+  function traverse(item) {
+    var parent = item.parentNode;
 
+    if (parent instanceof HTMLElement) {
+      if (parent.matches(query)) {
+        parents.push(parent);
+      }
 
-
-(function ($, window, undefined) {
-  $('.js-novablocks-google-map').each(function (i, obj) {
-    var $obj = $(obj),
-        markers = $obj.data('markers'),
-        styles = $obj.data('styles'),
-        zoom = $obj.data('zoom'),
-        hideControls = !$obj.data('controls'),
-        pinColor = $obj.data('pin-color'),
-        mapOptions = {
-      mapTypeId: 'roadmap',
-      center: getCenterFromMarkers(markers),
-      zoom: zoom,
-      styles: styles,
-      disableDefaultUI: hideControls,
-      clickableIcons: false,
-      keyboardShortcuts: false
-    },
-        map = new google.maps.Map(obj, mapOptions);
-    var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
-    markers.forEach(function (markerString) {
-      var marker = JSON.parse(markerString);
-      new google.maps.Marker({
-        map: map,
-        icon: {
-          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
-        },
-        title: marker.title,
-        position: marker.geometry.location
-      });
-    });
-  });
-  parallaxInit('novablocks-map');
-})(jQuery, window);
-// CONCATENATED MODULE: ./src/blocks/hero/frontend.js
-
-
-(function ($, window, undefined) {
-  $(function () {
-    var $body = $('body');
-    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;
-    parallaxInit('novablocks-hero');
-
-    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {
-      $('.novablocks-hero').bully();
-    }
-
-    scrollButtonInit();
-  });
-
-  function scrollButtonInit() {
-    var $scrollButton = $('.novablocks-hero__indicator');
-    var $hero = $scrollButton.closest('.novablocks-hero');
-
-    if ($hero.length) {
-      $scrollButton.on('click', function () {
-        var heroBox = $hero.get(0).getBoundingClientRect();
-        var heroBoxTop = heroBox.y || heroBox.top;
-        var scrollY = window.scrollY;
-        window.scrollTo({
-          top: heroBoxTop + heroBox.height + scrollY,
-          behavior: 'smooth'
-        });
-      });
+      traverse(parent);
     }
   }
-})(jQuery, window);
+
+  traverse(target);
+  return parents;
+}; // https://stackoverflow.com/a/2450976
+
+var shuffleArray = function shuffleArray(array) {
+  var currentIndex = array.length,
+      temporaryValue,
+      randomIndex; // While there remain elements to shuffle...
+
+  while (0 !== currentIndex) {
+    // eslint-disable-next-line no-restricted-syntax
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1; // And swap it with the current element.
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+var defaultSnapValues = {
+  x: [0, 0.5, 1],
+  y: [0, 0.5, 1]
+};
+var maybeSnapFocalPoint = function maybeSnapFocalPoint(focalPoint) {
+  var snapValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultSnapValues;
+  var x = parseFloat(focalPoint.x);
+  var y = parseFloat(focalPoint.y);
+  var thereshold = 0.05;
+  snapValues.x.forEach(function (snapValue) {
+    if (snapValue - thereshold < x && x < snapValue + thereshold) {
+      x = snapValue;
+    }
+  });
+  snapValues.y.forEach(function (snapValue) {
+    if (snapValue - thereshold < y && y < snapValue + thereshold) {
+      y = snapValue;
+    }
+  });
+  return {
+    x: x,
+    y: y
+  };
+};
+var getSnapClassname = function getSnapClassname(focalPoint) {
+  var classNames = [];
+
+  if (defaultSnapValues.x.includes(parseFloat(focalPoint.x))) {
+    classNames.push('is-snapped-x');
+  }
+
+  if (defaultSnapValues.y.includes(parseFloat(focalPoint.y))) {
+    classNames.push('is-snapped-y');
+  }
+
+  return classNames.join(' ');
+};
 // CONCATENATED MODULE: ./src/blocks/slideshow/frontend.js
+
 
 var BLOCK_SELECTOR = '.novablocks-slideshow';
 var SLIDER_SELECTOR = '.novablocks-slideshow__slider';
@@ -2304,18 +2697,8 @@ var TRANSITION_EASING = "easeInOutCirc";
 (function ($, window, undefined) {
   var $window = $(window);
   var $blocks = $(BLOCK_SELECTOR);
-  var $rellaxTarget = $blocks.filter('.has-parallax').find(SLIDER_SELECTOR);
   var useOrientation = hasTouchScreen() && 'orientation' in window;
-  var onDebouncedResize = debounce(onResize, 300); // initialize parallax effect
-
-  if (typeof $.fn.rellax !== "undefined") {
-    $rellaxTarget.rellax({
-      container: '.novablocks-slideshow__mask',
-      absolute: isSafari,
-      children: CONTENT_SELECTOR
-    });
-  }
-
+  var onDebouncedResize = debounce(onResize, 300);
   $blocks.each(function (index, block) {
     var $block = $(block),
         $slider = $block.find(SLIDER_SELECTOR),
@@ -2333,10 +2716,11 @@ var TRANSITION_EASING = "easeInOutCirc";
         prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
         nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
         appendArrows: $arrowContainer,
-        speed: TRANSITION_DURATION
+        speed: 0
       });
     }
   });
+  util_parallaxInit($blocks);
 
   if (useOrientation) {
     $window.on('orientationchange', function () {
@@ -2379,7 +2763,6 @@ var TRANSITION_EASING = "easeInOutCirc";
       var $block = $(block);
       var $slider = $block.find(SLIDER_SELECTOR);
       resetBlockMinHeight($block);
-      $rellaxTarget.rellax('refresh');
 
       if ($slider.is('.slick-initialized')) {
         $slider.slick('setPosition');
@@ -2390,36 +2773,57 @@ var TRANSITION_EASING = "easeInOutCirc";
   function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
     var $currentSlide = $(slick.$slides[currentSlide]);
     var $nextSlide = $(slick.$slides[nextSlide]);
-    $(slick.$slides).css('zIndex', 800);
+    var $slides = $(slick.$slides);
     transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
+  }
+
+  function hasFixedBackground($slide) {
+    var fixed = false;
+
+    if ($slide.find('.novablocks-parallax').css('position') === 'fixed') {
+      return true;
+    }
+
+    return fixed;
   }
 
   function transition($current, $next) {
     var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
     var slideWidth = $current.outerWidth();
     var move = 300;
+    var isFixed = hasFixedBackground($current);
     $current.velocity({
       tween: [0, 1]
     }, {
       duration: TRANSITION_DURATION,
       easing: TRANSITION_EASING,
+      begin: function begin() {
+        $current.addClass('novablocks-slideshow__slide--current');
+        $next.addClass('novablocks-slideshow__slide--next');
+      },
       progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
-        var next = $next.get(0);
-        var nextBg = $next.find(BACKGROUND_SELECTOR).get(0);
+        var next = $next.find('.novablocks-slideshow__slide-wrap').get(0);
+        var nextBg = $next.find('.novablocks-slideshow__media').get(0);
         var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
         var current = $current.get(0);
-        var currentBg = $current.find(BACKGROUND_SELECTOR).get(0);
+        var currentBg = $current.find('.novablocks-slideshow__media').get(0);
         var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
 
-        var moveX = function moveX(x) {
-          return 'translateX(' + sign * x + 'px)';
-        };
-
-        next.style.transform = moveX(slideWidth * tweenValue);
-        nextBg.style.transform = moveX((move - slideWidth) * tweenValue);
-        nextFg.style.transform = moveX(slideWidth * -tweenValue);
-        current.style.transform = moveX(-move * (1 - tweenValue));
-        currentFg.style.transform = moveX(move * (1 - tweenValue));
+        if (isFixed) {
+          next.style.left = slideWidth * tweenValue + 'px';
+          nextBg.style.left = move * tweenValue + 'px';
+          nextFg.style.left = slideWidth * -tweenValue + 'px';
+          currentBg.style.left = move * (tweenValue - 1) + 'px';
+        } else {
+          next.style.left = slideWidth * tweenValue + 'px';
+          nextBg.style.left = (move - slideWidth) * tweenValue + 'px';
+          nextFg.style.left = (move - slideWidth) * tweenValue + 'px';
+          currentBg.style.left = move * (tweenValue - 1) + 'px';
+        }
+      },
+      complete: function complete() {
+        $current.removeClass('novablocks-slideshow__slide--current');
+        $next.removeClass('novablocks-slideshow__slide--next');
       }
     });
   }
@@ -2440,10 +2844,6 @@ var TRANSITION_EASING = "easeInOutCirc";
     return direction;
   }
 })(jQuery, window);
-// EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(7);
-var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
-
 // CONCATENATED MODULE: ./src/components/viewportObserver.js
 
 

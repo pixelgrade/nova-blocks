@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { withParallaxContext } from '../../components/with-parallax';
-
 const SlideshowBackground = function( props ) {
 	const {
 		attributes: {
@@ -33,4 +31,4 @@ const SlideshowBackground = function( props ) {
 	);
 };
 
-export default withParallaxContext( SlideshowBackground );
+export default SlideshowBackground;
