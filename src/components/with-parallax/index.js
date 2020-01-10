@@ -192,7 +192,7 @@ const withParallaxControls = function( WrappedComponent ) {
 			}
 
 			const scrollTop = scrollContainer.scrollTop;
-			const speed = 1000; // px per second
+			const speed = 600; // px per second
 			const startTime = Date.now();
 
 			let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;

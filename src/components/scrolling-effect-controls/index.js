@@ -124,7 +124,7 @@ const DopplerPresetsPanel = ( props ) => {
 					setAttributes( newAttributes );
 
 					if ( 'custom' !== motionPreset && ! isScrolling ) {
-						previewScrolling();
+//						previewScrolling();
 					}
 				} }
 				options={ motionPresetOptions }
@@ -187,7 +187,7 @@ const StartFramePanel = ( props ) => {
 
 	const staticPanelTitle = __( 'Static Scrolling Settings', '__plugin_txtd' );
 	const parallaxPanelTitle = __( 'Parallax Scrolling Settings', '__plugin_txtd' );
-	const dopplerPanelTitle = __( 'Start Frame position', '__plugin_txtd' );
+	const dopplerPanelTitle = __( 'Start Frame', '__plugin_txtd' );
 
 	let panelTitle = staticPanelTitle;
 
@@ -293,7 +293,7 @@ const EndFramePanel = ( props ) => {
 	return (
 
 		<PanelBody
-			title={ __( 'End Frame position', '__plugin_txtd' ) }
+			title={ __( 'End Frame', '__plugin_txtd' ) }
 			className={ className }
 		>
 			<FocalPointPicker
