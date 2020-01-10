@@ -48,6 +48,7 @@ const SlideshowPreview = class extends Component {
 				contentPaddingCustom,
 				contentWidth,
 				contentWidthCustom,
+				minHeight,
 				// alignment
 				verticalAlignment,
 				horizontalAlignment,
@@ -99,14 +100,14 @@ const SlideshowPreview = class extends Component {
 			return true;
 		} );
 
-		styles.slider = {
-			minHeight: Math.max( mediaMinHeight, maxAspectRatio ) + 'px',
-		};
+		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
+
+		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 
 		return (
 			<Fragment>
 				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
-					<div className="novablocks-slideshow__slider" style={ styles.slider }>
+					<div className="novablocks-slideshow__slider">
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />

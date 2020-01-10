@@ -9,17 +9,29 @@
 
 .novablocks-slideshow.is-ready {
 	.novablocks-slideshow__slider,
-	.novablocks-slideshow__mask,
 	.novablocks-slideshow__foreground,
 	.novablocks-slideshow__content,
-	.novablocks-slideshow__background {
-		@include cover;
+	.novablocks-slideshow__background,
+	.novablocks-slideshow__slide,
+	.novablocks-slideshow__slide-wrap {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 	}
 }
 
-.novablocks-slideshow__background,
-.novablocks-slideshow__foreground {
-	will-change: transform;
+.novablocks-slideshow__slide-wrap {
+	overflow: hidden;
+}
+
+.novablocks-slideshow__slide--current {
+	z-index: 1100 !important;
+}
+
+.novablocks-slideshow__slide--next {
+	z-index: 1200 !important;
 }
 
 .novablocks-slideshow__media {

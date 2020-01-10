@@ -60,19 +60,6 @@ add_action( 'rest_api_init', 'novablocks_register_settings' );
 function novablocks_register_meta() {
 
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-
-		register_meta( 'post', 'novablocks_hero_minimum_height', array(
-			'type'         => 'number',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
-		register_meta( 'post', 'novablocks_hero_apply_minimum_height', array(
-			'type'         => 'string',
-			'single'       => true,
-			'show_in_rest' => true,
-		) );
-
 		register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
 			'type'         => 'boolean',
 			'single'       => true,
@@ -104,23 +91,6 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 	return $allowed_block_types;
 }
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
-
-function novablocks_get_parallax_attributes() {
-	return array(
-		'enableParallax'       => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'parallaxAmount'       => array(
-			'type'    => 'string',
-			'default' => '50',
-		),
-		'parallaxCustomAmount' => array(
-			'type'    => 'number',
-			'default' => 50,
-		),
-	);
-}
 
 function novablocks_get_content_padding_attributes() {
 	return array(
@@ -178,26 +148,51 @@ function novablocks_get_alignment_attributes() {
 	);
 }
 
-function novablocks_is_parallax_enabled( $attributes ) {
-	$enableParallax = $attributes[ 'enableParallax' ];
-	if ( ! empty( $enableParallax ) ) {
-		return $enableParallax;
-	} elseif ( $enableParallax === false ) {
-		return false;
-	}
-
-	$parallaxAttributes = novablocks_get_parallax_attributes();
-	return isset( $parallaxAttributes[ 'enableParallax' ][ 'default' ] ) ? $parallaxAttributes[ 'enableParallax' ][ 'default' ] : false;
-}
-
-function novablocks_get_parallax_amount( $attributes ) {
-	$parallaxAmount = $attributes[ 'parallaxAmount' ];
-	$parallaxAmount = ! empty( $parallaxAmount ) ? $parallaxAmount : '50';
-	$customParallaxAmount = $attributes[ 'parallaxCustomAmount' ];
-	$actualParallaxAmount = $parallaxAmount === 'custom' ? $customParallaxAmount : intval( $parallaxAmount );
-	$actualParallaxAmount = max( min( 1, floatval( $actualParallaxAmount ) / 100 ), 0 );
-
-	return esc_attr( $actualParallaxAmount );
+function novablocks_get_doppler_attributes() {
+	return array(
+		'focalPoint'    => array(
+			'type'    => 'object',
+			'default' => array(
+				'x' => 0.5,
+				'y' => 0.5
+			),
+		),
+		'finalFocalPoint'         => array(
+			'type'    => 'object',
+			'default' => array(
+				'x' => 0.5,
+				'y' => 0.5
+			),
+		),
+		'initialBackgroundScale'  => array(
+			'type'    => 'number',
+			'default' => 1
+		),
+		'finalBackgroundScale'    => array(
+			'type'    => 'number',
+			'default' => 1
+		),
+		'scrollIndicatorBlock'    => array(
+			'type'    => 'boolean',
+			'default' => false
+		),
+		'scrollingEffect' => array(
+			'type' => 'string',
+			'default' => 'parallax',
+		),
+		'motionPreset' => array(
+			'type' => 'string',
+			'default' => 'standard-dynamic',
+		),
+		'followThroughStart' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'followThroughEnd' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+	);
 }
 
 function novablocks_get_block_extra_classes( $attributes ) {
@@ -224,17 +219,13 @@ function novablocks_get_block_extra_classes( $attributes ) {
 		$classes[] = 'novablocks-u-background-' . $attributes['overlayFilterStyle'];
 	}
 
-	if ( novablocks_is_parallax_enabled( $attributes ) ) {
-		$classes[] = 'has-parallax';
-	}
-
 	return $classes;
 }
 
 function novablocks_get_hero_attributes() {
 	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
 
-	if ( ! empty( $novablocks_block_editor_settings['hero']['attributes'] ) ) {
+	if ( isset( $novablocks_block_editor_settings['hero']['attributes'] ) ) {
 		return $novablocks_block_editor_settings['hero']['attributes'];
 	}
 
@@ -244,65 +235,58 @@ function novablocks_get_hero_attributes() {
 function novablocks_get_slideshow_attributes() {
 	return array_merge(
 		array(
-			'galleryImages'         => array(
+			'galleryImages' => array(
 				'type'    => 'array',
-				'items'   => [
+				'items'   => array(
 					'type' => 'object',
-				],
-				'default' => array()
-			),
-			'focalPoint' => array(
-				'type'    => 'object',
-				'default' => array(
-					'x' => 0.5,
-					'y' => 0.5
 				),
+				'default' => array(),
 			),
-			'slideshowType'         => array(
+			'slideshowType' => array(
 				'type'    => 'string',
 				'default' => 'gallery'
 			),
-			'minHeight'             => array(
+			'minHeight'     => array(
 				'type'    => 'number',
 				'default' => 75,
 			),
 		),
+		novablocks_get_doppler_attributes(),
 		novablocks_get_alignment_attributes(),
 		novablocks_get_color_attributes(),
 		novablocks_get_content_padding_attributes(),
-		novablocks_get_content_width_attributes(),
-		novablocks_get_parallax_attributes()
+		novablocks_get_content_width_attributes()
 	);
 }
 
 function novablocks_get_google_map_attributes() {
 	return array_merge(
 		array(
-			'align' => array(
-				'type' => 'string',
+			'align'        => array(
+				'type'    => 'string',
 				'default' => 'center',
 			),
-			'markers' => array(
-				'type' => 'array',
+			'markers'      => array(
+				'type'    => 'array',
 				'default' => array(),
-				'items' => array(
+				'items'   => array(
 					'type' => 'string',
 				),
 			),
-			'pinColor' => array(
-				'type' => 'string',
+			'pinColor'     => array(
+				'type'    => 'string',
 				'default' => '#222222',
 			),
 			'showControls' => array(
-				'type' => 'boolean',
+				'type'    => 'boolean',
 				'default' => false,
 			),
-			'showIcons' => array(
-				'type' => 'boolean',
+			'showIcons'    => array(
+				'type'    => 'boolean',
 				'default' => true,
 			),
-			'showLabels' => array(
-				'type' => 'boolean',
+			'showLabels'   => array(
+				'type'    => 'boolean',
 				'default' => true,
 			),
 			'styleData' => array(
@@ -312,16 +296,16 @@ function novablocks_get_google_map_attributes() {
 					'type' => 'object'
 				),
 			),
-			'styleSlug' => array(
-				'type' => 'string',
+			'styleSlug'    => array(
+				'type'    => 'string',
 				'default' => 'original',
 			),
-			'zoom' => array(
-				'type' => 'number',
+			'zoom'         => array(
+				'type'    => 'number',
 				'default' => 17,
 			),
 		),
-		novablocks_get_parallax_attributes()
+		novablocks_get_doppler_attributes()
 	);
 }
 
@@ -407,21 +391,6 @@ function novablocks_add_hero_settings( $settings ) {
 					'type'    => 'string',
 					'default' => null,
 				),
-				'applyMinimumHeightBlock' => array(
-					'type'    => 'boolean',
-					'default' => false
-				),
-				'focalPoint'              => array(
-					'type'    => 'object',
-					'default' => array(
-						'x' => 0.5,
-						'y' => 0.5
-					),
-				),
-				'scrollIndicatorBlock'    => array(
-					'type'    => 'boolean',
-					'default' => false
-				),
 				'backgroundType'          => array(
 					'type'    => 'string',
 					'default' => 'image'
@@ -438,28 +407,23 @@ function novablocks_add_hero_settings( $settings ) {
 					),
 				),
 			),
+			novablocks_get_doppler_attributes(),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_color_attributes(),
 			novablocks_get_content_padding_attributes(),
-			novablocks_get_content_width_attributes(),
-			novablocks_get_parallax_attributes()
+			novablocks_get_content_width_attributes()
 		),
 	);
 
+	$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
+		'minHeightFallback' => array(
+			'type'    => 'number',
+			'default' => 100,
+		),
+	) );
+
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
 		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
-			'applyMinimumHeight' => array(
-				'type'    => 'string',
-				'source'  => 'meta',
-				'meta'    => 'novablocks_hero_apply_minimum_height',
-				'default' => 'first',
-			),
-			'minHeight'          => array(
-				'type'    => 'number',
-				'source'  => 'meta',
-				'meta'    => 'novablocks_hero_minimum_height',
-				'default' => 100,
-			),
 			'scrollIndicator'    => array(
 				'type'    => 'boolean',
 				'source'  => 'meta',
@@ -471,13 +435,6 @@ function novablocks_add_hero_settings( $settings ) {
 				'source' => 'meta',
 				'meta'   => 'novablocks_hero_position_indicators',
 				'default' => true,
-			),
-		) );
-	} else {
-		$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
-			'minHeightFallback' => array(
-				'type'    => 'number',
-				'default' => 100,
 			),
 		) );
 	}
@@ -676,20 +633,6 @@ function novablocks_get_block_editor_settings() {
 
 	$settings = array(
 		'usePostMetaAttributes' => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
-		'applyMinimumHeightOptions' => array(
-			array(
-				'label' => esc_html__( 'None', '__plugin_txtd' ),
-				'value' => 'none',
-			),
-			array(
-				'label' => esc_html__( 'First Hero Block Only', '__plugin_txtd' ),
-				'value' => 'first',
-			),
-			array(
-				'label' => esc_html__( 'All Hero Blocks', '__plugin_txtd' ),
-				'value' => 'all',
-			),
-		),
 		'minimumHeightOptions' => array(
 			array(
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
@@ -744,31 +687,95 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'parallaxOptions' => array(
-			array(
-				'label' => esc_html__( 'Fast as Mercure', '__plugin_txtd' ),
-				'value' => '20'
+		'motionPresetOptions' => array(
+			array (
+				'label' => 'Standard Dynamic',
+				'value' => 'standard-dynamic',
+				'preset' => array(
+					'focalPoint' => array(
+						'x' => 0.5,
+						'y' => 0
+					),
+					'finalFocalPoint' => array(
+						'x' => 0.5,
+						'y' => 1
+					),
+					'initialBackgroundScale' => 1.75,
+					'finalBackgroundScale' => 1,
+					'followThroughStart' => true,
+					'followThroughEnd' => true,
+				),
 			),
-			array(
-				'label' => esc_html__( 'Natural as Earth', '__plugin_txtd' ),
-				'value' => '50'
+			array (
+				'label' => 'Pull Focus',
+				'value' => 'pull-focus',
+				'preset' => array(
+					'focalPoint' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+					'finalFocalPoint' => array(
+						'x' => 0.5,
+						'y' => 1
+					),
+					'initialBackgroundScale' => 1,
+					'finalBackgroundScale' => 1.75,
+					'followThroughStart' => true,
+					'followThroughEnd' => true,
+				),
 			),
-			array(
-				'label' => esc_html__( 'Slow as Neptune', '__plugin_txtd' ),
-				'value' => '70'
+			array (
+				'label' => 'Static Reveal',
+				'value' => 'static-reveal',
+				'preset' => array(
+					'focalPoint' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+					'finalFocalPoint' => array(
+						'x' => 0.5,
+						'y' => 0.5
+					),
+					'initialBackgroundScale' => 1.75,
+					'finalBackgroundScale' => 1,
+					'followThroughStart' => true,
+					'followThroughEnd' => true,
+				),
 			),
-			array(
-				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
-				'value' => 'custom'
+			array (
+				'label' => 'Custom',
+				'value' => 'custom',
 			),
 		),
 		'theme_support' => novablocks_get_theme_support(),
 	);
 
 	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
+	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
-	return apply_filters( 'novablocks_block_editor_settings', $settings );
+	return $settings;
 }
+
+function novablocks_add_scrolling_effect_options( $settings ) {
+
+	$options = array(
+		array(
+			'label' => esc_html__( 'Static', '__plugin_txtd' ),
+			'value' => 'static'
+		),
+		array(
+			'label' => esc_html__( 'Parallax', '__plugin_txtd' ),
+			'value' => 'parallax'
+		),
+	);
+
+	$settings = array_merge( $settings, array(
+		'scrollingEffectOptions' => $options,
+	) );
+
+	return $settings;
+}
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_scrolling_effect_options' );
 
 function novablocks_get_theme_support() {
 	$theme_support = get_theme_support( 'novablocks' );
@@ -787,18 +794,4 @@ function novablocks_get_theme_support() {
 	}
 
 	return $theme_support;
-}
-
-function novablocks_get_feature_support( $feature, $default = false ) {
-	$theme_support = novablocks_get_theme_support();
-
-	if ( ! $theme_support ) {
-		return $default;
-	}
-
-	if ( isset( $theme_support[ $feature ] ) ) {
-		return $theme_support[ $feature ];
-	} else {
-		return $default;
-	}
 }

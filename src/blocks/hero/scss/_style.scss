@@ -3,17 +3,15 @@
 .novablocks-hero {
 	position: relative;
 	display: flex;
+	color: var(--novablocks-hero-text-color);
 }
 
-.novablocks-hero__mask,
-.novablocks-hero__parallax,
+.novablocks-hero.scrolling-effect-doppler {
+	align-items: flex-start;
+}
+
 .novablocks-hero__slider {
 	@include cover;
-}
-
-body:not(.wp-admin) .novablocks-hero__parallax {
-	opacity: 0;
-	transition: opacity 0.3s ease-out;
 }
 
 .novablocks-hero__media[class] {
@@ -42,7 +40,7 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 
 .novablocks-hero__indicator {
 	position: absolute;
-	bottom: 0;
+	top: calc( 100% - var(--novablocks-content-padding) );
 	left: 50%;
 	right: 0;
 
@@ -50,7 +48,9 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 	justify-content: center;
 	color: inherit;
 
-	transform: translate(-50%, 0);
+	transition: all .3s ease-out;
+	transition-property: opacity;
+	transform: translate(-50%, -100%);
 	cursor: pointer;
 
 	&:after {
@@ -67,6 +67,10 @@ body:not(.wp-admin) .novablocks-hero__parallax {
 
 		transform: translate(-50%, -70%) rotate(45deg);
 	}
+}
+
+.novablocks-hero__indicator--hidden {
+	opacity: 0;
 }
 
 .components-nova--popover {

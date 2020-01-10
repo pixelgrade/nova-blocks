@@ -18,7 +18,7 @@ const LayoutPanel = function( props ) {
 		<PanelBody
 			className="pixelgrade-hero-button-group-wrapper"
 			title={ __( 'Layout', '__plugin_txtd' ) }
-			initialOpen={ true }>
+			initialOpen={ false }>
 
 			<PaddingControls { ...props } />
 			<WidthControls { ...props } />

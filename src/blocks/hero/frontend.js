@@ -1,32 +1,58 @@
-import { parallaxInit } from "../../utils";
+import { parallaxInit } from "../../components/with-parallax/util";
 
 (function($, window, undefined) {
 
+	let $heroes = $( '.novablocks-hero' );
+	let windowScrollY;
+	let scrollButtonHidden = false;
 
-	$(function() {
+	const $scrollButton = $( '.novablocks-hero__indicator' );
+
+	parallaxInit( $heroes );
+	bulletsInit();
+	scrollButtonInit();
+	updateScroll();
+
+	$( window ).on( 'scroll', updateScroll );
+
+	function updateScroll() {
+		windowScrollY = window.scrollY;
+
+		if ( windowScrollY > 200 ) {
+			hideScrollButton();
+		}
+	}
+
+	function bulletsInit() {
 		const $body = $( 'body' );
 		const shouldHaveBullets = $body.is( '.novablocks-has-position-indicators' ) && $( '.novablocks-hero' ).length > 1;
-		parallaxInit( 'novablocks-hero' );
 
 		if ( shouldHaveBullets && typeof $.fn.bully !== 'undefined' ) {
 			$( '.novablocks-hero' ).bully();
 		}
+	}
 
-		scrollButtonInit();
-	})
+	function hideScrollButton() {
+
+		if ( scrollButtonHidden ) {
+			return;
+		}
+
+		$scrollButton.filter( '.novablocks-hero__indicator--middle' ).addClass( 'novablocks-hero__indicator--hidden' );
+		scrollButtonHidden = true;
+
+	}
 
 	function scrollButtonInit() {
-		const $scrollButton = $( '.novablocks-hero__indicator' );
 		const $hero = $scrollButton.closest( '.novablocks-hero' );
 
 		if ( $hero.length ) {
 			$scrollButton.on( 'click', function() {
 				const heroBox = $hero.get(0).getBoundingClientRect();
 				const heroBoxTop = heroBox.y || heroBox.top;
-				const scrollY = window.scrollY;
 
 				window.scrollTo( {
-					top: heroBoxTop + heroBox.height + scrollY,
+					top: heroBoxTop + heroBox.height + windowScrollY,
 					behavior: 'smooth'
 				} );
 			} );
