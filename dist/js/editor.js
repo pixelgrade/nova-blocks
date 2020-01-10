@@ -7285,15 +7285,12 @@ function (_Component) {
         return true;
       });
       var attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
-      styles.slider = {
-        minHeight: Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px'
-      };
+      styles.slideshow.minHeight = Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px';
       return Object(react["createElement"])(preview_Fragment, null, !!galleryImages.length && Object(react["createElement"])("div", {
         className: classes.join(' '),
         style: styles.slideshow
       }, Object(react["createElement"])("div", {
-        className: "novablocks-slideshow__slider",
-        style: styles.slider
+        className: "novablocks-slideshow__slider"
       }, Object(react["createElement"])("div", {
         className: "novablocks-slideshow__slide"
       }, previewImage && Object(react["createElement"])(preview_Fragment, null, Object(react["createElement"])(slideshow_background, this.props), Object(react["createElement"])("div", {

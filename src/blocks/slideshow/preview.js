@@ -102,14 +102,12 @@ const SlideshowPreview = class extends Component {
 
 		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
 
-		styles.slider = {
-			minHeight: Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px',
-		};
+		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 
 		return (
 			<Fragment>
 				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
-					<div className="novablocks-slideshow__slider" style={ styles.slider }>
+					<div className="novablocks-slideshow__slider">
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
