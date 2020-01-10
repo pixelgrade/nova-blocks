@@ -46,4 +46,10 @@
 		opacity: var(--novablocks-media-content-background-opacity);
 		pointer-events: none;
 	}
+
+	> * {
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		word-break: break-word;
+	}
 }
