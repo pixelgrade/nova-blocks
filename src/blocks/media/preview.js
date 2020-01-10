@@ -9,6 +9,7 @@ import classnames from 'classnames';
 const {
 	InnerBlocks,
 	MediaPlaceholder,
+	BlockIcon,
 } = wp.blockEditor;
 
 const MediaPreview = function( props ) {
@@ -41,7 +42,7 @@ const MediaPreview = function( props ) {
 		if ( 0 === imagesArray.length ) {
 			return (
 				<MediaPlaceholder
-					icon="format-gallery"
+					icon={ <BlockIcon icon='format-gallery' /> }
 					className="novablocks-media__placeholder"
 					onSelect={ updateImages }
 					accept="image/*"

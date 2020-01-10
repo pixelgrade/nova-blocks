@@ -6297,7 +6297,8 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
 
 var preview_wp$blockEditor = wp.blockEditor,
     media_preview_InnerBlocks = preview_wp$blockEditor.InnerBlocks,
-    preview_MediaPlaceholder = preview_wp$blockEditor.MediaPlaceholder;
+    preview_MediaPlaceholder = preview_wp$blockEditor.MediaPlaceholder,
+    BlockIcon = preview_wp$blockEditor.BlockIcon;
 
 var preview_MediaPreview = function MediaPreview(props) {
   var _props$attributes = props.attributes,
@@ -6318,7 +6319,9 @@ var preview_MediaPreview = function MediaPreview(props) {
   var displayImages = function displayImages(imagesArray) {
     if (0 === imagesArray.length) {
       return Object(react["createElement"])(preview_MediaPlaceholder, {
-        icon: "format-gallery",
+        icon: Object(react["createElement"])(BlockIcon, {
+          icon: "format-gallery"
+        }),
         className: "novablocks-media__placeholder",
         onSelect: updateImages,
         accept: "image/*",
