@@ -5682,8 +5682,12 @@ function (_Component) {
 ;
 var HeightPanel = with_settings(height_controls_HeightControls);
 var ScrollIndicatorPanel = with_settings(function (props) {
-  var scrollIndicator = props.attributes.scrollIndicator,
+  var settings = props.settings,
+      _props$attributes = props.attributes,
+      scrollIndicator = _props$attributes.scrollIndicator,
+      scrollIndicatorBlock = _props$attributes.scrollIndicatorBlock,
       setAttributes = props.setAttributes;
+  var scrollIndicatorValue = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicator;
   var heroBlocks = height_controls_select('core/block-editor').getBlocks().filter(function (block) {
     return block.name === 'novablocks/hero';
   });
@@ -5698,8 +5702,11 @@ var ScrollIndicatorPanel = with_settings(function (props) {
     initialOpen: false
   }, Object(react["createElement"])(height_controls_ToggleControl, {
     label: height_controls_('Enable Scroll Indicator', '__plugin_txtd'),
-    checked: scrollIndicator,
+    checked: scrollIndicatorValue,
     onChange: function onChange(nextScrollIndicator) {
+      setAttributes({
+        scrollIndicatorBlock: nextScrollIndicator
+      });
       setAttributes({
         scrollIndicator: nextScrollIndicator
       });
