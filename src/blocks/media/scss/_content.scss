@@ -32,6 +32,8 @@
 	flex-direction: column;
 	justify-content: center;
 
+	word-break: break-word;
+
 	&:after {
 		content: '';
 		position: absolute;
@@ -45,11 +47,5 @@
 		background-color: var(--novablocks-media-content-background-color);
 		opacity: var(--novablocks-media-content-background-opacity);
 		pointer-events: none;
-	}
-
-	> * {
-		overflow-wrap: break-word;
-		word-wrap: break-word;
-		word-break: break-word;
 	}
 }
