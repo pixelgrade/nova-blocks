@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 import { findParents } from '../../utils';
-import { easeInOutCubic } from '../../easing';
+import { easeInOutCubic, easeOutQuart } from '../../easing';
 import { ScrollingEffectControls, withSettings } from "../index";
 
 import { getStyles, getState } from './util';
@@ -172,6 +172,48 @@ const withParallaxControls = function( WrappedComponent ) {
 			this.previewScrolling = this.previewScrolling.bind( this );
 		}
 
+		scrollFromTo( start, end, easing = x => x, callback = () => {}, speed = 1000 ) {
+
+			const {
+				parallax: {
+					scrollContainer
+				}
+			} = this.props;
+
+			const length = end - start;
+			const duration = Math.abs( length ) * 1000 / speed;
+			const startTime = Date.now();
+
+			function updateScrollTopLoop() {
+				const currentTime = Date.now();
+				const timePassed = currentTime - startTime;
+				const progress = timePassed / duration;
+				const newScrollTop = start + length * easing( progress );
+
+				scrollContainer.scrollTop = newScrollTop;
+			}
+
+			scrollContainer.style.pointerEvents = 'none';
+			const interval = setInterval( updateScrollTopLoop, 0 );
+
+			this.setState({
+				isScrolling: true
+			});
+
+			setTimeout(() => {
+				clearInterval( interval );
+				this.setState({
+					isScrolling: false
+				});
+				scrollContainer.scrollTop = start + length;
+				scrollContainer.style.removeProperty( 'pointer-events' );
+
+				if ( typeof callback === "function" ) {
+					callback();
+				}
+			}, duration );
+		}
+
 		previewScrolling() {
 
 			const {
@@ -192,8 +234,6 @@ const withParallaxControls = function( WrappedComponent ) {
 			}
 
 			const scrollTop = scrollContainer.scrollTop;
-			const speed = 600; // px per second
-			const startTime = Date.now();
 
 			let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
 			let length = containerHeight + scrollContainerHeight;
@@ -210,32 +250,11 @@ const withParallaxControls = function( WrappedComponent ) {
 				length = length + distanceToBottom;
 			}
 
-			const duration = length * 1000 / speed;
+			let end = start + length;
 
-			function updateScrollTopLoop() {
-				const currentTime = Date.now();
-				const timePassed = currentTime - startTime;
-				const progress = timePassed / duration;
-				const newScrollTop = start + length * easeInOutCubic( progress );
-
-				scrollContainer.scrollTop = newScrollTop;
-			}
-
-			scrollContainer.style.pointerEvents = 'none';
-			const interval = setInterval( updateScrollTopLoop, 0 );
-
-			this.setState({
-				isScrolling: true
-			});
-
-			setTimeout(() => {
-				clearInterval( interval );
-				this.setState({
-					isScrolling: false
-				});
-				scrollContainer.scrollTop = start + length;
-				scrollContainer.style.removeProperty( 'pointer-events' );
-			}, duration );
+			this.scrollFromTo( scrollTop, start, easeOutQuart, () => {
+				this.scrollFromTo( start, end, easeInOutCubic, () => {}, 1000 );
+			}, 3000 );
 		}
 
 		render() {
