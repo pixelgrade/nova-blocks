@@ -32,6 +32,8 @@
 	flex-direction: column;
 	justify-content: center;
 
+	word-break: break-word;
+
 	&:after {
 		content: '';
 		position: absolute;
