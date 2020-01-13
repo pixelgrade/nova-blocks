@@ -24,11 +24,15 @@ const {
 
 const ScrollIndicatorPanel = withSettings( function( props ) {
 	const {
+		settings,
 		attributes: {
 			scrollIndicator,
+			scrollIndicatorBlock,
 		},
 		setAttributes,
 	} = props;
+
+	const scrollIndicatorValue = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicator;
 
 	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 		return block.name === 'novablocks/hero';
@@ -40,9 +44,10 @@ const ScrollIndicatorPanel = withSettings( function( props ) {
 		<PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } style={ { display: index === 0 ? 'block' : 'none' } } initialOpen={ false }>
 			<ToggleControl
 				label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
-				checked={ scrollIndicator }
+				checked={ scrollIndicatorValue }
 				onChange={ ( nextScrollIndicator ) => {
-					setAttributes( { scrollIndicator: nextScrollIndicator } );
+					setAttributes( {scrollIndicatorBlock: nextScrollIndicator} );
+					setAttributes( {scrollIndicator: nextScrollIndicator} );
 				} }
 			/>
 		</PanelBody>
