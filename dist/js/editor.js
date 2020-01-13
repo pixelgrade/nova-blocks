@@ -3597,9 +3597,9 @@ function PositionIndicatorsPanel(props) {
   }, Object(react["createElement"])(position_indicators_panel_ToggleControl, {
     label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
     checked: positionIndicators,
-    onChange: function onChange() {
+    onChange: function onChange(positionIndicators) {
       setAttributes({
-        positionIndicators: !positionIndicators
+        positionIndicators: positionIndicators
       });
     }
   }));
@@ -5276,7 +5276,7 @@ var alignment_controls_AlignmentControls = function AlignmentControls(props) {
 };
 
 
-// CONCATENATED MODULE: ./src/components/height-controls/index.js
+// CONCATENATED MODULE: ./src/components/scroll-indicator-panel/index.js
 
 
 /**
@@ -5287,41 +5287,33 @@ var alignment_controls_AlignmentControls = function AlignmentControls(props) {
  * WordPress dependencies
  */
 
-var height_controls_ = wp.i18n.__;
-var height_controls_wp$components = wp.components,
-    height_controls_PanelBody = height_controls_wp$components.PanelBody,
-    height_controls_RadioControl = height_controls_wp$components.RadioControl,
-    height_controls_ToggleControl = height_controls_wp$components.ToggleControl;
-var height_controls_select = wp.data.select;
-var height_controls_Component = wp.element.Component;
+var scroll_indicator_panel_ = wp.i18n.__;
+var scroll_indicator_panel_wp$components = wp.components,
+    scroll_indicator_panel_PanelBody = scroll_indicator_panel_wp$components.PanelBody,
+    scroll_indicator_panel_RadioControl = scroll_indicator_panel_wp$components.RadioControl,
+    scroll_indicator_panel_ToggleControl = scroll_indicator_panel_wp$components.ToggleControl;
+var scroll_indicator_panel_select = wp.data.select;
+var scroll_indicator_panel_Component = wp.element.Component;
 var ScrollIndicatorPanel = with_settings(function (props) {
   var settings = props.settings,
-      _props$attributes = props.attributes,
-      scrollIndicator = _props$attributes.scrollIndicator,
-      scrollIndicatorBlock = _props$attributes.scrollIndicatorBlock,
-      setAttributes = props.setAttributes;
-  var scrollIndicatorValue = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicator;
-  var heroBlocks = height_controls_select('core/block-editor').getBlocks().filter(function (block) {
+      scrollIndicator = props.attributes.scrollIndicator,
+      setAttributes = props.setAttributes,
+      updateAttributes = props.updateAttributes;
+  var heroBlocks = scroll_indicator_panel_select('core/block-editor').getBlocks().filter(function (block) {
     return block.name === 'novablocks/hero';
   });
   var index = heroBlocks.findIndex(function (block) {
-    return block.clientId === height_controls_select('core/block-editor').getSelectedBlockClientId();
+    return block.clientId === scroll_indicator_panel_select('core/block-editor').getSelectedBlockClientId();
   });
-  return Object(react["createElement"])(height_controls_PanelBody, {
-    title: height_controls_('Scroll Indicator', '__plugin_txtd'),
-    style: {
-      display: index === 0 ? 'block' : 'none'
-    },
+  return index === 0 && Object(react["createElement"])(scroll_indicator_panel_PanelBody, {
+    title: scroll_indicator_panel_('Scroll Indicator', '__plugin_txtd'),
     initialOpen: false
-  }, Object(react["createElement"])(height_controls_ToggleControl, {
-    label: height_controls_('Enable Scroll Indicator', '__plugin_txtd'),
-    checked: scrollIndicatorValue,
-    onChange: function onChange(nextScrollIndicator) {
-      setAttributes({
-        scrollIndicatorBlock: nextScrollIndicator
-      });
-      setAttributes({
-        scrollIndicator: nextScrollIndicator
+  }, Object(react["createElement"])(scroll_indicator_panel_ToggleControl, {
+    label: scroll_indicator_panel_('Enable Scroll Indicator', '__plugin_txtd'),
+    checked: scrollIndicator,
+    onChange: function onChange(scrollIndicator) {
+      updateAttributes({
+        scrollIndicator: scrollIndicator
       });
     }
   }));
@@ -6694,19 +6686,16 @@ var preview_HeroPreview = function HeroPreview(props) {
   var heroBlocks = preview_select('core/block-editor').getBlocks().filter(function (block) {
     return block.name === 'novablocks/hero';
   });
-  var index = heroBlocks.findIndex(function (block) {
-    return block.clientId === clientId;
-  });
-  var scrollIndicatorFallback = index === 0 && minHeightFallback === 100;
-  var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
-  styles.hero.minHeight = minHeightFallback + 'vh';
-  styles.foreground.minHeight = minHeightFallback + 'vh';
+  var heroHeight = minHeightFallback;
+  var contentHeight = heroHeight;
 
   if (scrollingEffect === 'doppler') {
+    heroHeight = minHeightFallback * 2;
     styles.hero.alignItems = 'flex-start';
-    styles.hero.minHeight = minHeightFallback * 2 + 'vh';
-    styles.foreground.minHeight = '100vh';
   }
+
+  styles.hero.minHeight = heroHeight + 'vh';
+  styles.foreground.minHeight = contentHeight + 'vh';
 
   if (contentPadding === 'custom') {
     styles.foreground.paddingTop = "".concat(contentPaddingCustom, "%");
@@ -6717,6 +6706,11 @@ var preview_HeroPreview = function HeroPreview(props) {
     styles.content.maxWidth = "".concat(contentWidthCustom, "%");
   }
 
+  var index = heroBlocks.findIndex(function (block) {
+    return block.clientId === clientId;
+  });
+  var scrollIndicatorFallback = index === 0 && heroHeight >= 100;
+  var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
   return Object(react["createElement"])("div", {
     className: classes.join(' '),
     style: styles.hero
@@ -6852,8 +6846,10 @@ function (_Component) {
       var scrollIndicator = attributes.scrollIndicator;
       var defaults = {};
 
-      if (!scrollIndicator) {
-        defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+      if (settings.usePostMetaAttributes) {
+        if (!scrollIndicator) {
+          defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+        }
       }
 
       return defaults;
@@ -6871,6 +6867,7 @@ function (_Component) {
       });
       var newScrollIndicatorBlock = index === 0 && scrollIndicator;
       return {
+        scrollIndicator: scrollIndicator,
         scrollIndicatorBlock: newScrollIndicatorBlock
       };
     }

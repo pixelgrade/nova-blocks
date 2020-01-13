@@ -63,18 +63,16 @@ const HeroPreview = function( props ) {
 		return block.name === 'novablocks/hero';
 	} );
 
-	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
-	const scrollIndicatorFallback = index === 0 && minHeightFallback === 100;
-	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
-
-	styles.hero.minHeight = minHeightFallback + 'vh';
-	styles.foreground.minHeight = minHeightFallback + 'vh';
+	let heroHeight = minHeightFallback;
+	let contentHeight = heroHeight;
 
 	if ( scrollingEffect === 'doppler' ) {
+		heroHeight = minHeightFallback * 2;
 		styles.hero.alignItems = 'flex-start';
-		styles.hero.minHeight = minHeightFallback * 2 + 'vh';
-		styles.foreground.minHeight = '100vh';
 	}
+
+	styles.hero.minHeight = heroHeight + 'vh';
+	styles.foreground.minHeight = contentHeight + 'vh';
 
 	if ( contentPadding === 'custom' ) {
 		styles.foreground.paddingTop = `${ contentPaddingCustom }%`;
@@ -84,6 +82,10 @@ const HeroPreview = function( props ) {
 	if ( contentWidth === 'custom' ) {
 		styles.content.maxWidth = `${ contentWidthCustom }%`;
 	}
+
+	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
+	const scrollIndicatorFallback = index === 0 && heroHeight >= 100;
+	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
 	return (
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>

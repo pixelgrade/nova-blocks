@@ -27,6 +27,5 @@ export {
 } from './alignment-controls';
 
 export {
-	HeightPanel,
 	ScrollIndicatorPanel,
-} from './height-controls';
+} from './scroll-indicator-panel';

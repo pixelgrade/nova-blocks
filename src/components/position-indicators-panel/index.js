@@ -15,7 +15,7 @@ function PositionIndicatorsPanel( props ) {
 			<ToggleControl
 				label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
 				checked={ positionIndicators }
-				onChange={ () => { setAttributes( { positionIndicators: ! positionIndicators } ) } }
+				onChange={ positionIndicators => { setAttributes( { positionIndicators } ) } }
 			/>
 		</PanelBody>
    )

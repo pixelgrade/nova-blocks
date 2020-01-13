@@ -1,5 +1,6 @@
 .novablocks-slideshow {
 	position: relative;
+	z-index: 20;
 }
 
 .novablocks-slideshow__slide {
@@ -99,6 +100,7 @@
 }
 
 .novablocks-slideshow {
+
 	.slick-list {
 		position: absolute;
 		top: 0;

@@ -63,6 +63,10 @@
 	.components-panel__body + .components-panel__body {
 		margin-top: 0;
 	}
+
+	.novablocks-scrolling-effect.components-radio-control:last-child {
+		margin-bottom: 16px;
+	}
 }
 
 @mixin pro-feature {

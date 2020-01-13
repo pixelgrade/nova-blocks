@@ -83,8 +83,10 @@ class HeroEdit extends Component {
 		const { scrollIndicator } = attributes;
 		const defaults = {};
 
-		if ( ! scrollIndicator ) {
-			defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+		if ( settings.usePostMetaAttributes ) {
+			if ( ! scrollIndicator ) {
+				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+			}
 		}
 
 		return defaults;
@@ -102,6 +104,7 @@ class HeroEdit extends Component {
 		const newScrollIndicatorBlock = index === 0 && scrollIndicator;
 
 		return {
+			scrollIndicator: scrollIndicator,
 			scrollIndicatorBlock: newScrollIndicatorBlock,
 		};
 	}
@@ -110,7 +113,6 @@ class HeroEdit extends Component {
 		const { attributes, setAttributes } = this.props;
 		const defaults = this.getDefaults( attributes );
 		const computedAttributes = this.getNewAttributes( { ...attributes, ...defaults, ...newAttributes } );
-
 		setAttributes( computedAttributes );
 	}
 
