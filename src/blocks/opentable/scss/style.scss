@@ -173,6 +173,8 @@
 		.ot-button {
 			background-color: var(--novablocks-color-3);
 			color: var(--novablocks-light-1);
+			border-radius: 0;
+			border-color: var(--novablocks-color-3);
 
 			&:hover {
 				background-color: var(--novablocks-color-1);

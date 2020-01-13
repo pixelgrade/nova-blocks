@@ -9,24 +9,35 @@ const {
 } = wp.i18n;
 
 const { Component } = wp.element;
-const { Toolbar } = wp.components;
+const { ToolbarGroup } = wp.components;
+
+/**
+ * Internal dependencies
+ */
+
+import HeadingLevelIcon from './heading-level-icon';
 
 class HeadingToolbar extends Component {
 	createLevelControl( targetLevel, selectedLevel, onChange ) {
+		const isActive = targetLevel === selectedLevel;
 		return {
-			icon: 'heading',
+			icon: <HeadingLevelIcon level={ targetLevel } isPressed={ isActive } />,
 			// translators: %s: heading level e.g: "1", "2", "3"
-			title: sprintf( __( 'Heading %d', '__plugin_txtd' ), targetLevel ),
-			isActive: targetLevel === selectedLevel,
+			title: sprintf( __( 'Heading %d' ), targetLevel ),
+			isActive,
 			onClick: () => onChange( targetLevel ),
-			subscript: String( targetLevel ),
 		};
 	}
 
 	render() {
 		const { minLevel, maxLevel, selectedLevel, onChange } = this.props;
+
 		return (
-			<Toolbar controls={ range( minLevel, maxLevel ).map( ( index ) => this.createLevelControl( index, selectedLevel, onChange ) ) } />
+			<ToolbarGroup
+				icon={ <HeadingLevelIcon level={ selectedLevel } /> }
+				controls={ range( minLevel, maxLevel ).map(
+					( index ) => this.createLevelControl( index, selectedLevel, onChange )
+				) } />
 		);
 	}
 }
