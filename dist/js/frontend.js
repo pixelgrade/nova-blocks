@@ -1117,407 +1117,6 @@ var getMarkersCenter = function getMarkersCenter() {
 var external_jQuery_ = __webpack_require__(2);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
-// CONCATENATED MODULE: ./src/components/with-parallax/util.js
-
-var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
-  if (!focalPoint1 && !focalPoint2) {
-    return {
-      x: 0.5,
-      y: 0.5
-    };
-  }
-
-  if (!focalPoint1) {
-    return focalPoint2;
-  }
-
-  if (!focalPoint2) {
-    return focalPoint1;
-  }
-
-  return {
-    x: parseFloat(focalPoint1.x) + (parseFloat(focalPoint2.x) - parseFloat(focalPoint1.x)) * progress,
-    y: parseFloat(focalPoint1.y) + (parseFloat(focalPoint2.y) - parseFloat(focalPoint1.y)) * progress
-  };
-};
-var getStyles = function getStyles(config) {
-  var props = getProps(config);
-  var styles = getStylesFromProps(props);
-  return styles;
-};
-var getStylesFromProps = function getStylesFromProps(props) {
-  var parallaxAmount = props.parallaxAmount,
-      width = props.width,
-      height = props.height,
-      moveX = props.moveX,
-      moveY = props.moveY,
-      offsetX = props.offsetX,
-      offsetY = props.offsetY,
-      scale = props.scale,
-      focalPoint = props.focalPoint,
-      containerBox = props.containerBox;
-  return {
-    width: width || '',
-    height: height || '',
-    minHeight: 0,
-    maxWidth: 'none',
-    transform: "translate(".concat(moveX, ",").concat(moveY * parallaxAmount, "px) translateX(").concat(offsetX, ") translateY(").concat(offsetY, "px) scale(").concat(scale, ")"),
-    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
-    transformOrigin: focalPoint.x * 100 + '% 50%'
-  };
-};
-
-function getIntermediateValue(initialValue, finalValue, progress) {
-  return initialValue + (finalValue - initialValue) * progress;
-}
-
-function getScales(config) {
-  var scrollingEffect = config.scrollingEffect,
-      initialBackgroundScale = config.initialBackgroundScale,
-      finalBackgroundScale = config.finalBackgroundScale,
-      progress = config.progress;
-  initialBackgroundScale = initialBackgroundScale || 1;
-
-  if (scrollingEffect === 'parallax') {
-    finalBackgroundScale = initialBackgroundScale;
-  }
-
-  var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
-  initialBackgroundScale = initialBackgroundScale / maxScale;
-  finalBackgroundScale = finalBackgroundScale / maxScale;
-  return {
-    maxScale: maxScale,
-    newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
-  };
-}
-
-function getFocalPoint(config) {
-  var scrollingEffect = config.scrollingEffect,
-      focalPoint = config.focalPoint,
-      finalFocalPoint = config.finalFocalPoint,
-      progress = config.progress;
-
-  if (!focalPoint) {
-    focalPoint = {
-      x: 0.5,
-      y: 0.5
-    };
-  }
-
-  if (scrollingEffect !== 'doppler') {
-    return focalPoint;
-  }
-
-  return getIntermediateFocalPoint(focalPoint, finalFocalPoint, progress);
-}
-
-function getNewImageHeight(config, parallaxAmount) {
-  var scrollContainerHeight = config.scrollContainerHeight,
-      containerHeight = config.containerHeight;
-  return containerHeight + (scrollContainerHeight - containerHeight) * parallaxAmount;
-}
-
-var getProps = function getProps(config, fixed) {
-  var distance = config.distance,
-      progress = config.progress,
-      smoothStart = config.smoothStart,
-      smoothEnd = config.smoothEnd,
-      scrollingEffect = config.scrollingEffect,
-      focalPoint = config.focalPoint,
-      finalFocalPoint = config.finalFocalPoint,
-      initialBackgroundScale = config.initialBackgroundScale,
-      finalBackgroundScale = config.finalBackgroundScale,
-      container = config.container,
-      containerBox = config.containerBox,
-      containerWidth = config.containerWidth,
-      containerHeight = config.containerHeight,
-      scrollContainer = config.scrollContainer,
-      scrollContainerBox = config.scrollContainerBox,
-      scrollContainerHeight = config.scrollContainerHeight;
-  var newFocalPoint = getFocalPoint(config);
-
-  if (scrollingEffect === 'static') {
-    return {
-      width: containerWidth,
-      height: containerHeight,
-      scale: initialBackgroundScale || 1,
-      moveX: 0,
-      moveY: 0,
-      offsetX: 0,
-      offsetY: 0,
-      parallaxAmount: 0,
-      focalPoint: newFocalPoint
-    };
-  }
-
-  var parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
-
-  var _getScales = getScales(config),
-      maxScale = _getScales.maxScale,
-      newScale = _getScales.newScale;
-
-  var newImageHeight = getNewImageHeight(config, parallaxAmount); // keep in sync with scroll
-
-  var moveY = scrollContainerBox.top - containerBox.top;
-
-  if (!smoothStart) {
-    if (!!fixed && containerBox.top < 0) {
-      moveY = scrollContainerBox.top;
-    }
-
-    if (!fixed && 0 > scrollContainerBox.top - containerBox.top) {
-      moveY = 0;
-    }
-  }
-
-  if (!smoothEnd) {
-    if (scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight) {
-      if (!!fixed) {
-        moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;
-      } else {
-        moveY = containerHeight - scrollContainerHeight;
-      }
-    }
-  } // align top
-
-
-  var offsetY = newImageHeight * maxScale * (newScale - 1) * 0.5; // position according to focalPoint
-
-  offsetY += newImageHeight * (1 - maxScale * newScale) * newFocalPoint.y;
-  return {
-    distance: distance,
-    parallaxAmount: parallaxAmount,
-    progress: progress,
-    width: containerWidth * maxScale,
-    height: newImageHeight * maxScale,
-    moveX: "".concat(fixed ? containerBox.left - scrollContainerBox.left : 0, "px"),
-    moveY: moveY,
-    offsetX: (1 / maxScale - 1) * newFocalPoint.x * 100 + '%',
-    offsetY: offsetY,
-    scale: newScale,
-    focalPoint: newFocalPoint
-  };
-};
-var getState = function getState(container, config) {
-  if (!container || !config) {
-    return {};
-  }
-
-  var followThroughStart = config.followThroughStart,
-      followThroughEnd = config.followThroughEnd,
-      scrollingEffect = config.scrollingEffect,
-      scrollContainerHeight = config.scrollContainerHeight,
-      scrollContainerBox = config.scrollContainerBox;
-  var containerWidth = container.offsetWidth;
-  var containerHeight = container.offsetHeight;
-  var containerBox = container.getBoundingClientRect();
-  var smoothStart = followThroughStart || scrollingEffect === 'parallax';
-  var smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
-  var current = scrollContainerBox.top - containerBox.top;
-  var distance = containerHeight - scrollContainerHeight;
-
-  if (smoothStart) {
-    current += scrollContainerHeight;
-    distance += scrollContainerHeight;
-  }
-
-  if (smoothEnd) {
-    distance += scrollContainerHeight;
-  }
-
-  var progress = distance <= 0 ? 0.5 : current / distance;
-
-  if (!smoothStart) {
-    progress = Math.max(0, progress);
-  }
-
-  if (!smoothEnd) {
-    progress = Math.min(1, progress);
-  }
-
-  return {
-    progress: progress,
-    distance: distance,
-    smoothStart: smoothStart,
-    smoothEnd: smoothEnd,
-    containerBox: containerBox,
-    containerHeight: containerHeight,
-    containerWidth: containerWidth,
-    scrollContainerHeight: scrollContainerHeight,
-    scrollContainerBox: scrollContainerBox
-  };
-};
-var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
-  var frameRendered = false;
-  $blocks.each(function (i, container) {
-    var $container = external_jQuery_default()(container);
-    var followThroughStart = !!$container.data('smooth-start');
-    var followThroughEnd = !!$container.data('smooth-end');
-    var scrollingEffect = $container.data('scrolling-effect');
-    var focalPoint = $container.data('focal-point');
-    var finalFocalPoint = $container.data('final-focal-point');
-    var initialBackgroundScale = $container.data('initial-background-scale');
-    var finalBackgroundScale = $container.data('final-background-scale');
-    var scrollContainerHeight = window.innerHeight;
-    var scrollContainerBox = {
-      top: 0,
-      left: 0
-    };
-    var config = {
-      followThroughStart: followThroughStart,
-      followThroughEnd: followThroughEnd,
-      scrollingEffect: scrollingEffect,
-      scrollContainerHeight: scrollContainerHeight,
-      scrollContainerBox: scrollContainerBox,
-      focalPoint: focalPoint,
-      finalFocalPoint: finalFocalPoint,
-      initialBackgroundScale: initialBackgroundScale,
-      finalBackgroundScale: finalBackgroundScale
-    };
-    $container.data({
-      state: getState(container, config),
-      config: config
-    });
-    var $mask = $container.find('.novablocks-mask');
-    var $parallax = $container.find('.novablocks-parallax');
-    $container.data('mask', $mask);
-    $container.data('parallax', $parallax);
-    external_jQuery_default()(window).on('scroll', function () {
-      var state = getState(container, config);
-      $container.data('state', state);
-      frameRendered = false;
-    });
-  });
-
-  function parallaxUpdateLoop() {
-    if (!frameRendered) {
-      $blocks.each(function (i, obj) {
-        var $container = external_jQuery_default()(obj);
-        var $background = $container.data('parallax');
-        var $foreground = $background.find('.novablocks-foreground');
-        var state = $container.data('state');
-        var config = $container.data('config');
-        config = Object.assign({}, state, config);
-        var props = getProps(config, true);
-        $foreground.css('transform', "translate3d(0,".concat(-props.moveY * props.parallaxAmount, "px,0)")); // because of fixed positioning
-
-        props.moveY = -1 * props.moveY;
-
-        if (0 < props.progress && props.progress < 1) {
-          props.parallaxAmount = 1 - props.parallaxAmount;
-        }
-
-        var styles = getStylesFromProps(props);
-        var _config = config,
-            containerWidth = _config.containerWidth,
-            containerHeight = _config.containerHeight;
-        $container.data('parallax').css(styles);
-        $container.data('mask').css({
-          clip: "rect(0 ".concat(containerWidth, "px ").concat(containerHeight, "px 0)")
-        });
-      });
-      frameRendered = true;
-    }
-
-    requestAnimationFrame(parallaxUpdateLoop);
-  }
-
-  requestAnimationFrame(parallaxUpdateLoop);
-};
-// CONCATENATED MODULE: ./src/blocks/google-map/frontend.js
-
-
-
-
-(function ($, window, undefined) {
-  var $blocks = $('.novablocks-map');
-  util_parallaxInit($blocks);
-  $('.js-novablocks-google-map').each(function (i, obj) {
-    var $obj = $(obj),
-        markers = $obj.data('markers'),
-        styles = $obj.data('styles'),
-        zoom = $obj.data('zoom'),
-        hideControls = !$obj.data('controls'),
-        pinColor = $obj.data('pin-color'),
-        mapOptions = {
-      mapTypeId: 'roadmap',
-      center: getCenterFromMarkers(markers),
-      zoom: zoom,
-      styles: styles,
-      disableDefaultUI: hideControls,
-      clickableIcons: false,
-      keyboardShortcuts: false
-    },
-        map = new google.maps.Map(obj, mapOptions);
-    var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
-    markers.forEach(function (markerString) {
-      var marker = JSON.parse(markerString);
-      new google.maps.Marker({
-        map: map,
-        icon: {
-          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
-        },
-        title: marker.title,
-        position: marker.geometry.location
-      });
-    });
-  });
-})(jQuery, window);
-// CONCATENATED MODULE: ./src/blocks/hero/frontend.js
-
-
-(function ($, window, undefined) {
-  var $heroes = $('.novablocks-hero');
-  var windowScrollY;
-  var scrollButtonHidden = false;
-  var $scrollButton = $('.novablocks-hero__indicator');
-  util_parallaxInit($heroes);
-  bulletsInit();
-  scrollButtonInit();
-  updateScroll();
-  $(window).on('scroll', updateScroll);
-
-  function updateScroll() {
-    windowScrollY = window.scrollY;
-
-    if (windowScrollY > 200) {
-      hideScrollButton();
-    }
-  }
-
-  function bulletsInit() {
-    var $body = $('body');
-    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;
-
-    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {
-      $('.novablocks-hero').bully();
-    }
-  }
-
-  function hideScrollButton() {
-    if (scrollButtonHidden) {
-      return;
-    }
-
-    $scrollButton.filter('.novablocks-hero__indicator--middle').addClass('novablocks-hero__indicator--hidden');
-    scrollButtonHidden = true;
-  }
-
-  function scrollButtonInit() {
-    var $hero = $scrollButton.closest('.novablocks-hero');
-
-    if ($hero.length) {
-      $scrollButton.on('click', function () {
-        var heroBox = $hero.get(0).getBoundingClientRect();
-        var heroBoxTop = heroBox.y || heroBox.top;
-        window.scrollTo({
-          top: heroBoxTop + heroBox.height + windowScrollY,
-          behavior: 'smooth'
-        });
-      });
-    }
-  }
-})(jQuery, window);
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -2682,6 +2281,412 @@ var getSnapClassname = function getSnapClassname(focalPoint) {
 
   return classNames.join(' ');
 };
+// CONCATENATED MODULE: ./src/components/with-parallax/util.js
+
+
+var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
+  if (!focalPoint1 && !focalPoint2) {
+    return {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (!focalPoint1) {
+    return focalPoint2;
+  }
+
+  if (!focalPoint2) {
+    return focalPoint1;
+  }
+
+  return {
+    x: parseFloat(focalPoint1.x) + (parseFloat(focalPoint2.x) - parseFloat(focalPoint1.x)) * progress,
+    y: parseFloat(focalPoint1.y) + (parseFloat(focalPoint2.y) - parseFloat(focalPoint1.y)) * progress
+  };
+};
+var getStyles = function getStyles(config) {
+  var props = getProps(config);
+  var styles = getStylesFromProps(props);
+  return styles;
+};
+var getStylesFromProps = function getStylesFromProps(props) {
+  var parallaxAmount = props.parallaxAmount,
+      width = props.width,
+      height = props.height,
+      moveX = props.moveX,
+      moveY = props.moveY,
+      offsetX = props.offsetX,
+      offsetY = props.offsetY,
+      scale = props.scale,
+      focalPoint = props.focalPoint,
+      containerBox = props.containerBox;
+  return {
+    width: width || '',
+    height: height || '',
+    minHeight: 0,
+    maxWidth: 'none',
+    transform: "translate(".concat(moveX, ",").concat(moveY * parallaxAmount, "px) translateX(").concat(offsetX, ") translateY(").concat(offsetY, "px) scale(").concat(scale, ")"),
+    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+    transformOrigin: focalPoint.x * 100 + '% 50%'
+  };
+};
+
+function getIntermediateValue(initialValue, finalValue, progress) {
+  return initialValue + (finalValue - initialValue) * progress;
+}
+
+function getScales(config) {
+  var scrollingEffect = config.scrollingEffect,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      progress = config.progress;
+  initialBackgroundScale = initialBackgroundScale || 1;
+
+  if (scrollingEffect === 'parallax') {
+    finalBackgroundScale = initialBackgroundScale;
+  }
+
+  var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
+  initialBackgroundScale = initialBackgroundScale / maxScale;
+  finalBackgroundScale = finalBackgroundScale / maxScale;
+  return {
+    maxScale: maxScale,
+    newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
+  };
+}
+
+function getFocalPoint(config) {
+  var scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      progress = config.progress;
+
+  if (!focalPoint) {
+    focalPoint = {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (scrollingEffect !== 'doppler') {
+    return focalPoint;
+  }
+
+  return getIntermediateFocalPoint(focalPoint, finalFocalPoint, progress);
+}
+
+function getNewImageHeight(config, parallaxAmount) {
+  var scrollContainerHeight = config.scrollContainerHeight,
+      containerHeight = config.containerHeight;
+  return containerHeight + (scrollContainerHeight - containerHeight) * parallaxAmount;
+}
+
+var getProps = function getProps(config, fixed) {
+  var distance = config.distance,
+      progress = config.progress,
+      smoothStart = config.smoothStart,
+      smoothEnd = config.smoothEnd,
+      scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      container = config.container,
+      containerBox = config.containerBox,
+      containerWidth = config.containerWidth,
+      containerHeight = config.containerHeight,
+      scrollContainer = config.scrollContainer,
+      scrollContainerBox = config.scrollContainerBox,
+      scrollContainerHeight = config.scrollContainerHeight;
+  var newFocalPoint = getFocalPoint(config);
+
+  if (scrollingEffect === 'static') {
+    return {
+      width: containerWidth,
+      height: containerHeight,
+      scale: initialBackgroundScale || 1,
+      moveX: 0,
+      moveY: 0,
+      offsetX: 0,
+      offsetY: 0,
+      parallaxAmount: 0,
+      focalPoint: newFocalPoint
+    };
+  }
+
+  var parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+
+  var _getScales = getScales(config),
+      maxScale = _getScales.maxScale,
+      newScale = _getScales.newScale;
+
+  var newImageHeight = getNewImageHeight(config, parallaxAmount); // keep in sync with scroll
+
+  var moveY = scrollContainerBox.top - containerBox.top;
+
+  if (!smoothStart) {
+    if (!!fixed && containerBox.top < 0) {
+      moveY = scrollContainerBox.top;
+    }
+
+    if (!fixed && 0 > scrollContainerBox.top - containerBox.top) {
+      moveY = 0;
+    }
+  }
+
+  if (!smoothEnd) {
+    if (scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight) {
+      if (!!fixed) {
+        moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;
+      } else {
+        moveY = containerHeight - scrollContainerHeight;
+      }
+    }
+  } // align top
+
+
+  var offsetY = newImageHeight * maxScale * (newScale - 1) * 0.5; // position according to focalPoint
+
+  offsetY += newImageHeight * (1 - maxScale * newScale) * newFocalPoint.y;
+  return {
+    distance: distance,
+    parallaxAmount: parallaxAmount,
+    progress: progress,
+    width: containerWidth * maxScale,
+    height: newImageHeight * maxScale,
+    moveX: "".concat(fixed ? containerBox.left - scrollContainerBox.left : 0, "px"),
+    moveY: moveY,
+    offsetX: (1 / maxScale - 1) * newFocalPoint.x * 100 + '%',
+    offsetY: offsetY,
+    scale: newScale,
+    focalPoint: newFocalPoint
+  };
+};
+var getState = function getState(container, config) {
+  if (!container || !config) {
+    return {};
+  }
+
+  var followThroughStart = config.followThroughStart,
+      followThroughEnd = config.followThroughEnd,
+      scrollingEffect = config.scrollingEffect,
+      scrollContainerHeight = config.scrollContainerHeight,
+      scrollContainerBox = config.scrollContainerBox;
+  var containerWidth = container.offsetWidth;
+  var containerHeight = container.offsetHeight;
+  var containerBox = container.getBoundingClientRect();
+  var smoothStart = followThroughStart || scrollingEffect === 'parallax';
+  var smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
+  var current = scrollContainerBox.top - containerBox.top;
+  var distance = containerHeight - scrollContainerHeight;
+
+  if (smoothStart) {
+    current += scrollContainerHeight;
+    distance += scrollContainerHeight;
+  }
+
+  if (smoothEnd) {
+    distance += scrollContainerHeight;
+  }
+
+  var progress = distance <= 0 ? 0.5 : current / distance;
+
+  if (!smoothStart) {
+    progress = Math.max(0, progress);
+  }
+
+  if (!smoothEnd) {
+    progress = Math.min(1, progress);
+  }
+
+  return {
+    progress: progress,
+    distance: distance,
+    smoothStart: smoothStart,
+    smoothEnd: smoothEnd,
+    containerBox: containerBox,
+    containerHeight: containerHeight,
+    containerWidth: containerWidth,
+    scrollContainerHeight: scrollContainerHeight,
+    scrollContainerBox: scrollContainerBox
+  };
+};
+var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
+  var frameRendered = false;
+  $blocks.each(function (i, container) {
+    var $container = external_jQuery_default()(container);
+    var followThroughStart = !!$container.data('smooth-start');
+    var followThroughEnd = !!$container.data('smooth-end');
+    var scrollingEffect = $container.data('scrolling-effect');
+    var focalPoint = $container.data('focal-point');
+    var finalFocalPoint = $container.data('final-focal-point');
+    var initialBackgroundScale = $container.data('initial-background-scale');
+    var finalBackgroundScale = $container.data('final-background-scale');
+    var scrollContainerHeight = window.innerHeight;
+    var scrollContainerBox = {
+      top: 0,
+      left: 0
+    };
+    var config = {
+      followThroughStart: followThroughStart,
+      followThroughEnd: followThroughEnd,
+      scrollingEffect: scrollingEffect,
+      scrollContainerHeight: scrollContainerHeight,
+      scrollContainerBox: scrollContainerBox,
+      focalPoint: focalPoint,
+      finalFocalPoint: finalFocalPoint,
+      initialBackgroundScale: initialBackgroundScale,
+      finalBackgroundScale: finalBackgroundScale
+    };
+    $container.data({
+      state: getState(container, config),
+      config: config
+    });
+    var $mask = $container.find('.novablocks-mask');
+    var $parallax = $container.find('.novablocks-parallax');
+    $container.data('mask', $mask);
+    $container.data('parallax', $parallax);
+
+    function parallaxUpdateState() {
+      var state = getState(container, config);
+      $container.data('state', state);
+      frameRendered = false;
+    }
+
+    external_jQuery_default()(window).on('scroll', parallaxUpdateState);
+    external_jQuery_default()(window).on('resize', debounce(parallaxUpdateState, 100));
+  });
+
+  function parallaxUpdateLoop() {
+    if (!frameRendered) {
+      $blocks.each(function (i, obj) {
+        var $container = external_jQuery_default()(obj);
+        var $background = $container.data('parallax');
+        var $foreground = $background.find('.novablocks-foreground');
+        var state = $container.data('state');
+        var config = $container.data('config');
+        config = Object.assign({}, state, config);
+        var props = getProps(config, true);
+        $foreground.css('transform', "translate3d(0,".concat(-props.moveY * props.parallaxAmount, "px,0)")); // because of fixed positioning
+
+        props.moveY = -1 * props.moveY;
+
+        if (0 < props.progress && props.progress < 1) {
+          props.parallaxAmount = 1 - props.parallaxAmount;
+        }
+
+        var styles = getStylesFromProps(props);
+        var _config = config,
+            containerWidth = _config.containerWidth,
+            containerHeight = _config.containerHeight;
+        $container.data('parallax').css(styles);
+        $container.data('mask').css({
+          clip: "rect(0 ".concat(containerWidth, "px ").concat(containerHeight, "px 0)")
+        });
+      });
+      frameRendered = true;
+    }
+
+    requestAnimationFrame(parallaxUpdateLoop);
+  }
+
+  requestAnimationFrame(parallaxUpdateLoop);
+};
+// CONCATENATED MODULE: ./src/blocks/google-map/frontend.js
+
+
+
+
+(function ($, window, undefined) {
+  var $blocks = $('.novablocks-map');
+  util_parallaxInit($blocks);
+  $('.js-novablocks-google-map').each(function (i, obj) {
+    var $obj = $(obj),
+        markers = $obj.data('markers'),
+        styles = $obj.data('styles'),
+        zoom = $obj.data('zoom'),
+        hideControls = !$obj.data('controls'),
+        pinColor = $obj.data('pin-color'),
+        mapOptions = {
+      mapTypeId: 'roadmap',
+      center: getCenterFromMarkers(markers),
+      zoom: zoom,
+      styles: styles,
+      disableDefaultUI: hideControls,
+      clickableIcons: false,
+      keyboardShortcuts: false
+    },
+        map = new google.maps.Map(obj, mapOptions);
+    var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
+    markers.forEach(function (markerString) {
+      var marker = JSON.parse(markerString);
+      new google.maps.Marker({
+        map: map,
+        icon: {
+          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+        },
+        title: marker.title,
+        position: marker.geometry.location
+      });
+    });
+  });
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/hero/frontend.js
+
+
+(function ($, window, undefined) {
+  var $heroes = $('.novablocks-hero');
+  var windowScrollY;
+  var scrollButtonHidden = false;
+  var $scrollButton = $('.novablocks-hero__indicator');
+  util_parallaxInit($heroes);
+  bulletsInit();
+  scrollButtonInit();
+  updateScroll();
+  $(window).on('scroll', updateScroll);
+
+  function updateScroll() {
+    windowScrollY = window.scrollY;
+
+    if (windowScrollY > 200) {
+      hideScrollButton();
+    }
+  }
+
+  function bulletsInit() {
+    var $body = $('body');
+    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;
+
+    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {
+      $('.novablocks-hero').bully();
+    }
+  }
+
+  function hideScrollButton() {
+    if (scrollButtonHidden) {
+      return;
+    }
+
+    $scrollButton.filter('.novablocks-hero__indicator--middle').addClass('novablocks-hero__indicator--hidden');
+    scrollButtonHidden = true;
+  }
+
+  function scrollButtonInit() {
+    var $hero = $scrollButton.closest('.novablocks-hero');
+
+    if ($hero.length) {
+      $scrollButton.on('click', function () {
+        var heroBox = $hero.get(0).getBoundingClientRect();
+        var heroBoxTop = heroBox.y || heroBox.top;
+        window.scrollTo({
+          top: heroBoxTop + heroBox.height + windowScrollY,
+          behavior: 'smooth'
+        });
+      });
+    }
+  }
+})(jQuery, window);
 // CONCATENATED MODULE: ./src/blocks/slideshow/frontend.js
 
 

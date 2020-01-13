@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { debounce } from '../../utils';
 
 export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, progress ) {
 
@@ -309,11 +310,14 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 		$container.data( 'mask', $mask );
 		$container.data( 'parallax', $parallax );
 
-		$( window ).on( 'scroll', function() {
+		function parallaxUpdateState() {
 			var state = getState( container, config );
 			$container.data( 'state', state );
 			frameRendered = false;
-		} );
+		}
+
+		$( window ).on( 'scroll', parallaxUpdateState );
+		$( window ).on( 'resize', debounce( parallaxUpdateState, 100 ) );
 	} );
 
 	function parallaxUpdateLoop() {

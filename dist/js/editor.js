@@ -342,6 +342,12 @@ if (true) {
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithHoles = __webpack_require__(27);
@@ -355,12 +361,6 @@ function _slicedToArray(arr, i) {
 }
 
 module.exports = _slicedToArray;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
 
 /***/ }),
 /* 14 */
@@ -3095,7 +3095,7 @@ var objectWithoutProperties = __webpack_require__(17);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(12);
+var slicedToArray = __webpack_require__(13);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/server.browser.js
@@ -3615,10 +3615,11 @@ var objectDestructuringEmpty = __webpack_require__(19);
 var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(13);
+var external_jQuery_ = __webpack_require__(12);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
+
 
 var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
   if (!focalPoint1 && !focalPoint2) {
@@ -3883,11 +3884,15 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     var $parallax = $container.find('.novablocks-parallax');
     $container.data('mask', $mask);
     $container.data('parallax', $parallax);
-    external_jQuery_default()(window).on('scroll', function () {
+
+    function parallaxUpdateState() {
       var state = getState(container, config);
       $container.data('state', state);
       frameRendered = false;
-    });
+    }
+
+    external_jQuery_default()(window).on('scroll', parallaxUpdateState);
+    external_jQuery_default()(window).on('resize', debounce(parallaxUpdateState, 100));
   });
 
   function parallaxUpdateLoop() {
