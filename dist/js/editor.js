@@ -4875,7 +4875,8 @@ var color_controls_wp$components = wp.components,
     IconButton = color_controls_wp$components.IconButton,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    Toolbar = color_controls_wp$components.Toolbar;
+    Toolbar = color_controls_wp$components.Toolbar,
+    color_controls_BaseControl = color_controls_wp$components.BaseControl;
 var PanelColorSettings = wp.blockEditor.PanelColorSettings;
 var colors = [{
   name: color_controls_('Dark', '__plugin_txtd'),
@@ -4925,7 +4926,9 @@ var color_controls_OverlayControls = function OverlayControls(props) {
 var color_controls_ColorControls = function ColorControls(props) {
   var contentColor = props.attributes.contentColor,
       setAttributes = props.setAttributes;
-  return Object(react["createElement"])(ColorPalette, {
+  return Object(react["createElement"])(color_controls_BaseControl, {
+    label: color_controls_('Content Color', '__plugin_txtd')
+  }, Object(react["createElement"])(ColorPalette, {
     className: "nova-hide-clear-color",
     value: contentColor,
     colors: colors,
@@ -4934,8 +4937,9 @@ var color_controls_ColorControls = function ColorControls(props) {
         contentColor: nextContentColor
       });
     },
-    disableCustomColors: true
-  });
+    disableCustomColors: true,
+    clearable: false
+  }));
 };
 
 var color_controls_ColorPanel = function ColorPanel(props) {
@@ -4972,7 +4976,7 @@ var color_controls_ColorToolbar = function ColorToolbar(props) {
         onClick: onToggle,
         icon: invert,
         "aria-expanded": isOpen,
-        label: color_controls_('Color Options', '__plugin_txtd'),
+        label: color_controls_('Colors', '__plugin_txtd'),
         labelPosition: "bottom"
       });
     },
@@ -5241,7 +5245,7 @@ var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
         onClick: onToggle,
         icon: alignment,
         "aria-expanded": isOpen,
-        label: alignment_controls_('Content Alignment', '__plugin_txtd'),
+        label: alignment_controls_('Content Position', '__plugin_txtd'),
         labelPosition: "bottom"
       });
     },
