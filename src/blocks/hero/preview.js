@@ -72,6 +72,7 @@ const HeroPreview = function( props ) {
 
 	if ( scrollingEffect === 'doppler' ) {
 		heroHeight = minHeightFallback * 2;
+		contentHeight = 100;
 		styles.hero.alignItems = 'flex-start';
 	}
 

@@ -68,24 +68,21 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$contentStyle .= '--theme-dark-primary: #FFF';
 		}
 
-		$minHeight = $attributes['minHeightFallback'];
+		$minHeight = floatval( $attributes['minHeightFallback'] );
+		$heroHeight = $minHeight;
 
-		if ( ! empty( $minHeight ) ) {
-			$minHeight = floatval( $minHeight );
-
-			if ( 'doppler' === $attributes['scrollingEffect'] ) {
-				$heroHeight = 2 * $minHeight;
-			}
-
-			$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--novablocks-1vh, 1vh)); ';
-			$foregroundStyle .= 'min-height: calc(100 * var(--novablocks-1vh, 1vh)); ';
+		if ( 'doppler' === $attributes['scrollingEffect'] ) {
+			$heroHeight = 2 * $minHeight;
 		}
+
+		$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--novablocks-1vh, 1vh)); ';
+		$foregroundStyle .= 'min-height: calc(100 * var(--novablocks-1vh, 1vh)); ';
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
 		}
 
-		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] ) && 100 <= $heroHeight;
+		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
 
 		$scrollIndicatorClasses = array( 'novablocks-hero__indicator' );
 
