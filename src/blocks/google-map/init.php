@@ -69,6 +69,8 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 					<div class="novablocks-parallax">
 						<div
 							class="novablocks-map__map js-novablocks-google-map"
+							data-show-icons='<?php echo json_encode( $attributes['showIcons'] ); ?>'
+							data-show-labels='<?php echo json_encode( $attributes['showLabels'] ); ?>'
 							data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
 							data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
 							data-zoom="<?php echo $attributes['zoom']; ?>"

@@ -1013,17 +1013,9 @@ var styles_styles = [{
 // CONCATENATED MODULE: ./src/blocks/google-map/utils.js
 
 
-var compileStyles = function compileStyles(styleData) {
-  var _this$props$attribute = this.props.attributes,
-      showLabels = _this$props$attribute.showLabels,
-      showIcons = _this$props$attribute.showIcons,
-      styleSlug = _this$props$attribute.styleSlug;
-  var accentColor = getMapAccentColor.call(this);
-  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
-  var newStyles = JSON.parse(styleDataString);
-
+var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, showIcons) {
   if (!showLabels) {
-    newStyles.unshift({
+    styles.unshift({
       "elementType": "labels.text",
       "stylers": [{
         "visibility": "off"
@@ -1032,7 +1024,7 @@ var compileStyles = function compileStyles(styleData) {
   }
 
   if (!showIcons) {
-    newStyles.unshift({
+    styles.unshift({
       "elementType": "labels.icon",
       "stylers": [{
         "visibility": "off"
@@ -1040,7 +1032,16 @@ var compileStyles = function compileStyles(styleData) {
     });
   }
 
-  return newStyles;
+  return styles;
+};
+var compileStyles = function compileStyles(styleData) {
+  var _this$props$attribute = this.props.attributes,
+      showLabels = _this$props$attribute.showLabels,
+      showIcons = _this$props$attribute.showIcons,
+      styleSlug = _this$props$attribute.styleSlug;
+  var accentColor = getMapAccentColor.call(this);
+  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
+  return JSON.parse(styleDataString);
 };
 var utils_getMapStyles = function getMapStyles() {
   var attributes = this.props.attributes;
@@ -2622,6 +2623,8 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
   $('.js-novablocks-google-map').each(function (i, obj) {
     var $obj = $(obj),
         markers = $obj.data('markers'),
+        showLabels = $obj.data('show-labels'),
+        showIcons = $obj.data('show-icons'),
         styles = $obj.data('styles'),
         zoom = $obj.data('zoom'),
         hideControls = !$obj.data('controls'),
@@ -2630,7 +2633,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
       mapTypeId: 'roadmap',
       center: getCenterFromMarkers(markers),
       zoom: zoom,
-      styles: styles,
+      styles: addVisibilityToStyles(styles, showLabels, showIcons),
       disableDefaultUI: hideControls,
       clickableIcons: false,
       keyboardShortcuts: false

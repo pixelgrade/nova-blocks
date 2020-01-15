@@ -1,5 +1,5 @@
 import pin from "./pin";
-import { getCenterFromMarkers } from "./utils";
+import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
 import { parallaxInit } from "../../components/with-parallax/util";
 
 (function( $, window, undefined ) {
@@ -12,6 +12,8 @@ import { parallaxInit } from "../../components/with-parallax/util";
 
 		var $obj = $( obj ),
 			markers = $obj.data( 'markers' ),
+			showLabels = $obj.data( 'show-labels' ),
+			showIcons = $obj.data( 'show-icons' ),
 			styles = $obj.data( 'styles' ),
 			zoom = $obj.data( 'zoom' ),
 			hideControls = ! $obj.data( 'controls' ),
@@ -20,7 +22,7 @@ import { parallaxInit } from "../../components/with-parallax/util";
 				mapTypeId: 'roadmap',
 				center: getCenterFromMarkers( markers ),
 				zoom: zoom,
-				styles: styles,
+				styles: addVisibilityToStyles( styles, showLabels, showIcons ),
 				disableDefaultUI: hideControls,
 				clickableIcons: false,
 				keyboardShortcuts: false,
