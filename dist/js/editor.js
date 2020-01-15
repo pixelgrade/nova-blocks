@@ -342,6 +342,12 @@ if (true) {
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithHoles = __webpack_require__(27);
@@ -355,12 +361,6 @@ function _slicedToArray(arr, i) {
 }
 
 module.exports = _slicedToArray;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
 
 /***/ }),
 /* 14 */
@@ -3095,7 +3095,7 @@ var objectWithoutProperties = __webpack_require__(17);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(12);
+var slicedToArray = __webpack_require__(13);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/server.browser.js
@@ -3616,10 +3616,17 @@ var objectDestructuringEmpty = __webpack_require__(19);
 var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(13);
+var external_jQuery_ = __webpack_require__(12);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
+
+
+
+function userPrefersReducedMotion() {
+  var mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !!mediaQuery.matches;
+}
 
 var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
   if (!focalPoint1 && !focalPoint2) {
@@ -3687,6 +3694,14 @@ function getScales(config) {
   var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
   initialBackgroundScale = initialBackgroundScale / maxScale;
   finalBackgroundScale = finalBackgroundScale / maxScale;
+
+  if (userPrefersReducedMotion()) {
+    return {
+      maxScale: 1,
+      newScale: 1
+    };
+  }
+
   return {
     maxScale: maxScale,
     newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
@@ -3752,7 +3767,7 @@ var getProps = function getProps(config, fixed) {
     };
   }
 
-  var parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+  var parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
 
   var _getScales = getScales(config),
       maxScale = _getScales.maxScale,
@@ -3837,6 +3852,10 @@ var getState = function getState(container, config) {
     progress = Math.min(1, progress);
   }
 
+  if (userPrefersReducedMotion()) {
+    progress = 0.5;
+  }
+
   return {
     progress: progress,
     distance: distance,
@@ -3884,11 +3903,15 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     var $parallax = $container.find('.novablocks-parallax');
     $container.data('mask', $mask);
     $container.data('parallax', $parallax);
-    external_jQuery_default()(window).on('scroll', function () {
+
+    function parallaxUpdateState() {
       var state = getState(container, config);
       $container.data('state', state);
       frameRendered = false;
-    });
+    }
+
+    external_jQuery_default()(window).on('scroll', parallaxUpdateState);
+    external_jQuery_default()(window).on('resize', debounce(parallaxUpdateState, 100));
   });
 
   function parallaxUpdateLoop() {
@@ -4871,7 +4894,8 @@ var color_controls_wp$components = wp.components,
     IconButton = color_controls_wp$components.IconButton,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    Toolbar = color_controls_wp$components.Toolbar;
+    Toolbar = color_controls_wp$components.Toolbar,
+    color_controls_BaseControl = color_controls_wp$components.BaseControl;
 var PanelColorSettings = wp.blockEditor.PanelColorSettings;
 var colors = [{
   name: color_controls_('Dark', '__plugin_txtd'),
@@ -4921,7 +4945,9 @@ var color_controls_OverlayControls = function OverlayControls(props) {
 var color_controls_ColorControls = function ColorControls(props) {
   var contentColor = props.attributes.contentColor,
       setAttributes = props.setAttributes;
-  return Object(react["createElement"])(ColorPalette, {
+  return Object(react["createElement"])(color_controls_BaseControl, {
+    label: color_controls_('Content Color', '__plugin_txtd')
+  }, Object(react["createElement"])(ColorPalette, {
     className: "nova-hide-clear-color",
     value: contentColor,
     colors: colors,
@@ -4930,8 +4956,9 @@ var color_controls_ColorControls = function ColorControls(props) {
         contentColor: nextContentColor
       });
     },
-    disableCustomColors: true
-  });
+    disableCustomColors: true,
+    clearable: false
+  }));
 };
 
 var color_controls_ColorPanel = function ColorPanel(props) {
@@ -4968,7 +4995,7 @@ var color_controls_ColorToolbar = function ColorToolbar(props) {
         onClick: onToggle,
         icon: invert,
         "aria-expanded": isOpen,
-        label: color_controls_('Color Options', '__plugin_txtd'),
+        label: color_controls_('Colors', '__plugin_txtd'),
         labelPosition: "bottom"
       });
     },
@@ -5237,7 +5264,7 @@ var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
         onClick: onToggle,
         icon: alignment,
         "aria-expanded": isOpen,
-        label: alignment_controls_('Content Alignment', '__plugin_txtd'),
+        label: alignment_controls_('Content Position', '__plugin_txtd'),
         labelPosition: "bottom"
       });
     },

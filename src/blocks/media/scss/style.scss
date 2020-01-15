@@ -13,6 +13,7 @@
 	--novablocks-media-content-box-shadow: none;
 }
 
+
 // media layout
 .novablocks-media {
 	background-color: var(--novablocks-media-background-color);
@@ -31,7 +32,7 @@
 		padding: var(--novablocks-media-padding) 0;
 	}
 
-	.wp-block-group__inner-container > * {
+	.wp-block-group__inner-container > .wp-block {
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -41,11 +42,12 @@
 	display: flex;
 	flex-wrap: wrap;
 
-	margin-left: calc(-1 * var(--novablocks-media-spacing));
+	margin-top: calc( -1 * var(--novablocks-media-spacing) );
+	margin-left: calc( -1 * var(--novablocks-media-spacing) );
 
 	> * {
-		min-width: 300px;
 		padding-left: var(--novablocks-media-spacing);
+		margin-top: var(--novablocks-media-spacing);
 		flex: 1 0 50%;
 	}
 }

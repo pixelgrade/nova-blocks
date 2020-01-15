@@ -1,17 +1,4 @@
-:root {
-	--bg-master-dark: #000000;
-	--bg-master-light: #FFFFFF;
-	--bg-master-none: transparent;
-}
-
-@each $color in dark, light, none {
-	.novablocks-u-background-#{$color} {
-		--element-background: var(--bg-master-#{$color});
-	}
-}
-
 .novablocks-u-background {
-	background-color: var(--element-background);
 	transition: background-color 0.4s ease-out;
 
 	.block-editor-inserter__toggle {

@@ -1,4 +1,10 @@
 import $ from 'jquery';
+import { debounce } from '../../utils';
+
+function userPrefersReducedMotion() {
+	const mediaQuery = window.matchMedia( '(prefers-reduced-motion: reduce)' );
+	return !! mediaQuery.matches;
+}
 
 export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, progress ) {
 
@@ -78,6 +84,13 @@ function getScales( config ) {
 
 	initialBackgroundScale = initialBackgroundScale / maxScale;
 	finalBackgroundScale = finalBackgroundScale / maxScale;
+
+	if ( userPrefersReducedMotion() ) {
+		return {
+			maxScale: 1,
+			newScale: 1,
+		};
+	}
 
 	return {
 		maxScale: maxScale,
@@ -159,7 +172,7 @@ export const getProps = function( config, fixed ) {
 		};
 	}
 
-	const parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+	const parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
 	const { maxScale, newScale } = getScales( config );
 	const newImageHeight = getNewImageHeight( config, parallaxAmount );
 
@@ -252,6 +265,10 @@ export const getState = function( container, config ) {
 		progress = Math.min( 1, progress );
 	}
 
+	if ( userPrefersReducedMotion() ) {
+		progress = 0.5;
+	}
+
 	return {
 		progress,
 		distance,
@@ -309,11 +326,14 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 		$container.data( 'mask', $mask );
 		$container.data( 'parallax', $parallax );
 
-		$( window ).on( 'scroll', function() {
+		function parallaxUpdateState() {
 			var state = getState( container, config );
 			$container.data( 'state', state );
 			frameRendered = false;
-		} );
+		}
+
+		$( window ).on( 'scroll', parallaxUpdateState );
+		$( window ).on( 'resize', debounce( parallaxUpdateState, 100 ) );
 	} );
 
 	function parallaxUpdateLoop() {
