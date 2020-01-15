@@ -1,6 +1,6 @@
 import ReactDOMServer from 'react-dom/server';
 import pin from './pin';
-import { getMapStyles, getMarkersCenter, getMapAccentColor } from './utils';
+import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
 import defaultMapCenter from './default-map-center';
 import { withParallax } from "../../components";
 
@@ -82,13 +82,13 @@ class Map extends Component {
 
 	initializeMap() {
 		const { attributes } = this.props;
-		const { showControls, zoom } = attributes;
+		const { showControls, showLabels, showIcons, zoom } = attributes;
 
 		this.map = new google.maps.Map( document.getElementById( `novablocks-google-map-${ this.props.clientId }` ), {
 			mapTypeId: 'roadmap',
 			center: defaultMapCenter,
 			zoom: zoom,
-			styles: this.getMapStyles(),
+			styles: addVisibilityToStyles( this.getMapStyles(), showLabels, showIcons ),
 
 			clickableIcons: false,
 			disableDefaultUI: ! showControls,
@@ -123,11 +123,11 @@ class Map extends Component {
 
 		const options = {};
 		const { attributes } = this.props;
-		const { showControls, showLabels, zoom } = attributes;
+		const { showControls, showLabels, showIcons, zoom } = attributes;
 
 		options.zoom = zoom;
 		options.disableDefaultUI = ! showControls;
-		options.styles = this.getMapStyles();
+		options.styles = addVisibilityToStyles( this.getMapStyles(), showLabels, showIcons );
 
 		this.map.setOptions( options );
 	}

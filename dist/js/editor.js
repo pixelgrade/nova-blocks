@@ -3223,17 +3223,9 @@ var styles_styles = [{
 // CONCATENATED MODULE: ./src/blocks/google-map/utils.js
 
 
-var compileStyles = function compileStyles(styleData) {
-  var _this$props$attribute = this.props.attributes,
-      showLabels = _this$props$attribute.showLabels,
-      showIcons = _this$props$attribute.showIcons,
-      styleSlug = _this$props$attribute.styleSlug;
-  var accentColor = getMapAccentColor.call(this);
-  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
-  var newStyles = JSON.parse(styleDataString);
-
+var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, showIcons) {
   if (!showLabels) {
-    newStyles.unshift({
+    styles.unshift({
       "elementType": "labels.text",
       "stylers": [{
         "visibility": "off"
@@ -3242,7 +3234,7 @@ var compileStyles = function compileStyles(styleData) {
   }
 
   if (!showIcons) {
-    newStyles.unshift({
+    styles.unshift({
       "elementType": "labels.icon",
       "stylers": [{
         "visibility": "off"
@@ -3250,7 +3242,16 @@ var compileStyles = function compileStyles(styleData) {
     });
   }
 
-  return newStyles;
+  return styles;
+};
+var compileStyles = function compileStyles(styleData) {
+  var _this$props$attribute = this.props.attributes,
+      showLabels = _this$props$attribute.showLabels,
+      showIcons = _this$props$attribute.showIcons,
+      styleSlug = _this$props$attribute.styleSlug;
+  var accentColor = getMapAccentColor.call(this);
+  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
+  return JSON.parse(styleDataString);
 };
 var utils_getMapStyles = function getMapStyles() {
   var attributes = this.props.attributes;
@@ -5461,12 +5462,14 @@ function (_Component) {
     value: function initializeMap() {
       var attributes = this.props.attributes;
       var showControls = attributes.showControls,
+          showLabels = attributes.showLabels,
+          showIcons = attributes.showIcons,
           zoom = attributes.zoom;
       this.map = new google.maps.Map(document.getElementById("novablocks-google-map-".concat(this.props.clientId)), {
         mapTypeId: 'roadmap',
         center: default_map_center,
         zoom: zoom,
-        styles: this.getMapStyles(),
+        styles: addVisibilityToStyles(this.getMapStyles(), showLabels, showIcons),
         clickableIcons: false,
         disableDefaultUI: !showControls,
         disableDoubleClickZoom: true,
@@ -5503,10 +5506,11 @@ function (_Component) {
       var attributes = this.props.attributes;
       var showControls = attributes.showControls,
           showLabels = attributes.showLabels,
+          showIcons = attributes.showIcons,
           zoom = attributes.zoom;
       options.zoom = zoom;
       options.disableDefaultUI = !showControls;
-      options.styles = this.getMapStyles();
+      options.styles = addVisibilityToStyles(this.getMapStyles(), showLabels, showIcons);
       this.map.setOptions(options);
     }
   }, {
