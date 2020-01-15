@@ -60,7 +60,7 @@ It's great if you're willing to use your skills, knowledge, and experience to he
 ### Contributors
 A manually curated list that include all the valuable people that have contributed to this project with code, user testing, feedback, or mockups. Thank you!
 
-[![](https://github.com/razwan.png?size=64)](https://github.com/razwan) [![](https://github.com/georgeolaru.png?size=64)](https://github.com/georgeolaru) [![](https://github.com/oanafilip.png?size=64)](https://github.com/oanafilip) [![](https://github.com/vladolaru.png?size=64)](https://github.com/vladolaru)  [![](https://github.com/madalingorbanescu.png?size=64)](https://github.com/madalingorbanescu) [![](https://github.com/acosmin.png?size=64)](https://github.com/acosmin) 
+[![](https://github.com/razwan.png?size=64)](https://github.com/razwan) [![](https://github.com/georgeolaru.png?size=64)](https://github.com/georgeolaru) [![](https://github.com/oanafilip.png?size=64)](https://github.com/oanafilip) [![](https://github.com/vladolaru.png?size=64)](https://github.com/vladolaru)  [![](https://github.com/madalingorbanescu.png?size=64)](https://github.com/madalingorbanescu) [![](https://github.com/acosmin.png?size=64)](https://github.com/acosmin) [![](https://github.com/loxK.png?size=64)](https://github.com/loxK) 
 
 ## License
 Nova Blocks source code is released under the [GNU GPL v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html) or later. This is so you have the freedom to create something beautiful and share it back with us.
