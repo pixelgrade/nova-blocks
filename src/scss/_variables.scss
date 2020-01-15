@@ -20,4 +20,8 @@ $nova-gray: #edf0f1 !default;
 	--novablocks-light-1: #{$nova-white};
 	--novablocks-light-2: #{$nova-gray};
 	--novablocks-light-3: #{$nova-gray};
+
+	--bg-master-dark: #000000;
+	--bg-master-light: #FFFFFF;
+	--bg-master-none: transparent;
 }

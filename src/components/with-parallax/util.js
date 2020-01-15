@@ -1,6 +1,11 @@
 import $ from 'jquery';
 import { debounce } from '../../utils';
 
+function userPrefersReducedMotion() {
+	const mediaQuery = window.matchMedia( '(prefers-reduced-motion: reduce)' );
+	return !! mediaQuery.matches;
+}
+
 export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, progress ) {
 
 	if ( ! focalPoint1 && ! focalPoint2 ) {
@@ -79,6 +84,13 @@ function getScales( config ) {
 
 	initialBackgroundScale = initialBackgroundScale / maxScale;
 	finalBackgroundScale = finalBackgroundScale / maxScale;
+
+	if ( userPrefersReducedMotion() ) {
+		return {
+			maxScale: 1,
+			newScale: 1,
+		};
+	}
 
 	return {
 		maxScale: maxScale,
@@ -160,7 +172,7 @@ export const getProps = function( config, fixed ) {
 		};
 	}
 
-	const parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+	const parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
 	const { maxScale, newScale } = getScales( config );
 	const newImageHeight = getNewImageHeight( config, parallaxAmount );
 
@@ -251,6 +263,10 @@ export const getState = function( container, config ) {
 
 	if ( ! smoothEnd ) {
 		progress = Math.min( 1, progress );
+	}
+
+	if ( userPrefersReducedMotion() ) {
+		progress = 0.5;
 	}
 
 	return {

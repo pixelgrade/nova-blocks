@@ -2284,6 +2284,12 @@ var getSnapClassname = function getSnapClassname(focalPoint) {
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 
 
+
+function userPrefersReducedMotion() {
+  var mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !!mediaQuery.matches;
+}
+
 var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
   if (!focalPoint1 && !focalPoint2) {
     return {
@@ -2350,6 +2356,14 @@ function getScales(config) {
   var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
   initialBackgroundScale = initialBackgroundScale / maxScale;
   finalBackgroundScale = finalBackgroundScale / maxScale;
+
+  if (userPrefersReducedMotion()) {
+    return {
+      maxScale: 1,
+      newScale: 1
+    };
+  }
+
   return {
     maxScale: maxScale,
     newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
@@ -2415,7 +2429,7 @@ var getProps = function getProps(config, fixed) {
     };
   }
 
-  var parallaxAmount = scrollingEffect === 'parallax' ? 0.75 : 1;
+  var parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
 
   var _getScales = getScales(config),
       maxScale = _getScales.maxScale,
@@ -2498,6 +2512,10 @@ var getState = function getState(container, config) {
 
   if (!smoothEnd) {
     progress = Math.min(1, progress);
+  }
+
+  if (userPrefersReducedMotion()) {
+    progress = 0.5;
   }
 
   return {
