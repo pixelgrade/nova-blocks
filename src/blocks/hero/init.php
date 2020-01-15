@@ -64,6 +64,10 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
 		}
 
+		if ( ! empty( $attributes['contentColor'] ) && $attributes['contentColor'] !== '#FFF' ) {
+			$contentStyle .= '--theme-dark-primary: #FFF';
+		}
+
 		$minHeight = $attributes['minHeightFallback'];
 
 		if ( ! empty( $minHeight ) ) {

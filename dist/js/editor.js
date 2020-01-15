@@ -6646,7 +6646,8 @@ var background_HeroBackground = function HeroBackground(props) {
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
       overlayFilterStrength = _props$attributes.overlayFilterStrength,
-      media = _props$attributes.media;
+      media = _props$attributes.media,
+      contentColor = _props$attributes.contentColor;
 
   var styles = background_objectSpread({}, props.parallax.style, {
     opacity: 1
@@ -6714,6 +6715,11 @@ var preview_HeroPreview = function HeroPreview(props) {
     foreground: {},
     content: {}
   };
+
+  if (contentColor !== '#FFF') {
+    styles.hero['--theme-dark-primary'] = '#FFF';
+  }
+
   var heroBlocks = preview_select('core/block-editor').getBlocks().filter(function (block) {
     return block.name === 'novablocks/hero';
   });

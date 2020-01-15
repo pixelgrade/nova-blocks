@@ -59,6 +59,10 @@ const HeroPreview = function( props ) {
 		content: {},
 	};
 
+	if ( contentColor !== '#FFF' ) {
+		styles.hero['--theme-dark-primary'] = '#FFF'
+	}
+
 	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 		return block.name === 'novablocks/hero';
 	} );
