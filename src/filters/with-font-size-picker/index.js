@@ -30,6 +30,8 @@ const {
 } = wp.hooks;
 
 const enableFontSizeControlOnBlocks = [
+	'core/quote',
+	'core/pullquote',
 	'core/heading',
 	'novablocks/headline'
 ];
@@ -55,6 +57,7 @@ function replaceActiveFontSize( className, fontSize, nextFontSize ) {
 }
 
 function withFontSizePicker( WrappedComponent ) {
+
 	return ( props ) => {
 
 		const {
@@ -68,10 +71,10 @@ function withFontSizePicker( WrappedComponent ) {
 
 		const selectValue = fontSizeOptions.find( x => x.value === fontSize ) ? fontSize : defaultFontSize;
 
-		return [
-			<WrappedComponent { ...props } />,
-			<InspectorControls>
-				{ level && level < 4 &&
+		return (
+			<Fragment>
+				<WrappedComponent { ...props } />
+				<InspectorControls>
 					<PanelBody title={ __( 'Text Settings', '__plugin_txtd' ) } className="blocks-custom-font-size">
 						<SelectControl
 							label={ __( 'Font Size', '__plugin_txtd' ) }
@@ -85,9 +88,9 @@ function withFontSizePicker( WrappedComponent ) {
 							} }
 						/>
 					</PanelBody>
-				}
-			</InspectorControls>
-		]
+				</InspectorControls>
+			 </Fragment>
+		)
 	}
 }
 
@@ -112,16 +115,16 @@ function addFontSizeAttribute( block ) {
 		return block;
 	}
 
-	if ( typeof block.attributes !== 'undefined' ){
-
-		block.attributes = Object.assign( block.attributes, {
-			fontSize: {
-				type: 'string',
-				default: defaultFontSize,
-			}
-		});
-
+	if ( typeof block.attributes === 'undefined' ) {
+		block.attributes = {};
 	}
+
+	block.attributes = Object.assign( block.attributes, {
+		fontSize: {
+			type: 'string',
+			default: defaultFontSize,
+		}
+	});
 
 	return block;
 }

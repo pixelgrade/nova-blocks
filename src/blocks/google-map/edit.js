@@ -2,8 +2,7 @@ import MapPlaceholder from './placeholder';
 import Map from './map';
 import InspectorControls from './inspector-controls';
 
-import withSettings from '../../components/with-settings';
-import withParallax from '../../components/with-parallax';
+import { withSettings, withParallax } from '../../components';
 
 const { __ } = wp.i18n;
 

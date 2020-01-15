@@ -1,5 +1,11 @@
 @import 'style';
 
+@import '../components/layout-panel/style';
+@import '../components/scrolling-effect-controls/style';
+
+@import '../components/alignment-controls/editor';
+@import '../components/color-controls/editor';
+
 @import '../blocks/announcement-bar/scss/editor';
 @import '../blocks/header/scss/editor';
 @import '../blocks/logo/scss/editor';

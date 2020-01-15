@@ -1,6 +1,25 @@
 import defaultMapCenter from "./default-map-center";
 import styles from "./styles";
 
+export const addVisibilityToStyles = function( styles, showLabels, showIcons ) {
+
+	if ( ! showLabels ) {
+		styles.unshift( {
+			"elementType": "labels.text",
+			"stylers": [ { "visibility": "off" } ]
+		} )
+	}
+
+	if ( ! showIcons ) {
+		styles.unshift( {
+			"elementType": "labels.icon",
+			"stylers": [ { "visibility": "off" } ]
+		} )
+	}
+
+	return styles;
+}
+
 export const compileStyles = function( styleData ) {
 	const {
 		attributes: {
@@ -12,23 +31,7 @@ export const compileStyles = function( styleData ) {
 
 	const accentColor = getMapAccentColor.call( this );
 	const styleDataString = JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, accentColor );
-	const newStyles = JSON.parse( styleDataString );
-
-	if ( ! showLabels ) {
-		newStyles.unshift( {
-			"elementType": "labels.text",
-			"stylers": [ { "visibility": "off" } ]
-		} )
-	}
-
-	if ( ! showIcons ) {
-		newStyles.unshift( {
-			"elementType": "labels.icon",
-			"stylers": [ { "visibility": "off" } ]
-		} )
-	}
-
-	return newStyles;
+	return JSON.parse( styleDataString );
 }
 
 export const getMapStyles = function() {

@@ -31,7 +31,7 @@ const AlignmentToolbar = function( props ) {
 						onClick={ onToggle }
 						icon={ icons.alignment }
 						aria-expanded={ isOpen }
-						label={ __( 'Content Alignment', '__plugin_txtd' ) }
+						label={ __( 'Content Position', '__plugin_txtd' ) }
 						labelPosition="bottom"
 					/>
 				) }
@@ -45,7 +45,6 @@ const AlignmentToolbar = function( props ) {
 const AlignmentControls = function( props ) {
 	const {
 		attributes: {
-			applyMinimumHeightBlock,
 			horizontalAlignment,
 			verticalAlignment,
 		},
@@ -67,13 +66,13 @@ const AlignmentControls = function( props ) {
 					} }
 				/>
 			</PanelRow>
-			{ applyMinimumHeightBlock && <PanelRow>
+			<PanelRow>
 				<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
 				<BlockVerticalAlignmentToolbar
 					value={ verticalAlignment }
 					onChange={ ( nextVerticalAlignment ) => setAttributes( { verticalAlignment: nextVerticalAlignment } ) }
 				/>
-			</PanelRow> }
+			</PanelRow>
 		</Fragment>
 	);
 };

@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import { shuffleArray } from '../../components/util';
+import { shuffleArray } from '../../utils';
 
 import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
-import withSettings from '../../components/with-settings';
-import withParallax from '../../components/with-parallax';
+import { withSettings, withParallax } from '../../components';
 
 /**
  * WordPress dependencies

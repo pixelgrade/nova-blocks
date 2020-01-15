@@ -1,12 +1,9 @@
 @import 'variables';
 @import 'mixins';
 
-@import '../components/alignment-controls/style';
-@import '../components/layout-panel/style';
-@import '../components/color-controls/style';
-
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
+@import '../blocks/headline/scss/style';
 @import '../blocks/header/scss/style';
 @import '../blocks/hero/scss/style';
 @import '../blocks/logo/scss/style';
@@ -15,6 +12,9 @@
 @import '../blocks/navigation/scss/style';
 @import '../blocks/menu-food/scss/style';
 @import '../blocks/opentable/scss/style';
+
+@import '../components/alignment-controls/style';
+@import '../components/color-controls/style';
 
 @import 'vendor/slick';
 @import 'vendor/slick-theme';
@@ -36,5 +36,20 @@
 	dl,
 	.editor-block-list__block {
 		color: inherit;
+	}
+}
+
+.novablocks-mask {
+	@include cover;
+}
+
+.novablocks-parallax {
+	position: fixed;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+
+	.scrolling-effect-static & {
+		position: static;
 	}
 }

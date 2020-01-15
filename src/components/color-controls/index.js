@@ -16,6 +16,7 @@ const {
 	RadioControl,
 	RangeControl,
 	Toolbar,
+	BaseControl
 } = wp.components;
 
 const {
@@ -71,13 +72,16 @@ const ColorControls = function( props ) {
 		setAttributes,
 	} = props;
 
-	return <ColorPalette
-		className="nova-hide-clear-color"
-		value={ contentColor }
-		colors={ colors }
-		onChange={ ( nextContentColor ) => setAttributes( { contentColor: nextContentColor } ) }
-		disableCustomColors
-	/>;
+	return <BaseControl label={ __( 'Content Color', '__plugin_txtd' ) }>
+				<ColorPalette
+				className="nova-hide-clear-color"
+				value={ contentColor }
+				colors={ colors }
+				onChange={ ( nextContentColor ) => setAttributes( { contentColor: nextContentColor } ) }
+				disableCustomColors
+				clearable={ false }
+				/>
+	</BaseControl>
 };
 
 const ColorPanel = function( props ) {
@@ -118,7 +122,7 @@ const ColorToolbar = function( props ) {
 						onClick={ onToggle }
 						icon={ icons.invert }
 						aria-expanded={ isOpen }
-						label={ __( 'Color Options', '__plugin_txtd' ) }
+						label={ __( 'Colors', '__plugin_txtd' ) }
 						labelPosition="bottom"
 					/>
 				) }

@@ -9,14 +9,13 @@ const HeroBackground = function( props ) {
 			overlayFilterStyle,
 			overlayFilterStrength,
 			media,
-			focalPoint,
+			contentColor
 		}
 	} = props;
 
 	const styles = {
 		...props.parallax.style,
 		opacity: 1,
-		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 	};
 
 	if ( overlayFilterStyle !== 'none' ) {
@@ -35,4 +34,4 @@ const HeroBackground = function( props ) {
 	);
 };
 
-export default withParallaxContext( HeroBackground );
+export default HeroBackground;

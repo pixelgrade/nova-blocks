@@ -35,7 +35,7 @@ function novablocks_admin_init() {
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.1.6',
+		'1.2.0',
 		true
 	);
 
@@ -51,7 +51,7 @@ function novablocks_admin_init() {
 		'nova-blocks-editor-css',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.1.6'
+		'1.2.0'
 	);
 }
 add_action( 'admin_init', 'novablocks_admin_init' );
@@ -69,7 +69,7 @@ function novablocks_enqueue_assets() {
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.1.6'
+		'1.2.0'
 	);
 }
 add_action( 'enqueue_block_assets', 'novablocks_enqueue_assets' );
@@ -82,15 +82,6 @@ function novablocks_enqueue_frontend_assets() {
 	}
 
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-	$rellax_path = '/dist/js/vendor/jquery.rellax' . $suffix . '.js';
-	wp_register_script(
-		'nova-blocks-rellax',
-		novablocks_get_plugin_url() . $rellax_path,
-		array( 'jquery' ),
-		'1.0.0',
-		true
-	);
 
 	$bully_path = '/dist/js/vendor/jquery.bully' . $suffix . '.js';
 	wp_register_script(
@@ -122,7 +113,6 @@ function novablocks_enqueue_frontend_assets() {
 	$script_dependencies = array(
 		'jquery',
 		'imagesloaded',
-		'nova-blocks-rellax',
 		'nova-blocks-slick',
 		'nova-blocks-velocity',
 	);
@@ -143,7 +133,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.1.6',
+		'1.2.0',
 		true
 	);
 }

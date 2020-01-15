@@ -14,29 +14,31 @@ const {
 
 const HeroPreview = function( props ) {
 	const {
-		attributes: {
-			// layout
-			contentPadding,
-			contentPaddingCustom,
-			contentWidth,
-			contentWidthCustom,
-			// alignment
-			verticalAlignment,
-			horizontalAlignment,
-			// height
-			minHeight,
-			minHeightFallback,
-			applyMinimumHeightBlock,
-			// indicators
-			scrollIndicatorBlock,
-			// colors
-			contentColor,
-			overlayFilterStyle,
-		},
+		attributes,
 		className,
 		clientId,
 		settings,
 	} = props;
+
+	const {
+		// layout
+		contentPadding,
+		contentPaddingCustom,
+		contentWidth,
+		contentWidthCustom,
+		// alignment
+		verticalAlignment,
+		horizontalAlignment,
+		// height
+		minHeightFallback,
+		// indicators
+		scrollIndicatorBlock,
+		// colors
+		contentColor,
+		overlayFilterStyle,
+
+		scrollingEffect,
+	} = attributes;
 
 	const classes = [
 		className,
@@ -51,25 +53,30 @@ const HeroPreview = function( props ) {
 
 	const styles = {
 		hero: {
-			color: contentColor,
+			'--novablocks-hero-text-color': contentColor,
 		},
 		foreground: {},
 		content: {},
 	};
 
-	const minimumHeight = settings.usePostMetaAttributes ? minHeight : minHeightFallback;
+	if ( contentColor !== '#FFF' ) {
+		styles.hero['--theme-dark-primary'] = '#FFF'
+	}
 
 	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
 		return block.name === 'novablocks/hero';
 	} );
 
-	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
-	const scrollIndicatorFallback = index === 0 && minimumHeight === 100;
-	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
+	let heroHeight = minHeightFallback;
+	let contentHeight = heroHeight;
 
-	if ( !! applyMinimumHeightBlock ) {
-		styles.hero.minHeight = minimumHeight + 'vh';
+	if ( scrollingEffect === 'doppler' ) {
+		heroHeight = minHeightFallback * 2;
+		styles.hero.alignItems = 'flex-start';
 	}
+
+	styles.hero.minHeight = heroHeight + 'vh';
+	styles.foreground.minHeight = contentHeight + 'vh';
 
 	if ( contentPadding === 'custom' ) {
 		styles.foreground.paddingTop = `${ contentPaddingCustom }%`;
@@ -80,16 +87,18 @@ const HeroPreview = function( props ) {
 		styles.content.maxWidth = `${ contentWidthCustom }%`;
 	}
 
+	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
+	const scrollIndicatorFallback = index === 0 && heroHeight >= 100;
+	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
+
 	return (
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>
 			<HeroBackground { ...props } />
-			<div className="novablocks-hero__foreground novablocks-u-content-padding" style={ styles.foreground }>
-				<div className="novablocks-u-content-align">
-					<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
-						<InnerBlocks template={ settings.hero.template } />
-					</div>
-					{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }
+			<div className="novablocks-hero__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
+				<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
+					<InnerBlocks template={ settings.hero.template } />
 				</div>
+				{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }
 			</div>
 		</div>
 	);

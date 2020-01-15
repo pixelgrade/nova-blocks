@@ -1,8 +1,8 @@
 import ReactDOMServer from 'react-dom/server';
 import pin from './pin';
-import { getMapStyles, getMarkersCenter, getMapAccentColor } from './utils';
+import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
 import defaultMapCenter from './default-map-center';
-import { withParallaxContext } from '../../components/with-parallax';
+import { withParallax } from "../../components";
 
 const { __ } = wp.i18n;
 
@@ -82,13 +82,13 @@ class Map extends Component {
 
 	initializeMap() {
 		const { attributes } = this.props;
-		const { showControls, zoom } = attributes;
+		const { showControls, showLabels, showIcons, zoom } = attributes;
 
 		this.map = new google.maps.Map( document.getElementById( `novablocks-google-map-${ this.props.clientId }` ), {
 			mapTypeId: 'roadmap',
 			center: defaultMapCenter,
 			zoom: zoom,
-			styles: this.getMapStyles(),
+			styles: addVisibilityToStyles( this.getMapStyles(), showLabels, showIcons ),
 
 			clickableIcons: false,
 			disableDefaultUI: ! showControls,
@@ -123,11 +123,11 @@ class Map extends Component {
 
 		const options = {};
 		const { attributes } = this.props;
-		const { showControls, showLabels, zoom } = attributes;
+		const { showControls, showLabels, showIcons, zoom } = attributes;
 
 		options.zoom = zoom;
 		options.disableDefaultUI = ! showControls;
-		options.styles = this.getMapStyles();
+		options.styles = addVisibilityToStyles( this.getMapStyles(), showLabels, showIcons );
 
 		this.map.setOptions( options );
 	}
@@ -198,7 +198,7 @@ const MapWrapper = ( Map ) => {
 				</div>
 				<div className="novablocks-map__map-container">
 					<div className="novablocks-mask">
-						<div className="novablocks-map__map-parallax" style={ parallax.style }>
+						<div style={ parallax.style }>
 							<Map { ...otherProps }></Map>
 						</div>
 					</div>
@@ -208,4 +208,4 @@ const MapWrapper = ( Map ) => {
 	}
 }
 
-export default withParallaxContext( MapWrapper( Map ) );
+export default MapWrapper( Map );
