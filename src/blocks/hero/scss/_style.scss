@@ -40,9 +40,9 @@
 
 .novablocks-hero__indicator {
 	position: absolute;
-	top: calc( 100% - var(--novablocks-content-padding) );
-	left: 50%;
 	right: 0;
+	bottom: 0;
+	left: 50%;
 
 	display: flex;
 	justify-content: center;
