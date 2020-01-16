@@ -36,8 +36,8 @@ class Block_Areas {
 	public function render( $slug, $args = [] ) {
 		global $post;
 
-		$id = $this->get_by_slug( $slug );
-		if ( empty( $id ) ) {
+		$post_id = $this->get_by_slug( $slug );
+		if ( empty( $post_id ) ) {
 			return;
 		}
 
@@ -49,20 +49,39 @@ class Block_Areas {
 			)
 		);
 
-		// Save original post to restore it later.
-		$orig_post = $post;
-
 		// Set up block area and render its content.
-		$post = get_post( $id );
-		setup_postdata( $post );
 
 		echo $args['before']; // phpcs:ignore WordPress.Security.EscapeOutput
-		the_content();
+		$this->the_content( $post_id );
 		echo $args['after']; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
 
-		// Restore original post.
-		$post = $orig_post;
-		setup_postdata( $post );
+	/**
+	 * Output the post content but without running 'the_content' filter, since this in not THE MAIN POST, CONTENT.
+	 *
+	 * @param int|WP_Post $post
+	 */
+	protected function the_content( $post = null ) {
+		$post = get_post( $post );
+		if ( empty( $post ) ) {
+			return;
+		}
+
+		// Retrieve the raw post content.
+		$content = apply_filters( 'novablocks_block_areas_raw_content', $post->post_content );
+
+		// Now apply some of the default the_content filters that are safe.
+		$content = do_blocks( $content );
+		$content = wptexturize( $content );
+		$content = convert_smilies( $content );
+		$content = wpautop( $content );
+		$content = capital_P_dangit( $content );
+		$content = do_shortcode( $content );
+		$content = shortcode_unautop( $content );
+		$content = wp_make_content_images_responsive( $content );
+
+		// Apply one custom filter to allow others to have a say.
+		echo apply_filters( 'novablocks_block_areas_the_content', $content );
 	}
 
 	/**
