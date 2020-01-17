@@ -74,7 +74,6 @@ class Block_Areas {
 		$content = do_blocks( $content );
 		$content = wptexturize( $content );
 		$content = convert_smilies( $content );
-		$content = wpautop( $content );
 		$content = capital_P_dangit( $content );
 		$content = do_shortcode( $content );
 		$content = shortcode_unautop( $content );
