@@ -57,3 +57,21 @@
 		position: static;
 	}
 }
+
+//@todo: remove this
+.novablocks-media__inner-container {
+	text-align: center;
+}
+
+.wp-block-novablocks-posts .wp-block {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-block-novablocks-posts .wp-block.alignwide {
+	max-width: var(--theme-content-width-wide) !important;
+}
+
+.wp-block-novablocks-posts .novablocks-media__inner-container {
+	padding: 5em;
+}

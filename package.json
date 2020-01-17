@@ -18,6 +18,7 @@
 		"@wordpress/blocks": "6.7.0",
 		"@wordpress/browserslist-config": "2.6.0",
 		"@wordpress/components": "^9.3.0",
+		"@wordpress/compose": "^3.10.0",
 		"@wordpress/date": "3.5.0",
 		"@wordpress/editor": "9.7.0",
 		"@wordpress/element": "2.8.0",
