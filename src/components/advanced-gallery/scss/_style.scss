@@ -7,68 +7,12 @@
 	grid-auto-rows: 1fr;
 	margin-top: -10px;
 	margin-left: -10px;
-
-	--padding-left: 0;
-	--padding-top: 0;
-
-	--max-scale: 6;
 }
 
 .novablocks-advanced-gallery__grid-item {
 	position: relative;
 	margin-top: 10px;
 	margin-left: 10px;
-
-	--item-span-addon: 3;
-	--item-span: calc(var(--max-scale) - var(--scale) + var(--item-span-addon));
-	--item-span-fallback: 9;
-
-	--item-1-span: calc(var(--max-scale) - var(--scale, 0) + 3);
-
-	// going clockwise
-	--item-1-col-start: calc(1 + var(--padding-left));
-	--item-1-row-start: calc(1 + var(--padding-top));
-
-	--item-2-col-start: calc(var(--item-1-span) + 1 - var(--offset) + var(--padding-left));
-	--item-2-row-start: calc(2 + var(--scale, 0) - var(--scale, 1)  + var(--offset) + var(--padding-top));
-
-	--item-3-col-start: calc(var(--item-1-span) + 1 - 2 * var(--offset) + var(--padding-left));
-	--item-3-row-start: calc(1 + var(--item-1-span) + var(--padding-top));
-
-	--item-4-col-start: calc(4 - 3 * var(--scale, 1) + 3 * var(--scale, 0) - var(--offset) + var(--padding-left));
-	--item-4-row-start: calc(1 + var(--item-1-span) - var(--offset) + var(--padding-top));
-
-	grid-column-end: span var(--item-span, var(--item-span-fallback));
-	grid-row-end: span var(--item-span, var(--item-span-fallback));
-
-	&:nth-child(1) {
-		// the first item should be the biggest
-		min-height: 300px;
-
-		grid-column-start: var(--item-1-col-start);
-		grid-row-start: var(--item-1-row-start);
-	}
-
-	&:nth-child(2) {
-		--item-span-addon: 2;
-
-		grid-column-start: var(--item-2-col-start);
-		grid-row-start: var(--item-2-row-start);
-	}
-
-	&:nth-child(3) {
-		--item-span-addon: 1;
-
-		grid-column-start: var(--item-3-col-start);
-		grid-row-start: var(--item-3-row-start);
-	}
-
-	&:nth-child(4) {
-		--item-span-addon: 0;
-
-		grid-column-start: var(--item-4-col-start);
-		grid-row-start: var(--item-4-row-start);
-	}
 }
 
 .novablocks-advanced-gallery__image[class] {

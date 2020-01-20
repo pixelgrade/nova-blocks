@@ -64,40 +64,71 @@ const AdvancedGalleryList = ( props ) => {
 		return false;
 	}
 
-	const styles = {};
-
-	styles['--offset'] = offset;
-
-	if ( scale !== 0 ) {
-		styles['--scale'] = scale;
-
-		if ( offset > 3 ) {
-			styles['--padding-left'] = offset - 3;
-		}
-
-		if ( offset * 2 > 9 - scale ) {
-			styles['--padding-left'] = offset * 2 + scale - 9;
-		}
-
-		if ( offset > 9 - scale ) {
-			styles['--padding-top'] = offset + scale - 9;
-		}
-	} else {
-		styles['--padding-left'] = 'var(--offset)';
-	}
-
 	return (
 		<div className={ `novablocks-advanced-gallery` }>
-			<div className={ `novablocks-advanced-gallery__grid` } style={ styles }>
-				{ images.map( image => <AdvancedGalleryListItem { ...image } /> ) }
+			<div className={ `novablocks-advanced-gallery__grid` }>
+				{ images.map( ( image, index ) => {
+
+					let idx = index;
+
+					if ( index === 3 ) idx = 2;
+					if ( index === 2 ) idx = 3;
+
+					const maxSize = 20;
+					const col = idx % 2;
+					const row = Math.floor( idx / 2 );
+					const size = maxSize - scale * ( index % 4 );
+					const x = maxSize * col + 1;
+					const y = maxSize * row + 1;
+
+					// offset for positioning
+					let offsetX = ( 1 - col % 2 ) * ( row % 2 ) * index * scale;
+					let offsetY = ( col % 2 ) * ( 1 - row % 2 ) * index * scale;
+
+					// offset from offset
+					// move 1st to right
+					offsetX += ( 1 - col % 2 ) * ( 1 - row % 2 ) * offset;
+					// move 2nd down
+					offsetY -= ( 1 - col % 2 ) * ( row % 2 ) * offset;
+					// move 3rd to left
+					offsetX -= ( col % 2 ) * ( row % 2 ) * offset;
+					// move 4th up
+					offsetY += ( col % 2 ) * ( 1 - row % 2 ) * offset;
+
+					let extraLeft = Math.min( offset, 20 - offset );
+
+					if ( images.length > 3 ) {
+						extraLeft = Math.min( extraLeft, 3 * scale );
+					}
+
+					const style = {
+						gridColumnStart: x + offsetX - extraLeft,
+						gridColumnEnd: `span ${size}`,
+						gridRowStart: y + offsetY,
+						gridRowEnd: `span ${size}`,
+					};
+
+					const props = {
+						image,
+						style,
+					}
+
+					return <AdvancedGalleryListItem { ...props } />
+				} ) }
 			</div>
 		</div>
 	);
 }
 
-const AdvancedGalleryListItem = ( image ) => {
+const AdvancedGalleryListItem = ( props ) => {
+
+	const {
+		image,
+		style
+	} = props;
+
 	return (
-		<div className={ `novablocks-advanced-gallery__grid-item` }>
+		<div className={ `novablocks-advanced-gallery__grid-item` } style={ style }>
 			<img className={ `novablocks-advanced-gallery__image` } src={ image.url } />
 		</div>
 	);
@@ -138,7 +169,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					value={ offset }
 					onChange={ offset => setAttributes( { offset } ) }
 					min={ 0 }
-					max={ maxOffset }
+					max={ 20 }
 				/>
 			</PanelBody>
 		</InspectorControls>
