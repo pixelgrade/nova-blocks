@@ -2895,6 +2895,233 @@ var navigation = Object(react["createElement"])("svg", {
   d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
   fill: "#6565F2"
 }));
+// CONCATENATED MODULE: ./src/components/advanced-gallery/index.js
+
+
+var advanced_gallery_ = wp.i18n.__;
+var advanced_gallery_Fragment = wp.element.Fragment;
+var _wp$blockEditor = wp.blockEditor,
+    BlockControls = _wp$blockEditor.BlockControls,
+    advanced_gallery_InspectorControls = _wp$blockEditor.InspectorControls,
+    MediaUpload = _wp$blockEditor.MediaUpload;
+var advanced_gallery_wp$components = wp.components,
+    advanced_gallery_PanelBody = advanced_gallery_wp$components.PanelBody,
+    RangeControl = advanced_gallery_wp$components.RangeControl,
+    Toolbar = advanced_gallery_wp$components.Toolbar,
+    IconButton = advanced_gallery_wp$components.IconButton;
+var _wp$blockEditor2 = wp.blockEditor,
+    MediaPlaceholder = _wp$blockEditor2.MediaPlaceholder,
+    BlockIcon = _wp$blockEditor2.BlockIcon;
+
+var advanced_gallery_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
+  var setAttributes = props.setAttributes,
+      images = props.attributes.images;
+
+  if (!!images && !!images.length) {
+    return false;
+  }
+
+  return Object(react["createElement"])(MediaPlaceholder, {
+    icon: Object(react["createElement"])(BlockIcon, {
+      icon: "format-gallery"
+    }),
+    onSelect: function onSelect(images) {
+      setAttributes({
+        images: images
+      });
+    },
+    accept: "image/*",
+    allowedTypes: ['image'],
+    multiple: true
+  });
+};
+
+var advanced_gallery_AdvancedGalleryList = function AdvancedGalleryList(props) {
+  var _props$attributes = props.attributes,
+      images = _props$attributes.images,
+      offset = _props$attributes.offset,
+      scale = _props$attributes.scale;
+
+  if (!images || !images.length) {
+    return false;
+  }
+
+  var styles = {};
+  styles['--offset'] = offset;
+
+  if (scale !== 0) {
+    styles['--scale'] = scale;
+
+    if (offset > 3) {
+      styles['--padding-left'] = offset - 3;
+    }
+
+    if (offset * 2 > 9 - scale) {
+      styles['--padding-left'] = offset * 2 + scale - 9;
+    }
+
+    if (offset > 9 - scale) {
+      styles['--padding-top'] = offset + scale - 9;
+    }
+  } else {
+    styles['--padding-left'] = 'var(--offset)';
+  }
+
+  return Object(react["createElement"])("div", {
+    className: "novablocks-advanced-gallery"
+  }, Object(react["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid",
+    style: styles
+  }, images.map(function (image) {
+    return Object(react["createElement"])(advanced_gallery_AdvancedGalleryListItem, image);
+  })));
+};
+
+var advanced_gallery_AdvancedGalleryListItem = function AdvancedGalleryListItem(image) {
+  return Object(react["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item"
+  }, Object(react["createElement"])("img", {
+    className: "novablocks-advanced-gallery__image",
+    src: image.url
+  }));
+};
+
+var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGalleryInspectorControls(props) {
+  var setAttributes = props.setAttributes,
+      _props$attributes2 = props.attributes,
+      scale = _props$attributes2.scale,
+      offset = _props$attributes2.offset;
+  var maxOffset = 9 - scale;
+  return Object(react["createElement"])(advanced_gallery_InspectorControls, null, Object(react["createElement"])(advanced_gallery_PanelBody, {
+    title: advanced_gallery_('Advanced Gallery Controls', '__plugin_txtd'),
+    initialOpen: true
+  }, Object(react["createElement"])(RangeControl, {
+    label: advanced_gallery_('Scale', '__plugin_txtd'),
+    value: scale,
+    onChange: function onChange(newScale) {
+      var newMaxOffset = 9 - newScale;
+      var newOffset = offset > newMaxOffset ? newMaxOffset : offset;
+      setAttributes({
+        offset: newOffset,
+        scale: newScale
+      });
+    },
+    min: 0,
+    max: 5
+  }), Object(react["createElement"])(RangeControl, {
+    label: advanced_gallery_('Offset', '__plugin_txtd'),
+    value: offset,
+    onChange: function onChange(offset) {
+      return setAttributes({
+        offset: offset
+      });
+    },
+    min: 0,
+    max: maxOffset
+  })));
+};
+
+var advanced_gallery_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
+  var setAttributes = props.setAttributes,
+      images = props.attributes.images;
+
+  if (!images || !images.length) {
+    return false;
+  }
+
+  return Object(react["createElement"])(BlockControls, null, Object(react["createElement"])(Toolbar, null, Object(react["createElement"])(MediaUpload, {
+    type: "image",
+    multiple: true,
+    gallery: true,
+    value: images.map(function (image) {
+      return image.id;
+    }),
+    onSelect: function onSelect(images) {
+      setAttributes({
+        images: images
+      });
+    },
+    render: function render(_ref) {
+      var open = _ref.open;
+      return Object(react["createElement"])(IconButton, {
+        className: "components-icon-button components-toolbar__control",
+        label: advanced_gallery_('Change Media', '__plugin_txtd'),
+        icon: swap,
+        onClick: open
+      });
+    }
+  })));
+};
+
+var advanced_gallery_AdvancedGallery = function AdvancedGallery(props) {
+  return Object(react["createElement"])(advanced_gallery_Fragment, null, Object(react["createElement"])(advanced_gallery_AdvancedGalleryPlaceholder, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryList, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryInspectorControls, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryBlockControls, props));
+};
+
+var advanced_gallery_addFilter = wp.hooks.addFilter;
+var advanced_gallery_enableBlockIdAttributeOnBlocks = ['novablocks/advanced-gallery'];
+
+function addAdvancedGalleryAttributes(block) {
+  if (!advanced_gallery_enableBlockIdAttributeOnBlocks.includes(block.name)) {
+    return block;
+  }
+
+  if (typeof block.attributes !== 'undefined') {
+    block.attributes = Object.assign(block.attributes, {
+      images: {
+        type: 'array',
+        default: []
+      },
+      scale: {
+        type: 'number',
+        default: 0
+      },
+      offset: {
+        type: 'number',
+        default: 0
+      }
+    });
+  }
+
+  return block;
+}
+
+advanced_gallery_addFilter('blocks.registerBlockType', 'novablocks/add-blockId-attribute', addAdvancedGalleryAttributes);
+/* harmony default export */ var advanced_gallery = (advanced_gallery_AdvancedGallery);
+// CONCATENATED MODULE: ./src/blocks/advanced-gallery/edit.js
+
+
+
+var edit_Edit = function Edit(props) {
+  return Object(react["createElement"])("div", null, Object(react["createElement"])(advanced_gallery, props));
+};
+
+/* harmony default export */ var advanced_gallery_edit = (edit_Edit);
+// CONCATENATED MODULE: ./src/blocks/advanced-gallery/index.js
+
+
+/**
+ * WordPress dependencies
+ */
+
+var blocks_advanced_gallery_ = wp.i18n.__;
+var registerBlockType = wp.blocks.registerBlockType;
+
+function init() {
+  registerBlockType('novablocks/advanced-gallery', {
+    title: blocks_advanced_gallery_('Advanced Gallery', '__plugin_txtd'),
+    description: blocks_advanced_gallery_('Advanced Gallery', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: 'gallery',
+    // Additional search terms
+    keywords: [blocks_advanced_gallery_('image with text', '__plugin_txtd'), blocks_advanced_gallery_('columns', '__plugin_txtd'), blocks_advanced_gallery_('side text', '__plugin_txtd')],
+    edit: advanced_gallery_edit,
+    save: function save() {
+      return false;
+    }
+  });
+}
+
+/* harmony default export */ var blocks_advanced_gallery = (init);
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/index.js
 
 
@@ -2908,17 +3135,17 @@ var navigation = Object(react["createElement"])("svg", {
  */
 
 var announcement_bar_ = wp.i18n.__;
-var registerBlockType = wp.blocks.registerBlockType;
+var announcement_bar_registerBlockType = wp.blocks.registerBlockType;
 var announcement_bar_Fragment = wp.element.Fragment;
 var announcement_bar_wp$components = wp.components,
     BaseControl = announcement_bar_wp$components.BaseControl,
     ToggleControl = announcement_bar_wp$components.ToggleControl;
-var _wp$blockEditor = wp.blockEditor,
-    RichText = _wp$blockEditor.RichText,
-    URLInput = _wp$blockEditor.URLInput;
+var announcement_bar_wp$blockEditor = wp.blockEditor,
+    RichText = announcement_bar_wp$blockEditor.RichText,
+    URLInput = announcement_bar_wp$blockEditor.URLInput;
 
-function init() {
-  registerBlockType('novablocks/announcement-bar', {
+function announcement_bar_init() {
+  announcement_bar_registerBlockType('novablocks/announcement-bar', {
     title: announcement_bar_('Announcement Bar', '__plugin_txtd'),
     description: announcement_bar_('Display a featured message through a banner across the top of your site.', '__plugin_txtd'),
     category: 'nova-blocks',
@@ -2992,7 +3219,7 @@ function init() {
   });
 }
 
-/* harmony default export */ var announcement_bar = (init);
+/* harmony default export */ var announcement_bar = (announcement_bar_init);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
 var helpers_extends = __webpack_require__(8);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
@@ -3405,7 +3632,7 @@ var padding_Fragment = wp.element.Fragment;
 var padding_wp$components = wp.components,
     padding_Button = padding_wp$components.Button,
     ButtonGroup = padding_wp$components.ButtonGroup,
-    RangeControl = padding_wp$components.RangeControl;
+    padding_RangeControl = padding_wp$components.RangeControl;
 
 var padding_PaddingControls = function PaddingControls(props) {
   var _props$attributes = props.attributes,
@@ -3424,7 +3651,7 @@ var padding_PaddingControls = function PaddingControls(props) {
         });
       }
     }, option.label);
-  })), 'custom' === contentPadding && Object(react["createElement"])(RangeControl, {
+  })), 'custom' === contentPadding && Object(react["createElement"])(padding_RangeControl, {
     value: contentPaddingCustom,
     onChange: function onChange(newContentPadding) {
       return setAttributes({
@@ -4790,7 +5017,7 @@ function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.le
  */
 var gallery_options_ = wp.i18n.__;
 var gallery_options_Component = wp.element.Component;
-var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
+var gallery_options_MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
 var ALLOWED_MEDIA_TYPES = ['image'];
 
 var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
@@ -4814,7 +5041,7 @@ var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
     });
   }
 
-  return Object(react["createElement"])(MediaPlaceholder, {
+  return Object(react["createElement"])(gallery_options_MediaPlaceholder, {
     addToGallery: hasImages,
     className: "",
     labels: {
@@ -4891,10 +5118,10 @@ var color_controls_Fragment = wp.element.Fragment;
 var color_controls_wp$components = wp.components,
     ColorPalette = color_controls_wp$components.ColorPalette,
     Dropdown = color_controls_wp$components.Dropdown,
-    IconButton = color_controls_wp$components.IconButton,
+    color_controls_IconButton = color_controls_wp$components.IconButton,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    Toolbar = color_controls_wp$components.Toolbar,
+    color_controls_Toolbar = color_controls_wp$components.Toolbar,
     color_controls_BaseControl = color_controls_wp$components.BaseControl;
 var PanelColorSettings = wp.blockEditor.PanelColorSettings;
 var colors = [{
@@ -4982,7 +5209,7 @@ var color_controls_ColorPanel = function ColorPanel(props) {
 };
 
 var color_controls_ColorToolbar = function ColorToolbar(props) {
-  return Object(react["createElement"])(Toolbar, {
+  return Object(react["createElement"])(color_controls_Toolbar, {
     className: "pixelgrade-hero-block-toolbar"
   }, Object(react["createElement"])(Dropdown, {
     position: "bottom",
@@ -4991,7 +5218,7 @@ var color_controls_ColorToolbar = function ColorToolbar(props) {
     renderToggle: function renderToggle(_ref) {
       var isOpen = _ref.isOpen,
           onToggle = _ref.onToggle;
-      return Object(react["createElement"])(IconButton, {
+      return Object(react["createElement"])(color_controls_IconButton, {
         onClick: onToggle,
         icon: invert,
         "aria-expanded": isOpen,
@@ -5914,7 +6141,7 @@ var edit_wp$components = wp.components,
     edit_TextControl = edit_wp$components.TextControl;
 var edit_wp$blockEditor = wp.blockEditor,
     BlockAlignmentToolbar = edit_wp$blockEditor.BlockAlignmentToolbar,
-    BlockControls = edit_wp$blockEditor.BlockControls;
+    edit_BlockControls = edit_wp$blockEditor.BlockControls;
 var edit_wp$compose = wp.compose,
     edit_compose = edit_wp$compose.compose,
     edit_createHigherOrderComponent = edit_wp$compose.createHigherOrderComponent;
@@ -5925,7 +6152,7 @@ window.gm_authFailure = function () {
   window.dispatchEvent(new Event('novablock.googlemaps_authfailure'));
 };
 
-var edit_Edit =
+var google_map_edit_Edit =
 /*#__PURE__*/
 function (_Component) {
   inherits_default()(Edit, _Component);
@@ -6101,7 +6328,7 @@ function (_Component) {
         newProps.attributes.styleData = JSON.parse(styleData);
       }
 
-      return Object(react["createElement"])(edit_Fragment, null, Object(react["createElement"])(BlockControls, null, Object(react["createElement"])(BlockAlignmentToolbar, {
+      return Object(react["createElement"])(edit_Fragment, null, Object(react["createElement"])(edit_BlockControls, null, Object(react["createElement"])(BlockAlignmentToolbar, {
         value: align,
         onChange: function onChange(align) {
           return setAttributes({
@@ -6126,7 +6353,7 @@ function (_Component) {
   return Edit;
 }(edit_Component);
 
-/* harmony default export */ var google_map_edit = (edit_createHigherOrderComponent(edit_compose([with_settings, with_parallax]))(edit_Edit));
+/* harmony default export */ var google_map_edit = (edit_createHigherOrderComponent(edit_compose([with_settings, with_parallax]))(google_map_edit_Edit));
 // CONCATENATED MODULE: ./src/blocks/google-map/index.js
 /**
  * Internal dependencies
@@ -6253,7 +6480,7 @@ var header_edit_wp$components = wp.components,
     edit_Toolbar = header_edit_wp$components.Toolbar,
     edit_IconButton = header_edit_wp$components.IconButton;
 var header_edit_wp$blockEditor = wp.blockEditor,
-    edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
+    header_edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
     InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
 var TEMPLATE_OPTIONS = [{
   title: header_edit_('Logo on the left side and one navigation menu', '__plugin_txtd'),
@@ -6303,7 +6530,7 @@ function header_edit_Edit(props) {
   };
 
   var classNames = classnames_default()(className, "site-header", "site-header-".concat(layout));
-  return [Object(react["createElement"])(edit_BlockControls, null, Object(react["createElement"])(edit_Toolbar, null, Object(react["createElement"])(edit_IconButton, {
+  return [Object(react["createElement"])(header_edit_BlockControls, null, Object(react["createElement"])(edit_Toolbar, null, Object(react["createElement"])(edit_IconButton, {
     className: "components-icon-button components-toolbar__control",
     label: header_edit_('Change Layout', '__plugin_txtd'),
     onClick: function onClick() {
@@ -6781,7 +7008,7 @@ var preview_HeroPreview = function HeroPreview(props) {
 var block_controls_ = wp.i18n.__;
 var block_controls_wp$blockEditor = wp.blockEditor,
     block_controls_BlockControls = block_controls_wp$blockEditor.BlockControls,
-    MediaUpload = block_controls_wp$blockEditor.MediaUpload;
+    block_controls_MediaUpload = block_controls_wp$blockEditor.MediaUpload;
 var block_controls_wp$components = wp.components,
     block_controls_IconButton = block_controls_wp$components.IconButton,
     block_controls_Toolbar = block_controls_wp$components.Toolbar;
@@ -6789,7 +7016,7 @@ var block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_HeroBlockControls = function HeroBlockControls(props) {
   var setAttributes = props.setAttributes;
-  return Object(react["createElement"])(block_controls_BlockControls, null, Object(react["createElement"])(alignment_controls_AlignmentToolbar, props), Object(react["createElement"])(color_controls_ColorToolbar, props), Object(react["createElement"])(block_controls_Toolbar, null, Object(react["createElement"])(MediaUpload, {
+  return Object(react["createElement"])(block_controls_BlockControls, null, Object(react["createElement"])(alignment_controls_AlignmentToolbar, props), Object(react["createElement"])(color_controls_ColorToolbar, props), Object(react["createElement"])(block_controls_Toolbar, null, Object(react["createElement"])(block_controls_MediaUpload, {
     allowedTypes: block_controls_ALLOWED_MEDIA_TYPES,
     onSelect: function onSelect(media) {
       return setAttributes({
@@ -7038,7 +7265,7 @@ function block_controls_objectSpread(target) { for (var i = 1; i < arguments.len
 
 var media_block_controls_ = wp.i18n.__;
 var media_block_controls_wp$blockEditor = wp.blockEditor,
-    block_controls_MediaUpload = media_block_controls_wp$blockEditor.MediaUpload,
+    media_block_controls_MediaUpload = media_block_controls_wp$blockEditor.MediaUpload,
     media_block_controls_BlockControls = media_block_controls_wp$blockEditor.BlockControls;
 var media_block_controls_wp$components = wp.components,
     media_block_controls_IconButton = media_block_controls_wp$components.IconButton,
@@ -7076,7 +7303,7 @@ var block_controls_MediaBlockControls = function MediaBlockControls(props) {
         isActive: mediaPosition === control
       });
     })
-  }), Object(react["createElement"])(alignment_controls_AlignmentToolbar, props), hasImages && Object(react["createElement"])(media_block_controls_Toolbar, null, Object(react["createElement"])(block_controls_MediaUpload, {
+  }), Object(react["createElement"])(alignment_controls_AlignmentToolbar, props), hasImages && Object(react["createElement"])(media_block_controls_Toolbar, null, Object(react["createElement"])(media_block_controls_MediaUpload, {
     type: "image",
     multiple: true,
     gallery: true,
@@ -7162,7 +7389,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
 var preview_wp$blockEditor = wp.blockEditor,
     media_preview_InnerBlocks = preview_wp$blockEditor.InnerBlocks,
     preview_MediaPlaceholder = preview_wp$blockEditor.MediaPlaceholder,
-    BlockIcon = preview_wp$blockEditor.BlockIcon;
+    preview_BlockIcon = preview_wp$blockEditor.BlockIcon;
 
 var preview_MediaPreview = function MediaPreview(props) {
   var _props$attributes = props.attributes,
@@ -7183,7 +7410,7 @@ var preview_MediaPreview = function MediaPreview(props) {
   var displayImages = function displayImages(imagesArray) {
     if (0 === imagesArray.length) {
       return Object(react["createElement"])(preview_MediaPlaceholder, {
-        icon: Object(react["createElement"])(BlockIcon, {
+        icon: Object(react["createElement"])(preview_BlockIcon, {
           icon: "format-gallery"
         }),
         className: "novablocks-media__placeholder",
@@ -8835,6 +9062,7 @@ function opentable_init() {
 
 
 
+
 var dispatch = wp.data.dispatch;
 var updateCategory = wp.blocks.updateCategory;
 
@@ -8854,6 +9082,7 @@ function () {
         icon: nova
       });
       var supports = typeof_default()(settings['theme_support']) === 'object' ? Object.values(settings['theme_support']) : settings['theme_support'];
+      blocks_advanced_gallery();
 
       if (supports.indexOf('announcement-bar') > -1) {
         announcement_bar();
