@@ -3,6 +3,8 @@
  */
 import classnames from 'classnames';
 
+import AdvancedGallery from '../../components/advanced-gallery';
+
 /**
  * WordPress dependencies
  */
@@ -21,7 +23,6 @@ const MediaPreview = function( props ) {
 			images,
 		},
 		className,
-		updateImages,
 		settings,
 	} = props;
 
@@ -36,32 +37,11 @@ const MediaPreview = function( props ) {
 		}
 	);
 
-	const galleryImages = images.map( ( image ) => JSON.parse( image ) );
+	const passedProps = props;
 
-	const displayImages = ( imagesArray ) => {
-		if ( 0 === imagesArray.length ) {
-			return (
-				<MediaPlaceholder
-					icon={ <BlockIcon icon='format-gallery' /> }
-					className="novablocks-media__placeholder"
-					onSelect={ updateImages }
-					accept="image/*"
-					allowedTypes={ [ 'image' ] }
-					multiple
-				/>
-			);
-		}
-
-		return (
-			galleryImages.map( ( image ) => {
-				return (
-					<div key={ image.id } className="novablocks-media__image">
-						<img alt={ image.alt } src={ image.url } />
-					</div>
-				);
-			} )
-		);
-	};
+	if ( images.length && typeof images[0] === 'string' ) {
+		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
+	}
 
 	return (
 		<div className={ classNames }>
@@ -77,7 +57,7 @@ const MediaPreview = function( props ) {
 							</div>
 						</div>
 						<div className="novablocks-media__aside">
-							{ displayImages( images ) }
+							<AdvancedGallery { ...passedProps } />
 						</div>
 					</div>
 				</div>

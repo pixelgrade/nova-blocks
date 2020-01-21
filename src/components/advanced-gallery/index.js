@@ -381,7 +381,7 @@ const AdvancedGallery = ( props ) => {
 
 const { addFilter } = wp.hooks;
 
-const enableBlockIdAttributeOnBlocks = [ 'novablocks/advanced-gallery' ];
+const enableBlockIdAttributeOnBlocks = [ 'novablocks/media' ];
 
 function addAdvancedGalleryAttributes( block ) {
 
