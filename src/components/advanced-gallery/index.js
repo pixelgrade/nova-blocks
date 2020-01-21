@@ -136,6 +136,7 @@ const AdvancedGalleryGrid = ( props ) => {
 			scale,
 			rotate,
 			orientation,
+			gridGap,
 		}
 	} = props;
 
@@ -149,6 +150,10 @@ const AdvancedGalleryGrid = ( props ) => {
 	for ( i = 0, j = images.length; i < j; i += chunkSize ) {
 		chunks.push( images.slice( i, i + chunkSize ) );
 	}
+
+	const gridStyle = {};
+
+	gridStyle['--novablocks-advanced-gallery-grid-gap'] = `${gridGap}px`;
 
 	return (
 		<div className={ `novablocks-advanced-gallery` }>
@@ -166,7 +171,7 @@ const AdvancedGalleryGrid = ( props ) => {
 				} );
 
 				return (
-					<div className={ `novablocks-advanced-gallery__grid` } key={ chunkIndex }>
+					<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle } key={ chunkIndex }>
 						{ chunkWithMeta.map( meta => {
 							const { idx, col, row, size, x, y, image, index } = meta;
 							const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
@@ -248,6 +253,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			orientation,
 			aspect,
 			aspectRatio,
+			gridGap,
 		},
 		settings: {
 			advancedGalleryPresetOptions
@@ -303,6 +309,13 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					onChange={ orientation => setAttributes( { orientation } ) }
 					min={ 0 }
 					max={ 3 }
+				/>
+				<RangeControl
+					label={ __( 'Grid Gap', '__plugin_txtd' ) }
+					value={ gridGap }
+					onChange={ gridGap => setAttributes( { gridGap } ) }
+					min={ 0 }
+					max={ 100 }
 				/>
 			</PanelBody>
 			<PanelBody title={ __( 'Images Controls', '__plugin_txtd' ) } initialOpen={ true }>
@@ -381,7 +394,7 @@ const AdvancedGallery = ( props ) => {
 
 const { addFilter } = wp.hooks;
 
-const enableBlockIdAttributeOnBlocks = [ 'novablocks/media' ];
+const enableBlockIdAttributeOnBlocks = [ 'novablocks/media', 'novablocks/advanced-gallery' ];
 
 function addAdvancedGalleryAttributes( block ) {
 
@@ -422,6 +435,10 @@ function addAdvancedGalleryAttributes( block ) {
 			aspectRatio: {
 				type: 'number',
 				default: 2,
+			},
+			gridGap: {
+				type: 'number',
+				default: 10,
 			},
 		});
 	}

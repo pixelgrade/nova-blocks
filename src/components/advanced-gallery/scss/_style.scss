@@ -7,8 +7,10 @@
 	display: grid;
 	grid-auto-rows: 1fr;
 
-	margin-top: -10px;
-	margin-left: -10px;
+	--novablocks-advanced-gallery-grid-gap: 10px;
+
+	margin-top: calc(-1 * var(--novablocks-advanced-gallery-grid-gap));
+	margin-left: calc(-1 * var(--novablocks-advanced-gallery-grid-gap));
 
 	& + & {
 		margin-top: 0;
@@ -18,8 +20,8 @@
 .novablocks-advanced-gallery__grid-item {
 	position: relative;
 
-	margin-top: 10px;
-	margin-left: 10px;
+	margin-top: var(--novablocks-advanced-gallery-grid-gap);
+	margin-left: var(--novablocks-advanced-gallery-grid-gap);
 
 	&:nth-child(1) {
 		// the first item should be the biggest
