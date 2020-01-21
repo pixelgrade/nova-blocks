@@ -1,18 +1,30 @@
 .novablocks-advanced-gallery {
-	overflow: hidden;
+	// padding top to make sure negative margin of child doesn't collapse
+	padding-top: 1px;
 }
 
 .novablocks-advanced-gallery__grid {
 	display: grid;
 	grid-auto-rows: 1fr;
+
 	margin-top: -10px;
 	margin-left: -10px;
+
+	& + & {
+		margin-top: 0;
+	}
 }
 
 .novablocks-advanced-gallery__grid-item {
 	position: relative;
+
 	margin-top: 10px;
 	margin-left: 10px;
+
+	&:nth-child(1) {
+		// the first item should be the biggest
+		min-height: 300px;
+	}
 }
 
 .novablocks-advanced-gallery__image[class] {

@@ -747,6 +747,57 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
+		'advancedGalleryPresetOptions' => array(
+			array (
+				'label' => 'Clean',
+				'value' => 'clean',
+				'preset' => array(
+					'scale' => 0,
+					'offset' => 0,
+					'rotate' => 0,
+				),
+			),
+			array (
+				'label' => 'Overlap',
+				'value' => 'overlap',
+				'preset' => array(
+					'scale' => 0,
+					'offset' => 5,
+					'rotate' => 0,
+				),
+			),
+			array (
+				'label' => 'Messy',
+				'value' => 'messy',
+				'preset' => array(
+					'scale' => 1,
+					'offset' => 15,
+					'rotate' => 5,
+				),
+			),
+			array (
+				'label' => 'Creative',
+				'value' => 'creative',
+				'preset' => array(
+					'scale' => 3,
+					'offset' => 14,
+					'rotate' => 0,
+				),
+			),
+			array (
+				'label' => 'Sparse',
+				'value' => 'sparse',
+				'preset' => array(
+					'scale' => 5,
+					'offset' => 20,
+					'rotate' => 0,
+				),
+			),
+			array (
+				'label' => 'Custom',
+				'value' => 'custom',
+			),
+		),
 		'theme_support' => novablocks_get_theme_support(),
 	);
 

@@ -1,4 +1,5 @@
 import * as icons from "../../icons";
+import withSettings from "../with-settings";
 
 const { __ } = wp.i18n;
 
@@ -14,6 +15,7 @@ const {
 
 const {
 	PanelBody,
+	RadioControl,
 	RangeControl,
 	Toolbar,
 	IconButton,
@@ -23,6 +25,9 @@ const {
 	MediaPlaceholder,
 	BlockIcon,
 } = wp.blockEditor;
+
+const ITEM_SIZE = 20;
+const MAX_ROTATION = 15;
 
 const AdvancedGalleryPlaceholder = ( props ) => {
 
@@ -50,13 +55,46 @@ const AdvancedGalleryPlaceholder = ( props ) => {
    )
 }
 
-const AdvancedGalleryList = ( props ) => {
+const getIndex = ( index, orientation = 0 ) => {
+
+	if ( orientation === 0 ) {
+		if ( index % 4 === 3 ) return index - 1;
+		if ( index % 4 === 2 ) return index + 1;
+		return index;
+	}
+
+	if ( orientation === 1 ) {
+		if ( index % 4 === 0 ) return index + 1;
+		if ( index % 4 === 1 ) return index - 1;
+		return index;
+	}
+
+	if ( orientation === 2 ) {
+		if ( index % 4 === 0 ) return index + 3;
+		if ( index % 4 === 1 ) return index + 1;
+		if ( index % 4 === 2 ) return index - 2;
+		if ( index % 4 === 3 ) return index - 2;
+	}
+
+	if ( orientation === 3 ) {
+		if ( index % 4 === 0 ) return index + 2;
+		if ( index % 4 === 1 ) return index + 2;
+		if ( index % 4 === 2 ) return index - 1;
+		if ( index % 4 === 3 ) return index - 3;
+	}
+}
+
+
+
+const AdvancedGalleryGrid = ( props ) => {
 
 	const {
 		attributes: {
 			images,
 			offset,
 			scale,
+			rotate,
+			orientation,
 		}
 	} = props;
 
@@ -64,72 +102,95 @@ const AdvancedGalleryList = ( props ) => {
 		return false;
 	}
 
+	let i, j, temparray, chunkSize = 4, chunks = [];
+
+	// split into groups of 4
+	for ( i = 0, j = images.length; i < j; i += chunkSize ) {
+		chunks.push( images.slice( i, i + chunkSize ) );
+	}
+
 	return (
 		<div className={ `novablocks-advanced-gallery` }>
-			<div className={ `novablocks-advanced-gallery__grid` }>
-				{ images.map( ( image, index ) => {
+			{ chunks.map( ( chunkImages, chunkIndex ) => {
+				return (
+					<div className={ `novablocks-advanced-gallery__grid` } key={ chunkIndex }>
+						{ chunkImages.map( ( image, index ) => {
+							const idx = getIndex( index, orientation );
+							const col = idx % 2;
+							const row = Math.floor( idx / 2 );
+							const size = ITEM_SIZE - scale * index;
+							const x = ITEM_SIZE * col + 1;
+							const y = ITEM_SIZE * row + 1;
 
-					let idx = index;
+							const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
 
-					if ( index === 3 ) idx = 2;
-					if ( index === 2 ) idx = 3;
+							console.log( {x,y,size, idx, index} );
 
-					const maxSize = 20;
-					const col = idx % 2;
-					const row = Math.floor( idx / 2 );
-					const size = maxSize - scale * ( index % 4 );
-					const x = maxSize * col + 1;
-					const y = maxSize * row + 1;
+							// offset for positioning
+							let offsetX = ( 1 - col % 2 ) * index * scale;
+							let offsetY = ( 1 - row % 2 ) * index * scale;
 
-					// offset for positioning
-					let offsetX = ( 1 - col % 2 ) * ( row % 2 ) * index * scale;
-					let offsetY = ( col % 2 ) * ( 1 - row % 2 ) * index * scale;
+							// offset from offset
+							// move 1st to right
+							offsetX += ( 1 - col % 2 ) * ( 1 - row % 2 ) * offset;
+							// move 2nd down
+							offsetY -= ( 1 - col % 2 ) * ( row % 2 ) * offset;
+							// move 3rd to left
+							offsetX -= ( col % 2 ) * ( row % 2 ) * offset;
+							// move 4th up
+							offsetY += ( col % 2 ) * ( 1 - row % 2 ) * offset;
 
-					// offset from offset
-					// move 1st to right
-					offsetX += ( 1 - col % 2 ) * ( 1 - row % 2 ) * offset;
-					// move 2nd down
-					offsetY -= ( 1 - col % 2 ) * ( row % 2 ) * offset;
-					// move 3rd to left
-					offsetX -= ( col % 2 ) * ( row % 2 ) * offset;
-					// move 4th up
-					offsetY += ( col % 2 ) * ( 1 - row % 2 ) * offset;
+							let extraLeft = 0;
+							let extraTop = 0;
 
-					let extraLeft = Math.min( offset, 20 - offset );
+//							if ( chunkIndex > 0 ) {
+//								extraTop = Math.min( ITEM_SIZE - offset, 2 * scale );
+//							}
 
-					if ( images.length > 3 ) {
-						extraLeft = Math.min( extraLeft, 3 * scale );
-					}
+							const style = {
+								gridColumnStart: x + offsetX - extraLeft,
+								gridColumnEnd: `span ${size}`,
+								gridRowStart: y + offsetY - extraTop,
+								gridRowEnd: `span ${size}`,
+								transform: rotation,
+							};
 
-					const style = {
-						gridColumnStart: x + offsetX - extraLeft,
-						gridColumnEnd: `span ${size}`,
-						gridRowStart: y + offsetY,
-						gridRowEnd: `span ${size}`,
-					};
+							const passedProps = Object.assign( {}, props, { image, style } );
 
-					const props = {
-						image,
-						style,
-					}
-
-					return <AdvancedGalleryListItem { ...props } />
-				} ) }
-			</div>
+							return <AdvancedGalleryListItem { ...passedProps } key={ index }/>
+						} ) }
+					</div>
+				)
+			} ) }
 		</div>
 	);
 }
 
 const AdvancedGalleryListItem = ( props ) => {
 
-	const {
+	let {
+		attributes: {
+			aspect,
+			aspectRatio,
+		},
 		image,
-		style
+		style,
 	} = props;
+
+	const paddingTopValues = [ 16/9, 4/3, 1, 3/4, 9/16 ];
+
+	style = Object.assign( {}, style, {
+		paddingTop: aspect === 'cropped' ? `${ paddingTopValues[ aspectRatio ] * 100 }%` : '',
+		minHeight: aspect === 'cropped' ? 0 : '',
+	} );
+
+	let imageStyle = {
+		objectFit: aspect === 'cropped' ? 'cover' : 'contain',
+	};
 
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ style }>
-			<img className={ `novablocks-advanced-gallery__image` } src={ image.url } />
+			<img className={ `novablocks-advanced-gallery__image` } src={ image.url } style={ imageStyle } />
 		</div>
 	);
 }
@@ -141,6 +202,14 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 		attributes: {
 			scale,
 			offset,
+			rotate,
+			stylePreset,
+			orientation,
+			aspect,
+			aspectRatio,
+		},
+		settings: {
+			advancedGalleryPresetOptions
 		}
 	} = props;
 
@@ -148,29 +217,72 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 
 	return (
 		<InspectorControls>
+			<PanelBody title={ __( 'Advanced Gallery Presets', '__plugin_txtd' ) } initialOpen={ true }>
+				<RadioControl
+					label={ 'Style Presets' }
+					selected={ stylePreset }
+					onChange={ ( stylePreset ) => {
+						let newAttributes = { stylePreset };
+						let newOption = advancedGalleryPresetOptions.find( option => stylePreset === option.value );
+
+						if ( newOption && newOption.preset ) {
+							newAttributes = Object.assign( newOption.preset, newAttributes );
+						}
+
+						setAttributes( newAttributes );
+					} }
+					options={ advancedGalleryPresetOptions }
+				/>
+			</PanelBody>
 			<PanelBody title={ __( 'Advanced Gallery Controls', '__plugin_txtd' ) } initialOpen={ true }>
 				<RangeControl
 					label={ __( 'Scale', '__plugin_txtd' ) }
 					value={ scale }
-					onChange={ newScale => {
-						const newMaxOffset = 9 - newScale;
-						const newOffset = offset > newMaxOffset ? newMaxOffset : offset;
-
-						setAttributes( {
-							offset: newOffset,
-							scale: newScale,
-						} );
-					} }
+					onChange={ scale => setAttributes( { scale, stylePreset: 'custom' } ) }
 					min={ 0 }
 					max={ 5 }
 				/>
 				<RangeControl
 					label={ __( 'Offset', '__plugin_txtd' ) }
 					value={ offset }
-					onChange={ offset => setAttributes( { offset } ) }
+					onChange={ offset => setAttributes( { offset, stylePreset: 'custom' } ) }
 					min={ 0 }
 					max={ 20 }
 				/>
+				<RangeControl
+					label={ __( 'Rotate', '__plugin_txtd' ) }
+					value={ rotate }
+					onChange={ rotate => setAttributes( { rotate, stylePreset: 'custom' } ) }
+					min={ 0 }
+					max={ MAX_ROTATION }
+				/>
+				<RangeControl
+					label={ __( 'Orientation', '__plugin_txtd' ) }
+					value={ orientation }
+					onChange={ orientation => setAttributes( { orientation } ) }
+					min={ 0 }
+					max={ 3 }
+				/>
+			</PanelBody>
+			<PanelBody title={ __( 'Images Controls', '__plugin_txtd' ) } initialOpen={ true }>
+				<RadioControl
+					label={ 'Aspect' }
+					selected={ aspect }
+					onChange={ aspect => setAttributes( { aspect } ) }
+					options={ [
+						{ label: 'Original', value: 'original' },
+						{ label: 'Cropped', value: 'cropped' },
+					] }
+				/>
+				{ aspect === 'cropped' &&
+					<RangeControl
+						label={ __( 'Aspect Ratio', '__plugin_txtd' ) }
+						value={ aspectRatio }
+						onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
+						min={ 0 }
+						max={ 4 }
+					/>
+				}
 			</PanelBody>
 		</InspectorControls>
 	);
@@ -219,7 +331,7 @@ const AdvancedGallery = ( props ) => {
 	return (
 		<Fragment>
 			<AdvancedGalleryPlaceholder { ...props } />
-			<AdvancedGalleryList { ...props } />
+			<AdvancedGalleryGrid { ...props } />
 			<AdvancedGalleryInspectorControls { ...props } />
 			<AdvancedGalleryBlockControls { ...props } />
 		</Fragment>
@@ -250,6 +362,26 @@ function addAdvancedGalleryAttributes( block ) {
 				type: 'number',
 				default: 0,
 			},
+			rotate: {
+				type: 'number',
+				default: 0,
+			},
+			stylePreset: {
+				type: 'string',
+				default: 'clean',
+			},
+			orientation: {
+				type: 'number',
+				default: 0,
+			},
+			aspect: {
+				type: 'string',
+				default: 'cropped',
+			},
+			aspectRatio: {
+				type: 'number',
+				default: 2,
+			},
 		});
 	}
 
@@ -257,4 +389,4 @@ function addAdvancedGalleryAttributes( block ) {
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/add-blockId-attribute', addAdvancedGalleryAttributes );
 
-export default AdvancedGallery;
+export default withSettings( AdvancedGallery );
