@@ -838,11 +838,11 @@ function novablocks_get_theme_support() {
 		'slideshow',
 	);
 
-//	if ( is_array( $theme_support ) ) {
-//		$theme_support = array_unique( array_merge( $default, $theme_support ) );
-//	} else {
+	if ( is_array( $theme_support ) ) {
+		$theme_support = array_unique( array_merge( $default, $theme_support ), SORT_REGULAR );
+	} else {
 		$theme_support = $default;
-//	}
+	}
 
 	return $theme_support;
 }
