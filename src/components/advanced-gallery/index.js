@@ -84,7 +84,48 @@ const getIndex = ( index, orientation = 0 ) => {
 	}
 }
 
+const getExtra = ( chunk, offset, direction ) => {
+	const topLeftImage = chunk.find( image => image.idx === 0 );
+	const topRightImage = chunk.find( image => image.idx === 1 );
+	const bottomLeftImage = chunk.find( image => image.idx === 2 );
+	const bottomRightImage = chunk.find( image => image.idx === 3 );
 
+	const topLeftImageExtra = topLeftImage ? topLeftImage.scale * topLeftImage.index : ITEM_SIZE;
+	const topRightImageExtra = topRightImage ? topRightImage.scale * topRightImage.index : ITEM_SIZE;
+	const bottomLeftImageExtra = bottomLeftImage ? bottomLeftImage.scale * bottomLeftImage.index : ITEM_SIZE;
+	const bottomRightImageExtra = bottomRightImage ? bottomRightImage.scale * bottomRightImage.index : ITEM_SIZE;
+
+	const extra = ITEM_SIZE - offset;
+
+	if ( direction === 'left' ) {
+		// minimum distance to left margin between first and second image
+		let extraLeft = Math.min( offset + topLeftImageExtra, ITEM_SIZE );
+
+		// adding third image in equation
+		if ( chunk.length > 2 ) {
+			extraLeft = Math.min( extraLeft, ITEM_SIZE - offset );
+		}
+
+		// adding forth image in equation
+		if ( chunk.length > 3 ) {
+			extraLeft = Math.min( extraLeft, bottomLeftImageExtra );
+		}
+
+		return extraLeft;
+	}
+
+	if ( direction === 'top' ) {
+		let extraTop = Math.min( topLeftImageExtra, offset + topRightImageExtra );
+
+		if ( chunk.length > 3 ) {
+			extraTop = Math.min( extraTop, ITEM_SIZE - offset );
+		}
+
+		return extraTop;
+	}
+
+	return 0;
+}
 
 const AdvancedGalleryGrid = ( props ) => {
 
@@ -111,20 +152,24 @@ const AdvancedGalleryGrid = ( props ) => {
 
 	return (
 		<div className={ `novablocks-advanced-gallery` }>
-			{ chunks.map( ( chunkImages, chunkIndex ) => {
+			{ chunks.map( ( chunk, chunkIndex ) => {
+
+				const chunkWithMeta = chunk.map( ( image, index ) => {
+					const idx = getIndex( index, orientation );
+					const col = idx % 2;
+					const row = Math.floor( idx / 2 );
+					const size = ITEM_SIZE - scale * index;
+					const x = ITEM_SIZE * col + 1;
+					const y = ITEM_SIZE * row + 1;
+
+					return { idx, col, row, size, x, y, image, index, offset, scale };
+				} );
+
 				return (
 					<div className={ `novablocks-advanced-gallery__grid` } key={ chunkIndex }>
-						{ chunkImages.map( ( image, index ) => {
-							const idx = getIndex( index, orientation );
-							const col = idx % 2;
-							const row = Math.floor( idx / 2 );
-							const size = ITEM_SIZE - scale * index;
-							const x = ITEM_SIZE * col + 1;
-							const y = ITEM_SIZE * row + 1;
-
+						{ chunkWithMeta.map( meta => {
+							const { idx, col, row, size, x, y, image, index } = meta;
 							const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
-
-							console.log( {x,y,size, idx, index} );
 
 							// offset for positioning
 							let offsetX = ( 1 - col % 2 ) * index * scale;
@@ -140,12 +185,8 @@ const AdvancedGalleryGrid = ( props ) => {
 							// move 4th up
 							offsetY += ( col % 2 ) * ( 1 - row % 2 ) * offset;
 
-							let extraLeft = 0;
-							let extraTop = 0;
-
-//							if ( chunkIndex > 0 ) {
-//								extraTop = Math.min( ITEM_SIZE - offset, 2 * scale );
-//							}
+							let extraLeft = getExtra( chunkWithMeta, offset, 'left' );
+							let extraTop = getExtra( chunkWithMeta, offset, 'top' );
 
 							const style = {
 								gridColumnStart: x + offsetX - extraLeft,
