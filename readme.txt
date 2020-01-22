@@ -2,7 +2,7 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.3.1
+Tested up to: 5.3.2
 Requires PHP: 5.4.0
 Stable tag: 1.2.0
 License: GPL v2.0 (or later)
@@ -95,8 +95,8 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 1.2.0 =
-* Implemented Doppler scrolling effect for the hero block
-* Added video support for the Hero Block
+* New: Implemented Doppler scrolling effect for the hero block
+* New: Added video support for the Hero Block
 * Fixed style controls and display for Map Block
 * Fixed a few visual issues for the Food Menu, Headline and Media Card blocks
 
