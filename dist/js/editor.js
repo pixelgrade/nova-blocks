@@ -3298,7 +3298,11 @@ var getMapAccentColor = function getMapAccentColor() {
 
   return fallbackColor;
 };
-var getCenterFromMarkers = function getCenterFromMarkers(markers) {
+var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
+  if (typeof google === "undefined" || typeof google.maps === "undefined") {
+    return default_map_center;
+  }
+
   var bounds = new google.maps.LatLngBounds(); // when there is only one marker bounds aren't accurate at great zoom levels
 
   if (markers.length === 1) {
@@ -3322,7 +3326,7 @@ var getCenterFromMarkers = function getCenterFromMarkers(markers) {
   return bounds.getCenter();
 };
 var getMarkersCenter = function getMarkersCenter() {
-  return getCenterFromMarkers(this.props.attributes.markers);
+  return utils_getCenterFromMarkers(this.props.attributes.markers);
 };
 // CONCATENATED MODULE: ./src/store/reducer.js
 

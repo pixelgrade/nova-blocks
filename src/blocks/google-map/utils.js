@@ -74,6 +74,11 @@ export const getMapAccentColor = function() {
 }
 
 export const getCenterFromMarkers = function( markers ) {
+
+	if ( typeof google === "undefined" || typeof google.maps === "undefined" ) {
+		return defaultMapCenter;
+	}
+
 	const bounds = new google.maps.LatLngBounds();
 
 	// when there is only one marker bounds aren't accurate at great zoom levels

@@ -1088,7 +1088,11 @@ var getMapAccentColor = function getMapAccentColor() {
 
   return fallbackColor;
 };
-var getCenterFromMarkers = function getCenterFromMarkers(markers) {
+var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
+  if (typeof google === "undefined" || typeof google.maps === "undefined") {
+    return default_map_center;
+  }
+
   var bounds = new google.maps.LatLngBounds(); // when there is only one marker bounds aren't accurate at great zoom levels
 
   if (markers.length === 1) {
@@ -1112,7 +1116,7 @@ var getCenterFromMarkers = function getCenterFromMarkers(markers) {
   return bounds.getCenter();
 };
 var getMarkersCenter = function getMarkersCenter() {
-  return getCenterFromMarkers(this.props.attributes.markers);
+  return utils_getCenterFromMarkers(this.props.attributes.markers);
 };
 // EXTERNAL MODULE: external "jQuery"
 var external_jQuery_ = __webpack_require__(2);
@@ -2620,38 +2624,46 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 (function ($, window, undefined) {
   var $blocks = $('.novablocks-map');
   util_parallaxInit($blocks);
-  $('.js-novablocks-google-map').each(function (i, obj) {
-    var $obj = $(obj),
-        markers = $obj.data('markers'),
-        showLabels = $obj.data('show-labels'),
-        showIcons = $obj.data('show-icons'),
-        styles = $obj.data('styles'),
-        zoom = $obj.data('zoom'),
-        hideControls = !$obj.data('controls'),
-        pinColor = $obj.data('pin-color'),
-        mapOptions = {
-      mapTypeId: 'roadmap',
-      center: getCenterFromMarkers(markers),
-      zoom: zoom,
-      styles: addVisibilityToStyles(styles, showLabels, showIcons),
-      disableDefaultUI: hideControls,
-      clickableIcons: false,
-      keyboardShortcuts: false
-    },
-        map = new google.maps.Map(obj, mapOptions);
-    var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
-    markers.forEach(function (markerString) {
-      var marker = JSON.parse(markerString);
-      new google.maps.Marker({
-        map: map,
-        icon: {
-          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
-        },
-        title: marker.title,
-        position: marker.geometry.location
+  mapInit();
+
+  function mapInit() {
+    if (typeof google === "undefined" || typeof google.maps === "undefined") {
+      return;
+    }
+
+    $('.js-novablocks-google-map').each(function (i, obj) {
+      var $obj = $(obj),
+          markers = $obj.data('markers'),
+          showLabels = $obj.data('show-labels'),
+          showIcons = $obj.data('show-icons'),
+          styles = $obj.data('styles'),
+          zoom = $obj.data('zoom'),
+          hideControls = !$obj.data('controls'),
+          pinColor = $obj.data('pin-color'),
+          mapOptions = {
+        mapTypeId: 'roadmap',
+        center: utils_getCenterFromMarkers(markers),
+        zoom: zoom,
+        styles: addVisibilityToStyles(styles, showLabels, showIcons),
+        disableDefaultUI: hideControls,
+        clickableIcons: false,
+        keyboardShortcuts: false
+      },
+          map = new google.maps.Map(obj, mapOptions);
+      var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
+      markers.forEach(function (markerString) {
+        var marker = JSON.parse(markerString);
+        new google.maps.Marker({
+          map: map,
+          icon: {
+            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+          },
+          title: marker.title,
+          position: marker.geometry.location
+        });
       });
     });
-  });
+  }
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/blocks/hero/frontend.js
 

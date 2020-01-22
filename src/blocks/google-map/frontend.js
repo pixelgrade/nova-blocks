@@ -7,41 +7,50 @@ import { parallaxInit } from "../../components/with-parallax/util";
 	const $blocks = $( '.novablocks-map' );
 
 	parallaxInit( $blocks );
+	mapInit();
 
-	$( '.js-novablocks-google-map' ).each( function( i, obj ) {
+	function mapInit() {
 
-		var $obj = $( obj ),
-			markers = $obj.data( 'markers' ),
-			showLabels = $obj.data( 'show-labels' ),
-			showIcons = $obj.data( 'show-icons' ),
-			styles = $obj.data( 'styles' ),
-			zoom = $obj.data( 'zoom' ),
-			hideControls = ! $obj.data( 'controls' ),
-			pinColor = $obj.data( 'pin-color' ),
-			mapOptions = {
-				mapTypeId: 'roadmap',
-				center: getCenterFromMarkers( markers ),
-				zoom: zoom,
-				styles: addVisibilityToStyles( styles, showLabels, showIcons ),
-				disableDefaultUI: hideControls,
-				clickableIcons: false,
-				keyboardShortcuts: false,
-			},
-			map = new google.maps.Map( obj, mapOptions );
+		if ( typeof google === "undefined" || typeof google.maps === "undefined" ) {
+			return;
+		}
 
-		var pinMarkup = pin.replace( /%ACCENT_COLOR%/g, pinColor );
+		$( '.js-novablocks-google-map' ).each( function( i, obj ) {
 
-		markers.forEach( markerString => {
-			const marker = JSON.parse( markerString );
+			var $obj = $( obj ),
+				markers = $obj.data( 'markers' ),
+				showLabels = $obj.data( 'show-labels' ),
+				showIcons = $obj.data( 'show-icons' ),
+				styles = $obj.data( 'styles' ),
+				zoom = $obj.data( 'zoom' ),
+				hideControls = ! $obj.data( 'controls' ),
+				pinColor = $obj.data( 'pin-color' ),
+				mapOptions = {
+					mapTypeId: 'roadmap',
+					center: getCenterFromMarkers( markers ),
+					zoom: zoom,
+					styles: addVisibilityToStyles( styles, showLabels, showIcons ),
+					disableDefaultUI: hideControls,
+					clickableIcons: false,
+					keyboardShortcuts: false,
+				},
+				map = new google.maps.Map( obj, mapOptions );
 
-			new google.maps.Marker( {
-				map: map,
-				icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
-				title: marker.title,
-				position: marker.geometry.location,
+			var pinMarkup = pin.replace( /%ACCENT_COLOR%/g, pinColor );
+
+			markers.forEach( markerString => {
+				const marker = JSON.parse( markerString );
+
+				new google.maps.Marker( {
+					map: map,
+					icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
+					title: marker.title,
+					position: marker.geometry.location,
+				} );
 			} );
+
 		} );
 
-	} );
+	}
 
 })( jQuery, window );
