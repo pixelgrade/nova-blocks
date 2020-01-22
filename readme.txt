@@ -97,6 +97,7 @@ Yes! Nova Block's core features are free to use.
 = 1.2.0 =
 * Implemented Doppler scrolling effect for the hero block
 * Added video support for the Hero Block
+* Improved accessibility by taking into consideration the user's prefers-reduced-motion setting and disabling parallax
 * Fixed style controls and display for Map Block
 * Fixed a few visual issues for the Food Menu, Headline and Media Card blocks
 
