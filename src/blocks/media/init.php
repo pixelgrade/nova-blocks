@@ -49,6 +49,8 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$classes[] = 'wp-block-group';
 		$classes[] = 'alignfull';
 
+		$images = $attributes['images'];
+
 		ob_start(); ?>
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
@@ -61,19 +63,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		                    </div>
 	                    </div>
 	                    <div class="novablocks-media__aside">
-		                    <?php if ( ! empty( $attributes['images'] ) && is_array( $attributes['images'] ) ) {
-								foreach ( $attributes['images'] as $image ) {
-									$image = json_decode( $image );
-									$image_markup = wp_get_attachment_image( $image->id, 'large' );
-									// Falback to URL if present
-									if ( empty( $image_markup ) && ! empty( $image->url ) ) {
-										$image_markup = '<img src="' . esc_url( $image->url ) . '" alt="" />';
-									}
-									echo '<div class="novablocks-media__image">' . $image_markup . '</div>';
-								}
-							} else { ?>
-								<div class="novablocks-media__image"></div>
-							<?php } ?>
+		                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
 	                    </div>
 	                </div>
 	            </div>

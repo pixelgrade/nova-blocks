@@ -1,6 +1,13 @@
 import * as icons from "../../icons";
 import withSettings from "../with-settings";
 
+import {
+	getGridItemStyle,
+	getImageStyle,
+	addMetaToImagesArray,
+	getStructuredImagesArray
+} from "./util";
+
 const { __ } = wp.i18n;
 
 const {
@@ -26,7 +33,6 @@ const {
 	BlockIcon,
 } = wp.blockEditor;
 
-const ITEM_SIZE = 20;
 const MAX_ROTATION = 15;
 
 const AdvancedGalleryPlaceholder = ( props ) => {
@@ -55,188 +61,60 @@ const AdvancedGalleryPlaceholder = ( props ) => {
    )
 }
 
-const getIndex = ( index, orientation = 0 ) => {
-
-	if ( orientation === 0 ) {
-		if ( index % 4 === 3 ) return index - 1;
-		if ( index % 4 === 2 ) return index + 1;
-		return index;
-	}
-
-	if ( orientation === 1 ) {
-		if ( index % 4 === 0 ) return index + 1;
-		if ( index % 4 === 1 ) return index - 1;
-		return index;
-	}
-
-	if ( orientation === 2 ) {
-		if ( index % 4 === 0 ) return index + 3;
-		if ( index % 4 === 1 ) return index + 1;
-		if ( index % 4 === 2 ) return index - 2;
-		if ( index % 4 === 3 ) return index - 2;
-	}
-
-	if ( orientation === 3 ) {
-		if ( index % 4 === 0 ) return index + 2;
-		if ( index % 4 === 1 ) return index + 2;
-		if ( index % 4 === 2 ) return index - 1;
-		if ( index % 4 === 3 ) return index - 3;
-	}
-}
-
-const getExtra = ( chunk, offset, direction ) => {
-	const topLeftImage = chunk.find( image => image.idx === 0 );
-	const topRightImage = chunk.find( image => image.idx === 1 );
-	const bottomLeftImage = chunk.find( image => image.idx === 2 );
-	const bottomRightImage = chunk.find( image => image.idx === 3 );
-
-	const topLeftImageExtra = topLeftImage ? topLeftImage.scale * topLeftImage.index : ITEM_SIZE;
-	const topRightImageExtra = topRightImage ? topRightImage.scale * topRightImage.index : ITEM_SIZE;
-	const bottomLeftImageExtra = bottomLeftImage ? bottomLeftImage.scale * bottomLeftImage.index : ITEM_SIZE;
-	const bottomRightImageExtra = bottomRightImage ? bottomRightImage.scale * bottomRightImage.index : ITEM_SIZE;
-
-	const extra = ITEM_SIZE - offset;
-
-	if ( direction === 'left' ) {
-		// minimum distance to left margin between first and second image
-		let extraLeft = Math.min( offset + topLeftImageExtra, ITEM_SIZE );
-
-		// adding third image in equation
-		if ( chunk.length > 2 ) {
-			extraLeft = Math.min( extraLeft, ITEM_SIZE - offset );
-		}
-
-		// adding forth image in equation
-		if ( chunk.length > 3 ) {
-			extraLeft = Math.min( extraLeft, bottomLeftImageExtra );
-		}
-
-		return extraLeft;
-	}
-
-	if ( direction === 'top' ) {
-		let extraTop = Math.min( topLeftImageExtra, offset + topRightImageExtra );
-
-		if ( chunk.length > 3 ) {
-			extraTop = Math.min( extraTop, ITEM_SIZE - offset );
-		}
-
-		return extraTop;
-	}
-
-	return 0;
-}
-
 const AdvancedGalleryGrid = ( props ) => {
 
 	const {
-		attributes: {
-			images,
-			offset,
-			scale,
-			rotate,
-			orientation,
-			gridGap,
-		}
+		attributes,
 	} = props;
+
+	const {
+		aspect,
+		aspectRatio,
+		images,
+		offset,
+		scale,
+		rotate,
+		orientation,
+		gridGap,
+	} = attributes;
 
 	if ( ! images || ! images.length ) {
 		return false;
 	}
 
-	let i, j, temparray, chunkSize = 4, chunks = [];
+	let structuredImagesArray = getStructuredImagesArray( images );
 
-	// split into groups of 4
-	for ( i = 0, j = images.length; i < j; i += chunkSize ) {
-		chunks.push( images.slice( i, i + chunkSize ) );
-	}
-
-	const gridStyle = {};
-
-	gridStyle['--novablocks-advanced-gallery-grid-gap'] = `${gridGap}px`;
+	const gridStyle = {
+		'--novablocks-advanced-gallery-grid-gap': `${gridGap}px`,
+	};
 
 	return (
 		<div className={ `novablocks-advanced-gallery` }>
-			{ chunks.map( ( chunk, chunkIndex ) => {
+			{ structuredImagesArray.map( ( chunk, chunkIndex ) => {
 
-				const chunkWithMeta = chunk.map( ( image, index ) => {
-					const idx = getIndex( index, orientation );
-					const col = idx % 2;
-					const row = Math.floor( idx / 2 );
-					const size = ITEM_SIZE - scale * index;
-					const x = ITEM_SIZE * col + 1;
-					const y = ITEM_SIZE * row + 1;
-
-					return { idx, col, row, size, x, y, image, index, offset, scale };
-				} );
+				const chunkWithMeta = addMetaToImagesArray( chunk, attributes );
 
 				return (
 					<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle } key={ chunkIndex }>
-						{ chunkWithMeta.map( meta => {
-							const { idx, col, row, size, x, y, image, index } = meta;
-							const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
+						{ chunkWithMeta.map( ( meta, index ) => {
+							const { image } = meta;
+							return (
+								<div
+									className={ `novablocks-advanced-gallery__grid-item` }
+									style={ getGridItemStyle( index, chunkWithMeta, attributes ) }
+								>
+									<img
+										className={ `novablocks-advanced-gallery__image` }
+										src={ image.url }
+										style={ getImageStyle( attributes ) }
+									/>
+								</div>
+							);
 
-							// offset for positioning
-							let offsetX = ( 1 - col % 2 ) * index * scale;
-							let offsetY = ( 1 - row % 2 ) * index * scale;
-
-							// offset from offset
-							// move 1st to right
-							offsetX += ( 1 - col % 2 ) * ( 1 - row % 2 ) * offset;
-							// move 2nd down
-							offsetY -= ( 1 - col % 2 ) * ( row % 2 ) * offset;
-							// move 3rd to left
-							offsetX -= ( col % 2 ) * ( row % 2 ) * offset;
-							// move 4th up
-							offsetY += ( col % 2 ) * ( 1 - row % 2 ) * offset;
-
-							let extraLeft = getExtra( chunkWithMeta, offset, 'left' );
-							let extraTop = getExtra( chunkWithMeta, offset, 'top' );
-
-							const style = {
-								gridColumnStart: x + offsetX - extraLeft,
-								gridColumnEnd: `span ${size}`,
-								gridRowStart: y + offsetY - extraTop,
-								gridRowEnd: `span ${size}`,
-								transform: rotation,
-							};
-
-							const passedProps = Object.assign( {}, props, { image, style } );
-
-							return <AdvancedGalleryListItem { ...passedProps } key={ index }/>
 						} ) }
 					</div>
 				)
 			} ) }
-		</div>
-	);
-}
-
-const AdvancedGalleryListItem = ( props ) => {
-
-	let {
-		attributes: {
-			aspect,
-			aspectRatio,
-		},
-		image,
-		style,
-	} = props;
-
-	const paddingTopValues = [ 16/9, 4/3, 1, 3/4, 9/16 ];
-
-	style = Object.assign( {}, style, {
-		paddingTop: aspect === 'cropped' ? `${ paddingTopValues[ aspectRatio ] * 100 }%` : '',
-		minHeight: aspect === 'cropped' ? 0 : '',
-	} );
-
-	let imageStyle = {
-		objectFit: aspect === 'cropped' ? 'cover' : 'contain',
-	};
-
-	return (
-		<div className={ `novablocks-advanced-gallery__grid-item` } style={ style }>
-			<img className={ `novablocks-advanced-gallery__image` } src={ image.url } style={ imageStyle } />
 		</div>
 	);
 }

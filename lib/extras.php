@@ -468,7 +468,7 @@ function novablocks_add_media_settings( $settings ) {
 			'images'              => array(
 				'type'    => 'array',
 				'items'   => array(
-					'type' => 'string',
+					'type' => 'object',
 				),
 				'default' => array(),
 			),
@@ -845,4 +845,57 @@ function novablocks_get_theme_support() {
 	}
 
 	return $theme_support;
+}
+
+function novablocks_render_advanced_gallery( $attributes ) {
+
+	$images = $attributes['images'];
+
+	$advanced_gallery_attributes = array(
+		'aspect',
+		'offset',
+		'scale',
+		'rotate',
+		'orientation',
+		'gridGap'
+	);
+
+	$data_attributes = array();
+
+	foreach ( $advanced_gallery_attributes as $attribute ) {
+		if ( empty( $attributes[ $attribute ] ) ) {
+			$attributes[ $attribute ] = 0;
+		}
+
+		$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
+	}
+
+	if ( ! empty( $images ) && is_array( $images ) ) {
+
+		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . '>';
+		echo '<div class="novablocks-advanced-gallery__grid">';
+
+		foreach ( $images as $image ) {
+
+			if ( is_string( $image ) ) {
+				$image = json_decode( $image );
+			}
+
+			if ( ! empty( $image ) ) {
+				$image = ( array ) $image;
+			}
+
+			$image = wp_get_attachment_image_src( $image['id'], 'large' );
+
+			if ( ! empty( $image ) ) {
+				echo '<div class="novablocks-advanced-gallery__grid-item">';
+				echo '<img class="novablocks-advanced-gallery__image" src="' . $image[0] . '" />';
+				echo '</div>';
+			}
+		}
+
+		echo '</div>';
+		echo '</div>';
+
+	}
 }

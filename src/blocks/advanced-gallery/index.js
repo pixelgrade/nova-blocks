@@ -12,7 +12,10 @@ function init() {
 		title: __( 'Advanced Gallery', '__plugin_txtd' ),
 		description: __( 'Advanced Gallery', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: 'gallery',
+		icon: icons.gallery,
+		supports: {
+			align: [ 'wide', 'full' ],
+		},
 		// Additional search terms
 		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 		edit,
