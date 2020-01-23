@@ -33,8 +33,12 @@
 	}
 
 	.wp-block-group__inner-container > .wp-block {
+		// center content
 		margin-left: auto;
 		margin-right: auto;
+
+		// make sure negative margin used for layout doesnt overlap other blocks
+		padding-top: 1px;
 	}
 }
 
