@@ -30,7 +30,9 @@ if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
 
 		if ( ! empty( $attributes[ 'align' ] ) ) {
 			$classes[] = 'align' . $attributes['align'];
-		} ?>
+		}
+
+		ob_start(); ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php novablocks_render_advanced_gallery( $attributes ); ?>
