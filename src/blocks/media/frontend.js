@@ -1,4 +1,6 @@
 import {
+	getGalleryStyle,
+	getGridStyle,
 	getGridItemStyle,
 	getImageStyle,
 	addMetaToImagesArray,
@@ -10,10 +12,13 @@ import {
 	$( '.novablocks-advanced-gallery' ).each( ( i, gallery ) => {
 
 		let $gallery = $( gallery ),
+			$grid = $gallery.find( '.novablocks-advanced-gallery__grid' ),
 			gridItems = $gallery.find( '.novablocks-advanced-gallery__grid-item' ).toArray(),
 			structuredImagesArray = getStructuredImagesArray( gridItems );
 
 		const attributes = {
+			aspect: $gallery.data( 'aspect' ),
+			aspectRatio: $gallery.data( 'aspectratio' ),
 			offset: $gallery.data( 'offset' ),
 			scale: $gallery.data( 'scale' ),
 			rotate: $gallery.data( 'rotate' ),
@@ -34,6 +39,9 @@ import {
 				$image.css( getImageStyle( attributes ) );
 			} );
 		} );
+
+		$gallery.css( getGalleryStyle( attributes ) );
+		$grid.css( getGridStyle( attributes ) );
 	} );
 
 })(jQuery, window);

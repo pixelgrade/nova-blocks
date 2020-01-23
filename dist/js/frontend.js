@@ -2910,7 +2910,6 @@ var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attribute
     transform: rotation
   };
   style = Object.assign({}, style, {
-    paddingTop: aspect === 'cropped' ? "".concat(PADDING_TOP_VALUES[aspectRatio] * 100, "%") : '',
     minHeight: aspect === 'cropped' ? 0 : ''
   });
   return style;
@@ -3029,6 +3028,19 @@ var getExtra = function getExtra(chunk, offset, direction) {
 
   return 0;
 };
+var getGalleryStyle = function getGalleryStyle(attributes) {
+  var aspect = attributes.aspect,
+      aspectRatio = attributes.aspectRatio;
+  return {
+    paddingTop: aspect === 'cropped' ? "".concat(PADDING_TOP_VALUES[aspectRatio] * 100, "%") : ''
+  };
+};
+var getGridStyle = function getGridStyle(attributes) {
+  var gridGap = attributes.gridGap;
+  return {
+    '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
+  };
+};
 var getImageStyle = function getImageStyle(attributes) {
   var aspect = attributes.aspect;
   return {
@@ -3041,9 +3053,12 @@ var getImageStyle = function getImageStyle(attributes) {
 (function ($, window, undefined) {
   $('.novablocks-advanced-gallery').each(function (i, gallery) {
     var $gallery = $(gallery),
+        $grid = $gallery.find('.novablocks-advanced-gallery__grid'),
         gridItems = $gallery.find('.novablocks-advanced-gallery__grid-item').toArray(),
         structuredImagesArray = getStructuredImagesArray(gridItems);
     var attributes = {
+      aspect: $gallery.data('aspect'),
+      aspectRatio: $gallery.data('aspectratio'),
       offset: $gallery.data('offset'),
       scale: $gallery.data('scale'),
       rotate: $gallery.data('rotate'),
@@ -3060,6 +3075,8 @@ var getImageStyle = function getImageStyle(attributes) {
         $image.css(getImageStyle(attributes));
       });
     });
+    $gallery.css(getGalleryStyle(attributes));
+    $grid.css(getGridStyle(attributes));
   });
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/components/viewportObserver.js

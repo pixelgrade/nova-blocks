@@ -2,6 +2,8 @@ import * as icons from "../../icons";
 import withSettings from "../with-settings";
 
 import {
+	getGalleryStyle,
+	getGridStyle,
 	getGridItemStyle,
 	getImageStyle,
 	addMetaToImagesArray,
@@ -84,18 +86,14 @@ const AdvancedGalleryGrid = ( props ) => {
 
 	let structuredImagesArray = getStructuredImagesArray( images );
 
-	const gridStyle = {
-		'--novablocks-advanced-gallery-grid-gap': `${gridGap}px`,
-	};
-
 	return (
-		<div className={ `novablocks-advanced-gallery` }>
+		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) }>
 			{ structuredImagesArray.map( ( chunk, chunkIndex ) => {
 
 				const chunkWithMeta = addMetaToImagesArray( chunk, attributes );
 
 				return (
-					<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle } key={ chunkIndex }>
+					<div className={ `novablocks-advanced-gallery__grid` } style={ getGridStyle( attributes ) } key={ chunkIndex }>
 						{ chunkWithMeta.map( ( meta, index ) => {
 							const { image } = meta;
 							return (
@@ -269,60 +267,5 @@ const AdvancedGallery = ( props ) => {
 		</Fragment>
 	)
 }
-
-const { addFilter } = wp.hooks;
-
-const enableBlockIdAttributeOnBlocks = [ 'novablocks/media', 'novablocks/advanced-gallery' ];
-
-function addAdvancedGalleryAttributes( block ) {
-
-	if ( ! enableBlockIdAttributeOnBlocks.includes( block.name ) ) {
-		return block;
-	}
-
-	if ( typeof block.attributes !== 'undefined' ){
-		block.attributes = Object.assign( block.attributes, {
-			images: {
-				type: 'array',
-				default: [],
-			},
-			scale: {
-				type: 'number',
-				default: 0,
-			},
-			offset: {
-				type: 'number',
-				default: 0,
-			},
-			rotate: {
-				type: 'number',
-				default: 0,
-			},
-			stylePreset: {
-				type: 'string',
-				default: 'clean',
-			},
-			orientation: {
-				type: 'number',
-				default: 0,
-			},
-			aspect: {
-				type: 'string',
-				default: 'cropped',
-			},
-			aspectRatio: {
-				type: 'number',
-				default: 2,
-			},
-			gridGap: {
-				type: 'number',
-				default: 10,
-			},
-		});
-	}
-
-	return block;
-}
-addFilter( 'blocks.registerBlockType', 'novablocks/add-blockId-attribute', addAdvancedGalleryAttributes );
 
 export default withSettings( AdvancedGallery );

@@ -118,6 +118,50 @@ function novablocks_get_content_width_attributes() {
 	);
 }
 
+function novablocks_get_advanced_gallery_attributes() {
+	return array(
+		'images'      => array(
+			'type'    => 'array',
+			'default' => array(),
+			'items' => array(
+				'type' => 'object'
+			),
+		),
+		'scale'       => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'offset'      => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'rotate'      => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'stylePreset' => array(
+			'type'    => 'string',
+			'default' => 'clean',
+		),
+		'orientation' => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'aspect'      => array(
+			'type'    => 'string',
+			'default' => 'cropped',
+		),
+		'aspectRatio' => array(
+			'type'    => 'number',
+			'default' => 2,
+		),
+		'gridGap'     => array(
+			'type'    => 'number',
+			'default' => 10,
+		),
+	);
+}
+
 function novablocks_get_color_attributes() {
 	return array(
 		'contentColor'          => array(
@@ -448,30 +492,33 @@ add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_set
 function novablocks_add_media_settings( $settings ) {
 
 	$media_settings = array(
-		'attributes'         => array(
-			'mediaPosition'       => array(
-				'type'    => 'string',
-				'default' => 'left',
-			),
-			'blockStyle'          => array(
-				'type'    => 'string',
-				'default' => 'basic'
-			),
-			'contentStyle'        => array(
-				'type'    => 'string',
-				'default' => 'basic',
-			),
-			'horizontalAlignment' => array(
-				'type'    => 'string',
-				'default' => 'left',
-			),
-			'images'              => array(
-				'type'    => 'array',
-				'items'   => array(
-					'type' => 'object',
+		'attributes'         => array_merge(
+			array(
+				'mediaPosition'       => array(
+					'type'    => 'string',
+					'default' => 'left',
 				),
-				'default' => array(),
+				'blockStyle'          => array(
+					'type'    => 'string',
+					'default' => 'basic'
+				),
+				'contentStyle'        => array(
+					'type'    => 'string',
+					'default' => 'basic',
+				),
+				'horizontalAlignment' => array(
+					'type'    => 'string',
+					'default' => 'left',
+				),
+				'images'              => array(
+					'type'    => 'array',
+					'items'   => array(
+						'type' => 'object',
+					),
+					'default' => array(),
+				),
 			),
+			novablocks_get_advanced_gallery_attributes()
 		),
 		'template'           => array(
 			array(
@@ -853,6 +900,7 @@ function novablocks_render_advanced_gallery( $attributes ) {
 
 	$advanced_gallery_attributes = array(
 		'aspect',
+		'aspectRatio',
 		'offset',
 		'scale',
 		'rotate',

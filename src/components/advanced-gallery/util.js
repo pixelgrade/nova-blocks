@@ -47,7 +47,6 @@ export const getGridItemStyle = ( index, chunkWithMeta, attributes ) => {
 	};
 
 	style = Object.assign( {}, style, {
-		paddingTop: aspect === 'cropped' ? `${ PADDING_TOP_VALUES[ aspectRatio ] * 100 }%` : '',
 		minHeight: aspect === 'cropped' ? 0 : '',
 	} );
 
@@ -159,6 +158,21 @@ export const getExtra = ( chunk, offset, direction ) => {
 
 	return 0;
 }
+
+export const getGalleryStyle = ( attributes ) => {
+	const { aspect, aspectRatio } = attributes;
+	return {
+		paddingTop: aspect === 'cropped' ? `${ PADDING_TOP_VALUES[ aspectRatio ] * 100 }%` : '',
+	}
+}
+
+export const getGridStyle = ( attributes ) => {
+	const { gridGap } = attributes;
+	return {
+		'--novablocks-advanced-gallery-grid-gap': `${ gridGap }px`
+	}
+}
+
 
 export const getImageStyle = ( attributes ) => {
 	const { aspect } = attributes;

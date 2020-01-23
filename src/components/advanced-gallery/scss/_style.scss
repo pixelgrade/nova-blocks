@@ -1,11 +1,18 @@
 .novablocks-advanced-gallery {
 	// padding top to make sure negative margin of child doesn't collapse
-	padding-top: 1px;
+	position: relative;
+	padding-top: 50%;
 }
 
 .novablocks-advanced-gallery__grid {
 	display: grid;
 	grid-auto-rows: 1fr;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 
 	--novablocks-advanced-gallery-grid-gap: 10px;
 
@@ -22,11 +29,6 @@
 
 	margin-top: var(--novablocks-advanced-gallery-grid-gap);
 	margin-left: var(--novablocks-advanced-gallery-grid-gap);
-
-	&:nth-child(1) {
-		// the first item should be the biggest
-		min-height: 300px;
-	}
 }
 
 .novablocks-advanced-gallery__image[class] {

@@ -3013,7 +3013,6 @@ var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attribute
     transform: rotation
   };
   style = Object.assign({}, style, {
-    paddingTop: aspect === 'cropped' ? "".concat(PADDING_TOP_VALUES[aspectRatio] * 100, "%") : '',
     minHeight: aspect === 'cropped' ? 0 : ''
   });
   return style;
@@ -3132,6 +3131,19 @@ var getExtra = function getExtra(chunk, offset, direction) {
 
   return 0;
 };
+var getGalleryStyle = function getGalleryStyle(attributes) {
+  var aspect = attributes.aspect,
+      aspectRatio = attributes.aspectRatio;
+  return {
+    paddingTop: aspect === 'cropped' ? "".concat(PADDING_TOP_VALUES[aspectRatio] * 100, "%") : ''
+  };
+};
+var getGridStyle = function getGridStyle(attributes) {
+  var gridGap = attributes.gridGap;
+  return {
+    '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
+  };
+};
 var getImageStyle = function getImageStyle(attributes) {
   var aspect = attributes.aspect;
   return {
@@ -3199,16 +3211,14 @@ var advanced_gallery_AdvancedGalleryGrid = function AdvancedGalleryGrid(props) {
   }
 
   var structuredImagesArray = getStructuredImagesArray(images);
-  var gridStyle = {
-    '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
-  };
   return Object(react["createElement"])("div", {
-    className: "novablocks-advanced-gallery"
+    className: "novablocks-advanced-gallery",
+    style: getGalleryStyle(attributes)
   }, structuredImagesArray.map(function (chunk, chunkIndex) {
     var chunkWithMeta = addMetaToImagesArray(chunk, attributes);
     return Object(react["createElement"])("div", {
       className: "novablocks-advanced-gallery__grid",
-      style: gridStyle,
+      style: getGridStyle(attributes),
       key: chunkIndex
     }, chunkWithMeta.map(function (meta, index) {
       var image = meta.image;
@@ -3382,59 +3392,6 @@ var advanced_gallery_AdvancedGallery = function AdvancedGallery(props) {
   return Object(react["createElement"])(advanced_gallery_Fragment, null, Object(react["createElement"])(advanced_gallery_AdvancedGalleryPlaceholder, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryGrid, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryInspectorControls, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryBlockControls, props));
 };
 
-var advanced_gallery_addFilter = wp.hooks.addFilter;
-var advanced_gallery_enableBlockIdAttributeOnBlocks = ['novablocks/media', 'novablocks/advanced-gallery'];
-
-function addAdvancedGalleryAttributes(block) {
-  if (!advanced_gallery_enableBlockIdAttributeOnBlocks.includes(block.name)) {
-    return block;
-  }
-
-  if (typeof block.attributes !== 'undefined') {
-    block.attributes = Object.assign(block.attributes, {
-      images: {
-        type: 'array',
-        default: []
-      },
-      scale: {
-        type: 'number',
-        default: 0
-      },
-      offset: {
-        type: 'number',
-        default: 0
-      },
-      rotate: {
-        type: 'number',
-        default: 0
-      },
-      stylePreset: {
-        type: 'string',
-        default: 'clean'
-      },
-      orientation: {
-        type: 'number',
-        default: 0
-      },
-      aspect: {
-        type: 'string',
-        default: 'cropped'
-      },
-      aspectRatio: {
-        type: 'number',
-        default: 2
-      },
-      gridGap: {
-        type: 'number',
-        default: 10
-      }
-    });
-  }
-
-  return block;
-}
-
-advanced_gallery_addFilter('blocks.registerBlockType', 'novablocks/add-blockId-attribute', addAdvancedGalleryAttributes);
 /* harmony default export */ var advanced_gallery = (with_settings(advanced_gallery_AdvancedGallery));
 // CONCATENATED MODULE: ./src/blocks/advanced-gallery/edit.js
 
