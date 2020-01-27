@@ -3060,7 +3060,7 @@ var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
   var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
   console.log(row, col, "".concat(positionX, "% ").concat(positionY, "%"));
   return {
-    objectFit: aspect === 'cropped' ? 'cover' : 'contain',
+    objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
     objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
   };
 };

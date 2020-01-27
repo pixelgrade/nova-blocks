@@ -187,7 +187,7 @@ export const getImageStyle = ( index, chunkWithMeta, attributes ) => {
 
 	console.log( row, col, `${ positionX }% ${ positionY }%` );
 	return {
-		objectFit: aspect === 'cropped' ? 'cover' : 'contain',
+		objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
 		objectPosition: aspect === 'original' ? `${ positionX }% ${ positionY }%` : '',
 	}
 }
