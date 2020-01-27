@@ -2975,7 +2975,6 @@ var with_settings_withSelect = wp.data.withSelect;
 }));
 // CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
 var ITEM_SIZE = 20;
-var PADDING_TOP_VALUES = [16 / 9, 4 / 3, 1, 3 / 4, 9 / 16];
 var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attributes) {
   var aspect = attributes.aspect,
       aspectRatio = attributes.aspectRatio,
@@ -3012,9 +3011,6 @@ var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attribute
     gridRowEnd: "span ".concat(size),
     transform: rotation
   };
-  style = Object.assign({}, style, {
-    minHeight: aspect === 'cropped' ? 0 : ''
-  });
   return style;
 };
 var addMetaToImagesArray = function addMetaToImagesArray(imagesArray, attributes) {
@@ -3134,8 +3130,19 @@ var getExtra = function getExtra(chunk, offset, direction) {
 var getGalleryStyle = function getGalleryStyle(attributes) {
   var aspect = attributes.aspect,
       aspectRatio = attributes.aspectRatio;
+  var numerator = 1;
+  var denominator = 1;
+
+  if (aspectRatio > 0) {
+    numerator = 1 + aspectRatio;
+  }
+
+  if (aspectRatio < 0) {
+    denominator = 1 + Math.abs(aspectRatio);
+  }
+
   return {
-    paddingTop: aspect === 'cropped' ? "".concat(PADDING_TOP_VALUES[aspectRatio] * 100, "%") : ''
+    paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
 var getGridStyle = function getGridStyle(attributes) {
@@ -3342,7 +3349,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       label: 'Cropped',
       value: 'cropped'
     }]
-  }), aspect === 'cropped' && Object(react["createElement"])(RangeControl, {
+  }), Object(react["createElement"])(RangeControl, {
     label: advanced_gallery_('Aspect Ratio', '__plugin_txtd'),
     value: aspectRatio,
     onChange: function onChange(aspectRatio) {
@@ -3351,8 +3358,9 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
         stylePreset: 'custom'
       });
     },
-    min: 0,
-    max: 4
+    min: -1,
+    max: 1,
+    step: 0.1
   })));
 };
 

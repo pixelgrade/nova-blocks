@@ -204,15 +204,14 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						{ label: 'Cropped', value: 'cropped' },
 					] }
 				/>
-				{ aspect === 'cropped' &&
-					<RangeControl
-						label={ __( 'Aspect Ratio', '__plugin_txtd' ) }
-						value={ aspectRatio }
-						onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
-						min={ 0 }
-						max={ 4 }
-					/>
-				}
+				<RangeControl
+					label={ __( 'Aspect Ratio', '__plugin_txtd' ) }
+					value={ aspectRatio }
+					onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
+					min={ -1 }
+					max={ 1 }
+					step={ 0.1 }
+				/>
 			</PanelBody>
 		</InspectorControls>
 	);

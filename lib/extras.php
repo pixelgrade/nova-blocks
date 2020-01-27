@@ -153,7 +153,7 @@ function novablocks_get_advanced_gallery_attributes() {
 		),
 		'aspectRatio' => array(
 			'type'    => 'number',
-			'default' => 2,
+			'default' => 0,
 		),
 		'gridGap'     => array(
 			'type'    => 'number',

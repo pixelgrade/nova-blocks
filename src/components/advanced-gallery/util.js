@@ -1,5 +1,4 @@
 const ITEM_SIZE = 20;
-const PADDING_TOP_VALUES = [ 16/9, 4/3, 1, 3/4, 9/16 ];
 
 export const getGridItemStyle = ( index, chunkWithMeta, attributes ) => {
 
@@ -45,10 +44,6 @@ export const getGridItemStyle = ( index, chunkWithMeta, attributes ) => {
 		gridRowEnd: `span ${size}`,
 		transform: rotation,
 	};
-
-	style = Object.assign( {}, style, {
-		minHeight: aspect === 'cropped' ? 0 : '',
-	} );
 
 	return style;
 }
@@ -161,8 +156,20 @@ export const getExtra = ( chunk, offset, direction ) => {
 
 export const getGalleryStyle = ( attributes ) => {
 	const { aspect, aspectRatio } = attributes;
+
+	let numerator = 1;
+	let denominator = 1;
+
+	if ( aspectRatio > 0 ) {
+		numerator = 1 + aspectRatio;
+	}
+
+	if ( aspectRatio < 0 ) {
+		denominator = 1 + Math.abs( aspectRatio );
+	}
+
 	return {
-		paddingTop: aspect === 'cropped' ? `${ PADDING_TOP_VALUES[ aspectRatio ] * 100 }%` : '',
+		paddingTop: `${ numerator * 100 / denominator }%`,
 	}
 }
 
