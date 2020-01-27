@@ -2880,12 +2880,13 @@ var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attribute
       offset = attributes.offset,
       scale = attributes.scale;
   index = index % 4;
-  var idx = getIndex(index, orientation);
-  var col = idx % 2;
-  var row = Math.floor(idx / 2);
-  var size = ITEM_SIZE - scale * index;
-  var x = ITEM_SIZE * col + 1;
-  var y = ITEM_SIZE * row + 1;
+  var _chunkWithMeta$index = chunkWithMeta[index],
+      idx = _chunkWithMeta$index.idx,
+      col = _chunkWithMeta$index.col,
+      row = _chunkWithMeta$index.row,
+      size = _chunkWithMeta$index.size,
+      x = _chunkWithMeta$index.x,
+      y = _chunkWithMeta$index.y;
   var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)"); // offset for positioning
 
   var offsetX = (1 - col % 2) * index * scale;
@@ -3025,10 +3026,10 @@ var getExtra = function getExtra(chunk, offset, direction) {
   return 0;
 };
 var getGalleryStyle = function getGalleryStyle(attributes) {
-  var aspect = attributes.aspect,
-      aspectRatio = attributes.aspectRatio;
+  var aspectRatio = attributes.aspectRatio;
   var numerator = 1;
   var denominator = 1;
+  aspectRatio = Math.min(Math.max(0, aspectRatio), 1);
 
   if (aspectRatio > 0) {
     numerator = 1 + aspectRatio;
@@ -3048,10 +3049,19 @@ var getGridStyle = function getGridStyle(attributes) {
     '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
   };
 };
-var getImageStyle = function getImageStyle(attributes) {
-  var aspect = attributes.aspect;
+var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
+  var aspect = attributes.aspect,
+      objectPosition = attributes.objectPosition;
+  var _chunkWithMeta = chunkWithMeta[index % 4],
+      idx = _chunkWithMeta.idx,
+      row = _chunkWithMeta.row,
+      col = _chunkWithMeta.col;
+  var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+  var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+  console.log(row, col, "".concat(positionX, "% ").concat(positionY, "%"));
   return {
-    objectFit: aspect === 'cropped' ? 'cover' : 'contain'
+    objectFit: aspect === 'cropped' ? 'cover' : 'contain',
+    objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
   };
 };
 // CONCATENATED MODULE: ./src/blocks/media/frontend.js
@@ -3079,7 +3089,7 @@ var getImageStyle = function getImageStyle(attributes) {
             $item = $(image),
             $image = $item.find('.novablocks-advanced-gallery__image');
         $item.css(getGridItemStyle(index, chunkWithMeta, attributes));
-        $image.css(getImageStyle(attributes));
+        $image.css(getImageStyle(index, chunkWithMeta, attributes));
       });
     });
     $gallery.css(getGalleryStyle(attributes));

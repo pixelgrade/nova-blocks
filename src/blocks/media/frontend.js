@@ -36,7 +36,7 @@ import {
 					$image = $item.find( '.novablocks-advanced-gallery__image' );
 
 				$item.css( getGridItemStyle( index, chunkWithMeta, attributes ) );
-				$image.css( getImageStyle( attributes ) );
+				$image.css( getImageStyle( index, chunkWithMeta, attributes ) );
 			} );
 		} );
 

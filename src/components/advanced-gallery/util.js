@@ -12,12 +12,8 @@ export const getGridItemStyle = ( index, chunkWithMeta, attributes ) => {
 	} = attributes;
 
 	index = index % 4;
-	const idx = getIndex( index, orientation );
-	const col = idx % 2;
-	const row = Math.floor( idx / 2 );
-	const size = ITEM_SIZE - scale * index;
-	const x = ITEM_SIZE * col + 1;
-	const y = ITEM_SIZE * row + 1;
+
+	const { idx, col, row, size, x, y } = chunkWithMeta[ index ];
 	const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
 
 	// offset for positioning
@@ -155,10 +151,11 @@ export const getExtra = ( chunk, offset, direction ) => {
 }
 
 export const getGalleryStyle = ( attributes ) => {
-	const { aspect, aspectRatio } = attributes;
-
+	let { aspectRatio } = attributes;
 	let numerator = 1;
 	let denominator = 1;
+
+	aspectRatio = Math.min( Math.max( 0, aspectRatio ), 1 );
 
 	if ( aspectRatio > 0 ) {
 		numerator = 1 + aspectRatio;
@@ -181,7 +178,16 @@ export const getGridStyle = ( attributes ) => {
 }
 
 
-export const getImageStyle = ( attributes ) => {
-	const { aspect } = attributes;
-	return { objectFit: aspect === 'cropped' ? 'cover' : 'contain' }
+export const getImageStyle = ( index, chunkWithMeta, attributes ) => {
+	const { aspect, objectPosition } = attributes;
+	const { idx, row, col } = chunkWithMeta[ index % 4 ];
+
+	const positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+	const positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+
+	console.log( row, col, `${ positionX }% ${ positionY }%` );
+	return {
+		objectFit: aspect === 'cropped' ? 'cover' : 'contain',
+		objectPosition: aspect === 'original' ? `${ positionX }% ${ positionY }%` : '',
+	}
 }

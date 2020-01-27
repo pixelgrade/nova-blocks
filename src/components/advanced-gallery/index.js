@@ -104,7 +104,7 @@ const AdvancedGalleryGrid = ( props ) => {
 									<img
 										className={ `novablocks-advanced-gallery__image` }
 										src={ image.url }
-										style={ getImageStyle( attributes ) }
+										style={ getImageStyle( index, chunkWithMeta, attributes ) }
 									/>
 								</div>
 							);
@@ -129,6 +129,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			orientation,
 			aspect,
 			aspectRatio,
+			objectPosition,
 			gridGap,
 		},
 		settings: {
@@ -173,13 +174,6 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					max={ 20 }
 				/>
 				<RangeControl
-					label={ __( 'Rotate', '__plugin_txtd' ) }
-					value={ rotate }
-					onChange={ rotate => setAttributes( { rotate, stylePreset: 'custom' } ) }
-					min={ 0 }
-					max={ MAX_ROTATION }
-				/>
-				<RangeControl
 					label={ __( 'Orientation', '__plugin_txtd' ) }
 					value={ orientation }
 					onChange={ orientation => setAttributes( { orientation } ) }
@@ -187,11 +181,26 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					max={ 3 }
 				/>
 				<RangeControl
+					label={ __( 'Aspect Ratio', '__plugin_txtd' ) }
+					value={ aspectRatio }
+					onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
+					min={ -1 }
+					max={ 1 }
+					step={ 0.1 }
+				/>
+				<RangeControl
 					label={ __( 'Grid Gap', '__plugin_txtd' ) }
 					value={ gridGap }
 					onChange={ gridGap => setAttributes( { gridGap } ) }
 					min={ 0 }
 					max={ 100 }
+				/>
+				<RangeControl
+					label={ __( 'Rotate', '__plugin_txtd' ) }
+					value={ rotate }
+					onChange={ rotate => setAttributes( { rotate, stylePreset: 'custom' } ) }
+					min={ 0 }
+					max={ MAX_ROTATION }
 				/>
 			</PanelBody>
 			<PanelBody title={ __( 'Images Controls', '__plugin_txtd' ) } initialOpen={ true }>
@@ -204,14 +213,14 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						{ label: 'Cropped', value: 'cropped' },
 					] }
 				/>
-				<RangeControl
-					label={ __( 'Aspect Ratio', '__plugin_txtd' ) }
-					value={ aspectRatio }
-					onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
-					min={ -1 }
-					max={ 1 }
-					step={ 0.1 }
-				/>
+				{ aspect === 'original' && <RangeControl
+					label={ __( 'Object Position', '__plugin_txtd' ) }
+					value={ objectPosition }
+					onChange={ objectPosition => setAttributes( { objectPosition } ) }
+					min={ 0 }
+					max={ 100 }
+					step={ 10 }
+				/> }
 			</PanelBody>
 		</InspectorControls>
 	);

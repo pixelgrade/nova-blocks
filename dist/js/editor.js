@@ -2983,12 +2983,13 @@ var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attribute
       offset = attributes.offset,
       scale = attributes.scale;
   index = index % 4;
-  var idx = getIndex(index, orientation);
-  var col = idx % 2;
-  var row = Math.floor(idx / 2);
-  var size = ITEM_SIZE - scale * index;
-  var x = ITEM_SIZE * col + 1;
-  var y = ITEM_SIZE * row + 1;
+  var _chunkWithMeta$index = chunkWithMeta[index],
+      idx = _chunkWithMeta$index.idx,
+      col = _chunkWithMeta$index.col,
+      row = _chunkWithMeta$index.row,
+      size = _chunkWithMeta$index.size,
+      x = _chunkWithMeta$index.x,
+      y = _chunkWithMeta$index.y;
   var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)"); // offset for positioning
 
   var offsetX = (1 - col % 2) * index * scale;
@@ -3128,10 +3129,10 @@ var getExtra = function getExtra(chunk, offset, direction) {
   return 0;
 };
 var getGalleryStyle = function getGalleryStyle(attributes) {
-  var aspect = attributes.aspect,
-      aspectRatio = attributes.aspectRatio;
+  var aspectRatio = attributes.aspectRatio;
   var numerator = 1;
   var denominator = 1;
+  aspectRatio = Math.min(Math.max(0, aspectRatio), 1);
 
   if (aspectRatio > 0) {
     numerator = 1 + aspectRatio;
@@ -3151,10 +3152,19 @@ var getGridStyle = function getGridStyle(attributes) {
     '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
   };
 };
-var getImageStyle = function getImageStyle(attributes) {
-  var aspect = attributes.aspect;
+var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
+  var aspect = attributes.aspect,
+      objectPosition = attributes.objectPosition;
+  var _chunkWithMeta = chunkWithMeta[index % 4],
+      idx = _chunkWithMeta.idx,
+      row = _chunkWithMeta.row,
+      col = _chunkWithMeta.col;
+  var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+  var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+  console.log(row, col, "".concat(positionX, "% ").concat(positionY, "%"));
   return {
-    objectFit: aspect === 'cropped' ? 'cover' : 'contain'
+    objectFit: aspect === 'cropped' ? 'cover' : 'contain',
+    objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
   };
 };
 // CONCATENATED MODULE: ./src/components/advanced-gallery/index.js
@@ -3235,7 +3245,7 @@ var advanced_gallery_AdvancedGalleryGrid = function AdvancedGalleryGrid(props) {
       }, Object(react["createElement"])("img", {
         className: "novablocks-advanced-gallery__image",
         src: image.url,
-        style: getImageStyle(attributes)
+        style: getImageStyle(index, chunkWithMeta, attributes)
       }));
     }));
   }));
@@ -3251,6 +3261,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       orientation = _props$attributes.orientation,
       aspect = _props$attributes.aspect,
       aspectRatio = _props$attributes.aspectRatio,
+      objectPosition = _props$attributes.objectPosition,
       gridGap = _props$attributes.gridGap,
       advancedGalleryPresetOptions = props.settings.advancedGalleryPresetOptions;
   var maxOffset = 9 - scale;
@@ -3301,17 +3312,6 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     min: 0,
     max: 20
   }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Rotate', '__plugin_txtd'),
-    value: rotate,
-    onChange: function onChange(rotate) {
-      return setAttributes({
-        rotate: rotate,
-        stylePreset: 'custom'
-      });
-    },
-    min: 0,
-    max: MAX_ROTATION
-  }), Object(react["createElement"])(RangeControl, {
     label: advanced_gallery_('Orientation', '__plugin_txtd'),
     value: orientation,
     onChange: function onChange(orientation) {
@@ -3322,6 +3322,18 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     min: 0,
     max: 3
   }), Object(react["createElement"])(RangeControl, {
+    label: advanced_gallery_('Aspect Ratio', '__plugin_txtd'),
+    value: aspectRatio,
+    onChange: function onChange(aspectRatio) {
+      return setAttributes({
+        aspectRatio: aspectRatio,
+        stylePreset: 'custom'
+      });
+    },
+    min: -1,
+    max: 1,
+    step: 0.1
+  }), Object(react["createElement"])(RangeControl, {
     label: advanced_gallery_('Grid Gap', '__plugin_txtd'),
     value: gridGap,
     onChange: function onChange(gridGap) {
@@ -3331,6 +3343,17 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     },
     min: 0,
     max: 100
+  }), Object(react["createElement"])(RangeControl, {
+    label: advanced_gallery_('Rotate', '__plugin_txtd'),
+    value: rotate,
+    onChange: function onChange(rotate) {
+      return setAttributes({
+        rotate: rotate,
+        stylePreset: 'custom'
+      });
+    },
+    min: 0,
+    max: MAX_ROTATION
   })), Object(react["createElement"])(advanced_gallery_PanelBody, {
     title: advanced_gallery_('Images Controls', '__plugin_txtd'),
     initialOpen: true
@@ -3349,18 +3372,17 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       label: 'Cropped',
       value: 'cropped'
     }]
-  }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Aspect Ratio', '__plugin_txtd'),
-    value: aspectRatio,
-    onChange: function onChange(aspectRatio) {
+  }), aspect === 'original' && Object(react["createElement"])(RangeControl, {
+    label: advanced_gallery_('Object Position', '__plugin_txtd'),
+    value: objectPosition,
+    onChange: function onChange(objectPosition) {
       return setAttributes({
-        aspectRatio: aspectRatio,
-        stylePreset: 'custom'
+        objectPosition: objectPosition
       });
     },
-    min: -1,
-    max: 1,
-    step: 0.1
+    min: 0,
+    max: 100,
+    step: 10
   })));
 };
 

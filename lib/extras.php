@@ -155,6 +155,10 @@ function novablocks_get_advanced_gallery_attributes() {
 			'type'    => 'number',
 			'default' => 0,
 		),
+		'objectPosition' => array(
+			'type'    => 'number',
+			'default' => 50,
+		),
 		'gridGap'     => array(
 			'type'    => 'number',
 			'default' => 10,
