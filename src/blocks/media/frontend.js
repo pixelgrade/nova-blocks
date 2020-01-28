@@ -37,14 +37,23 @@ import {GridItemCollection} from "../../components/advanced-gallery/grid-item";
 		const galleryStyle = getGalleryStyle( attributes );
 
 		for ( let propertyName in galleryStyle ) {
-			gallery.style.setProperty( propertyName, galleryStyle[ propertyName ] );
+			$gallery.css( galleryStyle );
+
+			if ( propertyName.indexOf( '--' ) === 0 ) {
+				gallery.style.setProperty( propertyName, galleryStyle[ propertyName ] );
+			}
 		}
 
 		if ( $grid.length ) {
+
 			const gridStyle = getGridStyle( attributes );
 
+			$grid.css( gridStyle );
+
 			for ( let propertyName in gridStyle ) {
-				$grid.get( 0 ).style.setProperty( propertyName, gridStyle[ propertyName ] );
+				if ( propertyName.indexOf( '--' ) === 0 ) {
+					$grid.get( 0 ).style.setProperty( propertyName, gridStyle[propertyName] );
+				}
 			}
 		}
 	} );
