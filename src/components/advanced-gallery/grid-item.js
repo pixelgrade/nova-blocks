@@ -5,7 +5,13 @@ export class GridItemCollection {
 	constructor( images, attributes ) {
 		const { orientation } = attributes;
 
-		this.gridItems = images.map( ( image, index ) => new GridItem( image, index, attributes ) );
+		this.gridItems = images.map( ( image, index ) => {
+			const groupStart = Math.floor( index / 4 ) * 4;
+			const groupEnd = Math.min( groupStart + 4, images.length );
+			const isGroupOfThree = groupEnd - groupStart === 3;
+
+			return new GridItem( image, index, attributes, isGroupOfThree );
+		} );
 
 		this.removeExtra();
 
@@ -69,7 +75,7 @@ export class GridItemCollection {
 
 export default class GridItem {
 
-	constructor( image, index, attributes ) {
+	constructor( image, index, attributes, isGroupOfThree ) {
 
 		this.scale = attributes.scale;
 		this.rotate = attributes.rotate;
@@ -84,11 +90,24 @@ export default class GridItem {
 		this.col = this.idx % 2;
 		this.row = Math.floor( index / 2 );
 
-		const { offsetX, offsetY } = this.getOffsets();
+		if ( !! isGroupOfThree ) {
+
+			if ( index === 0 ) {
+				this.offset = Math.min( this.offset, 10 );
+			}
+
+			if ( index === 2 ) {
+				this.offset = Math.max( this.offset, 10 );
+			}
+
+		}
+
+		let { offsetX, offsetY } = this.getOffsets();
 		const size = ITEM_SIZE - this.scale * ( index % 4 );
 
 		this.x = ITEM_SIZE * this.col + 1 + offsetX;
 		this.y = ITEM_SIZE * this.row + 1 + offsetY;
+
 		this.width = size;
 		this.height = size;
 	}

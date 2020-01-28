@@ -2,7 +2,8 @@ import {
 	getGalleryStyle,
 	getGridStyle,
 } from "../../components/advanced-gallery/util";
-import {GridItemCollection} from "../../components/advanced-gallery/grid-item";
+
+import { GridItemCollection } from "../../components/advanced-gallery/grid-item";
 
 (function($, window, undefined) {
 

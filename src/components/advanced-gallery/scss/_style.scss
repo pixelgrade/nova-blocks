@@ -3,10 +3,8 @@
 	position: relative;
 	padding-top: 50%;
 
-	@include above(tablet) {
-		margin-top: var(--novablocks-advanced-gallery-vertical-spacing);
-		margin-bottom: var(--novablocks-advanced-gallery-vertical-spacing);
-	}
+	margin-top: var(--novablocks-advanced-gallery-vertical-spacing);
+	margin-bottom: var(--novablocks-advanced-gallery-vertical-spacing);
 }
 
 .novablocks-advanced-gallery__grid {

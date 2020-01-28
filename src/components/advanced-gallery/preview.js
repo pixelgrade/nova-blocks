@@ -1,22 +1,10 @@
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./util";
+import AdvancedGallery from "./index";
 
 const AdvancedGalleryPreview = ( props ) => {
 
-	const {
-		attributes,
-	} = props;
-
-	const {
-		aspect,
-		aspectRatio,
-		images,
-		offset,
-		scale,
-		rotate,
-		orientation,
-		gridGap,
-	} = attributes;
+	const { images, ...attributes } = props.attributes;
 
 	if ( ! images || ! images.length ) {
 		return false;
@@ -27,25 +15,16 @@ const AdvancedGalleryPreview = ( props ) => {
 	return (
 		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) }>
 			<div className={ `novablocks-advanced-gallery__grid` } style={ getGridStyle( attributes ) }>
-				{
-					gridItemsCollection.gridItems.map( ( gridItem, index ) => {
-
-						return (
-							<div
-								className={ `novablocks-advanced-gallery__grid-item` }
-								style={ gridItem.getStyle() }
-							>
-								<img
-									className={ `novablocks-advanced-gallery__image` }
-									src={ gridItem.image.url }
-									style={ gridItem.getImageStyle() }
-								/>
-							</div>
-						);
-
-					} )
-				}
+				{ gridItemsCollection.gridItems.map( ( item ) => <AdvancedGalleryItem gridItem={ item } /> ) }
 			</div>
+		</div>
+	);
+}
+
+const AdvancedGalleryItem = ( { gridItem } ) => {
+	return (
+		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
+			<img className={ `novablocks-advanced-gallery__image` } style={ gridItem.getImageStyle() } src={ gridItem.image.url } />
 		</div>
 	);
 }

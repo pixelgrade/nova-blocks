@@ -122,7 +122,7 @@ module.exports = _createClass;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(16);
+var _typeof = __webpack_require__(17);
 
 var assertThisInitialized = __webpack_require__(10);
 
@@ -310,11 +310,11 @@ module.exports = _assertThisInitialized;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(26);
+var arrayWithoutHoles = __webpack_require__(27);
 
-var iterableToArray = __webpack_require__(27);
+var iterableToArray = __webpack_require__(28);
 
-var nonIterableSpread = __webpack_require__(28);
+var nonIterableSpread = __webpack_require__(29);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
@@ -366,6 +366,33 @@ module.exports = jQuery;
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var objectWithoutPropertiesLoose = __webpack_require__(26);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var arrayWithHoles = __webpack_require__(30);
 
 var iterableToArrayLimit = __webpack_require__(31);
@@ -379,7 +406,7 @@ function _slicedToArray(arr, i) {
 module.exports = _slicedToArray;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -476,7 +503,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -498,7 +525,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -506,33 +533,6 @@ function _readOnlyError(name) {
 }
 
 module.exports = _readOnlyError;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var objectWithoutPropertiesLoose = __webpack_require__(29);
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 19 */
@@ -614,7 +614,7 @@ module.exports = _setPrototypeOf;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(15),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(16),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -649,7 +649,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(5),m=__webpack_require__(15),q=__webpack_require__(24);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
+var aa=__webpack_require__(5),m=__webpack_require__(16),q=__webpack_require__(24);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
 function da(){if(ba)for(var a in ca){var b=ca[a],c=ba.indexOf(a);if(!(-1<c))throw t(Error(96),a);if(!ea[c]){if(!b.extractEvents)throw t(Error(97),a);ea[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],h=b,g=d;if(fa.hasOwnProperty(g))throw t(Error(99),g);fa[g]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ha(k[e],h,g);e=!0}else f.registrationName?(ha(f.registrationName,h,g),e=!0):e=!1;if(!e)throw t(Error(98),d,a);}}}}
 function ha(a,b,c){if(ia[a])throw t(Error(100),a);ia[a]=b;ja[a]=b.eventTypes[c].dependencies}var ea=[],fa={},ia={},ja={};function ka(a,b,c,d,e,f,h,g,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(n){this.onError(n)}}var la=!1,ma=null,na=!1,oa=null,pa={onError:function(a){la=!0;ma=a}};function qa(a,b,c,d,e,f,h,g,k){la=!1;ma=null;ka.apply(pa,arguments)}
 function ra(a,b,c,d,e,f,h,g,k){qa.apply(this,arguments);if(la){if(la){var l=ma;la=!1;ma=null}else throw t(Error(198));na||(na=!0,oa=l)}}var sa=null,ta=null,va=null;function wa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=va(c);ra(d,b,void 0,a);a.currentTarget=null}function xa(a,b){if(null==b)throw t(Error(30));if(null==a)return b;if(Array.isArray(a)){if(Array.isArray(b))return a.push.apply(a,b),a;a.push(b);return a}return Array.isArray(b)?[a].concat(b):[a,b]}
@@ -963,42 +963,6 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();U(a);return
 /* 26 */
 /***/ (function(module, exports) {
 
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-
-module.exports = _arrayWithoutHoles;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-module.exports = _nonIterableSpread;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -1015,6 +979,42 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
 
 /***/ }),
 /* 30 */
@@ -1098,7 +1098,7 @@ if (true) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(15),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
+var l=__webpack_require__(16),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
 var t="function"===typeof Symbol&&Symbol.for,aa=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,ba=t?Symbol.for("react.strict_mode"):60108,ca=t?Symbol.for("react.profiler"):60114,x=t?Symbol.for("react.provider"):60109,da=t?Symbol.for("react.context"):60110,ea=t?Symbol.for("react.concurrent_mode"):60111,fa=t?Symbol.for("react.forward_ref"):60112,A=t?Symbol.for("react.suspense"):60113,ha=t?Symbol.for("react.suspense_list"):60120,ia=t?Symbol.for("react.memo"):60115,ja=t?Symbol.for("react.lazy"):
 60116,ka=t?Symbol.for("react.fundamental"):60117;
 function B(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case v:return"Fragment";case aa:return"Portal";case ca:return"Profiler";case ba:return"StrictMode";case A:return"Suspense";case ha:return"SuspenseList"}if("object"===typeof a)switch(a.$$typeof){case da:return"Context.Consumer";case x:return"Context.Provider";case fa:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
@@ -1255,7 +1255,7 @@ __webpack_require__.r(actions_namespaceObject);
 __webpack_require__.d(actions_namespaceObject, "updateSettings", function() { return updateSettings; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(16);
+var helpers_typeof = __webpack_require__(17);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -2973,6 +2973,10 @@ var with_settings_withSelect = wp.data.withSelect;
     });
   })(Component);
 }));
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
+var objectWithoutProperties = __webpack_require__(14);
+var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
 var toConsumableArray = __webpack_require__(11);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
@@ -2990,7 +2994,10 @@ function () {
 
     var orientation = attributes.orientation;
     this.gridItems = images.map(function (image, index) {
-      return new grid_item_GridItem(image, index, attributes);
+      var groupStart = Math.floor(index / 4) * 4;
+      var groupEnd = Math.min(groupStart + 4, images.length);
+      var isGroupOfThree = groupEnd - groupStart === 3;
+      return new grid_item_GridItem(image, index, attributes, isGroupOfThree);
     });
     this.removeExtra();
 
@@ -3069,7 +3076,7 @@ function () {
 var grid_item_GridItem =
 /*#__PURE__*/
 function () {
-  function GridItem(image, index, attributes) {
+  function GridItem(image, index, attributes, isGroupOfThree) {
     classCallCheck_default()(this, GridItem);
 
     this.scale = attributes.scale;
@@ -3082,6 +3089,16 @@ function () {
     this.idx = this.getIndex(index);
     this.col = this.idx % 2;
     this.row = Math.floor(index / 2);
+
+    if (!!isGroupOfThree) {
+      if (index === 0) {
+        this.offset = Math.min(this.offset, 10);
+      }
+
+      if (index === 2) {
+        this.offset = Math.max(this.offset, 10);
+      }
+    }
 
     var _this$getOffsets = this.getOffsets(),
         offsetX = _this$getOffsets.offsetX,
@@ -3184,7 +3201,7 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   }
 
   return {
-    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing, " * var(--novablocks-spacing-unit, 10px )"),
+    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px )"),
     paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
@@ -3199,16 +3216,12 @@ var getGridStyle = function getGridStyle(attributes) {
 
 
 
+
+
 var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
-  var attributes = props.attributes;
-  var aspect = attributes.aspect,
-      aspectRatio = attributes.aspectRatio,
-      images = attributes.images,
-      offset = attributes.offset,
-      scale = attributes.scale,
-      rotate = attributes.rotate,
-      orientation = attributes.orientation,
-      gridGap = attributes.gridGap;
+  var _props$attributes = props.attributes,
+      images = _props$attributes.images,
+      attributes = objectWithoutProperties_default()(_props$attributes, ["images"]);
 
   if (!images || !images.length) {
     return false;
@@ -3221,16 +3234,23 @@ var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
   }, Object(react["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid",
     style: getGridStyle(attributes)
-  }, gridItemsCollection.gridItems.map(function (gridItem, index) {
-    return Object(react["createElement"])("div", {
-      className: "novablocks-advanced-gallery__grid-item",
-      style: gridItem.getStyle()
-    }, Object(react["createElement"])("img", {
-      className: "novablocks-advanced-gallery__image",
-      src: gridItem.image.url,
-      style: gridItem.getImageStyle()
-    }));
+  }, gridItemsCollection.gridItems.map(function (item) {
+    return Object(react["createElement"])(preview_AdvancedGalleryItem, {
+      gridItem: item
+    });
   })));
+};
+
+var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
+  var gridItem = _ref.gridItem;
+  return Object(react["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item",
+    style: gridItem.getStyle()
+  }, Object(react["createElement"])("img", {
+    className: "novablocks-advanced-gallery__image",
+    style: gridItem.getImageStyle(),
+    src: gridItem.image.url
+  }));
 };
 
 /* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
@@ -3386,8 +3406,8 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
         stylePreset: 'custom'
       });
     },
-    min: -20,
-    max: 20
+    min: -2,
+    max: 2
   })), Object(react["createElement"])(inspector_controls_PanelBody, {
     title: inspector_controls_('Images Controls', '__plugin_txtd'),
     initialOpen: true
@@ -3708,12 +3728,8 @@ function (_Component) {
 }(placeholder_Component);
 
 /* harmony default export */ var google_map_placeholder = (placeholder_MapPlaceholder);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(18);
-var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(14);
+var slicedToArray = __webpack_require__(15);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/server.browser.js
@@ -4911,7 +4927,7 @@ var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
 
 /* harmony default export */ var scrolling_effect_controls = (scrolling_effect_controls_ScrollingEffectControls);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(17);
+var readOnlyError = __webpack_require__(18);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js

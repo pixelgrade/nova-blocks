@@ -16,7 +16,7 @@ export const getGalleryStyle = ( attributes ) => {
 	}
 
 	return {
-		'--novablocks-advanced-gallery-vertical-spacing': `calc( ${ verticalSpacing } * var(--novablocks-spacing-unit, 10px )`,
+		'--novablocks-advanced-gallery-vertical-spacing': `calc( ${ verticalSpacing * 5 } * var(--novablocks-spacing-unit, 10px )`,
 		paddingTop: `${ numerator * 100 / denominator }%`,
 	}
 }

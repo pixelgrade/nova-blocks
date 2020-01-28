@@ -99,8 +99,8 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					label={ __( 'Vertical Spacing', '__plugin_txtd' ) }
 					value={ verticalSpacing }
 					onChange={ verticalSpacing => setAttributes( { verticalSpacing, stylePreset: 'custom' } ) }
-					min={ -20 }
-					max={ 20 }
+					min={ -2 }
+					max={ 2 }
 				/>
 			</PanelBody>
 			<PanelBody title={ __( 'Images Controls', '__plugin_txtd' ) } initialOpen={ true }>

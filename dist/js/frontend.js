@@ -2939,7 +2939,7 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   }
 
   return {
-    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing, " * var(--novablocks-spacing-unit, 10px )"),
+    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px )"),
     paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
@@ -2966,7 +2966,10 @@ function () {
 
     var orientation = attributes.orientation;
     this.gridItems = images.map(function (image, index) {
-      return new grid_item_GridItem(image, index, attributes);
+      var groupStart = Math.floor(index / 4) * 4;
+      var groupEnd = Math.min(groupStart + 4, images.length);
+      var isGroupOfThree = groupEnd - groupStart === 3;
+      return new grid_item_GridItem(image, index, attributes, isGroupOfThree);
     });
     this.removeExtra();
 
@@ -3045,7 +3048,7 @@ function () {
 var grid_item_GridItem =
 /*#__PURE__*/
 function () {
-  function GridItem(image, index, attributes) {
+  function GridItem(image, index, attributes, isGroupOfThree) {
     classCallCheck_default()(this, GridItem);
 
     this.scale = attributes.scale;
@@ -3058,6 +3061,16 @@ function () {
     this.idx = this.getIndex(index);
     this.col = this.idx % 2;
     this.row = Math.floor(index / 2);
+
+    if (!!isGroupOfThree) {
+      if (index === 0) {
+        this.offset = Math.min(this.offset, 10);
+      }
+
+      if (index === 2) {
+        this.offset = Math.max(this.offset, 10);
+      }
+    }
 
     var _this$getOffsets = this.getOffsets(),
         offsetX = _this$getOffsets.offsetX,
