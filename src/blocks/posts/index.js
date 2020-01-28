@@ -9,6 +9,7 @@ import edit from './edit';
  */
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+const { InnerBlocks } = wp.blockEditor;
 
 function init() {
 	registerBlockType('novablocks/posts', {
@@ -40,9 +41,19 @@ function init() {
 			numberOfPosts: {
 				type: 'number',
 				default: '4'
+			},
+			categories: {
+				type: 'string'
+			},
+			postLink: {
+				type: 'string',
+				default: 'Read More'
 			}
 		},
 		edit,
+		save() {
+			return <InnerBlocks.Content />;
+		},
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'full' } : {};
