@@ -129,9 +129,9 @@ export default class GridItem {
 		const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
 
 		return {
-			gridColumnStart: x,
+			gridColumnStart: x + '',
 			gridColumnEnd: `span ${ width }`,
-			gridRowStart: y,
+			gridRowStart: y + '',
 			gridRowEnd: `span ${ height }`,
 			transform: rotation,
 		};

@@ -1,11 +1,8 @@
 import {
 	getGalleryStyle,
 	getGridStyle,
-	getGridItemStyle,
-	getImageStyle,
-	addMetaToImagesArray,
-	getStructuredImagesArray
 } from "../../components/advanced-gallery/util";
+import {GridItemCollection} from "../../components/advanced-gallery/grid-item";
 
 (function($, window, undefined) {
 
@@ -13,8 +10,7 @@ import {
 
 		let $gallery = $( gallery ),
 			$grid = $gallery.find( '.novablocks-advanced-gallery__grid' ),
-			gridItems = $gallery.find( '.novablocks-advanced-gallery__grid-item' ).toArray(),
-			structuredImagesArray = getStructuredImagesArray( gridItems );
+			images = $gallery.find( '.novablocks-advanced-gallery__image' ).toArray();
 
 		const attributes = {
 			aspect: $gallery.data( 'aspect' ),
@@ -24,24 +20,33 @@ import {
 			rotate: $gallery.data( 'rotate' ),
 			orientation: $gallery.data( 'orientation' ),
 			gridGap: $gallery.data( 'gridgap' ),
+			verticalSpacing: $gallery.data( 'verticalspacing' ),
+			objectPosition: $gallery.data( 'objectposition' ),
 		};
 
-		$.each( structuredImagesArray, ( chunkIndex, chunk ) => {
+		const gridItemsCollection = new GridItemCollection( images, attributes );
 
-			const chunkWithMeta = addMetaToImagesArray( chunk, attributes );
+		gridItemsCollection.gridItems.map( ( gridItem, index ) => {
+			let $image = $( gridItem.image ),
+				$item = $image.closest( '.novablocks-advanced-gallery__grid-item' );
 
-			$.each( chunkWithMeta, ( index, meta ) => {
-				let { image } = meta,
-					$item = $( image ),
-					$image = $item.find( '.novablocks-advanced-gallery__image' );
-
-				$item.css( getGridItemStyle( index, chunkWithMeta, attributes ) );
-				$image.css( getImageStyle( index, attributes ) );
-			} );
+			$item.css( gridItem.getStyle() );
+			$image.css( gridItem.getImageStyle() );
 		} );
 
-		$gallery.css( getGalleryStyle( attributes ) );
-		$grid.css( getGridStyle( attributes ) );
+		const galleryStyle = getGalleryStyle( attributes );
+
+		for ( let propertyName in galleryStyle ) {
+			gallery.style.setProperty( propertyName, galleryStyle[ propertyName ] );
+		}
+
+		if ( $grid.length ) {
+			const gridStyle = getGridStyle( attributes );
+
+			for ( let propertyName in gridStyle ) {
+				$grid.get( 0 ).style.setProperty( propertyName, gridStyle[ propertyName ] );
+			}
+		}
 	} );
 
 })(jQuery, window);

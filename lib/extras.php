@@ -913,7 +913,9 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		'scale',
 		'rotate',
 		'orientation',
-		'gridGap'
+		'gridGap',
+		'verticalSpacing',
+		'objectPosition',
 	);
 
 	$data_attributes = array();
