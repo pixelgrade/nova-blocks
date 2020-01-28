@@ -122,7 +122,7 @@ module.exports = _createClass;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(15);
+var _typeof = __webpack_require__(16);
 
 var assertThisInitialized = __webpack_require__(10);
 
@@ -310,6 +310,22 @@ module.exports = _assertThisInitialized;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var arrayWithoutHoles = __webpack_require__(26);
+
+var iterableToArray = __webpack_require__(27);
+
+var nonIterableSpread = __webpack_require__(28);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -341,20 +357,20 @@ if (true) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = jQuery;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(27);
+var arrayWithHoles = __webpack_require__(30);
 
-var iterableToArrayLimit = __webpack_require__(28);
+var iterableToArrayLimit = __webpack_require__(31);
 
-var nonIterableRest = __webpack_require__(29);
+var nonIterableRest = __webpack_require__(32);
 
 function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
@@ -363,7 +379,7 @@ function _slicedToArray(arr, i) {
 module.exports = _slicedToArray;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,7 +476,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -482,7 +498,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -492,10 +508,10 @@ function _readOnlyError(name) {
 module.exports = _readOnlyError;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(26);
+var objectWithoutPropertiesLoose = __webpack_require__(29);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -517,22 +533,6 @@ function _objectWithoutProperties(source, excluded) {
 }
 
 module.exports = _objectWithoutProperties;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithoutHoles = __webpack_require__(32);
-
-var iterableToArray = __webpack_require__(33);
-
-var nonIterableSpread = __webpack_require__(34);
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
 
 /***/ }),
 /* 19 */
@@ -614,7 +614,7 @@ module.exports = _setPrototypeOf;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(14),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(15),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -649,7 +649,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(5),m=__webpack_require__(14),q=__webpack_require__(24);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
+var aa=__webpack_require__(5),m=__webpack_require__(15),q=__webpack_require__(24);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
 function da(){if(ba)for(var a in ca){var b=ca[a],c=ba.indexOf(a);if(!(-1<c))throw t(Error(96),a);if(!ea[c]){if(!b.extractEvents)throw t(Error(97),a);ea[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],h=b,g=d;if(fa.hasOwnProperty(g))throw t(Error(99),g);fa[g]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ha(k[e],h,g);e=!0}else f.registrationName?(ha(f.registrationName,h,g),e=!0):e=!1;if(!e)throw t(Error(98),d,a);}}}}
 function ha(a,b,c){if(ia[a])throw t(Error(100),a);ia[a]=b;ja[a]=b.eventTypes[c].dependencies}var ea=[],fa={},ia={},ja={};function ka(a,b,c,d,e,f,h,g,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(n){this.onError(n)}}var la=!1,ma=null,na=!1,oa=null,pa={onError:function(a){la=!0;ma=a}};function qa(a,b,c,d,e,f,h,g,k){la=!1;ma=null;ka.apply(pa,arguments)}
 function ra(a,b,c,d,e,f,h,g,k){qa.apply(this,arguments);if(la){if(la){var l=ma;la=!1;ma=null}else throw t(Error(198));na||(na=!0,oa=l)}}var sa=null,ta=null,va=null;function wa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=va(c);ra(d,b,void 0,a);a.currentTarget=null}function xa(a,b){if(null==b)throw t(Error(30));if(null==a)return b;if(Array.isArray(a)){if(Array.isArray(b))return a.push.apply(a,b),a;a.push(b);return a}return Array.isArray(b)?[a].concat(b):[a,b]}
@@ -963,6 +963,42 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();U(a);return
 /* 26 */
 /***/ (function(module, exports) {
 
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -981,7 +1017,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -991,7 +1027,7 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -1027,7 +1063,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -1037,19 +1073,19 @@ function _nonIterableRest() {
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(31);
+  module.exports = __webpack_require__(34);
 } else {}
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1062,7 +1098,7 @@ if (true) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(14),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
+var l=__webpack_require__(15),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
 var t="function"===typeof Symbol&&Symbol.for,aa=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,ba=t?Symbol.for("react.strict_mode"):60108,ca=t?Symbol.for("react.profiler"):60114,x=t?Symbol.for("react.provider"):60109,da=t?Symbol.for("react.context"):60110,ea=t?Symbol.for("react.concurrent_mode"):60111,fa=t?Symbol.for("react.forward_ref"):60112,A=t?Symbol.for("react.suspense"):60113,ha=t?Symbol.for("react.suspense_list"):60120,ia=t?Symbol.for("react.memo"):60115,ja=t?Symbol.for("react.lazy"):
 60116,ka=t?Symbol.for("react.fundamental"):60117;
 function B(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case v:return"Fragment";case aa:return"Portal";case ca:return"Profiler";case ba:return"StrictMode";case A:return"Suspense";case ha:return"SuspenseList"}if("object"===typeof a)switch(a.$$typeof){case da:return"Context.Consumer";case x:return"Context.Provider";case fa:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
@@ -1108,42 +1144,6 @@ if(!("object"===typeof h.dangerouslySetInnerHTML&&"__html"in h.dangerouslySetInn
 c;this.stack.push({domNamespace:c,type:b,children:e,childIndex:0,context:d,footer:h});this.previousWasTextNode=!1;return z};return a}(),Va={renderToString:function(a){a=new Ua(a,!1);try{return a.read(Infinity)}finally{a.destroy()}},renderToStaticMarkup:function(a){a=new Ua(a,!0);try{return a.read(Infinity)}finally{a.destroy()}},renderToNodeStream:function(){throw r(Error(207));},renderToStaticNodeStream:function(){throw r(Error(208));},version:"16.9.0"},Wa={default:Va},Xa=Wa&&Va||
 Wa;module.exports=Xa.default||Xa;
 
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-
-module.exports = _arrayWithoutHoles;
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-module.exports = _nonIterableSpread;
 
 /***/ }),
 /* 35 */
@@ -1255,7 +1255,7 @@ __webpack_require__.r(actions_namespaceObject);
 __webpack_require__.d(actions_namespaceObject, "updateSettings", function() { return updateSettings; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(15);
+var helpers_typeof = __webpack_require__(16);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -1566,7 +1566,7 @@ function switchChildrenNodeName(children, nodeName) {
 }
 //# sourceMappingURL=react.js.map
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(11);
+var react_dom = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react-platform.js
 /**
@@ -2973,166 +2973,207 @@ var with_settings_withSelect = wp.data.withSelect;
     });
   })(Component);
 }));
-// CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(11);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
+
+
+
 var ITEM_SIZE = 20;
-var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attributes) {
-  var aspect = attributes.aspect,
-      aspectRatio = attributes.aspectRatio,
-      orientation = attributes.orientation,
-      rotate = attributes.rotate,
-      offset = attributes.offset,
-      scale = attributes.scale;
-  index = index % 4;
-  var _chunkWithMeta$index = chunkWithMeta[index],
-      idx = _chunkWithMeta$index.idx,
-      col = _chunkWithMeta$index.col,
-      row = _chunkWithMeta$index.row,
-      size = _chunkWithMeta$index.size,
-      x = _chunkWithMeta$index.x,
-      y = _chunkWithMeta$index.y;
-  var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)"); // offset for positioning
+var grid_item_GridItemCollection =
+/*#__PURE__*/
+function () {
+  function GridItemCollection(images, attributes) {
+    classCallCheck_default()(this, GridItemCollection);
 
-  var offsetX = (1 - col % 2) * index * scale;
-  var offsetY = (1 - row % 2) * index * scale; // offset from offset
-  // move 1st to right
-
-  offsetX += (1 - col % 2) * (1 - row % 2) * offset; // move 2nd down
-
-  offsetY -= (1 - col % 2) * (row % 2) * offset; // move 3rd to left
-
-  offsetX -= col % 2 * (row % 2) * offset; // move 4th up
-
-  offsetY += col % 2 * (1 - row % 2) * offset;
-  var extraLeft = getExtra(chunkWithMeta, offset, 'left');
-  var extraTop = getExtra(chunkWithMeta, offset, 'top');
-  var style = {
-    gridColumnStart: x + offsetX - extraLeft + '',
-    gridColumnEnd: "span ".concat(size),
-    gridRowStart: y + offsetY - extraTop + '',
-    gridRowEnd: "span ".concat(size),
-    transform: rotation
-  };
-  return style;
-};
-var addMetaToImagesArray = function addMetaToImagesArray(imagesArray, attributes) {
-  var scale = attributes.scale,
-      offset = attributes.offset,
-      orientation = attributes.orientation;
-  return imagesArray.map(function (image, index) {
-    var idx = getIndex(index, orientation);
-    var col = idx % 2;
-    var row = Math.floor(idx / 2);
-    var size = ITEM_SIZE - scale * index;
-    var x = ITEM_SIZE * col + 1;
-    var y = ITEM_SIZE * row + 1;
-    return Object.assign({}, {
-      idx: idx,
-      col: col,
-      row: row,
-      size: size,
-      x: x,
-      y: y,
-      index: index,
-      offset: offset,
-      scale: scale,
-      image: image
+    var orientation = attributes.orientation;
+    this.gridItems = images.map(function (image, index) {
+      return new grid_item_GridItem(image, index, attributes);
     });
-  });
-};
-var getStructuredImagesArray = function getStructuredImagesArray(images) {
-  var i,
-      j,
-      temparray,
-      chunkSize = 4,
-      chunks = []; // split into groups of 4
+    this.removeExtra();
 
-  for (i = 0, j = images.length; i < j; i += chunkSize) {
-    chunks.push(images.slice(i, i + chunkSize));
-  }
-
-  return chunks;
-};
-var getIndex = function getIndex(index) {
-  var orientation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-  if (orientation === 0) {
-    if (index % 4 === 3) return index - 1;
-    if (index % 4 === 2) return index + 1;
-    return index;
-  }
-
-  if (orientation === 1) {
-    if (index % 4 === 0) return index + 1;
-    if (index % 4 === 1) return index - 1;
-    return index;
-  }
-
-  if (orientation === 2) {
-    if (index % 4 === 0) return index + 3;
-    if (index % 4 === 1) return index + 1;
-    if (index % 4 === 2) return index - 2;
-    if (index % 4 === 3) return index - 2;
-  }
-
-  if (orientation === 3) {
-    if (index % 4 === 0) return index + 2;
-    if (index % 4 === 1) return index + 2;
-    if (index % 4 === 2) return index - 1;
-    if (index % 4 === 3) return index - 3;
-  }
-};
-var getExtra = function getExtra(chunk, offset, direction) {
-  var topLeftImage = chunk.find(function (image) {
-    return image.idx === 0;
-  });
-  var topRightImage = chunk.find(function (image) {
-    return image.idx === 1;
-  });
-  var bottomLeftImage = chunk.find(function (image) {
-    return image.idx === 2;
-  });
-  var bottomRightImage = chunk.find(function (image) {
-    return image.idx === 3;
-  });
-  var topLeftImageExtra = topLeftImage ? topLeftImage.scale * topLeftImage.index : ITEM_SIZE;
-  var topRightImageExtra = topRightImage ? topRightImage.scale * topRightImage.index : ITEM_SIZE;
-  var bottomLeftImageExtra = bottomLeftImage ? bottomLeftImage.scale * bottomLeftImage.index : ITEM_SIZE;
-  var bottomRightImageExtra = bottomRightImage ? bottomRightImage.scale * bottomRightImage.index : ITEM_SIZE;
-  var extra = ITEM_SIZE - offset;
-
-  if (direction === 'left') {
-    // minimum distance to left margin between first and second image
-    var extraLeft = Math.min(offset + topLeftImageExtra, ITEM_SIZE); // adding third image in equation
-
-    if (chunk.length > 2) {
-      extraLeft = Math.min(extraLeft, ITEM_SIZE - offset);
-    } // adding forth image in equation
-
-
-    if (chunk.length > 3) {
-      extraLeft = Math.min(extraLeft, bottomLeftImageExtra);
+    if (orientation === 1 || orientation === 2) {
+      this.flipX();
     }
 
-    return extraLeft;
-  }
-
-  if (direction === 'top') {
-    var extraTop = Math.min(topLeftImageExtra, offset + topRightImageExtra);
-
-    if (chunk.length > 3) {
-      extraTop = Math.min(extraTop, ITEM_SIZE - offset);
+    if (orientation === 2 || orientation === 3) {
+      this.flipY();
     }
-
-    return extraTop;
   }
 
-  return 0;
-};
+  createClass_default()(GridItemCollection, [{
+    key: "removeExtra",
+    value: function removeExtra() {
+      var extraLeft = this.getExtraLeft();
+      var extraTop = this.getExtraTop();
+      var extraBetween = this.getExtraBetween();
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        var groupIndex = Math.floor(index / 4);
+        gridItem.x = gridItem.x - extraLeft;
+        gridItem.y = gridItem.y - extraTop - groupIndex * extraBetween;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipX",
+    value: function flipX() {
+      var maxX = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x + gridItem.width;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.x = maxX - gridItem.x - gridItem.width + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipY",
+    value: function flipY() {
+      var maxY = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.y = maxY - gridItem.y - gridItem.height + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "getExtraLeft",
+    value: function getExtraLeft() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraTop",
+    value: function getExtraTop() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraBetween",
+    value: function getExtraBetween() {
+      var firstGroup = this.gridItems.slice(0, 4);
+      var maxBottom = Math.max.apply(Math, toConsumableArray_default()(firstGroup.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      return ITEM_SIZE * 2 - maxBottom + 1;
+    }
+  }]);
+
+  return GridItemCollection;
+}();
+
+var grid_item_GridItem =
+/*#__PURE__*/
+function () {
+  function GridItem(image, index, attributes) {
+    classCallCheck_default()(this, GridItem);
+
+    this.scale = attributes.scale;
+    this.rotate = attributes.rotate;
+    this.offset = attributes.offset;
+    this.objectPosition = attributes.objectPosition;
+    this.aspect = attributes.aspect;
+    this.image = image;
+    this.index = index;
+    this.idx = this.getIndex(index);
+    this.col = this.idx % 2;
+    this.row = Math.floor(index / 2);
+
+    var _this$getOffsets = this.getOffsets(),
+        offsetX = _this$getOffsets.offsetX,
+        offsetY = _this$getOffsets.offsetY;
+
+    var size = ITEM_SIZE - this.scale * (index % 4);
+    this.x = ITEM_SIZE * this.col + 1 + offsetX;
+    this.y = ITEM_SIZE * this.row + 1 + offsetY;
+    this.width = size;
+    this.height = size;
+  }
+
+  createClass_default()(GridItem, [{
+    key: "getOffsets",
+    value: function getOffsets() {
+      var row = this.row,
+          col = this.col,
+          index = this.index,
+          scale = this.scale,
+          offset = this.offset; // offset for positioning
+
+      var offsetX = (1 - col % 2) * (index % 4) * scale;
+      var offsetY = (1 - row % 2) * (index % 4) * scale; // offset from offset
+      // move 1st to right
+
+      offsetX += (1 - col % 2) * (1 - row % 2) * offset; // move 3rd to left
+
+      offsetX -= col % 2 * (row % 2) * offset; // move 2nd down
+
+      offsetY -= (1 - col % 2) * (row % 2) * offset; // move 4th up
+
+      offsetY += col % 2 * (1 - row % 2) * offset;
+      return {
+        offsetX: offsetX,
+        offsetY: offsetY
+      };
+    } // reoder to display items clockwise
+
+  }, {
+    key: "getIndex",
+    value: function getIndex(index) {
+      if (index % 4 === 3) return index - 1;
+      if (index % 4 === 2) return index + 1;
+      return index;
+    }
+  }, {
+    key: "getStyle",
+    value: function getStyle() {
+      var index = this.index,
+          x = this.x,
+          y = this.y,
+          width = this.width,
+          height = this.height,
+          rotate = this.rotate;
+      var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)");
+      return {
+        gridColumnStart: x,
+        gridColumnEnd: "span ".concat(width),
+        gridRowStart: y,
+        gridRowEnd: "span ".concat(height),
+        transform: rotation
+      };
+    }
+  }, {
+    key: "getImageStyle",
+    value: function getImageStyle() {
+      var idx = this.idx,
+          row = this.row,
+          col = this.col,
+          objectPosition = this.objectPosition,
+          aspect = this.aspect;
+      var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var objPos = aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
+      return {
+        objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
+        objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
+      };
+    }
+  }]);
+
+  return GridItem;
+}();
+
+
+// CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
 var getGalleryStyle = function getGalleryStyle(attributes) {
-  var aspectRatio = attributes.aspectRatio;
+  var aspectRatio = attributes.aspectRatio,
+      verticalSpacing = attributes.verticalSpacing;
   var numerator = 1;
   var denominator = 1;
-  aspectRatio = Math.min(Math.max(0, aspectRatio), 1);
+  aspectRatio = Math.min(Math.max(-1, aspectRatio), 1);
 
   if (aspectRatio > 0) {
     numerator = 1 + aspectRatio;
@@ -3143,6 +3184,7 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   }
 
   return {
+    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing, " * var(--novablocks-spacing-unit, 10px )"),
     paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
@@ -3152,44 +3194,53 @@ var getGridStyle = function getGridStyle(attributes) {
     '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
   };
 };
-var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
+// CONCATENATED MODULE: ./src/components/advanced-gallery/preview.js
+
+
+
+
+var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
+  var attributes = props.attributes;
   var aspect = attributes.aspect,
-      objectPosition = attributes.objectPosition;
-  var _chunkWithMeta = chunkWithMeta[index % 4],
-      idx = _chunkWithMeta.idx,
-      row = _chunkWithMeta.row,
-      col = _chunkWithMeta.col;
-  var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
-  var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-  console.log(row, col, "".concat(positionX, "% ").concat(positionY, "%"));
-  return {
-    objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
-    objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
-  };
+      aspectRatio = attributes.aspectRatio,
+      images = attributes.images,
+      offset = attributes.offset,
+      scale = attributes.scale,
+      rotate = attributes.rotate,
+      orientation = attributes.orientation,
+      gridGap = attributes.gridGap;
+
+  if (!images || !images.length) {
+    return false;
+  }
+
+  var gridItemsCollection = new grid_item_GridItemCollection(images, attributes);
+  return Object(react["createElement"])("div", {
+    className: "novablocks-advanced-gallery",
+    style: getGalleryStyle(attributes)
+  }, Object(react["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid",
+    style: getGridStyle(attributes)
+  }, gridItemsCollection.gridItems.map(function (gridItem, index) {
+    return Object(react["createElement"])("div", {
+      className: "novablocks-advanced-gallery__grid-item",
+      style: gridItem.getStyle()
+    }, Object(react["createElement"])("img", {
+      className: "novablocks-advanced-gallery__image",
+      src: gridItem.image.url,
+      style: gridItem.getImageStyle()
+    }));
+  })));
 };
-// CONCATENATED MODULE: ./src/components/advanced-gallery/index.js
 
+/* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/placeholder.js
 
-
-
-var advanced_gallery_ = wp.i18n.__;
-var advanced_gallery_Fragment = wp.element.Fragment;
 var _wp$blockEditor = wp.blockEditor,
-    BlockControls = _wp$blockEditor.BlockControls,
-    advanced_gallery_InspectorControls = _wp$blockEditor.InspectorControls,
-    MediaUpload = _wp$blockEditor.MediaUpload;
-var advanced_gallery_wp$components = wp.components,
-    advanced_gallery_PanelBody = advanced_gallery_wp$components.PanelBody,
-    RadioControl = advanced_gallery_wp$components.RadioControl,
-    RangeControl = advanced_gallery_wp$components.RangeControl,
-    Toolbar = advanced_gallery_wp$components.Toolbar,
-    IconButton = advanced_gallery_wp$components.IconButton;
-var _wp$blockEditor2 = wp.blockEditor,
-    MediaPlaceholder = _wp$blockEditor2.MediaPlaceholder,
-    BlockIcon = _wp$blockEditor2.BlockIcon;
-var MAX_ROTATION = 15;
+    MediaPlaceholder = _wp$blockEditor.MediaPlaceholder,
+    BlockIcon = _wp$blockEditor.BlockIcon;
 
-var advanced_gallery_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
+var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
   var setAttributes = props.setAttributes,
       images = props.attributes.images;
 
@@ -3212,46 +3263,17 @@ var advanced_gallery_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceh
   });
 };
 
-var advanced_gallery_AdvancedGalleryGrid = function AdvancedGalleryGrid(props) {
-  var attributes = props.attributes;
-  var aspect = attributes.aspect,
-      aspectRatio = attributes.aspectRatio,
-      images = attributes.images,
-      offset = attributes.offset,
-      scale = attributes.scale,
-      rotate = attributes.rotate,
-      orientation = attributes.orientation,
-      gridGap = attributes.gridGap;
+/* harmony default export */ var placeholder = (placeholder_AdvancedGalleryPlaceholder);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/inspector-controls.js
 
-  if (!images || !images.length) {
-    return false;
-  }
+var inspector_controls_ = wp.i18n.__;
+var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var inspector_controls_wp$components = wp.components,
+    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
+    RadioControl = inspector_controls_wp$components.RadioControl,
+    RangeControl = inspector_controls_wp$components.RangeControl;
 
-  var structuredImagesArray = getStructuredImagesArray(images);
-  return Object(react["createElement"])("div", {
-    className: "novablocks-advanced-gallery",
-    style: getGalleryStyle(attributes)
-  }, structuredImagesArray.map(function (chunk, chunkIndex) {
-    var chunkWithMeta = addMetaToImagesArray(chunk, attributes);
-    return Object(react["createElement"])("div", {
-      className: "novablocks-advanced-gallery__grid",
-      style: getGridStyle(attributes),
-      key: chunkIndex
-    }, chunkWithMeta.map(function (meta, index) {
-      var image = meta.image;
-      return Object(react["createElement"])("div", {
-        className: "novablocks-advanced-gallery__grid-item",
-        style: getGridItemStyle(index, chunkWithMeta, attributes)
-      }, Object(react["createElement"])("img", {
-        className: "novablocks-advanced-gallery__image",
-        src: image.url,
-        style: getImageStyle(index, chunkWithMeta, attributes)
-      }));
-    }));
-  }));
-};
-
-var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGalleryInspectorControls(props) {
+var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalleryInspectorControls(props) {
   var setAttributes = props.setAttributes,
       _props$attributes = props.attributes,
       scale = _props$attributes.scale,
@@ -3263,10 +3285,10 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       aspectRatio = _props$attributes.aspectRatio,
       objectPosition = _props$attributes.objectPosition,
       gridGap = _props$attributes.gridGap,
+      verticalSpacing = _props$attributes.verticalSpacing,
       advancedGalleryPresetOptions = props.settings.advancedGalleryPresetOptions;
-  var maxOffset = 9 - scale;
-  return Object(react["createElement"])(advanced_gallery_InspectorControls, null, Object(react["createElement"])(advanced_gallery_PanelBody, {
-    title: advanced_gallery_('Advanced Gallery Presets', '__plugin_txtd'),
+  return Object(react["createElement"])(inspector_controls_InspectorControls, null, Object(react["createElement"])(inspector_controls_PanelBody, {
+    title: inspector_controls_('Advanced Gallery Presets', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RadioControl, {
     label: 'Style Presets',
@@ -3286,11 +3308,11 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       setAttributes(newAttributes);
     },
     options: advancedGalleryPresetOptions
-  })), Object(react["createElement"])(advanced_gallery_PanelBody, {
-    title: advanced_gallery_('Advanced Gallery Controls', '__plugin_txtd'),
+  })), Object(react["createElement"])(inspector_controls_PanelBody, {
+    title: inspector_controls_('Advanced Gallery Controls', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Scale', '__plugin_txtd'),
+    label: inspector_controls_('Scale', '__plugin_txtd'),
     value: scale,
     onChange: function onChange(scale) {
       return setAttributes({
@@ -3301,7 +3323,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     min: 0,
     max: 5
   }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Offset', '__plugin_txtd'),
+    label: inspector_controls_('Offset', '__plugin_txtd'),
     value: offset,
     onChange: function onChange(offset) {
       return setAttributes({
@@ -3312,7 +3334,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     min: 0,
     max: 20
   }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Orientation', '__plugin_txtd'),
+    label: inspector_controls_('Orientation', '__plugin_txtd'),
     value: orientation,
     onChange: function onChange(orientation) {
       return setAttributes({
@@ -3322,7 +3344,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     min: 0,
     max: 3
   }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Aspect Ratio', '__plugin_txtd'),
+    label: inspector_controls_('Aspect Ratio', '__plugin_txtd'),
     value: aspectRatio,
     onChange: function onChange(aspectRatio) {
       return setAttributes({
@@ -3334,7 +3356,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
     max: 1,
     step: 0.1
   }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Grid Gap', '__plugin_txtd'),
+    label: inspector_controls_('Grid Gap', '__plugin_txtd'),
     value: gridGap,
     onChange: function onChange(gridGap) {
       return setAttributes({
@@ -3342,9 +3364,10 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       });
     },
     min: 0,
-    max: 100
+    max: 100,
+    step: 10
   }), Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Rotate', '__plugin_txtd'),
+    label: inspector_controls_('Rotate', '__plugin_txtd'),
     value: rotate,
     onChange: function onChange(rotate) {
       return setAttributes({
@@ -3353,9 +3376,20 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       });
     },
     min: 0,
-    max: MAX_ROTATION
-  })), Object(react["createElement"])(advanced_gallery_PanelBody, {
-    title: advanced_gallery_('Images Controls', '__plugin_txtd'),
+    max: 15
+  }), Object(react["createElement"])(RangeControl, {
+    label: inspector_controls_('Vertical Spacing', '__plugin_txtd'),
+    value: verticalSpacing,
+    onChange: function onChange(verticalSpacing) {
+      return setAttributes({
+        verticalSpacing: verticalSpacing,
+        stylePreset: 'custom'
+      });
+    },
+    min: -20,
+    max: 20
+  })), Object(react["createElement"])(inspector_controls_PanelBody, {
+    title: inspector_controls_('Images Controls', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RadioControl, {
     label: 'Aspect',
@@ -3373,7 +3407,7 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
       value: 'cropped'
     }]
   }), aspect === 'original' && Object(react["createElement"])(RangeControl, {
-    label: advanced_gallery_('Object Position', '__plugin_txtd'),
+    label: inspector_controls_('Object Position', '__plugin_txtd'),
     value: objectPosition,
     onChange: function onChange(objectPosition) {
       return setAttributes({
@@ -3386,7 +3420,19 @@ var advanced_gallery_AdvancedGalleryInspectorControls = function AdvancedGallery
   })));
 };
 
-var advanced_gallery_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
+/* harmony default export */ var inspector_controls = (inspector_controls_AdvancedGalleryInspectorControls);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/block-controls.js
+
+
+var block_controls_ = wp.i18n.__;
+var block_controls_wp$blockEditor = wp.blockEditor,
+    BlockControls = block_controls_wp$blockEditor.BlockControls,
+    MediaUpload = block_controls_wp$blockEditor.MediaUpload;
+var block_controls_wp$components = wp.components,
+    Toolbar = block_controls_wp$components.Toolbar,
+    IconButton = block_controls_wp$components.IconButton;
+
+var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
   var setAttributes = props.setAttributes,
       images = props.attributes.images;
 
@@ -3410,7 +3456,7 @@ var advanced_gallery_AdvancedGalleryBlockControls = function AdvancedGalleryBloc
       var open = _ref.open;
       return Object(react["createElement"])(IconButton, {
         className: "components-icon-button components-toolbar__control",
-        label: advanced_gallery_('Change Media', '__plugin_txtd'),
+        label: block_controls_('Change Media', '__plugin_txtd'),
         icon: swap,
         onClick: open
       });
@@ -3418,8 +3464,18 @@ var advanced_gallery_AdvancedGalleryBlockControls = function AdvancedGalleryBloc
   })));
 };
 
+/* harmony default export */ var block_controls = (block_controls_AdvancedGalleryBlockControls);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/index.js
+
+
+
+
+
+
+var advanced_gallery_Fragment = wp.element.Fragment;
+
 var advanced_gallery_AdvancedGallery = function AdvancedGallery(props) {
-  return Object(react["createElement"])(advanced_gallery_Fragment, null, Object(react["createElement"])(advanced_gallery_AdvancedGalleryPlaceholder, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryGrid, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryInspectorControls, props), Object(react["createElement"])(advanced_gallery_AdvancedGalleryBlockControls, props));
+  return Object(react["createElement"])(advanced_gallery_Fragment, null, Object(react["createElement"])(placeholder, props), Object(react["createElement"])(preview, props), Object(react["createElement"])(inspector_controls, props), Object(react["createElement"])(block_controls, props));
 };
 
 /* harmony default export */ var advanced_gallery = (with_settings(advanced_gallery_AdvancedGallery));
@@ -3439,20 +3495,20 @@ var edit_Edit = function Edit(props) {
  * WordPress dependencies
  */
 
-var blocks_advanced_gallery_ = wp.i18n.__;
+var advanced_gallery_ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
 
 function init() {
   registerBlockType('novablocks/advanced-gallery', {
-    title: blocks_advanced_gallery_('Advanced Gallery', '__plugin_txtd'),
-    description: blocks_advanced_gallery_('Advanced Gallery', '__plugin_txtd'),
+    title: advanced_gallery_('Advanced Gallery', '__plugin_txtd'),
+    description: advanced_gallery_('Advanced Gallery', '__plugin_txtd'),
     category: 'nova-blocks',
     icon: gallery,
     supports: {
       align: ['wide', 'full']
     },
     // Additional search terms
-    keywords: [blocks_advanced_gallery_('image with text', '__plugin_txtd'), blocks_advanced_gallery_('columns', '__plugin_txtd'), blocks_advanced_gallery_('side text', '__plugin_txtd')],
+    keywords: [advanced_gallery_('image with text', '__plugin_txtd'), advanced_gallery_('columns', '__plugin_txtd'), advanced_gallery_('side text', '__plugin_txtd')],
     edit: advanced_gallery_edit,
     save: function save() {
       return false;
@@ -3651,17 +3707,17 @@ function (_Component) {
   return MapPlaceholder;
 }(placeholder_Component);
 
-/* harmony default export */ var placeholder = (placeholder_MapPlaceholder);
+/* harmony default export */ var google_map_placeholder = (placeholder_MapPlaceholder);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(17);
+var objectWithoutProperties = __webpack_require__(18);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(13);
+var slicedToArray = __webpack_require__(14);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/server.browser.js
-var server_browser = __webpack_require__(30);
+var server_browser = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/blocks/google-map/pin.js
 /* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fill-rule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
@@ -4104,16 +4160,12 @@ function PositionIndicatorsPanel(props) {
 }
 
 /* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(18);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
 var objectDestructuringEmpty = __webpack_require__(19);
 var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(12);
+var external_jQuery_ = __webpack_require__(13);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
@@ -4859,7 +4911,7 @@ var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
 
 /* harmony default export */ var scrolling_effect_controls = (scrolling_effect_controls_ScrollingEffectControls);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(16);
+var readOnlyError = __webpack_require__(17);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js
@@ -6281,14 +6333,14 @@ function (_Component) {
 
 
 
-var inspector_controls_ = wp.i18n.__;
-var inspector_controls_wp$components = wp.components,
-    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
-    inspector_controls_RangeControl = inspector_controls_wp$components.RangeControl,
-    inspector_controls_SelectControl = inspector_controls_wp$components.SelectControl,
-    inspector_controls_ToggleControl = inspector_controls_wp$components.ToggleControl;
+var google_map_inspector_controls_ = wp.i18n.__;
+var google_map_inspector_controls_wp$components = wp.components,
+    google_map_inspector_controls_PanelBody = google_map_inspector_controls_wp$components.PanelBody,
+    inspector_controls_RangeControl = google_map_inspector_controls_wp$components.RangeControl,
+    inspector_controls_SelectControl = google_map_inspector_controls_wp$components.SelectControl,
+    inspector_controls_ToggleControl = google_map_inspector_controls_wp$components.ToggleControl;
 var inspector_controls_Component = wp.element.Component;
-var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var google_map_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 
 var inspector_controls_ButtonInspectorControls =
 /*#__PURE__*/
@@ -6324,8 +6376,8 @@ function (_Component) {
         return null;
       }
 
-      return Object(react["createElement"])(inspector_controls_InspectorControls, null, Object(react["createElement"])(inspector_controls_PanelBody, {
-        title: inspector_controls_('Map Design', '__plugin_txtd')
+      return Object(react["createElement"])(google_map_inspector_controls_InspectorControls, null, Object(react["createElement"])(google_map_inspector_controls_PanelBody, {
+        title: google_map_inspector_controls_('Map Design', '__plugin_txtd')
       }, Object(react["createElement"])(map_style_select, extends_default()({}, this.props, {
         apiKey: savedApiKey,
         value: styleSlug,
@@ -6345,7 +6397,7 @@ function (_Component) {
           });
         }
       })), Object(react["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
+        label: google_map_inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
         checked: showIcons,
         onChange: function onChange() {
           return setAttributes({
@@ -6353,7 +6405,7 @@ function (_Component) {
           });
         }
       }), Object(react["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Street Labels', '__plugin_txtd'),
+        label: google_map_inspector_controls_('Show Street Labels', '__plugin_txtd'),
         checked: showLabels,
         onChange: function onChange() {
           return setAttributes({
@@ -6361,15 +6413,15 @@ function (_Component) {
           });
         }
       }), Object(react["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Controls', '__plugin_txtd'),
+        label: google_map_inspector_controls_('Show Controls', '__plugin_txtd'),
         checked: showControls,
         onChange: function onChange() {
           return setAttributes({
             showControls: !showControls
           });
         }
-      })), Object(react["createElement"])(inspector_controls_PanelBody, {
-        title: inspector_controls_('Zoom Level', '__plugin_txtd')
+      })), Object(react["createElement"])(google_map_inspector_controls_PanelBody, {
+        title: google_map_inspector_controls_('Zoom Level', '__plugin_txtd')
       }, Object(react["createElement"])(inspector_controls_RangeControl, {
         value: zoom,
         onChange: function onChange(newZoom) {
@@ -6386,7 +6438,7 @@ function (_Component) {
   return ButtonInspectorControls;
 }(inspector_controls_Component);
 
-/* harmony default export */ var inspector_controls = (inspector_controls_ButtonInspectorControls);
+/* harmony default export */ var google_map_inspector_controls = (inspector_controls_ButtonInspectorControls);
 // CONCATENATED MODULE: ./src/blocks/google-map/edit.js
 
 
@@ -6550,7 +6602,7 @@ function (_Component) {
       }
 
       if (!fetchedScript || !savedApiKey || gmAuthFailure) {
-        return Object(react["createElement"])(placeholder, {
+        return Object(react["createElement"])(google_map_placeholder, {
           saveApiKey: this.saveApiKey.bind(this),
           apiKey: savedApiKey,
           apiKeyInstructions: this.getInstructions()
@@ -6606,7 +6658,7 @@ function (_Component) {
           });
         },
         controls: ['center', 'full']
-      })), !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && Object(react["createElement"])(inspector_controls, extends_default()({}, newProps, {
+      })), !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && Object(react["createElement"])(google_map_inspector_controls, extends_default()({}, newProps, {
         apiKey: this.state.apiKey,
         savedApiKey: this.state.savedApiKey,
         onChangeApiKey: function onChangeApiKey(apiKey) {
@@ -7262,7 +7314,7 @@ var preview_HeroPreview = function HeroPreview(props) {
   })));
 };
 
-/* harmony default export */ var preview = (preview_HeroPreview);
+/* harmony default export */ var hero_preview = (preview_HeroPreview);
 // CONCATENATED MODULE: ./src/blocks/hero/block-controls.js
 
 
@@ -7275,13 +7327,13 @@ var preview_HeroPreview = function HeroPreview(props) {
  * WordPress dependencies
  */
 
-var block_controls_ = wp.i18n.__;
-var block_controls_wp$blockEditor = wp.blockEditor,
-    block_controls_BlockControls = block_controls_wp$blockEditor.BlockControls,
-    block_controls_MediaUpload = block_controls_wp$blockEditor.MediaUpload;
-var block_controls_wp$components = wp.components,
-    block_controls_IconButton = block_controls_wp$components.IconButton,
-    block_controls_Toolbar = block_controls_wp$components.Toolbar;
+var hero_block_controls_ = wp.i18n.__;
+var hero_block_controls_wp$blockEditor = wp.blockEditor,
+    block_controls_BlockControls = hero_block_controls_wp$blockEditor.BlockControls,
+    block_controls_MediaUpload = hero_block_controls_wp$blockEditor.MediaUpload;
+var hero_block_controls_wp$components = wp.components,
+    block_controls_IconButton = hero_block_controls_wp$components.IconButton,
+    block_controls_Toolbar = hero_block_controls_wp$components.Toolbar;
 var block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_HeroBlockControls = function HeroBlockControls(props) {
@@ -7297,7 +7349,7 @@ var block_controls_HeroBlockControls = function HeroBlockControls(props) {
       var open = _ref.open;
       return Object(react["createElement"])(block_controls_IconButton, {
         className: "components-icon-button components-toolbar__control",
-        label: block_controls_('Change Media', '__plugin_txtd'),
+        label: hero_block_controls_('Change Media', '__plugin_txtd'),
         icon: swap,
         onClick: open
       });
@@ -7305,7 +7357,7 @@ var block_controls_HeroBlockControls = function HeroBlockControls(props) {
   })));
 };
 
-/* harmony default export */ var block_controls = (block_controls_HeroBlockControls);
+/* harmony default export */ var hero_block_controls = (block_controls_HeroBlockControls);
 // CONCATENATED MODULE: ./src/blocks/hero/edit.js
 
 
@@ -7428,7 +7480,7 @@ function (_Component) {
       var settings = this.props.settings;
       var usePostMetaAttributes = settings.usePostMetaAttributes;
       var updateAttributes = this.updateAttributes.bind(this);
-      return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(preview, this.props), Object(react["createElement"])(block_controls, this.props), Object(react["createElement"])(hero_edit_InspectorControls, null, Object(react["createElement"])(layout_panel, this.props), Object(react["createElement"])(edit_BlockHeightControls, this.props), usePostMetaAttributes && Object(react["createElement"])(FirstBlockControls, extends_default()({}, this.props, {
+      return Object(react["createElement"])(hero_edit_Fragment, null, Object(react["createElement"])(hero_preview, this.props), Object(react["createElement"])(hero_block_controls, this.props), Object(react["createElement"])(hero_edit_InspectorControls, null, Object(react["createElement"])(layout_panel, this.props), Object(react["createElement"])(edit_BlockHeightControls, this.props), usePostMetaAttributes && Object(react["createElement"])(FirstBlockControls, extends_default()({}, this.props, {
         updateAttributes: updateAttributes
       }))));
     }

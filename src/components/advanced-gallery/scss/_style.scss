@@ -2,6 +2,9 @@
 	// padding top to make sure negative margin of child doesn't collapse
 	position: relative;
 	padding-top: 50%;
+
+	margin-top: var(--novablocks-advanced-gallery-vertical-spacing);
+	margin-bottom: var(--novablocks-advanced-gallery-vertical-spacing);
 }
 
 .novablocks-advanced-gallery__grid {

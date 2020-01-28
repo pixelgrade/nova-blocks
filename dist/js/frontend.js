@@ -2871,165 +2871,12 @@ var TRANSITION_EASING = "easeInOutCirc";
   }
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
-var ITEM_SIZE = 20;
-var getGridItemStyle = function getGridItemStyle(index, chunkWithMeta, attributes) {
-  var aspect = attributes.aspect,
-      aspectRatio = attributes.aspectRatio,
-      orientation = attributes.orientation,
-      rotate = attributes.rotate,
-      offset = attributes.offset,
-      scale = attributes.scale;
-  index = index % 4;
-  var _chunkWithMeta$index = chunkWithMeta[index],
-      idx = _chunkWithMeta$index.idx,
-      col = _chunkWithMeta$index.col,
-      row = _chunkWithMeta$index.row,
-      size = _chunkWithMeta$index.size,
-      x = _chunkWithMeta$index.x,
-      y = _chunkWithMeta$index.y;
-  var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)"); // offset for positioning
-
-  var offsetX = (1 - col % 2) * index * scale;
-  var offsetY = (1 - row % 2) * index * scale; // offset from offset
-  // move 1st to right
-
-  offsetX += (1 - col % 2) * (1 - row % 2) * offset; // move 2nd down
-
-  offsetY -= (1 - col % 2) * (row % 2) * offset; // move 3rd to left
-
-  offsetX -= col % 2 * (row % 2) * offset; // move 4th up
-
-  offsetY += col % 2 * (1 - row % 2) * offset;
-  var extraLeft = getExtra(chunkWithMeta, offset, 'left');
-  var extraTop = getExtra(chunkWithMeta, offset, 'top');
-  var style = {
-    gridColumnStart: x + offsetX - extraLeft + '',
-    gridColumnEnd: "span ".concat(size),
-    gridRowStart: y + offsetY - extraTop + '',
-    gridRowEnd: "span ".concat(size),
-    transform: rotation
-  };
-  return style;
-};
-var addMetaToImagesArray = function addMetaToImagesArray(imagesArray, attributes) {
-  var scale = attributes.scale,
-      offset = attributes.offset,
-      orientation = attributes.orientation;
-  return imagesArray.map(function (image, index) {
-    var idx = getIndex(index, orientation);
-    var col = idx % 2;
-    var row = Math.floor(idx / 2);
-    var size = ITEM_SIZE - scale * index;
-    var x = ITEM_SIZE * col + 1;
-    var y = ITEM_SIZE * row + 1;
-    return Object.assign({}, {
-      idx: idx,
-      col: col,
-      row: row,
-      size: size,
-      x: x,
-      y: y,
-      index: index,
-      offset: offset,
-      scale: scale,
-      image: image
-    });
-  });
-};
-var getStructuredImagesArray = function getStructuredImagesArray(images) {
-  var i,
-      j,
-      temparray,
-      chunkSize = 4,
-      chunks = []; // split into groups of 4
-
-  for (i = 0, j = images.length; i < j; i += chunkSize) {
-    chunks.push(images.slice(i, i + chunkSize));
-  }
-
-  return chunks;
-};
-var getIndex = function getIndex(index) {
-  var orientation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-  if (orientation === 0) {
-    if (index % 4 === 3) return index - 1;
-    if (index % 4 === 2) return index + 1;
-    return index;
-  }
-
-  if (orientation === 1) {
-    if (index % 4 === 0) return index + 1;
-    if (index % 4 === 1) return index - 1;
-    return index;
-  }
-
-  if (orientation === 2) {
-    if (index % 4 === 0) return index + 3;
-    if (index % 4 === 1) return index + 1;
-    if (index % 4 === 2) return index - 2;
-    if (index % 4 === 3) return index - 2;
-  }
-
-  if (orientation === 3) {
-    if (index % 4 === 0) return index + 2;
-    if (index % 4 === 1) return index + 2;
-    if (index % 4 === 2) return index - 1;
-    if (index % 4 === 3) return index - 3;
-  }
-};
-var getExtra = function getExtra(chunk, offset, direction) {
-  var topLeftImage = chunk.find(function (image) {
-    return image.idx === 0;
-  });
-  var topRightImage = chunk.find(function (image) {
-    return image.idx === 1;
-  });
-  var bottomLeftImage = chunk.find(function (image) {
-    return image.idx === 2;
-  });
-  var bottomRightImage = chunk.find(function (image) {
-    return image.idx === 3;
-  });
-  var topLeftImageExtra = topLeftImage ? topLeftImage.scale * topLeftImage.index : ITEM_SIZE;
-  var topRightImageExtra = topRightImage ? topRightImage.scale * topRightImage.index : ITEM_SIZE;
-  var bottomLeftImageExtra = bottomLeftImage ? bottomLeftImage.scale * bottomLeftImage.index : ITEM_SIZE;
-  var bottomRightImageExtra = bottomRightImage ? bottomRightImage.scale * bottomRightImage.index : ITEM_SIZE;
-  var extra = ITEM_SIZE - offset;
-
-  if (direction === 'left') {
-    // minimum distance to left margin between first and second image
-    var extraLeft = Math.min(offset + topLeftImageExtra, ITEM_SIZE); // adding third image in equation
-
-    if (chunk.length > 2) {
-      extraLeft = Math.min(extraLeft, ITEM_SIZE - offset);
-    } // adding forth image in equation
-
-
-    if (chunk.length > 3) {
-      extraLeft = Math.min(extraLeft, bottomLeftImageExtra);
-    }
-
-    return extraLeft;
-  }
-
-  if (direction === 'top') {
-    var extraTop = Math.min(topLeftImageExtra, offset + topRightImageExtra);
-
-    if (chunk.length > 3) {
-      extraTop = Math.min(extraTop, ITEM_SIZE - offset);
-    }
-
-    return extraTop;
-  }
-
-  return 0;
-};
 var getGalleryStyle = function getGalleryStyle(attributes) {
-  var aspectRatio = attributes.aspectRatio;
+  var aspectRatio = attributes.aspectRatio,
+      verticalSpacing = attributes.verticalSpacing;
   var numerator = 1;
   var denominator = 1;
-  aspectRatio = Math.min(Math.max(0, aspectRatio), 1);
+  aspectRatio = Math.min(Math.max(-1, aspectRatio), 1);
 
   if (aspectRatio > 0) {
     numerator = 1 + aspectRatio;
@@ -3040,6 +2887,7 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   }
 
   return {
+    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing, " * var(--novablocks-spacing-unit, 10px )"),
     paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
@@ -3047,21 +2895,6 @@ var getGridStyle = function getGridStyle(attributes) {
   var gridGap = attributes.gridGap;
   return {
     '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
-  };
-};
-var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
-  var aspect = attributes.aspect,
-      objectPosition = attributes.objectPosition;
-  var _chunkWithMeta = chunkWithMeta[index % 4],
-      idx = _chunkWithMeta.idx,
-      row = _chunkWithMeta.row,
-      col = _chunkWithMeta.col;
-  var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
-  var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-  console.log(row, col, "".concat(positionX, "% ").concat(positionY, "%"));
-  return {
-    objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
-    objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
   };
 };
 // CONCATENATED MODULE: ./src/blocks/media/frontend.js
@@ -3072,7 +2905,7 @@ var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
     var $gallery = $(gallery),
         $grid = $gallery.find('.novablocks-advanced-gallery__grid'),
         gridItems = $gallery.find('.novablocks-advanced-gallery__grid-item').toArray(),
-        structuredImagesArray = getStructuredImagesArray(gridItems);
+        structuredImagesArray = /* Cannot get final name for export "getStructuredImagesArray" in "./src/components/advanced-gallery/util.js" (known exports: getGalleryStyle getGridStyle, known reexports: ) */ undefined(gridItems);
     var attributes = {
       aspect: $gallery.data('aspect'),
       aspectRatio: $gallery.data('aspectratio'),
@@ -3083,13 +2916,13 @@ var getImageStyle = function getImageStyle(index, chunkWithMeta, attributes) {
       gridGap: $gallery.data('gridgap')
     };
     $.each(structuredImagesArray, function (chunkIndex, chunk) {
-      var chunkWithMeta = addMetaToImagesArray(chunk, attributes);
+      var chunkWithMeta = /* Cannot get final name for export "addMetaToImagesArray" in "./src/components/advanced-gallery/util.js" (known exports: getGalleryStyle getGridStyle, known reexports: ) */ undefined(chunk, attributes);
       $.each(chunkWithMeta, function (index, meta) {
         var image = meta.image,
             $item = $(image),
             $image = $item.find('.novablocks-advanced-gallery__image');
-        $item.css(getGridItemStyle(index, chunkWithMeta, attributes));
-        $image.css(getImageStyle(index, chunkWithMeta, attributes));
+        $item.css(/* Cannot get final name for export "getGridItemStyle" in "./src/components/advanced-gallery/util.js" (known exports: getGalleryStyle getGridStyle, known reexports: ) */ undefined(index, chunkWithMeta, attributes));
+        $image.css(/* Cannot get final name for export "getImageStyle" in "./src/components/advanced-gallery/util.js" (known exports: getGalleryStyle getGridStyle, known reexports: ) */ undefined(index, attributes));
       });
     });
     $gallery.css(getGalleryStyle(attributes));

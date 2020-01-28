@@ -1,4 +1,6 @@
 .novablocks-media__aside {
+	display: flex;
+	flex-direction: column;
 	min-height: 400px;
 
 	@include above(desktop) {
@@ -12,7 +14,7 @@
 	}
 
 	> .novablocks-advanced-gallery {
-		height: 100%;
+		flex-grow: 1;
 
 		display: flex;
 		align-items: stretch;

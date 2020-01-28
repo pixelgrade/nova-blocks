@@ -163,6 +163,10 @@ function novablocks_get_advanced_gallery_attributes() {
 			'type'    => 'number',
 			'default' => 10,
 		),
+		'verticalSpacing'     => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
 	);
 }
 
