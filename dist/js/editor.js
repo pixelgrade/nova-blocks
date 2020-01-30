@@ -2468,6 +2468,9 @@ var withSelect = wp.data.withSelect;
 var with_font_size_picker_addFilter = wp.hooks.addFilter;
 var enableFontSizeControlOnBlocks = ['core/quote', 'core/pullquote', 'core/heading', 'novablocks/headline'];
 var fontSizeOptions = [{
+  value: 'smallest',
+  label: __('Smallest', '__plugin_txtd')
+}, {
   value: 'smaller',
   label: __('Smaller', '__plugin_txtd')
 }, {
@@ -2476,6 +2479,9 @@ var fontSizeOptions = [{
 }, {
   value: 'larger',
   label: __('Larger', '__plugin_txtd')
+}, {
+  value: 'largest',
+  label: __('Largest', '__plugin_txtd')
 }];
 var defaultFontSize = 'normal';
 
