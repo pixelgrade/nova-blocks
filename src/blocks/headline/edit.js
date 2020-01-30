@@ -7,6 +7,10 @@ const {
 	Fragment
 } = wp.element;
 
+const {
+	PanelBody,
+} = wp.components;
+
 /**
  * WordPress dependencies
  */
@@ -46,8 +50,10 @@ export default function HeadlineEdit( props ) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<p>{ __( 'Level', '__plugin_txtd' ) }</p>
-				<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				<PanelBody title={ __( 'Headline Settings', '__plugin_txtd' ) } initialOpen={ true }>
+					<p>{ __( 'Level', '__plugin_txtd' ) }</p>
+					<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				</PanelBody>
 			</InspectorControls>
 
 			<TagName
