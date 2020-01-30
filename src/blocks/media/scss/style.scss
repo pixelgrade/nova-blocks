@@ -93,5 +93,10 @@
 	--novablocks-media-content-background-color: var(--novablocks-dark-1);
 }
 
+.novablocks-media .wp-block-group__inner-container {
+	padding-left: var(--novablocks-sides-spacings);
+	padding-right: var(--novablocks-sides-spacings);
+}
+
 @import 'content';
 @import 'aside';
