@@ -123,9 +123,6 @@ function novablocks_get_advanced_gallery_attributes() {
 		'images'      => array(
 			'type'    => 'array',
 			'default' => array(),
-			'items' => array(
-				'type' => 'object'
-			),
 		),
 		'scale'       => array(
 			'type'    => 'number',
@@ -517,13 +514,6 @@ function novablocks_add_media_settings( $settings ) {
 				'horizontalAlignment' => array(
 					'type'    => 'string',
 					'default' => 'left',
-				),
-				'images'              => array(
-					'type'    => 'array',
-					'items'   => array(
-						'type' => 'object',
-					),
-					'default' => array(),
 				),
 			),
 			novablocks_get_advanced_gallery_attributes()
@@ -943,11 +933,17 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				$image = ( array ) $image;
 			}
 
-			$image = wp_get_attachment_image_src( $image['id'], 'large' );
+			$url = $image['url'];
+			$attachment = wp_get_attachment_image_src( $image['id'], 'large' );
 
-			if ( ! empty( $image ) ) {
+			// fallback for import
+			if ( ! empty( $attachment ) ) {
+				$url = $attachment[0];
+			}
+
+			if ( ! empty( $url ) ) {
 				echo '<div class="novablocks-advanced-gallery__grid-item">';
-				echo '<img class="novablocks-advanced-gallery__image" src="' . $image[0] . '" />';
+				echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
 				echo '</div>';
 			}
 		}
