@@ -3295,6 +3295,7 @@ var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder
 var inspector_controls_ = wp.i18n.__;
 var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 var inspector_controls_wp$components = wp.components,
+    Button = inspector_controls_wp$components.Button,
     inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
     RadioControl = inspector_controls_wp$components.RadioControl,
     RangeControl = inspector_controls_wp$components.RangeControl;
@@ -3314,10 +3315,9 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       verticalSpacing = _props$attributes.verticalSpacing,
       advancedGalleryPresetOptions = props.settings.advancedGalleryPresetOptions;
   return Object(react["createElement"])(inspector_controls_InspectorControls, null, Object(react["createElement"])(inspector_controls_PanelBody, {
-    title: inspector_controls_('Advanced Gallery Presets', '__plugin_txtd'),
+    title: inspector_controls_('Style Presets', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RadioControl, {
-    label: 'Style Presets',
     selected: stylePreset,
     onChange: function onChange(stylePreset) {
       var newAttributes = {
@@ -3334,11 +3334,15 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       setAttributes(newAttributes);
     },
     options: advancedGalleryPresetOptions
-  })), Object(react["createElement"])(inspector_controls_PanelBody, {
-    title: inspector_controls_('Advanced Gallery Controls', '__plugin_txtd'),
+  }), Object(react["createElement"])("div", null, Object(react["createElement"])(Button, {
+    isLarge: true,
+    isPrimary: true,
+    onClick: function onClick() {}
+  }, "Randomize"))), Object(react["createElement"])(inspector_controls_PanelBody, {
+    title: inspector_controls_('Composition Settings', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Scale', '__plugin_txtd'),
+    label: inspector_controls_('Size Contrast', '__plugin_txtd'),
     value: scale,
     onChange: function onChange(scale) {
       return setAttributes({
@@ -3349,7 +3353,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     min: 0,
     max: 5
   }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Offset', '__plugin_txtd'),
+    label: inspector_controls_('Position Shift', '__plugin_txtd'),
     value: offset,
     onChange: function onChange(offset) {
       return setAttributes({
@@ -3360,29 +3364,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     min: 0,
     max: 20
   }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Orientation', '__plugin_txtd'),
-    value: orientation,
-    onChange: function onChange(orientation) {
-      return setAttributes({
-        orientation: orientation
-      });
-    },
-    min: 0,
-    max: 3
-  }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Aspect Ratio', '__plugin_txtd'),
-    value: aspectRatio,
-    onChange: function onChange(aspectRatio) {
-      return setAttributes({
-        aspectRatio: aspectRatio,
-        stylePreset: 'custom'
-      });
-    },
-    min: -1,
-    max: 1,
-    step: 0.1
-  }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Grid Gap', '__plugin_txtd'),
+    label: inspector_controls_('Elements Distance', '__plugin_txtd'),
     value: gridGap,
     onChange: function onChange(gridGap) {
       return setAttributes({
@@ -3393,32 +3375,20 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 10
   }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Rotate', '__plugin_txtd'),
-    value: rotate,
-    onChange: function onChange(rotate) {
+    label: inspector_controls_('Placement Variation', '__plugin_txtd'),
+    value: orientation,
+    onChange: function onChange(orientation) {
       return setAttributes({
-        rotate: rotate,
-        stylePreset: 'custom'
+        orientation: orientation
       });
     },
     min: 0,
-    max: 15
-  }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Vertical Spacing', '__plugin_txtd'),
-    value: verticalSpacing,
-    onChange: function onChange(verticalSpacing) {
-      return setAttributes({
-        verticalSpacing: verticalSpacing,
-        stylePreset: 'custom'
-      });
-    },
-    min: -2,
-    max: 2
+    max: 3
   })), Object(react["createElement"])(inspector_controls_PanelBody, {
     title: inspector_controls_('Images Controls', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RadioControl, {
-    label: 'Aspect',
+    label: 'Image resizing',
     selected: aspect,
     onChange: function onChange(aspect) {
       return setAttributes({
@@ -3426,11 +3396,11 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       });
     },
     options: [{
-      label: 'Original',
-      value: 'original'
-    }, {
-      label: 'Cropped',
+      label: 'Stretch to fill the container',
       value: 'cropped'
+    }, {
+      label: 'Shrink to fit (no crop)',
+      value: 'original'
     }]
   }), aspect === 'original' && Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Object Position', '__plugin_txtd'),
@@ -3443,6 +3413,29 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     min: 0,
     max: 100,
     step: 10
+  }), Object(react["createElement"])(RangeControl, {
+    label: inspector_controls_('Container Height', '__plugin_txtd'),
+    value: aspectRatio,
+    onChange: function onChange(aspectRatio) {
+      return setAttributes({
+        aspectRatio: aspectRatio,
+        stylePreset: 'custom'
+      });
+    },
+    min: -1,
+    max: 1,
+    step: 0.1
+  }), Object(react["createElement"])(RangeControl, {
+    label: inspector_controls_('Image Rotation', '__plugin_txtd'),
+    value: rotate,
+    onChange: function onChange(rotate) {
+      return setAttributes({
+        rotate: rotate,
+        stylePreset: 'custom'
+      });
+    },
+    min: 0,
+    max: 15
   })));
 };
 
@@ -3455,10 +3448,13 @@ var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
     MediaUpload = block_controls_wp$blockEditor.MediaUpload;
 var block_controls_wp$components = wp.components,
-    Toolbar = block_controls_wp$components.Toolbar,
-    IconButton = block_controls_wp$components.IconButton;
+    Dropdown = block_controls_wp$components.Dropdown,
+    IconButton = block_controls_wp$components.IconButton,
+    block_controls_RadioControl = block_controls_wp$components.RadioControl,
+    Toolbar = block_controls_wp$components.Toolbar;
+var block_controls_Fragment = wp.element.Fragment;
 
-var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
+var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryChangeMediaToolbar(props) {
   var setAttributes = props.setAttributes,
       images = props.attributes.images;
 
@@ -3466,7 +3462,7 @@ var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockC
     return false;
   }
 
-  return Object(react["createElement"])(BlockControls, null, Object(react["createElement"])(Toolbar, null, Object(react["createElement"])(MediaUpload, {
+  return Object(react["createElement"])(Toolbar, null, Object(react["createElement"])(MediaUpload, {
     type: "image",
     multiple: true,
     gallery: true,
@@ -3486,6 +3482,57 @@ var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockC
         icon: swap,
         onClick: open
       });
+    }
+  }));
+};
+
+var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
+  var setAttributes = props.setAttributes,
+      verticalSpacing = props.attributes.verticalSpacing;
+  return Object(react["createElement"])(BlockControls, null, Object(react["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props), Object(react["createElement"])(Toolbar, {
+    className: "pixelgrade-advanced-gallery-vertical-spacing-toolbar"
+  }, Object(react["createElement"])(Dropdown, {
+    position: "bottom",
+    className: "pixelgrade-hero-block-toolbar-dropdown",
+    contentClassName: "components-nova--popover",
+    renderToggle: function renderToggle(_ref2) {
+      var isOpen = _ref2.isOpen,
+          onToggle = _ref2.onToggle;
+      return Object(react["createElement"])(IconButton, {
+        onClick: onToggle,
+        icon: alignCenter,
+        "aria-expanded": isOpen,
+        label: block_controls_('Vertical Alignment', '__plugin_txtd'),
+        labelPosition: "bottom"
+      });
+    },
+    focusOnMount: false,
+    renderContent: function renderContent() {
+      return Object(react["createElement"])(block_controls_Fragment, null, Object(react["createElement"])(block_controls_RadioControl, {
+        label: 'Vertical Spacing',
+        selected: verticalSpacing,
+        onChange: function onChange(verticalSpacing) {
+          return setAttributes({
+            verticalSpacing: verticalSpacing
+          });
+        },
+        options: [{
+          label: '-2 Overlap',
+          value: -2
+        }, {
+          label: '-1 Overlap',
+          value: -1
+        }, {
+          label: 'None',
+          value: 0
+        }, {
+          label: '+1 Offset',
+          value: 1
+        }, {
+          label: '+2 Offset',
+          value: 2
+        }]
+      }));
     }
   })));
 };
@@ -3662,7 +3709,7 @@ var placeholder_wp$element = wp.element,
     placeholder_Component = placeholder_wp$element.Component,
     placeholder_Fragment = placeholder_wp$element.Fragment;
 var placeholder_wp$components = wp.components,
-    Button = placeholder_wp$components.Button,
+    placeholder_Button = placeholder_wp$components.Button,
     Placeholder = placeholder_wp$components.Placeholder,
     TextControl = placeholder_wp$components.TextControl;
 var ENTER = wp.keycodes.ENTER;
@@ -3719,7 +3766,7 @@ function (_Component) {
 
           _this2.handleKeyDown(keyCode);
         }
-      }), Object(react["createElement"])(Button, {
+      }), Object(react["createElement"])(placeholder_Button, {
         isLarge: true,
         disabled: !this.state.apiKey,
         type: "button",
@@ -5461,7 +5508,7 @@ var color_controls_ = wp.i18n.__;
 var color_controls_Fragment = wp.element.Fragment;
 var color_controls_wp$components = wp.components,
     ColorPalette = color_controls_wp$components.ColorPalette,
-    Dropdown = color_controls_wp$components.Dropdown,
+    color_controls_Dropdown = color_controls_wp$components.Dropdown,
     color_controls_IconButton = color_controls_wp$components.IconButton,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
@@ -5555,7 +5602,7 @@ var color_controls_ColorPanel = function ColorPanel(props) {
 var color_controls_ColorToolbar = function ColorToolbar(props) {
   return Object(react["createElement"])(color_controls_Toolbar, {
     className: "pixelgrade-hero-block-toolbar"
-  }, Object(react["createElement"])(Dropdown, {
+  }, Object(react["createElement"])(color_controls_Dropdown, {
     position: "bottom",
     className: "pixelgrade-hero-block-toolbar-dropdown",
     contentClassName: "components-nova--popover",
