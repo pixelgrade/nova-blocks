@@ -25,6 +25,6 @@ export const getGridStyle = ( attributes ) => {
 	const { gridGap } = attributes;
 
 	return {
-		'--novablocks-advanced-gallery-grid-gap': `${ gridGap }px`
+		'--novablocks-advanced-gallery-grid-gap': `${ 20 * gridGap }px`
 	}
 }

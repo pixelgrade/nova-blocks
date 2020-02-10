@@ -87,7 +87,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					max={ 3 }
 				/>
 			</PanelBody>
-			<PanelBody title={ __( 'Images Controls', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ true }>
 				<RadioControl
 					label={ 'Image resizing' }
 					selected={ aspect }
@@ -106,7 +106,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					step={ 10 }
 				/> }
 				<RangeControl
-					label={ __( 'Container Height', '__plugin_txtd' ) }
+					label={ __( 'Image container height', '__plugin_txtd' ) }
 					value={ aspectRatio }
 					onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
 					min={ -1 }
@@ -114,7 +114,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					step={ 0.1 }
 				/>
 				<RangeControl
-					label={ __( 'Image Rotation', '__plugin_txtd' ) }
+					label={ __( 'Image rotation', '__plugin_txtd' ) }
 					value={ rotate }
 					onChange={ rotate => setAttributes( { rotate, stylePreset: 'custom' } ) }
 					min={ 0 }

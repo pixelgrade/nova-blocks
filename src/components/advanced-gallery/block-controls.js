@@ -85,7 +85,9 @@ const AdvancedGalleryBlockControls = ( props ) => {
 						<RadioControl
 							label={ 'Vertical Spacing' }
 							selected={ verticalSpacing }
-							onChange={ verticalSpacing => setAttributes( { verticalSpacing } ) }
+							onChange={ verticalSpacing => {
+								setAttributes( { verticalSpacing: parseInt( verticalSpacing, 10 ) } )
+							} }
 							options={ [
 								{ label: '-2 Overlap', value: -2 },
 								{ label: '-1 Overlap', value: -1 },

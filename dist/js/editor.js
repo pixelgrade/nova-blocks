@@ -3214,7 +3214,7 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
 var getGridStyle = function getGridStyle(attributes) {
   var gridGap = attributes.gridGap;
   return {
-    '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
+    '--novablocks-advanced-gallery-grid-gap': "".concat(20 * gridGap, "px")
   };
 };
 // CONCATENATED MODULE: ./src/components/advanced-gallery/preview.js
@@ -3385,7 +3385,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     min: 0,
     max: 3
   })), Object(react["createElement"])(inspector_controls_PanelBody, {
-    title: inspector_controls_('Images Controls', '__plugin_txtd'),
+    title: inspector_controls_('Elements Settings', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RadioControl, {
     label: 'Image resizing',
@@ -3414,7 +3414,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 10
   }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Container Height', '__plugin_txtd'),
+    label: inspector_controls_('Image container height', '__plugin_txtd'),
     value: aspectRatio,
     onChange: function onChange(aspectRatio) {
       return setAttributes({
@@ -3426,7 +3426,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 1,
     step: 0.1
   }), Object(react["createElement"])(RangeControl, {
-    label: inspector_controls_('Image Rotation', '__plugin_txtd'),
+    label: inspector_controls_('Image rotation', '__plugin_txtd'),
     value: rotate,
     onChange: function onChange(rotate) {
       return setAttributes({
@@ -3512,8 +3512,8 @@ var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockC
         label: 'Vertical Spacing',
         selected: verticalSpacing,
         onChange: function onChange(verticalSpacing) {
-          return setAttributes({
-            verticalSpacing: verticalSpacing
+          setAttributes({
+            verticalSpacing: parseInt(verticalSpacing, 10)
           });
         },
         options: [{

@@ -2946,7 +2946,7 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
 var getGridStyle = function getGridStyle(attributes) {
   var gridGap = attributes.gridGap;
   return {
-    '--novablocks-advanced-gallery-grid-gap': "".concat(gridGap, "px")
+    '--novablocks-advanced-gallery-grid-gap': "".concat(20 * gridGap, "px")
   };
 };
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
