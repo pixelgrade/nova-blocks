@@ -3577,7 +3577,38 @@ var edit_Edit = function Edit(props) {
 };
 
 /* harmony default export */ var advanced_gallery_edit = (edit_Edit);
+// CONCATENATED MODULE: ./src/blocks/advanced-gallery/transforms.js
+var createBlock = wp.blocks.createBlock;
+/* harmony default export */ var transforms = ({
+  from: [{
+    type: 'block',
+    blocks: ['core/gallery'],
+    transform: function transform(attributes) {
+      return createBlock('novablocks/advanced-gallery', {
+        images: attributes.images
+      });
+    }
+  }],
+  to: [{
+    type: 'block',
+    blocks: ['novablocks/media'],
+    transform: function transform(attributes) {
+      return createBlock('novablocks/media', {
+        images: attributes.images
+      });
+    }
+  }, {
+    type: 'block',
+    blocks: ['core/gallery'],
+    transform: function transform(attributes) {
+      return createBlock('core/gallery', {
+        images: attributes.images
+      });
+    }
+  }]
+});
 // CONCATENATED MODULE: ./src/blocks/advanced-gallery/index.js
+
 
 
 /**
@@ -3601,7 +3632,8 @@ function init() {
     edit: advanced_gallery_edit,
     save: function save() {
       return false;
-    }
+    },
+    transforms: transforms
   });
 }
 
@@ -7860,12 +7892,43 @@ var edit_MediaEdit = function MediaEdit(props) {
 };
 
 /* harmony default export */ var media_edit = (with_settings(edit_MediaEdit));
+// CONCATENATED MODULE: ./src/blocks/media/transforms.js
+var transforms_createBlock = wp.blocks.createBlock;
+/* harmony default export */ var media_transforms = ({
+  from: [{
+    type: 'block',
+    blocks: ['core/gallery'],
+    transform: function transform(attributes) {
+      return transforms_createBlock('novablocks/media', {
+        images: attributes.images
+      });
+    }
+  }],
+  to: [{
+    type: 'block',
+    blocks: ['novablocks/advanced-gallery'],
+    transform: function transform(attributes) {
+      return transforms_createBlock('novablocks/advanced-gallery', {
+        images: attributes.images
+      });
+    }
+  }, {
+    type: 'block',
+    blocks: ['core/gallery'],
+    transform: function transform(attributes) {
+      return transforms_createBlock('core/gallery', {
+        images: attributes.images
+      });
+    }
+  }]
+});
 // CONCATENATED MODULE: ./src/blocks/media/index.js
 
 
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -7893,7 +7956,8 @@ function media_init() {
       return settings.alignWide ? {
         'data-align': 'full'
       } : {};
-    }
+    },
+    transforms: media_transforms
   });
 }
 
@@ -8514,7 +8578,7 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
 
 var preview_ = wp.i18n.__;
 var menu_food_preview_InnerBlocks = wp.blockEditor.InnerBlocks;
-var createBlock = wp.blocks.createBlock;
+var preview_createBlock = wp.blocks.createBlock;
 var preview_IconButton = wp.components.IconButton;
 var ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 var TEMPLATE = [['novablocks/menu-food-section', {
@@ -8589,7 +8653,7 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
       className = props.className;
 
   var addFoodMenuSection = function addFoodMenuSection() {
-    var block = createBlock('novablocks/menu-food-section');
+    var block = preview_createBlock('novablocks/menu-food-section');
     var index = wp.data.select('core/block-editor').getBlocksByClientId(clientId)[0].innerBlocks.length;
     wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
   };
@@ -8712,7 +8776,7 @@ var menu_food_section_preview_ = wp.i18n.__;
 var menu_food_section_preview_wp$blockEditor = wp.blockEditor,
     menu_food_section_preview_InnerBlocks = menu_food_section_preview_wp$blockEditor.InnerBlocks,
     preview_RichText = menu_food_section_preview_wp$blockEditor.RichText;
-var preview_createBlock = wp.blocks.createBlock;
+var menu_food_section_preview_createBlock = wp.blocks.createBlock;
 var menu_food_section_preview_IconButton = wp.components.IconButton;
 /**
  * Internal dependencies.
@@ -8728,7 +8792,7 @@ var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
       className = props.className;
 
   var addFoodMenuItem = function addFoodMenuItem() {
-    var block = preview_createBlock('novablocks/menu-food-item');
+    var block = menu_food_section_preview_createBlock('novablocks/menu-food-item');
     var index = wp.data.select('core/block-editor').getBlocksByClientId(clientId)[0].innerBlocks.length;
     wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
   };
