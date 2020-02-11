@@ -2924,18 +2924,18 @@ var TRANSITION_EASING = "easeInOutCirc";
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
 var getGalleryStyle = function getGalleryStyle(attributes) {
-  var aspectRatio = attributes.aspectRatio,
+  var containerHeight = attributes.containerHeight,
       verticalSpacing = attributes.verticalSpacing;
   var numerator = 1;
   var denominator = 1;
-  aspectRatio = Math.min(Math.max(-1, aspectRatio), 1);
+  containerHeight = Math.min(Math.max(-1, containerHeight), 1);
 
-  if (aspectRatio > 0) {
-    numerator = 1 + aspectRatio;
+  if (containerHeight > 0) {
+    numerator = 1 + containerHeight;
   }
 
-  if (aspectRatio < 0) {
-    denominator = 1 + Math.abs(aspectRatio);
+  if (containerHeight < 0) {
+    denominator = 1 + Math.abs(containerHeight);
   }
 
   return {
@@ -2944,9 +2944,9 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   };
 };
 var getGridStyle = function getGridStyle(attributes) {
-  var gridGap = attributes.gridGap;
+  var elementsDistance = attributes.elementsDistance;
   return {
-    '--novablocks-advanced-gallery-grid-gap': "".concat(20 * gridGap, "px")
+    '--novablocks-advanced-gallery-grid-gap': "".concat(20 * elementsDistance, "px")
   };
 };
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
@@ -2964,7 +2964,7 @@ function () {
   function GridItemCollection(images, attributes) {
     classCallCheck_default()(this, GridItemCollection);
 
-    var orientation = attributes.orientation;
+    var placementVariation = attributes.placementVariation;
     this.gridItems = images.map(function (image, index) {
       var groupStart = Math.floor(index / 4) * 4;
       var groupEnd = Math.min(groupStart + 4, images.length);
@@ -2973,11 +2973,11 @@ function () {
     });
     this.removeExtra();
 
-    if (orientation === 1 || orientation === 2) {
+    if (placementVariation === 1 || placementVariation === 2) {
       this.flipX();
     }
 
-    if (orientation === 2 || orientation === 3) {
+    if (placementVariation === 2 || placementVariation === 3) {
       this.flipY();
     }
   }
@@ -3051,11 +3051,11 @@ function () {
   function GridItem(image, index, attributes, isGroupOfThree) {
     classCallCheck_default()(this, GridItem);
 
-    this.scale = attributes.scale;
-    this.rotate = attributes.rotate;
-    this.offset = attributes.offset;
+    this.sizeContrast = attributes.sizeContrast;
+    this.imageRotation = attributes.imageRotation;
+    this.positionShift = attributes.positionShift;
     this.objectPosition = attributes.objectPosition;
-    this.aspect = attributes.aspect;
+    this.imageResizing = attributes.imageResizing;
     this.image = image;
     this.index = index;
     this.idx = this.getIndex(index);
@@ -3064,11 +3064,11 @@ function () {
 
     if (!!isGroupOfThree) {
       if (index === 0) {
-        this.offset = Math.min(this.offset, 10);
+        this.positionShift = Math.min(this.positionShift, 10);
       }
 
       if (index === 2) {
-        this.offset = Math.max(this.offset, 10);
+        this.positionShift = Math.max(this.positionShift, 10);
       }
     }
 
@@ -3076,7 +3076,7 @@ function () {
         offsetX = _this$getOffsets.offsetX,
         offsetY = _this$getOffsets.offsetY;
 
-    var size = ITEM_SIZE - this.scale * (index % 4);
+    var size = ITEM_SIZE - this.sizeContrast * (index % 4);
     this.x = ITEM_SIZE * this.col + 1 + offsetX;
     this.y = ITEM_SIZE * this.row + 1 + offsetY;
     this.width = size;
@@ -3089,20 +3089,20 @@ function () {
       var row = this.row,
           col = this.col,
           index = this.index,
-          scale = this.scale,
-          offset = this.offset; // offset for positioning
+          sizeContrast = this.sizeContrast,
+          positionShift = this.positionShift; // offset for positioning
 
-      var offsetX = (1 - col % 2) * (index % 4) * scale;
-      var offsetY = (1 - row % 2) * (index % 4) * scale; // offset from offset
+      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;
+      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset
       // move 1st to right
 
-      offsetX += (1 - col % 2) * (1 - row % 2) * offset; // move 3rd to left
+      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left
 
-      offsetX -= col % 2 * (row % 2) * offset; // move 2nd down
+      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down
 
-      offsetY -= (1 - col % 2) * (row % 2) * offset; // move 4th up
+      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up
 
-      offsetY += col % 2 * (1 - row % 2) * offset;
+      offsetY += col % 2 * (1 - row % 2) * positionShift;
       return {
         offsetX: offsetX,
         offsetY: offsetY
@@ -3124,8 +3124,8 @@ function () {
           y = this.y,
           width = this.width,
           height = this.height,
-          rotate = this.rotate;
-      var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)");
+          imageRotation = this.imageRotation;
+      var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * imageRotation, "deg)");
       return {
         gridColumnStart: x + '',
         gridColumnEnd: "span ".concat(width),
@@ -3141,13 +3141,13 @@ function () {
           row = this.row,
           col = this.col,
           objectPosition = this.objectPosition,
-          aspect = this.aspect;
+          imageResizing = this.imageResizing;
       var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
       var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
+      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
       return {
-        objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
-        objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
+        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
+        objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
       };
     }
   }]);
@@ -3166,13 +3166,13 @@ function () {
         $grid = $gallery.find('.novablocks-advanced-gallery__grid'),
         images = $gallery.find('.novablocks-advanced-gallery__image').toArray();
     var attributes = {
-      aspect: $gallery.data('aspect'),
-      aspectRatio: $gallery.data('aspectratio'),
-      offset: $gallery.data('offset'),
-      scale: $gallery.data('scale'),
-      rotate: $gallery.data('rotate'),
-      orientation: $gallery.data('orientation'),
-      gridGap: $gallery.data('gridgap'),
+      imageResizing: $gallery.data('imageresizing'),
+      containerHeight: $gallery.data('containerheight'),
+      positionShift: $gallery.data('positionshift'),
+      sizeContrast: $gallery.data('sizecontrast'),
+      imageRotation: $gallery.data('imagerotation'),
+      positionVariation: $gallery.data('positionvariation'),
+      elementsDistance: $gallery.data('elementsdistance'),
       verticalSpacing: $gallery.data('verticalspacing'),
       objectPosition: $gallery.data('objectposition')
     };

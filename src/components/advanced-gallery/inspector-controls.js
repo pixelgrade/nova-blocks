@@ -16,21 +16,40 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 	const {
 		setAttributes,
 		attributes: {
-			scale,
-			offset,
-			rotate,
+			// gallery preset
 			stylePreset,
-			orientation,
-			aspect,
-			aspectRatio,
+
+			// composition settings
+			sizeContrast,
+			positionShift,
+			elementsDistance,
+			placementVariation,
+
+			// elements settings
+			imageResizing,
 			objectPosition,
-			gridGap,
-			verticalSpacing,
+			containerHeight,
+			imageRotation,
 		},
 		settings: {
 			advancedGalleryPresetOptions
 		}
 	} = props;
+
+	const getRandomBetween = ( min, max ) => {
+		const random = Math.max(0, Math.random() - Number.MIN_VALUE );
+		return Math.floor( random * (max - min + 1) + min );
+	}
+
+	const randomize = () => {
+		setAttributes({
+			sizeContrast: getRandomBetween(0, 5),
+			positionShift: getRandomBetween(0, 20),
+			elementsDistance: getRandomBetween(0, 5),
+			placementVariation: getRandomBetween(0, 3),
+			stylePreset: 'custom',
+		});
+	}
 
 	return (
 		<InspectorControls>
@@ -53,36 +72,36 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					<Button
 						isLarge
 						isPrimary
-						onClick={ () => {} }>Randomize</Button>
+						onClick={ randomize }>Randomize</Button>
 				</div>
 			</PanelBody>
 			<PanelBody title={ __( 'Composition Settings', '__plugin_txtd' ) } initialOpen={ true }>
 				<RangeControl
 					label={ __( 'Size Contrast', '__plugin_txtd' ) }
-					value={ scale }
-					onChange={ scale => setAttributes( { scale, stylePreset: 'custom' } ) }
+					value={ sizeContrast }
+					onChange={ sizeContrast => setAttributes( { sizeContrast, stylePreset: 'custom' } ) }
 					min={ 0 }
 					max={ 5 }
 				/>
 				<RangeControl
 					label={ __( 'Position Shift', '__plugin_txtd' ) }
-					value={ offset }
-					onChange={ offset => setAttributes( { offset, stylePreset: 'custom' } ) }
+					value={ positionShift }
+					onChange={ positionShift => setAttributes( { positionShift, stylePreset: 'custom' } ) }
 					min={ 0 }
 					max={ 20 }
 				/>
 				<RangeControl
 					label={ __( 'Elements Distance', '__plugin_txtd' ) }
-					value={ gridGap }
-					onChange={ gridGap => setAttributes( { gridGap } ) }
+					value={ elementsDistance }
+					onChange={ elementsDistance => setAttributes( { elementsDistance } ) }
 					min={ 0 }
-					max={ 100 }
-					step={ 10 }
+					max={ 5 }
+					step={ 1 }
 				/>
 				<RangeControl
 					label={ __( 'Placement Variation', '__plugin_txtd' ) }
-					value={ orientation }
-					onChange={ orientation => setAttributes( { orientation } ) }
+					value={ placementVariation }
+					onChange={ placementVariation => setAttributes( { placementVariation } ) }
 					min={ 0 }
 					max={ 3 }
 				/>
@@ -90,33 +109,33 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ true }>
 				<RadioControl
 					label={ 'Image resizing' }
-					selected={ aspect }
-					onChange={ aspect => setAttributes( { aspect } ) }
+					selected={ imageResizing }
+					onChange={ imageResizing => setAttributes( { imageResizing } ) }
 					options={ [
 						{ label: 'Stretch to fill the container', value: 'cropped' },
 						{ label: 'Shrink to fit (no crop)', value: 'original' },
 					] }
 				/>
-				{ aspect === 'original' && <RangeControl
+				<RangeControl
 					label={ __( 'Object Position', '__plugin_txtd' ) }
 					value={ objectPosition }
 					onChange={ objectPosition => setAttributes( { objectPosition } ) }
 					min={ 0 }
 					max={ 100 }
 					step={ 10 }
-				/> }
+				/>
 				<RangeControl
 					label={ __( 'Image container height', '__plugin_txtd' ) }
-					value={ aspectRatio }
-					onChange={ aspectRatio => setAttributes( { aspectRatio, stylePreset: 'custom' } ) }
+					value={ containerHeight }
+					onChange={ containerHeight => setAttributes( { containerHeight, stylePreset: 'custom' } ) }
 					min={ -1 }
 					max={ 1 }
 					step={ 0.1 }
 				/>
 				<RangeControl
 					label={ __( 'Image rotation', '__plugin_txtd' ) }
-					value={ rotate }
-					onChange={ rotate => setAttributes( { rotate, stylePreset: 'custom' } ) }
+					value={ imageRotation }
+					onChange={ imageRotation => setAttributes( { imageRotation, stylePreset: 'custom' } ) }
 					min={ 0 }
 					max={ 15 }
 				/>

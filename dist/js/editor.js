@@ -2998,7 +2998,7 @@ function () {
   function GridItemCollection(images, attributes) {
     classCallCheck_default()(this, GridItemCollection);
 
-    var orientation = attributes.orientation;
+    var placementVariation = attributes.placementVariation;
     this.gridItems = images.map(function (image, index) {
       var groupStart = Math.floor(index / 4) * 4;
       var groupEnd = Math.min(groupStart + 4, images.length);
@@ -3007,11 +3007,11 @@ function () {
     });
     this.removeExtra();
 
-    if (orientation === 1 || orientation === 2) {
+    if (placementVariation === 1 || placementVariation === 2) {
       this.flipX();
     }
 
-    if (orientation === 2 || orientation === 3) {
+    if (placementVariation === 2 || placementVariation === 3) {
       this.flipY();
     }
   }
@@ -3085,11 +3085,11 @@ function () {
   function GridItem(image, index, attributes, isGroupOfThree) {
     classCallCheck_default()(this, GridItem);
 
-    this.scale = attributes.scale;
-    this.rotate = attributes.rotate;
-    this.offset = attributes.offset;
+    this.sizeContrast = attributes.sizeContrast;
+    this.imageRotation = attributes.imageRotation;
+    this.positionShift = attributes.positionShift;
     this.objectPosition = attributes.objectPosition;
-    this.aspect = attributes.aspect;
+    this.imageResizing = attributes.imageResizing;
     this.image = image;
     this.index = index;
     this.idx = this.getIndex(index);
@@ -3098,11 +3098,11 @@ function () {
 
     if (!!isGroupOfThree) {
       if (index === 0) {
-        this.offset = Math.min(this.offset, 10);
+        this.positionShift = Math.min(this.positionShift, 10);
       }
 
       if (index === 2) {
-        this.offset = Math.max(this.offset, 10);
+        this.positionShift = Math.max(this.positionShift, 10);
       }
     }
 
@@ -3110,7 +3110,7 @@ function () {
         offsetX = _this$getOffsets.offsetX,
         offsetY = _this$getOffsets.offsetY;
 
-    var size = ITEM_SIZE - this.scale * (index % 4);
+    var size = ITEM_SIZE - this.sizeContrast * (index % 4);
     this.x = ITEM_SIZE * this.col + 1 + offsetX;
     this.y = ITEM_SIZE * this.row + 1 + offsetY;
     this.width = size;
@@ -3123,20 +3123,20 @@ function () {
       var row = this.row,
           col = this.col,
           index = this.index,
-          scale = this.scale,
-          offset = this.offset; // offset for positioning
+          sizeContrast = this.sizeContrast,
+          positionShift = this.positionShift; // offset for positioning
 
-      var offsetX = (1 - col % 2) * (index % 4) * scale;
-      var offsetY = (1 - row % 2) * (index % 4) * scale; // offset from offset
+      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;
+      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset
       // move 1st to right
 
-      offsetX += (1 - col % 2) * (1 - row % 2) * offset; // move 3rd to left
+      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left
 
-      offsetX -= col % 2 * (row % 2) * offset; // move 2nd down
+      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down
 
-      offsetY -= (1 - col % 2) * (row % 2) * offset; // move 4th up
+      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up
 
-      offsetY += col % 2 * (1 - row % 2) * offset;
+      offsetY += col % 2 * (1 - row % 2) * positionShift;
       return {
         offsetX: offsetX,
         offsetY: offsetY
@@ -3158,8 +3158,8 @@ function () {
           y = this.y,
           width = this.width,
           height = this.height,
-          rotate = this.rotate;
-      var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * rotate, "deg)");
+          imageRotation = this.imageRotation;
+      var rotation = "rotate(".concat((index % 2 - 0.5) * 2 * imageRotation, "deg)");
       return {
         gridColumnStart: x + '',
         gridColumnEnd: "span ".concat(width),
@@ -3175,13 +3175,13 @@ function () {
           row = this.row,
           col = this.col,
           objectPosition = this.objectPosition,
-          aspect = this.aspect;
+          imageResizing = this.imageResizing;
       var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
       var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
+      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
       return {
-        objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
-        objectPosition: aspect === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : ''
+        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
+        objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
       };
     }
   }]);
@@ -3192,18 +3192,18 @@ function () {
 
 // CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
 var getGalleryStyle = function getGalleryStyle(attributes) {
-  var aspectRatio = attributes.aspectRatio,
+  var containerHeight = attributes.containerHeight,
       verticalSpacing = attributes.verticalSpacing;
   var numerator = 1;
   var denominator = 1;
-  aspectRatio = Math.min(Math.max(-1, aspectRatio), 1);
+  containerHeight = Math.min(Math.max(-1, containerHeight), 1);
 
-  if (aspectRatio > 0) {
-    numerator = 1 + aspectRatio;
+  if (containerHeight > 0) {
+    numerator = 1 + containerHeight;
   }
 
-  if (aspectRatio < 0) {
-    denominator = 1 + Math.abs(aspectRatio);
+  if (containerHeight < 0) {
+    denominator = 1 + Math.abs(containerHeight);
   }
 
   return {
@@ -3212,9 +3212,9 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   };
 };
 var getGridStyle = function getGridStyle(attributes) {
-  var gridGap = attributes.gridGap;
+  var elementsDistance = attributes.elementsDistance;
   return {
-    '--novablocks-advanced-gallery-grid-gap': "".concat(20 * gridGap, "px")
+    '--novablocks-advanced-gallery-grid-gap': "".concat(20 * elementsDistance, "px")
   };
 };
 // CONCATENATED MODULE: ./src/components/advanced-gallery/preview.js
@@ -3240,9 +3240,10 @@ var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
   }, Object(react["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid",
     style: getGridStyle(attributes)
-  }, gridItemsCollection.gridItems.map(function (item) {
+  }, gridItemsCollection.gridItems.map(function (item, index) {
     return Object(react["createElement"])(preview_AdvancedGalleryItem, {
-      gridItem: item
+      gridItem: item,
+      key: index
     });
   })));
 };
@@ -3303,17 +3304,32 @@ var inspector_controls_wp$components = wp.components,
 var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalleryInspectorControls(props) {
   var setAttributes = props.setAttributes,
       _props$attributes = props.attributes,
-      scale = _props$attributes.scale,
-      offset = _props$attributes.offset,
-      rotate = _props$attributes.rotate,
       stylePreset = _props$attributes.stylePreset,
-      orientation = _props$attributes.orientation,
-      aspect = _props$attributes.aspect,
-      aspectRatio = _props$attributes.aspectRatio,
+      sizeContrast = _props$attributes.sizeContrast,
+      positionShift = _props$attributes.positionShift,
+      elementsDistance = _props$attributes.elementsDistance,
+      placementVariation = _props$attributes.placementVariation,
+      imageResizing = _props$attributes.imageResizing,
       objectPosition = _props$attributes.objectPosition,
-      gridGap = _props$attributes.gridGap,
-      verticalSpacing = _props$attributes.verticalSpacing,
+      containerHeight = _props$attributes.containerHeight,
+      imageRotation = _props$attributes.imageRotation,
       advancedGalleryPresetOptions = props.settings.advancedGalleryPresetOptions;
+
+  var getRandomBetween = function getRandomBetween(min, max) {
+    var random = Math.max(0, Math.random() - Number.MIN_VALUE);
+    return Math.floor(random * (max - min + 1) + min);
+  };
+
+  var randomize = function randomize() {
+    setAttributes({
+      sizeContrast: getRandomBetween(0, 5),
+      positionShift: getRandomBetween(0, 20),
+      elementsDistance: getRandomBetween(0, 5),
+      placementVariation: getRandomBetween(0, 3),
+      stylePreset: 'custom'
+    });
+  };
+
   return Object(react["createElement"])(inspector_controls_InspectorControls, null, Object(react["createElement"])(inspector_controls_PanelBody, {
     title: inspector_controls_('Style Presets', '__plugin_txtd'),
     initialOpen: true
@@ -3337,16 +3353,16 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   }), Object(react["createElement"])("div", null, Object(react["createElement"])(Button, {
     isLarge: true,
     isPrimary: true,
-    onClick: function onClick() {}
+    onClick: randomize
   }, "Randomize"))), Object(react["createElement"])(inspector_controls_PanelBody, {
     title: inspector_controls_('Composition Settings', '__plugin_txtd'),
     initialOpen: true
   }, Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Size Contrast', '__plugin_txtd'),
-    value: scale,
-    onChange: function onChange(scale) {
+    value: sizeContrast,
+    onChange: function onChange(sizeContrast) {
       return setAttributes({
-        scale: scale,
+        sizeContrast: sizeContrast,
         stylePreset: 'custom'
       });
     },
@@ -3354,10 +3370,10 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 5
   }), Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Position Shift', '__plugin_txtd'),
-    value: offset,
-    onChange: function onChange(offset) {
+    value: positionShift,
+    onChange: function onChange(positionShift) {
       return setAttributes({
-        offset: offset,
+        positionShift: positionShift,
         stylePreset: 'custom'
       });
     },
@@ -3365,21 +3381,21 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 20
   }), Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Elements Distance', '__plugin_txtd'),
-    value: gridGap,
-    onChange: function onChange(gridGap) {
+    value: elementsDistance,
+    onChange: function onChange(elementsDistance) {
       return setAttributes({
-        gridGap: gridGap
+        elementsDistance: elementsDistance
       });
     },
     min: 0,
-    max: 100,
-    step: 10
+    max: 5,
+    step: 1
   }), Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Placement Variation', '__plugin_txtd'),
-    value: orientation,
-    onChange: function onChange(orientation) {
+    value: placementVariation,
+    onChange: function onChange(placementVariation) {
       return setAttributes({
-        orientation: orientation
+        placementVariation: placementVariation
       });
     },
     min: 0,
@@ -3389,10 +3405,10 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     initialOpen: true
   }, Object(react["createElement"])(RadioControl, {
     label: 'Image resizing',
-    selected: aspect,
-    onChange: function onChange(aspect) {
+    selected: imageResizing,
+    onChange: function onChange(imageResizing) {
       return setAttributes({
-        aspect: aspect
+        imageResizing: imageResizing
       });
     },
     options: [{
@@ -3402,7 +3418,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       label: 'Shrink to fit (no crop)',
       value: 'original'
     }]
-  }), aspect === 'original' && Object(react["createElement"])(RangeControl, {
+  }), Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Object Position', '__plugin_txtd'),
     value: objectPosition,
     onChange: function onChange(objectPosition) {
@@ -3415,10 +3431,10 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     step: 10
   }), Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Image container height', '__plugin_txtd'),
-    value: aspectRatio,
-    onChange: function onChange(aspectRatio) {
+    value: containerHeight,
+    onChange: function onChange(containerHeight) {
       return setAttributes({
-        aspectRatio: aspectRatio,
+        containerHeight: containerHeight,
         stylePreset: 'custom'
       });
     },
@@ -3427,10 +3443,10 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     step: 0.1
   }), Object(react["createElement"])(RangeControl, {
     label: inspector_controls_('Image rotation', '__plugin_txtd'),
-    value: rotate,
-    onChange: function onChange(rotate) {
+    value: imageRotation,
+    onChange: function onChange(imageRotation) {
       return setAttributes({
-        rotate: rotate,
+        imageRotation: imageRotation,
         stylePreset: 'custom'
       });
     },

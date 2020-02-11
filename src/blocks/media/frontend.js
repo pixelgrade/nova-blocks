@@ -14,13 +14,13 @@ import { GridItemCollection } from "../../components/advanced-gallery/grid-item"
 			images = $gallery.find( '.novablocks-advanced-gallery__image' ).toArray();
 
 		const attributes = {
-			aspect: $gallery.data( 'aspect' ),
-			aspectRatio: $gallery.data( 'aspectratio' ),
-			offset: $gallery.data( 'offset' ),
-			scale: $gallery.data( 'scale' ),
-			rotate: $gallery.data( 'rotate' ),
-			orientation: $gallery.data( 'orientation' ),
-			gridGap: $gallery.data( 'gridgap' ),
+			imageResizing: $gallery.data( 'imageresizing' ),
+			containerHeight: $gallery.data( 'containerheight' ),
+			positionShift: $gallery.data( 'positionshift' ),
+			sizeContrast: $gallery.data( 'sizecontrast' ),
+			imageRotation: $gallery.data( 'imagerotation' ),
+			positionVariation: $gallery.data( 'positionvariation' ),
+			elementsDistance: $gallery.data( 'elementsdistance' ),
 			verticalSpacing: $gallery.data( 'verticalspacing' ),
 			objectPosition: $gallery.data( 'objectposition' ),
 		};

@@ -3,7 +3,7 @@ const ITEM_SIZE = 20;
 export class GridItemCollection {
 
 	constructor( images, attributes ) {
-		const { orientation } = attributes;
+		const { placementVariation } = attributes;
 
 		this.gridItems = images.map( ( image, index ) => {
 			const groupStart = Math.floor( index / 4 ) * 4;
@@ -15,11 +15,11 @@ export class GridItemCollection {
 
 		this.removeExtra();
 
-		if ( orientation === 1 || orientation === 2 ) {
+		if ( placementVariation === 1 || placementVariation === 2 ) {
 			this.flipX();
 		}
 
-		if ( orientation === 2 || orientation === 3 ) {
+		if ( placementVariation === 2 || placementVariation === 3 ) {
 			this.flipY();
 		}
 	}
@@ -77,11 +77,11 @@ export default class GridItem {
 
 	constructor( image, index, attributes, isGroupOfThree ) {
 
-		this.scale = attributes.scale;
-		this.rotate = attributes.rotate;
-		this.offset = attributes.offset;
+		this.sizeContrast = attributes.sizeContrast;
+		this.imageRotation = attributes.imageRotation;
+		this.positionShift = attributes.positionShift;
 		this.objectPosition = attributes.objectPosition;
-		this.aspect = attributes.aspect;
+		this.imageResizing = attributes.imageResizing;
 
 		this.image = image;
 		this.index = index;
@@ -93,17 +93,17 @@ export default class GridItem {
 		if ( !! isGroupOfThree ) {
 
 			if ( index === 0 ) {
-				this.offset = Math.min( this.offset, 10 );
+				this.positionShift = Math.min( this.positionShift, 10 );
 			}
 
 			if ( index === 2 ) {
-				this.offset = Math.max( this.offset, 10 );
+				this.positionShift = Math.max( this.positionShift, 10 );
 			}
 
 		}
 
 		let { offsetX, offsetY } = this.getOffsets();
-		const size = ITEM_SIZE - this.scale * ( index % 4 );
+		const size = ITEM_SIZE - this.sizeContrast * ( index % 4 );
 
 		this.x = ITEM_SIZE * this.col + 1 + offsetX;
 		this.y = ITEM_SIZE * this.row + 1 + offsetY;
@@ -113,21 +113,21 @@ export default class GridItem {
 	}
 
 	getOffsets() {
-		const { row, col, index, scale, offset } = this;
+		const { row, col, index, sizeContrast, positionShift } = this;
 
 		// offset for positioning
-		let offsetX = ( 1 - col % 2 ) * ( index % 4 ) * scale;
-		let offsetY = ( 1 - row % 2 ) * ( index % 4 ) * scale;
+		let offsetX = ( 1 - col % 2 ) * ( index % 4 ) * sizeContrast;
+		let offsetY = ( 1 - row % 2 ) * ( index % 4 ) * sizeContrast;
 
 		// offset from offset
 		// move 1st to right
-		offsetX += ( 1 - col % 2 ) * ( 1 - row % 2 ) * offset;
+		offsetX += ( 1 - col % 2 ) * ( 1 - row % 2 ) * positionShift;
 		// move 3rd to left
-		offsetX -= ( col % 2 ) * ( row % 2 ) * offset;
+		offsetX -= ( col % 2 ) * ( row % 2 ) * positionShift;
 		// move 2nd down
-		offsetY -= ( 1 - col % 2 ) * ( row % 2 ) * offset;
+		offsetY -= ( 1 - col % 2 ) * ( row % 2 ) * positionShift;
 		// move 4th up
-		offsetY += ( col % 2 ) * ( 1 - row % 2 ) * offset;
+		offsetY += ( col % 2 ) * ( 1 - row % 2 ) * positionShift;
 
 		return {
 			offsetX,
@@ -144,8 +144,8 @@ export default class GridItem {
 	}
 
 	getStyle() {
-		const { index, x, y, width, height, rotate } = this;
-		const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * rotate }deg)`;
+		const { index, x, y, width, height, imageRotation } = this;
+		const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * imageRotation }deg)`;
 
 		return {
 			gridColumnStart: x + '',
@@ -157,14 +157,14 @@ export default class GridItem {
 	}
 
 	getImageStyle() {
-		const { idx, row, col, objectPosition, aspect } = this;
+		const { idx, row, col, objectPosition, imageResizing } = this;
 		const positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
 		const positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-		const objPos = aspect === 'original' ? `${ positionX }% ${ positionY }%` : '';
+		const objPos = imageResizing === 'original' ? `${ positionX }% ${ positionY }%` : '';
 
 		return {
-			objectFit: aspect === 'cropped' ? 'cover' : 'scale-down',
-			objectPosition: aspect === 'original' ? `${ positionX }% ${ positionY }%` : '',
+			objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
+			objectPosition: `${ positionX }% ${ positionY }%`,
 		}
 	}
 }

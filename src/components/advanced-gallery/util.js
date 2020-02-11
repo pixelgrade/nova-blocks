@@ -1,18 +1,18 @@
 
 
 export const getGalleryStyle = ( attributes ) => {
-	let { aspectRatio, verticalSpacing } = attributes;
+	let { containerHeight, verticalSpacing } = attributes;
 	let numerator = 1;
 	let denominator = 1;
 
-	aspectRatio = Math.min( Math.max( -1, aspectRatio ), 1 );
+	containerHeight = Math.min( Math.max( -1, containerHeight ), 1 );
 
-	if ( aspectRatio > 0 ) {
-		numerator = 1 + aspectRatio;
+	if ( containerHeight > 0 ) {
+		numerator = 1 + containerHeight;
 	}
 
-	if ( aspectRatio < 0 ) {
-		denominator = 1 + Math.abs( aspectRatio );
+	if ( containerHeight < 0 ) {
+		denominator = 1 + Math.abs( containerHeight );
 	}
 
 	return {
@@ -22,9 +22,9 @@ export const getGalleryStyle = ( attributes ) => {
 }
 
 export const getGridStyle = ( attributes ) => {
-	const { gridGap } = attributes;
+	const { elementsDistance } = attributes;
 
 	return {
-		'--novablocks-advanced-gallery-grid-gap': `${ 20 * gridGap }px`
+		'--novablocks-advanced-gallery-grid-gap': `${ 20 * elementsDistance }px`
 	}
 }

@@ -41,6 +41,7 @@ function novablocks_handle_theme_supports( $supports, $args, $theme_features ) {
 
 	return true;
 }
+
 add_filter( 'current_theme_supports-novablocks', 'novablocks_handle_theme_supports', 10, 3 );
 
 function novablocks_register_settings() {
@@ -54,6 +55,7 @@ function novablocks_register_settings() {
 		)
 	);
 }
+
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
 
@@ -73,6 +75,7 @@ function novablocks_register_meta() {
 		) );
 	}
 }
+
 add_action( 'init', 'novablocks_register_meta' );
 
 function novablocks_allowed_block_types( $allowed_block_types, $post ) {
@@ -90,6 +93,7 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 
 	return $allowed_block_types;
 }
+
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
 function novablocks_get_content_padding_attributes() {
@@ -120,47 +124,47 @@ function novablocks_get_content_width_attributes() {
 
 function novablocks_get_advanced_gallery_attributes() {
 	return array(
-		'images'      => array(
+		'images'             => array(
 			'type'    => 'array',
 			'default' => array(),
 		),
-		'scale'       => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
-		'offset'      => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
-		'rotate'      => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
-		'stylePreset' => array(
+		'stylePreset'        => array(
 			'type'    => 'string',
 			'default' => 'clean',
 		),
-		'orientation' => array(
+		'sizeContrast'       => array(
 			'type'    => 'number',
 			'default' => 0,
 		),
-		'aspect'      => array(
+		'positionShift'      => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'elementsDistance'   => array(
+			'type'    => 'number',
+			'default' => 1,
+		),
+		'placementVariation' => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'imageRotation'      => array(
+			'type'    => 'number',
+			'default' => 0,
+		),
+		'imageResizing'      => array(
 			'type'    => 'string',
 			'default' => 'cropped',
 		),
-		'aspectRatio' => array(
+		'containerHeight'    => array(
 			'type'    => 'number',
 			'default' => 0,
 		),
-		'objectPosition' => array(
+		'objectPosition'     => array(
 			'type'    => 'number',
 			'default' => 50,
 		),
-		'gridGap'     => array(
-			'type'    => 'number',
-			'default' => 10,
-		),
-		'verticalSpacing'     => array(
+		'verticalSpacing'    => array(
 			'type'    => 'number',
 			'default' => 0,
 		),
@@ -186,11 +190,11 @@ function novablocks_get_color_attributes() {
 
 function novablocks_get_alignment_attributes() {
 	return array(
-		'horizontalAlignment'  => array(
+		'horizontalAlignment' => array(
 			'type'    => 'string',
 			'default' => 'center',
 		),
-		'verticalAlignment'    => array(
+		'verticalAlignment'   => array(
 			'type'    => 'string',
 			'default' => 'center'
 		),
@@ -199,45 +203,45 @@ function novablocks_get_alignment_attributes() {
 
 function novablocks_get_doppler_attributes() {
 	return array(
-		'focalPoint'    => array(
+		'focalPoint'             => array(
 			'type'    => 'object',
 			'default' => array(
 				'x' => 0.5,
 				'y' => 0.5
 			),
 		),
-		'finalFocalPoint'         => array(
+		'finalFocalPoint'        => array(
 			'type'    => 'object',
 			'default' => array(
 				'x' => 0.5,
 				'y' => 0.5
 			),
 		),
-		'initialBackgroundScale'  => array(
+		'initialBackgroundScale' => array(
 			'type'    => 'number',
 			'default' => 1
 		),
-		'finalBackgroundScale'    => array(
+		'finalBackgroundScale'   => array(
 			'type'    => 'number',
 			'default' => 1
 		),
-		'scrollIndicatorBlock'    => array(
+		'scrollIndicatorBlock'   => array(
 			'type'    => 'boolean',
 			'default' => false
 		),
-		'scrollingEffect' => array(
-			'type' => 'string',
+		'scrollingEffect'        => array(
+			'type'    => 'string',
 			'default' => 'parallax',
 		),
-		'motionPreset' => array(
-			'type' => 'string',
+		'motionPreset'           => array(
+			'type'    => 'string',
 			'default' => 'standard-dynamic',
 		),
-		'followThroughStart' => array(
+		'followThroughStart'     => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'followThroughEnd' => array(
+		'followThroughEnd'       => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
@@ -338,10 +342,10 @@ function novablocks_get_google_map_attributes() {
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'styleData' => array(
-				'type' => 'array',
+			'styleData'    => array(
+				'type'    => 'array',
 				'default' => array(),
-				'items' => array(
+				'items'   => array(
 					'type' => 'object'
 				),
 			),
@@ -360,12 +364,12 @@ function novablocks_get_google_map_attributes() {
 
 function novablocks_get_header_attributes() {
 	return array(
-		'align' => array(
-			'type' => 'string',
+		'align'  => array(
+			'type'    => 'string',
 			'default' => 'full',
 		),
 		'layout' => array(
-			'type' => 'string',
+			'type'    => 'string',
 			'default' => 'logo-left',
 		),
 	);
@@ -383,68 +387,69 @@ function novablocks_get_media_attributes() {
 
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
 
-    foreach ( $attributes_config as $key => $value ) {
+	foreach ( $attributes_config as $key => $value ) {
 
-	    if ( ! isset( $attributes[ $key ] ) ) {
+		if ( ! isset( $attributes[ $key ] ) ) {
 
-			if ( isset( $attributes_config[ $key ][ 'source' ] ) && $attributes_config[ $key ][ 'source' ] === 'meta' ) {
-			    $attributes[ $key ] = get_post_meta( get_the_ID(), $attributes_config[ $key ][ 'meta' ], true );
-		    } elseif ( isset( $attributes_config[ $key ][ 'default' ] ) ) {
-		        $attributes[ $key ] = $attributes_config[ $key ][ 'default' ];
-		    } else {
-	    		// Put some value since some might use it. We should not get here, but do our best if we do.
-			    $attributes[ $key ] = '';
-		    }
-	    }
-    }
+			if ( isset( $attributes_config[ $key ]['source'] ) && $attributes_config[ $key ]['source'] === 'meta' ) {
+				$attributes[ $key ] = get_post_meta( get_the_ID(), $attributes_config[ $key ]['meta'], true );
+			} elseif ( isset( $attributes_config[ $key ]['default'] ) ) {
+				$attributes[ $key ] = $attributes_config[ $key ]['default'];
+			} else {
+				// Put some value since some might use it. We should not get here, but do our best if we do.
+				$attributes[ $key ] = '';
+			}
+		}
+	}
 
-    return $attributes;
+	return $attributes;
 }
 
 function novablocks_get_focal_point_style( $focalPoint ) {
 	$focalPointX = intval( $focalPoint['x'] * 10000 ) / 100 . '%';
 	$focalPointY = intval( $focalPoint['y'] * 10000 ) / 100 . '%';
+
 	return 'object-position: ' . $focalPointX . ' ' . $focalPointY . ';';
 }
 
 function novablocks_add_hero_settings( $settings ) {
 
 	$hero_settings = array(
-		'template' => array(
+		'template'   => array(
 			array(
 				'core/heading',
 				array(
 					'content' => esc_html__( 'This is a catchy title', '__plugin_txtd' ),
-					'align' => 'center',
-					'level' => 1,
+					'align'   => 'center',
+					'level'   => 1,
 				),
 			),
 			array(
 				'core/paragraph',
 				array(
 					'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
-					'align' => 'center',
+					'align'   => 'center',
 				),
 			),
 			array(
 				'core/button',
 				array(
-					'text' => esc_html__( 'Discover more', '__plugin_txtd' ),
+					'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
 					'align' => 'center',
 				),
 			),
 		),
 		'attributes' => array_merge(
 			array(
-				'anchor'                  => array(
+				'anchor'         => array(
 					'type'    => 'string',
 					'default' => null,
 				),
-				'backgroundType'          => array(
+				'backgroundType' => array(
 					'type'    => 'string',
 					'default' => 'image'
 				),
-				'media'                   => array(
+				'media'          => array(
 					'type'    => 'object',
 					'default' => array(
 						'type'  => 'image',
@@ -480,9 +485,9 @@ function novablocks_add_hero_settings( $settings ) {
 				'default' => false,
 			),
 			'positionIndicators' => array(
-				'type'   => 'boolean',
-				'source' => 'meta',
-				'meta'   => 'novablocks_hero_position_indicators',
+				'type'    => 'boolean',
+				'source'  => 'meta',
+				'meta'    => 'novablocks_hero_position_indicators',
 				'default' => true,
 			),
 		) );
@@ -492,6 +497,7 @@ function novablocks_add_hero_settings( $settings ) {
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
 
 function novablocks_add_media_settings( $settings ) {
@@ -580,54 +586,55 @@ function novablocks_add_media_settings( $settings ) {
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
 
 function novablocks_add_slideshow_settings( $settings ) {
 
 	$slideshow_settings = array(
-		'defaultImages' => array(
+		'defaultImages'    => array(
 			array(
-				'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
-				'id' => -1,
+				'url'   => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
+				'id'    => - 1,
 				'sizes' => array(
 					'thumbnail' => array(
 						'url' => 'https://source.unsplash.com/_nqApgG-QrY/150x150',
 					),
-					'large' => array(
-						'url' => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
-						"width" => 1600,
+					'large'     => array(
+						'url'    => 'https://source.unsplash.com/_nqApgG-QrY/1600x900',
+						"width"  => 1600,
 						"height" => 900
 					),
 				),
 			),
 			array(
-				'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
-				'title' => array(
+				'url'     => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
+				'title'   => array(
 					'rendered' => esc_html__( 'This is a catchy image title', '__plugin_txtd' ),
 				),
 				'caption' => esc_html__( 'A brilliant caption to explain its catchiness', '__plugin_txtd' ),
-				'id' => -2,
-				'sizes' => array(
+				'id'      => - 2,
+				'sizes'   => array(
 					'thumbnail' => array(
 						'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/150x150',
 					),
-					'large' => array(
-						'url' => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
-						'width' => 1600,
+					'large'     => array(
+						'url'    => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
+						'width'  => 1600,
 						'height' => 900,
 					),
 				),
 			),
 			array(
-				'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
-				'id' => -3,
+				'url'   => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
+				'id'    => - 3,
 				'sizes' => array(
 					'thumbnail' => array(
 						'url' => 'https://source.unsplash.com/1vKTnwLMdqs/150x150',
 					),
-					'large' => array(
-						'url' => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
-						'width' => 1600,
+					'large'     => array(
+						'url'    => 'https://source.unsplash.com/1vKTnwLMdqs/1600x900',
+						'width'  => 1600,
 						'height' => 900,
 					),
 				),
@@ -661,6 +668,7 @@ function novablocks_add_slideshow_settings( $settings ) {
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_slideshow_settings', 0 );
 
 function novablocks_add_separator_settings( $settings ) {
@@ -672,13 +680,14 @@ function novablocks_add_separator_settings( $settings ) {
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separator_settings', 0 );
 
 function novablocks_get_block_editor_settings() {
 
 	$settings = array(
-		'usePostMetaAttributes' => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
-		'minimumHeightOptions' => array(
+		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
+		'minimumHeightOptions'         => array(
 			array(
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
@@ -696,7 +705,7 @@ function novablocks_get_block_editor_settings() {
 				'value' => 100,
 			),
 		),
-		'contentPaddingOptions' => array(
+		'contentPaddingOptions'        => array(
 			array(
 				'label' => esc_html__( 'Small', '__plugin_txtd' ),
 				'value' => 'small',
@@ -714,7 +723,7 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'contentWidthOptions' => array(
+		'contentWidthOptions'          => array(
 			array(
 				'label' => esc_html__( 'Full', '__plugin_txtd' ),
 				'value' => 'full',
@@ -732,118 +741,118 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'motionPresetOptions' => array(
-			array (
-				'label' => 'Standard Dynamic',
-				'value' => 'standard-dynamic',
+		'motionPresetOptions'          => array(
+			array(
+				'label'  => 'Standard Dynamic',
+				'value'  => 'standard-dynamic',
 				'preset' => array(
-					'focalPoint' => array(
+					'focalPoint'             => array(
 						'x' => 0.5,
 						'y' => 0
 					),
-					'finalFocalPoint' => array(
+					'finalFocalPoint'        => array(
 						'x' => 0.5,
 						'y' => 1
 					),
 					'initialBackgroundScale' => 1.75,
-					'finalBackgroundScale' => 1,
-					'followThroughStart' => true,
-					'followThroughEnd' => true,
+					'finalBackgroundScale'   => 1,
+					'followThroughStart'     => true,
+					'followThroughEnd'       => true,
 				),
 			),
-			array (
-				'label' => 'Pull Focus',
-				'value' => 'pull-focus',
+			array(
+				'label'  => 'Pull Focus',
+				'value'  => 'pull-focus',
 				'preset' => array(
-					'focalPoint' => array(
+					'focalPoint'             => array(
 						'x' => 0.5,
 						'y' => 0.5
 					),
-					'finalFocalPoint' => array(
+					'finalFocalPoint'        => array(
 						'x' => 0.5,
 						'y' => 1
 					),
 					'initialBackgroundScale' => 1,
-					'finalBackgroundScale' => 1.75,
-					'followThroughStart' => true,
-					'followThroughEnd' => true,
+					'finalBackgroundScale'   => 1.75,
+					'followThroughStart'     => true,
+					'followThroughEnd'       => true,
 				),
 			),
-			array (
-				'label' => 'Static Reveal',
-				'value' => 'static-reveal',
+			array(
+				'label'  => 'Static Reveal',
+				'value'  => 'static-reveal',
 				'preset' => array(
-					'focalPoint' => array(
+					'focalPoint'             => array(
 						'x' => 0.5,
 						'y' => 0.5
 					),
-					'finalFocalPoint' => array(
+					'finalFocalPoint'        => array(
 						'x' => 0.5,
 						'y' => 0.5
 					),
 					'initialBackgroundScale' => 1.75,
-					'finalBackgroundScale' => 1,
-					'followThroughStart' => true,
-					'followThroughEnd' => true,
+					'finalBackgroundScale'   => 1,
+					'followThroughStart'     => true,
+					'followThroughEnd'       => true,
 				),
 			),
-			array (
+			array(
 				'label' => 'Custom',
 				'value' => 'custom',
 			),
 		),
 		'advancedGalleryPresetOptions' => array(
-			array (
-				'label' => 'Clean',
-				'value' => 'clean',
+			array(
+				'label'  => 'Clean',
+				'value'  => 'clean',
 				'preset' => array(
-					'scale' => 0,
+					'scale'  => 0,
 					'offset' => 0,
 					'rotate' => 0,
 				),
 			),
-			array (
-				'label' => 'Overlap',
-				'value' => 'overlap',
+			array(
+				'label'  => 'Overlap',
+				'value'  => 'overlap',
 				'preset' => array(
-					'scale' => 0,
+					'scale'  => 0,
 					'offset' => 5,
 					'rotate' => 0,
 				),
 			),
-			array (
-				'label' => 'Messy',
-				'value' => 'messy',
+			array(
+				'label'  => 'Messy',
+				'value'  => 'messy',
 				'preset' => array(
-					'scale' => 1,
+					'scale'  => 1,
 					'offset' => 15,
 					'rotate' => 5,
 				),
 			),
-			array (
-				'label' => 'Creative',
-				'value' => 'creative',
+			array(
+				'label'  => 'Creative',
+				'value'  => 'creative',
 				'preset' => array(
-					'scale' => 3,
+					'scale'  => 3,
 					'offset' => 14,
 					'rotate' => 0,
 				),
 			),
-			array (
-				'label' => 'Sparse',
-				'value' => 'sparse',
+			array(
+				'label'  => 'Sparse',
+				'value'  => 'sparse',
 				'preset' => array(
-					'scale' => 5,
+					'scale'  => 5,
 					'offset' => 20,
 					'rotate' => 0,
 				),
 			),
-			array (
+			array(
 				'label' => 'Custom',
 				'value' => 'custom',
 			),
 		),
-		'theme_support' => novablocks_get_theme_support(),
+		'theme_support'                => novablocks_get_theme_support(),
 	);
 
 	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
@@ -871,6 +880,7 @@ function novablocks_add_scrolling_effect_options( $settings ) {
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_scrolling_effect_options' );
 
 function novablocks_get_theme_support() {
@@ -897,15 +907,15 @@ function novablocks_render_advanced_gallery( $attributes ) {
 	$images = $attributes['images'];
 
 	$advanced_gallery_attributes = array(
-		'aspect',
-		'aspectRatio',
-		'offset',
-		'scale',
-		'rotate',
-		'orientation',
-		'gridGap',
-		'verticalSpacing',
+		'sizeContrast',
+		'positionShift',
+		'elementsDistance',
+		'positionVariation',
+		'imageResizing',
 		'objectPosition',
+		'containerHeight',
+		'imageRotation',
+		'verticalSpacing',
 	);
 
 	$data_attributes = array();
@@ -933,7 +943,7 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				$image = ( array ) $image;
 			}
 
-			$url = $image['url'];
+			$url        = $image['url'];
 			$attachment = wp_get_attachment_image_src( $image['id'], 'large' );
 
 			// fallback for import

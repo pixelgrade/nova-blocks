@@ -15,7 +15,9 @@ const AdvancedGalleryPreview = ( props ) => {
 	return (
 		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) }>
 			<div className={ `novablocks-advanced-gallery__grid` } style={ getGridStyle( attributes ) }>
-				{ gridItemsCollection.gridItems.map( ( item ) => <AdvancedGalleryItem gridItem={ item } /> ) }
+				{ gridItemsCollection.gridItems.map( ( item, index ) => (
+					<AdvancedGalleryItem gridItem={ item } key={ index } />
+				) ) }
 			</div>
 		</div>
 	);
