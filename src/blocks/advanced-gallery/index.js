@@ -9,8 +9,8 @@ const { registerBlockType } = wp.blocks;
 
 function init() {
 	registerBlockType( 'novablocks/advanced-gallery', {
-		title: __( 'Advanced Gallery', '__plugin_txtd' ),
-		description: __( 'Advanced Gallery', '__plugin_txtd' ),
+		title: __( 'Gallery of the Stars', '__plugin_txtd' ),
+		description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.gallery,
 		supports: {
