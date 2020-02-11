@@ -1,5 +1,6 @@
 import * as icons from '../../icons';
 import edit from './edit';
+import transforms from './transforms';
 
 /**
  * WordPress dependencies
@@ -22,6 +23,7 @@ function init() {
 		save() {
 			return false;
 		},
+		transforms,
 	} )
 }
 

@@ -123,14 +123,15 @@ function novablocks_get_content_width_attributes() {
 }
 
 function novablocks_get_advanced_gallery_attributes() {
-	return array(
+
+	$defaults = array(
 		'images'             => array(
 			'type'    => 'array',
 			'default' => array(),
 		),
 		'stylePreset'        => array(
 			'type'    => 'string',
-			'default' => 'clean',
+			'default' => 'creative',
 		),
 		'sizeContrast'       => array(
 			'type'    => 'number',
@@ -169,6 +170,33 @@ function novablocks_get_advanced_gallery_attributes() {
 			'default' => 0,
 		),
 	);
+
+	if ( ! isset( $defaults['stylePreset']['default'] ) ) {
+		return $defaults;
+	}
+
+	$defaultPresetSlug = $defaults['stylePreset']['default'];
+	$presetOptions = novablocks_get_advanced_gallery_presets();
+
+	$defaultPreset = array();
+
+	foreach ( $presetOptions as $preset ) {
+		if ( $preset['value'] === $defaultPresetSlug ) {
+			$defaultPreset = $preset['preset'];
+		}
+	}
+
+	if ( empty( $defaultPreset ) ) {
+		return $defaults;
+	}
+
+	foreach ( $defaultPreset as $key => $value ) {
+		if ( isset( $defaults[$key] ) ) {
+			$defaults[$key]['default'] = $value;
+		}
+	}
+
+	return $defaults;
 }
 
 function novablocks_get_color_attributes() {
@@ -801,57 +829,7 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'advancedGalleryPresetOptions' => array(
-			array(
-				'label'  => 'Clean',
-				'value'  => 'clean',
-				'preset' => array(
-					'scale'  => 0,
-					'offset' => 0,
-					'rotate' => 0,
-				),
-			),
-			array(
-				'label'  => 'Overlap',
-				'value'  => 'overlap',
-				'preset' => array(
-					'scale'  => 0,
-					'offset' => 5,
-					'rotate' => 0,
-				),
-			),
-			array(
-				'label'  => 'Messy',
-				'value'  => 'messy',
-				'preset' => array(
-					'scale'  => 1,
-					'offset' => 15,
-					'rotate' => 5,
-				),
-			),
-			array(
-				'label'  => 'Creative',
-				'value'  => 'creative',
-				'preset' => array(
-					'scale'  => 3,
-					'offset' => 14,
-					'rotate' => 0,
-				),
-			),
-			array(
-				'label'  => 'Sparse',
-				'value'  => 'sparse',
-				'preset' => array(
-					'scale'  => 5,
-					'offset' => 20,
-					'rotate' => 0,
-				),
-			),
-			array(
-				'label' => 'Custom',
-				'value' => 'custom',
-			),
-		),
+		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
@@ -859,6 +837,60 @@ function novablocks_get_block_editor_settings() {
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;
+}
+
+function novablocks_get_advanced_gallery_presets() {
+	return array(
+		array(
+			'label'  => 'Clean',
+			'value'  => 'clean',
+			'preset' => array(
+				'sizeContrast'  => 0,
+				'positionShift' => 0,
+				'imageRotation' => 0,
+			),
+		),
+		array(
+			'label'  => 'Overlap',
+			'value'  => 'overlap',
+			'preset' => array(
+				'sizeContrast'  => 0,
+				'positionShift' => 5,
+				'imageRotation' => 0,
+			),
+		),
+		array(
+			'label'  => 'Messy',
+			'value'  => 'messy',
+			'preset' => array(
+				'sizeContrast'  => 1,
+				'positionShift' => 15,
+				'imageRotation' => 5,
+			),
+		),
+		array(
+			'label'  => 'Creative',
+			'value'  => 'creative',
+			'preset' => array(
+				'sizeContrast'  => 3,
+				'positionShift' => 14,
+				'imageRotation' => 0,
+			),
+		),
+		array(
+			'label'  => 'Sparse',
+			'value'  => 'sparse',
+			'preset' => array(
+				'sizeContrast'  => 5,
+				'positionShift' => 20,
+				'imageRotation' => 0,
+			),
+		),
+		array(
+			'label' => 'Custom',
+			'value' => 'custom',
+		),
+	);
 }
 
 function novablocks_add_scrolling_effect_options( $settings ) {
