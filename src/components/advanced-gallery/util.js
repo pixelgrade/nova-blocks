@@ -1,7 +1,8 @@
 
 
 export const getGalleryStyle = ( attributes ) => {
-	let { containerHeight, verticalSpacing } = attributes;
+	let containerHeight = attributes.containerHeight / 50 - 1;
+	let verticalSpacing = attributes;
 	let numerator = 1;
 	let denominator = 1;
 
@@ -25,6 +26,6 @@ export const getGridStyle = ( attributes ) => {
 	const { elementsDistance } = attributes;
 
 	return {
-		'--novablocks-advanced-gallery-grid-gap': `${ 20 * elementsDistance }px`
+		'--novablocks-advanced-gallery-grid-gap': `${ elementsDistance }px`
 	}
 }

@@ -3,7 +3,7 @@ const ITEM_SIZE = 20;
 export class GridItemCollection {
 
 	constructor( images, attributes ) {
-		const { placementVariation } = attributes;
+		const placementVariation = attributes.placementVariation / 25 - 1;
 
 		this.gridItems = images.map( ( image, index ) => {
 			const groupStart = Math.floor( index / 4 ) * 4;
@@ -77,11 +77,11 @@ export default class GridItem {
 
 	constructor( image, index, attributes, isGroupOfThree ) {
 
-		this.sizeContrast = attributes.sizeContrast;
-		this.imageRotation = attributes.imageRotation;
-		this.positionShift = attributes.positionShift;
+		this.sizeContrast = attributes.sizeContrast / 20;
+		this.positionShift = attributes.positionShift / 5;
 		this.objectPosition = attributes.objectPosition;
 		this.imageResizing = attributes.imageResizing;
+		this.imageRotation = attributes.imageRotation;
 
 		this.image = image;
 		this.index = index;
@@ -145,7 +145,7 @@ export default class GridItem {
 
 	getStyle() {
 		const { index, x, y, width, height, imageRotation } = this;
-		const rotation = `rotate(${ ( index % 2 - 0.5 ) * 2 * imageRotation }deg)`;
+		const rotation = `rotate(${ ( index % 2 - 0.5 ) * imageRotation / 10 }deg)`;
 
 		return {
 			gridColumnStart: x + '',

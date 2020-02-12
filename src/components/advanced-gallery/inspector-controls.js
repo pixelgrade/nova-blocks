@@ -43,10 +43,10 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 
 	const randomize = () => {
 		setAttributes({
-			sizeContrast: getRandomBetween(0, 5),
-			positionShift: getRandomBetween(0, 20),
-			elementsDistance: getRandomBetween(0, 5),
-			placementVariation: getRandomBetween(0, 3),
+			sizeContrast: getRandomBetween(0, 5) * 20,
+			positionShift: getRandomBetween(0, 20) * 5,
+			elementsDistance: getRandomBetween(0, 5) * 20,
+			placementVariation: getRandomBetween(1, 4) * 25,
 			stylePreset: 'custom',
 		});
 	}
@@ -81,29 +81,32 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					value={ sizeContrast }
 					onChange={ sizeContrast => setAttributes( { sizeContrast, stylePreset: 'custom' } ) }
 					min={ 0 }
-					max={ 5 }
+					max={ 100 }
+					step={ 20 }
 				/>
 				<RangeControl
 					label={ __( 'Position Shift', '__plugin_txtd' ) }
 					value={ positionShift }
 					onChange={ positionShift => setAttributes( { positionShift, stylePreset: 'custom' } ) }
 					min={ 0 }
-					max={ 20 }
+					max={ 100 }
+					step={ 5 }
 				/>
 				<RangeControl
 					label={ __( 'Elements Distance', '__plugin_txtd' ) }
 					value={ elementsDistance }
 					onChange={ elementsDistance => setAttributes( { elementsDistance } ) }
 					min={ 0 }
-					max={ 5 }
-					step={ 1 }
+					max={ 100 }
+					step={ 20 }
 				/>
 				<RangeControl
 					label={ __( 'Placement Variation', '__plugin_txtd' ) }
 					value={ placementVariation }
 					onChange={ placementVariation => setAttributes( { placementVariation } ) }
-					min={ 0 }
-					max={ 3 }
+					min={ 25 }
+					max={ 100 }
+					step={ 25 }
 				/>
 			</PanelBody>
 			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ true }>
@@ -128,16 +131,17 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					label={ __( 'Image container height', '__plugin_txtd' ) }
 					value={ containerHeight }
 					onChange={ containerHeight => setAttributes( { containerHeight, stylePreset: 'custom' } ) }
-					min={ -1 }
-					max={ 1 }
-					step={ 0.1 }
+					min={ 0 }
+					max={ 100 }
+					step={ 5 }
 				/>
 				<RangeControl
 					label={ __( 'Image rotation', '__plugin_txtd' ) }
 					value={ imageRotation }
 					onChange={ imageRotation => setAttributes( { imageRotation, stylePreset: 'custom' } ) }
 					min={ 0 }
-					max={ 15 }
+					max={ 100 }
+					step={ 10 }
 				/>
 			</PanelBody>
 		</InspectorControls>
