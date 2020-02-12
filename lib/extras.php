@@ -123,8 +123,57 @@ function novablocks_get_content_width_attributes() {
 }
 
 function novablocks_get_advanced_gallery_attributes() {
+	$attributes = array_merge(
+		array(
+			'align' => array(
+				'type'    => 'string',
+				'default' => 'wide',
+			),
+		),
+		novablocks_get_advanced_gallery_component_attributes()
+	);
 
-	$defaults = array(
+	$attributes = novablocks_alter_default_attributes_from_preset( $attributes );
+
+	if ( isset( $attributes['imageResizing']['default'] ) ) {
+		$attributes['imageResizing']['default'] = 'original';
+	}
+
+	return $attributes;
+}
+
+function novablocks_alter_default_attributes_from_preset( $attributes ) {
+	if ( ! isset( $attributes['stylePreset']['default'] ) ) {
+		return $attributes;
+	}
+
+	$defaultPresetSlug = $attributes['stylePreset']['default'];
+	$presetOptions = novablocks_get_advanced_gallery_presets();
+
+	$defaultPreset = array();
+
+	foreach ( $presetOptions as $preset ) {
+		if ( $preset['value'] === $defaultPresetSlug ) {
+			$defaultPreset = $preset['preset'];
+		}
+	}
+
+	if ( empty( $defaultPreset ) ) {
+		return $attributes;
+	}
+
+	foreach ( $defaultPreset as $key => $value ) {
+		if ( isset( $attributes[$key] ) ) {
+			$attributes[$key]['default'] = $value;
+		}
+	}
+
+	return $attributes;
+}
+
+function novablocks_get_advanced_gallery_component_attributes() {
+
+	$attributes = array(
 		'images'             => array(
 			'type'    => 'array',
 			'default' => array(),
@@ -171,32 +220,7 @@ function novablocks_get_advanced_gallery_attributes() {
 		),
 	);
 
-	if ( ! isset( $defaults['stylePreset']['default'] ) ) {
-		return $defaults;
-	}
-
-	$defaultPresetSlug = $defaults['stylePreset']['default'];
-	$presetOptions = novablocks_get_advanced_gallery_presets();
-
-	$defaultPreset = array();
-
-	foreach ( $presetOptions as $preset ) {
-		if ( $preset['value'] === $defaultPresetSlug ) {
-			$defaultPreset = $preset['preset'];
-		}
-	}
-
-	if ( empty( $defaultPreset ) ) {
-		return $defaults;
-	}
-
-	foreach ( $defaultPreset as $key => $value ) {
-		if ( isset( $defaults[$key] ) ) {
-			$defaults[$key]['default'] = $value;
-		}
-	}
-
-	return $defaults;
+	return $attributes;
 }
 
 function novablocks_get_color_attributes() {
@@ -550,7 +574,7 @@ function novablocks_add_media_settings( $settings ) {
 					'default' => 'left',
 				),
 			),
-			novablocks_get_advanced_gallery_attributes()
+			novablocks_get_advanced_gallery_component_attributes()
 		),
 		'template'           => array(
 			array(
