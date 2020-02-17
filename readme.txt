@@ -95,7 +95,7 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 1.2.1 =
-* Quickfix for blocks crashing after some class name changes in the block editor in Gutenberg 7.5
+* Quick fix for blocks crashing after some class name changes in the block editor in Gutenberg 7.5
 
 = 1.2.0 =
 * New: Implemented Doppler scrolling effect for the hero block
