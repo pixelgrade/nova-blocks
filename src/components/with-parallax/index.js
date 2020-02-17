@@ -42,10 +42,9 @@ const withParallaxProvider = function( WrappedComponent ) {
 		}
 
 		getScrollContainer() {
-			const oldScrollContainer = document.querySelector( '.edit-post-layout__content' );
-			const newScrollContainer = document.querySelector( '.edit-post-editor-regions__content' );
-
-			return oldScrollContainer || newScrollContainer;
+			return document.querySelector( '.edit-post-layout__content' ) ||
+			       document.querySelector( '.edit-post-editor-regions__content' ) ||
+			       document.querySelector( '.block-editor-editor-skeleton__content' );
 		}
 
 		componentDidMount() {
