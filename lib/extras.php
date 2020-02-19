@@ -1,6 +1,30 @@
 <?php
 
 /**
+ * Retrieves the root plugin path.
+ *
+ * @return string Root path to the gutenberg plugin.
+ *
+ * @since 0.1.0
+ */
+function novablocks_get_plugin_path() {
+	return plugin_dir_path( dirname( __FILE__ ) );
+}
+
+/**
+ * Retrieves a URL to a file in the gutenberg plugin.
+ *
+ * @param  string $path Relative path of the desired file.
+ *
+ * @return string       Fully qualified URL pointing to the desired file.
+ *
+ * @since 0.1.0
+ */
+function novablocks_get_plugin_url( $path ) {
+	return plugins_url( $path, dirname( __FILE__ ) );
+}
+
+/**
  * Determine if a certain block is supported by the current theme.
  *
  * This way you can current_theme_supports() with a second parameter like so:

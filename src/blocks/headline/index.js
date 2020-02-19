@@ -5,8 +5,6 @@ import * as icons from '../../icons';
 import edit from './edit';
 import save from './save';
 
-import { STORE_NAME } from '../../store';
-
 /**
  * WordPress dependencies
  */

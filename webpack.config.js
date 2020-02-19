@@ -1,179 +1,183 @@
-const path = require( 'path' );
-const chalk = require( 'chalk' );
-
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const WebpackRTLPlugin = require( 'webpack-rtl-plugin' );
-const ProgressBarPlugin = require( 'progress-bar-webpack-plugin' );
-
-const NODE_ENV = process.env.NODE_ENV || 'development';
-const devMode = NODE_ENV !== 'production';
-
-const baseConfig = {
-	mode: NODE_ENV,
-	performance: {
-		hints: false,
-	},
-	stats: {
-		all: false,
-		assets: true,
-		builtAt: true,
-		colors: true,
-		errors: true,
-		hash: true,
-		timings: true,
-	},
-	externals: {
-		jquery: 'jQuery',
-		lodash : {
- 			commonjs: 'lodash',
- 			amd: 'lodash',
- 		},
-	},
-	output: {
-		// Add /* filename */ comments to generated require()s in the output.
-		pathinfo: devMode,
-		path: path.resolve( __dirname ),
-	},
-};
-
-const minimizeConfig = {
-	minimize: true,
-	minimizer: [
-		new TerserPlugin( {
-			include: /\.min\.js$/,
-		} )
-	],
-};
+/**
+ * External dependencies
+ */
+const { DefinePlugin } = require( 'webpack' );
+const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
+const postcss = require( 'postcss' );
+const { get, escapeRegExp, compact } = require( 'lodash' );
+const { basename, sep } = require( 'path' );
 
 /**
- * Config for compiling Vendors.
+ * WordPress dependencies
  */
-const VendorConfig = {
-	...baseConfig,
-	entry: {
-		'./dist/js/vendor/jquery.bully.min' : './dist/js/vendor/jquery.bully.js',
-		'./dist/js/vendor/jquery.slick.min' : './dist/js/vendor/jquery.slick.js',
-		'./dist/js/vendor/jquery.velocity.min' : './dist/js/vendor/jquery.velocity.js',
-	},
-	optimization: {
-		...minimizeConfig,
-	},
-}
+const CustomTemplatedPathPlugin = require( '@wordpress/custom-templated-path-webpack-plugin' );
+const LibraryExportDefaultPlugin = require( '@wordpress/library-export-default-webpack-plugin' );
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+const { camelCaseDash } = require( '@wordpress/scripts/utils' );
 
-const StylesConfig = {
-	mode: 'development',
-	watch: devMode,
+/**
+ * Internal dependencies
+ */
+const { dependencies } = require( './package' );
+
+const {
+	NODE_ENV: mode = 'development',
+	WP_DEVTOOL: devtool = mode === 'production' ? false : 'source-map',
+} = process.env;
+
+const NOVABLOCKS_NAMESPACE = '@novablocks/';
+
+const gutenbergPackages = Object.keys( dependencies )
+                                .filter( ( packageName ) => packageName.startsWith( NOVABLOCKS_NAMESPACE ) )
+                                .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
+
+module.exports = {
+	mode,
+	entry: gutenbergPackages.reduce( ( memo, packageName ) => {
+		const name = camelCaseDash( packageName );
+		memo[ name ] = `./packages/${ packageName }`;
+		return memo;
+	}, {} ),
 	output: {
-		// Add /* filename */ comments to generated require()s in the output.
-		pathinfo: devMode,
-		path: path.resolve( __dirname ),
+		devtoolNamespace: 'novablocks',
+		filename: './build/[basename]/index.js',
+		path: __dirname,
+		library: [ 'novablocks', '[name]' ],
+		libraryTarget: 'this',
 	},
 	module: {
-		rules: [
-			{
-				test: /\.s?css$/,
-				exclude: /node_modules/,
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-					},
-					{
-						loader: 'css-loader',
-						options: {
-							sourceMap: true,
-							importLoaders: 1,
-							url: false
-						}
-					},
-					{
-						loader: 'postcss-loader',
-					},
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true
-						}
-					},
-				],
+		rules: compact( [
+			mode !== 'production' && {
+				test: /\.js$/,
+				use: require.resolve( 'source-map-loader' ),
+				enforce: 'pre',
 			},
-		]
-	},
-	entry: {
-		'./dist/css/editor' : './src/scss/editor.scss',
-		'./dist/css/frontend' : './src/scss/style.scss',
-		'./dist/css/theme' : './src/scss/theme.scss',
+		] ),
 	},
 	plugins: [
-		new WebpackRTLPlugin( {
-			filename: '[name]-rtl.css',
-			minify: {
-				safe: true,
+		new CustomTemplatedPathPlugin( {
+			basename( path, data ) {
+				let rawRequest;
+
+				const entryModule = get( data, [ 'chunk', 'entryModule' ], {} );
+				switch ( entryModule.type ) {
+					case 'javascript/auto':
+						rawRequest = entryModule.rawRequest;
+						break;
+
+					case 'javascript/esm':
+						rawRequest = entryModule.rootModule.rawRequest;
+						break;
+				}
+
+				if ( rawRequest ) {
+					return basename( rawRequest );
+				}
+
+				return path;
 			},
 		} ),
-		new MiniCssExtractPlugin( {
-			filename: '[name].css',
+		new CopyWebpackPlugin(
+			gutenbergPackages.map( ( packageName ) => ( {
+				from: `./packages/${ packageName }/build-style/*.css`,
+				to: `./build/${ packageName }/`,
+				flatten: true,
+				transform: ( content ) => {
+					if ( mode === 'production' ) {
+						return postcss( [
+							require( 'cssnano' )( {
+								preset: [
+									'default',
+									{
+										discardComments: {
+											removeAll: true,
+										},
+									},
+								],
+							} ),
+						] )
+						.process( content, {
+							from: 'src/app.css',
+							to: 'dest/app.css',
+						} )
+						.then( ( result ) => result.css );
+					}
+					return content;
+				},
+			} ) )
+		),
+		new CopyWebpackPlugin( [
+			{
+				from: './packages/block-library/src/**/index.php',
+				test: new RegExp(
+					`([\\w-]+)${ escapeRegExp( sep ) }index\\.php$`
+				),
+				to: 'build/block-library/blocks/[1].php',
+				transform( content ) {
+					content = content.toString();
+
+					// Within content, search for any function definitions. For
+					// each, replace every other reference to it in the file.
+					return (
+						content
+						.match( /^function [^\(]+/gm )
+						.reduce( ( result, functionName ) => {
+							// Trim leading "function " prefix from match.
+							functionName = functionName.slice( 9 );
+
+							// Prepend the Gutenberg prefix, substituting any
+							// other core prefix (e.g. "wp_").
+							return result.replace(
+								new RegExp( functionName, 'g' ),
+								( match ) =>
+									'gutenberg_' +
+									match.replace( /^wp_/, '' )
+							);
+						}, content )
+						// The core blocks override procedure takes place in
+						// the init action default priority to ensure that core
+						// blocks would have been registered already. Since the
+						// blocks implementations occur at the default priority
+						// and due to WordPress hooks behavior not considering
+						// mutations to the same priority during another's
+						// callback, the Gutenberg build blocks are modified
+						// to occur at a later priority.
+						.replace(
+							/(add_action\(\s*'init',\s*'gutenberg_register_block_[^']+'(?!,))/,
+							'$1, 20'
+						)
+					);
+				},
+			},
+			{
+				from: './packages/block-library/src/*/block.json',
+				test: new RegExp(
+					`([\\w-]+)${ escapeRegExp( sep ) }block\\.json$`
+				),
+				to: 'build/block-library/blocks/[1]/block.json',
+			},
+		] ),
+		new DependencyExtractionWebpackPlugin( {
+			injectPolyfill: true,
+			requestToExternal,
+			requestToHandle,
 		} ),
-	]
+	],
+	devtool,
 };
 
-/**
- * Config for compiling Gutenberg blocks JS.
- */
-const GutenbergBlocksConfig = {
-	...baseConfig,
-	entry: {
-		'./dist/js/editor' : './src/editor.js',
-		'./dist/js/editor.min' : './src/editor.js',
-	},
-	optimization: {
-		...minimizeConfig
-	},
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: {
-					loader: 'babel-loader',
-				},
-			},
-		],
-	},
-	plugins: [ new ProgressBarPlugin( {
-		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
-	} ) ],
-};
+function requestToExternal( request ) {
+	if ( request.startsWith( NOVABLOCKS_NAMESPACE ) ) {
+		return [
+			'novablocks',
+			camelCaseDash( request.substring( NOVABLOCKS_NAMESPACE.length ) ),
+		];
+	}
+}
+function requestToHandle( request ) {
+	if ( request.startsWith( NOVABLOCKS_NAMESPACE ) ) {
+		return 'novablocks-' + request.substring( NOVABLOCKS_NAMESPACE.length );
+	}
+}
 
-const BlocksFrontendConfig = {
-	...baseConfig,
-	entry: {
-		'./dist/js/frontend' : './src/frontend.js',
-		'./dist/js/frontend.min' : './src/frontend.js',
-	},
-	optimization: {
-		...minimizeConfig
-	},
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: {
-					loader: 'babel-loader',
-				},
-			},
-		],
-	},
-	plugins: [ new ProgressBarPlugin( {
-		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
-	} ) ],
-};
 
-module.exports = [
-	GutenbergBlocksConfig,
-	BlocksFrontendConfig,
-	VendorConfig,
-	StylesConfig,
-];

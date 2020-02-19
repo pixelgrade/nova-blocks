@@ -1,0 +1,62 @@
+:root {
+	--novablocks-hero-transition-duration: 0.5s;
+	--novablocks-hero-transition-easing: ease;
+	--novablocks-hero-transition: all
+		var(--novablocks-media-transition-duration)
+		var(--novablocks-media-transition-easing);
+}
+
+.wp-block-novablocks-hero.novablocks-hero {
+	transition: var(--novablocks-hero-transition);
+	transition-property: color, background-color, opacity;
+}
+
+.novablocks-hero__media,
+.novablocks-hero__foreground {
+	transition: var(--novablocks-hero-transition);
+	transition-property: color, background-color, opacity;
+}
+
+.pixelgrade-hero-block-toolbar-dropdown {
+	button {
+		display: flex;
+		align-items: center;
+
+		&:after {
+			content: '';
+			border: 0 solid transparent;
+			border-width: 4px 3px 0;
+			border-top-color: currentColor;
+			margin-left: 4px;
+		}
+	}
+}
+
+.pixelgrade-hero-button-group-wrapper {
+	label + .components-button-group {
+		margin-top: 5px;
+	}
+
+	.components-button-group {
+		display: flex;
+
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		.components-button {
+			padding: 1px 5px 3px;
+			height: auto;
+			flex: 1 1 auto;
+			display: flex;
+			justify-content: center;
+			text-align: center;
+		}
+	}
+}
+
+.pixelgrade-hero-horizontal-alignment-button {
+	svg {
+		transform: rotate(-90deg);
+	}
+}

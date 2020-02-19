@@ -1,0 +1,11 @@
+{
+  "name": "@novablocks/easings",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+  "license": "ISC"
+}

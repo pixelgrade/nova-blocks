@@ -1,0 +1,23 @@
+{
+	"name": "@novablocks/components",
+	"version": "1.0.0",
+	"description": "",
+	"main": "build/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"license": "ISC",
+	"dependencies": {
+		"@novablocks/utils": "file:../utils",
+		"@novablocks/icons": "file:../icons",
+		"@novablocks/easings": "file:../easings",
+		"@wordpress/block-editor": "^3.7.1",
+		"@wordpress/components": "^9.2.1",
+		"@wordpress/compose": "^3.11.0",
+		"@wordpress/data": "^4.14.0",
+		"@wordpress/element": "^2.11.0",
+		"@wordpress/i18n": "^3.9.0",
+		"@wordpress/viewport": "^2.13.0"
+	}
+}
