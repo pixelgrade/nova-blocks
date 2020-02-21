@@ -7818,9 +7818,10 @@ var preview_MediaPreview = function MediaPreview(props) {
       blockStyle = _props$attributes.blockStyle,
       mediaPosition = _props$attributes.mediaPosition,
       images = _props$attributes.images,
+      verticalAlignment = _props$attributes.verticalAlignment,
       className = props.className,
       settings = props.settings;
-  var classNames = classnames_default()(className, "novablocks-media", "has-image-on-the-".concat(mediaPosition), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
+  var classNames = classnames_default()(className, "novablocks-media", "has-image-on-the-".concat(mediaPosition), "novablocks-u-valign-".concat(verticalAlignment), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
     'has-background': blockStyle !== 'basic'
   });
   var passedProps = props;
@@ -7839,7 +7840,7 @@ var preview_MediaPreview = function MediaPreview(props) {
     className: "wp-block",
     "data-align": "wide"
   }, Object(react["createElement"])("div", {
-    className: "novablocks-media__layout"
+    className: "novablocks-media__layout novablocks-u-content-align"
   }, Object(react["createElement"])("div", {
     className: "novablocks-media__content"
   }, Object(react["createElement"])("div", {

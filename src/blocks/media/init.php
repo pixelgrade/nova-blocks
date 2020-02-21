@@ -32,6 +32,9 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 		$classes[] = 'novablocks-media';
+		if ( ! empty( $attributes['verticalAlignment'] ) ) {
+			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
+		}
 		if ( ! empty( $attributes['mediaPosition'] ) ) {
 			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
 		}
@@ -56,7 +59,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
             <div class="wp-block-group__inner-container">
 	            <div class="wp-block alignwide">
-	                <div class="novablocks-media__layout">
+	                <div class="novablocks-media__layout novablocks-u-content-align">
 	                    <div class="novablocks-media__content">
 		                    <div class="novablocks-media__inner-container">
 								<?php echo $content; ?>

@@ -21,6 +21,8 @@ const MediaPreview = function( props ) {
 			blockStyle,
 			mediaPosition,
 			images,
+			// alignment
+			verticalAlignment
 		},
 		className,
 		settings,
@@ -30,6 +32,7 @@ const MediaPreview = function( props ) {
 		className,
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
+		`novablocks-u-valign-${ verticalAlignment }`,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
@@ -47,7 +50,7 @@ const MediaPreview = function( props ) {
 		<div className={ classNames }>
 			<div className="wp-block-group__inner-container">
 				<div className="wp-block" data-align="wide">
-					<div className="novablocks-media__layout">
+					<div className="novablocks-media__layout novablocks-u-content-align">
 						<div className="novablocks-media__content">
 							<div className="novablocks-media__inner-container">
 								<InnerBlocks

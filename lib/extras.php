@@ -573,7 +573,12 @@ function novablocks_add_media_settings( $settings ) {
 					'type'    => 'string',
 					'default' => 'left',
 				),
+				'verticalAlignment' => array(
+					'type'    => 'string',
+					'default' => 'center'
+				)
 			),
+			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()
 		),
 		'template'           => array(
