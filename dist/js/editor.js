@@ -122,7 +122,7 @@ module.exports = _createClass;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(15);
+var _typeof = __webpack_require__(16);
 
 var assertThisInitialized = __webpack_require__(10);
 
@@ -364,6 +364,16 @@ module.exports = _slicedToArray;
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+function _objectDestructuringEmpty(obj) {
+  if (obj == null) throw new TypeError("Cannot destructure undefined");
+}
+
+module.exports = _objectDestructuringEmpty;
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,7 +470,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -482,7 +492,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -492,7 +502,7 @@ function _readOnlyError(name) {
 module.exports = _readOnlyError;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var objectWithoutPropertiesLoose = __webpack_require__(26);
@@ -519,7 +529,7 @@ function _objectWithoutProperties(source, excluded) {
 module.exports = _objectWithoutProperties;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithoutHoles = __webpack_require__(32);
@@ -533,16 +543,6 @@ function _toConsumableArray(arr) {
 }
 
 module.exports = _toConsumableArray;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-function _objectDestructuringEmpty(obj) {
-  if (obj == null) throw new TypeError("Cannot destructure undefined");
-}
-
-module.exports = _objectDestructuringEmpty;
 
 /***/ }),
 /* 20 */
@@ -614,7 +614,7 @@ module.exports = _setPrototypeOf;
  * LICENSE file in the root directory of this source tree.
  */
 
-var h=__webpack_require__(14),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
+var h=__webpack_require__(15),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,aa=n?Symbol.for("react.suspense_list"):60120,ba=n?Symbol.for("react.memo"):
 60115,ca=n?Symbol.for("react.lazy"):60116;n&&Symbol.for("react.fundamental");n&&Symbol.for("react.responder");var z="function"===typeof Symbol&&Symbol.iterator;
 function A(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C={};
 function D(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw A(Error(85));this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}E.prototype=D.prototype;function F(a,b,d){this.props=a;this.context=b;this.refs=C;this.updater=d||B}var G=F.prototype=new E;
@@ -649,7 +649,7 @@ b.type=a;return b},isValidElement:N,version:"16.9.0",unstable_withSuspenseConfig
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(5),m=__webpack_require__(14),q=__webpack_require__(24);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
+var aa=__webpack_require__(5),m=__webpack_require__(15),q=__webpack_require__(24);function t(a){for(var b=a.message,c="https://reactjs.org/docs/error-decoder.html?invariant="+b,d=1;d<arguments.length;d++)c+="&args[]="+encodeURIComponent(arguments[d]);a.message="Minified React error #"+b+"; visit "+c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}if(!aa)throw t(Error(227));var ba=null,ca={};
 function da(){if(ba)for(var a in ca){var b=ca[a],c=ba.indexOf(a);if(!(-1<c))throw t(Error(96),a);if(!ea[c]){if(!b.extractEvents)throw t(Error(97),a);ea[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],h=b,g=d;if(fa.hasOwnProperty(g))throw t(Error(99),g);fa[g]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ha(k[e],h,g);e=!0}else f.registrationName?(ha(f.registrationName,h,g),e=!0):e=!1;if(!e)throw t(Error(98),d,a);}}}}
 function ha(a,b,c){if(ia[a])throw t(Error(100),a);ia[a]=b;ja[a]=b.eventTypes[c].dependencies}var ea=[],fa={},ia={},ja={};function ka(a,b,c,d,e,f,h,g,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(n){this.onError(n)}}var la=!1,ma=null,na=!1,oa=null,pa={onError:function(a){la=!0;ma=a}};function qa(a,b,c,d,e,f,h,g,k){la=!1;ma=null;ka.apply(pa,arguments)}
 function ra(a,b,c,d,e,f,h,g,k){qa.apply(this,arguments);if(la){if(la){var l=ma;la=!1;ma=null}else throw t(Error(198));na||(na=!0,oa=l)}}var sa=null,ta=null,va=null;function wa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=va(c);ra(d,b,void 0,a);a.currentTarget=null}function xa(a,b){if(null==b)throw t(Error(30));if(null==a)return b;if(Array.isArray(a)){if(Array.isArray(b))return a.push.apply(a,b),a;a.push(b);return a}return Array.isArray(b)?[a].concat(b):[a,b]}
@@ -1062,7 +1062,7 @@ if (true) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(14),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
+var l=__webpack_require__(15),m=__webpack_require__(5);function r(a){for(var b=a.message,d="https://reactjs.org/docs/error-decoder.html?invariant="+b,c=1;c<arguments.length;c++)d+="&args[]="+encodeURIComponent(arguments[c]);a.message="Minified React error #"+b+"; visit "+d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ";return a}
 var t="function"===typeof Symbol&&Symbol.for,aa=t?Symbol.for("react.portal"):60106,v=t?Symbol.for("react.fragment"):60107,ba=t?Symbol.for("react.strict_mode"):60108,ca=t?Symbol.for("react.profiler"):60114,x=t?Symbol.for("react.provider"):60109,da=t?Symbol.for("react.context"):60110,ea=t?Symbol.for("react.concurrent_mode"):60111,fa=t?Symbol.for("react.forward_ref"):60112,A=t?Symbol.for("react.suspense"):60113,ha=t?Symbol.for("react.suspense_list"):60120,ia=t?Symbol.for("react.memo"):60115,ja=t?Symbol.for("react.lazy"):
 60116,ka=t?Symbol.for("react.fundamental"):60117;
 function B(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case v:return"Fragment";case aa:return"Portal";case ca:return"Profiler";case ba:return"StrictMode";case A:return"Suspense";case ha:return"SuspenseList"}if("object"===typeof a)switch(a.$$typeof){case da:return"Context.Consumer";case x:return"Context.Provider";case fa:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef");
@@ -1255,7 +1255,7 @@ __webpack_require__.r(actions_namespaceObject);
 __webpack_require__.d(actions_namespaceObject, "updateSettings", function() { return updateSettings; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(15);
+var helpers_typeof = __webpack_require__(16);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -2547,6 +2547,331 @@ function addFontSizeAttribute(block) {
 }
 
 with_font_size_picker_addFilter('blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute);
+// CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
+// Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
+var fourSq = fourSq || {};
+fourSq.util = fourSq.util || {};
+fourSq.util.Hours = {
+  /**
+   * Pads times to be HHMM
+   * @param {string} text
+   * @return {string}
+   */
+  padTimes: function padTimes(text) {
+    // Add leading/trailing zeros to times so it's always 4 digits, like 0800
+    // Have to run each twice because they're pivoting around the separator
+    // i.e. x10-12x first matches "x10-" and doesn't match the rest
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    return text;
+  },
+
+  /**
+   * @param {Array.<number>} days
+   * @param {number} startMinutes
+   * @param {number} endMinutes
+   */
+  toTimeframe: function toTimeframe(days, startMinutes, endMinutes) {
+    // If we've day wrapped and end before 4am, push the ending value up 24 hours.
+    if (startMinutes >= endMinutes && endMinutes <= 240) {
+      endMinutes += 1440;
+    }
+
+    var startFormatted = fourSq.util.Hours.formatMinutes(startMinutes);
+    var endFormatted = fourSq.util.Hours.formatMinutes(endMinutes);
+    return (
+      /** @type {fourSq.api.models.hours.MachineTimeframe} */
+      {
+        days: days,
+        open: [
+        /** @type {fourSq.api.models.hours.MachineSegment} */
+        {
+          start: startFormatted,
+          end: endFormatted
+        }]
+      }
+    );
+  },
+
+  /**
+   * @param {number} minutes after minute
+   * @return {string} the hhmm format that API takes for the input hours
+   */
+  formatMinutes: function formatMinutes(minutes) {
+    var hh = Math.floor(minutes / 60);
+    var mm = minutes % 60;
+    var intoNextDay = hh % 24 !== hh;
+    hh = hh % 24;
+
+    if (hh % 10 === hh) {
+      hh = '0' + hh;
+    }
+
+    if (intoNextDay) {
+      hh = '+' + hh;
+    }
+
+    if (mm % 10 === mm) {
+      mm = '0' + mm;
+    }
+
+    return hh + '' + mm;
+  },
+
+  /**
+   * @param {string} hoursText
+   * @param {(string|undefined)} minutesText
+   * @param {(string|undefined)} meridiem
+   * @return {number}
+   */
+  minutesAfterMidnight: function minutesAfterMidnight(hoursText, minutesText, meridiem) {
+    var hours = parseInt(hoursText, 10);
+    var minutes = minutesText !== undefined ? parseInt(minutesText, 10) : 0;
+
+    if (hours === 12 && meridiem) {
+      hours -= 12;
+    }
+
+    if (meridiem && meridiem[0] === 'p') {
+      hours += 12;
+    }
+
+    return hours * 60 + minutes;
+  }
+};
+fourSq.util.HoursParser = {
+  /**
+   * @return {fourSq.api.models.hours.MachineHours}
+   */
+  parse: function parse(text) {
+    text = text.toLowerCase(); // Normalize new lines to ';'
+
+    text = text.replace(/\n/g, ' ; '); // Massage times
+    // TODO(ss): translate and do weekend/weekday subs
+
+    text = text.replace(/(12|12:00)?midnight/g, '1200a');
+    text = text.replace(/(12|12:00)?noon/g, '1200p');
+    text = text.replace(/(open)?\s*24\s*hours?/g, '1200a-1200a'); // Standardize conjunctions to '&'
+
+    text = text.replace(/\s*(and|,|\+|&)\s*/g, '&'); // Standardize range tokens to '-'
+
+    text = text.replace(/\s*(-|to|thru|through|till?|'till?|until)\s*/g, '-'); // Standardize am/pm
+
+    text = text.replace(/\s*a\.?m?\.?/g, 'a');
+    text = text.replace(/\s*p\.?m?\.?/g, 'p'); // Not sure this happens, but add trailing zeros to things like 5:3pm
+
+    text = text.replace(/([0-9])(h|:|\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...
+    // if they both have separators
+
+    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5'); // if only the start time has a separator
+
+    text = text.replace(/([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator
+    //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$2$3$5');
+
+    text = fourSq.util.Hours.padTimes(text); // Massage days
+
+    var dayCanonicals = _.map(_.range(1, 8), function (dayI) {
+      var allNames = fourSq.util.HoursParser.dayAliases(dayI);
+
+      var canonical = _.head(allNames); // Shortest is at the front
+
+
+      var aliases = _.tail(allNames);
+
+      aliases.reverse(); // Need to have the largest alias first for replacing
+
+      if (canonical && aliases) {
+        _.each(aliases, function (alias) {
+          text = text.replace(new RegExp(alias, 'g'), canonical);
+        });
+      }
+
+      return canonical;
+    });
+
+    var dayPattern = '(' + dayCanonicals.join('|') + ')';
+    var timePattern = '([0-9][0-9])([0-9][0-9])\\s*([ap])?';
+    var globTimePattern = '[0-9]{4}\\s*[ap]?';
+    var globTimeRangePattern = '(' + globTimePattern + '[^0-9]+' + globTimePattern + ')'; // Need to establish whether days come before times (forward) or not (backward)
+
+    var forwardTimeframePattern = dayPattern + '.*?' + globTimeRangePattern;
+    var backwardTimeframePattern = globTimeRangePattern + '.*?' + dayPattern;
+    var forwardPosition = text.search(new RegExp(forwardTimeframePattern));
+    var backwardPosition = text.search(new RegExp(backwardTimeframePattern)); // If a forward pattern is found first, consider it a forward facing text
+
+    var isForward = forwardPosition !== -1 && forwardPosition <= backwardPosition || backwardPosition === -1; // TODO(ss): may be better to normalize the string to be forward facing at this point
+    //           so the rest of the method would be easier to grok
+    // Separate out something like Mon-Thu, Sat, Sun
+
+    if (isForward) {
+      var ungroupedPattern = dayPattern + '&' + dayPattern + '[^&]*?' + globTimeRangePattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $3; $2 $3; ');
+      }
+    } else {
+      var ungroupedPattern = globTimeRangePattern + '([^0-9]*?)' + dayPattern + '&' + dayPattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $2 $3; $1 $4; ');
+      }
+    }
+
+    var dayRangePattern = dayPattern + '[^a-z0-9]*' + dayPattern + '?';
+    var timeRangePattern = timePattern + '[^0-9]*' + timePattern;
+    var timeframePattern = isForward ? dayRangePattern + '.*?' + timeRangePattern : timeRangePattern + '.*?' + dayRangePattern;
+    var dayTimeMatcher = new RegExp(timeframePattern, 'g');
+    var matches = [];
+
+    do {
+      var dayTimeMatch = dayTimeMatcher.exec(text);
+
+      if (dayTimeMatch) {
+        matches.push(dayTimeMatch);
+      }
+    } while (dayTimeMatch);
+
+    if (matches.length <= 0) {
+      // Try to find just a time range, and then we'll assume it's all days later on.
+      // First two groups are strings that won't match, to get undefined values
+      // in those slots in the regex match array.
+      var timeRangeMatcher = new RegExp('(@!ZfW#)?(@!ZfW#)?' + timeRangePattern);
+      var timeRangeMatch = timeRangeMatcher.exec(text);
+
+      if (timeRangeMatch) {
+        matches.push(timeRangeMatch);
+      }
+    }
+
+    var timeframes = _.map(matches, function (match) {
+      // day slots in the regex match array
+      var day1 = isForward ? match[1] : match[7];
+      var day2 = isForward ? match[2] : match[8];
+      var startDay = day1 !== undefined ? dayCanonicals.indexOf(day1) : 0;
+      var endDay = null;
+
+      if (day2 !== undefined) {
+        if (day1 === undefined) {
+          startDay = dayCanonicals.indexOf(day2);
+        } else {
+          endDay = dayCanonicals.indexOf(day2);
+        }
+      } else if (day1 === undefined) {
+        // If start and end days were undefined, assume 7 days a week
+        endDay = 7;
+      }
+
+      if (endDay === null) {
+        endDay = startDay;
+      }
+
+      if (endDay < startDay) {
+        // For case where: Sun-Tue (we start on Monday)
+        endDay += 7;
+      }
+
+      var days = _.map(_.range(startDay, endDay + 1), function (day) {
+        // Days start at 1 for Monday
+        return day % 7 + 1;
+      }); // time slots in the regex match array
+
+
+      var startHour = isForward ? match[3] : match[1];
+      var startMinute = isForward ? match[4] : match[2];
+      var startMeridiem = isForward ? match[5] : match[3];
+      var endHour = isForward ? match[6] : match[4];
+      var endMinute = isForward ? match[7] : match[5];
+      var endMeridiem = isForward ? match[8] : match[6]; // TODO(ss): hint the meridiem based on endHour < startHour and > 4
+
+      var startTime = fourSq.util.Hours.minutesAfterMidnight(startHour, startMinute, startMeridiem);
+      var endTime = fourSq.util.Hours.minutesAfterMidnight(endHour, endMinute, endMeridiem);
+      return fourSq.util.Hours.toTimeframe(days, startTime, endTime);
+    });
+
+    if (timeframes.length) {
+      return (
+        /** @type {fourSq.api.models.hours.MachineHours} */
+        {
+          timeframes: timeframes
+        }
+      );
+    } else {
+      return null;
+    }
+  },
+
+  /**
+   * @param {number} day starting at 1 for monday
+   * @return {Array.<string>} all aliases of the day, sorted by length
+   */
+  dayAliases: function dayAliases(day) {
+    var text = '';
+    var aliases = '';
+
+    switch (day) {
+      case 1:
+        aliases = ['mondays', 'monday', 'monda', 'mond', 'mon', 'mo', 'm'];
+        break;
+
+      case 2:
+        aliases = ['tuesdays', 'tuesday', 'tuesd', 'tues', 'tue', 'tu'];
+        break;
+
+      case 3:
+        aliases = ['wednesdays', 'wednesday', 'wednes', 'wedne', 'wedn', 'wed', 'we', 'w'];
+        break;
+
+      case 4:
+        aliases = ['thursdays', 'thursday', 'thurs', 'thur', 'thu', 'th'];
+        break;
+
+      case 5:
+        aliases = ['fridays', 'friday', 'frida', 'frid', 'fri', 'fr', 'f'];
+        break;
+
+      case 6:
+        aliases = ['saturdays', 'saturday', 'satur', 'satu', 'sat', 'sa'];
+        break;
+
+      case 7:
+        aliases = ['sundays', 'sunday', 'sunda', 'sund', 'sun', 'su'];
+        break;
+
+      default:
+        return [];
+    }
+
+    return _.sortBy(aliases, function (alias) {
+      return alias.length;
+    });
+  }
+}; // Remove the days in which the business is closed. The parser doesn't need those days anyways.
+
+function removeClosedDays(schedule) {
+  var hoursString = '';
+  var lines = schedule.split('\n');
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].includes('closed') || lines[i].includes('Closed') || !lines[i].match(/\d+/g)) {// don't add it to the list
+    } else {
+      hoursString += lines[i] + '\n';
+    }
+  }
+
+  return hoursString;
+}
+
+var parseContent = function parseContent(currentValue) {
+  currentValue = removeClosedDays(currentValue);
+  var hours = fourSq.util.HoursParser.parse(currentValue);
+  return JSON.stringify(hours);
+};
 // CONCATENATED MODULE: ./src/blocks/core/separator/index.js
 
 
@@ -3091,7 +3416,7 @@ function (_Component) {
 
 /* harmony default export */ var placeholder = (placeholder_MapPlaceholder);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(17);
+var objectWithoutProperties = __webpack_require__(18);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
@@ -3612,11 +3937,11 @@ function PositionIndicatorsPanel(props) {
 
 /* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(18);
+var toConsumableArray = __webpack_require__(19);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
-var objectDestructuringEmpty = __webpack_require__(19);
+var objectDestructuringEmpty = __webpack_require__(14);
 var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
 
 // EXTERNAL MODULE: external "jQuery"
@@ -4366,7 +4691,7 @@ var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
 
 /* harmony default export */ var scrolling_effect_controls = (scrolling_effect_controls_ScrollingEffectControls);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(16);
+var readOnlyError = __webpack_require__(17);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js
@@ -8813,7 +9138,238 @@ function opentable_init() {
 }
 
 /* harmony default export */ var blocks_opentable = (opentable_init);
+// CONCATENATED MODULE: ./src/blocks/openhours/preview.js
+
+
+
+
+
+
+
+/**
+ * WordPress dependencies
+ */
+var openhours_preview_ = wp.i18n.__;
+var openhours_preview_Component = wp.element.Component;
+
+var preview_OpenHoursPreview =
+/*#__PURE__*/
+function (_Component) {
+  inherits_default()(OpenHoursPreview, _Component);
+
+  function OpenHoursPreview() {
+    classCallCheck_default()(this, OpenHoursPreview);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(OpenHoursPreview).apply(this, arguments));
+  }
+
+  createClass_default()(OpenHoursPreview, [{
+    key: "render",
+    value: function render() {
+      var _this$props$attribute = this.props.attributes,
+          text = _this$props$attribute.text,
+          parsedText = _this$props$attribute.parsedText,
+          timeFormat = _this$props$attribute.timeFormat,
+          openNote = _this$props$attribute.openNote,
+          closedNote = _this$props$attribute.closedNote,
+          closedLabel = _this$props$attribute.closedLabel,
+          compressOpeningHours = _this$props$attribute.compressOpeningHours,
+          HideClosedDays = _this$props$attribute.HideClosedDays,
+          UseShortName = _this$props$attribute.UseShortName;
+      return [Object(react["createElement"])(wp.serverSideRender, {
+        block: "novablocks/openhours",
+        attributes: {
+          text: text,
+          parsedText: parsedText,
+          timeFormat: timeFormat,
+          openNote: openNote,
+          closedNote: closedNote,
+          closedLabel: closedLabel,
+          compressOpeningHours: compressOpeningHours,
+          HideClosedDays: HideClosedDays,
+          UseShortName: UseShortName
+        }
+      })];
+    }
+  }]);
+
+  return OpenHoursPreview;
+}(openhours_preview_Component);
+
+/* harmony default export */ var openhours_preview = (preview_OpenHoursPreview);
+// CONCATENATED MODULE: ./src/blocks/openhours/inspector-controls.js
+
+
+/**
+ * WordPress dependencies
+ */
+var openhours_inspector_controls_Fragment = wp.element.Fragment;
+var openhours_inspector_controls_ = wp.i18n.__;
+
+var openhours_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var openhours_inspector_controls_wp$components = wp.components,
+    openhours_inspector_controls_PanelBody = openhours_inspector_controls_wp$components.PanelBody,
+    openhours_inspector_controls_RadioControl = openhours_inspector_controls_wp$components.RadioControl,
+    openhours_inspector_controls_TextControl = openhours_inspector_controls_wp$components.TextControl,
+    TextareaControl = openhours_inspector_controls_wp$components.TextareaControl,
+    openhours_inspector_controls_ToggleControl = openhours_inspector_controls_wp$components.ToggleControl;
+
+var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorControls(props) {
+  var _props$attributes = props.attributes,
+      openHoursStyle = _props$attributes.openHoursStyle,
+      text = _props$attributes.text,
+      parsedText = _props$attributes.parsedText,
+      timeFormat = _props$attributes.timeFormat,
+      openNote = _props$attributes.openNote,
+      closedNote = _props$attributes.closedNote,
+      closedLabel = _props$attributes.closedLabel,
+      compressOpeningHours = _props$attributes.compressOpeningHours,
+      HideClosedDays = _props$attributes.HideClosedDays,
+      UseShortName = _props$attributes.UseShortName,
+      setAttributes = props.setAttributes;
+  return Object(react["createElement"])(openhours_inspector_controls_Fragment, null, Object(react["createElement"])(openhours_inspector_controls_InspectorControls, null, Object(react["createElement"])(TextareaControl, {
+    label: "Open Hours",
+    help: "Write your opening hours in a simple human readable format:",
+    value: text,
+    className: "original-text",
+    onChange: function onChange(text) {
+      return setAttributes({
+        text: text,
+        parsedText: parseContent(text)
+      });
+    }
+  }), Object(react["createElement"])(TextareaControl, {
+    label: "Parsed Text",
+    value: parsedText,
+    className: "parsed-text",
+    disabled: true
+  }), Object(react["createElement"])(openhours_inspector_controls_PanelBody, {
+    title: openhours_inspector_controls_('Layout', '__plugin_txtd'),
+    initialOpen: true
+  }, Object(react["createElement"])(openhours_inspector_controls_RadioControl, {
+    label: openhours_inspector_controls_('Displaying the opening hours', '__plugin_txtd'),
+    value: openHoursStyle,
+    selected: openHoursStyle,
+    options: [{
+      label: 'Overview',
+      value: 'overview'
+    }, {
+      label: 'Current Status',
+      value: 'status'
+    }],
+    onChange: function onChange(nextOpenHoursStyle) {
+      return setAttributes({
+        openHourStyle: nextOpenHoursStyle
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Time Format",
+    value: timeFormat,
+    onChange: function onChange(timeFormat) {
+      return setAttributes({
+        timeFormat: timeFormat
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Open Note",
+    value: openNote,
+    onChange: function onChange(openNote) {
+      return setAttributes({
+        openNote: openNote
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Closed Note",
+    value: closedNote,
+    onChange: function onChange(closedNote) {
+      return setAttributes({
+        closedNote: closedNote
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Closed Label",
+    value: closedLabel,
+    onChange: function onChange(closedLabel) {
+      return setAttributes({
+        closedLabel: closedLabel
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_ToggleControl, {
+    label: openhours_inspector_controls_('Compress Opening Hours', '__plugin_txtd'),
+    checked: compressOpeningHours,
+    onChange: function onChange() {
+      return setAttributes({
+        compressOpeningHours: !compressOpeningHours
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_ToggleControl, {
+    label: openhours_inspector_controls_('Hide Closed Days', '__plugin_txtd'),
+    checked: HideClosedDays,
+    onChange: function onChange() {
+      return setAttributes({
+        HideClosedDays: !HideClosedDays
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_ToggleControl, {
+    label: openhours_inspector_controls_('Use Short Name', '__plugin_txtd'),
+    checked: UseShortName,
+    onChange: function onChange() {
+      return setAttributes({
+        UseShortName: !UseShortName
+      });
+    }
+  }))));
+};
+
+/* harmony default export */ var openhours_inspector_controls = (inspector_controls_OpenHoursInspectorControls);
+// CONCATENATED MODULE: ./src/blocks/openhours/edit.js
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+var openhours_edit_Fragment = wp.element.Fragment;
+
+var edit_OpenHours = function OpenHours(props) {
+  return Object(react["createElement"])(openhours_edit_Fragment, null, Object(react["createElement"])(openhours_inspector_controls, props), Object(react["createElement"])(openhours_preview, props));
+};
+
+/* harmony default export */ var openhours_edit = (edit_OpenHours);
+// CONCATENATED MODULE: ./src/blocks/openhours/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+var openhours_ = wp.i18n.__;
+var openhours_registerBlockType = wp.blocks.registerBlockType;
+var openhours_InnerBlocks = wp.blockEditor.InnerBlocks;
+
+function openhours_init() {
+  openhours_registerBlockType('novablocks/openhours', {
+    title: openhours_('OpenHours', '__plugin_txtd'),
+    description: openhours_('Display Opening Hours for any kind of venue', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: opentable,
+    edit: openhours_edit,
+    save: function save() {
+      return Object(react["createElement"])(openhours_InnerBlocks.Content, null);
+    }
+  });
+}
+
+/* harmony default export */ var openhours = (openhours_init);
 // CONCATENATED MODULE: ./src/editor.js
+
+
 
 
 
@@ -8891,6 +9447,7 @@ function () {
       blocks_hero();
       blocks_media();
       blocks_slideshow();
+      openhours();
     }
   }]);
 

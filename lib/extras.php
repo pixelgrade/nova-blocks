@@ -332,6 +332,48 @@ function novablocks_get_media_attributes() {
 	return array();
 }
 
+function novablocks_get_openhours_attributes() {
+	return array(
+		'text'  => array(
+			'type'  => 'string',
+			'default'   => 'Hello Monday'
+		),
+		'parsedText'  => array(
+			'type'  => 'string',
+			'default'   => '{"timeframes":[{"days":[1],"open":[{"start":"1000","end":"2200"}]},{"days":[2,3,4,5],"open":[{"start":"0900","end":"1700"}]},{"days":[6],"open":[{"start":"1200","end":"+0200"}]}]}'
+		),
+		'timeFormat'    => array(
+			'type'  => 'string',
+			'default'   => 'g:i'
+		),
+		'openNote'    => array(
+			'type'  => 'string',
+			'default'   => 'Open Note'
+		),
+		'closedNote'    => array(
+			'type'  => 'string',
+			'default'   => 'Closed Note'
+		),
+		'closedLabel'    => array(
+			'type'  => 'string',
+			'default'   => 'Closed Label'
+		),
+		'compressOpeningHours'    => array(
+			'type'  => 'boolean',
+			'default'   => false
+		),
+		'HideClosedDays'    => array(
+			'type'  => 'boolean',
+			'default'   => false
+		),
+		'UseShortName'    => array(
+			'type'  => 'boolean',
+			'default'   => false
+		),
+
+	);
+}
+
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
 
     foreach ( $attributes_config as $key => $value ) {
