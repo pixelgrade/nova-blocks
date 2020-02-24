@@ -350,7 +350,7 @@ Sat noon - 2am'
 		),
 		'openHoursStyle'    => array(
 			'type' => 'string',
-			'default'   => 'overview'
+			'default'   => 'status'
 		),
 		'openNote'    => array(
 			'type'  => 'string',
@@ -368,11 +368,11 @@ Sat noon - 2am'
 			'type'  => 'boolean',
 			'default'   => false
 		),
-		'HideClosedDays'    => array(
+		'hideClosedDays'    => array(
 			'type'  => 'boolean',
 			'default'   => false
 		),
-		'UseShortName'    => array(
+		'useShortName'    => array(
 			'type'  => 'boolean',
 			'default'   => false
 		),

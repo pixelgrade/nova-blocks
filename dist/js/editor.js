@@ -9169,6 +9169,7 @@ function (_Component) {
       var _this$props$attribute = this.props.attributes,
           text = _this$props$attribute.text,
           parsedText = _this$props$attribute.parsedText,
+          openHoursStyle = _this$props$attribute.openHoursStyle,
           timeFormat = _this$props$attribute.timeFormat,
           openNote = _this$props$attribute.openNote,
           closedNote = _this$props$attribute.closedNote,
@@ -9178,7 +9179,18 @@ function (_Component) {
           useShortName = _this$props$attribute.useShortName;
       return [Object(react["createElement"])(wp.serverSideRender, {
         block: "novablocks/openhours",
-        attributes: this.props.attributes
+        attributes: {
+          text: text,
+          parsedText: parsedText,
+          openHoursStyle: openHoursStyle,
+          timeFormat: timeFormat,
+          openNote: openNote,
+          closedNote: closedNote,
+          closedLabel: closedLabel,
+          compressOpeningHours: compressOpeningHours,
+          hideClosedDays: hideClosedDays,
+          useShortName: useShortName
+        }
       })];
     }
   }]);
@@ -9190,10 +9202,13 @@ function (_Component) {
 // CONCATENATED MODULE: ./src/blocks/openhours/inspector-controls.js
 
 
+
 /**
  * WordPress dependencies
  */
-var openhours_inspector_controls_Fragment = wp.element.Fragment;
+var inspector_controls_wp$element = wp.element,
+    openhours_inspector_controls_Fragment = inspector_controls_wp$element.Fragment,
+    inspector_controls_useState = inspector_controls_wp$element.useState;
 var openhours_inspector_controls_ = wp.i18n.__;
 
 var openhours_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
@@ -9202,7 +9217,10 @@ var openhours_inspector_controls_wp$components = wp.components,
     openhours_inspector_controls_RadioControl = openhours_inspector_controls_wp$components.RadioControl,
     openhours_inspector_controls_TextControl = openhours_inspector_controls_wp$components.TextControl,
     TextareaControl = openhours_inspector_controls_wp$components.TextareaControl,
-    openhours_inspector_controls_ToggleControl = openhours_inspector_controls_wp$components.ToggleControl;
+    openhours_inspector_controls_ToggleControl = openhours_inspector_controls_wp$components.ToggleControl,
+    Modal = openhours_inspector_controls_wp$components.Modal,
+    inspector_controls_Button = openhours_inspector_controls_wp$components.Button,
+    ExternalLink = openhours_inspector_controls_wp$components.ExternalLink;
 
 var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorControls(props) {
   var _props$attributes = props.attributes,
@@ -9217,6 +9235,36 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
       hideClosedDays = _props$attributes.hideClosedDays,
       useShortName = _props$attributes.useShortName,
       setAttributes = props.setAttributes;
+  var timeFormattingUrl = 'https://wordpress.org/support/article/formatting-date-and-time/';
+
+  var AvailableTagsModal = function AvailableTagsModal() {
+    var _useState = inspector_controls_useState(false),
+        _useState2 = slicedToArray_default()(_useState, 2),
+        isOpen = _useState2[0],
+        setOpen = _useState2[1];
+
+    var openModal = function openModal() {
+      return setOpen(true);
+    };
+
+    var closeModal = function closeModal() {
+      return setOpen(false);
+    };
+
+    return Object(react["createElement"])(openhours_inspector_controls_Fragment, null, Object(react["createElement"])(inspector_controls_Button, {
+      isLink: true,
+      onClick: openModal
+    }, "See available tags"), isOpen && Object(react["createElement"])(Modal, {
+      onRequestClose: closeModal,
+      shouldCloseOnEsc: true,
+      shouldCloseOnClickOutside: true,
+      className: "novablocks-openhours__modal"
+    }));
+  };
+
+  var timeFormattingInstructions = Object(react["createElement"])(openhours_inspector_controls_Fragment, null, Object(react["createElement"])(ExternalLink, {
+    href: timeFormattingUrl
+  }, openhours_inspector_controls_('Learn more about time formatting', '__plugin_txtd')));
   return Object(react["createElement"])(openhours_inspector_controls_Fragment, null, Object(react["createElement"])(openhours_inspector_controls_InspectorControls, null, Object(react["createElement"])(TextareaControl, {
     label: "Open Hours",
     help: "Write your opening hours in a simple human readable format:",
@@ -9247,14 +9295,6 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
         openHoursStyle: nextOpenHoursStyle
       });
     }
-  }), Object(react["createElement"])(openhours_inspector_controls_TextControl, {
-    label: "Time Format",
-    value: timeFormat,
-    onChange: function onChange(timeFormat) {
-      return setAttributes({
-        timeFormat: timeFormat
-      });
-    }
   }), openHoursStyle === 'status' && Object(react["createElement"])(openhours_inspector_controls_TextControl, {
     label: "Open Note",
     value: openNote,
@@ -9271,7 +9311,7 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
         closedNote: closedNote
       });
     }
-  }), openHoursStyle === 'overview' && Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+  }), openHoursStyle === 'status' && Object(react["createElement"])(AvailableTagsModal, null), openHoursStyle === 'overview' && Object(react["createElement"])(openhours_inspector_controls_TextControl, {
     label: "Closed Label",
     value: closedLabel,
     onChange: function onChange(closedLabel) {
@@ -9301,6 +9341,15 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
     onChange: function onChange() {
       return setAttributes({
         useShortName: !useShortName
+      });
+    }
+  }), Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Time Format",
+    value: timeFormat,
+    help: timeFormattingInstructions,
+    onChange: function onChange(timeFormat) {
+      return setAttributes({
+        timeFormat: timeFormat
       });
     }
   }))));

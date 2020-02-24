@@ -16,6 +16,7 @@ class OpenHoursPreview extends Component {
 			attributes: {
 				text,
 				parsedText,
+				openHoursStyle,
 				timeFormat,
 				openNote,
 				closedNote,
@@ -30,7 +31,18 @@ class OpenHoursPreview extends Component {
 		return [
 			<wp.serverSideRender
 				block="novablocks/openhours"
-				attributes={ this.props.attributes }
+				attributes={{
+					text: text,
+					parsedText: parsedText,
+					openHoursStyle: openHoursStyle,
+					timeFormat: timeFormat,
+					openNote: openNote,
+					closedNote: closedNote,
+					closedLabel: closedLabel,
+					compressOpeningHours: compressOpeningHours,
+					hideClosedDays: hideClosedDays,
+					useShortName: useShortName
+				}}
 			/>
 		]
 	}

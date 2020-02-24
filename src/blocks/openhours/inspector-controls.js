@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const {Fragment} = wp.element;
+const {Fragment, useState} = wp.element;
 const {__} = wp.i18n;
 
 import { parseContent } from "./hoursparser";
@@ -15,7 +15,10 @@ const {
 	RadioControl,
 	TextControl,
 	TextareaControl,
-	ToggleControl
+	ToggleControl,
+	Modal,
+	Button,
+	ExternalLink
 } = wp.components;
 
 const OpenHoursInspectorControls = function( props ) {
@@ -35,6 +38,36 @@ const OpenHoursInspectorControls = function( props ) {
 		setAttributes,
 	} = props;
 
+	const timeFormattingUrl = 'https://wordpress.org/support/article/formatting-date-and-time/';
+
+	const AvailableTagsModal = () => {
+		const [ isOpen, setOpen ] = useState( false );
+		const openModal = () => setOpen( true );
+		const closeModal = () => setOpen( false );
+
+		return (
+			<>
+				<Button isLink onClick={ openModal }>See available tags</Button>
+				{ isOpen && (
+					<Modal
+						onRequestClose={ closeModal }
+						shouldCloseOnEsc = { true }
+						shouldCloseOnClickOutside = { true }
+						className = 'novablocks-openhours__modal'
+					>
+					</Modal>
+				) }
+			</>
+		)
+	};
+
+	const timeFormattingInstructions = (
+		<Fragment>
+			<ExternalLink href={timeFormattingUrl}>
+				{ __( 'Learn more about time formatting', '__plugin_txtd' ) }
+			</ExternalLink>
+		</Fragment>
+	);
 
 	return (
 
@@ -62,12 +95,6 @@ const OpenHoursInspectorControls = function( props ) {
 						onChange={ ( nextOpenHoursStyle ) => setAttributes( { openHoursStyle: nextOpenHoursStyle } ) }
 					/>
 
-					<TextControl
-						label="Time Format"
-						value={ timeFormat }
-						onChange={( timeFormat ) => setAttributes( {timeFormat} )}
-					/>
-
 					{ openHoursStyle === 'status' && <TextControl
 						label="Open Note"
 						value={ openNote }
@@ -79,6 +106,8 @@ const OpenHoursInspectorControls = function( props ) {
 						value={ closedNote }
 						onChange={( closedNote ) => setAttributes( {closedNote} )}
 					/> }
+
+					{ openHoursStyle === 'status' && <AvailableTagsModal/> }
 
 					{ openHoursStyle === 'overview' && <TextControl
 						label="Closed Label"
@@ -103,6 +132,13 @@ const OpenHoursInspectorControls = function( props ) {
 						checked={ useShortName }
 						onChange={ () => setAttributes( { useShortName: ! useShortName } ) }
 					/> }
+
+					<TextControl
+						label="Time Format"
+						value={ timeFormat }
+						help = { timeFormattingInstructions }
+						onChange={( timeFormat ) => setAttributes( {timeFormat} )}
+					/>
 
 				</PanelBody>
 			</InspectorControls>
