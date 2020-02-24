@@ -336,7 +336,9 @@ function novablocks_get_openhours_attributes() {
 	return array(
 		'text'  => array(
 			'type'  => 'string',
-			'default'   => 'Hello Monday'
+			'default'   => 'Monday 10am - 3pm
+Tuesday to Friday 9 - 17
+Sat noon - 2am'
 		),
 		'parsedText'  => array(
 			'type'  => 'string',
@@ -346,13 +348,17 @@ function novablocks_get_openhours_attributes() {
 			'type'  => 'string',
 			'default'   => 'g:i'
 		),
+		'openHoursStyle'    => array(
+			'type' => 'string',
+			'default'   => 'overview'
+		),
 		'openNote'    => array(
 			'type'  => 'string',
-			'default'   => 'Open Note'
+			'default'   => 'It\'s {time} and we\'re Open until {today-closing-time}'
 		),
 		'closedNote'    => array(
 			'type'  => 'string',
-			'default'   => 'Closed Note'
+			'default'   => 'We\'re closed until {next-opening-day} at {next-opening-time}'
 		),
 		'closedLabel'    => array(
 			'type'  => 'string',

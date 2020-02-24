@@ -17,39 +17,43 @@ if ( ! function_exists( 'novablocks_openhours_block_init' ) ) {
 	}
 }
 
-add_action( 'init', 'novablocks_openhours_block_init');
+add_action( 'init', 'novablocks_openhours_block_init' );
 
 if ( ! function_exists( 'novablocks_render_openhours_block' ) ) {
 	function novablocks_render_openhours_block( $attributes, $content ) {
 		$classes = array();
 
 		$attributes_config = novablocks_get_openhours_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes[] = 'novablocks-openhours';
 
 		ob_start(); ?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-			<p>
-
-
-                <?php OpenHours_Content($attributes) ?>
-			</p>
-		</div>
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+			<?php
+			if ( ! empty ( $attributes['openHoursStyle'] ) ) {
+				if ( $attributes['openHoursStyle'] === 'overview' ) {
+					novablocks_openhours_overview_content( $attributes );
+				} else if ( $attributes['openHoursStyle'] === 'status' ) {
+					echo novablocks_openhours_status_content( $attributes );
+				}
+			}
+			?>
+        </div>
 
 		<?php return ob_get_clean();
 	}
 }
 
-class OpenHours_Helper {
+class NovaBlocks_OpenHours_Helper {
 
 	private $current_day;
 
 	/**
 	 * A helper function that takes in a raw JSON of timeframes and returns an array of human readable schedule
 	 */
-	public function parse_open_hours_2( $hours, $hours_format = null, $closed_label = 'Closed', $use_short_days = false, $compress_hours = false, $hide_closed_days = false ) {
+	public function parse_open_hours( $hours, $hours_format = null, $closed_label = 'Closed', $use_short_days = false, $compress_hours = false, $hide_closed_days = false ) {
 		$hours_json = json_decode( $hours, true );
 		$schedule   = array();
 
@@ -141,8 +145,89 @@ class OpenHours_Helper {
 		return $date;
 	}
 
-	public function is_open() {
-		$overview_option = get_option( 'open_hours_overview_setting' );
+	/**
+	 * @param null $filter
+	 *
+	 * @return bool|false|string
+	 * Returns the time for a specific filter
+	 */
+	public function get_shortcode_time( $attributes, $filter = null, $time_format = 'g:i A' ) {
+		$dw = date( "N", current_time( 'timestamp' ) );
+
+		// call the is_open function
+		$this->is_open( $attributes );
+
+		$next_day        = date( "N", current_time( 'timestamp' ) + 24 * 3600 );
+		$overview_option = $attributes['parsedText'];
+
+		if ( ! $overview_option ) {
+			return false;
+		}
+
+		$schedule = json_decode( $overview_option, true );
+		$response = '';
+
+		switch ( $filter ) {
+			case 'time':
+				$response = current_time( $time_format );
+				break;
+			case 'today':
+				$response = ucfirst( date_i18n( 'l', strtotime( "Sunday + {$dw} days" ) ) );
+				break;
+			case 'today-opening-time':
+				$today_interval = $this->_get_interval( $schedule, $this->current_day );
+				if ( $today_interval ) {
+					$response = $this->_parse_hours( preg_replace( '/^\+/', '', $today_interval[0]['start'] ), $time_format );
+				}
+				break;
+			case 'today-closing-time':
+				$today_interval = $this->_get_interval( $schedule, $this->current_day );
+				if ( $today_interval ) {
+					$response = $this->_parse_hours( preg_replace( '/^\+/', '', $today_interval[0]['end'] ), $time_format );
+				}
+				break;
+			case 'today-timeframe':
+				$today_interval = $this->_get_interval( $schedule, $this->current_day );
+				if ( $today_interval ) {
+					$response = $this->_parse_hours( preg_replace( '/^\+/', '', $today_interval[0]['start'] ) ) . ' - ' . $this->_parse_hours( preg_replace( '/^\+/', '', $today_interval[0]['end'] ), $time_format );
+				}
+				break;
+			case 'next-opening-day':
+				$today         = $this->get_current_day( $dw, $attributes );
+				$next_open_day = $this->get_next_open_day( $today, $attributes );
+				$key           = array_keys( $next_open_day );
+				$response      = ucfirst( date_i18n( 'l', strtotime( "Sunday + {$key[0]} days" ) ) );
+				break;
+			case 'next-opening-time':
+				$today         = $this->get_current_day( $dw, $attributes );
+				$next_open_day = $this->get_next_open_day( $today, $attributes );
+				$key           = array_keys( $next_open_day );
+				$response      = isset( $next_open_day[ $key[0] ]['start'] ) ? $this->_parse_hours( preg_replace( '/^\+/', '', $next_open_day[ $key[0] ]['start'] ), $time_format ) : '';
+				break;
+			case 'next-closing-time':
+				$today         = $this->get_current_day( $dw, $attributes );
+				$next_open_day = $this->get_next_open_day( $today, $attributes );
+				$key           = array_keys( $next_open_day );
+				$response      = isset( $next_open_day[ $key[0] ]['end'] ) ? $this->_parse_hours( preg_replace( '/^\+/', '', $next_open_day[ $key[0] ]['end'] ), $time_format ) : '';
+				break;
+			case 'next-opening-timeframe':
+				$today         = $this->get_current_day( $dw, $attributes );
+				$next_open_day = $this->get_next_open_day( $today, $attributes );
+				$key           = array_keys( $next_open_day );
+				$start         = isset( $next_open_day[ $key[0] ]['start'] ) ? $this->_parse_hours( preg_replace( '/^\+/', '', $next_open_day[ $key[0] ]['start'] ), $time_format ) : '';
+				$end           = isset( $next_open_day[ $key[0] ]['end'] ) ? $this->_parse_hours( preg_replace( '/^\+/', '', $next_open_day[ $key[0] ]['end'] ), $time_format ) : '';
+				$response      = $start . ' - ' . $end;
+				break;
+			default:
+				break;
+		}
+
+		return $response;
+	}
+
+	public function is_open( $attributes ) {
+
+		$overview_option = $attributes['parsedText'];
 
 		if ( ! $overview_option ) {
 			return false;
@@ -315,8 +400,8 @@ class OpenHours_Helper {
 	/**
 	 * Helper function that creates an array of timeframes
 	 */
-	function _get_open_days() {
-		$overview_option = get_option( 'open_hours_overview_setting' );
+	function _get_open_days( $attributes ) {
+		$overview_option = $attributes['parsedText'];
 		$schedule        = array();
 
 		if ( ! $overview_option ) {
@@ -343,8 +428,8 @@ class OpenHours_Helper {
 	/**
 	 * Convert the json of timeframes to a smarter array
 	 */
-	function _get_schedule_array() {
-		$option         = get_option( 'open_hours_overview_setting' );
+	function _get_schedule_array( $attributes ) {
+		$option         = $attributes['parsedText'];
 		$schedule_array = array();
 
 		// if no option was found - return false
@@ -376,9 +461,9 @@ class OpenHours_Helper {
 	 * @return bool|mixed
 	 * Gets the next open day
 	 */
-	public function get_next_open_day( $today ) {
+	public function get_next_open_day( $today, $attributes ) {
 		$today    = (int) $today;
-		$schedule = $this->_get_schedule_array();
+		$schedule = $this->_get_schedule_array( $attributes );
 
 		if ( $today === 7 ) {
 			$next_day = 1;
@@ -387,7 +472,7 @@ class OpenHours_Helper {
 		}
 
 		if ( ! isset( $schedule[ $next_day ] ) ) {
-			return $this->get_next_open_day( $next_day );
+			return $this->get_next_open_day( $next_day, $attributes );
 		}
 
 		$next_open_day = array( $next_day => $schedule[ $next_day ] );
@@ -401,11 +486,11 @@ class OpenHours_Helper {
 	 * If the current time is before today's start time - it will return yesterday
 	 */
 
-	public function get_current_day( $today ) {
+	public function get_current_day( $today, $attributes ) {
 		$now             = current_time( 'timestamp' );
 		$current_day     = date( 'l', $now );
 		$current_end_day = $current_day;
-		$schedule        = $this->_get_schedule_array();
+		$schedule        = $this->_get_schedule_array( $attributes );
 		$today           = (int) $today;
 
 		if ( ! isset( $schedule[ $today ] ) ) {
@@ -438,61 +523,102 @@ class OpenHours_Helper {
 	}
 }
 
-function OpenHours_Content($attributes) {
+function novablocks_openhours_overview_content( $attributes ) {
 
-	$helper = new OpenHours_Helper();
-    $hours = $attributes['parsedText'];
+	$helper = new NovaBlocks_OpenHours_Helper();
+	$hours  = $attributes['parsedText'];
 
-    if ( ! empty($attributes['UseShortName']) && $attributes['UseShortName'] === true ) {
-	    $use_short_days = true;
-    } else {
-	    $use_short_days = false;
-    }
+	if ( ! empty( $attributes['useShortName'] ) && $attributes['useShortName'] === true ) {
+		$use_short_days = true;
+	} else {
+		$use_short_days = false;
+	}
 
-	if ( ! empty($attributes['compressOpeningHours']) && $attributes['compressOpeningHours'] === true ) {
+	if ( ! empty( $attributes['compressOpeningHours'] ) && $attributes['compressOpeningHours'] === true ) {
 		$compress_hours = true;
 	} else {
 		$compress_hours = false;
 	}
 
-	if ( ! empty($attributes['HideClosedDays']) && $attributes['HideClosedDays'] === true ) {
+	if ( ! empty( $attributes['hideClosedDay'] ) && $attributes['hideClosedDay'] === true ) {
 		$hide_closed_days = true;
 	} else {
 		$hide_closed_days = false;
 	}
 
-	$schedule = $helper->parse_open_hours_2( $hours, $attributes['timeFormat'], $attributes['closedLabel'], $use_short_days, $compress_hours, $hide_closed_days );
+	$schedule = $helper->parse_open_hours( $hours, $attributes['timeFormat'], $attributes['closedLabel'], $use_short_days, $compress_hours, $hide_closed_days );
 
-	if ( $schedule) { ?>
+	if ( $schedule ) { ?>
 
         <table class="open_overview_widget-schedule">
-            <?php
-            foreach ( $schedule as $day => $hours ) {
-            ?>
+			<?php
+			foreach ( $schedule
+
+			as $day => $hours ) {
+			?>
             <tr>
                 <td>
                     <div><?php echo $day; ?></div>
                 </td>
-                <?php
-                if ( $hours === $attributes['closed_label'] ) {
-                    ?>
+				<?php
+				if ( $hours === $attributes['closedLabel'] ) {
+					?>
                     <td>
                         <div class="open-hours-closed"><?php echo $hours; ?></div>
                     </td>
-                    <?php
-                } else {
-                    ?>
+					<?php
+				} else {
+					?>
                     <td>
                         <div><?php echo $hours; ?></div>
                     </td>
-                    <?php
-                }
-                }
-                ?>
+					<?php
+				}
+				}
+				?>
             </tr>
         </table>
 		<?php
 	} else {
-		?><p><?php echo __('You haven\'t setup a schedule yet.', 'open_hours')?></p><?php
-    }
+		?><p><?php echo __( 'You haven\'t setup a schedule yet.', 'open_hours' ) ?></p><?php
+	}
+}
+
+function novablocks_openhours_replace_strings( $attributes, $string, $time_format = 'g : i A' ) {
+	preg_match_all( '/\{(.*?)\}/', $string, $matches );
+	$helper = new NovaBlocks_OpenHours_Helper();
+
+	if ( empty( $matches ) ) {
+		// No match found, carry on with the same string
+		return $string;
+	}
+	for ( $i = 0; $i < count( $matches[0] ); $i ++ ) {
+		$string = str_replace( $matches[0][ $i ], $helper->get_shortcode_time( $attributes, $matches[1][ $i ], $time_format ), $string );
+	}
+
+	return $string;
+}
+
+function novablocks_openhours_status_content( $attributes ) {
+
+	$helper = new NovaBlocks_OpenHours_Helper();
+	$helper->is_open( $attributes );
+
+	$open_note = novablocks_openhours_replace_strings( $attributes, $attributes['openNote'], $attributes['timeFormat'] );
+
+	$closed_note = novablocks_openhours_replace_strings( $attributes, $attributes['closedNote'], $attributes['timeFormat'] );
+	ob_start();
+	?>
+
+
+	<?php if ( $helper->is_open( $attributes ) ) { ?>
+        <div class="opening-hours-note  opening-hours-note--open"><?php echo esc_attr( $open_note ); ?></div>
+	<?php } else { ?>
+        <div class="opening-hours-note  opening-hours-note--closed"><?php echo esc_attr( $closed_note ); ?></div>
+		<?php
+	}
+	?>
+	<?php
+
+	return ob_get_clean();
 }

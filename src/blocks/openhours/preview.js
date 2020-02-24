@@ -7,6 +7,10 @@ const {Component} = wp.element;
 
 class OpenHoursPreview extends Component {
 
+	constructor() {
+		super( ...arguments );
+	}
+
 	render() {
 		const {
 			attributes: {
@@ -17,8 +21,8 @@ class OpenHoursPreview extends Component {
 				closedNote,
 				closedLabel,
 				compressOpeningHours,
-				HideClosedDays,
-				UseShortName
+				hideClosedDays,
+				useShortName
 			},
 		} = this.props;
 
@@ -26,17 +30,7 @@ class OpenHoursPreview extends Component {
 		return [
 			<wp.serverSideRender
 				block="novablocks/openhours"
-				attributes={{
-					text: text,
-					parsedText: parsedText,
-					timeFormat: timeFormat,
-					openNote: openNote,
-					closedNote: closedNote,
-					closedLabel: closedLabel,
-					compressOpeningHours: compressOpeningHours,
-					HideClosedDays: HideClosedDays,
-					UseShortName: UseShortName
-				}}
+				attributes={ this.props.attributes }
 			/>
 		]
 	}

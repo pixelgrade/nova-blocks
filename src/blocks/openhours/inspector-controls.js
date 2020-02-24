@@ -29,8 +29,8 @@ const OpenHoursInspectorControls = function( props ) {
 			closedNote,
 			closedLabel,
 			compressOpeningHours,
-			HideClosedDays,
-			UseShortName
+			hideClosedDays,
+			useShortName
 		},
 		setAttributes,
 	} = props;
@@ -50,12 +50,6 @@ const OpenHoursInspectorControls = function( props ) {
 						parsedText: parseContent( text )
 					} )}
 				/>
-				<TextareaControl
-					label="Parsed Text"
-					value={ parsedText }
-					className = 'parsed-text'
-					disabled
-				/>
 				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) } initialOpen={ true }>
 					<RadioControl
 						label={ __( 'Displaying the opening hours', '__plugin_txtd' ) }
@@ -65,7 +59,7 @@ const OpenHoursInspectorControls = function( props ) {
 							{ label: 'Overview', value: 'overview' },
 							{ label: 'Current Status', value: 'status' },
 						] }
-						onChange={ ( nextOpenHoursStyle ) => setAttributes( { openHourStyle: nextOpenHoursStyle } ) }
+						onChange={ ( nextOpenHoursStyle ) => setAttributes( { openHoursStyle: nextOpenHoursStyle } ) }
 					/>
 
 					<TextControl
@@ -74,41 +68,41 @@ const OpenHoursInspectorControls = function( props ) {
 						onChange={( timeFormat ) => setAttributes( {timeFormat} )}
 					/>
 
-					<TextControl
+					{ openHoursStyle === 'status' && <TextControl
 						label="Open Note"
 						value={ openNote }
 						onChange={( openNote ) => setAttributes( {openNote} )}
-					/>
+					/> }
 
-					<TextControl
+					{ openHoursStyle === 'status' && <TextControl
 						label="Closed Note"
 						value={ closedNote }
 						onChange={( closedNote ) => setAttributes( {closedNote} )}
-					/>
+					/> }
 
-					<TextControl
+					{ openHoursStyle === 'overview' && <TextControl
 						label="Closed Label"
 						value={ closedLabel }
 						onChange={( closedLabel ) => setAttributes( {closedLabel} )}
-					/>
+					/> }
 
-					<ToggleControl
+					{ openHoursStyle === 'overview' && <ToggleControl
 						label={ __( 'Compress Opening Hours', '__plugin_txtd' ) }
 						checked={ compressOpeningHours }
 						onChange={ () => setAttributes( { compressOpeningHours: ! compressOpeningHours } ) }
-					/>
+					/> }
 
-					<ToggleControl
+					{ openHoursStyle === 'overview' && <ToggleControl
 						label={ __( 'Hide Closed Days', '__plugin_txtd' ) }
-						checked={ HideClosedDays }
-						onChange={ () => setAttributes( { HideClosedDays: ! HideClosedDays } ) }
-					/>
+						checked={ hideClosedDays }
+						onChange={ () => setAttributes( { hideClosedDays: ! hideClosedDays } ) }
+					/> }
 
-					<ToggleControl
+					{  openHoursStyle === 'overview' && <ToggleControl
 						label={ __( 'Use Short Name', '__plugin_txtd' ) }
-						checked={ UseShortName }
-						onChange={ () => setAttributes( { UseShortName: ! UseShortName } ) }
-					/>
+						checked={ useShortName }
+						onChange={ () => setAttributes( { useShortName: ! useShortName } ) }
+					/> }
 
 				</PanelBody>
 			</InspectorControls>

@@ -9,7 +9,6 @@ import edit from './edit';
  */
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
 
 function init() {
 	registerBlockType('novablocks/openhours', {
@@ -19,7 +18,7 @@ function init() {
 		icon: icons.opentable,
 		edit,
 		save() {
-			return <InnerBlocks.Content />;
+			return null;
 		},
 	})
 }
