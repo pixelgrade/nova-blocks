@@ -53,8 +53,8 @@ const MediaPreview = function( props ) {
 	const cssVars = {
 		'--block-top-spacing': blockTopSpacing,
 		'--block-bottom-spacing': blockBottomSpacing,
-		'--emphasis-top-spacing': emphasisTopSpacing,
-		'--emphasis-bottom-spacing': emphasisBottomSpacing,
+		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 	}
 
 	return (

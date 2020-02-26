@@ -42,7 +42,7 @@ const MediaInspectorControls = function( props ) {
 		<Fragment>
 			<InspectorControls>
 
-				<PanelBody title={ __( 'Content Alignemnt', '__plugin_txtd' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) } initialOpen={ true }>
 					<AlignmentControls { ...props } />
 					<label>Block Spacing</label>
 					<RangeControl

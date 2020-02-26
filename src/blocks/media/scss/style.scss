@@ -16,8 +16,6 @@
 
 // media layout
 .novablocks-media {
-	background-color: var(--novablocks-media-background-color);
-
 	--novablocks-media-spacing: 24px;
 
 	@include above(lap) {
