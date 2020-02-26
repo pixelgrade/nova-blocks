@@ -53,7 +53,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={ __( 'Style Presets', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Style Presets', '__plugin_txtd' ) } initialOpen={ false }>
 				<RadioControl
 					selected={ stylePreset }
 					onChange={ ( stylePreset ) => {
@@ -75,7 +75,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						onClick={ randomize }>Randomize</Button>
 				</div>
 			</PanelBody>
-			<PanelBody title={ __( 'Composition Settings', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Composition Settings', '__plugin_txtd' ) } initialOpen={ false }>
 				<RangeControl
 					label={ __( 'Size Contrast', '__plugin_txtd' ) }
 					value={ sizeContrast }
@@ -109,7 +109,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					step={ 25 }
 				/>
 			</PanelBody>
-			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ false }>
 				<RadioControl
 					label={ 'Image resizing' }
 					selected={ imageResizing }

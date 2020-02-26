@@ -29,7 +29,7 @@
 	}
 
 	&.has-background {
-		padding: var(--novablocks-media-padding) 0;
+		padding: 0;
 	}
 
 	.wp-block-group__inner-container > .wp-block {
@@ -45,7 +45,7 @@
 .novablocks-media__layout {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: stretch;
 
 	margin-top: calc( -1 * var(--novablocks-media-spacing) );
 	margin-left: calc( -1 * var(--novablocks-media-spacing) );

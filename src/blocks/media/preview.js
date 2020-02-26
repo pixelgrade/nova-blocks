@@ -22,7 +22,11 @@ const MediaPreview = function( props ) {
 			mediaPosition,
 			images,
 			// alignment
-			verticalAlignment
+			verticalAlignment,
+			blockTopSpacing,
+			blockBottomSpacing,
+			emphasisTopSpacing,
+			emphasisBottomSpacing,
 		},
 		className,
 		settings,
@@ -46,12 +50,19 @@ const MediaPreview = function( props ) {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
+	const cssVars = {
+		'--block-top-spacing': blockTopSpacing,
+		'--block-bottom-spacing': blockBottomSpacing,
+		'--emphasis-top-spacing': emphasisTopSpacing,
+		'--emphasis-bottom-spacing': emphasisBottomSpacing,
+	}
+
 	return (
-		<div className={ classNames }>
+		<div className={ classNames } style={ cssVars }>
 			<div className="wp-block-group__inner-container">
 				<div className="wp-block" data-align="wide">
-					<div className="novablocks-media__layout novablocks-u-content-align">
-						<div className="novablocks-media__content">
+					<div className="novablocks-media__layout">
+						<div className="novablocks-media__content novablocks-u-content-align">
 							<div className="novablocks-media__inner-container">
 								<InnerBlocks
 									allowedBlocks={ settings.media.allowedBlocks }

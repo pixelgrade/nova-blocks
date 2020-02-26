@@ -32,3 +32,39 @@
 	line-height: 1.8;
 }
 
+.wp-block-novablocks-media[class][class] {
+	--media-spacing-unit: 2rem;
+
+	// don't collapse margins
+	padding-top: 1px;
+	padding-bottom: 1px;
+
+	.wp-block-group__inner-container {
+		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--media-spacing-unit) );
+		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--media-spacing-unit) );
+
+		transition: var(--novablocks-media-transition);
+		transition-property: padding;
+
+		> .wp-block {
+			margin-top: calc( var(--block-top-spacing, 0) * var(--media-spacing-unit) );
+			margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--media-spacing-unit) );
+
+			transition: var(--novablocks-media-transition);
+			transition-property: margin;
+		}
+	}
+
+	.novablocks-advanced-gallery {
+		margin-top: calc( ( var(--emphasis-top-spacing, 0) ) * var(--media-spacing-unit) );
+		margin-bottom: calc( ( var(--emphasis-bottom-spacing, 0) ) * var(--media-spacing-unit) );
+
+		transition: var(--novablocks-media-transition);
+		transition-property: margin;
+	}
+}
+
+.novablocks-media__aside {
+	z-index: 100;
+}
+

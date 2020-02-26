@@ -1,26 +1,21 @@
 .novablocks-media__inner-container {
+	position: relative;
+	z-index: 2;
+
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	justify-content: center;
+
 	padding: var(--novablocks-media-content-padding);
+
 	color: var(--novablocks-media-text-color);
 	box-shadow: var(--novablocks-media-content-box-shadow);
-
-	margin-top: auto;
-	margin-bottom: auto;
-	z-index: 2;
+	word-break: break-word;
 
 	@include below(desktop) {
 		grid-column: span 2;
 	}
-}
-
-.novablocks-media__inner-container {
-	position: relative;
-
-	display: flex;
-	height: 100%;
-	flex-direction: column;
-	justify-content: center;
-
-	word-break: break-word;
 
 	&:after {
 		content: '';

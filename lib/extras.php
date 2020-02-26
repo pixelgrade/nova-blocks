@@ -576,7 +576,23 @@ function novablocks_add_media_settings( $settings ) {
 				'verticalAlignment' => array(
 					'type'    => 'string',
 					'default' => 'center'
-				)
+				),
+				'blockTopSpacing' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'blockBottomSpacing' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'emphasisTopSpacing' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'emphasisBottomSpacing' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
 			),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()
