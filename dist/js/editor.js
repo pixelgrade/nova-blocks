@@ -3903,9 +3903,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
       state: getState(container, config),
       config: config
     });
-    var $mask = $container.find('.novablocks-mask');
     var $parallax = $container.find('.novablocks-parallax');
-    $container.data('mask', $mask);
     $container.data('parallax', $parallax);
 
     function parallaxUpdateState() {
@@ -3937,13 +3935,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
         }
 
         var styles = getStylesFromProps(props);
-        var _config = config,
-            containerWidth = _config.containerWidth,
-            containerHeight = _config.containerHeight;
         $container.data('parallax').css(styles);
-        $container.data('mask').css({
-          clip: "rect(0 ".concat(containerWidth, "px ").concat(containerHeight, "px 0)")
-        });
       });
       frameRendered = true;
     }
