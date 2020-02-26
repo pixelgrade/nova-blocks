@@ -36,31 +36,29 @@
 	--media-spacing-unit: 2rem;
 
 	// don't collapse margins
-	padding-top: 1px;
-	padding-bottom: 1px;
+	display: flex;
+
+	> * {
+		flex-grow: 1;
+	}
 
 	.wp-block-group__inner-container {
+		margin-top: calc( var(--block-top-spacing, 0) * var(--media-spacing-unit) );
+		margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--media-spacing-unit) );
+
 		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--media-spacing-unit) );
 		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--media-spacing-unit) );
 
 		transition: var(--novablocks-media-transition);
-		transition-property: padding;
-
-		> .wp-block {
-			margin-top: calc( var(--block-top-spacing, 0) * var(--media-spacing-unit) );
-			margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--media-spacing-unit) );
-
-			transition: var(--novablocks-media-transition);
-			transition-property: margin;
-		}
+		transition-property: margin, padding;
 	}
 
-	.novablocks-advanced-gallery {
-		margin-top: calc( ( var(--emphasis-top-spacing, 0) ) * var(--media-spacing-unit) );
-		margin-bottom: calc( ( var(--emphasis-bottom-spacing, 0) ) * var(--media-spacing-unit) );
+	.novablocks-media__content {
+		padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--media-spacing-unit) );
+		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--media-spacing-unit) );
 
 		transition: var(--novablocks-media-transition);
-		transition-property: margin;
+		transition-property: padding;
 	}
 }
 

@@ -32,13 +32,19 @@
 		padding: 0;
 	}
 
+	// center content
 	.wp-block-group__inner-container > .wp-block {
-		// center content
 		margin-left: auto;
 		margin-right: auto;
+	}
 
-		// make sure negative margin used for layout doesnt overlap other blocks
-		padding-top: 1px;
+	// make sure negative margin used for layout doesnt overlap other blocks
+	.wp-block-group__inner-container > .wp-block {
+		display: flex;
+
+		> * {
+			flex-grow: 1;
+		}
 	}
 }
 
