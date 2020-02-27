@@ -27,6 +27,7 @@ const MediaPreview = function( props ) {
 			blockBottomSpacing,
 			emphasisTopSpacing,
 			emphasisBottomSpacing,
+			emphasisArea,
 		},
 		className,
 		settings,
@@ -55,6 +56,7 @@ const MediaPreview = function( props ) {
 		'--block-bottom-spacing': blockBottomSpacing,
 		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
 		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+		'--emphasis-area': emphasisArea,
 	}
 
 	return (

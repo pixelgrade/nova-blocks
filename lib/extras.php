@@ -593,6 +593,10 @@ function novablocks_add_media_settings( $settings ) {
 					'type' => 'number',
 					'default' => 0,
 				),
+				'emphasisArea' => array(
+					'type' => 'number',
+					'default' => 100,
+				),
 			),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()

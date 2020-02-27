@@ -54,9 +54,22 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$images = $attributes['images'];
 
+		$blockTopSpacing = $attributes['blockTopSpacing'];
+		$blockBottomSpacing = $attributes['blockBottomSpacing'];
+		$emphasisTopSpacing = $attributes['verticalAlignment'] === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
+		$emphasisBottomSpacing = $attributes['verticalAlignment'] === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
+		$emphasisArea = $attributes['emphasisArea'];
+
+		$style =
+			'--block-top-spacing:' . $blockTopSpacing . ';' .
+			'--block-bottom-spacing:' . $blockBottomSpacing . ';' .
+			'--emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
+			'--emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
+			'--emphasis-area:' . $emphasisArea . ';';
+
 		ob_start(); ?>
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo $style ?>">
             <div class="wp-block-group__inner-container">
 	            <div class="wp-block alignwide">
 	                <div class="novablocks-media__layout novablocks-u-content-align">

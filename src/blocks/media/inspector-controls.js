@@ -28,6 +28,7 @@ const MediaInspectorControls = function( props ) {
 			blockBottomSpacing,
 			emphasisTopSpacing,
 			emphasisBottomSpacing,
+			emphasisArea,
 		},
 		setAttributes,
 		settings: {
@@ -73,6 +74,14 @@ const MediaInspectorControls = function( props ) {
 						label={ __( 'Bottom' ) }
 						min={ -2 }
 						max={ 2 }
+					/>
+					<RangeControl
+						value={ emphasisArea }
+						onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
+						label={ __( 'Emphasis Area' ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
 					/>
 				</PanelBody>
 

@@ -1,4 +1,4 @@
-.wp-block-pixelgrade-media {
+:root {
 	margin-left: auto;
 	margin-right: auto;
 
@@ -11,12 +11,9 @@
 	--novablocks-media-content-background-color: transparent;
 	--novablocks-media-content-background-opacity: 1;
 	--novablocks-media-content-box-shadow: none;
-}
 
-
-// media layout
-.novablocks-media {
 	--novablocks-media-spacing: 24px;
+	--novablocks-media-background-direction: 90deg;
 
 	@include above(lap) {
 		--novablocks-media-spacing: 48px;
@@ -25,6 +22,11 @@
 	@include above(desktop) {
 		--novablocks-media-spacing: 56px;
 	}
+}
+
+
+// media layout
+.novablocks-media {
 
 	&.has-background {
 		padding: 0;
@@ -58,6 +60,47 @@
 		padding-left: var(--novablocks-media-spacing);
 		margin-top: var(--novablocks-media-spacing);
 		flex: 1 0 50%;
+	}
+}
+
+.has-image-on-the-left {
+	--novablocks-media-background-direction: -90deg;
+}
+
+.novablocks-media[class][class] {
+	margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+	margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+	padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+	padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+	transition: var(--novablocks-media-transition);
+	transition-property: margin, padding;
+
+	.novablocks-advanced-gallery {
+		margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+		transition: var(--novablocks-media-transition);
+		transition-property: margin, padding;
+	}
+
+	.wp-block-group__inner-container {
+		background-image: linear-gradient(
+				var(--novablocks-media-background-direction),
+				var(--novablocks-media-background-color) 0,
+				var(--novablocks-media-background-color) calc(var(--emphasis-area) * 1%),
+				transparent calc(var(--emphasis-area) * 1%)
+		);
+		background-size: 100% 100%;
+	}
+
+	.novablocks-media__content {
+		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+		transition: var(--novablocks-media-transition);
+		transition-property: padding;
 	}
 }
 

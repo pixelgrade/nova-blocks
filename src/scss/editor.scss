@@ -1,4 +1,5 @@
-@import 'style';
+@import 'variables';
+@import 'mixins';
 
 @import '../components/layout-panel/style';
 @import '../components/scrolling-effect-controls/style';
@@ -41,41 +42,7 @@
 	}
 }
 
-:root {
-	--novablocks-media-spacing-unit: 3rem;
-}
-
-.novablocks-media[class][class] {
-	margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing-unit) );
-	margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing-unit) );
-
-	padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing-unit) );
-	padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing-unit) );
-
-	transition: var(--novablocks-media-transition);
-	transition-property: margin, padding;
-
-	.novablocks-advanced-gallery {
-		margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing-unit) );
-		margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing-unit) );
-
-		transition: var(--novablocks-media-transition);
-		transition-property: margin, padding;
-	}
-
-	.wp-block-group__inner-container {
-		background-color: #f9e447;
-	}
-
-	.novablocks-media__content {
-		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing-unit) );
-		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing-unit) );
-
-		transition: var(--novablocks-media-transition);
-		transition-property: padding;
-	}
-}
-
+// Transition between different alignment states
 .novablocks-media__content.novablocks-u-content-align {
 	flex-direction: column;
 	justify-content: center;
@@ -113,8 +80,10 @@
 	}
 }
 
+// debug
 .wp-block-group__inner-container {
 	position: relative;
+	z-index: 10;
 
 	&:before,
 	&:after {
@@ -124,7 +93,7 @@
 
 		content: '';
 		display: block;
-		height: calc( 5 * var(--novablocks-media-spacing-unit) );
+		height: calc( 5 * var(--novablocks-media-spacing) );
 		background:
 			linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, rgba(0,0,0,0) 1px),
 			linear-gradient(to bottom, transparent 40%, red 40%, red calc(40% + 1px), transparent calc(40% + 1px));
@@ -134,11 +103,11 @@
 	}
 
 	&:before {
-		top: calc( -2 * var(--novablocks-media-spacing-unit) );
+		top: calc( -2 * var(--novablocks-media-spacing) );
 	}
 
 	&:after {
-		bottom: calc( -3 * var(--novablocks-media-spacing-unit) );
+		bottom: calc( -3 * var(--novablocks-media-spacing) );
 	}
 }
 
@@ -160,16 +129,16 @@
 
 	&:before {
 		--offset: calc( max( 0, -1 * var(--block-top-spacing, 0) ) );
-		padding-top: calc( -1 * var(--block-top-spacing, 0) * var(--novablocks-media-spacing-unit) );
-		padding-bottom: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing-unit) );
-		bottom: calc( 100% - var(--offset) * var(--novablocks-media-spacing-unit) );
+		padding-top: calc( -1 * var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-bottom: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+		bottom: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
 	}
 
 	&:after {
 		--offset: calc( max( 0, -1 * var(--block-bottom-spacing, 0) ) );
-		padding-top: calc( -1 * var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing-unit) );
-		padding-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing-unit) );
-		top: calc( 100% - var(--offset) * var(--novablocks-media-spacing-unit) );
+		padding-top: calc( -1 * var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		top: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
 	}
 }
 
