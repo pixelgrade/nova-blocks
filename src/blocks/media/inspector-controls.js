@@ -4,6 +4,7 @@
 const { __ } = wp.i18n;
 
 import { AlignmentControls } from '../../components';
+import BlobInspectorControls from '../../components/blob/inspector-controls';
 
 const {
 	Fragment,
@@ -29,6 +30,11 @@ const MediaInspectorControls = function( props ) {
 			emphasisTopSpacing,
 			emphasisBottomSpacing,
 			emphasisArea,
+
+			// blob
+			preset,
+			complexity,
+			smoothness,
 		},
 		setAttributes,
 		settings: {
@@ -43,7 +49,9 @@ const MediaInspectorControls = function( props ) {
 		<Fragment>
 			<InspectorControls>
 
-				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) } initialOpen={ true }>
+				<BlobInspectorControls { ...props } />
+
+				<PanelBody title={ __( 'Content Alignment', '__plugin_txtd' ) } initialOpen={ false }>
 					<AlignmentControls { ...props } />
 					<label>Block Spacing</label>
 					<RangeControl
@@ -85,7 +93,7 @@ const MediaInspectorControls = function( props ) {
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen={ false }>
 					<RadioControl
 						label={ __( 'Emphasis Level', '__plugin_txtd' ) }
 						value={ contentStyle }
@@ -95,7 +103,7 @@ const MediaInspectorControls = function( props ) {
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ false }>
 					<RadioControl
 						label={ __( 'Emphasis Level', '__plugin_txtd' ) }
 						value={ blockStyle }

@@ -9,6 +9,8 @@ export { default as ScrollingEffectControls } from './scrolling-effect-controls'
 export { default as withParallax } from './with-parallax';
 export { default as withSettings } from './with-settings';
 
+export { default as Blob } from './blob';
+
 export {
 	GalleryPreview,
 	GalleryPlaceholder,

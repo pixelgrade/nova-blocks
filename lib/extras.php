@@ -597,6 +597,18 @@ function novablocks_add_media_settings( $settings ) {
 					'type' => 'number',
 					'default' => 100,
 				),
+				'preset' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'complexity' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'smoothness' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
 			),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()
