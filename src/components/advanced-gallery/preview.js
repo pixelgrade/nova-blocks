@@ -1,3 +1,5 @@
+import { Spring, animated } from 'react-spring/renderprops';
+
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./util";
 import { generatePath } from '../../components/blob/util';
@@ -46,7 +48,9 @@ const AdvancedGalleryItem = ( { gridItem, index, props } ) => {
 			<svg className={ `novablocks-advanced-gallery__image` } viewBox={ '0 0 20 20' }>
 				<defs>
 					<clipPath id={ clipPathId }>
-						<path d={ generatePath( preset, complexity, smoothness, index ) } />
+						<Spring to={ { path: generatePath( preset, complexity, smoothness, index ) } }>
+							{ props => <animated.path d={ props.path } /> }
+						</Spring>
 					</clipPath>
 				</defs>
 				<image preserveAspectRatio="xMidYMid slice" clipPath={ `url(#${ clipPathId })` } height="20" width="20" xlinkHref={ gridItem.image.url } />
