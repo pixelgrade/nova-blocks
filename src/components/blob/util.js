@@ -32,9 +32,6 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset ) => 
 
 	const sides = getSidesFromPreset( preset );
 
-	let xMax = yMax = 0;
-	let XMin = yMin = BLOB_RADIUS;
-
 	for (let i = 1; i <= sides; i++) {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
