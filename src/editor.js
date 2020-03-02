@@ -18,6 +18,7 @@ import menuFoodInit from "./blocks/menu-food";
 import menuFoodSectionInit from "./blocks/menu-food-section";
 import menuFoodItemInit from "./blocks/menu-food-item";
 import opentableInit from "./blocks/opentable";
+import blobInit from "./blocks/blob";
 
 import { STORE_NAME } from './store';
 
@@ -80,6 +81,7 @@ class novaBlocks {
 		heroInit();
 		mediaInit();
 		slideshowInit();
+		blobInit();
 	}
 }
 

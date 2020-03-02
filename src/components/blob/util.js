@@ -25,6 +25,7 @@ export const getSidesFromPreset = preset => {
 }
 
 export const generatePath = ( preset, complexity, smoothness, presetOffset ) => {
+
 	const points = [];
 	let path = '';
 	let firstPoint = '';
