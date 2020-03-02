@@ -32,6 +32,12 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset ) => 
 
 	const sides = getSidesFromPreset( preset );
 
+	let xMax = 0;
+	let yMax = 0;
+	let xMin = BLOB_RADIUS;
+	let yMin = BLOB_RADIUS;
+	let curvePoints = [];
+
 	for (let i = 1; i <= sides; i++) {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
@@ -74,16 +80,51 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset ) => 
 		const x2 = M2.x * (1 - sqrt) + thisPt.x * sqrt;
 		const y2 = M2.y * (1 - sqrt) + thisPt.y * sqrt;
 
-		if ( i === 0 ) {
-			firstPoint = M1.x + ' ' + M1.y;
+		curvePoints.push({
+			x1: x1,
+			y1: y1,
+			x2: x2,
+			y2: y2,
+			m1x: M1.x,
+			m1y: M1.y,
+			m2x: M2.x,
+			m2y: M2.y
+		});
+
+		xMax = Math.max( xMax, x1, x2 );
+		yMax = Math.max( yMax, y1, y2 );
+		xMin = Math.min( xMin, x1, x2 );
+		yMin = Math.min( yMin, y1, y2 );
+	}
+
+	const newXratio = 2 * BLOB_RADIUS / ( xMax - xMin );
+	const newYratio = 2 * BLOB_RADIUS / ( yMax - yMin );
+
+	for ( let i = 0; i < curvePoints.length; i ++ ) {
+		const c = curvePoints[i];
+
+		const newX1 = ( c.x1 - xMin ) * newXratio;
+		const newY1 = ( c.y1 - yMin ) * newYratio;
+		const newX2 = ( c.x2 - xMin ) * newXratio;
+		const newY2 = ( c.y2 - yMin ) * newYratio;
+
+		const newM1x = ( c.m1x - xMin ) * newXratio;
+		const newM1y = ( c.m1y - yMin ) * newYratio;
+		const newM2x = ( c.m2x - xMin ) * newXratio;
+		const newM2y = ( c.m2y - yMin ) * newYratio;
+
+		curves += ' C ' + newX1 + ' ' + newY1 + ' ' + newX2 + ' ' + newY2 + ' ' + newM2x + ' ' + newM2y;
+
+		const dummyPointsCount = Math.round( missingPoints / (
+			points.length - i
+		) );
+
+		for ( let j = 0; j < dummyPointsCount; j ++ ) {
+			curves += ' C ' + newM2x + ' ' + newM2y + ' ' + newM2x + ' ' + newM2y + ' ' + newM2x + ' ' + newM2y;
 		}
 
-		curves += ' C ' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2 + ' ' + M2.x + ' ' + M2.y;
-
-		const dummyPointsCount = Math.round(missingPoints / (points.length - i) );
-
-		for (let j = 0; j < dummyPointsCount; j++) {
-			curves += ' C ' + M2.x + ' ' + M2.y + ' ' + M2.x + ' ' + M2.y + ' ' + M2.x + ' ' + M2.y;
+		if ( i === 0 ) {
+			firstPoint = newM1x + ' ' + newM1y;
 		}
 
 		missingPoints -= dummyPointsCount;
