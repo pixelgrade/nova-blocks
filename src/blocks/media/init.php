@@ -72,8 +72,8 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo $style ?>">
             <div class="wp-block-group__inner-container">
 	            <div class="wp-block alignwide">
-	                <div class="novablocks-media__layout novablocks-u-content-align">
-	                    <div class="novablocks-media__content">
+	                <div class="novablocks-media__layout">
+	                    <div class="novablocks-media__content novablocks-u-content-align">
 		                    <div class="novablocks-media__inner-container">
 								<?php echo $content; ?>
 		                    </div>

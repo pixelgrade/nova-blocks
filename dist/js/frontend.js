@@ -216,7 +216,7 @@ eval("var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles */ \".
 /*!***************************************************************!*\
   !*** ./node_modules/@wordpress/element/build-module/index.js ***!
   \***************************************************************/
-/*! exports provided: renderToString, RawHTML, Children, cloneElement, Component, createContext, createElement, createRef, forwardRef, Fragment, isValidElement, memo, StrictMode, useCallback, useContext, useDebugValue, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useReducer, useRef, useState, lazy, Suspense, concatChildren, switchChildrenNodeName, createPortal, findDOMNode, render, unmountComponentAtNode, isEmptyElement */
+/*! exports provided: Children, cloneElement, Component, createContext, createElement, createRef, forwardRef, Fragment, isValidElement, memo, StrictMode, useCallback, useContext, useDebugValue, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useReducer, useRef, useState, lazy, Suspense, concatChildren, switchChildrenNodeName, createPortal, findDOMNode, render, unmountComponentAtNode, isEmptyElement, renderToString, RawHTML */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

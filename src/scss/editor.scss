@@ -42,44 +42,6 @@
 	}
 }
 
-// Transition between different alignment states
-.novablocks-media__content.novablocks-u-content-align {
-	flex-direction: column;
-	justify-content: center;
-
-	&:before,
-	&:after {
-		content: '';
-		display: block;
-		height: 0;
-		flex: 1 0 auto;
-		transition: var(--novablocks-media-transition);
-		transition-property: flex-grow;
-	}
-
-	.novablocks-u-valign-top & {
-
-		&:before {
-			flex-grow: 0;
-		}
-	}
-
-	.novablocks-u-valign-center & {
-
-		&:before,
-		&:after {
-			flex-grow: 0;
-		}
-	}
-
-	.novablocks-u-valign-bottom & {
-
-		&:after {
-			flex-grow: 0;
-		}
-	}
-}
-
 // debug
 .wp-block-group__inner-container {
 	position: relative;
