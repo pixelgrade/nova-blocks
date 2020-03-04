@@ -29,6 +29,9 @@ const MediaInspectorControls = function( props ) {
 			emphasisTopSpacing,
 			emphasisBottomSpacing,
 			emphasisArea,
+
+			contentAreaWidth,
+			layoutGutter,
 		},
 		setAttributes,
 		settings: {
@@ -79,6 +82,22 @@ const MediaInspectorControls = function( props ) {
 						value={ emphasisArea }
 						onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
 						label={ __( 'Emphasis Area' ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
+					/>
+					<RangeControl
+						value={ contentAreaWidth }
+						onChange={ ( contentAreaWidth ) => setAttributes( { contentAreaWidth } ) }
+						label={ __( 'Content Area Width' ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 1 }
+					/>
+					<RangeControl
+						value={ layoutGutter }
+						onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
+						label={ __( 'Layout Gutter' ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 5 }

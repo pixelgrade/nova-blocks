@@ -28,6 +28,9 @@ const MediaPreview = function( props ) {
 			emphasisTopSpacing,
 			emphasisBottomSpacing,
 			emphasisArea,
+
+			contentAreaWidth,
+			layoutGutter,
 		},
 		className,
 		settings,
@@ -57,6 +60,8 @@ const MediaPreview = function( props ) {
 		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
 		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 		'--emphasis-area': emphasisArea,
+		'--novablocks-media-content-width': `${contentAreaWidth}%`,
+		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 8 / 100 )`,
 	}
 
 	return (
