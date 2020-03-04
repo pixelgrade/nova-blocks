@@ -587,11 +587,11 @@ function novablocks_add_media_settings( $settings ) {
 				),
 				'emphasisTopSpacing' => array(
 					'type' => 'number',
-					'default' => 0,
+					'default' => 1,
 				),
 				'emphasisBottomSpacing' => array(
 					'type' => 'number',
-					'default' => 0,
+					'default' => 1,
 				),
 				'emphasisArea' => array(
 					'type' => 'number',
