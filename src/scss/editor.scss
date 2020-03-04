@@ -1,11 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
-@import '../components/layout-panel/style';
-@import '../components/scrolling-effect-controls/style';
-
 @import '../components/alignment-controls/editor';
 @import '../components/color-controls/editor';
+@import '../components/layout-panel/editor';
+@import '../components/scrolling-effect-controls/editor';
 
 @import '../blocks/announcement-bar/scss/editor';
 @import '../blocks/header/scss/editor';

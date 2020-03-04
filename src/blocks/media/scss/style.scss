@@ -1,18 +1,13 @@
 :root {
-	margin-left: auto;
-	margin-right: auto;
-
 	--novablocks-media-text-color: var(--novablocks-dark-2);
 	--novablocks-media-titles-color: var(--novablocks-dark-3);
 	--novablocks-media-subtitles-color: var(--novablocks-color-1);
 	--novablocks-media-background-color: var(--novablocks-light-1);
 
-	--novablocks-media-content-padding: 0;
 	--novablocks-media-content-background-color: transparent;
 	--novablocks-media-content-background-opacity: 1;
 	--novablocks-media-content-box-shadow: none;
-
-	--novablocks-spacing: 1rem;
+	--novablocks-media-content-padding: calc( var( --novablocks-spacing ) * 4 );
 
 	--novablocks-media-spacing: var( --novablocks-spacing );
 	--novablocks-media-gutter: var( --novablocks-spacing );
@@ -120,7 +115,10 @@
 
 .content-is-moderate,
 .content-is-highlighted {
-	--novablocks-media-content-padding: var(--novablocks-media-spacing);
+
+	.novablocks-media__inner-container {
+		padding: var(--novablocks-media-content-padding);
+	}
 }
 
 .content-is-moderate,

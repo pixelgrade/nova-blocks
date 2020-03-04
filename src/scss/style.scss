@@ -1,6 +1,12 @@
 @import 'variables';
 @import 'mixins';
 
+@import '../components/advanced-gallery/scss/style';
+@import '../components/alignment-controls/style';
+@import '../components/color-controls/style';
+@import '../components/layout-panel/style';
+@import '../components/scrolling-effect-controls/style';
+
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
 @import '../blocks/headline/scss/style';
@@ -12,11 +18,6 @@
 @import '../blocks/navigation/scss/style';
 @import '../blocks/menu-food/scss/style';
 @import '../blocks/opentable/scss/style';
-
-@import '../components/alignment-controls/style';
-@import '../components/color-controls/style';
-
-@import '../components/advanced-gallery/scss/style';
 
 @import 'vendor/slick';
 @import 'vendor/slick-theme';

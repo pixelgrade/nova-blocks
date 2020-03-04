@@ -59,13 +59,17 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$emphasisTopSpacing = $attributes['verticalAlignment'] === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
 		$emphasisBottomSpacing = $attributes['verticalAlignment'] === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
 		$emphasisArea = $attributes['emphasisArea'];
+		$contentAreaWidth = $attributes['contentAreaWidth'];
+		$layoutGutter = $attributes['layoutGutter'];
 
 		$style =
 			'--block-top-spacing:' . $blockTopSpacing . ';' .
 			'--block-bottom-spacing:' . $blockBottomSpacing . ';' .
 			'--emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
 			'--emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
-			'--emphasis-area:' . $emphasisArea . ';';
+			'--emphasis-area:' . $emphasisArea . ';' .
+			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
+			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 8 / 100 )';
 
 		ob_start(); ?>
 
