@@ -7255,10 +7255,42 @@ function save_save(props) {
     tagName: "span"
   }));
 }
+// CONCATENATED MODULE: ./src/blocks/headline/transforms.js
+var transforms_createBlock = wp.blocks.createBlock;
+/* harmony default export */ var headline_transforms = ({
+  from: [{
+    type: 'block',
+    blocks: ['core/heading'],
+    transform: function transform(attributes) {
+      return transforms_createBlock('novablocks/headline', {
+        primary: attributes.content,
+        secondary: '',
+        level: attributes.level,
+        fontSize: attributes.fontSize,
+        className: attributes.className,
+        align: attributes.align
+      });
+    }
+  }],
+  to: [{
+    type: 'block',
+    blocks: ['core/heading'],
+    transform: function transform(attributes) {
+      return transforms_createBlock('core/heading', {
+        content: attributes.secondary + ' ' + attributes.primary,
+        level: attributes.level,
+        fontSize: attributes.fontSize,
+        className: attributes.className,
+        align: attributes.align
+      });
+    }
+  }]
+});
 // CONCATENATED MODULE: ./src/blocks/headline/index.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -7297,7 +7329,8 @@ function headline_init() {
       }
     },
     save: save_save,
-    edit: HeadlineEdit
+    edit: HeadlineEdit,
+    transforms: headline_transforms
   });
 }
 
@@ -7971,13 +8004,13 @@ var edit_MediaEdit = function MediaEdit(props) {
 
 /* harmony default export */ var media_edit = (with_settings(edit_MediaEdit));
 // CONCATENATED MODULE: ./src/blocks/media/transforms.js
-var transforms_createBlock = wp.blocks.createBlock;
+var media_transforms_createBlock = wp.blocks.createBlock;
 /* harmony default export */ var media_transforms = ({
   from: [{
     type: 'block',
     blocks: ['core/gallery'],
     transform: function transform(attributes) {
-      return transforms_createBlock('novablocks/media', {
+      return media_transforms_createBlock('novablocks/media', {
         images: attributes.images
       });
     }
@@ -7986,7 +8019,7 @@ var transforms_createBlock = wp.blocks.createBlock;
     type: 'block',
     blocks: ['novablocks/advanced-gallery'],
     transform: function transform(attributes) {
-      return transforms_createBlock('novablocks/advanced-gallery', {
+      return media_transforms_createBlock('novablocks/advanced-gallery', {
         images: attributes.images
       });
     }
@@ -7994,7 +8027,7 @@ var transforms_createBlock = wp.blocks.createBlock;
     type: 'block',
     blocks: ['core/gallery'],
     transform: function transform(attributes) {
-      return transforms_createBlock('core/gallery', {
+      return media_transforms_createBlock('core/gallery', {
         images: attributes.images
       });
     }

@@ -27,9 +27,7 @@
 }
 
 // Transition between different alignment states
-.novablocks-media__content.novablocks-u-content-align {
-	flex-direction: column;
-	justify-content: center;
+.novablocks-media__content {
 
 	&:before,
 	&:after {

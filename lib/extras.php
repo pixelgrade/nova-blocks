@@ -579,11 +579,11 @@ function novablocks_add_media_settings( $settings ) {
 				),
 				'blockTopSpacing' => array(
 					'type' => 'number',
-					'default' => 0,
+					'default' => 1,
 				),
 				'blockBottomSpacing' => array(
 					'type' => 'number',
-					'default' => 0,
+					'default' => 1,
 				),
 				'emphasisTopSpacing' => array(
 					'type' => 'number',
