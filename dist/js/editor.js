@@ -7055,10 +7055,15 @@ var block_controls_MediaBlockControls = function MediaBlockControls(props) {
   var mediaPosition = attributes.mediaPosition,
       _attributes$images = attributes.images,
       images = _attributes$images === void 0 ? [] : _attributes$images;
-  var galleryImages = images.map(function (image) {
-    return JSON.parse(image);
-  });
-  var hasImages = !!images.length;
+  var galleryImages = images;
+
+  if (images.length && typeof images[0] === 'string') {
+    galleryImages = images.map(function (image) {
+      return JSON.parse(image);
+    });
+  }
+
+  var hasImages = !!galleryImages.length;
   return Object(react["createElement"])(media_block_controls_BlockControls, null, Object(react["createElement"])(media_block_controls_Toolbar, {
     controls: Object.keys(MEDIA_ALIGNMENTS_CONTROLS).map(function (control) {
       return block_controls_objectSpread({}, MEDIA_ALIGNMENTS_CONTROLS[control], {
@@ -7170,9 +7175,13 @@ var preview_MediaPreview = function MediaPreview(props) {
   var classNames = classnames_default()(className, "novablocks-media", "has-image-on-the-".concat(mediaPosition), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
     'has-background': blockStyle !== 'basic'
   });
-  var galleryImages = images.map(function (image) {
-    return JSON.parse(image);
-  });
+  var galleryImages = images;
+
+  if (images.length && typeof images[0] === 'string') {
+    galleryImages = images.map(function (image) {
+      return JSON.parse(image);
+    });
+  }
 
   var displayImages = function displayImages(imagesArray) {
     if (0 === imagesArray.length) {
