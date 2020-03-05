@@ -40,6 +40,12 @@ function init() {
 			name: 'alert',
 			label: __( 'Alert', '__plugin_txtd' )
 		} ],
+		attributes: {
+			align: {
+				type: 'string',
+				default: 'full'
+			}
+		},
 		save: function() {},
 		edit: function( props ) {
 
