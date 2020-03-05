@@ -51,7 +51,7 @@ const MediaPreview = function( props ) {
 
 	const passedProps = props;
 
-	if ( images.length && typeof images[0] === 'string' ) {
+	if ( "undefined" !== typeof images && images.length && typeof images[0] === 'string' ) {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 

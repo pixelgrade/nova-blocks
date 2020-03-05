@@ -23,10 +23,7 @@ add_action( 'init', 'novablocks_media_block_init' );
 if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 	function novablocks_render_media_block( $attributes, $content ) {
-		$classes = array();
-
-		$attributes_config = novablocks_get_media_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$classes = array( 'novablocks-media' );
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];

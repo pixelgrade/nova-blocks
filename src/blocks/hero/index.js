@@ -3,6 +3,12 @@
  */
 import * as icons from '../../icons';
 import edit from './edit';
+import deprecated from './deprecated';
+import { STORE_NAME } from "../../store";
+import { changeDefaults, getRandomBetween } from "../../utils";
+import { getRandomAttributes } from "../../components/advanced-gallery/util";
+
+import attributes from "./attributes";
 
 /**
  * WordPress dependencies
@@ -12,7 +18,24 @@ const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 const { select } = wp.data;
 
+function getNewDefaults() {
+	const settings = select( STORE_NAME ).getSettings();
+	const placeholderImages = settings.placeholderImages;
+	const index = getRandomBetween( 0, placeholderImages.length - 1 );
+	const image = placeholderImages[index];
+
+	return {
+		media: {
+			...image,
+			type: 'image',
+		}
+	};
+}
+
 function init() {
+
+	changeDefaults( 'novablocks/hero', getNewDefaults );
+
 	registerBlockType( 'novablocks/hero', {
 		title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
 		description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
@@ -24,6 +47,7 @@ function init() {
 		supports: {
 			anchor: true,
 		},
+		attributes,
 		edit,
 		save() {
 			return <InnerBlocks.Content />;

@@ -1,0 +1,10 @@
+{
+	"horizontalAlignment": {
+		"type": "string",
+		"default": "center"
+	},
+	"verticalAlignment": {
+		"type": "string",
+		"default": "center"
+	}
+}

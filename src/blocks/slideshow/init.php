@@ -12,7 +12,6 @@ if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 
 	function novablocks_slideshow_block_init() {
 		register_block_type( 'novablocks/slideshow', array(
-			'attributes' => novablocks_get_slideshow_attributes(),
 			'render_callback' => 'novablocks_render_slideshow_block',
 		) );
 	}
@@ -22,9 +21,6 @@ add_action( 'init', 'novablocks_slideshow_block_init' );
 if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 	function novablocks_render_slideshow_block( $attributes, $content ) {
-
-		$attributes_config = novablocks_get_slideshow_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		if ( empty( $attributes['galleryImages'] ) ) {
 			return '';

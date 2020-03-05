@@ -1,0 +1,21 @@
+{
+	"galleryImages": {
+		"type": "array",
+		"items": {
+			"type": "object"
+		},
+		"default": []
+	},
+	"slideshowType": {
+		"type": "string",
+		"default": "gallery"
+	},
+	"minHeight": {
+		"type": "number",
+		"default": 75
+	},
+	"defaultsGenerated": {
+		"type": "boolean",
+		"default": false
+	}
+}

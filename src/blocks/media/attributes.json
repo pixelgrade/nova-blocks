@@ -1,0 +1,50 @@
+{
+	"mediaPosition": {
+		"type": "string",
+		"default": "left"
+	},
+	"blockStyle": {
+		"type": "string",
+		"default": "basic"
+	},
+	"contentStyle": {
+		"type": "string",
+		"default": "basic"
+	},
+	"horizontalAlignment": {
+		"type": "string",
+		"default": "left"
+	},
+	"verticalAlignment": {
+		"type": "string",
+		"default": "center"
+	},
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"blockBottomSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"emphasisTopSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisBottomSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisArea": {
+		"type": "number",
+		"default": 100
+	},
+	"contentAreaWidth": {
+		"type": "number",
+		"default": 50
+	},
+	"layoutGutter": {
+		"type": "number",
+		"default": 25
+	}
+}

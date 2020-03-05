@@ -93,7 +93,7 @@ class GalleryPreview extends Component {
 					}
 
 					return (
-						<li key={ img.id || img.url } onClick={ () => {
+						<li key={ index } onClick={ () => {
 							onSelectImage( index );
 						} }>
 							<div className={ classes.join( ' ' ) }>

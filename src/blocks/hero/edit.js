@@ -10,6 +10,8 @@ import {
 	withSettings,
 } from '../../components';
 
+import heroAttributes from './attributes';
+
 import { ControlsTab, ControlsSection } from "../../components/control-sections";
 
 import { withFirstBlockConditions } from '../../utils';
@@ -89,7 +91,7 @@ class HeroEdit extends Component {
 
 		if ( settings.usePostMetaAttributes ) {
 			if ( ! scrollIndicator ) {
-				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+				defaults.scrollIndicator = heroAttributes.scrollIndicator.default;
 			}
 		}
 

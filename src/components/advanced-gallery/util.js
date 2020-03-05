@@ -1,5 +1,15 @@
-import { debounce, isSafari } from "../../utils";
 import $ from 'jquery';
+import { debounce, isSafari, getRandomBetween } from "../../utils";
+
+export const getRandomAttributes = () => {
+	return {
+		sizeContrast: getRandomBetween(0, 5) * 20,
+		positionShift: getRandomBetween(0, 20) * 5,
+		elementsDistance: getRandomBetween(0, 5) * 20,
+		placementVariation: getRandomBetween(1, 4) * 25,
+		stylePreset: 'custom',
+	};
+}
 
 export const getGalleryStyle = ( attributes ) => {
 	let containerHeight = attributes.containerHeight / 50 - 1;

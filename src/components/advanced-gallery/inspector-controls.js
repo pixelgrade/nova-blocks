@@ -1,3 +1,5 @@
+import { getRandomAttributes } from "./util";
+
 import { Notice, Tab, Tabs } from '../../components';
 
 import {

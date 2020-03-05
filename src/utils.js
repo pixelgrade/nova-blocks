@@ -1,5 +1,22 @@
-import { getProps, getState, getStylesFromProps } from "./components/with-parallax/util";
-import classnames from "classnames";
+export const getRandomBetween = ( min, max ) => {
+	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
+	return Math.floor( random * (max - min + 1) + min );
+}
+
+export const getRandomArrayFromArray = ( arr, n ) => {
+
+	var result = new Array( n ),
+		len = arr.length,
+		taken = new Array( len );
+
+	while ( n -- ) {
+		var x = Math.floor( Math.random() * len );
+		result[n] = arr[x in taken ? taken[x] : x];
+		taken[x] = -- len in taken ? taken[len] : len;
+	}
+
+	return result;
+}
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -159,3 +176,39 @@ export const getControlsWrapClassname = ( attributes, compiledAttributes ) => {
 		}
 	);
 }
+
+export const changeDefaults = ( blockType, getNewDefaults ) => {
+	const { getBlocks } = wp.data.select( 'core/block-editor' );
+	const { isEditedPostEmpty } = wp.data.select( 'core/editor' );
+
+	let blocks = getBlocks();
+	let loadedSavedBlocks = false;
+
+	return wp.data.subscribe( () => {
+		const newBlocks = getBlocks();
+		let addedBlocks = newBlocks.filter( x => ! blocks.map( y => y.clientId ).includes( x.clientId ) );
+
+		if ( newBlocks === blocks || ! addedBlocks.length ) {
+			return;
+		}
+
+		// if this is the first set of added blocks
+		if ( ! loadedSavedBlocks ) {
+			loadedSavedBlocks = true;
+			return;
+		}
+
+		blocks = newBlocks;
+
+		addedBlocks.map( block => {
+			if ( block.name === blockType && ! block.attributes.defaultsGenerated && typeof getNewDefaults === "function" ) {
+				const defaults = getNewDefaults();
+				wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
+					...defaults,
+					defaultsGenerated: true
+				} );
+			}
+		} );
+	} );
+}
+
