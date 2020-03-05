@@ -6479,6 +6479,7 @@ var headline_edit_wp$blockEditor = wp.blockEditor,
     edit_AlignmentToolbar = headline_edit_wp$blockEditor.AlignmentToolbar,
     headline_edit_BlockControls = headline_edit_wp$blockEditor.BlockControls,
     edit_InspectorControls = headline_edit_wp$blockEditor.InspectorControls;
+var edit_PanelBody = wp.components.PanelBody;
 function HeadlineEdit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes,
@@ -6504,7 +6505,10 @@ function HeadlineEdit(props) {
         align: nextAlign
       });
     }
-  })), Object(react["createElement"])(edit_InspectorControls, null, Object(react["createElement"])("p", null, headline_edit_('Level', '__plugin_txtd')), Object(react["createElement"])(heading_toolbar, {
+  })), Object(react["createElement"])(edit_InspectorControls, null, Object(react["createElement"])(edit_PanelBody, {
+    title: headline_edit_('Heading settings', '__plugin_txtd'),
+    initialOpen: true
+  }, Object(react["createElement"])("p", null, headline_edit_('Level', '__plugin_txtd')), Object(react["createElement"])(heading_toolbar, {
     minLevel: 1,
     maxLevel: 6,
     selectedLevel: level,
@@ -6513,7 +6517,7 @@ function HeadlineEdit(props) {
         level: newLevel
       });
     }
-  })), Object(react["createElement"])(TagName, {
+  }))), Object(react["createElement"])(TagName, {
     className: classnames_default()(className, 'c-headline', defineProperty_default()({}, "has-text-align-".concat(align), align))
   }, Object(react["createElement"])(edit_RichText, {
     className: "c-headline__secondary",
@@ -6594,7 +6598,7 @@ var headline_registerBlockType = wp.blocks.registerBlockType;
 function headline_init() {
   headline_registerBlockType('novablocks/headline', {
     title: headline_('Headline', '__plugin_txtd'),
-    description: headline_('Advanced heading block with a fancier display', '__plugin_txtd'),
+    description: headline_('Advanced heading block with a fancier display.', '__plugin_txtd'),
     category: 'nova-blocks',
     icon: headline,
     // Additional search terms
@@ -6827,7 +6831,7 @@ function edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) 
 var hero_edit_ = wp.i18n.__;
 var hero_edit_InspectorControls = wp.blockEditor.InspectorControls;
 var hero_edit_wp$components = wp.components,
-    edit_PanelBody = hero_edit_wp$components.PanelBody,
+    hero_edit_PanelBody = hero_edit_wp$components.PanelBody,
     edit_RadioControl = hero_edit_wp$components.RadioControl;
 var hero_edit_wp$element = wp.element,
     hero_edit_Component = hero_edit_wp$element.Component,
@@ -6845,7 +6849,7 @@ var edit_BlockHeightControls = function BlockHeightControls(props) {
       setAttributes = props.setAttributes,
       settings = props.settings;
   var minHeightFallback = attributes.minHeightFallback;
-  return Object(react["createElement"])(edit_PanelBody, {
+  return Object(react["createElement"])(hero_edit_PanelBody, {
     title: hero_edit_('Height', '__plugin_txtd'),
     initialOpen: false
   }, Object(react["createElement"])(edit_RadioControl, {
