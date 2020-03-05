@@ -95,7 +95,9 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 1.2.3 =
-* Fixed Media Card Block images attribute parsing
+* Fixed block toolbar positioning for full width blocks
+* Fixed Media Card block images attribute parsing
+* Improved controls display and copy for the Headline block
 
 = 1.2.2 =
 * Fixed parallax scrolling for Safari browser
