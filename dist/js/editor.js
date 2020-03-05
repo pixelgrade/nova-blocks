@@ -2935,6 +2935,12 @@ function init() {
       name: 'alert',
       label: announcement_bar_('Alert', '__plugin_txtd')
     }],
+    attributes: {
+      align: {
+        type: 'string',
+        default: 'full'
+      }
+    },
     save: function save() {},
     edit: function edit(props) {
       var className = props.className,
@@ -8098,6 +8104,10 @@ function menu_food_init() {
       enableTwoColumns: {
         type: 'boolean',
         default: true
+      },
+      align: {
+        type: 'string',
+        default: 'wide'
       }
     },
     example: {

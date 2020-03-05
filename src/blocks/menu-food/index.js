@@ -25,6 +25,10 @@ function init() {
 			enableTwoColumns : {
 				type: 'boolean',
 				default: true
+			},
+			align: {
+				type: 'string',
+				default: 'wide'
 			}
 		},
 		example: {
