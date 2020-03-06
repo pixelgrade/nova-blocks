@@ -362,7 +362,7 @@ Sat noon - 2am'
 		),
 		'closedLabel'    => array(
 			'type'  => 'string',
-			'default'   => 'Closed Label'
+			'default'   => 'Closed'
 		),
 		'compressOpeningHours'    => array(
 			'type'  => 'boolean',

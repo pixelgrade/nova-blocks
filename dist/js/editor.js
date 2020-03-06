@@ -9310,9 +9310,10 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
       return setAttributes({
         closedNote: closedNote
       });
-    }
-  }), openHoursStyle === 'status' && Object(react["createElement"])(AvailableTagsModal, null), openHoursStyle === 'overview' && Object(react["createElement"])(openhours_inspector_controls_TextControl, {
-    label: "Closed Label",
+    },
+    help: Object(react["createElement"])(AvailableTagsModal, null)
+  }), openHoursStyle === 'overview' && Object(react["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Closed",
     value: closedLabel,
     onChange: function onChange(closedLabel) {
       return setAttributes({

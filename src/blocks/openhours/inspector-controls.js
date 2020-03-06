@@ -46,7 +46,7 @@ const OpenHoursInspectorControls = function( props ) {
 		const closeModal = () => setOpen( false );
 
 		return (
-			<>
+			<Fragment>
 				<Button isLink onClick={ openModal }>See available tags</Button>
 				{ isOpen && (
 					<Modal
@@ -57,7 +57,7 @@ const OpenHoursInspectorControls = function( props ) {
 					>
 					</Modal>
 				) }
-			</>
+			</Fragment>
 		)
 	};
 
@@ -105,12 +105,11 @@ const OpenHoursInspectorControls = function( props ) {
 						label="Closed Note"
 						value={ closedNote }
 						onChange={( closedNote ) => setAttributes( {closedNote} )}
+						help = {<AvailableTagsModal/>}
 					/> }
 
-					{ openHoursStyle === 'status' && <AvailableTagsModal/> }
-
 					{ openHoursStyle === 'overview' && <TextControl
-						label="Closed Label"
+						label="Closed"
 						value={ closedLabel }
 						onChange={( closedLabel ) => setAttributes( {closedLabel} )}
 					/> }
