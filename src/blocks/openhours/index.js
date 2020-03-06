@@ -13,7 +13,7 @@ const { registerBlockType } = wp.blocks;
 function init() {
 	registerBlockType('novablocks/openhours', {
 		title: __('OpenHours', '__plugin_txtd'),
-		description: __('Display Opening Hours for any kind of venue', '__plugin_txtd'),
+		description: __('Display Opening Hours for any kind of venue.', '__plugin_txtd'),
 		category: 'nova-blocks',
 		icon: icons.opentable,
 		edit,

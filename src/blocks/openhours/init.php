@@ -546,7 +546,7 @@ function novablocks_openhours_overview_content( $attributes ) {
 		$hide_closed_days = false;
 	}
 
-	$schedule = $helper->parse_open_hours( $hours, $attributes['timeFormat'], $attributes['closedLabel'], $attributes['useShortName'], $attribute['compressOpeningHours'], $attributes['hideClosedDays'] );
+	$schedule = $helper->parse_open_hours( $hours, $attributes['timeFormat'], $attributes['closedLabel'], $attributes['useShortName'], $attributes['compressOpeningHours'], $attributes['hideClosedDays'] );
 
 	if ( $schedule ) { ?>
 

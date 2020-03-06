@@ -47,7 +47,7 @@ const OpenHoursInspectorControls = function( props ) {
 
 		return (
 			<Fragment>
-				<Button isLink onClick={ openModal }>See available tags</Button>
+				<Button className={'novablocks__label'} isLink onClick={ openModal }>See available tags</Button>
 				{ isOpen && (
 					<Modal
 						onRequestClose={ closeModal }
@@ -73,9 +73,9 @@ const OpenHoursInspectorControls = function( props ) {
 
 		<Fragment>
 			<InspectorControls>
+				<PanelBody title={ __( 'Setup', '__plugin_txtd' ) } initialOpen={ true }>
 				<TextareaControl
-					label="Open Hours"
-					help="Write your opening hours in a simple human readable format:"
+					label="Write your opening hours in a simple human readable format"
 					value={ text }
 					className = 'original-text'
 					onChange={( text ) => setAttributes( {
@@ -83,7 +83,14 @@ const OpenHoursInspectorControls = function( props ) {
 						parsedText: parseContent( text )
 					} )}
 				/>
-				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) } initialOpen={ true }>
+				<div className="components-base-control__label novablocks__label novablocks__example novablocks__example--multi">
+					{ __( 'Monday 10am - 3pm\n' +
+					      'Tuesday to Friday 9 - 17\n' +
+					      'Sat noon - 2am', '__plugin_txtd' ) }
+				</div>
+				</PanelBody>
+				<PanelBody title={ __( 'Display', '__plugin_txtd' ) } initialOpen={ true }>
+
 					<RadioControl
 						label={ __( 'Displaying the opening hours', '__plugin_txtd' ) }
 						value={ openHoursStyle }
@@ -95,21 +102,44 @@ const OpenHoursInspectorControls = function( props ) {
 						onChange={ ( nextOpenHoursStyle ) => setAttributes( { openHoursStyle: nextOpenHoursStyle } ) }
 					/>
 
+
+					{ openHoursStyle === 'status' && <div className="components-base-control__label novablocks__label">
+						Write the "Open" and "Closed" messages using the tags displayed below.
+					</div> }
+
+					{ openHoursStyle === 'status' && <AvailableTagsModal/> }
+
 					{ openHoursStyle === 'status' && <TextControl
 						label="Open Note"
 						value={ openNote }
 						onChange={( openNote ) => setAttributes( {openNote} )}
 					/> }
 
+					{ openHoursStyle === 'status' && <div className="components-base-control__label novablocks__label novablocks__example">
+						{ __( 'It\'s {time} and we\'re Open until {today-closing-time}.', '__plugin_txtd' ) }
+					</div> }
+
+					{ openHoursStyle === 'status' && <div className="components-base-control__label novablocks__label novablocks__example">
+						{ __( '{time} - It\'s today, we\'re Open.', '__plugin_txtd' ) }
+					</div> }
+
 					{ openHoursStyle === 'status' && <TextControl
 						label="Closed Note"
 						value={ closedNote }
 						onChange={( closedNote ) => setAttributes( {closedNote} )}
-						help = {<AvailableTagsModal/>}
 					/> }
 
+					{ openHoursStyle === 'status' && <div className="components-base-control__label novablocks__label novablocks__example">
+						{ __( 'We\'re closed until {next-opening-day} at {next-opening-time}.', '__plugin_txtd' ) }
+					</div> }
+
+					{ openHoursStyle === 'status' && <div className="components-base-control__label novablocks__label novablocks__example">
+						{ __( '{time} - it\'s closed now.', '__plugin_txtd' ) }
+					</div> }
+
+
 					{ openHoursStyle === 'overview' && <TextControl
-						label="Closed"
+						label="Closed Label"
 						value={ closedLabel }
 						onChange={( closedLabel ) => setAttributes( {closedLabel} )}
 					/> }
@@ -127,7 +157,7 @@ const OpenHoursInspectorControls = function( props ) {
 					/> }
 
 					{  openHoursStyle === 'overview' && <ToggleControl
-						label={ __( 'Use Short Name', '__plugin_txtd' ) }
+						label={ __( 'Use Short Day Name', '__plugin_txtd' ) }
 						checked={ useShortName }
 						onChange={ () => setAttributes( { useShortName: ! useShortName } ) }
 					/> }

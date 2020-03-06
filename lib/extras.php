@@ -346,11 +346,11 @@ Sat noon - 2am'
 		),
 		'timeFormat'    => array(
 			'type'  => 'string',
-			'default'   => 'g:i'
+			'default'   => 'g:ia'
 		),
 		'openHoursStyle'    => array(
 			'type' => 'string',
-			'default'   => 'status'
+			'default'   => 'overview'
 		),
 		'openNote'    => array(
 			'type'  => 'string',
