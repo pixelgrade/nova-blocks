@@ -3913,13 +3913,17 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     $container.data('parallax', $parallax);
 
     function parallaxUpdateState() {
-      var state = getState(container, config);
+      var newConfig = Object.assign({}, config, {
+        scrollContainerHeight: window.innerHeight
+      });
+      var state = getState(container, newConfig);
       $container.data('state', state);
+      $container.data('config', newConfig);
       frameRendered = false;
     }
 
     external_jQuery_default()(window).on('scroll', parallaxUpdateState);
-    external_jQuery_default()(window).on('resize', debounce(parallaxUpdateState, 100));
+    external_jQuery_default()(window).on('resize', parallaxUpdateState);
   });
 
   function parallaxUpdateLoop() {
@@ -3940,6 +3944,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
           props.parallaxAmount = 1 - props.parallaxAmount;
         }
 
+        console.log(props);
         var styles = getStylesFromProps(props);
         $container.data('parallax').css(styles);
       });
