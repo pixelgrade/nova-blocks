@@ -2601,7 +2601,6 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
           props.parallaxAmount = 1 - props.parallaxAmount;
         }
 
-        console.log(props);
         var styles = getStylesFromProps(props);
         $container.data('parallax').css(styles);
       });

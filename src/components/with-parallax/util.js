@@ -360,7 +360,6 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 					props.parallaxAmount = 1 - props.parallaxAmount;
 				}
 
-				console.log( props );
 				let styles = getStylesFromProps( props );
 
 				$container.data( 'parallax' ).css( styles );
