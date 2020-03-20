@@ -14,6 +14,7 @@ function novablocks_admin_init() {
 	$block_path = '/dist/js/editor.js';
 
 	$script_dependencies = array(
+		'lodash',
 		'wp-i18n',
 		'wp-api',
 		'wp-blocks',
