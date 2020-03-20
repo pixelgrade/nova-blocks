@@ -14865,7 +14865,6 @@ var _wp$i18n = wp.i18n,
     heading_toolbar_ = _wp$i18n.__,
     sprintf = _wp$i18n.sprintf;
 var heading_toolbar_Component = wp.element.Component;
-console.log();
 
 /**
  * Internal dependencies

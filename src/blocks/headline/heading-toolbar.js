@@ -6,7 +6,6 @@ import { range } from 'lodash';
 const { __, sprintf } = wp.i18n;
 
 const { Component } = wp.element;
-console.log();
 import { ToolbarGroup } from '@wordpress/components';
 
 /**
