@@ -1,15 +1,13 @@
-import { range } from '../../utils';
+import { range } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-const {
-	__,
-	sprintf
-} = wp.i18n;
+const { __, sprintf } = wp.i18n;
 
 const { Component } = wp.element;
-const { ToolbarGroup } = wp.components;
+console.log();
+import { ToolbarGroup } from '@wordpress/components';
 
 /**
  * Internal dependencies

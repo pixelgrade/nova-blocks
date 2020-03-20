@@ -26,10 +26,9 @@ const baseConfig = {
 	},
 	externals: {
 		jquery: 'jQuery',
-		lodash : {
- 			commonjs: 'lodash',
- 			amd: 'lodash',
- 		},
+		lodash : 'lodash',
+		react : 'React',
+		react_dom: 'ReactDOM'
 	},
 	output: {
 		// Add /* filename */ comments to generated require()s in the output.
