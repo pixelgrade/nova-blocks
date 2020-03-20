@@ -44,6 +44,18 @@ function init() {
 			align: {
 				type: 'string',
 				default: 'full'
+			},
+			url: {
+				type: 'string',
+				default: ''
+			},
+			opensInNewTab: {
+				type: 'boolean',
+				default: false
+			},
+			content: {
+				type: 'string',
+				default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
 			}
 		},
 		save: function() {},
