@@ -41,8 +41,8 @@
 
 .novablocks-mask {
 	@include cover;
-	clip: auto;
-	-webkit-mask-image: -webkit-linear-gradient(top, white 0, white 100%);
+	clip: rect(0 auto auto 0);
+	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
 .novablocks-parallax {
