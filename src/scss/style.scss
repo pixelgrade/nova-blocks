@@ -51,6 +51,8 @@
 	left: 0;
 	object-fit: cover;
 
+	pointer-events: none;
+
 	.scrolling-effect-static & {
 		position: static;
 	}
