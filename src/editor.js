@@ -1,6 +1,7 @@
 import "./filters/with-block-id";
 import "./filters/with-block-index";
 import "./filters/with-font-size-picker";
+import "./filters/with-emphasis-level";
 
 import "./blocks/core/separator";
 
@@ -17,6 +18,8 @@ import menuFoodInit from "./blocks/menu-food";
 import menuFoodSectionInit from "./blocks/menu-food-section";
 import menuFoodItemInit from "./blocks/menu-food-item";
 import opentableInit from "./blocks/opentable";
+import cardInit from "./blocks/card";
+import cardsCollectionInit from "./blocks/cards-collection";
 
 import { STORE_NAME } from './store';
 
@@ -73,6 +76,9 @@ class novaBlocks {
 		if ( supports.indexOf('opentable') > -1 ) {
 			opentableInit();
 		}
+
+		cardInit();
+		cardsCollectionInit();
 
 		heroInit();
 		mediaInit();

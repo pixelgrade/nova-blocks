@@ -461,14 +461,6 @@ function novablocks_add_media_settings( $settings ) {
 				'type'    => 'string',
 				'default' => 'left',
 			),
-			'blockStyle'          => array(
-				'type'    => 'string',
-				'default' => 'basic'
-			),
-			'contentStyle'        => array(
-				'type'    => 'string',
-				'default' => 'basic',
-			),
 			'horizontalAlignment' => array(
 				'type'    => 'string',
 				'default' => 'left',
