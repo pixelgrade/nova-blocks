@@ -3,7 +3,7 @@
  */
 const { InnerBlocks } = wp.blockEditor;
 
-function CardEdit( props ) {
+const CardEdit = ( props ) => {
 
 	const blockClassName = 'novablocks-card';
 	const { className } = props;
@@ -20,5 +20,14 @@ function CardEdit( props ) {
 	);
 }
 
-export default CardEdit;
+const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
+	const { clientId } = props;
+	const parentClientId = select( 'core/editor' ).getBlockHierarchyRootClientId( clientId );
+	const parentBlock = select( 'core/editor' ).getBlock( parentClientId );
 
+	return {
+		...props
+	}
+} )( CardEdit );
+
+export default CardWithVisibility;

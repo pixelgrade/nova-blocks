@@ -19,7 +19,8 @@ const MediaEdit = function( props ) {
 
 	return (
 		<Fragment>
-
+			<MediaPreview { ...{ ...props, updateImages } } />
+			<BlockControls { ...{ ...props, updateImages } } />
 		</Fragment>
 	);
 };

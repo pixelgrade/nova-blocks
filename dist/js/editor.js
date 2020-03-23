@@ -32866,6 +32866,11 @@ var preview_MediaPreview = function MediaPreview(props) {
 // CONCATENATED MODULE: ./src/blocks/media/edit.js
 
 
+
+function media_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function media_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { media_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { media_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * Internal dependencies
  */
@@ -32891,7 +32896,11 @@ var edit_MediaEdit = function MediaEdit(props) {
     });
   }
 
-  return Object(external_React_["createElement"])(media_edit_Fragment, null);
+  return Object(external_React_["createElement"])(media_edit_Fragment, null, Object(external_React_["createElement"])(media_preview, media_edit_objectSpread({}, props, {
+    updateImages: updateImages
+  })), Object(external_React_["createElement"])(media_block_controls, media_edit_objectSpread({}, props, {
+    updateImages: updateImages
+  })));
 };
 
 /* harmony default export */ var media_edit = (with_settings(edit_MediaEdit));
@@ -34432,12 +34441,17 @@ function opentable_init() {
 // CONCATENATED MODULE: ./src/blocks/card/edit.js
 
 
+
+function card_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { card_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { card_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * WordPress dependencies
  */
 var edit_InnerBlocks = wp.blockEditor.InnerBlocks;
 
-function CardEdit(props) {
+var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
   var className = props.className;
   return Object(external_React_["createElement"])("div", {
@@ -34455,9 +34469,16 @@ function CardEdit(props) {
   }, "Buttons"), Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__meta")
   }, "Meta"));
-}
+};
 
-/* harmony default export */ var card_edit = (CardEdit);
+var CardWithVisibility = wp.data.withSelect(function (select, props) {
+  var clientId = props.clientId;
+  var parentClientId = select('core/editor').getBlockHierarchyRootClientId(clientId);
+  var parentBlock = select('core/editor').getBlock(parentClientId);
+  console.log(parentBlock);
+  return card_edit_objectSpread({}, props);
+})(edit_CardEdit);
+/* harmony default export */ var card_edit = (CardWithVisibility);
 // CONCATENATED MODULE: ./src/blocks/card/index.js
 
 
@@ -34493,26 +34514,126 @@ function card_init() {
 // CONCATENATED MODULE: ./src/blocks/cards-collection/edit.js
 
 
+
+function cards_collection_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function cards_collection_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { cards_collection_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { cards_collection_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
 /**
  * WordPress dependencies
  */
+
 var cards_collection_edit_Fragment = wp.element.Fragment;
-var cards_collection_edit_InnerBlocks = wp.blockEditor.InnerBlocks;
+var cards_collection_edit_ = wp.i18n.__;
+var cards_collection_edit_wp$components = wp.components,
+    cards_collection_edit_PanelBody = cards_collection_edit_wp$components.PanelBody,
+    edit_ToggleControl = cards_collection_edit_wp$components.ToggleControl;
+var cards_collection_edit_wp$blockEditor = wp.blockEditor,
+    cards_collection_edit_InnerBlocks = cards_collection_edit_wp$blockEditor.InnerBlocks,
+    cards_collection_edit_InspectorControls = cards_collection_edit_wp$blockEditor.InspectorControls;
 var edit_ALLOWED_BLOCKS = ['novablocks/card'];
 var CARDS_COLLECTION_TEMPLATE = [['novablocks/card']];
 
-function CardsCollectionEdit(props) {
-  var className = props.className;
-  return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])("div", {
-    className: "novablocks-cards-collection ".concat(className)
+var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
+  var _props$attributes = props.attributes,
+      blockStyle = _props$attributes.blockStyle,
+      contentStyle = _props$attributes.contentStyle,
+      showCollectionTitle = _props$attributes.showCollectionTitle,
+      showCollectionSubtitle = _props$attributes.showCollectionSubtitle,
+      showMedia = _props$attributes.showMedia,
+      showTitle = _props$attributes.showTitle,
+      showSubtitle = _props$attributes.showSubtitle,
+      showDescription = _props$attributes.showDescription,
+      showButtons = _props$attributes.showButtons,
+      showMeta = _props$attributes.showMeta,
+      childrenBlocks = props.childrenBlocks,
+      setAttributes = props.setAttributes;
+  var className = classnames_default()(props.className, 'novablocks-cards-collection', "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
+  console.log(childrenBlocks);
+  return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])(cards_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_collection_edit_PanelBody, {
+    initialOpen: true,
+    title: cards_collection_edit_('Elements Visibility', '__plugin_txtd')
+  }, Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Collection Title'),
+    checked: !!showCollectionTitle,
+    onChange: function onChange(showCollectionTitle) {
+      return setAttributes({
+        showCollectionTitle: showCollectionTitle
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Collection Subtitle'),
+    checked: !!showCollectionSubtitle,
+    onChange: function onChange(showCollectionSubtitle) {
+      return setAttributes({
+        showCollectionSubtitle: showCollectionSubtitle
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Media'),
+    checked: !!showMedia,
+    onChange: function onChange(showMedia) {
+      return setAttributes({
+        showMedia: showMedia
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Title'),
+    checked: !!showTitle,
+    onChange: function onChange(showTitle) {
+      return setAttributes({
+        showTitle: showTitle
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Subtitle'),
+    checked: !!showSubtitle,
+    onChange: function onChange(showSubtitle) {
+      return setAttributes({
+        showSubtitle: showSubtitle
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Description'),
+    checked: !!showDescription,
+    onChange: function onChange(showDescription) {
+      return setAttributes({
+        showDescription: showDescription
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Buttons'),
+    checked: !!showButtons,
+    onChange: function onChange(showButtons) {
+      return setAttributes({
+        showButtons: showButtons
+      });
+    }
+  }), Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: cards_collection_edit_('Meta'),
+    checked: !!showMeta,
+    onChange: function onChange(showMeta) {
+      return setAttributes({
+        showMeta: showMeta
+      });
+    }
+  }))), Object(external_React_["createElement"])("div", {
+    className: className
   }, Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
     allowedBlocks: edit_ALLOWED_BLOCKS,
     template: CARDS_COLLECTION_TEMPLATE,
     __experimentalMoverDirection: "horizontal"
   })));
-}
+};
 
-/* harmony default export */ var cards_collection_edit = (CardsCollectionEdit);
+var CardCollectionWithChildren = wp.data.withSelect(function (select, props) {
+  var clientId = props.clientId;
+  return cards_collection_edit_objectSpread({
+    childrenBlocks: select('core/editor').getBlock(clientId).innerBlocks
+  }, props);
+})(edit_CardsCollectionEdit);
+/* harmony default export */ var cards_collection_edit = (CardCollectionWithChildren);
 // CONCATENATED MODULE: ./src/blocks/cards-collection/index.js
 
 
