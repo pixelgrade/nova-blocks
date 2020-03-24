@@ -1,16 +1,16 @@
+@import "mixins";
+
 .novablocks-cards-collection {
 
-	.block-editor-block-list__layout {
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@include novablocks-cards-collection-layout;
 
 		> .block-list-appender {
 			flex: 0 0 auto;
 		}
 
-		> .wp-block[class][class] {
+		.wp-block[class][class] {
 			max-width: none;
-			margin-left: 0;
-			margin-right: 0;
 		}
 	}
 }

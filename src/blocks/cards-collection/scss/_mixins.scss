@@ -1,10 +1,12 @@
 @mixin novablocks-cards-collection-layout {
 	display: flex;
+	align-items: stretch;
+	margin-left: calc(-1 * var(--novablocks-spacing));
 
 	> * {
 		flex: 1 1 0;
 		max-width: none;
-		margin-left: 0;
+		margin-left: var(--novablocks-spacing);
 		margin-right: 0;
 	}
 }

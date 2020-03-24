@@ -55,7 +55,7 @@
 // block variations
 .block-is-moderate,
 .block-is-highlighted {
-	--novablocks-media-padding: var(--novablocks-media-spacing);
+	--novablocks-media-padding: var(--novablocks-spacing);
 }
 
 .block-is-moderate {
@@ -68,7 +68,7 @@
 
 .content-is-moderate,
 .content-is-highlighted {
-	--novablocks-media-content-padding: var(--novablocks-media-spacing);
+	--novablocks-media-content-padding: var(--novablocks-spacing);
 }
 
 .content-is-moderate,

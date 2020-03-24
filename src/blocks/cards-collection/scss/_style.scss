@@ -2,4 +2,7 @@
 
 .novablocks-cards-collection {
 	@include novablocks-cards-collection-layout;
+
+	padding: var(--novablocks-media-padding);
+	background: var(--novablocks-media-background-color);
 }

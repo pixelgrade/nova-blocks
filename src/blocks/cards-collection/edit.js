@@ -22,23 +22,25 @@ const CARDS_COLLECTION_TEMPLATE = [ [ 'novablocks/card' ] ];
 const CardsCollectionEdit = ( props ) => {
 
 	const {
-		attributes: {
-			blockStyle,
-			contentStyle,
-
-			showCollectionTitle,
-			showCollectionSubtitle,
-
-			showMedia,
-			showTitle,
-			showSubtitle,
-			showDescription,
-			showButtons,
-			showMeta,
-		},
+		attributes,
 		childrenBlocks,
 		setAttributes,
 	} = props;
+
+	const {
+		blockStyle,
+		contentStyle,
+
+		showCollectionTitle,
+		showCollectionSubtitle,
+
+		showMedia,
+		showTitle,
+		showSubtitle,
+		showDescription,
+		showButtons,
+		showMeta,
+	} = attributes;
 
 	const className = classnames(
 		props.className,
@@ -47,7 +49,17 @@ const CardsCollectionEdit = ( props ) => {
 		`content-is-${ contentStyle }`
 	);
 
-	console.log( childrenBlocks );
+	const toggleAttribute = ( attribute ) => {
+		const newAttributes = {
+			[attribute]: ! attributes[attribute]
+		};
+
+		childrenBlocks.forEach( ( { clientId } ) => {
+			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
+		} );
+
+		setAttributes( newAttributes );
+	};
 
 	return (
 		<Fragment>
@@ -66,32 +78,32 @@ const CardsCollectionEdit = ( props ) => {
 					<ToggleControl
 						label={ __( 'Media' ) }
 						checked={ !! showMedia }
-						onChange={ showMedia => setAttributes( { showMedia } ) }
+						onChange={ () => { toggleAttribute( 'showMedia' ) } }
 					/>
 					<ToggleControl
 						label={ __( 'Title' ) }
 						checked={ !! showTitle }
-						onChange={ showTitle => setAttributes( { showTitle } ) }
+						onChange={ () => { toggleAttribute( 'showTitle' ) } }
 					/>
 					<ToggleControl
 						label={ __( 'Subtitle' ) }
 						checked={ !! showSubtitle }
-						onChange={ showSubtitle => setAttributes( { showSubtitle } ) }
+						onChange={ () => { toggleAttribute( 'showSubtitle' ) } }
 					/>
 					<ToggleControl
 						label={ __( 'Description' ) }
 						checked={ !! showDescription }
-						onChange={ showDescription => setAttributes( { showDescription } ) }
+						onChange={ () => { toggleAttribute( 'showDescription' ) } }
 					/>
 					<ToggleControl
 						label={ __( 'Buttons' ) }
 						checked={ !! showButtons }
-						onChange={ showButtons => setAttributes( { showButtons } ) }
+						onChange={ () => { toggleAttribute( 'showButtons' ) } }
 					/>
 					<ToggleControl
 						label={ __( 'Meta' ) }
 						checked={ !! showMeta }
-						onChange={ showMeta => setAttributes( { showMeta } ) }
+						onChange={ () => { toggleAttribute( 'showMeta' ) } }
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -108,9 +120,11 @@ const CardsCollectionEdit = ( props ) => {
 
 const CardCollectionWithChildren = wp.data.withSelect( ( select, props ) => {
 	const { clientId } = props;
+	const parentBlock = select( 'core/block-editor' ).getBlock( clientId );
+	const childrenBlocks = parentBlock.innerBlocks;
 
 	return {
-		childrenBlocks: select( 'core/editor' ).getBlock( clientId ).innerBlocks,
+		childrenBlocks,
 		...props
 	}
 } )( CardsCollectionEdit );

@@ -17,6 +17,32 @@ function init() {
 		description: __( 'Display a list of cards placed within a coherent layout.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
+		attributes: {
+			showMedia: {
+				type: 'boolean',
+				default: true,
+			},
+			showTitle: {
+				type: 'boolean',
+				default: true,
+			},
+			showSubtitle: {
+				type: 'boolean',
+				default: true,
+			},
+			showDescription: {
+				type: 'boolean',
+				default: true,
+			},
+			showButtons: {
+				type: 'boolean',
+				default: true,
+			},
+			showMeta: {
+				type: 'boolean',
+				default: true,
+			},
+		},
 		// Additional search terms
 		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 		edit,

@@ -1,3 +1,5 @@
 .novablocks-card {
-	padding: 10px;
+	padding: var(--novablocks-media-content-padding);
+	background: var(--novablocks-media-content-background-color);
+	box-shadow: var(--novablocks-media-content-box-shadow);
 }
