@@ -1,0 +1,10 @@
+@mixin novablocks-cards-collection-layout {
+	display: flex;
+
+	> * {
+		flex: 1 1 0;
+		max-width: none;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
