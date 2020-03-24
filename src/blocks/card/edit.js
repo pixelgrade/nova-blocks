@@ -111,9 +111,8 @@ const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
 		}
 	}
 
-	console.log( newProps );
-
 	return newProps;
+
 } )( CardEdit );
 
 export default CardWithVisibility;
