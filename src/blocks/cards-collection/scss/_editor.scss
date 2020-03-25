@@ -1,6 +1,6 @@
 @import "mixins";
 
-.novablocks-cards-collection {
+.novablocks-cards-collection__layout {
 
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@include novablocks-cards-collection-layout;

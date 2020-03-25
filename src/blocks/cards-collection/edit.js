@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import EditableText from "../../components/editable-text";
 
 /**
  * WordPress dependencies
@@ -31,6 +32,9 @@ const CardsCollectionEdit = ( props ) => {
 		blockStyle,
 		contentStyle,
 
+		title,
+		subtitle,
+
 		showCollectionTitle,
 		showCollectionSubtitle,
 
@@ -42,9 +46,11 @@ const CardsCollectionEdit = ( props ) => {
 		showMeta,
 	} = attributes;
 
+	const blockClassName = 'novablocks-cards-collection';
+
 	const className = classnames(
 		props.className,
-		'novablocks-cards-collection',
+		blockClassName,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`
 	);
@@ -108,11 +114,32 @@ const CardsCollectionEdit = ( props ) => {
 				</PanelBody>
 			</InspectorControls>
 			<div className={ className }>
-				<InnerBlocks
-					allowedBlocks={ ALLOWED_BLOCKS }
-					template={ CARDS_COLLECTION_TEMPLATE }
-					__experimentalMoverDirection="horizontal"
-				/>
+				{
+					showCollectionTitle &&
+					<EditableText
+						tagName={ 'h2' }
+						value={title}
+						onChange={title => {
+							setAttributes( {title} )
+						}}
+					/>
+				}
+				{
+					showCollectionSubtitle &&
+					<EditableText
+						tagName={ 'h3' }
+						value={subtitle}
+						onChange={subtitle => {
+							setAttributes( {subtitle} )
+						}}
+					/>
+				}
+				<div className={ `${blockClassName}__layout` }>
+					<InnerBlocks
+						allowedBlocks={ ALLOWED_BLOCKS }
+						template={ CARDS_COLLECTION_TEMPLATE }
+					/>
+				</div>
 			</div>
 		</Fragment>
 	);

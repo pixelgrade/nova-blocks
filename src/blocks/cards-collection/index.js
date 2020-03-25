@@ -18,6 +18,22 @@ function init() {
 		category: 'nova-blocks',
 		icon: icons.media,
 		attributes: {
+			title: {
+				type: 'string',
+				default: 'Collection Title',
+			},
+			subtitle: {
+				type: 'string',
+				default: 'Collection Subtitle',
+			},
+			showCollectionTitle: {
+				type: 'boolean',
+				default: true,
+			},
+			showCollectionSubtitle: {
+				type: 'boolean',
+				default: true,
+			},
 			showMedia: {
 				type: 'boolean',
 				default: true,

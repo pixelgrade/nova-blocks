@@ -7,6 +7,8 @@ import EditableText from '../../components/editable-text';
 const {
 	InnerBlocks,
 	PlainText,
+	MediaPlaceholder,
+	BlockIcon,
 } = wp.blockEditor;
 
 const CardEdit = ( props ) => {
@@ -34,7 +36,15 @@ const CardEdit = ( props ) => {
 		<div className={ `${ blockClassName } ${ className }` }>
 			{
 				showMedia &&
-				<div className={ `${ blockClassName }__media` }></div>
+				<div className={ `${ blockClassName }__media` }>
+					<MediaPlaceholder
+						icon={ <BlockIcon icon='format-gallery' /> }
+						className="novablocks-cards-collection__media-placeholder"
+						onSelect={ () => {} }
+						accept="image/*"
+						allowedTypes={ [ 'image' ] }
+					/>
+				</div>
 			}
 			{
 				showTitle &&
@@ -76,7 +86,7 @@ const CardEdit = ( props ) => {
 				showButtons &&
 				<div className={ `${ blockClassName }__buttons` }>
 					<InnerBlocks
-						allowedBlocks={ [ 'core/buttons' ] }
+						allowedBlocks={ [ 'core/buttons', 'core/button' ] }
 						template={ [
 							[ 'core/buttons', {},
 								[ [ 'core/button', { text: 'Button' } ] ]

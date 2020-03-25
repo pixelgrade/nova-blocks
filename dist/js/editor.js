@@ -17348,7 +17348,9 @@ function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; 
 
 var card_edit_wp$blockEditor = wp.blockEditor,
     edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
-    PlainText = card_edit_wp$blockEditor.PlainText;
+    PlainText = card_edit_wp$blockEditor.PlainText,
+    edit_MediaPlaceholder = card_edit_wp$blockEditor.MediaPlaceholder,
+    edit_BlockIcon = card_edit_wp$blockEditor.BlockIcon;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
@@ -17368,7 +17370,15 @@ var edit_CardEdit = function CardEdit(props) {
     className: "".concat(blockClassName, " ").concat(className)
   }, showMedia && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__media")
-  }), showTitle && Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(edit_MediaPlaceholder, {
+    icon: Object(external_React_["createElement"])(edit_BlockIcon, {
+      icon: "format-gallery"
+    }),
+    className: "novablocks-cards-collection__media-placeholder",
+    onSelect: function onSelect() {},
+    accept: "image/*",
+    allowedTypes: ['image']
+  })), showTitle && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__title")
   }, Object(external_React_["createElement"])(editable_text, {
     tagName: 'h2',
@@ -17401,7 +17411,7 @@ var edit_CardEdit = function CardEdit(props) {
   })), showButtons && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__buttons")
   }, Object(external_React_["createElement"])(edit_InnerBlocks, {
-    allowedBlocks: ['core/buttons'],
+    allowedBlocks: ['core/buttons', 'core/button'],
     template: [['core/buttons', {}, [['core/button', {
       text: 'Button'
     }]]]]
@@ -17450,6 +17460,7 @@ function card_init() {
     title: card_('Card', '__plugin_txtd'),
     description: card_('Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd'),
     category: 'nova-blocks',
+    parent: ['novablocks/cards-collection'],
     icon: icons_media,
     // Additional search terms
     keywords: [card_('image with text', '__plugin_txtd'), card_('columns', '__plugin_txtd'), card_('side text', '__plugin_txtd')],
@@ -17516,6 +17527,7 @@ function cards_collection_edit_ownKeys(object, enumerableOnly) { var keys = Obje
 function cards_collection_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { cards_collection_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { cards_collection_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
+
 /**
  * WordPress dependencies
  */
@@ -17537,6 +17549,8 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       setAttributes = props.setAttributes;
   var blockStyle = attributes.blockStyle,
       contentStyle = attributes.contentStyle,
+      title = attributes.title,
+      subtitle = attributes.subtitle,
       showCollectionTitle = attributes.showCollectionTitle,
       showCollectionSubtitle = attributes.showCollectionSubtitle,
       showMedia = attributes.showMedia,
@@ -17545,7 +17559,8 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       showDescription = attributes.showDescription,
       showButtons = attributes.showButtons,
       showMeta = attributes.showMeta;
-  var className = classnames_default()(props.className, 'novablocks-cards-collection', "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
+  var blockClassName = 'novablocks-cards-collection';
+  var className = classnames_default()(props.className, blockClassName, "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
 
   var toggleAttribute = function toggleAttribute(attribute) {
     var newAttributes = defineProperty_default()({}, attribute, !attributes[attribute]);
@@ -17614,11 +17629,28 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
     }
   }))), Object(external_React_["createElement"])("div", {
     className: className
+  }, showCollectionTitle && Object(external_React_["createElement"])(editable_text, {
+    tagName: 'h2',
+    value: title,
+    onChange: function onChange(title) {
+      setAttributes({
+        title: title
+      });
+    }
+  }), showCollectionSubtitle && Object(external_React_["createElement"])(editable_text, {
+    tagName: 'h3',
+    value: subtitle,
+    onChange: function onChange(subtitle) {
+      setAttributes({
+        subtitle: subtitle
+      });
+    }
+  }), Object(external_React_["createElement"])("div", {
+    className: "".concat(blockClassName, "__layout")
   }, Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
     allowedBlocks: edit_ALLOWED_BLOCKS,
-    template: CARDS_COLLECTION_TEMPLATE,
-    __experimentalMoverDirection: "horizontal"
-  })));
+    template: CARDS_COLLECTION_TEMPLATE
+  }))));
 };
 
 var CardCollectionWithChildren = wp.data.withSelect(function (select, props) {
@@ -17653,6 +17685,22 @@ function cards_collection_init() {
     category: 'nova-blocks',
     icon: icons_media,
     attributes: {
+      title: {
+        type: 'string',
+        default: 'Collection Title'
+      },
+      subtitle: {
+        type: 'string',
+        default: 'Collection Subtitle'
+      },
+      showCollectionTitle: {
+        type: 'boolean',
+        default: true
+      },
+      showCollectionSubtitle: {
+        type: 'boolean',
+        default: true
+      },
       showMedia: {
         type: 'boolean',
         default: true
