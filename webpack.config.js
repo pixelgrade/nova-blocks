@@ -122,7 +122,8 @@ const GutenbergBlocksConfig = {
 	externals: {
 		jquery: 'jQuery',
 		react: 'React',
-		react_dom: 'ReactDOM'
+		react_dom: 'ReactDOM',
+		lodash: 'lodash',
 	},
 	entry: {
 		'./dist/js/editor' : './src/editor.js',
