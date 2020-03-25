@@ -17411,7 +17411,8 @@ var edit_CardEdit = function CardEdit(props) {
   })), showButtons && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__buttons")
   }, Object(external_React_["createElement"])(edit_InnerBlocks, {
-    allowedBlocks: ['core/buttons', 'core/button'],
+    allowedBlocks: ['core/buttons'],
+    renderAppender: false,
     template: [['core/buttons', {}, [['core/button', {
       text: 'Button'
     }]]]]

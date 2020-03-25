@@ -86,7 +86,8 @@ const CardEdit = ( props ) => {
 				showButtons &&
 				<div className={ `${ blockClassName }__buttons` }>
 					<InnerBlocks
-						allowedBlocks={ [ 'core/buttons', 'core/button' ] }
+						allowedBlocks={ [ 'core/buttons' ] }
+						renderAppender={ false }
 						template={ [
 							[ 'core/buttons', {},
 								[ [ 'core/button', { text: 'Button' } ] ]
