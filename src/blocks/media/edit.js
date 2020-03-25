@@ -3,7 +3,6 @@
  */
 import withSettings from '../../components/with-settings';
 import BlockControls from './block-controls';
-import InspectorControls from './inspector-controls';
 import MediaPreview from './preview';
 
 /**
@@ -22,7 +21,6 @@ const MediaEdit = function( props ) {
 		<Fragment>
 			<MediaPreview { ...{ ...props, updateImages } } />
 			<BlockControls { ...{ ...props, updateImages } } />
-			<InspectorControls { ...props } />
 		</Fragment>
 	);
 };
