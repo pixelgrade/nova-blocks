@@ -17686,6 +17686,10 @@ function cards_collection_init() {
     category: 'nova-blocks',
     icon: icons_media,
     attributes: {
+      align: {
+        type: 'string',
+        default: 'full'
+      },
       title: {
         type: 'string',
         default: 'Collection Title'

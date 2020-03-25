@@ -18,6 +18,10 @@ function init() {
 		category: 'nova-blocks',
 		icon: icons.media,
 		attributes: {
+			align: {
+				type: 'string',
+				default: 'full'
+			},
 			title: {
 				type: 'string',
 				default: 'Collection Title',
