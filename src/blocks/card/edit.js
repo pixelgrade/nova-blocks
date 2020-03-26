@@ -3,13 +3,19 @@
  */
 
 import EditableText from '../../components/editable-text';
+import * as icons from "../../icons";
 
 const {
 	InnerBlocks,
 	PlainText,
 	MediaPlaceholder,
+	MediaUpload,
 	BlockIcon,
 } = wp.blockEditor;
+
+const {
+	Placeholder
+} = wp.components;
 
 const CardEdit = ( props ) => {
 
@@ -17,9 +23,11 @@ const CardEdit = ( props ) => {
 
 	const {
 		attributes: {
+			level,
 			title,
 			subtitle,
 			description,
+			media,
 
 			showMedia,
 			showTitle,
@@ -32,25 +40,50 @@ const CardEdit = ( props ) => {
 		setAttributes,
 	} = props;
 
+	const CardMedia = ( props ) => {
+
+		const {
+			attributes: {
+				media
+			},
+			open,
+		} = props;
+
+		console.log( media );
+
+		if ( !! media && !! media.url ) {
+			return <img className={ `${ blockClassName }__media-image` } src={ media.url } onClick={ open } />
+		}
+
+		return (
+			<div className={ `${ blockClassName }__media-placeholder` } onClick={ open }>
+				{ icons.placeholder }
+			</div>
+		);
+	}
+
 	return (
 		<div className={ `${ blockClassName } ${ className }` }>
 			{
 				showMedia &&
-				<div className={ `${ blockClassName }__media` }>
-					<MediaPlaceholder
-						icon={ <BlockIcon icon='format-gallery' /> }
-						className="novablocks-cards-collection__media-placeholder"
-						onSelect={ () => {} }
-						accept="image/*"
-						allowedTypes={ [ 'image' ] }
-					/>
+				<div className={ `${ blockClassName }__media-wrap` }>
+					<div className={ `${ blockClassName }__media` }>
+						<MediaUpload
+							type="image"
+							value={ !! media && media.id }
+							onSelect={ ( media ) => setAttributes( { media } ) }
+							render={ ( { open } ) => (
+								<CardMedia { ...props } open={ open } />
+							) }
+						/>
+					</div>
 				</div>
 			}
 			{
 				showTitle &&
 				<div className={`${blockClassName}__title`}>
 					 <EditableText
-						 tagName={'h2'}
+						 tagName={`h${level + 1}`}
 						 value={title}
 						 onChange={title => {
 							 setAttributes( {title} )
@@ -62,7 +95,7 @@ const CardEdit = ( props ) => {
 				showSubtitle &&
 				<div className={ `${ blockClassName }__subtitle` }>
 					<EditableText
-						tagName={ 'h3' }
+						tagName={ `h${level + 2}` }
 						value={subtitle}
 						onChange={subtitle => {
 							setAttributes( {subtitle} )
@@ -114,6 +147,7 @@ const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
 		...props,
 		attributes: {
 			...props.attributes,
+			level: parentBlockAttributes.level,
 			showTitle: parentBlockAttributes.showTitle,
 			showSubtitle: parentBlockAttributes.showSubtitle,
 			showDescription: parentBlockAttributes.showDescription,
@@ -121,6 +155,8 @@ const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
 			showMeta: parentBlockAttributes.showMeta,
 		}
 	}
+
+	console.log( newProps );
 
 	return newProps;
 

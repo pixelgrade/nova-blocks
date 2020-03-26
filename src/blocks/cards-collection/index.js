@@ -22,6 +22,10 @@ function init() {
 				type: 'string',
 				default: 'full'
 			},
+			level: {
+				type: 'number',
+				default: 2,
+			},
 			title: {
 				type: 'string',
 				default: 'Collection Title',

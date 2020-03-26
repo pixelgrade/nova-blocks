@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import EditableText from "../../components/editable-text";
+import HeadingToolbar from "../../components/heading-toolbar";
 
 /**
  * WordPress dependencies
@@ -34,6 +35,7 @@ const CardsCollectionEdit = ( props ) => {
 
 		title,
 		subtitle,
+		level,
 
 		showCollectionTitle,
 		showCollectionSubtitle,
@@ -81,6 +83,7 @@ const CardsCollectionEdit = ( props ) => {
 						checked={ !! showCollectionSubtitle }
 						onChange={ showCollectionSubtitle => setAttributes( { showCollectionSubtitle } ) }
 					/>
+					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 					<ToggleControl
 						label={ __( 'Media' ) }
 						checked={ !! showMedia }
@@ -117,7 +120,7 @@ const CardsCollectionEdit = ( props ) => {
 				{
 					showCollectionTitle &&
 					<EditableText
-						tagName={ 'h2' }
+						tagName={ `h${level}` }
 						value={title}
 						onChange={title => {
 							setAttributes( {title} )
@@ -127,7 +130,8 @@ const CardsCollectionEdit = ( props ) => {
 				{
 					showCollectionSubtitle &&
 					<EditableText
-						tagName={ 'h3' }
+						tagName={ 'p' }
+						className={ 'intro' }
 						value={subtitle}
 						onChange={subtitle => {
 							setAttributes( {subtitle} )

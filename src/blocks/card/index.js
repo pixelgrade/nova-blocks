@@ -21,6 +21,10 @@ function init() {
 		// Additional search terms
 		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 		attributes: {
+			level: {
+				type: 'number',
+				default: 2,
+			},
 			media: {
 				type: 'object',
 				default: {}
