@@ -13,7 +13,7 @@
 
 .novablocks-card__media {
 	position: relative;
-	padding-top: 50%;
+	padding-top: var(--card-media-padding-top, 100%);
 	overflow: hidden;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .novablocks-card__media-image {
-	object-fit: cover;
+	object-fit: var(--card-media-object-fit, cover);
 }
 
 .novablocks-card__media-placeholder {

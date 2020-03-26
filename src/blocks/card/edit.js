@@ -49,8 +49,6 @@ const CardEdit = ( props ) => {
 			open,
 		} = props;
 
-		console.log( media );
-
 		if ( !! media && !! media.url ) {
 			return <img className={ `${ blockClassName }__media-image` } src={ media.url } onClick={ open } />
 		}
@@ -155,8 +153,6 @@ const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
 			showMeta: parentBlockAttributes.showMeta,
 		}
 	}
-
-	console.log( newProps );
 
 	return newProps;
 

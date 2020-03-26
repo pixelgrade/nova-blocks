@@ -26,6 +26,14 @@ function init() {
 				type: 'number',
 				default: 2,
 			},
+			imageResizing: {
+				type: 'string',
+				default: 'original'
+			},
+			containerHeight: {
+				type: 'number',
+				default: 50
+			},
 			title: {
 				type: 'string',
 				default: 'Collection Title',
