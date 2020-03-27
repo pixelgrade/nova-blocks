@@ -2,6 +2,9 @@ import classnames from 'classnames';
 import EditableText from "../../components/editable-text";
 import HeadingToolbar from "../../components/heading-toolbar";
 
+import blockAttributes from './attributes';
+import { updateBlockAttributesWithDefaults } from '../../utils';
+
 /**
  * WordPress dependencies
  */
@@ -29,6 +32,7 @@ const CardsCollectionEdit = ( props ) => {
 		attributes,
 		childrenBlocks,
 		setAttributes,
+		clientId,
 	} = props;
 
 	const {
@@ -61,6 +65,8 @@ const CardsCollectionEdit = ( props ) => {
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`
 	);
+
+	updateBlockAttributesWithDefaults( props, blockAttributes );
 
 	const toggleAttribute = ( attribute ) => {
 		const newAttributes = {

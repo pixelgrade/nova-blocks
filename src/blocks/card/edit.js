@@ -5,6 +5,9 @@
 import EditableText from '../../components/editable-text';
 import * as icons from "../../icons";
 
+import blockAttributes from "./attributes";
+import { updateBlockAttributesWithDefaults } from '../../utils';
+
 const {
 	InnerBlocks,
 	PlainText,
@@ -39,6 +42,8 @@ const CardEdit = ( props ) => {
 		className,
 		setAttributes,
 	} = props;
+
+	updateBlockAttributesWithDefaults( props, blockAttributes );
 
 	const CardMedia = ( props ) => {
 
