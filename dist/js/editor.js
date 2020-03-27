@@ -17363,11 +17363,7 @@ function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; 
 
 var card_edit_wp$blockEditor = wp.blockEditor,
     edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
-    PlainText = card_edit_wp$blockEditor.PlainText,
-    edit_MediaPlaceholder = card_edit_wp$blockEditor.MediaPlaceholder,
-    edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload,
-    edit_BlockIcon = card_edit_wp$blockEditor.BlockIcon;
-var edit_Placeholder = wp.components.Placeholder;
+    edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';

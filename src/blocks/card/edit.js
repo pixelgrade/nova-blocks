@@ -7,15 +7,8 @@ import * as icons from "../../icons";
 
 const {
 	InnerBlocks,
-	PlainText,
-	MediaPlaceholder,
 	MediaUpload,
-	BlockIcon,
 } = wp.blockEditor;
-
-const {
-	Placeholder
-} = wp.components;
 
 const CardEdit = ( props ) => {
 
