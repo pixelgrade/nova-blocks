@@ -5339,6 +5339,19 @@ var navigation = Object(external_React_["createElement"])("svg", {
   d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
   fill: "#6565F2"
 }));
+var placeholder = Object(external_React_["createElement"])("svg", {
+  width: "100",
+  height: "67",
+  viewBox: "0 0 100 67",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z",
+  fill: "#323067"
+}), Object(external_React_["createElement"])("path", {
+  d: "M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z",
+  fill: "#323067"
+}));
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/index.js
 
 
@@ -5545,7 +5558,7 @@ var placeholder_MapPlaceholder = /*#__PURE__*/function (_Component) {
   return MapPlaceholder;
 }(placeholder_Component);
 
-/* harmony default export */ var placeholder = (placeholder_MapPlaceholder);
+/* harmony default export */ var google_map_placeholder = (placeholder_MapPlaceholder);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
 var objectWithoutProperties = __webpack_require__(28);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
@@ -8420,7 +8433,7 @@ var edit_Edit = /*#__PURE__*/function (_Component) {
       }
 
       if (!fetchedScript || !savedApiKey || gmAuthFailure) {
-        return Object(external_React_["createElement"])(placeholder, {
+        return Object(external_React_["createElement"])(google_map_placeholder, {
           saveApiKey: this.saveApiKey.bind(this),
           apiKey: savedApiKey,
           apiKeyInstructions: this.getInstructions()
@@ -14902,7 +14915,7 @@ function ToolbarGroup(_ref) {
 
 /* harmony default export */ var toolbar_group = (ToolbarGroup);
 //# sourceMappingURL=index.js.map
-// CONCATENATED MODULE: ./src/blocks/headline/heading-level-icon.js
+// CONCATENATED MODULE: ./src/components/heading-level-icon/index.js
 
 
 /**
@@ -14911,7 +14924,7 @@ function ToolbarGroup(_ref) {
 var heading_level_icon_wp$components = wp.components,
     heading_level_icon_Path = heading_level_icon_wp$components.Path,
     heading_level_icon_SVG = heading_level_icon_wp$components.SVG;
-function HeadingLevelIcon(_ref) {
+function Index(_ref) {
   var level = _ref.level,
       _ref$isPressed = _ref.isPressed,
       isPressed = _ref$isPressed === void 0 ? false : _ref$isPressed;
@@ -14938,7 +14951,7 @@ function HeadingLevelIcon(_ref) {
     d: levelToPath[level]
   }));
 }
-// CONCATENATED MODULE: ./src/blocks/headline/heading-toolbar.js
+// CONCATENATED MODULE: ./src/components/heading-toolbar/index.js
 
 
 
@@ -14975,7 +14988,7 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
     value: function createLevelControl(targetLevel, selectedLevel, onChange) {
       var isActive = targetLevel === selectedLevel;
       return {
-        icon: Object(external_React_["createElement"])(HeadingLevelIcon, {
+        icon: Object(external_React_["createElement"])(Index, {
           level: targetLevel,
           isPressed: isActive
         }),
@@ -14998,7 +15011,7 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
           selectedLevel = _this$props.selectedLevel,
           onChange = _this$props.onChange;
       return Object(external_React_["createElement"])(toolbar_group, {
-        icon: Object(external_React_["createElement"])(HeadingLevelIcon, {
+        icon: Object(external_React_["createElement"])(Index, {
           level: selectedLevel
         }),
         controls: range_default()(minLevel, maxLevel).map(function (index) {
@@ -17338,6 +17351,7 @@ EditableText.Content = function (_ref) {
 
 
 
+
 function card_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { card_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { card_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -17346,18 +17360,19 @@ function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; 
  * WordPress dependencies
  */
 
+
 var card_edit_wp$blockEditor = wp.blockEditor,
     edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
-    PlainText = card_edit_wp$blockEditor.PlainText,
-    edit_MediaPlaceholder = card_edit_wp$blockEditor.MediaPlaceholder,
-    edit_BlockIcon = card_edit_wp$blockEditor.BlockIcon;
+    edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
   var _props$attributes = props.attributes,
+      level = _props$attributes.level,
       title = _props$attributes.title,
       subtitle = _props$attributes.subtitle,
       description = _props$attributes.description,
+      media = _props$attributes.media,
       showMedia = _props$attributes.showMedia,
       showTitle = _props$attributes.showTitle,
       showSubtitle = _props$attributes.showSubtitle,
@@ -17366,22 +17381,49 @@ var edit_CardEdit = function CardEdit(props) {
       showMeta = _props$attributes.showMeta,
       className = props.className,
       setAttributes = props.setAttributes;
+
+  var CardMedia = function CardMedia(props) {
+    var media = props.attributes.media,
+        open = props.open;
+
+    if (!!media && !!media.url) {
+      return Object(external_React_["createElement"])("img", {
+        className: "".concat(blockClassName, "__media-image"),
+        src: media.url,
+        onClick: open
+      });
+    }
+
+    return Object(external_React_["createElement"])("div", {
+      className: "".concat(blockClassName, "__media-placeholder"),
+      onClick: open
+    }, placeholder);
+  };
+
   return Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, " ").concat(className)
   }, showMedia && Object(external_React_["createElement"])("div", {
+    className: "".concat(blockClassName, "__media-wrap")
+  }, Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__media")
-  }, Object(external_React_["createElement"])(edit_MediaPlaceholder, {
-    icon: Object(external_React_["createElement"])(edit_BlockIcon, {
-      icon: "format-gallery"
-    }),
-    className: "novablocks-cards-collection__media-placeholder",
-    onSelect: function onSelect() {},
-    accept: "image/*",
-    allowedTypes: ['image']
-  })), showTitle && Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(edit_MediaUpload, {
+    type: "image",
+    value: !!media && media.id,
+    onSelect: function onSelect(media) {
+      return setAttributes({
+        media: media
+      });
+    },
+    render: function render(_ref) {
+      var open = _ref.open;
+      return Object(external_React_["createElement"])(CardMedia, extends_default()({}, props, {
+        open: open
+      }));
+    }
+  }))), showTitle && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__title")
   }, Object(external_React_["createElement"])(editable_text, {
-    tagName: 'h2',
+    tagName: "h".concat(level + 1),
     value: title,
     onChange: function onChange(title) {
       setAttributes({
@@ -17391,7 +17433,7 @@ var edit_CardEdit = function CardEdit(props) {
   })), showSubtitle && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__subtitle")
   }, Object(external_React_["createElement"])(editable_text, {
-    tagName: 'h3',
+    tagName: "h".concat(level + 2),
     value: subtitle,
     onChange: function onChange(subtitle) {
       setAttributes({
@@ -17429,6 +17471,7 @@ var CardWithVisibility = wp.data.withSelect(function (select, props) {
 
   var newProps = card_edit_objectSpread({}, props, {
     attributes: card_edit_objectSpread({}, props.attributes, {
+      level: parentBlockAttributes.level,
       showTitle: parentBlockAttributes.showTitle,
       showSubtitle: parentBlockAttributes.showSubtitle,
       showDescription: parentBlockAttributes.showDescription,
@@ -17466,6 +17509,10 @@ function card_init() {
     // Additional search terms
     keywords: [card_('image with text', '__plugin_txtd'), card_('columns', '__plugin_txtd'), card_('side text', '__plugin_txtd')],
     attributes: {
+      level: {
+        type: 'number',
+        default: 2
+      },
       media: {
         type: 'object',
         default: {}
@@ -17529,6 +17576,7 @@ function cards_collection_edit_objectSpread(target) { for (var i = 1; i < argume
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -17537,6 +17585,8 @@ var cards_collection_edit_Fragment = wp.element.Fragment;
 var cards_collection_edit_ = wp.i18n.__;
 var cards_collection_edit_wp$components = wp.components,
     cards_collection_edit_PanelBody = cards_collection_edit_wp$components.PanelBody,
+    cards_collection_edit_RadioControl = cards_collection_edit_wp$components.RadioControl,
+    edit_RangeControl = cards_collection_edit_wp$components.RangeControl,
     edit_ToggleControl = cards_collection_edit_wp$components.ToggleControl;
 var cards_collection_edit_wp$blockEditor = wp.blockEditor,
     cards_collection_edit_InnerBlocks = cards_collection_edit_wp$blockEditor.InnerBlocks,
@@ -17552,6 +17602,9 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       contentStyle = attributes.contentStyle,
       title = attributes.title,
       subtitle = attributes.subtitle,
+      level = attributes.level,
+      imageResizing = attributes.imageResizing,
+      containerHeight = attributes.containerHeight,
       showCollectionTitle = attributes.showCollectionTitle,
       showCollectionSubtitle = attributes.showCollectionSubtitle,
       showMedia = attributes.showMedia,
@@ -17573,7 +17626,66 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
     setAttributes(newAttributes);
   };
 
+  var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
+    var compiledHeight = containerHeight / 50 - 1;
+    var numerator = 1;
+    var denominator = 1;
+    compiledHeight = Math.min(Math.max(-1, compiledHeight), 1);
+
+    if (compiledHeight > 0) {
+      numerator = 1 + compiledHeight;
+    }
+
+    if (compiledHeight < 0) {
+      denominator = 1 + Math.abs(compiledHeight);
+    }
+
+    return "".concat(numerator * 100 / denominator, "%");
+  };
+
+  var style = {
+    '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
+    '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
+  };
   return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])(cards_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_collection_edit_PanelBody, {
+    initialOpen: true,
+    title: cards_collection_edit_('Controls')
+  }, Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 2,
+    maxLevel: 4,
+    selectedLevel: level,
+    onChange: function onChange(newLevel) {
+      return setAttributes({
+        level: newLevel
+      });
+    }
+  }), Object(external_React_["createElement"])(cards_collection_edit_RadioControl, {
+    label: 'Image resizing',
+    selected: imageResizing,
+    onChange: function onChange(imageResizing) {
+      setAttributes({
+        imageResizing: imageResizing
+      });
+    },
+    options: [{
+      label: 'Stretch to fill the container',
+      value: 'cropped'
+    }, {
+      label: 'Shrink to fit (no crop)',
+      value: 'original'
+    }]
+  }), Object(external_React_["createElement"])(edit_RangeControl, {
+    label: cards_collection_edit_('Image container height', '__plugin_txtd'),
+    value: containerHeight,
+    onChange: function onChange(containerHeight) {
+      setAttributes({
+        containerHeight: containerHeight
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 5
+  })), Object(external_React_["createElement"])(cards_collection_edit_PanelBody, {
     initialOpen: true,
     title: cards_collection_edit_('Elements Visibility', '__plugin_txtd')
   }, Object(external_React_["createElement"])(edit_ToggleControl, {
@@ -17629,9 +17741,10 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       toggleAttribute('showMeta');
     }
   }))), Object(external_React_["createElement"])("div", {
-    className: className
+    className: className,
+    style: style
   }, showCollectionTitle && Object(external_React_["createElement"])(editable_text, {
-    tagName: 'h2',
+    tagName: "h".concat(level),
     value: title,
     onChange: function onChange(title) {
       setAttributes({
@@ -17639,7 +17752,8 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       });
     }
   }), showCollectionSubtitle && Object(external_React_["createElement"])(editable_text, {
-    tagName: 'h3',
+    tagName: 'p',
+    className: 'intro',
     value: subtitle,
     onChange: function onChange(subtitle) {
       setAttributes({
@@ -17689,6 +17803,18 @@ function cards_collection_init() {
       align: {
         type: 'string',
         default: 'full'
+      },
+      level: {
+        type: 'number',
+        default: 2
+      },
+      imageResizing: {
+        type: 'string',
+        default: 'original'
+      },
+      containerHeight: {
+        type: 'number',
+        default: 50
       },
       title: {
         type: 'string',
