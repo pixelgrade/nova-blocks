@@ -4,9 +4,6 @@
 import * as icons from '../../icons';
 import edit from './edit';
 
-import blockAttributes from './attributes';
-import { getAttributesWithoutDefaults } from '../../utils';
-
 /**
  * WordPress dependencies
  */
@@ -23,7 +20,6 @@ function init() {
 		icon: icons.media,
 		// Additional search terms
 		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
-		attributes: getAttributesWithoutDefaults( blockAttributes ),
 		edit,
 		save() {
 			return <InnerBlocks.Content />;

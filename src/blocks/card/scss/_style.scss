@@ -4,7 +4,7 @@
 	box-shadow: var(--novablocks-media-content-box-shadow);
 }
 
-.novablocks-card__media-wrap {
+.novablocks-card__media-wrap[class] {
 	margin-top: calc( -0.5 * var(--novablocks-media-content-padding) );
 	margin-left: calc( -0.5 * var(--novablocks-media-content-padding) );
 	margin-right: calc( -0.5 * var(--novablocks-media-content-padding) );
@@ -15,6 +15,7 @@
 	position: relative;
 	padding-top: var(--card-media-padding-top, 100%);
 	overflow: hidden;
+	background: var(--novablocks-light-3);
 }
 
 .novablocks-card__media-placeholder,
@@ -31,7 +32,6 @@
 }
 
 .novablocks-card__media-placeholder {
-	background: var(--novablocks-light-3);
 	display: flex;
 	align-items: center;
 	justify-content: center;

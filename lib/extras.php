@@ -336,6 +336,120 @@ function novablocks_get_media_attributes() {
 	return array();
 }
 
+function novablocks_get_card_attributes() {
+	return array(
+		'level'           => array(
+			'type'    => 'number',
+			'default' => 2,
+		),
+		'media'           => array(
+			'type'    => 'object',
+			'default' => array(),
+		),
+		'title'           => array(
+			'type'    => 'string',
+			'default' => 'Title',
+		),
+		'subtitle'        => array(
+			'type'    => 'string',
+			'default' => 'Subtitle',
+		),
+		'description'     => array(
+			'type'    => 'string',
+			'default' => 'This is just an example of what a description for this card could look like',
+		),
+		'meta'            => array(
+			'type'    => 'string',
+			'default' => '',
+		),
+		'showMedia'       => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showTitle'       => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showSubtitle'    => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showDescription' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showButtons'     => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showMeta'        => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+	);
+}
+
+function novablocks_get_cards_collection_attributes() {
+	return array(
+		'align'                  => array(
+			'type'    => 'string',
+			'default' => 'full'
+		),
+		'level'                  => array(
+			'type'    => 'number',
+			'default' => 2,
+		),
+		'imageResizing'          => array(
+			'type'    => 'string',
+			'default' => 'original'
+		),
+		'containerHeight'        => array(
+			'type'    => 'number',
+			'default' => 50
+		),
+		'title'                  => array(
+			'type'    => 'string',
+			'default' => 'Collection Title',
+		),
+		'subtitle'               => array(
+			'type'    => 'string',
+			'default' => 'Collection Subtitle',
+		),
+		'showCollectionTitle'    => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showCollectionSubtitle' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showMedia'              => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showTitle'              => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showSubtitle'           => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showDescription'        => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showButtons'            => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showMeta'               => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+	);
+}
+
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
 
     foreach ( $attributes_config as $key => $value ) {

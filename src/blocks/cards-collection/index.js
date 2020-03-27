@@ -4,10 +4,6 @@
 import * as icons from '../../icons';
 import edit from './edit';
 
-import blockAttributes from './attributes';
-import { getAttributesWithoutDefaults } from '../../utils';
-
-
 /**
  * WordPress dependencies
  */
@@ -21,7 +17,6 @@ function init() {
 		description: __( 'Display a list of cards placed within a coherent layout.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.media,
-		attributes: getAttributesWithoutDefaults( blockAttributes ),
 		// Additional search terms
 		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 		edit,

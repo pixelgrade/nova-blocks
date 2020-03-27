@@ -1,5 +1,4 @@
 import {getProps, getState, getStylesFromProps} from "./components/with-parallax/util";
-import blockAttributes from "./blocks/cards-collection/attributes";
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -143,40 +142,4 @@ export const getSnapClassname = function( focalPoint ) {
 	}
 
 	return classNames.join( ' ' );
-}
-
-export const updateBlockAttributesWithDefaults = ( props, blockAttributes ) => {
-	const attributes = props.attributes;
-	const newAttributes = {};
-
-	Object.keys( blockAttributes ).forEach( attribute => {
-		if ( typeof attributes[attribute] === "undefined" ) {
-			newAttributes[attribute] = blockAttributes[attribute].default
-		}
-	} );
-
-	if ( Object.keys( newAttributes ).length ) {
-		console.log( props.clientId, newAttributes );
-		wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( props.clientId, newAttributes );
-	}
-}
-
-export const getAttributesWithoutDefaults = ( attributes ) => {
-	const attributesWithoutDefaults = {};
-
-	Object.keys( attributes ).forEach( attribute => {
-		const type = attributes[ attribute ].type;
-		let defaultValue;
-
-		if ( type === 'number' ) defaultValue = Number.MIN_SAFE_INTEGER;
-		if ( type === 'string' ) defaultValue = '';
-		if ( type === 'boolean' ) defaultValue = false;
-		if ( type === 'object' ) defaultValue = {};
-		if ( type === 'array' ) defaultValue = [];
-
-		attributesWithoutDefaults[ attribute ] = {
-			type: attributes[ attribute ].type,
-			default: defaultValue,
-		}
-	} );
 }
