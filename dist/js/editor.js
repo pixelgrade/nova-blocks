@@ -17569,8 +17569,6 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       showDescription = attributes.showDescription,
       showButtons = attributes.showButtons,
       showMeta = attributes.showMeta;
-  console.log(level);
-  console.log('altceva');
   var blockClassName = 'novablocks-cards-collection';
   var className = classnames_default()(props.className, blockClassName, "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
 

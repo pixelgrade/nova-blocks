@@ -54,9 +54,6 @@ const CardsCollectionEdit = ( props ) => {
 		showMeta,
 	} = attributes;
 
-	console.log( level );
-	console.log( 'altceva' );
-
 	const blockClassName = 'novablocks-cards-collection';
 
 	const className = classnames(
