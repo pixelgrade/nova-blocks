@@ -29,6 +29,7 @@ const CardsCollectionEdit = ( props ) => {
 		attributes,
 		childrenBlocks,
 		setAttributes,
+		clientId,
 	} = props;
 
 	const {

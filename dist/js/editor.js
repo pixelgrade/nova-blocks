@@ -17373,6 +17373,7 @@ var edit_CardEdit = function CardEdit(props) {
       subtitle = _props$attributes.subtitle,
       description = _props$attributes.description,
       media = _props$attributes.media,
+      meta = _props$attributes.meta,
       showMedia = _props$attributes.showMedia,
       showTitle = _props$attributes.showTitle,
       showSubtitle = _props$attributes.showSubtitle,
@@ -17420,9 +17421,8 @@ var edit_CardEdit = function CardEdit(props) {
         open: open
       }));
     }
-  }))), showTitle && Object(external_React_["createElement"])("div", {
-    className: "".concat(blockClassName, "__title")
-  }, Object(external_React_["createElement"])(editable_text, {
+  }))), showTitle && Object(external_React_["createElement"])(editable_text, {
+    className: "".concat(blockClassName, "__title"),
     tagName: "h".concat(level + 1),
     value: title,
     onChange: function onChange(title) {
@@ -17430,9 +17430,8 @@ var edit_CardEdit = function CardEdit(props) {
         title: title
       });
     }
-  })), showSubtitle && Object(external_React_["createElement"])("div", {
-    className: "".concat(blockClassName, "__subtitle")
-  }, Object(external_React_["createElement"])(editable_text, {
+  }), showSubtitle && Object(external_React_["createElement"])(editable_text, {
+    className: "".concat(blockClassName, "__subtitle"),
     tagName: "h".concat(level + 2),
     value: subtitle,
     onChange: function onChange(subtitle) {
@@ -17440,9 +17439,8 @@ var edit_CardEdit = function CardEdit(props) {
         subtitle: subtitle
       });
     }
-  })), showDescription && Object(external_React_["createElement"])("div", {
-    className: "".concat(blockClassName, "__description")
-  }, Object(external_React_["createElement"])(editable_text, {
+  }), showDescription && Object(external_React_["createElement"])(editable_text, {
+    className: "".concat(blockClassName, "__description"),
     tagName: 'p',
     value: description,
     onChange: function onChange(description) {
@@ -17450,7 +17448,7 @@ var edit_CardEdit = function CardEdit(props) {
         description: description
       });
     }
-  })), showButtons && Object(external_React_["createElement"])("div", {
+  }), showButtons && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__buttons")
   }, Object(external_React_["createElement"])(edit_InnerBlocks, {
     allowedBlocks: ['core/buttons'],
@@ -17458,9 +17456,16 @@ var edit_CardEdit = function CardEdit(props) {
     template: [['core/buttons', {}, [['core/button', {
       text: 'Button'
     }]]]]
-  })), showMeta && Object(external_React_["createElement"])("div", {
-    className: "".concat(blockClassName, "__meta")
-  }, "Meta"));
+  })), showMeta && Object(external_React_["createElement"])(editable_text, {
+    className: "".concat(blockClassName, "__meta"),
+    tagName: 'p',
+    value: meta,
+    onChange: function onChange(meta) {
+      setAttributes({
+        meta: meta
+      });
+    }
+  }));
 };
 
 var CardWithVisibility = wp.data.withSelect(function (select, props) {
@@ -17508,56 +17513,6 @@ function card_init() {
     icon: icons_media,
     // Additional search terms
     keywords: [card_('image with text', '__plugin_txtd'), card_('columns', '__plugin_txtd'), card_('side text', '__plugin_txtd')],
-    attributes: {
-      level: {
-        type: 'number',
-        default: 2
-      },
-      media: {
-        type: 'object',
-        default: {}
-      },
-      title: {
-        type: 'string',
-        default: 'Title'
-      },
-      subtitle: {
-        type: 'string',
-        default: 'Subtitle'
-      },
-      description: {
-        type: 'string',
-        default: 'This is just an example of what a description for this card could look like'
-      },
-      meta: {
-        type: 'string',
-        default: ''
-      },
-      showMedia: {
-        type: 'boolean',
-        default: true
-      },
-      showTitle: {
-        type: 'boolean',
-        default: true
-      },
-      showSubtitle: {
-        type: 'boolean',
-        default: true
-      },
-      showDescription: {
-        type: 'boolean',
-        default: true
-      },
-      showButtons: {
-        type: 'boolean',
-        default: true
-      },
-      showMeta: {
-        type: 'boolean',
-        default: true
-      }
-    },
     edit: card_edit,
     save: function save() {
       return Object(external_React_["createElement"])(card_InnerBlocks.Content, null);
@@ -17597,7 +17552,8 @@ var CARDS_COLLECTION_TEMPLATE = [['novablocks/card']];
 var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   var attributes = props.attributes,
       childrenBlocks = props.childrenBlocks,
-      setAttributes = props.setAttributes;
+      setAttributes = props.setAttributes,
+      clientId = props.clientId;
   var blockStyle = attributes.blockStyle,
       contentStyle = attributes.contentStyle,
       title = attributes.title,
@@ -17799,64 +17755,6 @@ function cards_collection_init() {
     description: cards_collection_('Display a list of cards placed within a coherent layout.', '__plugin_txtd'),
     category: 'nova-blocks',
     icon: icons_media,
-    attributes: {
-      align: {
-        type: 'string',
-        default: 'full'
-      },
-      level: {
-        type: 'number',
-        default: 2
-      },
-      imageResizing: {
-        type: 'string',
-        default: 'original'
-      },
-      containerHeight: {
-        type: 'number',
-        default: 50
-      },
-      title: {
-        type: 'string',
-        default: 'Collection Title'
-      },
-      subtitle: {
-        type: 'string',
-        default: 'Collection Subtitle'
-      },
-      showCollectionTitle: {
-        type: 'boolean',
-        default: true
-      },
-      showCollectionSubtitle: {
-        type: 'boolean',
-        default: true
-      },
-      showMedia: {
-        type: 'boolean',
-        default: true
-      },
-      showTitle: {
-        type: 'boolean',
-        default: true
-      },
-      showSubtitle: {
-        type: 'boolean',
-        default: true
-      },
-      showDescription: {
-        type: 'boolean',
-        default: true
-      },
-      showButtons: {
-        type: 'boolean',
-        default: true
-      },
-      showMeta: {
-        type: 'boolean',
-        default: true
-      }
-    },
     // Additional search terms
     keywords: [cards_collection_('image with text', '__plugin_txtd'), cards_collection_('columns', '__plugin_txtd'), cards_collection_('side text', '__plugin_txtd')],
     edit: cards_collection_edit,

@@ -21,6 +21,7 @@ const CardEdit = ( props ) => {
 			subtitle,
 			description,
 			media,
+			meta,
 
 			showMedia,
 			showTitle,
@@ -72,39 +73,35 @@ const CardEdit = ( props ) => {
 			}
 			{
 				showTitle &&
-				<div className={`${blockClassName}__title`}>
-					 <EditableText
-						 tagName={`h${level + 1}`}
-						 value={title}
-						 onChange={title => {
-							 setAttributes( {title} )
-						 }}
-					 />
-				 </div>
+				<EditableText
+					className={`${blockClassName}__title`}
+					tagName={`h${level + 1}`}
+					value={title}
+					onChange={title => {
+						setAttributes( {title} )
+					}} />
 			}
 			{
 				showSubtitle &&
-				<div className={ `${ blockClassName }__subtitle` }>
-					<EditableText
-						tagName={ `h${level + 2}` }
-						value={subtitle}
-						onChange={subtitle => {
-							setAttributes( {subtitle} )
-						}}
-					/>
-				</div>
+				<EditableText
+					className={ `${ blockClassName }__subtitle` }
+					tagName={ `h${level + 2}` }
+					value={subtitle}
+					onChange={subtitle => {
+						setAttributes( {subtitle} )
+					}}
+				/>
 			}
 			{
 				showDescription &&
-				<div className={ `${ blockClassName }__description` }>
-					<EditableText
-						tagName={ 'p' }
-						value={description}
-						onChange={description => {
-							setAttributes( {description} )
-						}}
-					/>
-				</div>
+				<EditableText
+					className={ `${ blockClassName }__description` }
+					tagName={ 'p' }
+					value={description}
+					onChange={description => {
+						setAttributes( {description} )
+					}}
+				/>
 			}
 			{
 				showButtons &&
@@ -122,7 +119,14 @@ const CardEdit = ( props ) => {
 			}
 			{
 				showMeta &&
-				<div className={ `${ blockClassName }__meta` }>Meta</div>
+				<EditableText
+					className={ `${ blockClassName }__meta` }
+					tagName={ 'p' }
+					value={meta}
+					onChange={meta => {
+						setAttributes( {meta} )
+					}}
+				/>
 			}
 		</div>
 	);
