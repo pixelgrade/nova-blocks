@@ -5,10 +5,14 @@
 	--novablocks-block-background-color: var(--novablocks-light-1);
 
 	--novablocks-block-content-padding: 0;
+	--novablocks-block-content-text-color: var(--novablocks-dark-2);
+	--novablocks-block-content-titles-color: var(--novablocks-dark-3);
+	--novablocks-block-content-subtitles-color: var(--novablocks-color-1);
 	--novablocks-block-content-background-color: transparent;
 	--novablocks-block-content-background-opacity: 1;
 	--novablocks-block-content-box-shadow: none;
 
+	color: var(--novablocks-block-text-color);
 	background-color: var(--novablocks-block-background-color);
 
 	transition: var(--novablocks-transition);
@@ -17,6 +21,14 @@
 	h1, h2, h3, h4, h5, h6 {
 		transition: var(--novablocks-transition);
 		transition-property: color;
+	}
+
+	h1, h2, h3 {
+		color: var(--novablocks-block-titles-color);
+	}
+
+	h4, h5, h6 {
+		color: var(--novablocks-block-subtitles-color);
 	}
 
 	.wp-block-group__inner-container {
@@ -29,7 +41,7 @@
 	position: relative;
 	padding: var(--novablocks-block-content-padding);
 
-	color: var(--novablocks-block-text-color);
+	color: var(--novablocks-block-content-text-color);
 	box-shadow: var(--novablocks-block-content-box-shadow);
 	transform: translateZ(0);
 
@@ -37,11 +49,11 @@
 	transition-property: padding, box-shadow;
 
 	h1, h2, h3 {
-		color: var(--novablocks-block-titles-color);
+		color: var(--novablocks-block-content-titles-color);
 	}
 
 	h4, h5, h6 {
-		color: var(--novablocks-block-subtitles-color);
+		color: var(--novablocks-block-content-subtitles-color);
 	}
 
 	&:after {
@@ -74,6 +86,9 @@
 
 .block-is-highlighted {
 	--novablocks-block-background-color: var(--novablocks-dark-3);
+	--novablocks-block-text-color: var(--novablocks-light-1);
+	--novablocks-block-titles-color: var(--novablocks-light-1);
+	--novablocks-block-subtitles-color: var(--novablocks-light-1);
 }
 
 .content-is-moderate,
@@ -94,9 +109,9 @@
 
 .block-is-highlighted:not(.content-is-highlighted),
 .content-is-highlighted:not(.block-is-highlighted) {
-	--novablocks-block-text-color: var(--novablocks-light-1);
-	--novablocks-block-titles-color: var(--novablocks-block-text-color);
-	--novablocks-block-subtitles-color: var(--novablocks-block-text-color);
+	--novablocks-block-content-text-color: var(--novablocks-light-1);
+	--novablocks-block-content-titles-color: var(--novablocks-block-content-text-color);
+	--novablocks-block-content-subtitles-color: var(--novablocks-block-content-text-color);
 }
 
 .content-is-highlighted:not(.block-is-highlighted) {
