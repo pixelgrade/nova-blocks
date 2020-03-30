@@ -55,7 +55,7 @@ const CardEdit = ( props ) => {
 	}
 
 	return (
-		<div className={ `${ blockClassName } ${ className }` }>
+		<div className={ `${ blockClassName } ${ className } novablocks-block__content` }>
 			{
 				showMedia &&
 				<div className={ `${ blockClassName }__media-wrap` }>

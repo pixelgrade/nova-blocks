@@ -1,14 +1,14 @@
 .novablocks-card {
-	padding: var(--novablocks-media-content-padding);
-	background: var(--novablocks-media-content-background-color);
-	box-shadow: var(--novablocks-media-content-box-shadow);
+	padding: var(--novablocks-block-content-padding);
+	box-shadow: var(--novablocks-block-content-box-shadow);
 }
 
 .novablocks-card__media-wrap[class] {
-	margin-top: calc( -0.5 * var(--novablocks-media-content-padding) );
-	margin-left: calc( -0.5 * var(--novablocks-media-content-padding) );
-	margin-right: calc( -0.5 * var(--novablocks-media-content-padding) );
-	margin-bottom: var(--novablocks-media-content-padding);
+	margin: calc( -0.5 * var(--novablocks-block-content-padding) );
+	margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
+
+	transition: var(--novablocks-transition);
+	transition-property: margin;
 }
 
 .novablocks-card__media {

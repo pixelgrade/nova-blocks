@@ -24,10 +24,20 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array( 'novablocks-cards-collection' );
+		$classes[] = 'novablocks-block';
 		$classes[] = $attributes[ 'className' ];
 		$classes[] = 'alignfull';
 		$classes[] = 'content-is-' . $attributes[ 'contentStyle' ];
 		$classes[] = 'block-is-' . $attributes[ 'blockStyle' ];
+		$classes[] = 'novablocks-cards-collection--align-' . $attributes[ 'contentAlign' ];
+
+		if ( ! empty( $attributes['blockStyle'] ) ) {
+			$classes[] = 'block-is-' . $attributes['blockStyle'];
+
+			if ( $attributes['blockStyle'] !== 'basic' ) {
+				$classes[] = 'has-background';
+			}
+		}
 
 		$className = join( ' ', $classes );
 
@@ -43,10 +53,14 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		ob_start(); ?>
 
 		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
-			<?php echo '<' . $titleTag . '>' . $attributes['title'] . '</' . $titleTag . '>'; ?>
-			<p class="intro"><?php echo $attributes['subtitle']; ?></p>
-			<div class="novablocks-cards-collection__layout alignfull">
-				<?php echo $content; ?>
+			<div class="wp-block-group__inner-container">
+				<?php echo '<' . $titleTag . ' class="alignwide">' . $attributes['title'] . '</' . $titleTag . '>'; ?>
+				<p class="intro alignwide"><?php echo $attributes['subtitle']; ?></p>
+				<div class="wp-block alignwide">
+					<div class="novablocks-cards-collection__layout">
+						<?php echo $content; ?>
+					</div>
+				</div>
 			</div>
 		</div>
 

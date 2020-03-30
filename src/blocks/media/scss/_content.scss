@@ -1,8 +1,4 @@
 .novablocks-media__inner-container {
-	padding: var(--novablocks-media-content-padding);
-	color: var(--novablocks-media-text-color);
-	box-shadow: var(--novablocks-media-content-box-shadow);
-
 	margin-top: auto;
 	margin-bottom: auto;
 	z-index: 2;
@@ -13,7 +9,6 @@
 }
 
 .novablocks-media__inner-container {
-	position: relative;
 
 	display: flex;
 	height: 100%;
@@ -21,19 +16,4 @@
 	justify-content: center;
 
 	word-break: break-word;
-
-	&:after {
-		content: '';
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
-
-		display: block;
-		background-color: var(--novablocks-media-content-background-color);
-		opacity: var(--novablocks-media-content-background-opacity);
-		pointer-events: none;
-	}
 }

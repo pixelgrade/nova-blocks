@@ -31,10 +31,14 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
+
+		$classes[] = 'novablocks-block';
 		$classes[] = 'novablocks-media';
+
 		if ( ! empty( $attributes['mediaPosition'] ) ) {
 			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
 		}
+
 		if ( ! empty( $attributes['blockStyle'] ) ) {
 			$classes[] = 'block-is-' . $attributes['blockStyle'];
 
@@ -42,6 +46,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 				$classes[] = 'has-background';
 			}
 		}
+
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
 		}
@@ -56,7 +61,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 	            <div class="wp-block alignwide">
 	                <div class="novablocks-media__layout">
 	                    <div class="novablocks-media__content">
-		                    <div class="novablocks-media__inner-container">
+		                    <div class="novablocks-media__inner-container novablocks-block__content">
 								<?php echo $content; ?>
 		                    </div>
 	                    </div>

@@ -7,6 +7,10 @@
 
 		> .block-list-appender {
 			flex: 0 0 auto;
+
+			[data-type="novablocks/cards-collection"]:not(.is-selected) & {
+				display: none;
+			}
 		}
 
 		.wp-block[class][class] {
