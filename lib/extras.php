@@ -395,6 +395,10 @@ function novablocks_get_cards_collection_attributes() {
 			'type'    => 'string',
 			'default' => 'full'
 		),
+		'contentAlign'           => array(
+			'type'    => 'string',
+			'default' => 'left'
+		),
 		'level'                  => array(
 			'type'    => 'number',
 			'default' => 2,
