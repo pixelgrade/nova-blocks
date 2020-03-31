@@ -23,6 +23,7 @@ const CardEdit = ( props ) => {
 			media,
 			meta,
 
+			contentAlign,
 			showMedia,
 			showTitle,
 			showSubtitle,
@@ -111,7 +112,7 @@ const CardEdit = ( props ) => {
 							allowedBlocks={ [ 'core/buttons' ] }
 							renderAppender={ false }
 							template={ [
-								[ 'core/buttons', {},
+								[ 'core/buttons', { align: contentAlign },
 									[ [ 'core/button', { text: 'Button' } ] ]
 								]
 							] }
@@ -145,6 +146,7 @@ const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
 		attributes: {
 			...props.attributes,
 			level: parentBlockAttributes.level,
+			contentAlign: parentBlockAttributes.contentAlign,
 			showTitle: parentBlockAttributes.showTitle,
 			showSubtitle: parentBlockAttributes.showSubtitle,
 			showDescription: parentBlockAttributes.showDescription,

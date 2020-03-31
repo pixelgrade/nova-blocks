@@ -17374,6 +17374,7 @@ var edit_CardEdit = function CardEdit(props) {
       description = _props$attributes.description,
       media = _props$attributes.media,
       meta = _props$attributes.meta,
+      contentAlign = _props$attributes.contentAlign,
       showMedia = _props$attributes.showMedia,
       showTitle = _props$attributes.showTitle,
       showSubtitle = _props$attributes.showSubtitle,
@@ -17455,7 +17456,9 @@ var edit_CardEdit = function CardEdit(props) {
   }, Object(external_React_["createElement"])(edit_InnerBlocks, {
     allowedBlocks: ['core/buttons'],
     renderAppender: false,
-    template: [['core/buttons', {}, [['core/button', {
+    template: [['core/buttons', {
+      align: contentAlign
+    }, [['core/button', {
       text: 'Button'
     }]]]]
   })), showMeta && Object(external_React_["createElement"])(editable_text, {
@@ -17479,6 +17482,7 @@ var CardWithVisibility = wp.data.withSelect(function (select, props) {
   var newProps = card_edit_objectSpread({}, props, {
     attributes: card_edit_objectSpread({}, props.attributes, {
       level: parentBlockAttributes.level,
+      contentAlign: parentBlockAttributes.contentAlign,
       showTitle: parentBlockAttributes.showTitle,
       showSubtitle: parentBlockAttributes.showSubtitle,
       showDescription: parentBlockAttributes.showDescription,
