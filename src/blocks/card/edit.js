@@ -55,79 +55,81 @@ const CardEdit = ( props ) => {
 	}
 
 	return (
-		<div className={ `${ blockClassName } ${ className }` }>
-			{
-				showMedia &&
-				<div className={ `${ blockClassName }__media-wrap` }>
-					<div className={ `${ blockClassName }__media` }>
-						<MediaUpload
-							type="image"
-							value={ !! media && media.id }
-							onSelect={ ( media ) => setAttributes( { media } ) }
-							render={ ( { open } ) => (
-								<CardMedia { ...props } open={ open } />
-							) }
+		<div className={ `${ blockClassName } ${ className } novablocks-block__content` }>
+			<div className="block-editor-block-list__layout">
+				{
+					showMedia &&
+					<div className={ `${ blockClassName }__media-wrap block-editor-block-list__block` }>
+						<div className={ `${ blockClassName }__media` }>
+							<MediaUpload
+								type="image"
+								value={ !! media && media.id }
+								onSelect={ ( media ) => setAttributes( { media } ) }
+								render={ ( { open } ) => (
+									<CardMedia { ...props } open={ open } />
+								) }
+							/>
+						</div>
+					</div>
+				}
+				{
+					showTitle &&
+					<EditableText
+						className={`${blockClassName}__title block-editor-block-list__block`}
+						tagName={`h${level + 1}`}
+						value={title}
+						onChange={title => {
+							setAttributes( {title} )
+						}} />
+				}
+				{
+					showSubtitle &&
+					<EditableText
+						className={ `${ blockClassName }__subtitle block-editor-block-list__block` }
+						tagName={ `h${level + 2}` }
+						value={subtitle}
+						onChange={subtitle => {
+							setAttributes( {subtitle} )
+						}}
+					/>
+				}
+				{
+					showDescription &&
+					<EditableText
+						className={ `${ blockClassName }__description block-editor-block-list__block` }
+						tagName={ 'p' }
+						value={description}
+						onChange={description => {
+							setAttributes( {description} )
+						}}
+					/>
+				}
+				{
+					showButtons &&
+					<div className={ `${ blockClassName }__buttons block-editor-block-list__block` }>
+						<InnerBlocks
+							allowedBlocks={ [ 'core/buttons' ] }
+							renderAppender={ false }
+							template={ [
+								[ 'core/buttons', {},
+									[ [ 'core/button', { text: 'Button' } ] ]
+								]
+							] }
 						/>
 					</div>
-				</div>
-			}
-			{
-				showTitle &&
-				<EditableText
-					className={`${blockClassName}__title`}
-					tagName={`h${level + 1}`}
-					value={title}
-					onChange={title => {
-						setAttributes( {title} )
-					}} />
-			}
-			{
-				showSubtitle &&
-				<EditableText
-					className={ `${ blockClassName }__subtitle` }
-					tagName={ `h${level + 2}` }
-					value={subtitle}
-					onChange={subtitle => {
-						setAttributes( {subtitle} )
-					}}
-				/>
-			}
-			{
-				showDescription &&
-				<EditableText
-					className={ `${ blockClassName }__description` }
-					tagName={ 'p' }
-					value={description}
-					onChange={description => {
-						setAttributes( {description} )
-					}}
-				/>
-			}
-			{
-				showButtons &&
-				<div className={ `${ blockClassName }__buttons` }>
-					<InnerBlocks
-						allowedBlocks={ [ 'core/buttons' ] }
-						renderAppender={ false }
-						template={ [
-							[ 'core/buttons', {},
-								[ [ 'core/button', { text: 'Button' } ] ]
-							]
-						] }
+				}
+				{
+					showMeta &&
+					<EditableText
+						className={ `${ blockClassName }__meta block-editor-block-list__block` }
+						tagName={ 'p' }
+						value={meta}
+						onChange={meta => {
+							setAttributes( {meta} )
+						}}
 					/>
-				</div>
-			}
-			{
-				showMeta &&
-				<EditableText
-					className={ `${ blockClassName }__meta` }
-					tagName={ 'p' }
-					value={meta}
-					onChange={meta => {
-						setAttributes( {meta} )
-					}}
-				/>
-			}
+				}
+			</div>
 		</div>
 	);
 }

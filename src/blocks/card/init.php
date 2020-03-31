@@ -27,9 +27,20 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 		$titleTag = 'h' . ( $hlevel + 1 );
 		$subtitleTag = 'h' . ( $hlevel + 2 );
 
+		$classes = array( 'novablocks-card' );
+
+		$classes[] = 'novablocks-block__content';
+		$classes[] = 'novablocks-cards-collection__inner-container';
+
+		if ( ! empty( $attributes['contentStyle'] ) ) {
+			$classes[] = 'content-is-' . $attributes['contentStyle'];
+		}
+
+		$className = join( ' ', $classes );
+
 		ob_start(); ?>
 
-		<div class="novablocks-card entry-content">
+		<div class="<?php echo $className; ?>">
 
 			<?php if ( ! empty( $attributes['media'] ) && false != $attributes['showMedia'] ) { ?>
 				<div class="novablocks-card__media-wrap">

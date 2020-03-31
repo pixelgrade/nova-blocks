@@ -56,9 +56,13 @@ const CardsCollectionEdit = ( props ) => {
 	const className = classnames(
 		props.className,
 		blockClassName,
+		'novablocks-block',
 		`${ blockClassName }--align-${ contentAlign }`,
 		`block-is-${ blockStyle }`,
-		`content-is-${ contentStyle }`
+		`content-is-${ contentStyle }`,
+		{
+			'has-background': blockStyle !== 'basic'
+		}
 	);
 
 	const getCardMediaPaddingTop = ( containerHeight ) => {
@@ -87,32 +91,40 @@ const CardsCollectionEdit = ( props ) => {
 	return (
 		<Fragment>
 			<div className={ className } style={ style }>
-				{
-					showCollectionTitle &&
-					<EditableText
-						tagName={ `h${level}` }
-						value={title}
-						onChange={title => {
-							setAttributes( {title} )
-						}}
-					/>
-				}
-				{
-					showCollectionSubtitle &&
-					<EditableText
-						tagName={ 'p' }
-						className={ 'intro' }
-						value={subtitle}
-						onChange={subtitle => {
-							setAttributes( {subtitle} )
-						}}
-					/>
-				}
-				<div className={ `${blockClassName}__layout` }>
-					<InnerBlocks
-						allowedBlocks={ ALLOWED_BLOCKS }
-						template={ CARDS_COLLECTION_TEMPLATE }
-					/>
+				<div className="wp-block-group__inner-container">
+					{
+						showCollectionTitle &&
+						<div className="wp-block" data-align="wide">
+							<EditableText
+								tagName={ `h${level}` }
+								value={title}
+								onChange={title => {
+									setAttributes( {title} )
+								}}
+							/>
+						</div>
+					}
+					{
+						showCollectionSubtitle &&
+						<div className="wp-block" data-align="wide">
+							<EditableText
+								tagName={ 'p' }
+								className={ 'intro' }
+								value={subtitle}
+								onChange={subtitle => {
+									setAttributes( {subtitle} )
+								}}
+							/>
+						</div>
+					}
+					<div className="wp-block" data-align="wide">
+						<div className={ `${blockClassName}__layout` }>
+							<InnerBlocks
+								allowedBlocks={ ALLOWED_BLOCKS }
+								template={ CARDS_COLLECTION_TEMPLATE }
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 			<InspectorControls { ...props } />

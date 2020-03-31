@@ -27,6 +27,7 @@ const MediaPreview = function( props ) {
 
 	const classNames = classnames(
 		className,
+		`novablocks-block`,
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`block-is-${ blockStyle }`,
@@ -73,7 +74,7 @@ const MediaPreview = function( props ) {
 				<div className="wp-block" data-align="wide">
 					<div className="novablocks-media__layout">
 						<div className="novablocks-media__content">
-							<div className="novablocks-media__inner-container">
+							<div className="novablocks-media__inner-container novablocks-block__content">
 								<InnerBlocks
 									allowedBlocks={ settings.media.allowedBlocks }
 									template={ settings.media.template }
