@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import EditableText from "../../components/editable-text";
-import HeadingToolbar from "../../components/heading-toolbar";
+import InspectorControls from "./inspector-controls";
 
 /**
  * WordPress dependencies
@@ -9,16 +9,12 @@ const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
 const {
-	PanelBody,
-	RadioControl,
-	RangeControl,
-	ToggleControl,
-} = wp.components;
+	InnerBlocks,
+} = wp.blockEditor;
 
 const {
-	InnerBlocks,
-	InspectorControls,
-} = wp.blockEditor;
+	withSelect,
+} = wp.data;
 
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
 const CARDS_COLLECTION_TEMPLATE = [ [ 'novablocks/card' ] ];
@@ -39,6 +35,7 @@ const CardsCollectionEdit = ( props ) => {
 		title,
 		subtitle,
 
+		contentAlign,
 		level,
 		imageResizing,
 		containerHeight,
@@ -59,21 +56,10 @@ const CardsCollectionEdit = ( props ) => {
 	const className = classnames(
 		props.className,
 		blockClassName,
+		`${ blockClassName }--align-${ contentAlign }`,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`
 	);
-
-	const toggleAttribute = ( attribute ) => {
-		const newAttributes = {
-			[attribute]: ! attributes[attribute]
-		};
-
-		childrenBlocks.forEach( ( { clientId } ) => {
-			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
-		} );
-
-		setAttributes( newAttributes );
-	};
 
 	const getCardMediaPaddingTop = ( containerHeight ) => {
 		let compiledHeight = containerHeight / 50 - 1;
@@ -100,70 +86,6 @@ const CardsCollectionEdit = ( props ) => {
 
 	return (
 		<Fragment>
-			<InspectorControls>
-				<PanelBody initialOpen={ true } title={ __( 'Controls' ) }>
-					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
-					<RadioControl
-						label={ 'Image resizing' }
-						selected={ imageResizing }
-						onChange={ imageResizing => { setAttributes( { imageResizing } ) } }
-						options={ [
-							{ label: 'Stretch to fill the container', value: 'cropped' },
-							{ label: 'Shrink to fit (no crop)', value: 'original' },
-						] }
-					/>
-					<RangeControl
-						label={ __( 'Image container height', '__plugin_txtd' ) }
-						value={ containerHeight }
-						onChange={ containerHeight => { setAttributes( { containerHeight } ) } }
-						min={ 0 }
-						max={ 100 }
-						step={ 5 }
-					/>
-				</PanelBody>
-				<PanelBody initialOpen={ true } title={ __( 'Elements Visibility', '__plugin_txtd' ) }>
-					<ToggleControl
-						label={ __( 'Collection Title' ) }
-						checked={ !! showCollectionTitle }
-						onChange={ showCollectionTitle => setAttributes( { showCollectionTitle } ) }
-					/>
-					<ToggleControl
-						label={ __( 'Collection Subtitle' ) }
-						checked={ !! showCollectionSubtitle }
-						onChange={ showCollectionSubtitle => setAttributes( { showCollectionSubtitle } ) }
-					/>
-					<ToggleControl
-						label={ __( 'Media' ) }
-						checked={ !! showMedia }
-						onChange={ () => { toggleAttribute( 'showMedia' ) } }
-					/>
-					<ToggleControl
-						label={ __( 'Title' ) }
-						checked={ !! showTitle }
-						onChange={ () => { toggleAttribute( 'showTitle' ) } }
-					/>
-					<ToggleControl
-						label={ __( 'Subtitle' ) }
-						checked={ !! showSubtitle }
-						onChange={ () => { toggleAttribute( 'showSubtitle' ) } }
-					/>
-					<ToggleControl
-						label={ __( 'Description' ) }
-						checked={ !! showDescription }
-						onChange={ () => { toggleAttribute( 'showDescription' ) } }
-					/>
-					<ToggleControl
-						label={ __( 'Buttons' ) }
-						checked={ !! showButtons }
-						onChange={ () => { toggleAttribute( 'showButtons' ) } }
-					/>
-					<ToggleControl
-						label={ __( 'Meta' ) }
-						checked={ !! showMeta }
-						onChange={ () => { toggleAttribute( 'showMeta' ) } }
-					/>
-				</PanelBody>
-			</InspectorControls>
 			<div className={ className } style={ style }>
 				{
 					showCollectionTitle &&
@@ -193,13 +115,15 @@ const CardsCollectionEdit = ( props ) => {
 					/>
 				</div>
 			</div>
+			<InspectorControls { ...props } />
 		</Fragment>
 	);
 }
 
-const CardCollectionWithChildren = wp.data.withSelect( ( select, props ) => {
+const CardCollectionWithChildren = withSelect( ( select, props ) => {
 	const { clientId } = props;
-	const parentBlock = select( 'core/block-editor' ).getBlock( clientId );
+	const { getBlock } = select( 'core/block-editor' );
+	const parentBlock = getBlock( clientId );
 	const childrenBlocks = parentBlock.innerBlocks;
 
 	return {
