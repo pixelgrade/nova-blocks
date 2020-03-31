@@ -360,7 +360,7 @@ function novablocks_get_card_attributes() {
 		),
 		'meta'            => array(
 			'type'    => 'string',
-			'default' => '',
+			'default' => 'Meta',
 		),
 		'showMedia'       => array(
 			'type'    => 'boolean',

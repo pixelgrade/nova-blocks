@@ -23,12 +23,15 @@
 		transition-property: color;
 	}
 
-	h1, h2, h3 {
-		color: var(--novablocks-block-titles-color);
-	}
+	&[class] {
 
-	h4, h5, h6 {
-		color: var(--novablocks-block-subtitles-color);
+		h1, h2, h3 {
+			color: var(--novablocks-block-titles-color);
+		}
+
+		h4, h5, h6 {
+			color: var(--novablocks-block-subtitles-color);
+		}
 	}
 
 	.wp-block-group__inner-container {
@@ -39,7 +42,6 @@
 
 .novablocks-block__content {
 	position: relative;
-	padding: var(--novablocks-block-content-padding);
 
 	color: var(--novablocks-block-content-text-color);
 	box-shadow: var(--novablocks-block-content-box-shadow);
@@ -48,12 +50,16 @@
 	transition: var(--novablocks-transition);
 	transition-property: padding, box-shadow;
 
-	h1, h2, h3 {
-		color: var(--novablocks-block-content-titles-color);
-	}
+	&[class] {
+		padding: var(--novablocks-block-content-padding);
 
-	h4, h5, h6 {
-		color: var(--novablocks-block-content-subtitles-color);
+		h1, h2, h3 {
+			color: var(--novablocks-block-content-titles-color);
+		}
+
+		h4, h5, h6 {
+			color: var(--novablocks-block-content-subtitles-color);
+		}
 	}
 
 	&:after {
