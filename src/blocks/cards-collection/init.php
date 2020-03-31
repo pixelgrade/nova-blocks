@@ -25,10 +25,8 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		$classes = array( 'novablocks-cards-collection' );
 		$classes[] = 'novablocks-block';
-		$classes[] = $attributes[ 'className' ];
+		$classes[] = $attributes['className'];
 		$classes[] = 'alignfull';
-		$classes[] = 'content-is-' . $attributes[ 'contentStyle' ];
-		$classes[] = 'block-is-' . $attributes[ 'blockStyle' ];
 		$classes[] = 'novablocks-cards-collection--align-' . $attributes[ 'contentAlign' ];
 
 		if ( ! empty( $attributes['blockStyle'] ) ) {
@@ -37,6 +35,10 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 			if ( $attributes['blockStyle'] !== 'basic' ) {
 				$classes[] = 'has-background';
 			}
+		}
+
+		if ( ! empty( $attributes['contentStyle'] ) ) {
+			$classes[] = 'content-is-' . $attributes['contentStyle'];
 		}
 
 		$className = join( ' ', $classes );
