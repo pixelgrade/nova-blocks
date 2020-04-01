@@ -36,6 +36,17 @@ function init() {
 				enableTwoColumns: false
 			}
 		},
+		styles: [
+			{
+				name: 'classic',
+				label: __( 'Classic' ),
+				isDefault: true
+			},
+			{
+				name: 'basic',
+				label: __( 'Basic' )
+			},
+		],
 		getEditWrapperProps() {
 			const settings = select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'wide' } : {};
