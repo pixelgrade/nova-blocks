@@ -14,11 +14,10 @@ const { InnerBlocks } = wp.blockEditor;
 function init() {
 	registerBlockType( 'novablocks/cards-collection', {
 		title: __( 'Cards Collection', '__plugin_txtd' ),
-		description: __( 'Display a list of cards placed within a coherent layout.', '__plugin_txtd' ),
+		description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.media,
-		// Additional search terms
-		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
+		icon: icons.card,
+		keywords: [ __( 'grid', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'collection', '__plugin_txtd' ), __( 'group', '__plugin_txtd' ) ],
 		edit,
 		save() {
 			return <InnerBlocks.Content />;

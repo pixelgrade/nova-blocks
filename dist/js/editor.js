@@ -5352,6 +5352,25 @@ var placeholder = Object(external_React_["createElement"])("svg", {
   d: "M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z",
   fill: "#323067"
 }));
+var card = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("rect", {
+  y: "24",
+  width: "24",
+  height: "24",
+  rx: "12",
+  transform: "rotate(-90 0 24)",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  "fill-rule": "evenodd",
+  "clip-rule": "evenodd",
+  d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
+  fill: "#6565F2"
+}));
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/index.js
 
 
@@ -17516,9 +17535,8 @@ function card_init() {
     description: card_('Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd'),
     category: 'nova-blocks',
     parent: ['novablocks/cards-collection'],
-    icon: icons_media,
-    // Additional search terms
-    keywords: [card_('image with text', '__plugin_txtd'), card_('columns', '__plugin_txtd'), card_('side text', '__plugin_txtd')],
+    icon: card,
+    keywords: [card_('image with text', '__plugin_txtd')],
     edit: card_edit,
     save: function save() {
       return Object(external_React_["createElement"])(card_InnerBlocks.Content, null);
@@ -17526,7 +17544,7 @@ function card_init() {
   });
 }
 
-/* harmony default export */ var card = (card_init);
+/* harmony default export */ var blocks_card = (card_init);
 // CONCATENATED MODULE: ./src/blocks/cards-collection/inspector-controls.js
 
 
@@ -17833,11 +17851,10 @@ var cards_collection_InnerBlocks = wp.blockEditor.InnerBlocks;
 function cards_collection_init() {
   cards_collection_registerBlockType('novablocks/cards-collection', {
     title: cards_collection_('Cards Collection', '__plugin_txtd'),
-    description: cards_collection_('Display a list of cards placed within a coherent layout.', '__plugin_txtd'),
+    description: cards_collection_('Display a list of related items placed within a coherent layout.', '__plugin_txtd'),
     category: 'nova-blocks',
-    icon: icons_media,
-    // Additional search terms
-    keywords: [cards_collection_('image with text', '__plugin_txtd'), cards_collection_('columns', '__plugin_txtd'), cards_collection_('side text', '__plugin_txtd')],
+    icon: card,
+    keywords: [cards_collection_('grid', '__plugin_txtd'), cards_collection_('columns', '__plugin_txtd'), cards_collection_('collection', '__plugin_txtd'), cards_collection_('group', '__plugin_txtd')],
     edit: cards_collection_edit,
     save: function save() {
       return Object(external_React_["createElement"])(cards_collection_InnerBlocks.Content, null);
@@ -17928,7 +17945,7 @@ var editor_novaBlocks = /*#__PURE__*/function () {
         blocks_opentable();
       }
 
-      card();
+      blocks_card();
       cards_collection();
       blocks_hero();
       blocks_media();

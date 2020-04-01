@@ -17,9 +17,8 @@ function init() {
 		description: __( 'Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		parent: [ 'novablocks/cards-collection' ],
-		icon: icons.media,
-		// Additional search terms
-		keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
+		icon: icons.card,
+		keywords: [ __( 'image with text', '__plugin_txtd' ) ],
 		edit,
 		save() {
 			return <InnerBlocks.Content />;
