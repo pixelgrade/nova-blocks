@@ -5506,6 +5506,24 @@ var navigation = Object(external_React_["createElement"])("svg", {
   d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
   fill: "#6565F2"
 }));
+var openhours = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("g", {
+  clipPath: "url(#clip0)"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("defs", null, Object(external_React_["createElement"])("clipPath", {
+  id: "clip0"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#fff",
+  d: "M0 0h24v24H0z"
+}))));
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/index.js
 
 
@@ -17859,7 +17877,7 @@ function openhours_init() {
     title: openhours_('OpenHours', '__plugin_txtd'),
     description: openhours_('Display Opening Hours for any kind of venue.', '__plugin_txtd'),
     category: 'nova-blocks',
-    icon: opentable,
+    icon: openhours,
     edit: openhours_edit,
     save: function save() {
       return null;
@@ -17867,7 +17885,7 @@ function openhours_init() {
   });
 }
 
-/* harmony default export */ var openhours = (openhours_init);
+/* harmony default export */ var blocks_openhours = (openhours_init);
 // CONCATENATED MODULE: ./src/editor.js
 
 
@@ -17946,7 +17964,7 @@ var editor_novaBlocks = /*#__PURE__*/function () {
       blocks_hero();
       blocks_media();
       blocks_slideshow();
-      openhours();
+      blocks_openhours();
     }
   }]);
 
