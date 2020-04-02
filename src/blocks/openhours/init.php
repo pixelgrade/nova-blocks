@@ -612,9 +612,9 @@ function novablocks_openhours_status_content( $attributes ) {
 
 
 	<?php if ( $helper->is_open( $attributes ) ) { ?>
-        <div class="opening-hours-note  opening-hours-note--open"><?php echo esc_attr( $open_note ); ?></div>
+        <div class="opening-hours-note  opening-hours-note--open"><?php echo $open_note ?></div>
 	<?php } else { ?>
-        <div class="opening-hours-note  opening-hours-note--closed"><?php echo esc_attr( $closed_note ); ?></div>
+        <div class="opening-hours-note  opening-hours-note--closed"><?php echo $closed_note ?></div>
 		<?php
 	}
 	?>
