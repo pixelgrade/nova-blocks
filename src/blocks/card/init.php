@@ -30,7 +30,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 		$classes = array( 'novablocks-card' );
 
 		$classes[] = 'novablocks-block__content';
-		$classes[] = 'novablocks-cards-collection__inner-container';
+		$classes[] = 'novablocks-card__inner-container';
 
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];

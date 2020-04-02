@@ -1,6 +1,15 @@
 .novablocks-card {
 	padding: var(--novablocks-block-content-padding);
 	box-shadow: var(--novablocks-block-content-box-shadow);
+
+	&,
+	> .block-editor-block-list__layout {
+		--element-spacing: var(--theme-spacing-tiny);
+	}
+
+	> .block-editor-block-list__layout {
+		@include clearfix;
+	}
 }
 
 .novablocks-card__media-wrap[class] {
@@ -15,7 +24,6 @@
 	position: relative;
 	padding-top: var(--card-media-padding-top, 100%);
 	overflow: hidden;
-	background: var(--novablocks-light-3);
 }
 
 .novablocks-card__media-placeholder,
@@ -35,6 +43,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background: var(--novablocks-light-3);
 
 	svg {
 		max-width: 50%;
