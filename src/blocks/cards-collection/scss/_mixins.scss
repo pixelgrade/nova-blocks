@@ -45,12 +45,12 @@
 				--columns: 2;
 			}
 		}
+	}
 
-		&[class][class] {
+	&[class][class] > * {
 
-			@include below(tablet) {
-				--columns: 1;
-			}
+		@include below(tablet) {
+			--columns: 1;
 		}
 	}
 }
