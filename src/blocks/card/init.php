@@ -40,6 +40,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		ob_start(); ?>
 
+		<div>
 		<div class="<?php echo $className; ?>">
 
 			<?php if ( ! empty( $attributes['media'] ) && false != $attributes['showMedia'] ) { ?>
@@ -72,6 +73,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 				<div class="novablocks-card__meta"><?php echo $attributes['meta']; ?></div>
 			<?php } ?>
 
+		</div>
 		</div>
 
 		<?php return ob_get_clean();

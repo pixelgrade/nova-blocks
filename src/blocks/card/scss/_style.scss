@@ -41,3 +41,7 @@
 		max-height: 50%;
 	}
 }
+
+.novablocks-card__buttons {
+	@include clearfix;
+}

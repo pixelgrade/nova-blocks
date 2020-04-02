@@ -10,6 +10,7 @@
 
 .novablocks-cards-collection__layout {
 	@include novablocks-cards-collection-layout;
+	@include novablocks-cards-columns-count;
 }
 
 @each $alignment in left, center, right {
