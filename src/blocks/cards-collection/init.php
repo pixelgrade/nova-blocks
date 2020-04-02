@@ -25,9 +25,12 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		$classes = array( 'novablocks-cards-collection' );
 		$classes[] = 'novablocks-block';
-		$classes[] = $attributes['className'];
 		$classes[] = 'alignfull';
 		$classes[] = 'novablocks-cards-collection--align-' . $attributes[ 'contentAlign' ];
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		if ( ! empty( $attributes['blockStyle'] ) ) {
 			$classes[] = 'block-is-' . $attributes['blockStyle'];
