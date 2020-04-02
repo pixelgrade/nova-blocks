@@ -1,13 +1,10 @@
-import HeadingToolbar from "../../components/heading-toolbar";
+import { HeadingToolbar, ToggleGroup } from "../../components";
 
 const { __ } = wp.i18n;
 
 const {
 	PanelBody,
 	PanelRow,
-	RadioControl,
-	RangeControl,
-	ToggleControl,
 } = wp.components;
 
 const {
@@ -19,6 +16,7 @@ const {
 	dispatch,
 	select,
 } = wp.data;
+
 
 const CardsCollectionInspectorControls = ( props ) => {
 
@@ -57,6 +55,42 @@ const CardsCollectionInspectorControls = ( props ) => {
 		setAttributes( newAttributes );
 	};
 
+	const toggles = [
+		{
+			label: __( 'Collection Title' ),
+			value: attributes[ 'showCollectionTitle' ],
+			attribute: 'showCollectionTitle'
+		}, {
+			label: __( 'Collection Subtitle' ),
+			value: attributes[ 'showCollectionSubtitle' ],
+			attribute: 'showCollectionSubtitle',
+		}, {
+			label: __( 'Media' ),
+			value: attributes[ 'showMedia' ],
+			attribute: 'showMedia',
+		}, {
+			label: __( 'Title' ),
+			value: attributes[ 'showTitle' ],
+			attribute: 'showTitle',
+		}, {
+			label: __( 'Subtitle' ),
+			value: attributes[ 'showSubtitle' ],
+			attribute: 'showSubtitle',
+		}, {
+			label: __( 'Description' ),
+			value: attributes[ 'showDescription' ],
+			attribute: 'showDescription',
+		}, {
+			label: __( 'Buttons' ),
+			value: attributes[ 'showButtons' ],
+			attribute: 'showButtons',
+		}, {
+			label: __( 'Meta' ),
+			value: attributes[ 'showMeta' ],
+			attribute: 'showMeta',
+		}
+	];
+
 	return (
 		<InspectorControls>
 			<PanelBody initialOpen={ true } title={ __( 'Cards Content Area' ) }>
@@ -83,67 +117,11 @@ const CardsCollectionInspectorControls = ( props ) => {
 					/>
 				</PanelRow>
 			</PanelBody>
-			<PanelBody initialOpen={ true } title={ __( 'Cards Media Area' ) }>
-				<RadioControl
-					label={ 'Image resizing' }
-					selected={ imageResizing }
-					onChange={ imageResizing => { setAttributes( { imageResizing } ) } }
-					options={ [
-						{ label: 'Stretch to fill the container', value: 'cropped' },
-						{ label: 'Shrink to fit (no crop)', value: 'original' },
-					] }
-				/>
-				<RangeControl
-					label={ __( 'Image container height', '__plugin_txtd' ) }
-					value={ containerHeight }
-					onChange={ containerHeight => { setAttributes( { containerHeight } ) } }
-					min={ 0 }
-					max={ 100 }
-					step={ 5 }
-				/>
-			</PanelBody>
-			<PanelBody initialOpen={ true } title={ __( 'Elements Visibility', '__plugin_txtd' ) }>
-				<ToggleControl
-					label={ __( 'Collection Title' ) }
-					checked={ !! showCollectionTitle }
-					onChange={ showCollectionTitle => setAttributes( { showCollectionTitle } ) }
-				/>
-				<ToggleControl
-					label={ __( 'Collection Subtitle' ) }
-					checked={ !! showCollectionSubtitle }
-					onChange={ showCollectionSubtitle => setAttributes( { showCollectionSubtitle } ) }
-				/>
-				<ToggleControl
-					label={ __( 'Media' ) }
-					checked={ !! showMedia }
-					onChange={ () => { toggleAttribute( 'showMedia' ) } }
-				/>
-				<ToggleControl
-					label={ __( 'Title' ) }
-					checked={ !! showTitle }
-					onChange={ () => { toggleAttribute( 'showTitle' ) } }
-				/>
-				<ToggleControl
-					label={ __( 'Subtitle' ) }
-					checked={ !! showSubtitle }
-					onChange={ () => { toggleAttribute( 'showSubtitle' ) } }
-				/>
-				<ToggleControl
-					label={ __( 'Description' ) }
-					checked={ !! showDescription }
-					onChange={ () => { toggleAttribute( 'showDescription' ) } }
-				/>
-				<ToggleControl
-					label={ __( 'Buttons' ) }
-					checked={ !! showButtons }
-					onChange={ () => { toggleAttribute( 'showButtons' ) } }
-				/>
-				<ToggleControl
-					label={ __( 'Meta' ) }
-					checked={ !! showMeta }
-					onChange={ () => { toggleAttribute( 'showMeta' ) } }
-				/>
-			</PanelBody>
+			<ToggleGroup
+				label={ __( 'Cards Manager', '__plugin_txtd' ) }
+				onChange={ toggleAttribute }
+				toggles={ toggles }
+			/>
 		</InspectorControls>
    );
 }
