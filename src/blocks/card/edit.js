@@ -56,7 +56,7 @@ const CardEdit = ( props ) => {
 	}
 
 	return (
-		<div className={ `${ blockClassName } ${ className } novablocks-block__content` }>
+		<div className={ `${ blockClassName } ${ className } novablocks-card__inner-container novablocks-block__content` }>
 			<div className="block-editor-block-list__layout">
 				{
 					showMedia &&
@@ -72,6 +72,17 @@ const CardEdit = ( props ) => {
 							/>
 						</div>
 					</div>
+				}
+				{
+					showMeta &&
+					<EditableText
+						className={ `${ blockClassName }__meta block-editor-block-list__block` }
+						tagName={ 'p' }
+						value={meta}
+						onChange={meta => {
+							setAttributes( {meta} )
+						}}
+					/>
 				}
 				{
 					showTitle &&
@@ -118,17 +129,6 @@ const CardEdit = ( props ) => {
 							] }
 						/>
 					</div>
-				}
-				{
-					showMeta &&
-					<EditableText
-						className={ `${ blockClassName }__meta block-editor-block-list__block` }
-						tagName={ 'p' }
-						value={meta}
-						onChange={meta => {
-							setAttributes( {meta} )
-						}}
-					/>
 				}
 			</div>
 		</div>

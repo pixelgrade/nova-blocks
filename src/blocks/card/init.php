@@ -30,7 +30,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 		$classes = array( 'novablocks-card' );
 
 		$classes[] = 'novablocks-block__content';
-		$classes[] = 'novablocks-cards-collection__inner-container';
+		$classes[] = 'novablocks-card__inner-container';
 
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
@@ -51,6 +51,10 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 				</div>
 			<?php }
 
+			if ( ! empty( $attributes['meta'] ) && false != $attributes['showMeta'] ) { ?>
+				<div class="novablocks-card__meta"><?php echo $attributes['meta']; ?></div>
+			<?php }
+
 			if ( ! empty( $attributes['title'] ) && false != $attributes['showTitle'] ) {
 				echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
 			}
@@ -67,10 +71,6 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 				<div class="novablocks-card__buttons">
 					<?php echo $content; ?>
 				</div>
-			<?php }
-
-			if ( ! empty( $attributes['meta'] ) && false != $attributes['showMeta'] ) { ?>
-				<div class="novablocks-card__meta"><?php echo $attributes['meta']; ?></div>
 			<?php } ?>
 
 		</div>

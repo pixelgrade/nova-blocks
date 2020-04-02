@@ -17478,7 +17478,7 @@ var edit_CardEdit = function CardEdit(props) {
   };
 
   return Object(external_React_["createElement"])("div", {
-    className: "".concat(blockClassName, " ").concat(className, " novablocks-block__content")
+    className: "".concat(blockClassName, " ").concat(className, " novablocks-card__inner-container novablocks-block__content")
   }, Object(external_React_["createElement"])("div", {
     className: "block-editor-block-list__layout"
   }, showMedia && Object(external_React_["createElement"])("div", {
@@ -17499,7 +17499,16 @@ var edit_CardEdit = function CardEdit(props) {
         open: open
       }));
     }
-  }))), showTitle && Object(external_React_["createElement"])(editable_text, {
+  }))), showMeta && Object(external_React_["createElement"])(editable_text, {
+    className: "".concat(blockClassName, "__meta block-editor-block-list__block"),
+    tagName: 'p',
+    value: meta,
+    onChange: function onChange(meta) {
+      setAttributes({
+        meta: meta
+      });
+    }
+  }), showTitle && Object(external_React_["createElement"])(editable_text, {
     className: "".concat(blockClassName, "__title block-editor-block-list__block"),
     tagName: "h".concat(level + 1),
     value: title,
@@ -17536,16 +17545,7 @@ var edit_CardEdit = function CardEdit(props) {
     }, [['core/button', {
       text: 'Button'
     }]]]]
-  })), showMeta && Object(external_React_["createElement"])(editable_text, {
-    className: "".concat(blockClassName, "__meta block-editor-block-list__block"),
-    tagName: 'p',
-    value: meta,
-    onChange: function onChange(meta) {
-      setAttributes({
-        meta: meta
-      });
-    }
-  })));
+  }))));
 };
 
 var CardWithVisibility = wp.data.withSelect(function (select, props) {
