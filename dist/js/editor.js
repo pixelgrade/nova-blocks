@@ -1060,7 +1060,7 @@ var memize = __webpack_require__(45);
 var memize_default = /*#__PURE__*/__webpack_require__.n(memize);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/i18n/node_modules/sprintf-js/src/sprintf.js
-var sprintf = __webpack_require__(36);
+var sprintf = __webpack_require__(35);
 var sprintf_default = /*#__PURE__*/__webpack_require__.n(sprintf);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/i18n/build-module/index.js
@@ -2363,7 +2363,7 @@ module.exports.isShallowEqualArrays = isShallowEqualArrays;
 /* harmony import */ var reakit_Toolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(79);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(37);
+/* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
 /* harmony import */ var _toolbar_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24);
 
 
@@ -2477,16 +2477,6 @@ module.exports = _typeof;
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports) {
-
-function _readOnlyError(name) {
-  throw new Error("\"" + name + "\" is read-only");
-}
-
-module.exports = _readOnlyError;
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
@@ -2724,7 +2714,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2768,6 +2758,16 @@ function warning(message) {
 }
 //# sourceMappingURL=index.js.map
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41)))
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+function _readOnlyError(name) {
+  throw new Error("\"" + name + "\" is read-only");
+}
+
+module.exports = _readOnlyError;
 
 /***/ }),
 /* 38 */,
@@ -5366,8 +5366,8 @@ var card = Object(external_React_["createElement"])("svg", {
   transform: "rotate(-90 0 24)",
   fill: "white"
 }), Object(external_React_["createElement"])("path", {
-  "fill-rule": "evenodd",
-  "clip-rule": "evenodd",
+  fillRule: "evenodd",
+  clipRule: "evenodd",
   d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
   fill: "#6565F2"
 }));
@@ -5587,7 +5587,7 @@ var slicedToArray = __webpack_require__(29);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // CONCATENATED MODULE: ./src/blocks/google-map/pin.js
-/* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fill-rule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
+/* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fillRule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
 // CONCATENATED MODULE: ./src/blocks/google-map/default-map-center.js
 var defaultMapCenter = {
   lat: 47.1665264,
@@ -6781,1981 +6781,60 @@ var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
 };
 
 /* harmony default export */ var scrolling_effect_controls = (scrolling_effect_controls_ScrollingEffectControls);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(35);
-var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
-
-// CONCATENATED MODULE: ./src/easing.js
-
-// Credits:
-// Gaëtan Renaudeau - https://gist.github.com/gre/1650294
-// Jeremy Kahn - https://github.com/jeremyckahn/shifty/
-// Johan Lindell - https://gist.github.com/gre/1650294#gistcomment-1806616
-var pow = Math.pow,
-    abs = Math.abs,
-    sin = Math.sin,
-    cos = Math.cos,
-    PI = Math.PI;
-
-var EaseIn = function EaseIn(power) {
-  return function (x) {
-    return pow(x, power);
-  };
-};
-
-var EaseOut = function EaseOut(power) {
-  return function (x) {
-    return 1 - abs(pow(x - 1, power));
-  };
-};
-
-var EaseInOut = function EaseInOut(power) {
-  return function (x) {
-    return x < .5 ? EaseIn(power)(x * 2) / 2 : EaseOut(power)(x * 2 - 1) / 2 + 0.5;
-  };
-}; // Linear
-
-
-var linear = EaseInOut(1); // Quad
-
-var easeInQuad = EaseIn(2);
-var easeOutQuad = EaseOut(2);
-var easeInOutQuad = EaseInOut(2); // Cubic
-
-var easeInCubic = EaseIn(3);
-var easeOutCubic = EaseOut(3);
-var easeInOutCubic = EaseInOut(3); // Quart
-
-var easeInQuart = EaseIn(4);
-var easeOutQuart = EaseOut(4);
-var easeInOutQuart = EaseInOut(4); // Quint
-
-var easeInQuint = EaseIn(5);
-var easeOutQuint = EaseOut(5);
-var easeInOutQuint = EaseInOut(5); // Sine
-
-var easeInSine = function easeInSine(x) {
-  return -1 * cos(x * PI / 2) + 1;
-};
-var easeOutSine = function easeOutSine(x) {
-  return sin(x * PI / 2);
-};
-var easeInOutSine = function easeInOutSine(x) {
-  return -0.5 * (cos(PI * x) - 1);
-}; // Expo
-
-var easeInExpo = function easeInExpo(x) {
-  return x === 0 ? 0 : pow(2, 10 * (x - 1));
-};
-var easeOutExpo = function easeOutExpo(x) {
-  return x === 1 ? 1 : -pow(2, -10 * x) + 1;
-};
-var easeInOutExpo = function easeInOutExpo(x) {
-  if (x === 0 || x === 1) {
-    return x;
-  }
-
-  if ((x /= 0.5) < 1) {
-    return 0.5 * pow(2, 10 * (x - 1));
-  }
-
-  return 0.5 * (-pow(2, -10 * --x) + 2);
-}; // Back
-
-var easeInBack = function easeInBack(x) {
-  var s = 1.70158;
-  return pow(x, 2) * ((s + 1) * x - s);
-};
-var easeOutBack = function easeOutBack(x) {
-  var s = 1.70158;
-  return (x = x - 1) * x * ((s + 1) * x + s) + 1;
-};
-var easing_easeInOutBack = function easeInOutBack(x) {
-  var s = 1.70158;
-  return (x /= 0.5) < 1 ? 0.5 * (x * x * (((s *= (readOnlyError_default()("s"), 1.525)) + 1) * x - s)) : 0.5 * ((x -= 2) * x * (((s *= (readOnlyError_default()("s"), 1.525)) + 1) * x + s) + 2);
-};
-// CONCATENATED MODULE: ./src/components/with-parallax/index.js
-
-
-
-
-
-
-
-
-var createContext = wp.element.createContext;
-
-
-
-
-/**
- * WordPress dependencies
- */
-
-var with_parallax_wp$element = wp.element,
-    with_parallax_Component = with_parallax_wp$element.Component,
-    with_parallax_Fragment = with_parallax_wp$element.Fragment;
-var with_parallax_InspectorControls = wp.blockEditor.InspectorControls;
-var with_parallax_compose = wp.compose.compose;
-var ParallaxContext = createContext();
-
-var with_parallax_withParallaxProvider = function withParallaxProvider(WrappedComponent) {
-  return (/*#__PURE__*/function (_Component) {
-      inherits_default()(_class, _Component);
-
-      function _class() {
-        var _this;
-
-        classCallCheck_default()(this, _class);
-
-        _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class).apply(this, arguments));
-        _this.state = {
-          scrollContainerWidth: 0,
-          scrollContainerHeight: 0,
-          progress: 0.5
-        };
-        _this.updateHandler = _this.updateState.bind(assertThisInitialized_default()(_this));
-        _this.scrollContainer = _this.getScrollContainer();
-        return _this;
-      }
-
-      createClass_default()(_class, [{
-        key: "getScrollContainer",
-        value: function getScrollContainer() {
-          return document.querySelector('.edit-post-layout__content') || document.querySelector('.edit-post-editor-regions__content') || document.querySelector('.block-editor-editor-skeleton__content');
-        }
-      }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-          window.addEventListener('resize', this.updateHandler);
-          this.createBlockObservers();
-          this.unsubscribeUpdate = wp.data.subscribe(this.updateHandler);
-
-          if (this.scrollContainer) {
-            this.scrollContainer.addEventListener('scroll', this.updateHandler);
-          }
-
-          this.updateState();
-        }
-      }, {
-        key: "createBlockObservers",
-        value: function createBlockObservers() {
-          var _this2 = this;
-
-          this.observers = [];
-          findParents(this.container, '.wp-block').map(function (block) {
-            if (window.MutationObserver) {
-              var mutationObserver = new MutationObserver(function (movements) {
-                movements.forEach(function (movement) {
-                  if ('style' === movement.attributeName) {
-                    if (movement.oldValue && movement.oldValue.includes('transform: translate3d')) {
-                      _this2.updateState();
-                    }
-                  }
-                });
-              });
-              mutationObserver.observe(block, {
-                attributes: true,
-                attributeOldValue: true,
-                childList: false,
-                subtree: false
-              });
-
-              _this2.observers.push(mutationObserver);
-            }
-
-            if (window.ResizeObserver) {
-              var resizeObserver = new ResizeObserver(function () {
-                _this2.updateState();
-              });
-              resizeObserver.observe(block);
-
-              _this2.observers.push(resizeObserver);
-            }
-          });
-        }
-      }, {
-        key: "componentWillUnmount",
-        value: function componentWillUnmount() {
-          window.removeEventListener('resize', this.updateHandler);
-          this.observers.forEach(function (observer) {
-            return observer.disconnect();
-          });
-          this.unsubscribeUpdate();
-
-          if (this.scrollContainer) {
-            this.scrollContainer.removeEventListener('scroll', this.updateHandler);
-          }
-        }
-      }, {
-        key: "updateState",
-        value: function updateState() {
-          var container = this.container;
-          var scrollContainerHeight = this.scrollContainer.offsetHeight;
-          var scrollContainerBox = this.scrollContainer.getBoundingClientRect();
-          var config = Object.assign({}, this.props.attributes, {
-            scrollContainerBox: scrollContainerBox,
-            scrollContainerHeight: scrollContainerHeight
-          });
-          this.setState(getState(container, config));
-        }
-      }, {
-        key: "getElementStyle",
-        value: function getElementStyle() {
-          var attributes = this.props.attributes;
-          var scrollingEffect = attributes.scrollingEffect;
-
-          if (!this.scrollContainer || !this.container) {
-            return {};
-          }
-
-          var state = getState(this.container, Object.assign({}, this.state, attributes));
-          var config = Object.assign({}, state, attributes);
-          var styles = getStyles(config);
-          return styles;
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var _this3 = this;
-
-          return Object(external_React_["createElement"])(with_parallax_Fragment, null, Object(external_React_["createElement"])("div", {
-            ref: function ref(el) {
-              return _this3.container = el;
-            }
-          }, Object(external_React_["createElement"])(ParallaxContext.Provider, {
-            value: {
-              style: this.getElementStyle(),
-              state: this.state,
-              container: this.container,
-              scrollContainer: this.scrollContainer
-            }
-          }, Object(external_React_["createElement"])(WrappedComponent, this.props))));
-        }
-      }]);
-
-      return _class;
-    }(with_parallax_Component)
-  );
-};
-
-var with_parallax_withParallaxControls = function withParallaxControls(WrappedComponent) {
-  return (/*#__PURE__*/function (_Component2) {
-      inherits_default()(_class2, _Component2);
-
-      function _class2() {
-        var _this4;
-
-        classCallCheck_default()(this, _class2);
-
-        _this4 = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class2).apply(this, arguments));
-        _this4.state = {
-          isScrolling: false
-        };
-        _this4.previewScrolling = _this4.previewScrolling.bind(assertThisInitialized_default()(_this4));
-        return _this4;
-      }
-
-      createClass_default()(_class2, [{
-        key: "scrollFromTo",
-        value: function scrollFromTo(start, end) {
-          var _this5 = this;
-
-          var easing = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (x) {
-            return x;
-          };
-          var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
-          var speed = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1000;
-          var scrollContainer = this.props.parallax.scrollContainer;
-          var length = end - start;
-          var duration = Math.abs(length) * 1000 / speed;
-          var startTime = Date.now();
-
-          function updateScrollTopLoop() {
-            var currentTime = Date.now();
-            var timePassed = currentTime - startTime;
-            var progress = timePassed / duration;
-            var newScrollTop = start + length * easing(progress);
-            scrollContainer.scrollTop = newScrollTop;
-          }
-
-          scrollContainer.style.pointerEvents = 'none';
-          var interval = setInterval(updateScrollTopLoop, 0);
-          this.setState({
-            isScrolling: true
-          });
-          setTimeout(function () {
-            clearInterval(interval);
-
-            _this5.setState({
-              isScrolling: false
-            });
-
-            scrollContainer.scrollTop = start + length;
-            scrollContainer.style.removeProperty('pointer-events');
-
-            if (typeof callback === "function") {
-              callback();
-            }
-          }, duration);
-        }
-      }, {
-        key: "previewScrolling",
-        value: function previewScrolling() {
-          var _this6 = this;
-
-          var _this$props$parallax = this.props.parallax,
-              scrollContainer = _this$props$parallax.scrollContainer,
-              container = _this$props$parallax.container,
-              _this$props$parallax$ = _this$props$parallax.state,
-              containerBox = _this$props$parallax$.containerBox,
-              containerHeight = _this$props$parallax$.containerHeight,
-              scrollContainerHeight = _this$props$parallax$.scrollContainerHeight,
-              scrollContainerBox = _this$props$parallax$.scrollContainerBox;
-
-          if (!container || !scrollContainer) {
-            return;
-          }
-
-          var scrollTop = scrollContainer.scrollTop;
-          var start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
-          var length = containerHeight + scrollContainerHeight;
-
-          if (start < 0) {
-            length = length + start;
-            start = 0;
-          }
-
-          var maxScroll = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
-          var distanceToBottom = maxScroll - (start + length);
-
-          if (distanceToBottom < 0) {
-            length = length + distanceToBottom;
-          }
-
-          var end = start + length;
-          this.scrollFromTo(scrollTop, start, easeOutQuart, function () {
-            _this6.scrollFromTo(start, end, easeInOutCubic, function () {}, 1000);
-          }, 3000);
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          return Object(external_React_["createElement"])(with_parallax_Fragment, null, Object(external_React_["createElement"])(with_parallax_InspectorControls, null, Object(external_React_["createElement"])(scrolling_effect_controls, extends_default()({}, this.props, {
-            isScrolling: this.state.isScrolling,
-            previewScrolling: this.previewScrolling
-          }))), Object(external_React_["createElement"])(WrappedComponent, this.props));
-        }
-      }]);
-
-      return _class2;
-    }(with_parallax_Component)
-  );
-};
-
-var with_parallax_withParallaxContext = function withParallaxContext(WrappedComponent) {
-  return (/*#__PURE__*/function (_Component3) {
-      inherits_default()(_class3, _Component3);
-
-      function _class3() {
-        classCallCheck_default()(this, _class3);
-
-        return possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class3).apply(this, arguments));
-      }
-
-      createClass_default()(_class3, [{
-        key: "render",
-        value: function render() {
-          var _this7 = this;
-
-          return Object(external_React_["createElement"])(ParallaxContext.Consumer, null, function (context) {
-            return Object(external_React_["createElement"])(WrappedComponent, extends_default()({
-              parallax: context
-            }, _this7.props));
-          });
-        }
-      }]);
-
-      return _class3;
-    }(with_parallax_Component)
-  );
-};
-
-var withParallax = with_parallax_compose([with_parallax_withParallaxProvider, with_parallax_withParallaxContext, with_parallax_withParallaxControls]);
-
-/* harmony default export */ var with_parallax = (withParallax);
-// CONCATENATED MODULE: ./src/components/gallery-options/index.js
-
-
-
-
-
-
-
-
-function gallery_options_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { gallery_options_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { gallery_options_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * WordPress dependencies
- */
-var gallery_options_ = wp.i18n.__;
-var gallery_options_Component = wp.element.Component;
-var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
-var ALLOWED_MEDIA_TYPES = ['image'];
-
-var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
-  var galleryImages = props.attributes.galleryImages;
-  var hasImages = !!galleryImages.length;
-
-  function onChangeGallery(newGalleryImages) {
-    var promises = newGalleryImages.map(function (image, index) {
-      return wp.apiRequest({
-        path: '/wp/v2/media/' + image.id
-      }).then(function (newImage) {
-        newGalleryImages[index] = gallery_options_objectSpread({}, newImage, {}, image);
-      });
-    });
-    Promise.all(promises).then(function () {
-      props.setAttributes({
-        galleryImages: newGalleryImages.filter(function (image) {
-          return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
-        })
-      });
-    });
-  }
-
-  return Object(external_React_["createElement"])(MediaPlaceholder, {
-    addToGallery: hasImages,
-    className: "",
-    labels: {
-      title: '',
-      instructions: gallery_options_('Drag images, upload new ones or select files from your library.', '__plugin_txtd')
-    },
-    onSelect: onChangeGallery,
-    accept: "image/*",
-    allowedTypes: ALLOWED_MEDIA_TYPES,
-    multiple: true,
-    value: hasImages ? galleryImages : undefined
+// CONCATENATED MODULE: ./src/components/toggle-group/index.js
+
+var toggle_group_Fragment = wp.element.Fragment;
+var toggle_group_wp$components = wp.components,
+    toggle_group_PanelBody = toggle_group_wp$components.PanelBody,
+    toggle_group_ToggleControl = toggle_group_wp$components.ToggleControl;
+
+var toggle_group_ToggleGroup = function ToggleGroup(props) {
+  var toggles = props.toggles,
+      _onChange = props.onChange,
+      label = props.label;
+  var enabledToggles = toggles.filter(function (toggle) {
+    return !!toggle.value;
   });
-};
-
-var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
-  inherits_default()(GalleryPreview, _Component);
-
-  function GalleryPreview() {
-    classCallCheck_default()(this, GalleryPreview);
-
-    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(GalleryPreview).apply(this, arguments));
-  }
-
-  createClass_default()(GalleryPreview, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          galleryImages = _this$props.galleryImages,
-          selected = _this$props.selected,
-          onSelectImage = _this$props.onSelectImage;
-      return Object(external_React_["createElement"])("ul", {
-        className: "novablocks-slideshow__gallery-edit"
-      }, galleryImages.map(function (img, index) {
-        var classes = ['novablocks-slideshow__gallery-item'];
-
-        if (selected === index) {
-          classes.push('novablocks-slideshow__gallery-item--active');
-        }
-
-        return Object(external_React_["createElement"])("li", {
-          key: img.id || img.url,
-          onClick: function onClick() {
-            onSelectImage(index);
-          }
-        }, Object(external_React_["createElement"])("div", {
-          className: classes.join(' ')
-        }, Object(external_React_["createElement"])("img", {
-          src: img.sizes.thumbnail.url,
-          alt: ""
-        })));
-      }));
-    }
-  }]);
-
-  return GalleryPreview;
-}(gallery_options_Component);
-
-
-// CONCATENATED MODULE: ./src/components/color-controls/index.js
-
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var color_controls_ = wp.i18n.__;
-var color_controls_Fragment = wp.element.Fragment;
-var color_controls_wp$components = wp.components,
-    ColorPalette = color_controls_wp$components.ColorPalette,
-    color_controls_Dropdown = color_controls_wp$components.Dropdown,
-    IconButton = color_controls_wp$components.IconButton,
-    color_controls_RadioControl = color_controls_wp$components.RadioControl,
-    color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    Toolbar = color_controls_wp$components.Toolbar,
-    color_controls_BaseControl = color_controls_wp$components.BaseControl;
-var PanelColorSettings = wp.blockEditor.PanelColorSettings;
-var colors = [{
-  name: color_controls_('Dark', '__plugin_txtd'),
-  color: '#000'
-}, {
-  name: color_controls_('Light', '__plugin_txtd'),
-  color: '#FFF'
-}];
-
-var color_controls_OverlayControls = function OverlayControls(props) {
-  var _props$attributes = props.attributes,
-      overlayFilterStyle = _props$attributes.overlayFilterStyle,
-      overlayFilterStrength = _props$attributes.overlayFilterStrength,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(color_controls_Fragment, null, Object(external_React_["createElement"])(color_controls_RadioControl, {
-    label: color_controls_('Overlay Filter Style', '__plugin_txtd'),
-    selected: overlayFilterStyle,
-    options: [{
-      label: color_controls_('None', '__plugin_txtd'),
-      value: 'none'
-    }, {
-      label: color_controls_('Dark', '__plugin_txtd'),
-      value: 'dark'
-    }, {
-      label: color_controls_('Light', '__plugin_txtd'),
-      value: 'light'
-    }],
-    onChange: function onChange(nextOverlayFilterStyle) {
-      return setAttributes({
-        overlayFilterStyle: nextOverlayFilterStyle
-      });
-    }
-  }), overlayFilterStyle !== 'none' && Object(external_React_["createElement"])(color_controls_RangeControl, {
-    label: color_controls_('Overlay Filter Strength', '__plugin_txtd'),
-    value: overlayFilterStrength,
-    onChange: function onChange(nextOverlayFilterStrength) {
-      return setAttributes({
-        overlayFilterStrength: nextOverlayFilterStrength
-      });
-    },
-    min: 0,
-    max: 100,
-    step: 10
-  }));
-};
-
-var color_controls_ColorControls = function ColorControls(props) {
-  var contentColor = props.attributes.contentColor,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(color_controls_BaseControl, {
-    label: color_controls_('Content Color', '__plugin_txtd')
-  }, Object(external_React_["createElement"])(ColorPalette, {
-    className: "nova-hide-clear-color",
-    value: contentColor,
-    colors: colors,
-    onChange: function onChange(nextContentColor) {
-      return setAttributes({
-        contentColor: nextContentColor
-      });
-    },
-    disableCustomColors: true,
-    clearable: false
-  }));
-};
-
-var color_controls_ColorPanel = function ColorPanel(props) {
-  var contentColor = props.attributes.contentColor,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(PanelColorSettings, {
-    className: "nova-hide-clear-color",
-    title: color_controls_('Color Settings', '__plugin_txtd'),
-    colorSettings: [{
-      value: contentColor,
-      onChange: function onChange(nextContentColor) {
-        return setAttributes({
-          contentColor: nextContentColor
-        });
-      },
-      label: color_controls_('Content Color', '__plugin_txtd')
-    }],
-    colors: colors,
-    initialOpen: false
-  }, Object(external_React_["createElement"])(color_controls_OverlayControls, props));
-};
-
-var color_controls_ColorToolbar = function ColorToolbar(props) {
-  return Object(external_React_["createElement"])(Toolbar, {
-    className: "pixelgrade-hero-block-toolbar"
-  }, Object(external_React_["createElement"])(color_controls_Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref) {
-      var isOpen = _ref.isOpen,
-          onToggle = _ref.onToggle;
-      return Object(external_React_["createElement"])(IconButton, {
-        onClick: onToggle,
-        icon: invert,
-        "aria-expanded": isOpen,
-        label: color_controls_('Colors', '__plugin_txtd'),
-        labelPosition: "bottom"
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(external_React_["createElement"])(color_controls_Fragment, null, Object(external_React_["createElement"])(color_controls_ColorControls, props), Object(external_React_["createElement"])(color_controls_OverlayControls, props));
-    }
-  }));
-};
-
-
-// CONCATENATED MODULE: ./src/components/block-horizontal-alignment-toolbar/index.js
-
-
-
-
-function block_horizontal_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function block_horizontal_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_horizontal_alignment_toolbar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_horizontal_alignment_toolbar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var block_horizontal_alignment_toolbar_ = wp.i18n.__;
-var block_horizontal_alignment_toolbar_Toolbar = wp.components.Toolbar;
-var withViewportMatch = wp.viewport.withViewportMatch;
-var block_horizontal_alignment_toolbar_withSelect = wp.data.withSelect;
-var block_horizontal_alignment_toolbar_wp$compose = wp.compose,
-    block_horizontal_alignment_toolbar_compose = block_horizontal_alignment_toolbar_wp$compose.compose,
-    block_horizontal_alignment_toolbar_createHigherOrderComponent = block_horizontal_alignment_toolbar_wp$compose.createHigherOrderComponent;
-var block_horizontal_alignment_toolbar_createContext = wp.element.createContext;
-
-var _createContext = block_horizontal_alignment_toolbar_createContext({
-  name: '',
-  isSelected: false,
-  focusedElement: null,
-  setFocusedElement: function setFocusedElement() {},
-  clientId: null
-}),
-    Consumer = _createContext.Consumer;
-
-var BLOCK_ALIGNMENTS_CONTROLS = {
-  left: {
-    icon: alignTop,
-    title: block_horizontal_alignment_toolbar_('Align Left', '__plugin_txtd')
-  },
-  center: {
-    icon: alignCenter,
-    title: block_horizontal_alignment_toolbar_('Align Middle', '__plugin_txtd')
-  },
-  right: {
-    icon: alignBottom,
-    title: block_horizontal_alignment_toolbar_('Align Right', '__plugin_txtd')
-  }
-};
-var DEFAULT_CONTROLS = ['left', 'center', 'right'];
-var DEFAULT_CONTROL = 'center';
-function BlockHorizontalAlignmentToolbar(_ref) {
-  var isCollapsed = _ref.isCollapsed,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      _ref$controls = _ref.controls,
-      controls = _ref$controls === void 0 ? DEFAULT_CONTROLS : _ref$controls;
-
-  function applyOrUnset(align) {
-    return function () {
-      return onChange(value === align ? undefined : align);
-    };
-  }
-
-  var activeAlignment = BLOCK_ALIGNMENTS_CONTROLS[value];
-  var defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS[DEFAULT_CONTROL];
-  return Object(external_React_["createElement"])(block_horizontal_alignment_toolbar_Toolbar, {
-    isCollapsed: isCollapsed,
-    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-    controls: controls.map(function (control) {
-      return block_horizontal_alignment_toolbar_objectSpread({}, BLOCK_ALIGNMENTS_CONTROLS[control], {
-        isActive: value === control,
-        onClick: applyOrUnset(control),
-        className: 'pixelgrade-hero-horizontal-alignment-button'
-      });
-    })
+  var disabledToggles = toggles.filter(function (toggle) {
+    return !toggle.value;
   });
-} // @todo remove function declaration and use core method when exposed through the api
-
-var block_horizontal_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
-  return block_horizontal_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
-    return function (props) {
-      return Object(external_React_["createElement"])(Consumer, null, function (context) {
-        return Object(external_React_["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
-      });
-    };
-  }, 'withBlockEditContext');
-};
-
-/* harmony default export */ var block_horizontal_alignment_toolbar = (block_horizontal_alignment_toolbar_compose(block_horizontal_alignment_toolbar_withBlockEditContext(function (_ref2) {
-  var clientId = _ref2.clientId;
-  return {
-    clientId: clientId
-  };
-}), withViewportMatch({
-  isLargeViewport: 'medium'
-}), block_horizontal_alignment_toolbar_withSelect(function (select, _ref3) {
-  var clientId = _ref3.clientId,
-      isLargeViewport = _ref3.isLargeViewport,
-      isCollapsed = _ref3.isCollapsed;
-
-  var _select = select('core/block-editor'),
-      getBlockRootClientId = _select.getBlockRootClientId,
-      getSettings = _select.getSettings;
-
-  return {
-    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
-  };
-}))(BlockHorizontalAlignmentToolbar));
-// CONCATENATED MODULE: ./src/components/block-vertical-alignment-toolbar/index.js
-
-
-
-
-function block_vertical_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function block_vertical_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_vertical_alignment_toolbar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_vertical_alignment_toolbar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var _x = wp.i18n._x;
-var block_vertical_alignment_toolbar_Toolbar = wp.components.Toolbar;
-var block_vertical_alignment_toolbar_withViewportMatch = wp.viewport.withViewportMatch;
-var block_vertical_alignment_toolbar_withSelect = wp.data.withSelect;
-var block_vertical_alignment_toolbar_wp$compose = wp.compose,
-    block_vertical_alignment_toolbar_compose = block_vertical_alignment_toolbar_wp$compose.compose,
-    block_vertical_alignment_toolbar_createHigherOrderComponent = block_vertical_alignment_toolbar_wp$compose.createHigherOrderComponent;
-var block_vertical_alignment_toolbar_createContext = wp.element.createContext;
-
-var components_block_vertical_alignment_toolbar_createContext = block_vertical_alignment_toolbar_createContext({
-  name: '',
-  isSelected: false,
-  focusedElement: null,
-  setFocusedElement: function setFocusedElement() {},
-  clientId: null
-}),
-    block_vertical_alignment_toolbar_Consumer = components_block_vertical_alignment_toolbar_createContext.Consumer;
-
-var block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS = {
-  top: {
-    icon: alignTop,
-    title: _x('Vertically Align Top', 'Block vertical alignment setting')
-  },
-  center: {
-    icon: alignCenter,
-    title: _x('Vertically Align Middle', 'Block vertical alignment setting')
-  },
-  bottom: {
-    icon: alignBottom,
-    title: _x('Vertically Align Bottom', 'Block vertical alignment setting')
-  }
-};
-var block_vertical_alignment_toolbar_DEFAULT_CONTROLS = ['top', 'center', 'bottom'];
-var block_vertical_alignment_toolbar_DEFAULT_CONTROL = 'top';
-function BlockVerticalAlignmentToolbar(_ref) {
-  var isCollapsed = _ref.isCollapsed,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      _ref$controls = _ref.controls,
-      controls = _ref$controls === void 0 ? block_vertical_alignment_toolbar_DEFAULT_CONTROLS : _ref$controls;
-
-  function applyOrUnset(align) {
-    return function () {
-      return onChange(value === align ? undefined : align);
-    };
-  }
-
-  var activeAlignment = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[value];
-  var defaultAlignmentControl = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[block_vertical_alignment_toolbar_DEFAULT_CONTROL];
-  return Object(external_React_["createElement"])(block_vertical_alignment_toolbar_Toolbar, {
-    isCollapsed: isCollapsed,
-    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-    label: _x('Change Alignment', 'Block vertical alignment setting label'),
-    controls: controls.map(function (control) {
-      return block_vertical_alignment_toolbar_objectSpread({}, block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[control], {
-        isActive: value === control,
-        onClick: applyOrUnset(control)
-      });
-    })
-  });
-} // @todo remove function declaration and use core method when exposed through the api
-
-var block_vertical_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
-  return block_vertical_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
-    return function (props) {
-      return Object(external_React_["createElement"])(block_vertical_alignment_toolbar_Consumer, null, function (context) {
-        return Object(external_React_["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
-      });
-    };
-  }, 'withBlockEditContext');
-};
-/**
- * @see https://github.com/WordPress/gutenberg/blob/master/packages/block-editor/src/components/block-vertical-alignment-toolbar/README.md
- */
-
-
-/* harmony default export */ var block_vertical_alignment_toolbar = (block_vertical_alignment_toolbar_compose(block_vertical_alignment_toolbar_withBlockEditContext(function (_ref2) {
-  var clientId = _ref2.clientId;
-  return {
-    clientId: clientId
-  };
-}), block_vertical_alignment_toolbar_withViewportMatch({
-  isLargeViewport: 'medium'
-}), block_vertical_alignment_toolbar_withSelect(function (select, _ref3) {
-  var clientId = _ref3.clientId,
-      isLargeViewport = _ref3.isLargeViewport,
-      isCollapsed = _ref3.isCollapsed;
-
-  var _select = select('core/block-editor'),
-      getBlockRootClientId = _select.getBlockRootClientId,
-      getSettings = _select.getSettings;
-
-  return {
-    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
-  };
-}))(BlockVerticalAlignmentToolbar));
-// CONCATENATED MODULE: ./src/components/alignment-controls/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * WordPress dependencies
- */
-
-var alignment_controls_ = wp.i18n.__;
-var alignment_controls_Fragment = wp.element.Fragment;
-var alignment_controls_wp$components = wp.components,
-    alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
-    alignment_controls_IconButton = alignment_controls_wp$components.IconButton,
-    PanelRow = alignment_controls_wp$components.PanelRow,
-    alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
-
-var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
-  return Object(external_React_["createElement"])(alignment_controls_Toolbar, {
-    className: "pixelgrade-hero-block-toolbar"
-  }, Object(external_React_["createElement"])(alignment_controls_Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref) {
-      var isOpen = _ref.isOpen,
-          onToggle = _ref.onToggle;
-      return Object(external_React_["createElement"])(alignment_controls_IconButton, {
-        onClick: onToggle,
-        icon: alignment,
-        "aria-expanded": isOpen,
-        label: alignment_controls_('Content Position', '__plugin_txtd'),
-        labelPosition: "bottom"
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(external_React_["createElement"])(alignment_controls_AlignmentControls, props);
-    }
-  }));
-};
-
-var alignment_controls_AlignmentControls = function AlignmentControls(props) {
-  var _props$attributes = props.attributes,
-      horizontalAlignment = _props$attributes.horizontalAlignment,
-      verticalAlignment = _props$attributes.verticalAlignment,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(alignment_controls_Fragment, null, Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(external_React_["createElement"])(block_horizontal_alignment_toolbar, {
-    value: horizontalAlignment,
-    onChange: function onChange(nextHorizontalAlignment) {
-      wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map(function (block) {
-        wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, {
-          align: nextHorizontalAlignment
-        });
-        return true;
-      });
-      setAttributes({
-        horizontalAlignment: nextHorizontalAlignment
-      });
-    }
-  })), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
-    value: verticalAlignment,
-    onChange: function onChange(nextVerticalAlignment) {
-      return setAttributes({
-        verticalAlignment: nextVerticalAlignment
-      });
-    }
-  })));
-};
-
-
-// CONCATENATED MODULE: ./src/components/scroll-indicator-panel/index.js
-
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var scroll_indicator_panel_ = wp.i18n.__;
-var scroll_indicator_panel_wp$components = wp.components,
-    scroll_indicator_panel_PanelBody = scroll_indicator_panel_wp$components.PanelBody,
-    scroll_indicator_panel_RadioControl = scroll_indicator_panel_wp$components.RadioControl,
-    scroll_indicator_panel_ToggleControl = scroll_indicator_panel_wp$components.ToggleControl;
-var scroll_indicator_panel_select = wp.data.select;
-var scroll_indicator_panel_Component = wp.element.Component;
-var ScrollIndicatorPanel = with_settings(function (props) {
-  var settings = props.settings,
-      scrollIndicator = props.attributes.scrollIndicator,
-      setAttributes = props.setAttributes,
-      updateAttributes = props.updateAttributes;
-  var heroBlocks = scroll_indicator_panel_select('core/block-editor').getBlocks().filter(function (block) {
-    return block.name === 'novablocks/hero';
-  });
-  var index = heroBlocks.findIndex(function (block) {
-    return block.clientId === scroll_indicator_panel_select('core/block-editor').getSelectedBlockClientId();
-  });
-  return index === 0 && Object(external_React_["createElement"])(scroll_indicator_panel_PanelBody, {
-    title: scroll_indicator_panel_('Scroll Indicator', '__plugin_txtd'),
-    initialOpen: false
-  }, Object(external_React_["createElement"])(scroll_indicator_panel_ToggleControl, {
-    label: scroll_indicator_panel_('Enable Scroll Indicator', '__plugin_txtd'),
-    checked: scrollIndicator,
-    onChange: function onChange(scrollIndicator) {
-      updateAttributes({
-        scrollIndicator: scrollIndicator
-      });
-    }
-  }));
-});
-
-// CONCATENATED MODULE: ./src/components/index.js
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-
-
-// CONCATENATED MODULE: ./src/blocks/google-map/map.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-var map_ = wp.i18n.__;
-var map_wp$element = wp.element,
-    map_Component = map_wp$element.Component,
-    map_Fragment = map_wp$element.Fragment;
-var map_Placeholder = wp.components.Placeholder;
-
-var map_Map = /*#__PURE__*/function (_Component) {
-  inherits_default()(Map, _Component);
-
-  function Map() {
-    var _this;
-
-    classCallCheck_default()(this, Map);
-
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Map).apply(this, arguments));
-    _this.map = null;
-    _this.searchBox = null;
-    _this.markers = [];
-    _this.getMapStyles = utils_getMapStyles.bind(assertThisInitialized_default()(_this));
-    return _this;
-  }
-
-  createClass_default()(Map, [{
-    key: "clearMarkers",
-    value: function clearMarkers() {
-      this.markers.forEach(function (marker) {
-        marker.setMap(null);
-      });
-      this.markers = [];
-    }
-  }, {
-    key: "onPlacesChanged",
-    value: function onPlacesChanged() {
-      if (!this.searchBox) {
-        return;
-      }
-
-      this.props.onChange(this.searchBox.getPlaces().map(function (place) {
-        var keepProps = ['name', 'geometry'];
-        var filtered = Object.keys(place).filter(function (key) {
-          return keepProps.includes(key);
-        }).reduce(function (obj, key) {
-          obj[key] = place[key];
-          return obj;
-        }, {});
-        return JSON.stringify(filtered);
-      }));
-    }
-  }, {
-    key: "createMarkers",
-    value: function createMarkers() {
-      var _this2 = this;
-
-      var attributes = this.props.attributes;
-      var markers = attributes.markers,
-          styleSlug = attributes.styleSlug;
-      var accentColor = styleSlug === 'customized' ? getMapAccentColor.call(this) : '#222222';
-      var pinMarkup = pin.replace('%ACCENT_COLOR%', accentColor);
-      markers.forEach(function (markerString) {
-        var marker = JSON.parse(markerString);
-
-        if (!marker.geometry) {
-          return;
-        }
-
-        _this2.markers.push(new google.maps.Marker({
-          map: _this2.map,
-          icon: {
-            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
-          },
-          title: marker.name,
-          position: marker.geometry.location
-        }));
-      });
-
-      if (this.markers.length) {
-        this.map.setCenter(getMarkersCenter.call(this));
-      }
-    }
-  }, {
-    key: "initializeMap",
-    value: function initializeMap() {
-      var attributes = this.props.attributes;
-      var showControls = attributes.showControls,
-          showLabels = attributes.showLabels,
-          showIcons = attributes.showIcons,
-          zoom = attributes.zoom;
-      this.map = new google.maps.Map(document.getElementById("novablocks-google-map-".concat(this.props.clientId)), {
-        mapTypeId: 'roadmap',
-        center: default_map_center,
-        zoom: zoom,
-        styles: addVisibilityToStyles(this.getMapStyles(), showLabels, showIcons),
-        clickableIcons: false,
-        disableDefaultUI: !showControls,
-        disableDoubleClickZoom: true,
-        draggable: false,
-        gestureHandling: 'none',
-        keyboardShortcuts: false,
-        scrollwheel: false
-      });
-    }
-  }, {
-    key: "initializeSearchBox",
-    value: function initializeSearchBox() {
-      var _this3 = this;
-
-      // Create the search box and link it to the UI element.
-      var input = document.getElementById("novablocks-google-map-search-input-".concat(this.props.clientId));
-      this.searchBox = new google.maps.places.SearchBox(input); // Bias the SearchBox results towards current map's viewport.
-
-      this.map.addListener('bounds_changed', function () {
-        _this3.searchBox.setBounds(_this3.map.getBounds());
-      }); // Listen for the event fired when the user selects a prediction and retrieve
-      // more details for that place.
-
-      this.searchBox.addListener('places_changed', this.onPlacesChanged.bind(this));
-    }
-  }, {
-    key: "updateMapOptions",
-    value: function updateMapOptions() {
-      if (this.map === null) {
-        return;
-      }
-
-      var options = {};
-      var attributes = this.props.attributes;
-      var showControls = attributes.showControls,
-          showLabels = attributes.showLabels,
-          showIcons = attributes.showIcons,
-          zoom = attributes.zoom;
-      options.zoom = zoom;
-      options.disableDefaultUI = !showControls;
-      options.styles = addVisibilityToStyles(this.getMapStyles(), showLabels, showIcons);
-      this.map.setOptions(options);
-    }
-  }, {
-    key: "updateMapMarkers",
-    value: function updateMapMarkers() {
-      this.clearMarkers();
-      this.createMarkers();
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      if (this.map === null) {
-        this.initializeMap();
-        this.initializeSearchBox();
-        this.createMarkers();
-        return;
-      }
-
-      google.maps.event.trigger(this.map, 'resize');
-    }
-  }, {
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(nextProps) {
-      var shouldUpdate = false;
-      Object.entries(this.props).forEach(function (_ref) {
-        var _ref2 = slicedToArray_default()(_ref, 2),
-            key = _ref2[0],
-            val = _ref2[1];
-
-        if (nextProps[key] !== val) {
-          shouldUpdate = true;
-        }
-      });
-      return shouldUpdate;
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {
-      this.updateMapOptions();
-
-      if (prevProps.attributes.markers !== this.props.attributes.markers || prevProps.attributes.styleSlug !== this.props.attributes.styleSlug) {
-        this.updateMapMarkers();
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return Object(external_React_["createElement"])("div", {
-        className: "novablocks-map__map",
-        id: "novablocks-google-map-".concat(this.props.clientId)
-      });
-    }
-  }]);
-
-  return Map;
-}(map_Component);
-
-var map_MapWrapper = function MapWrapper(Map) {
-  return function (props) {
-    var parallax = props.parallax,
-        otherProps = objectWithoutProperties_default()(props, ["parallax"]);
-
-    var searchBoxStyles = {};
-
-    if (!props.isSelected) {
-      searchBoxStyles.display = 'none';
-    }
-
+  return Object(external_React_["createElement"])(toggle_group_PanelBody, {
+    initialOpen: true,
+    title: label
+  }, Object(external_React_["createElement"])("div", {
+    className: 'components-toggle-group'
+  }, !!enabledToggles.length && Object(external_React_["createElement"])("div", {
+    className: 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled'
+  }, enabledToggles.map(function (toggle, idx) {
     return Object(external_React_["createElement"])("div", {
-      className: "novablocks-map"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-map__search-box"
-    }, Object(external_React_["createElement"])(map_Placeholder, {
-      style: searchBoxStyles
-    }, Object(external_React_["createElement"])("input", {
-      type: "text",
-      id: "novablocks-google-map-search-input-".concat(props.clientId),
-      placeholder: map_('Enter an address to drop a pin on this map')
-    }))), Object(external_React_["createElement"])("div", {
-      className: "novablocks-map__map-container"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-mask"
-    }, Object(external_React_["createElement"])("div", {
-      style: parallax.style
-    }, Object(external_React_["createElement"])(Map, otherProps)))));
-  };
+      className: "components-toggle-group__toggle-list-item"
+    }, Object(external_React_["createElement"])(toggle_group_ToggleControl, {
+      key: idx,
+      label: toggle.label,
+      checked: !!toggle.value,
+      onChange: function onChange() {
+        _onChange(toggle.attribute);
+      }
+    }));
+  })), !!disabledToggles.length && Object(external_React_["createElement"])(toggle_group_Fragment, null, Object(external_React_["createElement"])("label", {
+    className: 'components-toggle-group__toggle-list-label'
+  }, "Elements you aren't using"), Object(external_React_["createElement"])("div", {
+    className: 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled'
+  }, disabledToggles.map(function (toggle, idx) {
+    return Object(external_React_["createElement"])("div", {
+      className: "components-toggle-group__toggle-list-item"
+    }, Object(external_React_["createElement"])(toggle_group_ToggleControl, {
+      key: idx,
+      label: toggle.label,
+      checked: !!toggle.value,
+      onChange: function onChange() {
+        _onChange(toggle.attribute);
+      }
+    }));
+  })))));
 };
 
-/* harmony default export */ var google_map_map = (map_MapWrapper(map_Map));
-// CONCATENATED MODULE: ./src/blocks/google-map/api-key-panel-body.js
-
-
-
-
-
-
-var api_key_panel_body_ = wp.i18n.__;
-var api_key_panel_body_wp$components = wp.components,
-    api_key_panel_body_Button = api_key_panel_body_wp$components.Button,
-    api_key_panel_body_TextControl = api_key_panel_body_wp$components.TextControl,
-    api_key_panel_body_PanelBody = api_key_panel_body_wp$components.PanelBody;
-var api_key_panel_body_Component = wp.element.Component;
-
-var api_key_panel_body_ApiKeyPanelBody = /*#__PURE__*/function (_Component) {
-  inherits_default()(ApiKeyPanelBody, _Component);
-
-  function ApiKeyPanelBody() {
-    classCallCheck_default()(this, ApiKeyPanelBody);
-
-    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(ApiKeyPanelBody).apply(this, arguments));
-  }
-
-  createClass_default()(ApiKeyPanelBody, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          apiKey = _this$props.apiKey,
-          apiKeyInstructions = _this$props.apiKeyInstructions,
-          savedApiKey = _this$props.savedApiKey,
-          onChangeApiKey = _this$props.onChangeApiKey,
-          onSaveApiKey = _this$props.onSaveApiKey;
-
-      if (savedApiKey === '') {
-        return null;
-      }
-
-      return Object(external_React_["createElement"])(api_key_panel_body_PanelBody, {
-        title: api_key_panel_body_('Google Maps API Key', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(api_key_panel_body_TextControl, {
-        placeholder: api_key_panel_body_('Paste API key here', '__plugin_txtd'),
-        value: apiKey,
-        onChange: onChangeApiKey,
-        help: apiKeyInstructions
-      }), Object(external_React_["createElement"])(api_key_panel_body_Button, {
-        isDefault: true,
-        onClick: function onClick() {
-          onSaveApiKey(apiKey);
-        }
-      }, api_key_panel_body_('Save', '__plugin_txtd')));
-    }
-  }]);
-
-  return ApiKeyPanelBody;
-}(api_key_panel_body_Component);
-
-/* harmony default export */ var api_key_panel_body = (api_key_panel_body_ApiKeyPanelBody);
-// CONCATENATED MODULE: ./src/blocks/google-map/map-style-select.js
-
-
-
-
-
-
-
-
-
-
-var map_style_select_Component = wp.element.Component;
-
-var map_style_select_MapStyleSelect = /*#__PURE__*/function (_Component) {
-  inherits_default()(MapStyleSelect, _Component);
-
-  function MapStyleSelect() {
-    var _this;
-
-    classCallCheck_default()(this, MapStyleSelect);
-
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(MapStyleSelect).apply(this, arguments));
-    _this.state = {
-      active: _this.props.value
-    };
-    _this.compileStyles = compileStyles.bind(assertThisInitialized_default()(_this));
-    return _this;
-  }
-
-  createClass_default()(MapStyleSelect, [{
-    key: "getStaticStyle",
-    value: function getStaticStyle(styles) {
-      var result = [];
-      styles.forEach(function (v, i, a) {
-        var style = '';
-
-        if (v.stylers) {
-          if (v.stylers.length > 0) {
-            style += (v.hasOwnProperty('featureType') ? 'feature:' + v.featureType : 'feature:all') + '|';
-            style += (v.hasOwnProperty('elementType') ? 'element:' + v.elementType : 'element:all') + '|';
-            v.stylers.forEach(function (val, i, a) {
-              var prop = Object.keys(val)[0];
-              var propertyval = val[prop].toString().replace('#', '0x');
-              style += prop + ':' + propertyval + '|';
-            });
-          }
-        }
-
-        result.push('style=' + encodeURIComponent(style));
-      });
-      return result.join('&');
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      var _this$props = this.props,
-          attributes = _this$props.attributes,
-          options = _this$props.options,
-          value = _this$props.value,
-          onChange = _this$props.onChange,
-          apiKey = _this$props.apiKey;
-      var markers = attributes.markers,
-          zoom = attributes.zoom;
-      var center = markers.length ? getMarkersCenter.call(this) : new google.maps.LatLng(default_map_center);
-      var latitude = center.lat();
-      var longitude = center.lng();
-      return Object(external_React_["createElement"])("div", {
-        className: "components-base-control"
-      }, Object(external_React_["createElement"])("div", {
-        className: "editor-block-styles block-editor-block-styles novablocks-block-editor-map-styles"
-      }, options.map(function (option) {
-        var style = _this2.getStaticStyle(_this2.compileStyles(option.styles));
-
-        var size = '200x200';
-        var mapType = 'roadmap';
-        var url = 'https://maps.googleapis.com/maps/api/staticmap';
-        var src = "".concat(url, "?center=").concat(latitude, ",").concat(longitude, "&zoom=").concat(zoom, "&size=").concat(size, "&maptype=").concat(mapType, "&").concat(style, "&key=").concat(apiKey);
-        return Object(external_React_["createElement"])("div", {
-          key: option.slug,
-          className: classnames_default()('editor-block-styles__item block-editor-block-styles__item', {
-            'is-active': option.slug === _this2.state.active
-          }),
-          onClick: function onClick() {
-            _this2.setState({
-              active: option.slug
-            });
-
-            onChange(option.slug);
-          },
-          role: "button",
-          tabIndex: "0",
-          "aria-label": option.label
-        }, Object(external_React_["createElement"])("div", {
-          className: "editor-block-styles__item-preview block-editor-block-styles__item-preview"
-        }, Object(external_React_["createElement"])("img", {
-          src: src,
-          alt: "".concat(option.label, " map style preview")
-        })), Object(external_React_["createElement"])("div", {
-          className: "editor-block-styles__item-label block-editor-block-styles__item-label"
-        }, option.label));
-      })));
-    }
-  }]);
-
-  return MapStyleSelect;
-}(map_style_select_Component);
-
-/* harmony default export */ var map_style_select = (map_style_select_MapStyleSelect);
-// CONCATENATED MODULE: ./src/blocks/google-map/inspector-controls.js
-
-
-
-
-
-
-
-
-
-
-
-
-var inspector_controls_ = wp.i18n.__;
-var inspector_controls_wp$components = wp.components,
-    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
-    inspector_controls_RangeControl = inspector_controls_wp$components.RangeControl,
-    inspector_controls_SelectControl = inspector_controls_wp$components.SelectControl,
-    inspector_controls_ToggleControl = inspector_controls_wp$components.ToggleControl;
-var inspector_controls_Component = wp.element.Component;
-var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
-
-var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Component) {
-  inherits_default()(ButtonInspectorControls, _Component);
-
-  function ButtonInspectorControls() {
-    var _this;
-
-    classCallCheck_default()(this, ButtonInspectorControls);
-
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(ButtonInspectorControls).apply(this, arguments));
-    _this.compileStyles = compileStyles.bind(assertThisInitialized_default()(_this));
-    return _this;
-  }
-
-  createClass_default()(ButtonInspectorControls, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      var _this$props = this.props,
-          _this$props$attribute = _this$props.attributes,
-          styleSlug = _this$props$attribute.styleSlug,
-          zoom = _this$props$attribute.zoom,
-          showLabels = _this$props$attribute.showLabels,
-          showControls = _this$props$attribute.showControls,
-          showIcons = _this$props$attribute.showIcons,
-          savedApiKey = _this$props.savedApiKey,
-          setAttributes = _this$props.setAttributes;
-
-      if (!savedApiKey) {
-        return null;
-      }
-
-      return Object(external_React_["createElement"])(inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(inspector_controls_PanelBody, {
-        title: inspector_controls_('Map Design', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(map_style_select, extends_default()({}, this.props, {
-        apiKey: savedApiKey,
-        value: styleSlug,
-        options: google_map_styles,
-        onChange: function onChange(newStyleSlug) {
-          var mapStyles = google_map_styles.find(function (style) {
-            return style.slug === newStyleSlug;
-          }).styles;
-
-          var newStyles = _this2.compileStyles(mapStyles);
-
-          var newPinColor = newStyleSlug === 'customized' ? getMapAccentColor.call(_this2) : '#222222';
-          setAttributes({
-            styleSlug: newStyleSlug,
-            styleData: newStyles,
-            pinColor: newPinColor
-          });
-        }
-      })), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
-        checked: showIcons,
-        onChange: function onChange() {
-          return setAttributes({
-            showIcons: !showIcons
-          });
-        }
-      }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Street Labels', '__plugin_txtd'),
-        checked: showLabels,
-        onChange: function onChange() {
-          return setAttributes({
-            showLabels: !showLabels
-          });
-        }
-      }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Controls', '__plugin_txtd'),
-        checked: showControls,
-        onChange: function onChange() {
-          return setAttributes({
-            showControls: !showControls
-          });
-        }
-      })), Object(external_React_["createElement"])(inspector_controls_PanelBody, {
-        title: inspector_controls_('Zoom Level', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
-        value: zoom,
-        onChange: function onChange(newZoom) {
-          return setAttributes({
-            zoom: newZoom
-          });
-        },
-        min: 5,
-        max: 20
-      })), Object(external_React_["createElement"])(api_key_panel_body, this.props));
-    }
-  }]);
-
-  return ButtonInspectorControls;
-}(inspector_controls_Component);
-
-/* harmony default export */ var inspector_controls = (inspector_controls_ButtonInspectorControls);
-// CONCATENATED MODULE: ./src/blocks/google-map/edit.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-var edit_ = wp.i18n.__;
-var API_KEY_SETTING_ID = 'novablocks_google_maps_api_key';
-var edit_wp$element = wp.element,
-    edit_Component = edit_wp$element.Component,
-    edit_Fragment = edit_wp$element.Fragment;
-var edit_wp$components = wp.components,
-    Spinner = edit_wp$components.Spinner,
-    edit_TextControl = edit_wp$components.TextControl;
-var edit_wp$blockEditor = wp.blockEditor,
-    BlockAlignmentToolbar = edit_wp$blockEditor.BlockAlignmentToolbar,
-    BlockControls = edit_wp$blockEditor.BlockControls;
-var edit_wp$compose = wp.compose,
-    edit_compose = edit_wp$compose.compose,
-    edit_createHigherOrderComponent = edit_wp$compose.createHigherOrderComponent;
-var Settings = wp.api.models.Settings; // This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
-
-window.gm_authFailure = function () {
-  window.googlemaps_authfailure = true;
-  window.dispatchEvent(new Event('novablock.googlemaps_authfailure'));
-};
-
-var edit_Edit = /*#__PURE__*/function (_Component) {
-  inherits_default()(Edit, _Component);
-
-  function Edit() {
-    var _this;
-
-    classCallCheck_default()(this, Edit);
-
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Edit).apply(this, arguments));
-    _this.state = {
-      fetchedScript: false,
-      fetchedApiKey: false,
-      savedApiKey: '',
-      apiKey: '',
-      gmAuthFailure: typeof window.googlemaps_authfailure === 'undefined' ? false : !!window.googlemaps_authfailure
-    };
-    _this.onChangeMarkers = _this.onChangeMarkers.bind(assertThisInitialized_default()(_this));
-    _this.onGoogleMapsAuthFailure = _this.onGoogleMapsAuthFailure.bind(assertThisInitialized_default()(_this));
-    _this.settings = null;
-    return _this;
-  }
-
-  createClass_default()(Edit, [{
-    key: "onGoogleMapsAuthFailure",
-    value: function onGoogleMapsAuthFailure(event) {
-      this.setState({
-        gmAuthFailure: true
-      });
-    }
-  }, {
-    key: "onChangeMarkers",
-    value: function onChangeMarkers(markers) {
-      this.props.setAttributes({
-        markers: markers
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      window.addEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
-      wp.api.loadPromise.done(function () {
-        _this2.settings = new wp.api.models.Settings();
-
-        _this2.settings.on("change:".concat(API_KEY_SETTING_ID), function (model) {
-          var apiKey = model.get(API_KEY_SETTING_ID);
-
-          _this2.setState({
-            fetchedApiKey: true,
-            savedApiKey: apiKey,
-            apiKey: apiKey
-          });
-
-          if (!!apiKey) {
-            _this2.loadGoogleMapsScript();
-          }
-        });
-
-        _this2.settings.fetch();
-      });
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      window.removeEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
-    }
-  }, {
-    key: "loadGoogleMapsScript",
-    value: function loadGoogleMapsScript() {
-      var _this3 = this;
-
-      var savedApiKey = this.state.savedApiKey;
-      var keyParam = savedApiKey !== '' ? "key=".concat(savedApiKey, "&") : '';
-      var scriptSrc = "//maps.googleapis.com/maps/api/js?".concat(keyParam, "libraries=places");
-      var scripts = document.querySelectorAll('script[src*="maps.googleapis.com"]');
-
-      if (scripts.length) {
-        this.setState({
-          fetchedScript: true
-        });
-        return Promise.resolve();
-      }
-
-      var promise = new Promise(function (resolve, reject) {
-        var script = document.createElement('script');
-        script.onload = resolve;
-        script.onerror = reject;
-        script.async = true;
-        script.src = scriptSrc;
-        document.body.appendChild(script);
-      });
-      return promise.then(function () {
-        _this3.setState({
-          fetchedScript: true
-        });
-      });
-    }
-  }, {
-    key: "saveApiKey",
-    value: function saveApiKey(apiKey) {
-      var _this4 = this;
-
-      var key = new wp.api.models.Settings(defineProperty_default()({}, API_KEY_SETTING_ID, apiKey));
-      key.save().then(function () {
-        _this4.setState({
-          gmAuthFailure: false
-        });
-
-        _this4.settings.fetch();
-      });
-    }
-  }, {
-    key: "renderPreview",
-    value: function renderPreview() {
-      var _this$state = this.state,
-          fetchedApiKey = _this$state.fetchedApiKey,
-          fetchedScript = _this$state.fetchedScript,
-          savedApiKey = _this$state.savedApiKey,
-          gmAuthFailure = _this$state.gmAuthFailure;
-
-      if (!fetchedApiKey) {
-        return Object(external_React_["createElement"])(Spinner, null);
-      }
-
-      if (!fetchedScript || !savedApiKey || gmAuthFailure) {
-        return Object(external_React_["createElement"])(google_map_placeholder, {
-          saveApiKey: this.saveApiKey.bind(this),
-          apiKey: savedApiKey,
-          apiKeyInstructions: this.getInstructions()
-        });
-      }
-
-      return Object(external_React_["createElement"])(edit_Fragment, null, Object(external_React_["createElement"])(google_map_map, extends_default()({}, this.props, {
-        onChange: this.onChangeMarkers
-      })));
-    }
-  }, {
-    key: "getInstructions",
-    value: function getInstructions() {
-      var gmAuthFailure = this.state.gmAuthFailure;
-      var url = '//developers.google.com/maps/documentation/javascript/get-api-key';
-      var hyperlink = Object(external_React_["createElement"])("a", {
-        target: "_blank",
-        href: url
-      }, edit_('register a Google Maps API Key', '__plugin_txtd'));
-
-      if (gmAuthFailure) {
-        return Object(external_React_["createElement"])(edit_Fragment, null, edit_('It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to', '__plugin_txtd'), " ", hyperlink);
-      }
-
-      return Object(external_React_["createElement"])(edit_Fragment, null, edit_('To display the map, you need to', '__plugin_txtd'), " ", hyperlink, " ", edit_('and include it bellow.', '__plugin_txtd'));
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this5 = this;
-
-      var _this$state2 = this.state,
-          fetchedApiKey = _this$state2.fetchedApiKey,
-          fetchedScript = _this$state2.fetchedScript,
-          savedApiKey = _this$state2.savedApiKey,
-          gmAuthFailure = _this$state2.gmAuthFailure;
-      var _this$props = this.props,
-          attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes;
-      var align = attributes.align,
-          styleData = attributes.styleData;
-      var newProps = Object.assign(this.props);
-
-      if (typeof styleData === "string") {
-        newProps.attributes.styleData = JSON.parse(styleData);
-      }
-
-      return Object(external_React_["createElement"])(edit_Fragment, null, Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(BlockAlignmentToolbar, {
-        value: align,
-        onChange: function onChange(align) {
-          return setAttributes({
-            align: align
-          });
-        },
-        controls: ['center', 'full']
-      })), !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && Object(external_React_["createElement"])(inspector_controls, extends_default()({}, newProps, {
-        apiKey: this.state.apiKey,
-        savedApiKey: this.state.savedApiKey,
-        onChangeApiKey: function onChangeApiKey(apiKey) {
-          _this5.setState({
-            apiKey: apiKey
-          });
-        },
-        onSaveApiKey: this.saveApiKey.bind(this),
-        apiKeyInstructions: this.getInstructions()
-      })), this.renderPreview());
-    }
-  }]);
-
-  return Edit;
-}(edit_Component);
-
-/* harmony default export */ var google_map_edit = (edit_createHigherOrderComponent(edit_compose([with_settings, with_parallax]))(edit_Edit));
-// CONCATENATED MODULE: ./src/blocks/google-map/index.js
-/**
- * Internal dependencies
- */
-
-
-
-
-/**
- * WordPress dependencies
- */
-
-var google_map_ = wp.i18n.__;
-var google_map_registerBlockType = wp.blocks.registerBlockType;
-
-function google_map_init() {
-  google_map_registerBlockType('novablocks/google-map', {
-    title: google_map_('Map of the World', '__plugin_txtd'),
-    description: google_map_('Display an interactive map to show the location of your venue.', '__plugin_txtd'),
-    category: 'nova-blocks',
-    icon: map,
-    // Additional search terms
-    keywords: [google_map_('google', '__plugin_txtd'), google_map_('maps', '__plugin_txtd'), google_map_('google maps', '__plugin_txtd'), google_map_('location', '__plugin_txtd')],
-    getEditWrapperProps: function getEditWrapperProps(attributes) {
-      var align = attributes.align;
-
-      if ('center' === align || 'full' === align) {
-        return {
-          'data-align': align
-        };
-      }
-    },
-    edit: google_map_edit,
-    save: function save() {}
-  });
-}
-
-/* harmony default export */ var google_map = (google_map_init);
-// CONCATENATED MODULE: ./src/blocks/header/icons.js
-
-var header_icons_wp$components = wp.components,
-    header_icons_SVG = header_icons_wp$components.SVG,
-    header_icons_Path = header_icons_wp$components.Path;
-var logoLeft = Object(external_React_["createElement"])("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "48px",
-  height: "48px",
-  viewBox: "0 0 48 48"
-}, Object(external_React_["createElement"])("g", {
-  fill: "none",
-  fillRule: "evenodd",
-  stroke: "none",
-  strokeWidth: "1"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F3",
-  d: "M7.172 0C10.912 0 14 3.033 14 6.774 14 10.764 10.734 14 6.744 14 3.034 14 0 10.993 0 7.285v-.17C0 3.185 3.242 0 7.172 0zm.115 3.111a2.62 2.62 0 00-2.605 2.333h.656a2.828 2.828 0 012.829 2.829v1.05a2.963 2.963 0 002.722-2.953v-.312a2.947 2.947 0 00-2.947-2.947h-.655z",
-  transform: "translate(0 17)"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#FAE547",
-  d: "M4.714 7C3.768 7 3 7.768 3 8.714A2.286 2.286 0 005.286 11h.176C6.312 11 7 10.311 7 9.462v-.644A1.818 1.818 0 005.182 7h-.468z",
-  transform: "translate(0 17)"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#A5A5A5",
-  d: "M20 20H48V28H20z"
-})));
-var logoRight = Object(external_React_["createElement"])("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "48px",
-  height: "48px",
-  viewBox: "0 0 48 48"
-}, Object(external_React_["createElement"])("g", {
-  fill: "none",
-  fillRule: "evenodd",
-  stroke: "none",
-  strokeWidth: "1"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F3",
-  d: "M7.172 0C10.912 0 14 3.033 14 6.774 14 10.764 10.734 14 6.744 14 3.034 14 0 10.993 0 7.285v-.17C0 3.185 3.242 0 7.172 0zm.115 3.111a2.62 2.62 0 00-2.605 2.333h.656a2.828 2.828 0 012.829 2.829v1.05a2.963 2.963 0 002.722-2.953v-.312a2.947 2.947 0 00-2.947-2.947h-.655z",
-  transform: "translate(34 17)"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#FAE547",
-  d: "M4.714 7C3.768 7 3 7.768 3 8.714A2.286 2.286 0 005.286 11h.176C6.312 11 7 10.311 7 9.462v-.644A1.818 1.818 0 005.182 7h-.468z",
-  transform: "translate(34 17)"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#A5A5A5",
-  d: "M0 20H28V28H0z"
-})));
-var logoCenter = Object(external_React_["createElement"])("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "48px",
-  height: "48px",
-  viewBox: "0 0 48 48"
-}, Object(external_React_["createElement"])("g", {
-  fill: "none",
-  fillRule: "evenodd",
-  stroke: "none",
-  strokeWidth: "1"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F3",
-  d: "M7.172 0C10.912 0 14 3.033 14 6.774 14 10.764 10.734 14 6.744 14 3.034 14 0 10.993 0 7.285v-.17C0 3.185 3.242 0 7.172 0zm.115 3.111a2.62 2.62 0 00-2.605 2.333h.656a2.828 2.828 0 012.829 2.829v1.05a2.963 2.963 0 002.722-2.953v-.312a2.947 2.947 0 00-2.947-2.947h-.655z",
-  transform: "translate(17 17)"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#FAE547",
-  d: "M4.714 7C3.768 7 3 7.768 3 8.714A2.286 2.286 0 005.286 11h.176C6.312 11 7 10.311 7 9.462v-.644A1.818 1.818 0 005.182 7h-.468z",
-  transform: "translate(17 17)"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#A5A5A5",
-  d: "M0 20H9V28H0z"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#A5A5A5",
-  d: "M0 20H11V28H0z"
-}), Object(external_React_["createElement"])("path", {
-  fill: "#A5A5A5",
-  d: "M37 20H48V28H37z"
-})));
-// CONCATENATED MODULE: ./src/blocks/header/edit.js
-
-
-
-
-var header_edit_ = wp.i18n.__;
-var useState = wp.element.useState;
-var header_edit_wp$components = wp.components,
-    edit_Toolbar = header_edit_wp$components.Toolbar,
-    edit_IconButton = header_edit_wp$components.IconButton;
-var header_edit_wp$blockEditor = wp.blockEditor,
-    edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
-    InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
-var TEMPLATE_OPTIONS = [{
-  title: header_edit_('Logo on the left side and one navigation menu', '__plugin_txtd'),
-  name: 'logo-left',
-  icon: logoLeft,
-  template: [['novablocks/logo'], ['novablocks/navigation', {
-    className: "site-header__menu site-header__menu--primary",
-    slug: "primary"
-  }]]
-}, {
-  title: header_edit_('Logo centered and one navigation menu on each side', '__plugin_txtd'),
-  name: 'logo-center',
-  icon: logoCenter,
-  template: [['novablocks/navigation', {
-    className: "site-header__menu site-header__menu--secondary",
-    slug: "secondary"
-  }], ['novablocks/logo'], ['novablocks/navigation', {
-    className: "site-header__menu site-header__menu--primary",
-    slug: "primary"
-  }]]
-}];
-function header_edit_Edit(props) {
-  var clientId = props.clientId;
-  var layout = props.attributes.layout,
-      className = props.className,
-      setAttributes = props.setAttributes;
-  var block = wp.data.select('core/block-editor').getBlock(clientId);
-  var innerBlocks = block.innerBlocks;
-  var currentTemplate = block !== null && !!innerBlocks.length ? innerBlocks.map(function (block) {
-    return [block.name];
-  }) : null;
-
-  var _useState = useState(currentTemplate),
-      _useState2 = slicedToArray_default()(_useState, 2),
-      template = _useState2[0],
-      setTemplate = _useState2[1];
-
-  var applyTemplate = function applyTemplate(template) {
-    var activeTemplate = TEMPLATE_OPTIONS.find(function (option) {
-      return option.template === template;
-    });
-    var activeTemplateName = activeTemplate.name;
-    setAttributes({
-      layout: activeTemplateName
-    });
-    setTemplate(template);
-  };
-
-  var classNames = classnames_default()(className, "site-header", "site-header-".concat(layout));
-  return [Object(external_React_["createElement"])(edit_BlockControls, null, Object(external_React_["createElement"])(edit_Toolbar, null, Object(external_React_["createElement"])(edit_IconButton, {
-    className: "components-icon-button components-toolbar__control",
-    label: header_edit_('Change Layout', '__plugin_txtd'),
-    onClick: function onClick() {
-      return setTemplate(null);
-    },
-    icon: "edit"
-  }))), Object(external_React_["createElement"])("div", {
-    className: classNames
-  }, Object(external_React_["createElement"])(InnerBlocks, {
-    __experimentalTemplateOptions: TEMPLATE_OPTIONS,
-    __experimentalOnSelectTemplateOption: function __experimentalOnSelectTemplateOption(nextTemplate) {
-      applyTemplate(nextTemplate);
-    },
-    template: template,
-    templateLock: "all"
-  }))];
-}
-// CONCATENATED MODULE: ./src/blocks/header/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-var header_ = wp.i18n.__;
-var header_registerBlockType = wp.blocks.registerBlockType;
-var header_InnerBlocks = wp.blockEditor.InnerBlocks;
-
-function header_init() {
-  header_registerBlockType('novablocks/header', {
-    title: header_('Header', '__plugin_txtd'),
-    description: header_('Outputs custom header markup.', '__plugin_txtd'),
-    category: 'nova-blocks',
-    icon: header,
-    // Additional search terms
-    keywords: [header_('logo', '__plugin_txtd'), header_('menu', '__plugin_txtd')],
-    supports: {
-      align: ["wide", "full"],
-      default: "full"
-    },
-    edit: header_edit_Edit,
-    save: function save() {
-      return Object(external_React_["createElement"])(header_InnerBlocks.Content, null);
-    }
-  });
-}
-
-/* harmony default export */ var blocks_header = (header_init);
+/* harmony default export */ var toggle_group = (toggle_group_ToggleGroup);
 // EXTERNAL MODULE: ./node_modules/lodash/range.js
 var lodash_range = __webpack_require__(44);
 var range_default = /*#__PURE__*/__webpack_require__.n(lodash_range);
@@ -10425,14 +8504,14 @@ var esm_assertThisInitialized = __webpack_require__(13);
 
 
 
-var context_createContext = Object(external_React_["createContext"])({
+var _createContext = Object(external_React_["createContext"])({
   focusHistory: []
 }),
-    Provider = context_createContext.Provider,
-    context_Consumer = context_createContext.Consumer;
+    Provider = _createContext.Provider,
+    Consumer = _createContext.Consumer;
 
 Provider.displayName = 'FocusReturnProvider';
-context_Consumer.displayName = 'FocusReturnConsumer';
+Consumer.displayName = 'FocusReturnConsumer';
 /**
  * The maximum history length to capture for the focus stack. When exceeded,
  * items should be shifted from the stack for each consecutive push.
@@ -10631,7 +8710,7 @@ function withFocusReturn(options) {
     }(external_React_["Component"]);
 
     return function (props) {
-      return Object(external_React_["createElement"])(context_Consumer, null, function (context) {
+      return Object(external_React_["createElement"])(Consumer, null, function (context) {
         return Object(external_React_["createElement"])(FocusReturn, {
           childProps: props,
           focus: context
@@ -11337,7 +9416,7 @@ var context_SlotFillContext = Object(external_React_["createContext"])({
   subscribe: function subscribe() {}
 });
 var context_Provider = context_SlotFillContext.Provider,
-    slot_fill_context_Consumer = context_SlotFillContext.Consumer;
+    context_Consumer = context_SlotFillContext.Consumer;
 
 var context_SlotFillProvider =
 /*#__PURE__*/
@@ -11616,7 +9695,7 @@ function (_Component) {
 }(external_React_["Component"]);
 
 var slot_Slot = function Slot(props) {
-  return Object(external_React_["createElement"])(slot_fill_context_Consumer, null, function (_ref) {
+  return Object(external_React_["createElement"])(context_Consumer, null, function (_ref) {
     var registerSlot = _ref.registerSlot,
         unregisterSlot = _ref.unregisterSlot,
         getFills = _ref.getFills;
@@ -11705,7 +9784,7 @@ function fill_FillComponent(_ref) {
 }
 
 var fill_Fill = function Fill(props) {
-  return Object(external_React_["createElement"])(slot_fill_context_Consumer, null, function (_ref2) {
+  return Object(external_React_["createElement"])(context_Consumer, null, function (_ref2) {
     var registerFill = _ref2.registerFill,
         unregisterFill = _ref2.unregisterFill;
     return Object(external_React_["createElement"])(fill_FillComponent, Object(esm_extends["a" /* default */])({}, props, {
@@ -15044,6 +13123,1983 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
 }(heading_toolbar_Component);
 
 /* harmony default export */ var heading_toolbar = (heading_toolbar_HeadingToolbar);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
+var readOnlyError = __webpack_require__(37);
+var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
+
+// CONCATENATED MODULE: ./src/easing.js
+
+// Credits:
+// Gaëtan Renaudeau - https://gist.github.com/gre/1650294
+// Jeremy Kahn - https://github.com/jeremyckahn/shifty/
+// Johan Lindell - https://gist.github.com/gre/1650294#gistcomment-1806616
+var pow = Math.pow,
+    abs = Math.abs,
+    sin = Math.sin,
+    cos = Math.cos,
+    PI = Math.PI;
+
+var EaseIn = function EaseIn(power) {
+  return function (x) {
+    return pow(x, power);
+  };
+};
+
+var EaseOut = function EaseOut(power) {
+  return function (x) {
+    return 1 - abs(pow(x - 1, power));
+  };
+};
+
+var EaseInOut = function EaseInOut(power) {
+  return function (x) {
+    return x < .5 ? EaseIn(power)(x * 2) / 2 : EaseOut(power)(x * 2 - 1) / 2 + 0.5;
+  };
+}; // Linear
+
+
+var linear = EaseInOut(1); // Quad
+
+var easeInQuad = EaseIn(2);
+var easeOutQuad = EaseOut(2);
+var easeInOutQuad = EaseInOut(2); // Cubic
+
+var easeInCubic = EaseIn(3);
+var easeOutCubic = EaseOut(3);
+var easeInOutCubic = EaseInOut(3); // Quart
+
+var easeInQuart = EaseIn(4);
+var easeOutQuart = EaseOut(4);
+var easeInOutQuart = EaseInOut(4); // Quint
+
+var easeInQuint = EaseIn(5);
+var easeOutQuint = EaseOut(5);
+var easeInOutQuint = EaseInOut(5); // Sine
+
+var easeInSine = function easeInSine(x) {
+  return -1 * cos(x * PI / 2) + 1;
+};
+var easeOutSine = function easeOutSine(x) {
+  return sin(x * PI / 2);
+};
+var easeInOutSine = function easeInOutSine(x) {
+  return -0.5 * (cos(PI * x) - 1);
+}; // Expo
+
+var easeInExpo = function easeInExpo(x) {
+  return x === 0 ? 0 : pow(2, 10 * (x - 1));
+};
+var easeOutExpo = function easeOutExpo(x) {
+  return x === 1 ? 1 : -pow(2, -10 * x) + 1;
+};
+var easeInOutExpo = function easeInOutExpo(x) {
+  if (x === 0 || x === 1) {
+    return x;
+  }
+
+  if ((x /= 0.5) < 1) {
+    return 0.5 * pow(2, 10 * (x - 1));
+  }
+
+  return 0.5 * (-pow(2, -10 * --x) + 2);
+}; // Back
+
+var easeInBack = function easeInBack(x) {
+  var s = 1.70158;
+  return pow(x, 2) * ((s + 1) * x - s);
+};
+var easeOutBack = function easeOutBack(x) {
+  var s = 1.70158;
+  return (x = x - 1) * x * ((s + 1) * x + s) + 1;
+};
+var easing_easeInOutBack = function easeInOutBack(x) {
+  var s = 1.70158;
+  return (x /= 0.5) < 1 ? 0.5 * (x * x * (((s *= (readOnlyError_default()("s"), 1.525)) + 1) * x - s)) : 0.5 * ((x -= 2) * x * (((s *= (readOnlyError_default()("s"), 1.525)) + 1) * x + s) + 2);
+};
+// CONCATENATED MODULE: ./src/components/with-parallax/index.js
+
+
+
+
+
+
+
+
+var createContext = wp.element.createContext;
+
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+var with_parallax_wp$element = wp.element,
+    with_parallax_Component = with_parallax_wp$element.Component,
+    with_parallax_Fragment = with_parallax_wp$element.Fragment;
+var with_parallax_InspectorControls = wp.blockEditor.InspectorControls;
+var with_parallax_compose = wp.compose.compose;
+var ParallaxContext = createContext();
+
+var with_parallax_withParallaxProvider = function withParallaxProvider(WrappedComponent) {
+  return (/*#__PURE__*/function (_Component) {
+      inherits_default()(_class, _Component);
+
+      function _class() {
+        var _this;
+
+        classCallCheck_default()(this, _class);
+
+        _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class).apply(this, arguments));
+        _this.state = {
+          scrollContainerWidth: 0,
+          scrollContainerHeight: 0,
+          progress: 0.5
+        };
+        _this.updateHandler = _this.updateState.bind(assertThisInitialized_default()(_this));
+        _this.scrollContainer = _this.getScrollContainer();
+        return _this;
+      }
+
+      createClass_default()(_class, [{
+        key: "getScrollContainer",
+        value: function getScrollContainer() {
+          return document.querySelector('.edit-post-layout__content') || document.querySelector('.edit-post-editor-regions__content') || document.querySelector('.block-editor-editor-skeleton__content');
+        }
+      }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+          window.addEventListener('resize', this.updateHandler);
+          this.createBlockObservers();
+          this.unsubscribeUpdate = wp.data.subscribe(this.updateHandler);
+
+          if (this.scrollContainer) {
+            this.scrollContainer.addEventListener('scroll', this.updateHandler);
+          }
+
+          this.updateState();
+        }
+      }, {
+        key: "createBlockObservers",
+        value: function createBlockObservers() {
+          var _this2 = this;
+
+          this.observers = [];
+          findParents(this.container, '.wp-block').map(function (block) {
+            if (window.MutationObserver) {
+              var mutationObserver = new MutationObserver(function (movements) {
+                movements.forEach(function (movement) {
+                  if ('style' === movement.attributeName) {
+                    if (movement.oldValue && movement.oldValue.includes('transform: translate3d')) {
+                      _this2.updateState();
+                    }
+                  }
+                });
+              });
+              mutationObserver.observe(block, {
+                attributes: true,
+                attributeOldValue: true,
+                childList: false,
+                subtree: false
+              });
+
+              _this2.observers.push(mutationObserver);
+            }
+
+            if (window.ResizeObserver) {
+              var resizeObserver = new ResizeObserver(function () {
+                _this2.updateState();
+              });
+              resizeObserver.observe(block);
+
+              _this2.observers.push(resizeObserver);
+            }
+          });
+        }
+      }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+          window.removeEventListener('resize', this.updateHandler);
+          this.observers.forEach(function (observer) {
+            return observer.disconnect();
+          });
+          this.unsubscribeUpdate();
+
+          if (this.scrollContainer) {
+            this.scrollContainer.removeEventListener('scroll', this.updateHandler);
+          }
+        }
+      }, {
+        key: "updateState",
+        value: function updateState() {
+          var container = this.container;
+          var scrollContainerHeight = this.scrollContainer.offsetHeight;
+          var scrollContainerBox = this.scrollContainer.getBoundingClientRect();
+          var config = Object.assign({}, this.props.attributes, {
+            scrollContainerBox: scrollContainerBox,
+            scrollContainerHeight: scrollContainerHeight
+          });
+          this.setState(getState(container, config));
+        }
+      }, {
+        key: "getElementStyle",
+        value: function getElementStyle() {
+          var attributes = this.props.attributes;
+          var scrollingEffect = attributes.scrollingEffect;
+
+          if (!this.scrollContainer || !this.container) {
+            return {};
+          }
+
+          var state = getState(this.container, Object.assign({}, this.state, attributes));
+          var config = Object.assign({}, state, attributes);
+          var styles = getStyles(config);
+          return styles;
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          var _this3 = this;
+
+          return Object(external_React_["createElement"])(with_parallax_Fragment, null, Object(external_React_["createElement"])("div", {
+            ref: function ref(el) {
+              return _this3.container = el;
+            }
+          }, Object(external_React_["createElement"])(ParallaxContext.Provider, {
+            value: {
+              style: this.getElementStyle(),
+              state: this.state,
+              container: this.container,
+              scrollContainer: this.scrollContainer
+            }
+          }, Object(external_React_["createElement"])(WrappedComponent, this.props))));
+        }
+      }]);
+
+      return _class;
+    }(with_parallax_Component)
+  );
+};
+
+var with_parallax_withParallaxControls = function withParallaxControls(WrappedComponent) {
+  return (/*#__PURE__*/function (_Component2) {
+      inherits_default()(_class2, _Component2);
+
+      function _class2() {
+        var _this4;
+
+        classCallCheck_default()(this, _class2);
+
+        _this4 = possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class2).apply(this, arguments));
+        _this4.state = {
+          isScrolling: false
+        };
+        _this4.previewScrolling = _this4.previewScrolling.bind(assertThisInitialized_default()(_this4));
+        return _this4;
+      }
+
+      createClass_default()(_class2, [{
+        key: "scrollFromTo",
+        value: function scrollFromTo(start, end) {
+          var _this5 = this;
+
+          var easing = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (x) {
+            return x;
+          };
+          var callback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
+          var speed = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1000;
+          var scrollContainer = this.props.parallax.scrollContainer;
+          var length = end - start;
+          var duration = Math.abs(length) * 1000 / speed;
+          var startTime = Date.now();
+
+          function updateScrollTopLoop() {
+            var currentTime = Date.now();
+            var timePassed = currentTime - startTime;
+            var progress = timePassed / duration;
+            var newScrollTop = start + length * easing(progress);
+            scrollContainer.scrollTop = newScrollTop;
+          }
+
+          scrollContainer.style.pointerEvents = 'none';
+          var interval = setInterval(updateScrollTopLoop, 0);
+          this.setState({
+            isScrolling: true
+          });
+          setTimeout(function () {
+            clearInterval(interval);
+
+            _this5.setState({
+              isScrolling: false
+            });
+
+            scrollContainer.scrollTop = start + length;
+            scrollContainer.style.removeProperty('pointer-events');
+
+            if (typeof callback === "function") {
+              callback();
+            }
+          }, duration);
+        }
+      }, {
+        key: "previewScrolling",
+        value: function previewScrolling() {
+          var _this6 = this;
+
+          var _this$props$parallax = this.props.parallax,
+              scrollContainer = _this$props$parallax.scrollContainer,
+              container = _this$props$parallax.container,
+              _this$props$parallax$ = _this$props$parallax.state,
+              containerBox = _this$props$parallax$.containerBox,
+              containerHeight = _this$props$parallax$.containerHeight,
+              scrollContainerHeight = _this$props$parallax$.scrollContainerHeight,
+              scrollContainerBox = _this$props$parallax$.scrollContainerBox;
+
+          if (!container || !scrollContainer) {
+            return;
+          }
+
+          var scrollTop = scrollContainer.scrollTop;
+          var start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
+          var length = containerHeight + scrollContainerHeight;
+
+          if (start < 0) {
+            length = length + start;
+            start = 0;
+          }
+
+          var maxScroll = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+          var distanceToBottom = maxScroll - (start + length);
+
+          if (distanceToBottom < 0) {
+            length = length + distanceToBottom;
+          }
+
+          var end = start + length;
+          this.scrollFromTo(scrollTop, start, easeOutQuart, function () {
+            _this6.scrollFromTo(start, end, easeInOutCubic, function () {}, 1000);
+          }, 3000);
+        }
+      }, {
+        key: "render",
+        value: function render() {
+          return Object(external_React_["createElement"])(with_parallax_Fragment, null, Object(external_React_["createElement"])(with_parallax_InspectorControls, null, Object(external_React_["createElement"])(scrolling_effect_controls, extends_default()({}, this.props, {
+            isScrolling: this.state.isScrolling,
+            previewScrolling: this.previewScrolling
+          }))), Object(external_React_["createElement"])(WrappedComponent, this.props));
+        }
+      }]);
+
+      return _class2;
+    }(with_parallax_Component)
+  );
+};
+
+var with_parallax_withParallaxContext = function withParallaxContext(WrappedComponent) {
+  return (/*#__PURE__*/function (_Component3) {
+      inherits_default()(_class3, _Component3);
+
+      function _class3() {
+        classCallCheck_default()(this, _class3);
+
+        return possibleConstructorReturn_default()(this, getPrototypeOf_default()(_class3).apply(this, arguments));
+      }
+
+      createClass_default()(_class3, [{
+        key: "render",
+        value: function render() {
+          var _this7 = this;
+
+          return Object(external_React_["createElement"])(ParallaxContext.Consumer, null, function (context) {
+            return Object(external_React_["createElement"])(WrappedComponent, extends_default()({
+              parallax: context
+            }, _this7.props));
+          });
+        }
+      }]);
+
+      return _class3;
+    }(with_parallax_Component)
+  );
+};
+
+var withParallax = with_parallax_compose([with_parallax_withParallaxProvider, with_parallax_withParallaxContext, with_parallax_withParallaxControls]);
+
+/* harmony default export */ var with_parallax = (withParallax);
+// CONCATENATED MODULE: ./src/components/gallery-options/index.js
+
+
+
+
+
+
+
+
+function gallery_options_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { gallery_options_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { gallery_options_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * WordPress dependencies
+ */
+var gallery_options_ = wp.i18n.__;
+var gallery_options_Component = wp.element.Component;
+var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
+var ALLOWED_MEDIA_TYPES = ['image'];
+
+var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
+  var galleryImages = props.attributes.galleryImages;
+  var hasImages = !!galleryImages.length;
+
+  function onChangeGallery(newGalleryImages) {
+    var promises = newGalleryImages.map(function (image, index) {
+      return wp.apiRequest({
+        path: '/wp/v2/media/' + image.id
+      }).then(function (newImage) {
+        newGalleryImages[index] = gallery_options_objectSpread({}, newImage, {}, image);
+      });
+    });
+    Promise.all(promises).then(function () {
+      props.setAttributes({
+        galleryImages: newGalleryImages.filter(function (image) {
+          return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
+        })
+      });
+    });
+  }
+
+  return Object(external_React_["createElement"])(MediaPlaceholder, {
+    addToGallery: hasImages,
+    className: "",
+    labels: {
+      title: '',
+      instructions: gallery_options_('Drag images, upload new ones or select files from your library.', '__plugin_txtd')
+    },
+    onSelect: onChangeGallery,
+    accept: "image/*",
+    allowedTypes: ALLOWED_MEDIA_TYPES,
+    multiple: true,
+    value: hasImages ? galleryImages : undefined
+  });
+};
+
+var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
+  inherits_default()(GalleryPreview, _Component);
+
+  function GalleryPreview() {
+    classCallCheck_default()(this, GalleryPreview);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(GalleryPreview).apply(this, arguments));
+  }
+
+  createClass_default()(GalleryPreview, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          galleryImages = _this$props.galleryImages,
+          selected = _this$props.selected,
+          onSelectImage = _this$props.onSelectImage;
+      return Object(external_React_["createElement"])("ul", {
+        className: "novablocks-slideshow__gallery-edit"
+      }, galleryImages.map(function (img, index) {
+        var classes = ['novablocks-slideshow__gallery-item'];
+
+        if (selected === index) {
+          classes.push('novablocks-slideshow__gallery-item--active');
+        }
+
+        return Object(external_React_["createElement"])("li", {
+          key: img.id || img.url,
+          onClick: function onClick() {
+            onSelectImage(index);
+          }
+        }, Object(external_React_["createElement"])("div", {
+          className: classes.join(' ')
+        }, Object(external_React_["createElement"])("img", {
+          src: img.sizes.thumbnail.url,
+          alt: ""
+        })));
+      }));
+    }
+  }]);
+
+  return GalleryPreview;
+}(gallery_options_Component);
+
+
+// CONCATENATED MODULE: ./src/components/color-controls/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var color_controls_ = wp.i18n.__;
+var color_controls_Fragment = wp.element.Fragment;
+var color_controls_wp$components = wp.components,
+    ColorPalette = color_controls_wp$components.ColorPalette,
+    color_controls_Dropdown = color_controls_wp$components.Dropdown,
+    IconButton = color_controls_wp$components.IconButton,
+    color_controls_RadioControl = color_controls_wp$components.RadioControl,
+    color_controls_RangeControl = color_controls_wp$components.RangeControl,
+    Toolbar = color_controls_wp$components.Toolbar,
+    color_controls_BaseControl = color_controls_wp$components.BaseControl;
+var PanelColorSettings = wp.blockEditor.PanelColorSettings;
+var colors = [{
+  name: color_controls_('Dark', '__plugin_txtd'),
+  color: '#000'
+}, {
+  name: color_controls_('Light', '__plugin_txtd'),
+  color: '#FFF'
+}];
+
+var color_controls_OverlayControls = function OverlayControls(props) {
+  var _props$attributes = props.attributes,
+      overlayFilterStyle = _props$attributes.overlayFilterStyle,
+      overlayFilterStrength = _props$attributes.overlayFilterStrength,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(color_controls_Fragment, null, Object(external_React_["createElement"])(color_controls_RadioControl, {
+    label: color_controls_('Overlay Filter Style', '__plugin_txtd'),
+    selected: overlayFilterStyle,
+    options: [{
+      label: color_controls_('None', '__plugin_txtd'),
+      value: 'none'
+    }, {
+      label: color_controls_('Dark', '__plugin_txtd'),
+      value: 'dark'
+    }, {
+      label: color_controls_('Light', '__plugin_txtd'),
+      value: 'light'
+    }],
+    onChange: function onChange(nextOverlayFilterStyle) {
+      return setAttributes({
+        overlayFilterStyle: nextOverlayFilterStyle
+      });
+    }
+  }), overlayFilterStyle !== 'none' && Object(external_React_["createElement"])(color_controls_RangeControl, {
+    label: color_controls_('Overlay Filter Strength', '__plugin_txtd'),
+    value: overlayFilterStrength,
+    onChange: function onChange(nextOverlayFilterStrength) {
+      return setAttributes({
+        overlayFilterStrength: nextOverlayFilterStrength
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 10
+  }));
+};
+
+var color_controls_ColorControls = function ColorControls(props) {
+  var contentColor = props.attributes.contentColor,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(color_controls_BaseControl, {
+    label: color_controls_('Content Color', '__plugin_txtd')
+  }, Object(external_React_["createElement"])(ColorPalette, {
+    className: "nova-hide-clear-color",
+    value: contentColor,
+    colors: colors,
+    onChange: function onChange(nextContentColor) {
+      return setAttributes({
+        contentColor: nextContentColor
+      });
+    },
+    disableCustomColors: true,
+    clearable: false
+  }));
+};
+
+var color_controls_ColorPanel = function ColorPanel(props) {
+  var contentColor = props.attributes.contentColor,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(PanelColorSettings, {
+    className: "nova-hide-clear-color",
+    title: color_controls_('Color Settings', '__plugin_txtd'),
+    colorSettings: [{
+      value: contentColor,
+      onChange: function onChange(nextContentColor) {
+        return setAttributes({
+          contentColor: nextContentColor
+        });
+      },
+      label: color_controls_('Content Color', '__plugin_txtd')
+    }],
+    colors: colors,
+    initialOpen: false
+  }, Object(external_React_["createElement"])(color_controls_OverlayControls, props));
+};
+
+var color_controls_ColorToolbar = function ColorToolbar(props) {
+  return Object(external_React_["createElement"])(Toolbar, {
+    className: "pixelgrade-hero-block-toolbar"
+  }, Object(external_React_["createElement"])(color_controls_Dropdown, {
+    position: "bottom",
+    className: "pixelgrade-hero-block-toolbar-dropdown",
+    contentClassName: "components-nova--popover",
+    renderToggle: function renderToggle(_ref) {
+      var isOpen = _ref.isOpen,
+          onToggle = _ref.onToggle;
+      return Object(external_React_["createElement"])(IconButton, {
+        onClick: onToggle,
+        icon: invert,
+        "aria-expanded": isOpen,
+        label: color_controls_('Colors', '__plugin_txtd'),
+        labelPosition: "bottom"
+      });
+    },
+    focusOnMount: false,
+    renderContent: function renderContent() {
+      return Object(external_React_["createElement"])(color_controls_Fragment, null, Object(external_React_["createElement"])(color_controls_ColorControls, props), Object(external_React_["createElement"])(color_controls_OverlayControls, props));
+    }
+  }));
+};
+
+
+// CONCATENATED MODULE: ./src/components/block-horizontal-alignment-toolbar/index.js
+
+
+
+
+function block_horizontal_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function block_horizontal_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_horizontal_alignment_toolbar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_horizontal_alignment_toolbar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var block_horizontal_alignment_toolbar_ = wp.i18n.__;
+var block_horizontal_alignment_toolbar_Toolbar = wp.components.Toolbar;
+var withViewportMatch = wp.viewport.withViewportMatch;
+var block_horizontal_alignment_toolbar_withSelect = wp.data.withSelect;
+var block_horizontal_alignment_toolbar_wp$compose = wp.compose,
+    block_horizontal_alignment_toolbar_compose = block_horizontal_alignment_toolbar_wp$compose.compose,
+    block_horizontal_alignment_toolbar_createHigherOrderComponent = block_horizontal_alignment_toolbar_wp$compose.createHigherOrderComponent;
+var block_horizontal_alignment_toolbar_createContext = wp.element.createContext;
+
+var components_block_horizontal_alignment_toolbar_createContext = block_horizontal_alignment_toolbar_createContext({
+  name: '',
+  isSelected: false,
+  focusedElement: null,
+  setFocusedElement: function setFocusedElement() {},
+  clientId: null
+}),
+    block_horizontal_alignment_toolbar_Consumer = components_block_horizontal_alignment_toolbar_createContext.Consumer;
+
+var BLOCK_ALIGNMENTS_CONTROLS = {
+  left: {
+    icon: alignTop,
+    title: block_horizontal_alignment_toolbar_('Align Left', '__plugin_txtd')
+  },
+  center: {
+    icon: alignCenter,
+    title: block_horizontal_alignment_toolbar_('Align Middle', '__plugin_txtd')
+  },
+  right: {
+    icon: alignBottom,
+    title: block_horizontal_alignment_toolbar_('Align Right', '__plugin_txtd')
+  }
+};
+var DEFAULT_CONTROLS = ['left', 'center', 'right'];
+var DEFAULT_CONTROL = 'center';
+function BlockHorizontalAlignmentToolbar(_ref) {
+  var isCollapsed = _ref.isCollapsed,
+      value = _ref.value,
+      onChange = _ref.onChange,
+      _ref$controls = _ref.controls,
+      controls = _ref$controls === void 0 ? DEFAULT_CONTROLS : _ref$controls;
+
+  function applyOrUnset(align) {
+    return function () {
+      return onChange(value === align ? undefined : align);
+    };
+  }
+
+  var activeAlignment = BLOCK_ALIGNMENTS_CONTROLS[value];
+  var defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS[DEFAULT_CONTROL];
+  return Object(external_React_["createElement"])(block_horizontal_alignment_toolbar_Toolbar, {
+    isCollapsed: isCollapsed,
+    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
+    controls: controls.map(function (control) {
+      return block_horizontal_alignment_toolbar_objectSpread({}, BLOCK_ALIGNMENTS_CONTROLS[control], {
+        isActive: value === control,
+        onClick: applyOrUnset(control),
+        className: 'pixelgrade-hero-horizontal-alignment-button'
+      });
+    })
+  });
+} // @todo remove function declaration and use core method when exposed through the api
+
+var block_horizontal_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
+  return block_horizontal_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
+    return function (props) {
+      return Object(external_React_["createElement"])(block_horizontal_alignment_toolbar_Consumer, null, function (context) {
+        return Object(external_React_["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
+      });
+    };
+  }, 'withBlockEditContext');
+};
+
+/* harmony default export */ var block_horizontal_alignment_toolbar = (block_horizontal_alignment_toolbar_compose(block_horizontal_alignment_toolbar_withBlockEditContext(function (_ref2) {
+  var clientId = _ref2.clientId;
+  return {
+    clientId: clientId
+  };
+}), withViewportMatch({
+  isLargeViewport: 'medium'
+}), block_horizontal_alignment_toolbar_withSelect(function (select, _ref3) {
+  var clientId = _ref3.clientId,
+      isLargeViewport = _ref3.isLargeViewport,
+      isCollapsed = _ref3.isCollapsed;
+
+  var _select = select('core/block-editor'),
+      getBlockRootClientId = _select.getBlockRootClientId,
+      getSettings = _select.getSettings;
+
+  return {
+    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
+  };
+}))(BlockHorizontalAlignmentToolbar));
+// CONCATENATED MODULE: ./src/components/block-vertical-alignment-toolbar/index.js
+
+
+
+
+function block_vertical_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function block_vertical_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_vertical_alignment_toolbar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_vertical_alignment_toolbar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var _x = wp.i18n._x;
+var block_vertical_alignment_toolbar_Toolbar = wp.components.Toolbar;
+var block_vertical_alignment_toolbar_withViewportMatch = wp.viewport.withViewportMatch;
+var block_vertical_alignment_toolbar_withSelect = wp.data.withSelect;
+var block_vertical_alignment_toolbar_wp$compose = wp.compose,
+    block_vertical_alignment_toolbar_compose = block_vertical_alignment_toolbar_wp$compose.compose,
+    block_vertical_alignment_toolbar_createHigherOrderComponent = block_vertical_alignment_toolbar_wp$compose.createHigherOrderComponent;
+var block_vertical_alignment_toolbar_createContext = wp.element.createContext;
+
+var components_block_vertical_alignment_toolbar_createContext = block_vertical_alignment_toolbar_createContext({
+  name: '',
+  isSelected: false,
+  focusedElement: null,
+  setFocusedElement: function setFocusedElement() {},
+  clientId: null
+}),
+    block_vertical_alignment_toolbar_Consumer = components_block_vertical_alignment_toolbar_createContext.Consumer;
+
+var block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS = {
+  top: {
+    icon: alignTop,
+    title: _x('Vertically Align Top', 'Block vertical alignment setting')
+  },
+  center: {
+    icon: alignCenter,
+    title: _x('Vertically Align Middle', 'Block vertical alignment setting')
+  },
+  bottom: {
+    icon: alignBottom,
+    title: _x('Vertically Align Bottom', 'Block vertical alignment setting')
+  }
+};
+var block_vertical_alignment_toolbar_DEFAULT_CONTROLS = ['top', 'center', 'bottom'];
+var block_vertical_alignment_toolbar_DEFAULT_CONTROL = 'top';
+function BlockVerticalAlignmentToolbar(_ref) {
+  var isCollapsed = _ref.isCollapsed,
+      value = _ref.value,
+      onChange = _ref.onChange,
+      _ref$controls = _ref.controls,
+      controls = _ref$controls === void 0 ? block_vertical_alignment_toolbar_DEFAULT_CONTROLS : _ref$controls;
+
+  function applyOrUnset(align) {
+    return function () {
+      return onChange(value === align ? undefined : align);
+    };
+  }
+
+  var activeAlignment = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[value];
+  var defaultAlignmentControl = block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[block_vertical_alignment_toolbar_DEFAULT_CONTROL];
+  return Object(external_React_["createElement"])(block_vertical_alignment_toolbar_Toolbar, {
+    isCollapsed: isCollapsed,
+    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
+    label: _x('Change Alignment', 'Block vertical alignment setting label'),
+    controls: controls.map(function (control) {
+      return block_vertical_alignment_toolbar_objectSpread({}, block_vertical_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[control], {
+        isActive: value === control,
+        onClick: applyOrUnset(control)
+      });
+    })
+  });
+} // @todo remove function declaration and use core method when exposed through the api
+
+var block_vertical_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
+  return block_vertical_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
+    return function (props) {
+      return Object(external_React_["createElement"])(block_vertical_alignment_toolbar_Consumer, null, function (context) {
+        return Object(external_React_["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
+      });
+    };
+  }, 'withBlockEditContext');
+};
+/**
+ * @see https://github.com/WordPress/gutenberg/blob/master/packages/block-editor/src/components/block-vertical-alignment-toolbar/README.md
+ */
+
+
+/* harmony default export */ var block_vertical_alignment_toolbar = (block_vertical_alignment_toolbar_compose(block_vertical_alignment_toolbar_withBlockEditContext(function (_ref2) {
+  var clientId = _ref2.clientId;
+  return {
+    clientId: clientId
+  };
+}), block_vertical_alignment_toolbar_withViewportMatch({
+  isLargeViewport: 'medium'
+}), block_vertical_alignment_toolbar_withSelect(function (select, _ref3) {
+  var clientId = _ref3.clientId,
+      isLargeViewport = _ref3.isLargeViewport,
+      isCollapsed = _ref3.isCollapsed;
+
+  var _select = select('core/block-editor'),
+      getBlockRootClientId = _select.getBlockRootClientId,
+      getSettings = _select.getSettings;
+
+  return {
+    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
+  };
+}))(BlockVerticalAlignmentToolbar));
+// CONCATENATED MODULE: ./src/components/alignment-controls/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+var alignment_controls_ = wp.i18n.__;
+var alignment_controls_Fragment = wp.element.Fragment;
+var alignment_controls_wp$components = wp.components,
+    alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
+    alignment_controls_IconButton = alignment_controls_wp$components.IconButton,
+    PanelRow = alignment_controls_wp$components.PanelRow,
+    alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
+
+var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
+  return Object(external_React_["createElement"])(alignment_controls_Toolbar, {
+    className: "pixelgrade-hero-block-toolbar"
+  }, Object(external_React_["createElement"])(alignment_controls_Dropdown, {
+    position: "bottom",
+    className: "pixelgrade-hero-block-toolbar-dropdown",
+    contentClassName: "components-nova--popover",
+    renderToggle: function renderToggle(_ref) {
+      var isOpen = _ref.isOpen,
+          onToggle = _ref.onToggle;
+      return Object(external_React_["createElement"])(alignment_controls_IconButton, {
+        onClick: onToggle,
+        icon: alignment,
+        "aria-expanded": isOpen,
+        label: alignment_controls_('Content Position', '__plugin_txtd'),
+        labelPosition: "bottom"
+      });
+    },
+    focusOnMount: false,
+    renderContent: function renderContent() {
+      return Object(external_React_["createElement"])(alignment_controls_AlignmentControls, props);
+    }
+  }));
+};
+
+var alignment_controls_AlignmentControls = function AlignmentControls(props) {
+  var _props$attributes = props.attributes,
+      horizontalAlignment = _props$attributes.horizontalAlignment,
+      verticalAlignment = _props$attributes.verticalAlignment,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(alignment_controls_Fragment, null, Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(external_React_["createElement"])(block_horizontal_alignment_toolbar, {
+    value: horizontalAlignment,
+    onChange: function onChange(nextHorizontalAlignment) {
+      wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map(function (block) {
+        wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, {
+          align: nextHorizontalAlignment
+        });
+        return true;
+      });
+      setAttributes({
+        horizontalAlignment: nextHorizontalAlignment
+      });
+    }
+  })), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
+    value: verticalAlignment,
+    onChange: function onChange(nextVerticalAlignment) {
+      return setAttributes({
+        verticalAlignment: nextVerticalAlignment
+      });
+    }
+  })));
+};
+
+
+// CONCATENATED MODULE: ./src/components/scroll-indicator-panel/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var scroll_indicator_panel_ = wp.i18n.__;
+var scroll_indicator_panel_wp$components = wp.components,
+    scroll_indicator_panel_PanelBody = scroll_indicator_panel_wp$components.PanelBody,
+    scroll_indicator_panel_RadioControl = scroll_indicator_panel_wp$components.RadioControl,
+    scroll_indicator_panel_ToggleControl = scroll_indicator_panel_wp$components.ToggleControl;
+var scroll_indicator_panel_select = wp.data.select;
+var scroll_indicator_panel_Component = wp.element.Component;
+var ScrollIndicatorPanel = with_settings(function (props) {
+  var settings = props.settings,
+      scrollIndicator = props.attributes.scrollIndicator,
+      setAttributes = props.setAttributes,
+      updateAttributes = props.updateAttributes;
+  var heroBlocks = scroll_indicator_panel_select('core/block-editor').getBlocks().filter(function (block) {
+    return block.name === 'novablocks/hero';
+  });
+  var index = heroBlocks.findIndex(function (block) {
+    return block.clientId === scroll_indicator_panel_select('core/block-editor').getSelectedBlockClientId();
+  });
+  return index === 0 && Object(external_React_["createElement"])(scroll_indicator_panel_PanelBody, {
+    title: scroll_indicator_panel_('Scroll Indicator', '__plugin_txtd'),
+    initialOpen: false
+  }, Object(external_React_["createElement"])(scroll_indicator_panel_ToggleControl, {
+    label: scroll_indicator_panel_('Enable Scroll Indicator', '__plugin_txtd'),
+    checked: scrollIndicator,
+    onChange: function onChange(scrollIndicator) {
+      updateAttributes({
+        scrollIndicator: scrollIndicator
+      });
+    }
+  }));
+});
+
+// CONCATENATED MODULE: ./src/components/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+// CONCATENATED MODULE: ./src/blocks/google-map/map.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+var map_ = wp.i18n.__;
+var map_wp$element = wp.element,
+    map_Component = map_wp$element.Component,
+    map_Fragment = map_wp$element.Fragment;
+var map_Placeholder = wp.components.Placeholder;
+
+var map_Map = /*#__PURE__*/function (_Component) {
+  inherits_default()(Map, _Component);
+
+  function Map() {
+    var _this;
+
+    classCallCheck_default()(this, Map);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Map).apply(this, arguments));
+    _this.map = null;
+    _this.searchBox = null;
+    _this.markers = [];
+    _this.getMapStyles = utils_getMapStyles.bind(assertThisInitialized_default()(_this));
+    return _this;
+  }
+
+  createClass_default()(Map, [{
+    key: "clearMarkers",
+    value: function clearMarkers() {
+      this.markers.forEach(function (marker) {
+        marker.setMap(null);
+      });
+      this.markers = [];
+    }
+  }, {
+    key: "onPlacesChanged",
+    value: function onPlacesChanged() {
+      if (!this.searchBox) {
+        return;
+      }
+
+      this.props.onChange(this.searchBox.getPlaces().map(function (place) {
+        var keepProps = ['name', 'geometry'];
+        var filtered = Object.keys(place).filter(function (key) {
+          return keepProps.includes(key);
+        }).reduce(function (obj, key) {
+          obj[key] = place[key];
+          return obj;
+        }, {});
+        return JSON.stringify(filtered);
+      }));
+    }
+  }, {
+    key: "createMarkers",
+    value: function createMarkers() {
+      var _this2 = this;
+
+      var attributes = this.props.attributes;
+      var markers = attributes.markers,
+          styleSlug = attributes.styleSlug;
+      var accentColor = styleSlug === 'customized' ? getMapAccentColor.call(this) : '#222222';
+      var pinMarkup = pin.replace('%ACCENT_COLOR%', accentColor);
+      markers.forEach(function (markerString) {
+        var marker = JSON.parse(markerString);
+
+        if (!marker.geometry) {
+          return;
+        }
+
+        _this2.markers.push(new google.maps.Marker({
+          map: _this2.map,
+          icon: {
+            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+          },
+          title: marker.name,
+          position: marker.geometry.location
+        }));
+      });
+
+      if (this.markers.length) {
+        this.map.setCenter(getMarkersCenter.call(this));
+      }
+    }
+  }, {
+    key: "initializeMap",
+    value: function initializeMap() {
+      var attributes = this.props.attributes;
+      var showControls = attributes.showControls,
+          showLabels = attributes.showLabels,
+          showIcons = attributes.showIcons,
+          zoom = attributes.zoom;
+      this.map = new google.maps.Map(document.getElementById("novablocks-google-map-".concat(this.props.clientId)), {
+        mapTypeId: 'roadmap',
+        center: default_map_center,
+        zoom: zoom,
+        styles: addVisibilityToStyles(this.getMapStyles(), showLabels, showIcons),
+        clickableIcons: false,
+        disableDefaultUI: !showControls,
+        disableDoubleClickZoom: true,
+        draggable: false,
+        gestureHandling: 'none',
+        keyboardShortcuts: false,
+        scrollwheel: false
+      });
+    }
+  }, {
+    key: "initializeSearchBox",
+    value: function initializeSearchBox() {
+      var _this3 = this;
+
+      // Create the search box and link it to the UI element.
+      var input = document.getElementById("novablocks-google-map-search-input-".concat(this.props.clientId));
+      this.searchBox = new google.maps.places.SearchBox(input); // Bias the SearchBox results towards current map's viewport.
+
+      this.map.addListener('bounds_changed', function () {
+        _this3.searchBox.setBounds(_this3.map.getBounds());
+      }); // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+
+      this.searchBox.addListener('places_changed', this.onPlacesChanged.bind(this));
+    }
+  }, {
+    key: "updateMapOptions",
+    value: function updateMapOptions() {
+      if (this.map === null) {
+        return;
+      }
+
+      var options = {};
+      var attributes = this.props.attributes;
+      var showControls = attributes.showControls,
+          showLabels = attributes.showLabels,
+          showIcons = attributes.showIcons,
+          zoom = attributes.zoom;
+      options.zoom = zoom;
+      options.disableDefaultUI = !showControls;
+      options.styles = addVisibilityToStyles(this.getMapStyles(), showLabels, showIcons);
+      this.map.setOptions(options);
+    }
+  }, {
+    key: "updateMapMarkers",
+    value: function updateMapMarkers() {
+      this.clearMarkers();
+      this.createMarkers();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.map === null) {
+        this.initializeMap();
+        this.initializeSearchBox();
+        this.createMarkers();
+        return;
+      }
+
+      google.maps.event.trigger(this.map, 'resize');
+    }
+  }, {
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps) {
+      var shouldUpdate = false;
+      Object.entries(this.props).forEach(function (_ref) {
+        var _ref2 = slicedToArray_default()(_ref, 2),
+            key = _ref2[0],
+            val = _ref2[1];
+
+        if (nextProps[key] !== val) {
+          shouldUpdate = true;
+        }
+      });
+      return shouldUpdate;
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      this.updateMapOptions();
+
+      if (prevProps.attributes.markers !== this.props.attributes.markers || prevProps.attributes.styleSlug !== this.props.attributes.styleSlug) {
+        this.updateMapMarkers();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return Object(external_React_["createElement"])("div", {
+        className: "novablocks-map__map",
+        id: "novablocks-google-map-".concat(this.props.clientId)
+      });
+    }
+  }]);
+
+  return Map;
+}(map_Component);
+
+var map_MapWrapper = function MapWrapper(Map) {
+  return function (props) {
+    var parallax = props.parallax,
+        otherProps = objectWithoutProperties_default()(props, ["parallax"]);
+
+    var searchBoxStyles = {};
+
+    if (!props.isSelected) {
+      searchBoxStyles.display = 'none';
+    }
+
+    return Object(external_React_["createElement"])("div", {
+      className: "novablocks-map"
+    }, Object(external_React_["createElement"])("div", {
+      className: "novablocks-map__search-box"
+    }, Object(external_React_["createElement"])(map_Placeholder, {
+      style: searchBoxStyles
+    }, Object(external_React_["createElement"])("input", {
+      type: "text",
+      id: "novablocks-google-map-search-input-".concat(props.clientId),
+      placeholder: map_('Enter an address to drop a pin on this map')
+    }))), Object(external_React_["createElement"])("div", {
+      className: "novablocks-map__map-container"
+    }, Object(external_React_["createElement"])("div", {
+      className: "novablocks-mask"
+    }, Object(external_React_["createElement"])("div", {
+      style: parallax.style
+    }, Object(external_React_["createElement"])(Map, otherProps)))));
+  };
+};
+
+/* harmony default export */ var google_map_map = (map_MapWrapper(map_Map));
+// CONCATENATED MODULE: ./src/blocks/google-map/api-key-panel-body.js
+
+
+
+
+
+
+var api_key_panel_body_ = wp.i18n.__;
+var api_key_panel_body_wp$components = wp.components,
+    api_key_panel_body_Button = api_key_panel_body_wp$components.Button,
+    api_key_panel_body_TextControl = api_key_panel_body_wp$components.TextControl,
+    api_key_panel_body_PanelBody = api_key_panel_body_wp$components.PanelBody;
+var api_key_panel_body_Component = wp.element.Component;
+
+var api_key_panel_body_ApiKeyPanelBody = /*#__PURE__*/function (_Component) {
+  inherits_default()(ApiKeyPanelBody, _Component);
+
+  function ApiKeyPanelBody() {
+    classCallCheck_default()(this, ApiKeyPanelBody);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(ApiKeyPanelBody).apply(this, arguments));
+  }
+
+  createClass_default()(ApiKeyPanelBody, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          apiKey = _this$props.apiKey,
+          apiKeyInstructions = _this$props.apiKeyInstructions,
+          savedApiKey = _this$props.savedApiKey,
+          onChangeApiKey = _this$props.onChangeApiKey,
+          onSaveApiKey = _this$props.onSaveApiKey;
+
+      if (savedApiKey === '') {
+        return null;
+      }
+
+      return Object(external_React_["createElement"])(api_key_panel_body_PanelBody, {
+        title: api_key_panel_body_('Google Maps API Key', '__plugin_txtd')
+      }, Object(external_React_["createElement"])(api_key_panel_body_TextControl, {
+        placeholder: api_key_panel_body_('Paste API key here', '__plugin_txtd'),
+        value: apiKey,
+        onChange: onChangeApiKey,
+        help: apiKeyInstructions
+      }), Object(external_React_["createElement"])(api_key_panel_body_Button, {
+        isDefault: true,
+        onClick: function onClick() {
+          onSaveApiKey(apiKey);
+        }
+      }, api_key_panel_body_('Save', '__plugin_txtd')));
+    }
+  }]);
+
+  return ApiKeyPanelBody;
+}(api_key_panel_body_Component);
+
+/* harmony default export */ var api_key_panel_body = (api_key_panel_body_ApiKeyPanelBody);
+// CONCATENATED MODULE: ./src/blocks/google-map/map-style-select.js
+
+
+
+
+
+
+
+
+
+
+var map_style_select_Component = wp.element.Component;
+
+var map_style_select_MapStyleSelect = /*#__PURE__*/function (_Component) {
+  inherits_default()(MapStyleSelect, _Component);
+
+  function MapStyleSelect() {
+    var _this;
+
+    classCallCheck_default()(this, MapStyleSelect);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(MapStyleSelect).apply(this, arguments));
+    _this.state = {
+      active: _this.props.value
+    };
+    _this.compileStyles = compileStyles.bind(assertThisInitialized_default()(_this));
+    return _this;
+  }
+
+  createClass_default()(MapStyleSelect, [{
+    key: "getStaticStyle",
+    value: function getStaticStyle(styles) {
+      var result = [];
+      styles.forEach(function (v, i, a) {
+        var style = '';
+
+        if (v.stylers) {
+          if (v.stylers.length > 0) {
+            style += (v.hasOwnProperty('featureType') ? 'feature:' + v.featureType : 'feature:all') + '|';
+            style += (v.hasOwnProperty('elementType') ? 'element:' + v.elementType : 'element:all') + '|';
+            v.stylers.forEach(function (val, i, a) {
+              var prop = Object.keys(val)[0];
+              var propertyval = val[prop].toString().replace('#', '0x');
+              style += prop + ':' + propertyval + '|';
+            });
+          }
+        }
+
+        result.push('style=' + encodeURIComponent(style));
+      });
+      return result.join('&');
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          attributes = _this$props.attributes,
+          options = _this$props.options,
+          value = _this$props.value,
+          onChange = _this$props.onChange,
+          apiKey = _this$props.apiKey;
+      var markers = attributes.markers,
+          zoom = attributes.zoom;
+      var center = markers.length ? getMarkersCenter.call(this) : new google.maps.LatLng(default_map_center);
+      var latitude = center.lat();
+      var longitude = center.lng();
+      return Object(external_React_["createElement"])("div", {
+        className: "components-base-control"
+      }, Object(external_React_["createElement"])("div", {
+        className: "editor-block-styles block-editor-block-styles novablocks-block-editor-map-styles"
+      }, options.map(function (option) {
+        var style = _this2.getStaticStyle(_this2.compileStyles(option.styles));
+
+        var size = '200x200';
+        var mapType = 'roadmap';
+        var url = 'https://maps.googleapis.com/maps/api/staticmap';
+        var src = "".concat(url, "?center=").concat(latitude, ",").concat(longitude, "&zoom=").concat(zoom, "&size=").concat(size, "&maptype=").concat(mapType, "&").concat(style, "&key=").concat(apiKey);
+        return Object(external_React_["createElement"])("div", {
+          key: option.slug,
+          className: classnames_default()('editor-block-styles__item block-editor-block-styles__item', {
+            'is-active': option.slug === _this2.state.active
+          }),
+          onClick: function onClick() {
+            _this2.setState({
+              active: option.slug
+            });
+
+            onChange(option.slug);
+          },
+          role: "button",
+          tabIndex: "0",
+          "aria-label": option.label
+        }, Object(external_React_["createElement"])("div", {
+          className: "editor-block-styles__item-preview block-editor-block-styles__item-preview"
+        }, Object(external_React_["createElement"])("img", {
+          src: src,
+          alt: "".concat(option.label, " map style preview")
+        })), Object(external_React_["createElement"])("div", {
+          className: "editor-block-styles__item-label block-editor-block-styles__item-label"
+        }, option.label));
+      })));
+    }
+  }]);
+
+  return MapStyleSelect;
+}(map_style_select_Component);
+
+/* harmony default export */ var map_style_select = (map_style_select_MapStyleSelect);
+// CONCATENATED MODULE: ./src/blocks/google-map/inspector-controls.js
+
+
+
+
+
+
+
+
+
+
+
+
+var inspector_controls_ = wp.i18n.__;
+var inspector_controls_wp$components = wp.components,
+    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
+    inspector_controls_RangeControl = inspector_controls_wp$components.RangeControl,
+    inspector_controls_SelectControl = inspector_controls_wp$components.SelectControl,
+    inspector_controls_ToggleControl = inspector_controls_wp$components.ToggleControl;
+var inspector_controls_Component = wp.element.Component;
+var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+
+var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Component) {
+  inherits_default()(ButtonInspectorControls, _Component);
+
+  function ButtonInspectorControls() {
+    var _this;
+
+    classCallCheck_default()(this, ButtonInspectorControls);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(ButtonInspectorControls).apply(this, arguments));
+    _this.compileStyles = compileStyles.bind(assertThisInitialized_default()(_this));
+    return _this;
+  }
+
+  createClass_default()(ButtonInspectorControls, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          _this$props$attribute = _this$props.attributes,
+          styleSlug = _this$props$attribute.styleSlug,
+          zoom = _this$props$attribute.zoom,
+          showLabels = _this$props$attribute.showLabels,
+          showControls = _this$props$attribute.showControls,
+          showIcons = _this$props$attribute.showIcons,
+          savedApiKey = _this$props.savedApiKey,
+          setAttributes = _this$props.setAttributes;
+
+      if (!savedApiKey) {
+        return null;
+      }
+
+      return Object(external_React_["createElement"])(inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(inspector_controls_PanelBody, {
+        title: inspector_controls_('Map Design', '__plugin_txtd')
+      }, Object(external_React_["createElement"])(map_style_select, extends_default()({}, this.props, {
+        apiKey: savedApiKey,
+        value: styleSlug,
+        options: google_map_styles,
+        onChange: function onChange(newStyleSlug) {
+          var mapStyles = google_map_styles.find(function (style) {
+            return style.slug === newStyleSlug;
+          }).styles;
+
+          var newStyles = _this2.compileStyles(mapStyles);
+
+          var newPinColor = newStyleSlug === 'customized' ? getMapAccentColor.call(_this2) : '#222222';
+          setAttributes({
+            styleSlug: newStyleSlug,
+            styleData: newStyles,
+            pinColor: newPinColor
+          });
+        }
+      })), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+        label: inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
+        checked: showIcons,
+        onChange: function onChange() {
+          return setAttributes({
+            showIcons: !showIcons
+          });
+        }
+      }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+        label: inspector_controls_('Show Street Labels', '__plugin_txtd'),
+        checked: showLabels,
+        onChange: function onChange() {
+          return setAttributes({
+            showLabels: !showLabels
+          });
+        }
+      }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+        label: inspector_controls_('Show Controls', '__plugin_txtd'),
+        checked: showControls,
+        onChange: function onChange() {
+          return setAttributes({
+            showControls: !showControls
+          });
+        }
+      })), Object(external_React_["createElement"])(inspector_controls_PanelBody, {
+        title: inspector_controls_('Zoom Level', '__plugin_txtd')
+      }, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+        value: zoom,
+        onChange: function onChange(newZoom) {
+          return setAttributes({
+            zoom: newZoom
+          });
+        },
+        min: 5,
+        max: 20
+      })), Object(external_React_["createElement"])(api_key_panel_body, this.props));
+    }
+  }]);
+
+  return ButtonInspectorControls;
+}(inspector_controls_Component);
+
+/* harmony default export */ var inspector_controls = (inspector_controls_ButtonInspectorControls);
+// CONCATENATED MODULE: ./src/blocks/google-map/edit.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+var edit_ = wp.i18n.__;
+var API_KEY_SETTING_ID = 'novablocks_google_maps_api_key';
+var edit_wp$element = wp.element,
+    edit_Component = edit_wp$element.Component,
+    edit_Fragment = edit_wp$element.Fragment;
+var edit_wp$components = wp.components,
+    Spinner = edit_wp$components.Spinner,
+    edit_TextControl = edit_wp$components.TextControl;
+var edit_wp$blockEditor = wp.blockEditor,
+    BlockAlignmentToolbar = edit_wp$blockEditor.BlockAlignmentToolbar,
+    BlockControls = edit_wp$blockEditor.BlockControls;
+var edit_wp$compose = wp.compose,
+    edit_compose = edit_wp$compose.compose,
+    edit_createHigherOrderComponent = edit_wp$compose.createHigherOrderComponent;
+var Settings = wp.api.models.Settings; // This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
+
+window.gm_authFailure = function () {
+  window.googlemaps_authfailure = true;
+  window.dispatchEvent(new Event('novablock.googlemaps_authfailure'));
+};
+
+var edit_Edit = /*#__PURE__*/function (_Component) {
+  inherits_default()(Edit, _Component);
+
+  function Edit() {
+    var _this;
+
+    classCallCheck_default()(this, Edit);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Edit).apply(this, arguments));
+    _this.state = {
+      fetchedScript: false,
+      fetchedApiKey: false,
+      savedApiKey: '',
+      apiKey: '',
+      gmAuthFailure: typeof window.googlemaps_authfailure === 'undefined' ? false : !!window.googlemaps_authfailure
+    };
+    _this.onChangeMarkers = _this.onChangeMarkers.bind(assertThisInitialized_default()(_this));
+    _this.onGoogleMapsAuthFailure = _this.onGoogleMapsAuthFailure.bind(assertThisInitialized_default()(_this));
+    _this.settings = null;
+    return _this;
+  }
+
+  createClass_default()(Edit, [{
+    key: "onGoogleMapsAuthFailure",
+    value: function onGoogleMapsAuthFailure(event) {
+      this.setState({
+        gmAuthFailure: true
+      });
+    }
+  }, {
+    key: "onChangeMarkers",
+    value: function onChangeMarkers(markers) {
+      this.props.setAttributes({
+        markers: markers
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      window.addEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
+      wp.api.loadPromise.done(function () {
+        _this2.settings = new wp.api.models.Settings();
+
+        _this2.settings.on("change:".concat(API_KEY_SETTING_ID), function (model) {
+          var apiKey = model.get(API_KEY_SETTING_ID);
+
+          _this2.setState({
+            fetchedApiKey: true,
+            savedApiKey: apiKey,
+            apiKey: apiKey
+          });
+
+          if (!!apiKey) {
+            _this2.loadGoogleMapsScript();
+          }
+        });
+
+        _this2.settings.fetch();
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
+    }
+  }, {
+    key: "loadGoogleMapsScript",
+    value: function loadGoogleMapsScript() {
+      var _this3 = this;
+
+      var savedApiKey = this.state.savedApiKey;
+      var keyParam = savedApiKey !== '' ? "key=".concat(savedApiKey, "&") : '';
+      var scriptSrc = "//maps.googleapis.com/maps/api/js?".concat(keyParam, "libraries=places");
+      var scripts = document.querySelectorAll('script[src*="maps.googleapis.com"]');
+
+      if (scripts.length) {
+        this.setState({
+          fetchedScript: true
+        });
+        return Promise.resolve();
+      }
+
+      var promise = new Promise(function (resolve, reject) {
+        var script = document.createElement('script');
+        script.onload = resolve;
+        script.onerror = reject;
+        script.async = true;
+        script.src = scriptSrc;
+        document.body.appendChild(script);
+      });
+      return promise.then(function () {
+        _this3.setState({
+          fetchedScript: true
+        });
+      });
+    }
+  }, {
+    key: "saveApiKey",
+    value: function saveApiKey(apiKey) {
+      var _this4 = this;
+
+      var key = new wp.api.models.Settings(defineProperty_default()({}, API_KEY_SETTING_ID, apiKey));
+      key.save().then(function () {
+        _this4.setState({
+          gmAuthFailure: false
+        });
+
+        _this4.settings.fetch();
+      });
+    }
+  }, {
+    key: "renderPreview",
+    value: function renderPreview() {
+      var _this$state = this.state,
+          fetchedApiKey = _this$state.fetchedApiKey,
+          fetchedScript = _this$state.fetchedScript,
+          savedApiKey = _this$state.savedApiKey,
+          gmAuthFailure = _this$state.gmAuthFailure;
+
+      if (!fetchedApiKey) {
+        return Object(external_React_["createElement"])(Spinner, null);
+      }
+
+      if (!fetchedScript || !savedApiKey || gmAuthFailure) {
+        return Object(external_React_["createElement"])(google_map_placeholder, {
+          saveApiKey: this.saveApiKey.bind(this),
+          apiKey: savedApiKey,
+          apiKeyInstructions: this.getInstructions()
+        });
+      }
+
+      return Object(external_React_["createElement"])(edit_Fragment, null, Object(external_React_["createElement"])(google_map_map, extends_default()({}, this.props, {
+        onChange: this.onChangeMarkers
+      })));
+    }
+  }, {
+    key: "getInstructions",
+    value: function getInstructions() {
+      var gmAuthFailure = this.state.gmAuthFailure;
+      var url = '//developers.google.com/maps/documentation/javascript/get-api-key';
+      var hyperlink = Object(external_React_["createElement"])("a", {
+        target: "_blank",
+        href: url
+      }, edit_('register a Google Maps API Key', '__plugin_txtd'));
+
+      if (gmAuthFailure) {
+        return Object(external_React_["createElement"])(edit_Fragment, null, edit_('It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to', '__plugin_txtd'), " ", hyperlink);
+      }
+
+      return Object(external_React_["createElement"])(edit_Fragment, null, edit_('To display the map, you need to', '__plugin_txtd'), " ", hyperlink, " ", edit_('and include it bellow.', '__plugin_txtd'));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var _this$state2 = this.state,
+          fetchedApiKey = _this$state2.fetchedApiKey,
+          fetchedScript = _this$state2.fetchedScript,
+          savedApiKey = _this$state2.savedApiKey,
+          gmAuthFailure = _this$state2.gmAuthFailure;
+      var _this$props = this.props,
+          attributes = _this$props.attributes,
+          setAttributes = _this$props.setAttributes;
+      var align = attributes.align,
+          styleData = attributes.styleData;
+      var newProps = Object.assign(this.props);
+
+      if (typeof styleData === "string") {
+        newProps.attributes.styleData = JSON.parse(styleData);
+      }
+
+      return Object(external_React_["createElement"])(edit_Fragment, null, Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(BlockAlignmentToolbar, {
+        value: align,
+        onChange: function onChange(align) {
+          return setAttributes({
+            align: align
+          });
+        },
+        controls: ['center', 'full']
+      })), !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && Object(external_React_["createElement"])(inspector_controls, extends_default()({}, newProps, {
+        apiKey: this.state.apiKey,
+        savedApiKey: this.state.savedApiKey,
+        onChangeApiKey: function onChangeApiKey(apiKey) {
+          _this5.setState({
+            apiKey: apiKey
+          });
+        },
+        onSaveApiKey: this.saveApiKey.bind(this),
+        apiKeyInstructions: this.getInstructions()
+      })), this.renderPreview());
+    }
+  }]);
+
+  return Edit;
+}(edit_Component);
+
+/* harmony default export */ var google_map_edit = (edit_createHigherOrderComponent(edit_compose([with_settings, with_parallax]))(edit_Edit));
+// CONCATENATED MODULE: ./src/blocks/google-map/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+var google_map_ = wp.i18n.__;
+var google_map_registerBlockType = wp.blocks.registerBlockType;
+
+function google_map_init() {
+  google_map_registerBlockType('novablocks/google-map', {
+    title: google_map_('Map of the World', '__plugin_txtd'),
+    description: google_map_('Display an interactive map to show the location of your venue.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: map,
+    // Additional search terms
+    keywords: [google_map_('google', '__plugin_txtd'), google_map_('maps', '__plugin_txtd'), google_map_('google maps', '__plugin_txtd'), google_map_('location', '__plugin_txtd')],
+    getEditWrapperProps: function getEditWrapperProps(attributes) {
+      var align = attributes.align;
+
+      if ('center' === align || 'full' === align) {
+        return {
+          'data-align': align
+        };
+      }
+    },
+    edit: google_map_edit,
+    save: function save() {}
+  });
+}
+
+/* harmony default export */ var google_map = (google_map_init);
+// CONCATENATED MODULE: ./src/blocks/header/icons.js
+
+var header_icons_wp$components = wp.components,
+    header_icons_SVG = header_icons_wp$components.SVG,
+    header_icons_Path = header_icons_wp$components.Path;
+var logoLeft = Object(external_React_["createElement"])("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "48px",
+  height: "48px",
+  viewBox: "0 0 48 48"
+}, Object(external_React_["createElement"])("g", {
+  fill: "none",
+  fillRule: "evenodd",
+  stroke: "none",
+  strokeWidth: "1"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F3",
+  d: "M7.172 0C10.912 0 14 3.033 14 6.774 14 10.764 10.734 14 6.744 14 3.034 14 0 10.993 0 7.285v-.17C0 3.185 3.242 0 7.172 0zm.115 3.111a2.62 2.62 0 00-2.605 2.333h.656a2.828 2.828 0 012.829 2.829v1.05a2.963 2.963 0 002.722-2.953v-.312a2.947 2.947 0 00-2.947-2.947h-.655z",
+  transform: "translate(0 17)"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#FAE547",
+  d: "M4.714 7C3.768 7 3 7.768 3 8.714A2.286 2.286 0 005.286 11h.176C6.312 11 7 10.311 7 9.462v-.644A1.818 1.818 0 005.182 7h-.468z",
+  transform: "translate(0 17)"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#A5A5A5",
+  d: "M20 20H48V28H20z"
+})));
+var logoRight = Object(external_React_["createElement"])("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "48px",
+  height: "48px",
+  viewBox: "0 0 48 48"
+}, Object(external_React_["createElement"])("g", {
+  fill: "none",
+  fillRule: "evenodd",
+  stroke: "none",
+  strokeWidth: "1"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F3",
+  d: "M7.172 0C10.912 0 14 3.033 14 6.774 14 10.764 10.734 14 6.744 14 3.034 14 0 10.993 0 7.285v-.17C0 3.185 3.242 0 7.172 0zm.115 3.111a2.62 2.62 0 00-2.605 2.333h.656a2.828 2.828 0 012.829 2.829v1.05a2.963 2.963 0 002.722-2.953v-.312a2.947 2.947 0 00-2.947-2.947h-.655z",
+  transform: "translate(34 17)"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#FAE547",
+  d: "M4.714 7C3.768 7 3 7.768 3 8.714A2.286 2.286 0 005.286 11h.176C6.312 11 7 10.311 7 9.462v-.644A1.818 1.818 0 005.182 7h-.468z",
+  transform: "translate(34 17)"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#A5A5A5",
+  d: "M0 20H28V28H0z"
+})));
+var logoCenter = Object(external_React_["createElement"])("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "48px",
+  height: "48px",
+  viewBox: "0 0 48 48"
+}, Object(external_React_["createElement"])("g", {
+  fill: "none",
+  fillRule: "evenodd",
+  stroke: "none",
+  strokeWidth: "1"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F3",
+  d: "M7.172 0C10.912 0 14 3.033 14 6.774 14 10.764 10.734 14 6.744 14 3.034 14 0 10.993 0 7.285v-.17C0 3.185 3.242 0 7.172 0zm.115 3.111a2.62 2.62 0 00-2.605 2.333h.656a2.828 2.828 0 012.829 2.829v1.05a2.963 2.963 0 002.722-2.953v-.312a2.947 2.947 0 00-2.947-2.947h-.655z",
+  transform: "translate(17 17)"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#FAE547",
+  d: "M4.714 7C3.768 7 3 7.768 3 8.714A2.286 2.286 0 005.286 11h.176C6.312 11 7 10.311 7 9.462v-.644A1.818 1.818 0 005.182 7h-.468z",
+  transform: "translate(17 17)"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#A5A5A5",
+  d: "M0 20H9V28H0z"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#A5A5A5",
+  d: "M0 20H11V28H0z"
+}), Object(external_React_["createElement"])("path", {
+  fill: "#A5A5A5",
+  d: "M37 20H48V28H37z"
+})));
+// CONCATENATED MODULE: ./src/blocks/header/edit.js
+
+
+
+
+var header_edit_ = wp.i18n.__;
+var useState = wp.element.useState;
+var header_edit_wp$components = wp.components,
+    edit_Toolbar = header_edit_wp$components.Toolbar,
+    edit_IconButton = header_edit_wp$components.IconButton;
+var header_edit_wp$blockEditor = wp.blockEditor,
+    edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
+    InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
+var TEMPLATE_OPTIONS = [{
+  title: header_edit_('Logo on the left side and one navigation menu', '__plugin_txtd'),
+  name: 'logo-left',
+  icon: logoLeft,
+  template: [['novablocks/logo'], ['novablocks/navigation', {
+    className: "site-header__menu site-header__menu--primary",
+    slug: "primary"
+  }]]
+}, {
+  title: header_edit_('Logo centered and one navigation menu on each side', '__plugin_txtd'),
+  name: 'logo-center',
+  icon: logoCenter,
+  template: [['novablocks/navigation', {
+    className: "site-header__menu site-header__menu--secondary",
+    slug: "secondary"
+  }], ['novablocks/logo'], ['novablocks/navigation', {
+    className: "site-header__menu site-header__menu--primary",
+    slug: "primary"
+  }]]
+}];
+function header_edit_Edit(props) {
+  var clientId = props.clientId;
+  var layout = props.attributes.layout,
+      className = props.className,
+      setAttributes = props.setAttributes;
+  var block = wp.data.select('core/block-editor').getBlock(clientId);
+  var innerBlocks = block.innerBlocks;
+  var currentTemplate = block !== null && !!innerBlocks.length ? innerBlocks.map(function (block) {
+    return [block.name];
+  }) : null;
+
+  var _useState = useState(currentTemplate),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      template = _useState2[0],
+      setTemplate = _useState2[1];
+
+  var applyTemplate = function applyTemplate(template) {
+    var activeTemplate = TEMPLATE_OPTIONS.find(function (option) {
+      return option.template === template;
+    });
+    var activeTemplateName = activeTemplate.name;
+    setAttributes({
+      layout: activeTemplateName
+    });
+    setTemplate(template);
+  };
+
+  var classNames = classnames_default()(className, "site-header", "site-header-".concat(layout));
+  return [Object(external_React_["createElement"])(edit_BlockControls, null, Object(external_React_["createElement"])(edit_Toolbar, null, Object(external_React_["createElement"])(edit_IconButton, {
+    className: "components-icon-button components-toolbar__control",
+    label: header_edit_('Change Layout', '__plugin_txtd'),
+    onClick: function onClick() {
+      return setTemplate(null);
+    },
+    icon: "edit"
+  }))), Object(external_React_["createElement"])("div", {
+    className: classNames
+  }, Object(external_React_["createElement"])(InnerBlocks, {
+    __experimentalTemplateOptions: TEMPLATE_OPTIONS,
+    __experimentalOnSelectTemplateOption: function __experimentalOnSelectTemplateOption(nextTemplate) {
+      applyTemplate(nextTemplate);
+    },
+    template: template,
+    templateLock: "all"
+  }))];
+}
+// CONCATENATED MODULE: ./src/blocks/header/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+var header_ = wp.i18n.__;
+var header_registerBlockType = wp.blocks.registerBlockType;
+var header_InnerBlocks = wp.blockEditor.InnerBlocks;
+
+function header_init() {
+  header_registerBlockType('novablocks/header', {
+    title: header_('Header', '__plugin_txtd'),
+    description: header_('Outputs custom header markup.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: header,
+    // Additional search terms
+    keywords: [header_('logo', '__plugin_txtd'), header_('menu', '__plugin_txtd')],
+    supports: {
+      align: ["wide", "full"],
+      default: "full"
+    },
+    edit: header_edit_Edit,
+    save: function save() {
+      return Object(external_React_["createElement"])(header_InnerBlocks.Content, null);
+    }
+  });
+}
+
+/* harmony default export */ var blocks_header = (header_init);
 // CONCATENATED MODULE: ./src/blocks/headline/edit.js
 
 
@@ -17552,10 +17608,7 @@ function card_init() {
 var cards_collection_inspector_controls_ = wp.i18n.__;
 var cards_collection_inspector_controls_wp$components = wp.components,
     cards_collection_inspector_controls_PanelBody = cards_collection_inspector_controls_wp$components.PanelBody,
-    inspector_controls_PanelRow = cards_collection_inspector_controls_wp$components.PanelRow,
-    cards_collection_inspector_controls_RadioControl = cards_collection_inspector_controls_wp$components.RadioControl,
-    cards_collection_inspector_controls_RangeControl = cards_collection_inspector_controls_wp$components.RangeControl,
-    cards_collection_inspector_controls_ToggleControl = cards_collection_inspector_controls_wp$components.ToggleControl;
+    inspector_controls_PanelRow = cards_collection_inspector_controls_wp$components.PanelRow;
 var inspector_controls_wp$blockEditor = wp.blockEditor,
     cards_collection_inspector_controls_InspectorControls = inspector_controls_wp$blockEditor.InspectorControls,
     inspector_controls_AlignmentToolbar = inspector_controls_wp$blockEditor.AlignmentToolbar;
@@ -17590,6 +17643,39 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     setAttributes(newAttributes);
   };
 
+  var toggles = [{
+    label: cards_collection_inspector_controls_('Collection Title'),
+    value: attributes['showCollectionTitle'],
+    attribute: 'showCollectionTitle'
+  }, {
+    label: cards_collection_inspector_controls_('Collection Subtitle'),
+    value: attributes['showCollectionSubtitle'],
+    attribute: 'showCollectionSubtitle'
+  }, {
+    label: cards_collection_inspector_controls_('Media'),
+    value: attributes['showMedia'],
+    attribute: 'showMedia'
+  }, {
+    label: cards_collection_inspector_controls_('Title'),
+    value: attributes['showTitle'],
+    attribute: 'showTitle'
+  }, {
+    label: cards_collection_inspector_controls_('Subtitle'),
+    value: attributes['showSubtitle'],
+    attribute: 'showSubtitle'
+  }, {
+    label: cards_collection_inspector_controls_('Description'),
+    value: attributes['showDescription'],
+    attribute: 'showDescription'
+  }, {
+    label: cards_collection_inspector_controls_('Buttons'),
+    value: attributes['showButtons'],
+    attribute: 'showButtons'
+  }, {
+    label: cards_collection_inspector_controls_('Meta'),
+    value: attributes['showMeta'],
+    attribute: 'showMeta'
+  }];
   return Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
     initialOpen: true,
     title: cards_collection_inspector_controls_('Cards Content Area')
@@ -17623,91 +17709,11 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         contentAlign: contentAlign
       });
     }
-  }))), Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
-    initialOpen: true,
-    title: cards_collection_inspector_controls_('Cards Media Area')
-  }, Object(external_React_["createElement"])(cards_collection_inspector_controls_RadioControl, {
-    label: 'Image resizing',
-    selected: imageResizing,
-    onChange: function onChange(imageResizing) {
-      setAttributes({
-        imageResizing: imageResizing
-      });
-    },
-    options: [{
-      label: 'Stretch to fill the container',
-      value: 'cropped'
-    }, {
-      label: 'Shrink to fit (no crop)',
-      value: 'original'
-    }]
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_RangeControl, {
-    label: cards_collection_inspector_controls_('Image container height', '__plugin_txtd'),
-    value: containerHeight,
-    onChange: function onChange(containerHeight) {
-      setAttributes({
-        containerHeight: containerHeight
-      });
-    },
-    min: 0,
-    max: 100,
-    step: 5
-  })), Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
-    initialOpen: true,
-    title: cards_collection_inspector_controls_('Elements Visibility', '__plugin_txtd')
-  }, Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Collection Title'),
-    checked: !!showCollectionTitle,
-    onChange: function onChange(showCollectionTitle) {
-      return setAttributes({
-        showCollectionTitle: showCollectionTitle
-      });
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Collection Subtitle'),
-    checked: !!showCollectionSubtitle,
-    onChange: function onChange(showCollectionSubtitle) {
-      return setAttributes({
-        showCollectionSubtitle: showCollectionSubtitle
-      });
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Media'),
-    checked: !!showMedia,
-    onChange: function onChange() {
-      toggleAttribute('showMedia');
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Title'),
-    checked: !!showTitle,
-    onChange: function onChange() {
-      toggleAttribute('showTitle');
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Subtitle'),
-    checked: !!showSubtitle,
-    onChange: function onChange() {
-      toggleAttribute('showSubtitle');
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Description'),
-    checked: !!showDescription,
-    onChange: function onChange() {
-      toggleAttribute('showDescription');
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Buttons'),
-    checked: !!showButtons,
-    onChange: function onChange() {
-      toggleAttribute('showButtons');
-    }
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_ToggleControl, {
-    label: cards_collection_inspector_controls_('Meta'),
-    checked: !!showMeta,
-    onChange: function onChange() {
-      toggleAttribute('showMeta');
-    }
-  })));
+  }))), Object(external_React_["createElement"])(toggle_group, {
+    label: cards_collection_inspector_controls_('Cards Manager', '__plugin_txtd'),
+    onChange: toggleAttribute,
+    toggles: toggles
+  }));
 };
 
 /* harmony default export */ var cards_collection_inspector_controls = (inspector_controls_CardsCollectionInspectorControls);

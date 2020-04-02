@@ -56,8 +56,12 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
 			<div class="wp-block-group__inner-container">
-				<?php echo '<' . $titleTag . ' class="alignwide">' . $attributes['title'] . '</' . $titleTag . '>'; ?>
-				<p class="intro alignwide"><?php echo $attributes['subtitle']; ?></p>
+				<?php if ( ! empty( $attributes['showCollectionTitle'] ) ) {
+					echo '<' . $titleTag . ' class="alignwide">' . $attributes['title'] . '</' . $titleTag . '>';
+				}
+				if ( ! empty( $attributes['showCollectionSubtitle'] ) ) { ?>
+					<p class="intro alignwide"><?php echo $attributes['subtitle']; ?></p>
+				<?php } ?>
 				<div class="wp-block alignwide">
 					<div class="novablocks-cards-collection__layout">
 						<?php echo $content; ?>
