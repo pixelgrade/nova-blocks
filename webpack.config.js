@@ -24,13 +24,6 @@ const baseConfig = {
 		hash: true,
 		timings: true,
 	},
-	externals: {
-		jquery: 'jQuery',
-		lodash : {
- 			commonjs: 'lodash',
- 			amd: 'lodash',
- 		},
-	},
 	output: {
 		// Add /* filename */ comments to generated require()s in the output.
 		pathinfo: devMode,
@@ -52,6 +45,9 @@ const minimizeConfig = {
  */
 const VendorConfig = {
 	...baseConfig,
+	externals: {
+		jquery: 'jQuery',
+	},
 	entry: {
 		'./dist/js/vendor/jquery.bully.min' : './dist/js/vendor/jquery.bully.js',
 		'./dist/js/vendor/jquery.slick.min' : './dist/js/vendor/jquery.slick.js',
@@ -123,6 +119,12 @@ const StylesConfig = {
  */
 const GutenbergBlocksConfig = {
 	...baseConfig,
+	externals: {
+		jquery: 'jQuery',
+		react: 'React',
+		react_dom: 'ReactDOM',
+		lodash: 'lodash',
+	},
 	entry: {
 		'./dist/js/editor' : './src/editor.js',
 		'./dist/js/editor.min' : './src/editor.js',
@@ -148,6 +150,9 @@ const GutenbergBlocksConfig = {
 
 const BlocksFrontendConfig = {
 	...baseConfig,
+	externals: {
+		jquery: 'jQuery',
+	},
 	entry: {
 		'./dist/js/frontend' : './src/frontend.js',
 		'./dist/js/frontend.min' : './src/frontend.js',

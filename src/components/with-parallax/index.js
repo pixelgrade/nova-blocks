@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+const { createContext } = wp.element;
 
 import { findParents } from '../../utils';
 import { easeInOutCubic, easeOutQuart } from '../../easing';

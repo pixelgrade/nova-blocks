@@ -250,6 +250,10 @@ function novablocks_get_slideshow_attributes() {
 				'type'    => 'number',
 				'default' => 75,
 			),
+			'align' => array(
+				'type' => 'string',
+				'default' => 'full',
+			),
 		),
 		novablocks_get_doppler_attributes(),
 		novablocks_get_alignment_attributes(),
@@ -454,6 +458,10 @@ function novablocks_add_hero_settings( $settings ) {
 						),
 					),
 				),
+				'align' => array(
+					'type'  => 'string',
+					'default'   => 'full'
+				)
 			),
 			novablocks_get_doppler_attributes(),
 			novablocks_get_alignment_attributes(),
@@ -520,6 +528,10 @@ function novablocks_add_media_settings( $settings ) {
 				),
 				'default' => array(),
 			),
+			'align' => array(
+				'type'  => 'string',
+				'default'   => 'full'
+			)
 		),
 		'template'           => array(
 			array(

@@ -43,13 +43,28 @@ function init() {
 			name: 'alert',
 			label: __( 'Alert', '__plugin_txtd' )
 		} ],
-		save: function() {},
+		attributes: {
+			align: {
+				type: 'string',
+				default: 'full'
+			},
+			url: {
+				type: 'string',
+				default: ''
+			},
+			opensInNewTab: {
+				type: 'boolean',
+				default: false
+			}
+		},
+		save() {
+			return <InnerBlocks.Content />;
+		},
 		edit: function( props ) {
 
 			const {
 				className,
 				attributes: {
-					content,
 					url,
 					opensInNewTab
 				},
@@ -69,19 +84,7 @@ function init() {
 						<InnerBlocks
 							allowedBlocks={ ALLOWED_BLOCKS }
 							template ={ANNOUNCEMENT_BAR_TEMPLATE}
-							renderAppender={ () => (
-								<InnerBlocks.ButtonBlockAppender />
-							) }
 						/>
-						{/*<RichText*/}
-						{/*	tagName="p"*/}
-						{/*	className="novablocks-announcement-bar__content"*/}
-						{/*	value={ content }*/}
-						{/*	onChange={ content => {*/}
-						{/*		setAttributes( { content } );*/}
-						{/*	} }*/}
-						{/*	allowedFormats={ ['core/link', 'core/bold', 'core/italic'] }*/}
-						{/*/>*/}
 					</div>
 					{ isSelected &&
 					  <div className="novablocks-announcement-bar__url-field-wrapper">

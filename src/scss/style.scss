@@ -42,6 +42,8 @@
 
 .novablocks-mask {
 	@include cover;
+	clip: rect(0 auto auto 0);
+	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
 .novablocks-parallax {
@@ -49,6 +51,8 @@
 	top: 0;
 	left: 0;
 	object-fit: cover;
+
+	pointer-events: none;
 
 	.scrolling-effect-static & {
 		position: static;

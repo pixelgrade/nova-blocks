@@ -42,8 +42,13 @@ const MediaBlockControls = function( props ) {
 		images = [],
 	} = attributes;
 
-	const galleryImages = images.map( ( image ) => JSON.parse( image ) );
-	const hasImages = !! images.length;
+	let galleryImages = images;
+
+	if ( images.length && typeof images[0] === 'string' ) {
+		galleryImages = images.map( ( image ) => JSON.parse( image ) );
+	}
+
+	const hasImages = !! galleryImages.length;
 
 	return (
 		<BlockControls>

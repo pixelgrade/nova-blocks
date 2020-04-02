@@ -36,7 +36,11 @@ const MediaPreview = function( props ) {
 		}
 	);
 
-	const galleryImages = images.map( ( image ) => JSON.parse( image ) );
+	let galleryImages = images;
+
+	if ( images.length && typeof images[0] === 'string' ) {
+		galleryImages = images.map( image => JSON.parse( image ) );
+	}
 
 	const displayImages = ( imagesArray ) => {
 		if ( 0 === imagesArray.length ) {
