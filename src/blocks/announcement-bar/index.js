@@ -17,9 +17,12 @@ const {
 } = wp.components;
 
 const {
-	RichText,
 	URLInput,
+	InnerBlocks
 } = wp.blockEditor;
+
+const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
+const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
 
 function init() {
 
@@ -63,15 +66,22 @@ function init() {
 			return (
 				<Fragment>
 					<div className={ classNames }>
-						<RichText
-							tagName="p"
-							className="novablocks-announcement-bar__content"
-							value={ content }
-							onChange={ content => {
-								setAttributes( { content } );
-							} }
-							allowedFormats={ ['core/link', 'core/bold', 'core/italic'] }
+						<InnerBlocks
+							allowedBlocks={ ALLOWED_BLOCKS }
+							template ={ANNOUNCEMENT_BAR_TEMPLATE}
+							renderAppender={ () => (
+								<InnerBlocks.ButtonBlockAppender />
+							) }
 						/>
+						{/*<RichText*/}
+						{/*	tagName="p"*/}
+						{/*	className="novablocks-announcement-bar__content"*/}
+						{/*	value={ content }*/}
+						{/*	onChange={ content => {*/}
+						{/*		setAttributes( { content } );*/}
+						{/*	} }*/}
+						{/*	allowedFormats={ ['core/link', 'core/bold', 'core/italic'] }*/}
+						{/*/>*/}
 					</div>
 					{ isSelected &&
 					  <div className="novablocks-announcement-bar__url-field-wrapper">

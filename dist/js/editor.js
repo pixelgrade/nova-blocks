@@ -1854,8 +1854,12 @@ var announcement_bar_wp$components = wp.components,
     BaseControl = announcement_bar_wp$components.BaseControl,
     ToggleControl = announcement_bar_wp$components.ToggleControl;
 var _wp$blockEditor = wp.blockEditor,
-    RichText = _wp$blockEditor.RichText,
-    URLInput = _wp$blockEditor.URLInput;
+    URLInput = _wp$blockEditor.URLInput,
+    InnerBlocks = _wp$blockEditor.InnerBlocks;
+var ALLOWED_BLOCKS = ['novablocks/openhours', 'core/paragraph'];
+var ANNOUNCEMENT_BAR_TEMPLATE = [['novablocks/openhours', {
+  openHoursStyle: 'status'
+}]];
 
 function init() {
   registerBlockType('novablocks/announcement-bar', {
@@ -1887,16 +1891,12 @@ function init() {
       var classNames = classnames_default()(className, 'novablocks-announcement-bar');
       return Object(react["createElement"])(announcement_bar_Fragment, null, Object(react["createElement"])("div", {
         className: classNames
-      }, Object(react["createElement"])(RichText, {
-        tagName: "p",
-        className: "novablocks-announcement-bar__content",
-        value: content,
-        onChange: function onChange(content) {
-          setAttributes({
-            content: content
-          });
-        },
-        allowedFormats: ['core/link', 'core/bold', 'core/italic']
+      }, Object(react["createElement"])(InnerBlocks, {
+        allowedBlocks: ALLOWED_BLOCKS,
+        template: ANNOUNCEMENT_BAR_TEMPLATE,
+        renderAppender: function renderAppender() {
+          return Object(react["createElement"])(InnerBlocks.ButtonBlockAppender, null);
+        }
       })), isSelected && Object(react["createElement"])("div", {
         className: "novablocks-announcement-bar__url-field-wrapper"
       }, Object(react["createElement"])(BaseControl, {
@@ -5176,7 +5176,7 @@ var header_edit_wp$components = wp.components,
     edit_IconButton = header_edit_wp$components.IconButton;
 var header_edit_wp$blockEditor = wp.blockEditor,
     edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
-    InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
+    edit_InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
 var TEMPLATE_OPTIONS = [{
   title: header_edit_('Logo on the left side and one navigation menu', '__plugin_txtd'),
   name: 'logo-left',
@@ -5234,7 +5234,7 @@ function header_edit_Edit(props) {
     icon: "edit"
   }))), Object(react["createElement"])("div", {
     className: classNames
-  }, Object(react["createElement"])(InnerBlocks, {
+  }, Object(react["createElement"])(edit_InnerBlocks, {
     __experimentalTemplateOptions: TEMPLATE_OPTIONS,
     __experimentalOnSelectTemplateOption: function __experimentalOnSelectTemplateOption(nextTemplate) {
       applyTemplate(nextTemplate);
@@ -5401,7 +5401,7 @@ var headline_edit_Fragment = wp.element.Fragment;
  */
 
 var headline_edit_wp$blockEditor = wp.blockEditor,
-    edit_RichText = headline_edit_wp$blockEditor.RichText,
+    RichText = headline_edit_wp$blockEditor.RichText,
     edit_AlignmentToolbar = headline_edit_wp$blockEditor.AlignmentToolbar,
     headline_edit_BlockControls = headline_edit_wp$blockEditor.BlockControls,
     edit_InspectorControls = headline_edit_wp$blockEditor.InspectorControls;
@@ -5441,7 +5441,7 @@ function HeadlineEdit(props) {
     }
   })), Object(react["createElement"])(TagName, {
     className: classnames_default()(className, 'c-headline', defineProperty_default()({}, "has-text-align-".concat(align), align))
-  }, Object(react["createElement"])(edit_RichText, {
+  }, Object(react["createElement"])(RichText, {
     className: "c-headline__secondary",
     identifier: "secondary",
     tagName: "span",
@@ -5454,7 +5454,7 @@ function HeadlineEdit(props) {
     placeholder: headline_edit_('Subtitle…', '__plugin_txtd'),
     keepPlaceholderOnFocus: true,
     allowedFormats: []
-  }), Object(react["createElement"])(edit_RichText, {
+  }), Object(react["createElement"])(RichText, {
     className: "c-headline__primary",
     identifier: "primary",
     tagName: "span",
@@ -6837,7 +6837,7 @@ var preview_ = wp.i18n.__;
 var menu_food_preview_InnerBlocks = wp.blockEditor.InnerBlocks;
 var createBlock = wp.blocks.createBlock;
 var preview_IconButton = wp.components.IconButton;
-var ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
+var preview_ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 var TEMPLATE = [['novablocks/menu-food-section', {
   sectionTitle: 'Starters'
 }, [['novablocks/menu-food-item', {
@@ -6921,7 +6921,7 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
   return Object(react["createElement"])("div", {
     className: classNames
   }, Object(react["createElement"])(menu_food_preview_InnerBlocks, {
-    allowedBlocks: ALLOWED_BLOCKS,
+    allowedBlocks: preview_ALLOWED_BLOCKS,
     template: TEMPLATE,
     renderAppender: false
   }), Object(react["createElement"])(preview_IconButton, {
@@ -7039,7 +7039,7 @@ var menu_food_section_preview_IconButton = wp.components.IconButton;
  * Internal dependencies.
  */
 
-var preview_ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
+var menu_food_section_preview_ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
 var preview_TEMPLATE = [['novablocks/menu-food-item']];
 
 var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
@@ -7071,7 +7071,7 @@ var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
   })), Object(react["createElement"])("div", {
     className: "nova-food-menu__items"
   }, Object(react["createElement"])(menu_food_section_preview_InnerBlocks, {
-    allowedBlocks: preview_ALLOWED_BLOCKS,
+    allowedBlocks: menu_food_section_preview_ALLOWED_BLOCKS,
     template: preview_TEMPLATE,
     renderAppender: false
   })), Object(react["createElement"])(menu_food_section_preview_IconButton, {

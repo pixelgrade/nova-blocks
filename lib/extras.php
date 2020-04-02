@@ -84,7 +84,7 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 		}
 
 		if ( $post->post_name === 'promo-bar' ) {
-			return array( 'novablocks/announcement-bar' );
+			return array( 'novablocks/announcement-bar', 'novablocks/openhours', 'core/paragraph' );
 		}
 	}
 
