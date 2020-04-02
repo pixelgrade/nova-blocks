@@ -1,6 +1,8 @@
 .novablocks-openhours__modal {
   background: url("../../src/images/opening_hours_scheme.png") #ffffff center center no-repeat;
 
+	background-size: contain;
+
   min-height: 90vh;
   min-width: 50vw;
 }
