@@ -13,7 +13,9 @@
 		@include novablocks-cards-collection-layout;
 		@include novablocks-cards-columns-count(1);
 
-		--surplus: 100px;
+		> * {
+			--surplus: 100px;
+		}
 
 		> .block-list-appender {
 			align-self: center;

@@ -5,10 +5,9 @@
 	margin-top: calc(-1 * var(--novablocks-spacing));
 	margin-left: calc(-1 * var(--novablocks-spacing));
 
-	--columns: 1;
-	--surplus: 0px;
-
 	> * {
+		--columns: 1;
+		--surplus: 0px;
 		--width: calc( ( 100% - var(--surplus) ) / var(--columns) );
 		flex: 0 1 var(--width);
 		max-width: var(--width);
@@ -47,8 +46,11 @@
 			}
 		}
 
-		@include below(tablet) {
-			--columns: 1;
+		&[class][class] {
+
+			@include below(tablet) {
+				--columns: 1;
+			}
 		}
 	}
 }
