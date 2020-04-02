@@ -81,7 +81,7 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		}
 
 		if ( $containerHeight < 0 ) {
-			$containerHeight = 1 + Math.abs( $containerHeight );
+			$containerHeight = 1 + abs( $containerHeight );
 		}
 
 		return ( $numerator * 100 / $denominator ) . '%';
