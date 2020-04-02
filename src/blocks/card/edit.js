@@ -74,6 +74,17 @@ const CardEdit = ( props ) => {
 					</div>
 				}
 				{
+					showMeta &&
+					<EditableText
+						className={ `${ blockClassName }__meta block-editor-block-list__block` }
+						tagName={ 'p' }
+						value={meta}
+						onChange={meta => {
+							setAttributes( {meta} )
+						}}
+					/>
+				}
+				{
 					showTitle &&
 					<EditableText
 						className={`${blockClassName}__title block-editor-block-list__block`}
@@ -118,17 +129,6 @@ const CardEdit = ( props ) => {
 							] }
 						/>
 					</div>
-				}
-				{
-					showMeta &&
-					<EditableText
-						className={ `${ blockClassName }__meta block-editor-block-list__block` }
-						tagName={ 'p' }
-						value={meta}
-						onChange={meta => {
-							setAttributes( {meta} )
-						}}
-					/>
 				}
 			</div>
 		</div>
