@@ -147,6 +147,7 @@ const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
 			...props.attributes,
 			level: parentBlockAttributes.level,
 			contentAlign: parentBlockAttributes.contentAlign,
+			showMedia: parentBlockAttributes.showMedia,
 			showTitle: parentBlockAttributes.showTitle,
 			showSubtitle: parentBlockAttributes.showSubtitle,
 			showDescription: parentBlockAttributes.showDescription,

@@ -17558,6 +17558,7 @@ var CardWithVisibility = wp.data.withSelect(function (select, props) {
     attributes: card_edit_objectSpread({}, props.attributes, {
       level: parentBlockAttributes.level,
       contentAlign: parentBlockAttributes.contentAlign,
+      showMedia: parentBlockAttributes.showMedia,
       showTitle: parentBlockAttributes.showTitle,
       showSubtitle: parentBlockAttributes.showSubtitle,
       showDescription: parentBlockAttributes.showDescription,
