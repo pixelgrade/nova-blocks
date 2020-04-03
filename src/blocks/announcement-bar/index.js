@@ -3,6 +3,7 @@
  */
 import * as icons from '../../icons';
 import classnames from "classnames";
+import deprecated from './deprecated';
 
 /**
  * WordPress dependencies
@@ -121,6 +122,7 @@ function init() {
 		getEditWrapperProps( attributes ) {
 			return { 'data-align': 'full' };
 		},
+		deprecated
 	} );
 }
 
