@@ -18,9 +18,8 @@ const ToggleGroup = ( props ) => {
 				  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>
 					  { enabledToggles.map( ( toggle, idx ) => {
 						  return (
-							  <div className="components-toggle-group__toggle-list-item">
+							  <div key={ idx } className="components-toggle-group__toggle-list-item">
 								  <ToggleControl
-									  key={ idx }
 									  label={ toggle.label }
 									  checked={ !! toggle.value }
 									  onChange={ () => { onChange( toggle.attribute ) } }
@@ -36,9 +35,8 @@ const ToggleGroup = ( props ) => {
 					  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled' }>
 						  { disabledToggles.map( ( toggle, idx ) => {
 							  return (
-								  <div className="components-toggle-group__toggle-list-item">
+								  <div key={ idx } className="components-toggle-group__toggle-list-item">
 									  <ToggleControl
-										  key={ idx }
 										  label={ toggle.label }
 										  checked={ !! toggle.value }
 										  onChange={ () => { onChange( toggle.attribute ) } }

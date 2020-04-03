@@ -4909,7 +4909,14 @@ var emphasis_level_controls_ = wp.i18n.__;
 var emphasis_level_controls_Fragment = wp.element.Fragment;
 var emphasis_level_controls_wp$components = wp.components,
     emphasis_level_controls_PanelBody = emphasis_level_controls_wp$components.PanelBody,
-    RadioControl = emphasis_level_controls_wp$components.RadioControl;
+    RadioControl = emphasis_level_controls_wp$components.RadioControl,
+    createSlotFill = emphasis_level_controls_wp$components.createSlotFill;
+var EmphasisContentAreaSlotFill = createSlotFill('EmphasisContentArea');
+var EmphasisContentAreaSlot = EmphasisContentAreaSlotFill.Slot;
+var EmphasisContentAreaFill = EmphasisContentAreaSlotFill.Fill;
+var EmphasisBlockAreaSlotFill = createSlotFill('EmphasisBlockArea');
+var EmphasisBlockAreaSlot = EmphasisBlockAreaSlotFill.Slot;
+var EmphasisBlockAreaFill = EmphasisBlockAreaSlotFill.Fill;
 
 var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelControls(props) {
   var _props$attributes = props.attributes,
@@ -4932,7 +4939,7 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
         contentStyle: nextContentStyle
       });
     }
-  })), Object(external_React_["createElement"])(emphasis_level_controls_PanelBody, {
+  }), Object(external_React_["createElement"])(EmphasisContentAreaSlot, null)), Object(external_React_["createElement"])(emphasis_level_controls_PanelBody, {
     title: emphasis_level_controls_('Block Area', '__plugin_txtd'),
     initialOpen: true
   }, Object(external_React_["createElement"])(RadioControl, {
@@ -4945,8 +4952,9 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
         blockStyle: nextBlockStyle
       });
     }
-  })));
+  }), Object(external_React_["createElement"])(EmphasisBlockAreaSlot, null)));
 };
+
 
 /* harmony default export */ var emphasis_level_controls = (with_settings(emphasis_level_controls_EmphasisLevelControls));
 // CONCATENATED MODULE: ./src/filters/with-emphasis-level/index.js
@@ -6807,9 +6815,9 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
     className: 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled'
   }, enabledToggles.map(function (toggle, idx) {
     return Object(external_React_["createElement"])("div", {
+      key: idx,
       className: "components-toggle-group__toggle-list-item"
     }, Object(external_React_["createElement"])(toggle_group_ToggleControl, {
-      key: idx,
       label: toggle.label,
       checked: !!toggle.value,
       onChange: function onChange() {
@@ -6822,9 +6830,9 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
     className: 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled'
   }, disabledToggles.map(function (toggle, idx) {
     return Object(external_React_["createElement"])("div", {
+      key: idx,
       className: "components-toggle-group__toggle-list-item"
     }, Object(external_React_["createElement"])(toggle_group_ToggleControl, {
-      key: idx,
       label: toggle.label,
       checked: !!toggle.value,
       onChange: function onChange() {
@@ -9914,7 +9922,7 @@ function slot_fill_Fill(props) {
   // will render. The other one will return null.
   return Object(external_React_["createElement"])(external_React_["Fragment"], null, Object(external_React_["createElement"])(slot_fill_fill, props), Object(external_React_["createElement"])(bubbles_virtually_fill_Fill, props));
 }
-function createSlotFill(name) {
+function slot_fill_createSlotFill(name) {
   var FillComponent = function FillComponent(props) {
     return Object(external_React_["createElement"])(slot_fill_Fill, Object(esm_extends["a" /* default */])({
       name: name
@@ -17606,10 +17614,10 @@ function card_init() {
 
 
 
+
 var cards_collection_inspector_controls_ = wp.i18n.__;
-var cards_collection_inspector_controls_wp$components = wp.components,
-    cards_collection_inspector_controls_PanelBody = cards_collection_inspector_controls_wp$components.PanelBody,
-    inspector_controls_PanelRow = cards_collection_inspector_controls_wp$components.PanelRow;
+var cards_collection_inspector_controls_Fragment = wp.element.Fragment;
+var inspector_controls_PanelRow = wp.components.PanelRow;
 var inspector_controls_wp$blockEditor = wp.blockEditor,
     cards_collection_inspector_controls_InspectorControls = inspector_controls_wp$blockEditor.InspectorControls,
     inspector_controls_AlignmentToolbar = inspector_controls_wp$blockEditor.AlignmentToolbar;
@@ -17677,10 +17685,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     value: attributes['showMeta'],
     attribute: 'showMeta'
   }];
-  return Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
-    initialOpen: true,
-    title: cards_collection_inspector_controls_('Cards Content Area')
-  }, Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+  return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 2,
     maxLevel: 4,
     selectedLevel: level,
@@ -17689,7 +17694,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         level: newLevel
       });
     }
-  })), Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
+  }))), Object(external_React_["createElement"])(EmphasisContentAreaFill, null, Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
     value: contentAlign,
     isCollapsed: false,
     onChange: function onChange(contentAlign) {
@@ -17710,11 +17715,11 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         contentAlign: contentAlign
       });
     }
-  }))), Object(external_React_["createElement"])(toggle_group, {
+  }))), Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(toggle_group, {
     label: cards_collection_inspector_controls_('Cards Manager', '__plugin_txtd'),
     onChange: toggleAttribute,
     toggles: toggles
-  }));
+  })));
 };
 
 /* harmony default export */ var cards_collection_inspector_controls = (inspector_controls_CardsCollectionInspectorControls);

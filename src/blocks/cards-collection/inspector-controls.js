@@ -1,9 +1,13 @@
 import { HeadingToolbar, ToggleGroup } from "../../components";
+import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../../components/emphasis-level-controls";
 
 const { __ } = wp.i18n;
 
 const {
-	PanelBody,
+	Fragment
+} = wp.element;
+
+const {
 	PanelRow,
 } = wp.components;
 
@@ -92,12 +96,14 @@ const CardsCollectionInspectorControls = ( props ) => {
 	];
 
 	return (
-		<InspectorControls>
-			<PanelBody initialOpen={ true } title={ __( 'Cards Content Area' ) }>
+		<Fragment>
+			<EmphasisBlockAreaFill>
 				<PanelRow>
 					<span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
 					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 				</PanelRow>
+			</EmphasisBlockAreaFill>
+			<EmphasisContentAreaFill>
 				<PanelRow>
 					<span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
 					<AlignmentToolbar
@@ -116,13 +122,15 @@ const CardsCollectionInspectorControls = ( props ) => {
 						} }
 					/>
 				</PanelRow>
-			</PanelBody>
-			<ToggleGroup
-				label={ __( 'Cards Manager', '__plugin_txtd' ) }
-				onChange={ toggleAttribute }
-				toggles={ toggles }
-			/>
-		</InspectorControls>
+			</EmphasisContentAreaFill>
+			<InspectorControls>
+				<ToggleGroup
+					label={ __( 'Cards Manager', '__plugin_txtd' ) }
+					onChange={ toggleAttribute }
+					toggles={ toggles }
+				/>
+			</InspectorControls>
+		</Fragment>
    );
 }
 

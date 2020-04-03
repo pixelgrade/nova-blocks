@@ -1,5 +1,6 @@
 import withSettings from '../with-settings';
 
+
 const { __ } = wp.i18n;
 
 const {
@@ -9,7 +10,16 @@ const {
 const {
 	PanelBody,
 	RadioControl,
+	createSlotFill,
 } = wp.components;
+
+const EmphasisContentAreaSlotFill = createSlotFill( 'EmphasisContentArea' );
+const EmphasisContentAreaSlot = EmphasisContentAreaSlotFill.Slot;
+const EmphasisContentAreaFill = EmphasisContentAreaSlotFill.Fill;
+
+const EmphasisBlockAreaSlotFill = createSlotFill( 'EmphasisBlockArea' );
+const EmphasisBlockAreaSlot = EmphasisBlockAreaSlotFill.Slot;
+const EmphasisBlockAreaFill = EmphasisBlockAreaSlotFill.Fill;
 
 const EmphasisLevelControls = ( props ) => {
 
@@ -37,6 +47,7 @@ const EmphasisLevelControls = ( props ) => {
 					options={ contentAreaOptions }
 					onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
 				/>
+				<EmphasisContentAreaSlot />
 			</PanelBody>
 
 			<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ true }>
@@ -47,9 +58,12 @@ const EmphasisLevelControls = ( props ) => {
 					options={ blockAreaOptions }
 					onChange={ ( nextBlockStyle ) => setAttributes( { blockStyle: nextBlockStyle } ) }
 				/>
+				<EmphasisBlockAreaSlot />
 			</PanelBody>
 		</Fragment>
 	)
 }
+
+export { EmphasisContentAreaFill, EmphasisBlockAreaFill };
 
 export default withSettings( EmphasisLevelControls );
