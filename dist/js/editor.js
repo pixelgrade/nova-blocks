@@ -17617,7 +17617,11 @@ function card_init() {
 
 var cards_collection_inspector_controls_ = wp.i18n.__;
 var cards_collection_inspector_controls_Fragment = wp.element.Fragment;
-var inspector_controls_PanelRow = wp.components.PanelRow;
+var cards_collection_inspector_controls_wp$components = wp.components,
+    cards_collection_inspector_controls_PanelBody = cards_collection_inspector_controls_wp$components.PanelBody,
+    inspector_controls_PanelRow = cards_collection_inspector_controls_wp$components.PanelRow,
+    cards_collection_inspector_controls_RadioControl = cards_collection_inspector_controls_wp$components.RadioControl,
+    cards_collection_inspector_controls_RangeControl = cards_collection_inspector_controls_wp$components.RangeControl;
 var inspector_controls_wp$blockEditor = wp.blockEditor,
     cards_collection_inspector_controls_InspectorControls = inspector_controls_wp$blockEditor.InspectorControls,
     inspector_controls_AlignmentToolbar = inspector_controls_wp$blockEditor.AlignmentToolbar;
@@ -17719,7 +17723,36 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     label: cards_collection_inspector_controls_('Cards Manager', '__plugin_txtd'),
     onChange: toggleAttribute,
     toggles: toggles
-  })));
+  }), showMedia && Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
+    initialOpen: true,
+    title: cards_collection_inspector_controls_('Cards Media Area')
+  }, Object(external_React_["createElement"])(cards_collection_inspector_controls_RadioControl, {
+    label: 'Image resizing',
+    selected: imageResizing,
+    onChange: function onChange(imageResizing) {
+      setAttributes({
+        imageResizing: imageResizing
+      });
+    },
+    options: [{
+      label: 'Stretch to fill the container',
+      value: 'cropped'
+    }, {
+      label: 'Shrink to fit (no crop)',
+      value: 'original'
+    }]
+  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_RangeControl, {
+    label: cards_collection_inspector_controls_('Image container height', '__plugin_txtd'),
+    value: containerHeight,
+    onChange: function onChange(containerHeight) {
+      setAttributes({
+        containerHeight: containerHeight
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 5
+  }))));
 };
 
 /* harmony default export */ var cards_collection_inspector_controls = (inspector_controls_CardsCollectionInspectorControls);

@@ -8,7 +8,10 @@ const {
 } = wp.element;
 
 const {
+	PanelBody,
 	PanelRow,
+	RadioControl,
+	RangeControl,
 } = wp.components;
 
 const {
@@ -129,6 +132,31 @@ const CardsCollectionInspectorControls = ( props ) => {
 					onChange={ toggleAttribute }
 					toggles={ toggles }
 				/>
+				{ showMedia &&
+				    <PanelBody initialOpen={ true } title={ __( 'Cards Media Area' ) }>
+					    <RadioControl
+						    label={'Image resizing'}
+						    selected={imageResizing}
+						    onChange={imageResizing => {
+							    setAttributes( {imageResizing} )
+						    }}
+						    options={[
+							    {label: 'Stretch to fill the container', value: 'cropped'},
+							    {label: 'Shrink to fit (no crop)', value: 'original'},
+						    ]}
+					    />
+					    <RangeControl
+						    label={__( 'Image container height', '__plugin_txtd' )}
+						    value={containerHeight}
+						    onChange={containerHeight => {
+							    setAttributes( {containerHeight} )
+						    }}
+						    min={0}
+						    max={100}
+						    step={5}
+					    />
+				    </PanelBody>
+				}
 			</InspectorControls>
 		</Fragment>
    );
