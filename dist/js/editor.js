@@ -5580,6 +5580,10 @@ function init() {
       opensInNewTab: {
         type: 'boolean',
         default: false
+      },
+      content: {
+        type: 'string',
+        default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.'
       }
     },
     save: function save() {
@@ -5590,6 +5594,7 @@ function init() {
           _props$attributes = props.attributes,
           url = _props$attributes.url,
           opensInNewTab = _props$attributes.opensInNewTab,
+          content = _props$attributes.content,
           setAttributes = props.setAttributes,
           isSelected = props.isSelected;
       var classNames = classnames_default()(className, 'novablocks-announcement-bar');

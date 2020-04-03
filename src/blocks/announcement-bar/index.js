@@ -55,6 +55,10 @@ function init() {
 			opensInNewTab: {
 				type: 'boolean',
 				default: false
+			},
+			content: {
+				type: 'string',
+				default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
 			}
 		},
 		save() {
@@ -66,7 +70,8 @@ function init() {
 				className,
 				attributes: {
 					url,
-					opensInNewTab
+					opensInNewTab,
+					content
 				},
 				setAttributes,
 				isSelected,
