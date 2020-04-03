@@ -17745,6 +17745,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     label: cards_collection_inspector_controls_('Image container height', '__plugin_txtd'),
     value: containerHeight,
     onChange: function onChange(containerHeight) {
+      console.log(containerHeight);
       setAttributes({
         containerHeight: containerHeight
       });
@@ -17806,9 +17807,14 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
 
   var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
     var compiledHeight = containerHeight / 50 - 1;
+
+    if (compiledHeight < 0) {
+      compiledHeight *= 3;
+    }
+
     var numerator = 1;
     var denominator = 1;
-    compiledHeight = Math.min(Math.max(-1, compiledHeight), 1);
+    compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
 
     if (compiledHeight > 0) {
       numerator = 1 + compiledHeight;

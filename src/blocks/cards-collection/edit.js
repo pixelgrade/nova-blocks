@@ -67,10 +67,15 @@ const CardsCollectionEdit = ( props ) => {
 
 	const getCardMediaPaddingTop = ( containerHeight ) => {
 		let compiledHeight = containerHeight / 50 - 1;
+
+		if ( compiledHeight < 0 ) {
+			compiledHeight *= 3;
+		}
+
 		let numerator = 1;
 		let denominator = 1;
 
-		compiledHeight = Math.min( Math.max( -1, compiledHeight ), 1 );
+		compiledHeight = Math.min( Math.max( -3, compiledHeight ), 1 );
 
 		if ( compiledHeight > 0 ) {
 			numerator = 1 + compiledHeight;
