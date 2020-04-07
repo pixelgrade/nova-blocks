@@ -50136,7 +50136,7 @@ var blockAttributes = {
 };
 var deprecated = [{
   isEligible: function isEligible(attributes, innerBlocks) {
-    return attributes.content !== 'undefined' && !!innerBlocks;
+    return typeof attributes.content !== 'undefined' && !innerBlocks.length;
   },
   attributes: _objectSpread({
     content: {

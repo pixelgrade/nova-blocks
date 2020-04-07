@@ -18,7 +18,9 @@ const blockAttributes = {
 
 const deprecated = [
 	{
-		isEligible: ( attributes, innerBlocks ) => attributes.content !== 'undefined' && !! innerBlocks,
+		isEligible: ( attributes, innerBlocks ) => {
+			return typeof attributes.content !== 'undefined' && ! innerBlocks.length;
+		},
 		attributes: {
 			content: {
 				type: 'string',
