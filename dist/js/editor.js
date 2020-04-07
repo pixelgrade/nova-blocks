@@ -17508,7 +17508,7 @@ var edit_CardEdit = function CardEdit(props) {
       }));
     }
   }))), showMeta && Object(external_React_["createElement"])(editable_text, {
-    className: "".concat(blockClassName, "__meta block-editor-block-list__block"),
+    className: "".concat(blockClassName, "__meta block-editor-block-list__block is-style-meta"),
     tagName: 'p',
     value: meta,
     onChange: function onChange(meta) {
@@ -17632,7 +17632,8 @@ var _wp$data = wp.data,
 var inspector_controls_CardsCollectionInspectorControls = function CardsCollectionInspectorControls(props) {
   var attributes = props.attributes,
       childrenBlocks = props.childrenBlocks,
-      setAttributes = props.setAttributes;
+      setAttributes = props.setAttributes,
+      isSelected = props.isSelected;
   var level = attributes.level,
       imageResizing = attributes.imageResizing,
       containerHeight = attributes.containerHeight,
@@ -17689,7 +17690,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     value: attributes['showMeta'],
     attribute: 'showMeta'
   }];
-  return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+  return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 2,
     maxLevel: 4,
     selectedLevel: level,
@@ -17698,7 +17699,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         level: newLevel
       });
     }
-  }))), Object(external_React_["createElement"])(EmphasisContentAreaFill, null, Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
+  }))), Object(external_React_["createElement"])(EmphasisContentAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
     value: contentAlign,
     isCollapsed: false,
     onChange: function onChange(contentAlign) {
@@ -17777,7 +17778,7 @@ var cards_collection_edit_ = wp.i18n.__;
 var cards_collection_edit_InnerBlocks = wp.blockEditor.InnerBlocks;
 var edit_withSelect = wp.data.withSelect;
 var edit_ALLOWED_BLOCKS = ['novablocks/card'];
-var CARDS_COLLECTION_TEMPLATE = [['novablocks/card']];
+var CARDS_COLLECTION_TEMPLATE = [['novablocks/card'], ['novablocks/card'], ['novablocks/card']];
 
 var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   var attributes = props.attributes,
@@ -17801,8 +17802,10 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       showButtons = attributes.showButtons,
       showMeta = attributes.showMeta;
   var blockClassName = 'novablocks-cards-collection';
+  var hasAppender = childrenBlocks.length < 4;
   var className = classnames_default()(props.className, blockClassName, 'novablocks-block', "".concat(blockClassName, "--align-").concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
-    'has-background': blockStyle !== 'basic'
+    'has-background': blockStyle !== 'basic',
+    'has-appender': hasAppender
   });
 
   var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
@@ -17852,7 +17855,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
     "data-align": "wide"
   }, Object(external_React_["createElement"])(editable_text, {
     tagName: 'p',
-    className: 'intro',
+    className: 'is-style-lead',
     value: subtitle,
     onChange: function onChange(subtitle) {
       setAttributes({
@@ -17866,7 +17869,8 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
     className: "".concat(blockClassName, "__layout")
   }, Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
     allowedBlocks: edit_ALLOWED_BLOCKS,
-    template: CARDS_COLLECTION_TEMPLATE
+    template: CARDS_COLLECTION_TEMPLATE,
+    renderAppender: hasAppender ? window.undefined : false
   }))))), Object(external_React_["createElement"])(cards_collection_inspector_controls, props));
 };
 

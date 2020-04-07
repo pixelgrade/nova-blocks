@@ -1,32 +1,53 @@
 @import "mixins";
 
 .novablocks-cards-collection__layout[class] {
+
+	// in editor the layout is handled by .block-editor-block-list__layout
+	// but frontend styles are also loaded in editor
+	// and we won't fix that at the moment
 	display: block;
 	margin: 0;
 
-	> * {
+	> [class][class] {
 		max-width: none;
-		padding: 0;
+		margin: 0;
+	}
+
+	.block-editor-block-list__block[data-type="core/buttons"][data-align] {
+		height: auto;
+
+		> .is-block-content {
+			float: none;
+			margin-left: 0;
+			margin-right: 0;
+		}
 	}
 
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@include novablocks-cards-collection-layout;
-		@include novablocks-cards-columns-count(1);
-
-		> * {
-			--surplus: 100px;
-		}
-
-		> .block-list-appender {
-			align-self: center;
-			flex: 0 0 var(--surplus);
-			padding-left: calc(0.5 * var(--novablocks-spacing));
-		}
 
 		.wp-block[class][class] {
-			max-width: none;
-			margin-left: 0;
 			margin-right: 0;
+		}
+
+		.novablocks-cards-collection.has-appender & {
+			@include novablocks-cards-columns-count(1);
+
+			--apender-width: 100px;
+
+			> * {
+				--surplus: calc(var(--apender-width) + var(--novablocks-spacing));
+			}
+
+			> .block-list-appender {
+				align-self: center;
+				flex: 0 0 var(--apender-width);
+				padding-left: calc(0.5 * var(--novablocks-spacing));
+			}
+		}
+
+		.novablocks-cards-collection:not(.has-appender) & {
+			@include novablocks-cards-columns-count;
 		}
 	}
 }

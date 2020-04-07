@@ -2,11 +2,6 @@
 	padding: var(--novablocks-block-content-padding);
 	box-shadow: var(--novablocks-block-content-box-shadow);
 
-	&,
-	> .block-editor-block-list__layout {
-		--element-spacing: var(--theme-spacing-tiny);
-	}
-
 	> .block-editor-block-list__layout {
 		@include clearfix;
 	}
@@ -53,4 +48,10 @@
 
 .novablocks-card__buttons {
 	@include clearfix;
+
+	.wp-block-buttons[class] {
+		float: none;
+		margin-left: 0;
+		margin-right: 0;
+	}
 }

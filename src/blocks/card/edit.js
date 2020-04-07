@@ -76,7 +76,7 @@ const CardEdit = ( props ) => {
 				{
 					showMeta &&
 					<EditableText
-						className={ `${ blockClassName }__meta block-editor-block-list__block` }
+						className={ `${ blockClassName }__meta block-editor-block-list__block is-style-meta` }
 						tagName={ 'p' }
 						value={meta}
 						onChange={meta => {

@@ -31,6 +31,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 		attributes,
 		childrenBlocks,
 		setAttributes,
+		isSelected,
 	} = props;
 
 	const {
@@ -101,30 +102,34 @@ const CardsCollectionInspectorControls = ( props ) => {
 	return (
 		<Fragment>
 			<EmphasisBlockAreaFill>
-				<PanelRow>
-					<span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
-					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
-				</PanelRow>
+				{ isSelected &&
+					<PanelRow>
+						<span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
+						<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+					</PanelRow>
+				}
 			</EmphasisBlockAreaFill>
 			<EmphasisContentAreaFill>
-				<PanelRow>
-					<span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
-					<AlignmentToolbar
-						value={ contentAlign }
-						isCollapsed={ false }
-						onChange={ ( contentAlign ) => {
-							const { getSelectedBlock } = select( 'core/block-editor' );
-							const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+				{ isSelected &&
+					<PanelRow>
+						<span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
+						<AlignmentToolbar
+							value={ contentAlign }
+							isCollapsed={ false }
+							onChange={ ( contentAlign ) => {
+								const { getSelectedBlock } = select( 'core/block-editor' );
+								const { updateBlockAttributes } = dispatch( 'core/block-editor' );
 
-							getSelectedBlock().innerBlocks.map( ( block ) => {
-								block.innerBlocks.map( ( innerBlock ) => {
-									updateBlockAttributes( innerBlock.clientId, { align: contentAlign } );
+								getSelectedBlock().innerBlocks.map( ( block ) => {
+									block.innerBlocks.map( ( innerBlock ) => {
+										updateBlockAttributes( innerBlock.clientId, { align: contentAlign } );
+									} );
 								} );
-							} );
-							setAttributes( { contentAlign } );
-						} }
-					/>
-				</PanelRow>
+								setAttributes( { contentAlign } );
+							} }
+						/>
+					</PanelRow>
+				}
 			</EmphasisContentAreaFill>
 			<InspectorControls>
 				<ToggleGroup

@@ -8,11 +8,15 @@
 	> * {
 		--columns: 1;
 		--surplus: 0px;
-		--width: calc( ( 100% - var(--surplus) ) / var(--columns) );
+		--width: calc( ( 100% - var(--surplus) ) / var(--columns) - var(--novablocks-spacing));
+
 		flex: 0 1 var(--width);
-		max-width: var(--width);
-		padding-top: var(--novablocks-spacing);
-		padding-left: var(--novablocks-spacing);
+		margin-top: var(--novablocks-spacing);
+		margin-left: var(--novablocks-spacing);
+
+		&[class][class] {
+			max-width: var(--width);
+		}
 	}
 
 	> div:not([class]) {

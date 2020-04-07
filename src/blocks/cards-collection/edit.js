@@ -17,7 +17,11 @@ const {
 } = wp.data;
 
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
-const CARDS_COLLECTION_TEMPLATE = [ [ 'novablocks/card' ] ];
+const CARDS_COLLECTION_TEMPLATE = [
+	[ 'novablocks/card' ],
+	[ 'novablocks/card' ],
+	[ 'novablocks/card' ],
+];
 
 const CardsCollectionEdit = ( props ) => {
 
@@ -52,6 +56,7 @@ const CardsCollectionEdit = ( props ) => {
 	} = attributes;
 
 	const blockClassName = 'novablocks-cards-collection';
+	const hasAppender = childrenBlocks.length < 4;
 
 	const className = classnames(
 		props.className,
@@ -61,7 +66,8 @@ const CardsCollectionEdit = ( props ) => {
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
-			'has-background': blockStyle !== 'basic'
+			'has-background': blockStyle !== 'basic',
+			'has-appender': hasAppender,
 		}
 	);
 
@@ -114,7 +120,7 @@ const CardsCollectionEdit = ( props ) => {
 						<div className="wp-block" data-align="wide">
 							<EditableText
 								tagName={ 'p' }
-								className={ 'intro' }
+								className={ 'is-style-lead' }
 								value={subtitle}
 								onChange={subtitle => {
 									setAttributes( {subtitle} )
@@ -127,6 +133,7 @@ const CardsCollectionEdit = ( props ) => {
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_BLOCKS }
 								template={ CARDS_COLLECTION_TEMPLATE }
+								renderAppender={ hasAppender ? window.undefined : false }
 							/>
 						</div>
 					</div>
