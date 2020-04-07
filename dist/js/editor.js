@@ -16694,6 +16694,14 @@ function menu_food_init() {
         enableTwoColumns: false
       }
     },
+    styles: [{
+      name: 'classic',
+      label: menu_food_('Classic'),
+      isDefault: true
+    }, {
+      name: 'basic',
+      label: menu_food_('Basic')
+    }],
     getEditWrapperProps: function getEditWrapperProps() {
       var settings = menu_food_select('core/block-editor').getSettings();
       return settings.alignWide ? {
