@@ -12,7 +12,7 @@ import { ToolbarGroup } from '@wordpress/components';
  * Internal dependencies
  */
 
-import HeadingLevelIcon from './heading-level-icon';
+import HeadingLevelIcon from '../heading-level-icon';
 
 class HeadingToolbar extends Component {
 	createLevelControl( targetLevel, selectedLevel, onChange ) {

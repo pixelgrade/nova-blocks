@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import HeadingToolbar from './heading-toolbar';
+import HeadingToolbar from '../../components/heading-toolbar';
 
 const { __ } = wp.i18n;
 

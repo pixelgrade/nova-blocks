@@ -1,6 +1,8 @@
 @import 'variables';
 @import 'mixins';
 
+@import './emphasis';
+
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
 @import '../blocks/headline/scss/style';
@@ -13,6 +15,8 @@
 @import '../blocks/menu-food/scss/style';
 @import '../blocks/opentable/scss/style';
 @import '../blocks/openhours/scss/style';
+@import '../blocks/card/scss/style';
+@import '../blocks/cards-collection/scss/style';
 
 @import '../components/alignment-controls/style';
 @import '../components/color-controls/style';
@@ -21,21 +25,15 @@
 @import 'vendor/slick';
 @import 'vendor/slick-theme';
 
-.u-container-width {
+[class*="__inner-container"] > [class*="wp-block"] {
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .novablocks-foreground[class] {
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	ul,
-	ol,
-	dl,
+
+	h1, h2, h3, h4, h5, h6,
+	ul, ol, dl,
 	.editor-block-list__block {
 		color: inherit;
 	}

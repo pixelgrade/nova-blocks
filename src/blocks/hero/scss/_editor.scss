@@ -2,8 +2,8 @@
 	--novablocks-hero-transition-duration: 0.5s;
 	--novablocks-hero-transition-easing: ease;
 	--novablocks-hero-transition: all
-		var(--novablocks-media-transition-duration)
-		var(--novablocks-media-transition-easing);
+		var(--novablocks-transition-duration)
+		var(--novablocks-transition-easing);
 }
 
 .wp-block-novablocks-hero.novablocks-hero {

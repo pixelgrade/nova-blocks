@@ -7,7 +7,7 @@ export default `<svg width="62" height="75" xmlns="http://www.w3.org/2000/svg" x
 			<feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"></feColorMatrix>
 		</filter>
 	</defs>
-	<g fill="none" fill-rule="evenodd">
+	<g fill="none" fillRule="evenodd">
 		<use fill="#000" filter="url(#a)" xlink:href="#b" style="display:none"></use>
 		<use fill="%ACCENT_COLOR%" xlink:href="#b"></use>
 	</g>
