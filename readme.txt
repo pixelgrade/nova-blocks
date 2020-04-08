@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.2.2
 Tested up to: 5.3.2
 Requires PHP: 5.4.0
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,7 +94,11 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
-= 1.2.3 =
+= 1.3.0 =
+* New Block: Open Hours to display businesses open hours
+* New Block: Cards Collection to display related items in a coherent layout
+* Added a new style for the Food Menu block
+* Fixed parallax scaling and overflow issues
 * Fixed block toolbar positioning for full width blocks
 * Fixed Media Card block images attribute parsing
 * Improved controls display and copy for the Headline block
