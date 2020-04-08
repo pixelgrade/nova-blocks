@@ -372,7 +372,7 @@ function novablocks_get_card_attributes() {
 		),
 		'showSubtitle'    => array(
 			'type'    => 'boolean',
-			'default' => true,
+			'default' => false,
 		),
 		'showDescription' => array(
 			'type'    => 'boolean',
@@ -384,7 +384,7 @@ function novablocks_get_card_attributes() {
 		),
 		'showMeta'        => array(
 			'type'    => 'boolean',
-			'default' => true,
+			'default' => false,
 		),
 	);
 }
@@ -405,7 +405,7 @@ function novablocks_get_cards_collection_attributes() {
 		),
 		'imageResizing'          => array(
 			'type'    => 'string',
-			'default' => 'original'
+			'default' => 'cropped'
 		),
 		'containerHeight'        => array(
 			'type'    => 'number',
@@ -437,7 +437,7 @@ function novablocks_get_cards_collection_attributes() {
 		),
 		'showSubtitle'           => array(
 			'type'    => 'boolean',
-			'default' => true,
+			'default' => false,
 		),
 		'showDescription'        => array(
 			'type'    => 'boolean',
@@ -449,7 +449,7 @@ function novablocks_get_cards_collection_attributes() {
 		),
 		'showMeta'               => array(
 			'type'    => 'boolean',
-			'default' => true,
+			'default' => false,
 		),
 	);
 }

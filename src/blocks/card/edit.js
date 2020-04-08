@@ -10,6 +10,15 @@ const {
 	MediaUpload,
 } = wp.blockEditor;
 
+const {
+	createHigherOrderComponent
+} = wp.compose;
+
+const {
+	select,
+	dispatch,
+} = wp.data;
+
 const CardEdit = ( props ) => {
 
 	const blockClassName = 'novablocks-card';
@@ -135,29 +144,26 @@ const CardEdit = ( props ) => {
 	);
 }
 
-const CardWithVisibility = wp.data.withSelect( ( select, props ) => {
-	const { clientId } = props;
-	const parentClientId = select( 'core/editor' ).getBlockHierarchyRootClientId( clientId );
-	const parentBlock = select( 'core/editor' ).getBlock( parentClientId );
-	const parentBlockAttributes = parentBlock.attributes;
+const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
+	return ( props ) => {
+		if ( 'novablocks/card' === props.name ) {
+			const { clientId } = props;
+			const parentClientId = select( 'core/editor' ).getBlockHierarchyRootClientId( clientId );
+			const parentBlock = select( 'core/editor' ).getBlock( parentClientId );
+			const parentBlockAttributes = parentBlock.attributes;
 
-	const newProps = {
-		...props,
-		attributes: {
-			...props.attributes,
-			level: parentBlockAttributes.level,
-			contentAlign: parentBlockAttributes.contentAlign,
-			showMedia: parentBlockAttributes.showMedia,
-			showTitle: parentBlockAttributes.showTitle,
-			showSubtitle: parentBlockAttributes.showSubtitle,
-			showDescription: parentBlockAttributes.showDescription,
-			showButtons: parentBlockAttributes.showButtons,
-			showMeta: parentBlockAttributes.showMeta,
+			const newAttributes = (
+				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => (
+					{ level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta }
+				)
+			)( parentBlock.attributes );
+
+			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
 		}
-	}
+		return <BlockListBlock { ...props } />
+	};
+}, 'withCollectionVisibilityAttributes' );
 
-	return newProps;
+wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
 
-} )( CardEdit );
-
-export default CardWithVisibility;
+export default CardEdit;

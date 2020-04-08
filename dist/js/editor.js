@@ -182,27 +182,6 @@ function _extends() {
 /* 5 */
 /***/ (function(module, exports) {
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -212,7 +191,7 @@ function _classCallCheck(instance, Constructor) {
 module.exports = _classCallCheck;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 function _defineProperties(target, props) {
@@ -234,7 +213,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 module.exports = _createClass;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -253,6 +232,27 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
 
 /***/ }),
 /* 9 */
@@ -543,7 +543,7 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding *
 // UNUSED EXPORTS: BACKSPACE, ENTER, SPACE, DELETE, F10, ALT, CTRL, COMMAND, SHIFT, modifiers, rawShortcut, displayShortcutList, displayShortcut, shortcutAriaLabel, isKeyboardEvent
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var defineProperty = __webpack_require__(8);
+var defineProperty = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
 var toConsumableArray = __webpack_require__(20);
@@ -2358,7 +2358,7 @@ module.exports.isShallowEqualArrays = isShallowEqualArrays;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 /* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
 /* harmony import */ var reakit_Toolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(79);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
@@ -4573,11 +4573,11 @@ var helpers_typeof = __webpack_require__(34);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(6);
+var classCallCheck = __webpack_require__(5);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(7);
+var createClass = __webpack_require__(6);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
@@ -4834,7 +4834,7 @@ function addFontSizeAttribute(block) {
 
 with_font_size_picker_addFilter('blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(5);
+var defineProperty = __webpack_require__(8);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./src/store/reducer.js
@@ -6875,7 +6875,7 @@ var esm_getPrototypeOf = __webpack_require__(17);
 var esm_inherits = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var esm_defineProperty = __webpack_require__(8);
+var esm_defineProperty = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react.js
 
@@ -17442,11 +17442,6 @@ EditableText.Content = function (_ref) {
 
 
 
-
-function card_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { card_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { card_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 /**
  * WordPress dependencies
  */
@@ -17455,6 +17450,10 @@ function card_edit_objectSpread(target) { for (var i = 1; i < arguments.length; 
 var card_edit_wp$blockEditor = wp.blockEditor,
     edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
     edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
+var card_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var _wp$data = wp.data,
+    card_edit_select = _wp$data.select,
+    dispatch = _wp$data.dispatch;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
@@ -17564,28 +17563,43 @@ var edit_CardEdit = function CardEdit(props) {
   }))));
 };
 
-var CardWithVisibility = wp.data.withSelect(function (select, props) {
-  var clientId = props.clientId;
-  var parentClientId = select('core/editor').getBlockHierarchyRootClientId(clientId);
-  var parentBlock = select('core/editor').getBlock(parentClientId);
-  var parentBlockAttributes = parentBlock.attributes;
+var withCollectionVisibilityAttributes = card_edit_createHigherOrderComponent(function (BlockListBlock) {
+  return function (props) {
+    if ('novablocks/card' === props.name) {
+      var clientId = props.clientId;
+      var parentClientId = card_edit_select('core/editor').getBlockHierarchyRootClientId(clientId);
+      var parentBlock = card_edit_select('core/editor').getBlock(parentClientId);
+      var parentBlockAttributes = parentBlock.attributes;
 
-  var newProps = card_edit_objectSpread({}, props, {
-    attributes: card_edit_objectSpread({}, props.attributes, {
-      level: parentBlockAttributes.level,
-      contentAlign: parentBlockAttributes.contentAlign,
-      showMedia: parentBlockAttributes.showMedia,
-      showTitle: parentBlockAttributes.showTitle,
-      showSubtitle: parentBlockAttributes.showSubtitle,
-      showDescription: parentBlockAttributes.showDescription,
-      showButtons: parentBlockAttributes.showButtons,
-      showMeta: parentBlockAttributes.showMeta
-    })
-  });
+      var newAttributes = function (_ref2) {
+        var level = _ref2.level,
+            contentAlign = _ref2.contentAlign,
+            showMedia = _ref2.showMedia,
+            showTitle = _ref2.showTitle,
+            showSubtitle = _ref2.showSubtitle,
+            showDescription = _ref2.showDescription,
+            showButtons = _ref2.showButtons,
+            showMeta = _ref2.showMeta;
+        return {
+          level: level,
+          contentAlign: contentAlign,
+          showMedia: showMedia,
+          showTitle: showTitle,
+          showSubtitle: showSubtitle,
+          showDescription: showDescription,
+          showButtons: showButtons,
+          showMeta: showMeta
+        };
+      }(parentBlock.attributes);
 
-  return newProps;
-})(edit_CardEdit);
-/* harmony default export */ var card_edit = (CardWithVisibility);
+      dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
+    }
+
+    return Object(external_React_["createElement"])(BlockListBlock, props);
+  };
+}, 'withCollectionVisibilityAttributes');
+wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes);
+/* harmony default export */ var card_edit = (edit_CardEdit);
 // CONCATENATED MODULE: ./src/blocks/card/index.js
 
 
@@ -17633,9 +17647,9 @@ var cards_collection_inspector_controls_wp$components = wp.components,
 var inspector_controls_wp$blockEditor = wp.blockEditor,
     cards_collection_inspector_controls_InspectorControls = inspector_controls_wp$blockEditor.InspectorControls,
     inspector_controls_AlignmentToolbar = inspector_controls_wp$blockEditor.AlignmentToolbar;
-var _wp$data = wp.data,
-    dispatch = _wp$data.dispatch,
-    inspector_controls_select = _wp$data.select;
+var inspector_controls_wp$data = wp.data,
+    inspector_controls_dispatch = inspector_controls_wp$data.dispatch,
+    inspector_controls_select = inspector_controls_wp$data.select;
 
 var inspector_controls_CardsCollectionInspectorControls = function CardsCollectionInspectorControls(props) {
   var attributes = props.attributes,
@@ -17714,7 +17728,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
       var _select = inspector_controls_select('core/block-editor'),
           getSelectedBlock = _select.getSelectedBlock;
 
-      var _dispatch = dispatch('core/block-editor'),
+      var _dispatch = inspector_controls_dispatch('core/block-editor'),
           updateBlockAttributes = _dispatch.updateBlockAttributes;
 
       getSelectedBlock().innerBlocks.map(function (block) {
@@ -17848,8 +17862,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, showCollectionTitle && Object(external_React_["createElement"])("div", {
-    className: "wp-block",
-    "data-align": "wide"
+    className: "wp-block"
   }, Object(external_React_["createElement"])(editable_text, {
     tagName: "h".concat(level),
     value: title,
@@ -17859,8 +17872,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       });
     }
   })), showCollectionSubtitle && Object(external_React_["createElement"])("div", {
-    className: "wp-block",
-    "data-align": "wide"
+    className: "wp-block"
   }, Object(external_React_["createElement"])(editable_text, {
     tagName: 'p',
     className: 'is-style-lead',
@@ -18008,8 +18020,11 @@ var editor_novaBlocks = /*#__PURE__*/function () {
         blocks_opentable();
       }
 
-      blocks_card();
-      cards_collection();
+      if (supports.indexOf('cards-collection') > -1) {
+        blocks_card();
+        cards_collection();
+      }
+
       blocks_hero();
       blocks_media();
       blocks_slideshow();

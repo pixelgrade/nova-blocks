@@ -77,8 +77,10 @@ class novaBlocks {
 			opentableInit();
 		}
 
-		cardInit();
-		cardsCollectionInit();
+		if ( supports.indexOf('cards-collection') > -1 ) {
+			cardInit();
+			cardsCollectionInit();
+		}
 
 		heroInit();
 		mediaInit();

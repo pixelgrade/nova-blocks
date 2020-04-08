@@ -105,7 +105,7 @@ const CardsCollectionEdit = ( props ) => {
 				<div className="wp-block-group__inner-container">
 					{
 						showCollectionTitle &&
-						<div className="wp-block" data-align="wide">
+						<div className="wp-block">
 							<EditableText
 								tagName={ `h${level}` }
 								value={title}
@@ -117,7 +117,7 @@ const CardsCollectionEdit = ( props ) => {
 					}
 					{
 						showCollectionSubtitle &&
-						<div className="wp-block" data-align="wide">
+						<div className="wp-block">
 							<EditableText
 								tagName={ 'p' }
 								className={ 'is-style-lead' }
