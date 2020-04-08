@@ -1,17 +1,5 @@
-/**
- * WordPress dependencies
- */
+const OpenHoursPreview = function(props) {
 
-const {__} = wp.i18n;
-const {Component} = wp.element;
-
-class OpenHoursPreview extends Component {
-
-	constructor() {
-		super( ...arguments );
-	}
-
-	render() {
 		const {
 			attributes: {
 				text,
@@ -25,27 +13,15 @@ class OpenHoursPreview extends Component {
 				hideClosedDays,
 				useShortName
 			},
-		} = this.props;
+		} = props;
 
 
-		return [
+		return (
 			<wp.serverSideRender
 				block="novablocks/openhours"
-				attributes={{
-					text: text,
-					parsedText: parsedText,
-					openHoursStyle: openHoursStyle,
-					timeFormat: timeFormat,
-					openNote: openNote,
-					closedNote: closedNote,
-					closedLabel: closedLabel,
-					compressOpeningHours: compressOpeningHours,
-					hideClosedDays: hideClosedDays,
-					useShortName: useShortName
-				}}
+				attributes={ props.attributes }
 			/>
-		]
-	}
-}
+		)
+};
 
 export default OpenHoursPreview;

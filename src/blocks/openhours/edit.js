@@ -6,13 +6,13 @@ import InspectorControls from "./inspector-controls";
  */
 const {Fragment} = wp.element;
 
-const OpenHours = function(props) {
+const OpenHours = function( props ) {
 	return (
 		<Fragment>
-			<InspectorControls {...props}/>
-			<OpenHoursPreview {...props}/>
+			<InspectorControls { ...props }/>
+			<OpenHoursPreview { ...props }/>
 		</Fragment>
 	);
-}
+};
 
 export default OpenHours;

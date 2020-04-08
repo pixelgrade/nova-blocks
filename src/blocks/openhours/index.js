@@ -16,10 +16,8 @@ function init() {
 		description: __('Display Opening Hours for any kind of venue.', '__plugin_txtd'),
 		category: 'nova-blocks',
 		icon: icons.openhours,
+		save: function() {},
 		edit,
-		save() {
-			return null;
-		},
 	})
 }
 
