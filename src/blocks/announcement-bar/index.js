@@ -3,6 +3,7 @@
  */
 import * as icons from '../../icons';
 import classnames from "classnames";
+import deprecated from './deprecated';
 
 /**
  * WordPress dependencies
@@ -17,9 +18,12 @@ const {
 } = wp.components;
 
 const {
-	RichText,
 	URLInput,
+	InnerBlocks
 } = wp.blockEditor;
+
+const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
+const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
 
 function init() {
 
@@ -58,15 +62,17 @@ function init() {
 				default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
 			}
 		},
-		save: function() {},
+		save() {
+			return <InnerBlocks.Content />;
+		},
 		edit: function( props ) {
 
 			const {
 				className,
 				attributes: {
-					content,
 					url,
-					opensInNewTab
+					opensInNewTab,
+					content
 				},
 				setAttributes,
 				isSelected,
@@ -81,14 +87,9 @@ function init() {
 			return (
 				<Fragment>
 					<div className={ classNames }>
-						<RichText
-							tagName="p"
-							className="novablocks-announcement-bar__content"
-							value={ content }
-							onChange={ content => {
-								setAttributes( { content } );
-							} }
-							allowedFormats={ ['core/link', 'core/bold', 'core/italic'] }
+						<InnerBlocks
+							allowedBlocks={ ALLOWED_BLOCKS }
+							template ={ANNOUNCEMENT_BAR_TEMPLATE}
 						/>
 					</div>
 					{ isSelected &&
@@ -121,6 +122,7 @@ function init() {
 		getEditWrapperProps( attributes ) {
 			return { 'data-align': 'full' };
 		},
+		deprecated
 	} );
 }
 

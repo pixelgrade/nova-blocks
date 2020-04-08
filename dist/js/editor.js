@@ -214,27 +214,6 @@ module.exports = _createClass;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _defineProperty; });
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -255,7 +234,82 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(35);
+
+var assertThisInitialized = __webpack_require__(22);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(47);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _defineProperty; });
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+/***/ }),
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -298,60 +352,6 @@ function _objectWithoutProperties(source, excluded) {
 
   return target;
 }
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(34);
-
-var assertThisInitialized = __webpack_require__(22);
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-module.exports = _possibleConstructorReturn;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-module.exports = _getPrototypeOf;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var setPrototypeOf = __webpack_require__(47);
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-module.exports = _inherits;
 
 /***/ }),
 /* 13 */
@@ -407,7 +407,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _possibleConstructorReturn; });
-/* harmony import */ var _helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(26);
+/* harmony import */ var _helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
 /* harmony import */ var _assertThisInitialized__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 
 
@@ -543,7 +543,7 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding *
 // UNUSED EXPORTS: BACKSPACE, ENTER, SPACE, DELETE, F10, ALT, CTRL, COMMAND, SHIFT, modifiers, rawShortcut, displayShortcutList, displayShortcut, shortcutAriaLabel, isKeyboardEvent
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var defineProperty = __webpack_require__(7);
+var defineProperty = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
 var toConsumableArray = __webpack_require__(20);
@@ -1060,7 +1060,7 @@ var memize = __webpack_require__(45);
 var memize_default = /*#__PURE__*/__webpack_require__.n(memize);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/i18n/node_modules/sprintf-js/src/sprintf.js
-var sprintf = __webpack_require__(35);
+var sprintf = __webpack_require__(36);
 var sprintf_default = /*#__PURE__*/__webpack_require__.n(sprintf);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/i18n/build-module/index.js
@@ -2239,6 +2239,22 @@ function deprecated(feature) {
 
 /***/ }),
 /* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(52);
+
+var iterableToArrayLimit = __webpack_require__(53);
+
+var nonIterableRest = __webpack_require__(54);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+
+/***/ }),
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2260,16 +2276,32 @@ function _typeof(obj) {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = jQuery;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(48);
+var arrayWithoutHoles = __webpack_require__(48);
+
+var iterableToArray = __webpack_require__(49);
+
+var nonIterableSpread = __webpack_require__(50);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(51);
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -2293,23 +2325,7 @@ function _objectWithoutProperties(source, excluded) {
 module.exports = _objectWithoutProperties;
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithHoles = __webpack_require__(49);
-
-var iterableToArrayLimit = __webpack_require__(50);
-
-var nonIterableRest = __webpack_require__(51);
-
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
-}
-
-module.exports = _slicedToArray;
-
-/***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2354,16 +2370,16 @@ module.exports.isShallowEqualArrays = isShallowEqualArrays;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
 /* harmony import */ var reakit_Toolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(79);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
+/* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(37);
 /* harmony import */ var _toolbar_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24);
 
 
@@ -2413,11 +2429,11 @@ function ToolbarItem(_ref, ref) {
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["forwardRef"])(ToolbarItem));
 //# sourceMappingURL=index.js.map
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(42)))
 
 /***/ }),
-/* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports) {
 
 /**
@@ -2454,7 +2470,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -2476,7 +2492,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
@@ -2714,7 +2730,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2757,10 +2773,10 @@ function warning(message) {
   }
 }
 //# sourceMappingURL=index.js.map
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(41)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(42)))
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -2770,11 +2786,11 @@ function _readOnlyError(name) {
 module.exports = _readOnlyError;
 
 /***/ }),
-/* 38 */,
-/* 39 */
+/* 39 */,
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(40),
+var Symbol = __webpack_require__(41),
     getRawTag = __webpack_require__(64),
     objectToString = __webpack_require__(65);
 
@@ -2805,7 +2821,7 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(61);
@@ -2817,7 +2833,7 @@ module.exports = Symbol;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -3005,22 +3021,6 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithoutHoles = __webpack_require__(52);
-
-var iterableToArray = __webpack_require__(53);
-
-var nonIterableSpread = __webpack_require__(54);
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
 
 /***/ }),
 /* 43 */
@@ -3271,6 +3271,42 @@ module.exports = _setPrototypeOf;
 /* 48 */
 /***/ (function(module, exports) {
 
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -3289,7 +3325,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 module.exports = _objectWithoutPropertiesLoose;
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -3299,7 +3335,7 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -3335,7 +3371,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -3343,42 +3379,6 @@ function _nonIterableRest() {
 }
 
 module.exports = _nonIterableRest;
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports) {
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-
-module.exports = _arrayWithoutHoles;
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports) {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-module.exports = _nonIterableSpread;
 
 /***/ }),
 /* 55 */
@@ -3457,7 +3457,7 @@ module.exports = baseRange;
 var eq = __webpack_require__(58),
     isArrayLike = __webpack_require__(59),
     isIndex = __webpack_require__(67),
-    isObject = __webpack_require__(33);
+    isObject = __webpack_require__(34);
 
 /**
  * Checks if the given arguments are from an iteratee call.
@@ -3572,8 +3572,8 @@ module.exports = isArrayLike;
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(39),
-    isObject = __webpack_require__(33);
+var baseGetTag = __webpack_require__(40),
+    isObject = __webpack_require__(34);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -3667,7 +3667,7 @@ module.exports = g;
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(40);
+var Symbol = __webpack_require__(41);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3867,7 +3867,7 @@ module.exports = toFinite;
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(33),
+var isObject = __webpack_require__(34),
     isSymbol = __webpack_require__(70);
 
 /** Used as references for various `Number` constants. */
@@ -3939,7 +3939,7 @@ module.exports = toNumber;
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(39),
+var baseGetTag = __webpack_require__(40),
     isObjectLike = __webpack_require__(71);
 
 /** `Object#toString` result references. */
@@ -4569,7 +4569,7 @@ __webpack_require__.d(tabbable_namespaceObject, "findPrevious", function() { ret
 __webpack_require__.d(tabbable_namespaceObject, "findNext", function() { return findNext; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(34);
+var helpers_typeof = __webpack_require__(35);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -4581,15 +4581,15 @@ var createClass = __webpack_require__(6);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(10);
+var possibleConstructorReturn = __webpack_require__(8);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(11);
+var getPrototypeOf = __webpack_require__(9);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(12);
+var inherits = __webpack_require__(10);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: external "React"
@@ -4834,7 +4834,7 @@ function addFontSizeAttribute(block) {
 
 with_font_size_picker_addFilter('blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(8);
+var defineProperty = __webpack_require__(7);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./src/store/reducer.js
@@ -4999,6 +4999,331 @@ function addEmphasisLevelAttribute(block) {
 }
 
 with_emphasis_level_addFilter('blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addEmphasisLevelAttribute);
+// CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
+// Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
+var fourSq = fourSq || {};
+fourSq.util = fourSq.util || {};
+fourSq.util.Hours = {
+  /**
+   * Pads times to be HHMM
+   * @param {string} text
+   * @return {string}
+   */
+  padTimes: function padTimes(text) {
+    // Add leading/trailing zeros to times so it's always 4 digits, like 0800
+    // Have to run each twice because they're pivoting around the separator
+    // i.e. x10-12x first matches "x10-" and doesn't match the rest
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    return text;
+  },
+
+  /**
+   * @param {Array.<number>} days
+   * @param {number} startMinutes
+   * @param {number} endMinutes
+   */
+  toTimeframe: function toTimeframe(days, startMinutes, endMinutes) {
+    // If we've day wrapped and end before 4am, push the ending value up 24 hours.
+    if (startMinutes >= endMinutes && endMinutes <= 240) {
+      endMinutes += 1440;
+    }
+
+    var startFormatted = fourSq.util.Hours.formatMinutes(startMinutes);
+    var endFormatted = fourSq.util.Hours.formatMinutes(endMinutes);
+    return (
+      /** @type {fourSq.api.models.hours.MachineTimeframe} */
+      {
+        days: days,
+        open: [
+        /** @type {fourSq.api.models.hours.MachineSegment} */
+        {
+          start: startFormatted,
+          end: endFormatted
+        }]
+      }
+    );
+  },
+
+  /**
+   * @param {number} minutes after minute
+   * @return {string} the hhmm format that API takes for the input hours
+   */
+  formatMinutes: function formatMinutes(minutes) {
+    var hh = Math.floor(minutes / 60);
+    var mm = minutes % 60;
+    var intoNextDay = hh % 24 !== hh;
+    hh = hh % 24;
+
+    if (hh % 10 === hh) {
+      hh = '0' + hh;
+    }
+
+    if (intoNextDay) {
+      hh = '+' + hh;
+    }
+
+    if (mm % 10 === mm) {
+      mm = '0' + mm;
+    }
+
+    return hh + '' + mm;
+  },
+
+  /**
+   * @param {string} hoursText
+   * @param {(string|undefined)} minutesText
+   * @param {(string|undefined)} meridiem
+   * @return {number}
+   */
+  minutesAfterMidnight: function minutesAfterMidnight(hoursText, minutesText, meridiem) {
+    var hours = parseInt(hoursText, 10);
+    var minutes = minutesText !== undefined ? parseInt(minutesText, 10) : 0;
+
+    if (hours === 12 && meridiem) {
+      hours -= 12;
+    }
+
+    if (meridiem && meridiem[0] === 'p') {
+      hours += 12;
+    }
+
+    return hours * 60 + minutes;
+  }
+};
+fourSq.util.HoursParser = {
+  /**
+   * @return {fourSq.api.models.hours.MachineHours}
+   */
+  parse: function parse(text) {
+    text = text.toLowerCase(); // Normalize new lines to ';'
+
+    text = text.replace(/\n/g, ' ; '); // Massage times
+    // TODO(ss): translate and do weekend/weekday subs
+
+    text = text.replace(/(12|12:00)?midnight/g, '1200a');
+    text = text.replace(/(12|12:00)?noon/g, '1200p');
+    text = text.replace(/(open)?\s*24\s*hours?/g, '1200a-1200a'); // Standardize conjunctions to '&'
+
+    text = text.replace(/\s*(and|,|\+|&)\s*/g, '&'); // Standardize range tokens to '-'
+
+    text = text.replace(/\s*(-|to|thru|through|till?|'till?|until)\s*/g, '-'); // Standardize am/pm
+
+    text = text.replace(/\s*a\.?m?\.?/g, 'a');
+    text = text.replace(/\s*p\.?m?\.?/g, 'p'); // Not sure this happens, but add trailing zeros to things like 5:3pm
+
+    text = text.replace(/([0-9])(h|:|\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...
+    // if they both have separators
+
+    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5'); // if only the start time has a separator
+
+    text = text.replace(/([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator
+    //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$2$3$5');
+
+    text = fourSq.util.Hours.padTimes(text); // Massage days
+
+    var dayCanonicals = _.map(_.range(1, 8), function (dayI) {
+      var allNames = fourSq.util.HoursParser.dayAliases(dayI);
+
+      var canonical = _.head(allNames); // Shortest is at the front
+
+
+      var aliases = _.tail(allNames);
+
+      aliases.reverse(); // Need to have the largest alias first for replacing
+
+      if (canonical && aliases) {
+        _.each(aliases, function (alias) {
+          text = text.replace(new RegExp(alias, 'g'), canonical);
+        });
+      }
+
+      return canonical;
+    });
+
+    var dayPattern = '(' + dayCanonicals.join('|') + ')';
+    var timePattern = '([0-9][0-9])([0-9][0-9])\\s*([ap])?';
+    var globTimePattern = '[0-9]{4}\\s*[ap]?';
+    var globTimeRangePattern = '(' + globTimePattern + '[^0-9]+' + globTimePattern + ')'; // Need to establish whether days come before times (forward) or not (backward)
+
+    var forwardTimeframePattern = dayPattern + '.*?' + globTimeRangePattern;
+    var backwardTimeframePattern = globTimeRangePattern + '.*?' + dayPattern;
+    var forwardPosition = text.search(new RegExp(forwardTimeframePattern));
+    var backwardPosition = text.search(new RegExp(backwardTimeframePattern)); // If a forward pattern is found first, consider it a forward facing text
+
+    var isForward = forwardPosition !== -1 && forwardPosition <= backwardPosition || backwardPosition === -1; // TODO(ss): may be better to normalize the string to be forward facing at this point
+    //           so the rest of the method would be easier to grok
+    // Separate out something like Mon-Thu, Sat, Sun
+
+    if (isForward) {
+      var ungroupedPattern = dayPattern + '&' + dayPattern + '[^&]*?' + globTimeRangePattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $3; $2 $3; ');
+      }
+    } else {
+      var ungroupedPattern = globTimeRangePattern + '([^0-9]*?)' + dayPattern + '&' + dayPattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $2 $3; $1 $4; ');
+      }
+    }
+
+    var dayRangePattern = dayPattern + '[^a-z0-9]*' + dayPattern + '?';
+    var timeRangePattern = timePattern + '[^0-9]*' + timePattern;
+    var timeframePattern = isForward ? dayRangePattern + '.*?' + timeRangePattern : timeRangePattern + '.*?' + dayRangePattern;
+    var dayTimeMatcher = new RegExp(timeframePattern, 'g');
+    var matches = [];
+
+    do {
+      var dayTimeMatch = dayTimeMatcher.exec(text);
+
+      if (dayTimeMatch) {
+        matches.push(dayTimeMatch);
+      }
+    } while (dayTimeMatch);
+
+    if (matches.length <= 0) {
+      // Try to find just a time range, and then we'll assume it's all days later on.
+      // First two groups are strings that won't match, to get undefined values
+      // in those slots in the regex match array.
+      var timeRangeMatcher = new RegExp('(@!ZfW#)?(@!ZfW#)?' + timeRangePattern);
+      var timeRangeMatch = timeRangeMatcher.exec(text);
+
+      if (timeRangeMatch) {
+        matches.push(timeRangeMatch);
+      }
+    }
+
+    var timeframes = _.map(matches, function (match) {
+      // day slots in the regex match array
+      var day1 = isForward ? match[1] : match[7];
+      var day2 = isForward ? match[2] : match[8];
+      var startDay = day1 !== undefined ? dayCanonicals.indexOf(day1) : 0;
+      var endDay = null;
+
+      if (day2 !== undefined) {
+        if (day1 === undefined) {
+          startDay = dayCanonicals.indexOf(day2);
+        } else {
+          endDay = dayCanonicals.indexOf(day2);
+        }
+      } else if (day1 === undefined) {
+        // If start and end days were undefined, assume 7 days a week
+        endDay = 7;
+      }
+
+      if (endDay === null) {
+        endDay = startDay;
+      }
+
+      if (endDay < startDay) {
+        // For case where: Sun-Tue (we start on Monday)
+        endDay += 7;
+      }
+
+      var days = _.map(_.range(startDay, endDay + 1), function (day) {
+        // Days start at 1 for Monday
+        return day % 7 + 1;
+      }); // time slots in the regex match array
+
+
+      var startHour = isForward ? match[3] : match[1];
+      var startMinute = isForward ? match[4] : match[2];
+      var startMeridiem = isForward ? match[5] : match[3];
+      var endHour = isForward ? match[6] : match[4];
+      var endMinute = isForward ? match[7] : match[5];
+      var endMeridiem = isForward ? match[8] : match[6]; // TODO(ss): hint the meridiem based on endHour < startHour and > 4
+
+      var startTime = fourSq.util.Hours.minutesAfterMidnight(startHour, startMinute, startMeridiem);
+      var endTime = fourSq.util.Hours.minutesAfterMidnight(endHour, endMinute, endMeridiem);
+      return fourSq.util.Hours.toTimeframe(days, startTime, endTime);
+    });
+
+    if (timeframes.length) {
+      return (
+        /** @type {fourSq.api.models.hours.MachineHours} */
+        {
+          timeframes: timeframes
+        }
+      );
+    } else {
+      return null;
+    }
+  },
+
+  /**
+   * @param {number} day starting at 1 for monday
+   * @return {Array.<string>} all aliases of the day, sorted by length
+   */
+  dayAliases: function dayAliases(day) {
+    var text = '';
+    var aliases = '';
+
+    switch (day) {
+      case 1:
+        aliases = ['mondays', 'monday', 'monda', 'mond', 'mon', 'mo', 'm'];
+        break;
+
+      case 2:
+        aliases = ['tuesdays', 'tuesday', 'tuesd', 'tues', 'tue', 'tu'];
+        break;
+
+      case 3:
+        aliases = ['wednesdays', 'wednesday', 'wednes', 'wedne', 'wedn', 'wed', 'we', 'w'];
+        break;
+
+      case 4:
+        aliases = ['thursdays', 'thursday', 'thurs', 'thur', 'thu', 'th'];
+        break;
+
+      case 5:
+        aliases = ['fridays', 'friday', 'frida', 'frid', 'fri', 'fr', 'f'];
+        break;
+
+      case 6:
+        aliases = ['saturdays', 'saturday', 'satur', 'satu', 'sat', 'sa'];
+        break;
+
+      case 7:
+        aliases = ['sundays', 'sunday', 'sunda', 'sund', 'sun', 'su'];
+        break;
+
+      default:
+        return [];
+    }
+
+    return _.sortBy(aliases, function (alias) {
+      return alias.length;
+    });
+  }
+}; // Remove the days in which the business is closed. The parser doesn't need those days anyways.
+
+function removeClosedDays(schedule) {
+  var hoursString = '';
+  var lines = schedule.split('\n');
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].includes('closed') || lines[i].includes('Closed') || !lines[i].match(/\d+/g)) {// don't add it to the list
+    } else {
+      hoursString += lines[i] + '\n';
+    }
+  }
+
+  return hoursString;
+}
+
+var parseContent = function parseContent(currentValue) {
+  currentValue = removeClosedDays(currentValue);
+  var hours = fourSq.util.HoursParser.parse(currentValue);
+  return JSON.stringify(hours);
+};
 // CONCATENATED MODULE: ./src/blocks/core/separator/index.js
 
 
@@ -5347,6 +5672,24 @@ var navigation = Object(external_React_["createElement"])("svg", {
   d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
   fill: "#6565F2"
 }));
+var openhours = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("g", {
+  clipPath: "url(#clip0)"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("defs", null, Object(external_React_["createElement"])("clipPath", {
+  id: "clip0"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#fff",
+  d: "M0 0h24v24H0z"
+}))));
 var placeholder = Object(external_React_["createElement"])("svg", {
   width: "100",
   height: "67",
@@ -5379,12 +5722,60 @@ var card = Object(external_React_["createElement"])("svg", {
   d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
   fill: "#6565F2"
 }));
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(29);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// CONCATENATED MODULE: ./src/blocks/announcement-bar/deprecated.js
+
+
+
+function deprecated_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var _lodash = lodash,
+    omit = _lodash.omit;
+var createBlock = wp.blocks.createBlock;
+var blockAttributes = {
+  align: {
+    type: 'string',
+    default: 'full'
+  },
+  url: {
+    type: 'string',
+    default: ''
+  },
+  opensInNewTab: {
+    type: 'boolean',
+    default: false
+  }
+};
+var deprecated = [{
+  isEligible: function isEligible(attributes, innerBlocks) {
+    return typeof attributes.content !== 'undefined' && !innerBlocks.length;
+  },
+  attributes: deprecated_objectSpread({
+    content: {
+      type: 'string',
+      default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.'
+    }
+  }, blockAttributes),
+  migrate: function migrate(attributes, innerBlocks) {
+    return [omit(attributes, 'content'), [createBlock('core/paragraph', {
+      content: attributes.content
+    })].concat(toConsumableArray_default()(innerBlocks))];
+  },
+  save: function save() {}
+}];
+/* harmony default export */ var announcement_bar_deprecated = (deprecated);
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/index.js
 
 
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -5398,8 +5789,12 @@ var announcement_bar_wp$components = wp.components,
     BaseControl = announcement_bar_wp$components.BaseControl,
     ToggleControl = announcement_bar_wp$components.ToggleControl;
 var _wp$blockEditor = wp.blockEditor,
-    RichText = _wp$blockEditor.RichText,
-    URLInput = _wp$blockEditor.URLInput;
+    URLInput = _wp$blockEditor.URLInput,
+    InnerBlocks = _wp$blockEditor.InnerBlocks;
+var ALLOWED_BLOCKS = ['novablocks/openhours', 'core/paragraph'];
+var ANNOUNCEMENT_BAR_TEMPLATE = [['novablocks/openhours', {
+  openHoursStyle: 'status'
+}]];
 
 function init() {
   registerBlockType('novablocks/announcement-bar', {
@@ -5437,28 +5832,23 @@ function init() {
         default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.'
       }
     },
-    save: function save() {},
+    save: function save() {
+      return Object(external_React_["createElement"])(InnerBlocks.Content, null);
+    },
     edit: function edit(props) {
       var className = props.className,
           _props$attributes = props.attributes,
-          content = _props$attributes.content,
           url = _props$attributes.url,
           opensInNewTab = _props$attributes.opensInNewTab,
+          content = _props$attributes.content,
           setAttributes = props.setAttributes,
           isSelected = props.isSelected;
       var classNames = classnames_default()(className, 'novablocks-announcement-bar');
       return Object(external_React_["createElement"])(announcement_bar_Fragment, null, Object(external_React_["createElement"])("div", {
         className: classNames
-      }, Object(external_React_["createElement"])(RichText, {
-        tagName: "p",
-        className: "novablocks-announcement-bar__content",
-        value: content,
-        onChange: function onChange(content) {
-          setAttributes({
-            content: content
-          });
-        },
-        allowedFormats: ['core/link', 'core/bold', 'core/italic']
+      }, Object(external_React_["createElement"])(InnerBlocks, {
+        allowedBlocks: ALLOWED_BLOCKS,
+        template: ANNOUNCEMENT_BAR_TEMPLATE
       })), isSelected && Object(external_React_["createElement"])("div", {
         className: "novablocks-announcement-bar__url-field-wrapper"
       }, Object(external_React_["createElement"])(BaseControl, {
@@ -5490,7 +5880,8 @@ function init() {
       return {
         'data-align': 'full'
       };
-    }
+    },
+    deprecated: announcement_bar_deprecated
   });
 }
 
@@ -5587,11 +5978,11 @@ var placeholder_MapPlaceholder = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ var google_map_placeholder = (placeholder_MapPlaceholder);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(28);
+var objectWithoutProperties = __webpack_require__(30);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(29);
+var slicedToArray = __webpack_require__(26);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // CONCATENATED MODULE: ./src/blocks/google-map/pin.js
@@ -6039,16 +6430,12 @@ function PositionIndicatorsPanel(props) {
 }
 
 /* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(42);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
 var objectDestructuringEmpty = __webpack_require__(43);
 var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(27);
+var external_jQuery_ = __webpack_require__(28);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
@@ -6851,7 +7238,7 @@ var range_default = /*#__PURE__*/__webpack_require__.n(lodash_range);
 var esm_extends = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js + 1 modules
-var esm_objectWithoutProperties = __webpack_require__(9);
+var esm_objectWithoutProperties = __webpack_require__(12);
 
 // EXTERNAL MODULE: external "lodash"
 var external_lodash_ = __webpack_require__(2);
@@ -6875,7 +7262,7 @@ var esm_getPrototypeOf = __webpack_require__(17);
 var esm_inherits = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var esm_defineProperty = __webpack_require__(7);
+var esm_defineProperty = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react.js
 
@@ -9287,7 +9674,7 @@ var utils_isEmptyElement = function isEmptyElement(element) {
 };
 //# sourceMappingURL=utils.js.map
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(26);
+var esm_typeof = __webpack_require__(27);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/build-module/slot-fill/bubbles-virtually/slot-fill-provider.js
 
@@ -9805,7 +10192,7 @@ var fill_Fill = function Fill(props) {
 /* harmony default export */ var slot_fill_fill = (fill_Fill);
 //# sourceMappingURL=fill.js.map
 // EXTERNAL MODULE: ./node_modules/@wordpress/is-shallow-equal/index.js
-var is_shallow_equal = __webpack_require__(30);
+var is_shallow_equal = __webpack_require__(31);
 var is_shallow_equal_default = /*#__PURE__*/__webpack_require__.n(is_shallow_equal);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/build-module/slot-fill/bubbles-virtually/slot.js
@@ -12224,7 +12611,7 @@ function button_Button(props, ref) {
 /* harmony default export */ var build_module_button = (Object(external_React_["forwardRef"])(button_Button));
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/build-module/toolbar-item/index.js
-var toolbar_item = __webpack_require__(31);
+var toolbar_item = __webpack_require__(32);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/build-module/toolbar-context/index.js
 var toolbar_context = __webpack_require__(24);
@@ -13132,7 +13519,7 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ var heading_toolbar = (heading_toolbar_HeadingToolbar);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(37);
+var readOnlyError = __webpack_require__(38);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js
@@ -15005,7 +15392,7 @@ var header_edit_wp$components = wp.components,
     edit_IconButton = header_edit_wp$components.IconButton;
 var header_edit_wp$blockEditor = wp.blockEditor,
     edit_BlockControls = header_edit_wp$blockEditor.BlockControls,
-    InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
+    edit_InnerBlocks = header_edit_wp$blockEditor.InnerBlocks;
 var TEMPLATE_OPTIONS = [{
   title: header_edit_('Logo on the left side and one navigation menu', '__plugin_txtd'),
   name: 'logo-left',
@@ -15063,7 +15450,7 @@ function header_edit_Edit(props) {
     icon: "edit"
   }))), Object(external_React_["createElement"])("div", {
     className: classNames
-  }, Object(external_React_["createElement"])(InnerBlocks, {
+  }, Object(external_React_["createElement"])(edit_InnerBlocks, {
     __experimentalTemplateOptions: TEMPLATE_OPTIONS,
     __experimentalOnSelectTemplateOption: function __experimentalOnSelectTemplateOption(nextTemplate) {
       applyTemplate(nextTemplate);
@@ -15120,7 +15507,7 @@ var headline_edit_Fragment = wp.element.Fragment;
  */
 
 var headline_edit_wp$blockEditor = wp.blockEditor,
-    edit_RichText = headline_edit_wp$blockEditor.RichText,
+    RichText = headline_edit_wp$blockEditor.RichText,
     edit_AlignmentToolbar = headline_edit_wp$blockEditor.AlignmentToolbar,
     headline_edit_BlockControls = headline_edit_wp$blockEditor.BlockControls,
     edit_InspectorControls = headline_edit_wp$blockEditor.InspectorControls;
@@ -15164,7 +15551,7 @@ function HeadlineEdit(props) {
     }
   }))), Object(external_React_["createElement"])(TagName, {
     className: classnames_default()(className, 'c-headline', defineProperty_default()({}, "has-text-align-".concat(align), align))
-  }, Object(external_React_["createElement"])(edit_RichText, {
+  }, Object(external_React_["createElement"])(RichText, {
     className: "c-headline__secondary",
     identifier: "secondary",
     tagName: "span",
@@ -15177,7 +15564,7 @@ function HeadlineEdit(props) {
     placeholder: headline_edit_('Subtitle…', '__plugin_txtd'),
     keepPlaceholderOnFocus: true,
     allowedFormats: []
-  }), Object(external_React_["createElement"])(edit_RichText, {
+  }), Object(external_React_["createElement"])(RichText, {
     className: "c-headline__primary",
     identifier: "primary",
     tagName: "span",
@@ -16515,9 +16902,9 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
 
 var preview_ = wp.i18n.__;
 var menu_food_preview_InnerBlocks = wp.blockEditor.InnerBlocks;
-var createBlock = wp.blocks.createBlock;
+var preview_createBlock = wp.blocks.createBlock;
 var preview_IconButton = wp.components.IconButton;
-var ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
+var preview_ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 var TEMPLATE = [['novablocks/menu-food-section', {
   sectionTitle: 'Starters'
 }, [['novablocks/menu-food-item', {
@@ -16590,7 +16977,7 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
       className = props.className;
 
   var addFoodMenuSection = function addFoodMenuSection() {
-    var block = createBlock('novablocks/menu-food-section');
+    var block = preview_createBlock('novablocks/menu-food-section');
     var index = wp.data.select('core/block-editor').getBlocksByClientId(clientId)[0].innerBlocks.length;
     wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
   };
@@ -16601,7 +16988,7 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
   return Object(external_React_["createElement"])("div", {
     className: classNames
   }, Object(external_React_["createElement"])(menu_food_preview_InnerBlocks, {
-    allowedBlocks: ALLOWED_BLOCKS,
+    allowedBlocks: preview_ALLOWED_BLOCKS,
     template: TEMPLATE,
     renderAppender: false
   }), Object(external_React_["createElement"])(preview_IconButton, {
@@ -16725,13 +17112,13 @@ var menu_food_section_preview_ = wp.i18n.__;
 var menu_food_section_preview_wp$blockEditor = wp.blockEditor,
     menu_food_section_preview_InnerBlocks = menu_food_section_preview_wp$blockEditor.InnerBlocks,
     preview_RichText = menu_food_section_preview_wp$blockEditor.RichText;
-var preview_createBlock = wp.blocks.createBlock;
+var menu_food_section_preview_createBlock = wp.blocks.createBlock;
 var menu_food_section_preview_IconButton = wp.components.IconButton;
 /**
  * Internal dependencies.
  */
 
-var preview_ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
+var menu_food_section_preview_ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
 var preview_TEMPLATE = [['novablocks/menu-food-item']];
 
 var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
@@ -16741,7 +17128,7 @@ var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
       className = props.className;
 
   var addFoodMenuItem = function addFoodMenuItem() {
-    var block = preview_createBlock('novablocks/menu-food-item');
+    var block = menu_food_section_preview_createBlock('novablocks/menu-food-item');
     var index = wp.data.select('core/block-editor').getBlocksByClientId(clientId)[0].innerBlocks.length;
     wp.data.dispatch('core/block-editor').insertBlock(block, index, clientId);
   };
@@ -16763,7 +17150,7 @@ var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
   })), Object(external_React_["createElement"])("div", {
     className: "nova-food-menu__items"
   }, Object(external_React_["createElement"])(menu_food_section_preview_InnerBlocks, {
-    allowedBlocks: preview_ALLOWED_BLOCKS,
+    allowedBlocks: menu_food_section_preview_ALLOWED_BLOCKS,
     template: preview_TEMPLATE,
     renderAppender: false
   })), Object(external_React_["createElement"])(menu_food_section_preview_IconButton, {
@@ -17409,6 +17796,279 @@ function opentable_init() {
 }
 
 /* harmony default export */ var blocks_opentable = (opentable_init);
+// CONCATENATED MODULE: ./src/blocks/openhours/preview.js
+
+
+
+
+
+
+
+/**
+ * WordPress dependencies
+ */
+var openhours_preview_ = wp.i18n.__;
+var openhours_preview_Component = wp.element.Component;
+
+var preview_OpenHoursPreview = /*#__PURE__*/function (_Component) {
+  inherits_default()(OpenHoursPreview, _Component);
+
+  function OpenHoursPreview() {
+    classCallCheck_default()(this, OpenHoursPreview);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(OpenHoursPreview).apply(this, arguments));
+  }
+
+  createClass_default()(OpenHoursPreview, [{
+    key: "render",
+    value: function render() {
+      var _this$props$attribute = this.props.attributes,
+          text = _this$props$attribute.text,
+          parsedText = _this$props$attribute.parsedText,
+          openHoursStyle = _this$props$attribute.openHoursStyle,
+          timeFormat = _this$props$attribute.timeFormat,
+          openNote = _this$props$attribute.openNote,
+          closedNote = _this$props$attribute.closedNote,
+          closedLabel = _this$props$attribute.closedLabel,
+          compressOpeningHours = _this$props$attribute.compressOpeningHours,
+          hideClosedDays = _this$props$attribute.hideClosedDays,
+          useShortName = _this$props$attribute.useShortName;
+      return [Object(external_React_["createElement"])(wp.serverSideRender, {
+        block: "novablocks/openhours",
+        attributes: {
+          text: text,
+          parsedText: parsedText,
+          openHoursStyle: openHoursStyle,
+          timeFormat: timeFormat,
+          openNote: openNote,
+          closedNote: closedNote,
+          closedLabel: closedLabel,
+          compressOpeningHours: compressOpeningHours,
+          hideClosedDays: hideClosedDays,
+          useShortName: useShortName
+        }
+      })];
+    }
+  }]);
+
+  return OpenHoursPreview;
+}(openhours_preview_Component);
+
+/* harmony default export */ var openhours_preview = (preview_OpenHoursPreview);
+// CONCATENATED MODULE: ./src/blocks/openhours/inspector-controls.js
+
+
+
+/**
+ * WordPress dependencies
+ */
+var inspector_controls_wp$element = wp.element,
+    openhours_inspector_controls_Fragment = inspector_controls_wp$element.Fragment,
+    inspector_controls_useState = inspector_controls_wp$element.useState;
+var openhours_inspector_controls_ = wp.i18n.__;
+
+var openhours_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var openhours_inspector_controls_wp$components = wp.components,
+    openhours_inspector_controls_PanelBody = openhours_inspector_controls_wp$components.PanelBody,
+    openhours_inspector_controls_RadioControl = openhours_inspector_controls_wp$components.RadioControl,
+    openhours_inspector_controls_TextControl = openhours_inspector_controls_wp$components.TextControl,
+    TextareaControl = openhours_inspector_controls_wp$components.TextareaControl,
+    openhours_inspector_controls_ToggleControl = openhours_inspector_controls_wp$components.ToggleControl,
+    Modal = openhours_inspector_controls_wp$components.Modal,
+    inspector_controls_Button = openhours_inspector_controls_wp$components.Button,
+    ExternalLink = openhours_inspector_controls_wp$components.ExternalLink;
+
+var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorControls(props) {
+  var _props$attributes = props.attributes,
+      openHoursStyle = _props$attributes.openHoursStyle,
+      text = _props$attributes.text,
+      parsedText = _props$attributes.parsedText,
+      timeFormat = _props$attributes.timeFormat,
+      openNote = _props$attributes.openNote,
+      closedNote = _props$attributes.closedNote,
+      closedLabel = _props$attributes.closedLabel,
+      compressOpeningHours = _props$attributes.compressOpeningHours,
+      hideClosedDays = _props$attributes.hideClosedDays,
+      useShortName = _props$attributes.useShortName,
+      setAttributes = props.setAttributes;
+  var timeFormattingUrl = 'https://wordpress.org/support/article/formatting-date-and-time/';
+
+  var AvailableTagsModal = function AvailableTagsModal() {
+    var _useState = inspector_controls_useState(false),
+        _useState2 = slicedToArray_default()(_useState, 2),
+        isOpen = _useState2[0],
+        setOpen = _useState2[1];
+
+    var openModal = function openModal() {
+      return setOpen(true);
+    };
+
+    var closeModal = function closeModal() {
+      return setOpen(false);
+    };
+
+    return Object(external_React_["createElement"])(openhours_inspector_controls_Fragment, null, Object(external_React_["createElement"])(inspector_controls_Button, {
+      className: 'novablocks__label',
+      isLink: true,
+      onClick: openModal
+    }, "See available tags"), isOpen && Object(external_React_["createElement"])(Modal, {
+      onRequestClose: closeModal,
+      shouldCloseOnEsc: true,
+      shouldCloseOnClickOutside: true,
+      className: "novablocks-openhours__modal"
+    }));
+  };
+
+  var timeFormattingInstructions = Object(external_React_["createElement"])(openhours_inspector_controls_Fragment, null, Object(external_React_["createElement"])(ExternalLink, {
+    href: timeFormattingUrl
+  }, openhours_inspector_controls_('Learn more about time formatting', '__plugin_txtd')));
+  return Object(external_React_["createElement"])(openhours_inspector_controls_Fragment, null, Object(external_React_["createElement"])(openhours_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(openhours_inspector_controls_PanelBody, {
+    title: openhours_inspector_controls_('Setup', '__plugin_txtd'),
+    initialOpen: true
+  }, Object(external_React_["createElement"])(TextareaControl, {
+    label: "Write your opening hours in a simple human readable format",
+    value: text,
+    className: "original-text",
+    onChange: function onChange(text) {
+      return setAttributes({
+        text: text,
+        parsedText: parseContent(text)
+      });
+    }
+  }), Object(external_React_["createElement"])("div", {
+    className: "components-base-control__label novablocks__label novablocks__example novablocks__example--multi"
+  }, openhours_inspector_controls_('Monday 10am - 3pm\n' + 'Tuesday to Friday 9 - 17\n' + 'Sat noon - 2am', '__plugin_txtd'))), Object(external_React_["createElement"])(openhours_inspector_controls_PanelBody, {
+    title: openhours_inspector_controls_('Display', '__plugin_txtd'),
+    initialOpen: true
+  }, Object(external_React_["createElement"])(openhours_inspector_controls_RadioControl, {
+    label: openhours_inspector_controls_('Displaying the opening hours', '__plugin_txtd'),
+    value: openHoursStyle,
+    selected: openHoursStyle,
+    options: [{
+      label: 'Overview',
+      value: 'overview'
+    }, {
+      label: 'Current Status',
+      value: 'status'
+    }],
+    onChange: function onChange(nextOpenHoursStyle) {
+      return setAttributes({
+        openHoursStyle: nextOpenHoursStyle
+      });
+    }
+  }), openHoursStyle === 'status' && Object(external_React_["createElement"])("div", {
+    className: "components-base-control__label novablocks__label"
+  }, "Write the \"Open\" and \"Closed\" messages using the tags displayed below."), openHoursStyle === 'status' && Object(external_React_["createElement"])(AvailableTagsModal, null), openHoursStyle === 'status' && Object(external_React_["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Open Note",
+    value: openNote,
+    onChange: function onChange(openNote) {
+      return setAttributes({
+        openNote: openNote
+      });
+    }
+  }), openHoursStyle === 'status' && Object(external_React_["createElement"])("div", {
+    className: "components-base-control__label novablocks__label novablocks__example"
+  }, openhours_inspector_controls_('It\'s {time} and we\'re Open until {today-closing-time}.', '__plugin_txtd')), openHoursStyle === 'status' && Object(external_React_["createElement"])("div", {
+    className: "components-base-control__label novablocks__label novablocks__example"
+  }, openhours_inspector_controls_('{time} - It\'s today, we\'re Open.', '__plugin_txtd')), openHoursStyle === 'status' && Object(external_React_["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Closed Note",
+    value: closedNote,
+    onChange: function onChange(closedNote) {
+      return setAttributes({
+        closedNote: closedNote
+      });
+    }
+  }), openHoursStyle === 'status' && Object(external_React_["createElement"])("div", {
+    className: "components-base-control__label novablocks__label novablocks__example"
+  }, openhours_inspector_controls_('We\'re closed until {next-opening-day} at {next-opening-time}.', '__plugin_txtd')), openHoursStyle === 'status' && Object(external_React_["createElement"])("div", {
+    className: "components-base-control__label novablocks__label novablocks__example"
+  }, openhours_inspector_controls_('{time} - it\'s closed now.', '__plugin_txtd')), openHoursStyle === 'overview' && Object(external_React_["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Closed Label",
+    value: closedLabel,
+    onChange: function onChange(closedLabel) {
+      return setAttributes({
+        closedLabel: closedLabel
+      });
+    }
+  }), openHoursStyle === 'overview' && Object(external_React_["createElement"])(openhours_inspector_controls_ToggleControl, {
+    label: openhours_inspector_controls_('Compress Opening Hours', '__plugin_txtd'),
+    checked: compressOpeningHours,
+    onChange: function onChange() {
+      return setAttributes({
+        compressOpeningHours: !compressOpeningHours
+      });
+    }
+  }), openHoursStyle === 'overview' && Object(external_React_["createElement"])(openhours_inspector_controls_ToggleControl, {
+    label: openhours_inspector_controls_('Hide Closed Days', '__plugin_txtd'),
+    checked: hideClosedDays,
+    onChange: function onChange() {
+      return setAttributes({
+        hideClosedDays: !hideClosedDays
+      });
+    }
+  }), openHoursStyle === 'overview' && Object(external_React_["createElement"])(openhours_inspector_controls_ToggleControl, {
+    label: openhours_inspector_controls_('Use Short Day Name', '__plugin_txtd'),
+    checked: useShortName,
+    onChange: function onChange() {
+      return setAttributes({
+        useShortName: !useShortName
+      });
+    }
+  }), Object(external_React_["createElement"])(openhours_inspector_controls_TextControl, {
+    label: "Time Format",
+    value: timeFormat,
+    help: timeFormattingInstructions,
+    onChange: function onChange(timeFormat) {
+      return setAttributes({
+        timeFormat: timeFormat
+      });
+    }
+  }))));
+};
+
+/* harmony default export */ var openhours_inspector_controls = (inspector_controls_OpenHoursInspectorControls);
+// CONCATENATED MODULE: ./src/blocks/openhours/edit.js
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+var openhours_edit_Fragment = wp.element.Fragment;
+
+var edit_OpenHours = function OpenHours(props) {
+  return Object(external_React_["createElement"])(openhours_edit_Fragment, null, Object(external_React_["createElement"])(openhours_inspector_controls, props), Object(external_React_["createElement"])(openhours_preview, props));
+};
+
+/* harmony default export */ var openhours_edit = (edit_OpenHours);
+// CONCATENATED MODULE: ./src/blocks/openhours/index.js
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+var openhours_ = wp.i18n.__;
+var openhours_registerBlockType = wp.blocks.registerBlockType;
+
+function openhours_init() {
+  openhours_registerBlockType('novablocks/openhours', {
+    title: openhours_('OpenHours', '__plugin_txtd'),
+    description: openhours_('Display Opening Hours for any kind of venue.', '__plugin_txtd'),
+    category: 'nova-blocks',
+    icon: openhours,
+    edit: openhours_edit,
+    save: function save() {
+      return null;
+    }
+  });
+}
+
+/* harmony default export */ var blocks_openhours = (openhours_init);
 // CONCATENATED MODULE: ./src/components/editable-text/index.js
 
 
@@ -17448,7 +18108,7 @@ EditableText.Content = function (_ref) {
 
 
 var card_edit_wp$blockEditor = wp.blockEditor,
-    edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
+    card_edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
     edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
 var card_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
 var _wp$data = wp.data,
@@ -17552,7 +18212,7 @@ var edit_CardEdit = function CardEdit(props) {
     }
   }), showButtons && Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__buttons block-editor-block-list__block")
-  }, Object(external_React_["createElement"])(edit_InnerBlocks, {
+  }, Object(external_React_["createElement"])(card_edit_InnerBlocks, {
     allowedBlocks: ['core/buttons'],
     renderAppender: false,
     template: [['core/buttons', {
@@ -17971,6 +18631,8 @@ function cards_collection_init() {
 
 
 
+
+
 var editor_dispatch = wp.data.dispatch;
 var updateCategory = wp.blocks.updateCategory;
 
@@ -18028,6 +18690,7 @@ var editor_novaBlocks = /*#__PURE__*/function () {
       blocks_hero();
       blocks_media();
       blocks_slideshow();
+      blocks_openhours();
     }
   }]);
 

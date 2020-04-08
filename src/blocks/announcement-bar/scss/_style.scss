@@ -15,6 +15,11 @@
 	&.is-hidden {
 		display: none;
 	}
+
+	table {
+		color: inherit;
+		font: inherit;
+	}
 }
 
 .novablocks-announcement-bar__wrapper {

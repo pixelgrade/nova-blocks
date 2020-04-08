@@ -14,11 +14,7 @@ if ( ! function_exists( 'novablocks_get_announcement_bar_attributes') ) {
 			'opensInNewTab' => array(
 				'type' => 'boolean',
 				'default' => false,
-			),
-			'content' => array(
-				'type' => 'string',
-				'default' => '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
-			),
+			)
 		);
 	}
 }
