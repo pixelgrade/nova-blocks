@@ -31,7 +31,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
-		$classes[] = 'novablocks-media';
+
 		if ( ! empty( $attributes['mediaPosition'] ) ) {
 			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
 		}
