@@ -105,7 +105,7 @@ const CardsCollectionEdit = ( props ) => {
 				<div className="wp-block-group__inner-container">
 					{
 						showCollectionTitle &&
-						<div className="wp-block">
+						<div className="block-editor-block-list__block wp-block novablocks-cards-collection__title">
 							<EditableText
 								tagName={ `h${level}` }
 								value={title}
@@ -117,7 +117,7 @@ const CardsCollectionEdit = ( props ) => {
 					}
 					{
 						showCollectionSubtitle &&
-						<div className="wp-block">
+						<div className="block-editor-block-list__block wp-block novablocks-cards-collection__subtitle">
 							<EditableText
 								tagName={ 'p' }
 								className={ 'is-style-lead' }
@@ -128,7 +128,7 @@ const CardsCollectionEdit = ( props ) => {
 							/>
 						</div>
 					}
-					<div className="wp-block" data-align="wide">
+					<div className="block-editor-block-list__block wp-block novablocks-cards-collection__cards" data-align="wide">
 						<div className={ `${blockClassName}__layout` }>
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_BLOCKS }

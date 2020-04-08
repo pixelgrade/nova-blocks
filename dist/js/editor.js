@@ -18522,7 +18522,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, showCollectionTitle && Object(external_React_["createElement"])("div", {
-    className: "wp-block"
+    className: "block-editor-block-list__block wp-block novablocks-cards-collection__title"
   }, Object(external_React_["createElement"])(editable_text, {
     tagName: "h".concat(level),
     value: title,
@@ -18532,7 +18532,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       });
     }
   })), showCollectionSubtitle && Object(external_React_["createElement"])("div", {
-    className: "wp-block"
+    className: "block-editor-block-list__block wp-block novablocks-cards-collection__subtitle"
   }, Object(external_React_["createElement"])(editable_text, {
     tagName: 'p',
     className: 'is-style-lead',
@@ -18543,7 +18543,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
       });
     }
   })), Object(external_React_["createElement"])("div", {
-    className: "wp-block",
+    className: "block-editor-block-list__block wp-block novablocks-cards-collection__cards",
     "data-align": "wide"
   }, Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__layout")

@@ -25,5 +25,6 @@ $nova-gray: #edf0f1 !default;
 	--bg-master-light: #FFFFFF;
 	--bg-master-none: transparent;
 
-	--novablocks-sides-spacings: 24px;
+	--novablocks-spacing: 24px;
+	--novablocks-sides-spacings: var(--novablocks-spacing);
 }

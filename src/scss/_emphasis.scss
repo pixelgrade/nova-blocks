@@ -4,7 +4,9 @@
 	--novablocks-block-subtitles-color: var(--novablocks-color-1);
 	--novablocks-block-background-color: var(--novablocks-light-1);
 
+	--novablocks-block-padding: 0;
 	--novablocks-block-content-padding: 0;
+
 	--novablocks-block-content-text-color: var(--novablocks-dark-2);
 	--novablocks-block-content-titles-color: var(--novablocks-dark-3);
 	--novablocks-block-content-subtitles-color: var(--novablocks-color-1);
@@ -84,6 +86,7 @@
 .block-is-moderate,
 .block-is-highlighted {
 	--novablocks-block-padding: var(--novablocks-spacing);
+	--novablocks-block-content-padding: var(--novablocks-spacing);
 }
 
 .block-is-moderate {
