@@ -54,16 +54,17 @@
 		.novablocks-cards-collection.has-appender & {
 			@include novablocks-cards-columns-count(1);
 
-			--apender-width: 100px;
+			--apender-width: 60px;
 
 			> * {
-				--surplus: calc(var(--apender-width) + var(--novablocks-spacing));
+				--surplus: calc(var(--apender-width) + var(--novablocks-spacing) * 0.5);
 			}
 
 			> .block-list-appender {
 				align-self: center;
 				flex: 0 0 var(--apender-width);
-				padding-left: calc(0.5 * var(--novablocks-spacing));
+				margin-left: calc(0.5 * var(--novablocks-spacing));
+				margin-right: 0;
 			}
 		}
 
