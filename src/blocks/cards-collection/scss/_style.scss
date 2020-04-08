@@ -1,13 +1,5 @@
 @import "mixins";
 
-.novablocks-cards-collection {
-	background: var(--novablocks-block-background-color);
-
-	&.has-background {
-		padding: var(--novablocks-block-padding) 0;
-	}
-}
-
 .novablocks-cards-collection__layout {
 	@include novablocks-cards-collection-layout;
 	@include novablocks-cards-columns-count;

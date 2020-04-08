@@ -13,10 +13,10 @@
 		flex: 0 1 var(--width);
 		margin-top: var(--novablocks-spacing);
 		margin-left: var(--novablocks-spacing);
+	}
 
-		&[class][class] {
-			max-width: var(--width);
-		}
+	&[class][class] > * {
+		max-width: var(--width);
 	}
 
 	> div:not([class]) {

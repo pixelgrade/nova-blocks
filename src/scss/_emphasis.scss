@@ -1,4 +1,4 @@
-.novablocks-block {
+.novablocks-block[class] {
 	--novablocks-block-text-color: var(--novablocks-dark-2);
 	--novablocks-block-titles-color: var(--novablocks-dark-3);
 	--novablocks-block-subtitles-color: var(--novablocks-color-1);
@@ -12,6 +12,7 @@
 	--novablocks-block-content-background-opacity: 1;
 	--novablocks-block-content-box-shadow: none;
 
+	padding: var(--novablocks-block-padding);
 	color: var(--novablocks-block-text-color);
 	background-color: var(--novablocks-block-background-color);
 
