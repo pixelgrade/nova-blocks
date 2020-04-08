@@ -23,6 +23,12 @@
 @import '../blocks/openhours/scss/editor';
 @import '../blocks/cards-collection/scss/editor';
 
+// Quickfix block appender visibility
+.block-list-appender__toggle {
+	opacity: 1 !important;
+	transform: none !important;
+}
+
 .novablocks-mask {
 	@include cover;
 	overflow: hidden;
