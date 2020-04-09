@@ -871,54 +871,88 @@ function novablocks_get_block_editor_settings() {
 function novablocks_get_advanced_gallery_presets() {
 	return array(
 		array(
-			'label'  => 'Clean',
+			'label'  => 'The Cloud Atlas',
 			'value'  => 'clean',
 			'preset' => array(
 				'sizeContrast'  => 0,
 				'positionShift' => 0,
 				'imageRotation' => 0,
+				'elementsDistance' => 20,
+				'placementVariation' => 25,
 			),
 		),
 		array(
-			'label'  => 'Overlap',
-			'value'  => 'overlap',
-			'preset' => array(
-				'sizeContrast'  => 0,
-				'positionShift' => 25,
-				'imageRotation' => 0,
-			),
-		),
-		array(
-			'label'  => 'Messy',
-			'value'  => 'messy',
-			'preset' => array(
-				'sizeContrast'  => 20,
-				'positionShift' => 75,
-				'imageRotation' => 25,
-			),
-		),
-		array(
-			'label'  => 'Creative',
+			'label'  => 'Pride and Prejudice',
 			'value'  => 'creative',
 			'preset' => array(
 				'sizeContrast'  => 60,
 				'positionShift' => 70,
 				'imageRotation' => 0,
+				'elementsDistance' => 40,
+				'placementVariation' => 0,
 			),
 		),
 		array(
-			'label'  => 'Sparse',
-			'value'  => 'sparse',
+			'label'  => 'Brave New World',
+			'value'  => 'overlap',
+			'preset' => array(
+				'sizeContrast'  => 20,
+				'positionShift' => 25,
+				'imageRotation' => 0,
+				'elementsDistance' => 20,
+				'placementVariation' => 50,
+			),
+		),
+		array(
+			'label'  => 'A Walk to Remember',
+			'value'  => 'aligned',
 			'preset' => array(
 				'sizeContrast'  => 100,
-				'positionShift' => 100,
+				'positionShift' => 50,
 				'imageRotation' => 0,
+				'elementsDistance' => 20,
+				'placementVariation' => 25,
+			),
+		),
+		array(
+			'label'  => 'Racing in the Rain',
+			'value'  => 'sparse',
+			'preset' => array(
+				'sizeContrast'  => 80,
+				'positionShift' => 80,
+				'imageRotation' => 0,
+				'elementsDistance' => 40,
+				'placementVariation' => 25,
+			),
+		),
+		array(
+			'label'  => 'The Sun Also Rises',
+			'value'  => 'joyful',
+			'preset' => array(
+				'sizeContrast'  => 20,
+				'positionShift' => 75,
+				'imageRotation' => 40,
+				'elementsDistance' => 20,
+				'placementVariation' => 25,
+			),
+		),
+		array(
+			'label'  => 'Memoirs of a Geisha',
+			'value'  => 'packed',
+			'preset' => array(
+				'sizeContrast'  => 80,
+				'positionShift' => 0,
+				'imageRotation' => 0,
+				'elementsDistance' => 20,
+				'placementVariation' => 50,
 			),
 		),
 		array(
 			'label' => 'Custom',
 			'value' => 'custom',
 		),
+
+		// More titles ideas for future references
 	);
 }
 
