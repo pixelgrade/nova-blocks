@@ -1,3 +1,5 @@
+import { Notice, Tab, Tabs } from '../../components';
+
 const { __ } = wp.i18n;
 
 const {
@@ -53,70 +55,77 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={ __( 'Style Presets', '__plugin_txtd' ) } initialOpen={ true }>
-				<RadioControl
-					selected={ stylePreset }
-					onChange={ ( stylePreset ) => {
-						let newAttributes = { stylePreset };
-						let newOption = advancedGalleryPresetOptions.find( option => stylePreset === option.value );
+			<Tabs>
+				<Tab label={ __( 'Presets', '__plugin_txtd' ) }>
+					<Notice
+						id={ 'novablocks-advanced-gallery-quick-start' }
+						content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
+						dismissLabel={ '✔ Ok, I got it!' }
+					/>
+					<RadioControl
+						selected={ stylePreset }
+						onChange={ ( stylePreset ) => {
+							let newAttributes = { stylePreset };
+							let newOption = advancedGalleryPresetOptions.find( option => stylePreset === option.value );
 
-						if ( newOption && newOption.preset ) {
-							newAttributes = Object.assign( newOption.preset, newAttributes );
-						}
+							if ( newOption && newOption.preset ) {
+								newAttributes = Object.assign( newOption.preset, newAttributes );
+							}
 
-						setAttributes( newAttributes );
-					} }
-					options={ advancedGalleryPresetOptions }
-				/>
-				<div>
-					<Button
-						isLarge
-						isPrimary
-						onClick={ randomize }>Randomize</Button>
-				</div>
-			</PanelBody>
-			<PanelBody title={ __( 'Composition Settings', '__plugin_txtd' ) } initialOpen={ false }>
-				<RangeControl
-					label={ __( 'Size Contrast', '__plugin_txtd' ) }
-					value={ sizeContrast }
-					onChange={ sizeContrast => setAttributes( { sizeContrast, stylePreset: 'custom' } ) }
-					min={ 0 }
-					max={ 100 }
-					step={ 20 }
-				/>
-				<RangeControl
-					label={ __( 'Position Shift', '__plugin_txtd' ) }
-					value={ positionShift }
-					onChange={ positionShift => setAttributes( { positionShift, stylePreset: 'custom' } ) }
-					min={ 0 }
-					max={ 100 }
-					step={ 5 }
-				/>
-				<RangeControl
-					label={ __( 'Elements Distance', '__plugin_txtd' ) }
-					value={ elementsDistance }
-					onChange={ elementsDistance => setAttributes( { elementsDistance } ) }
-					min={ 0 }
-					max={ 100 }
-					step={ 20 }
-				/>
-				<RangeControl
-					label={ __( 'Placement Variation', '__plugin_txtd' ) }
-					value={ placementVariation }
-					onChange={ placementVariation => setAttributes( { placementVariation } ) }
-					min={ 25 }
-					max={ 100 }
-					step={ 25 }
-				/>
-				<RangeControl
-					label={ __( 'Image Rotation', '__plugin_txtd' ) }
-					value={ imageRotation }
-					onChange={ imageRotation => setAttributes( { imageRotation, stylePreset: 'custom' } ) }
-					min={ 0 }Image
-					max={ 100 }
-					step={ 10 }
-				/>
-			</PanelBody>
+							setAttributes( newAttributes );
+						} }
+						options={ advancedGalleryPresetOptions }
+					/>
+					<div>
+						<Button
+							isLarge
+							isPrimary
+							onClick={ randomize }>Randomize</Button>
+					</div>
+				</Tab>
+				<Tab label={ __( 'Customize', '__plugin_txtd' ) }>
+					<RangeControl
+						label={ __( 'Size Contrast', '__plugin_txtd' ) }
+						value={ sizeContrast }
+						onChange={ sizeContrast => setAttributes( { sizeContrast, stylePreset: 'custom' } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 20 }
+					/>
+					<RangeControl
+						label={ __( 'Position Shift', '__plugin_txtd' ) }
+						value={ positionShift }
+						onChange={ positionShift => setAttributes( { positionShift, stylePreset: 'custom' } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
+					/>
+					<RangeControl
+						label={ __( 'Elements Distance', '__plugin_txtd' ) }
+						value={ elementsDistance }
+						onChange={ elementsDistance => setAttributes( { elementsDistance } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 20 }
+					/>
+					<RangeControl
+						label={ __( 'Placement Variation', '__plugin_txtd' ) }
+						value={ placementVariation }
+						onChange={ placementVariation => setAttributes( { placementVariation } ) }
+						min={ 25 }
+						max={ 100 }
+						step={ 25 }
+					/>
+					<RangeControl
+						label={ __( 'Image Rotation', '__plugin_txtd' ) }
+						value={ imageRotation }
+						onChange={ imageRotation => setAttributes( { imageRotation, stylePreset: 'custom' } ) }
+						min={ 0 }Image
+						max={ 100 }
+						step={ 10 }
+					/>
+				</Tab>
+			</Tabs>
 			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ true }>
 				<RangeControl
 					label={ __( 'Image Container Height', '__plugin_txtd' ) }

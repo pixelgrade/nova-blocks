@@ -15,6 +15,13 @@ export {
 } from './gallery-options';
 
 export {
+	Tabs,
+	Tab,
+} from './tabs';
+
+export { default as Notice } from './notice';
+
+export {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
