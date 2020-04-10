@@ -42,10 +42,10 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		<div>
 		<div class="<?php echo $className; ?>">
-
+        <?php if (false != $attributes['showMedia']) { ?>
 			<div class="novablocks-card__media-wrap">
 				<div class="novablocks-card__media">
-					<?php if ( ! empty( $attributes['media'] ) && false != $attributes['showMedia'] ) { ?>
+					<?php if ( ! empty( $attributes['media'] )) { ?>
 						<img class="novablocks-card__media-image" src="<?php echo $attributes['media']['url']; ?>" />
 					<?php } else { ?>
 						<div class="novablocks-card__media-placeholder">
@@ -57,6 +57,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 					<?php } ?>
 				</div>
 			</div>
+        <?php } ?>
 
 			<?php if ( ! empty( $attributes['meta'] ) && false != $attributes['showMeta'] ) { ?>
 				<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
