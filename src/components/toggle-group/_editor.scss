@@ -1,11 +1,24 @@
+.components-toggle-group__panel {
+	overflow: hidden;
+}
+
+.components-toggle-group__toggle-list {
+	margin-top: -6px;
+}
+
+.components-toggle-group__toggle-list-animated {
+	position: relative;
+	will-change: opacity, left, height;
+
+	> div {
+		padding-top: 6px;
+	}
+}
+
 .components-toggle-group__toggle-list-item {
 	padding: 9px 11px;
 	border-radius: 4px;
 	border: 1px solid transparent;
-
-	& + & {
-		margin-top: 6px;
-	}
 
 	.components-toggle-control[class],
 	.components-base-control__field[class] {
@@ -19,6 +32,7 @@
 
 	.components-toggle-group__toggle-list--disabled & {
 		border-color: #C4C7D5;
+		background-color: #FFFFFF;
 	}
 }
 
