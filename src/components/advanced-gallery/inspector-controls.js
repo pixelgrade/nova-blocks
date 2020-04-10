@@ -49,7 +49,6 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			positionShift: getRandomBetween(0, 20) * 5,
 			elementsDistance: getRandomBetween(0, 5) * 20,
 			placementVariation: getRandomBetween(1, 4) * 25,
-			stylePreset: 'custom',
 		});
 	}
 
@@ -76,18 +75,21 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						} }
 						options={ advancedGalleryPresetOptions }
 					/>
-					<div>
-						<Button
-							isLarge
-							isPrimary
-							onClick={ randomize }>Randomize</Button>
-					</div>
+					{
+						stylePreset === 'just-my-style' &&
+						<div>
+							<Button
+								isLarge
+								isPrimary
+								onClick={ randomize }>{ __( '💡 Surprise me' ) }</Button>
+						</div>
+					}
 				</Tab>
 				<Tab label={ __( 'Customize', '__plugin_txtd' ) }>
 					<RangeControl
 						label={ __( 'Size Contrast', '__plugin_txtd' ) }
 						value={ sizeContrast }
-						onChange={ sizeContrast => setAttributes( { sizeContrast, stylePreset: 'custom' } ) }
+						onChange={ sizeContrast => setAttributes( { sizeContrast } ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 20 }
@@ -95,7 +97,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					<RangeControl
 						label={ __( 'Position Shift', '__plugin_txtd' ) }
 						value={ positionShift }
-						onChange={ positionShift => setAttributes( { positionShift, stylePreset: 'custom' } ) }
+						onChange={ positionShift => setAttributes( { positionShift } ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 5 }
@@ -119,7 +121,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					<RangeControl
 						label={ __( 'Image Rotation', '__plugin_txtd' ) }
 						value={ imageRotation }
-						onChange={ imageRotation => setAttributes( { imageRotation, stylePreset: 'custom' } ) }
+						onChange={ imageRotation => setAttributes( { imageRotation } ) }
 						min={ 0 }Image
 						max={ 100 }
 						step={ 10 }
@@ -130,7 +132,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 				<RangeControl
 					label={ __( 'Image Container Height', '__plugin_txtd' ) }
 					value={ containerHeight }
-					onChange={ containerHeight => setAttributes( { containerHeight, stylePreset: 'custom' } ) }
+					onChange={ containerHeight => setAttributes( { containerHeight } ) }
 					min={ 0 }
 					max={ 100 }
 					step={ 5 }

@@ -872,7 +872,7 @@ function novablocks_get_advanced_gallery_presets() {
 	return array(
 		array(
 			'label'  => 'The Cloud Atlas',
-			'value'  => 'clean',
+			'value'  => 'the-cloud-atlas',
 			'preset' => array(
 				'sizeContrast'  => 0,
 				'positionShift' => 0,
@@ -883,7 +883,7 @@ function novablocks_get_advanced_gallery_presets() {
 		),
 		array(
 			'label'  => 'Pride and Prejudice',
-			'value'  => 'creative',
+			'value'  => 'pride-and-prejudice',
 			'preset' => array(
 				'sizeContrast'  => 60,
 				'positionShift' => 70,
@@ -894,7 +894,7 @@ function novablocks_get_advanced_gallery_presets() {
 		),
 		array(
 			'label'  => 'Brave New World',
-			'value'  => 'overlap',
+			'value'  => 'brave-new-world',
 			'preset' => array(
 				'sizeContrast'  => 20,
 				'positionShift' => 25,
@@ -905,7 +905,7 @@ function novablocks_get_advanced_gallery_presets() {
 		),
 		array(
 			'label'  => 'A Walk to Remember',
-			'value'  => 'aligned',
+			'value'  => 'a-walk-to-remember',
 			'preset' => array(
 				'sizeContrast'  => 100,
 				'positionShift' => 50,
@@ -916,7 +916,7 @@ function novablocks_get_advanced_gallery_presets() {
 		),
 		array(
 			'label'  => 'Racing in the Rain',
-			'value'  => 'sparse',
+			'value'  => 'racing-in-the-rain',
 			'preset' => array(
 				'sizeContrast'  => 80,
 				'positionShift' => 80,
@@ -927,7 +927,7 @@ function novablocks_get_advanced_gallery_presets() {
 		),
 		array(
 			'label'  => 'The Sun Also Rises',
-			'value'  => 'joyful',
+			'value'  => 'the-sun-also-rises',
 			'preset' => array(
 				'sizeContrast'  => 20,
 				'positionShift' => 75,
@@ -938,7 +938,7 @@ function novablocks_get_advanced_gallery_presets() {
 		),
 		array(
 			'label'  => 'Memoirs of a Geisha',
-			'value'  => 'packed',
+			'value'  => 'memoirs-of-a-geisha',
 			'preset' => array(
 				'sizeContrast'  => 80,
 				'positionShift' => 0,
@@ -948,11 +948,9 @@ function novablocks_get_advanced_gallery_presets() {
 			),
 		),
 		array(
-			'label' => 'Custom',
-			'value' => 'custom',
+			'label' => 'Just My Style™',
+			'value' => 'just-my-style',
 		),
-
-		// More titles ideas for future references
 	);
 }
 
