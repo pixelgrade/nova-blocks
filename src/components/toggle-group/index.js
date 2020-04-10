@@ -21,10 +21,11 @@ const ToggleGroup = ( props ) => {
 	const disabledToggles = toggles.filter( toggle => ! toggle.value );
 
 	const config = {
+		initial: false,
 		from: {
 			opacity: 0,
 			height: 0,
-			transform: 'translateX(40px)',
+			left: 40,
 		},
 		enter: item => async next => {
 			const ref = refMap.get(item);
@@ -38,11 +39,11 @@ const ToggleGroup = ( props ) => {
 			}, 100);
 
 			setTimeout(() => {
-				next( { opacity: 1, transform: 'translateX(0)' } );
+				next( { opacity: 1, left: 0 } );
 			}, 200);
 		},
 		leave: item => async next => {
-			next( { opacity: 0, transform: 'translateX(40px)' } );
+			next( { opacity: 0, left: 40 } );
 
 			setTimeout(() => {
 				next( { height: 0 } );
@@ -54,13 +55,13 @@ const ToggleGroup = ( props ) => {
 	const disabledTransitions = useTransition( disabledToggles, item => item.attribute, config );
 
 	return (
-		<PanelBody initialOpen={ true } title={ label }>
+		<PanelBody initialOpen={ true } title={ label } className={ 'components-toggle-group__panel' }>
 			<div className={ 'components-toggle-group' }>
 				{ !! enabledToggles.length &&
 				  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>
 					  { enabledTransitions.map( ( { item, key, props } ) => {
 						  return (
-							  <animated.div key={ key } style={ props }>
+							  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
 								  <div ref={ref => ref && refMap.set(item, ref)}>
 									  <div className="components-toggle-group__toggle-list-item">
 										  <ToggleControl
@@ -81,7 +82,7 @@ const ToggleGroup = ( props ) => {
 					  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled' }>
 						  { disabledTransitions.map( ( { item, key, props } ) => {
 							  return (
-								  <animated.div key={ key } style={ props }>
+								  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
 									  <div ref={ref => ref && refMap.set(item, ref)}>
 										  <div className="components-toggle-group__toggle-list-item">
 											  <ToggleControl

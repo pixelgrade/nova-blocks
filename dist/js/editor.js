@@ -11181,10 +11181,11 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
     return !toggle.value;
   });
   var config = {
+    initial: false,
     from: {
       opacity: 0,
       height: 0,
-      transform: 'translateX(40px)'
+      left: 40
     },
     enter: function enter(item) {
       return (/*#__PURE__*/function () {
@@ -11212,7 +11213,7 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
                     setTimeout(function () {
                       next({
                         opacity: 1,
-                        transform: 'translateX(0)'
+                        left: 0
                       });
                     }, 200);
 
@@ -11239,7 +11240,7 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
                   case 0:
                     next({
                       opacity: 0,
-                      transform: 'translateX(40px)'
+                      left: 40
                     });
                     setTimeout(function () {
                       next({
@@ -11270,7 +11271,8 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
   }, config);
   return Object(external_React_["createElement"])(toggle_group_PanelBody, {
     initialOpen: true,
-    title: label
+    title: label,
+    className: 'components-toggle-group__panel'
   }, Object(external_React_["createElement"])("div", {
     className: 'components-toggle-group'
   }, !!enabledToggles.length && Object(external_React_["createElement"])("div", {
@@ -11281,7 +11283,8 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
         props = _ref3.props;
     return Object(external_React_["createElement"])(extendedAnimated.div, {
       key: key,
-      style: props
+      style: props,
+      className: 'components-toggle-group__toggle-list-animated'
     }, Object(external_React_["createElement"])("div", {
       ref: function ref(_ref4) {
         return _ref4 && refMap.set(item, _ref4);
@@ -11305,7 +11308,8 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
         props = _ref5.props;
     return Object(external_React_["createElement"])(extendedAnimated.div, {
       key: key,
-      style: props
+      style: props,
+      className: 'components-toggle-group__toggle-list-animated'
     }, Object(external_React_["createElement"])("div", {
       ref: function ref(_ref6) {
         return _ref6 && refMap.set(item, _ref6);

@@ -1,11 +1,16 @@
-.components-toggle-group {
+.components-toggle-group__panel {
 	overflow: hidden;
 }
 
 .components-toggle-group__toggle-list {
 	margin-top: -6px;
+}
 
-	> div > div {
+.components-toggle-group__toggle-list-animated {
+	position: relative;
+	will-change: opacity, left, height;
+
+	> div {
 		padding-top: 6px;
 	}
 }
