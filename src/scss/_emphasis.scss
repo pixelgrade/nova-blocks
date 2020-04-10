@@ -87,6 +87,12 @@
 .block-is-highlighted {
 	--novablocks-block-padding: var(--novablocks-spacing);
 	--novablocks-block-content-padding: var(--novablocks-spacing);
+
+	&:not(.content-is-moderate):not(.content-is-highlighted) {
+		.novablocks-block__content {
+			--novablocks-block-content-padding: 0;
+		}
+	}
 }
 
 .block-is-moderate {
