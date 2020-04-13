@@ -52,3 +52,9 @@
 			margin: 4px 8px 4px 0;
 		}
 }
+
+[data-type='novablocks/header'] {
+	.block-editor-block-variation-picker__variation-label[class] {
+		display: none;
+	}
+}
