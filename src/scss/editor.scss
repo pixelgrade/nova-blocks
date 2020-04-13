@@ -45,3 +45,16 @@
 	line-height: 1.8;
 }
 
+.block-editor-block-variation-picker__variations[class][class][class] {
+	padding-left: 0;
+
+		> li {
+			margin: 4px 8px 4px 0;
+		}
+}
+
+[data-type='novablocks/header'] {
+	.block-editor-block-variation-picker__variation-label[class] {
+		display: none;
+	}
+}
