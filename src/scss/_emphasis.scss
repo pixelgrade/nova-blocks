@@ -15,7 +15,7 @@
 	--novablocks-block-content-box-shadow: none;
 
 	&[class] {
-		padding: var(--novablocks-block-padding);
+		padding: var(--novablocks-block-padding) 0;
 		color: var(--novablocks-block-text-color);
 		background-color: var(--novablocks-block-background-color);
 
