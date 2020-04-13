@@ -180,7 +180,7 @@ function novablocks_get_advanced_gallery_component_attributes() {
 		),
 		'stylePreset'        => array(
 			'type'    => 'string',
-			'default' => 'creative',
+			'default' => 'the-cloud-atlas',
 		),
 		'sizeContrast'       => array(
 			'type'    => 'number',

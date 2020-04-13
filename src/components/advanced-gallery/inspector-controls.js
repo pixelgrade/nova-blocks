@@ -72,6 +72,11 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							}
 
 							setAttributes( newAttributes );
+
+							if ( newOption.value === 'just-my-style' ) {
+								randomize();
+								return;
+							}
 						} }
 						options={ advancedGalleryPresetOptions }
 					/>
@@ -81,7 +86,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							<Button
 								isLarge
 								isPrimary
-								onClick={ randomize }>{ __( '💡 Surprise me' ) }</Button>
+								onClick={ randomize }>{ __( '💡 Surprise me!' ) }</Button>
 						</div>
 					}
 				</Tab>

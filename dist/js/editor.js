@@ -5099,7 +5099,6 @@ var notice_Notice = function Notice(props) {
     className: 'novablocks-notice'
   }, content, Object(react["createElement"])(notice_Button, {
     isPrimary: true,
-    isSmall: true,
     onClick: onClick
   }, dismissLabel));
 };
@@ -5653,13 +5652,18 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       }
 
       setAttributes(newAttributes);
+
+      if (newOption.value === 'just-my-style') {
+        randomize();
+        return;
+      }
     },
     options: advancedGalleryPresetOptions
   }), stylePreset === 'just-my-style' && Object(react["createElement"])("div", null, Object(react["createElement"])(inspector_controls_Button, {
     isLarge: true,
     isPrimary: true,
     onClick: randomize
-  }, inspector_controls_('💡 Surprise me')))), Object(react["createElement"])(tabs_Tab, {
+  }, inspector_controls_('💡 Surprise me!')))), Object(react["createElement"])(tabs_Tab, {
     label: inspector_controls_('Customize', '__plugin_txtd')
   }, Object(react["createElement"])(inspector_controls_RangeControl, {
     label: inspector_controls_('Size Contrast', '__plugin_txtd'),

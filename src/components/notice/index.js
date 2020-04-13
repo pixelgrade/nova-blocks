@@ -30,7 +30,7 @@ const Notice = ( props ) => {
 	return (
 		<div className={ 'novablocks-notice' }>
 			{ content }
-			<Button isPrimary isSmall onClick={ onClick }>{ dismissLabel }</Button>
+			<Button isPrimary onClick={ onClick }>{ dismissLabel }</Button>
 		</div>
 	);
 }
