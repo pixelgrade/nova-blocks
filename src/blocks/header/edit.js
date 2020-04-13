@@ -80,7 +80,9 @@ class Edit extends Component {
 	blockVariationPicker() {
 		return (
 			<Fragment>
-				<InnerBlocks />
+				<InnerBlocks
+					renderAppender = { false }
+				/>
 			</Fragment>
 		);
 	}
@@ -165,7 +167,7 @@ class Edit extends Component {
 				<__experimentalBlockVariationPicker
 					icon={ get( blockType, [ 'icon', 'src' ] ) }
 					label={ get( blockType, [ 'title' ] ) }
-					instructions={ __( 'Select a variation to start with.', 'coblocks' ) }
+					instructions={ __( 'Select a variation to start with.', '__plugin_txtd' ) }
 					variations={ variations }
 					allowSkip
 					onSelect={ ( nextVariation ) => blockVariationPickerOnSelect( nextVariation ) }
@@ -183,7 +185,6 @@ const applyWithSelect = withSelect( ( select, props ) => {
 	const innerBlocks = getBlocks( props.clientId );
 
 	return {
-		// Subscribe to changes of the innerBlocks to control the display of the layout selection placeholder.
 		blockType: getBlockType( props.name ),
 		defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
 		getBlocksByClientId,
