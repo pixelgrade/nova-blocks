@@ -154,7 +154,6 @@ const CardsCollectionInspectorControls = ( props ) => {
 						    label={__( 'Image container height', '__plugin_txtd' )}
 						    value={containerHeight}
 						    onChange={containerHeight => {
-						    	console.log( containerHeight );
 							    setAttributes( {containerHeight} )
 						    }}
 						    min={0}
