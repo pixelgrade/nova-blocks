@@ -67,7 +67,7 @@ const ToggleGroup = ( props ) => {
 										  <ToggleControl
 											  label={ item.label }
 											  checked={ !! item.value }
-											  onChange={ () => { onChange( item.attribute ) } }
+											  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
 										  />
 									  </div>
 								  </div>
@@ -88,7 +88,7 @@ const ToggleGroup = ( props ) => {
 											  <ToggleControl
 												  label={ item.label }
 												  checked={ !! item.value }
-												  onChange={ () => { onChange( item.attribute ) } }
+												  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
 											  />
 										  </div>
 									  </div>

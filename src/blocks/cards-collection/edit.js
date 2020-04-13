@@ -5,7 +5,11 @@ import InspectorControls from "./inspector-controls";
 /**
  * WordPress dependencies
  */
-const { Fragment } = wp.element;
+const {
+	Component,
+	Fragment
+} = wp.element;
+
 const { __ } = wp.i18n;
 
 const {
@@ -27,9 +31,9 @@ const CardsCollectionEdit = ( props ) => {
 
 	const {
 		attributes,
-		childrenBlocks,
 		setAttributes,
 		clientId,
+		innerBlocks
 	} = props;
 
 	const {
@@ -56,7 +60,7 @@ const CardsCollectionEdit = ( props ) => {
 	} = attributes;
 
 	const blockClassName = 'novablocks-cards-collection';
-	const hasAppender = childrenBlocks.length < 4;
+	const hasAppender = !! innerBlocks && innerBlocks.length < 4;
 
 	const className = classnames(
 		props.className,
@@ -144,17 +148,17 @@ const CardsCollectionEdit = ( props ) => {
 	);
 }
 
-const CardCollectionWithChildren = withSelect( ( select, props ) => {
+const withInnerBlocks = withSelect( ( select, props ) => {
 	const { clientId } = props;
 	const { getBlock } = select( 'core/block-editor' );
 	const parentBlock = getBlock( clientId );
-	const childrenBlocks = parentBlock.innerBlocks;
+	const innerBlocks = parentBlock.innerBlocks;
 
 	return {
-		childrenBlocks,
+		innerBlocks,
 		...props
 	}
-} )( CardsCollectionEdit );
+} );
 
-export default CardCollectionWithChildren;
+export default withInnerBlocks( CardsCollectionEdit );
 

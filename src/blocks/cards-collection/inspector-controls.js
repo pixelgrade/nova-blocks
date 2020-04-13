@@ -29,8 +29,8 @@ const CardsCollectionInspectorControls = ( props ) => {
 
 	const {
 		attributes,
-		childrenBlocks,
 		setAttributes,
+		innerBlocks,
 		isSelected,
 	} = props;
 
@@ -51,17 +51,17 @@ const CardsCollectionInspectorControls = ( props ) => {
 		showMeta,
 	} = attributes;
 
-	const toggleAttribute = ( attribute ) => {
-		const newAttributes = {
-			[attribute]: ! attributes[attribute]
-		};
-
-		childrenBlocks.forEach( ( { clientId } ) => {
-			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
+	const updateChildrenAttributes = ( attributes ) => {
+		innerBlocks.forEach( ( { clientId } ) => {
+			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, attributes );
 		} );
+	}
 
-		setAttributes( newAttributes );
-	};
+	const updateAttributes = ( attributes ) => {
+		console.log( attributes );
+		setAttributes( attributes );
+		updateChildrenAttributes( attributes );
+	}
 
 	const toggles = [
 		{
@@ -105,7 +105,14 @@ const CardsCollectionInspectorControls = ( props ) => {
 				{ isSelected &&
 					<PanelRow>
 						<span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
-						<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+						<HeadingToolbar
+							minLevel={ 2 }
+							maxLevel={ 4 }
+							selectedLevel={ level }
+							onChange={ ( newLevel ) => {
+								updateAttributes( { level: newLevel } );
+							} }
+						/>
 					</PanelRow>
 				}
 			</EmphasisBlockAreaFill>
@@ -117,15 +124,8 @@ const CardsCollectionInspectorControls = ( props ) => {
 							value={ contentAlign }
 							isCollapsed={ false }
 							onChange={ ( contentAlign ) => {
-								const { getSelectedBlock } = select( 'core/block-editor' );
-								const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-
-								getSelectedBlock().innerBlocks.map( ( block ) => {
-									block.innerBlocks.map( ( innerBlock ) => {
-										updateBlockAttributes( innerBlock.clientId, { align: contentAlign } );
-									} );
-								} );
 								setAttributes( { contentAlign } );
+								updateChildrenAttributes( { align: contentAlign } );
 							} }
 						/>
 					</PanelRow>
@@ -134,7 +134,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 			<InspectorControls>
 				<ToggleGroup
 					label={ __( 'Cards Manager', '__plugin_txtd' ) }
-					onChange={ toggleAttribute }
+					onChange={ updateAttributes }
 					toggles={ toggles }
 				/>
 				{ showMedia &&
