@@ -1,15 +1,4 @@
 .novablocks-media__inner-container {
-	margin-top: auto;
-	margin-bottom: auto;
-	z-index: 2;
-
-	@include below(desktop) {
-		grid-column: span 2;
-	}
-}
-
-.novablocks-media__inner-container {
-
 	display: flex;
 	height: 100%;
 	flex-direction: column;

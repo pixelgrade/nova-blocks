@@ -2,32 +2,28 @@
 	margin-left: auto;
 	margin-right: auto;
 
-	--novablocks-media-spacing: 24px;
-
-	@include above(lap) {
-		--novablocks-media-spacing: 48px;
-	}
-
-	@include above(desktop) {
-		--novablocks-media-spacing: 56px;
-	}
-
-	&.has-background {
-		padding: var(--novablocks-block-padding) 0;
+	// hack to contain negative margin-top of .novablocks-media__layout
+	> .wp-block-group__inner-container {
+		padding-top: 1px;
 	}
 }
 
 .novablocks-media__layout {
-	display: flex;
-	flex-wrap: wrap;
-
 	margin-top: calc( -1 * var(--novablocks-media-spacing) );
 	margin-left: calc( -1 * var(--novablocks-media-spacing) );
 
 	> * {
 		padding-left: var(--novablocks-media-spacing);
 		margin-top: var(--novablocks-media-spacing);
-		flex: 1 0 50%;
+	}
+
+	@include above(tablet) {
+		display: flex;
+		flex-wrap: wrap;
+
+		> * {
+			flex: 1 0 50%;
+		}
 	}
 }
 
