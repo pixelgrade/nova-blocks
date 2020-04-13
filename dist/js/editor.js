@@ -83604,7 +83604,7 @@ function (_Component) {
   }, {
     key: "supportsInnerBlocksPicker",
     value: function supportsInnerBlocksPicker() {
-      return typeof edit_InnerBlocks.prototype === 'undefined' ? false : true;
+      return typeof edit_InnerBlocks.prototype !== 'undefined';
     }
   }, {
     key: "supportsBlockVariationPicker",
@@ -83680,6 +83680,10 @@ function (_Component) {
 
       var blockVariationPickerOnSelect = function blockVariationPickerOnSelect() {
         var nextVariation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultVariation;
+        var nextVariationName = nextVariation.name;
+        setAttributes({
+          layout: nextVariationName
+        });
 
         if (nextVariation.attributes) {
           _this3.props.setAttributes(nextVariation.attributes);
@@ -83760,7 +83764,6 @@ var variations_variations = [{
   name: 'logo-center',
   title: variations_('Logo centered and one navigation menu on each side', '__plugin_txtd'),
   icon: logoCenter,
-  isDefault: true,
   innerBlocks: [['novablocks/navigation', {
     className: "site-header__menu site-header__menu--secondary",
     slug: "secondary"

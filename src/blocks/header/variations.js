@@ -20,7 +20,6 @@ const variations = [
 		name: 'logo-center',
 		title: __( 'Logo centered and one navigation menu on each side', '__plugin_txtd' ),
 		icon: icons.logoCenter,
-		isDefault: true,
 		innerBlocks:  [
 			[ 'novablocks/navigation', {
 				className: "site-header__menu site-header__menu--secondary",

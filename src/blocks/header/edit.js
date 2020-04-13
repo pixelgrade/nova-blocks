@@ -70,7 +70,7 @@ class Edit extends Component {
 	}
 
 	supportsInnerBlocksPicker() {
-		return typeof InnerBlocks.prototype === 'undefined' ? false : true;
+		return typeof InnerBlocks.prototype!=='undefined';
 	}
 
 	supportsBlockVariationPicker() {
@@ -150,6 +150,10 @@ class Edit extends Component {
 		}
 
 		const blockVariationPickerOnSelect = ( nextVariation = defaultVariation ) => {
+
+			const nextVariationName = nextVariation.name;
+			setAttributes( { layout: nextVariationName } );
+
 			if ( nextVariation.attributes ) {
 				this.props.setAttributes( nextVariation.attributes );
 			}
