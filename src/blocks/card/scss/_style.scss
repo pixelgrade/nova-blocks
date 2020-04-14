@@ -1,6 +1,4 @@
 .novablocks-card {
-	padding: var(--novablocks-block-content-padding);
-	box-shadow: var(--novablocks-block-content-box-shadow);
 
 	> .block-editor-block-list__layout {
 		@include clearfix;
