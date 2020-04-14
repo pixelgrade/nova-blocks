@@ -64,8 +64,8 @@ The Nova Blocks plugin bundles the following third-party resources:
 * [jQuery Bully plugin](http://pixelgrade.github.io/rellax/) Copyright (c) 2016 Pixelgrade - License: MIT
 * [jQuery Slick plugin](http://kenwheeler.github.io) Copyright (c) 2017 Ken Wheeler - License: MIT
 * [jQuery Velocity plugin](http://velocityjs.org/) Copyright (c) 2014-2017 Julian Shapiro - License: MIT
+* [JS Cookie](https://github.com/js-cookie/js-cookie) Copyright (c) 2018 Klaus Hartl, Fagner Brack, GitHub Contributors - License: MIT
 
-* [WP-REST-API V2 Menus](https://wordpress.org/plugins/wp-rest-api-v2-menus/) - License GPLv2
 * [Block Areas](https://wordpress.org/plugins/block-areas/) - License GPLv2
 
 == Installation ==
