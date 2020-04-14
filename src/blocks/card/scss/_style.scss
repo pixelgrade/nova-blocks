@@ -5,6 +5,12 @@
 	}
 }
 
+.novablocks-cards-collection:not(.content-is-moderate):not(.content-is-highlighted) {
+	.novablocks-block__content {
+		padding: calc( 0.5 * var(--novablocks-block-content-padding) );
+	}
+}
+
 .novablocks-card__media-wrap[class] {
 	margin: calc( -0.5 * var(--novablocks-block-content-padding) );
 	margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
