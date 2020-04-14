@@ -1,4 +1,8 @@
 .novablocks-media__aside {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 15px;
+	min-height: 400px;
 
 	@include above(tablet) {
 		.has-image-on-the-left & {
@@ -10,9 +14,16 @@
 // fit images
 .novablocks-media__image {
 	position: relative;
-	height: 100%;
 
 	img {
 		@include image-cover;
+	}
+
+	&:nth-child(2n + 1):last-child {
+		grid-column-end: span 2;
+	}
+
+	&:nth-child(n + 5) {
+		display: none;
 	}
 }

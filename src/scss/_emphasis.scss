@@ -46,7 +46,6 @@
 	position: relative;
 
 	color: var(--novablocks-block-content-text-color);
-	box-shadow: var(--novablocks-block-content-box-shadow);
 	transform: translateZ(0);
 
 	transition: var(--novablocks-transition);
@@ -64,22 +63,26 @@
 		}
 	}
 
-	&:after {
-		content: '';
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
+	@include above(tablet) {
+		box-shadow: var(--novablocks-block-content-box-shadow);
 
-		display: block;
-		background-color: var(--novablocks-block-content-background-color);
-		opacity: var(--novablocks-block-content-background-opacity);
-		pointer-events: none;
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: -1;
 
-		transition: var(--novablocks-transition);
-		transition-property: background-color, opacity;
+			display: block;
+			background-color: var(--novablocks-block-content-background-color);
+			opacity: var(--novablocks-block-content-background-opacity);
+			pointer-events: none;
+
+			transition: var(--novablocks-transition);
+			transition-property: background-color, opacity;
+		}
 	}
 }
 
