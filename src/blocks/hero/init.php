@@ -69,14 +69,15 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		}
 
 		$minHeight = floatval( $attributes['minHeightFallback'] );
-		$heroHeight = $minHeight;
+		$heroHeight = $foregroundHeight = $minHeight;
 
 		if ( 'doppler' === $attributes['scrollingEffect'] ) {
 			$heroHeight = 2 * $minHeight;
+			$foregroundHeight = 100;
 		}
 
 		$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--novablocks-1vh, 1vh)); ';
-		$foregroundStyle .= 'min-height: calc(100 * var(--novablocks-1vh, 1vh)); ';
+		$foregroundStyle .= 'min-height: calc(' . $foregroundHeight . ' * var(--novablocks-1vh, 1vh)); ';
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
