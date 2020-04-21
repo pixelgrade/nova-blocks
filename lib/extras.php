@@ -425,7 +425,7 @@ function novablocks_get_card_attributes() {
 	);
 }
 
-function novablocks_get_cards_collection_attributes() {
+function novablocks_get_collection_attributes() {
 	return array(
 		'align'                  => array(
 			'type'    => 'string',
@@ -487,6 +487,40 @@ function novablocks_get_cards_collection_attributes() {
 			'type'    => 'boolean',
 			'default' => false,
 		),
+	);
+}
+
+function novablocks_get_source_attributes() {
+	return array(
+		'order' => array(
+			'type' => 'string',
+			'default' => 'desc',
+		),
+		'orderBy' => array(
+			'type' => 'string',
+			'default' => 'date',
+		),
+		'category' => array(
+			'type' => 'string',
+			'default' => 'all',
+		),
+		'numberOfPosts' => array(
+			'type' => 'number',
+			'default' => 3
+		),
+	);
+}
+
+function novablocks_get_posts_collection_attributes() {
+	return array_merge(
+		novablocks_get_source_attributes(),
+		novablocks_get_collection_attributes()
+	);
+}
+
+function novablocks_get_cards_collection_attributes() {
+	return array_merge(
+		novablocks_get_collection_attributes()
 	);
 }
 
@@ -1000,4 +1034,79 @@ function novablocks_get_theme_support() {
 	}
 
 	return $theme_support;
+}
+
+function novablocks_get_card_media_padding_top( $containerHeight ) {
+	$containerHeight = $containerHeight / 50 - 1;
+	$numerator = 1;
+	$denominator = 1;
+
+	$containerHeight = min( max( -1, $containerHeight ), 1 );
+
+	if ( $containerHeight > 0 ) {
+		$numerator = 1 + $containerHeight;
+	}
+
+	if ( $containerHeight < 0 ) {
+		$containerHeight = 1 + abs( $containerHeight );
+	}
+
+	return ( $numerator * 100 / $denominator ) . '%';
+}
+
+if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
+
+	function novablocks_get_collection_output( $attributes, $content ) {
+		$classes = array( 'novablocks-cards-collection' );
+		$classes[] = 'novablocks-block';
+		$classes[] = 'alignfull';
+		$classes[] = 'novablocks-cards-collection--align-' . $attributes[ 'contentAlign' ];
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
+
+		if ( ! empty( $attributes['blockStyle'] ) ) {
+			$classes[] = 'block-is-' . $attributes['blockStyle'];
+
+			if ( $attributes['blockStyle'] !== 'basic' ) {
+				$classes[] = 'has-background';
+			}
+		}
+
+		if ( ! empty( $attributes['contentStyle'] ) ) {
+			$classes[] = 'content-is-' . $attributes['contentStyle'];
+		}
+
+		$className = join( ' ', $classes );
+
+		$cssProps = array(
+			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ),
+			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
+		);
+
+		$style = join( '; ', $cssProps );
+
+		$titleTag = 'h' . $attributes['level'];
+
+		ob_start(); ?>
+
+		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
+			<div class="wp-block-group__inner-container">
+				<?php if ( ! empty( $attributes['showCollectionTitle'] ) ) {
+					echo '<' . $titleTag . ' class="novablocks-cards-collection__title">' . $attributes['title'] . '</' . $titleTag . '>';
+				}
+				if ( ! empty( $attributes['showCollectionSubtitle'] ) ) { ?>
+					<p class="novablocks-cards-collection__subtitle is-style-lead"><?php echo $attributes['subtitle']; ?></p>
+				<?php } ?>
+				<div class="novablocks-cards-collection__cards wp-block alignwide">
+					<div class="novablocks-cards-collection__layout">
+						<?php echo $content; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<?php return ob_get_clean();
+	}
 }

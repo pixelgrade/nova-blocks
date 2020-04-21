@@ -80,11 +80,6 @@ const withInspectorControls = function( OriginalComponent ) {
 
 			const {
 				attributes: {
-					displayFeaturedImage,
-					displayDate,
-					displayContent,
-					layoutStyle,
-					displayReadMore,
 					order,
 					orderBy,
 					numberOfPosts
@@ -105,29 +100,7 @@ const withInspectorControls = function( OriginalComponent ) {
 				<Fragment>
 					<OriginalComponent { ...this.props } />
 					<InspectorControls>
-						<PanelBody title={ __( 'Display', '__plugin_txtd' ) } initialOpen={ true }>
-							<ToggleControl
-								label={__( 'Display Image', '__plugin_txtd' )}
-								checked={ displayFeaturedImage }
-								onChange={() => setAttributes( {displayFeaturedImage: ! displayFeaturedImage} )}
-							/>
-							<ToggleControl
-								label={__( 'Display Date', '__plugin_txtd' )}
-								checked={displayDate}
-								onChange={() => setAttributes( {displayDate: ! displayDate} )}
-							/>
-							<ToggleControl
-								label={__( 'Display Content', '__plugin_txtd' )}
-								checked={displayContent}
-								onChange={() => setAttributes( {displayContent: ! displayContent} )}
-							/>
-							<ToggleControl
-								label={__( 'Display Read More', '__plugin_txtd' )}
-								checked={displayReadMore}
-								onChange={() => setAttributes( {displayReadMore: ! displayReadMore} )}
-							/>
-						</PanelBody>
-						<PanelBody title={ __( 'Sorting', '__plugin_txtd' ) } initialOpen={ true }>
+						<PanelBody title={ __( 'Source', '__plugin_txtd' ) } initialOpen={ true }>
 							<QueryControls
 								{ ...{ order, orderBy } }
 								categoriesList={ categoriesList }
@@ -140,8 +113,8 @@ const withInspectorControls = function( OriginalComponent ) {
 								label={ __( 'Number of posts', '__plugin_txtd' ) }
 								value={ numberOfPosts }
 								onChange={ ( value ) => postsCountOnChange( value ) }
-								min={ 1 }
-								max={ 100 }
+								min={ 2 }
+								max={ 4 }
 							/>
 						</PanelBody>
 					</InspectorControls>
@@ -168,12 +141,14 @@ const withQueriedPosts = withSelect( ( select, props ) => {
 			return {
 				...post,
 				featured_media_object: post.featured_media && select( 'core' ).getMedia( post.featured_media ),
+				...props,
 			};
 		} );
 	}
 
 	return {
 		posts: posts,
+		...props,
 	};
 } );
 

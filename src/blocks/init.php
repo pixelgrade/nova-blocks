@@ -15,4 +15,4 @@ require_once dirname( __FILE__ ) . '/slideshow/init.php';
 require_once dirname( __FILE__ ) . '/openhours/init.php';
 require_once dirname( __FILE__ ) . '/card/init.php';
 require_once dirname( __FILE__ ) . '/cards-collection/init.php';
-require_once dirname( __FILE__ ) . '/posts/init.php';
+require_once dirname( __FILE__ ) . '/posts-collection/init.php';

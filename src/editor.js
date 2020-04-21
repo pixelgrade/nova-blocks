@@ -22,7 +22,7 @@ import opentableInit from "./blocks/opentable";
 import openHoursInit from "./blocks/openhours";
 import cardInit from "./blocks/card";
 import cardsCollectionInit from "./blocks/cards-collection";
-import postsInit from "./blocks/posts"
+import postsCollectionInit from "./blocks/posts-collection"
 
 import { STORE_NAME } from './store';
 
@@ -89,7 +89,7 @@ class novaBlocks {
 		mediaInit();
 		slideshowInit();
 		openHoursInit();
-		postsInit();
+		postsCollectionInit();
 	}
 }
 

@@ -1,18 +1,18 @@
 @import "mixins";
 
-.novablocks-cards-collection__layout {
-	@include novablocks-cards-collection-layout;
+.novablocks-collection__layout {
+	@include novablocks-collection-layout;
 	@include novablocks-cards-columns-count;
 }
 
 @each $alignment in left, center, right {
 
-	.novablocks-cards-collection--align-#{ $alignment } {
+	.novablocks-collection--align-#{ $alignment } {
 		text-align: $alignment;
 	}
 }
 
-.novablocks-cards-collection--align-right {
+.novablocks-collection--align-right {
 
 	.wp-block-buttons {
 		flex-direction: row-reverse;

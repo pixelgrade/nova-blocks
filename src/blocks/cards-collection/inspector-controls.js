@@ -1,4 +1,4 @@
-import { HeadingToolbar, ToggleGroup } from "../../components";
+import { HeadingToolbar, ToggleGroup, CardsManagerPanel } from "../../components";
 import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../../components/emphasis-level-controls";
 
 const { __ } = wp.i18n;
@@ -58,46 +58,9 @@ const CardsCollectionInspectorControls = ( props ) => {
 	}
 
 	const updateAttributes = ( attributes ) => {
-		console.log( attributes );
 		setAttributes( attributes );
 		updateChildrenAttributes( attributes );
 	}
-
-	const toggles = [
-		{
-			label: __( 'Collection Title' ),
-			value: attributes[ 'showCollectionTitle' ],
-			attribute: 'showCollectionTitle'
-		}, {
-			label: __( 'Collection Subtitle' ),
-			value: attributes[ 'showCollectionSubtitle' ],
-			attribute: 'showCollectionSubtitle',
-		}, {
-			label: __( 'Media' ),
-			value: attributes[ 'showMedia' ],
-			attribute: 'showMedia',
-		}, {
-			label: __( 'Title' ),
-			value: attributes[ 'showTitle' ],
-			attribute: 'showTitle',
-		}, {
-			label: __( 'Subtitle' ),
-			value: attributes[ 'showSubtitle' ],
-			attribute: 'showSubtitle',
-		}, {
-			label: __( 'Description' ),
-			value: attributes[ 'showDescription' ],
-			attribute: 'showDescription',
-		}, {
-			label: __( 'Buttons' ),
-			value: attributes[ 'showButtons' ],
-			attribute: 'showButtons',
-		}, {
-			label: __( 'Meta' ),
-			value: attributes[ 'showMeta' ],
-			attribute: 'showMeta',
-		}
-	];
 
 	return (
 		<Fragment>
@@ -132,10 +95,10 @@ const CardsCollectionInspectorControls = ( props ) => {
 				}
 			</EmphasisContentAreaFill>
 			<InspectorControls>
-				<ToggleGroup
+				<CardsManagerPanel
 					label={ __( 'Cards Manager', '__plugin_txtd' ) }
 					onChange={ updateAttributes }
-					toggles={ toggles }
+					{ ...props }
 				/>
 				{ showMedia &&
 				    <PanelBody initialOpen={ true } title={ __( 'Cards Media Area' ) }>

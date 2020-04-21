@@ -12,7 +12,7 @@
 	}
 }
 
-.novablocks-cards-collection:not(.content-is-moderate):not(.content-is-highlighted) {
+.novablocks-collection:not(.content-is-moderate):not(.content-is-highlighted) {
 	.novablocks-block__content {
 		padding: calc( 0.5 * var(--novablocks-block-content-padding) );
 	}

@@ -351,6 +351,30 @@ function _assertThisInitialized(self) {
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -362,7 +386,7 @@ function _classCallCheck(instance, Constructor) {
 }
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -384,7 +408,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 }
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -402,7 +426,7 @@ function _possibleConstructorReturn(self, call) {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -415,7 +439,7 @@ function _getPrototypeOf(o) {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -448,30 +472,6 @@ function _inherits(subClass, superClass) {
   });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
 
 /***/ }),
 /* 20 */
@@ -11767,7 +11767,7 @@ function init() {
 
 /* harmony default export */ var announcement_bar = (init);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(19);
+var helpers_extends = __webpack_require__(14);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
@@ -15232,19 +15232,19 @@ var range_default = /*#__PURE__*/__webpack_require__.n(lodash_range);
 var deprecated_build_module = __webpack_require__(32);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-var esm_classCallCheck = __webpack_require__(14);
+var esm_classCallCheck = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
-var esm_createClass = __webpack_require__(15);
+var esm_createClass = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
-var esm_possibleConstructorReturn = __webpack_require__(16);
+var esm_possibleConstructorReturn = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
-var esm_getPrototypeOf = __webpack_require__(17);
+var esm_getPrototypeOf = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inherits.js + 1 modules
-var esm_inherits = __webpack_require__(18);
+var esm_inherits = __webpack_require__(19);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/element/build-module/react.js
 
@@ -21510,6 +21510,206 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
 }(heading_toolbar_Component);
 
 /* harmony default export */ var heading_toolbar = (heading_toolbar_HeadingToolbar);
+// CONCATENATED MODULE: ./src/components/cards-manager-panel/index.js
+
+
+var cards_manager_panel_ = wp.i18n.__;
+
+var cards_manager_panel_CardsManagerPanel = function CardsManagerPanel(props) {
+  var attributes = props.attributes;
+  var toggles = [{
+    label: cards_manager_panel_('Collection Title'),
+    value: attributes['showCollectionTitle'],
+    attribute: 'showCollectionTitle'
+  }, {
+    label: cards_manager_panel_('Collection Subtitle'),
+    value: attributes['showCollectionSubtitle'],
+    attribute: 'showCollectionSubtitle'
+  }, {
+    label: cards_manager_panel_('Media'),
+    value: attributes['showMedia'],
+    attribute: 'showMedia'
+  }, {
+    label: cards_manager_panel_('Title'),
+    value: attributes['showTitle'],
+    attribute: 'showTitle'
+  }, {
+    label: cards_manager_panel_('Subtitle'),
+    value: attributes['showSubtitle'],
+    attribute: 'showSubtitle'
+  }, {
+    label: cards_manager_panel_('Description'),
+    value: attributes['showDescription'],
+    attribute: 'showDescription'
+  }, {
+    label: cards_manager_panel_('Buttons'),
+    value: attributes['showButtons'],
+    attribute: 'showButtons'
+  }, {
+    label: cards_manager_panel_('Meta'),
+    value: attributes['showMeta'],
+    attribute: 'showMeta'
+  }];
+  var label = props.label,
+      onChange = props.onChange;
+  return Object(external_React_["createElement"])(toggle_group, {
+    label: label,
+    onChange: onChange,
+    toggles: toggles
+  });
+};
+
+/* harmony default export */ var cards_manager_panel = (cards_manager_panel_CardsManagerPanel);
+// CONCATENATED MODULE: ./src/components/editable-text/index.js
+
+
+
+var forwardRef = wp.element.forwardRef;
+var RichText = wp.blockEditor.RichText;
+var EditableText = forwardRef(function (props, ref) {
+  return Object(external_React_["createElement"])(RichText, extends_default()({
+    ref: ref
+  }, props, {
+    __unstableDisableFormats: true
+  }));
+});
+
+EditableText.Content = function (_ref) {
+  var _ref$value = _ref.value,
+      value = _ref$value === void 0 ? '' : _ref$value,
+      _ref$tagName = _ref.tagName,
+      Tag = _ref$tagName === void 0 ? 'div' : _ref$tagName,
+      props = objectWithoutProperties_default()(_ref, ["value", "tagName"]);
+
+  return Object(external_React_["createElement"])(Tag, props, value);
+};
+/**
+ * Renders an editable text input in which text formatting is not allowed.
+ */
+
+
+/* harmony default export */ var editable_text = (EditableText);
+// CONCATENATED MODULE: ./src/components/collection/index.js
+
+
+
+
+var collection_CollectionTitle = function CollectionTitle(props) {
+  var _props$attributes = props.attributes,
+      showCollectionTitle = _props$attributes.showCollectionTitle,
+      title = _props$attributes.title,
+      level = _props$attributes.level,
+      setAttributes = props.setAttributes;
+
+  if (!showCollectionTitle) {
+    return null;
+  }
+
+  return Object(external_React_["createElement"])("div", {
+    className: "block-editor-block-list__block wp-block novablocks-collection__title"
+  }, Object(external_React_["createElement"])(editable_text, {
+    tagName: "h".concat(level),
+    value: title,
+    onChange: function onChange(title) {
+      setAttributes({
+        title: title
+      });
+    }
+  }));
+};
+
+var collection_CollectionSubtitle = function CollectionSubtitle(props) {
+  var _props$attributes2 = props.attributes,
+      showCollectionSubtitle = _props$attributes2.showCollectionSubtitle,
+      subtitle = _props$attributes2.subtitle,
+      setAttributes = props.setAttributes;
+
+  if (!showCollectionSubtitle) {
+    return null;
+  }
+
+  return Object(external_React_["createElement"])("div", {
+    className: "block-editor-block-list__block wp-block novablocks-collection__subtitle"
+  }, Object(external_React_["createElement"])(editable_text, {
+    tagName: 'p',
+    className: 'is-style-lead',
+    value: subtitle,
+    onChange: function onChange(subtitle) {
+      setAttributes({
+        subtitle: subtitle
+      });
+    }
+  }));
+};
+
+var collection_Collection = function Collection(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes,
+      clientId = props.clientId,
+      innerBlocks = props.innerBlocks,
+      hasAppender = props.hasAppender;
+  var blockStyle = attributes.blockStyle,
+      contentStyle = attributes.contentStyle,
+      title = attributes.title,
+      subtitle = attributes.subtitle,
+      contentAlign = attributes.contentAlign,
+      level = attributes.level,
+      imageResizing = attributes.imageResizing,
+      containerHeight = attributes.containerHeight,
+      showCollectionTitle = attributes.showCollectionTitle,
+      showCollectionSubtitle = attributes.showCollectionSubtitle,
+      showMedia = attributes.showMedia,
+      showTitle = attributes.showTitle,
+      showSubtitle = attributes.showSubtitle,
+      showDescription = attributes.showDescription,
+      showButtons = attributes.showButtons,
+      showMeta = attributes.showMeta;
+  var blockClassName = 'novablocks-collection';
+
+  var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
+    var compiledHeight = containerHeight / 50 - 1;
+
+    if (compiledHeight < 0) {
+      compiledHeight *= 3;
+    }
+
+    var numerator = 1;
+    var denominator = 1;
+    compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
+
+    if (compiledHeight > 0) {
+      numerator = 1 + compiledHeight;
+    }
+
+    if (compiledHeight < 0) {
+      denominator = 1 + Math.abs(compiledHeight);
+    }
+
+    return "".concat(numerator * 100 / denominator, "%");
+  };
+
+  var style = {
+    '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
+    '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
+  };
+  var className = classnames_default()(props.className, blockClassName, 'novablocks-block', "".concat(blockClassName, "--align-").concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
+    'has-background': blockStyle !== 'basic',
+    'has-appender': hasAppender
+  });
+  return Object(external_React_["createElement"])("div", {
+    className: className,
+    style: style
+  }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props), Object(external_React_["createElement"])("div", {
+    className: "wp-block-group__inner-container"
+  }, Object(external_React_["createElement"])("div", {
+    className: "block-editor-block-list__block wp-block novablocks-collection__cards",
+    "data-align": "wide"
+  }, Object(external_React_["createElement"])("div", {
+    className: "".concat(blockClassName, "__layout")
+  }, props.children))));
+};
+
+/* harmony default export */ var collection = (collection_Collection);
 // EXTERNAL MODULE: ./node_modules/lodash/pickBy.js
 var pickBy = __webpack_require__(94);
 var pickBy_default = /*#__PURE__*/__webpack_require__.n(pickBy);
@@ -21603,11 +21803,6 @@ var with_posts_withInspectorControls = function withInspectorControls(OriginalCo
         value: function render() {
           var _this$props = this.props,
               _this$props$attribute = _this$props.attributes,
-              displayFeaturedImage = _this$props$attribute.displayFeaturedImage,
-              displayDate = _this$props$attribute.displayDate,
-              displayContent = _this$props$attribute.displayContent,
-              layoutStyle = _this$props$attribute.layoutStyle,
-              displayReadMore = _this$props$attribute.displayReadMore,
               order = _this$props$attribute.order,
               orderBy = _this$props$attribute.orderBy,
               numberOfPosts = _this$props$attribute.numberOfPosts,
@@ -21622,42 +21817,7 @@ var with_posts_withInspectorControls = function withInspectorControls(OriginalCo
           };
 
           return Object(external_React_["createElement"])(with_posts_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, this.props), Object(external_React_["createElement"])(with_posts_InspectorControls, null, Object(external_React_["createElement"])(with_posts_PanelBody, {
-            title: with_posts_('Display', '__plugin_txtd'),
-            initialOpen: true
-          }, Object(external_React_["createElement"])(with_posts_ToggleControl, {
-            label: with_posts_('Display Image', '__plugin_txtd'),
-            checked: displayFeaturedImage,
-            onChange: function onChange() {
-              return setAttributes({
-                displayFeaturedImage: !displayFeaturedImage
-              });
-            }
-          }), Object(external_React_["createElement"])(with_posts_ToggleControl, {
-            label: with_posts_('Display Date', '__plugin_txtd'),
-            checked: displayDate,
-            onChange: function onChange() {
-              return setAttributes({
-                displayDate: !displayDate
-              });
-            }
-          }), Object(external_React_["createElement"])(with_posts_ToggleControl, {
-            label: with_posts_('Display Content', '__plugin_txtd'),
-            checked: displayContent,
-            onChange: function onChange() {
-              return setAttributes({
-                displayContent: !displayContent
-              });
-            }
-          }), Object(external_React_["createElement"])(with_posts_ToggleControl, {
-            label: with_posts_('Display Read More', '__plugin_txtd'),
-            checked: displayReadMore,
-            onChange: function onChange() {
-              return setAttributes({
-                displayReadMore: !displayReadMore
-              });
-            }
-          })), Object(external_React_["createElement"])(with_posts_PanelBody, {
-            title: with_posts_('Sorting', '__plugin_txtd'),
+            title: with_posts_('Source', '__plugin_txtd'),
             initialOpen: true
           }, Object(external_React_["createElement"])(QueryControls, extends_default()({
             order: order,
@@ -21686,8 +21846,8 @@ var with_posts_withInspectorControls = function withInspectorControls(OriginalCo
             onChange: function onChange(value) {
               return postsCountOnChange(value);
             },
-            min: 1,
-            max: 100
+            min: 2,
+            max: 4
           }))));
         }
       }]);
@@ -21722,13 +21882,13 @@ var withQueriedPosts = with_posts_withSelect(function (select, props) {
     posts = posts.map(function (post) {
       return with_posts_objectSpread({}, post, {
         featured_media_object: post.featured_media && select('core').getMedia(post.featured_media)
-      });
+      }, props);
     });
   }
 
-  return {
+  return with_posts_objectSpread({
     posts: posts
-  };
+  }, props);
 });
 /* harmony default export */ var with_posts = (with_posts_compose([with_posts_withInspectorControls, withQueriedPosts]));
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
@@ -22711,6 +22871,8 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -23903,7 +24065,7 @@ var headline_edit_Fragment = wp.element.Fragment;
  */
 
 var headline_edit_wp$blockEditor = wp.blockEditor,
-    RichText = headline_edit_wp$blockEditor.RichText,
+    edit_RichText = headline_edit_wp$blockEditor.RichText,
     edit_AlignmentToolbar = headline_edit_wp$blockEditor.AlignmentToolbar,
     edit_BlockControls = headline_edit_wp$blockEditor.BlockControls,
     edit_InspectorControls = headline_edit_wp$blockEditor.InspectorControls;
@@ -23947,7 +24109,7 @@ function HeadlineEdit(props) {
     }
   }))), Object(external_React_["createElement"])(TagName, {
     className: classnames_default()(className, 'c-headline', defineProperty_default()({}, "has-text-align-".concat(align), align))
-  }, Object(external_React_["createElement"])(RichText, {
+  }, Object(external_React_["createElement"])(edit_RichText, {
     className: "c-headline__secondary",
     identifier: "secondary",
     tagName: "span",
@@ -23960,7 +24122,7 @@ function HeadlineEdit(props) {
     placeholder: headline_edit_('Subtitle…', '__plugin_txtd'),
     keepPlaceholderOnFocus: true,
     allowedFormats: []
-  }), Object(external_React_["createElement"])(RichText, {
+  }), Object(external_React_["createElement"])(edit_RichText, {
     className: "c-headline__primary",
     identifier: "primary",
     tagName: "span",
@@ -26430,35 +26592,6 @@ function openhours_init() {
 }
 
 /* harmony default export */ var blocks_openhours = (openhours_init);
-// CONCATENATED MODULE: ./src/components/editable-text/index.js
-
-
-
-var forwardRef = wp.element.forwardRef;
-var editable_text_RichText = wp.blockEditor.RichText;
-var EditableText = forwardRef(function (props, ref) {
-  return Object(external_React_["createElement"])(editable_text_RichText, extends_default()({
-    ref: ref
-  }, props, {
-    __unstableDisableFormats: true
-  }));
-});
-
-EditableText.Content = function (_ref) {
-  var _ref$value = _ref.value,
-      value = _ref$value === void 0 ? '' : _ref$value,
-      _ref$tagName = _ref.tagName,
-      Tag = _ref$tagName === void 0 ? 'div' : _ref$tagName,
-      props = objectWithoutProperties_default()(_ref, ["value", "tagName"]);
-
-  return Object(external_React_["createElement"])(Tag, props, value);
-};
-/**
- * Renders an editable text input in which text formatting is not allowed.
- */
-
-
-/* harmony default export */ var editable_text = (EditableText);
 // CONCATENATED MODULE: ./src/blocks/card/edit.js
 
 
@@ -26657,6 +26790,7 @@ function card_init() {
 
 
 
+
 var cards_collection_inspector_controls_ = wp.i18n.__;
 var cards_collection_inspector_controls_Fragment = wp.element.Fragment;
 var cards_collection_inspector_controls_wp$components = wp.components,
@@ -26697,44 +26831,10 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
   };
 
   var updateAttributes = function updateAttributes(attributes) {
-    console.log(attributes);
     setAttributes(attributes);
     updateChildrenAttributes(attributes);
   };
 
-  var toggles = [{
-    label: cards_collection_inspector_controls_('Collection Title'),
-    value: attributes['showCollectionTitle'],
-    attribute: 'showCollectionTitle'
-  }, {
-    label: cards_collection_inspector_controls_('Collection Subtitle'),
-    value: attributes['showCollectionSubtitle'],
-    attribute: 'showCollectionSubtitle'
-  }, {
-    label: cards_collection_inspector_controls_('Media'),
-    value: attributes['showMedia'],
-    attribute: 'showMedia'
-  }, {
-    label: cards_collection_inspector_controls_('Title'),
-    value: attributes['showTitle'],
-    attribute: 'showTitle'
-  }, {
-    label: cards_collection_inspector_controls_('Subtitle'),
-    value: attributes['showSubtitle'],
-    attribute: 'showSubtitle'
-  }, {
-    label: cards_collection_inspector_controls_('Description'),
-    value: attributes['showDescription'],
-    attribute: 'showDescription'
-  }, {
-    label: cards_collection_inspector_controls_('Buttons'),
-    value: attributes['showButtons'],
-    attribute: 'showButtons'
-  }, {
-    label: cards_collection_inspector_controls_('Meta'),
-    value: attributes['showMeta'],
-    attribute: 'showMeta'
-  }];
   return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 2,
     maxLevel: 4,
@@ -26755,11 +26855,10 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         align: contentAlign
       });
     }
-  }))), Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(toggle_group, {
+  }))), Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
     label: cards_collection_inspector_controls_('Cards Manager', '__plugin_txtd'),
-    onChange: updateAttributes,
-    toggles: toggles
-  }), showMedia && Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
+    onChange: updateAttributes
+  }, props)), showMedia && Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
     initialOpen: true,
     title: cards_collection_inspector_controls_('Cards Media Area')
   }, Object(external_React_["createElement"])(cards_collection_inspector_controls_RadioControl, {
@@ -26796,10 +26895,10 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
 
 
 
+
 function cards_collection_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function cards_collection_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { cards_collection_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { cards_collection_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 
 
 
@@ -26817,95 +26916,15 @@ var edit_ALLOWED_BLOCKS = ['novablocks/card'];
 var CARDS_COLLECTION_TEMPLATE = [['novablocks/card'], ['novablocks/card'], ['novablocks/card']];
 
 var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes,
-      clientId = props.clientId,
-      innerBlocks = props.innerBlocks;
-  var blockStyle = attributes.blockStyle,
-      contentStyle = attributes.contentStyle,
-      title = attributes.title,
-      subtitle = attributes.subtitle,
-      contentAlign = attributes.contentAlign,
-      level = attributes.level,
-      imageResizing = attributes.imageResizing,
-      containerHeight = attributes.containerHeight,
-      showCollectionTitle = attributes.showCollectionTitle,
-      showCollectionSubtitle = attributes.showCollectionSubtitle,
-      showMedia = attributes.showMedia,
-      showTitle = attributes.showTitle,
-      showSubtitle = attributes.showSubtitle,
-      showDescription = attributes.showDescription,
-      showButtons = attributes.showButtons,
-      showMeta = attributes.showMeta;
-  var blockClassName = 'novablocks-cards-collection';
+  var innerBlocks = props.innerBlocks;
   var hasAppender = !!innerBlocks && innerBlocks.length < 4;
-  var className = classnames_default()(props.className, blockClassName, 'novablocks-block', "".concat(blockClassName, "--align-").concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
-    'has-background': blockStyle !== 'basic',
-    'has-appender': hasAppender
-  });
-
-  var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
-    var compiledHeight = containerHeight / 50 - 1;
-
-    if (compiledHeight < 0) {
-      compiledHeight *= 3;
-    }
-
-    var numerator = 1;
-    var denominator = 1;
-    compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
-
-    if (compiledHeight > 0) {
-      numerator = 1 + compiledHeight;
-    }
-
-    if (compiledHeight < 0) {
-      denominator = 1 + Math.abs(compiledHeight);
-    }
-
-    return "".concat(numerator * 100 / denominator, "%");
-  };
-
-  var style = {
-    '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
-    '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
-  };
-  return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])("div", {
-    className: className,
-    style: style
-  }, Object(external_React_["createElement"])("div", {
-    className: "wp-block-group__inner-container"
-  }, showCollectionTitle && Object(external_React_["createElement"])("div", {
-    className: "block-editor-block-list__block wp-block novablocks-cards-collection__title"
-  }, Object(external_React_["createElement"])(editable_text, {
-    tagName: "h".concat(level),
-    value: title,
-    onChange: function onChange(title) {
-      setAttributes({
-        title: title
-      });
-    }
-  })), showCollectionSubtitle && Object(external_React_["createElement"])("div", {
-    className: "block-editor-block-list__block wp-block novablocks-cards-collection__subtitle"
-  }, Object(external_React_["createElement"])(editable_text, {
-    tagName: 'p',
-    className: 'is-style-lead',
-    value: subtitle,
-    onChange: function onChange(subtitle) {
-      setAttributes({
-        subtitle: subtitle
-      });
-    }
-  })), Object(external_React_["createElement"])("div", {
-    className: "block-editor-block-list__block wp-block novablocks-cards-collection__cards",
-    "data-align": "wide"
-  }, Object(external_React_["createElement"])("div", {
-    className: "".concat(blockClassName, "__layout")
-  }, Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
+  return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])(collection, extends_default()({
+    hasAppender: hasAppender
+  }, props), Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
     allowedBlocks: edit_ALLOWED_BLOCKS,
     template: CARDS_COLLECTION_TEMPLATE,
     renderAppender: hasAppender ? window.undefined : false
-  }))))), Object(external_React_["createElement"])(cards_collection_inspector_controls, props));
+  })), Object(external_React_["createElement"])(cards_collection_inspector_controls, props));
 };
 
 var withInnerBlocks = cards_collection_edit_withSelect(function (select, props) {
@@ -26958,7 +26977,7 @@ function cards_collection_init() {
 }
 
 /* harmony default export */ var cards_collection = (cards_collection_init);
-// CONCATENATED MODULE: ./src/blocks/posts/edit.js
+// CONCATENATED MODULE: ./src/blocks/posts-collection/edit.js
 
 
 
@@ -26966,32 +26985,27 @@ function cards_collection_init() {
 
 
 
-/**
- * External dependencies
- */
 
-var posts_edit_compose = wp.compose.compose;
+var posts_collection_edit_compose = wp.compose.compose;
 
-/**
- * WordPress dependencies
- */
 
-var posts_edit_wp$blockEditor = wp.blockEditor,
-    edit_BlockIcon = posts_edit_wp$blockEditor.BlockIcon,
-    edit_RichText = posts_edit_wp$blockEditor.RichText;
-var posts_edit_ = wp.i18n.__;
+var posts_collection_edit_wp$blockEditor = wp.blockEditor,
+    edit_BlockIcon = posts_collection_edit_wp$blockEditor.BlockIcon,
+    posts_collection_edit_RichText = posts_collection_edit_wp$blockEditor.RichText,
+    posts_collection_edit_InspectorControls = posts_collection_edit_wp$blockEditor.InspectorControls;
+var posts_collection_edit_ = wp.i18n.__;
 var _wp$date = wp.date,
     __experimentalGetSettings = _wp$date.__experimentalGetSettings,
     dateI18n = _wp$date.dateI18n,
     format = _wp$date.format;
-var posts_edit_withSelect = wp.data.withSelect;
-var posts_edit_wp$components = wp.components,
-    edit_Placeholder = posts_edit_wp$components.Placeholder,
-    edit_Spinner = posts_edit_wp$components.Spinner;
-var posts_edit_wp$element = wp.element,
-    posts_edit_Component = posts_edit_wp$element.Component,
-    posts_edit_Fragment = posts_edit_wp$element.Fragment,
-    edit_RawHTML = posts_edit_wp$element.RawHTML;
+var posts_collection_edit_withSelect = wp.data.withSelect;
+var posts_collection_edit_wp$components = wp.components,
+    edit_Placeholder = posts_collection_edit_wp$components.Placeholder,
+    edit_Spinner = posts_collection_edit_wp$components.Spinner;
+var posts_collection_edit_wp$element = wp.element,
+    posts_collection_edit_Component = posts_collection_edit_wp$element.Component,
+    posts_collection_edit_Fragment = posts_collection_edit_wp$element.Fragment,
+    edit_RawHTML = posts_collection_edit_wp$element.RawHTML;
 
 var edit_PostsEdit = /*#__PURE__*/function (_Component) {
   inherits_default()(PostsEdit, _Component);
@@ -27010,98 +27024,52 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           className = _this$props.className,
           posts = _this$props.posts;
-      var displayFeaturedImage = attributes.displayFeaturedImage,
-          displayDate = attributes.displayDate,
-          displayContent = attributes.displayContent,
-          displayReadMore = attributes.displayReadMore,
-          postLink = attributes.postLink,
-          excerptLength = attributes.excerptLength,
-          numberOfPosts = attributes.numberOfPosts;
+      console.log(posts);
       var hasPosts = Array.isArray(posts) && posts.length;
-      var displayPosts = Array.isArray(posts) && posts.length > numberOfPosts ? posts.slice(0, numberOfPosts) : posts;
-
-      var dateFormat = __experimentalGetSettings().formats.date;
-
-      if (!hasPosts) {
-        return Object(external_React_["createElement"])(posts_edit_Fragment, null, Object(external_React_["createElement"])(edit_Placeholder, {
-          icon: Object(external_React_["createElement"])(edit_BlockIcon, {
-            icon: "format-gallery"
-          }),
-          label: posts_edit_('Blog Posts', '__plugin_txtd')
-        }, !Array.isArray(posts) ? Object(external_React_["createElement"])(edit_Spinner, null) : posts_edit_('No posts found. Start publishing or add posts from an RSS feed.', '__plugin_txtd')));
-      }
-
-      return Object(external_React_["createElement"])("div", {
-        className: className
-      }, Object(external_React_["createElement"])("div", null, displayPosts.map(function (post, i) {
-        var featuredImageUrl = post.featured_media_object ? post.featured_media_object.source_url : null;
-        var titleTrimmed = post.title.rendered.trim();
-        var excerpt = post.excerpt.rendered;
-
-        if (post.excerpt.raw === '') {
-          excerpt = post.content.raw;
+      return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
+        label: posts_collection_edit_('Cards Manager', '__plugin_txtd'),
+        onChange: function onChange(attributes) {
+          setAttributes(attributes);
         }
-
-        var excerptElement = document.createElement('div');
-        excerptElement.innerHTML = excerpt;
-        excerpt = excerptElement.textContent || excerptElement.innerText || '';
+      }, this.props))), Object(external_React_["createElement"])("div", {
+        className: "novablocks-collection"
+      }, Object(external_React_["createElement"])("div", {
+        className: "novablocks-collection__layout"
+      }, Object(external_React_["createElement"])("div", {
+        className: "block-editor-inner-blocks"
+      }, Object(external_React_["createElement"])("div", {
+        className: "block-editor-block-list__layout"
+      }, !!posts && posts.map(function (post, idx) {
+        console.log(post);
         return Object(external_React_["createElement"])("div", {
-          key: i
-        }, Object(external_React_["createElement"])("article", {
-          className: "novablocks-media novablocks-media--blog wp-block-group alignfull content-is-moderate block-is-moderate has-background"
+          className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
+          key: idx
         }, Object(external_React_["createElement"])("div", {
-          className: "wp-block-group__inner-container"
+          className: "novablocks-card__media-wrap"
         }, Object(external_React_["createElement"])("div", {
-          className: "wp-block alignwide"
+          className: "novablocks-card__media"
         }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-media__layout"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-media__content"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-media__inner-container"
-        }, displayDate && Object(external_React_["createElement"])("time", {
-          dateTime: format('c', post.date_gmt)
-        }, dateI18n(dateFormat, post.date_gmt)), Object(external_React_["createElement"])("h2", null, Object(external_React_["createElement"])("a", {
-          href: post.link,
-          target: "_blank",
-          rel: "noreferrer noopener",
-          alt: titleTrimmed
-        }, titleTrimmed ? Object(external_React_["createElement"])(edit_RawHTML, null, titleTrimmed) :
-        /* translators: placeholder when a post has no title */
-        posts_edit_('(no title)', '__plugin_txtd'))), displayContent && Object(external_React_["createElement"])("p", null, Object(external_React_["createElement"])(edit_RawHTML, {
-          key: "html"
-        }, excerptLength < excerpt.trim().split(' ').length ? excerpt.trim().split(' ', excerptLength).join(' ') + '…' : excerpt.trim().split(' ', excerptLength).join(' '))), displayReadMore && Object(external_React_["createElement"])(edit_RichText, {
-          tagName: "a",
-          onChange: function onChange(newPostLink) {
-            return setAttributes({
-              postLink: newPostLink
-            });
-          },
-          value: postLink,
-          placeholder: posts_edit_('Read more', '__plugin_txtd'),
-          multiline: false,
-          withoutInteractiveFormatting: false,
-          isSelected: false
-        }))), featuredImageUrl !== null && displayFeaturedImage && Object(external_React_["createElement"])("div", {
-          className: "novablocks-media__aside"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-media__image"
-        }, Object(external_React_["createElement"])("a", {
-          href: "",
-          className: "post-thumbnail"
-        }, Object(external_React_["createElement"])("img", {
-          src: featuredImageUrl,
-          alt: ""
-        })))))))));
-      })));
+          className: "novablocks-card__media-placeholder"
+        }, placeholder))), Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__meta"
+        }), Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__title"
+        }, post.title.raw), Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__subtitle"
+        }), Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__description"
+        }, post.excerpt.raw), Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__buttons"
+        }));
+      }))))));
     }
   }]);
 
   return PostsEdit;
-}(posts_edit_Component);
+}(posts_collection_edit_Component);
 
-/* harmony default export */ var posts_edit = (with_posts(edit_PostsEdit));
-// CONCATENATED MODULE: ./src/blocks/posts/index.js
+/* harmony default export */ var posts_collection_edit = (with_posts(edit_PostsEdit));
+// CONCATENATED MODULE: ./src/blocks/posts-collection/index.js
 
 
 /**
@@ -27113,52 +27081,19 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
  * WordPress dependencies
  */
 
-var posts_ = wp.i18n.__;
-var posts_registerBlockType = wp.blocks.registerBlockType;
-var posts_InnerBlocks = wp.blockEditor.InnerBlocks;
+var posts_collection_ = wp.i18n.__;
+var posts_collection_registerBlockType = wp.blocks.registerBlockType;
+var posts_collection_InnerBlocks = wp.blockEditor.InnerBlocks;
 
-function posts_init() {
-  posts_registerBlockType('novablocks/posts', {
-    title: posts_('Latest Nova Posts', '__plugin_txtd'),
-    description: posts_('Show Latest Posts', '__plugin_txtd'),
+function posts_collection_init() {
+  posts_collection_registerBlockType('novablocks/posts-collection', {
+    title: posts_collection_('Posts Collection', '__plugin_txtd'),
+    description: posts_collection_('Show Latest Posts', '__plugin_txtd'),
     category: 'nova-blocks',
-    icon: icons_media,
-    attributes: {
-      displayFeaturedImage: {
-        type: 'boolean',
-        default: true
-      },
-      displayDate: {
-        type: 'boolean',
-        default: true
-      },
-      displayContent: {
-        type: 'boolean',
-        default: true
-      },
-      columnsNumber: {
-        type: 'number',
-        default: 2
-      },
-      displayReadMore: {
-        type: 'boolean',
-        default: true
-      },
-      numberOfPosts: {
-        type: 'number',
-        default: '4'
-      },
-      categories: {
-        type: 'string'
-      },
-      postLink: {
-        type: 'string',
-        default: 'Read More'
-      }
-    },
-    edit: posts_edit,
+    icon: card,
+    edit: posts_collection_edit,
     save: function save() {
-      return Object(external_React_["createElement"])(posts_InnerBlocks.Content, null);
+      return Object(external_React_["createElement"])(posts_collection_InnerBlocks.Content, null);
     },
     getEditWrapperProps: function getEditWrapperProps() {
       var settings = wp.data.select('core/block-editor').getSettings();
@@ -27169,7 +27104,7 @@ function posts_init() {
   });
 }
 
-/* harmony default export */ var blocks_posts = (posts_init);
+/* harmony default export */ var posts_collection = (posts_collection_init);
 // CONCATENATED MODULE: ./src/editor.js
 
 
@@ -27258,7 +27193,7 @@ var editor_novaBlocks = /*#__PURE__*/function () {
       blocks_media();
       blocks_slideshow();
       blocks_openhours();
-      blocks_posts();
+      posts_collection();
     }
   }]);
 
