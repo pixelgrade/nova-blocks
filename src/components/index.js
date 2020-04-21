@@ -8,6 +8,7 @@ export { default as ScrollingEffectControls } from './scrolling-effect-controls'
 export { default as ToggleGroup } from './toggle-group';
 export { default as HeadingToolbar } from './heading-toolbar';
 
+export { default as withPosts } from './with-posts';
 export { default as withParallax } from './with-parallax';
 export { default as withSettings } from './with-settings';
 
