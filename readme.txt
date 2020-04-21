@@ -2,7 +2,7 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.3.2
+Tested up to: 5.4.0
 Requires PHP: 5.4.0
 Stable tag: 1.3.1
 License: GPL v2.0 (or later)
@@ -93,6 +93,9 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.3.1 =
+* Fix fatal error
 
 = 1.3.0 =
 * New Block: Open Hours to display businesses open hours
