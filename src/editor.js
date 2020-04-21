@@ -84,10 +84,13 @@ class novaBlocks {
 			cardsCollectionInit();
 		}
 
+		if ( supports.indexOf( 'openhours' ) > - 1 ) {
+			openHoursInit();
+		}
+
 		heroInit();
 		mediaInit();
 		slideshowInit();
-		openHoursInit();
 	}
 }
 

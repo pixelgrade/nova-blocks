@@ -26408,10 +26408,13 @@ var editor_novaBlocks = /*#__PURE__*/function () {
         cards_collection();
       }
 
+      if (supports.indexOf('openhours') > -1) {
+        blocks_openhours();
+      }
+
       blocks_hero();
       blocks_media();
       blocks_slideshow();
-      blocks_openhours();
     }
   }]);
 
