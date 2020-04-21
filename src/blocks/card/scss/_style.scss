@@ -1,4 +1,11 @@
 .novablocks-card {
+	@include clearfix;
+
+	.wp-block-buttons[class] {
+		float: none;
+		margin-left: 0;
+		margin-right: 0;
+	}
 
 	> .block-editor-block-list__layout {
 		@include clearfix;
@@ -47,15 +54,5 @@
 	svg {
 		max-width: 50%;
 		max-height: 50%;
-	}
-}
-
-.novablocks-card__buttons {
-	@include clearfix;
-
-	.wp-block-buttons[class] {
-		float: none;
-		margin-left: 0;
-		margin-right: 0;
 	}
 }
