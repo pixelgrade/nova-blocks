@@ -27024,7 +27024,7 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           className = _this$props.className,
           posts = _this$props.posts;
-      console.log(posts);
+      var showTitle = attributes.showTitle;
       var hasPosts = Array.isArray(posts) && posts.length;
       return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
         label: posts_collection_edit_('Cards Manager', '__plugin_txtd'),
@@ -27040,7 +27040,6 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
       }, Object(external_React_["createElement"])("div", {
         className: "block-editor-block-list__layout"
       }, !!posts && posts.map(function (post, idx) {
-        console.log(post);
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
           key: idx
@@ -27052,7 +27051,7 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           className: "novablocks-card__media-placeholder"
         }, placeholder))), Object(external_React_["createElement"])("div", {
           className: "novablocks-card__meta"
-        }), Object(external_React_["createElement"])("div", {
+        }), showTitle && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__title"
         }, post.title.raw), Object(external_React_["createElement"])("div", {
           className: "novablocks-card__subtitle"

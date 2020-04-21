@@ -53,7 +53,9 @@ class PostsEdit extends Component {
 			posts,
 		} = this.props;
 
-		console.log( posts );
+		const {
+			showTitle
+		} = attributes;
 
 		const hasPosts = Array.isArray( posts ) && posts.length;
 
@@ -72,7 +74,7 @@ class PostsEdit extends Component {
 							<div className="block-editor-block-list__layout">
 								{
 									!! posts && posts.map( ( post, idx ) => {
-										console.log( post );
+
 										return (
 											<div className={ `novablocks-card novablocks-card__inner-container novablocks-block__content` } key={ idx }>
 												<div className="novablocks-card__media-wrap">
@@ -81,7 +83,7 @@ class PostsEdit extends Component {
 													</div>
 												</div>
 												<div className="novablocks-card__meta"></div>
-												<div className="novablocks-card__title">{ post.title.raw }</div>
+												{ showTitle && <div className="novablocks-card__title">{ post.title.raw }</div> }
 												<div className="novablocks-card__subtitle"></div>
 												<div className="novablocks-card__description">{ post.excerpt.raw }</div>
 												<div className="novablocks-card__buttons"></div>
