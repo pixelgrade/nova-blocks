@@ -21589,10 +21589,89 @@ EditableText.Content = function (_ref) {
 
 
 /* harmony default export */ var editable_text = (EditableText);
+// CONCATENATED MODULE: ./src/components/collection/inspector-controls.js
+
+
+
+var inspector_controls_ = wp.i18n.__;
+var inspector_controls_Fragment = wp.element.Fragment;
+var inspector_controls_wp$components = wp.components,
+    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
+    PanelRow = inspector_controls_wp$components.PanelRow,
+    inspector_controls_RadioControl = inspector_controls_wp$components.RadioControl,
+    inspector_controls_RangeControl = inspector_controls_wp$components.RangeControl;
+var inspector_controls_wp$blockEditor = wp.blockEditor,
+    inspector_controls_InspectorControls = inspector_controls_wp$blockEditor.InspectorControls,
+    inspector_controls_AlignmentToolbar = inspector_controls_wp$blockEditor.AlignmentToolbar;
+
+var inspector_controls_CollectionInspectorControls = function CollectionInspectorControls(props) {
+  var _props$attributes = props.attributes,
+      contentAlign = _props$attributes.contentAlign,
+      containerHeight = _props$attributes.containerHeight,
+      imageResizing = _props$attributes.imageResizing,
+      level = _props$attributes.level,
+      showMedia = _props$attributes.showMedia,
+      setAttributes = props.setAttributes,
+      isSelected = props.isSelected;
+
+  var _onChange = typeof props.onChange !== 'function' ? setAttributes : props.onChange;
+
+  return Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, isSelected && Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 2,
+    maxLevel: 4,
+    selectedLevel: level,
+    onChange: function onChange(level) {
+      _onChange({
+        level: level
+      });
+    }
+  }))), Object(external_React_["createElement"])(EmphasisContentAreaFill, null, isSelected && Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
+    value: contentAlign,
+    isCollapsed: false,
+    onChange: function onChange(contentAlign) {
+      _onChange({
+        contentAlign: contentAlign
+      });
+    }
+  }))), Object(external_React_["createElement"])(inspector_controls_InspectorControls, null, showMedia && Object(external_React_["createElement"])(inspector_controls_PanelBody, {
+    initialOpen: true,
+    title: inspector_controls_('Cards Media Area')
+  }, Object(external_React_["createElement"])(inspector_controls_RadioControl, {
+    label: 'Image resizing',
+    selected: imageResizing,
+    onChange: function onChange(imageResizing) {
+      setAttributes({
+        imageResizing: imageResizing
+      });
+    },
+    options: [{
+      label: 'Stretch to fill the container',
+      value: 'cropped'
+    }, {
+      label: 'Shrink to fit (no crop)',
+      value: 'original'
+    }]
+  }), Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+    label: inspector_controls_('Image container height', '__plugin_txtd'),
+    value: containerHeight,
+    onChange: function onChange(containerHeight) {
+      setAttributes({
+        containerHeight: containerHeight
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 5
+  }))));
+};
+
+/* harmony default export */ var inspector_controls = (inspector_controls_CollectionInspectorControls);
 // CONCATENATED MODULE: ./src/components/collection/index.js
 
 
 
+
+var collection_Fragment = wp.element.Fragment;
 
 var collection_CollectionTitle = function CollectionTitle(props) {
   var _props$attributes = props.attributes,
@@ -21696,7 +21775,7 @@ var collection_Collection = function Collection(props) {
     'has-background': blockStyle !== 'basic',
     'has-appender': hasAppender
   });
-  return Object(external_React_["createElement"])("div", {
+  return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(inspector_controls, props), Object(external_React_["createElement"])("div", {
     className: className,
     style: style
   }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props), Object(external_React_["createElement"])("div", {
@@ -21706,7 +21785,7 @@ var collection_Collection = function Collection(props) {
     "data-align": "wide"
   }, Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__layout")
-  }, props.children))));
+  }, props.children)))));
 };
 
 /* harmony default export */ var collection = (collection_Collection);
@@ -22767,7 +22846,7 @@ var alignment_controls_Fragment = wp.element.Fragment;
 var alignment_controls_wp$components = wp.components,
     alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
     alignment_controls_IconButton = alignment_controls_wp$components.IconButton,
-    PanelRow = alignment_controls_wp$components.PanelRow,
+    alignment_controls_PanelRow = alignment_controls_wp$components.PanelRow,
     alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
 
 var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
@@ -22800,7 +22879,7 @@ var alignment_controls_AlignmentControls = function AlignmentControls(props) {
       horizontalAlignment = _props$attributes.horizontalAlignment,
       verticalAlignment = _props$attributes.verticalAlignment,
       setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(alignment_controls_Fragment, null, Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(external_React_["createElement"])(block_horizontal_alignment_toolbar, {
+  return Object(external_React_["createElement"])(alignment_controls_Fragment, null, Object(external_React_["createElement"])(alignment_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(external_React_["createElement"])(block_horizontal_alignment_toolbar, {
     value: horizontalAlignment,
     onChange: function onChange(nextHorizontalAlignment) {
       wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map(function (block) {
@@ -22813,7 +22892,7 @@ var alignment_controls_AlignmentControls = function AlignmentControls(props) {
         horizontalAlignment: nextHorizontalAlignment
       });
     }
-  })), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
+  })), Object(external_React_["createElement"])(alignment_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
     value: verticalAlignment,
     onChange: function onChange(nextVerticalAlignment) {
       return setAttributes({
@@ -23302,14 +23381,14 @@ var map_style_select_MapStyleSelect = /*#__PURE__*/function (_Component) {
 
 
 
-var inspector_controls_ = wp.i18n.__;
-var inspector_controls_wp$components = wp.components,
-    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
-    inspector_controls_RangeControl = inspector_controls_wp$components.RangeControl,
-    inspector_controls_SelectControl = inspector_controls_wp$components.SelectControl,
-    inspector_controls_ToggleControl = inspector_controls_wp$components.ToggleControl;
+var google_map_inspector_controls_ = wp.i18n.__;
+var google_map_inspector_controls_wp$components = wp.components,
+    google_map_inspector_controls_PanelBody = google_map_inspector_controls_wp$components.PanelBody,
+    google_map_inspector_controls_RangeControl = google_map_inspector_controls_wp$components.RangeControl,
+    inspector_controls_SelectControl = google_map_inspector_controls_wp$components.SelectControl,
+    inspector_controls_ToggleControl = google_map_inspector_controls_wp$components.ToggleControl;
 var inspector_controls_Component = wp.element.Component;
-var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var google_map_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 
 var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Component) {
   inherits_default()(ButtonInspectorControls, _Component);
@@ -23343,8 +23422,8 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
         return null;
       }
 
-      return Object(external_React_["createElement"])(inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(inspector_controls_PanelBody, {
-        title: inspector_controls_('Map Design', '__plugin_txtd')
+      return Object(external_React_["createElement"])(google_map_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(google_map_inspector_controls_PanelBody, {
+        title: google_map_inspector_controls_('Map Design', '__plugin_txtd')
       }, Object(external_React_["createElement"])(map_style_select, extends_default()({}, this.props, {
         apiKey: savedApiKey,
         value: styleSlug,
@@ -23364,7 +23443,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         }
       })), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
+        label: google_map_inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
         checked: showIcons,
         onChange: function onChange() {
           return setAttributes({
@@ -23372,7 +23451,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         }
       }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Street Labels', '__plugin_txtd'),
+        label: google_map_inspector_controls_('Show Street Labels', '__plugin_txtd'),
         checked: showLabels,
         onChange: function onChange() {
           return setAttributes({
@@ -23380,16 +23459,16 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         }
       }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
-        label: inspector_controls_('Show Controls', '__plugin_txtd'),
+        label: google_map_inspector_controls_('Show Controls', '__plugin_txtd'),
         checked: showControls,
         onChange: function onChange() {
           return setAttributes({
             showControls: !showControls
           });
         }
-      })), Object(external_React_["createElement"])(inspector_controls_PanelBody, {
-        title: inspector_controls_('Zoom Level', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+      })), Object(external_React_["createElement"])(google_map_inspector_controls_PanelBody, {
+        title: google_map_inspector_controls_('Zoom Level', '__plugin_txtd')
+      }, Object(external_React_["createElement"])(google_map_inspector_controls_RangeControl, {
         value: zoom,
         onChange: function onChange(newZoom) {
           return setAttributes({
@@ -23405,7 +23484,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
   return ButtonInspectorControls;
 }(inspector_controls_Component);
 
-/* harmony default export */ var inspector_controls = (inspector_controls_ButtonInspectorControls);
+/* harmony default export */ var google_map_inspector_controls = (inspector_controls_ButtonInspectorControls);
 // CONCATENATED MODULE: ./src/blocks/google-map/edit.js
 
 
@@ -23623,7 +23702,7 @@ var edit_Edit = /*#__PURE__*/function (_Component) {
           });
         },
         controls: ['center', 'full']
-      })), !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && Object(external_React_["createElement"])(inspector_controls, extends_default()({}, newProps, {
+      })), !!fetchedApiKey && !!fetchedScript && !!savedApiKey && !gmAuthFailure && Object(external_React_["createElement"])(google_map_inspector_controls, extends_default()({}, newProps, {
         apiKey: this.state.apiKey,
         savedApiKey: this.state.savedApiKey,
         onChangeApiKey: function onChangeApiKey(apiKey) {
@@ -25065,10 +25144,10 @@ var slideshow_inspector_controls_ = wp.i18n.__;
 var slideshow_inspector_controls_wp$components = wp.components,
     inspector_controls_FocalPointPicker = slideshow_inspector_controls_wp$components.FocalPointPicker,
     slideshow_inspector_controls_PanelBody = slideshow_inspector_controls_wp$components.PanelBody,
-    inspector_controls_RadioControl = slideshow_inspector_controls_wp$components.RadioControl,
+    slideshow_inspector_controls_RadioControl = slideshow_inspector_controls_wp$components.RadioControl,
     slideshow_inspector_controls_RangeControl = slideshow_inspector_controls_wp$components.RangeControl;
 var slideshow_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
-var inspector_controls_Fragment = wp.element.Fragment;
+var slideshow_inspector_controls_Fragment = wp.element.Fragment;
 
 var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorControls(props) {
   var _props$attributes = props.attributes,
@@ -25098,7 +25177,7 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
     galleryImages: galleryImages,
     onSelectImage: setIndex,
     selected: selectedIndex
-  }), selectedImage && Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(inspector_controls_FocalPointPicker, {
+  }), selectedImage && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(inspector_controls_FocalPointPicker, {
     className: focalPointPickerClassNames,
     url: selectedImage.url,
     dimensions: {
@@ -25116,10 +25195,10 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
         galleryImages: newGalleryImages
       });
     }
-  }))), 'gallery' === slideshowType && Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(layout_panel, props), Object(external_React_["createElement"])(slideshow_inspector_controls_PanelBody, {
+  }))), 'gallery' === slideshowType && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(layout_panel, props), Object(external_React_["createElement"])(slideshow_inspector_controls_PanelBody, {
     title: slideshow_inspector_controls_('Height', '__plugin_txtd'),
     initialOpen: false
-  }, Object(external_React_["createElement"])(inspector_controls_RadioControl, {
+  }, Object(external_React_["createElement"])(slideshow_inspector_controls_RadioControl, {
     label: slideshow_inspector_controls_('Minimum Height', '__plugin_txtd'),
     selected: minHeight,
     onChange: function onChange(nextMinHeight) {
@@ -26790,43 +26869,17 @@ function card_init() {
 
 
 
-
 var cards_collection_inspector_controls_ = wp.i18n.__;
-var cards_collection_inspector_controls_Fragment = wp.element.Fragment;
-var cards_collection_inspector_controls_wp$components = wp.components,
-    cards_collection_inspector_controls_PanelBody = cards_collection_inspector_controls_wp$components.PanelBody,
-    inspector_controls_PanelRow = cards_collection_inspector_controls_wp$components.PanelRow,
-    cards_collection_inspector_controls_RadioControl = cards_collection_inspector_controls_wp$components.RadioControl,
-    cards_collection_inspector_controls_RangeControl = cards_collection_inspector_controls_wp$components.RangeControl;
-var inspector_controls_wp$blockEditor = wp.blockEditor,
-    cards_collection_inspector_controls_InspectorControls = inspector_controls_wp$blockEditor.InspectorControls,
-    inspector_controls_AlignmentToolbar = inspector_controls_wp$blockEditor.AlignmentToolbar;
-var inspector_controls_wp$data = wp.data,
-    inspector_controls_dispatch = inspector_controls_wp$data.dispatch,
-    inspector_controls_select = inspector_controls_wp$data.select;
+var cards_collection_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var inspector_controls_dispatch = wp.data.dispatch;
 
 var inspector_controls_CardsCollectionInspectorControls = function CardsCollectionInspectorControls(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes,
-      innerBlocks = props.innerBlocks,
-      isSelected = props.isSelected;
-  var level = attributes.level,
-      imageResizing = attributes.imageResizing,
-      containerHeight = attributes.containerHeight,
-      contentAlign = attributes.contentAlign,
-      showCollectionTitle = attributes.showCollectionTitle,
-      showCollectionSubtitle = attributes.showCollectionSubtitle,
-      showMedia = attributes.showMedia,
-      showTitle = attributes.showTitle,
-      showSubtitle = attributes.showSubtitle,
-      showDescription = attributes.showDescription,
-      showButtons = attributes.showButtons,
-      showMeta = attributes.showMeta;
+  var innerBlocks = props.innerBlocks;
 
   var updateChildrenAttributes = function updateChildrenAttributes(attributes) {
     innerBlocks.forEach(function (_ref) {
       var clientId = _ref.clientId;
-      wp.data.dispatch('core/block-editor').updateBlockAttributes(clientId, attributes);
+      inspector_controls_dispatch('core/block-editor').updateBlockAttributes(clientId, attributes);
     });
   };
 
@@ -26835,59 +26888,10 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     updateChildrenAttributes(attributes);
   };
 
-  return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
-    minLevel: 2,
-    maxLevel: 4,
-    selectedLevel: level,
-    onChange: function onChange(newLevel) {
-      updateAttributes({
-        level: newLevel
-      });
-    }
-  }))), Object(external_React_["createElement"])(EmphasisContentAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
-    value: contentAlign,
-    isCollapsed: false,
-    onChange: function onChange(contentAlign) {
-      setAttributes({
-        contentAlign: contentAlign
-      });
-      updateChildrenAttributes({
-        align: contentAlign
-      });
-    }
-  }))), Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
+  return Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
     label: cards_collection_inspector_controls_('Cards Manager', '__plugin_txtd'),
     onChange: updateAttributes
-  }, props)), showMedia && Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
-    initialOpen: true,
-    title: cards_collection_inspector_controls_('Cards Media Area')
-  }, Object(external_React_["createElement"])(cards_collection_inspector_controls_RadioControl, {
-    label: 'Image resizing',
-    selected: imageResizing,
-    onChange: function onChange(imageResizing) {
-      setAttributes({
-        imageResizing: imageResizing
-      });
-    },
-    options: [{
-      label: 'Stretch to fill the container',
-      value: 'cropped'
-    }, {
-      label: 'Shrink to fit (no crop)',
-      value: 'original'
-    }]
-  }), Object(external_React_["createElement"])(cards_collection_inspector_controls_RangeControl, {
-    label: cards_collection_inspector_controls_('Image container height', '__plugin_txtd'),
-    value: containerHeight,
-    onChange: function onChange(containerHeight) {
-      setAttributes({
-        containerHeight: containerHeight
-      });
-    },
-    min: 0,
-    max: 100,
-    step: 5
-  }))));
+  }, props)));
 };
 
 /* harmony default export */ var cards_collection_inspector_controls = (inspector_controls_CardsCollectionInspectorControls);
@@ -27024,9 +27028,11 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes,
           className = _this$props.className,
           posts = _this$props.posts;
-      var showTitle = attributes.showTitle,
+      var level = attributes.level,
+          showTitle = attributes.showTitle,
           showDescription = attributes.showDescription;
       var hasPosts = Array.isArray(posts) && posts.length;
+      var HeadingTagName = "h".concat(level + 1);
       return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
         label: posts_collection_edit_('Cards Manager', '__plugin_txtd'),
         onChange: function onChange(attributes) {
@@ -27050,9 +27056,9 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           className: "novablocks-card__media-placeholder"
         }, placeholder))), Object(external_React_["createElement"])("div", {
           className: "novablocks-card__meta"
-        }), showTitle && Object(external_React_["createElement"])("div", {
+        }), showTitle && Object(external_React_["createElement"])(HeadingTagName, {
           className: "novablocks-card__title"
-        }, post.title.raw), showDescription && Object(external_React_["createElement"])("div", {
+        }, post.title.raw), showDescription && Object(external_React_["createElement"])("p", {
           className: "novablocks-card__description"
         }, post.excerpt.raw), Object(external_React_["createElement"])("div", {
           className: "novablocks-card__buttons"

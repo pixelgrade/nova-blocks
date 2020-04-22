@@ -1,5 +1,8 @@
 import classnames from 'classnames';
 import EditableText from "../editable-text";
+import InspectorControls from "./inspector-controls";
+
+const { Fragment } = wp.element;
 
 const CollectionTitle = ( props ) => {
 
@@ -134,17 +137,20 @@ const Collection = ( props ) => {
 	);
 
 	return (
-		<div className={ className } style={ style }>
-			<CollectionTitle { ...props } />
-			<CollectionSubtitle { ...props } />
-			<div className="wp-block-group__inner-container">
-				<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
-					<div className={ `${ blockClassName }__layout` }>
-						{ props.children }
+		<Fragment>
+			<InspectorControls { ...props } />
+			<div className={ className } style={ style }>
+				<CollectionTitle { ...props } />
+				<CollectionSubtitle { ...props } />
+				<div className="wp-block-group__inner-container">
+					<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
+						<div className={ `${ blockClassName }__layout` }>
+							{ props.children }
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</Fragment>
 	)
 }
 

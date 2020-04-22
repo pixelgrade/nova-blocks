@@ -54,11 +54,13 @@ class PostsEdit extends Component {
 		} = this.props;
 
 		const {
+			level,
 			showTitle,
 			showDescription,
 		} = attributes;
 
 		const hasPosts = Array.isArray( posts ) && posts.length;
+		const HeadingTagName = `h${ level + 1 }`;
 
 		return (
 			<Fragment>
@@ -83,8 +85,8 @@ class PostsEdit extends Component {
 												</div>
 											</div>
 											<div className="novablocks-card__meta"></div>
-											{ showTitle && <div className="novablocks-card__title">{ post.title.raw }</div> }
-											{ showDescription && <div className="novablocks-card__description">{ post.excerpt.raw }</div> }
+											{ showTitle && <HeadingTagName className="novablocks-card__title">{ post.title.raw }</HeadingTagName> }
+											{ showDescription && <p className="novablocks-card__description">{ post.excerpt.raw }</p> }
 											<div className="novablocks-card__buttons"></div>
 										</div>
 									);
