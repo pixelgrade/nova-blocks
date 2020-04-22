@@ -55,12 +55,29 @@ class PostsEdit extends Component {
 
 		const {
 			level,
-			showTitle,
+			showButtons,
 			showDescription,
+			showMedia,
+			showMeta,
+			showTitle,
+			showSubtitle,
 		} = attributes;
 
 		const hasPosts = Array.isArray( posts ) && posts.length;
-		const HeadingTagName = `h${ level + 1 }`;
+		const TitleTagName = `h${ level + 1 }`;
+		const SubtitleTagName = `h${ level + 2 }`;
+		const dateFormat = __experimentalGetSettings().formats.date;
+
+		const CardMedia = ( props ) => {
+			const { post } = props;
+			const featuredImageUrl = post.featured_media_object ? post.featured_media_object.source_url : null;
+
+			if ( !! featuredImageUrl ) {
+				return <img className={ `novablocks-card__media-image` } src={ featuredImageUrl } />
+			}
+
+			return <div className={ `novablocks-card__media-placeholder` }>{ icons.placeholder }</div>
+		}
 
 		return (
 			<Fragment>
@@ -79,15 +96,36 @@ class PostsEdit extends Component {
 
 									return (
 										<div className={ `novablocks-card novablocks-card__inner-container novablocks-block__content` } key={ idx }>
-											<div className="novablocks-card__media-wrap">
-												<div className="novablocks-card__media">
-													<div className="novablocks-card__media-placeholder">{ icons.placeholder }</div>
+											{
+												showMedia &&
+												<div className="novablocks-card__media-wrap">
+													<div className="novablocks-card__media">
+														<CardMedia post={ post } />
+													</div>
 												</div>
-											</div>
-											<div className="novablocks-card__meta"></div>
-											{ showTitle && <HeadingTagName className="novablocks-card__title">{ post.title.raw }</HeadingTagName> }
+											}
+											{
+												showMeta &&
+												<div className="novablocks-card__meta">
+													 <time dateTime={ format( 'c', post.date_gmt ) }>
+														 { dateI18n( dateFormat, post.date_gmt ) }
+													 </time>
+												</div>
+											}
+											{ showTitle && <TitleTagName className="novablocks-card__title">{ post.title.raw }</TitleTagName> }
+											{
+												showSubtitle && post.categories.length &&
+												<SubtitleTagName className="novablocks-card__subtitle">{ post.categories[0] }</SubtitleTagName>
+											}
 											{ showDescription && <p className="novablocks-card__description">{ post.excerpt.raw }</p> }
-											<div className="novablocks-card__buttons"></div>
+											{
+												showButtons &&
+												<div className="novablocks-card__buttons">
+													<div className="wp-block-button">
+														<div className="wp-block-button__link">Read More</div>
+													</div>
+												</div>
+											}
 										</div>
 									);
 

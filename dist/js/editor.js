@@ -27029,10 +27029,34 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           className = _this$props.className,
           posts = _this$props.posts;
       var level = attributes.level,
+          showButtons = attributes.showButtons,
+          showDescription = attributes.showDescription,
+          showMedia = attributes.showMedia,
+          showMeta = attributes.showMeta,
           showTitle = attributes.showTitle,
-          showDescription = attributes.showDescription;
+          showSubtitle = attributes.showSubtitle;
       var hasPosts = Array.isArray(posts) && posts.length;
-      var HeadingTagName = "h".concat(level + 1);
+      var TitleTagName = "h".concat(level + 1);
+      var SubtitleTagName = "h".concat(level + 2);
+
+      var dateFormat = __experimentalGetSettings().formats.date;
+
+      var CardMedia = function CardMedia(props) {
+        var post = props.post;
+        var featuredImageUrl = post.featured_media_object ? post.featured_media_object.source_url : null;
+
+        if (!!featuredImageUrl) {
+          return Object(external_React_["createElement"])("img", {
+            className: "novablocks-card__media-image",
+            src: featuredImageUrl
+          });
+        }
+
+        return Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__media-placeholder"
+        }, placeholder);
+      };
+
       return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
         label: posts_collection_edit_('Cards Manager', '__plugin_txtd'),
         onChange: function onChange(attributes) {
@@ -27048,21 +27072,29 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
           key: idx
-        }, Object(external_React_["createElement"])("div", {
+        }, showMedia && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__media-wrap"
         }, Object(external_React_["createElement"])("div", {
           className: "novablocks-card__media"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__media-placeholder"
-        }, placeholder))), Object(external_React_["createElement"])("div", {
+        }, Object(external_React_["createElement"])(CardMedia, {
+          post: post
+        }))), showMeta && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__meta"
-        }), showTitle && Object(external_React_["createElement"])(HeadingTagName, {
+        }, Object(external_React_["createElement"])("time", {
+          dateTime: format('c', post.date_gmt)
+        }, dateI18n(dateFormat, post.date_gmt))), showTitle && Object(external_React_["createElement"])(TitleTagName, {
           className: "novablocks-card__title"
-        }, post.title.raw), showDescription && Object(external_React_["createElement"])("p", {
+        }, post.title.raw), showSubtitle && post.categories.length && Object(external_React_["createElement"])(SubtitleTagName, {
+          className: "novablocks-card__subtitle"
+        }, post.categories[0]), showDescription && Object(external_React_["createElement"])("p", {
           className: "novablocks-card__description"
-        }, post.excerpt.raw), Object(external_React_["createElement"])("div", {
+        }, post.excerpt.raw), showButtons && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__buttons"
-        }));
+        }, Object(external_React_["createElement"])("div", {
+          className: "wp-block-button"
+        }, Object(external_React_["createElement"])("div", {
+          className: "wp-block-button__link"
+        }, "Read More"))));
       })))));
     }
   }]);
