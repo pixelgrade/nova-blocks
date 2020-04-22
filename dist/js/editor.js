@@ -21778,7 +21778,9 @@ var collection_Collection = function Collection(props) {
   return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(inspector_controls, props), Object(external_React_["createElement"])("div", {
     className: className,
     style: style
-  }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props), Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])("div", {
+    className: "wp-block-group__inner-container"
+  }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props)), Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {
     className: "block-editor-block-list__block wp-block novablocks-collection__cards",

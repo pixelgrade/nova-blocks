@@ -140,8 +140,10 @@ const Collection = ( props ) => {
 		<Fragment>
 			<InspectorControls { ...props } />
 			<div className={ className } style={ style }>
-				<CollectionTitle { ...props } />
-				<CollectionSubtitle { ...props } />
+				<div className="wp-block-group__inner-container">
+					<CollectionTitle { ...props } />
+					<CollectionSubtitle { ...props } />
+				</div>
 				<div className="wp-block-group__inner-container">
 					<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
 						<div className={ `${ blockClassName }__layout` }>
