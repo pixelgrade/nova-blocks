@@ -1038,17 +1038,22 @@ function novablocks_get_theme_support() {
 
 function novablocks_get_card_media_padding_top( $containerHeight ) {
 	$containerHeight = $containerHeight / 50 - 1;
+
+	if ( $containerHeight < 0 ) {
+		$containerHeight *= 3;
+	}
+
 	$numerator = 1;
 	$denominator = 1;
 
-	$containerHeight = min( max( -1, $containerHeight ), 1 );
+	$containerHeight = min( max( -3, $containerHeight ), 1 );
 
 	if ( $containerHeight > 0 ) {
 		$numerator = 1 + $containerHeight;
 	}
 
 	if ( $containerHeight < 0 ) {
-		$containerHeight = 1 + abs( $containerHeight );
+		$denominator = 1 + abs( $containerHeight );
 	}
 
 	return ( $numerator * 100 / $denominator ) . '%';
