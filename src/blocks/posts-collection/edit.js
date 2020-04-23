@@ -1,5 +1,8 @@
 import classnames from 'classnames';
 
+import { CardsManagerPanel, Collection, withPosts } from '../../components';
+import * as icons from "../../icons";
+
 import {
 	some,
 	pickBy,
@@ -11,9 +14,6 @@ const { apiFetch } = wp;
 const {
 	compose
 } = wp.compose;
-
-import {CardsManagerPanel, Collection, withPosts} from '../../components';
-import * as icons from "../../icons";
 
 const {
 	BlockIcon,
