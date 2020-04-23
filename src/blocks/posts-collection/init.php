@@ -87,8 +87,18 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 			echo '<' . $titleTag . ' class="novablocks-card__title">' . $title . '</' . $titleTag . '>';
 		}
 
+		$categories = wp_get_post_categories( $post->ID );
+
 		if ( false != $attributes['showSubtitle'] ) {
-			echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . 'Category' . '</' . $subtitleTag . '>';
+
+			if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+				$category_id = $categories[0];
+				$category = get_the_category_by_ID( $category_id );
+
+				if ( ! is_wp_error( $category ) ) {
+					echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $category . '</' . $subtitleTag . '>';
+				}
+			}
 		}
 
 		if ( false != $attributes['showDescription'] && ! empty( $excerpt ) ) { ?>

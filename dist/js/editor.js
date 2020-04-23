@@ -214,6 +214,60 @@ module.exports = _createClass;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(62);
+
+var assertThisInitialized = __webpack_require__(22);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(100);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -238,60 +292,6 @@ function _objectWithoutProperties(source, excluded) {
 
   return target;
 }
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(62);
-
-var assertThisInitialized = __webpack_require__(22);
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-module.exports = _possibleConstructorReturn;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-module.exports = _getPrototypeOf;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var setPrototypeOf = __webpack_require__(100);
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-module.exports = _inherits;
 
 /***/ }),
 /* 11 */
@@ -2378,7 +2378,7 @@ module.exports = _objectWithoutProperties;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10);
 /* harmony import */ var reakit_Toolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(211);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
@@ -9617,15 +9617,15 @@ var createClass = __webpack_require__(6);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(8);
+var possibleConstructorReturn = __webpack_require__(7);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(9);
+var getPrototypeOf = __webpack_require__(8);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(10);
+var inherits = __webpack_require__(9);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
@@ -9652,7 +9652,7 @@ function _objectSpread(target) {
   return target;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(7);
+var objectWithoutProperties = __webpack_require__(10);
 
 // EXTERNAL MODULE: external "React"
 var external_React_ = __webpack_require__(0);
@@ -21859,7 +21859,7 @@ var with_posts_withInspectorControls = function withInspectorControls(OriginalCo
 
           this.isStillMounted = true;
           this.fetchRequest = apiFetch({
-            path: addQueryArgs('/wp-json/wp/v2/categories', CATEGORIES_LIST_QUERY)
+            path: addQueryArgs('/wp/v2/categories', CATEGORIES_LIST_QUERY)
           }).then(function (categoriesList) {
             if (_this2.isStillMounted) {
               _this2.setState({
@@ -26992,6 +26992,8 @@ function cards_collection_init() {
 
 
 
+var edit_wp = wp,
+    edit_apiFetch = edit_wp.apiFetch;
 var posts_collection_edit_compose = wp.compose.compose;
 
 
@@ -27013,8 +27015,55 @@ var posts_collection_edit_wp$element = wp.element,
     posts_collection_edit_Fragment = posts_collection_edit_wp$element.Fragment,
     edit_RawHTML = posts_collection_edit_wp$element.RawHTML;
 
-var edit_PostsEdit = /*#__PURE__*/function (_Component) {
-  inherits_default()(PostsEdit, _Component);
+var edit_Category = /*#__PURE__*/function (_Component) {
+  inherits_default()(Category, _Component);
+
+  function Category() {
+    var _this;
+
+    classCallCheck_default()(this, Category);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Category).apply(this, arguments));
+    _this.state = {
+      name: null
+    };
+    return _this;
+  }
+
+  createClass_default()(Category, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var id = this.props.id;
+      this.isStillMounted = true;
+      this.fetchRequest = edit_apiFetch({
+        path: "/wp/v2/categories/".concat(id)
+      }).then(function (category) {
+        if (_this2.isStillMounted) {
+          _this2.setState({
+            name: category.name
+          });
+        }
+      }).catch(function () {});
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.isStillMounted = false;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return this.state.name;
+    }
+  }]);
+
+  return Category;
+}(posts_collection_edit_Component);
+
+var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
+  inherits_default()(PostsEdit, _Component2);
 
   function PostsEdit() {
     classCallCheck_default()(this, PostsEdit);
@@ -27088,7 +27137,9 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component) {
           className: "novablocks-card__title"
         }, post.title.raw), showSubtitle && post.categories.length && Object(external_React_["createElement"])(SubtitleTagName, {
           className: "novablocks-card__subtitle"
-        }, post.categories[0]), showDescription && Object(external_React_["createElement"])("p", {
+        }, Object(external_React_["createElement"])(edit_Category, {
+          id: post.categories[0]
+        })), showDescription && Object(external_React_["createElement"])("p", {
           className: "novablocks-card__description"
         }, post.excerpt.raw), showButtons && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__buttons"

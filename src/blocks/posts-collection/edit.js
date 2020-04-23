@@ -6,6 +6,8 @@ import {
 	isUndefined,
 } from "lodash";
 
+const { apiFetch } = wp;
+
 const {
 	compose
 } = wp.compose;
@@ -41,6 +43,40 @@ const {
 	Fragment,
 	RawHTML
 } = wp.element;
+
+class Category extends Component {
+
+	constructor() {
+		super( ...arguments );
+
+		this.state = {
+			name: null
+		};
+	}
+
+	componentDidMount() {
+		const { id } = this.props;
+
+		this.isStillMounted = true;
+		this.fetchRequest = apiFetch( {
+			path: `/wp/v2/categories/${id}`,
+		} )
+		.then( ( category ) => {
+				if ( this.isStillMounted ) {
+					this.setState( { name: category.name } )
+				}
+			}
+		).catch( () => {} );
+	}
+
+	componentWillUnmount() {
+		this.isStillMounted = false;
+	}
+
+	render() {
+		return this.state.name;
+	}
+}
 
 class PostsEdit extends Component {
 
@@ -115,7 +151,9 @@ class PostsEdit extends Component {
 											{ showTitle && <TitleTagName className="novablocks-card__title">{ post.title.raw }</TitleTagName> }
 											{
 												showSubtitle && post.categories.length &&
-												<SubtitleTagName className="novablocks-card__subtitle">{ post.categories[0] }</SubtitleTagName>
+												<SubtitleTagName className="novablocks-card__subtitle">
+													<Category id={ post.categories[0] } />
+												</SubtitleTagName>
 											}
 											{ showDescription && <p className="novablocks-card__description">{ post.excerpt.raw }</p> }
 											{
