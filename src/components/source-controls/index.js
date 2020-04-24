@@ -38,20 +38,10 @@ class SourceControls extends Component {
 		this.fetchTypesRequest = apiFetch( {
 			path: addQueryArgs( '/wp/v2/types', { per_page: -1 } ),
 		} ).then( types => {
-			const excludeTypes = [ 'wp_block', 'block_area', 'attachment' ];
-			const postTypes = Object.keys( types )
-			                        .filter( type => ! excludeTypes.includes( type ) )
-			                        .map( type => {
-										return {
-											slug: type,
-											label: types[type].name,
-										}
-			                        } );
-
 			if ( this.isStillMounted ) {
 				this.setState( {
 					fetchedTypes: true,
-					types: postTypes
+					types: types
 				} );
 			}
 		} ).catch( ( err ) => {
@@ -61,21 +51,15 @@ class SourceControls extends Component {
 
 	fetchTaxonomies() {
 		this.fetchTaxonomiesRequest = apiFetch( {
-			path: addQueryArgs( '/wp/v2/taxonomies', { per_page: -1 } ),
+			path: addQueryArgs( '/wp/v2/taxonomies', {
+				per_page: -1,
+				type: this.state.selectedType
+			} ),
 		} ).then( taxonomies => {
-			const postTaxonomies = Object.keys( taxonomies )
-			                             .map( taxonomy => {
-			                             	return {
-						                        slug: taxonomy,
-						                        label: taxonomies[taxonomy].name,
-					                            items_url: taxonomies[taxonomy]['_links']['wp:items'][0]
-					                        }
-			                             } );
-
 			if ( this.isStillMounted ) {
 				this.setState( {
 					fetchedTaxonomies: true,
-					taxonomies: postTaxonomies
+					taxonomies: taxonomies
 				} );
 			}
 		} ).catch( ( err ) => {
@@ -84,25 +68,22 @@ class SourceControls extends Component {
 	}
 
 	fetchTerms() {
-		const selectedTaxonomy = this.state.taxonomies.find( taxonomy => {
-			console.log( taxonomy.slug, this.state.selectedTaxonomy );
-			return this.state.selectedTaxonomy === taxonomy.slug
-		} );
+		const { taxonomies, selectedTaxonomy } = this.state;
+		const taxonomy = taxonomies[ selectedTaxonomy ];
 
-		console.log( selectedTaxonomy );
-		if ( ! selectedTaxonomy ) {
+		if ( ! taxonomy ) {
 			return false;
 		}
 
-		const url = selectedTaxonomy.items_url;
+		const url = taxonomy['_links']['wp:items'][0]['href'];
 
 		this.fetchTermsRequest = apiFetch( {
-			path: addQueryArgs( url, { per_page: -1 } ),
+			url: addQueryArgs( url, { per_page: -1 } ),
 		} ).then( terms => {
 			const postTerms = Object.keys( terms )
 			                        .map( term => {
 			                        	return {
-			                        		slug: term,
+			                        		value: term,
 					                        label: terms[term].name,
 				                        }
 			                        } );
@@ -119,6 +100,33 @@ class SourceControls extends Component {
 	}
 
 	render() {
+
+		const excludeTypes = [ 'wp_block', 'block_area', 'attachment' ];
+
+		const typeOptions = Object.keys( this.state.types )
+		                          .filter( type => !excludeTypes.includes( type ) )
+		                          .map( type => {
+			                          return {
+				                          value: type,
+				                          label: this.state.types[type].name,
+			                          }
+		                          } );
+
+		const taxonomyOptions = Object.keys( this.state.taxonomies )
+		                              .map( taxonomy => {
+			                              return {
+				                              value: taxonomy,
+				                              label: this.state.taxonomies[taxonomy].name
+			                              }
+		                              } );
+
+		const termOptions = this.state.terms.map( term => {
+			return {
+				value: term.slug,
+				label: term.name,
+			}
+		} );
+
 		return (
 			<PanelBody title={ __( 'Source' ) }>
 				{
@@ -128,7 +136,7 @@ class SourceControls extends Component {
 						options={ [{
 							slug: 'all',
 							label: 'All',
-						}, ...this.state.types] }
+						}, ...typeOptions] }
 						onChange={ type => {
 							this.setState( {
 								selectedType: type,
@@ -136,8 +144,9 @@ class SourceControls extends Component {
 								selectedTerm: 'all',
 								fetchedTaxonomies: false,
 								fetchedTerms: false,
+							}, () => {
+								this.fetchTaxonomies();
 							} );
-							this.fetchTaxonomies();
 						} }
 					/>
 				}
@@ -149,14 +158,15 @@ class SourceControls extends Component {
 						options={ [{
 							slug: 'all',
 							label: 'All',
-						}, ...this.state.taxonomies] }
+						}, ...taxonomyOptions] }
 						onChange={ taxonomy => {
 							this.setState( {
 								selectedTaxonomy: taxonomy,
 								selectedTerm: 'all',
 								fetchedTerms: false,
+							}, () => {
+								this.fetchTerms();
 							} );
-							this.fetchTerms();
 						} }
 					/>
 				}
@@ -168,7 +178,7 @@ class SourceControls extends Component {
 						options={ [{
 							slug: 'all',
 							label: 'All',
-						}, ...this.state.terms] }
+						}, ...termOptions] }
 						onChange={ term => {
 							this.setState( { selectedTerm: term } );
 						} }
@@ -178,6 +188,5 @@ class SourceControls extends Component {
 		);
 	}
 }
-
 
 export default SourceControls;
