@@ -4,6 +4,72 @@ const { Component, Fragment } = wp.element;
 const { PanelBody, SelectControl } = wp.components;
 const { addQueryArgs } = wp.url;
 
+class AuthorSelect extends Component {
+
+	constructor() {
+		super( ...arguments );
+
+		this.state = {
+			authors: [],
+			fetchedAuthors: false,
+		};
+	}
+
+	componentDidMount() {
+		this.isStillMounted = true;
+
+		if ( ! this.state.fetchedAuthors ) {
+			this.fetchAuthors();
+		}
+	}
+
+	componentWillUnmount() {
+		this.isStillMounted = false;
+	}
+
+	fetchAuthors() {
+		this.fetchAuthorsRequest = apiFetch( {
+			path: addQueryArgs( '/wp/v2/users', { per_page: -1 } ),
+		} ).then( authors => {
+			if ( this.isStillMounted ) {
+				this.setState( {
+					fetchedAuthors: true,
+					authors: authors
+				} );
+			}
+		} ).catch( ( err ) => {
+			console.log( err );
+		} );
+	}
+
+	render() {
+
+		const authorOpions = this.state.authors.map( author => {
+			return {
+				value: author.slug,
+				label: author.name,
+			}
+		} );
+
+		return (
+			<SelectControl
+				label={ __( 'Author' ) }
+				value={ this.state.selectedAuthor }
+				options={ [{
+					slug: 'all',
+					label: 'All',
+				}, ...authorOpions] }
+				onChange={ author => {
+					this.setState( {
+						selectedAuthor: author,
+					}, () => {
+					} );
+				} }
+			/>
+		);
+	}
+}
+
 class SourceControls extends Component {
 
 	constructor() {
@@ -129,29 +195,30 @@ class SourceControls extends Component {
 
 		return (
 			<PanelBody title={ __( 'Source' ) }>
-				{
-					<SelectControl
-						label={ __( 'Post Type' ) }
-						value={ this.state.selectedType }
-						options={ [{
-							slug: 'all',
-							label: 'All',
-						}, ...typeOptions] }
-						onChange={ type => {
-							this.setState( {
-								selectedType: type,
-								selectedTaxonomy: 'all',
-								selectedTerm: 'all',
-								fetchedTaxonomies: false,
-								fetchedTerms: false,
-							}, () => {
+				<AuthorSelect />
+				<SelectControl
+					label={ __( 'Post Type' ) }
+					value={ this.state.selectedType }
+					options={ [{
+						slug: 'all',
+						label: 'All',
+					}, ...typeOptions] }
+					onChange={ type => {
+						this.setState( {
+							selectedType: type,
+							selectedTaxonomy: 'all',
+							selectedTerm: 'all',
+							fetchedTaxonomies: false,
+							fetchedTerms: false,
+						}, () => {
+							if ( type !== 'all' ) {
 								this.fetchTaxonomies();
-							} );
-						} }
-					/>
-				}
+							}
+						} );
+					} }
+				/>
 				{
-					this.state.fetchedTaxonomies &&
+					this.state.fetchedTaxonomies && !! taxonomyOptions.length &&
 					<SelectControl
 						label={ __( 'Taxonomy' ) }
 						value={ this.state.selectedTaxonomy }
@@ -165,13 +232,15 @@ class SourceControls extends Component {
 								selectedTerm: 'all',
 								fetchedTerms: false,
 							}, () => {
-								this.fetchTerms();
+								if ( taxonomy !== 'all' ) {
+									this.fetchTerms();
+								}
 							} );
 						} }
 					/>
 				}
 				{
-					this.state.fetchedTerms &&
+					this.state.fetchedTerms && !! termOptions.length &&
 					<SelectControl
 						label={ __( 'Terms' ) }
 						value={ this.state.selectedTerm }

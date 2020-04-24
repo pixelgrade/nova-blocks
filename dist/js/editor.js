@@ -1202,6 +1202,22 @@ module.exports = isArray;
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var arrayWithoutHoles = __webpack_require__(105);
+
+var iterableToArray = __webpack_require__(106);
+
+var nonIterableSpread = __webpack_require__(107);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var arrayWithHoles = __webpack_require__(109);
 
 var iterableToArrayLimit = __webpack_require__(110);
@@ -1215,7 +1231,7 @@ function _slicedToArray(arr, i) {
 module.exports = _slicedToArray;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1228,22 +1244,6 @@ module.exports = _slicedToArray;
 var ToolbarContext = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
 /* harmony default export */ __webpack_exports__["a"] = (ToolbarContext);
 //# sourceMappingURL=index.js.map
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithoutHoles = __webpack_require__(105);
-
-var iterableToArray = __webpack_require__(106);
-
-var nonIterableSpread = __webpack_require__(107);
-
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-}
-
-module.exports = _toConsumableArray;
 
 /***/ }),
 /* 31 */
@@ -2383,7 +2383,7 @@ module.exports = _objectWithoutProperties;
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_warning__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(65);
-/* harmony import */ var _toolbar_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(29);
+/* harmony import */ var _toolbar_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(30);
 
 
 
@@ -11603,7 +11603,7 @@ var card = Object(external_React_["createElement"])("svg", {
   fill: "#6565F2"
 }));
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(30);
+var toConsumableArray = __webpack_require__(28);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/deprecated.js
@@ -11862,7 +11862,7 @@ var helpers_objectWithoutProperties = __webpack_require__(50);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(helpers_objectWithoutProperties);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(28);
+var slicedToArray = __webpack_require__(29);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // CONCATENATED MODULE: ./src/blocks/google-map/pin.js
@@ -20607,7 +20607,7 @@ function button_Button(props, ref) {
 var toolbar_item = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/build-module/toolbar-context/index.js
-var toolbar_context = __webpack_require__(29);
+var toolbar_context = __webpack_require__(30);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/build-module/toolbar-button/toolbar-button-container.js
 
@@ -21608,16 +21608,96 @@ var source_controls_wp$components = wp.components,
     source_controls_SelectControl = source_controls_wp$components.SelectControl;
 var addQueryArgs = wp.url.addQueryArgs;
 
-var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
-  inherits_default()(SourceControls, _Component);
+var source_controls_AuthorSelect = /*#__PURE__*/function (_Component) {
+  inherits_default()(AuthorSelect, _Component);
+
+  function AuthorSelect() {
+    var _this;
+
+    classCallCheck_default()(this, AuthorSelect);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(AuthorSelect).apply(this, arguments));
+    _this.state = {
+      authors: [],
+      fetchedAuthors: false
+    };
+    return _this;
+  }
+
+  createClass_default()(AuthorSelect, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.isStillMounted = true;
+
+      if (!this.state.fetchedAuthors) {
+        this.fetchAuthors();
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.isStillMounted = false;
+    }
+  }, {
+    key: "fetchAuthors",
+    value: function fetchAuthors() {
+      var _this2 = this;
+
+      this.fetchAuthorsRequest = apiFetch({
+        path: addQueryArgs('/wp/v2/users', {
+          per_page: -1
+        })
+      }).then(function (authors) {
+        if (_this2.isStillMounted) {
+          _this2.setState({
+            fetchedAuthors: true,
+            authors: authors
+          });
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var authorOpions = this.state.authors.map(function (author) {
+        return {
+          value: author.slug,
+          label: author.name
+        };
+      });
+      return Object(external_React_["createElement"])(source_controls_SelectControl, {
+        label: source_controls_('Author'),
+        value: this.state.selectedAuthor,
+        options: [{
+          slug: 'all',
+          label: 'All'
+        }].concat(toConsumableArray_default()(authorOpions)),
+        onChange: function onChange(author) {
+          _this3.setState({
+            selectedAuthor: author
+          }, function () {});
+        }
+      });
+    }
+  }]);
+
+  return AuthorSelect;
+}(source_controls_Component);
+
+var source_controls_SourceControls = /*#__PURE__*/function (_Component2) {
+  inherits_default()(SourceControls, _Component2);
 
   function SourceControls() {
-    var _this;
+    var _this4;
 
     classCallCheck_default()(this, SourceControls);
 
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(SourceControls).apply(this, arguments));
-    _this.state = {
+    _this4 = possibleConstructorReturn_default()(this, getPrototypeOf_default()(SourceControls).apply(this, arguments));
+    _this4.state = {
       fetchedTypes: false,
       selectedType: 'all',
       types: [],
@@ -21628,7 +21708,7 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
       selectedTerm: 'all',
       terms: []
     };
-    return _this;
+    return _this4;
   }
 
   createClass_default()(SourceControls, [{
@@ -21648,15 +21728,15 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
   }, {
     key: "fetchTypes",
     value: function fetchTypes() {
-      var _this2 = this;
+      var _this5 = this;
 
       this.fetchTypesRequest = apiFetch({
         path: addQueryArgs('/wp/v2/types', {
           per_page: -1
         })
       }).then(function (types) {
-        if (_this2.isStillMounted) {
-          _this2.setState({
+        if (_this5.isStillMounted) {
+          _this5.setState({
             fetchedTypes: true,
             types: types
           });
@@ -21668,7 +21748,7 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
   }, {
     key: "fetchTaxonomies",
     value: function fetchTaxonomies() {
-      var _this3 = this;
+      var _this6 = this;
 
       this.fetchTaxonomiesRequest = apiFetch({
         path: addQueryArgs('/wp/v2/taxonomies', {
@@ -21676,8 +21756,8 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
           type: this.state.selectedType
         })
       }).then(function (taxonomies) {
-        if (_this3.isStillMounted) {
-          _this3.setState({
+        if (_this6.isStillMounted) {
+          _this6.setState({
             fetchedTaxonomies: true,
             taxonomies: taxonomies
           });
@@ -21689,7 +21769,7 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
   }, {
     key: "fetchTerms",
     value: function fetchTerms() {
-      var _this4 = this;
+      var _this7 = this;
 
       var _this$state = this.state,
           taxonomies = _this$state.taxonomies,
@@ -21713,8 +21793,8 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
           };
         });
 
-        if (_this4.isStillMounted) {
-          _this4.setState({
+        if (_this7.isStillMounted) {
+          _this7.setState({
             fetchedTerms: true,
             terms: terms
           });
@@ -21726,7 +21806,7 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this8 = this;
 
       var excludeTypes = ['wp_block', 'block_area', 'attachment'];
       var typeOptions = Object.keys(this.state.types).filter(function (type) {
@@ -21734,13 +21814,13 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
       }).map(function (type) {
         return {
           value: type,
-          label: _this5.state.types[type].name
+          label: _this8.state.types[type].name
         };
       });
       var taxonomyOptions = Object.keys(this.state.taxonomies).map(function (taxonomy) {
         return {
           value: taxonomy,
-          label: _this5.state.taxonomies[taxonomy].name
+          label: _this8.state.taxonomies[taxonomy].name
         };
       });
       var termOptions = this.state.terms.map(function (term) {
@@ -21751,7 +21831,7 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
       });
       return Object(external_React_["createElement"])(source_controls_PanelBody, {
         title: source_controls_('Source')
-      }, Object(external_React_["createElement"])(source_controls_SelectControl, {
+      }, Object(external_React_["createElement"])(source_controls_AuthorSelect, null), Object(external_React_["createElement"])(source_controls_SelectControl, {
         label: source_controls_('Post Type'),
         value: this.state.selectedType,
         options: [{
@@ -21759,17 +21839,19 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
           label: 'All'
         }].concat(toConsumableArray_default()(typeOptions)),
         onChange: function onChange(type) {
-          _this5.setState({
+          _this8.setState({
             selectedType: type,
             selectedTaxonomy: 'all',
             selectedTerm: 'all',
             fetchedTaxonomies: false,
             fetchedTerms: false
           }, function () {
-            _this5.fetchTaxonomies();
+            if (type !== 'all') {
+              _this8.fetchTaxonomies();
+            }
           });
         }
-      }), this.state.fetchedTaxonomies && Object(external_React_["createElement"])(source_controls_SelectControl, {
+      }), this.state.fetchedTaxonomies && !!taxonomyOptions.length && Object(external_React_["createElement"])(source_controls_SelectControl, {
         label: source_controls_('Taxonomy'),
         value: this.state.selectedTaxonomy,
         options: [{
@@ -21777,15 +21859,17 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
           label: 'All'
         }].concat(toConsumableArray_default()(taxonomyOptions)),
         onChange: function onChange(taxonomy) {
-          _this5.setState({
+          _this8.setState({
             selectedTaxonomy: taxonomy,
             selectedTerm: 'all',
             fetchedTerms: false
           }, function () {
-            _this5.fetchTerms();
+            if (taxonomy !== 'all') {
+              _this8.fetchTerms();
+            }
           });
         }
-      }), this.state.fetchedTerms && Object(external_React_["createElement"])(source_controls_SelectControl, {
+      }), this.state.fetchedTerms && !!termOptions.length && Object(external_React_["createElement"])(source_controls_SelectControl, {
         label: source_controls_('Terms'),
         value: this.state.selectedTerm,
         options: [{
@@ -21793,7 +21877,7 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component) {
           label: 'All'
         }].concat(toConsumableArray_default()(termOptions)),
         onChange: function onChange(term) {
-          _this5.setState({
+          _this8.setState({
             selectedTerm: term
           });
         }
