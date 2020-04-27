@@ -731,26 +731,14 @@ function novablocks_add_media_settings( $settings ) {
 	$media_settings = array(
 		'attributes'         => array_merge(
 			array(
-				'mediaPosition'       => array(
+				'mediaPosition' => array(
 					'type'    => 'string',
 					'default' => 'left',
 				),
-				'blockStyle'          => array(
+				'align'         => array(
 					'type'    => 'string',
-					'default' => 'basic'
+					'default' => 'full'
 				),
-				'contentStyle'        => array(
-					'type'    => 'string',
-					'default' => 'basic',
-				),
-				'horizontalAlignment' => array(
-					'type'    => 'string',
-					'default' => 'left',
-				),
-				'verticalAlignment' => array(
-					'type'    => 'string',
-					'default' => 'center'
-				)
 			),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()
