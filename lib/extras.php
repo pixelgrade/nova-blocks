@@ -87,7 +87,7 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 		}
 
 		if ( $post->post_name === 'promo-bar' ) {
-			return array( 'novablocks/announcement-bar' );
+			return array( 'novablocks/announcement-bar', 'novablocks/openhours', 'core/paragraph' );
 		}
 	}
 
@@ -355,6 +355,10 @@ function novablocks_get_slideshow_attributes() {
 				'type'    => 'number',
 				'default' => 75,
 			),
+			'align' => array(
+				'type' => 'string',
+				'default' => 'full',
+			),
 		),
 		novablocks_get_doppler_attributes(),
 		novablocks_get_alignment_attributes(),
@@ -437,6 +441,172 @@ function novablocks_get_media_attributes() {
 	return array();
 }
 
+function novablocks_get_card_attributes() {
+	return array(
+		'level'           => array(
+			'type'    => 'number',
+			'default' => 2,
+		),
+		'media'           => array(
+			'type'    => 'object',
+			'default' => array(),
+		),
+		'title'           => array(
+			'type'    => 'string',
+			'default' => 'Title',
+		),
+		'subtitle'        => array(
+			'type'    => 'string',
+			'default' => 'Subtitle',
+		),
+		'description'     => array(
+			'type'    => 'string',
+			'default' => 'This is just an example of what a description for this card could look like',
+		),
+		'meta'            => array(
+			'type'    => 'string',
+			'default' => 'Meta',
+		),
+		'showMedia'       => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showTitle'       => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showSubtitle'    => array(
+			'type'    => 'boolean',
+			'default' => false,
+		),
+		'showDescription' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showButtons'     => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showMeta'        => array(
+			'type'    => 'boolean',
+			'default' => false,
+		),
+	);
+}
+
+function novablocks_get_cards_collection_attributes() {
+	return array(
+		'align'                  => array(
+			'type'    => 'string',
+			'default' => 'full'
+		),
+		'contentAlign'           => array(
+			'type'    => 'string',
+			'default' => 'left'
+		),
+		'level'                  => array(
+			'type'    => 'number',
+			'default' => 2,
+		),
+		'imageResizing'          => array(
+			'type'    => 'string',
+			'default' => 'cropped'
+		),
+		'containerHeight'        => array(
+			'type'    => 'number',
+			'default' => 50
+		),
+		'title'                  => array(
+			'type'    => 'string',
+			'default' => 'Collection Title',
+		),
+		'subtitle'               => array(
+			'type'    => 'string',
+			'default' => 'Collection Subtitle',
+		),
+		'showCollectionTitle'    => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showCollectionSubtitle' => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showMedia'              => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showTitle'              => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showSubtitle'           => array(
+			'type'    => 'boolean',
+			'default' => false,
+		),
+		'showDescription'        => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showButtons'            => array(
+			'type'    => 'boolean',
+			'default' => true,
+		),
+		'showMeta'               => array(
+			'type'    => 'boolean',
+			'default' => false,
+		),
+	);
+}
+
+function novablocks_get_openhours_attributes() {
+	return array(
+		'text'  => array(
+			'type'  => 'string',
+			'default'   => 'Monday 10am - 3pm
+Tuesday to Friday 9 - 17
+Sat noon - 2am'
+		),
+		'parsedText'  => array(
+			'type'  => 'string',
+			'default'   => '{"timeframes":[{"days":[1],"open":[{"start":"1000","end":"2200"}]},{"days":[2,3,4,5],"open":[{"start":"0900","end":"1700"}]},{"days":[6],"open":[{"start":"1200","end":"+0200"}]}]}'
+		),
+		'timeFormat'    => array(
+			'type'  => 'string',
+			'default'   => 'g:ia'
+		),
+		'openHoursStyle'    => array(
+			'type' => 'string',
+			'default'   => 'overview'
+		),
+		'openNote'    => array(
+			'type'  => 'string',
+			'default'   => 'It\'s {time} and we\'re Open until {today-closing-time}'
+		),
+		'closedNote'    => array(
+			'type'  => 'string',
+			'default'   => 'We\'re closed until {next-opening-day} at {next-opening-time}'
+		),
+		'closedLabel'    => array(
+			'type'  => 'string',
+			'default'   => 'Closed'
+		),
+		'compressOpeningHours'    => array(
+			'type'  => 'boolean',
+			'default'   => false
+		),
+		'hideClosedDays'    => array(
+			'type'  => 'boolean',
+			'default'   => false
+		),
+		'useShortName'    => array(
+			'type'  => 'boolean',
+			'default'   => false
+		),
+
+	);
+}
+
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
 
 	foreach ( $attributes_config as $key => $value ) {
@@ -512,6 +682,10 @@ function novablocks_add_hero_settings( $settings ) {
 						),
 					),
 				),
+				'align' => array(
+					'type'  => 'string',
+					'default'   => 'full'
+				)
 			),
 			novablocks_get_doppler_attributes(),
 			novablocks_get_alignment_attributes(),

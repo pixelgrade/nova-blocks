@@ -1,14 +1,16 @@
 .novablocks-opentable {
 	z-index: 9999;
 
+	--novablocks-opentable-spacing: 5%;
+
 	.ot-title[class][class] {
 		line-height: 1;
-		margin-bottom: var(--novablocks-content-padding-small);
+		margin-bottom: var(--novablocks-opentable-spacing);
 	}
 
 	.ot-button[class] {
 		box-shadow: none;
-
+		border: 0;
 		height: auto;
 	}
 

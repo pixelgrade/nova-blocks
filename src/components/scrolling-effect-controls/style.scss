@@ -67,6 +67,11 @@
 	.novablocks-scrolling-effect.components-radio-control:last-child {
 		margin-bottom: 16px;
 	}
+
+	.novablocks-focal-point-picker--parallax[class],
+	.novablocks-focal-point-picker--static[class] {
+		margin-bottom: 0;
+	}
 }
 
 @mixin pro-feature {

@@ -45,11 +45,17 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 		do_action( 'novablocks_announcement_bar:before' ); ?>
 
-		<?php if ( ! empty( $attributes['content'] ) ) { ?>
-
-		<div class="<?php echo join( ' ', $classes ); ?>" data-id="<?php echo $attributes['blockId'] ;?>" >
+		<div class="<?php echo join( ' ', $classes ); ?>" data-id="<?php echo $attributes['blockId'] ;?>">
 			<div class="novablocks-announcement-bar__wrapper">
-				<div class="novablocks-announcement-bar__content"><?php echo $attributes['content']; ?></div>
+				<div class="novablocks-announcement-bar__content">
+					<?php
+						if ( ! empty( $attributes['content'] ) && empty( $content ) ) {
+							echo $attributes['content'];
+						} else {
+							echo $content;
+						}
+					?>
+				</div>
 				<div class="novablocks-announcement-bar__close">
 					<svg width="26" height="26" viewBox="0 0 26 26">
 						<g fill="currentColor" fill-rule="evenodd">
@@ -64,7 +70,7 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 			</div>
 		</div>
 
-		<?php }
+		<?php
 
 		do_action( 'novablocks_announcement_bar:after' );
 

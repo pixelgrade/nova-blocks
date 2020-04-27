@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+const { createContext } = wp.element;
 
 import { findParents } from '../../utils';
 import { easeInOutCubic, easeOutQuart } from '../../easing';
@@ -43,8 +43,9 @@ const withParallaxProvider = function( WrappedComponent ) {
 
 		getScrollContainer() {
 			return document.querySelector( '.edit-post-layout__content' ) ||
-				document.querySelector( '.edit-post-editor-regions__content' ) ||
-				document.querySelector( '.block-editor-editor-skeleton__content' );
+			       document.querySelector( '.edit-post-editor-regions__content' ) ||
+			       document.querySelector( '.block-editor-editor-skeleton__content' ) ||
+			       document.querySelector( '.interface-interface-skeleton__content' );
 		}
 
 		componentDidMount() {

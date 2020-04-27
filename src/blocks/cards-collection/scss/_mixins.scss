@@ -1,0 +1,60 @@
+@mixin novablocks-cards-collection-layout {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	margin-top: calc(-1 * var(--novablocks-spacing));
+	margin-left: calc(-1 * var(--novablocks-spacing));
+
+	> * {
+		--columns: 1;
+		--surplus: 0px;
+		--width: calc( ( 100% - var(--surplus) ) / var(--columns) - var(--novablocks-spacing));
+
+		flex: 0 1 var(--width);
+		margin-top: var(--novablocks-spacing);
+		margin-left: var(--novablocks-spacing);
+	}
+
+	&[class][class] > * {
+		max-width: var(--width);
+	}
+
+	> div:not([class]) {
+		display: flex;
+		flex-direction: column;
+
+		> .novablocks-card {
+			height: 100%;
+		}
+	}
+}
+
+// $surplus: number of extra elements that ar siblings of the columns
+@mixin novablocks-cards-columns-count( $surplus: 0 ) {
+
+	> * {
+
+		@include count(#{2 + $surplus}) {
+			--columns: 2;
+		}
+
+		@include count(#{3 + $surplus}) {
+			--columns: 3;
+		}
+
+		@include count(#{4 + $surplus}) {
+			--columns: 4;
+
+			@include below(lap) {
+				--columns: 2;
+			}
+		}
+	}
+
+	&[class][class] > * {
+
+		@include below(tablet) {
+			--columns: 1;
+		}
+	}
+}

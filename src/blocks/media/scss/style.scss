@@ -1,20 +1,3 @@
-.wp-block-pixelgrade-media {
-	margin-left: auto;
-	margin-right: auto;
-
-	--novablocks-media-text-color: var(--novablocks-dark-2);
-	--novablocks-media-titles-color: var(--novablocks-dark-3);
-	--novablocks-media-subtitles-color: var(--novablocks-color-1);
-	--novablocks-media-background-color: var(--novablocks-light-1);
-
-	--novablocks-media-content-padding: 0;
-	--novablocks-media-content-background-color: transparent;
-	--novablocks-media-content-background-opacity: 1;
-	--novablocks-media-content-box-shadow: none;
-}
-
-
-// media layout
 .novablocks-media {
 	background-color: var(--novablocks-media-background-color);
 
@@ -53,49 +36,16 @@
 	> * {
 		padding-left: var(--novablocks-media-spacing);
 		margin-top: var(--novablocks-media-spacing);
-		flex: 1 0 50%;
 	}
-}
 
-// block variations
-.block-is-moderate,
-.block-is-highlighted {
-	--novablocks-media-padding: var(--novablocks-media-spacing);
-}
+	@include above(tablet) {
+		display: flex;
+		flex-wrap: wrap;
 
-.block-is-moderate {
-	--novablocks-media-background-color: var(--novablocks-light-2);
-}
-
-.block-is-highlighted {
-	--novablocks-media-background-color: var(--novablocks-dark-3);
-}
-
-.content-is-moderate,
-.content-is-highlighted {
-	--novablocks-media-content-padding: var(--novablocks-media-spacing);
-}
-
-.content-is-moderate,
-.content-is-highlighted.block-is-highlighted {
-	--novablocks-media-content-background-color: var(--novablocks-light-1);
-	--novablocks-media-content-box-shadow: #{$nova-box-shadow-nova};
-}
-
-.content-is-moderate.block-is-highlighted {
-	--novablocks-media-content-background-color: var(--novablocks-light-1);
-	--novablocks-media-content-background-opacity: 0.2;
-}
-
-.block-is-highlighted:not(.content-is-highlighted),
-.content-is-highlighted:not(.block-is-highlighted) {
-	--novablocks-media-text-color: var(--novablocks-light-1);
-	--novablocks-media-titles-color: var(--novablocks-media-text-color);
-	--novablocks-media-subtitles-color: var(--novablocks-media-text-color);
-}
-
-.content-is-highlighted:not(.block-is-highlighted) {
-	--novablocks-media-content-background-color: var(--novablocks-dark-1);
+		> * {
+			flex: 1 0 50%;
+		}
+	}
 }
 
 @import 'content';

@@ -1,21 +1,18 @@
-import { range } from '../../utils';
+import { range } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-const {
-	__,
-	sprintf
-} = wp.i18n;
+const { __, sprintf } = wp.i18n;
 
 const { Component } = wp.element;
-const { ToolbarGroup } = wp.components;
+import { ToolbarGroup } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
 
-import HeadingLevelIcon from './heading-level-icon';
+import HeadingLevelIcon from '../heading-level-icon';
 
 class HeadingToolbar extends Component {
 	createLevelControl( targetLevel, selectedLevel, onChange ) {

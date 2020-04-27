@@ -53,3 +53,17 @@
 		}
 	}
 }
+
+
+[data-type="novablocks/google-map"] .components-placeholder {
+	align-items: center;
+
+	.components-placeholder__instructions {
+		flex-basis: 100%;
+		text-align: center;
+	}
+
+	.components-placeholder__fieldset {
+		max-width: 40em;
+	}
+}

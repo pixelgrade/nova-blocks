@@ -1,4 +1,7 @@
-@import 'style';
+@import 'variables';
+@import 'mixins';
+
+@import './emphasis';
 
 @import '../components/layout-panel/style';
 @import '../components/scrolling-effect-controls/style';
@@ -7,6 +10,7 @@
 @import '../components/color-controls/editor';
 @import '../components/notice/editor';
 @import '../components/tabs/editor';
+@import '../components/toggle-group/editor';
 
 @import '../blocks/announcement-bar/scss/editor';
 @import '../blocks/header/scss/editor';
@@ -17,7 +21,16 @@
 @import '../blocks/slideshow/scss/editor';
 @import '../blocks/navigation/scss/editor';
 @import '../blocks/opentable/scss/editor';
+@import '../blocks/opentable/scss/style';
 @import '../blocks/menu-food/scss/editor';
+@import '../blocks/openhours/scss/editor';
+@import '../blocks/cards-collection/scss/editor';
+
+// Quickfix block appender visibility
+.block-list-appender__toggle {
+	opacity: 1 !important;
+	transform: none !important;
+}
 
 .novablocks-mask {
 	@include cover;
@@ -34,3 +47,16 @@
 	line-height: 1.8;
 }
 
+.block-editor-block-variation-picker__variations[class][class][class] {
+	padding-left: 0;
+
+		> li {
+			margin: 4px 8px 4px 0;
+		}
+}
+
+[data-type='novablocks/header'] {
+	.block-editor-block-variation-picker__variation-label[class] {
+		display: none;
+	}
+}

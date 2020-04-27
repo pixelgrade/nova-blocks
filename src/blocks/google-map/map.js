@@ -1,4 +1,3 @@
-import ReactDOMServer from 'react-dom/server';
 import pin from './pin';
 import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
 import defaultMapCenter from './default-map-center';

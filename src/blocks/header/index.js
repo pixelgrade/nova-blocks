@@ -3,6 +3,7 @@
  */
 import * as icons from '../../icons';
 import edit from './edit';
+import variations from './variations';
 
 
 /**
@@ -22,6 +23,7 @@ function init() {
 		// Additional search terms
 		keywords: [ __( 'logo', '__plugin_txtd' ), __( 'menu', '__plugin_txtd' ) ],
 		supports: { align: ["wide", "full"], default: "full" },
+		variations,
 		edit,
 		save: function() {
 			return <InnerBlocks.Content />

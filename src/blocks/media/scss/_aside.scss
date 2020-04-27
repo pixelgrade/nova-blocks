@@ -10,10 +10,6 @@
 		}
 	}
 
-	@include below(desktop) {
-		grid-column: span 2;
-	}
-
 	> .novablocks-advanced-gallery {
 		flex-grow: 1;
 
