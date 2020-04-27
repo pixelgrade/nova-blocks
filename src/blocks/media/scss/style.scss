@@ -1,26 +1,9 @@
 .novablocks-media {
-	background-color: var(--novablocks-media-background-color);
+	margin-left: auto;
+	margin-right: auto;
 
-	--novablocks-media-spacing: 24px;
-
-	@include above(lap) {
-		--novablocks-media-spacing: 48px;
-	}
-
-	@include above(desktop) {
-		--novablocks-media-spacing: 56px;
-	}
-
-	&.has-background {
-		padding: var(--novablocks-media-padding) 0;
-	}
-
-	.wp-block-group__inner-container > .wp-block {
-		// center content
-		margin-left: auto;
-		margin-right: auto;
-
-		// make sure negative margin used for layout doesnt overlap other blocks
+	// hack to contain negative margin-top of .novablocks-media__layout
+	> .wp-block-group__inner-container {
 		padding-top: 1px;
 	}
 }

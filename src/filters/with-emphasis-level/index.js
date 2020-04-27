@@ -20,10 +20,10 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 
 		return (
 			<Fragment>
+				<OriginalComponent { ...props } />
 				<InspectorControls>
 					<EmphasisLevelControls { ...props } />
 				</InspectorControls>
-				<OriginalComponent { ...props } />
 			</Fragment>
 		);
 	};

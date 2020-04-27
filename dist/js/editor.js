@@ -10619,7 +10619,7 @@ var withEmphasisLevelControls = with_emphasis_level_createHigherOrderComponent(f
       return Object(external_React_["createElement"])(OriginalComponent, props);
     }
 
-    return Object(external_React_["createElement"])(with_emphasis_level_Fragment, null, Object(external_React_["createElement"])(with_emphasis_level_InspectorControls, null, Object(external_React_["createElement"])(emphasis_level_controls, props)), Object(external_React_["createElement"])(OriginalComponent, props));
+    return Object(external_React_["createElement"])(with_emphasis_level_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(with_emphasis_level_InspectorControls, null, Object(external_React_["createElement"])(emphasis_level_controls, props)));
   };
 });
 with_emphasis_level_addFilter('editor.BlockEdit', 'novablocks/with-ehpasis-level-controls', withEmphasisLevelControls);
