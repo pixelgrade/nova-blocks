@@ -12,6 +12,7 @@ class AuthorSelect extends Component {
 		this.state = {
 			authors: [],
 			fetchedAuthors: false,
+			queryArgs: {},
 		};
 	}
 
@@ -34,7 +35,7 @@ class AuthorSelect extends Component {
 			if ( this.isStillMounted ) {
 				this.setState( {
 					fetchedAuthors: true,
-					authors: authors
+					authors: authors,
 				} );
 			}
 		} ).catch( ( err ) => {
@@ -62,6 +63,9 @@ class AuthorSelect extends Component {
 				onChange={ author => {
 					this.setState( {
 						selectedAuthor: author,
+						queryArgs: {
+							author: author
+						}
 					}, () => {
 					} );
 				} }
@@ -165,6 +169,28 @@ class SourceControls extends Component {
 		} );
 	}
 
+	updateQueryArgs() {
+		let url = 'wp/v2/posts';
+		let args = {};
+
+		if ( 'post' === this.state.selectedType ) {
+
+			if ( 'category' === this.state.selectedTaxonomy && 'all' !== this.state.selectedTerm ) {
+				args[ 'categories' ] = [ this.state.selectedTerm ];
+			}
+
+			if ( 'post_tag' === this.state.selectedTaxonomy && 'all' !== this.state.selectedTerm ) {
+				args[ 'tags' ] = [ this.state.selectedTerm ];
+			}
+		}
+
+		if ( 'page' === this.state.selectedType ) {
+			url = 'wp/v2/pages';
+		}
+
+		console.log( url, args );
+	}
+
 	render() {
 
 		const excludeTypes = [ 'wp_block', 'block_area', 'attachment' ];
@@ -214,6 +240,7 @@ class SourceControls extends Component {
 							if ( type !== 'all' ) {
 								this.fetchTaxonomies();
 							}
+							this.updateQueryArgs();
 						} );
 					} }
 				/>
@@ -235,6 +262,7 @@ class SourceControls extends Component {
 								if ( taxonomy !== 'all' ) {
 									this.fetchTerms();
 								}
+								this.updateQueryArgs();
 							} );
 						} }
 					/>
@@ -249,7 +277,11 @@ class SourceControls extends Component {
 							label: 'All',
 						}, ...termOptions] }
 						onChange={ term => {
-							this.setState( { selectedTerm: term } );
+							this.setState( {
+								selectedTerm: term
+							}, () => {
+								this.updateQueryArgs();
+							} );
 						} }
 					/>
 				}

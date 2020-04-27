@@ -21619,7 +21619,8 @@ var source_controls_AuthorSelect = /*#__PURE__*/function (_Component) {
     _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(AuthorSelect).apply(this, arguments));
     _this.state = {
       authors: [],
-      fetchedAuthors: false
+      fetchedAuthors: false,
+      queryArgs: {}
     };
     return _this;
   }
@@ -21678,7 +21679,10 @@ var source_controls_AuthorSelect = /*#__PURE__*/function (_Component) {
         }].concat(toConsumableArray_default()(authorOpions)),
         onChange: function onChange(author) {
           _this3.setState({
-            selectedAuthor: author
+            selectedAuthor: author,
+            queryArgs: {
+              author: author
+            }
           }, function () {});
         }
       });
@@ -21804,6 +21808,28 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component2) {
       });
     }
   }, {
+    key: "updateQueryArgs",
+    value: function updateQueryArgs() {
+      var url = 'wp/v2/posts';
+      var args = {};
+
+      if ('post' === this.state.selectedType) {
+        if ('category' === this.state.selectedTaxonomy && 'all' !== this.state.selectedTerm) {
+          args['categories'] = [this.state.selectedTerm];
+        }
+
+        if ('post_tag' === this.state.selectedTaxonomy && 'all' !== this.state.selectedTerm) {
+          args['tags'] = [this.state.selectedTerm];
+        }
+      }
+
+      if ('page' === this.state.selectedType) {
+        url = 'wp/v2/pages';
+      }
+
+      console.log(url, args);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this8 = this;
@@ -21879,6 +21905,8 @@ var source_controls_SourceControls = /*#__PURE__*/function (_Component2) {
         onChange: function onChange(term) {
           _this8.setState({
             selectedTerm: term
+          }, function () {
+            _this8.updateQueryArgs();
           });
         }
       }));
