@@ -2,7 +2,7 @@
 
 export const getGalleryStyle = ( attributes ) => {
 	let containerHeight = attributes.containerHeight / 50 - 1;
-	let verticalSpacing = attributes;
+	let { verticalSpacing } = attributes;
 	let numerator = 1;
 	let denominator = 1;
 
@@ -17,7 +17,7 @@ export const getGalleryStyle = ( attributes ) => {
 	}
 
 	return {
-		'--novablocks-advanced-gallery-vertical-spacing': `calc( ${ verticalSpacing * 5 } * var(--novablocks-spacing-unit, 10px )`,
+		'--novablocks-advanced-gallery-vertical-spacing': `calc( ${ verticalSpacing * 5 } * var(--novablocks-spacing-unit, 10px) )`,
 		paddingTop: `${ numerator * 100 / denominator }%`,
 	}
 }
