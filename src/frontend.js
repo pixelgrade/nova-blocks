@@ -5,4 +5,6 @@ import './blocks/slideshow/frontend';
 import './blocks/media/frontend';
 import "./blocks/openhours/hoursparser";
 
+import "./components/advanced-gallery/frontend";
+
 import viewportObserver from "./components/viewportObserver";
