@@ -22381,7 +22381,6 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       });
     },
     min: 0,
-    Image: true,
     max: 100,
     step: 10
   }))), Object(external_React_["createElement"])(inspector_controls_PanelBody, {
@@ -22477,52 +22476,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
 var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
   var setAttributes = props.setAttributes,
       verticalSpacing = props.attributes.verticalSpacing;
-  return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props), Object(external_React_["createElement"])(block_controls_Toolbar, {
-    className: "pixelgrade-advanced-gallery-vertical-spacing-toolbar"
-  }, Object(external_React_["createElement"])(block_controls_Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref2) {
-      var isOpen = _ref2.isOpen,
-          onToggle = _ref2.onToggle;
-      return Object(external_React_["createElement"])(block_controls_IconButton, {
-        onClick: onToggle,
-        icon: alignCenter,
-        "aria-expanded": isOpen,
-        label: block_controls_('Vertical Alignment', '__plugin_txtd'),
-        labelPosition: "bottom"
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(external_React_["createElement"])(block_controls_Fragment, null, Object(external_React_["createElement"])(block_controls_RadioControl, {
-        label: 'Vertical Spacing',
-        selected: verticalSpacing,
-        onChange: function onChange(verticalSpacing) {
-          setAttributes({
-            verticalSpacing: parseInt(verticalSpacing, 10)
-          });
-        },
-        options: [{
-          label: '-2 Overlap',
-          value: -2
-        }, {
-          label: '-1 Overlap',
-          value: -1
-        }, {
-          label: 'None',
-          value: 0
-        }, {
-          label: '+1 Offset',
-          value: 1
-        }, {
-          label: '+2 Offset',
-          value: 2
-        }]
-      }));
-    }
-  })));
+  return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props));
 };
 
 /* harmony default export */ var block_controls = (block_controls_AdvancedGalleryBlockControls);
@@ -26917,8 +26871,8 @@ var withCollectionVisibilityAttributes = card_edit_createHigherOrderComponent(fu
   return function (props) {
     if ('novablocks/card' === props.name) {
       var clientId = props.clientId;
-      var parentClientId = card_edit_select('core/editor').getBlockHierarchyRootClientId(clientId);
-      var parentBlock = card_edit_select('core/editor').getBlock(parentClientId);
+      var parentClientId = card_edit_select('core/block-editor').getBlockHierarchyRootClientId(clientId);
+      var parentBlock = card_edit_select('core/block-editor').getBlock(parentClientId);
       var parentBlockAttributes = parentBlock.attributes;
 
       var newAttributes = function (_ref2) {

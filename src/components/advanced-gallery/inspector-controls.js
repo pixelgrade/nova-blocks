@@ -127,7 +127,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						label={ __( 'Image Rotation', '__plugin_txtd' ) }
 						value={ imageRotation }
 						onChange={ imageRotation => setAttributes( { imageRotation } ) }
-						min={ 0 }Image
+						min={ 0 }
 						max={ 100 }
 						step={ 10 }
 					/>

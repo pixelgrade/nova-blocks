@@ -66,39 +66,6 @@ const AdvancedGalleryBlockControls = ( props ) => {
 	return (
 		<BlockControls>
 			<AdvancedGalleryChangeMediaToolbar { ...props } />
-			<Toolbar className="pixelgrade-advanced-gallery-vertical-spacing-toolbar">
-				<Dropdown
-					position="bottom"
-					className="pixelgrade-hero-block-toolbar-dropdown"
-					contentClassName="components-nova--popover"
-					renderToggle={ ( { isOpen, onToggle } ) => (
-						<IconButton
-							onClick={ onToggle }
-							icon={ alignCenter }
-							aria-expanded={ isOpen }
-							label={ __( 'Vertical Alignment', '__plugin_txtd' ) }
-							labelPosition="bottom"
-						/>
-					) }
-					focusOnMount={ false }
-					renderContent={ () => <Fragment>
-						<RadioControl
-							label={ 'Vertical Spacing' }
-							selected={ verticalSpacing }
-							onChange={ verticalSpacing => {
-								setAttributes( { verticalSpacing: parseInt( verticalSpacing, 10 ) } )
-							} }
-							options={ [
-								{ label: '-2 Overlap', value: -2 },
-								{ label: '-1 Overlap', value: -1 },
-								{ label: 'None', value: 0 },
-								{ label: '+1 Offset', value: 1 },
-								{ label: '+2 Offset', value: 2 },
-							] }
-						/>
-					</Fragment> }
-				/>
-			</Toolbar>
 		</BlockControls>
 	)
 }
