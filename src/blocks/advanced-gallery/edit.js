@@ -2,8 +2,14 @@ import AdvancedGallery from '../../components/advanced-gallery';
 
 const Edit = ( props ) => {
 
+	const {
+		attributes: {
+			className
+		}
+	} = props;
+
 	return (
-		<div>
+		<div className={ className }>
 			<AdvancedGallery { ...props } />
 		</div>
 	);

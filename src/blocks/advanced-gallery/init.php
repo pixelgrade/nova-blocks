@@ -27,9 +27,13 @@ if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(
-			array( 'novablocks-map' ),
+			array( 'novablocks-gallery' ),
 			novablocks_get_block_extra_classes( $attributes )
 		);
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		if ( ! empty( $attributes[ 'align' ] ) ) {
 			$classes[] = 'align' . $attributes['align'];
