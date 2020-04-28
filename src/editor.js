@@ -49,8 +49,6 @@ class novaBlocks {
 
 		const supports = ( typeof settings[ 'theme_support' ] === 'object' ) ? Object.values( settings[ 'theme_support' ] ) : settings[ 'theme_support' ];
 
-		advancedGalleryInit();
-
 		if ( supports.indexOf('announcement-bar') > -1 ) {
 			announcementBarBlockInit();
 		}
@@ -87,8 +85,12 @@ class novaBlocks {
 			cardsCollectionInit();
 		}
 
-		if ( supports.indexOf( 'openhours' ) > - 1 ) {
+		if ( supports.indexOf( 'openhours' ) > -1 ) {
 			openHoursInit();
+		}
+
+		if ( supports.indexOf( 'advanced-gallery' ) > -1 ) {
+			advancedGalleryInit();
 		}
 
 		heroInit();

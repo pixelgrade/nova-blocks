@@ -27405,7 +27405,6 @@ var editor_novaBlocks = /*#__PURE__*/function () {
         icon: nova
       });
       var supports = typeof_default()(settings['theme_support']) === 'object' ? Object.values(settings['theme_support']) : settings['theme_support'];
-      blocks_advanced_gallery();
 
       if (supports.indexOf('announcement-bar') > -1) {
         announcement_bar();
@@ -27445,6 +27444,10 @@ var editor_novaBlocks = /*#__PURE__*/function () {
 
       if (supports.indexOf('openhours') > -1) {
         blocks_openhours();
+      }
+
+      if (supports.indexOf('advanced-gallery') > -1) {
+        blocks_advanced_gallery();
       }
 
       blocks_hero();
