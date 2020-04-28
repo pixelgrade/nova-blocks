@@ -1,4 +1,5 @@
-
+import { debounce, isSafari } from "../../utils";
+import $ from 'jquery';
 
 export const getGalleryStyle = ( attributes ) => {
 	let containerHeight = attributes.containerHeight / 50 - 1;
@@ -27,5 +28,38 @@ export const getGridStyle = ( attributes ) => {
 
 	return {
 		'--novablocks-advanced-gallery-grid-gap': `${ elementsDistance }px`
+	}
+}
+
+export const safariHeightFix = ( grid ) => {
+
+	if ( ! isSafari ) {
+		return;
+	}
+
+	const parent = grid.parentNode;
+	const $grid = $( grid );
+	const $parent = $( parent );
+
+	const resetHeight = () => {
+		const newHeight = $parent.outerHeight();
+
+		$grid.css( 'height', newHeight );
+	}
+
+	const debouncedResetHeight = debounce( resetHeight, 30 );
+
+	resetHeight();
+
+	if ( typeof window.ResizeObserver !== "undefined" ) {
+		const observer = new ResizeObserver( entries => {
+			debouncedResetHeight();
+		} );
+
+		observer.observe( parent );
+	} else {
+		$( window ).on( 'resize', function() {
+			debouncedResetHeight();
+		} );
 	}
 }

@@ -1,20 +1,35 @@
+import { isSafari } from "../../utils";
+
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./util";
 import AdvancedGallery from "./index";
 
+const { useState, useEffect, useRef } = wp.element;
+
 const AdvancedGalleryPreview = ( props ) => {
 
 	const { images, ...attributes } = props.attributes;
+	const [ height, setHeight ] = useState(0);
+	const ref = useRef( null );
 
 	if ( ! images || ! images.length ) {
 		return false;
 	}
 
+	useEffect(() => {
+		setHeight( !! ref.current ? ref.current.clientHeight : 0 );
+	});
+
 	const gridItemsCollection = new GridItemCollection( images, attributes );
+	const gridStyle = getGridStyle( attributes );
+
+	if ( !! isSafari ) {
+		Object.assign( gridStyle, { height } );
+	}
 
 	return (
-		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) }>
-			<div className={ `novablocks-advanced-gallery__grid` } style={ getGridStyle( attributes ) }>
+		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) } ref={ ref }>
+			<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
 				{ gridItemsCollection.gridItems.map( ( item, index ) => (
 					<AdvancedGalleryItem gridItem={ item } key={ index } />
 				) ) }
