@@ -148,8 +148,8 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 	return ( props ) => {
 		if ( 'novablocks/card' === props.name ) {
 			const { clientId } = props;
-			const parentClientId = select( 'core/editor' ).getBlockHierarchyRootClientId( clientId );
-			const parentBlock = select( 'core/editor' ).getBlock( parentClientId );
+			const parentClientId = select( 'core/block-editor' ).getBlockHierarchyRootClientId( clientId );
+			const parentBlock = select( 'core/block-editor' ).getBlock( parentClientId );
 			const parentBlockAttributes = parentBlock.attributes;
 
 			const newAttributes = (

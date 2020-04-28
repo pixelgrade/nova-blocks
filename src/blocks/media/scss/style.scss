@@ -9,6 +9,10 @@
 }
 
 .novablocks-media__layout {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+
 	margin-top: calc( -1 * var(--novablocks-media-spacing) );
 	margin-left: calc( -1 * var(--novablocks-media-spacing) );
 

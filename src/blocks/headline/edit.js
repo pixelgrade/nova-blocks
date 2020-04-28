@@ -7,17 +7,16 @@ const {
 	Fragment
 } = wp.element;
 
-/**
- * WordPress dependencies
- */
+const {
+	PanelBody,
+} = wp.components;
+
 const {
 	RichText,
 	AlignmentToolbar,
 	BlockControls,
 	InspectorControls,
 } = wp.blockEditor;
-
-const { PanelBody } = wp.components;
 
 export default function HeadlineEdit( props ) {
 
@@ -48,9 +47,9 @@ export default function HeadlineEdit( props ) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Heading settings', '__plugin_txtd' ) } initialOpen={ true }>
-				<p>{ __( 'Level', '__plugin_txtd' ) }</p>
-				<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				<PanelBody title={ __( 'Headline Settings', '__plugin_txtd' ) } initialOpen={ true }>
+					<p>{ __( 'Level', '__plugin_txtd' ) }</p>
+					<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 				</PanelBody>
 			</InspectorControls>
 
