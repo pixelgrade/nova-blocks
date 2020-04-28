@@ -34,6 +34,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$classes[] = 'novablocks-block';
 		$classes[] = 'novablocks-media';
+
 		if ( ! empty( $attributes['verticalAlignment'] ) ) {
 			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
 		}

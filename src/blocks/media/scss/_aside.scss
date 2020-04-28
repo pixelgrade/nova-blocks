@@ -4,7 +4,7 @@
 	flex-direction: column;
 	min-height: 400px;
 
-	@include above(desktop) {
+	@include above(tablet) {
 		.has-image-on-the-left & {
 			order: -1;
 		}

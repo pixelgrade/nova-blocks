@@ -105,18 +105,16 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 								</div>
 	                        </div>
 	                        <div class="novablocks-slideshow__foreground novablocks-foreground">
-	                            <div class="novablocks-slideshow__content novablocks-u-content-padding">
-	                                <div class="novablocks-u-content-align">
-	                                    <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
-	                                        <?php
-	                                        if ( ! empty( $image['title']['rendered'] ) ) {
-	                                            echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';
-	                                        }
-	                                        if ( ! empty( $image['caption'] ) ) {
-	                                            echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';
-	                                        } ?>
-	                                    </div>
-	                                </div>
+	                            <div class="novablocks-slideshow__content novablocks-u-content-padding novablocks-u-content-align">
+                                    <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
+                                        <?php
+                                        if ( ! empty( $image['title']['rendered'] ) ) {
+                                            echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';
+                                        }
+                                        if ( ! empty( $image['caption'] ) ) {
+                                            echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';
+                                        } ?>
+                                    </div>
 	                            </div>
 	                        </div>
                         </div>
