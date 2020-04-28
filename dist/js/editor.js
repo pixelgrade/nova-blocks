@@ -21927,8 +21927,8 @@ var with_posts_withInspectorControls = function withInspectorControls(OriginalCo
             onChange: function onChange(value) {
               return postsCountOnChange(value);
             },
-            min: 2,
-            max: 4
+            min: 1,
+            max: 12
           }))));
         }
       }]);
@@ -26992,11 +26992,11 @@ function cards_collection_init() {
 
 
 
+
+
 var edit_wp = wp,
     edit_apiFetch = edit_wp.apiFetch;
 var posts_collection_edit_compose = wp.compose.compose;
-
-
 var posts_collection_edit_wp$blockEditor = wp.blockEditor,
     edit_BlockIcon = posts_collection_edit_wp$blockEditor.BlockIcon,
     posts_collection_edit_RichText = posts_collection_edit_wp$blockEditor.RichText,
@@ -27008,7 +27008,9 @@ var _wp$date = wp.date,
     format = _wp$date.format;
 var posts_collection_edit_withSelect = wp.data.withSelect;
 var posts_collection_edit_wp$components = wp.components,
+    posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody,
     edit_Placeholder = posts_collection_edit_wp$components.Placeholder,
+    edit_RangeControl = posts_collection_edit_wp$components.RangeControl,
     edit_Spinner = posts_collection_edit_wp$components.Spinner;
 var posts_collection_edit_wp$element = wp.element,
     posts_collection_edit_Component = posts_collection_edit_wp$element.Component,
@@ -27079,7 +27081,8 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
           setAttributes = _this$props.setAttributes,
           className = _this$props.className,
           posts = _this$props.posts;
-      var level = attributes.level,
+      var columns = attributes.columns,
+          level = attributes.level,
           showButtons = attributes.showButtons,
           showDescription = attributes.showDescription,
           showMedia = attributes.showMedia,
@@ -27113,16 +27116,31 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
         onChange: function onChange(attributes) {
           setAttributes(attributes);
         }
-      }, this.props))), Object(external_React_["createElement"])(collection, extends_default()({
+      }, this.props)), Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
+        title: posts_collection_edit_('Layout', '__plugin_txtd')
+      }, Object(external_React_["createElement"])(edit_RangeControl, {
+        value: columns,
+        onChange: function onChange(columns) {
+          return setAttributes({
+            columns: columns
+          });
+        },
+        min: 2,
+        max: 4
+      }))), Object(external_React_["createElement"])(collection, extends_default()({
         hasAppender: false
       }, this.props), Object(external_React_["createElement"])("div", {
         className: "block-editor-inner-blocks"
       }, Object(external_React_["createElement"])("div", {
         className: "block-editor-block-list__layout"
       }, !!posts && posts.map(function (post, idx) {
+        var style = {
+          '--columns': columns
+        };
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
-          key: idx
+          key: idx,
+          style: style
         }, showMedia && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__media-wrap"
         }, Object(external_React_["createElement"])("div", {

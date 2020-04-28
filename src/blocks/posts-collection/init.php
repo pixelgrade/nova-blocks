@@ -71,7 +71,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="novablocks-card novablocks-block__content novablocks-card__inner-container">
+	<div class="novablocks-card novablocks-block__content novablocks-card__inner-container" style="--columns: <?php echo $attributes['columns']; ?>">
 
 		<?php
 

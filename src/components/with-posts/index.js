@@ -113,8 +113,8 @@ const withInspectorControls = function( OriginalComponent ) {
 								label={ __( 'Number of posts', '__plugin_txtd' ) }
 								value={ numberOfPosts }
 								onChange={ ( value ) => postsCountOnChange( value ) }
-								min={ 2 }
-								max={ 4 }
+								min={ 1 }
+								max={ 12 }
 							/>
 						</PanelBody>
 					</InspectorControls>

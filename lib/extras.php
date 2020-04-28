@@ -513,6 +513,12 @@ function novablocks_get_source_attributes() {
 
 function novablocks_get_posts_collection_attributes() {
 	return array_merge(
+		array(
+			'columns' => array(
+				'type'    => 'number',
+				'default' => 3,
+			),
+		),
 		novablocks_get_source_attributes(),
 		novablocks_get_collection_attributes()
 	);

@@ -1,19 +1,13 @@
 import classnames from 'classnames';
-
-import {
-	some,
-	pickBy,
-	isUndefined,
-} from "lodash";
+import { some, pickBy, isUndefined } from "lodash";
+import { CardsManagerPanel, Collection, withPosts } from '../../components';
+import * as icons from "../../icons";
 
 const { apiFetch } = wp;
 
 const {
 	compose
 } = wp.compose;
-
-import {CardsManagerPanel, Collection, withPosts} from '../../components';
-import * as icons from "../../icons";
 
 const {
 	BlockIcon,
@@ -34,7 +28,9 @@ const {
 } = wp.data;
 
 const {
+	PanelBody,
 	Placeholder,
+	RangeControl,
 	Spinner
 } = wp.components;
 
@@ -90,6 +86,7 @@ class PostsEdit extends Component {
 		} = this.props;
 
 		const {
+			columns,
 			level,
 			showButtons,
 			showDescription,
@@ -123,6 +120,14 @@ class PostsEdit extends Component {
 						onChange={ ( attributes ) => { setAttributes( attributes ) } }
 						{ ...this.props }
 					/>
+					<PanelBody title={ __( 'Layout', '__plugin_txtd' ) }>
+						<RangeControl
+							value={ columns }
+							onChange={ ( columns ) => setAttributes( { columns } ) }
+							min={ 2 }
+							max={ 4 }
+						/>
+					</PanelBody>
 				</InspectorControls>
 				<Collection hasAppender={ false } { ...this.props }>
 					<div className="block-editor-inner-blocks">
@@ -130,8 +135,12 @@ class PostsEdit extends Component {
 							{
 								!! posts && posts.map( ( post, idx ) => {
 
+									const style = {
+										'--columns': columns,
+									}
+
 									return (
-										<div className={ `novablocks-card novablocks-card__inner-container novablocks-block__content` } key={ idx }>
+										<div className={ `novablocks-card novablocks-card__inner-container novablocks-block__content` } key={ idx } style={ style }>
 											{
 												showMedia &&
 												<div className="novablocks-card__media-wrap">
