@@ -54,7 +54,9 @@ const GalleryPlaceholder = function( props ) {
 };
 
 class GalleryPreview extends Component {
+
 	render() {
+
 		const {
 			galleryImages,
 			selected,
@@ -72,12 +74,32 @@ class GalleryPreview extends Component {
 						classes.push( 'novablocks-slideshow__gallery-item--active' );
 					}
 
+					let thumb = false;
+
+					const {
+						sizes: {
+							thumbnail,
+							medium,
+							medium_large,
+							large,
+							full
+						}
+					} = img;
+
+					console.log( img.sizes );
+
+					thumb = thumbnail || medium || medium_large || full || thumb;
+
+					if ( ! thumb || typeof thumb.url === "undefined" ) {
+						return null;
+					}
+
 					return (
 						<li key={ img.id || img.url } onClick={ () => {
 							onSelectImage( index );
 						} }>
 							<div className={ classes.join( ' ' ) }>
-								<img src={ img.sizes.thumbnail.url } alt="" />
+								<img src={ thumb.url } alt="" />
 							</div>
 						</li>
 					);

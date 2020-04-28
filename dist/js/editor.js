@@ -21658,6 +21658,20 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
           classes.push('novablocks-slideshow__gallery-item--active');
         }
 
+        var thumb = false;
+        var _img$sizes = img.sizes,
+            thumbnail = _img$sizes.thumbnail,
+            medium = _img$sizes.medium,
+            medium_large = _img$sizes.medium_large,
+            large = _img$sizes.large,
+            full = _img$sizes.full;
+        console.log(img.sizes);
+        thumb = thumbnail || medium || medium_large || full || thumb;
+
+        if (!thumb || typeof thumb.url === "undefined") {
+          return null;
+        }
+
         return Object(external_React_["createElement"])("li", {
           key: img.id || img.url,
           onClick: function onClick() {
@@ -21666,7 +21680,7 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
         }, Object(external_React_["createElement"])("div", {
           className: classes.join(' ')
         }, Object(external_React_["createElement"])("img", {
-          src: img.sizes.thumbnail.url,
+          src: thumb.url,
           alt: ""
         })));
       }));
@@ -24588,7 +24602,7 @@ var preview_HeroPreview = function HeroPreview(props) {
     className: classes.join(' '),
     style: styles.hero
   }, Object(external_React_["createElement"])(background, props), Object(external_React_["createElement"])("div", {
-    className: "novablocks-hero__foreground novablocks-u-content-padding novablocks-u-content-align",
+    className: "novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align",
     style: styles.foreground
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-hero__inner-container novablocks-u-content-width",
