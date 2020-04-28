@@ -12,13 +12,13 @@ const AdvancedGalleryPreview = ( props ) => {
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
 
-	if ( ! images || ! images.length ) {
-		return false;
-	}
-
 	useEffect(() => {
 		setHeight( !! ref.current ? ref.current.clientHeight : 0 );
 	});
+
+	if ( ! images || ! images.length ) {
+		return null;
+	}
 
 	const gridItemsCollection = new GridItemCollection( images, attributes );
 	const gridStyle = getGridStyle( attributes );

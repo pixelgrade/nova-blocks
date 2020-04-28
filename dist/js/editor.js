@@ -12139,14 +12139,14 @@ var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
       setHeight = _useState2[1];
 
   var ref = useRef(null);
-
-  if (!images || !images.length) {
-    return false;
-  }
-
   useEffect(function () {
     setHeight(!!ref.current ? ref.current.clientHeight : 0);
   });
+
+  if (!images || !images.length) {
+    return null;
+  }
+
   var gridItemsCollection = new grid_item_GridItemCollection(images, attributes);
   var gridStyle = getGridStyle(attributes);
 
