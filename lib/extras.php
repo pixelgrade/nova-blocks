@@ -176,6 +176,9 @@ function novablocks_get_advanced_gallery_component_attributes() {
 	$attributes = array(
 		'images'             => array(
 			'type'    => 'array',
+			'items'   => array(
+				'type' => 'object',
+			),
 			'default' => array(),
 		),
 		'stylePreset'        => array(
