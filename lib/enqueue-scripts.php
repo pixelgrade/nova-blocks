@@ -41,7 +41,7 @@ function novablocks_admin_init() {
 	);
 
 	wp_localize_script( 'nova-blocks-js', 'novablocks_urls', array(
-		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/frontend.style.css',
+		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/frontend.css',
 		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
 	) );
 
