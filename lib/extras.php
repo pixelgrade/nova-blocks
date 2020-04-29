@@ -1169,7 +1169,7 @@ function novablocks_get_theme_support() {
 
 function novablocks_render_advanced_gallery( $attributes ) {
 
-	$images = $attributes['images'];
+	$gallery = $attributes['gallery'];
 
 	$advanced_gallery_attributes = array(
 		'sizeContrast',
@@ -1193,12 +1193,12 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
 	}
 
-	if ( ! empty( $images ) && is_array( $images ) ) {
+	if ( ! empty( $gallery ) && is_array( $gallery ) ) {
 
 		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . '>';
 		echo '<div class="novablocks-advanced-gallery__grid">';
 
-		foreach ( $images as $image ) {
+		foreach ( $gallery as $image ) {
 
 			if ( is_string( $image ) ) {
 				$image = json_decode( $image );

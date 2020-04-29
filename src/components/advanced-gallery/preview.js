@@ -8,7 +8,9 @@ const { useState, useEffect, useRef } = wp.element;
 
 const AdvancedGalleryPreview = ( props ) => {
 
-	const { images, ...attributes } = props.attributes;
+	const { attributes } = props;
+	const gallery = attributes.gallery || attributes.images;
+
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
 
@@ -16,11 +18,11 @@ const AdvancedGalleryPreview = ( props ) => {
 		setHeight( !! ref.current ? ref.current.clientHeight : 0 );
 	});
 
-	if ( ! images || ! images.length ) {
+	if ( ! gallery || ! gallery.length ) {
 		return null;
 	}
 
-	const gridItemsCollection = new GridItemCollection( images, attributes );
+	const gridItemsCollection = new GridItemCollection( gallery, attributes );
 	const gridStyle = getGridStyle( attributes );
 
 	if ( !! isSafari ) {

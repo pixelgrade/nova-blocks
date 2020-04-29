@@ -21,13 +21,13 @@ const {
 const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 
 	const {
+		attributes,
 		setAttributes,
-		attributes: {
-			images,
-		}
 	} = props;
 
-	if ( ! images || ! images.length ) {
+	const gallery = attributes.gallery || attributes.images;
+
+	if ( ! gallery || ! gallery.length ) {
 		return false;
 	}
 
@@ -37,9 +37,9 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 				type="image"
 				multiple
 				gallery
-				value={ images.map( ( image ) => image.id ) }
-				onSelect={ ( images ) => {
-					setAttributes( { images } );
+				value={ gallery.map( ( image ) => image.id ) }
+				onSelect={ ( gallery ) => {
+					setAttributes( { gallery } );
 				} }
 				render={ ( { open } ) => (
 					<IconButton

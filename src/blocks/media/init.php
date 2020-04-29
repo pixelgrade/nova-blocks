@@ -58,7 +58,9 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$classes[] = 'wp-block-group';
 		$classes[] = 'alignfull';
 
-		$images = $attributes['images'];
+		if ( empty( $attributes['gallery'] ) && ! empty( $attributes['images'] ) ) {
+			$attributes['gallery'] = $attributes['images'];
+		}
 
 		ob_start(); ?>
 
