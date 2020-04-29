@@ -12125,7 +12125,7 @@ var preview_wp$element = wp.element,
 
 var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
   var attributes = props.attributes;
-  var gallery = attributes.gallery || attributes.images;
+  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
 
   var _useState = useState(0),
       _useState2 = slicedToArray_default()(_useState, 2),
@@ -12187,7 +12187,7 @@ var _wp$blockEditor = wp.blockEditor,
 var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var gallery = attributes.gallery || attributes.images;
+  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
 
   if (!!gallery && !!gallery.length) {
     return false;
@@ -22508,7 +22508,7 @@ var block_controls_Fragment = wp.element.Fragment;
 var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryChangeMediaToolbar(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var gallery = attributes.gallery || attributes.images;
+  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
 
   if (!gallery || !gallery.length) {
     return false;
