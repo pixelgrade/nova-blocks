@@ -21660,7 +21660,6 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
             medium_large = _img$sizes.medium_large,
             large = _img$sizes.large,
             full = _img$sizes.full;
-        console.log(img.sizes);
         thumb = thumbnail || medium || medium_large || full || thumb;
 
         if (!thumb || typeof thumb.url === "undefined") {
@@ -27097,7 +27096,6 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
   };
 
   var updateAttributes = function updateAttributes(attributes) {
-    console.log(attributes);
     setAttributes(attributes);
     updateChildrenAttributes(attributes);
   };

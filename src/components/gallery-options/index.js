@@ -86,8 +86,6 @@ class GalleryPreview extends Component {
 						}
 					} = img;
 
-					console.log( img.sizes );
-
 					thumb = thumbnail || medium || medium_large || full || thumb;
 
 					if ( ! thumb || typeof thumb.url === "undefined" ) {
