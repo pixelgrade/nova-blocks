@@ -94,6 +94,10 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 1.4.0 =
+* New Block: Gallery of the Stars for creative gallery layouts
+* Enhanced block: Media Card Constellation's gallery can also use creative layouts
+
 = 1.3.2 =
 * Fix Hero block minimum height attribute
 
