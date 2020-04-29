@@ -174,7 +174,7 @@ function novablocks_alter_default_attributes_from_preset( $attributes ) {
 function novablocks_get_advanced_gallery_component_attributes() {
 
 	$attributes = array(
-		'images'             => array(
+		'gallery'            => array(
 			'type'    => 'array',
 			'items'   => array(
 				'type' => 'object',
@@ -741,6 +741,13 @@ function novablocks_add_media_settings( $settings ) {
 				'align'         => array(
 					'type'    => 'string',
 					'default' => 'full'
+				),
+				'images'        => array(
+					'type'    => 'array',
+					'items'   => array(
+						'type' => 'object',
+					),
+					'default' => array(),
 				),
 			),
 			novablocks_get_alignment_attributes(),
