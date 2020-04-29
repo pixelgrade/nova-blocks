@@ -11,11 +11,10 @@ const { __ } = wp.i18n;
 
 const {
 	MediaUpload,
-	BlockControls
+	BlockControls,
 } = wp.blockEditor;
 
 const {
-	IconButton,
 	Toolbar,
 } = wp.components;
 
@@ -31,24 +30,15 @@ const MEDIA_ALIGNMENTS_CONTROLS = {
 };
 
 const MediaBlockControls = function( props ) {
+
 	const {
 		attributes,
 		setAttributes,
-		updateImages,
 	} = props;
 
 	const {
 		mediaPosition,
-		images = [],
 	} = attributes;
-
-	let galleryImages = images;
-
-	if ( images.length && typeof images[0] === 'string' ) {
-		galleryImages = images.map( ( image ) => JSON.parse( image ) );
-	}
-
-	const hasImages = !! galleryImages.length;
 
 	return (
 		<BlockControls>
@@ -66,24 +56,6 @@ const MediaBlockControls = function( props ) {
 			/>
 
 			<AlignmentToolbar { ...props } />
-
-			{ hasImages && <Toolbar>
-				<MediaUpload
-					type="image"
-					multiple
-					gallery
-					value={ galleryImages.map( ( image ) => image.id ) }
-					onSelect={ updateImages }
-					render={ ( { open } ) => (
-						<IconButton
-							className="components-icon-button components-toolbar__control"
-							label={ __( 'Change Media', '__plugin_txtd' ) }
-							icon={ icons.swap }
-							onClick={ open }
-						/>
-					) }
-				/>
-			</Toolbar> }
 
 		</BlockControls>
 	);

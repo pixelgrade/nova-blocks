@@ -95,7 +95,7 @@ const HeroPreview = function( props ) {
 	return (
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>
 			<HeroBackground { ...props } />
-			<div className="novablocks-hero__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
+			<div className="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 				<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
 					<InnerBlocks template={ settings.hero.template } />
 				</div>

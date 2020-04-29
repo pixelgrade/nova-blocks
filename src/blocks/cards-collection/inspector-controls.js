@@ -58,7 +58,6 @@ const CardsCollectionInspectorControls = ( props ) => {
 	}
 
 	const updateAttributes = ( attributes ) => {
-		console.log( attributes );
 		setAttributes( attributes );
 		updateChildrenAttributes( attributes );
 	}

@@ -18,23 +18,9 @@
 	@include image-cover;
 }
 
-.novablocks-hero__foreground {
-	position: relative;
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-
-	.novablocks-hero__inner-container {
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			color: inherit;
-		}
+.novablocks-hero__inner-container[class] {
+	h1, h2, h3, h4, h5, h6 {
+		color: inherit;
 	}
 }
 

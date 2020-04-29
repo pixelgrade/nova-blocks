@@ -6,6 +6,7 @@ import "./filters/with-emphasis-level";
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
 
+import advancedGalleryInit from "./blocks/advanced-gallery";
 import announcementBarBlockInit from "./blocks/announcement-bar";
 import googleMapBlockInit from "./blocks/google-map";
 import headerBlockInit from "./blocks/header";
@@ -84,8 +85,12 @@ class novaBlocks {
 			cardsCollectionInit();
 		}
 
-		if ( supports.indexOf( 'openhours' ) > - 1 ) {
+		if ( supports.indexOf( 'openhours' ) > -1 ) {
 			openHoursInit();
+		}
+
+		if ( supports.indexOf( 'advanced-gallery' ) > -1 ) {
+			advancedGalleryInit();
 		}
 
 		heroInit();
