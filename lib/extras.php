@@ -745,7 +745,7 @@ function novablocks_add_media_settings( $settings ) {
 				'images'        => array(
 					'type'    => 'array',
 					'items'   => array(
-						'type' => 'string',
+						'type' => array( 'object', 'string' ),
 					),
 					'default' => array(),
 				),
