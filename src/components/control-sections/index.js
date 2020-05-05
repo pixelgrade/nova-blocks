@@ -169,6 +169,10 @@ const ControlsSections = ( props ) => {
 
 						const className = getClassName( label );
 
+						if ( activeLevel !== label && fills.length === 0 ) {
+							return false;
+						}
+
 						return (
 							<div className={ className } onClick={ () => { setActiveLevel( label ) } }>{ label }</div>
 						)
