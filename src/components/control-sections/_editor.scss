@@ -18,28 +18,23 @@
 }
 
 .novablocks-sections__buttons {
-	display: grid;
-	grid-gap: 10px;
-	grid-template-columns: repeat(2, 1fr);
 	grid-auto-rows: 1fr;
 
 	padding: 16px;
 }
 
 .novablocks-sections__button {
-	display: flex;
-	align-items: center;
-	align-self: stretch;
-	justify-content: center;
-
-	padding: 20px;
-	border: 1px solid #C4C7D5;
+	padding: 10px 20px;
+	border-radius: 5px;
 
 	background: #F2F2F2;
 	font-weight: 700;
-	text-align: center;
 
 	cursor: pointer;
+
+	& + & {
+		margin-top: 10px;
+	}
 }
 
 //

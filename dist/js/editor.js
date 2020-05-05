@@ -16683,6 +16683,108 @@ var preview_MediaPreview = function MediaPreview(props) {
 };
 
 /* harmony default export */ var media_preview = (preview_MediaPreview);
+// CONCATENATED MODULE: ./src/blocks/media/inspector-controls.js
+
+
+/**
+ * WordPress dependencies
+ */
+
+var media_inspector_controls_ = wp.i18n.__;
+var media_inspector_controls_Fragment = wp.element.Fragment;
+var media_inspector_controls_wp$components = wp.components,
+    media_inspector_controls_RadioControl = media_inspector_controls_wp$components.RadioControl,
+    media_inspector_controls_RangeControl = media_inspector_controls_wp$components.RangeControl;
+
+var inspector_controls_MediaInspectorControls = function MediaInspectorControls(props) {
+  var _props$attributes = props.attributes,
+      blockTopSpacing = _props$attributes.blockTopSpacing,
+      blockBottomSpacing = _props$attributes.blockBottomSpacing,
+      emphasisTopSpacing = _props$attributes.emphasisTopSpacing,
+      emphasisBottomSpacing = _props$attributes.emphasisBottomSpacing,
+      emphasisArea = _props$attributes.emphasisArea,
+      contentAreaWidth = _props$attributes.contentAreaWidth,
+      layoutGutter = _props$attributes.layoutGutter,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: media_inspector_controls_('Spacing')
+  }, Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: blockTopSpacing,
+    onChange: function onChange(blockTopSpacing) {
+      return setAttributes({
+        blockTopSpacing: blockTopSpacing
+      });
+    },
+    label: media_inspector_controls_('Top'),
+    min: -2,
+    max: 2
+  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: blockBottomSpacing,
+    onChange: function onChange(blockBottomSpacing) {
+      return setAttributes({
+        blockBottomSpacing: blockBottomSpacing
+      });
+    },
+    label: media_inspector_controls_('Bottom'),
+    min: -2,
+    max: 2
+  }), Object(external_React_["createElement"])("label", null, "Emphasis Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: emphasisTopSpacing,
+    onChange: function onChange(emphasisTopSpacing) {
+      return setAttributes({
+        emphasisTopSpacing: emphasisTopSpacing
+      });
+    },
+    label: media_inspector_controls_('Top'),
+    min: -2,
+    max: 2
+  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: emphasisBottomSpacing,
+    onChange: function onChange(emphasisBottomSpacing) {
+      return setAttributes({
+        emphasisBottomSpacing: emphasisBottomSpacing
+      });
+    },
+    label: media_inspector_controls_('Bottom'),
+    min: -2,
+    max: 2
+  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: emphasisArea,
+    onChange: function onChange(emphasisArea) {
+      return setAttributes({
+        emphasisArea: emphasisArea
+      });
+    },
+    label: media_inspector_controls_('Emphasis Area'),
+    min: 0,
+    max: 100,
+    step: 5
+  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: contentAreaWidth,
+    onChange: function onChange(contentAreaWidth) {
+      return setAttributes({
+        contentAreaWidth: contentAreaWidth
+      });
+    },
+    label: media_inspector_controls_('Content Area Width'),
+    min: 0,
+    max: 100,
+    step: 1
+  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: layoutGutter,
+    onChange: function onChange(layoutGutter) {
+      return setAttributes({
+        layoutGutter: layoutGutter
+      });
+    },
+    label: media_inspector_controls_('Layout Gutter'),
+    min: 0,
+    max: 100,
+    step: 5
+  })));
+};
+
+/* harmony default export */ var media_inspector_controls = (inspector_controls_MediaInspectorControls);
 // CONCATENATED MODULE: ./src/blocks/media/edit.js
 
 
@@ -16694,6 +16796,7 @@ function media_edit_objectSpread(target) { for (var i = 1; i < arguments.length;
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -16716,7 +16819,7 @@ var edit_MediaEdit = function MediaEdit(props) {
     });
   }
 
-  return Object(external_React_["createElement"])(media_edit_Fragment, null, Object(external_React_["createElement"])(media_preview, media_edit_objectSpread({}, props, {
+  return Object(external_React_["createElement"])(media_edit_Fragment, null, Object(external_React_["createElement"])(media_inspector_controls, props), Object(external_React_["createElement"])(media_preview, media_edit_objectSpread({}, props, {
     updateImages: updateImages
   })), Object(external_React_["createElement"])(media_block_controls, media_edit_objectSpread({}, props, {
     updateImages: updateImages
