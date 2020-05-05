@@ -1,5 +1,14 @@
 import EmphasisLevelControls from "../../components/emphasis-level-controls";
 
+import {
+	ControlsSection,
+
+	GeneralControls,
+	CustomizeControls,
+	SettingsControls,
+} from "../../components/control-sections";
+
+const { __ } = wp.i18n;
 const { InspectorControls } = wp.blockEditor;
 const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;
@@ -21,9 +30,11 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<InspectorControls>
-					<EmphasisLevelControls { ...props } />
-				</InspectorControls>
+				<ControlsSection label={ __( 'Emphasis' ) }>
+					<SettingsControls>
+						<EmphasisLevelControls { ...props } />
+					</SettingsControls>
+				</ControlsSection>
 			</Fragment>
 		);
 	};

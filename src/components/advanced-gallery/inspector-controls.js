@@ -1,6 +1,15 @@
 import { Notice, Tab, Tabs } from '../../components';
 
+import {
+	ControlsSection,
+
+	GeneralControls,
+	CustomizeControls,
+	SettingsControls,
+} from "../control-sections";
+
 const { __ } = wp.i18n;
+const { Fragment } = wp.element;
 
 const {
 	InspectorControls,
@@ -53,9 +62,24 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 	}
 
 	return (
-		<InspectorControls>
-			<Tabs>
-				<Tab label={ __( 'Presets', '__plugin_txtd' ) }>
+		<Fragment>
+
+			<ControlsSection label={ __( 'Gallery' ) }>
+				<SettingsControls>
+					<RangeControl
+						label={ __( 'Size Contrast', '__plugin_txtd' ) }
+						value={ sizeContrast }
+						onChange={ sizeContrast => setAttributes( { sizeContrast } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 20 }
+					/>
+				</SettingsControls>
+			</ControlsSection>
+
+			<ControlsSection label={ __( 'Gallery' ) }>
+
+				<GeneralControls>
 					<Notice
 						id={ 'novablocks-advanced-gallery-quick-start' }
 						content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
@@ -89,16 +113,12 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 								onClick={ randomize }>{ __( '💡 Surprise me!' ) }</Button>
 						</div>
 					}
-				</Tab>
-				<Tab label={ __( 'Customize', '__plugin_txtd' ) }>
-					<RangeControl
-						label={ __( 'Size Contrast', '__plugin_txtd' ) }
-						value={ sizeContrast }
-						onChange={ sizeContrast => setAttributes( { sizeContrast } ) }
-						min={ 0 }
-						max={ 100 }
-						step={ 20 }
-					/>
+				</GeneralControls>
+
+				<CustomizeControls>
+				</CustomizeControls>
+
+				<SettingsControls>
 					<RangeControl
 						label={ __( 'Position Shift', '__plugin_txtd' ) }
 						value={ positionShift }
@@ -131,36 +151,35 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						max={ 100 }
 						step={ 10 }
 					/>
-				</Tab>
-			</Tabs>
-			<PanelBody title={ __( 'Elements Settings', '__plugin_txtd' ) } initialOpen={ true }>
-				<RangeControl
-					label={ __( 'Image Container Height', '__plugin_txtd' ) }
-					value={ containerHeight }
-					onChange={ containerHeight => setAttributes( { containerHeight } ) }
-					min={ 0 }
-					max={ 100 }
-					step={ 5 }
-				/>
-				<RadioControl
-					label={ 'Image Resizing' }
-					selected={ imageResizing }
-					onChange={ imageResizing => setAttributes( { imageResizing } ) }
-					options={ [
-						{ label: 'Stretch to fill the container', value: 'cropped' },
-						{ label: 'Shrink to fit (no crop)', value: 'original' },
-					] }
-				/>
-				<RangeControl
-					label={ __( 'Image Position', '__plugin_txtd' ) }
-					value={ objectPosition }
-					onChange={ objectPosition => setAttributes( { objectPosition } ) }
-					min={ 0 }
-					max={ 100 }
-					step={ 10 }
-				/>
-			</PanelBody>
-		</InspectorControls>
+					<RangeControl
+						label={ __( 'Image Container Height', '__plugin_txtd' ) }
+						value={ containerHeight }
+						onChange={ containerHeight => setAttributes( { containerHeight } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
+					/>
+					<RadioControl
+						label={ 'Image Resizing' }
+						selected={ imageResizing }
+						onChange={ imageResizing => setAttributes( { imageResizing } ) }
+						options={ [
+							{ label: 'Stretch to fill the container', value: 'cropped' },
+							{ label: 'Shrink to fit (no crop)', value: 'original' },
+						] }
+					/>
+					<RangeControl
+						label={ __( 'Image Position', '__plugin_txtd' ) }
+						value={ objectPosition }
+						onChange={ objectPosition => setAttributes( { objectPosition } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 10 }
+					/>
+				</SettingsControls>
+
+			</ControlsSection>
+		</Fragment>
 	);
 }
 

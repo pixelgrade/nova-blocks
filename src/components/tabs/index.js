@@ -29,7 +29,7 @@ class Tabs extends Component {
 		return (
 			<div className="novablocks-tabs">
 				<ol className="novablocks-tabs__list">
-					{children.map((child) => {
+					{ children.map((child) => {
 						const { label } = child.props;
 
 						return (
@@ -40,7 +40,7 @@ class Tabs extends Component {
 								onClick={onClickTabItem}
 							/>
 						);
-					})}
+					}) }
 				</ol>
 				<div className="novablocks-tabs__content">
 					{ children.map((child) => {
