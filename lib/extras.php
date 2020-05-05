@@ -749,6 +749,34 @@ function novablocks_add_media_settings( $settings ) {
 					),
 					'default' => array(),
 				),
+				'blockTopSpacing' => array(
+					'type' => 'number',
+					'default' => 1,
+				),
+				'blockBottomSpacing' => array(
+					'type' => 'number',
+					'default' => 1,
+				),
+				'emphasisTopSpacing' => array(
+					'type' => 'number',
+					'default' => 1,
+				),
+				'emphasisBottomSpacing' => array(
+					'type' => 'number',
+					'default' => 1,
+				),
+				'emphasisArea' => array(
+					'type' => 'number',
+					'default' => 100,
+				),
+				'contentAreaWidth' => array(
+					'type' => 'number',
+					'default' => 50,
+				),
+				'layoutGutter' => array(
+					'type' => 'number',
+					'default' => 25,
+				),
 			),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()

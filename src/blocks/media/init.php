@@ -62,9 +62,26 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$attributes['gallery'] = $attributes['images'];
 		}
 
+		$blockTopSpacing = $attributes['blockTopSpacing'];
+		$blockBottomSpacing = $attributes['blockBottomSpacing'];
+		$emphasisTopSpacing = $attributes['verticalAlignment'] === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
+		$emphasisBottomSpacing = $attributes['verticalAlignment'] === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
+		$emphasisArea = $attributes['emphasisArea'];
+		$contentAreaWidth = $attributes['contentAreaWidth'];
+		$layoutGutter = $attributes['layoutGutter'];
+
+		$style =
+			'--block-top-spacing:' . $blockTopSpacing . ';' .
+			'--block-bottom-spacing:' . $blockBottomSpacing . ';' .
+			'--emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
+			'--emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
+			'--emphasis-area:' . $emphasisArea . ';' .
+			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
+			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 8 / 100 )';
+
 		ob_start(); ?>
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo $style ?>">
             <div class="wp-block-group__inner-container">
 	            <div class="wp-block alignwide">
 	                <div class="novablocks-media__layout novablocks-u-content-align">

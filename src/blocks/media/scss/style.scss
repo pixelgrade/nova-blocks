@@ -6,6 +6,21 @@
 	> .wp-block-group__inner-container {
 		padding-top: 1px;
 	}
+
+	// center content
+	.wp-block-group__inner-container > .wp-block {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	// make sure negative margin used for layout doesnt overlap other blocks
+	.wp-block-group__inner-container > .wp-block {
+		display: flex;
+
+		> * {
+			flex-grow: 1;
+		}
+	}
 }
 
 .novablocks-media__layout {
@@ -25,6 +40,40 @@
 		> * {
 			flex: 1 0 50%;
 		}
+	}
+}
+
+.novablocks-media[class][class] {
+	margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+	margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+	padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+	padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+	transition: var(--novablocks-media-transition);
+	transition-property: margin, padding;
+
+	.novablocks-advanced-gallery {
+		margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+		transition: var(--novablocks-media-transition);
+		transition-property: margin, padding;
+	}
+
+	.wp-block-group__inner-container {
+		background-image: linear-gradient(
+				var(--novablocks-media-background-direction),
+				var(--novablocks-media-background-color) 0,
+				var(--novablocks-media-background-color) calc(var(--emphasis-area) * 1%),
+				transparent calc(var(--emphasis-area) * 1%)
+		);
+		background-size: 100% 100%;
+	}
+
+	.novablocks-media__content {
+		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
 	}
 }
 
