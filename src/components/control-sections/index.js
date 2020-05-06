@@ -35,164 +35,197 @@ const Cube = ( props ) => {
 	)
 }
 
+const SectionsList = ( props ) => {
+
+	const {
+		activeSectionLabel,
+		sections,
+		onSectionClick
+	} = props;
+
+	const active = sections.find( section => section.props.label === activeSectionLabel );
+
+	if ( !! active ) {
+		return false;
+	}
+
+	return (
+		<div className="novablocks-sections">
+			<div className="novablocks-sections__header">
+				<div className="novablocks-sections__title">{ __( 'Select a section to customize' ) }</div>
+				<Cube />
+			</div>
+			<div className={ 'novablocks-sections__buttons' }>
+				{ sections.map( section => {
+					const { label } = section.props;
+					const isActive = label === activeSectionLabel;
+					const className = classnames(
+						'novablocks-sections__button',
+						{
+							'novablocks-sections__button--active': isActive
+						}
+					);
+
+					return <div key={ kebabCase( label ) } className={ className } onClick={ () => { onSectionClick( label ) } }>{ label }</div>
+				} ) }
+			</div>
+		</div>
+	)
+}
+
+const SectionContent = ( props ) => {
+
+	const { section } = props;
+
+	if ( ! section || ! section.props.children ) {
+		return null;
+	}
+
+	return section.props.children;
+}
+
+const SectionTab = ( props ) => {
+
+	const {
+		className,
+		label,
+		onClick,
+	} = props;
+
+	return (
+		<div className={ className } onClick={ () => { onClick( label ) } }>{ label }</div>
+	);
+}
+
+const ActiveSection = ( props ) => {
+
+	const {
+		activeLevel,
+		section,
+		onBackButtonClick,
+		onTabClick,
+	} = props;
+
+	if ( ! section ) {
+		return false;
+	}
+
+	const getTabClassName = ( label ) => {
+		return classnames(
+			'novablocks-sections__tab',
+			{
+				'novablocks-sections__tab--active': activeLevel === label
+			}
+		)
+	}
+
+	const getTab = ( label ) => {
+
+		return ( fills ) => {
+
+			return (
+				<div className={ getTabClassName( label ) } onClick={ () => { onTabClick( label ) } }>{ label }</div>
+			)
+		}
+	}
+
+	return (
+		<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeLevel ) }` }>
+			<div className="novablocks-sections__controls-header">
+				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
+				<div className="novablocks-sections__controls-title">
+					{ section.props.label }
+				</div>
+				<Cube />
+			</div>
+			<div className={ 'novablocks-sections__tabs' }>
+				<GeneralControlsSlot>{ getTab( __( 'General' ) ) }</GeneralControlsSlot>
+				<CustomizeControlsSlot>{ getTab( __( 'Customize' ) ) }</CustomizeControlsSlot>
+				<SettingsControlsSlot>{ getTab( __( 'Settings' ) ) }</SettingsControlsSlot>
+			</div>
+			<div className={ 'novablocks-sections__tab-content' }>
+				{ activeLevel === __( 'General' ) && <GeneralControlsSlot /> }
+				{ activeLevel === __( 'Customize' ) && <CustomizeControlsSlot /> }
+				{ activeLevel === __( 'Settings' ) && <SettingsControlsSlot /> }
+			</div>
+		</div>
+	)
+}
+
+const getSectionsFromFills = ( fills ) => {
+	const sections = [];
+
+	// Merge sections with the same label
+	fills.forEach( fill => {
+		const index = sections.findIndex( section => {
+			return section.props.label === fill[0].props.label;
+		} );
+
+		if ( index === -1 ) {
+			sections.push( {
+				props: fill[0].props,
+			} );
+		} else {
+			const oldChildren = sections[index].props.children;
+			let oldChildrenArray;
+			let newChildren = fill[0].props.children;
+
+			if ( typeof newChildren !== "undefined" ) {
+
+				if ( ! Array.isArray( newChildren ) ) {
+					newChildren = [ newChildren ];
+				}
+
+				if ( typeof oldChildren !== "undefined" ) {
+
+					if ( ! Array.isArray( oldChildren ) ) {
+						oldChildrenArray = Array.isArray( oldChildren ) ? oldChildren : [ oldChildren ];
+					}
+
+					newChildren = oldChildrenArray.concat( newChildren );
+				}
+
+				sections.splice(index, 1, {
+					props: {
+						label: sections[index].props.label,
+						children: newChildren,
+					}
+				});
+			}
+		}
+	} );
+
+	return sections;
+}
+
 const ControlsSections = ( props ) => {
 
 	const { isSelected } = props;
-	const [ activeSection, setActiveSection ] = useState( false );
+	const [ activeSectionLabel, setActiveSectionLabel ] = useState( false );
 	const [ activeLevel, setActiveLevel ] = useState( __( 'Settings' ) );
 
 	return (
 		<ControlsSectionsSlot>
 			{ ( fills ) => {
-
-				const sections = [];
-
-				// Merge sections with the same label
-				fills.forEach( fill => {
-					const index = sections.findIndex( section => {
-						return section.props.label === fill[0].props.label;
-					} );
-
-					if ( index === -1 ) {
-						sections.push( {
-							props: fill[0].props,
-						} );
-					} else {
-						const oldChildren = sections[index].props.children;
-						let oldChildrenArray;
-						let newChildren = fill[0].props.children;
-
-						if ( typeof newChildren !== "undefined" ) {
-
-							if ( ! Array.isArray( newChildren ) ) {
-								newChildren = [ newChildren ];
-							}
-
-							if ( typeof oldChildren !== "undefined" ) {
-
-								if ( ! Array.isArray( oldChildren ) ) {
-									oldChildrenArray = Array.isArray( oldChildren ) ? oldChildren : [ oldChildren ];
-								}
-
-								newChildren = oldChildrenArray.concat( newChildren );
-							}
-
-							sections.splice(index, 1, {
-								props: {
-									label: sections[index].props.label,
-									children: newChildren,
-								}
-							});
-						}
-					}
-				} );
-
-				const active = sections.find( section => section.props.label === activeSection );
-
-				const Buttons = () => {
-
-					if ( !! active ) {
-						return false;
-					}
-
-					return (
-						<div className="novablocks-sections">
-							<div className="novablocks-sections__header">
-								<div className="novablocks-sections__title">{ __( 'Select a section to customize' ) }</div>
-								<Cube />
-							</div>
-							<div className={ 'novablocks-sections__buttons' }>
-								{ sections.map( section => {
-									const { label } = section.props;
-									const isActive = label === activeSection;
-									const className = classnames(
-										'novablocks-sections__button',
-										{
-											'novablocks-sections__button--active': isActive
-										}
-									);
-
-									return <div className={ className } onClick={ () => { setActiveSection( label ) } }>{ label }</div>
-								} ) }
-							</div>
-						</div>
-					)
-				}
-
-				const ActiveSection = () => {
-
-					if ( ! active ) {
-						return false;
-					}
-
-					return (
-						<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeLevel ) }` }>
-							<div className="novablocks-sections__controls-header">
-								<div className="novablocks-sections__controls-back" onClick={ () => { setActiveSection( false ) } }></div>
-								<div className="novablocks-sections__controls-title">
-									{ active.props.label }
-								</div>
-								<Cube />
-							</div>
-							<div className={ 'novablocks-sections__tabs' }>
-								<GeneralControlsSlot>
-									{ getTab( __( 'General' ) ) }
-								</GeneralControlsSlot>
-								<CustomizeControlsSlot>
-									{ getTab( __( 'Customize' ) ) }
-								</CustomizeControlsSlot>
-								<SettingsControlsSlot>
-									{ getTab( __( 'Settings' ) ) }
-								</SettingsControlsSlot>
-							</div>
-							<div className={ 'novablocks-sections__tab-content' }>
-								{ activeLevel === __( 'General' ) && <GeneralControlsSlot /> }
-								{ activeLevel === __( 'Customize' ) && <CustomizeControlsSlot /> }
-								{ activeLevel === __( 'Settings' ) && <SettingsControlsSlot /> }
-							</div>
-						</div>
-					)
-				}
-
-				const getClassName = ( label ) => {
-					return classnames(
-						'novablocks-sections__tab',
-						{
-							'novablocks-sections__tab--active': activeLevel === label
-						}
-					)
-				}
-
-				const getTab = ( label ) => {
-
-					return ( fills ) => {
-
-						const className = getClassName( label );
-
-						if ( activeLevel !== label && fills.length === 0 ) {
-							return false;
-						}
-
-						return (
-							<div className={ className } onClick={ () => { setActiveLevel( label ) } }>{ label }</div>
-						)
-					}
-				}
-
-				const Content = () => {
-
-					if ( ! active || ! active.props.children ) {
-						return null;
-					}
-
-					return active.props.children;
-				}
+				const sections = getSectionsFromFills( fills );
+				const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 
 				return isSelected && (
 					<Fragment>
-						<Buttons />
-						<Content />
-						<ActiveSection />
+						<SectionsList
+							sections={ sections }
+							activeSectionLabel={ activeSectionLabel }
+							onSectionClick={ setActiveSectionLabel }
+						/>
+						<SectionContent
+							section={ activeSection }
+						/>
+						<ActiveSection
+							section={ activeSection }
+							activeLevel={ activeLevel }
+							onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
+							onTabClick={ setActiveLevel }
+						/>
 					</Fragment>
 				);
 

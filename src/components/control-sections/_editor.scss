@@ -18,28 +18,47 @@
 }
 
 .novablocks-sections__buttons {
-	grid-auto-rows: 1fr;
-
 	padding: 16px;
 }
 
 .novablocks-sections__button {
-	padding: 10px 20px;
-	border-radius: 5px;
+	position: relative;
 
-	background: #F2F2F2;
-	font-weight: 700;
+	padding: 16px;
+	border-radius: 5px;
+	font-weight: 600;
+
+	background: #f2f2f2;
+	color: #9195AB;
 
 	cursor: pointer;
 
 	& + & {
-		margin-top: 10px;
+		margin-top: 6px;
+	}
+
+	&:after {
+		content: "";
+
+		position: absolute;
+		top: 50%;
+		right: 18px;
+
+		transform: translateY(-50%) rotate(45deg);
+
+		display: block;
+		width: 10px;
+		height: 10px;
+
+		border: 0 solid currentColor;
+		border-top-width: 2px;
+		border-right-width: 2px;
+	}
+
+	&:hover {
+		color: #2A2136;
 	}
 }
-
-//
-
-
 
 :root {
 	--novablocks-red: #DE1651;
@@ -84,6 +103,14 @@
 	input[type="radio"]:checked {
 		background: var(--novablocks-section-controls-accent);
 		border-color: var(--novablocks-section-controls-accent);
+	}
+
+	.components-form-toggle.is-checked .components-form-toggle__track {
+		background: var(--novablocks-section-controls-accent);
+	}
+
+	.components-range-control__track {
+		color: var(--novablocks-section-controls-accent);
 	}
 
 	.components-button.is-primary {

@@ -336,7 +336,7 @@ module.exports = _toConsumableArray;
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(44);
+var freeGlobal = __webpack_require__(45);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -606,7 +606,7 @@ module.exports = isSymbol;
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(46),
+var isFunction = __webpack_require__(47),
     isLength = __webpack_require__(34);
 
 /**
@@ -800,7 +800,7 @@ module.exports = _objectWithoutProperties;
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(47);
+var baseGet = __webpack_require__(48);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -1137,6 +1137,40 @@ module.exports = _typeof;
 
 /***/ }),
 /* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var createCompounder = __webpack_require__(72);
+
+/**
+ * Converts `string` to
+ * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category String
+ * @param {string} [string=''] The string to convert.
+ * @returns {string} Returns the kebab cased string.
+ * @example
+ *
+ * _.kebabCase('Foo Bar');
+ * // => 'foo-bar'
+ *
+ * _.kebabCase('fooBar');
+ * // => 'foo-bar'
+ *
+ * _.kebabCase('__FOO_BAR__');
+ * // => 'foo-bar'
+ */
+var kebabCase = createCompounder(function(result, word, index) {
+  return result + (index ? '-' : '') + word.toLowerCase();
+});
+
+module.exports = kebabCase;
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -1178,7 +1212,7 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -1188,7 +1222,7 @@ function _readOnlyError(name) {
 module.exports = _readOnlyError;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1361,7 +1395,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -1372,7 +1406,7 @@ module.exports = freeGlobal;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(78)))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 /**
@@ -1399,7 +1433,7 @@ module.exports = arrayMap;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(18),
@@ -1442,10 +1476,10 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(48),
+var castPath = __webpack_require__(49),
     toKey = __webpack_require__(29);
 
 /**
@@ -1472,7 +1506,7 @@ module.exports = baseGet;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(14),
@@ -1499,7 +1533,7 @@ module.exports = castPath;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -1531,7 +1565,7 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(26),
@@ -1564,7 +1598,7 @@ module.exports = Stack;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqualDeep = __webpack_require__(127),
@@ -1598,7 +1632,7 @@ module.exports = baseIsEqual;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var SetCache = __webpack_require__(128),
@@ -1687,7 +1721,7 @@ module.exports = equalArrays;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(146),
@@ -1729,7 +1763,7 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(13),
@@ -1771,10 +1805,10 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(55)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(56)(module)))
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -1802,7 +1836,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsTypedArray = __webpack_require__(148),
@@ -1835,7 +1869,7 @@ module.exports = isTypedArray;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(20);
@@ -1856,7 +1890,7 @@ module.exports = isStrictComparable;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 /**
@@ -1879,40 +1913,6 @@ function matchesStrictComparable(key, srcValue) {
 }
 
 module.exports = matchesStrictComparable;
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var createCompounder = __webpack_require__(72);
-
-/**
- * Converts `string` to
- * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category String
- * @param {string} [string=''] The string to convert.
- * @returns {string} Returns the kebab cased string.
- * @example
- *
- * _.kebabCase('Foo Bar');
- * // => 'foo-bar'
- *
- * _.kebabCase('fooBar');
- * // => 'foo-bar'
- *
- * _.kebabCase('__FOO_BAR__');
- * // => 'foo-bar'
- */
-var kebabCase = createCompounder(function(result, word, index) {
-  return result + (index ? '-' : '') + word.toLowerCase();
-});
-
-module.exports = kebabCase;
 
 
 /***/ }),
@@ -1981,7 +1981,7 @@ module.exports = range;
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(45),
+var arrayMap = __webpack_require__(46),
     baseIteratee = __webpack_require__(119),
     baseMap = __webpack_require__(169),
     isArray = __webpack_require__(14);
@@ -2787,7 +2787,7 @@ module.exports = basePropertyOf;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(22),
-    arrayMap = __webpack_require__(45),
+    arrayMap = __webpack_require__(46),
     isArray = __webpack_require__(14),
     isSymbol = __webpack_require__(23);
 
@@ -4338,10 +4338,10 @@ module.exports = hashClear;
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(46),
+var isFunction = __webpack_require__(47),
     isMasked = __webpack_require__(102),
     isObject = __webpack_require__(20),
-    toSource = __webpack_require__(49);
+    toSource = __webpack_require__(50);
 
 /**
  * Used to match `RegExp`
@@ -4860,7 +4860,7 @@ module.exports = baseIteratee;
 
 var baseIsMatch = __webpack_require__(121),
     getMatchData = __webpack_require__(160),
-    matchesStrictComparable = __webpack_require__(58);
+    matchesStrictComparable = __webpack_require__(59);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -4886,8 +4886,8 @@ module.exports = baseMatches;
 /* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(50),
-    baseIsEqual = __webpack_require__(51);
+var Stack = __webpack_require__(51),
+    baseIsEqual = __webpack_require__(52);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -5079,14 +5079,14 @@ module.exports = stackSet;
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(50),
-    equalArrays = __webpack_require__(52),
+var Stack = __webpack_require__(51),
+    equalArrays = __webpack_require__(53),
     equalByTag = __webpack_require__(133),
     equalObjects = __webpack_require__(137),
     getTag = __webpack_require__(155),
     isArray = __webpack_require__(14),
-    isBuffer = __webpack_require__(54),
-    isTypedArray = __webpack_require__(56);
+    isBuffer = __webpack_require__(55),
+    isTypedArray = __webpack_require__(57);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -5297,7 +5297,7 @@ module.exports = cacheHas;
 var Symbol = __webpack_require__(22),
     Uint8Array = __webpack_require__(134),
     eq = __webpack_require__(33),
-    equalArrays = __webpack_require__(52),
+    equalArrays = __webpack_require__(53),
     mapToArray = __webpack_require__(135),
     setToArray = __webpack_require__(136);
 
@@ -5738,11 +5738,11 @@ module.exports = stubArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseTimes = __webpack_require__(145),
-    isArguments = __webpack_require__(53),
+    isArguments = __webpack_require__(54),
     isArray = __webpack_require__(14),
-    isBuffer = __webpack_require__(54),
+    isBuffer = __webpack_require__(55),
     isIndex = __webpack_require__(35),
-    isTypedArray = __webpack_require__(56);
+    isTypedArray = __webpack_require__(57);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -5952,7 +5952,7 @@ module.exports = baseUnary;
 /* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(44);
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(45);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -5983,7 +5983,7 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(55)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(56)(module)))
 
 /***/ }),
 /* 151 */
@@ -6088,7 +6088,7 @@ var DataView = __webpack_require__(156),
     Set = __webpack_require__(158),
     WeakMap = __webpack_require__(159),
     baseGetTag = __webpack_require__(18),
-    toSource = __webpack_require__(49);
+    toSource = __webpack_require__(50);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -6198,7 +6198,7 @@ module.exports = WeakMap;
 /* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isStrictComparable = __webpack_require__(57),
+var isStrictComparable = __webpack_require__(58),
     keys = __webpack_require__(39);
 
 /**
@@ -6228,12 +6228,12 @@ module.exports = getMatchData;
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqual = __webpack_require__(51),
+var baseIsEqual = __webpack_require__(52),
     get = __webpack_require__(31),
     hasIn = __webpack_require__(162),
     isKey = __webpack_require__(36),
-    isStrictComparable = __webpack_require__(57),
-    matchesStrictComparable = __webpack_require__(58),
+    isStrictComparable = __webpack_require__(58),
+    matchesStrictComparable = __webpack_require__(59),
     toKey = __webpack_require__(29);
 
 /** Used to compose bitmasks for value comparisons. */
@@ -6326,8 +6326,8 @@ module.exports = baseHasIn;
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(48),
-    isArguments = __webpack_require__(53),
+var castPath = __webpack_require__(49),
+    isArguments = __webpack_require__(54),
     isArray = __webpack_require__(14),
     isIndex = __webpack_require__(35),
     isLength = __webpack_require__(34),
@@ -6456,7 +6456,7 @@ module.exports = baseProperty;
 /* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(47);
+var baseGet = __webpack_require__(48);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -8173,7 +8173,7 @@ var slicedToArray = __webpack_require__(9);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash/kebabCase.js
-var kebabCase = __webpack_require__(59);
+var kebabCase = __webpack_require__(41);
 var kebabCase_default = /*#__PURE__*/__webpack_require__.n(kebabCase);
 
 // CONCATENATED MODULE: ./src/components/layout-panel/padding.js
@@ -9149,7 +9149,7 @@ var regenerator = __webpack_require__(21);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(41);
+var asyncToGenerator = __webpack_require__(42);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
@@ -11457,7 +11457,7 @@ var assertThisInitialized = __webpack_require__(11);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(42);
+var readOnlyError = __webpack_require__(43);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js
@@ -12088,7 +12088,7 @@ function (_Component2) {
 
 
 // EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(43);
+var js_cookie = __webpack_require__(44);
 var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
 
 // CONCATENATED MODULE: ./src/components/notice/index.js
@@ -13028,13 +13028,156 @@ var control_sections_Cube = function Cube(props) {
   }));
 };
 
+var control_sections_SectionsList = function SectionsList(props) {
+  var activeSectionLabel = props.activeSectionLabel,
+      sections = props.sections,
+      onSectionClick = props.onSectionClick;
+  var active = sections.find(function (section) {
+    return section.props.label === activeSectionLabel;
+  });
+
+  if (!!active) {
+    return false;
+  }
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, control_sections_('Select a section to customize')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__buttons'
+  }, sections.map(function (section) {
+    var label = section.props.label;
+    var isActive = label === activeSectionLabel;
+    var className = classnames_default()('novablocks-sections__button', {
+      'novablocks-sections__button--active': isActive
+    });
+    return Object(external_React_["createElement"])("div", {
+      key: kebabCase_default()(label),
+      className: className,
+      onClick: function onClick() {
+        onSectionClick(label);
+      }
+    }, label);
+  })));
+};
+
+var SectionContent = function SectionContent(props) {
+  var section = props.section;
+
+  if (!section || !section.props.children) {
+    return null;
+  }
+
+  return section.props.children;
+};
+
+var control_sections_SectionTab = function SectionTab(props) {
+  var className = props.className,
+      label = props.label,
+      _onClick = props.onClick;
+  return Object(external_React_["createElement"])("div", {
+    className: className,
+    onClick: function onClick() {
+      _onClick(label);
+    }
+  }, label);
+};
+
+var control_sections_ActiveSection = function ActiveSection(props) {
+  var activeLevel = props.activeLevel,
+      section = props.section,
+      onBackButtonClick = props.onBackButtonClick,
+      onTabClick = props.onTabClick;
+
+  if (!section) {
+    return false;
+  }
+
+  var getTabClassName = function getTabClassName(label) {
+    return classnames_default()('novablocks-sections__tab', {
+      'novablocks-sections__tab--active': activeLevel === label
+    });
+  };
+
+  var getTab = function getTab(label) {
+    return function (fills) {
+      return Object(external_React_["createElement"])("div", {
+        className: getTabClassName(label),
+        onClick: function onClick() {
+          onTabClick(label);
+        }
+      }, label);
+    };
+  };
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeLevel))
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-back",
+    onClick: onBackButtonClick
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-title"
+  }, section.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__tabs'
+  }, Object(external_React_["createElement"])(GeneralControlsSlot, null, getTab(control_sections_('General'))), Object(external_React_["createElement"])(CustomizeControlsSlot, null, getTab(control_sections_('Customize'))), Object(external_React_["createElement"])(SettingsControlsSlot, null, getTab(control_sections_('Settings')))), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__tab-content'
+  }, activeLevel === control_sections_('General') && Object(external_React_["createElement"])(GeneralControlsSlot, null), activeLevel === control_sections_('Customize') && Object(external_React_["createElement"])(CustomizeControlsSlot, null), activeLevel === control_sections_('Settings') && Object(external_React_["createElement"])(SettingsControlsSlot, null)));
+};
+
+var getSectionsFromFills = function getSectionsFromFills(fills) {
+  var sections = []; // Merge sections with the same label
+
+  fills.forEach(function (fill) {
+    var index = sections.findIndex(function (section) {
+      return section.props.label === fill[0].props.label;
+    });
+
+    if (index === -1) {
+      sections.push({
+        props: fill[0].props
+      });
+    } else {
+      var oldChildren = sections[index].props.children;
+      var oldChildrenArray;
+      var newChildren = fill[0].props.children;
+
+      if (typeof newChildren !== "undefined") {
+        if (!Array.isArray(newChildren)) {
+          newChildren = [newChildren];
+        }
+
+        if (typeof oldChildren !== "undefined") {
+          if (!Array.isArray(oldChildren)) {
+            oldChildrenArray = Array.isArray(oldChildren) ? oldChildren : [oldChildren];
+          }
+
+          newChildren = oldChildrenArray.concat(newChildren);
+        }
+
+        sections.splice(index, 1, {
+          props: {
+            label: sections[index].props.label,
+            children: newChildren
+          }
+        });
+      }
+    }
+  });
+  return sections;
+};
+
 var control_sections_ControlsSections = function ControlsSections(props) {
   var isSelected = props.isSelected;
 
   var _useState = control_sections_useState(false),
       _useState2 = slicedToArray_default()(_useState, 2),
-      activeSection = _useState2[0],
-      setActiveSection = _useState2[1];
+      activeSectionLabel = _useState2[0],
+      setActiveSectionLabel = _useState2[1];
 
   var _useState3 = control_sections_useState(control_sections_('Settings')),
       _useState4 = slicedToArray_default()(_useState3, 2),
@@ -13042,131 +13185,24 @@ var control_sections_ControlsSections = function ControlsSections(props) {
       setActiveLevel = _useState4[1];
 
   return Object(external_React_["createElement"])(ControlsSectionsSlot, null, function (fills) {
-    var sections = []; // Merge sections with the same label
-
-    fills.forEach(function (fill) {
-      var index = sections.findIndex(function (section) {
-        return section.props.label === fill[0].props.label;
-      });
-
-      if (index === -1) {
-        sections.push({
-          props: fill[0].props
-        });
-      } else {
-        var oldChildren = sections[index].props.children;
-        var oldChildrenArray;
-        var newChildren = fill[0].props.children;
-
-        if (typeof newChildren !== "undefined") {
-          if (!Array.isArray(newChildren)) {
-            newChildren = [newChildren];
-          }
-
-          if (typeof oldChildren !== "undefined") {
-            if (!Array.isArray(oldChildren)) {
-              oldChildrenArray = Array.isArray(oldChildren) ? oldChildren : [oldChildren];
-            }
-
-            newChildren = oldChildrenArray.concat(newChildren);
-          }
-
-          sections.splice(index, 1, {
-            props: {
-              label: sections[index].props.label,
-              children: newChildren
-            }
-          });
-        }
-      }
+    var sections = getSectionsFromFills(fills);
+    var activeSection = sections.find(function (section) {
+      return section.props.label === activeSectionLabel;
     });
-    var active = sections.find(function (section) {
-      return section.props.label === activeSection;
-    });
-
-    var Buttons = function Buttons() {
-      if (!!active) {
-        return false;
-      }
-
-      return Object(external_React_["createElement"])("div", {
-        className: "novablocks-sections"
-      }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-sections__header"
-      }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-sections__title"
-      }, control_sections_('Select a section to customize')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
-        className: 'novablocks-sections__buttons'
-      }, sections.map(function (section) {
-        var label = section.props.label;
-        var isActive = label === activeSection;
-        var className = classnames_default()('novablocks-sections__button', {
-          'novablocks-sections__button--active': isActive
-        });
-        return Object(external_React_["createElement"])("div", {
-          className: className,
-          onClick: function onClick() {
-            setActiveSection(label);
-          }
-        }, label);
-      })));
-    };
-
-    var ActiveSection = function ActiveSection() {
-      if (!active) {
-        return false;
-      }
-
-      return Object(external_React_["createElement"])("div", {
-        className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeLevel))
-      }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-sections__controls-header"
-      }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-sections__controls-back",
-        onClick: function onClick() {
-          setActiveSection(false);
-        }
-      }), Object(external_React_["createElement"])("div", {
-        className: "novablocks-sections__controls-title"
-      }, active.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
-        className: 'novablocks-sections__tabs'
-      }, Object(external_React_["createElement"])(GeneralControlsSlot, null, getTab(control_sections_('General'))), Object(external_React_["createElement"])(CustomizeControlsSlot, null, getTab(control_sections_('Customize'))), Object(external_React_["createElement"])(SettingsControlsSlot, null, getTab(control_sections_('Settings')))), Object(external_React_["createElement"])("div", {
-        className: 'novablocks-sections__tab-content'
-      }, activeLevel === control_sections_('General') && Object(external_React_["createElement"])(GeneralControlsSlot, null), activeLevel === control_sections_('Customize') && Object(external_React_["createElement"])(CustomizeControlsSlot, null), activeLevel === control_sections_('Settings') && Object(external_React_["createElement"])(SettingsControlsSlot, null)));
-    };
-
-    var getClassName = function getClassName(label) {
-      return classnames_default()('novablocks-sections__tab', {
-        'novablocks-sections__tab--active': activeLevel === label
-      });
-    };
-
-    var getTab = function getTab(label) {
-      return function (fills) {
-        var className = getClassName(label);
-
-        if (activeLevel !== label && fills.length === 0) {
-          return false;
-        }
-
-        return Object(external_React_["createElement"])("div", {
-          className: className,
-          onClick: function onClick() {
-            setActiveLevel(label);
-          }
-        }, label);
-      };
-    };
-
-    var Content = function Content() {
-      if (!active || !active.props.children) {
-        return null;
-      }
-
-      return active.props.children;
-    };
-
-    return isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(Buttons, null), Object(external_React_["createElement"])(Content, null), Object(external_React_["createElement"])(ActiveSection, null));
+    return isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(control_sections_SectionsList, {
+      sections: sections,
+      activeSectionLabel: activeSectionLabel,
+      onSectionClick: setActiveSectionLabel
+    }), Object(external_React_["createElement"])(SectionContent, {
+      section: activeSection
+    }), Object(external_React_["createElement"])(control_sections_ActiveSection, {
+      section: activeSection,
+      activeLevel: activeLevel,
+      onBackButtonClick: function onBackButtonClick() {
+        setActiveSectionLabel(false);
+      },
+      onTabClick: setActiveLevel
+    }));
   });
 };
 
@@ -16691,10 +16727,12 @@ var preview_MediaPreview = function MediaPreview(props) {
  */
 
 var media_inspector_controls_ = wp.i18n.__;
+var media_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 var media_inspector_controls_Fragment = wp.element.Fragment;
 var media_inspector_controls_wp$components = wp.components,
     media_inspector_controls_RadioControl = media_inspector_controls_wp$components.RadioControl,
-    media_inspector_controls_RangeControl = media_inspector_controls_wp$components.RangeControl;
+    media_inspector_controls_RangeControl = media_inspector_controls_wp$components.RangeControl,
+    media_inspector_controls_ToggleControl = media_inspector_controls_wp$components.ToggleControl;
 
 var inspector_controls_MediaInspectorControls = function MediaInspectorControls(props) {
   var _props$attributes = props.attributes,
@@ -16705,10 +16743,90 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       emphasisArea = _props$attributes.emphasisArea,
       contentAreaWidth = _props$attributes.contentAreaWidth,
       layoutGutter = _props$attributes.layoutGutter,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: media_inspector_controls_('Spacing')
-  }, Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+      layoutPreset = _props$attributes.layoutPreset,
+      emphasisBySpace = _props$attributes.emphasisBySpace,
+      enableOverlapping = _props$attributes.enableOverlapping,
+      containerHeight = _props$attributes.containerHeight,
+      verticalAlignment = _props$attributes.verticalAlignment,
+      setAttributes = props.setAttributes,
+      clientId = props.clientId;
+
+  var _wp$data$dispatch = wp.data.dispatch('core/block-editor'),
+      updateBlockAttributes = _wp$data$dispatch.updateBlockAttributes;
+
+  var onSpacingChange = function onSpacingChange(emphasis, overlap) {
+    var actualEmphasis = !overlap ? emphasis : -1 * emphasis;
+    setAttributes({
+      emphasisBySpace: emphasis,
+      enableOverlapping: overlap,
+      blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(verticalAlignment) ? actualEmphasis : 0,
+      blockBottomSpacing: actualEmphasis < 0 && ['top', 'center'].includes(verticalAlignment) ? actualEmphasis : 0,
+      emphasisTopSpacing: verticalAlignment !== 'top' ? actualEmphasis : 1,
+      emphasisBottomSpacing: verticalAlignment !== 'bottom' ? actualEmphasis : 1
+    });
+  };
+
+  return Object(external_React_["createElement"])(media_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: media_inspector_controls_('Space and Sizing')
+  }, Object(external_React_["createElement"])(GeneralControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
+    label: media_inspector_controls_('Choose a layout preset:', '__plugin_txtd'),
+    selected: layoutPreset,
+    onChange: function onChange(layoutPreset) {
+      setAttributes({
+        layoutPreset: layoutPreset
+      });
+    },
+    options: [{
+      label: media_inspector_controls_('Calm and stable'),
+      value: 'stable'
+    }, {
+      label: media_inspector_controls_('Moving and dynamic'),
+      value: 'dynamic'
+    }]
+  })), Object(external_React_["createElement"])(CustomizeControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: emphasisBySpace,
+    onChange: function onChange(emphasisBySpace) {
+      onSpacingChange(emphasisBySpace, enableOverlapping);
+    },
+    label: media_inspector_controls_('Emphasis by Space'),
+    min: 0,
+    max: 3
+  }), Object(external_React_["createElement"])(media_inspector_controls_ToggleControl, {
+    label: media_inspector_controls_('Enable Overlapping'),
+    checked: enableOverlapping,
+    onChange: function onChange() {
+      onSpacingChange(emphasisBySpace, !enableOverlapping);
+    }
+  }), Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
+    label: media_inspector_controls_('Minimum Height', '__plugin_txtd'),
+    selected: verticalAlignment,
+    onChange: function onChange(verticalAlignment) {
+      setAttributes({
+        verticalAlignment: verticalAlignment
+      });
+    },
+    options: [{
+      label: media_inspector_controls_('Top'),
+      value: 'top'
+    }, {
+      label: media_inspector_controls_('Middle'),
+      value: 'center'
+    }, {
+      label: media_inspector_controls_('Bottom'),
+      value: 'bottom'
+    }]
+  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    label: media_inspector_controls_('Minimum Covered Area', '__plugin_txtd'),
+    value: containerHeight,
+    onChange: function onChange(containerHeight) {
+      return setAttributes({
+        containerHeight: containerHeight
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 5
+  })), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: blockTopSpacing,
     onChange: function onChange(blockTopSpacing) {
       return setAttributes({
@@ -16716,8 +16834,8 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       });
     },
     label: media_inspector_controls_('Top'),
-    min: -2,
-    max: 2
+    min: -3,
+    max: 3
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: blockBottomSpacing,
     onChange: function onChange(blockBottomSpacing) {
@@ -16726,8 +16844,8 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       });
     },
     label: media_inspector_controls_('Bottom'),
-    min: -2,
-    max: 2
+    min: -3,
+    max: 3
   }), Object(external_React_["createElement"])("label", null, "Emphasis Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisTopSpacing,
     onChange: function onChange(emphasisTopSpacing) {
@@ -16736,8 +16854,8 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       });
     },
     label: media_inspector_controls_('Top'),
-    min: -2,
-    max: 2
+    min: -3,
+    max: 3
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisBottomSpacing,
     onChange: function onChange(emphasisBottomSpacing) {
@@ -16746,8 +16864,8 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       });
     },
     label: media_inspector_controls_('Bottom'),
-    min: -2,
-    max: 2
+    min: -3,
+    max: 3
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisArea,
     onChange: function onChange(emphasisArea) {
@@ -16781,7 +16899,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: 0,
     max: 100,
     step: 5
-  })));
+  }))));
 };
 
 /* harmony default export */ var media_inspector_controls = (inspector_controls_MediaInspectorControls);
