@@ -126,6 +126,27 @@ module.exports = _createClass;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = __webpack_require__(40);
@@ -143,7 +164,7 @@ function _possibleConstructorReturn(self, call) {
 module.exports = _possibleConstructorReturn;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 function _getPrototypeOf(o) {
@@ -156,7 +177,7 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var setPrototypeOf = __webpack_require__(64);
@@ -179,7 +200,7 @@ function _inherits(subClass, superClass) {
 module.exports = _inherits;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -234,27 +255,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	} else {}
 }());
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
 
 /***/ }),
 /* 8 */
@@ -6757,15 +6757,15 @@ var createClass = __webpack_require__(2);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(3);
+var possibleConstructorReturn = __webpack_require__(4);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(4);
+var getPrototypeOf = __webpack_require__(5);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(5);
+var inherits = __webpack_require__(6);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
@@ -7938,7 +7938,7 @@ var withBlockIndexAttribute = with_block_index_createHigherOrderComponent(functi
 }, "withBlockIndexAttribute");
 with_block_index_addFilter('editor.BlockEdit', 'novablocks/with-blockIndex-attribute', withBlockIndexAttribute);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
-var classnames = __webpack_require__(6);
+var classnames = __webpack_require__(7);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
 // CONCATENATED MODULE: ./src/filters/with-font-size-picker/index.js
@@ -8045,7 +8045,7 @@ function addFontSizeAttribute(block) {
 
 with_font_size_picker_addFilter('blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(7);
+var defineProperty = __webpack_require__(3);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./src/store/reducer.js
@@ -12994,6 +12994,12 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
+
+function control_sections_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function control_sections_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { control_sections_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { control_sections_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
 var control_sections_createSlotFill = wp.components.createSlotFill;
 var control_sections_wp$element = wp.element,
     control_sections_Component = control_sections_wp$element.Component,
@@ -13006,6 +13012,9 @@ var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderCo
 var ControlsSectionsSlotFill = control_sections_createSlotFill('ControlsSections');
 var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
 var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
+var ControlsSlotFill = control_sections_createSlotFill('Controls');
+var ControlsSlot = ControlsSlotFill.Slot;
+var ControlsFill = ControlsSlotFill.Fill;
 var GeneralControlsSlotFill = control_sections_createSlotFill('GeneralControls');
 var GeneralControlsSlot = GeneralControlsSlotFill.Slot;
 var GeneralControlsFill = GeneralControlsSlotFill.Fill;
@@ -13028,12 +13037,30 @@ var control_sections_Cube = function Cube(props) {
   }));
 };
 
+var control_sections_SectionListItem = function SectionListItem(props) {
+  var label = props.label,
+      _onClick = props.onClick;
+  return Object(external_React_["createElement"])("div", {
+    key: kebabCase_default()(label),
+    className: 'novablocks-sections__button',
+    onClick: function onClick() {
+      _onClick(label);
+    }
+  }, label);
+};
+
 var control_sections_SectionsList = function SectionsList(props) {
   var activeSectionLabel = props.activeSectionLabel,
       sections = props.sections,
       onSectionClick = props.onSectionClick;
   var active = sections.find(function (section) {
     return section.props.label === activeSectionLabel;
+  });
+  var blockSections = sections.filter(function (section) {
+    return !section.props.module;
+  });
+  var modules = sections.filter(function (section) {
+    return !!section.props.module;
   });
 
   if (!!active) {
@@ -13048,19 +13075,22 @@ var control_sections_SectionsList = function SectionsList(props) {
     className: "novablocks-sections__title"
   }, control_sections_('Select a section to customize')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__buttons'
-  }, sections.map(function (section) {
-    var label = section.props.label;
-    var isActive = label === activeSectionLabel;
-    var className = classnames_default()('novablocks-sections__button', {
-      'novablocks-sections__button--active': isActive
+  }, blockSections.map(function (section, index) {
+    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
+      key: index,
+      label: section.props.label,
+      onClick: onSectionClick
     });
-    return Object(external_React_["createElement"])("div", {
-      key: kebabCase_default()(label),
-      className: className,
-      onClick: function onClick() {
-        onSectionClick(label);
-      }
-    }, label);
+  })), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, control_sections_('Modules')), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__buttons'
+  }, modules.map(function (section, index) {
+    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
+      key: index,
+      label: section.props.label,
+      onClick: onSectionClick
+    });
   })));
 };
 
@@ -13077,11 +13107,11 @@ var SectionContent = function SectionContent(props) {
 var control_sections_SectionTab = function SectionTab(props) {
   var className = props.className,
       label = props.label,
-      _onClick = props.onClick;
+      _onClick2 = props.onClick;
   return Object(external_React_["createElement"])("div", {
     className: className,
     onClick: function onClick() {
-      _onClick(label);
+      _onClick2(label);
     }
   }, label);
 };
@@ -13102,17 +13132,6 @@ var control_sections_ActiveSection = function ActiveSection(props) {
     });
   };
 
-  var getTab = function getTab(label) {
-    return function (fills) {
-      return Object(external_React_["createElement"])("div", {
-        className: getTabClassName(label),
-        onClick: function onClick() {
-          onTabClick(label);
-        }
-      }, label);
-    };
-  };
-
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeLevel))
   }, Object(external_React_["createElement"])("div", {
@@ -13122,11 +13141,44 @@ var control_sections_ActiveSection = function ActiveSection(props) {
     onClick: onBackButtonClick
   }), Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__controls-title"
-  }, section.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__tabs'
-  }, Object(external_React_["createElement"])(GeneralControlsSlot, null, getTab(control_sections_('General'))), Object(external_React_["createElement"])(CustomizeControlsSlot, null, getTab(control_sections_('Customize'))), Object(external_React_["createElement"])(SettingsControlsSlot, null, getTab(control_sections_('Settings')))), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__tab-content'
-  }, activeLevel === control_sections_('General') && Object(external_React_["createElement"])(GeneralControlsSlot, null), activeLevel === control_sections_('Customize') && Object(external_React_["createElement"])(CustomizeControlsSlot, null), activeLevel === control_sections_('Settings') && Object(external_React_["createElement"])(SettingsControlsSlot, null)));
+  }, section.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
+    var sections = getSectionsFromFills(fills);
+    return Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
+      className: 'novablocks-sections__tabs'
+    }, sections.map(function (section) {
+      var label = section.props.label;
+      return Object(external_React_["createElement"])("div", {
+        className: getTabClassName(label),
+        onClick: function onClick() {
+          onTabClick(label);
+        }
+      }, label);
+    })), Object(external_React_["createElement"])("div", {
+      className: 'novablocks-sections__tab-content'
+    }, sections.filter(function (section) {
+      return section.props.label === activeLevel;
+    }).map(function (section) {
+      return section.props.children;
+    })));
+  }));
+};
+
+var getTabsFromFills = function getTabsFromFills(fills) {
+  var tabs = [];
+};
+
+var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
+  if (typeof children1 === "undefined") {
+    return children2;
+  }
+
+  if (typeof children2 === "undefined") {
+    return children1;
+  }
+
+  var children1Array = Array.isArray(children1) ? children1 : [children1];
+  var children2Array = Array.isArray(children2) ? children2 : [children2];
+  return children1Array.concat(children2Array);
 };
 
 var getSectionsFromFills = function getSectionsFromFills(fills) {
@@ -13142,30 +13194,11 @@ var getSectionsFromFills = function getSectionsFromFills(fills) {
         props: fill[0].props
       });
     } else {
-      var oldChildren = sections[index].props.children;
-      var oldChildrenArray;
-      var newChildren = fill[0].props.children;
-
-      if (typeof newChildren !== "undefined") {
-        if (!Array.isArray(newChildren)) {
-          newChildren = [newChildren];
-        }
-
-        if (typeof oldChildren !== "undefined") {
-          if (!Array.isArray(oldChildren)) {
-            oldChildrenArray = Array.isArray(oldChildren) ? oldChildren : [oldChildren];
-          }
-
-          newChildren = oldChildrenArray.concat(newChildren);
-        }
-
-        sections.splice(index, 1, {
-          props: {
-            label: sections[index].props.label,
-            children: newChildren
-          }
-        });
-      }
+      sections.splice(index, 1, {
+        props: control_sections_objectSpread({}, sections[index].props, {
+          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
+        })
+      });
     }
   });
   return sections;
@@ -13206,13 +13239,17 @@ var control_sections_ControlsSections = function ControlsSections(props) {
   });
 };
 
+var control_sections_ControlsGroup = function ControlsGroup(props) {
+  return Object(external_React_["createElement"])(ControlsFill, null, Object(external_React_["createElement"])("div", {
+    label: props.label
+  }, props.children));
+};
+
 var control_sections_ControlsSection = function ControlsSection(props) {
   var _useBlockEditContext = useBlockEditContext(),
       isSelected = _useBlockEditContext.isSelected;
 
-  return Object(external_React_["createElement"])(ControlsSectionsFill, null, isSelected && Object(external_React_["createElement"])("div", {
-    label: props.label
-  }, props.children));
+  return Object(external_React_["createElement"])(ControlsSectionsFill, null, isSelected && Object(external_React_["createElement"])("div", props));
 };
 
 
@@ -13235,7 +13272,9 @@ var withEmphasisLevelControls = with_emphasis_level_createHigherOrderComponent(f
 
     return Object(external_React_["createElement"])(with_emphasis_level_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
       label: with_emphasis_level_('Emphasis')
-    }, Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(emphasis_level_controls, props))));
+    }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+      label: with_emphasis_level_('Settings')
+    }, Object(external_React_["createElement"])(emphasis_level_controls, props))));
   };
 });
 with_emphasis_level_addFilter('editor.BlockEdit', 'novablocks/with-ehpasis-level-controls', withEmphasisLevelControls);
@@ -14038,21 +14077,11 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   };
 
   return Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: inspector_controls_('Gallery')
-  }, Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
-    label: inspector_controls_('Size Contrast', '__plugin_txtd'),
-    value: sizeContrast,
-    onChange: function onChange(sizeContrast) {
-      return setAttributes({
-        sizeContrast: sizeContrast
-      });
-    },
-    min: 0,
-    max: 100,
-    step: 20
-  }))), Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: inspector_controls_('Gallery')
-  }, Object(external_React_["createElement"])(GeneralControlsFill, null, Object(external_React_["createElement"])(notice, {
+    label: inspector_controls_('Media'),
+    module: true
+  }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: inspector_controls_('General')
+  }, Object(external_React_["createElement"])(notice, {
     id: 'novablocks-advanced-gallery-quick-start',
     content: Object(external_React_["createElement"])("p", null, Object(external_React_["createElement"])("strong", null, "Quick start:"), " Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details"),
     dismissLabel: '✔ Ok, I got it!'
@@ -14082,7 +14111,20 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     isLarge: true,
     isPrimary: true,
     onClick: randomize
-  }, inspector_controls_('💡 Surprise me!')))), Object(external_React_["createElement"])(CustomizeControlsFill, null), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+  }, inspector_controls_('💡 Surprise me!')))), Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: inspector_controls_('Settings')
+  }, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+    label: inspector_controls_('Size Contrast', '__plugin_txtd'),
+    value: sizeContrast,
+    onChange: function onChange(sizeContrast) {
+      return setAttributes({
+        sizeContrast: sizeContrast
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 20
+  }), Object(external_React_["createElement"])(inspector_controls_RangeControl, {
     label: inspector_controls_('Position Shift', '__plugin_txtd'),
     value: positionShift,
     onChange: function onChange(positionShift) {
@@ -16794,7 +16836,9 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     step: 5
   })), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: media_inspector_controls_('Space and Sizing')
-  }, Object(external_React_["createElement"])(GeneralControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
+  }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: media_inspector_controls_('General')
+  }, Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
     label: media_inspector_controls_('Choose a layout preset:', '__plugin_txtd'),
     selected: layoutPreset,
     onChange: function onChange(layoutPreset) {
@@ -16809,7 +16853,9 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       label: media_inspector_controls_('Moving and dynamic'),
       value: 'dynamic'
     }]
-  })), Object(external_React_["createElement"])(CustomizeControlsFill, null, Object(external_React_["createElement"])("div", {
+  })), Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: media_inspector_controls_('Customize')
+  }, Object(external_React_["createElement"])("div", {
     className: getEmphasisControlsClassName()
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisBySpace,
@@ -16856,7 +16902,9 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: 0,
     max: 100,
     step: 5
-  })), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])("label", null, "Block Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+  })), Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: media_inspector_controls_('Settings')
+  }, Object(external_React_["createElement"])("label", null, "Block Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: blockTopSpacing,
     onChange: function onChange(blockTopSpacing) {
       return setAttributes({

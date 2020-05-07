@@ -13,6 +13,10 @@ const ControlsSectionsSlotFill = createSlotFill( 'ControlsSections' );
 const ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
 const ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
 
+const ControlsSlotFill = createSlotFill( 'Controls' );
+const ControlsSlot = ControlsSlotFill.Slot;
+const ControlsFill = ControlsSlotFill.Fill;
+
 const GeneralControlsSlotFill = createSlotFill( 'GeneralControls' );
 const GeneralControlsSlot = GeneralControlsSlotFill.Slot;
 const GeneralControlsFill = GeneralControlsSlotFill.Fill;
@@ -35,6 +39,15 @@ const Cube = ( props ) => {
 	)
 }
 
+const SectionListItem = ( props ) => {
+	const {
+		label,
+		onClick,
+	} = props;
+
+	return <div key={ kebabCase( label ) } className={ 'novablocks-sections__button' } onClick={ () => { onClick( label ) } }>{ label }</div>
+}
+
 const SectionsList = ( props ) => {
 
 	const {
@@ -44,6 +57,9 @@ const SectionsList = ( props ) => {
 	} = props;
 
 	const active = sections.find( section => section.props.label === activeSectionLabel );
+
+	const blockSections = sections.filter( section => ! section.props.module );
+	const modules = sections.filter( section => !! section.props.module );
 
 	if ( !! active ) {
 		return false;
@@ -56,18 +72,11 @@ const SectionsList = ( props ) => {
 				<Cube />
 			</div>
 			<div className={ 'novablocks-sections__buttons' }>
-				{ sections.map( section => {
-					const { label } = section.props;
-					const isActive = label === activeSectionLabel;
-					const className = classnames(
-						'novablocks-sections__button',
-						{
-							'novablocks-sections__button--active': isActive
-						}
-					);
-
-					return <div key={ kebabCase( label ) } className={ className } onClick={ () => { onSectionClick( label ) } }>{ label }</div>
-				} ) }
+				{ blockSections.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
+			</div>
+			<div className="novablocks-sections__title">{ __( 'Modules' ) }</div>
+			<div className={ 'novablocks-sections__buttons' }>
+				{ modules.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
 			</div>
 		</div>
 	)
@@ -119,18 +128,9 @@ const ActiveSection = ( props ) => {
 		)
 	}
 
-	const getTab = ( label ) => {
-
-		return ( fills ) => {
-
-			return (
-				<div className={ getTabClassName( label ) } onClick={ () => { onTabClick( label ) } }>{ label }</div>
-			)
-		}
-	}
-
 	return (
 		<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeLevel ) }` }>
+
 			<div className="novablocks-sections__controls-header">
 				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
 				<div className="novablocks-sections__controls-title">
@@ -138,18 +138,51 @@ const ActiveSection = ( props ) => {
 				</div>
 				<Cube />
 			</div>
-			<div className={ 'novablocks-sections__tabs' }>
-				<GeneralControlsSlot>{ getTab( __( 'General' ) ) }</GeneralControlsSlot>
-				<CustomizeControlsSlot>{ getTab( __( 'Customize' ) ) }</CustomizeControlsSlot>
-				<SettingsControlsSlot>{ getTab( __( 'Settings' ) ) }</SettingsControlsSlot>
-			</div>
-			<div className={ 'novablocks-sections__tab-content' }>
-				{ activeLevel === __( 'General' ) && <GeneralControlsSlot /> }
-				{ activeLevel === __( 'Customize' ) && <CustomizeControlsSlot /> }
-				{ activeLevel === __( 'Settings' ) && <SettingsControlsSlot /> }
-			</div>
+
+			<ControlsSlot>
+				{
+					( fills ) => {
+						const sections = getSectionsFromFills( fills );
+
+						return (
+							<Fragment>
+								<div className={ 'novablocks-sections__tabs' }>
+									{ sections.map( section => {
+										const label = section.props.label;
+										return <div className={ getTabClassName( label ) } onClick={ () => { onTabClick( label ) } }>{ label }</div>
+									} ) }
+								</div>
+								<div className={ 'novablocks-sections__tab-content' }>
+									{ sections.filter( section => section.props.label === activeLevel ).map( section => section.props.children ) }
+								</div>
+							</Fragment>
+						)
+					}
+				}
+			</ControlsSlot>
+
 		</div>
 	)
+}
+
+const getTabsFromFills = ( fills ) => {
+	const tabs = [];
+}
+
+const mergeChildrenProps = ( children1, children2 ) => {
+
+	if ( typeof children1 === "undefined" ) {
+		return children2;
+	}
+
+	if ( typeof children2 === "undefined" ) {
+		return children1;
+	}
+
+	let children1Array = Array.isArray( children1 ) ? children1 : [ children1 ];
+	let children2Array = Array.isArray( children2 ) ? children2 : [ children2 ];
+
+	return children1Array.concat( children2Array );
 }
 
 const getSectionsFromFills = ( fills ) => {
@@ -166,32 +199,12 @@ const getSectionsFromFills = ( fills ) => {
 				props: fill[0].props,
 			} );
 		} else {
-			const oldChildren = sections[index].props.children;
-			let oldChildrenArray;
-			let newChildren = fill[0].props.children;
-
-			if ( typeof newChildren !== "undefined" ) {
-
-				if ( ! Array.isArray( newChildren ) ) {
-					newChildren = [ newChildren ];
+			sections.splice(index, 1, {
+				props: {
+					...sections[index].props,
+					children: mergeChildrenProps( sections[index].props.children, fill[0].props.children ),
 				}
-
-				if ( typeof oldChildren !== "undefined" ) {
-
-					if ( ! Array.isArray( oldChildren ) ) {
-						oldChildrenArray = Array.isArray( oldChildren ) ? oldChildren : [ oldChildren ];
-					}
-
-					newChildren = oldChildrenArray.concat( newChildren );
-				}
-
-				sections.splice(index, 1, {
-					props: {
-						label: sections[index].props.label,
-						children: newChildren,
-					}
-				});
-			}
+			});
 		}
 	} );
 
@@ -234,13 +247,22 @@ const ControlsSections = ( props ) => {
 	);
 }
 
+const ControlsGroup = ( props ) => {
+	return (
+		<ControlsFill>
+			<div label={ props.label }>{ props.children }</div>
+		</ControlsFill>
+	)
+}
+
+
 const ControlsSection = ( props ) => {
 
 	const { isSelected } = useBlockEditContext();
 
 	return (
 		<ControlsSectionsFill>
-			{ isSelected && <div label={ props.label }>{ props.children }</div> }
+			{ isSelected && <div { ...props } /> }
 		</ControlsSectionsFill>
 	)
 }
@@ -252,6 +274,7 @@ export {
 }
 
 export {
+	ControlsGroup,
 	ControlsSections,
 	ControlsSection,
 };

@@ -2,6 +2,7 @@ import { isMatch } from 'lodash';
 import classnames from 'classnames';
 
 import {
+	ControlsGroup,
 	ControlsSection,
 
 	GeneralControls,
@@ -112,7 +113,7 @@ const MediaInspectorControls = function( props ) {
 
 			<ControlsSection label={ __( 'Space and Sizing' ) }>
 
-				<GeneralControls>
+				<ControlsGroup label={ __( 'General' ) }>
 					<RadioControl
 						label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
 						selected={ layoutPreset }
@@ -122,9 +123,9 @@ const MediaInspectorControls = function( props ) {
 							{ label: __( 'Moving and dynamic' ), value: 'dynamic' },
 						] }
 					/>
-				</GeneralControls>
+				</ControlsGroup>
 
-				<CustomizeControls>
+				<ControlsGroup label={ __( 'Customize' ) }>
 					<div className={ getEmphasisControlsClassName() }>
 						<RangeControl
 							value={ emphasisBySpace }
@@ -163,9 +164,9 @@ const MediaInspectorControls = function( props ) {
 						max={ 100 }
 						step={ 5 }
 					/>
-				</CustomizeControls>
+				</ControlsGroup>
 
-				<SettingsControls>
+				<ControlsGroup label={ __( 'Settings' ) }>
 					<label>Block Spacing</label>
 					<RangeControl
 						value={ blockTopSpacing }
@@ -212,7 +213,7 @@ const MediaInspectorControls = function( props ) {
 						max={ 100 }
 						step={ 5 }
 					/>
-				</SettingsControls>
+				</ControlsGroup>
 
 			</ControlsSection>
 		</Fragment>

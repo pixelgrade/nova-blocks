@@ -2,10 +2,7 @@ import { Notice, Tab, Tabs } from '../../components';
 
 import {
 	ControlsSection,
-
-	GeneralControls,
-	CustomizeControls,
-	SettingsControls,
+	ControlsGroup,
 } from "../control-sections";
 
 const { __ } = wp.i18n;
@@ -64,22 +61,9 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 	return (
 		<Fragment>
 
-			<ControlsSection label={ __( 'Gallery' ) }>
-				<SettingsControls>
-					<RangeControl
-						label={ __( 'Size Contrast', '__plugin_txtd' ) }
-						value={ sizeContrast }
-						onChange={ sizeContrast => setAttributes( { sizeContrast } ) }
-						min={ 0 }
-						max={ 100 }
-						step={ 20 }
-					/>
-				</SettingsControls>
-			</ControlsSection>
+			<ControlsSection label={ __( 'Media' ) } module={ true }>
 
-			<ControlsSection label={ __( 'Gallery' ) }>
-
-				<GeneralControls>
+				<ControlsGroup label={ __( 'General' ) }>
 					<Notice
 						id={ 'novablocks-advanced-gallery-quick-start' }
 						content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
@@ -113,12 +97,17 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 								onClick={ randomize }>{ __( '💡 Surprise me!' ) }</Button>
 						</div>
 					}
-				</GeneralControls>
+				</ControlsGroup>
 
-				<CustomizeControls>
-				</CustomizeControls>
-
-				<SettingsControls>
+				<ControlsGroup label={ __( 'Settings' ) }>
+					<RangeControl
+						label={ __( 'Size Contrast', '__plugin_txtd' ) }
+						value={ sizeContrast }
+						onChange={ sizeContrast => setAttributes( { sizeContrast } ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 20 }
+					/>
 					<RangeControl
 						label={ __( 'Position Shift', '__plugin_txtd' ) }
 						value={ positionShift }
@@ -176,7 +165,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						max={ 100 }
 						step={ 10 }
 					/>
-				</SettingsControls>
+				</ControlsGroup>
 
 			</ControlsSection>
 		</Fragment>

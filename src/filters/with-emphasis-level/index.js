@@ -1,11 +1,8 @@
 import EmphasisLevelControls from "../../components/emphasis-level-controls";
 
 import {
+	ControlsGroup,
 	ControlsSection,
-
-	GeneralControls,
-	CustomizeControls,
-	SettingsControls,
 } from "../../components/control-sections";
 
 const { __ } = wp.i18n;
@@ -31,9 +28,9 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 			<Fragment>
 				<OriginalComponent { ...props } />
 				<ControlsSection label={ __( 'Emphasis' ) }>
-					<SettingsControls>
+					<ControlsGroup label={ __( 'Settings' ) }>
 						<EmphasisLevelControls { ...props } />
-					</SettingsControls>
+					</ControlsGroup>
 				</ControlsSection>
 			</Fragment>
 		);
