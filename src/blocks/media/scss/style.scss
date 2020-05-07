@@ -24,12 +24,12 @@
 }
 
 .novablocks-media__layout {
-	margin-top: calc( -1 * var(--novablocks-media-spacing) );
-	margin-left: calc( -1 * var(--novablocks-media-spacing) );
+	margin-top: calc( -1 * var(--novablocks-media-gutter) );
+	margin-left: calc( -1 * var(--novablocks-media-gutter) );
 
 	> * {
-		padding-left: var(--novablocks-media-spacing);
-		margin-top: var(--novablocks-media-spacing);
+		padding-left: var(--novablocks-media-gutter);
+		margin-top: var(--novablocks-media-gutter);
 	}
 
 	@include above(tablet) {
@@ -37,8 +37,12 @@
 		flex-wrap: wrap;
 		align-items: center;
 
-		> * {
-			flex: 1 0 50%;
+		.novablocks-media__aside {
+			flex: 1 1 calc( 100% - var(--novablocks-media-content-width, 50%) );
+		}
+
+		.novablocks-media__content {
+			flex: 1 1 var(--novablocks-media-content-width, 50%);
 		}
 	}
 }

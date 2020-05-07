@@ -146,7 +146,7 @@ const MediaInspectorControls = function( props ) {
 				</CustomizeControls>
 
 				<SettingsControls>
-					<label>Content Area Spacing</label>
+					<label>Block Spacing</label>
 					<RangeControl
 						value={ blockTopSpacing }
 						onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
