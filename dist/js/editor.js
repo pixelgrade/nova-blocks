@@ -13073,7 +13073,7 @@ var control_sections_SectionsList = function SectionsList(props) {
     className: "novablocks-sections__header"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__title"
-  }, control_sections_('Select a section to customize')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__buttons'
   }, blockSections.map(function (section, index) {
     return Object(external_React_["createElement"])(control_sections_SectionListItem, {
@@ -13081,7 +13081,7 @@ var control_sections_SectionsList = function SectionsList(props) {
       label: section.props.label,
       onClick: onSectionClick
     });
-  })), Object(external_React_["createElement"])("div", {
+  })), !!modules.length && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__title"
   }, control_sections_('Modules')), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__buttons'
@@ -13091,7 +13091,7 @@ var control_sections_SectionsList = function SectionsList(props) {
       label: section.props.label,
       onClick: onSectionClick
     });
-  })));
+  }))));
 };
 
 var SectionContent = function SectionContent(props) {
@@ -13222,7 +13222,7 @@ var control_sections_ControlsSections = function ControlsSections(props) {
     var activeSection = sections.find(function (section) {
       return section.props.label === activeSectionLabel;
     });
-    return isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(control_sections_SectionsList, {
+    return !!sections.length && isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(control_sections_SectionsList, {
       sections: sections,
       activeSectionLabel: activeSectionLabel,
       onSectionClick: setActiveSectionLabel

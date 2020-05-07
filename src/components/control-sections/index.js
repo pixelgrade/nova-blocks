@@ -68,16 +68,21 @@ const SectionsList = ( props ) => {
 	return (
 		<div className="novablocks-sections">
 			<div className="novablocks-sections__header">
-				<div className="novablocks-sections__title">{ __( 'Select a section to customize' ) }</div>
+				<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
 				<Cube />
 			</div>
 			<div className={ 'novablocks-sections__buttons' }>
 				{ blockSections.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
 			</div>
-			<div className="novablocks-sections__title">{ __( 'Modules' ) }</div>
-			<div className={ 'novablocks-sections__buttons' }>
-				{ modules.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
-			</div>
+			{
+				!! modules.length &&
+				<Fragment>
+					<div className="novablocks-sections__title">{ __( 'Modules' ) }</div>
+					<div className={ 'novablocks-sections__buttons' }>
+						{ modules.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
+					</div>
+				</Fragment>
+			}
 		</div>
 	)
 }
@@ -223,7 +228,7 @@ const ControlsSections = ( props ) => {
 				const sections = getSectionsFromFills( fills );
 				const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 
-				return isSelected && (
+				return !! sections.length && isSelected && (
 					<Fragment>
 						<SectionsList
 							sections={ sections }
