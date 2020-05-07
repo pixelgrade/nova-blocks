@@ -1,3 +1,6 @@
+import { isMatch } from 'lodash';
+import classnames from 'classnames';
+
 import {
 	ControlsSection,
 
@@ -26,44 +29,63 @@ const {
 } = wp.components;
 
 const MediaInspectorControls = function( props ) {
+
 	const {
-		attributes: {
-			blockTopSpacing,
-			blockBottomSpacing,
-			emphasisTopSpacing,
-			emphasisBottomSpacing,
-			emphasisArea,
-
-			contentAreaWidth,
-			layoutGutter,
-
-			// general tab attributes
-			layoutPreset,
-
-			// customize tab attributes
-			emphasisBySpace,
-			enableOverlapping,
-			containerHeight,
-			verticalAlignment,
-		},
+		attributes,
 		setAttributes,
-		clientId,
 	} = props;
+
+	const {
+		blockTopSpacing,
+		blockBottomSpacing,
+		emphasisTopSpacing,
+		emphasisBottomSpacing,
+		emphasisArea,
+
+		contentAreaWidth,
+		layoutGutter,
+
+		// general tab attributes
+		layoutPreset,
+
+		// customize tab attributes
+		emphasisBySpace,
+		enableOverlapping,
+		containerHeight,
+		verticalAlignment,
+	} = attributes;
 
 	const { updateBlockAttributes } = wp.data.dispatch('core/block-editor');
 
-	const onSpacingChange = ( emphasis, overlap ) => {
+	const getEmphasisAttributes = ( emphasis, overlap ) => {
 
 		const actualEmphasis = ! overlap ? emphasis : -1 * emphasis;
 
-		setAttributes( {
+		return {
 			emphasisBySpace: emphasis,
 			enableOverlapping: overlap,
 			blockTopSpacing: ( actualEmphasis < 0 && ['center', 'bottom'].includes( verticalAlignment ) ) ? actualEmphasis : 0,
 			blockBottomSpacing: ( actualEmphasis < 0 && ['top', 'center'].includes( verticalAlignment ) ) ? actualEmphasis : 0,
 			emphasisTopSpacing: ( verticalAlignment !== 'top' ) ? actualEmphasis : 1,
 			emphasisBottomSpacing: ( verticalAlignment !== 'bottom' ) ? actualEmphasis : 1,
+		};
+	}
+
+	const emphasisAttributesMatch = () => {
+		const emphasisAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping );
+
+		return Object.keys( emphasisAttributes ).every( key => {
+			return emphasisAttributes[ key ] === attributes[ key ];
 		} );
+	}
+
+	const getEmphasisControlsClassName = () => {
+		return classnames(
+			'novablocks-controls-wrap',
+			{
+				'novablocks-controls-wrap--dirty': ! emphasisAttributesMatch(),
+			}
+		);
 	}
 
 	return (
@@ -83,18 +105,26 @@ const MediaInspectorControls = function( props ) {
 				</GeneralControls>
 
 				<CustomizeControls>
-					<RangeControl
-						value={ emphasisBySpace }
-						onChange={ ( emphasisBySpace ) => { onSpacingChange( emphasisBySpace, enableOverlapping ) } }
-						label={ __( 'Emphasis by Space' ) }
-						min={ 0 }
-						max={ 3 }
-					/>
-					<ToggleControl
-						label={ __( 'Enable Overlapping' ) }
-						checked={ enableOverlapping }
-						onChange={ () => { onSpacingChange( emphasisBySpace, ! enableOverlapping ) } }
-					/>
+					<div className={ getEmphasisControlsClassName() }>
+						<RangeControl
+							value={ emphasisBySpace }
+							onChange={ ( emphasisBySpace ) => {
+								const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping );
+								setAttributes( newAttributes );
+							} }
+							label={ __( 'Emphasis by Space' ) }
+							min={ 0 }
+							max={ 3 }
+						/>
+						<ToggleControl
+							label={ __( 'Enable Overlapping' ) }
+							checked={ enableOverlapping }
+							onChange={ () => {
+								const newAttributes = getEmphasisAttributes( emphasisBySpace, ! enableOverlapping );
+								setAttributes( newAttributes );
+							} }
+						/>
+					</div>
 					<RadioControl
 						label={ __( 'Minimum Height', '__plugin_txtd' ) }
 						selected={ verticalAlignment }
@@ -116,6 +146,7 @@ const MediaInspectorControls = function( props ) {
 				</CustomizeControls>
 
 				<SettingsControls>
+					<label>Content Area Spacing</label>
 					<RangeControl
 						value={ blockTopSpacing }
 						onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
@@ -130,7 +161,7 @@ const MediaInspectorControls = function( props ) {
 						min={ -3 }
 						max={ 3 }
 					/>
-					<label>Emphasis Spacing</label>
+					<label>Content Area Spacing</label>
 					<RangeControl
 						value={ emphasisTopSpacing }
 						onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }

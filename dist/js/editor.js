@@ -180,27 +180,6 @@ module.exports = _inherits;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -255,6 +234,27 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	} else {}
 }());
 
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
 
 /***/ }),
 /* 8 */
@@ -7938,7 +7938,7 @@ var withBlockIndexAttribute = with_block_index_createHigherOrderComponent(functi
 }, "withBlockIndexAttribute");
 with_block_index_addFilter('editor.BlockEdit', 'novablocks/with-blockIndex-attribute', withBlockIndexAttribute);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
-var classnames = __webpack_require__(7);
+var classnames = __webpack_require__(6);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
 // CONCATENATED MODULE: ./src/filters/with-font-size-picker/index.js
@@ -8045,7 +8045,7 @@ function addFontSizeAttribute(block) {
 
 with_font_size_picker_addFilter('blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(6);
+var defineProperty = __webpack_require__(7);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./src/store/reducer.js
@@ -16722,6 +16722,7 @@ var preview_MediaPreview = function MediaPreview(props) {
 // CONCATENATED MODULE: ./src/blocks/media/inspector-controls.js
 
 
+
 /**
  * WordPress dependencies
  */
@@ -16735,34 +16736,46 @@ var media_inspector_controls_wp$components = wp.components,
     media_inspector_controls_ToggleControl = media_inspector_controls_wp$components.ToggleControl;
 
 var inspector_controls_MediaInspectorControls = function MediaInspectorControls(props) {
-  var _props$attributes = props.attributes,
-      blockTopSpacing = _props$attributes.blockTopSpacing,
-      blockBottomSpacing = _props$attributes.blockBottomSpacing,
-      emphasisTopSpacing = _props$attributes.emphasisTopSpacing,
-      emphasisBottomSpacing = _props$attributes.emphasisBottomSpacing,
-      emphasisArea = _props$attributes.emphasisArea,
-      contentAreaWidth = _props$attributes.contentAreaWidth,
-      layoutGutter = _props$attributes.layoutGutter,
-      layoutPreset = _props$attributes.layoutPreset,
-      emphasisBySpace = _props$attributes.emphasisBySpace,
-      enableOverlapping = _props$attributes.enableOverlapping,
-      containerHeight = _props$attributes.containerHeight,
-      verticalAlignment = _props$attributes.verticalAlignment,
-      setAttributes = props.setAttributes,
-      clientId = props.clientId;
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes;
+  var blockTopSpacing = attributes.blockTopSpacing,
+      blockBottomSpacing = attributes.blockBottomSpacing,
+      emphasisTopSpacing = attributes.emphasisTopSpacing,
+      emphasisBottomSpacing = attributes.emphasisBottomSpacing,
+      emphasisArea = attributes.emphasisArea,
+      contentAreaWidth = attributes.contentAreaWidth,
+      layoutGutter = attributes.layoutGutter,
+      layoutPreset = attributes.layoutPreset,
+      emphasisBySpace = attributes.emphasisBySpace,
+      enableOverlapping = attributes.enableOverlapping,
+      containerHeight = attributes.containerHeight,
+      verticalAlignment = attributes.verticalAlignment;
 
   var _wp$data$dispatch = wp.data.dispatch('core/block-editor'),
       updateBlockAttributes = _wp$data$dispatch.updateBlockAttributes;
 
-  var onSpacingChange = function onSpacingChange(emphasis, overlap) {
+  var getEmphasisAttributes = function getEmphasisAttributes(emphasis, overlap) {
     var actualEmphasis = !overlap ? emphasis : -1 * emphasis;
-    setAttributes({
+    return {
       emphasisBySpace: emphasis,
       enableOverlapping: overlap,
       blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(verticalAlignment) ? actualEmphasis : 0,
       blockBottomSpacing: actualEmphasis < 0 && ['top', 'center'].includes(verticalAlignment) ? actualEmphasis : 0,
       emphasisTopSpacing: verticalAlignment !== 'top' ? actualEmphasis : 1,
       emphasisBottomSpacing: verticalAlignment !== 'bottom' ? actualEmphasis : 1
+    };
+  };
+
+  var emphasisAttributesMatch = function emphasisAttributesMatch() {
+    var emphasisAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping);
+    return Object.keys(emphasisAttributes).every(function (key) {
+      return emphasisAttributes[key] === attributes[key];
+    });
+  };
+
+  var getEmphasisControlsClassName = function getEmphasisControlsClassName() {
+    return classnames_default()('novablocks-controls-wrap', {
+      'novablocks-controls-wrap--dirty': !emphasisAttributesMatch()
     });
   };
 
@@ -16783,10 +16796,13 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       label: media_inspector_controls_('Moving and dynamic'),
       value: 'dynamic'
     }]
-  })), Object(external_React_["createElement"])(CustomizeControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+  })), Object(external_React_["createElement"])(CustomizeControlsFill, null, Object(external_React_["createElement"])("div", {
+    className: getEmphasisControlsClassName()
+  }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisBySpace,
     onChange: function onChange(emphasisBySpace) {
-      onSpacingChange(emphasisBySpace, enableOverlapping);
+      var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping);
+      setAttributes(newAttributes);
     },
     label: media_inspector_controls_('Emphasis by Space'),
     min: 0,
@@ -16795,9 +16811,10 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     label: media_inspector_controls_('Enable Overlapping'),
     checked: enableOverlapping,
     onChange: function onChange() {
-      onSpacingChange(emphasisBySpace, !enableOverlapping);
+      var newAttributes = getEmphasisAttributes(emphasisBySpace, !enableOverlapping);
+      setAttributes(newAttributes);
     }
-  }), Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
+  })), Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
     label: media_inspector_controls_('Minimum Height', '__plugin_txtd'),
     selected: verticalAlignment,
     onChange: function onChange(verticalAlignment) {
@@ -16826,7 +16843,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: 0,
     max: 100,
     step: 5
-  })), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+  })), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])("label", null, "Content Area Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: blockTopSpacing,
     onChange: function onChange(blockTopSpacing) {
       return setAttributes({
@@ -16846,7 +16863,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     label: media_inspector_controls_('Bottom'),
     min: -3,
     max: 3
-  }), Object(external_React_["createElement"])("label", null, "Emphasis Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+  }), Object(external_React_["createElement"])("label", null, "Content Area Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisTopSpacing,
     onChange: function onChange(emphasisTopSpacing) {
       return setAttributes({
