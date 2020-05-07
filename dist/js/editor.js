@@ -16723,6 +16723,7 @@ var preview_MediaPreview = function MediaPreview(props) {
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -16745,6 +16746,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       emphasisArea = attributes.emphasisArea,
       contentAreaWidth = attributes.contentAreaWidth,
       layoutGutter = attributes.layoutGutter,
+      blockStyle = attributes.blockStyle,
       layoutPreset = attributes.layoutPreset,
       emphasisBySpace = attributes.emphasisBySpace,
       enableOverlapping = attributes.enableOverlapping,
@@ -16779,7 +16781,18 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     });
   };
 
-  return Object(external_React_["createElement"])(media_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+  return Object(external_React_["createElement"])(media_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, blockStyle !== 'basic' && Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    value: emphasisArea,
+    onChange: function onChange(emphasisArea) {
+      return setAttributes({
+        emphasisArea: emphasisArea
+      });
+    },
+    label: media_inspector_controls_('Emphasis Area'),
+    min: 0,
+    max: 100,
+    step: 5
+  })), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: media_inspector_controls_('Space and Sizing')
   }, Object(external_React_["createElement"])(GeneralControlsFill, null, Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
     label: media_inspector_controls_('Choose a layout preset:', '__plugin_txtd'),
@@ -16843,7 +16856,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: 0,
     max: 100,
     step: 5
-  })), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])("label", null, "Content Area Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+  })), Object(external_React_["createElement"])(SettingsControlsFill, null, Object(external_React_["createElement"])("label", null, "Block Spacing"), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: blockTopSpacing,
     onChange: function onChange(blockTopSpacing) {
       return setAttributes({
@@ -16883,17 +16896,6 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     label: media_inspector_controls_('Bottom'),
     min: -3,
     max: 3
-  }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
-    value: emphasisArea,
-    onChange: function onChange(emphasisArea) {
-      return setAttributes({
-        emphasisArea: emphasisArea
-      });
-    },
-    label: media_inspector_controls_('Emphasis Area'),
-    min: 0,
-    max: 100,
-    step: 5
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: contentAreaWidth,
     onChange: function onChange(contentAreaWidth) {

@@ -9,6 +9,10 @@ import {
 	SettingsControls,
 } from "../../components/control-sections";
 
+import {
+	EmphasisBlockAreaFill
+} from "../../components/emphasis-level-controls"
+
 /**
  * WordPress dependencies
  */
@@ -44,6 +48,7 @@ const MediaInspectorControls = function( props ) {
 
 		contentAreaWidth,
 		layoutGutter,
+		blockStyle,
 
 		// general tab attributes
 		layoutPreset,
@@ -90,6 +95,21 @@ const MediaInspectorControls = function( props ) {
 
 	return (
 		<Fragment>
+
+			<EmphasisBlockAreaFill>
+				{
+					blockStyle !== 'basic' &&
+					<RangeControl
+						value={ emphasisArea }
+						onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
+						label={ __( 'Emphasis Area' ) }
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
+					/>
+				}
+			</EmphasisBlockAreaFill>
+
 			<ControlsSection label={ __( 'Space and Sizing' ) }>
 
 				<GeneralControls>
@@ -175,14 +195,6 @@ const MediaInspectorControls = function( props ) {
 						label={ __( 'Bottom' ) }
 						min={ -3 }
 						max={ 3 }
-					/>
-					<RangeControl
-						value={ emphasisArea }
-						onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
-						label={ __( 'Emphasis Area' ) }
-						min={ 0 }
-						max={ 100 }
-						step={ 5 }
 					/>
 					<RangeControl
 						value={ contentAreaWidth }
