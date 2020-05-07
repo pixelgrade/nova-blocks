@@ -8176,232 +8176,1054 @@ var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 var kebabCase = __webpack_require__(41);
 var kebabCase_default = /*#__PURE__*/__webpack_require__.n(kebabCase);
 
-// CONCATENATED MODULE: ./src/components/layout-panel/padding.js
+// CONCATENATED MODULE: ./src/components/control-sections/index.js
 
 
-/**
- * Internal dependencies
- */
 
-/**
- * WordPress dependencies
- */
 
-var padding_ = wp.i18n.__;
-var padding_Fragment = wp.element.Fragment;
-var padding_wp$components = wp.components,
-    Button = padding_wp$components.Button,
-    ButtonGroup = padding_wp$components.ButtonGroup,
-    RangeControl = padding_wp$components.RangeControl;
 
-var padding_PaddingControls = function PaddingControls(props) {
-  var _props$attributes = props.attributes,
-      contentPadding = _props$attributes.contentPadding,
-      contentPaddingCustom = _props$attributes.contentPaddingCustom,
-      setAttributes = props.setAttributes,
-      contentPaddingOptions = props.settings.contentPaddingOptions;
-  return Object(external_React_["createElement"])(padding_Fragment, null, Object(external_React_["createElement"])("label", null, padding_('Content Padding', '__plugin_txtd')), Object(external_React_["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
-    return Object(external_React_["createElement"])(Button, {
-      key: option.value,
-      isDefault: option.value !== contentPadding,
-      isPrimary: option.value === contentPadding,
-      onClick: function onClick() {
-        setAttributes({
-          contentPadding: option.value
-        });
-      }
-    }, option.label);
-  })), 'custom' === contentPadding && Object(external_React_["createElement"])(RangeControl, {
-    value: contentPaddingCustom,
-    onChange: function onChange(newContentPadding) {
-      return setAttributes({
-        contentPaddingCustom: newContentPadding
-      });
-    },
-    min: 0,
-    max: 25
+function control_sections_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function control_sections_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { control_sections_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { control_sections_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var control_sections_createSlotFill = wp.components.createSlotFill;
+var control_sections_wp$element = wp.element,
+    control_sections_Component = control_sections_wp$element.Component,
+    control_sections_Fragment = control_sections_wp$element.Fragment,
+    useState = control_sections_wp$element.useState;
+var control_sections_ = wp.i18n.__;
+var useBlockEditContext = wp.blockEditor.useBlockEditContext;
+var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var ControlsSectionsSlotFill = control_sections_createSlotFill('ControlsSections');
+var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
+var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
+var ControlsSlotFill = control_sections_createSlotFill('Controls');
+var ControlsSlot = ControlsSlotFill.Slot;
+var ControlsFill = ControlsSlotFill.Fill;
+
+var control_sections_Cube = function Cube(props) {
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube-face novablocks-sections__cube-face--top"
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube-face novablocks-sections__cube-face--left"
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube-face novablocks-sections__cube-face--right"
   }));
 };
 
-/* harmony default export */ var padding = (with_settings(padding_PaddingControls));
-// CONCATENATED MODULE: ./src/components/layout-panel/width.js
+var control_sections_SectionListItem = function SectionListItem(props) {
+  var label = props.label,
+      _onClick = props.onClick;
+  return Object(external_React_["createElement"])("div", {
+    key: kebabCase_default()(label),
+    className: 'novablocks-sections__button',
+    onClick: function onClick() {
+      _onClick(label);
+    }
+  }, label);
+};
 
+var control_sections_SectionsList = function SectionsList(props) {
+  var activeSectionLabel = props.activeSectionLabel,
+      sections = props.sections,
+      onSectionClick = props.onSectionClick;
+  var active = sections.find(function (section) {
+    return section.props.label === activeSectionLabel;
+  });
+  var blockSections = sections.filter(function (section) {
+    return !section.props.module;
+  });
+  var modules = sections.filter(function (section) {
+    return !!section.props.module;
+  });
 
-/**
- * Internal dependencies
- */
+  if (!!active) {
+    return false;
+  }
 
-/**
- * WordPress dependencies
- */
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__buttons'
+  }, blockSections.map(function (section, index) {
+    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
+      key: index,
+      label: section.props.label,
+      onClick: onSectionClick
+    });
+  })), !!modules.length && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, control_sections_('Modules')), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__buttons'
+  }, modules.map(function (section, index) {
+    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
+      key: index,
+      label: section.props.label,
+      onClick: onSectionClick
+    });
+  }))));
+};
 
-var width_ = wp.i18n.__;
-var width_Fragment = wp.element.Fragment;
-var width_wp$components = wp.components,
-    width_Button = width_wp$components.Button,
-    width_ButtonGroup = width_wp$components.ButtonGroup,
-    width_RangeControl = width_wp$components.RangeControl;
+var SectionContent = function SectionContent(props) {
+  var section = props.section;
 
-var width_WidthControls = function WidthControls(props) {
-  var _props$attributes = props.attributes,
-      contentWidth = _props$attributes.contentWidth,
-      contentWidthCustom = _props$attributes.contentWidthCustom,
-      setAttributes = props.setAttributes,
-      contentWidthOptions = props.settings.contentWidthOptions;
-  return Object(external_React_["createElement"])(width_Fragment, null, Object(external_React_["createElement"])("label", null, width_('Content Width', '__plugin_txtd')), Object(external_React_["createElement"])(width_ButtonGroup, {
-    label: "Content Width"
-  }, contentWidthOptions.map(function (option) {
-    return Object(external_React_["createElement"])(width_Button, {
-      key: option.value,
-      isDefault: option.value !== contentWidth,
-      isPrimary: option.value === contentWidth,
-      onClick: function onClick() {
-        setAttributes({
-          contentWidth: option.value
-        });
-      }
-    }, option.label);
-  })), 'custom' === contentWidth && Object(external_React_["createElement"])(width_RangeControl, {
-    value: contentWidthCustom,
-    onChange: function onChange(newContentWidth) {
-      return setAttributes({
-        contentWidthCustom: newContentWidth
-      });
-    },
-    min: 20,
-    max: 90,
-    step: 10
+  if (!section || !section.props.children) {
+    return null;
+  }
+
+  return section.props.children;
+};
+
+var control_sections_SectionTab = function SectionTab(props) {
+  var className = props.className,
+      label = props.label,
+      _onClick2 = props.onClick;
+  return Object(external_React_["createElement"])("div", {
+    className: className,
+    onClick: function onClick() {
+      _onClick2(label);
+    }
+  }, label);
+};
+
+var control_sections_ActiveSection = function ActiveSection(props) {
+  var activeLevel = props.activeLevel,
+      section = props.section,
+      onBackButtonClick = props.onBackButtonClick,
+      onTabClick = props.onTabClick;
+
+  if (!section) {
+    return false;
+  }
+
+  var getTabClassName = function getTabClassName(label) {
+    return classnames_default()('novablocks-sections__tab', {
+      'novablocks-sections__tab--active': activeLevel === label
+    });
+  };
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeLevel))
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-back",
+    onClick: onBackButtonClick
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-title"
+  }, section.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
+    var sections = getSectionsFromFills(fills);
+    return Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
+      className: 'novablocks-sections__tabs'
+    }, sections.map(function (section) {
+      var label = section.props.label;
+      return Object(external_React_["createElement"])("div", {
+        className: getTabClassName(label),
+        onClick: function onClick() {
+          onTabClick(label);
+        }
+      }, label);
+    })), Object(external_React_["createElement"])("div", {
+      className: 'novablocks-sections__tab-content'
+    }, sections.filter(function (section) {
+      return section.props.label === activeLevel;
+    }).map(function (section) {
+      return section.props.children;
+    })));
   }));
 };
 
-/* harmony default export */ var width = (with_settings(width_WidthControls));
-// CONCATENATED MODULE: ./src/components/layout-panel/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-var layout_panel_ = wp.i18n.__;
-var layout_panel_PanelBody = wp.components.PanelBody;
-
-var layout_panel_LayoutPanel = function LayoutPanel(props) {
-  return Object(external_React_["createElement"])(layout_panel_PanelBody, {
-    className: "pixelgrade-hero-button-group-wrapper",
-    title: layout_panel_('Layout', '__plugin_txtd'),
-    initialOpen: false
-  }, Object(external_React_["createElement"])(padding, props), Object(external_React_["createElement"])(width, props), props.children);
+var getTabsFromFills = function getTabsFromFills(fills) {
+  var tabs = [];
 };
 
-/* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
-// CONCATENATED MODULE: ./src/components/parallax-panel/index.js
+var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
+  if (typeof children1 === "undefined") {
+    return children2;
+  }
 
+  if (typeof children2 === "undefined") {
+    return children1;
+  }
 
-/**
- * Internal dependencies
- */
+  var children1Array = Array.isArray(children1) ? children1 : [children1];
+  var children2Array = Array.isArray(children2) ? children2 : [children2];
+  return children1Array.concat(children2Array);
+};
 
-/**
- * WordPress dependencies
- */
+var getSectionsFromFills = function getSectionsFromFills(fills) {
+  var sections = []; // Merge sections with the same label
 
-var parallax_panel_ = wp.i18n.__;
-var parallax_panel_wp$components = wp.components,
-    parallax_panel_PanelBody = parallax_panel_wp$components.PanelBody,
-    parallax_panel_RangeControl = parallax_panel_wp$components.RangeControl,
-    parallax_panel_RadioControl = parallax_panel_wp$components.RadioControl,
-    ToggleControl = parallax_panel_wp$components.ToggleControl;
+  fills.forEach(function (fill) {
+    var index = sections.findIndex(function (section) {
+      return section.props.label === fill[0].props.label;
+    });
 
-var parallax_panel_ParallaxPanel = function ParallaxPanel(props) {
-  var _props$attributes = props.attributes,
-      enableParallax = _props$attributes.enableParallax,
-      parallaxAmount = _props$attributes.parallaxAmount,
-      parallaxCustomAmount = _props$attributes.parallaxCustomAmount,
-      focalPoint = _props$attributes.focalPoint,
-      setAttributes = props.setAttributes,
-      parallaxOptions = props.settings.parallaxOptions;
-  return Object(external_React_["createElement"])(parallax_panel_PanelBody, {
-    title: parallax_panel_('Parallax', '__plugin_txtd'),
-    initialOpen: false
-  }, Object(external_React_["createElement"])(ToggleControl, {
-    label: parallax_panel_('Enable Parallax Scrolling', '__plugin_txtd'),
-    checked: enableParallax,
-    onChange: function onChange() {
-      return setAttributes({
-        enableParallax: !enableParallax
+    if (index === -1) {
+      sections.push({
+        props: fill[0].props
+      });
+    } else {
+      sections.splice(index, 1, {
+        props: control_sections_objectSpread({}, sections[index].props, {
+          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
+        })
       });
     }
-  }), !!enableParallax && Object(external_React_["createElement"])(parallax_panel_RadioControl, {
-    label: parallax_panel_('Parallax Orbital Speed', '__plugin_txtd'),
-    selected: parallaxAmount,
-    onChange: function onChange(nextParallaxAmount) {
-      if (nextParallaxAmount === 'custom') {
-        setAttributes({
-          parallaxAmount: nextParallaxAmount
-        });
-      } else {
-        setAttributes({
-          parallaxAmount: nextParallaxAmount,
-          parallaxCustomAmount: parseInt(nextParallaxAmount, 10)
-        });
-      }
-    },
-    options: parallaxOptions,
-    help: parallax_panel_('The speed at which the parallax effect runs.', '__plugin_txtd')
-  }), !!enableParallax && 'custom' === parallaxAmount && Object(external_React_["createElement"])(parallax_panel_RangeControl, {
-    value: parallaxCustomAmount,
-    onChange: function onChange(nextParallaxAmount) {
-      return setAttributes({
-        parallaxCustomAmount: nextParallaxAmount
-      });
-    },
-    min: 10,
-    max: 100,
-    step: 10,
-    help: parallax_panel_('It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.', '__plugin_txtd')
-  }));
+  });
+  return sections;
 };
 
-/* harmony default export */ var parallax_panel = (with_settings(parallax_panel_ParallaxPanel));
-// CONCATENATED MODULE: ./src/components/position-indicators-panel/index.js
+var control_sections_ControlsSections = function ControlsSections(props) {
+  var isSelected = props.isSelected;
 
-var position_indicators_panel_ = wp.i18n.__;
-var position_indicators_panel_wp$components = wp.components,
-    position_indicators_panel_PanelBody = position_indicators_panel_wp$components.PanelBody,
-    position_indicators_panel_ToggleControl = position_indicators_panel_wp$components.ToggleControl;
+  var _useState = useState(false),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      activeSectionLabel = _useState2[0],
+      setActiveSectionLabel = _useState2[1];
 
-function PositionIndicatorsPanel(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes;
-  var positionIndicators = attributes.positionIndicators;
-  return Object(external_React_["createElement"])(position_indicators_panel_PanelBody, {
-    title: position_indicators_panel_('Position Indicators', '__plugin_txtd'),
-    initialOpen: false
-  }, Object(external_React_["createElement"])(position_indicators_panel_ToggleControl, {
-    label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
-    checked: positionIndicators,
-    onChange: function onChange(positionIndicators) {
-      setAttributes({
-        positionIndicators: positionIndicators
-      });
+  var _useState3 = useState(control_sections_('Settings')),
+      _useState4 = slicedToArray_default()(_useState3, 2),
+      activeLevel = _useState4[0],
+      setActiveLevel = _useState4[1];
+
+  return Object(external_React_["createElement"])(ControlsSectionsSlot, null, function (fills) {
+    var sections = getSectionsFromFills(fills);
+    var activeSection = sections.find(function (section) {
+      return section.props.label === activeSectionLabel;
+    });
+    return !!sections.length && isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(control_sections_SectionsList, {
+      sections: sections,
+      activeSectionLabel: activeSectionLabel,
+      onSectionClick: setActiveSectionLabel
+    }), Object(external_React_["createElement"])(control_sections_ActiveSection, {
+      section: activeSection,
+      activeLevel: activeLevel,
+      onBackButtonClick: function onBackButtonClick() {
+        setActiveSectionLabel(false);
+      },
+      onTabClick: setActiveLevel
+    }), Object(external_React_["createElement"])(SectionContent, {
+      section: activeSection
+    }));
+  });
+};
+
+var control_sections_ControlsGroup = function ControlsGroup(props) {
+  return Object(external_React_["createElement"])(ControlsFill, null, Object(external_React_["createElement"])("div", {
+    label: props.label
+  }, props.children));
+};
+
+var control_sections_ControlsSection = function ControlsSection(props) {
+  var _useBlockEditContext = useBlockEditContext(),
+      isSelected = _useBlockEditContext.isSelected;
+
+  return Object(external_React_["createElement"])(ControlsSectionsFill, null, isSelected && Object(external_React_["createElement"])("div", props));
+};
+
+
+// CONCATENATED MODULE: ./src/filters/with-emphasis-level/index.js
+
+
+
+var with_emphasis_level_ = wp.i18n.__;
+var with_emphasis_level_InspectorControls = wp.blockEditor.InspectorControls;
+var with_emphasis_level_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var with_emphasis_level_addFilter = wp.hooks.addFilter;
+var with_emphasis_level_Fragment = wp.element.Fragment;
+var with_emphasis_level_enableFontSizeControlOnBlocks = ['novablocks/media', 'novablocks/cards-collection'];
+var withEmphasisLevelControls = with_emphasis_level_createHigherOrderComponent(function (OriginalComponent) {
+  return function (props) {
+    if (!with_emphasis_level_enableFontSizeControlOnBlocks.includes(props.name)) {
+      return Object(external_React_["createElement"])(OriginalComponent, props);
     }
-  }));
+
+    return Object(external_React_["createElement"])(with_emphasis_level_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+      label: with_emphasis_level_('Emphasis')
+    }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+      label: with_emphasis_level_('Settings')
+    }, Object(external_React_["createElement"])(emphasis_level_controls, props))));
+  };
+});
+with_emphasis_level_addFilter('editor.BlockEdit', 'novablocks/with-ehpasis-level-controls', withEmphasisLevelControls);
+
+function addEmphasisLevelAttribute(block) {
+  if (!with_emphasis_level_enableFontSizeControlOnBlocks.includes(block.name)) {
+    return block;
+  }
+
+  if (typeof block.attributes === 'undefined') {
+    block.attributes = {};
+  }
+
+  block.attributes = Object.assign(block.attributes, {
+    blockStyle: {
+      type: 'string',
+      default: 'basic'
+    },
+    contentStyle: {
+      type: 'string',
+      default: 'basic'
+    }
+  });
+  return block;
 }
 
-/* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(12);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+with_emphasis_level_addFilter('blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addEmphasisLevelAttribute);
+// CONCATENATED MODULE: ./src/filters/with-controls-sections/index.js
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
-var objectDestructuringEmpty = __webpack_require__(60);
-var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
 
+var with_controls_sections_InspectorControls = wp.blockEditor.InspectorControls;
+var with_controls_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var with_controls_sections_addFilter = wp.hooks.addFilter;
+var with_controls_sections_Fragment = wp.element.Fragment;
+var withControlsSections = with_controls_sections_createHigherOrderComponent(function (OriginalComponent) {
+  return function (props) {
+    return Object(external_React_["createElement"])(with_controls_sections_Fragment, null, Object(external_React_["createElement"])(with_controls_sections_InspectorControls, null, Object(external_React_["createElement"])(control_sections_ControlsSections, props)), Object(external_React_["createElement"])(OriginalComponent, props));
+  };
+});
+with_controls_sections_addFilter('editor.BlockEdit', 'novablocks/with-controls-sections', withControlsSections);
+// CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
+// Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
+var fourSq = fourSq || {};
+fourSq.util = fourSq.util || {};
+fourSq.util.Hours = {
+  /**
+   * Pads times to be HHMM
+   * @param {string} text
+   * @return {string}
+   */
+  padTimes: function padTimes(text) {
+    // Add leading/trailing zeros to times so it's always 4 digits, like 0800
+    // Have to run each twice because they're pivoting around the separator
+    // i.e. x10-12x first matches "x10-" and doesn't match the rest
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    return text;
+  },
+
+  /**
+   * @param {Array.<number>} days
+   * @param {number} startMinutes
+   * @param {number} endMinutes
+   */
+  toTimeframe: function toTimeframe(days, startMinutes, endMinutes) {
+    // If we've day wrapped and end before 4am, push the ending value up 24 hours.
+    if (startMinutes >= endMinutes && endMinutes <= 240) {
+      endMinutes += 1440;
+    }
+
+    var startFormatted = fourSq.util.Hours.formatMinutes(startMinutes);
+    var endFormatted = fourSq.util.Hours.formatMinutes(endMinutes);
+    return (
+      /** @type {fourSq.api.models.hours.MachineTimeframe} */
+      {
+        days: days,
+        open: [
+        /** @type {fourSq.api.models.hours.MachineSegment} */
+        {
+          start: startFormatted,
+          end: endFormatted
+        }]
+      }
+    );
+  },
+
+  /**
+   * @param {number} minutes after minute
+   * @return {string} the hhmm format that API takes for the input hours
+   */
+  formatMinutes: function formatMinutes(minutes) {
+    var hh = Math.floor(minutes / 60);
+    var mm = minutes % 60;
+    var intoNextDay = hh % 24 !== hh;
+    hh = hh % 24;
+
+    if (hh % 10 === hh) {
+      hh = '0' + hh;
+    }
+
+    if (intoNextDay) {
+      hh = '+' + hh;
+    }
+
+    if (mm % 10 === mm) {
+      mm = '0' + mm;
+    }
+
+    return hh + '' + mm;
+  },
+
+  /**
+   * @param {string} hoursText
+   * @param {(string|undefined)} minutesText
+   * @param {(string|undefined)} meridiem
+   * @return {number}
+   */
+  minutesAfterMidnight: function minutesAfterMidnight(hoursText, minutesText, meridiem) {
+    var hours = parseInt(hoursText, 10);
+    var minutes = minutesText !== undefined ? parseInt(minutesText, 10) : 0;
+
+    if (hours === 12 && meridiem) {
+      hours -= 12;
+    }
+
+    if (meridiem && meridiem[0] === 'p') {
+      hours += 12;
+    }
+
+    return hours * 60 + minutes;
+  }
+};
+fourSq.util.HoursParser = {
+  /**
+   * @return {fourSq.api.models.hours.MachineHours}
+   */
+  parse: function parse(text) {
+    text = text.toLowerCase(); // Normalize new lines to ';'
+
+    text = text.replace(/\n/g, ' ; '); // Massage times
+    // TODO(ss): translate and do weekend/weekday subs
+
+    text = text.replace(/(12|12:00)?midnight/g, '1200a');
+    text = text.replace(/(12|12:00)?noon/g, '1200p');
+    text = text.replace(/(open)?\s*24\s*hours?/g, '1200a-1200a'); // Standardize conjunctions to '&'
+
+    text = text.replace(/\s*(and|,|\+|&)\s*/g, '&'); // Standardize range tokens to '-'
+
+    text = text.replace(/\s*(-|to|thru|through|till?|'till?|until)\s*/g, '-'); // Standardize am/pm
+
+    text = text.replace(/\s*a\.?m?\.?/g, 'a');
+    text = text.replace(/\s*p\.?m?\.?/g, 'p'); // Not sure this happens, but add trailing zeros to things like 5:3pm
+
+    text = text.replace(/([0-9])(h|:|\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...
+    // if they both have separators
+
+    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5'); // if only the start time has a separator
+
+    text = text.replace(/([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator
+    //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$2$3$5');
+
+    text = fourSq.util.Hours.padTimes(text); // Massage days
+
+    var dayCanonicals = _.map(_.range(1, 8), function (dayI) {
+      var allNames = fourSq.util.HoursParser.dayAliases(dayI);
+
+      var canonical = _.head(allNames); // Shortest is at the front
+
+
+      var aliases = _.tail(allNames);
+
+      aliases.reverse(); // Need to have the largest alias first for replacing
+
+      if (canonical && aliases) {
+        _.each(aliases, function (alias) {
+          text = text.replace(new RegExp(alias, 'g'), canonical);
+        });
+      }
+
+      return canonical;
+    });
+
+    var dayPattern = '(' + dayCanonicals.join('|') + ')';
+    var timePattern = '([0-9][0-9])([0-9][0-9])\\s*([ap])?';
+    var globTimePattern = '[0-9]{4}\\s*[ap]?';
+    var globTimeRangePattern = '(' + globTimePattern + '[^0-9]+' + globTimePattern + ')'; // Need to establish whether days come before times (forward) or not (backward)
+
+    var forwardTimeframePattern = dayPattern + '.*?' + globTimeRangePattern;
+    var backwardTimeframePattern = globTimeRangePattern + '.*?' + dayPattern;
+    var forwardPosition = text.search(new RegExp(forwardTimeframePattern));
+    var backwardPosition = text.search(new RegExp(backwardTimeframePattern)); // If a forward pattern is found first, consider it a forward facing text
+
+    var isForward = forwardPosition !== -1 && forwardPosition <= backwardPosition || backwardPosition === -1; // TODO(ss): may be better to normalize the string to be forward facing at this point
+    //           so the rest of the method would be easier to grok
+    // Separate out something like Mon-Thu, Sat, Sun
+
+    if (isForward) {
+      var ungroupedPattern = dayPattern + '&' + dayPattern + '[^&]*?' + globTimeRangePattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $3; $2 $3; ');
+      }
+    } else {
+      var ungroupedPattern = globTimeRangePattern + '([^0-9]*?)' + dayPattern + '&' + dayPattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $2 $3; $1 $4; ');
+      }
+    }
+
+    var dayRangePattern = dayPattern + '[^a-z0-9]*' + dayPattern + '?';
+    var timeRangePattern = timePattern + '[^0-9]*' + timePattern;
+    var timeframePattern = isForward ? dayRangePattern + '.*?' + timeRangePattern : timeRangePattern + '.*?' + dayRangePattern;
+    var dayTimeMatcher = new RegExp(timeframePattern, 'g');
+    var matches = [];
+
+    do {
+      var dayTimeMatch = dayTimeMatcher.exec(text);
+
+      if (dayTimeMatch) {
+        matches.push(dayTimeMatch);
+      }
+    } while (dayTimeMatch);
+
+    if (matches.length <= 0) {
+      // Try to find just a time range, and then we'll assume it's all days later on.
+      // First two groups are strings that won't match, to get undefined values
+      // in those slots in the regex match array.
+      var timeRangeMatcher = new RegExp('(@!ZfW#)?(@!ZfW#)?' + timeRangePattern);
+      var timeRangeMatch = timeRangeMatcher.exec(text);
+
+      if (timeRangeMatch) {
+        matches.push(timeRangeMatch);
+      }
+    }
+
+    var timeframes = _.map(matches, function (match) {
+      // day slots in the regex match array
+      var day1 = isForward ? match[1] : match[7];
+      var day2 = isForward ? match[2] : match[8];
+      var startDay = day1 !== undefined ? dayCanonicals.indexOf(day1) : 0;
+      var endDay = null;
+
+      if (day2 !== undefined) {
+        if (day1 === undefined) {
+          startDay = dayCanonicals.indexOf(day2);
+        } else {
+          endDay = dayCanonicals.indexOf(day2);
+        }
+      } else if (day1 === undefined) {
+        // If start and end days were undefined, assume 7 days a week
+        endDay = 7;
+      }
+
+      if (endDay === null) {
+        endDay = startDay;
+      }
+
+      if (endDay < startDay) {
+        // For case where: Sun-Tue (we start on Monday)
+        endDay += 7;
+      }
+
+      var days = _.map(_.range(startDay, endDay + 1), function (day) {
+        // Days start at 1 for Monday
+        return day % 7 + 1;
+      }); // time slots in the regex match array
+
+
+      var startHour = isForward ? match[3] : match[1];
+      var startMinute = isForward ? match[4] : match[2];
+      var startMeridiem = isForward ? match[5] : match[3];
+      var endHour = isForward ? match[6] : match[4];
+      var endMinute = isForward ? match[7] : match[5];
+      var endMeridiem = isForward ? match[8] : match[6]; // TODO(ss): hint the meridiem based on endHour < startHour and > 4
+
+      var startTime = fourSq.util.Hours.minutesAfterMidnight(startHour, startMinute, startMeridiem);
+      var endTime = fourSq.util.Hours.minutesAfterMidnight(endHour, endMinute, endMeridiem);
+      return fourSq.util.Hours.toTimeframe(days, startTime, endTime);
+    });
+
+    if (timeframes.length) {
+      return (
+        /** @type {fourSq.api.models.hours.MachineHours} */
+        {
+          timeframes: timeframes
+        }
+      );
+    } else {
+      return null;
+    }
+  },
+
+  /**
+   * @param {number} day starting at 1 for monday
+   * @return {Array.<string>} all aliases of the day, sorted by length
+   */
+  dayAliases: function dayAliases(day) {
+    var text = '';
+    var aliases = '';
+
+    switch (day) {
+      case 1:
+        aliases = ['mondays', 'monday', 'monda', 'mond', 'mon', 'mo', 'm'];
+        break;
+
+      case 2:
+        aliases = ['tuesdays', 'tuesday', 'tuesd', 'tues', 'tue', 'tu'];
+        break;
+
+      case 3:
+        aliases = ['wednesdays', 'wednesday', 'wednes', 'wedne', 'wedn', 'wed', 'we', 'w'];
+        break;
+
+      case 4:
+        aliases = ['thursdays', 'thursday', 'thurs', 'thur', 'thu', 'th'];
+        break;
+
+      case 5:
+        aliases = ['fridays', 'friday', 'frida', 'frid', 'fri', 'fr', 'f'];
+        break;
+
+      case 6:
+        aliases = ['saturdays', 'saturday', 'satur', 'satu', 'sat', 'sa'];
+        break;
+
+      case 7:
+        aliases = ['sundays', 'sunday', 'sunda', 'sund', 'sun', 'su'];
+        break;
+
+      default:
+        return [];
+    }
+
+    return _.sortBy(aliases, function (alias) {
+      return alias.length;
+    });
+  }
+}; // Remove the days in which the business is closed. The parser doesn't need those days anyways.
+
+function removeClosedDays(schedule) {
+  var hoursString = '';
+  var lines = schedule.split('\n');
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].includes('closed') || lines[i].includes('Closed') || !lines[i].match(/\d+/g)) {// don't add it to the list
+    } else {
+      hoursString += lines[i] + '\n';
+    }
+  }
+
+  return hoursString;
+}
+
+var parseContent = function parseContent(currentValue) {
+  currentValue = removeClosedDays(currentValue);
+  var hours = fourSq.util.HoursParser.parse(currentValue);
+  return JSON.stringify(hours);
+};
+// CONCATENATED MODULE: ./src/blocks/core/separator/index.js
+
+
+var separator_addSeparatorFilters = function addSeparatorFilters(settings) {
+  var Separator = function Separator(props) {
+    var className = classnames_default()('wp-block-separator', props.className);
+    return Object(external_React_["createElement"])("div", {
+      className: className,
+      dangerouslySetInnerHTML: {
+        __html: settings.separator && settings.separator.markup
+      }
+    });
+  };
+
+  var replaceSeparatorEdit = wp.compose.createHigherOrderComponent(function (BlockEdit) {
+    return function (props) {
+      if ('core/separator' === props.name) {
+        return Object(external_React_["createElement"])(Separator, {
+          className: props.attributes.className
+        });
+      } else {
+        return Object(external_React_["createElement"])(BlockEdit, props);
+      }
+    };
+  }, "replaceSeparatorEdit");
+
+  var replaceSeparatorSave = function replaceSeparatorSave(element, blockType, attributes) {
+    if ('core/separator' !== blockType.name) {
+      return element;
+    }
+
+    return null;
+  };
+
+  wp.hooks.addFilter('editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit);
+  wp.hooks.addFilter('blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave);
+};
+// CONCATENATED MODULE: ./src/icons.js
+
+var icons_wp$components = wp.components,
+    SVG = icons_wp$components.SVG,
+    Path = icons_wp$components.Path;
+var nova = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 36 36",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M8 21.2857C8 18.9188 9.91878 17 12.2857 17H13.4545C15.9649 17 18 19.0351 18 21.5455V23.1538C18 25.278 16.278 27 14.1538 27H13.7143C10.5584 27 8 24.4416 8 21.2857Z",
+  fill: "#FFE42E"
+}));
+var hero = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "mask0",
+  "mask-type": "alpha",
+  maskUnits: "userSpaceOnUse",
+  x: "0",
+  y: "0",
+  width: "24",
+  height: "24"
+}, Object(external_React_["createElement"])("rect", {
+  width: "24",
+  height: "24",
+  rx: "12",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("g", {
+  mask: "url(#mask0)"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM4 8.49123C4 6.01079 7.01619 4 10.7368 4H11.619C16.2477 4 20 6.50152 20 9.5873C20 12.3926 16.5888 14.6667 12.381 14.6667H11.5789C7.39321 14.6667 4 12.4045 4 9.61403V8.49123Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M7 18.7143C7 19.4244 7.57563 20 8.28571 20H15.5C16.3284 20 17 19.3284 17 18.5V18.5C17 17.6716 16.3284 17 15.5 17H8.71429C7.76751 17 7 17.7675 7 18.7143V18.7143Z",
+  fill: "#FFE42E"
+})));
+var icons_media = Object(external_React_["createElement"])("svg", {
+  width: "36",
+  height: "36",
+  viewBox: "0 0 36 36",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "path-1-outside-1",
+  maskUnits: "userSpaceOnUse",
+  x: "-2",
+  y: "-2",
+  width: "40",
+  height: "40",
+  fill: "black"
+}, Object(external_React_["createElement"])("rect", {
+  fill: "white",
+  x: "-2",
+  y: "-2",
+  width: "40",
+  height: "40"
+}), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z"
+})), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M2 18C2 9.16344 9.16344 2 18 2V-2C6.95431 -2 -2 6.95431 -2 18H2ZM18 34C9.16344 34 2 26.8366 2 18H-2C-2 29.0457 6.95431 38 18 38V34ZM34 18C34 26.8366 26.8366 34 18 34V38C29.0457 38 38 29.0457 38 18H34ZM18 2C26.8366 2 34 9.16344 34 18H38C38 6.95431 29.0457 -2 18 -2V2ZM16 19.5263C16 23.6539 19.3461 27 23.4737 27V23C21.5552 23 20 21.4448 20 19.5263H16ZM16 18.8095V19.5263H20V18.8095H16ZM24.8095 10C19.9442 10 16 13.9442 16 18.8095H20C20 16.1533 22.1533 14 24.8095 14V10ZM33 18.1905C33 13.667 29.333 10 24.8095 10V14C27.1239 14 29 15.8761 29 18.1905H33ZM33 18.8421V18.1905H29V18.8421H33ZM24.8421 27C29.3476 27 33 23.3476 33 18.8421H29C29 21.1384 27.1384 23 24.8421 23V27ZM23.4737 27H24.8421V23H23.4737V27Z",
+  fill: "white",
+  mask: "url(#path-1-outside-1)"
+}), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 30C8.68629 30 6 27.3137 6 24V14C6 9.58172 9.58172 6 14 6H16C18.728 6 20.9458 8.18475 20.999 10.9C18.0388 12.3471 16 15.3878 16 18.9048V19.8421C16 22.9484 17.9786 25.5925 20.7443 26.5829C20.0821 28.5685 18.2082 30 16 30H12Z",
+  fill: "#FFE42E"
+}));
+var slideshow = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "mask0",
+  "mask-type": "alpha",
+  maskUnits: "userSpaceOnUse",
+  x: "0",
+  y: "0",
+  width: "24",
+  height: "24"
+}, Object(external_React_["createElement"])("rect", {
+  width: "24",
+  height: "24",
+  rx: "12",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("g", {
+  mask: "url(#mask0)"
+}, Object(external_React_["createElement"])("path", {
+  d: "M0 12C0 5.37258 5.37258 0 12 0V0C18.6274 0 24 5.37258 24 12V12C24 18.6274 18.6274 24 12 24V24C5.37258 24 0 18.6274 0 12V12Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M17.3982 8.99283C17.8831 9.39282 17.8831 10.1358 17.3982 10.5357L14.9673 12.5407C14.315 13.0787 13.331 12.6147 13.331 11.7692V7.75933C13.331 6.91386 14.315 6.44992 14.9673 6.98788L17.3982 8.99283Z",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  d: "M6.60184 8.99283C6.11689 9.39282 6.11689 10.1358 6.60184 10.5357L9.03272 12.5407C9.68496 13.0787 10.669 12.6147 10.669 11.7692V7.75933C10.669 6.91386 9.68496 6.44992 9.03272 6.98788L6.60184 8.99283Z",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  d: "M7 18.2751C7 18.8033 7.42818 19.2314 7.95637 19.2314H8.2172C8.7774 19.2314 9.23154 18.7773 9.23154 18.2171V17.8582C9.23154 17.3842 8.84727 16.9999 8.37325 16.9999H8.27517C7.57091 16.9999 7 17.5708 7 18.2751V18.2751Z",
+  fill: "#FFE42E"
+}), Object(external_React_["createElement"])("path", {
+  d: "M10.7192 18.2751C10.7192 18.8033 11.1474 19.2314 11.6756 19.2314H11.9364C12.4966 19.2314 12.9508 18.7773 12.9508 18.2171V17.8582C12.9508 17.3842 12.5665 16.9999 12.0925 16.9999H11.9944C11.2901 16.9999 10.7192 17.5708 10.7192 18.2751V18.2751Z",
+  fill: "#FFE42E"
+}), Object(external_React_["createElement"])("path", {
+  d: "M14.4385 18.2751C14.4385 18.8033 14.8667 19.2314 15.3948 19.2314H15.6557C16.2159 19.2314 16.67 18.7773 16.67 18.2171V17.8582C16.67 17.3842 16.2857 16.9999 15.8117 16.9999H15.7136C15.0094 16.9999 14.4385 17.5708 14.4385 18.2751V18.2751Z",
+  fill: "#FFE42E"
+})));
+var foodmenu = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "mask0",
+  "mask-type": "alpha",
+  maskUnits: "userSpaceOnUse",
+  x: "0",
+  y: "0",
+  width: "24",
+  height: "24"
+}, Object(external_React_["createElement"])("path", {
+  d: "M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12Z",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("g", {
+  mask: "url(#mask0)"
+}, Object(external_React_["createElement"])("path", {
+  d: "M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M18.0001 9.73684C19.1047 9.73684 20.0394 8.81569 19.7116 7.76087C17.739 1.41304 6.26117 1.41304 4.28861 7.76087C3.96084 8.81569 4.89552 9.73684 6.00009 9.73684H18.0001Z",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  d: "M5 13.1429C5 13.6162 5.38376 14 5.85714 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H6.14286C5.51167 12 5 12.5117 5 13.1429ZM5 17.1429C5 17.6162 5.38376 18 5.85714 18H15C15.5523 18 16 17.5523 16 17C16 16.4477 15.5523 16 15 16H6.14286C5.51167 16 5 16.5117 5 17.1429ZM18 13.1429C18 13.6162 18.3838 14 18.8571 14H19.0909C19.593 14 20 13.593 20 13.0909V12.7692C20 12.3444 19.6556 12 19.2308 12H19.1429C18.5117 12 18 12.5117 18 13.1429ZM18 17.1429C18 17.6162 18.3838 18 18.8571 18H19.0909C19.593 18 20 17.593 20 17.0909V16.7692C20 16.3444 19.6556 16 19.2308 16H19.1429C18.5117 16 18 16.5117 18 17.1429Z",
+  fill: "#FFE42E"
+})));
+var opentable = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM8.85456 12.3999C8.85456 9.09043 11.5325 6.3999 14.8546 6.3999C18.164 6.3999 20.8419 9.09043 20.8546 12.3999C20.8546 15.7094 18.164 18.3999 14.8546 18.3999C11.5451 18.3999 8.85456 15.7094 8.85456 12.3999ZM13.3514 12.3999C13.3514 13.2336 14.0209 13.9031 14.8546 13.9031C15.6756 13.9031 16.3451 13.2336 16.3577 12.3999C16.3577 11.5662 15.6882 10.8967 14.8546 10.8967C14.0209 10.8967 13.3514 11.5662 13.3514 12.3999ZM5.82298 10.8967C4.9893 10.8967 4.31982 11.5662 4.31982 12.3999C4.31982 13.2336 4.9893 13.9031 5.82298 13.9031C6.65667 13.9031 7.32614 13.2336 7.32614 12.3999C7.32614 11.5662 6.65667 10.8967 5.82298 10.8967Z",
+  fill: "#6565F2"
+}));
+var alignBottom = Object(external_React_["createElement"])(SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])(Path, {
+  fill: "none",
+  d: "M0 0h24v24H0V0z"
+}), Object(external_React_["createElement"])(Path, {
+  d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"
+}));
+var alignCenter = Object(external_React_["createElement"])(SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])(Path, {
+  fill: "none",
+  d: "M0 0h24v24H0V0z"
+}), Object(external_React_["createElement"])(Path, {
+  d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
+}));
+var alignTop = Object(external_React_["createElement"])(SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])(Path, {
+  fill: "none",
+  d: "M0 0h24v24H0V0z"
+}), Object(external_React_["createElement"])(Path, {
+  d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"
+}));
+var alignment = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M15.54 5.54L13.77 7.3L12 5.54L10.23 7.3L8.46 5.54L12 2L15.54 5.54ZM18.46 15.54L16.7 13.77L18.46 12L16.7 10.23L18.46 8.46L22 12L18.46 15.54ZM8.46 18.46L10.23 16.7L12 18.46L13.77 16.7L15.54 18.46L12 22L8.46 18.46ZM5.54 8.46L7.3 10.23L5.54 12L7.3 13.77L5.54 15.54L2 12L5.54 8.46Z",
+  fill: "currentColor"
+}), Object(external_React_["createElement"])("path", {
+  d: "M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z",
+  fill: "currentColor"
+}));
+var invert = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M20 15.3099L23.31 11.9999L20 8.68994V3.99994H15.31L12 0.689941L8.69 3.99994H4V8.68994L0.690002 11.9999L4 15.3099V19.9999H8.69L12 23.3099L15.31 19.9999H20V15.3099ZM12 17.9999V5.99994C15.31 5.99994 18 8.68994 18 11.9999C18 15.3099 15.31 17.9999 12 17.9999Z",
+  fill: "currentColor"
+}));
+var swap = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M18 2L20 6H18L16 2H13L15 6H13L11 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V14C8 14.5304 8.21071 15.0391 8.58579 15.4142C8.96086 15.7893 9.46957 16 10 16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V2H18ZM20 14H10V4.4L11.8 8H20V14Z",
+  fill: "currentColor"
+}), Object(external_React_["createElement"])("path", {
+  d: "M14 20H4V10H7V8H4C3.46957 8 2.96086 8.21071 2.58579 8.58579C2.21071 8.96086 2 9.46957 2 10V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H14C14.5304 22 15.0391 21.7893 15.4142 21.4142C15.7893 21.0391 16 20.5304 16 20V17H14V20Z",
+  fill: "currentColor"
+}), Object(external_React_["createElement"])("path", {
+  d: "M5 19H13L11.41 17H9.24L8.4 18.1L7 16.3L5 19Z",
+  fill: "currentColor"
+}));
+var map = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  fill: "none"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F2",
+  fillRule: "evenodd",
+  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM5.45 10.55a6.55 6.55 0 1113.1 0c0 2.236-2.504 5.893-4.416 8.359a2.677 2.677 0 01-4.268 0c-1.912-2.466-4.415-6.123-4.415-8.36zm3.4-.186a3.15 3.15 0 106.301 0 3.15 3.15 0 00-6.301 0z",
+  clipRule: "evenodd"
+}));
+var announcement = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 18 18",
+  xmlns: "http://www.w3.org/2000/svg",
+  fill: "none"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F2",
+  fillRule: "evenodd",
+  d: "M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z",
+  clipRule: "evenodd"
+}));
+var headline = Object(external_React_["createElement"])("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  fill: "none",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F2",
+  fillRule: "evenodd",
+  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.147 16.208a1 1 0 01-.978.792h-.762a1 1 0 01-.979-1.207l.428-2.023a1 1 0 00-.978-1.207h-2.333a1 1 0 00-.978.792l-.608 2.854A1 1 0 017.98 17h-.746a1 1 0 01-.978-1.208l1.915-9A1 1 0 019.15 6h.754a1 1 0 01.978 1.207l-.403 1.9a1 1 0 00.979 1.208h2.332a1 1 0 00.978-.791l.584-2.733a1 1 0 01.978-.79h.754a1 1 0 01.978 1.207l-1.915 9z",
+  clipRule: "evenodd"
+}));
+var header = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M0 12C0 5.37258 5.37258 0 12 0c6.6274 0 12 5.37258 12 12 0 6.6274-5.3726 12-12 12-6.62742 0-12-5.3726-12-12zm10 7c-.55228 0-1-.4477-1-1s.44772-1 1-1h4c.5523 0 1 .4477 1 1s-.4477 1-1 1h-4zm0 2c-1.65685 0-3-1.3431-3-3s1.34315-3 3-3h4c1.6569 0 3 1.3431 3 3s-1.3431 3-3 3h-4zM8 4C5.79086 4 4 5.79086 4 8v3c0 1.1046.89543 2 2 2h12c1.1046 0 2-.8954 2-2V8c0-2.20914-1.7909-4-4-4H8z",
+  fill: "#6565F2"
+}));
+var logo = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zm0 7c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5 2.7614 0 5-2.2386 5-5 0-2.76142-2.2386-5-5-5zm-7 5c0 3.866 3.13401 7 7 7 3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7-3.86599 0-7 3.13401-7 7z",
+  fill: "#6565F2"
+}));
+var navigation = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
+  fill: "#6565F2"
+}));
+var openhours = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("g", {
+  clipPath: "url(#clip0)"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("defs", null, Object(external_React_["createElement"])("clipPath", {
+  id: "clip0"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#fff",
+  d: "M0 0h24v24H0z"
+}))));
+var placeholder = Object(external_React_["createElement"])("svg", {
+  width: "100",
+  height: "67",
+  viewBox: "0 0 100 67",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z",
+  fill: "#323067"
+}), Object(external_React_["createElement"])("path", {
+  d: "M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z",
+  fill: "#323067"
+}));
+var card = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("rect", {
+  y: "24",
+  width: "24",
+  height: "24",
+  rx: "12",
+  transform: "rotate(-90 0 24)",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
+  fill: "#6565F2"
+}));
+var icons_gallery = Object(external_React_["createElement"])("svg", {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM17 17C19.2091 17 21 15.2091 21 13C21 11.8954 20.1046 11 19 11H16C14.8954 11 14 11.8954 14 13V15C14 16.1046 14.8954 17 16 17H17ZM8 20C5.79086 20 4 18.2091 4 16V8C4 6.48581 4.84135 5.16813 6.08206 4.48894C7.05095 3.95855 8 4.89543 8 6V9C8 10.1046 8.89543 11 10 11C11.1046 11 12 11.8954 12 13V18C12 19.1046 11.1046 20 10 20H8ZM16 9C17.1046 9 18 8.10457 18 7C18 4.79086 16.2091 3 14 3H12C10.8954 3 10 3.89543 10 5V7C10 8.10457 10.8954 9 12 9H16Z",
+  fill: "#6565F2"
+}));
 // EXTERNAL MODULE: external "jQuery"
 var external_jQuery_ = __webpack_require__(15);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
@@ -8869,6 +9691,590 @@ var getSnapClassname = function getSnapClassname(focalPoint) {
 
   return classNames.join(' ');
 };
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(12);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
+
+
+
+var ITEM_SIZE = 20;
+var grid_item_GridItemCollection =
+/*#__PURE__*/
+function () {
+  function GridItemCollection(images, attributes) {
+    classCallCheck_default()(this, GridItemCollection);
+
+    var placementVariation = attributes.placementVariation / 25 - 1;
+    this.gridItems = images.map(function (image, index) {
+      var groupStart = Math.floor(index / 4) * 4;
+      var groupEnd = Math.min(groupStart + 4, images.length);
+      var isGroupOfThree = groupEnd - groupStart === 3;
+      return new grid_item_GridItem(image, index, attributes, isGroupOfThree);
+    });
+    this.removeExtra();
+
+    if (placementVariation === 1 || placementVariation === 2) {
+      this.flipX();
+    }
+
+    if (placementVariation === 2 || placementVariation === 3) {
+      this.flipY();
+    }
+  }
+
+  createClass_default()(GridItemCollection, [{
+    key: "removeExtra",
+    value: function removeExtra() {
+      var extraLeft = this.getExtraLeft();
+      var extraTop = this.getExtraTop();
+      var extraBetween = this.getExtraBetween();
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        var groupIndex = Math.floor(index / 4);
+        gridItem.x = gridItem.x - extraLeft;
+        gridItem.y = gridItem.y - extraTop - groupIndex * extraBetween;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipX",
+    value: function flipX() {
+      var maxX = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x + gridItem.width;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.x = maxX - gridItem.x - gridItem.width + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipY",
+    value: function flipY() {
+      var maxY = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.y = maxY - gridItem.y - gridItem.height + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "getExtraLeft",
+    value: function getExtraLeft() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraTop",
+    value: function getExtraTop() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraBetween",
+    value: function getExtraBetween() {
+      var firstGroup = this.gridItems.slice(0, 4);
+      var maxBottom = Math.max.apply(Math, toConsumableArray_default()(firstGroup.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      return ITEM_SIZE * 2 - maxBottom + 1;
+    }
+  }]);
+
+  return GridItemCollection;
+}();
+
+var grid_item_GridItem =
+/*#__PURE__*/
+function () {
+  function GridItem(image, index, attributes, isGroupOfThree) {
+    classCallCheck_default()(this, GridItem);
+
+    this.sizeContrast = attributes.sizeContrast / 20;
+    this.positionShift = attributes.positionShift / 5;
+    this.objectPosition = attributes.objectPosition;
+    this.imageResizing = attributes.imageResizing;
+    this.imageRotation = attributes.imageRotation;
+    this.image = image;
+    this.index = index;
+    this.idx = this.getIndex(index);
+    this.col = this.idx % 2;
+    this.row = Math.floor(index / 2);
+
+    if (!!isGroupOfThree) {
+      if (index === 0) {
+        this.positionShift = Math.min(this.positionShift, 10);
+      }
+
+      if (index === 2) {
+        this.positionShift = Math.max(this.positionShift, 10);
+      }
+    }
+
+    var _this$getOffsets = this.getOffsets(),
+        offsetX = _this$getOffsets.offsetX,
+        offsetY = _this$getOffsets.offsetY;
+
+    var size = ITEM_SIZE - this.sizeContrast * (index % 4);
+    this.x = ITEM_SIZE * this.col + 1 + offsetX;
+    this.y = ITEM_SIZE * this.row + 1 + offsetY;
+    this.width = size;
+    this.height = size;
+  }
+
+  createClass_default()(GridItem, [{
+    key: "getOffsets",
+    value: function getOffsets() {
+      var row = this.row,
+          col = this.col,
+          index = this.index,
+          sizeContrast = this.sizeContrast,
+          positionShift = this.positionShift; // offset for positioning
+
+      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;
+      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset
+      // move 1st to right
+
+      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left
+
+      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down
+
+      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up
+
+      offsetY += col % 2 * (1 - row % 2) * positionShift;
+      return {
+        offsetX: offsetX,
+        offsetY: offsetY
+      };
+    } // reoder to display items clockwise
+
+  }, {
+    key: "getIndex",
+    value: function getIndex(index) {
+      if (index % 4 === 3) return index - 1;
+      if (index % 4 === 2) return index + 1;
+      return index;
+    }
+  }, {
+    key: "getStyle",
+    value: function getStyle() {
+      var index = this.index,
+          x = this.x,
+          y = this.y,
+          width = this.width,
+          height = this.height,
+          imageRotation = this.imageRotation;
+      var rotation = "rotate(".concat((index % 2 - 0.5) * imageRotation / 10, "deg)");
+      return {
+        gridColumnStart: x + '',
+        gridColumnEnd: "span ".concat(width),
+        gridRowStart: y + '',
+        gridRowEnd: "span ".concat(height),
+        transform: rotation
+      };
+    }
+  }, {
+    key: "getImageStyle",
+    value: function getImageStyle() {
+      var idx = this.idx,
+          row = this.row,
+          col = this.col,
+          objectPosition = this.objectPosition,
+          imageResizing = this.imageResizing;
+      var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
+      return {
+        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
+        objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
+      };
+    }
+  }]);
+
+  return GridItem;
+}();
+
+
+// CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
+
+
+var getGalleryStyle = function getGalleryStyle(attributes) {
+  var containerHeight = attributes.containerHeight / 50 - 1;
+  var verticalSpacing = attributes.verticalSpacing;
+  var numerator = 1;
+  var denominator = 1;
+  containerHeight = Math.min(Math.max(-1, containerHeight), 1);
+
+  if (containerHeight > 0) {
+    numerator = 1 + containerHeight;
+  }
+
+  if (containerHeight < 0) {
+    denominator = 1 + Math.abs(containerHeight);
+  }
+
+  return {
+    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px) )"),
+    paddingTop: "".concat(numerator * 100 / denominator, "%")
+  };
+};
+var getGridStyle = function getGridStyle(attributes) {
+  var elementsDistance = attributes.elementsDistance;
+  return {
+    '--novablocks-advanced-gallery-grid-gap': "".concat(elementsDistance, "px")
+  };
+};
+var util_safariHeightFix = function safariHeightFix(grid) {
+  if (!isSafari) {
+    return;
+  }
+
+  var parent = grid.parentNode;
+  var $grid = external_jQuery_default()(grid);
+  var $parent = external_jQuery_default()(parent);
+
+  var resetHeight = function resetHeight() {
+    var newHeight = $parent.outerHeight();
+    $grid.css('height', newHeight);
+  };
+
+  var debouncedResetHeight = debounce(resetHeight, 30);
+  resetHeight();
+
+  if (typeof window.ResizeObserver !== "undefined") {
+    var observer = new ResizeObserver(function (entries) {
+      debouncedResetHeight();
+    });
+    observer.observe(parent);
+  } else {
+    external_jQuery_default()(window).on('resize', function () {
+      debouncedResetHeight();
+    });
+  }
+};
+// CONCATENATED MODULE: ./src/components/advanced-gallery/preview.js
+
+
+
+
+
+
+var preview_wp$element = wp.element,
+    preview_useState = preview_wp$element.useState,
+    useEffect = preview_wp$element.useEffect,
+    useRef = preview_wp$element.useRef;
+
+var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
+  var attributes = props.attributes;
+  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
+
+  var _useState = preview_useState(0),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      height = _useState2[0],
+      setHeight = _useState2[1];
+
+  var ref = useRef(null);
+  useEffect(function () {
+    setHeight(!!ref.current ? ref.current.clientHeight : 0);
+  });
+
+  if (!gallery || !gallery.length) {
+    return null;
+  }
+
+  var gridItemsCollection = new grid_item_GridItemCollection(gallery, attributes);
+  var gridStyle = getGridStyle(attributes);
+
+  if (!!isSafari) {
+    Object.assign(gridStyle, {
+      height: height
+    });
+  }
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery",
+    style: getGalleryStyle(attributes),
+    ref: ref
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid",
+    style: gridStyle
+  }, gridItemsCollection.gridItems.map(function (item, index) {
+    return Object(external_React_["createElement"])(preview_AdvancedGalleryItem, {
+      gridItem: item,
+      key: index
+    });
+  })));
+};
+
+var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
+  var gridItem = _ref.gridItem;
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item",
+    style: gridItem.getStyle()
+  }, Object(external_React_["createElement"])("img", {
+    className: "novablocks-advanced-gallery__image",
+    style: gridItem.getImageStyle(),
+    src: gridItem.image.url
+  }));
+};
+
+/* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/placeholder.js
+
+var _wp$blockEditor = wp.blockEditor,
+    MediaPlaceholder = _wp$blockEditor.MediaPlaceholder,
+    BlockIcon = _wp$blockEditor.BlockIcon;
+
+var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes;
+  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
+
+  if (!!gallery && !!gallery.length) {
+    return false;
+  }
+
+  return Object(external_React_["createElement"])(MediaPlaceholder, {
+    icon: Object(external_React_["createElement"])(BlockIcon, {
+      icon: "format-gallery"
+    }),
+    onSelect: function onSelect(gallery) {
+      setAttributes({
+        gallery: gallery
+      });
+    },
+    accept: "image/*",
+    allowedTypes: ['image'],
+    multiple: true
+  });
+};
+
+/* harmony default export */ var advanced_gallery_placeholder = (placeholder_AdvancedGalleryPlaceholder);
+// CONCATENATED MODULE: ./src/components/layout-panel/padding.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var padding_ = wp.i18n.__;
+var padding_Fragment = wp.element.Fragment;
+var padding_wp$components = wp.components,
+    Button = padding_wp$components.Button,
+    ButtonGroup = padding_wp$components.ButtonGroup,
+    RangeControl = padding_wp$components.RangeControl;
+
+var padding_PaddingControls = function PaddingControls(props) {
+  var _props$attributes = props.attributes,
+      contentPadding = _props$attributes.contentPadding,
+      contentPaddingCustom = _props$attributes.contentPaddingCustom,
+      setAttributes = props.setAttributes,
+      contentPaddingOptions = props.settings.contentPaddingOptions;
+  return Object(external_React_["createElement"])(padding_Fragment, null, Object(external_React_["createElement"])("label", null, padding_('Content Padding', '__plugin_txtd')), Object(external_React_["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
+    return Object(external_React_["createElement"])(Button, {
+      key: option.value,
+      isDefault: option.value !== contentPadding,
+      isPrimary: option.value === contentPadding,
+      onClick: function onClick() {
+        setAttributes({
+          contentPadding: option.value
+        });
+      }
+    }, option.label);
+  })), 'custom' === contentPadding && Object(external_React_["createElement"])(RangeControl, {
+    value: contentPaddingCustom,
+    onChange: function onChange(newContentPadding) {
+      return setAttributes({
+        contentPaddingCustom: newContentPadding
+      });
+    },
+    min: 0,
+    max: 25
+  }));
+};
+
+/* harmony default export */ var padding = (with_settings(padding_PaddingControls));
+// CONCATENATED MODULE: ./src/components/layout-panel/width.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var width_ = wp.i18n.__;
+var width_Fragment = wp.element.Fragment;
+var width_wp$components = wp.components,
+    width_Button = width_wp$components.Button,
+    width_ButtonGroup = width_wp$components.ButtonGroup,
+    width_RangeControl = width_wp$components.RangeControl;
+
+var width_WidthControls = function WidthControls(props) {
+  var _props$attributes = props.attributes,
+      contentWidth = _props$attributes.contentWidth,
+      contentWidthCustom = _props$attributes.contentWidthCustom,
+      setAttributes = props.setAttributes,
+      contentWidthOptions = props.settings.contentWidthOptions;
+  return Object(external_React_["createElement"])(width_Fragment, null, Object(external_React_["createElement"])("label", null, width_('Content Width', '__plugin_txtd')), Object(external_React_["createElement"])(width_ButtonGroup, {
+    label: "Content Width"
+  }, contentWidthOptions.map(function (option) {
+    return Object(external_React_["createElement"])(width_Button, {
+      key: option.value,
+      isDefault: option.value !== contentWidth,
+      isPrimary: option.value === contentWidth,
+      onClick: function onClick() {
+        setAttributes({
+          contentWidth: option.value
+        });
+      }
+    }, option.label);
+  })), 'custom' === contentWidth && Object(external_React_["createElement"])(width_RangeControl, {
+    value: contentWidthCustom,
+    onChange: function onChange(newContentWidth) {
+      return setAttributes({
+        contentWidthCustom: newContentWidth
+      });
+    },
+    min: 20,
+    max: 90,
+    step: 10
+  }));
+};
+
+/* harmony default export */ var width = (with_settings(width_WidthControls));
+// CONCATENATED MODULE: ./src/components/layout-panel/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+var layout_panel_ = wp.i18n.__;
+var layout_panel_PanelBody = wp.components.PanelBody;
+
+var layout_panel_LayoutPanel = function LayoutPanel(props) {
+  return Object(external_React_["createElement"])(layout_panel_PanelBody, {
+    className: "pixelgrade-hero-button-group-wrapper",
+    title: layout_panel_('Layout', '__plugin_txtd'),
+    initialOpen: false
+  }, Object(external_React_["createElement"])(padding, props), Object(external_React_["createElement"])(width, props), props.children);
+};
+
+/* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
+// CONCATENATED MODULE: ./src/components/parallax-panel/index.js
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+var parallax_panel_ = wp.i18n.__;
+var parallax_panel_wp$components = wp.components,
+    parallax_panel_PanelBody = parallax_panel_wp$components.PanelBody,
+    parallax_panel_RangeControl = parallax_panel_wp$components.RangeControl,
+    parallax_panel_RadioControl = parallax_panel_wp$components.RadioControl,
+    ToggleControl = parallax_panel_wp$components.ToggleControl;
+
+var parallax_panel_ParallaxPanel = function ParallaxPanel(props) {
+  var _props$attributes = props.attributes,
+      enableParallax = _props$attributes.enableParallax,
+      parallaxAmount = _props$attributes.parallaxAmount,
+      parallaxCustomAmount = _props$attributes.parallaxCustomAmount,
+      focalPoint = _props$attributes.focalPoint,
+      setAttributes = props.setAttributes,
+      parallaxOptions = props.settings.parallaxOptions;
+  return Object(external_React_["createElement"])(parallax_panel_PanelBody, {
+    title: parallax_panel_('Parallax', '__plugin_txtd'),
+    initialOpen: false
+  }, Object(external_React_["createElement"])(ToggleControl, {
+    label: parallax_panel_('Enable Parallax Scrolling', '__plugin_txtd'),
+    checked: enableParallax,
+    onChange: function onChange() {
+      return setAttributes({
+        enableParallax: !enableParallax
+      });
+    }
+  }), !!enableParallax && Object(external_React_["createElement"])(parallax_panel_RadioControl, {
+    label: parallax_panel_('Parallax Orbital Speed', '__plugin_txtd'),
+    selected: parallaxAmount,
+    onChange: function onChange(nextParallaxAmount) {
+      if (nextParallaxAmount === 'custom') {
+        setAttributes({
+          parallaxAmount: nextParallaxAmount
+        });
+      } else {
+        setAttributes({
+          parallaxAmount: nextParallaxAmount,
+          parallaxCustomAmount: parseInt(nextParallaxAmount, 10)
+        });
+      }
+    },
+    options: parallaxOptions,
+    help: parallax_panel_('The speed at which the parallax effect runs.', '__plugin_txtd')
+  }), !!enableParallax && 'custom' === parallaxAmount && Object(external_React_["createElement"])(parallax_panel_RangeControl, {
+    value: parallaxCustomAmount,
+    onChange: function onChange(nextParallaxAmount) {
+      return setAttributes({
+        parallaxCustomAmount: nextParallaxAmount
+      });
+    },
+    min: 10,
+    max: 100,
+    step: 10,
+    help: parallax_panel_('It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place.', '__plugin_txtd')
+  }));
+};
+
+/* harmony default export */ var parallax_panel = (with_settings(parallax_panel_ParallaxPanel));
+// CONCATENATED MODULE: ./src/components/position-indicators-panel/index.js
+
+var position_indicators_panel_ = wp.i18n.__;
+var position_indicators_panel_wp$components = wp.components,
+    position_indicators_panel_PanelBody = position_indicators_panel_wp$components.PanelBody,
+    position_indicators_panel_ToggleControl = position_indicators_panel_wp$components.ToggleControl;
+
+function PositionIndicatorsPanel(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes;
+  var positionIndicators = attributes.positionIndicators;
+  return Object(external_React_["createElement"])(position_indicators_panel_PanelBody, {
+    title: position_indicators_panel_('Position Indicators', '__plugin_txtd'),
+    initialOpen: false
+  }, Object(external_React_["createElement"])(position_indicators_panel_ToggleControl, {
+    label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
+    checked: positionIndicators,
+    onChange: function onChange(positionIndicators) {
+      setAttributes({
+        positionIndicators: positionIndicators
+      });
+    }
+  }));
+}
+
+/* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
+var objectDestructuringEmpty = __webpack_require__(60);
+var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
+
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
 
@@ -11153,9 +12559,11 @@ const extendedAnimated = apply(domElements);
 
 
 
+
+var toggle_group_ = wp.i18n.__;
 var toggle_group_wp$element = wp.element,
     toggle_group_Fragment = toggle_group_wp$element.Fragment,
-    useState = toggle_group_wp$element.useState;
+    toggle_group_useState = toggle_group_wp$element.useState;
 var toggle_group_wp$components = wp.components,
     toggle_group_PanelBody = toggle_group_wp$components.PanelBody,
     toggle_group_ToggleControl = toggle_group_wp$components.ToggleControl;
@@ -11165,7 +12573,7 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
       _onChange2 = props.onChange,
       label = props.label;
 
-  var _useState = useState(function () {
+  var _useState = toggle_group_useState(function () {
     return new WeakMap();
   }),
       _useState2 = slicedToArray_default()(_useState, 1),
@@ -11274,9 +12682,11 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
   var disabledTransitions = useTransition(disabledToggles, function (item) {
     return item.attribute;
   }, config);
-  return Object(external_React_["createElement"])(toggle_group_PanelBody, {
-    initialOpen: true,
-    title: label,
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: label
+  }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: toggle_group_('Settings')
+  }, Object(external_React_["createElement"])("div", {
     className: 'components-toggle-group__panel'
   }, Object(external_React_["createElement"])("div", {
     className: 'components-toggle-group'
@@ -11328,7 +12738,7 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
         _onChange2(defineProperty_default()({}, item.attribute, value));
       }
     }))));
-  })))));
+  })))))));
 };
 
 /* harmony default export */ var toggle_group = (toggle_group_ToggleGroup);
@@ -11343,8 +12753,8 @@ var range_default = /*#__PURE__*/__webpack_require__.n(lodash_range);
  * WordPress dependencies
  */
 var heading_level_icon_wp$components = wp.components,
-    Path = heading_level_icon_wp$components.Path,
-    SVG = heading_level_icon_wp$components.SVG;
+    heading_level_icon_Path = heading_level_icon_wp$components.Path,
+    heading_level_icon_SVG = heading_level_icon_wp$components.SVG;
 function Index(_ref) {
   var level = _ref.level,
       _ref$isPressed = _ref.isPressed,
@@ -11362,13 +12772,13 @@ function Index(_ref) {
     return null;
   }
 
-  return Object(external_React_["createElement"])(SVG, {
+  return Object(external_React_["createElement"])(heading_level_icon_SVG, {
     width: "20",
     height: "20",
     viewBox: "0 0 20 20",
     xmlns: "http://www.w3.org/2000/svg",
     isPressed: isPressed
-  }, Object(external_React_["createElement"])(Path, {
+  }, Object(external_React_["createElement"])(heading_level_icon_Path, {
     d: levelToPath[level]
   }));
 }
@@ -11883,7 +13293,7 @@ function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.le
  */
 var gallery_options_ = wp.i18n.__;
 var gallery_options_Component = wp.element.Component;
-var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
+var gallery_options_MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
 var ALLOWED_MEDIA_TYPES = ['image'];
 
 var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
@@ -11907,7 +13317,7 @@ var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
     });
   }
 
-  return Object(external_React_["createElement"])(MediaPlaceholder, {
+  return Object(external_React_["createElement"])(gallery_options_MediaPlaceholder, {
     addToGallery: hasImages,
     className: "",
     labels: {
@@ -12128,377 +13538,6 @@ var notice_Notice = function Notice(props) {
 };
 
 /* harmony default export */ var notice = (notice_Notice);
-// CONCATENATED MODULE: ./src/icons.js
-
-var icons_wp$components = wp.components,
-    icons_SVG = icons_wp$components.SVG,
-    icons_Path = icons_wp$components.Path;
-var nova = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 36 36",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M8 21.2857C8 18.9188 9.91878 17 12.2857 17H13.4545C15.9649 17 18 19.0351 18 21.5455V23.1538C18 25.278 16.278 27 14.1538 27H13.7143C10.5584 27 8 24.4416 8 21.2857Z",
-  fill: "#FFE42E"
-}));
-var hero = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "mask0",
-  "mask-type": "alpha",
-  maskUnits: "userSpaceOnUse",
-  x: "0",
-  y: "0",
-  width: "24",
-  height: "24"
-}, Object(external_React_["createElement"])("rect", {
-  width: "24",
-  height: "24",
-  rx: "12",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("g", {
-  mask: "url(#mask0)"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM4 8.49123C4 6.01079 7.01619 4 10.7368 4H11.619C16.2477 4 20 6.50152 20 9.5873C20 12.3926 16.5888 14.6667 12.381 14.6667H11.5789C7.39321 14.6667 4 12.4045 4 9.61403V8.49123Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M7 18.7143C7 19.4244 7.57563 20 8.28571 20H15.5C16.3284 20 17 19.3284 17 18.5V18.5C17 17.6716 16.3284 17 15.5 17H8.71429C7.76751 17 7 17.7675 7 18.7143V18.7143Z",
-  fill: "#FFE42E"
-})));
-var icons_media = Object(external_React_["createElement"])("svg", {
-  width: "36",
-  height: "36",
-  viewBox: "0 0 36 36",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "path-1-outside-1",
-  maskUnits: "userSpaceOnUse",
-  x: "-2",
-  y: "-2",
-  width: "40",
-  height: "40",
-  fill: "black"
-}, Object(external_React_["createElement"])("rect", {
-  fill: "white",
-  x: "-2",
-  y: "-2",
-  width: "40",
-  height: "40"
-}), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z"
-})), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M2 18C2 9.16344 9.16344 2 18 2V-2C6.95431 -2 -2 6.95431 -2 18H2ZM18 34C9.16344 34 2 26.8366 2 18H-2C-2 29.0457 6.95431 38 18 38V34ZM34 18C34 26.8366 26.8366 34 18 34V38C29.0457 38 38 29.0457 38 18H34ZM18 2C26.8366 2 34 9.16344 34 18H38C38 6.95431 29.0457 -2 18 -2V2ZM16 19.5263C16 23.6539 19.3461 27 23.4737 27V23C21.5552 23 20 21.4448 20 19.5263H16ZM16 18.8095V19.5263H20V18.8095H16ZM24.8095 10C19.9442 10 16 13.9442 16 18.8095H20C20 16.1533 22.1533 14 24.8095 14V10ZM33 18.1905C33 13.667 29.333 10 24.8095 10V14C27.1239 14 29 15.8761 29 18.1905H33ZM33 18.8421V18.1905H29V18.8421H33ZM24.8421 27C29.3476 27 33 23.3476 33 18.8421H29C29 21.1384 27.1384 23 24.8421 23V27ZM23.4737 27H24.8421V23H23.4737V27Z",
-  fill: "white",
-  mask: "url(#path-1-outside-1)"
-}), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 30C8.68629 30 6 27.3137 6 24V14C6 9.58172 9.58172 6 14 6H16C18.728 6 20.9458 8.18475 20.999 10.9C18.0388 12.3471 16 15.3878 16 18.9048V19.8421C16 22.9484 17.9786 25.5925 20.7443 26.5829C20.0821 28.5685 18.2082 30 16 30H12Z",
-  fill: "#FFE42E"
-}));
-var slideshow = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "mask0",
-  "mask-type": "alpha",
-  maskUnits: "userSpaceOnUse",
-  x: "0",
-  y: "0",
-  width: "24",
-  height: "24"
-}, Object(external_React_["createElement"])("rect", {
-  width: "24",
-  height: "24",
-  rx: "12",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("g", {
-  mask: "url(#mask0)"
-}, Object(external_React_["createElement"])("path", {
-  d: "M0 12C0 5.37258 5.37258 0 12 0V0C18.6274 0 24 5.37258 24 12V12C24 18.6274 18.6274 24 12 24V24C5.37258 24 0 18.6274 0 12V12Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M17.3982 8.99283C17.8831 9.39282 17.8831 10.1358 17.3982 10.5357L14.9673 12.5407C14.315 13.0787 13.331 12.6147 13.331 11.7692V7.75933C13.331 6.91386 14.315 6.44992 14.9673 6.98788L17.3982 8.99283Z",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  d: "M6.60184 8.99283C6.11689 9.39282 6.11689 10.1358 6.60184 10.5357L9.03272 12.5407C9.68496 13.0787 10.669 12.6147 10.669 11.7692V7.75933C10.669 6.91386 9.68496 6.44992 9.03272 6.98788L6.60184 8.99283Z",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  d: "M7 18.2751C7 18.8033 7.42818 19.2314 7.95637 19.2314H8.2172C8.7774 19.2314 9.23154 18.7773 9.23154 18.2171V17.8582C9.23154 17.3842 8.84727 16.9999 8.37325 16.9999H8.27517C7.57091 16.9999 7 17.5708 7 18.2751V18.2751Z",
-  fill: "#FFE42E"
-}), Object(external_React_["createElement"])("path", {
-  d: "M10.7192 18.2751C10.7192 18.8033 11.1474 19.2314 11.6756 19.2314H11.9364C12.4966 19.2314 12.9508 18.7773 12.9508 18.2171V17.8582C12.9508 17.3842 12.5665 16.9999 12.0925 16.9999H11.9944C11.2901 16.9999 10.7192 17.5708 10.7192 18.2751V18.2751Z",
-  fill: "#FFE42E"
-}), Object(external_React_["createElement"])("path", {
-  d: "M14.4385 18.2751C14.4385 18.8033 14.8667 19.2314 15.3948 19.2314H15.6557C16.2159 19.2314 16.67 18.7773 16.67 18.2171V17.8582C16.67 17.3842 16.2857 16.9999 15.8117 16.9999H15.7136C15.0094 16.9999 14.4385 17.5708 14.4385 18.2751V18.2751Z",
-  fill: "#FFE42E"
-})));
-var foodmenu = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "mask0",
-  "mask-type": "alpha",
-  maskUnits: "userSpaceOnUse",
-  x: "0",
-  y: "0",
-  width: "24",
-  height: "24"
-}, Object(external_React_["createElement"])("path", {
-  d: "M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12Z",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("g", {
-  mask: "url(#mask0)"
-}, Object(external_React_["createElement"])("path", {
-  d: "M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M18.0001 9.73684C19.1047 9.73684 20.0394 8.81569 19.7116 7.76087C17.739 1.41304 6.26117 1.41304 4.28861 7.76087C3.96084 8.81569 4.89552 9.73684 6.00009 9.73684H18.0001Z",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  d: "M5 13.1429C5 13.6162 5.38376 14 5.85714 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H6.14286C5.51167 12 5 12.5117 5 13.1429ZM5 17.1429C5 17.6162 5.38376 18 5.85714 18H15C15.5523 18 16 17.5523 16 17C16 16.4477 15.5523 16 15 16H6.14286C5.51167 16 5 16.5117 5 17.1429ZM18 13.1429C18 13.6162 18.3838 14 18.8571 14H19.0909C19.593 14 20 13.593 20 13.0909V12.7692C20 12.3444 19.6556 12 19.2308 12H19.1429C18.5117 12 18 12.5117 18 13.1429ZM18 17.1429C18 17.6162 18.3838 18 18.8571 18H19.0909C19.593 18 20 17.593 20 17.0909V16.7692C20 16.3444 19.6556 16 19.2308 16H19.1429C18.5117 16 18 16.5117 18 17.1429Z",
-  fill: "#FFE42E"
-})));
-var opentable = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM8.85456 12.3999C8.85456 9.09043 11.5325 6.3999 14.8546 6.3999C18.164 6.3999 20.8419 9.09043 20.8546 12.3999C20.8546 15.7094 18.164 18.3999 14.8546 18.3999C11.5451 18.3999 8.85456 15.7094 8.85456 12.3999ZM13.3514 12.3999C13.3514 13.2336 14.0209 13.9031 14.8546 13.9031C15.6756 13.9031 16.3451 13.2336 16.3577 12.3999C16.3577 11.5662 15.6882 10.8967 14.8546 10.8967C14.0209 10.8967 13.3514 11.5662 13.3514 12.3999ZM5.82298 10.8967C4.9893 10.8967 4.31982 11.5662 4.31982 12.3999C4.31982 13.2336 4.9893 13.9031 5.82298 13.9031C6.65667 13.9031 7.32614 13.2336 7.32614 12.3999C7.32614 11.5662 6.65667 10.8967 5.82298 10.8967Z",
-  fill: "#6565F2"
-}));
-var alignBottom = Object(external_React_["createElement"])(icons_SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])(icons_Path, {
-  fill: "none",
-  d: "M0 0h24v24H0V0z"
-}), Object(external_React_["createElement"])(icons_Path, {
-  d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"
-}));
-var alignCenter = Object(external_React_["createElement"])(icons_SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])(icons_Path, {
-  fill: "none",
-  d: "M0 0h24v24H0V0z"
-}), Object(external_React_["createElement"])(icons_Path, {
-  d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
-}));
-var alignTop = Object(external_React_["createElement"])(icons_SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])(icons_Path, {
-  fill: "none",
-  d: "M0 0h24v24H0V0z"
-}), Object(external_React_["createElement"])(icons_Path, {
-  d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"
-}));
-var alignment = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M15.54 5.54L13.77 7.3L12 5.54L10.23 7.3L8.46 5.54L12 2L15.54 5.54ZM18.46 15.54L16.7 13.77L18.46 12L16.7 10.23L18.46 8.46L22 12L18.46 15.54ZM8.46 18.46L10.23 16.7L12 18.46L13.77 16.7L15.54 18.46L12 22L8.46 18.46ZM5.54 8.46L7.3 10.23L5.54 12L7.3 13.77L5.54 15.54L2 12L5.54 8.46Z",
-  fill: "currentColor"
-}), Object(external_React_["createElement"])("path", {
-  d: "M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z",
-  fill: "currentColor"
-}));
-var invert = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M20 15.3099L23.31 11.9999L20 8.68994V3.99994H15.31L12 0.689941L8.69 3.99994H4V8.68994L0.690002 11.9999L4 15.3099V19.9999H8.69L12 23.3099L15.31 19.9999H20V15.3099ZM12 17.9999V5.99994C15.31 5.99994 18 8.68994 18 11.9999C18 15.3099 15.31 17.9999 12 17.9999Z",
-  fill: "currentColor"
-}));
-var swap = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M18 2L20 6H18L16 2H13L15 6H13L11 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V14C8 14.5304 8.21071 15.0391 8.58579 15.4142C8.96086 15.7893 9.46957 16 10 16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V2H18ZM20 14H10V4.4L11.8 8H20V14Z",
-  fill: "currentColor"
-}), Object(external_React_["createElement"])("path", {
-  d: "M14 20H4V10H7V8H4C3.46957 8 2.96086 8.21071 2.58579 8.58579C2.21071 8.96086 2 9.46957 2 10V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H14C14.5304 22 15.0391 21.7893 15.4142 21.4142C15.7893 21.0391 16 20.5304 16 20V17H14V20Z",
-  fill: "currentColor"
-}), Object(external_React_["createElement"])("path", {
-  d: "M5 19H13L11.41 17H9.24L8.4 18.1L7 16.3L5 19Z",
-  fill: "currentColor"
-}));
-var map = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F2",
-  fillRule: "evenodd",
-  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM5.45 10.55a6.55 6.55 0 1113.1 0c0 2.236-2.504 5.893-4.416 8.359a2.677 2.677 0 01-4.268 0c-1.912-2.466-4.415-6.123-4.415-8.36zm3.4-.186a3.15 3.15 0 106.301 0 3.15 3.15 0 00-6.301 0z",
-  clipRule: "evenodd"
-}));
-var announcement = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 18 18",
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F2",
-  fillRule: "evenodd",
-  d: "M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z",
-  clipRule: "evenodd"
-}));
-var headline = Object(external_React_["createElement"])("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "24",
-  height: "24",
-  fill: "none",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F2",
-  fillRule: "evenodd",
-  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.147 16.208a1 1 0 01-.978.792h-.762a1 1 0 01-.979-1.207l.428-2.023a1 1 0 00-.978-1.207h-2.333a1 1 0 00-.978.792l-.608 2.854A1 1 0 017.98 17h-.746a1 1 0 01-.978-1.208l1.915-9A1 1 0 019.15 6h.754a1 1 0 01.978 1.207l-.403 1.9a1 1 0 00.979 1.208h2.332a1 1 0 00.978-.791l.584-2.733a1 1 0 01.978-.79h.754a1 1 0 01.978 1.207l-1.915 9z",
-  clipRule: "evenodd"
-}));
-var header = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M0 12C0 5.37258 5.37258 0 12 0c6.6274 0 12 5.37258 12 12 0 6.6274-5.3726 12-12 12-6.62742 0-12-5.3726-12-12zm10 7c-.55228 0-1-.4477-1-1s.44772-1 1-1h4c.5523 0 1 .4477 1 1s-.4477 1-1 1h-4zm0 2c-1.65685 0-3-1.3431-3-3s1.34315-3 3-3h4c1.6569 0 3 1.3431 3 3s-1.3431 3-3 3h-4zM8 4C5.79086 4 4 5.79086 4 8v3c0 1.1046.89543 2 2 2h12c1.1046 0 2-.8954 2-2V8c0-2.20914-1.7909-4-4-4H8z",
-  fill: "#6565F2"
-}));
-var logo = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zm0 7c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5 2.7614 0 5-2.2386 5-5 0-2.76142-2.2386-5-5-5zm-7 5c0 3.866 3.13401 7 7 7 3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7-3.86599 0-7 3.13401-7 7z",
-  fill: "#6565F2"
-}));
-var navigation = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
-  fill: "#6565F2"
-}));
-var openhours = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("g", {
-  clipPath: "url(#clip0)"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("defs", null, Object(external_React_["createElement"])("clipPath", {
-  id: "clip0"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#fff",
-  d: "M0 0h24v24H0z"
-}))));
-var placeholder = Object(external_React_["createElement"])("svg", {
-  width: "100",
-  height: "67",
-  viewBox: "0 0 100 67",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z",
-  fill: "#323067"
-}), Object(external_React_["createElement"])("path", {
-  d: "M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z",
-  fill: "#323067"
-}));
-var card = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("rect", {
-  y: "24",
-  width: "24",
-  height: "24",
-  rx: "12",
-  transform: "rotate(-90 0 24)",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
-  fill: "#6565F2"
-}));
-var icons_gallery = Object(external_React_["createElement"])("svg", {
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM17 17C19.2091 17 21 15.2091 21 13C21 11.8954 20.1046 11 19 11H16C14.8954 11 14 11.8954 14 13V15C14 16.1046 14.8954 17 16 17H17ZM8 20C5.79086 20 4 18.2091 4 16V8C4 6.48581 4.84135 5.16813 6.08206 4.48894C7.05095 3.95855 8 4.89543 8 6V9C8 10.1046 8.89543 11 10 11C11.1046 11 12 11.8954 12 13V18C12 19.1046 11.1046 20 10 20H8ZM16 9C17.1046 9 18 8.10457 18 7C18 4.79086 16.2091 3 14 3H12C10.8954 3 10 3.89543 10 5V7C10 8.10457 10.8954 9 12 9H16Z",
-  fill: "#6565F2"
-}));
 // CONCATENATED MODULE: ./src/components/color-controls/index.js
 
 
@@ -12989,1052 +14028,6 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
-// CONCATENATED MODULE: ./src/components/control-sections/index.js
-
-
-
-
-
-function control_sections_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function control_sections_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { control_sections_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { control_sections_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-var control_sections_createSlotFill = wp.components.createSlotFill;
-var control_sections_wp$element = wp.element,
-    control_sections_Component = control_sections_wp$element.Component,
-    control_sections_Fragment = control_sections_wp$element.Fragment,
-    control_sections_useState = control_sections_wp$element.useState;
-var control_sections_ = wp.i18n.__;
-var useBlockEditContext = wp.blockEditor.useBlockEditContext;
-var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-
-var ControlsSectionsSlotFill = control_sections_createSlotFill('ControlsSections');
-var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
-var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
-var ControlsSlotFill = control_sections_createSlotFill('Controls');
-var ControlsSlot = ControlsSlotFill.Slot;
-var ControlsFill = ControlsSlotFill.Fill;
-var GeneralControlsSlotFill = control_sections_createSlotFill('GeneralControls');
-var GeneralControlsSlot = GeneralControlsSlotFill.Slot;
-var GeneralControlsFill = GeneralControlsSlotFill.Fill;
-var CustomizeControlsSlotFill = control_sections_createSlotFill('CustomizeControls');
-var CustomizeControlsSlot = CustomizeControlsSlotFill.Slot;
-var CustomizeControlsFill = CustomizeControlsSlotFill.Fill;
-var SettingsControlsSlotFill = control_sections_createSlotFill('SettingsControls');
-var SettingsControlsSlot = SettingsControlsSlotFill.Slot;
-var SettingsControlsFill = SettingsControlsSlotFill.Fill;
-
-var control_sections_Cube = function Cube(props) {
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube-face novablocks-sections__cube-face--top"
-  }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube-face novablocks-sections__cube-face--left"
-  }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube-face novablocks-sections__cube-face--right"
-  }));
-};
-
-var control_sections_SectionListItem = function SectionListItem(props) {
-  var label = props.label,
-      _onClick = props.onClick;
-  return Object(external_React_["createElement"])("div", {
-    key: kebabCase_default()(label),
-    className: 'novablocks-sections__button',
-    onClick: function onClick() {
-      _onClick(label);
-    }
-  }, label);
-};
-
-var control_sections_SectionsList = function SectionsList(props) {
-  var activeSectionLabel = props.activeSectionLabel,
-      sections = props.sections,
-      onSectionClick = props.onSectionClick;
-  var active = sections.find(function (section) {
-    return section.props.label === activeSectionLabel;
-  });
-  var blockSections = sections.filter(function (section) {
-    return !section.props.module;
-  });
-  var modules = sections.filter(function (section) {
-    return !!section.props.module;
-  });
-
-  if (!!active) {
-    return false;
-  }
-
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__header"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__title"
-  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__buttons'
-  }, blockSections.map(function (section, index) {
-    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
-      key: index,
-      label: section.props.label,
-      onClick: onSectionClick
-    });
-  })), !!modules.length && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__title"
-  }, control_sections_('Modules')), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__buttons'
-  }, modules.map(function (section, index) {
-    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
-      key: index,
-      label: section.props.label,
-      onClick: onSectionClick
-    });
-  }))));
-};
-
-var SectionContent = function SectionContent(props) {
-  var section = props.section;
-
-  if (!section || !section.props.children) {
-    return null;
-  }
-
-  return section.props.children;
-};
-
-var control_sections_SectionTab = function SectionTab(props) {
-  var className = props.className,
-      label = props.label,
-      _onClick2 = props.onClick;
-  return Object(external_React_["createElement"])("div", {
-    className: className,
-    onClick: function onClick() {
-      _onClick2(label);
-    }
-  }, label);
-};
-
-var control_sections_ActiveSection = function ActiveSection(props) {
-  var activeLevel = props.activeLevel,
-      section = props.section,
-      onBackButtonClick = props.onBackButtonClick,
-      onTabClick = props.onTabClick;
-
-  if (!section) {
-    return false;
-  }
-
-  var getTabClassName = function getTabClassName(label) {
-    return classnames_default()('novablocks-sections__tab', {
-      'novablocks-sections__tab--active': activeLevel === label
-    });
-  };
-
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeLevel))
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-header"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-back",
-    onClick: onBackButtonClick
-  }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-title"
-  }, section.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
-    var sections = getSectionsFromFills(fills);
-    return Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
-      className: 'novablocks-sections__tabs'
-    }, sections.map(function (section) {
-      var label = section.props.label;
-      return Object(external_React_["createElement"])("div", {
-        className: getTabClassName(label),
-        onClick: function onClick() {
-          onTabClick(label);
-        }
-      }, label);
-    })), Object(external_React_["createElement"])("div", {
-      className: 'novablocks-sections__tab-content'
-    }, sections.filter(function (section) {
-      return section.props.label === activeLevel;
-    }).map(function (section) {
-      return section.props.children;
-    })));
-  }));
-};
-
-var getTabsFromFills = function getTabsFromFills(fills) {
-  var tabs = [];
-};
-
-var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
-  if (typeof children1 === "undefined") {
-    return children2;
-  }
-
-  if (typeof children2 === "undefined") {
-    return children1;
-  }
-
-  var children1Array = Array.isArray(children1) ? children1 : [children1];
-  var children2Array = Array.isArray(children2) ? children2 : [children2];
-  return children1Array.concat(children2Array);
-};
-
-var getSectionsFromFills = function getSectionsFromFills(fills) {
-  var sections = []; // Merge sections with the same label
-
-  fills.forEach(function (fill) {
-    var index = sections.findIndex(function (section) {
-      return section.props.label === fill[0].props.label;
-    });
-
-    if (index === -1) {
-      sections.push({
-        props: fill[0].props
-      });
-    } else {
-      sections.splice(index, 1, {
-        props: control_sections_objectSpread({}, sections[index].props, {
-          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
-        })
-      });
-    }
-  });
-  return sections;
-};
-
-var control_sections_ControlsSections = function ControlsSections(props) {
-  var isSelected = props.isSelected;
-
-  var _useState = control_sections_useState(false),
-      _useState2 = slicedToArray_default()(_useState, 2),
-      activeSectionLabel = _useState2[0],
-      setActiveSectionLabel = _useState2[1];
-
-  var _useState3 = control_sections_useState(control_sections_('Settings')),
-      _useState4 = slicedToArray_default()(_useState3, 2),
-      activeLevel = _useState4[0],
-      setActiveLevel = _useState4[1];
-
-  return Object(external_React_["createElement"])(ControlsSectionsSlot, null, function (fills) {
-    var sections = getSectionsFromFills(fills);
-    var activeSection = sections.find(function (section) {
-      return section.props.label === activeSectionLabel;
-    });
-    return !!sections.length && isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(control_sections_SectionsList, {
-      sections: sections,
-      activeSectionLabel: activeSectionLabel,
-      onSectionClick: setActiveSectionLabel
-    }), Object(external_React_["createElement"])(SectionContent, {
-      section: activeSection
-    }), Object(external_React_["createElement"])(control_sections_ActiveSection, {
-      section: activeSection,
-      activeLevel: activeLevel,
-      onBackButtonClick: function onBackButtonClick() {
-        setActiveSectionLabel(false);
-      },
-      onTabClick: setActiveLevel
-    }));
-  });
-};
-
-var control_sections_ControlsGroup = function ControlsGroup(props) {
-  return Object(external_React_["createElement"])(ControlsFill, null, Object(external_React_["createElement"])("div", {
-    label: props.label
-  }, props.children));
-};
-
-var control_sections_ControlsSection = function ControlsSection(props) {
-  var _useBlockEditContext = useBlockEditContext(),
-      isSelected = _useBlockEditContext.isSelected;
-
-  return Object(external_React_["createElement"])(ControlsSectionsFill, null, isSelected && Object(external_React_["createElement"])("div", props));
-};
-
-
-
-// CONCATENATED MODULE: ./src/filters/with-emphasis-level/index.js
-
-
-
-var with_emphasis_level_ = wp.i18n.__;
-var with_emphasis_level_InspectorControls = wp.blockEditor.InspectorControls;
-var with_emphasis_level_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var with_emphasis_level_addFilter = wp.hooks.addFilter;
-var with_emphasis_level_Fragment = wp.element.Fragment;
-var with_emphasis_level_enableFontSizeControlOnBlocks = ['novablocks/media', 'novablocks/cards-collection'];
-var withEmphasisLevelControls = with_emphasis_level_createHigherOrderComponent(function (OriginalComponent) {
-  return function (props) {
-    if (!with_emphasis_level_enableFontSizeControlOnBlocks.includes(props.name)) {
-      return Object(external_React_["createElement"])(OriginalComponent, props);
-    }
-
-    return Object(external_React_["createElement"])(with_emphasis_level_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
-      label: with_emphasis_level_('Emphasis')
-    }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
-      label: with_emphasis_level_('Settings')
-    }, Object(external_React_["createElement"])(emphasis_level_controls, props))));
-  };
-});
-with_emphasis_level_addFilter('editor.BlockEdit', 'novablocks/with-ehpasis-level-controls', withEmphasisLevelControls);
-
-function addEmphasisLevelAttribute(block) {
-  if (!with_emphasis_level_enableFontSizeControlOnBlocks.includes(block.name)) {
-    return block;
-  }
-
-  if (typeof block.attributes === 'undefined') {
-    block.attributes = {};
-  }
-
-  block.attributes = Object.assign(block.attributes, {
-    blockStyle: {
-      type: 'string',
-      default: 'basic'
-    },
-    contentStyle: {
-      type: 'string',
-      default: 'basic'
-    }
-  });
-  return block;
-}
-
-with_emphasis_level_addFilter('blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addEmphasisLevelAttribute);
-// CONCATENATED MODULE: ./src/filters/with-controls-sections/index.js
-
-
-var with_controls_sections_InspectorControls = wp.blockEditor.InspectorControls;
-var with_controls_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var with_controls_sections_addFilter = wp.hooks.addFilter;
-var with_controls_sections_Fragment = wp.element.Fragment;
-var withControlsSections = with_controls_sections_createHigherOrderComponent(function (OriginalComponent) {
-  return function (props) {
-    return Object(external_React_["createElement"])(with_controls_sections_Fragment, null, Object(external_React_["createElement"])(with_controls_sections_InspectorControls, null, Object(external_React_["createElement"])(control_sections_ControlsSections, props)), Object(external_React_["createElement"])(OriginalComponent, props));
-  };
-});
-with_controls_sections_addFilter('editor.BlockEdit', 'novablocks/with-controls-sections', withControlsSections);
-// CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
-// Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
-var fourSq = fourSq || {};
-fourSq.util = fourSq.util || {};
-fourSq.util.Hours = {
-  /**
-   * Pads times to be HHMM
-   * @param {string} text
-   * @return {string}
-   */
-  padTimes: function padTimes(text) {
-    // Add leading/trailing zeros to times so it's always 4 digits, like 0800
-    // Have to run each twice because they're pivoting around the separator
-    // i.e. x10-12x first matches "x10-" and doesn't match the rest
-    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
-    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
-    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
-    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
-    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
-    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
-    return text;
-  },
-
-  /**
-   * @param {Array.<number>} days
-   * @param {number} startMinutes
-   * @param {number} endMinutes
-   */
-  toTimeframe: function toTimeframe(days, startMinutes, endMinutes) {
-    // If we've day wrapped and end before 4am, push the ending value up 24 hours.
-    if (startMinutes >= endMinutes && endMinutes <= 240) {
-      endMinutes += 1440;
-    }
-
-    var startFormatted = fourSq.util.Hours.formatMinutes(startMinutes);
-    var endFormatted = fourSq.util.Hours.formatMinutes(endMinutes);
-    return (
-      /** @type {fourSq.api.models.hours.MachineTimeframe} */
-      {
-        days: days,
-        open: [
-        /** @type {fourSq.api.models.hours.MachineSegment} */
-        {
-          start: startFormatted,
-          end: endFormatted
-        }]
-      }
-    );
-  },
-
-  /**
-   * @param {number} minutes after minute
-   * @return {string} the hhmm format that API takes for the input hours
-   */
-  formatMinutes: function formatMinutes(minutes) {
-    var hh = Math.floor(minutes / 60);
-    var mm = minutes % 60;
-    var intoNextDay = hh % 24 !== hh;
-    hh = hh % 24;
-
-    if (hh % 10 === hh) {
-      hh = '0' + hh;
-    }
-
-    if (intoNextDay) {
-      hh = '+' + hh;
-    }
-
-    if (mm % 10 === mm) {
-      mm = '0' + mm;
-    }
-
-    return hh + '' + mm;
-  },
-
-  /**
-   * @param {string} hoursText
-   * @param {(string|undefined)} minutesText
-   * @param {(string|undefined)} meridiem
-   * @return {number}
-   */
-  minutesAfterMidnight: function minutesAfterMidnight(hoursText, minutesText, meridiem) {
-    var hours = parseInt(hoursText, 10);
-    var minutes = minutesText !== undefined ? parseInt(minutesText, 10) : 0;
-
-    if (hours === 12 && meridiem) {
-      hours -= 12;
-    }
-
-    if (meridiem && meridiem[0] === 'p') {
-      hours += 12;
-    }
-
-    return hours * 60 + minutes;
-  }
-};
-fourSq.util.HoursParser = {
-  /**
-   * @return {fourSq.api.models.hours.MachineHours}
-   */
-  parse: function parse(text) {
-    text = text.toLowerCase(); // Normalize new lines to ';'
-
-    text = text.replace(/\n/g, ' ; '); // Massage times
-    // TODO(ss): translate and do weekend/weekday subs
-
-    text = text.replace(/(12|12:00)?midnight/g, '1200a');
-    text = text.replace(/(12|12:00)?noon/g, '1200p');
-    text = text.replace(/(open)?\s*24\s*hours?/g, '1200a-1200a'); // Standardize conjunctions to '&'
-
-    text = text.replace(/\s*(and|,|\+|&)\s*/g, '&'); // Standardize range tokens to '-'
-
-    text = text.replace(/\s*(-|to|thru|through|till?|'till?|until)\s*/g, '-'); // Standardize am/pm
-
-    text = text.replace(/\s*a\.?m?\.?/g, 'a');
-    text = text.replace(/\s*p\.?m?\.?/g, 'p'); // Not sure this happens, but add trailing zeros to things like 5:3pm
-
-    text = text.replace(/([0-9])(h|:|\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...
-    // if they both have separators
-
-    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5'); // if only the start time has a separator
-
-    text = text.replace(/([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator
-    //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$2$3$5');
-
-    text = fourSq.util.Hours.padTimes(text); // Massage days
-
-    var dayCanonicals = _.map(_.range(1, 8), function (dayI) {
-      var allNames = fourSq.util.HoursParser.dayAliases(dayI);
-
-      var canonical = _.head(allNames); // Shortest is at the front
-
-
-      var aliases = _.tail(allNames);
-
-      aliases.reverse(); // Need to have the largest alias first for replacing
-
-      if (canonical && aliases) {
-        _.each(aliases, function (alias) {
-          text = text.replace(new RegExp(alias, 'g'), canonical);
-        });
-      }
-
-      return canonical;
-    });
-
-    var dayPattern = '(' + dayCanonicals.join('|') + ')';
-    var timePattern = '([0-9][0-9])([0-9][0-9])\\s*([ap])?';
-    var globTimePattern = '[0-9]{4}\\s*[ap]?';
-    var globTimeRangePattern = '(' + globTimePattern + '[^0-9]+' + globTimePattern + ')'; // Need to establish whether days come before times (forward) or not (backward)
-
-    var forwardTimeframePattern = dayPattern + '.*?' + globTimeRangePattern;
-    var backwardTimeframePattern = globTimeRangePattern + '.*?' + dayPattern;
-    var forwardPosition = text.search(new RegExp(forwardTimeframePattern));
-    var backwardPosition = text.search(new RegExp(backwardTimeframePattern)); // If a forward pattern is found first, consider it a forward facing text
-
-    var isForward = forwardPosition !== -1 && forwardPosition <= backwardPosition || backwardPosition === -1; // TODO(ss): may be better to normalize the string to be forward facing at this point
-    //           so the rest of the method would be easier to grok
-    // Separate out something like Mon-Thu, Sat, Sun
-
-    if (isForward) {
-      var ungroupedPattern = dayPattern + '&' + dayPattern + '[^&]*?' + globTimeRangePattern;
-      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
-
-      for (var i = 0; i < dayCanonicals.length; ++i) {
-        text = text.replace(ungroupedRegex, '$1 $3; $2 $3; ');
-      }
-    } else {
-      var ungroupedPattern = globTimeRangePattern + '([^0-9]*?)' + dayPattern + '&' + dayPattern;
-      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
-
-      for (var i = 0; i < dayCanonicals.length; ++i) {
-        text = text.replace(ungroupedRegex, '$1 $2 $3; $1 $4; ');
-      }
-    }
-
-    var dayRangePattern = dayPattern + '[^a-z0-9]*' + dayPattern + '?';
-    var timeRangePattern = timePattern + '[^0-9]*' + timePattern;
-    var timeframePattern = isForward ? dayRangePattern + '.*?' + timeRangePattern : timeRangePattern + '.*?' + dayRangePattern;
-    var dayTimeMatcher = new RegExp(timeframePattern, 'g');
-    var matches = [];
-
-    do {
-      var dayTimeMatch = dayTimeMatcher.exec(text);
-
-      if (dayTimeMatch) {
-        matches.push(dayTimeMatch);
-      }
-    } while (dayTimeMatch);
-
-    if (matches.length <= 0) {
-      // Try to find just a time range, and then we'll assume it's all days later on.
-      // First two groups are strings that won't match, to get undefined values
-      // in those slots in the regex match array.
-      var timeRangeMatcher = new RegExp('(@!ZfW#)?(@!ZfW#)?' + timeRangePattern);
-      var timeRangeMatch = timeRangeMatcher.exec(text);
-
-      if (timeRangeMatch) {
-        matches.push(timeRangeMatch);
-      }
-    }
-
-    var timeframes = _.map(matches, function (match) {
-      // day slots in the regex match array
-      var day1 = isForward ? match[1] : match[7];
-      var day2 = isForward ? match[2] : match[8];
-      var startDay = day1 !== undefined ? dayCanonicals.indexOf(day1) : 0;
-      var endDay = null;
-
-      if (day2 !== undefined) {
-        if (day1 === undefined) {
-          startDay = dayCanonicals.indexOf(day2);
-        } else {
-          endDay = dayCanonicals.indexOf(day2);
-        }
-      } else if (day1 === undefined) {
-        // If start and end days were undefined, assume 7 days a week
-        endDay = 7;
-      }
-
-      if (endDay === null) {
-        endDay = startDay;
-      }
-
-      if (endDay < startDay) {
-        // For case where: Sun-Tue (we start on Monday)
-        endDay += 7;
-      }
-
-      var days = _.map(_.range(startDay, endDay + 1), function (day) {
-        // Days start at 1 for Monday
-        return day % 7 + 1;
-      }); // time slots in the regex match array
-
-
-      var startHour = isForward ? match[3] : match[1];
-      var startMinute = isForward ? match[4] : match[2];
-      var startMeridiem = isForward ? match[5] : match[3];
-      var endHour = isForward ? match[6] : match[4];
-      var endMinute = isForward ? match[7] : match[5];
-      var endMeridiem = isForward ? match[8] : match[6]; // TODO(ss): hint the meridiem based on endHour < startHour and > 4
-
-      var startTime = fourSq.util.Hours.minutesAfterMidnight(startHour, startMinute, startMeridiem);
-      var endTime = fourSq.util.Hours.minutesAfterMidnight(endHour, endMinute, endMeridiem);
-      return fourSq.util.Hours.toTimeframe(days, startTime, endTime);
-    });
-
-    if (timeframes.length) {
-      return (
-        /** @type {fourSq.api.models.hours.MachineHours} */
-        {
-          timeframes: timeframes
-        }
-      );
-    } else {
-      return null;
-    }
-  },
-
-  /**
-   * @param {number} day starting at 1 for monday
-   * @return {Array.<string>} all aliases of the day, sorted by length
-   */
-  dayAliases: function dayAliases(day) {
-    var text = '';
-    var aliases = '';
-
-    switch (day) {
-      case 1:
-        aliases = ['mondays', 'monday', 'monda', 'mond', 'mon', 'mo', 'm'];
-        break;
-
-      case 2:
-        aliases = ['tuesdays', 'tuesday', 'tuesd', 'tues', 'tue', 'tu'];
-        break;
-
-      case 3:
-        aliases = ['wednesdays', 'wednesday', 'wednes', 'wedne', 'wedn', 'wed', 'we', 'w'];
-        break;
-
-      case 4:
-        aliases = ['thursdays', 'thursday', 'thurs', 'thur', 'thu', 'th'];
-        break;
-
-      case 5:
-        aliases = ['fridays', 'friday', 'frida', 'frid', 'fri', 'fr', 'f'];
-        break;
-
-      case 6:
-        aliases = ['saturdays', 'saturday', 'satur', 'satu', 'sat', 'sa'];
-        break;
-
-      case 7:
-        aliases = ['sundays', 'sunday', 'sunda', 'sund', 'sun', 'su'];
-        break;
-
-      default:
-        return [];
-    }
-
-    return _.sortBy(aliases, function (alias) {
-      return alias.length;
-    });
-  }
-}; // Remove the days in which the business is closed. The parser doesn't need those days anyways.
-
-function removeClosedDays(schedule) {
-  var hoursString = '';
-  var lines = schedule.split('\n');
-
-  for (var i = 0; i < lines.length; i++) {
-    if (lines[i].includes('closed') || lines[i].includes('Closed') || !lines[i].match(/\d+/g)) {// don't add it to the list
-    } else {
-      hoursString += lines[i] + '\n';
-    }
-  }
-
-  return hoursString;
-}
-
-var parseContent = function parseContent(currentValue) {
-  currentValue = removeClosedDays(currentValue);
-  var hours = fourSq.util.HoursParser.parse(currentValue);
-  return JSON.stringify(hours);
-};
-// CONCATENATED MODULE: ./src/blocks/core/separator/index.js
-
-
-var separator_addSeparatorFilters = function addSeparatorFilters(settings) {
-  var Separator = function Separator(props) {
-    var className = classnames_default()('wp-block-separator', props.className);
-    return Object(external_React_["createElement"])("div", {
-      className: className,
-      dangerouslySetInnerHTML: {
-        __html: settings.separator && settings.separator.markup
-      }
-    });
-  };
-
-  var replaceSeparatorEdit = wp.compose.createHigherOrderComponent(function (BlockEdit) {
-    return function (props) {
-      if ('core/separator' === props.name) {
-        return Object(external_React_["createElement"])(Separator, {
-          className: props.attributes.className
-        });
-      } else {
-        return Object(external_React_["createElement"])(BlockEdit, props);
-      }
-    };
-  }, "replaceSeparatorEdit");
-
-  var replaceSeparatorSave = function replaceSeparatorSave(element, blockType, attributes) {
-    if ('core/separator' !== blockType.name) {
-      return element;
-    }
-
-    return null;
-  };
-
-  wp.hooks.addFilter('editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit);
-  wp.hooks.addFilter('blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave);
-};
-// CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
-
-
-
-var ITEM_SIZE = 20;
-var grid_item_GridItemCollection =
-/*#__PURE__*/
-function () {
-  function GridItemCollection(images, attributes) {
-    classCallCheck_default()(this, GridItemCollection);
-
-    var placementVariation = attributes.placementVariation / 25 - 1;
-    this.gridItems = images.map(function (image, index) {
-      var groupStart = Math.floor(index / 4) * 4;
-      var groupEnd = Math.min(groupStart + 4, images.length);
-      var isGroupOfThree = groupEnd - groupStart === 3;
-      return new grid_item_GridItem(image, index, attributes, isGroupOfThree);
-    });
-    this.removeExtra();
-
-    if (placementVariation === 1 || placementVariation === 2) {
-      this.flipX();
-    }
-
-    if (placementVariation === 2 || placementVariation === 3) {
-      this.flipY();
-    }
-  }
-
-  createClass_default()(GridItemCollection, [{
-    key: "removeExtra",
-    value: function removeExtra() {
-      var extraLeft = this.getExtraLeft();
-      var extraTop = this.getExtraTop();
-      var extraBetween = this.getExtraBetween();
-      this.gridItems = this.gridItems.map(function (gridItem, index) {
-        var groupIndex = Math.floor(index / 4);
-        gridItem.x = gridItem.x - extraLeft;
-        gridItem.y = gridItem.y - extraTop - groupIndex * extraBetween;
-        return gridItem;
-      });
-    }
-  }, {
-    key: "flipX",
-    value: function flipX() {
-      var maxX = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
-        return gridItem.x + gridItem.width;
-      })));
-      this.gridItems = this.gridItems.map(function (gridItem, index) {
-        gridItem.x = maxX - gridItem.x - gridItem.width + 1;
-        return gridItem;
-      });
-    }
-  }, {
-    key: "flipY",
-    value: function flipY() {
-      var maxY = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
-        return gridItem.y + gridItem.height;
-      })));
-      this.gridItems = this.gridItems.map(function (gridItem, index) {
-        gridItem.y = maxY - gridItem.y - gridItem.height + 1;
-        return gridItem;
-      });
-    }
-  }, {
-    key: "getExtraLeft",
-    value: function getExtraLeft() {
-      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
-        return gridItem.x;
-      }))) - 1;
-    }
-  }, {
-    key: "getExtraTop",
-    value: function getExtraTop() {
-      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
-        return gridItem.y;
-      }))) - 1;
-    }
-  }, {
-    key: "getExtraBetween",
-    value: function getExtraBetween() {
-      var firstGroup = this.gridItems.slice(0, 4);
-      var maxBottom = Math.max.apply(Math, toConsumableArray_default()(firstGroup.map(function (gridItem) {
-        return gridItem.y + gridItem.height;
-      })));
-      return ITEM_SIZE * 2 - maxBottom + 1;
-    }
-  }]);
-
-  return GridItemCollection;
-}();
-
-var grid_item_GridItem =
-/*#__PURE__*/
-function () {
-  function GridItem(image, index, attributes, isGroupOfThree) {
-    classCallCheck_default()(this, GridItem);
-
-    this.sizeContrast = attributes.sizeContrast / 20;
-    this.positionShift = attributes.positionShift / 5;
-    this.objectPosition = attributes.objectPosition;
-    this.imageResizing = attributes.imageResizing;
-    this.imageRotation = attributes.imageRotation;
-    this.image = image;
-    this.index = index;
-    this.idx = this.getIndex(index);
-    this.col = this.idx % 2;
-    this.row = Math.floor(index / 2);
-
-    if (!!isGroupOfThree) {
-      if (index === 0) {
-        this.positionShift = Math.min(this.positionShift, 10);
-      }
-
-      if (index === 2) {
-        this.positionShift = Math.max(this.positionShift, 10);
-      }
-    }
-
-    var _this$getOffsets = this.getOffsets(),
-        offsetX = _this$getOffsets.offsetX,
-        offsetY = _this$getOffsets.offsetY;
-
-    var size = ITEM_SIZE - this.sizeContrast * (index % 4);
-    this.x = ITEM_SIZE * this.col + 1 + offsetX;
-    this.y = ITEM_SIZE * this.row + 1 + offsetY;
-    this.width = size;
-    this.height = size;
-  }
-
-  createClass_default()(GridItem, [{
-    key: "getOffsets",
-    value: function getOffsets() {
-      var row = this.row,
-          col = this.col,
-          index = this.index,
-          sizeContrast = this.sizeContrast,
-          positionShift = this.positionShift; // offset for positioning
-
-      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;
-      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset
-      // move 1st to right
-
-      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left
-
-      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down
-
-      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up
-
-      offsetY += col % 2 * (1 - row % 2) * positionShift;
-      return {
-        offsetX: offsetX,
-        offsetY: offsetY
-      };
-    } // reoder to display items clockwise
-
-  }, {
-    key: "getIndex",
-    value: function getIndex(index) {
-      if (index % 4 === 3) return index - 1;
-      if (index % 4 === 2) return index + 1;
-      return index;
-    }
-  }, {
-    key: "getStyle",
-    value: function getStyle() {
-      var index = this.index,
-          x = this.x,
-          y = this.y,
-          width = this.width,
-          height = this.height,
-          imageRotation = this.imageRotation;
-      var rotation = "rotate(".concat((index % 2 - 0.5) * imageRotation / 10, "deg)");
-      return {
-        gridColumnStart: x + '',
-        gridColumnEnd: "span ".concat(width),
-        gridRowStart: y + '',
-        gridRowEnd: "span ".concat(height),
-        transform: rotation
-      };
-    }
-  }, {
-    key: "getImageStyle",
-    value: function getImageStyle() {
-      var idx = this.idx,
-          row = this.row,
-          col = this.col,
-          objectPosition = this.objectPosition,
-          imageResizing = this.imageResizing;
-      var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
-      return {
-        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
-        objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
-      };
-    }
-  }]);
-
-  return GridItem;
-}();
-
-
-// CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
-
-
-var getGalleryStyle = function getGalleryStyle(attributes) {
-  var containerHeight = attributes.containerHeight / 50 - 1;
-  var verticalSpacing = attributes.verticalSpacing;
-  var numerator = 1;
-  var denominator = 1;
-  containerHeight = Math.min(Math.max(-1, containerHeight), 1);
-
-  if (containerHeight > 0) {
-    numerator = 1 + containerHeight;
-  }
-
-  if (containerHeight < 0) {
-    denominator = 1 + Math.abs(containerHeight);
-  }
-
-  return {
-    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px) )"),
-    paddingTop: "".concat(numerator * 100 / denominator, "%")
-  };
-};
-var getGridStyle = function getGridStyle(attributes) {
-  var elementsDistance = attributes.elementsDistance;
-  return {
-    '--novablocks-advanced-gallery-grid-gap': "".concat(elementsDistance, "px")
-  };
-};
-var util_safariHeightFix = function safariHeightFix(grid) {
-  if (!isSafari) {
-    return;
-  }
-
-  var parent = grid.parentNode;
-  var $grid = external_jQuery_default()(grid);
-  var $parent = external_jQuery_default()(parent);
-
-  var resetHeight = function resetHeight() {
-    var newHeight = $parent.outerHeight();
-    $grid.css('height', newHeight);
-  };
-
-  var debouncedResetHeight = debounce(resetHeight, 30);
-  resetHeight();
-
-  if (typeof window.ResizeObserver !== "undefined") {
-    var observer = new ResizeObserver(function (entries) {
-      debouncedResetHeight();
-    });
-    observer.observe(parent);
-  } else {
-    external_jQuery_default()(window).on('resize', function () {
-      debouncedResetHeight();
-    });
-  }
-};
-// CONCATENATED MODULE: ./src/components/advanced-gallery/preview.js
-
-
-
-
-
-
-var preview_wp$element = wp.element,
-    preview_useState = preview_wp$element.useState,
-    useEffect = preview_wp$element.useEffect,
-    useRef = preview_wp$element.useRef;
-
-var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
-  var attributes = props.attributes;
-  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
-
-  var _useState = preview_useState(0),
-      _useState2 = slicedToArray_default()(_useState, 2),
-      height = _useState2[0],
-      setHeight = _useState2[1];
-
-  var ref = useRef(null);
-  useEffect(function () {
-    setHeight(!!ref.current ? ref.current.clientHeight : 0);
-  });
-
-  if (!gallery || !gallery.length) {
-    return null;
-  }
-
-  var gridItemsCollection = new grid_item_GridItemCollection(gallery, attributes);
-  var gridStyle = getGridStyle(attributes);
-
-  if (!!isSafari) {
-    Object.assign(gridStyle, {
-      height: height
-    });
-  }
-
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-advanced-gallery",
-    style: getGalleryStyle(attributes),
-    ref: ref
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-advanced-gallery__grid",
-    style: gridStyle
-  }, gridItemsCollection.gridItems.map(function (item, index) {
-    return Object(external_React_["createElement"])(preview_AdvancedGalleryItem, {
-      gridItem: item,
-      key: index
-    });
-  })));
-};
-
-var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
-  var gridItem = _ref.gridItem;
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-advanced-gallery__grid-item",
-    style: gridItem.getStyle()
-  }, Object(external_React_["createElement"])("img", {
-    className: "novablocks-advanced-gallery__image",
-    style: gridItem.getImageStyle(),
-    src: gridItem.image.url
-  }));
-};
-
-/* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
-// CONCATENATED MODULE: ./src/components/advanced-gallery/placeholder.js
-
-var _wp$blockEditor = wp.blockEditor,
-    placeholder_MediaPlaceholder = _wp$blockEditor.MediaPlaceholder,
-    BlockIcon = _wp$blockEditor.BlockIcon;
-
-var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes;
-  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
-
-  if (!!gallery && !!gallery.length) {
-    return false;
-  }
-
-  return Object(external_React_["createElement"])(placeholder_MediaPlaceholder, {
-    icon: Object(external_React_["createElement"])(BlockIcon, {
-      icon: "format-gallery"
-    }),
-    onSelect: function onSelect(gallery) {
-      setAttributes({
-        gallery: gallery
-      });
-    },
-    accept: "image/*",
-    allowedTypes: ['image'],
-    multiple: true
-  });
-};
-
-/* harmony default export */ var advanced_gallery_placeholder = (placeholder_AdvancedGalleryPlaceholder);
 // CONCATENATED MODULE: ./src/components/advanced-gallery/inspector-controls.js
 
 
@@ -15677,8 +15670,8 @@ function google_map_init() {
 // CONCATENATED MODULE: ./src/blocks/header/icons.js
 
 var header_icons_wp$components = wp.components,
-    header_icons_SVG = header_icons_wp$components.SVG,
-    header_icons_Path = header_icons_wp$components.Path;
+    icons_SVG = header_icons_wp$components.SVG,
+    icons_Path = header_icons_wp$components.Path;
 var logoLeft = Object(external_React_["createElement"])("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   width: "48px",
@@ -19059,6 +19052,7 @@ function card_init() {
 
 
 
+
 var cards_collection_inspector_controls_ = wp.i18n.__;
 var cards_collection_inspector_controls_Fragment = wp.element.Fragment;
 var cards_collection_inspector_controls_wp$components = wp.components,
@@ -19156,13 +19150,14 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         align: contentAlign
       });
     }
-  }))), Object(external_React_["createElement"])(cards_collection_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(toggle_group, {
+  }))), Object(external_React_["createElement"])(toggle_group, {
     label: cards_collection_inspector_controls_('Cards Manager', '__plugin_txtd'),
     onChange: updateAttributes,
     toggles: toggles
-  }), showMedia && Object(external_React_["createElement"])(cards_collection_inspector_controls_PanelBody, {
-    initialOpen: true,
-    title: cards_collection_inspector_controls_('Cards Media Area')
+  }), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: cards_collection_inspector_controls_('Media')
+  }, Object(external_React_["createElement"])(control_sections_ControlsGroup, {
+    label: cards_collection_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(cards_collection_inspector_controls_RadioControl, {
     label: 'Image resizing',
     selected: imageResizing,

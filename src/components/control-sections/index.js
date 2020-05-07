@@ -7,8 +7,6 @@ const { __ } = wp.i18n;
 const { useBlockEditContext } = wp.blockEditor;
 const { createHigherOrderComponent } = wp.compose;
 
-import { Tab, Tabs } from '../../components';
-
 const ControlsSectionsSlotFill = createSlotFill( 'ControlsSections' );
 const ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
 const ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
@@ -16,18 +14,6 @@ const ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
 const ControlsSlotFill = createSlotFill( 'Controls' );
 const ControlsSlot = ControlsSlotFill.Slot;
 const ControlsFill = ControlsSlotFill.Fill;
-
-const GeneralControlsSlotFill = createSlotFill( 'GeneralControls' );
-const GeneralControlsSlot = GeneralControlsSlotFill.Slot;
-const GeneralControlsFill = GeneralControlsSlotFill.Fill;
-
-const CustomizeControlsSlotFill = createSlotFill( 'CustomizeControls' );
-const CustomizeControlsSlot = CustomizeControlsSlotFill.Slot;
-const CustomizeControlsFill = CustomizeControlsSlotFill.Fill;
-
-const SettingsControlsSlotFill = createSlotFill( 'SettingsControls' );
-const SettingsControlsSlot = SettingsControlsSlotFill.Slot;
-const SettingsControlsFill = SettingsControlsSlotFill.Fill;
 
 const Cube = ( props ) => {
 	return (
@@ -235,14 +221,14 @@ const ControlsSections = ( props ) => {
 							activeSectionLabel={ activeSectionLabel }
 							onSectionClick={ setActiveSectionLabel }
 						/>
-						<SectionContent
-							section={ activeSection }
-						/>
 						<ActiveSection
 							section={ activeSection }
 							activeLevel={ activeLevel }
 							onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
 							onTabClick={ setActiveLevel }
+						/>
+						<SectionContent
+							section={ activeSection }
 						/>
 					</Fragment>
 				);
@@ -260,7 +246,6 @@ const ControlsGroup = ( props ) => {
 	)
 }
 
-
 const ControlsSection = ( props ) => {
 
 	const { isSelected } = useBlockEditContext();
@@ -270,12 +255,6 @@ const ControlsSection = ( props ) => {
 			{ isSelected && <div { ...props } /> }
 		</ControlsSectionsFill>
 	)
-}
-
-export {
-	GeneralControlsFill as GeneralControls,
-	CustomizeControlsFill as CustomizeControls,
-	SettingsControlsFill as SettingsControls,
 }
 
 export {

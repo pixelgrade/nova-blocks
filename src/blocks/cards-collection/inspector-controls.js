@@ -1,5 +1,6 @@
 import { HeadingToolbar, ToggleGroup } from "../../components";
 import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../../components/emphasis-level-controls";
+import { ControlsSection, ControlsGroup } from '../../components/control-sections';
 
 const { __ } = wp.i18n;
 
@@ -130,38 +131,36 @@ const CardsCollectionInspectorControls = ( props ) => {
 					</PanelRow>
 				}
 			</EmphasisContentAreaFill>
-			<InspectorControls>
-				<ToggleGroup
-					label={ __( 'Cards Manager', '__plugin_txtd' ) }
-					onChange={ updateAttributes }
-					toggles={ toggles }
-				/>
-				{ showMedia &&
-				    <PanelBody initialOpen={ true } title={ __( 'Cards Media Area' ) }>
-					    <RadioControl
-						    label={'Image resizing'}
-						    selected={imageResizing}
-						    onChange={imageResizing => {
-							    setAttributes( {imageResizing} )
-						    }}
-						    options={[
-							    {label: 'Stretch to fill the container', value: 'cropped'},
-							    {label: 'Shrink to fit (no crop)', value: 'original'},
-						    ]}
-					    />
-					    <RangeControl
-						    label={__( 'Image container height', '__plugin_txtd' )}
-						    value={containerHeight}
-						    onChange={containerHeight => {
-							    setAttributes( {containerHeight} )
-						    }}
-						    min={0}
-						    max={100}
-						    step={5}
-					    />
-				    </PanelBody>
-				}
-			</InspectorControls>
+			<ToggleGroup
+				label={ __( 'Cards Manager', '__plugin_txtd' ) }
+				onChange={ updateAttributes }
+				toggles={ toggles }
+			/>
+			<ControlsSection label={ __( 'Media' ) }>
+				<ControlsGroup label={ __( 'Settings' ) }>
+				    <RadioControl
+					    label={'Image resizing'}
+					    selected={imageResizing}
+					    onChange={imageResizing => {
+						    setAttributes( {imageResizing} )
+					    }}
+					    options={[
+						    {label: 'Stretch to fill the container', value: 'cropped'},
+						    {label: 'Shrink to fit (no crop)', value: 'original'},
+					    ]}
+				    />
+				    <RangeControl
+					    label={__( 'Image container height', '__plugin_txtd' )}
+					    value={containerHeight}
+					    onChange={containerHeight => {
+						    setAttributes( {containerHeight} )
+					    }}
+					    min={0}
+					    max={100}
+					    step={5}
+				    />
+				</ControlsGroup>
+			</ControlsSection>
 		</Fragment>
    );
 }

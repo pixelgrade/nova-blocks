@@ -3,6 +3,10 @@ import {
 	animated,
 } from 'react-spring';
 
+import { ControlsSection, ControlsGroup } from '../../components/control-sections';
+
+const { __ } = wp.i18n;
+
 const {
 	Fragment,
 	useState,
@@ -55,51 +59,55 @@ const ToggleGroup = ( props ) => {
 	const disabledTransitions = useTransition( disabledToggles, item => item.attribute, config );
 
 	return (
-		<PanelBody initialOpen={ true } title={ label } className={ 'components-toggle-group__panel' }>
-			<div className={ 'components-toggle-group' }>
-				{ !! enabledToggles.length &&
-				  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>
-					  { enabledTransitions.map( ( { item, key, props } ) => {
-						  return (
-							  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
-								  <div ref={ref => ref && refMap.set(item, ref)}>
-									  <div className="components-toggle-group__toggle-list-item">
-										  <ToggleControl
-											  label={ item.label }
-											  checked={ !! item.value }
-											  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
-										  />
-									  </div>
-								  </div>
-							  </animated.div>
-						  );
-					  } ) }
-				  </div>
-				}
-				{ !! disabledToggles.length &&
-				  <Fragment>
-					  <label className={ 'components-toggle-group__toggle-list-label' }>Elements you aren't using</label>
-					  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled' }>
-						  { disabledTransitions.map( ( { item, key, props } ) => {
-							  return (
-								  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
-									  <div ref={ref => ref && refMap.set(item, ref)}>
-										  <div className="components-toggle-group__toggle-list-item">
-											  <ToggleControl
-												  label={ item.label }
-												  checked={ !! item.value }
-												  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
-											  />
+		<ControlsSection label={ label }>
+			<ControlsGroup label={ __( 'Settings' ) }>
+				<div className={ 'components-toggle-group__panel' }>
+					<div className={ 'components-toggle-group' }>
+						{ !! enabledToggles.length &&
+						  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>
+							  { enabledTransitions.map( ( { item, key, props } ) => {
+								  return (
+									  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
+										  <div ref={ref => ref && refMap.set(item, ref)}>
+											  <div className="components-toggle-group__toggle-list-item">
+												  <ToggleControl
+													  label={ item.label }
+													  checked={ !! item.value }
+													  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
+												  />
+											  </div>
 										  </div>
-									  </div>
-								  </animated.div>
-							  );
-						  } ) }
-					  </div>
-				  </Fragment>
-				}
-			</div>
-		</PanelBody>
+									  </animated.div>
+								  );
+							  } ) }
+						  </div>
+						}
+						{ !! disabledToggles.length &&
+						  <Fragment>
+							  <label className={ 'components-toggle-group__toggle-list-label' }>Elements you aren't using</label>
+							  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled' }>
+								  { disabledTransitions.map( ( { item, key, props } ) => {
+									  return (
+										  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
+											  <div ref={ref => ref && refMap.set(item, ref)}>
+												  <div className="components-toggle-group__toggle-list-item">
+													  <ToggleControl
+														  label={ item.label }
+														  checked={ !! item.value }
+														  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
+													  />
+												  </div>
+											  </div>
+										  </animated.div>
+									  );
+								  } ) }
+							  </div>
+						  </Fragment>
+						}
+					</div>
+				</div>
+			</ControlsGroup>
+		</ControlsSection>
 	);
 };
 

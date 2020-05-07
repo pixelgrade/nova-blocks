@@ -4,10 +4,6 @@ import classnames from 'classnames';
 import {
 	ControlsGroup,
 	ControlsSection,
-
-	GeneralControls,
-	CustomizeControls,
-	SettingsControls,
 } from "../../components/control-sections";
 
 import {
