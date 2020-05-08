@@ -8117,6 +8117,7 @@ var with_settings_withSelect = wp.data.withSelect;
 
 
 var emphasis_level_controls_ = wp.i18n.__;
+var useBlockEditContext = wp.blockEditor.useBlockEditContext;
 var emphasis_level_controls_Fragment = wp.element.Fragment;
 var emphasis_level_controls_wp$components = wp.components,
     emphasis_level_controls_PanelBody = emphasis_level_controls_wp$components.PanelBody,
@@ -8166,6 +8167,20 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
   }), Object(external_React_["createElement"])(EmphasisBlockAreaSlot, null)));
 };
 
+var emphasis_level_controls_EmphasisContentAreaControls = function EmphasisContentAreaControls(props) {
+  var _useBlockEditContext = useBlockEditContext(),
+      isSelected = _useBlockEditContext.isSelected;
+
+  return Object(external_React_["createElement"])(EmphasisContentAreaFill, null, isSelected && props.children);
+};
+
+var emphasis_level_controls_EmphasisBlockAreaControls = function EmphasisBlockAreaControls(props) {
+  var _useBlockEditContext2 = useBlockEditContext(),
+      isSelected = _useBlockEditContext2.isSelected;
+
+  return Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, isSelected && props.children);
+};
+
 
 /* harmony default export */ var emphasis_level_controls = (with_settings(emphasis_level_controls_EmphasisLevelControls));
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
@@ -8193,7 +8208,7 @@ var control_sections_wp$element = wp.element,
     control_sections_Fragment = control_sections_wp$element.Fragment,
     useState = control_sections_wp$element.useState;
 var control_sections_ = wp.i18n.__;
-var useBlockEditContext = wp.blockEditor.useBlockEditContext;
+var control_sections_useBlockEditContext = wp.blockEditor.useBlockEditContext;
 var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
 var ControlsSectionsSlotFill = control_sections_createSlotFill('ControlsSections');
 var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
@@ -8423,7 +8438,7 @@ var control_sections_ControlsGroup = function ControlsGroup(props) {
 };
 
 var control_sections_ControlsSection = function ControlsSection(props) {
-  var _useBlockEditContext = useBlockEditContext(),
+  var _useBlockEditContext = control_sections_useBlockEditContext(),
       isSelected = _useBlockEditContext.isSelected;
 
   return Object(external_React_["createElement"])(ControlsSectionsFill, null, isSelected && Object(external_React_["createElement"])("div", props));
@@ -16816,7 +16831,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     });
   };
 
-  return Object(external_React_["createElement"])(media_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, blockStyle !== 'basic' && Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+  return Object(external_React_["createElement"])(media_inspector_controls_Fragment, null, Object(external_React_["createElement"])(emphasis_level_controls_EmphasisBlockAreaControls, null, blockStyle !== 'basic' && Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisArea,
     onChange: function onChange(emphasisArea) {
       return setAttributes({
@@ -19130,7 +19145,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
     value: attributes['showMeta'],
     attribute: 'showMeta'
   }];
-  return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(EmphasisBlockAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+  return Object(external_React_["createElement"])(cards_collection_inspector_controls_Fragment, null, Object(external_React_["createElement"])(emphasis_level_controls_EmphasisBlockAreaControls, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 2,
     maxLevel: 4,
     selectedLevel: level,
@@ -19139,7 +19154,7 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
         level: newLevel
       });
     }
-  }))), Object(external_React_["createElement"])(EmphasisContentAreaFill, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
+  }))), Object(external_React_["createElement"])(emphasis_level_controls_EmphasisContentAreaControls, null, isSelected && Object(external_React_["createElement"])(inspector_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, cards_collection_inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
     value: contentAlign,
     isCollapsed: false,
     onChange: function onChange(contentAlign) {

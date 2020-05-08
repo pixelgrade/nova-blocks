@@ -1,5 +1,5 @@
 import { HeadingToolbar, ToggleGroup } from "../../components";
-import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../../components/emphasis-level-controls";
+import { EmphasisBlockAreaControls, EmphasisContentAreaControls } from "../../components/emphasis-level-controls";
 import { ControlsSection, ControlsGroup } from '../../components/control-sections';
 
 const { __ } = wp.i18n;
@@ -101,7 +101,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 
 	return (
 		<Fragment>
-			<EmphasisBlockAreaFill>
+			<EmphasisBlockAreaControls>
 				{ isSelected &&
 					<PanelRow>
 						<span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
@@ -115,8 +115,8 @@ const CardsCollectionInspectorControls = ( props ) => {
 						/>
 					</PanelRow>
 				}
-			</EmphasisBlockAreaFill>
-			<EmphasisContentAreaFill>
+			</EmphasisBlockAreaControls>
+			<EmphasisContentAreaControls>
 				{ isSelected &&
 					<PanelRow>
 						<span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
@@ -130,7 +130,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 						/>
 					</PanelRow>
 				}
-			</EmphasisContentAreaFill>
+			</EmphasisContentAreaControls>
 			<ToggleGroup
 				label={ __( 'Cards Manager', '__plugin_txtd' ) }
 				onChange={ updateAttributes }

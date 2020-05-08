@@ -1,7 +1,8 @@
 import withSettings from '../with-settings';
 
-
 const { __ } = wp.i18n;
+
+const { useBlockEditContext } = wp.blockEditor;
 
 const {
 	Fragment,
@@ -64,6 +65,26 @@ const EmphasisLevelControls = ( props ) => {
 	)
 }
 
-export { EmphasisContentAreaFill, EmphasisBlockAreaFill };
+const EmphasisContentAreaControls = ( props ) => {
+	const { isSelected } = useBlockEditContext();
+
+	return (
+		<EmphasisContentAreaFill>
+			{ isSelected && props.children }
+		</EmphasisContentAreaFill>
+	)
+}
+
+const EmphasisBlockAreaControls = ( props ) => {
+	const { isSelected } = useBlockEditContext();
+
+	return (
+		<EmphasisBlockAreaFill>
+			{ isSelected && props.children }
+		</EmphasisBlockAreaFill>
+	)
+}
+
+export { EmphasisContentAreaControls, EmphasisBlockAreaControls };
 
 export default withSettings( EmphasisLevelControls );

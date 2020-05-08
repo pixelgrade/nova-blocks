@@ -7,7 +7,7 @@ import {
 } from "../../components/control-sections";
 
 import {
-	EmphasisBlockAreaFill
+	EmphasisBlockAreaControls
 } from "../../components/emphasis-level-controls"
 
 /**
@@ -93,7 +93,7 @@ const MediaInspectorControls = function( props ) {
 	return (
 		<Fragment>
 
-			<EmphasisBlockAreaFill>
+			<EmphasisBlockAreaControls>
 				{
 					blockStyle !== 'basic' &&
 					<RangeControl
@@ -105,7 +105,7 @@ const MediaInspectorControls = function( props ) {
 						step={ 5 }
 					/>
 				}
-			</EmphasisBlockAreaFill>
+			</EmphasisBlockAreaControls>
 
 			<ControlsSection label={ __( 'Space and Sizing' ) }>
 
