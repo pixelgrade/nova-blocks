@@ -97,62 +97,79 @@ const SectionTab = ( props ) => {
 	);
 }
 
-const ActiveSection = ( props ) => {
+const ActiveSectionTabs = ( props ) => {
 
 	const {
-		activeLevel,
-		section,
+		title,
+		tabs,
 		onBackButtonClick,
-		onTabClick,
 	} = props;
 
-	if ( ! section ) {
-		return false;
-	}
+	const [ activeTabLabel, setActiveTabLabel ] = useState( tabs[0].props.label );
+
+	const activeTab = tabs.find( tab => tab.props.label === activeTabLabel );
 
 	const getTabClassName = ( label ) => {
 		return classnames(
 			'novablocks-sections__tab',
 			{
-				'novablocks-sections__tab--active': activeLevel === label
+				'novablocks-sections__tab--active': activeTabLabel === label
 			}
 		)
 	}
 
 	return (
-		<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeLevel ) }` }>
-
+		<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeTabLabel ) }` }>
 			<div className="novablocks-sections__controls-header">
 				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
-				<div className="novablocks-sections__controls-title">
-					{ section.props.label }
-				</div>
+				<div className="novablocks-sections__controls-title">{ title }</div>
 				<Cube />
 			</div>
-
-			<ControlsSlot>
-				{
-					( fills ) => {
-						const sections = getSectionsFromFills( fills );
-
-						return (
-							<Fragment>
-								<div className={ 'novablocks-sections__tabs' }>
-									{ sections.map( section => {
-										const label = section.props.label;
-										return <div className={ getTabClassName( label ) } onClick={ () => { onTabClick( label ) } }>{ label }</div>
-									} ) }
-								</div>
-								<div className={ 'novablocks-sections__tab-content' }>
-									{ sections.filter( section => section.props.label === activeLevel ).map( section => section.props.children ) }
-								</div>
-							</Fragment>
-						)
-					}
-				}
-			</ControlsSlot>
-
+			<div className={ 'novablocks-sections__tabs' }>
+				{ tabs.map( tab => {
+					const label = tab.props.label;
+					return <div className={ getTabClassName( label, activeTabLabel ) } onClick={ () => { setActiveTabLabel( label ) } }>{ label }</div>
+				} ) }
+			</div>
+			<div className={ 'novablocks-sections__tab-content' }>
+				{ !! activeTab && activeTab.props.children }
+			</div>
 		</div>
+	)
+}
+
+const ActiveSection = ( props ) => {
+
+	const {
+		section,
+		onBackButtonClick,
+	} = props;
+
+	if ( ! section ) {
+		return null;
+	}
+
+	return (
+
+		<ControlsSlot>
+			{
+				( fills ) => {
+					const tabs = getSectionsFromFills( fills );
+
+					if ( ! tabs.length ) {
+						return null;
+					}
+
+					return (
+						<ActiveSectionTabs
+							title={ section.props.label }
+							tabs={ tabs }
+							onBackButtonClick={ onBackButtonClick }
+						/>
+					)
+				}
+			}
+		</ControlsSlot>
 	)
 }
 
@@ -206,7 +223,6 @@ const ControlsSections = ( props ) => {
 
 	const { isSelected } = props;
 	const [ activeSectionLabel, setActiveSectionLabel ] = useState( false );
-	const [ activeLevel, setActiveLevel ] = useState( __( 'Settings' ) );
 
 	return (
 		<ControlsSectionsSlot>
@@ -223,13 +239,9 @@ const ControlsSections = ( props ) => {
 						/>
 						<ActiveSection
 							section={ activeSection }
-							activeLevel={ activeLevel }
 							onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
-							onTabClick={ setActiveLevel }
 						/>
-						<SectionContent
-							section={ activeSection }
-						/>
+						<SectionContent section={ activeSection } />
 					</Fragment>
 				);
 

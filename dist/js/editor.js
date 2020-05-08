@@ -8308,24 +8308,28 @@ var control_sections_SectionTab = function SectionTab(props) {
   }, label);
 };
 
-var control_sections_ActiveSection = function ActiveSection(props) {
-  var activeLevel = props.activeLevel,
-      section = props.section,
-      onBackButtonClick = props.onBackButtonClick,
-      onTabClick = props.onTabClick;
+var control_sections_ActiveSectionTabs = function ActiveSectionTabs(props) {
+  var title = props.title,
+      tabs = props.tabs,
+      onBackButtonClick = props.onBackButtonClick;
 
-  if (!section) {
-    return false;
-  }
+  var _useState = useState(tabs[0].props.label),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      activeTabLabel = _useState2[0],
+      setActiveTabLabel = _useState2[1];
+
+  var activeTab = tabs.find(function (tab) {
+    return tab.props.label === activeTabLabel;
+  });
 
   var getTabClassName = function getTabClassName(label) {
     return classnames_default()('novablocks-sections__tab', {
-      'novablocks-sections__tab--active': activeLevel === label
+      'novablocks-sections__tab--active': activeTabLabel === label
     });
   };
 
   return Object(external_React_["createElement"])("div", {
-    className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeLevel))
+    className: "novablocks-section__controls novablocks-section__controls--".concat(kebabCase_default()(activeTabLabel))
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__controls-header"
   }, Object(external_React_["createElement"])("div", {
@@ -8333,26 +8337,42 @@ var control_sections_ActiveSection = function ActiveSection(props) {
     onClick: onBackButtonClick
   }), Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__controls-title"
-  }, section.props.label), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
-    var sections = getSectionsFromFills(fills);
-    return Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
-      className: 'novablocks-sections__tabs'
-    }, sections.map(function (section) {
-      var label = section.props.label;
-      return Object(external_React_["createElement"])("div", {
-        className: getTabClassName(label),
-        onClick: function onClick() {
-          onTabClick(label);
-        }
-      }, label);
-    })), Object(external_React_["createElement"])("div", {
-      className: 'novablocks-sections__tab-content'
-    }, sections.filter(function (section) {
-      return section.props.label === activeLevel;
-    }).map(function (section) {
-      return section.props.children;
-    })));
-  }));
+  }, title), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__tabs'
+  }, tabs.map(function (tab) {
+    var label = tab.props.label;
+    return Object(external_React_["createElement"])("div", {
+      className: getTabClassName(label, activeTabLabel),
+      onClick: function onClick() {
+        setActiveTabLabel(label);
+      }
+    }, label);
+  })), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__tab-content'
+  }, !!activeTab && activeTab.props.children));
+};
+
+var control_sections_ActiveSection = function ActiveSection(props) {
+  var section = props.section,
+      onBackButtonClick = props.onBackButtonClick;
+
+  if (!section) {
+    return null;
+  }
+
+  return Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
+    var tabs = getSectionsFromFills(fills);
+
+    if (!tabs.length) {
+      return null;
+    }
+
+    return Object(external_React_["createElement"])(control_sections_ActiveSectionTabs, {
+      title: section.props.label,
+      tabs: tabs,
+      onBackButtonClick: onBackButtonClick
+    });
+  });
 };
 
 var getTabsFromFills = function getTabsFromFills(fills) {
@@ -8399,15 +8419,10 @@ var getSectionsFromFills = function getSectionsFromFills(fills) {
 var control_sections_ControlsSections = function ControlsSections(props) {
   var isSelected = props.isSelected;
 
-  var _useState = useState(false),
-      _useState2 = slicedToArray_default()(_useState, 2),
-      activeSectionLabel = _useState2[0],
-      setActiveSectionLabel = _useState2[1];
-
-  var _useState3 = useState(control_sections_('Settings')),
+  var _useState3 = useState(false),
       _useState4 = slicedToArray_default()(_useState3, 2),
-      activeLevel = _useState4[0],
-      setActiveLevel = _useState4[1];
+      activeSectionLabel = _useState4[0],
+      setActiveSectionLabel = _useState4[1];
 
   return Object(external_React_["createElement"])(ControlsSectionsSlot, null, function (fills) {
     var sections = getSectionsFromFills(fills);
@@ -8420,11 +8435,9 @@ var control_sections_ControlsSections = function ControlsSections(props) {
       onSectionClick: setActiveSectionLabel
     }), Object(external_React_["createElement"])(control_sections_ActiveSection, {
       section: activeSection,
-      activeLevel: activeLevel,
       onBackButtonClick: function onBackButtonClick() {
         setActiveSectionLabel(false);
-      },
-      onTabClick: setActiveLevel
+      }
     }), Object(external_React_["createElement"])(SectionContent, {
       section: activeSection
     }));
