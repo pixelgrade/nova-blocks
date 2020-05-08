@@ -15,63 +15,10 @@ const ControlsSlotFill = createSlotFill( 'Controls' );
 const ControlsSlot = ControlsSlotFill.Slot;
 const ControlsFill = ControlsSlotFill.Fill;
 
-const Cube = ( props ) => {
-	return (
-		<div className="novablocks-sections__cube">
-			<div className="novablocks-sections__cube-face novablocks-sections__cube-face--top"></div>
-			<div className="novablocks-sections__cube-face novablocks-sections__cube-face--left"></div>
-			<div className="novablocks-sections__cube-face novablocks-sections__cube-face--right"></div>
-		</div>
-	)
-}
+import { mergeChildrenProps, getSectionsFromFills } from './utils';
 
-const SectionListItem = ( props ) => {
-	const {
-		label,
-		onClick,
-	} = props;
-
-	return <div key={ kebabCase( label ) } className={ 'novablocks-sections__button' } onClick={ () => { onClick( label ) } }>{ label }</div>
-}
-
-const SectionsList = ( props ) => {
-
-	const {
-		activeSectionLabel,
-		sections,
-		onSectionClick
-	} = props;
-
-	const active = sections.find( section => section.props.label === activeSectionLabel );
-
-	const blockSections = sections.filter( section => ! section.props.module );
-	const modules = sections.filter( section => !! section.props.module );
-
-	if ( !! active ) {
-		return false;
-	}
-
-	return (
-		<div className="novablocks-sections">
-			<div className="novablocks-sections__header">
-				<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
-				<Cube />
-			</div>
-			<div className={ 'novablocks-sections__buttons' }>
-				{ blockSections.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
-			</div>
-			{
-				!! modules.length &&
-				<Fragment>
-					<div className="novablocks-sections__title">{ __( 'Modules' ) }</div>
-					<div className={ 'novablocks-sections__buttons' }>
-						{ modules.map( ( section, index ) => <SectionListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
-					</div>
-				</Fragment>
-			}
-		</div>
-	)
-}
+import Cube from './cube';
+import { SectionsList, SectionsListItem } from './sections-list';
 
 const SectionContent = ( props ) => {
 
@@ -82,19 +29,6 @@ const SectionContent = ( props ) => {
 	}
 
 	return section.props.children;
-}
-
-const SectionTab = ( props ) => {
-
-	const {
-		className,
-		label,
-		onClick,
-	} = props;
-
-	return (
-		<div className={ className } onClick={ () => { onClick( label ) } }>{ label }</div>
-	);
 }
 
 const ActiveSectionTabs = ( props ) => {
@@ -171,52 +105,6 @@ const ActiveSection = ( props ) => {
 			}
 		</ControlsSlot>
 	)
-}
-
-const getTabsFromFills = ( fills ) => {
-	const tabs = [];
-}
-
-const mergeChildrenProps = ( children1, children2 ) => {
-
-	if ( typeof children1 === "undefined" ) {
-		return children2;
-	}
-
-	if ( typeof children2 === "undefined" ) {
-		return children1;
-	}
-
-	let children1Array = Array.isArray( children1 ) ? children1 : [ children1 ];
-	let children2Array = Array.isArray( children2 ) ? children2 : [ children2 ];
-
-	return children1Array.concat( children2Array );
-}
-
-const getSectionsFromFills = ( fills ) => {
-	const sections = [];
-
-	// Merge sections with the same label
-	fills.forEach( fill => {
-		const index = sections.findIndex( section => {
-			return section.props.label === fill[0].props.label;
-		} );
-
-		if ( index === -1 ) {
-			sections.push( {
-				props: fill[0].props,
-			} );
-		} else {
-			sections.splice(index, 1, {
-				props: {
-					...sections[index].props,
-					children: mergeChildrenProps( sections[index].props.children, fill[0].props.children ),
-				}
-			});
-		}
-	} );
-
-	return sections;
 }
 
 const ControlsSections = ( props ) => {

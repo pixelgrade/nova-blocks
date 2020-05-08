@@ -149,7 +149,7 @@ module.exports = _defineProperty;
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(40);
+var _typeof = __webpack_require__(41);
 
 var assertThisInitialized = __webpack_require__(11);
 
@@ -607,7 +607,7 @@ module.exports = isSymbol;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(47),
-    isLength = __webpack_require__(34);
+    isLength = __webpack_require__(35);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -695,7 +695,7 @@ module.exports = ListCache;
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(33);
+var eq = __webpack_require__(34);
 
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -773,6 +773,40 @@ module.exports = toKey;
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var createCompounder = __webpack_require__(72);
+
+/**
+ * Converts `string` to
+ * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category String
+ * @param {string} [string=''] The string to convert.
+ * @returns {string} Returns the kebab cased string.
+ * @example
+ *
+ * _.kebabCase('Foo Bar');
+ * // => 'foo-bar'
+ *
+ * _.kebabCase('fooBar');
+ * // => 'foo-bar'
+ *
+ * _.kebabCase('__FOO_BAR__');
+ * // => 'foo-bar'
+ */
+var kebabCase = createCompounder(function(result, word, index) {
+  return result + (index ? '-' : '') + word.toLowerCase();
+});
+
+module.exports = kebabCase;
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var objectWithoutPropertiesLoose = __webpack_require__(94);
 
 function _objectWithoutProperties(source, excluded) {
@@ -797,7 +831,7 @@ function _objectWithoutProperties(source, excluded) {
 module.exports = _objectWithoutProperties;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(48);
@@ -836,7 +870,7 @@ module.exports = get;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseToString = __webpack_require__(77);
@@ -870,7 +904,7 @@ module.exports = toString;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 /**
@@ -913,7 +947,7 @@ module.exports = eq;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -954,7 +988,7 @@ module.exports = isLength;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -985,7 +1019,7 @@ module.exports = isIndex;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(14),
@@ -1020,7 +1054,7 @@ module.exports = isKey;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var mapCacheClear = __webpack_require__(98),
@@ -1058,7 +1092,7 @@ module.exports = MapCache;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(16),
@@ -1071,7 +1105,7 @@ module.exports = Map;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(144),
@@ -1114,7 +1148,7 @@ module.exports = keys;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -1134,40 +1168,6 @@ function _typeof(obj) {
 }
 
 module.exports = _typeof;
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var createCompounder = __webpack_require__(72);
-
-/**
- * Converts `string` to
- * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category String
- * @param {string} [string=''] The string to convert.
- * @returns {string} Returns the kebab cased string.
- * @example
- *
- * _.kebabCase('Foo Bar');
- * // => 'foo-bar'
- *
- * _.kebabCase('fooBar');
- * // => 'foo-bar'
- *
- * _.kebabCase('__FOO_BAR__');
- * // => 'foo-bar'
- */
-var kebabCase = createCompounder(function(result, word, index) {
-  return result + (index ? '-' : '') + word.toLowerCase();
-});
-
-module.exports = kebabCase;
-
 
 /***/ }),
 /* 42 */
@@ -1510,9 +1510,9 @@ module.exports = baseGet;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(14),
-    isKey = __webpack_require__(36),
+    isKey = __webpack_require__(37),
     stringToPath = __webpack_require__(95),
-    toString = __webpack_require__(32);
+    toString = __webpack_require__(33);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -2639,7 +2639,7 @@ module.exports = arrayReduce;
 /***/ (function(module, exports, __webpack_require__) {
 
 var deburrLetter = __webpack_require__(75),
-    toString = __webpack_require__(32);
+    toString = __webpack_require__(33);
 
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
 var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
@@ -2937,7 +2937,7 @@ module.exports = objectToString;
 
 var asciiWords = __webpack_require__(82),
     hasUnicodeWord = __webpack_require__(83),
-    toString = __webpack_require__(32),
+    toString = __webpack_require__(33),
     unicodeWords = __webpack_require__(84);
 
 /**
@@ -3931,9 +3931,9 @@ module.exports = baseRange;
 /* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(33),
+var eq = __webpack_require__(34),
     isArrayLike = __webpack_require__(24),
-    isIndex = __webpack_require__(35),
+    isIndex = __webpack_require__(36),
     isObject = __webpack_require__(20);
 
 /**
@@ -4173,7 +4173,7 @@ module.exports = memoizeCapped;
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(37);
+var MapCache = __webpack_require__(38);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -4254,7 +4254,7 @@ module.exports = memoize;
 
 var Hash = __webpack_require__(99),
     ListCache = __webpack_require__(26),
-    Map = __webpack_require__(38);
+    Map = __webpack_require__(39);
 
 /**
  * Removes all key-value entries from the map.
@@ -5040,8 +5040,8 @@ module.exports = stackHas;
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(26),
-    Map = __webpack_require__(38),
-    MapCache = __webpack_require__(37);
+    Map = __webpack_require__(39),
+    MapCache = __webpack_require__(38);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -5168,7 +5168,7 @@ module.exports = baseIsEqualDeep;
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(37),
+var MapCache = __webpack_require__(38),
     setCacheAdd = __webpack_require__(129),
     setCacheHas = __webpack_require__(130);
 
@@ -5296,7 +5296,7 @@ module.exports = cacheHas;
 
 var Symbol = __webpack_require__(22),
     Uint8Array = __webpack_require__(134),
-    eq = __webpack_require__(33),
+    eq = __webpack_require__(34),
     equalArrays = __webpack_require__(53),
     mapToArray = __webpack_require__(135),
     setToArray = __webpack_require__(136);
@@ -5569,7 +5569,7 @@ module.exports = equalObjects;
 
 var baseGetAllKeys = __webpack_require__(139),
     getSymbols = __webpack_require__(141),
-    keys = __webpack_require__(39);
+    keys = __webpack_require__(40);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -5741,7 +5741,7 @@ var baseTimes = __webpack_require__(145),
     isArguments = __webpack_require__(54),
     isArray = __webpack_require__(14),
     isBuffer = __webpack_require__(55),
-    isIndex = __webpack_require__(35),
+    isIndex = __webpack_require__(36),
     isTypedArray = __webpack_require__(57);
 
 /** Used for built-in method references. */
@@ -5867,7 +5867,7 @@ module.exports = stubFalse;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(18),
-    isLength = __webpack_require__(34),
+    isLength = __webpack_require__(35),
     isObjectLike = __webpack_require__(19);
 
 /** `Object#toString` result references. */
@@ -6083,7 +6083,7 @@ module.exports = overArg;
 /***/ (function(module, exports, __webpack_require__) {
 
 var DataView = __webpack_require__(156),
-    Map = __webpack_require__(38),
+    Map = __webpack_require__(39),
     Promise = __webpack_require__(157),
     Set = __webpack_require__(158),
     WeakMap = __webpack_require__(159),
@@ -6199,7 +6199,7 @@ module.exports = WeakMap;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isStrictComparable = __webpack_require__(58),
-    keys = __webpack_require__(39);
+    keys = __webpack_require__(40);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -6229,9 +6229,9 @@ module.exports = getMatchData;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqual = __webpack_require__(52),
-    get = __webpack_require__(31),
+    get = __webpack_require__(32),
     hasIn = __webpack_require__(162),
-    isKey = __webpack_require__(36),
+    isKey = __webpack_require__(37),
     isStrictComparable = __webpack_require__(58),
     matchesStrictComparable = __webpack_require__(59),
     toKey = __webpack_require__(29);
@@ -6329,8 +6329,8 @@ module.exports = baseHasIn;
 var castPath = __webpack_require__(49),
     isArguments = __webpack_require__(54),
     isArray = __webpack_require__(14),
-    isIndex = __webpack_require__(35),
-    isLength = __webpack_require__(34),
+    isIndex = __webpack_require__(36),
+    isLength = __webpack_require__(35),
     toKey = __webpack_require__(29);
 
 /**
@@ -6400,7 +6400,7 @@ module.exports = identity;
 
 var baseProperty = __webpack_require__(167),
     basePropertyDeep = __webpack_require__(168),
-    isKey = __webpack_require__(36),
+    isKey = __webpack_require__(37),
     toKey = __webpack_require__(29);
 
 /**
@@ -6527,7 +6527,7 @@ module.exports = baseEach;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFor = __webpack_require__(172),
-    keys = __webpack_require__(39);
+    keys = __webpack_require__(40);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -6745,7 +6745,7 @@ __webpack_require__.r(actions_namespaceObject);
 __webpack_require__.d(actions_namespaceObject, "updateSettings", function() { return updateSettings; });
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(40);
+var helpers_typeof = __webpack_require__(41);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -8188,36 +8188,55 @@ var slicedToArray = __webpack_require__(9);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash/kebabCase.js
-var kebabCase = __webpack_require__(41);
+var kebabCase = __webpack_require__(30);
 var kebabCase_default = /*#__PURE__*/__webpack_require__.n(kebabCase);
 
-// CONCATENATED MODULE: ./src/components/control-sections/index.js
+// CONCATENATED MODULE: ./src/components/control-sections/utils.js
 
 
+function utils_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function utils_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { utils_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { utils_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
+  if (typeof children1 === "undefined") {
+    return children2;
+  }
+
+  if (typeof children2 === "undefined") {
+    return children1;
+  }
+
+  var children1Array = Array.isArray(children1) ? children1 : [children1];
+  var children2Array = Array.isArray(children2) ? children2 : [children2];
+  return children1Array.concat(children2Array);
+};
+var getSectionsFromFills = function getSectionsFromFills(fills) {
+  var sections = []; // Merge sections with the same label
+
+  fills.forEach(function (fill) {
+    var index = sections.findIndex(function (section) {
+      return section.props.label === fill[0].props.label;
+    });
+
+    if (index === -1) {
+      sections.push({
+        props: fill[0].props
+      });
+    } else {
+      sections.splice(index, 1, {
+        props: utils_objectSpread({}, sections[index].props, {
+          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
+        })
+      });
+    }
+  });
+  return sections;
+};
+// CONCATENATED MODULE: ./src/components/control-sections/cube.js
 
 
-
-function control_sections_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function control_sections_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { control_sections_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { control_sections_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-var control_sections_createSlotFill = wp.components.createSlotFill;
-var control_sections_wp$element = wp.element,
-    control_sections_Component = control_sections_wp$element.Component,
-    control_sections_Fragment = control_sections_wp$element.Fragment,
-    useState = control_sections_wp$element.useState;
-var control_sections_ = wp.i18n.__;
-var control_sections_useBlockEditContext = wp.blockEditor.useBlockEditContext;
-var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var ControlsSectionsSlotFill = control_sections_createSlotFill('ControlsSections');
-var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
-var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
-var ControlsSlotFill = control_sections_createSlotFill('Controls');
-var ControlsSlot = ControlsSlotFill.Slot;
-var ControlsFill = ControlsSlotFill.Fill;
-
-var control_sections_Cube = function Cube(props) {
+var cube_Cube = function Cube(props) {
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__cube"
   }, Object(external_React_["createElement"])("div", {
@@ -8229,7 +8248,15 @@ var control_sections_Cube = function Cube(props) {
   }));
 };
 
-var control_sections_SectionListItem = function SectionListItem(props) {
+/* harmony default export */ var cube = (cube_Cube);
+// CONCATENATED MODULE: ./src/components/control-sections/sections-list.js
+
+
+
+var sections_list_Fragment = wp.element.Fragment;
+var sections_list_ = wp.i18n.__;
+
+var sections_list_SectionsListItem = function SectionsListItem(props) {
   var label = props.label,
       _onClick = props.onClick;
   return Object(external_React_["createElement"])("div", {
@@ -8241,7 +8268,7 @@ var control_sections_SectionListItem = function SectionListItem(props) {
   }, label);
 };
 
-var control_sections_SectionsList = function SectionsList(props) {
+var sections_list_SectionsList = function SectionsList(props) {
   var activeSectionLabel = props.activeSectionLabel,
       sections = props.sections,
       onSectionClick = props.onSectionClick;
@@ -8265,26 +8292,50 @@ var control_sections_SectionsList = function SectionsList(props) {
     className: "novablocks-sections__header"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__title"
-  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+  }, sections_list_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__buttons'
   }, blockSections.map(function (section, index) {
-    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
+    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
       key: index,
       label: section.props.label,
       onClick: onSectionClick
     });
-  })), !!modules.length && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])("div", {
+  })), !!modules.length && Object(external_React_["createElement"])(sections_list_Fragment, null, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__title"
-  }, control_sections_('Modules')), Object(external_React_["createElement"])("div", {
+  }, sections_list_('Modules')), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__buttons'
   }, modules.map(function (section, index) {
-    return Object(external_React_["createElement"])(control_sections_SectionListItem, {
+    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
       key: index,
       label: section.props.label,
       onClick: onSectionClick
     });
   }))));
 };
+
+
+// CONCATENATED MODULE: ./src/components/control-sections/index.js
+
+
+
+
+var control_sections_createSlotFill = wp.components.createSlotFill;
+var control_sections_wp$element = wp.element,
+    control_sections_Component = control_sections_wp$element.Component,
+    control_sections_Fragment = control_sections_wp$element.Fragment,
+    useState = control_sections_wp$element.useState;
+var control_sections_ = wp.i18n.__;
+var control_sections_useBlockEditContext = wp.blockEditor.useBlockEditContext;
+var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var ControlsSectionsSlotFill = control_sections_createSlotFill('ControlsSections');
+var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
+var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
+var ControlsSlotFill = control_sections_createSlotFill('Controls');
+var ControlsSlot = ControlsSlotFill.Slot;
+var ControlsFill = ControlsSlotFill.Fill;
+
+
+
 
 var SectionContent = function SectionContent(props) {
   var section = props.section;
@@ -8294,18 +8345,6 @@ var SectionContent = function SectionContent(props) {
   }
 
   return section.props.children;
-};
-
-var control_sections_SectionTab = function SectionTab(props) {
-  var className = props.className,
-      label = props.label,
-      _onClick2 = props.onClick;
-  return Object(external_React_["createElement"])("div", {
-    className: className,
-    onClick: function onClick() {
-      _onClick2(label);
-    }
-  }, label);
 };
 
 var control_sections_ActiveSectionTabs = function ActiveSectionTabs(props) {
@@ -8337,7 +8376,7 @@ var control_sections_ActiveSectionTabs = function ActiveSectionTabs(props) {
     onClick: onBackButtonClick
   }), Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__controls-title"
-  }, title), Object(external_React_["createElement"])(control_sections_Cube, null)), Object(external_React_["createElement"])("div", {
+  }, title), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__tabs'
   }, tabs.map(function (tab) {
     var label = tab.props.label;
@@ -8375,47 +8414,6 @@ var control_sections_ActiveSection = function ActiveSection(props) {
   });
 };
 
-var getTabsFromFills = function getTabsFromFills(fills) {
-  var tabs = [];
-};
-
-var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
-  if (typeof children1 === "undefined") {
-    return children2;
-  }
-
-  if (typeof children2 === "undefined") {
-    return children1;
-  }
-
-  var children1Array = Array.isArray(children1) ? children1 : [children1];
-  var children2Array = Array.isArray(children2) ? children2 : [children2];
-  return children1Array.concat(children2Array);
-};
-
-var getSectionsFromFills = function getSectionsFromFills(fills) {
-  var sections = []; // Merge sections with the same label
-
-  fills.forEach(function (fill) {
-    var index = sections.findIndex(function (section) {
-      return section.props.label === fill[0].props.label;
-    });
-
-    if (index === -1) {
-      sections.push({
-        props: fill[0].props
-      });
-    } else {
-      sections.splice(index, 1, {
-        props: control_sections_objectSpread({}, sections[index].props, {
-          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
-        })
-      });
-    }
-  });
-  return sections;
-};
-
 var control_sections_ControlsSections = function ControlsSections(props) {
   var isSelected = props.isSelected;
 
@@ -8429,7 +8427,7 @@ var control_sections_ControlsSections = function ControlsSections(props) {
     var activeSection = sections.find(function (section) {
       return section.props.label === activeSectionLabel;
     });
-    return !!sections.length && isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(control_sections_SectionsList, {
+    return !!sections.length && isSelected && Object(external_React_["createElement"])(control_sections_Fragment, null, Object(external_React_["createElement"])(sections_list_SectionsList, {
       sections: sections,
       activeSectionLabel: activeSectionLabel,
       onSectionClick: setActiveSectionLabel
@@ -14662,7 +14660,7 @@ function (_Component) {
 
 /* harmony default export */ var google_map_placeholder = (placeholder_MapPlaceholder);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(30);
+var objectWithoutProperties = __webpack_require__(31);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // CONCATENATED MODULE: ./src/blocks/google-map/pin.js
@@ -15773,7 +15771,7 @@ var logoCenter = Object(external_React_["createElement"])("svg", {
   d: "M37 20H48V28H37z"
 })));
 // EXTERNAL MODULE: ./node_modules/lodash/get.js
-var lodash_get = __webpack_require__(31);
+var lodash_get = __webpack_require__(32);
 var get_default = /*#__PURE__*/__webpack_require__.n(lodash_get);
 
 // EXTERNAL MODULE: ./node_modules/lodash/map.js
