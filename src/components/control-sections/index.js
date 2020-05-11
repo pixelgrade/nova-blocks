@@ -138,7 +138,7 @@ const ControlsSections = ( props ) => {
 	);
 }
 
-const ControlsGroup = ( props ) => {
+const ControlsTab = ( props ) => {
 	return (
 		<ControlsFill>
 			<div label={ props.label }>{ props.children }</div>
@@ -158,7 +158,7 @@ const ControlsSection = ( props ) => {
 }
 
 export {
-	ControlsGroup,
+	ControlsTab,
 	ControlsSections,
 	ControlsSection,
 };

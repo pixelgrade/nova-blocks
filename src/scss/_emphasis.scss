@@ -93,6 +93,10 @@
 
 @include above(tablet) {
 
+	.content-is-basic {
+		--novablocks-block-content-background-color: var(--novablocks-block-background-color);
+	}
+
 	.block-is-moderate {
 		--novablocks-block-background-color: var(--novablocks-light-3);
 	}

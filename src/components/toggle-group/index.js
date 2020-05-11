@@ -3,7 +3,7 @@ import {
 	animated,
 } from 'react-spring';
 
-import { ControlsSection, ControlsGroup } from '../../components/control-sections';
+import { ControlsSection, ControlsTab } from '../../components/control-sections';
 
 const { __ } = wp.i18n;
 
@@ -60,7 +60,7 @@ const ToggleGroup = ( props ) => {
 
 	return (
 		<ControlsSection label={ label }>
-			<ControlsGroup label={ __( 'Settings' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
 				<div className={ 'components-toggle-group__panel' }>
 					<div className={ 'components-toggle-group' }>
 						{ !! enabledToggles.length &&
@@ -106,7 +106,7 @@ const ToggleGroup = ( props ) => {
 						}
 					</div>
 				</div>
-			</ControlsGroup>
+			</ControlsTab>
 		</ControlsSection>
 	);
 };

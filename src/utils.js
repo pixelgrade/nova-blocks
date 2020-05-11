@@ -1,4 +1,5 @@
 import {getProps, getState, getStylesFromProps} from "./components/with-parallax/util";
+import classnames from "classnames";
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -142,4 +143,19 @@ export const getSnapClassname = function( focalPoint ) {
 	}
 
 	return classNames.join( ' ' );
+}
+
+const wrappedControlsMatch = ( attributes, compiledAttributes ) => {
+	return Object.keys( compiledAttributes ).every( key => {
+		return compiledAttributes[ key ] === attributes[ key ];
+	} );
+}
+
+export const getControlsWrapClassname = ( attributes, compiledAttributes ) => {
+	return classnames(
+		'novablocks-controls-wrap',
+		{
+			'novablocks-controls-wrap--dirty': ! wrappedControlsMatch( attributes, compiledAttributes ),
+		}
+	);
 }

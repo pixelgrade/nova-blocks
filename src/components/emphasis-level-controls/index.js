@@ -1,4 +1,5 @@
 import withSettings from '../with-settings';
+import { ControlsTab, ControlsSection } from "../control-sections";
 
 const { __ } = wp.i18n;
 
@@ -9,7 +10,7 @@ const {
 } = wp.element;
 
 const {
-	PanelBody,
+	RangeControl,
 	RadioControl,
 	createSlotFill,
 } = wp.components;
@@ -28,6 +29,7 @@ const EmphasisLevelControls = ( props ) => {
 		attributes: {
 			contentStyle,
 			blockStyle,
+			emphasisByContrast,
 		},
 		setAttributes,
 		settings: {
@@ -38,30 +40,58 @@ const EmphasisLevelControls = ( props ) => {
 		},
 	} = props;
 
-	return (
-		<Fragment>
-			<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen={ true }>
-				<RadioControl
-					label={ __( 'Emphasis Level', '__plugin_txtd' ) }
-					value={ contentStyle }
-					selected={ contentStyle }
-					options={ contentAreaOptions }
-					onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
-				/>
-				<EmphasisContentAreaSlot />
-			</PanelBody>
+	const getEmphasisByContrastValue = () => {
+		const blockIndex = blockAreaOptions.findIndex( option => option.value === blockStyle );
+		const contentIndex = contentAreaOptions.findIndex( option => option.value === contentStyle );
+		return blockIndex * 3 + contentIndex;
+	}
 
-			<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ true }>
+	return (
+		<ControlsSection label={ __( 'Color Contrast' ) }>
+
+			<ControlsTab label={ __( 'Customize' ) }>
+
+				<RangeControl
+					value={ getEmphasisByContrastValue() }
+					onChange={ contrast => {
+						const blockIndex = Math.floor( contrast / 3 );
+						const contentIndex = contrast % 3;
+
+						setAttributes( {
+							blockStyle: blockAreaOptions[ blockIndex ].value,
+							contentStyle: contentAreaOptions[ contentIndex ].value
+						} );
+					} }
+					label={ __( 'Emphasis by Contrast' ) }
+					min={ 0 }
+					max={ 8 }
+				/>
+
+			</ControlsTab>
+
+			<ControlsTab label={ __( 'Settings' ) }>
+
 				<RadioControl
-					label={ __( 'Emphasis Level', '__plugin_txtd' ) }
+					label={ __( 'Block Emphasis', '__plugin_txtd' ) }
 					value={ blockStyle }
 					selected={ blockStyle }
 					options={ blockAreaOptions }
 					onChange={ ( nextBlockStyle ) => setAttributes( { blockStyle: nextBlockStyle } ) }
 				/>
 				<EmphasisBlockAreaSlot />
-			</PanelBody>
-		</Fragment>
+
+				<RadioControl
+					label={ __( 'Content Area Emphasis', '__plugin_txtd' ) }
+					value={ contentStyle }
+					selected={ contentStyle }
+					options={ contentAreaOptions }
+					onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
+				/>
+				<EmphasisContentAreaSlot />
+
+			</ControlsTab>
+
+		</ControlsSection>
 	)
 }
 

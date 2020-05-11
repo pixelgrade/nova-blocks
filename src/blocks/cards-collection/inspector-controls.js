@@ -1,6 +1,6 @@
 import { HeadingToolbar, ToggleGroup } from "../../components";
 import { EmphasisBlockAreaControls, EmphasisContentAreaControls } from "../../components/emphasis-level-controls";
-import { ControlsSection, ControlsGroup } from '../../components/control-sections';
+import { ControlsSection, ControlsTab } from '../../components/control-sections';
 
 const { __ } = wp.i18n;
 
@@ -137,7 +137,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 				toggles={ toggles }
 			/>
 			<ControlsSection label={ __( 'Media' ) }>
-				<ControlsGroup label={ __( 'Settings' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
 				    <RadioControl
 					    label={'Image resizing'}
 					    selected={imageResizing}
@@ -159,7 +159,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 					    max={100}
 					    step={5}
 				    />
-				</ControlsGroup>
+				</ControlsTab>
 			</ControlsSection>
 		</Fragment>
    );

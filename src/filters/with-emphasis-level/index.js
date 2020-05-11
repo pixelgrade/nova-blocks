@@ -1,7 +1,7 @@
 import EmphasisLevelControls from "../../components/emphasis-level-controls";
 
 import {
-	ControlsGroup,
+	ControlsTab,
 	ControlsSection,
 } from "../../components/control-sections";
 
@@ -27,11 +27,7 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<ControlsSection label={ __( 'Emphasis' ) }>
-					<ControlsGroup label={ __( 'Settings' ) }>
-						<EmphasisLevelControls { ...props } />
-					</ControlsGroup>
-				</ControlsSection>
+				<EmphasisLevelControls { ...props } />
 			</Fragment>
 		);
 	};
@@ -57,6 +53,10 @@ function addEmphasisLevelAttribute( block ) {
 		contentStyle: {
 			type: 'string',
 			default: 'basic',
+		},
+		emphasisByContrast: {
+			number: 'number',
+			default: 1
 		}
 	});
 

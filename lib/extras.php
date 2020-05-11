@@ -797,6 +797,14 @@ function novablocks_add_media_settings( $settings ) {
 					'type' => 'number',
 					'default' => 25,
 				),
+				'balanceEmphasis' => array(
+					'type' => 'number',
+					'default' => 50,
+				),
+				'balanceFocalPoint' => array(
+					'type' => 'string',
+					'default' => 'content',
+				),
 			),
 			novablocks_get_media_spacing_atttributes(),
 			novablocks_get_alignment_attributes(),
