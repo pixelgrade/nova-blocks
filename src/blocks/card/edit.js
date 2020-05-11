@@ -133,7 +133,7 @@ const CardEdit = ( props ) => {
 							renderAppender={ false }
 							template={ [
 								[ 'core/buttons', { align: contentAlign },
-									[ [ 'core/button', { text: 'Button' } ] ]
+									[ [ 'core/button', { text: 'Button', className: 'is-style-text' } ] ]
 								]
 							] }
 						/>

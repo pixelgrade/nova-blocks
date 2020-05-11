@@ -52,6 +52,7 @@
 	transition-property: padding, box-shadow;
 
 	&[class] {
+		height: 100%;
 		padding: var(--novablocks-block-content-padding);
 
 		h1, h2, h3 {
