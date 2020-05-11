@@ -16,7 +16,7 @@ const {
 
 const {
 	InspectorControls,
-	AlignmentToolbar,
+	AlignmentToolbar
 } = wp.blockEditor;
 
 const {
