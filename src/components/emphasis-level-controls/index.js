@@ -1,5 +1,6 @@
 import withSettings from '../with-settings';
 import { ControlsTab, ControlsSection } from "../control-sections";
+import ControlsGroup from "../controls-group";
 
 const { __ } = wp.i18n;
 
@@ -50,7 +51,6 @@ const EmphasisLevelControls = ( props ) => {
 		<ControlsSection label={ __( 'Color Contrast' ) }>
 
 			<ControlsTab label={ __( 'Customize' ) }>
-
 				<RangeControl
 					value={ getEmphasisByContrastValue() }
 					onChange={ contrast => {
@@ -66,29 +66,28 @@ const EmphasisLevelControls = ( props ) => {
 					min={ 0 }
 					max={ 8 }
 				/>
-
 			</ControlsTab>
 
 			<ControlsTab label={ __( 'Settings' ) }>
+				<ControlsGroup title={ __( 'Contrast' ) }>
+					<RadioControl
+						label={ __( 'Block Emphasis', '__plugin_txtd' ) }
+						value={ blockStyle }
+						selected={ blockStyle }
+						options={ blockAreaOptions }
+						onChange={ ( nextBlockStyle ) => setAttributes( { blockStyle: nextBlockStyle } ) }
+					/>
+					<EmphasisBlockAreaSlot />
 
-				<RadioControl
-					label={ __( 'Block Emphasis', '__plugin_txtd' ) }
-					value={ blockStyle }
-					selected={ blockStyle }
-					options={ blockAreaOptions }
-					onChange={ ( nextBlockStyle ) => setAttributes( { blockStyle: nextBlockStyle } ) }
-				/>
-				<EmphasisBlockAreaSlot />
-
-				<RadioControl
-					label={ __( 'Content Area Emphasis', '__plugin_txtd' ) }
-					value={ contentStyle }
-					selected={ contentStyle }
-					options={ contentAreaOptions }
-					onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
-				/>
-				<EmphasisContentAreaSlot />
-
+					<RadioControl
+						label={ __( 'Content Area Emphasis', '__plugin_txtd' ) }
+						value={ contentStyle }
+						selected={ contentStyle }
+						options={ contentAreaOptions }
+						onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
+					/>
+					<EmphasisContentAreaSlot />
+				</ControlsGroup>
 			</ControlsTab>
 
 		</ControlsSection>

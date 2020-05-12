@@ -222,6 +222,12 @@
 	}
 }
 
+.novablocks-controls-wrap {
+	&:not(:last-child) {
+		margin-bottom: 24px;
+	}
+}
+
 .novablocks-controls-wrap--dirty {
 	--novablocks-section-controls-accent: #919191;
 

@@ -8411,7 +8411,20 @@ var control_sections_ControlsSection = function ControlsSection(props) {
 };
 
 
+// CONCATENATED MODULE: ./src/components/controls-group/index.js
+
+
+var controls_group_ControlsGroup = function ControlsGroup(props) {
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-controls-group"
+  }, !!props.title && Object(external_React_["createElement"])("div", {
+    className: "novablocks-controls-group__title"
+  }, props.title), props.children);
+};
+
+/* harmony default export */ var controls_group = (controls_group_ControlsGroup);
 // CONCATENATED MODULE: ./src/components/emphasis-level-controls/index.js
+
 
 
 
@@ -8468,6 +8481,8 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
     max: 8
   })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: emphasis_level_controls_('Settings')
+  }, Object(external_React_["createElement"])(controls_group, {
+    title: emphasis_level_controls_('Contrast')
   }, Object(external_React_["createElement"])(RadioControl, {
     label: emphasis_level_controls_('Block Emphasis', '__plugin_txtd'),
     value: blockStyle,
@@ -8488,7 +8503,7 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
         contentStyle: nextContentStyle
       });
     }
-  }), Object(external_React_["createElement"])(EmphasisContentAreaSlot, null)));
+  }), Object(external_React_["createElement"])(EmphasisContentAreaSlot, null))));
 };
 
 var emphasis_level_controls_EmphasisContentAreaControls = function EmphasisContentAreaControls(props) {
@@ -14123,6 +14138,7 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
+
 var inspector_controls_ = wp.i18n.__;
 var inspector_controls_Fragment = wp.element.Fragment;
 var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
@@ -14210,6 +14226,8 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     step: 1
   })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: inspector_controls_('Settings')
+  }, Object(external_React_["createElement"])(controls_group, {
+    title: inspector_controls_('Gallery')
   }, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
     label: inspector_controls_('Size Contrast', '__plugin_txtd'),
     value: sizeContrast,
@@ -14265,7 +14283,9 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     min: 0,
     max: 100,
     step: 10
-  }), Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+  })), Object(external_React_["createElement"])(controls_group, {
+    title: inspector_controls_('Media')
+  }, Object(external_React_["createElement"])(inspector_controls_RangeControl, {
     label: inspector_controls_('Image Container Height', '__plugin_txtd'),
     value: containerHeight,
     onChange: function onChange(containerHeight) {
@@ -14302,7 +14322,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     min: 0,
     max: 100,
     step: 10
-  }))));
+  })))));
 };
 
 /* harmony default export */ var inspector_controls = (inspector_controls_AdvancedGalleryInspectorControls);
@@ -16897,18 +16917,6 @@ var preview_MediaPreview = function MediaPreview(props) {
 };
 
 /* harmony default export */ var media_preview = (preview_MediaPreview);
-// CONCATENATED MODULE: ./src/components/controls-group/index.js
-
-
-var controls_group_ControlsGroup = function ControlsGroup(props) {
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-controls-group"
-  }, !!props.title && Object(external_React_["createElement"])("div", {
-    className: "novablocks-controls-group__title"
-  }, props.title), props.children);
-};
-
-/* harmony default export */ var controls_group = (controls_group_ControlsGroup);
 // CONCATENATED MODULE: ./src/blocks/media/inspector-controls.js
 
 
@@ -17120,6 +17128,8 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     }]
   }))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: media_inspector_controls_('Settings')
+  }, Object(external_React_["createElement"])(controls_group, {
+    title: media_inspector_controls_('Layout')
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: contentAreaWidth,
     onChange: function onChange(contentAreaWidth) {
@@ -17142,7 +17152,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: 0,
     max: 100,
     step: 5
-  }))));
+  })))));
 };
 
 /* harmony default export */ var media_inspector_controls = (inspector_controls_MediaInspectorControls);

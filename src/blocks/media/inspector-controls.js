@@ -237,22 +237,24 @@ const MediaInspectorControls = function( props ) {
 				</ControlsTab>
 
 				<ControlsTab label={ __( 'Settings' ) }>
-					<RangeControl
-						value={ contentAreaWidth }
-						onChange={ ( contentAreaWidth ) => setAttributes( { contentAreaWidth } ) }
-						label={ __( 'Content Area Width' ) }
-						min={ CONTENT_AREA_MIN_WIDTH }
-						max={ CONTENT_AREA_MAX_WIDTH }
-						step={ 5 }
-					/>
-					<RangeControl
-						value={ layoutGutter }
-						onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
-						label={ __( 'Layout Gutter' ) }
-						min={ 0 }
-						max={ 100 }
-						step={ 5 }
-					/>
+					<ControlsGroup title={ __( 'Layout' ) }>
+						<RangeControl
+							value={ contentAreaWidth }
+							onChange={ ( contentAreaWidth ) => setAttributes( { contentAreaWidth } ) }
+							label={ __( 'Content Area Width' ) }
+							min={ CONTENT_AREA_MIN_WIDTH }
+							max={ CONTENT_AREA_MAX_WIDTH }
+							step={ 5 }
+						/>
+						<RangeControl
+							value={ layoutGutter }
+							onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
+							label={ __( 'Layout Gutter' ) }
+							min={ 0 }
+							max={ 100 }
+							step={ 5 }
+						/>
+					</ControlsGroup>
 				</ControlsTab>
 
 			</ControlsSection>
