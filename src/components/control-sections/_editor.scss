@@ -233,3 +233,15 @@
 
 	opacity: 0.5;
 }
+
+.novablocks-panel {
+	position: relative;
+}
+
+.novablocks-subpanel {
+	position: absolute;
+	top: 0;
+	left: 100%;
+
+	width: 100%;
+}

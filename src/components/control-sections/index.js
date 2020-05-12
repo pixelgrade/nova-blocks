@@ -1,11 +1,20 @@
 import classnames from 'classnames';
 import { kebabCase } from 'lodash';
+import { useTransition, animated } from 'react-spring';
 
-const { createSlotFill } = wp.components;
-const { Component, Fragment, useState } = wp.element;
 const { __ } = wp.i18n;
+const { createSlotFill } = wp.components;
 const { useBlockEditContext } = wp.blockEditor;
 const { createHigherOrderComponent } = wp.compose;
+
+const {
+	Component,
+	Fragment,
+	useEffect,
+	useRef,
+	useState,
+} = wp.element;
+
 
 const ControlsSectionsSlotFill = createSlotFill( 'ControlsSections' );
 const ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
@@ -21,17 +30,6 @@ import Cube from './cube';
 import { SectionsList, SectionsListItem } from './sections-list';
 import useMemoryState from "../memory-state";
 
-const SectionContent = ( props ) => {
-
-	const { section } = props;
-
-	if ( ! section || ! section.props.children ) {
-		return null;
-	}
-
-	return section.props.children;
-}
-
 const ActiveSectionTabs = ( props ) => {
 
 	const {
@@ -40,6 +38,9 @@ const ActiveSectionTabs = ( props ) => {
 		onBackButtonClick,
 	} = props;
 
+	if ( ! tabs.length ) {
+		return null;
+	}
 
 	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( kebabCase( title ), tabs[0].props.label );
 
@@ -55,7 +56,7 @@ const ActiveSectionTabs = ( props ) => {
 	}
 
 	return (
-		<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeTabLabel ) }` }>
+		<div className={ `novablocks-section__controls` }>
 			<div className="novablocks-sections__controls-header">
 				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
 				<div className="novablocks-sections__controls-title">{ title }</div>
@@ -74,6 +75,31 @@ const ActiveSectionTabs = ( props ) => {
 	)
 }
 
+const AnimatedActiveSection = ( ownProps ) => {
+
+	const { section } = ownProps;
+
+	const transitions = useTransition( !! section, null, {
+		from: {progress: 0},
+		enter: {progress: 1},
+		leave: {progress: 0},
+	} );
+
+	return transitions.map( ( { item, key, props } ) => {
+		const {progress} = props;
+
+		return (
+			<animated.div style={{
+				transform: progress.interpolate( progress => `translateX(${100 - progress * 100}%)` )
+			}}>
+				<ActiveSection {...ownProps}>
+					{ownProps.children}
+				</ActiveSection>
+			</animated.div>
+		);
+	} );
+}
+
 const ActiveSection = ( props ) => {
 
 	const {
@@ -81,32 +107,51 @@ const ActiveSection = ( props ) => {
 		onBackButtonClick,
 	} = props;
 
-	if ( ! section ) {
-		return null;
-	}
-
 	return (
+		<Fragment>
+			{ !! section && section.props.children }
+			<ControlsSlot>
+				{
+					( fills ) => {
+						const tabs = getSectionsFromFills( fills );
 
-		<ControlsSlot>
-			{
-				( fills ) => {
-					const tabs = getSectionsFromFills( fills );
-
-					if ( ! tabs.length ) {
-						return null;
+						return (
+							<ActiveSectionTabs
+								title={ !! section && section.props.label }
+								tabs={ tabs }
+								onBackButtonClick={ onBackButtonClick }
+							/>
+						)
 					}
-
-					return (
-						<ActiveSectionTabs
-							title={ section.props.label }
-							tabs={ tabs }
-							onBackButtonClick={ onBackButtonClick }
-						/>
-					)
 				}
-			}
-		</ControlsSlot>
+			</ControlsSlot>
+		</Fragment>
 	)
+}
+
+const AnimatedSectionsList = ( ownProps ) => {
+
+	const { activeSectionLabel } = ownProps;
+
+	const transitions = useTransition( ! activeSectionLabel, null, {
+		from: {progress: 1},
+		enter: {progress: 1},
+		leave: {progress: 0},
+	} );
+
+	return transitions.map( ( { item, key, props } ) => {
+
+		const {progress} = props;
+
+		return (
+			<animated.div style={{
+				transform: progress.interpolate( progress => `translateX(-${100 - progress * 100}%)` )
+			}}>
+				Panel
+				<SectionsList { ...ownProps } />
+			</animated.div>
+		);
+	} );
 }
 
 const ControlsSections = ( props ) => {
@@ -120,21 +165,21 @@ const ControlsSections = ( props ) => {
 				const sections = getSectionsFromFills( fills );
 				const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 
-				return !! sections.length && isSelected && (
+				return (
 					<Fragment>
 						<SectionsList
 							sections={ sections }
 							activeSectionLabel={ activeSectionLabel }
 							onSectionClick={ setActiveSectionLabel }
 						/>
-						<ActiveSection
-							section={ activeSection }
-							onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
-						/>
-						<SectionContent section={ activeSection } />
+						{ sections.map( section =>
+							<ActiveSection
+								section={ section }
+								onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
+							/>
+						) }
 					</Fragment>
 				);
-
 			} }
 		</ControlsSectionsSlot>
 	);
