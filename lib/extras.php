@@ -799,7 +799,7 @@ function novablocks_add_media_settings( $settings ) {
 				),
 				'balanceEmphasis' => array(
 					'type' => 'number',
-					'default' => 50,
+					'default' => 0,
 				),
 				'balanceFocalPoint' => array(
 					'type' => 'string',

@@ -37,8 +37,8 @@ const {
 	ToggleControl,
 } = wp.components;
 
-const CONTENT_AREA_MAX_WIDTH = 65;
-const CONTENT_AREA_MIN_WIDTH = 35;
+const CONTENT_AREA_MAX_WIDTH = 70;
+const CONTENT_AREA_MIN_WIDTH = 50;
 
 const MediaInspectorControls = function( props ) {
 
@@ -109,7 +109,7 @@ const MediaInspectorControls = function( props ) {
 						value={ emphasisArea }
 						onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
 						label={ __( 'Emphasis Area' ) }
-						min={ 0 }
+						min={ 10 }
 						max={ 100 }
 						step={ 5 }
 					/>
