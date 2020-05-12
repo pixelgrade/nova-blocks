@@ -19,6 +19,7 @@ import { mergeChildrenProps, getSectionsFromFills } from './utils';
 
 import Cube from './cube';
 import { SectionsList, SectionsListItem } from './sections-list';
+import useMemoryState from "../memory-state";
 
 const SectionContent = ( props ) => {
 
@@ -39,7 +40,8 @@ const ActiveSectionTabs = ( props ) => {
 		onBackButtonClick,
 	} = props;
 
-	const [ activeTabLabel, setActiveTabLabel ] = useState( tabs[0].props.label );
+
+	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( kebabCase( title ), tabs[0].props.label );
 
 	const activeTab = tabs.find( tab => tab.props.label === activeTabLabel );
 

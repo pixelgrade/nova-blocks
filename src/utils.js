@@ -1,4 +1,4 @@
-import {getProps, getState, getStylesFromProps} from "./components/with-parallax/util";
+import { getProps, getState, getStylesFromProps } from "./components/with-parallax/util";
 import classnames from "classnames";
 
 export const debounce = (func, wait) => {
