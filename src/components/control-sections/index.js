@@ -51,11 +51,10 @@ const ActiveSectionTabs = ( props ) => {
 		'rgb(0,202,182)',
 		'rgb(222,22,81)',
 	];
-	const colorIndex = Math.max( 0, Math.min( activeTabIndex, colors.length ) );
-	console.log( colors[0], activeTabIndex, colorIndex, colors[colorIndex] );
+
+	const colorIndex = Number.isInteger( activeTabIndex ) ? Math.max( 0, Math.min( activeTabIndex, colors.length ) ) : 0;
 
 	const { accentColor } = useSpring({
-		from: { accentColor: colors[0] },
 		accentColor: colors[colorIndex]
 	} );
 
