@@ -1,0 +1,49 @@
+.novablocks-drawers {
+	position: relative;
+
+	padding: 16px;
+}
+
+.novablocks-drawers__panel {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 100%;
+
+	padding: 16px;
+}
+
+.novablocks-drawer {
+	position: relative;
+	padding: 12px 16px;
+
+	font-size: 13px;
+
+	background: #F4F5F8;
+	color: #555D66;
+	border-radius: 4px;
+
+	cursor: pointer;
+
+	&:after {
+		content: "";
+
+		position: absolute;
+		top: 50%;
+		right: 18px;
+
+		transform: translateY(-50%) rotate(45deg);
+
+		display: block;
+		width: 10px;
+		height: 10px;
+
+		border: 0 solid currentColor;
+		border-top-width: 2px;
+		border-right-width: 2px;
+	}
+
+	&:not(first-child) {
+		margin-top: 6px;
+	}
+}
