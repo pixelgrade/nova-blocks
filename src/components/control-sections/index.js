@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { kebabCase } from 'lodash';
-import { useTransition, animated } from 'react-spring';
+import { useSpring, useTransition, interpolate, animated } from 'react-spring';
 
 const { __ } = wp.i18n;
 const { createSlotFill } = wp.components;
@@ -43,8 +43,22 @@ const ActiveSectionTabs = ( props ) => {
 	}
 
 	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( kebabCase( title ), tabs[0].props.label );
+	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
+	const activeTab = tabs[activeTabIndex];
 
-	const activeTab = tabs.find( tab => tab.props.label === activeTabLabel );
+	const colors = [
+		'rgb(142,101,192)',
+		'rgb(0,202,182)',
+		'rgb(222,22,81)',
+	];
+	const colorIndex = Math.max( 0, Math.min( activeTabIndex, colors.length ) );
+	console.log( colors[0], activeTabIndex, colorIndex, colors[colorIndex] );
+
+	const { accentColor } = useSpring({
+		from: { accentColor: colors[0] },
+		accentColor: colors[colorIndex]
+	} );
+
 
 	const getTabClassName = ( label ) => {
 		return classnames(
@@ -56,7 +70,7 @@ const ActiveSectionTabs = ( props ) => {
 	}
 
 	return (
-		<div className={ `novablocks-section__controls` }>
+		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
 				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
 				<div className="novablocks-sections__controls-title">{ title }</div>
@@ -71,7 +85,7 @@ const ActiveSectionTabs = ( props ) => {
 			<div className={ 'novablocks-sections__tab-content' }>
 				{ !! activeTab && activeTab.props.children }
 			</div>
-		</div>
+		</animated.div>
 	)
 }
 

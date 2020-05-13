@@ -28,23 +28,7 @@ const withControlsSections = createHigherOrderComponent(OriginalComponent => {
 		return (
 			<Fragment>
 				<InspectorControls>
-					<Drawers>
-						<DrawerList>
-							<Drawer title={ 'Unu' } />
-							<Drawer title={ 'Doi' } />
-						</DrawerList>
-						<DrawerPanel>
-							<DrawerPanelContent>
-								<p>Continut x1</p>
-							</DrawerPanelContent>
-						</DrawerPanel>
-						<DrawerPanel>
-							<DrawerPanelContent>
-								<p>Continut x2</p>
-								<p>Continut x2</p>
-							</DrawerPanelContent>
-						</DrawerPanel>
-					</Drawers>
+					<ControlsSections { ...props } />
 				</InspectorControls>
 				<OriginalComponent { ...props } />
 			</Fragment>
