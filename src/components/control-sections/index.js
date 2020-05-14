@@ -2,6 +2,13 @@ import classnames from 'classnames';
 import { kebabCase } from 'lodash';
 import { useSpring, useTransition, interpolate, animated } from 'react-spring';
 
+import {
+	Drawer,
+	Drawers,
+	DrawerList,
+	DrawerPanel
+} from "../drawer";
+
 const { __ } = wp.i18n;
 const { createSlotFill } = wp.components;
 const { useBlockEditContext } = wp.blockEditor;
@@ -36,6 +43,7 @@ const ActiveSectionTabs = ( props ) => {
 		title,
 		tabs,
 		onBackButtonClick,
+		onTabChange,
 	} = props;
 
 	if ( ! tabs.length ) {
@@ -68,6 +76,12 @@ const ActiveSectionTabs = ( props ) => {
 		)
 	}
 
+	useEffect(() => {
+		if ( typeof onTabChange === "function" ) {
+			onTabChange();
+		}
+	});
+
 	return (
 		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
@@ -78,7 +92,9 @@ const ActiveSectionTabs = ( props ) => {
 			<div className={ 'novablocks-sections__tabs' }>
 				{ tabs.map( tab => {
 					const label = tab.props.label;
-					return <div className={ getTabClassName( label, activeTabLabel ) } onClick={ () => { setActiveTabLabel( label ) } }>{ label }</div>
+					return <div className={ getTabClassName( label, activeTabLabel ) } onClick={ () => {
+						setActiveTabLabel( label );
+					} }>{ label }</div>
 				} ) }
 			</div>
 			<div className={ 'novablocks-sections__tab-content' }>
@@ -88,41 +104,20 @@ const ActiveSectionTabs = ( props ) => {
 	)
 }
 
-const AnimatedActiveSection = ( ownProps ) => {
-
-	const { section } = ownProps;
-
-	const transitions = useTransition( !! section, null, {
-		from: {progress: 0},
-		enter: {progress: 1},
-		leave: {progress: 0},
-	} );
-
-	return transitions.map( ( { item, key, props } ) => {
-		const {progress} = props;
-
-		return (
-			<animated.div style={{
-				transform: progress.interpolate( progress => `translateX(${100 - progress * 100}%)` )
-			}}>
-				<ActiveSection {...ownProps}>
-					{ownProps.children}
-				</ActiveSection>
-			</animated.div>
-		);
-	} );
-}
-
 const ActiveSection = ( props ) => {
 
 	const {
 		section,
-		onBackButtonClick,
+		goBack,
+		updateHeight,
 	} = props;
+
+	const label = !! section ? section.props.label : '';
+	const children = !! section ? section.props.children : [];
 
 	return (
 		<Fragment>
-			{ !! section && section.props.children }
+			{ children }
 			<ControlsSlot>
 				{
 					( fills ) => {
@@ -130,9 +125,10 @@ const ActiveSection = ( props ) => {
 
 						return (
 							<ActiveSectionTabs
-								title={ !! section && section.props.label }
+								title={ label }
 								tabs={ tabs }
-								onBackButtonClick={ onBackButtonClick }
+								onBackButtonClick={ goBack }
+								onTabChange={ updateHeight }
 							/>
 						)
 					}
@@ -140,31 +136,6 @@ const ActiveSection = ( props ) => {
 			</ControlsSlot>
 		</Fragment>
 	)
-}
-
-const AnimatedSectionsList = ( ownProps ) => {
-
-	const { activeSectionLabel } = ownProps;
-
-	const transitions = useTransition( ! activeSectionLabel, null, {
-		from: {progress: 1},
-		enter: {progress: 1},
-		leave: {progress: 0},
-	} );
-
-	return transitions.map( ( { item, key, props } ) => {
-
-		const {progress} = props;
-
-		return (
-			<animated.div style={{
-				transform: progress.interpolate( progress => `translateX(-${100 - progress * 100}%)` )
-			}}>
-				Panel
-				<SectionsList { ...ownProps } />
-			</animated.div>
-		);
-	} );
 }
 
 const ControlsSections = ( props ) => {
@@ -178,20 +149,33 @@ const ControlsSections = ( props ) => {
 				const sections = getSectionsFromFills( fills );
 				const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 
+				if ( ! sections.length ) {
+					return null;
+				}
+
 				return (
-					<Fragment>
-						<SectionsList
-							sections={ sections }
-							activeSectionLabel={ activeSectionLabel }
-							onSectionClick={ setActiveSectionLabel }
-						/>
-						{ sections.map( section =>
-							<ActiveSection
-								section={ section }
-								onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
-							/>
-						) }
-					</Fragment>
+					<div className="novablocks-sections">
+						<Drawers>
+							<div className="novablocks-sections__header">
+								<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+								<Cube />
+							</div>
+							<DrawerList>
+								{ sections.map( section => {
+									return <Drawer
+										target={ 0 }
+										title={ section.props.label }
+										onOpen={ () => {
+											setActiveSectionLabel( section.props.label )
+										} }
+									/>
+								} ) }
+							</DrawerList>
+							<DrawerPanel id={ 0 }>
+								<ActiveSection section={ activeSection } />
+							</DrawerPanel>
+						</Drawers>
+					</div>
 				);
 			} }
 		</ControlsSectionsSlot>

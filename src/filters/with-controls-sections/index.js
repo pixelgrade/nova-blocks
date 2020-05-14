@@ -1,12 +1,5 @@
 import { ControlsSections } from "../../components/control-sections";
 
-import {
-	Drawer,
-	Drawers,
-	DrawerList,
-	DrawerPanel
-} from "../../components/drawer";
-
 const { InspectorControls } = wp.blockEditor;
 const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;

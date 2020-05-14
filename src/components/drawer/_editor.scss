@@ -1,6 +1,9 @@
 .novablocks-drawers {
 	position: relative;
+	overflow: hidden;
+}
 
+.novablocks-drawers__list {
 	padding: 16px;
 }
 
@@ -9,8 +12,6 @@
 	top: 0;
 	left: 100%;
 	width: 100%;
-
-	padding: 16px;
 }
 
 .novablocks-drawer {
@@ -43,7 +44,7 @@
 		border-right-width: 2px;
 	}
 
-	&:not(first-child) {
+	&:not(:first-child) {
 		margin-top: 6px;
 	}
 }
