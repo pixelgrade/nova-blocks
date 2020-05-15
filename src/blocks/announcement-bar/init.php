@@ -43,7 +43,11 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_announcement_bar:before' ); ?>
+		if ( ! empty( $attributes['content'] ) || ! empty( $content ) ) {
+
+		do_action( 'novablocks_announcement_bar:before' );
+
+		?>
 
 		<div class="<?php echo join( ' ', $classes ); ?>" data-id="<?php echo $attributes['blockId'] ;?>">
 			<div class="novablocks-announcement-bar__wrapper">
@@ -73,6 +77,8 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 		<?php
 
 		do_action( 'novablocks_announcement_bar:after' );
+
+		}
 
 		return ob_get_clean();
 	}
