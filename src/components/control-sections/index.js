@@ -40,17 +40,22 @@ import useMemoryState from "../memory-state";
 const ActiveSectionTabs = ( props ) => {
 
 	const {
-		title,
-		tabs,
+		section,
 		onBackButtonClick,
 		onTabChange,
+		lastTab,
 	} = props;
+
+	const {
+		title,
+		tabs
+	} = section;
 
 	if ( ! tabs.length ) {
 		return null;
 	}
 
-	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( kebabCase( title ), tabs[0].props.label );
+	const [ activeTabLabel, setActiveTabLabel ] = useState( lastTab || tabs[0].props.label );
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
 	const activeTab = tabs[activeTabIndex];
 
@@ -84,11 +89,21 @@ const ActiveSectionTabs = ( props ) => {
 		)
 	}
 
-	useEffect(() => {
+	useEffect( () => {
 		if ( typeof onTabChange === "function" ) {
-			onTabChange();
+			onTabChange(activeTabLabel);
 		}
-	});
+	}, [activeTabLabel] )
+
+	useEffect( () => {
+		if ( !! lastTab ) {
+			if ( lastTab !== activeTabLabel ) {
+				setActiveTabLabel( lastTab );
+			}
+		} else {
+			setActiveTabLabel( tabs[0].props.label );
+		}
+	}, [section] )
 
 	return (
 		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
@@ -123,6 +138,13 @@ const ActiveSection = ( props ) => {
 	const label = !! section ? section.props.label : '';
 	const children = !! section ? section.props.children : [];
 
+	const [ lastTabs, setLastTabs ] = useState( {} );
+	const lastTab = lastTabs?.[ kebabCase( label ) ] || false;
+
+	const setLastTab = ( lastTab ) => {
+		setLastTabs( Object.assign( {}, lastTabs, { [ kebabCase( label ) ]: lastTab } ) );
+	}
+
 	return (
 		<Fragment>
 			{ children }
@@ -133,10 +155,16 @@ const ActiveSection = ( props ) => {
 
 						return (
 							<ActiveSectionTabs
-								title={ label }
-								tabs={ tabs }
+								section={{
+									title: label,
+									tabs: tabs,
+								}}
 								onBackButtonClick={ goBack }
-								onTabChange={ updateHeight }
+								lastTab={ lastTab }
+								onTabChange={ ( tabLabel ) => {
+									setLastTab( tabLabel );
+									updateHeight();
+								} }
 							/>
 						)
 					}
@@ -157,6 +185,9 @@ const ControlsSections = ( props ) => {
 				const sections = getSectionsFromFills( fills );
 				const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 
+				const notModules = sections.filter( section => ! section.props.module )
+				const modules = sections.filter( section => !! section.props.module );
+
 				if ( ! sections.length ) {
 					return null;
 				}
@@ -169,7 +200,7 @@ const ControlsSections = ( props ) => {
 								<Cube />
 							</div>
 							<DrawerList>
-								{ sections.map( section => {
+								{ notModules.map( section => {
 									return <Drawer
 										target={ 0 }
 										title={ section.props.label }
@@ -179,6 +210,20 @@ const ControlsSections = ( props ) => {
 									/>
 								} ) }
 							</DrawerList>
+							{
+								!! modules.length &&
+								<DrawerList title={ __( 'Modules' ) }>
+									{ modules.map( section => {
+										return <Drawer
+											target={ 0 }
+											title={ section.props.label }
+											onOpen={ () => {
+												setActiveSectionLabel( section.props.label )
+											} }
+										/>
+									} ) }
+								</DrawerList>
+							}
 							<DrawerPanel id={ 0 }>
 								<ActiveSection section={ activeSection } />
 							</DrawerPanel>

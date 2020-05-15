@@ -14,14 +14,9 @@ const Drawers = ( ownProps ) => {
 
 	const children = Children.toArray( ownProps.children );
 
-	const drawerList = children.filter( child => child.type === DrawerList );
-	const drawers = getDrawersFromList( drawerList );
+	const drawerLists = children.filter( child => child.type === DrawerList );
 	const drawerPanels = children.filter( child => child.type === DrawerPanel );
 	const otherChildren = children.filter( child => child.type !== DrawerList && child.type !== DrawerPanel);
-
-	if ( ! drawers.length ) {
-		return null;
-	}
 
 	const [ active, setActive ] = useState( false );
 	const [ open, setOpen ] = useState( false );
@@ -47,7 +42,7 @@ const Drawers = ( ownProps ) => {
 		setHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	}
 
-	useEffect( updateHeight );
+	useEffect( updateHeight, [ open ] );
 
 	return (
 		<Spring from={ { progress: 0, height: getDrawerListHeight() } } to={ { progress: open ? 1 : 0, height: height } }>
@@ -61,29 +56,37 @@ const Drawers = ( ownProps ) => {
 							style={ { transform: `translateX(-${ progress * 100 }%)` } }>
 							<div className={ `novablocks-drawers__front` } ref={ ref }>
 								{ otherChildren }
-								<div className={ `novablocks-drawers__list` }>
-									{ drawers.map( ( drawer, index ) => {
-										return (
-											<Drawer { ...drawer.props }
-												onClick={ () => {
-													const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : index;
-													setActive( target );
-													setOpen( true );
+								{ drawerLists.map( drawerList => {
+									const drawers = getDrawersFromList( drawerList );
+									const title = drawerList?.props?.title;
 
-													if ( typeof drawer.props.onOpen === "function" ) {
-														drawer.props.onOpen();
-													}
-												} } />
-										)
-									} ) }
-									{ drawerPanels.map( ( drawerPanel, index ) => {
-										return (
-											<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
-												<DrawerWithProps { ...drawerPanel.props } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
-											</div>
-										)
-									} ) }
-								</div>
+									return (
+										<div className={ `novablocks-drawers__list` }>
+											{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
+											{ drawers.map( ( drawer, index ) => {
+												return (
+													<Drawer { ...drawer.props }
+														onClick={ () => {
+															const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : index;
+															setActive( target );
+															setOpen( true );
+
+															if ( typeof drawer.props.onOpen === "function" ) {
+																drawer.props.onOpen();
+															}
+														} } />
+												)
+											} ) }
+										</div>
+									)
+								} ) }
+								{ drawerPanels.map( ( drawerPanel, index ) => {
+									return (
+										<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+											<DrawerWithProps { ...drawerPanel.props } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
+										</div>
+									)
+								} ) }
 							</div>
 						</animated.div>
 					</animated.div>
@@ -118,7 +121,7 @@ const addPropsToChildren = ( children, props ) => {
 
 const getDrawersFromList = ( drawerList ) => {
 
-	const children = drawerList?.[0]?.props?.children;
+	const children = drawerList?.props?.children;
 
 	if ( ! Array.isArray( children ) ) {
 		return [];
