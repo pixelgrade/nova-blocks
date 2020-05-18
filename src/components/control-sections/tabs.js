@@ -43,16 +43,12 @@ const getTabClassName = ( label, activeTabLabel ) => {
 const ActiveSectionTabs = ( props ) => {
 
 	const {
-		section,
+		title,
+		tabs,
 		onBackButtonClick,
 		onTabChange,
 		lastTab,
 	} = props;
-
-	const {
-		title,
-		tabs
-	} = section;
 
 	if ( ! tabs.length ) {
 		return null;
@@ -76,11 +72,17 @@ const ActiveSectionTabs = ( props ) => {
 		if ( !! lastTab ) {
 			if ( lastTab !== activeTabLabel ) {
 				setActiveTabLabel( lastTab );
+			} else if ( typeof onTabChange === "function" ) {
+				onTabChange( activeTabLabel );
 			}
 		} else {
-			setActiveTabLabel( tabs[0].props.label );
+			if ( tabs[0].props.label !== activeTabLabel ) {
+				setActiveTabLabel( tabs[0].props.label );
+			} else if ( typeof onTabChange === "function" ) {
+				onTabChange( activeTabLabel );
+			}
 		}
-	}, [section] )
+	}, [title, tabs] )
 
 	return (
 		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
@@ -139,14 +141,14 @@ const ActiveSection = ( props ) => {
 
 						return (
 							<ActiveSectionTabs
-								section={{
-									title: label,
-									tabs: tabs,
-								}}
+								title={ label }
+								tabs={ tabs }
 								onBackButtonClick={ goBack }
 								lastTab={ lastTab }
 								onTabChange={ ( tabLabel ) => {
-									setLastTab( tabLabel );
+									if ( lastTab !== tabLabel ) {
+										setLastTab( tabLabel );
+									}
 									updateHeight();
 								} }
 							/>

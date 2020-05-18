@@ -10,6 +10,7 @@
 .novablocks-drawers__list-title {
 	font-size: 14px;
 	font-weight: 600;
+	color: #2A2136;
 }
 
 .novablocks-drawers__panel {
@@ -24,6 +25,7 @@
 	padding: 12px 16px;
 
 	font-size: 13px;
+	font-weight: 500;
 
 	background: #F4F5F8;
 	color: #555D66;
@@ -44,12 +46,19 @@
 		width: 10px;
 		height: 10px;
 
-		border: 0 solid currentColor;
+		border: 0 solid #9195AB;
 		border-top-width: 2px;
 		border-right-width: 2px;
+
+		transition: var(--novablocks-transition);
+		transition-property: border-color;
 	}
 
 	&:not(:first-child) {
 		margin-top: 6px;
+	}
+
+	&:hover:after {
+		border-color: #2A2136;
 	}
 }

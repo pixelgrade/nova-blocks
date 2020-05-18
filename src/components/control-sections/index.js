@@ -1,23 +1,16 @@
-// external dependencies
-import classnames from 'classnames';
-import { kebabCase } from 'lodash';
-import { useSpring, useTransition, interpolate, animated } from 'react-spring';
-
 // internal dependencies
-import { mergeChildrenProps, getSectionsFromFills } from './utils';
+import { getSectionsFromFills } from './utils';
 import { ControlsSlot, ControlsFill } from "./controls-slot-fill";
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
+import { SectionsList, SectionsListItem } from './sections-list';
 
 import Cube from './cube';
-import { SectionsList, SectionsListItem } from './sections-list';
 import ActiveSection from "./tabs";
 
-import { Drawer, Drawers, DrawerList, DrawerPanel } from "../drawer";
+import { Drawer, Drawers, DrawerList, DrawerPanel } from "../../components/drawer";
 
 const { __ } = wp.i18n;
-const { createSlotFill } = wp.components;
 const { useBlockEditContext } = wp.blockEditor;
-const { createHigherOrderComponent } = wp.compose;
 
 const {
 	Component,

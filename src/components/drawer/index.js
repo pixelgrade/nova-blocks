@@ -1,5 +1,4 @@
-import { Spring, animated } from 'react-spring/renderprops';
-import { useTransition } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 
 const {
 	Children,
@@ -21,7 +20,7 @@ const Drawers = ( ownProps ) => {
 	const [ active, setActive ] = useState( false );
 	const [ open, setOpen ] = useState( false );
 
-	const [ height, setHeight ] = useState(0);
+	const [ wrapperHeight, setWrapperHeight ] = useState(0);
 
 	const ref = useRef( null );
 	const [ refMap ] = useState( () => new WeakMap() );
@@ -39,60 +38,61 @@ const Drawers = ( ownProps ) => {
 		const drawerListHeight = getDrawerListHeight();
 		const drawerPanelHeight = getActiveDrawerHeight();
 
-		setHeight( !! open ? drawerPanelHeight : drawerListHeight );
+		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	}
 
-	useEffect( updateHeight, [ open ] );
+	const { height, transform } = useSpring({
+		transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
+		height: wrapperHeight
+	} );
+
+	useEffect( () => {
+		updateHeight();
+	}, [ open, active ] );
 
 	return (
-		<Spring from={ { progress: 0, height: getDrawerListHeight() } } to={ { progress: open ? 1 : 0, height: height } }>
-			{ ( { progress, height } ) => {
-				return (
-					<animated.div
-						className={ `novablocks-drawers` }
-						style={ { height: height } }>
-						<animated.div
-							className={ `novablocks-drawers__wrap` }
-							style={ { transform: `translateX(-${ progress * 100 }%)` } }>
-							<div className={ `novablocks-drawers__front` } ref={ ref }>
-								{ otherChildren }
-								{ drawerLists.map( drawerList => {
-									const drawers = getDrawersFromList( drawerList );
-									const title = drawerList?.props?.title;
+		<animated.div
+			className={ `novablocks-drawers` }
+			style={ { height } }>
+			<animated.div
+				className={ `novablocks-drawers__wrap` }
+				style={ { transform } }>
+				<div className={ `novablocks-drawers__front` } ref={ ref }>
+					{ otherChildren }
+					{ drawerLists.map( drawerList => {
+						const drawers = getDrawersFromList( drawerList );
+						const title = drawerList?.props?.title;
 
+						return (
+							<div className={ `novablocks-drawers__list` }>
+								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
+								{ drawers.map( ( drawer, index ) => {
 									return (
-										<div className={ `novablocks-drawers__list` }>
-											{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
-											{ drawers.map( ( drawer, index ) => {
-												return (
-													<Drawer { ...drawer.props }
-														onClick={ () => {
-															const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : index;
-															setActive( target );
-															setOpen( true );
+										<Drawer { ...drawer.props }
+											onClick={ () => {
+												const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : index;
+												setActive( target );
+												setOpen( true );
 
-															if ( typeof drawer.props.onOpen === "function" ) {
-																drawer.props.onOpen();
-															}
-														} } />
-												)
-											} ) }
-										</div>
-									)
-								} ) }
-								{ drawerPanels.map( ( drawerPanel, index ) => {
-									return (
-										<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
-											<DrawerWithProps { ...drawerPanel.props } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
-										</div>
+												if ( typeof drawer.props.onOpen === "function" ) {
+													drawer.props.onOpen();
+												}
+											} } />
 									)
 								} ) }
 							</div>
-						</animated.div>
-					</animated.div>
-				);
-			} }
-		</Spring>
+						)
+					} ) }
+					{ drawerPanels.map( ( drawerPanel, index ) => {
+						return (
+							<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+								<DrawerWithProps { ...drawerPanel.props } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
+							</div>
+						)
+					} ) }
+				</div>
+			</animated.div>
+		</animated.div>
 	);
 }
 
@@ -148,9 +148,4 @@ const Drawer = ( props ) => {
 	)
 }
 
-export {
-	Drawer,
-	Drawers,
-	DrawerList,
-	DrawerPanel
-};
+export { Drawer, Drawers, DrawerList, DrawerPanel };
