@@ -67,6 +67,7 @@ const Drawers = ( ownProps ) => {
 												return (
 													<Drawer { ...drawer.props }
 														onClick={ () => {
+															console.log( 'click' );
 															const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : index;
 															setActive( target );
 															setOpen( true );

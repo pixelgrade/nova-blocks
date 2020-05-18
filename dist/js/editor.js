@@ -162,29 +162,6 @@ module.exports = _defineProperty;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var setPrototypeOf = __webpack_require__(67);
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-module.exports = _inherits;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
   Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -237,6 +214,29 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	} else {}
 }());
 
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(67);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
 
 /***/ }),
 /* 7 */
@@ -8844,7 +8844,7 @@ var createClass = __webpack_require__(3);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(5);
+var inherits = __webpack_require__(6);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
@@ -10021,7 +10021,7 @@ var withBlockIndexAttribute = with_block_index_createHigherOrderComponent(functi
 }, "withBlockIndexAttribute");
 with_block_index_addFilter('editor.BlockEdit', 'novablocks/with-blockIndex-attribute', withBlockIndexAttribute);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
-var classnames = __webpack_require__(6);
+var classnames = __webpack_require__(5);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
 // CONCATENATED MODULE: ./src/filters/with-font-size-picker/index.js
@@ -10200,9 +10200,136 @@ var with_settings_withSelect = wp.data.withSelect;
 var slicedToArray = __webpack_require__(10);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
+// CONCATENATED MODULE: ./src/components/control-sections/utils.js
+
+
+function utils_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function utils_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { utils_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { utils_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
+  if (typeof children1 === "undefined") {
+    return children2;
+  }
+
+  if (typeof children2 === "undefined") {
+    return children1;
+  }
+
+  var children1Array = Array.isArray(children1) ? children1 : [children1];
+  var children2Array = Array.isArray(children2) ? children2 : [children2];
+  return children1Array.concat(children2Array);
+};
+var getSectionsFromFills = function getSectionsFromFills(fills) {
+  var sections = []; // Merge sections with the same label
+
+  fills.forEach(function (fill) {
+    var index = sections.findIndex(function (section) {
+      return section.props.label === fill[0].props.label;
+    });
+
+    if (index === -1) {
+      sections.push({
+        props: fill[0].props
+      });
+    } else {
+      sections.splice(index, 1, {
+        props: utils_objectSpread(utils_objectSpread({}, sections[index].props), {}, {
+          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
+        })
+      });
+    }
+  });
+  return sections;
+};
+// CONCATENATED MODULE: ./src/components/control-sections/controls-slot-fill.js
+var createSlotFill = wp.components.createSlotFill;
+var ControlsSlotFill = createSlotFill('Controls');
+var ControlsSlot = ControlsSlotFill.Slot;
+var ControlsFill = ControlsSlotFill.Fill;
+
+// CONCATENATED MODULE: ./src/components/control-sections/controls-sections-slot-fill.js
+var controls_sections_slot_fill_createSlotFill = wp.components.createSlotFill;
+var ControlsSectionsSlotFill = controls_sections_slot_fill_createSlotFill('ControlsSections');
+var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
+var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
+
+// CONCATENATED MODULE: ./src/components/control-sections/cube.js
+
+
+var cube_Cube = function Cube(props) {
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube-face novablocks-sections__cube-face--top"
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube-face novablocks-sections__cube-face--left"
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__cube-face novablocks-sections__cube-face--right"
+  }));
+};
+
+/* harmony default export */ var cube = (cube_Cube);
 // EXTERNAL MODULE: ./node_modules/lodash/kebabCase.js
 var kebabCase = __webpack_require__(23);
 var kebabCase_default = /*#__PURE__*/__webpack_require__.n(kebabCase);
+
+// CONCATENATED MODULE: ./src/components/control-sections/sections-list.js
+
+
+
+var sections_list_Fragment = wp.element.Fragment;
+var sections_list_ = wp.i18n.__;
+
+var sections_list_SectionsListItem = function SectionsListItem(props) {
+  var label = props.label,
+      _onClick = props.onClick;
+  return Object(external_React_["createElement"])("div", {
+    key: kebabCase_default()(label),
+    className: 'novablocks-sections__button',
+    onClick: function onClick() {
+      _onClick(label);
+    }
+  }, label);
+};
+
+var sections_list_SectionsList = function SectionsList(props) {
+  var activeSectionLabel = props.activeSectionLabel,
+      sections = props.sections,
+      onSectionClick = props.onSectionClick;
+  var blockSections = sections.filter(function (section) {
+    return !section.props.module;
+  });
+  var modules = sections.filter(function (section) {
+    return !!section.props.module;
+  });
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, sections_list_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__buttons'
+  }, blockSections.map(function (section, index) {
+    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
+      key: index,
+      label: section.props.label,
+      onClick: onSectionClick
+    });
+  })), !!modules.length && Object(external_React_["createElement"])(sections_list_Fragment, null, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, sections_list_('Modules')), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__buttons'
+  }, modules.map(function (section, index) {
+    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
+      key: index,
+      label: section.props.label,
+      onClick: onSectionClick
+    });
+  }))));
+};
+
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(8);
@@ -11710,7 +11837,7 @@ class AnimatedStyle extends AnimatedObject {
 }
 
 // http://www.w3.org/TR/css3-color/#svg-color
-const web_colors = {
+const colors = {
   transparent: 0x00000000,
   aliceblue: 0xf0f8ffff,
   antiquewhite: 0xfaebd7ff,
@@ -11926,7 +12053,7 @@ function normalizeColor(color) {
 
 
   if (match = hex6.exec(color)) return parseInt(match[1] + 'ff', 16) >>> 0;
-  if (web_colors.hasOwnProperty(color)) return web_colors[color];
+  if (colors.hasOwnProperty(color)) return colors[color];
 
   if (match = rgb.exec(color)) {
     return (parse255(match[1]) << 24 | // r
@@ -12045,7 +12172,7 @@ const stringShapeRegex = /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g; //
 
 const colorRegex = /(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi; // Covers color names (transparent, blue, etc.)
 
-const colorNamesRegex = new RegExp(`(${Object.keys(web_colors).join('|')})`, 'g');
+const colorNamesRegex = new RegExp(`(${Object.keys(colors).join('|')})`, 'g');
 /**
  * Supports string shapes by extracting numbers so new values can be computed,
  * and recombines those values into new strings of the same shape.  Supports
@@ -12141,7 +12268,7 @@ const attributeCache = {};
 injectCreateAnimatedStyle(style => new AnimatedStyle(style));
 injectDefaultElement('div');
 injectStringInterpolator(createStringInterpolator);
-injectColorNames(web_colors);
+injectColorNames(colors);
 injectApplyAnimatedValues((instance, props) => {
   if (instance.nodeType && instance.setAttribute !== undefined) {
     const style = props.style,
@@ -12183,6 +12310,149 @@ const extendedAnimated = apply(domElements);
 
 
 
+// CONCATENATED MODULE: ./src/components/control-sections/tabs.js
+
+
+
+
+
+
+
+
+
+var ACCENT_COLORS = ['rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)'];
+var tabs_ = wp.i18n.__;
+var tabs_wp$element = wp.element,
+    useEffect = tabs_wp$element.useEffect,
+    useState = tabs_wp$element.useState,
+    tabs_Fragment = tabs_wp$element.Fragment;
+
+var getTabAccentColor = function getTabAccentColor(label) {
+  if (tabs_('General') === label) {
+    return ACCENT_COLORS[0];
+  }
+
+  if (tabs_('Customize') === label) {
+    return ACCENT_COLORS[1];
+  }
+
+  return ACCENT_COLORS[2];
+};
+
+var tabs_getTabClassName = function getTabClassName(label, activeTabLabel) {
+  return classnames_default()('novablocks-sections__tab', {
+    'novablocks-sections__tab--active': activeTabLabel === label
+  });
+};
+
+var tabs_ActiveSectionTabs = function ActiveSectionTabs(props) {
+  var section = props.section,
+      onBackButtonClick = props.onBackButtonClick,
+      onTabChange = props.onTabChange,
+      lastTab = props.lastTab;
+  var title = section.title,
+      tabs = section.tabs;
+
+  if (!tabs.length) {
+    return null;
+  }
+
+  var _useState = useState(lastTab || tabs[0].props.label),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      activeTabLabel = _useState2[0],
+      setActiveTabLabel = _useState2[1];
+
+  var activeTabIndex = tabs.findIndex(function (tab) {
+    return tab.props.label === activeTabLabel;
+  });
+  var activeTab = tabs[activeTabIndex];
+
+  var _useSpring = useSpring({
+    accentColor: getTabAccentColor(activeTabLabel)
+  }),
+      accentColor = _useSpring.accentColor;
+
+  useEffect(function () {
+    if (typeof onTabChange === "function") {
+      onTabChange(activeTabLabel);
+    }
+  }, [activeTabLabel]);
+  useEffect(function () {
+    if (!!lastTab) {
+      if (lastTab !== activeTabLabel) {
+        setActiveTabLabel(lastTab);
+      }
+    } else {
+      setActiveTabLabel(tabs[0].props.label);
+    }
+  }, [section]);
+  return Object(external_React_["createElement"])(extendedAnimated.div, {
+    className: "novablocks-section__controls",
+    style: {
+      '--novablocks-section-controls-accent': accentColor
+    }
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-back",
+    onClick: onBackButtonClick
+  }), Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__controls-title"
+  }, title), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__tabs'
+  }, tabs.map(function (tab) {
+    var label = tab.props.label;
+    var className = tabs_getTabClassName(label, activeTabLabel);
+
+    var onClick = function onClick() {
+      setActiveTabLabel(label);
+    };
+
+    return Object(external_React_["createElement"])("div", {
+      className: className,
+      onClick: onClick
+    }, label);
+  })), Object(external_React_["createElement"])("div", {
+    className: 'novablocks-sections__tab-content'
+  }, !!activeTab && activeTab.props.children));
+};
+
+var tabs_ActiveSection = function ActiveSection(props) {
+  var section = props.section,
+      goBack = props.goBack,
+      updateHeight = props.updateHeight;
+  var label = !!section ? section.props.label : '';
+  var children = !!section ? section.props.children : [];
+
+  var _useState3 = useState({}),
+      _useState4 = slicedToArray_default()(_useState3, 2),
+      lastTabs = _useState4[0],
+      setLastTabs = _useState4[1];
+
+  var lastTab = (lastTabs === null || lastTabs === void 0 ? void 0 : lastTabs[kebabCase_default()(label)]) || false;
+
+  var setLastTab = function setLastTab(lastTab) {
+    setLastTabs(Object.assign({}, lastTabs, defineProperty_default()({}, kebabCase_default()(label), lastTab)));
+  };
+
+  return Object(external_React_["createElement"])(tabs_Fragment, null, children, Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
+    var tabs = getSectionsFromFills(fills);
+    return Object(external_React_["createElement"])(tabs_ActiveSectionTabs, {
+      section: {
+        title: label,
+        tabs: tabs
+      },
+      onBackButtonClick: goBack,
+      lastTab: lastTab,
+      onTabChange: function onTabChange(tabLabel) {
+        setLastTab(tabLabel);
+        updateHeight();
+      }
+    });
+  }));
+};
+
+/* harmony default export */ var control_sections_tabs = (tabs_ActiveSection);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
 var helpers_extends = __webpack_require__(9);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
@@ -12200,9 +12470,9 @@ var drawer_wp$element = wp.element,
     Children = drawer_wp$element.Children,
     drawer_Fragment = drawer_wp$element.Fragment,
     cloneElement = drawer_wp$element.cloneElement,
-    useEffect = drawer_wp$element.useEffect,
+    drawer_useEffect = drawer_wp$element.useEffect,
     useRef = drawer_wp$element.useRef,
-    useState = drawer_wp$element.useState;
+    drawer_useState = drawer_wp$element.useState;
 
 var drawer_Drawers = function Drawers(ownProps) {
   var children = Children.toArray(ownProps.children);
@@ -12216,24 +12486,24 @@ var drawer_Drawers = function Drawers(ownProps) {
     return child.type !== drawer_DrawerList && child.type !== DrawerPanel;
   });
 
-  var _useState = useState(false),
+  var _useState = drawer_useState(false),
       _useState2 = slicedToArray_default()(_useState, 2),
       active = _useState2[0],
       setActive = _useState2[1];
 
-  var _useState3 = useState(false),
+  var _useState3 = drawer_useState(false),
       _useState4 = slicedToArray_default()(_useState3, 2),
       open = _useState4[0],
       setOpen = _useState4[1];
 
-  var _useState5 = useState(0),
+  var _useState5 = drawer_useState(0),
       _useState6 = slicedToArray_default()(_useState5, 2),
       height = _useState6[0],
       setHeight = _useState6[1];
 
   var ref = useRef(null);
 
-  var _useState7 = useState(function () {
+  var _useState7 = drawer_useState(function () {
     return new WeakMap();
   }),
       _useState8 = slicedToArray_default()(_useState7, 1),
@@ -12254,7 +12524,7 @@ var drawer_Drawers = function Drawers(ownProps) {
     setHeight(!!open ? drawerPanelHeight : drawerListHeight);
   };
 
-  useEffect(updateHeight, [open]);
+  drawer_useEffect(updateHeight, [open]);
   return Object(external_React_["createElement"])(renderprops["Spring"], {
     from: {
       progress: 0,
@@ -12294,6 +12564,7 @@ var drawer_Drawers = function Drawers(ownProps) {
           onClick: function onClick() {
             var _drawer$props;
 
+            console.log('click');
             var target = Number.isInteger((_drawer$props = drawer.props) === null || _drawer$props === void 0 ? void 0 : _drawer$props.target) ? drawer.props.target : index;
             setActive(target);
             setOpen(true);
@@ -12380,150 +12651,13 @@ var drawer_Drawer = function Drawer(props) {
 };
 
 
-// CONCATENATED MODULE: ./src/components/control-sections/utils.js
-
-
-function utils_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function utils_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { utils_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { utils_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-var mergeChildrenProps = function mergeChildrenProps(children1, children2) {
-  if (typeof children1 === "undefined") {
-    return children2;
-  }
-
-  if (typeof children2 === "undefined") {
-    return children1;
-  }
-
-  var children1Array = Array.isArray(children1) ? children1 : [children1];
-  var children2Array = Array.isArray(children2) ? children2 : [children2];
-  return children1Array.concat(children2Array);
-};
-var getSectionsFromFills = function getSectionsFromFills(fills) {
-  var sections = []; // Merge sections with the same label
-
-  fills.forEach(function (fill) {
-    var index = sections.findIndex(function (section) {
-      return section.props.label === fill[0].props.label;
-    });
-
-    if (index === -1) {
-      sections.push({
-        props: fill[0].props
-      });
-    } else {
-      sections.splice(index, 1, {
-        props: utils_objectSpread(utils_objectSpread({}, sections[index].props), {}, {
-          children: mergeChildrenProps(sections[index].props.children, fill[0].props.children)
-        })
-      });
-    }
-  });
-  return sections;
-};
-// CONCATENATED MODULE: ./src/components/control-sections/cube.js
-
-
-var cube_Cube = function Cube(props) {
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube-face novablocks-sections__cube-face--top"
-  }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube-face novablocks-sections__cube-face--left"
-  }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__cube-face novablocks-sections__cube-face--right"
-  }));
-};
-
-/* harmony default export */ var cube = (cube_Cube);
-// CONCATENATED MODULE: ./src/components/control-sections/sections-list.js
-
-
-
-var sections_list_Fragment = wp.element.Fragment;
-var sections_list_ = wp.i18n.__;
-
-var sections_list_SectionsListItem = function SectionsListItem(props) {
-  var label = props.label,
-      _onClick = props.onClick;
-  return Object(external_React_["createElement"])("div", {
-    key: kebabCase_default()(label),
-    className: 'novablocks-sections__button',
-    onClick: function onClick() {
-      _onClick(label);
-    }
-  }, label);
-};
-
-var sections_list_SectionsList = function SectionsList(props) {
-  var activeSectionLabel = props.activeSectionLabel,
-      sections = props.sections,
-      onSectionClick = props.onSectionClick;
-  var blockSections = sections.filter(function (section) {
-    return !section.props.module;
-  });
-  var modules = sections.filter(function (section) {
-    return !!section.props.module;
-  });
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__header"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__title"
-  }, sections_list_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__buttons'
-  }, blockSections.map(function (section, index) {
-    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
-      key: index,
-      label: section.props.label,
-      onClick: onSectionClick
-    });
-  })), !!modules.length && Object(external_React_["createElement"])(sections_list_Fragment, null, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__title"
-  }, sections_list_('Modules')), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__buttons'
-  }, modules.map(function (section, index) {
-    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
-      key: index,
-      label: section.props.label,
-      onClick: onSectionClick
-    });
-  }))));
-};
-
-
-// CONCATENATED MODULE: ./src/components/memory-state/index.js
-
-var memory_state_useState = wp.element.useState;
-var memoryState = {};
-
-var memory_state_useMemoryState = function useMemoryState(key, initialState) {
-  var _useState = memory_state_useState(function () {
-    var hasMemoryValue = Object.prototype.hasOwnProperty.call(memoryState, key);
-
-    if (hasMemoryValue) {
-      return memoryState[key];
-    } else {
-      return typeof initialState === 'function' ? initialState() : initialState;
-    }
-  }),
-      _useState2 = slicedToArray_default()(_useState, 2),
-      state = _useState2[0],
-      setState = _useState2[1];
-
-  function onChange(nextState) {
-    memoryState[key] = nextState;
-    setState(nextState);
-  }
-
-  return [state, onChange];
-};
-
-/* harmony default export */ var memory_state = (memory_state_useMemoryState);
 // CONCATENATED MODULE: ./src/components/control-sections/index.js
+
+
+// external dependencies
+
+ // internal dependencies
+
 
 
 
@@ -12532,198 +12666,71 @@ var memory_state_useMemoryState = function useMemoryState(key, initialState) {
 
 
 var control_sections_ = wp.i18n.__;
-var createSlotFill = wp.components.createSlotFill;
+var control_sections_createSlotFill = wp.components.createSlotFill;
 var useBlockEditContext = wp.blockEditor.useBlockEditContext;
 var control_sections_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
 var control_sections_wp$element = wp.element,
     control_sections_Component = control_sections_wp$element.Component,
     control_sections_Fragment = control_sections_wp$element.Fragment,
-    control_sections_useEffect = control_sections_wp$element.useEffect,
-    control_sections_useRef = control_sections_wp$element.useRef,
     control_sections_useState = control_sections_wp$element.useState;
-var ControlsSectionsSlotFill = createSlotFill('ControlsSections');
-var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
-var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
-var ControlsSlotFill = createSlotFill('Controls');
-var ControlsSlot = ControlsSlotFill.Slot;
-var ControlsFill = ControlsSlotFill.Fill;
 
-
-
-
-
-var control_sections_ActiveSectionTabs = function ActiveSectionTabs(props) {
-  var section = props.section,
-      onBackButtonClick = props.onBackButtonClick,
-      onTabChange = props.onTabChange,
-      lastTab = props.lastTab;
-  var title = section.title,
-      tabs = section.tabs;
-
-  if (!tabs.length) {
-    return null;
-  }
-
-  var _useState = control_sections_useState(lastTab || tabs[0].props.label),
-      _useState2 = slicedToArray_default()(_useState, 2),
-      activeTabLabel = _useState2[0],
-      setActiveTabLabel = _useState2[1];
-
-  var activeTabIndex = tabs.findIndex(function (tab) {
-    return tab.props.label === activeTabLabel;
-  });
-  var activeTab = tabs[activeTabIndex];
-  var colors = ['rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)'];
-  var nextColor = colors[2];
-
-  if (control_sections_('Customize') === activeTabLabel) {
-    nextColor = colors[1];
-  }
-
-  if (control_sections_('General') === activeTabLabel) {
-    nextColor = colors[0];
-  }
-
-  var _useSpring = useSpring({
-    accentColor: nextColor
-  }),
-      accentColor = _useSpring.accentColor;
-
-  var getTabClassName = function getTabClassName(label) {
-    return classnames_default()('novablocks-sections__tab', {
-      'novablocks-sections__tab--active': activeTabLabel === label
+var control_sections_renderControlsSectionsList = function renderControlsSectionsList(sections, onSectionClick) {
+  return sections.map(function (section, index) {
+    var label = section.props.label;
+    return Object(external_React_["createElement"])(drawer_Drawer, {
+      key: index,
+      target: 0,
+      title: label,
+      onOpen: function onOpen() {
+        onSectionClick(label);
+      }
     });
-  };
-
-  control_sections_useEffect(function () {
-    if (typeof onTabChange === "function") {
-      onTabChange(activeTabLabel);
-    }
-  }, [activeTabLabel]);
-  control_sections_useEffect(function () {
-    if (!!lastTab) {
-      if (lastTab !== activeTabLabel) {
-        setActiveTabLabel(lastTab);
-      }
-    } else {
-      setActiveTabLabel(tabs[0].props.label);
-    }
-  }, [section]);
-  return Object(external_React_["createElement"])(extendedAnimated.div, {
-    className: "novablocks-section__controls",
-    style: {
-      '--novablocks-section-controls-accent': accentColor
-    }
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-header"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-back",
-    onClick: onBackButtonClick
-  }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-title"
-  }, title), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__tabs'
-  }, tabs.map(function (tab) {
-    var label = tab.props.label;
-    return Object(external_React_["createElement"])("div", {
-      className: getTabClassName(label, activeTabLabel),
-      onClick: function onClick() {
-        setActiveTabLabel(label);
-      }
-    }, label);
-  })), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__tab-content'
-  }, !!activeTab && activeTab.props.children));
+  });
 };
 
-var control_sections_ActiveSection = function ActiveSection(props) {
-  var section = props.section,
-      goBack = props.goBack,
-      updateHeight = props.updateHeight;
-  var label = !!section ? section.props.label : '';
-  var children = !!section ? section.props.children : [];
+var control_sections_ControlsSectionsComponent = function ControlsSectionsComponent(props) {
+  var sections = props.sections;
 
-  var _useState3 = control_sections_useState({}),
-      _useState4 = slicedToArray_default()(_useState3, 2),
-      lastTabs = _useState4[0],
-      setLastTabs = _useState4[1];
+  var _useState = control_sections_useState(false),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      activeSectionLabel = _useState2[0],
+      setActiveSectionLabel = _useState2[1];
 
-  var lastTab = (lastTabs === null || lastTabs === void 0 ? void 0 : lastTabs[kebabCase_default()(label)]) || false;
-
-  var setLastTab = function setLastTab(lastTab) {
-    setLastTabs(Object.assign({}, lastTabs, defineProperty_default()({}, kebabCase_default()(label), lastTab)));
-  };
-
-  return Object(external_React_["createElement"])(control_sections_Fragment, null, children, Object(external_React_["createElement"])(ControlsSlot, null, function (fills) {
-    var tabs = getSectionsFromFills(fills);
-    return Object(external_React_["createElement"])(control_sections_ActiveSectionTabs, {
-      section: {
-        title: label,
-        tabs: tabs
-      },
-      onBackButtonClick: goBack,
-      lastTab: lastTab,
-      onTabChange: function onTabChange(tabLabel) {
-        setLastTab(tabLabel);
-        updateHeight();
-      }
-    });
-  }));
+  var activeSection = sections.find(function (section) {
+    return section.props.label === activeSectionLabel;
+  });
+  var notModules = sections.filter(function (section) {
+    return !section.props.module;
+  });
+  var modules = sections.filter(function (section) {
+    return !!section.props.module;
+  });
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections"
+  }, Object(external_React_["createElement"])(drawer_Drawers, null, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__header"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-sections__title"
+  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])(drawer_DrawerList, null, control_sections_renderControlsSectionsList(notModules, setActiveSectionLabel)), Object(external_React_["createElement"])(drawer_DrawerList, {
+    title: control_sections_('Modules')
+  }, control_sections_renderControlsSectionsList(modules, setActiveSectionLabel)), Object(external_React_["createElement"])(DrawerPanel, {
+    id: 0
+  }, Object(external_React_["createElement"])(control_sections_tabs, {
+    section: activeSection
+  }))));
 };
 
 var control_sections_ControlsSections = function ControlsSections(props) {
-  var isSelected = props.isSelected;
-
-  var _useState5 = control_sections_useState(false),
-      _useState6 = slicedToArray_default()(_useState5, 2),
-      activeSectionLabel = _useState6[0],
-      setActiveSectionLabel = _useState6[1];
-
   return Object(external_React_["createElement"])(ControlsSectionsSlot, null, function (fills) {
     var sections = getSectionsFromFills(fills);
-    var activeSection = sections.find(function (section) {
-      return section.props.label === activeSectionLabel;
-    });
-    var notModules = sections.filter(function (section) {
-      return !section.props.module;
-    });
-    var modules = sections.filter(function (section) {
-      return !!section.props.module;
-    });
 
     if (!sections.length) {
       return null;
     }
 
-    return Object(external_React_["createElement"])("div", {
-      className: "novablocks-sections"
-    }, Object(external_React_["createElement"])(drawer_Drawers, null, Object(external_React_["createElement"])("div", {
-      className: "novablocks-sections__header"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-sections__title"
-    }, control_sections_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])(drawer_DrawerList, null, notModules.map(function (section) {
-      return Object(external_React_["createElement"])(drawer_Drawer, {
-        target: 0,
-        title: section.props.label,
-        onOpen: function onOpen() {
-          setActiveSectionLabel(section.props.label);
-        }
-      });
-    })), !!modules.length && Object(external_React_["createElement"])(drawer_DrawerList, {
-      title: control_sections_('Modules')
-    }, modules.map(function (section) {
-      return Object(external_React_["createElement"])(drawer_Drawer, {
-        target: 0,
-        title: section.props.label,
-        onOpen: function onOpen() {
-          setActiveSectionLabel(section.props.label);
-        }
-      });
-    })), Object(external_React_["createElement"])(DrawerPanel, {
-      id: 0
-    }, Object(external_React_["createElement"])(control_sections_ActiveSection, {
-      section: activeSection
-    }))));
+    return Object(external_React_["createElement"])(control_sections_ControlsSectionsComponent, {
+      sections: sections
+    });
   });
 };
 
