@@ -12564,7 +12564,6 @@ var drawer_Drawers = function Drawers(ownProps) {
           onClick: function onClick() {
             var _drawer$props;
 
-            console.log('click');
             var target = Number.isInteger((_drawer$props = drawer.props) === null || _drawer$props === void 0 ? void 0 : _drawer$props.target) ? drawer.props.target : index;
             setActive(target);
             setOpen(true);
