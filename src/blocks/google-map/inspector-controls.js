@@ -73,7 +73,7 @@ class ButtonInspectorControls extends Component {
 						onChange={ () => setAttributes( { showIcons: ! showIcons } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Show Street Labels', '__plugin_txtd' ) }
+						label={ __( 'Show Labels', '__plugin_txtd' ) }
 						checked={ showLabels }
 						onChange={ () => setAttributes( { showLabels: ! showLabels } ) }
 					/>
