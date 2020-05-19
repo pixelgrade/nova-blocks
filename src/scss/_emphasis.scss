@@ -64,6 +64,11 @@
 		}
 	}
 
+
+	h1, h2, h3, h4, h5, h6 {
+		width: 100%;
+	}
+
 	@include above(tablet) {
 		box-shadow: var(--novablocks-block-content-box-shadow);
 
