@@ -24,7 +24,7 @@ const {
 } = wp.date;
 
 const {
-	withSelect
+	select,
 } = wp.data;
 
 const {
@@ -74,6 +74,17 @@ class Category extends Component {
 	}
 }
 
+const CardMedia = ( { post } ) => {
+	const featuredMediaObject = !! post.featured_media ? select( 'core' ).getMedia( post.featured_media ) : null;
+	const featuredImageUrl = featuredMediaObject ? featuredMediaObject.source_url : null;
+
+	if ( !! featuredImageUrl ) {
+		return <img className={ `novablocks-card__media-image` } src={ featuredImageUrl } />
+	}
+
+	return <div className={ `novablocks-card__media-placeholder` }>{ icons.placeholder }</div>
+}
+
 class PostsEdit extends Component {
 
 	render() {
@@ -102,17 +113,6 @@ class PostsEdit extends Component {
 		const TitleTagName = `h${ level + 1 }`;
 		const SubtitleTagName = `h${ level + 2 }`;
 		const dateFormat = __experimentalGetSettings().formats.date;
-
-		const CardMedia = ( props ) => {
-			const { post } = props;
-			const featuredImageUrl = post.featured_media_object ? post.featured_media_object.source_url : null;
-
-			if ( !! featuredImageUrl ) {
-				return <img className={ `novablocks-card__media-image` } src={ featuredImageUrl } />
-			}
-
-			return <div className={ `novablocks-card__media-placeholder` }>{ icons.placeholder }</div>
-		}
 
 		markPostsAsDisplayed( clientId, posts );
 

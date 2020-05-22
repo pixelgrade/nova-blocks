@@ -30862,7 +30862,7 @@ var _wp$date = wp.date,
     __experimentalGetSettings = _wp$date.__experimentalGetSettings,
     dateI18n = _wp$date.dateI18n,
     format = _wp$date.format;
-var posts_collection_edit_withSelect = wp.data.withSelect;
+var posts_collection_edit_select = wp.data.select;
 var posts_collection_edit_wp$components = wp.components,
     posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody,
     edit_Placeholder = posts_collection_edit_wp$components.Placeholder,
@@ -30922,6 +30922,23 @@ var edit_Category = /*#__PURE__*/function (_Component) {
   return Category;
 }(posts_collection_edit_Component);
 
+var edit_CardMedia = function CardMedia(_ref) {
+  var post = _ref.post;
+  var featuredMediaObject = !!post.featured_media ? posts_collection_edit_select('core').getMedia(post.featured_media) : null;
+  var featuredImageUrl = featuredMediaObject ? featuredMediaObject.source_url : null;
+
+  if (!!featuredImageUrl) {
+    return Object(external_React_["createElement"])("img", {
+      className: "novablocks-card__media-image",
+      src: featuredImageUrl
+    });
+  }
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__media-placeholder"
+  }, placeholder);
+};
+
 var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
   inherits_default()(PostsEdit, _Component2);
 
@@ -30956,22 +30973,6 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
       var SubtitleTagName = "h".concat(level + 2);
 
       var dateFormat = __experimentalGetSettings().formats.date;
-
-      var CardMedia = function CardMedia(props) {
-        var post = props.post;
-        var featuredImageUrl = post.featured_media_object ? post.featured_media_object.source_url : null;
-
-        if (!!featuredImageUrl) {
-          return Object(external_React_["createElement"])("img", {
-            className: "novablocks-card__media-image",
-            src: featuredImageUrl
-          });
-        }
-
-        return Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__media-placeholder"
-        }, placeholder);
-      };
 
       markPostsAsDisplayed(clientId, posts);
       return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
@@ -31008,7 +31009,7 @@ var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
           className: "novablocks-card__media-wrap"
         }, Object(external_React_["createElement"])("div", {
           className: "novablocks-card__media"
-        }, Object(external_React_["createElement"])(CardMedia, {
+        }, Object(external_React_["createElement"])(edit_CardMedia, {
           post: post
         }))), showMeta && Object(external_React_["createElement"])("div", {
           className: "novablocks-card__meta"

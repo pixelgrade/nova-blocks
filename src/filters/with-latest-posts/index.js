@@ -149,13 +149,14 @@ const withLatestPosts = compose( [
 		const { attributes, clientId } = props;
 
 		const latestPostsQuery = queryCriteriaFromAttributes( attributes );
+
 		if ( ! isSpecificPostModeActive( attributes ) ) {
 			const postIdsToExclude = select( STORE_NAME ).previousPostIds( clientId );
 			latestPostsQuery.exclude = postIdsToExclude.join( ',' );
 		}
 
 		return {
-			posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery ),
+			posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery )
 		};
 	} ),
 	withDispatch( ( dispatch, props ) => {
