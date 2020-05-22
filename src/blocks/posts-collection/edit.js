@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { some, pickBy, isUndefined } from "lodash";
-import { CardsManagerPanel, Collection, withPosts } from '../../components';
+import { CardsManagerPanel, Collection } from '../../components';
 import * as icons from "../../icons";
 
 const { apiFetch } = wp;
@@ -83,6 +83,8 @@ class PostsEdit extends Component {
 			setAttributes,
 			className,
 			posts,
+			clientId,
+			markPostsAsDisplayed,
 		} = this.props;
 
 		const {
@@ -111,6 +113,8 @@ class PostsEdit extends Component {
 
 			return <div className={ `novablocks-card__media-placeholder` }>{ icons.placeholder }</div>
 		}
+
+		markPostsAsDisplayed( clientId, posts );
 
 		return (
 			<Fragment>
@@ -186,4 +190,4 @@ class PostsEdit extends Component {
 	}
 }
 
-export default withPosts( PostsEdit );
+export default PostsEdit;

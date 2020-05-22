@@ -19,28 +19,18 @@ add_action( 'init', 'novablocks_posts_collection_block_init' );
 if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 	function novablocks_render_posts_collection_block( $attributes, $content ) {
+		global $novablocks_rendered_posts_ids;
 
 		$attributes_config = novablocks_get_posts_collection_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$args = array(
-			'posts_per_page'   => $attributes['numberOfPosts'],
-			'post_status'      => 'publish',
-			'order'            => $attributes['order'],
-			'orderby'          => $attributes['orderBy'],
-			'suppress_filters' => false,
-			'post__not_in'     => array( get_the_ID() ),
-		);
-
-		if ( isset( $attributes['categories'] ) ) {
-			$args['category'] = $attributes['categories'];
-		}
-
+		$args = novablocks_build_articles_query( $attributes );
 		$posts = get_posts( $args );
 
 		ob_start();
 
 		foreach ( $posts as $post ) {
+			array_push( $novablocks_rendered_posts_ids, $post->ID );
 			$card_markup = novablocks_get_post_card_markup( $post, $attributes );
 			echo apply_filters( 'novablocks_post_card_markup', $card_markup, $post, $attributes );
 		}

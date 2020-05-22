@@ -1143,3 +1143,40 @@ function novablocks_get_card_media_markup( $url ) {
 
 	<?php return ob_get_clean();
 }
+
+function novablocks_build_articles_query( $attributes ) {
+	global $novablocks_rendered_posts_ids;
+
+	if ( ! $novablocks_rendered_posts_ids ) {
+		$novablocks_rendered_posts_ids = array();
+	}
+
+	$authors        = isset( $attributes['authors'] ) ? $attributes['authors'] : array();
+	$categories     = isset( $attributes['categories'] ) ? $attributes['categories'] : array();
+	$tags           = isset( $attributes['tags'] ) ? $attributes['tags'] : array();
+	$specific_posts = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : array();
+	$posts_to_show  = intval( $attributes['postsToShow'] );
+	$manual_mode    = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
+	$args           = array(
+		'post_status'         => 'publish',
+		'suppress_filters'    => false,
+		'ignore_sticky_posts' => true,
+		'post__not_in'        => $novablocks_rendered_posts_ids,
+	);
+	if ( $manual_mode && $specific_posts ) {
+		$args['post__in'] = $specific_posts;
+		$args['orderby']  = 'post__in';
+	} else {
+		$args['posts_per_page'] = $posts_to_show;
+		if ( $authors && count( $authors ) ) {
+			$args['author__in'] = $authors;
+		}
+		if ( $categories && count( $categories ) ) {
+			$args['category__in'] = $categories;
+		}
+		if ( $tags && count( $tags ) ) {
+			$args['tag__in'] = $tags;
+		}
+	}
+	return $args;
+}

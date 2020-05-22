@@ -39,7 +39,7 @@ const EmphasisLevelControls = ( props ) => {
 
 	return (
 		<Fragment>
-			<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Content Area', '__plugin_txtd' ) } initialOpen={ false }>
 				<RadioControl
 					label={ __( 'Emphasis Level', '__plugin_txtd' ) }
 					value={ contentStyle }
@@ -50,7 +50,7 @@ const EmphasisLevelControls = ( props ) => {
 				<EmphasisContentAreaSlot />
 			</PanelBody>
 
-			<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ true }>
+			<PanelBody title={ __( 'Block Area', '__plugin_txtd' ) } initialOpen={ false }>
 				<RadioControl
 					label={ __( 'Emphasis Level', '__plugin_txtd' ) }
 					value={ blockStyle }

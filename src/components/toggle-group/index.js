@@ -55,7 +55,7 @@ const ToggleGroup = ( props ) => {
 	const disabledTransitions = useTransition( disabledToggles, item => item.attribute, config );
 
 	return (
-		<PanelBody initialOpen={ true } title={ label } className={ 'components-toggle-group__panel' }>
+		<PanelBody initialOpen={ false } title={ label } className={ 'components-toggle-group__panel' }>
 			<div className={ 'components-toggle-group' }>
 				{ !! enabledToggles.length &&
 				  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>

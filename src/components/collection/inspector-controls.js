@@ -1,6 +1,5 @@
 import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../emphasis-level-controls";
 import { HeadingToolbar } from "../../components";
-import SourceControls from '../../components/source-controls';
 
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
@@ -61,10 +60,9 @@ const CollectionInspectorControls = ( props ) => {
 				}
 			</EmphasisContentAreaFill>
 			<InspectorControls>
-				<SourceControls />
 				{
 					showMedia &&
-					<PanelBody initialOpen={true} title={__( 'Cards Media Area' )}>
+					<PanelBody initialOpen={ false } title={__( 'Cards Media Area' )}>
 						<RadioControl
 							label={'Image resizing'}
 							selected={imageResizing}
