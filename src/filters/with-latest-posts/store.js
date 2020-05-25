@@ -88,12 +88,12 @@ const selectors = {
 
 export const registerQueryStore = blockName => {
 	/**
-	 * Returns an array of all newspack-blocks/query blocks in the order they are on
+	 * Returns an array of all query blocks in the order they are on
 	 * the page. This is needed to be able to show the editor blocks in the order
 	 * that PHP will render them.
 	 *
 	 * @param {Block[]} blocks any blocks
-	 * @returns {Block[]} ordered newspack-blocks/query blocks
+	 * @returns {Block[]} ordered query blocks
 	 */
 	const getQueryBlocksInOrder = blocks =>
 		blocks.flatMap( block => {

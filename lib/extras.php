@@ -1155,7 +1155,7 @@ function novablocks_build_articles_query( $attributes ) {
 	$categories     = isset( $attributes['categories'] ) ? $attributes['categories'] : array();
 	$tags           = isset( $attributes['tags'] ) ? $attributes['tags'] : array();
 	$specific_posts = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : array();
-	$posts_to_show  = intval( $attributes['postsToShow'] );
+	$posts_to_show  = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
 	$manual_mode    = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
 	$args           = array(
 		'post_status'         => 'publish',

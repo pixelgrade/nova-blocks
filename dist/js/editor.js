@@ -19959,12 +19959,12 @@ var selectors = {
 };
 var store_registerQueryStore = function registerQueryStore(blockName) {
   /**
-   * Returns an array of all newspack-blocks/query blocks in the order they are on
+   * Returns an array of all query blocks in the order they are on
    * the page. This is needed to be able to show the editor blocks in the order
    * that PHP will render them.
    *
    * @param {Block[]} blocks any blocks
-   * @returns {Block[]} ordered newspack-blocks/query blocks
+   * @returns {Block[]} ordered query blocks
    */
   var getQueryBlocksInOrder = function getQueryBlocksInOrder(blocks) {
     return blocks.flatMap(function (block) {
@@ -25725,9 +25725,7 @@ var collection_Collection = function Collection(props) {
     style: style
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
-  }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props)), Object(external_React_["createElement"])("div", {
-    className: "wp-block-group__inner-container"
-  }, Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props), Object(external_React_["createElement"])("div", {
     className: "block-editor-block-list__block wp-block novablocks-collection__cards",
     "data-align": "wide"
   }, Object(external_React_["createElement"])("div", {
@@ -30834,6 +30832,51 @@ function cards_collection_init() {
 }
 
 /* harmony default export */ var cards_collection = (cards_collection_init);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/media.js
+
+
+
+function media_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function media_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { media_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { media_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var media_withSelect = wp.data.withSelect;
+
+var media_CardMedia = function CardMedia(_ref) {
+  var post = _ref.post;
+  var featured_media_url = post.featured_media_url;
+
+  if (!!featured_media_url) {
+    return Object(external_React_["createElement"])("img", {
+      className: "novablocks-card__media-image",
+      src: featured_media_url
+    });
+  }
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__media-placeholder"
+  }, placeholder);
+};
+
+/* harmony default export */ var posts_collection_media = (media_withSelect(function (select, ownProps) {
+  var _select = select('core'),
+      getMedia = _select.getMedia;
+
+  var post = ownProps.post;
+
+  if (!post.featured_media) {
+    return {};
+  }
+
+  var featured_media_obj = getMedia(post.featured_media);
+  var featured_media_url = featured_media_obj ? featured_media_obj.source_url : null;
+  return {
+    post: media_objectSpread(media_objectSpread({}, post), {}, {
+      featured_media_url: featured_media_url
+    })
+  };
+})(media_CardMedia));
 // CONCATENATED MODULE: ./src/blocks/posts-collection/edit.js
 
 
@@ -30862,7 +30905,6 @@ var _wp$date = wp.date,
     __experimentalGetSettings = _wp$date.__experimentalGetSettings,
     dateI18n = _wp$date.dateI18n,
     format = _wp$date.format;
-var posts_collection_edit_select = wp.data.select;
 var posts_collection_edit_wp$components = wp.components,
     posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody,
     edit_Placeholder = posts_collection_edit_wp$components.Placeholder,
@@ -30922,120 +30964,95 @@ var edit_Category = /*#__PURE__*/function (_Component) {
   return Category;
 }(posts_collection_edit_Component);
 
-var edit_CardMedia = function CardMedia(_ref) {
-  var post = _ref.post;
-  var featuredMediaObject = !!post.featured_media ? posts_collection_edit_select('core').getMedia(post.featured_media) : null;
-  var featuredImageUrl = featuredMediaObject ? featuredMediaObject.source_url : null;
+var edit_PostsEdit = function PostsEdit(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes,
+      className = props.className,
+      posts = props.posts,
+      clientId = props.clientId,
+      markPostsAsDisplayed = props.markPostsAsDisplayed;
+  var columns = attributes.columns,
+      level = attributes.level,
+      showButtons = attributes.showButtons,
+      showDescription = attributes.showDescription,
+      showMedia = attributes.showMedia,
+      showMeta = attributes.showMeta,
+      showTitle = attributes.showTitle,
+      showSubtitle = attributes.showSubtitle;
+  var hasPosts = Array.isArray(posts) && posts.length;
+  var TitleTagName = "h".concat(level + 1);
+  var SubtitleTagName = "h".concat(level + 2);
 
-  if (!!featuredImageUrl) {
-    return Object(external_React_["createElement"])("img", {
-      className: "novablocks-card__media-image",
-      src: featuredImageUrl
-    });
-  }
+  var dateFormat = __experimentalGetSettings().formats.date;
 
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-card__media-placeholder"
-  }, placeholder);
-};
-
-var edit_PostsEdit = /*#__PURE__*/function (_Component2) {
-  inherits_default()(PostsEdit, _Component2);
-
-  var _super2 = posts_collection_edit_createSuper(PostsEdit);
-
-  function PostsEdit() {
-    classCallCheck_default()(this, PostsEdit);
-
-    return _super2.apply(this, arguments);
-  }
-
-  createClass_default()(PostsEdit, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          attributes = _this$props.attributes,
-          setAttributes = _this$props.setAttributes,
-          className = _this$props.className,
-          posts = _this$props.posts,
-          clientId = _this$props.clientId,
-          markPostsAsDisplayed = _this$props.markPostsAsDisplayed;
-      var columns = attributes.columns,
-          level = attributes.level,
-          showButtons = attributes.showButtons,
-          showDescription = attributes.showDescription,
-          showMedia = attributes.showMedia,
-          showMeta = attributes.showMeta,
-          showTitle = attributes.showTitle,
-          showSubtitle = attributes.showSubtitle;
-      var hasPosts = Array.isArray(posts) && posts.length;
-      var TitleTagName = "h".concat(level + 1);
-      var SubtitleTagName = "h".concat(level + 2);
-
-      var dateFormat = __experimentalGetSettings().formats.date;
-
-      markPostsAsDisplayed(clientId, posts);
-      return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
-        label: posts_collection_edit_('Cards Manager', '__plugin_txtd'),
-        onChange: function onChange(attributes) {
-          setAttributes(attributes);
-        }
-      }, this.props)), Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
-        title: posts_collection_edit_('Layout', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(edit_RangeControl, {
-        value: columns,
-        onChange: function onChange(columns) {
-          return setAttributes({
-            columns: columns
-          });
-        },
-        min: 2,
-        max: 4
-      }))), Object(external_React_["createElement"])(collection, extends_default()({
-        hasAppender: false
-      }, this.props), Object(external_React_["createElement"])("div", {
-        className: "block-editor-inner-blocks"
-      }, Object(external_React_["createElement"])("div", {
-        className: "block-editor-block-list__layout"
-      }, !!posts && posts.map(function (post, idx) {
-        var style = {
-          '--columns': columns
-        };
-        return Object(external_React_["createElement"])("div", {
-          className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
-          key: idx,
-          style: style
-        }, showMedia && Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__media-wrap"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__media"
-        }, Object(external_React_["createElement"])(edit_CardMedia, {
-          post: post
-        }))), showMeta && Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__meta"
-        }, Object(external_React_["createElement"])("time", {
-          dateTime: format('c', post.date_gmt)
-        }, dateI18n(dateFormat, post.date_gmt))), showTitle && Object(external_React_["createElement"])(TitleTagName, {
-          className: "novablocks-card__title"
-        }, post.title.raw), showSubtitle && post.categories.length && Object(external_React_["createElement"])(SubtitleTagName, {
-          className: "novablocks-card__subtitle"
-        }, Object(external_React_["createElement"])(edit_Category, {
-          id: post.categories[0]
-        })), showDescription && Object(external_React_["createElement"])("p", {
-          className: "novablocks-card__description"
-        }, post.excerpt.raw), showButtons && Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__buttons"
-        }, Object(external_React_["createElement"])("div", {
-          className: "wp-block-button"
-        }, Object(external_React_["createElement"])("div", {
-          className: "wp-block-button__link"
-        }, "Read More"))));
-      })))));
+  markPostsAsDisplayed(clientId, posts);
+  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_edit_InspectorControls, null, Object(external_React_["createElement"])(cards_manager_panel, extends_default()({
+    label: posts_collection_edit_('Cards Manager', '__plugin_txtd'),
+    onChange: function onChange(attributes) {
+      setAttributes(attributes);
     }
-  }]);
-
-  return PostsEdit;
-}(posts_collection_edit_Component);
+  }, props)), Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
+    title: posts_collection_edit_('Layout', '__plugin_txtd')
+  }, Object(external_React_["createElement"])(edit_RangeControl, {
+    value: columns,
+    onChange: function onChange(columns) {
+      return setAttributes({
+        columns: columns
+      });
+    },
+    min: 2,
+    max: 4
+  }))), Object(external_React_["createElement"])(collection, extends_default()({
+    hasAppender: false
+  }, props), Object(external_React_["createElement"])("div", {
+    className: "block-editor-inner-blocks"
+  }, Object(external_React_["createElement"])("div", {
+    className: "block-editor-block-list__layout"
+  }, !!posts && posts.map(function (post, idx) {
+    var style = {
+      '--columns': columns
+    };
+    return Object(external_React_["createElement"])("div", {
+      className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
+      key: idx,
+      style: style
+    }, showMedia && Object(external_React_["createElement"])("div", {
+      className: "wp-block"
+    }, Object(external_React_["createElement"])("div", {
+      className: "novablocks-card__media-wrap"
+    }, Object(external_React_["createElement"])("div", {
+      className: "novablocks-card__media"
+    }, Object(external_React_["createElement"])(posts_collection_media, {
+      post: post
+    })))), showMeta && Object(external_React_["createElement"])("div", {
+      className: "wp-block"
+    }, Object(external_React_["createElement"])("div", {
+      className: "novablocks-card__meta"
+    }, Object(external_React_["createElement"])("time", {
+      dateTime: format('c', post.date_gmt)
+    }, dateI18n(dateFormat, post.date_gmt)))), showTitle && Object(external_React_["createElement"])("div", {
+      className: "wp-block"
+    }, Object(external_React_["createElement"])(TitleTagName, {
+      className: "novablocks-card__title"
+    }, post.title.raw)), showSubtitle && post.categories.length && Object(external_React_["createElement"])("div", {
+      className: "wp-block"
+    }, Object(external_React_["createElement"])(SubtitleTagName, {
+      className: "novablocks-card__subtitle"
+    }, Object(external_React_["createElement"])(edit_Category, {
+      id: post.categories[0]
+    }))), showDescription && Object(external_React_["createElement"])(edit_RawHTML, {
+      className: "wp-block novablocks-card__description"
+    }, post.excerpt.rendered), showButtons && Object(external_React_["createElement"])("div", {
+      className: "wp-block"
+    }, Object(external_React_["createElement"])("div", {
+      className: "novablocks-card__buttons"
+    }, Object(external_React_["createElement"])("div", {
+      className: "wp-block-button"
+    }, Object(external_React_["createElement"])("div", {
+      className: "wp-block-button__link"
+    }, "Read More")))));
+  })))));
+};
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/index.js

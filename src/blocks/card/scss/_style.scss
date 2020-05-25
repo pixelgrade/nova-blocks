@@ -3,8 +3,6 @@
 
 	.wp-block-buttons[class] {
 		float: none;
-		margin-left: 0;
-		margin-right: 0;
 	}
 
 	> .block-editor-block-list__layout {
@@ -19,6 +17,8 @@
 }
 
 .novablocks-card__media-wrap[class] {
+	max-width: none !important;
+
 	margin: calc( -0.5 * var(--novablocks-block-content-padding) );
 	margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
 

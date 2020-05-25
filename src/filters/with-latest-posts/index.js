@@ -11,7 +11,6 @@ import { STORE_NAME, registerQueryStore } from "./store";
 
 registerQueryStore( `novablocks/${ STORE_NAME }` );
 
-
 const { __ } = wp.i18n;
 const { addFilter } = wp.hooks;
 const { Fragment } = wp.element;

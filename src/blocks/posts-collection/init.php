@@ -49,11 +49,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 	$dateReadable = esc_html( get_the_date( '', $post ) );
 	$title = get_the_title( $post );
 	$postLink = esc_url( get_permalink( $post ) );
-	$excerpt = $post->post_excerpt;
-
-	if ( ! ( $excerpt ) ) {
-		$excerpt = $post->post_content;
-	}
+	$excerpt = get_the_excerpt( $post );
 
 	$hlevel = $attributes['level'];
 	$titleTag = 'h' . ( $hlevel + 1 );
