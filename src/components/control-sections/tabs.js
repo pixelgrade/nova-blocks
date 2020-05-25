@@ -8,6 +8,8 @@ import Cube from "./cube";
 import { getSectionsFromFills } from "./utils";
 import { ControlsSlot, ControlsFill } from "./controls-slot-fill";
 
+import { useEffectDebugger } from "../../utils";
+
 const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
 
 const { __ } = wp.i18n;
@@ -62,13 +64,15 @@ const ActiveSectionTabs = ( props ) => {
 		accentColor: getTabAccentColor( activeTabLabel )
 	} );
 
-	useEffect( () => {
+	useEffectDebugger( () => {
 		if ( typeof onTabChange === "function" ) {
 			onTabChange(activeTabLabel);
 		}
 	}, [activeTabLabel] )
 
-	useEffect( () => {
+	useEffectDebugger( () => {
+		console.log( lastTab );
+
 		if ( !! lastTab ) {
 			if ( lastTab !== activeTabLabel ) {
 				setActiveTabLabel( lastTab );
@@ -82,7 +86,7 @@ const ActiveSectionTabs = ( props ) => {
 				onTabChange( activeTabLabel );
 			}
 		}
-	}, [title, tabs] )
+	}, [title] )
 
 	return (
 		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
