@@ -3,16 +3,18 @@
 
 @import './emphasis';
 
-@import '../components/layout-panel/style';
-@import '../components/scrolling-effect-controls/style';
-
 @import '../components/alignment-controls/editor';
 @import '../components/color-controls/editor';
+@import '../components/control-sections/editor';
+@import '../components/drawer/editor';
+@import '../components/layout-panel/editor';
 @import '../components/notice/editor';
+@import '../components/scrolling-effect-controls/editor';
 @import '../components/tabs/editor';
 @import '../components/toggle-group/editor';
 
 @import '../blocks/announcement-bar/scss/editor';
+@import '../components/controls-group/scss/editor';
 @import '../blocks/header/scss/editor';
 @import '../blocks/logo/scss/editor';
 @import '../blocks/google-map/scss/editor';
@@ -47,6 +49,78 @@
 	line-height: 1.8;
 }
 
+// don't collapse margins
+.wp-block[data-type="novablocks/media"] {
+	display: flex;
+
+	> * {
+		flex-grow: 1;
+	}
+}
+
+// debug
+body.debug {
+	.wp-block-group__inner-container {
+		position: relative;
+		z-index: 10;
+
+		&:before,
+		&:after {
+			position: absolute;
+			left: 0;
+			right: 0;
+
+			content: '';
+			display: block;
+			height: calc( 5 * var(--novablocks-media-spacing) );
+			background:
+				linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, rgba(0,0,0,0) 1px),
+				linear-gradient(to bottom, transparent 40%, red 40%, red calc(40% + 1px), transparent calc(40% + 1px));
+			background-size:
+				20% 20%,
+				100% 100%;
+		}
+
+		&:before {
+			top: calc( -2 * var(--novablocks-media-spacing) );
+		}
+
+		&:after {
+			bottom: calc( -3 * var(--novablocks-media-spacing) );
+		}
+	}
+
+	.novablocks-media {
+		position: relative;
+
+		&:before,
+		&:after {
+			content: "";
+			display: block;
+			position: absolute;
+			background: #b9deff;
+			left: 0;
+			right: 0;
+
+			transition: var(--novablocks-media-transition);
+			transition-property: padding, top, bottom;
+		}
+
+		&:before {
+			--offset: calc( max( 0, -1 * var(--block-top-spacing, 0) ) );
+			padding-top: calc( -1 * var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-bottom: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+			bottom: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
+		}
+
+		&:after {
+			--offset: calc( max( 0, -1 * var(--block-bottom-spacing, 0) ) );
+			padding-top: calc( -1 * var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+			top: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
+		}
+	}
+}
 .block-editor-block-variation-picker__variations[class][class][class] {
 	padding-left: 0;
 

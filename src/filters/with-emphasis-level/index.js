@@ -1,5 +1,11 @@
 import EmphasisLevelControls from "../../components/emphasis-level-controls";
 
+import {
+	ControlsTab,
+	ControlsSection,
+} from "../../components/control-sections";
+
+const { __ } = wp.i18n;
 const { InspectorControls } = wp.blockEditor;
 const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;
@@ -21,9 +27,7 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<InspectorControls>
-					<EmphasisLevelControls { ...props } />
-				</InspectorControls>
+				<EmphasisLevelControls { ...props } />
 			</Fragment>
 		);
 	};
@@ -49,6 +53,10 @@ function addEmphasisLevelAttribute( block ) {
 		contentStyle: {
 			type: 'string',
 			default: 'basic',
+		},
+		emphasisByContrast: {
+			number: 'number',
+			default: 1
 		}
 	});
 

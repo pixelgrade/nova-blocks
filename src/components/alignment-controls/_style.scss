@@ -7,29 +7,25 @@
 	width: 100%;
 
 	.novablocks-u-halign-left & {
-		justify-content: flex-start;
+		align-items: flex-start;
 		text-align: left;
 	}
 
 	.novablocks-u-halign-center & {
-		justify-content: center;
+		align-items: center;
 		text-align: center;
 	}
 
 	.novablocks-u-halign-right & {
-		justify-content: flex-end;
+		align-items: flex-end;
 		text-align: right;
 	}
 
 	.novablocks-u-valign-top & {
-		align-items: flex-start;
-	}
-
-	.novablocks-u-valign-center & {
-		align-items: center;
+		justify-content: flex-start;
 	}
 
 	.novablocks-u-valign-bottom & {
-		align-items: flex-end;
+		justify-content: flex-end;
 	}
 }

@@ -729,6 +729,42 @@ function novablocks_add_hero_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
 
+function novablocks_get_media_spacing_atttributes() {
+	return array(
+		// general
+		'layoutPreset' => array(
+			'type' => 'string',
+			'default' => 'stable',
+		),
+		// customize
+		'emphasisBySpace' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'enableOverlapping' => array(
+			'type' => 'boolean',
+			'default' => false,
+		),
+		// settings
+		'blockTopSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'blockBottomSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'emphasisTopSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'emphasisBottomSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+	);
+}
+
 function novablocks_add_media_settings( $settings ) {
 
 	$media_settings = array(
@@ -749,7 +785,28 @@ function novablocks_add_media_settings( $settings ) {
 					),
 					'default' => array(),
 				),
+				'emphasisArea' => array(
+					'type' => 'number',
+					'default' => 100,
+				),
+				'contentAreaWidth' => array(
+					'type' => 'number',
+					'default' => 50,
+				),
+				'layoutGutter' => array(
+					'type' => 'number',
+					'default' => 25,
+				),
+				'balanceEmphasis' => array(
+					'type' => 'number',
+					'default' => 0,
+				),
+				'balanceFocalPoint' => array(
+					'type' => 'string',
+					'default' => 'content',
+				),
 			),
+			novablocks_get_media_spacing_atttributes(),
 			novablocks_get_alignment_attributes(),
 			novablocks_get_advanced_gallery_component_attributes()
 		),

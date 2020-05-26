@@ -1,5 +1,6 @@
 import { HeadingToolbar, ToggleGroup } from "../../components";
-import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../../components/emphasis-level-controls";
+import { EmphasisBlockAreaControls, EmphasisContentAreaControls } from "../../components/emphasis-level-controls";
+import { ControlsSection, ControlsTab } from '../../components/control-sections';
 
 const { __ } = wp.i18n;
 
@@ -100,7 +101,7 @@ const CardsCollectionInspectorControls = ( props ) => {
 
 	return (
 		<Fragment>
-			<EmphasisBlockAreaFill>
+			<EmphasisBlockAreaControls>
 				{ isSelected &&
 					<PanelRow>
 						<span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
@@ -114,8 +115,8 @@ const CardsCollectionInspectorControls = ( props ) => {
 						/>
 					</PanelRow>
 				}
-			</EmphasisBlockAreaFill>
-			<EmphasisContentAreaFill>
+			</EmphasisBlockAreaControls>
+			<EmphasisContentAreaControls>
 				{ isSelected &&
 					<PanelRow>
 						<span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
@@ -129,39 +130,37 @@ const CardsCollectionInspectorControls = ( props ) => {
 						/>
 					</PanelRow>
 				}
-			</EmphasisContentAreaFill>
-			<InspectorControls>
-				<ToggleGroup
-					label={ __( 'Cards Manager', '__plugin_txtd' ) }
-					onChange={ updateAttributes }
-					toggles={ toggles }
-				/>
-				{ showMedia &&
-				    <PanelBody initialOpen={ true } title={ __( 'Cards Media Area' ) }>
-					    <RadioControl
-						    label={'Image resizing'}
-						    selected={imageResizing}
-						    onChange={imageResizing => {
-							    setAttributes( {imageResizing} )
-						    }}
-						    options={[
-							    {label: 'Stretch to fill the container', value: 'cropped'},
-							    {label: 'Shrink to fit (no crop)', value: 'original'},
-						    ]}
-					    />
-					    <RangeControl
-						    label={__( 'Image container height', '__plugin_txtd' )}
-						    value={containerHeight}
-						    onChange={containerHeight => {
-							    setAttributes( {containerHeight} )
-						    }}
-						    min={0}
-						    max={100}
-						    step={5}
-					    />
-				    </PanelBody>
-				}
-			</InspectorControls>
+			</EmphasisContentAreaControls>
+			<ToggleGroup
+				label={ __( 'Cards Manager', '__plugin_txtd' ) }
+				onChange={ updateAttributes }
+				toggles={ toggles }
+			/>
+			<ControlsSection label={ __( 'Media' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
+				    <RadioControl
+					    label={'Image resizing'}
+					    selected={imageResizing}
+					    onChange={imageResizing => {
+						    setAttributes( {imageResizing} )
+					    }}
+					    options={[
+						    {label: 'Stretch to fill the container', value: 'cropped'},
+						    {label: 'Shrink to fit (no crop)', value: 'original'},
+					    ]}
+				    />
+				    <RangeControl
+					    label={__( 'Image container height', '__plugin_txtd' )}
+					    value={containerHeight}
+					    onChange={containerHeight => {
+						    setAttributes( {containerHeight} )
+					    }}
+					    min={0}
+					    max={100}
+					    step={5}
+				    />
+				</ControlsTab>
+			</ControlsSection>
 		</Fragment>
    );
 }

@@ -22,7 +22,15 @@ const MediaPreview = function( props ) {
 			mediaPosition,
 			images,
 			// alignment
-			verticalAlignment
+			verticalAlignment,
+			blockTopSpacing,
+			blockBottomSpacing,
+			emphasisTopSpacing,
+			emphasisBottomSpacing,
+			emphasisArea,
+
+			contentAreaWidth,
+			layoutGutter,
 		},
 		className,
 		settings,
@@ -47,8 +55,18 @@ const MediaPreview = function( props ) {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
+	const cssVars = {
+		'--block-top-spacing': blockTopSpacing,
+		'--block-bottom-spacing': blockBottomSpacing,
+		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+		'--emphasis-area': emphasisArea,
+		'--novablocks-media-content-width': `${contentAreaWidth}%`,
+		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 8 / 100 )`,
+	}
+
 	return (
-		<div className={ classNames }>
+		<div className={ classNames } style={ cssVars }>
 			<div className="wp-block-group__inner-container">
 				<div className="wp-block" data-align="wide">
 					<div className="novablocks-media__layout novablocks-u-content-align">

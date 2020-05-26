@@ -23,6 +23,7 @@ const {
 } = wp.element;
 
 const ScrollIndicatorPanel = withSettings( function( props ) {
+
 	const {
 		settings,
 		attributes: {
@@ -32,11 +33,13 @@ const ScrollIndicatorPanel = withSettings( function( props ) {
 		updateAttributes,
 	} = props;
 
-	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
+	const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
+
+	const heroBlocks = getBlocks().filter( ( block ) => {
 		return block.name === 'novablocks/hero';
 	} );
 
-	const index = heroBlocks.findIndex( block => block.clientId === select( 'core/block-editor' ).getSelectedBlockClientId() );
+	const index = heroBlocks.findIndex( block => block.clientId === getSelectedBlockClientId() );
 
 	return (
 		index === 0 &&

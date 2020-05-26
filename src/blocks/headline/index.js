@@ -4,6 +4,7 @@
 import * as icons from '../../icons';
 import edit from './edit';
 import save from './save';
+import transforms from './transforms';
 
 import { STORE_NAME } from '../../store';
 
@@ -41,6 +42,7 @@ function init() {
 		},
 		save,
 		edit,
+		transforms,
 	} )
 }
 
