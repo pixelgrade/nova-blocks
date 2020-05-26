@@ -368,7 +368,7 @@ module.exports = _toConsumableArray;
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(45);
+var freeGlobal = __webpack_require__(46);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -571,7 +571,7 @@ module.exports = Symbol;
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(44),
+var isFunction = __webpack_require__(45),
     isLength = __webpack_require__(34);
 
 /**
@@ -773,7 +773,7 @@ module.exports = toKey;
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(58);
+var baseGet = __webpack_require__(59);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -1137,6 +1137,53 @@ module.exports = _typeof;
 
 /***/ }),
 /* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseAssignValue = __webpack_require__(72),
+    createAggregator = __webpack_require__(81);
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Creates an object composed of keys generated from the results of running
+ * each element of `collection` thru `iteratee`. The order of grouped values
+ * is determined by the order they occur in `collection`. The corresponding
+ * value of each key is an array of elements responsible for generating the
+ * key. The iteratee is invoked with one argument: (value).
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Collection
+ * @param {Array|Object} collection The collection to iterate over.
+ * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
+ * @returns {Object} Returns the composed aggregate object.
+ * @example
+ *
+ * _.groupBy([6.1, 4.2, 6.3], Math.floor);
+ * // => { '4': [4.2], '6': [6.1, 6.3] }
+ *
+ * // The `_.property` iteratee shorthand.
+ * _.groupBy(['one', 'two', 'three'], 'length');
+ * // => { '3': ['one', 'two'], '5': ['three'] }
+ */
+var groupBy = createAggregator(function(result, value, key) {
+  if (hasOwnProperty.call(result, key)) {
+    result[key].push(value);
+  } else {
+    baseAssignValue(result, key, [value]);
+  }
+});
+
+module.exports = groupBy;
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -1178,7 +1225,7 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -1188,7 +1235,7 @@ function _readOnlyError(name) {
 module.exports = _readOnlyError;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1361,7 +1408,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(18),
@@ -1404,7 +1451,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -1415,7 +1462,7 @@ module.exports = freeGlobal;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(75)))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -1447,7 +1494,7 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseForOwn = __webpack_require__(84),
@@ -1467,7 +1514,7 @@ module.exports = baseEach;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(89),
@@ -1509,7 +1556,7 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(14),
@@ -1551,10 +1598,10 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(51)(module)))
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -1582,7 +1629,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsTypedArray = __webpack_require__(91),
@@ -1615,7 +1662,7 @@ module.exports = isTypedArray;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseMatches = __webpack_require__(99),
@@ -1652,7 +1699,7 @@ module.exports = baseIteratee;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(24),
@@ -1685,7 +1732,7 @@ module.exports = Stack;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqualDeep = __webpack_require__(123),
@@ -1719,7 +1766,7 @@ module.exports = baseIsEqual;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var SetCache = __webpack_require__(124),
@@ -1808,7 +1855,7 @@ module.exports = equalArrays;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(19);
@@ -1829,7 +1876,7 @@ module.exports = isStrictComparable;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 /**
@@ -1855,10 +1902,10 @@ module.exports = matchesStrictComparable;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(59),
+var castPath = __webpack_require__(60),
     toKey = __webpack_require__(29);
 
 /**
@@ -1885,7 +1932,7 @@ module.exports = baseGet;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(12),
@@ -1912,7 +1959,7 @@ module.exports = castPath;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /**
@@ -1936,53 +1983,6 @@ function arrayMap(array, iteratee) {
 }
 
 module.exports = arrayMap;
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseAssignValue = __webpack_require__(72),
-    createAggregator = __webpack_require__(81);
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Creates an object composed of keys generated from the results of running
- * each element of `collection` thru `iteratee`. The order of grouped values
- * is determined by the order they occur in `collection`. The corresponding
- * value of each key is an array of elements responsible for generating the
- * key. The iteratee is invoked with one argument: (value).
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Collection
- * @param {Array|Object} collection The collection to iterate over.
- * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
- * @returns {Object} Returns the composed aggregate object.
- * @example
- *
- * _.groupBy([6.1, 4.2, 6.3], Math.floor);
- * // => { '4': [4.2], '6': [6.1, 6.3] }
- *
- * // The `_.property` iteratee shorthand.
- * _.groupBy(['one', 'two', 'three'], 'length');
- * // => { '3': ['one', 'two'], '5': ['three'] }
- */
-var groupBy = createAggregator(function(result, value, key) {
-  if (hasOwnProperty.call(result, key)) {
-    result[key].push(value);
-  } else {
-    baseAssignValue(result, key, [value]);
-  }
-});
-
-module.exports = groupBy;
 
 
 /***/ }),
@@ -2085,8 +2085,8 @@ module.exports = range;
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(60),
-    baseIteratee = __webpack_require__(52),
+var arrayMap = __webpack_require__(61),
+    baseIteratee = __webpack_require__(53),
     baseMap = __webpack_require__(180),
     isArray = __webpack_require__(12);
 
@@ -2684,10 +2684,10 @@ module.exports = defineProperty;
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(44),
+var isFunction = __webpack_require__(45),
     isMasked = __webpack_require__(78),
     isObject = __webpack_require__(19),
-    toSource = __webpack_require__(46);
+    toSource = __webpack_require__(47);
 
 /**
  * Used to match `RegExp`
@@ -2902,7 +2902,7 @@ module.exports = getValue;
 
 var arrayAggregator = __webpack_require__(82),
     baseAggregator = __webpack_require__(83),
-    baseIteratee = __webpack_require__(52),
+    baseIteratee = __webpack_require__(53),
     isArray = __webpack_require__(12);
 
 /**
@@ -2957,7 +2957,7 @@ module.exports = arrayAggregator;
 /* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseEach = __webpack_require__(47);
+var baseEach = __webpack_require__(48);
 
 /**
  * Aggregates elements of `collection` on `accumulator` with keys transformed
@@ -3060,11 +3060,11 @@ module.exports = createBaseFor;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseTimes = __webpack_require__(88),
-    isArguments = __webpack_require__(48),
+    isArguments = __webpack_require__(49),
     isArray = __webpack_require__(12),
-    isBuffer = __webpack_require__(49),
+    isBuffer = __webpack_require__(50),
     isIndex = __webpack_require__(33),
-    isTypedArray = __webpack_require__(51);
+    isTypedArray = __webpack_require__(52);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3274,7 +3274,7 @@ module.exports = baseUnary;
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(45);
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(46);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -3305,7 +3305,7 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(50)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(51)(module)))
 
 /***/ }),
 /* 94 */
@@ -3444,7 +3444,7 @@ module.exports = createBaseEach;
 
 var baseIsMatch = __webpack_require__(100),
     getMatchData = __webpack_require__(145),
-    matchesStrictComparable = __webpack_require__(57);
+    matchesStrictComparable = __webpack_require__(58);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -3470,8 +3470,8 @@ module.exports = baseMatches;
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(53),
-    baseIsEqual = __webpack_require__(54);
+var Stack = __webpack_require__(54),
+    baseIsEqual = __webpack_require__(55);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -4122,14 +4122,14 @@ module.exports = mapCacheSet;
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(53),
-    equalArrays = __webpack_require__(55),
+var Stack = __webpack_require__(54),
+    equalArrays = __webpack_require__(56),
     equalByTag = __webpack_require__(129),
     equalObjects = __webpack_require__(133),
     getTag = __webpack_require__(140),
     isArray = __webpack_require__(12),
-    isBuffer = __webpack_require__(49),
-    isTypedArray = __webpack_require__(51);
+    isBuffer = __webpack_require__(50),
+    isTypedArray = __webpack_require__(52);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -4340,7 +4340,7 @@ module.exports = cacheHas;
 var Symbol = __webpack_require__(22),
     Uint8Array = __webpack_require__(130),
     eq = __webpack_require__(35),
-    equalArrays = __webpack_require__(55),
+    equalArrays = __webpack_require__(56),
     mapToArray = __webpack_require__(131),
     setToArray = __webpack_require__(132);
 
@@ -4786,7 +4786,7 @@ var DataView = __webpack_require__(141),
     Set = __webpack_require__(143),
     WeakMap = __webpack_require__(144),
     baseGetTag = __webpack_require__(18),
-    toSource = __webpack_require__(46);
+    toSource = __webpack_require__(47);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -4896,7 +4896,7 @@ module.exports = WeakMap;
 /* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isStrictComparable = __webpack_require__(56),
+var isStrictComparable = __webpack_require__(57),
     keys = __webpack_require__(32);
 
 /**
@@ -4926,12 +4926,12 @@ module.exports = getMatchData;
 /* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqual = __webpack_require__(54),
+var baseIsEqual = __webpack_require__(55),
     get = __webpack_require__(30),
     hasIn = __webpack_require__(151),
     isKey = __webpack_require__(38),
-    isStrictComparable = __webpack_require__(56),
-    matchesStrictComparable = __webpack_require__(57),
+    isStrictComparable = __webpack_require__(57),
+    matchesStrictComparable = __webpack_require__(58),
     toKey = __webpack_require__(29);
 
 /** Used to compose bitmasks for value comparisons. */
@@ -5110,7 +5110,7 @@ module.exports = memoize;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(22),
-    arrayMap = __webpack_require__(60),
+    arrayMap = __webpack_require__(61),
     isArray = __webpack_require__(12),
     isSymbol = __webpack_require__(28);
 
@@ -5211,8 +5211,8 @@ module.exports = baseHasIn;
 /* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(59),
-    isArguments = __webpack_require__(48),
+var castPath = __webpack_require__(60),
+    isArguments = __webpack_require__(49),
     isArray = __webpack_require__(12),
     isIndex = __webpack_require__(33),
     isLength = __webpack_require__(34),
@@ -5341,7 +5341,7 @@ module.exports = baseProperty;
 /* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(58);
+var baseGet = __webpack_require__(59);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -6802,7 +6802,7 @@ module.exports = _objectWithoutPropertiesLoose;
 /* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseEach = __webpack_require__(47),
+var baseEach = __webpack_require__(48),
     isArrayLike = __webpack_require__(23);
 
 /**
@@ -8318,7 +8318,7 @@ var with_settings_withSelect = wp.data.withSelect;
   })(Component);
 }));
 // EXTERNAL MODULE: ./node_modules/lodash/groupBy.js
-var groupBy = __webpack_require__(61);
+var groupBy = __webpack_require__(41);
 var groupBy_default = /*#__PURE__*/__webpack_require__.n(groupBy);
 
 // CONCATENATED MODULE: ./src/components/control-sections/utils.js
@@ -11033,7 +11033,7 @@ var tabs_ActiveSectionTabs = function ActiveSectionTabs(props) {
     onClick: goBack
   }), Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__controls-title"
-  }, title), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
+  }, title), Object(external_React_["createElement"])(cube, null)), tabs.length > 1 && Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__tabs'
   }, tabs.map(function (tab) {
     var label = tab.props.label;
@@ -11259,6 +11259,7 @@ var drawer_Drawer = function Drawer(props) {
 var control_sections_ = wp.i18n.__;
 var useBlockEditContext = wp.blockEditor.useBlockEditContext;
 var control_sections_wp$element = wp.element,
+    control_sections_Children = control_sections_wp$element.Children,
     control_sections_Component = control_sections_wp$element.Component,
     control_sections_Fragment = control_sections_wp$element.Fragment,
     control_sections_useState = control_sections_wp$element.useState;
@@ -11311,14 +11312,33 @@ var control_sections_ControlsSectionsComponent = function ControlsSectionsCompon
   }), Object.keys(groups).map(function (key) {
     var sections = groups[key];
     return sections.map(function (section, index) {
-      var tabs = section.props.children.filter(function (child) {
+      var _section$props = section.props,
+          children = _section$props.children,
+          label = _section$props.label;
+      var tabs = control_sections_Children.toArray(children).filter(function (child) {
         return child.type === control_sections_ControlsTab;
+      });
+
+      var groupedTabs = groupBy_default()(tabs, function (tab) {
+        return tab.props.label;
+      });
+
+      var compiledTabs = Object.keys(groupedTabs).map(function (key) {
+        var group = groupedTabs[key];
+        return {
+          props: {
+            label: key,
+            children: group.reduce(function (accumulator, tab) {
+              return accumulator.concat(control_sections_Children.toArray(tab.props.children));
+            }, [])
+          }
+        };
       });
       return Object(external_React_["createElement"])(DrawerPanel, {
         key: index
       }, Object(external_React_["createElement"])(tabs_ActiveSectionTabs, {
         title: section.props.label,
-        tabs: tabs
+        tabs: compiledTabs
       }));
     });
   })));
@@ -12729,19 +12749,19 @@ var width_WidthControls = function WidthControls(props) {
  */
 
 
+
 /**
  * WordPress dependencies
  */
 
 var layout_panel_ = wp.i18n.__;
-var layout_panel_PanelBody = wp.components.PanelBody;
 
 var layout_panel_LayoutPanel = function LayoutPanel(props) {
-  return Object(external_React_["createElement"])(layout_panel_PanelBody, {
-    className: "pixelgrade-hero-button-group-wrapper",
-    title: layout_panel_('Layout', '__plugin_txtd'),
-    initialOpen: false
-  }, Object(external_React_["createElement"])(padding, props), Object(external_React_["createElement"])(width, props), props.children);
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: layout_panel_('Layout')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: layout_panel_('Settings')
+  }, Object(external_React_["createElement"])(padding, props), Object(external_React_["createElement"])(width, props)));
 };
 
 /* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
@@ -12852,6 +12872,7 @@ var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(object
 /**
  * WordPress dependencies
  */
+
 var scrolling_effect_controls_ = wp.i18n.__;
 var scrolling_effect_controls_wp$components = wp.components,
     scrolling_effect_controls_Button = scrolling_effect_controls_wp$components.Button,
@@ -12888,9 +12909,10 @@ var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPan
     });
   }
 
-  return Object(external_React_["createElement"])(scrolling_effect_controls_PanelBody, {
-    title: "Scrolling Effect:",
-    className: 'novablocks-scrolling-effect-panel'
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: scrolling_effect_controls_('Scrolling Effect')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: scrolling_effect_controls_('Customize')
   }, Object(external_React_["createElement"])(scrolling_effect_controls_RadioControl, {
     selected: scrollingEffect,
     className: 'novablocks-scrolling-effect',
@@ -12910,7 +12932,7 @@ var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPan
       setAttributes(newAttributes);
     },
     options: scrollingEffectOptions
-  }), props.children);
+  }), props.children));
 };
 
 var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel(props) {
@@ -13124,7 +13146,7 @@ var regenerator = __webpack_require__(21);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(41);
+var asyncToGenerator = __webpack_require__(42);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // CONCATENATED MODULE: ./src/components/toggle-group/index.js
@@ -13432,7 +13454,7 @@ var assertThisInitialized = __webpack_require__(11);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(42);
+var readOnlyError = __webpack_require__(43);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js
@@ -14074,7 +14096,7 @@ var tabs_Tab = /*#__PURE__*/function (_Component2) {
 
 
 // EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(43);
+var js_cookie = __webpack_require__(44);
 var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
 
 // CONCATENATED MODULE: ./src/components/notice/index.js
@@ -15728,7 +15750,9 @@ var api_key_panel_body_wp$components = wp.components,
     api_key_panel_body_Button = api_key_panel_body_wp$components.Button,
     api_key_panel_body_TextControl = api_key_panel_body_wp$components.TextControl,
     api_key_panel_body_PanelBody = api_key_panel_body_wp$components.PanelBody;
-var api_key_panel_body_Component = wp.element.Component;
+var api_key_panel_body_wp$element = wp.element,
+    api_key_panel_body_Component = api_key_panel_body_wp$element.Component,
+    api_key_panel_body_Fragment = api_key_panel_body_wp$element.Fragment;
 
 var api_key_panel_body_ApiKeyPanelBody = /*#__PURE__*/function (_Component) {
   inherits_default()(ApiKeyPanelBody, _Component);
@@ -15755,11 +15779,10 @@ var api_key_panel_body_ApiKeyPanelBody = /*#__PURE__*/function (_Component) {
         return null;
       }
 
-      return Object(external_React_["createElement"])(api_key_panel_body_PanelBody, {
-        title: api_key_panel_body_('Google Maps API Key', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(api_key_panel_body_TextControl, {
+      return Object(external_React_["createElement"])(api_key_panel_body_Fragment, null, Object(external_React_["createElement"])(api_key_panel_body_TextControl, {
         placeholder: api_key_panel_body_('Paste API key here', '__plugin_txtd'),
         value: apiKey,
+        label: api_key_panel_body_('Google Maps API Key', '__plugin_txtd'),
         onChange: onChangeApiKey,
         help: apiKeyInstructions
       }), Object(external_React_["createElement"])(api_key_panel_body_Button, {
@@ -15910,6 +15933,8 @@ function inspector_controls_isNativeReflectConstruct() { if (typeof Reflect === 
 
 
 
+
+
 var google_map_inspector_controls_ = wp.i18n.__;
 var google_map_inspector_controls_wp$components = wp.components,
     google_map_inspector_controls_PanelBody = google_map_inspector_controls_wp$components.PanelBody,
@@ -15953,8 +15978,10 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
         return null;
       }
 
-      return Object(external_React_["createElement"])(google_map_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(google_map_inspector_controls_PanelBody, {
-        title: google_map_inspector_controls_('Map Design', '__plugin_txtd')
+      return Object(external_React_["createElement"])(external_React_["Fragment"], null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+        label: google_map_inspector_controls_('Map Design')
+      }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+        label: google_map_inspector_controls_('Customize')
       }, Object(external_React_["createElement"])(map_style_select, extends_default()({}, this.props, {
         apiKey: savedApiKey,
         value: styleSlug,
@@ -15973,7 +16000,9 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
             pinColor: newPinColor
           });
         }
-      })), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+      }))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
+        label: google_map_inspector_controls_('Settings')
+      }, Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
         label: google_map_inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
         checked: showIcons,
         onChange: function onChange() {
@@ -15997,9 +16026,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
             showControls: !showControls
           });
         }
-      })), Object(external_React_["createElement"])(google_map_inspector_controls_PanelBody, {
-        title: google_map_inspector_controls_('Zoom Level', '__plugin_txtd')
-      }, Object(external_React_["createElement"])(google_map_inspector_controls_RangeControl, {
+      }), Object(external_React_["createElement"])(google_map_inspector_controls_RangeControl, {
         value: zoom,
         onChange: function onChange(newZoom) {
           return setAttributes({
@@ -16007,8 +16034,13 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         },
         min: 5,
-        max: 20
-      })), Object(external_React_["createElement"])(api_key_panel_body, this.props));
+        max: 20,
+        label: google_map_inspector_controls_('Zoom Level', '__plugin_txtd')
+      }))), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+        label: google_map_inspector_controls_('Setup')
+      }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+        label: google_map_inspector_controls_('Settings')
+      }, Object(external_React_["createElement"])(api_key_panel_body, this.props))));
     }
   }]);
 
@@ -17075,6 +17107,7 @@ function hero_edit_isNativeReflectConstruct() { if (typeof Reflect === "undefine
 
 
 
+
 var hero_edit_ = wp.i18n.__;
 var hero_edit_InspectorControls = wp.blockEditor.InspectorControls;
 var hero_edit_wp$components = wp.components,
@@ -17096,9 +17129,10 @@ var edit_BlockHeightControls = function BlockHeightControls(props) {
       setAttributes = props.setAttributes,
       settings = props.settings;
   var minHeightFallback = attributes.minHeightFallback;
-  return Object(external_React_["createElement"])(hero_edit_PanelBody, {
-    title: hero_edit_('Height', '__plugin_txtd'),
-    initialOpen: false
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: hero_edit_('Layout')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: hero_edit_('Settings')
   }, Object(external_React_["createElement"])(edit_RadioControl, {
     label: hero_edit_('Minimum Height', '__plugin_txtd'),
     selected: minHeightFallback,
@@ -17108,7 +17142,7 @@ var edit_BlockHeightControls = function BlockHeightControls(props) {
       });
     },
     options: settings.minimumHeightOptions
-  }));
+  })));
 };
 
 var edit_HeroEdit = /*#__PURE__*/function (_Component) {

@@ -71,21 +71,24 @@ const ActiveSectionTabs = ( props ) => {
 				<div className="novablocks-sections__controls-title">{ title }</div>
 				<Cube />
 			</div>
-			<div className={ 'novablocks-sections__tabs' }>
-				{
-					tabs.map( tab => {
-						const label = tab.props.label;
-						const className = getTabClassName( label, activeTabLabel );
-						const onClick = () => {
-							setActiveTabLabel( label );
-						};
+			{
+				tabs.length > 1 &&
+				<div className={'novablocks-sections__tabs'}>
+					{
+						tabs.map( tab => {
+							const label = tab.props.label;
+							const className = getTabClassName( label, activeTabLabel );
+							const onClick = () => {
+								setActiveTabLabel( label );
+							};
 
-						return (
-							<div className={ className } onClick={ onClick }>{ label }</div>
-						);
-					} )
-				}
-			</div>
+							return (
+								<div className={className} onClick={onClick}>{label}</div>
+							);
+						} )
+					}
+				</div>
+			}
 			<div className={ 'novablocks-sections__tab-content' }>
 				{ !! activeTab && activeTab.props.children }
 			</div>

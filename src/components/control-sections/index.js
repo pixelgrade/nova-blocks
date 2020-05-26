@@ -14,6 +14,7 @@ const { __ } = wp.i18n;
 const { useBlockEditContext } = wp.blockEditor;
 
 const {
+	Children,
 	Component,
 	Fragment,
 	useState,
@@ -80,13 +81,30 @@ const ControlsSectionsComponent = ( props ) => {
 						const sections = groups[ key ];
 
 						return sections.map( ( section, index ) => {
-							const tabs = section.props.children.filter( child => child.type === ControlsTab );
+							const { children, label } = section.props;
+							const tabs = Children.toArray( children ).filter( child => child.type === ControlsTab );
+							const groupedTabs = groupBy( tabs, tab => {
+								return tab.props.label;
+							} );
+
+							const compiledTabs = Object.keys( groupedTabs ).map( key => {
+								const group = groupedTabs[key];
+
+								return {
+									props: {
+										label: key,
+										children: group.reduce( ( accumulator, tab ) => {
+											return accumulator.concat( Children.toArray( tab.props.children ) );
+										}, [] )
+									}
+								};
+							} );
 
 							return (
 								<DrawerPanel key={ index }>
 									<ActiveSectionTabs
 										title={ section.props.label }
-										tabs={ tabs }
+										tabs={ compiledTabs }
 									/>
 								</DrawerPanel>
 							)
