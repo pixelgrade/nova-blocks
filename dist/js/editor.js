@@ -18372,12 +18372,7 @@ function navigation_init() {
 // CONCATENATED MODULE: ./src/blocks/menu-food/inspector-controls.js
 
 
-/**
- * WordPress dependencies
- */
 var menu_food_inspector_controls_ = wp.i18n.__;
-var menu_food_inspector_controls_Fragment = wp.element.Fragment;
-var menu_food_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 var menu_food_inspector_controls_wp$components = wp.components,
     menu_food_inspector_controls_PanelBody = menu_food_inspector_controls_wp$components.PanelBody,
     menu_food_inspector_controls_ToggleControl = menu_food_inspector_controls_wp$components.ToggleControl;
@@ -18385,9 +18380,10 @@ var menu_food_inspector_controls_wp$components = wp.components,
 var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorControls(props) {
   var enableTwoColumns = props.attributes.enableTwoColumns,
       setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(menu_food_inspector_controls_Fragment, null, Object(external_React_["createElement"])(menu_food_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(menu_food_inspector_controls_PanelBody, {
-    title: menu_food_inspector_controls_('Layout', '__plugin_txtd'),
-    initialOpen: true
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: menu_food_inspector_controls_('Layout')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: menu_food_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(menu_food_inspector_controls_ToggleControl, {
     label: menu_food_inspector_controls_('2 columns', '__plugin_txtd'),
     checked: enableTwoColumns,
@@ -18396,7 +18392,7 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
         enableTwoColumns: !enableTwoColumns
       });
     }
-  }))));
+  })));
 };
 
 /* harmony default export */ var menu_food_inspector_controls = (inspector_controls_FoodMenuInspectorControls);
@@ -19349,6 +19345,7 @@ var preview_OpenHoursPreview = function OpenHoursPreview(props) {
 /**
  * WordPress dependencies
  */
+
 var inspector_controls_wp$element = wp.element,
     openhours_inspector_controls_Fragment = inspector_controls_wp$element.Fragment,
     inspector_controls_useState = inspector_controls_wp$element.useState;
@@ -19409,9 +19406,10 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
   var timeFormattingInstructions = Object(external_React_["createElement"])(openhours_inspector_controls_Fragment, null, Object(external_React_["createElement"])(ExternalLink, {
     href: timeFormattingUrl
   }, openhours_inspector_controls_('Learn more about time formatting', '__plugin_txtd')));
-  return Object(external_React_["createElement"])(openhours_inspector_controls_Fragment, null, Object(external_React_["createElement"])(openhours_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(openhours_inspector_controls_PanelBody, {
-    title: openhours_inspector_controls_('Setup', '__plugin_txtd'),
-    initialOpen: true
+  return Object(external_React_["createElement"])(openhours_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: openhours_inspector_controls_('Setup')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: openhours_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(TextareaControl, {
     label: "Write your opening hours in a simple human readable format",
     value: text,
@@ -19424,9 +19422,10 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
     }
   }), Object(external_React_["createElement"])("div", {
     className: "components-base-control__label novablocks__label novablocks__example novablocks__example--multi"
-  }, openhours_inspector_controls_('Monday 10am - 3pm\n' + 'Tuesday to Friday 9 - 17\n' + 'Sat noon - 2am', '__plugin_txtd'))), Object(external_React_["createElement"])(openhours_inspector_controls_PanelBody, {
-    title: openhours_inspector_controls_('Display', '__plugin_txtd'),
-    initialOpen: true
+  }, openhours_inspector_controls_('Monday 10am - 3pm\n' + 'Tuesday to Friday 9 - 17\n' + 'Sat noon - 2am', '__plugin_txtd')))), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: openhours_inspector_controls_('Display')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: openhours_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(openhours_inspector_controls_RadioControl, {
     label: openhours_inspector_controls_('Displaying the opening hours', '__plugin_txtd'),
     value: openHoursStyle,

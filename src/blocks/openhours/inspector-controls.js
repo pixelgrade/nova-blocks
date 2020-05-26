@@ -1,3 +1,5 @@
+import {ControlsSection, ControlsTab} from "../../components/control-sections";
+
 /**
  * WordPress dependencies
  */
@@ -72,24 +74,26 @@ const OpenHoursInspectorControls = function( props ) {
 	return (
 
 		<Fragment>
-			<InspectorControls>
-				<PanelBody title={ __( 'Setup', '__plugin_txtd' ) } initialOpen={ true }>
-				<TextareaControl
-					label="Write your opening hours in a simple human readable format"
-					value={ text }
-					className = 'original-text'
-					onChange={( text ) => setAttributes( {
-						text,
-						parsedText: parseContent( text )
-					} )}
-				/>
-				<div className="components-base-control__label novablocks__label novablocks__example novablocks__example--multi">
-					{ __( 'Monday 10am - 3pm\n' +
-					      'Tuesday to Friday 9 - 17\n' +
-					      'Sat noon - 2am', '__plugin_txtd' ) }
-				</div>
-				</PanelBody>
-				<PanelBody title={ __( 'Display', '__plugin_txtd' ) } initialOpen={ true }>
+			<ControlsSection label={ __( 'Setup' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
+					<TextareaControl
+						label="Write your opening hours in a simple human readable format"
+						value={ text }
+						className = 'original-text'
+						onChange={( text ) => setAttributes( {
+							text,
+							parsedText: parseContent( text )
+						} )}
+					/>
+					<div className="components-base-control__label novablocks__label novablocks__example novablocks__example--multi">
+						{ __( 'Monday 10am - 3pm\n' +
+						      'Tuesday to Friday 9 - 17\n' +
+						      'Sat noon - 2am', '__plugin_txtd' ) }
+					</div>
+				</ControlsTab>
+			</ControlsSection>
+			<ControlsSection label={ __( 'Display' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
 
 					<RadioControl
 						label={ __( 'Displaying the opening hours', '__plugin_txtd' ) }
@@ -169,8 +173,8 @@ const OpenHoursInspectorControls = function( props ) {
 						onChange={( timeFormat ) => setAttributes( {timeFormat} )}
 					/>
 
-				</PanelBody>
-			</InspectorControls>
+				</ControlsTab>
+			</ControlsSection>
 		</Fragment>
 	)
 };
