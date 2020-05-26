@@ -6,7 +6,6 @@ import { useSpring, animated } from 'react-spring';
 import Cube from "./cube";
 
 import { getSectionsFromFills } from "./utils";
-import { ControlsSlot, ControlsFill } from "./controls-slot-fill";
 
 import { useEffectDebugger } from "../../utils";
 
@@ -47,16 +46,15 @@ const ActiveSectionTabs = ( props ) => {
 	const {
 		title,
 		tabs,
-		onBackButtonClick,
-		onTabChange,
-		lastTab,
+		goBack,
+		updateHeight,
 	} = props;
 
 	if ( ! tabs.length ) {
 		return null;
 	}
 
-	const [ activeTabLabel, setActiveTabLabel ] = useState( lastTab || tabs[0].props.label );
+	const [ activeTabLabel, setActiveTabLabel ] = useState( tabs[0].props.label );
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
 	const activeTab = tabs[activeTabIndex];
 
@@ -64,34 +62,12 @@ const ActiveSectionTabs = ( props ) => {
 		accentColor: getTabAccentColor( activeTabLabel )
 	} );
 
-	useEffectDebugger( () => {
-		if ( typeof onTabChange === "function" ) {
-			onTabChange(activeTabLabel);
-		}
-	}, [activeTabLabel] )
-
-	useEffectDebugger( () => {
-		console.log( lastTab );
-
-		if ( !! lastTab ) {
-			if ( lastTab !== activeTabLabel ) {
-				setActiveTabLabel( lastTab );
-			} else if ( typeof onTabChange === "function" ) {
-				onTabChange( activeTabLabel );
-			}
-		} else {
-			if ( tabs[0].props.label !== activeTabLabel ) {
-				setActiveTabLabel( tabs[0].props.label );
-			} else if ( typeof onTabChange === "function" ) {
-				onTabChange( activeTabLabel );
-			}
-		}
-	}, [title] )
+	useEffect( updateHeight, [activeTabLabel] );
 
 	return (
 		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
-				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
+				<div className="novablocks-sections__controls-back" onClick={ goBack }></div>
 				<div className="novablocks-sections__controls-title">{ title }</div>
 				<Cube />
 			</div>
@@ -117,51 +93,4 @@ const ActiveSectionTabs = ( props ) => {
 	)
 }
 
-const ActiveSection = ( props ) => {
-
-	const {
-		section,
-		goBack,
-		updateHeight,
-	} = props;
-
-	const label = !! section ? section.props.label : '';
-	const children = !! section ? section.props.children : [];
-
-	const [ lastTabs, setLastTabs ] = useState( {} );
-	const lastTab = lastTabs?.[ kebabCase( label ) ] || false;
-
-	const setLastTab = ( lastTab ) => {
-		setLastTabs( Object.assign( {}, lastTabs, { [ kebabCase( label ) ]: lastTab } ) );
-	}
-
-	return (
-		<Fragment>
-			{ children }
-			<ControlsSlot>
-				{
-					( fills ) => {
-						const tabs = getSectionsFromFills( fills );
-
-						return (
-							<ActiveSectionTabs
-								title={ label }
-								tabs={ tabs }
-								onBackButtonClick={ goBack }
-								lastTab={ lastTab }
-								onTabChange={ ( tabLabel ) => {
-									if ( lastTab !== tabLabel ) {
-										setLastTab( tabLabel );
-									}
-									updateHeight();
-								} }
-							/>
-						)
-					}
-				}
-			</ControlsSlot>
-		</Fragment>
-	)
-}
-
-export default ActiveSection;
+export { ActiveSectionTabs };

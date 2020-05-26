@@ -50,6 +50,9 @@ const Drawers = ( ownProps ) => {
 		updateHeight();
 	}, [ open, active ] );
 
+	// keep track of number of drawers in previous drawerLists
+	let totalDrawers = 0;
+
 	return (
 		<animated.div
 			className={ `novablocks-drawers` }
@@ -59,18 +62,21 @@ const Drawers = ( ownProps ) => {
 				style={ { transform } }>
 				<div className={ `novablocks-drawers__front` } ref={ ref }>
 					{ otherChildren }
-					{ drawerLists.map( drawerList => {
+					{ drawerLists.map( ( drawerList, drawerListIndex ) => {
 						const drawers = getDrawersFromList( drawerList );
 						const title = drawerList?.props?.title;
+						totalDrawers = totalDrawers + drawers.length;
 
 						return (
 							<div className={ `novablocks-drawers__list` }>
 								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
 								{ drawers.map( ( drawer, index ) => {
+									const defaultTarget = totalDrawers - drawers.length + index;
+									const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : defaultTarget;
+
 									return (
 										<Drawer { ...drawer.props }
 											onClick={ () => {
-												const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : index;
 												setActive( target );
 												setOpen( true );
 
@@ -83,14 +89,14 @@ const Drawers = ( ownProps ) => {
 							</div>
 						)
 					} ) }
-					{ drawerPanels.map( ( drawerPanel, index ) => {
-						return (
-							<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
-								<DrawerWithProps { ...drawerPanel.props } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
-							</div>
-						)
-					} ) }
 				</div>
+				{ drawerPanels.map( ( drawerPanel, index ) => {
+					return (
+						<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+							<DrawerWithProps { ...drawerPanel.props } isActive={ index === active } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
+						</div>
+					)
+				} ) }
 			</animated.div>
 		</animated.div>
 	);

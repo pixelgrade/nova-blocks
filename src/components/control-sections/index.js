@@ -1,13 +1,14 @@
 // internal dependencies
+import { groupBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
-import { ControlsSlot, ControlsFill } from "./controls-slot-fill";
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
 import { SectionsList, SectionsListItem } from './sections-list';
 
 import Cube from './cube';
-import ActiveSection from "./tabs";
+import { ActiveSectionTabs } from "./tabs";
 
 import { Drawer, Drawers, DrawerList, DrawerPanel } from "../../components/drawer";
+import {kebabCase} from "lodash";
 
 const { __ } = wp.i18n;
 const { useBlockEditContext } = wp.blockEditor;
@@ -39,11 +40,13 @@ const renderControlsSectionsList = ( sections, onSectionClick ) => {
 const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
-	const [ activeSectionLabel, setActiveSectionLabel ] = useState( false );
 
-	const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 	const notModules = sections.filter( section => ! section.props.module )
 	const modules = sections.filter( section => !! section.props.module );
+
+	const groups = groupBy( sections, section => {
+		return !! section.props.group ? section.props.group : '';
+	} );
 
 	return (
 		<div className="novablocks-sections">
@@ -52,15 +55,44 @@ const ControlsSectionsComponent = ( props ) => {
 					<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
 					<Cube />
 				</div>
-				<DrawerList>
-					{ renderControlsSectionsList( notModules, setActiveSectionLabel ) }
-				</DrawerList>
-				<DrawerList title={ __( 'Modules' ) }>
-					{ renderControlsSectionsList( modules, setActiveSectionLabel ) }
-				</DrawerList>
-				<DrawerPanel id={ 0 }>
-					<ActiveSection section={ activeSection } />
-				</DrawerPanel>
+				{
+					Object.keys( groups ).map( key => {
+						const sections = groups[ key ];
+
+						return (
+							<DrawerList title={ key } key={ key }>
+								{ sections.map( ( section, index ) => {
+									const { label } = section.props;
+
+									return (
+										<Drawer
+											key={ index }
+											title={ label }
+										/>
+									);
+								} ) }
+							</DrawerList>
+						)
+					} )
+				}
+				{
+					Object.keys( groups ).map( key => {
+						const sections = groups[ key ];
+
+						return sections.map( ( section, index ) => {
+							const tabs = section.props.children.filter( child => child.type === ControlsTab );
+
+							return (
+								<DrawerPanel key={ index }>
+									<ActiveSectionTabs
+										title={ section.props.label }
+										tabs={ tabs }
+									/>
+								</DrawerPanel>
+							)
+						} );
+					} )
+				}
 			</Drawers>
 		</div>
 	);
@@ -85,9 +117,7 @@ const ControlsSections = ( props ) => {
 
 const ControlsTab = ( props ) => {
 	return (
-		<ControlsFill>
-			<div label={ props.label }>{ props.children }</div>
-		</ControlsFill>
+		<div label={ props.label }>{ props.children }</div>
 	)
 }
 
