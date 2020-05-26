@@ -37,9 +37,11 @@ const enableFontSizeControlOnBlocks = [
 ];
 
 const fontSizeOptions = [
+	{ value: 'smallest', label: __( 'Smallest', '__plugin_txtd' ) },
 	{ value: 'smaller', label: __( 'Smaller', '__plugin_txtd' ) },
 	{ value: 'normal', label: __( 'Normal', '__plugin_txtd' ) },
 	{ value: 'larger', label: __( 'Larger', '__plugin_txtd' ) },
+	{ value: 'largest', label: __( 'Largest', '__plugin_txtd' ) },
 ];
 
 const defaultFontSize = 'normal';

@@ -35,6 +35,10 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$classes[] = 'novablocks-block';
 		$classes[] = 'novablocks-media';
 
+		if ( ! empty( $attributes['verticalAlignment'] ) ) {
+			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
+		}
+
 		if ( ! empty( $attributes['mediaPosition'] ) ) {
 			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
 		}
@@ -54,31 +58,40 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$classes[] = 'wp-block-group';
 		$classes[] = 'alignfull';
 
+		if ( empty( $attributes['gallery'] ) && ! empty( $attributes['images'] ) ) {
+			$attributes['gallery'] = $attributes['images'];
+		}
+
+		$blockTopSpacing = $attributes['blockTopSpacing'];
+		$blockBottomSpacing = $attributes['blockBottomSpacing'];
+		$emphasisTopSpacing = $attributes['verticalAlignment'] === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
+		$emphasisBottomSpacing = $attributes['verticalAlignment'] === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
+		$emphasisArea = $attributes['emphasisArea'];
+		$contentAreaWidth = $attributes['contentAreaWidth'];
+		$layoutGutter = $attributes['layoutGutter'];
+
+		$style =
+			'--block-top-spacing:' . $blockTopSpacing . ';' .
+			'--block-bottom-spacing:' . $blockBottomSpacing . ';' .
+			'--emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
+			'--emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
+			'--emphasis-area:' . $emphasisArea . ';' .
+			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
+			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 8 / 100 )';
+
 		ob_start(); ?>
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo $style ?>">
             <div class="wp-block-group__inner-container">
 	            <div class="wp-block alignwide">
-	                <div class="novablocks-media__layout">
+	                <div class="novablocks-media__layout novablocks-u-content-align">
 	                    <div class="novablocks-media__content">
 		                    <div class="novablocks-media__inner-container novablocks-block__content">
 								<?php echo $content; ?>
 		                    </div>
 	                    </div>
 	                    <div class="novablocks-media__aside">
-		                    <?php if ( ! empty( $attributes['images'] ) && is_array( $attributes['images'] ) ) {
-								foreach ( $attributes['images'] as $image ) {
-									$image = json_decode( $image );
-									$image_markup = wp_get_attachment_image( $image->id, 'large' );
-									// Falback to URL if present
-									if ( empty( $image_markup ) && ! empty( $image->url ) ) {
-										$image_markup = '<img src="' . esc_url( $image->url ) . '" alt="" />';
-									}
-									echo '<div class="novablocks-media__image">' . $image_markup . '</div>';
-								}
-							} else { ?>
-								<div class="novablocks-media__image"></div>
-							<?php } ?>
+		                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
 	                    </div>
 	                </div>
 	            </div>

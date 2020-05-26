@@ -7,6 +7,7 @@ import {
 } from '../../components';
 
 import {getSnapClassname, maybeSnapFocalPoint} from "../../utils";
+import {ControlsSection, ControlsTab} from "../../components/control-sections";
 
 /**
  * WordPress dependencies
@@ -58,60 +59,59 @@ const SlideshowInspectorControls = function( props ) {
 	focalPointPickerClassNames = focalPointPickerClassNames.join( ' ' );
 
 	return (
-		<InspectorControls>
+		<Fragment>
 
-			{ !! galleryImages.length &&
-				<PanelBody
-					className={ 'nova-blocks-slideshow-type-panel' }
-					title={ __( 'Slides', '__plugin_txtd' ) }>
-					<GalleryPreview
-						galleryImages={ galleryImages }
-						onSelectImage={ setIndex }
-						selected={ selectedIndex }
-					/>
-					{
-						selectedImage &&
-						<Fragment>
-							<FocalPointPicker
-								className={ focalPointPickerClassNames }
-								url={ selectedImage.url }
-								dimensions={ {
-									width: selectedImage.width,
-									height: selectedImage.height,
+			{
+				!! galleryImages.length &&
+				<ControlsSection label={ __( 'Slides' ) }>
+					<ControlsTab label={ __( 'General' ) }>
+						<GalleryPreview
+							galleryImages={ galleryImages }
+							onSelectImage={ setIndex }
+							selected={ selectedIndex }
+						/>
+						{
+							selectedImage &&
+							<Fragment>
+								<FocalPointPicker
+									className={ focalPointPickerClassNames }
+									url={ selectedImage.url }
+									dimensions={ {
+										width: selectedImage.width,
+										height: selectedImage.height,
+									} }
+									value={ selectedImage.focalPoint || { x: 0.5, y: 0.5 } }
+									onChange={ focalPoint => {
+										const newGalleryImages = galleryImages;
+										newGalleryImages[ selectedIndex ].focalPoint = maybeSnapFocalPoint( focalPoint );
+										setAttributes( { galleryImages: newGalleryImages } );
+									} }
+								/>
+							</Fragment>
+						}
+					</ControlsTab>
+				</ControlsSection>
+			}
+
+			{
+				'gallery' === slideshowType &&
+				<Fragment>
+					<LayoutPanel { ...props } />
+					<ControlsSection label={ __( 'Layout' ) }>
+						<ControlsTab label={ __( 'Settings' ) }>
+							<RadioControl
+								label={ __( 'Minimum Height', '__plugin_txtd' ) }
+								selected={ minHeight }
+								onChange={ ( nextMinHeight ) => {
+									setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
 								} }
-								value={ selectedImage.focalPoint || { x: 0.5, y: 0.5 } }
-								onChange={ focalPoint => {
-									const newGalleryImages = galleryImages;
-									newGalleryImages[ selectedIndex ].focalPoint = maybeSnapFocalPoint( focalPoint );
-									setAttributes( { galleryImages: newGalleryImages } );
-								} }
+								options={ minHeightOptions }
 							/>
-						</Fragment>
-					}
-				</PanelBody> }
-
-			{ 'gallery' === slideshowType && <Fragment>
-
-				<LayoutPanel { ...props } />
-
-				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-					<RadioControl
-						label={ __( 'Minimum Height', '__plugin_txtd' ) }
-						selected={ minHeight }
-						onChange={ ( nextMinHeight ) => {
-							setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
-						} }
-						options={ minHeightOptions }
-					/>
-				</PanelBody>
-
-			</Fragment> }
-
-			{ 'gallery' !== slideshowType && <PanelBody>
-				{ __( 'Coming Soon', '__plugin_txtd' ) }
-			</PanelBody> }
-
-		</InspectorControls>
+						</ControlsTab>
+					</ControlsSection>
+				</Fragment>
+			}
+		</Fragment>
 	);
 };
 

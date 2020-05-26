@@ -3,6 +3,8 @@
  */
 import classnames from 'classnames';
 
+import AdvancedGallery from '../../components/advanced-gallery';
+
 /**
  * WordPress dependencies
  */
@@ -19,9 +21,18 @@ const MediaPreview = function( props ) {
 			blockStyle,
 			mediaPosition,
 			images,
+			// alignment
+			verticalAlignment,
+			blockTopSpacing,
+			blockBottomSpacing,
+			emphasisTopSpacing,
+			emphasisBottomSpacing,
+			emphasisArea,
+
+			contentAreaWidth,
+			layoutGutter,
 		},
 		className,
-		updateImages,
 		settings,
 	} = props;
 
@@ -30,6 +41,7 @@ const MediaPreview = function( props ) {
 		`novablocks-block`,
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
+		`novablocks-u-valign-${ verticalAlignment }`,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
@@ -37,42 +49,27 @@ const MediaPreview = function( props ) {
 		}
 	);
 
-	let galleryImages = images;
+	const passedProps = props;
 
 	if ( images.length && typeof images[0] === 'string' ) {
-		galleryImages = images.map( image => JSON.parse( image ) );
+		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
-	const displayImages = ( imagesArray ) => {
-		if ( 0 === imagesArray.length ) {
-			return (
-				<MediaPlaceholder
-					icon={ <BlockIcon icon='format-gallery' /> }
-					className="novablocks-media__placeholder"
-					onSelect={ updateImages }
-					accept="image/*"
-					allowedTypes={ [ 'image' ] }
-					multiple
-				/>
-			);
-		}
-
-		return (
-			galleryImages.map( ( image ) => {
-				return (
-					<div key={ image.id } className="novablocks-media__image">
-						<img alt={ image.alt } src={ image.url } />
-					</div>
-				);
-			} )
-		);
-	};
+	const cssVars = {
+		'--block-top-spacing': blockTopSpacing,
+		'--block-bottom-spacing': blockBottomSpacing,
+		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+		'--emphasis-area': emphasisArea,
+		'--novablocks-media-content-width': `${contentAreaWidth}%`,
+		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 8 / 100 )`,
+	}
 
 	return (
-		<div className={ classNames }>
+		<div className={ classNames } style={ cssVars }>
 			<div className="wp-block-group__inner-container">
 				<div className="wp-block" data-align="wide">
-					<div className="novablocks-media__layout">
+					<div className="novablocks-media__layout novablocks-u-content-align">
 						<div className="novablocks-media__content">
 							<div className="novablocks-media__inner-container novablocks-block__content">
 								<InnerBlocks
@@ -82,7 +79,7 @@ const MediaPreview = function( props ) {
 							</div>
 						</div>
 						<div className="novablocks-media__aside">
-							{ displayImages( images ) }
+							<AdvancedGallery { ...passedProps } />
 						</div>
 					</div>
 				</div>

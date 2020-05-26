@@ -8,6 +8,7 @@ import {
 } from "./utils";
 
 import { STORE_NAME, registerQueryStore } from "./store";
+import {ControlsSection, ControlsTab} from "../../components/control-sections";
 
 registerQueryStore( `novablocks/${ STORE_NAME }` );
 
@@ -54,8 +55,8 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<InspectorControls>
-					<PanelBody title={ __( 'Query' ) }>
+				<ControlsSection label={ __( 'Posts' ) }>
+					<ControlsTab label={ __( 'Settings' ) }>
 						<QueryControls
 							enableSpecific={ true }
 							numberOfItems={ postsToShow }
@@ -83,8 +84,8 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 								setAttributes( { tags: _tags } );
 							} }
 						/>
-					</PanelBody>
-				</InspectorControls>
+					</ControlsTab>
+				</ControlsSection>
 			</Fragment>
 		)
 	}

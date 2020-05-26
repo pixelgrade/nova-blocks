@@ -1,7 +1,7 @@
 .novablocks-media__aside {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 15px;
+	display: flex;
+	align-self: stretch;
+	flex-direction: column;
 	min-height: 400px;
 
 	@include above(tablet) {
@@ -9,21 +9,29 @@
 			order: -1;
 		}
 	}
+
+	> .novablocks-advanced-gallery {
+		flex-grow: 1;
+
+		display: flex;
+		align-items: stretch;
+
+		@include below(tablet) {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+
+	> .block-editor-media-placeholder {
+		flex-grow: 1;
+	}
+
+	.novablocks-advanced-gallery__grid {
+		flex-grow: 1;
+	}
 }
 
-// fit images
-.novablocks-media__image {
-	position: relative;
-
-	img {
-		@include image-cover;
-	}
-
-	&:nth-child(2n + 1):last-child {
-		grid-column-end: span 2;
-	}
-
-	&:nth-child(n + 5) {
-		display: none;
-	}
+// gallery with more than 4 items
+.novablocks-media__image:nth-child(n + 5) {
+	display: none;
 }

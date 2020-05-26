@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.2.2
 Tested up to: 5.4.0
 Requires PHP: 5.4.0
-Stable tag: 1.3.2
+Stable tag: 1.4.2
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,16 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.4.2 =
+* Improved labels for Map block options in the editor
+* Improved Cards Collection block alignment
+* Fixed display of Media Card block on small devices
+* Fixed Map controls in the frontend
+
+= 1.4.0 =
+* New Block: Gallery of the Stars for creative gallery layouts
+* Enhanced block: Media Card Constellation's gallery can also use creative layouts
 
 = 1.3.2 =
 * Fix Hero block minimum height attribute

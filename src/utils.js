@@ -1,4 +1,10 @@
-import {getProps, getState, getStylesFromProps} from "./components/with-parallax/util";
+import { getProps, getState, getStylesFromProps } from "./components/with-parallax/util";
+import classnames from "classnames";
+
+const {
+	useEffect,
+	useRef,
+} = wp.element;
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -143,3 +149,52 @@ export const getSnapClassname = function( focalPoint ) {
 
 	return classNames.join( ' ' );
 }
+
+const wrappedControlsMatch = ( attributes, compiledAttributes ) => {
+	return Object.keys( compiledAttributes ).every( key => {
+		return compiledAttributes[ key ] === attributes[ key ];
+	} );
+}
+
+export const getControlsWrapClassname = ( attributes, compiledAttributes ) => {
+	return classnames(
+		'novablocks-controls-wrap',
+		{
+			'novablocks-controls-wrap--dirty': ! wrappedControlsMatch( attributes, compiledAttributes ),
+		}
+	);
+}
+
+// https://stackoverflow.com/questions/55187563/determine-which-dependency-array-variable-caused-useeffect-hook-to-fire
+export const usePrevious = (value, initialValue) => {
+	const ref = useRef(initialValue);
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+};
+
+export const useEffectDebugger = (effectHook, dependencies, dependencyNames = []) => {
+	const previousDeps = usePrevious(dependencies, []);
+
+	const changedDeps = dependencies.reduce((accum, dependency, index) => {
+		if (dependency !== previousDeps[index]) {
+			const keyName = dependencyNames[index] || index;
+			return {
+				...accum,
+				[keyName]: {
+					before: previousDeps[index],
+					after: dependency
+				}
+			};
+		}
+
+		return accum;
+	}, {});
+
+	if (Object.keys(changedDeps).length) {
+		console.log('[use-effect-debugger] ', changedDeps);
+	}
+
+	useEffect(effectHook, dependencies);
+};

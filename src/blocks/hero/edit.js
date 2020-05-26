@@ -10,6 +10,8 @@ import {
 	withSettings,
 } from '../../components';
 
+import { ControlsTab, ControlsSection } from "../../components/control-sections";
+
 import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';
@@ -61,18 +63,20 @@ const BlockHeightControls = function( props ) {
 	const { minHeightFallback } = attributes;
 
 	return (
-		<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-			<RadioControl
-				label={ __( 'Minimum Height', '__plugin_txtd' ) }
-				selected={ minHeightFallback }
-				onChange={ minHeightFallback => {
-					setAttributes( {
-						minHeightFallback: parseFloat( minHeightFallback )
-					} );
-				} }
-				options={ settings.minimumHeightOptions }
-			/>
-		</PanelBody>
+		<ControlsSection label={ __( 'Layout' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<RadioControl
+					label={ __( 'Minimum Height', '__plugin_txtd' ) }
+					selected={ minHeightFallback }
+					onChange={ minHeightFallback => {
+						setAttributes( {
+							minHeightFallback: parseFloat( minHeightFallback )
+						} );
+					} }
+					options={ settings.minimumHeightOptions }
+				/>
+			</ControlsTab>
+		</ControlsSection>
 	);
 }
 

@@ -27,13 +27,11 @@ const CardsCollectionInspectorControls = ( props ) => {
 	}
 
 	return (
-		<InspectorControls>
-			<CardsManagerPanel
-				label={ __( 'Cards Manager', '__plugin_txtd' ) }
-				onChange={ updateAttributes }
-				{ ...props }
-			/>
-		</InspectorControls>
+		<CardsManagerPanel
+			label={ __( 'Cards Manager', '__plugin_txtd' ) }
+			onChange={ updateAttributes }
+			{ ...props }
+		/>
    );
 }
 

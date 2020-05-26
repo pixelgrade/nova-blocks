@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -92,7 +92,7 @@
 
 
 if (true) {
-  module.exports = __webpack_require__(8);
+  module.exports = __webpack_require__(11);
 } else {}
 
 
@@ -17205,7 +17205,7 @@ if (true) {
   else {}
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9), __webpack_require__(10)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(12), __webpack_require__(13)(module)))
 
 /***/ }),
 /* 2 */
@@ -17215,6 +17215,56 @@ module.exports = jQuery;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(17);
+
+var iterableToArray = __webpack_require__(18);
+
+var nonIterableSpread = __webpack_require__(19);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17243,46 +17293,12 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(11);
+  module.exports = __webpack_require__(14);
 } else {}
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-module.exports = _classCallCheck;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-module.exports = _createClass;
-
-/***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -17455,7 +17471,28 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17552,7 +17589,64 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 8 */
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17565,7 +17659,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(7),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,z=n?Symbol.for("react.memo"):60115,A=n?Symbol.for("react.lazy"):
+var l=__webpack_require__(9),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,z=n?Symbol.for("react.memo"):60115,A=n?Symbol.for("react.lazy"):
 60116,B="function"===typeof Symbol&&Symbol.iterator;function C(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}
 var D={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},E={};function F(a,b,c){this.props=a;this.context=b;this.refs=E;this.updater=c||D}F.prototype.isReactComponent={};F.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error(C(85));this.updater.enqueueSetState(this,a,b,"setState")};F.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function G(){}G.prototype=F.prototype;function H(a,b,c){this.props=a;this.context=b;this.refs=E;this.updater=c||D}var I=H.prototype=new G;I.constructor=H;l(I,F.prototype);I.isPureReactComponent=!0;var J={current:null},K=Object.prototype.hasOwnProperty,L={key:!0,ref:!0,__self:!0,__source:!0};
@@ -17584,7 +17678,7 @@ exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.u
 
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports) {
 
 var g;
@@ -17610,7 +17704,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17638,7 +17732,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17654,7 +17748,7 @@ module.exports = function(module) {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),n=__webpack_require__(7),r=__webpack_require__(12);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
+var aa=__webpack_require__(0),n=__webpack_require__(9),r=__webpack_require__(15);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
 function ba(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,k){da=!1;ea=null;ba.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,k){ja.apply(this,arguments);if(da){if(da){var l=ea;da=!1;ea=null}else throw Error(u(198));fa||(fa=!0,ha=l)}}var la=null,ma=null,na=null;
 function oa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=na(c);ka(d,b,void 0,a);a.currentTarget=null}var pa=null,qa={};
 function ra(){if(pa)for(var a in qa){var b=qa[a],c=pa.indexOf(a);if(!(-1<c))throw Error(u(96,a));if(!sa[c]){if(!b.extractEvents)throw Error(u(97,a));sa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;if(ta.hasOwnProperty(h))throw Error(u(99,h));ta[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ua(k[e],g,h);e=!0}else f.registrationName?(ua(f.registrationName,g,h),e=!0):e=!1;if(!e)throw Error(u(98,d,a));}}}}
@@ -17937,19 +18031,19 @@ exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Er
 
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(13);
+  module.exports = __webpack_require__(16);
 } else {}
 
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17977,7 +18071,43 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=
 
 
 /***/ }),
-/* 14 */
+/* 17 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17985,15 +18115,15 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(4);
+var classCallCheck = __webpack_require__(3);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(5);
+var createClass = __webpack_require__(4);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(6);
+var js_cookie = __webpack_require__(7);
 var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
 
 // CONCATENATED MODULE: ./src/blocks/announcement-bar/announcement-bar.js
@@ -18292,6 +18422,10 @@ var getMarkersCenter = function getMarkersCenter() {
 var external_jQuery_ = __webpack_require__(2);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(8);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -18580,7 +18714,7 @@ function switchChildrenNodeName(children, nodeName) {
 }
 //# sourceMappingURL=react.js.map
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(3);
+var react_dom = __webpack_require__(6);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/element/build-module/react-platform.js
 /**
@@ -19319,9 +19453,23 @@ function renderStyle(style) {
 
 
 //# sourceMappingURL=index.js.map
+// EXTERNAL MODULE: ./node_modules/classnames/index.js
+var classnames = __webpack_require__(10);
+var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
+
 // CONCATENATED MODULE: ./src/utils.js
 
 
+
+function utils_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function utils_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { utils_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { utils_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+var _wp$element = wp.element,
+    useEffect = _wp$element.useEffect,
+    useRef = _wp$element.useRef;
 var debounce = function debounce(func, wait) {
   var timeout = null;
   return function () {
@@ -19455,6 +19603,47 @@ var getSnapClassname = function getSnapClassname(focalPoint) {
   }
 
   return classNames.join(' ');
+};
+
+var wrappedControlsMatch = function wrappedControlsMatch(attributes, compiledAttributes) {
+  return Object.keys(compiledAttributes).every(function (key) {
+    return compiledAttributes[key] === attributes[key];
+  });
+};
+
+var utils_getControlsWrapClassname = function getControlsWrapClassname(attributes, compiledAttributes) {
+  return classnames_default()('novablocks-controls-wrap', {
+    'novablocks-controls-wrap--dirty': !wrappedControlsMatch(attributes, compiledAttributes)
+  });
+}; // https://stackoverflow.com/questions/55187563/determine-which-dependency-array-variable-caused-useeffect-hook-to-fire
+
+var usePrevious = function usePrevious(value, initialValue) {
+  var ref = useRef(initialValue);
+  useEffect(function () {
+    ref.current = value;
+  });
+  return ref.current;
+};
+var utils_useEffectDebugger = function useEffectDebugger(effectHook, dependencies) {
+  var dependencyNames = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  var previousDeps = usePrevious(dependencies, []);
+  var changedDeps = dependencies.reduce(function (accum, dependency, index) {
+    if (dependency !== previousDeps[index]) {
+      var keyName = dependencyNames[index] || index;
+      return utils_objectSpread(utils_objectSpread({}, accum), {}, defineProperty_default()({}, keyName, {
+        before: previousDeps[index],
+        after: dependency
+      }));
+    }
+
+    return accum;
+  }, {});
+
+  if (Object.keys(changedDeps).length) {
+    console.log('[use-effect-debugger] ', changedDeps);
+  }
+
+  useEffect(effectHook, dependencies);
 };
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 
@@ -20048,6 +20237,315 @@ var TRANSITION_EASING = "easeInOutCirc";
     return direction;
   }
 })(jQuery, window);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
+
+
+var getGalleryStyle = function getGalleryStyle(attributes) {
+  var containerHeight = attributes.containerHeight / 50 - 1;
+  var verticalSpacing = attributes.verticalSpacing;
+  var numerator = 1;
+  var denominator = 1;
+  containerHeight = Math.min(Math.max(-1, containerHeight), 1);
+
+  if (containerHeight > 0) {
+    numerator = 1 + containerHeight;
+  }
+
+  if (containerHeight < 0) {
+    denominator = 1 + Math.abs(containerHeight);
+  }
+
+  return {
+    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px) )"),
+    paddingTop: "".concat(numerator * 100 / denominator, "%")
+  };
+};
+var getGridStyle = function getGridStyle(attributes) {
+  var elementsDistance = attributes.elementsDistance;
+  return {
+    '--novablocks-advanced-gallery-grid-gap': "".concat(elementsDistance, "px")
+  };
+};
+var util_safariHeightFix = function safariHeightFix(grid) {
+  if (!isSafari) {
+    return;
+  }
+
+  var parent = grid.parentNode;
+  var $grid = external_jQuery_default()(grid);
+  var $parent = external_jQuery_default()(parent);
+
+  var resetHeight = function resetHeight() {
+    var newHeight = $parent.outerHeight();
+    $grid.css('height', newHeight);
+  };
+
+  var debouncedResetHeight = debounce(resetHeight, 30);
+  resetHeight();
+
+  if (typeof window.ResizeObserver !== "undefined") {
+    var observer = new ResizeObserver(function (entries) {
+      debouncedResetHeight();
+    });
+    observer.observe(parent);
+  } else {
+    external_jQuery_default()(window).on('resize', function () {
+      debouncedResetHeight();
+    });
+  }
+};
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(5);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
+
+
+
+var ITEM_SIZE = 20;
+var grid_item_GridItemCollection = /*#__PURE__*/function () {
+  function GridItemCollection(images, attributes) {
+    classCallCheck_default()(this, GridItemCollection);
+
+    var placementVariation = attributes.placementVariation / 25 - 1;
+    this.gridItems = images.map(function (image, index) {
+      var groupStart = Math.floor(index / 4) * 4;
+      var groupEnd = Math.min(groupStart + 4, images.length);
+      var isGroupOfThree = groupEnd - groupStart === 3;
+      return new grid_item_GridItem(image, index, attributes, isGroupOfThree);
+    });
+    this.removeExtra();
+
+    if (placementVariation === 1 || placementVariation === 2) {
+      this.flipX();
+    }
+
+    if (placementVariation === 2 || placementVariation === 3) {
+      this.flipY();
+    }
+  }
+
+  createClass_default()(GridItemCollection, [{
+    key: "removeExtra",
+    value: function removeExtra() {
+      var extraLeft = this.getExtraLeft();
+      var extraTop = this.getExtraTop();
+      var extraBetween = this.getExtraBetween();
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        var groupIndex = Math.floor(index / 4);
+        gridItem.x = gridItem.x - extraLeft;
+        gridItem.y = gridItem.y - extraTop - groupIndex * extraBetween;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipX",
+    value: function flipX() {
+      var maxX = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x + gridItem.width;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.x = maxX - gridItem.x - gridItem.width + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipY",
+    value: function flipY() {
+      var maxY = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.y = maxY - gridItem.y - gridItem.height + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "getExtraLeft",
+    value: function getExtraLeft() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraTop",
+    value: function getExtraTop() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraBetween",
+    value: function getExtraBetween() {
+      var firstGroup = this.gridItems.slice(0, 4);
+      var maxBottom = Math.max.apply(Math, toConsumableArray_default()(firstGroup.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      return ITEM_SIZE * 2 - maxBottom + 1;
+    }
+  }]);
+
+  return GridItemCollection;
+}();
+
+var grid_item_GridItem = /*#__PURE__*/function () {
+  function GridItem(image, index, attributes, isGroupOfThree) {
+    classCallCheck_default()(this, GridItem);
+
+    this.sizeContrast = attributes.sizeContrast / 20;
+    this.positionShift = attributes.positionShift / 5;
+    this.objectPosition = attributes.objectPosition;
+    this.imageResizing = attributes.imageResizing;
+    this.imageRotation = attributes.imageRotation;
+    this.image = image;
+    this.index = index;
+    this.idx = this.getIndex(index);
+    this.col = this.idx % 2;
+    this.row = Math.floor(index / 2);
+
+    if (!!isGroupOfThree) {
+      if (index === 0) {
+        this.positionShift = Math.min(this.positionShift, 10);
+      }
+
+      if (index === 2) {
+        this.positionShift = Math.max(this.positionShift, 10);
+      }
+    }
+
+    var _this$getOffsets = this.getOffsets(),
+        offsetX = _this$getOffsets.offsetX,
+        offsetY = _this$getOffsets.offsetY;
+
+    var size = ITEM_SIZE - this.sizeContrast * (index % 4);
+    this.x = ITEM_SIZE * this.col + 1 + offsetX;
+    this.y = ITEM_SIZE * this.row + 1 + offsetY;
+    this.width = size;
+    this.height = size;
+  }
+
+  createClass_default()(GridItem, [{
+    key: "getOffsets",
+    value: function getOffsets() {
+      var row = this.row,
+          col = this.col,
+          index = this.index,
+          sizeContrast = this.sizeContrast,
+          positionShift = this.positionShift; // offset for positioning
+
+      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;
+      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset
+      // move 1st to right
+
+      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left
+
+      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down
+
+      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up
+
+      offsetY += col % 2 * (1 - row % 2) * positionShift;
+      return {
+        offsetX: offsetX,
+        offsetY: offsetY
+      };
+    } // reoder to display items clockwise
+
+  }, {
+    key: "getIndex",
+    value: function getIndex(index) {
+      if (index % 4 === 3) return index - 1;
+      if (index % 4 === 2) return index + 1;
+      return index;
+    }
+  }, {
+    key: "getStyle",
+    value: function getStyle() {
+      var index = this.index,
+          x = this.x,
+          y = this.y,
+          width = this.width,
+          height = this.height,
+          imageRotation = this.imageRotation;
+      var rotation = "rotate(".concat((index % 2 - 0.5) * imageRotation / 10, "deg)");
+      return {
+        gridColumnStart: x + '',
+        gridColumnEnd: "span ".concat(width),
+        gridRowStart: y + '',
+        gridRowEnd: "span ".concat(height),
+        transform: rotation
+      };
+    }
+  }, {
+    key: "getImageStyle",
+    value: function getImageStyle() {
+      var idx = this.idx,
+          row = this.row,
+          col = this.col,
+          objectPosition = this.objectPosition,
+          imageResizing = this.imageResizing;
+      var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
+      return {
+        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
+        objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
+      };
+    }
+  }]);
+
+  return GridItem;
+}();
+
+
+// CONCATENATED MODULE: ./src/blocks/media/frontend.js
+
+
+
+(function ($, window, undefined) {
+  $('.novablocks-advanced-gallery').each(function (i, gallery) {
+    var $gallery = $(gallery),
+        $grid = $gallery.find('.novablocks-advanced-gallery__grid'),
+        images = $gallery.find('.novablocks-advanced-gallery__image').toArray();
+    var attributes = {
+      imageResizing: $gallery.data('imageresizing'),
+      containerHeight: $gallery.data('containerheight'),
+      positionShift: $gallery.data('positionshift'),
+      sizeContrast: $gallery.data('sizecontrast'),
+      imageRotation: $gallery.data('imagerotation'),
+      positionVariation: $gallery.data('positionvariation'),
+      elementsDistance: $gallery.data('elementsdistance'),
+      verticalSpacing: $gallery.data('verticalspacing'),
+      objectPosition: $gallery.data('objectposition')
+    };
+    var gridItemsCollection = new grid_item_GridItemCollection(images, attributes);
+    gridItemsCollection.gridItems.map(function (gridItem, index) {
+      var $image = $(gridItem.image),
+          $item = $image.closest('.novablocks-advanced-gallery__grid-item');
+      $item.css(gridItem.getStyle());
+      $image.css(gridItem.getImageStyle());
+    });
+    var galleryStyle = getGalleryStyle(attributes);
+
+    for (var propertyName in galleryStyle) {
+      $gallery.css(galleryStyle);
+
+      if (propertyName.indexOf('--') === 0) {
+        gallery.style.setProperty(propertyName, galleryStyle[propertyName]);
+      }
+    }
+
+    if ($grid.length) {
+      var gridStyle = getGridStyle(attributes);
+      $grid.css(gridStyle);
+
+      for (var _propertyName in gridStyle) {
+        if (_propertyName.indexOf('--') === 0) {
+          $grid.get(0).style.setProperty(_propertyName, gridStyle[_propertyName]);
+        }
+      }
+    }
+  });
+})(jQuery, window);
 // CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
 // Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
 var fourSq = fourSq || {};
@@ -20373,6 +20871,14 @@ var parseContent = function parseContent(currentValue) {
   var hours = fourSq.util.HoursParser.parse(currentValue);
   return JSON.stringify(hours);
 };
+// CONCATENATED MODULE: ./src/components/advanced-gallery/frontend.js
+
+
+(function ($, window, undefined) {
+  $('.novablocks-advanced-gallery__grid').each(function (i, obj) {
+    util_safariHeightFix(obj);
+  });
+})(jQuery, window);
 // CONCATENATED MODULE: ./src/components/viewportObserver.js
 
 
@@ -20418,6 +20924,8 @@ var viewportObserver_viewportObserver = /*#__PURE__*/function () {
 
 /* harmony default export */ var components_viewportObserver = (new viewportObserver_viewportObserver());
 // CONCATENATED MODULE: ./src/frontend.js
+
+
 
 
 

@@ -1,0 +1,39 @@
+.novablocks-advanced-gallery {
+	// padding top to make sure negative margin of child doesn't collapse
+	position: relative;
+	padding-top: 50%;
+
+	margin-top: var(--novablocks-advanced-gallery-vertical-spacing);
+	margin-bottom: var(--novablocks-advanced-gallery-vertical-spacing);
+}
+
+.novablocks-advanced-gallery__grid {
+	display: grid;
+	grid-auto-rows: 1fr;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	--novablocks-advanced-gallery-grid-gap: 10px;
+
+	margin-top: calc(-1 * var(--novablocks-advanced-gallery-grid-gap));
+	margin-left: calc(-1 * var(--novablocks-advanced-gallery-grid-gap));
+
+	& + & {
+		margin-top: 0;
+	}
+}
+
+.novablocks-advanced-gallery__grid-item {
+	position: relative;
+
+	margin-top: var(--novablocks-advanced-gallery-grid-gap);
+	margin-left: var(--novablocks-advanced-gallery-grid-gap);
+}
+
+.novablocks-advanced-gallery__image[class] {
+	@include image-cover;
+}

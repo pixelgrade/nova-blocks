@@ -6,24 +6,83 @@
 	> .wp-block-group__inner-container {
 		padding-top: 1px;
 	}
+
+	// center content
+	.wp-block-group__inner-container > .wp-block {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	// make sure negative margin used for layout doesnt overlap other blocks
+	.wp-block-group__inner-container > .wp-block {
+		display: flex;
+
+		> * {
+			flex-grow: 1;
+		}
+	}
 }
 
 .novablocks-media__layout {
-	margin-top: calc( -1 * var(--novablocks-media-spacing) );
-	margin-left: calc( -1 * var(--novablocks-media-spacing) );
+	margin-top: calc( -1 * var(--novablocks-media-gutter) );
+	margin-left: calc( -1 * var(--novablocks-media-gutter) );
 
 	> * {
-		padding-left: var(--novablocks-media-spacing);
-		margin-top: var(--novablocks-media-spacing);
+		padding-left: var(--novablocks-media-gutter);
+		margin-top: var(--novablocks-media-gutter);
 	}
 
 	@include above(tablet) {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: stretch;
 
-		> * {
-			flex: 1 0 50%;
+		.novablocks-media__aside {
+			flex: 1 1 calc( 100% - var(--novablocks-media-content-width, 50%) );
 		}
+
+		.novablocks-media__content {
+			flex: 1 1 var(--novablocks-media-content-width, 50%);
+		}
+	}
+}
+
+.novablocks-media,
+.novablocks-media .novablocks-advanced-gallery,
+.novablocks-media__layout,
+.novablocks-media__aside,
+.novablocks-media__content {
+	transition: var(--novablocks-transition);
+	transition-property: padding, margin;
+}
+
+.novablocks-media[class][class] {
+	margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+	margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+	padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+	padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+	background: linear-gradient(
+			var(--novablocks-media-background-direction),
+			var(--novablocks-block-background-color) 0,
+			var(--novablocks-block-background-color) calc(var(--emphasis-area) * 1%),
+			transparent calc(var(--emphasis-area) * 1%)
+	);
+	background-size: 100% 100%;
+
+	.novablocks-advanced-gallery {
+		margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+	}
+
+	.novablocks-media__content {
+		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+	}
+
+	&.has-image-on-the-left {
+		--novablocks-media-background-direction: -90deg;
 	}
 }
 

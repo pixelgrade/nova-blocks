@@ -52,6 +52,7 @@
 	transition-property: padding, box-shadow;
 
 	&[class] {
+		height: 100%;
 		padding: var(--novablocks-block-content-padding);
 
 		h1, h2, h3 {
@@ -61,6 +62,11 @@
 		h4, h5, h6 {
 			color: var(--novablocks-block-content-subtitles-color);
 		}
+	}
+
+
+	h1, h2, h3, h4, h5, h6 {
+		width: 100%;
 	}
 
 	@include above(tablet) {
@@ -93,6 +99,10 @@
 
 @include above(tablet) {
 
+	.content-is-basic {
+		--novablocks-block-content-background-color: var(--novablocks-block-background-color);
+	}
+
 	.block-is-moderate {
 		--novablocks-block-background-color: var(--novablocks-light-3);
 	}
@@ -118,6 +128,10 @@
 	.content-is-moderate.block-is-highlighted {
 		--novablocks-block-content-background-color: var(--novablocks-light-1);
 		--novablocks-block-content-background-opacity: 0.2;
+
+		.novablocks-block__content {
+			background-color: var(--novablocks-block-background-color);
+		}
 	}
 
 	.block-is-highlighted:not(.content-is-highlighted),

@@ -1,3 +1,5 @@
+import {ControlsSection, ControlsTab} from "../../components/control-sections";
+
 /**
  * WordPress dependencies
  */
@@ -19,9 +21,9 @@ const OpenTableInspectorControls = function( props ) {
 
 	return (
 		<Fragment>
-			<InspectorControls>
-				<PanelBody title={__( 'Settings', '__plugin_txtd' )} initialOpen={true}>
 
+			<ControlsSection label={ __( 'Setup' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
 					<TextControl
 						label="Restaurant ID"
 						placeholder={__( '1' )}
@@ -30,7 +32,6 @@ const OpenTableInspectorControls = function( props ) {
 						value={restaurantId}
 						onChange={( restaurantId ) => setAttributes( {restaurantId: restaurantId} )}
 					/>
-
 					<SelectControl
 						label="Language"
 						value={ language }
@@ -45,7 +46,11 @@ const OpenTableInspectorControls = function( props ) {
 						] }
 						onChange={ ( nextLanguage ) => setAttributes( { language: nextLanguage } ) }
 					/>
+				</ControlsTab>
+			</ControlsSection>
 
+			<ControlsSection label={ __( 'Layout' ) }>
+				<ControlsTab label={ __( 'Customize' ) }>
 					<RadioControl
 						label={ __( 'Layout', '__plugin_txtd' ) }
 						value={ layoutForm }
@@ -56,15 +61,14 @@ const OpenTableInspectorControls = function( props ) {
 						] }
 						onChange={ ( nextLayout ) => setAttributes( { layoutForm: nextLayout } ) }
 					/>
-
 					<ToggleControl
 						label={__( 'Show OpenTable Logo', '__plugin_txtd' )}
 						checked={showOpenTableLogo}
 						onChange={() => setAttributes( {showOpenTableLogo: ! showOpenTableLogo} )}
 					/>
+				</ControlsTab>
+			</ControlsSection>
 
-				</PanelBody>
-			</InspectorControls>
 		</Fragment>
 	)
 };

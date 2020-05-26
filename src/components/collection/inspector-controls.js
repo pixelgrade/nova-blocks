@@ -1,5 +1,6 @@
-import { EmphasisBlockAreaFill, EmphasisContentAreaFill } from "../emphasis-level-controls";
+import { EmphasisBlockAreaControls, EmphasisContentAreaControls } from "../emphasis-level-controls";
 import { HeadingToolbar } from "../../components";
+import {ControlsSection, ControlsTab} from "../control-sections";
 
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
@@ -34,8 +35,7 @@ const CollectionInspectorControls = ( props ) => {
 
 	return (
 		<Fragment>
-			<EmphasisBlockAreaFill>
-				{ isSelected &&
+			<EmphasisBlockAreaControls>
 				  <PanelRow>
 					  <span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
 					  <HeadingToolbar
@@ -45,10 +45,8 @@ const CollectionInspectorControls = ( props ) => {
 						  onChange={ ( level ) => { onChange( { level } ) } }
 					  />
 				  </PanelRow>
-				}
-			</EmphasisBlockAreaFill>
-			<EmphasisContentAreaFill>
-				{ isSelected &&
+			</EmphasisBlockAreaControls>
+			<EmphasisContentAreaControls>
 				  <PanelRow>
 					  <span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
 					  <AlignmentToolbar
@@ -57,36 +55,32 @@ const CollectionInspectorControls = ( props ) => {
 						  onChange={ ( contentAlign ) => { onChange( { contentAlign } ) } }
 					  />
 				  </PanelRow>
-				}
-			</EmphasisContentAreaFill>
-			<InspectorControls>
-				{
-					showMedia &&
-					<PanelBody initialOpen={ false } title={__( 'Cards Media Area' )}>
-						<RadioControl
-							label={'Image resizing'}
-							selected={imageResizing}
-							onChange={imageResizing => {
-								setAttributes( {imageResizing} )
-							}}
-							options={[
-								{label: 'Stretch to fill the container', value: 'cropped'},
-								{label: 'Shrink to fit (no crop)', value: 'original'},
-							]}
-						/>
-						<RangeControl
-							label={__( 'Image container height', '__plugin_txtd' )}
-							value={containerHeight}
-							onChange={containerHeight => {
-								setAttributes( {containerHeight} )
-							}}
-							min={0}
-							max={100}
-							step={5}
-						/>
-					</PanelBody>
-				}
-			</InspectorControls>
+			</EmphasisContentAreaControls>
+			<ControlsSection label={ __( 'Display' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
+					<RadioControl
+						label={'Image resizing'}
+						selected={imageResizing}
+						onChange={imageResizing => {
+							setAttributes( {imageResizing} )
+						}}
+						options={[
+							{label: 'Stretch to fill the container', value: 'cropped'},
+							{label: 'Shrink to fit (no crop)', value: 'original'},
+						]}
+					/>
+					<RangeControl
+						label={__( 'Image container height', '__plugin_txtd' )}
+						value={containerHeight}
+						onChange={containerHeight => {
+							setAttributes( {containerHeight} )
+						}}
+						min={0}
+						max={100}
+						step={5}
+					/>
+				</ControlsTab>
+			</ControlsSection>
 		</Fragment>
 	)
 }

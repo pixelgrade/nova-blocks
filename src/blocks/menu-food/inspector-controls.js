@@ -1,11 +1,7 @@
-/**
- * WordPress dependencies
- */
-const {__} = wp.i18n;
-const {Fragment} = wp.element;
-const {InspectorControls} = wp.blockEditor;
+import { ControlsTab, ControlsSection } from "../../components/control-sections";
 
-const {PanelBody, ToggleControl} = wp.components;
+const { __ } = wp.i18n;
+const { PanelBody, ToggleControl } = wp.components;
 
 const FoodMenuInspectorControls = function( props ) {
 	const {
@@ -16,17 +12,15 @@ const FoodMenuInspectorControls = function( props ) {
 	} = props;
 
 	return (
-		<Fragment>
-			<InspectorControls>
-				<PanelBody title={__( 'Layout', '__plugin_txtd' )} initialOpen={true}>
-					<ToggleControl
-						label={__( '2 columns', '__plugin_txtd' )}
-						checked={enableTwoColumns}
-						onChange={() => setAttributes( {enableTwoColumns: ! enableTwoColumns} )}
-					/>
-				</PanelBody>
-			</InspectorControls>
-		</Fragment>
+		<ControlsSection label={ __( 'Layout' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<ToggleControl
+					label={__( '2 columns', '__plugin_txtd' ) }
+					checked={ enableTwoColumns }
+					onChange={ () => setAttributes( { enableTwoColumns: ! enableTwoColumns } ) }
+				/>
+			</ControlsTab>
+		</ControlsSection>
 	);
 };
 

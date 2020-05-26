@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { some, pickBy, isUndefined } from "lodash";
 import { CardsManagerPanel, Collection } from '../../components';
 import CardMedia from './media';
+import {ControlsSection, ControlsTab} from "../../components/control-sections";
 
 const { apiFetch } = wp;
 
@@ -101,21 +102,21 @@ const PostsEdit = ( props ) => {
 
 	return (
 		<Fragment>
-			<InspectorControls>
-				<CardsManagerPanel
-					label={ __( 'Cards Manager', '__plugin_txtd' ) }
-					onChange={ ( attributes ) => { setAttributes( attributes ) } }
-					{ ...props }
-				/>
-				<PanelBody title={ __( 'Layout', '__plugin_txtd' ) }>
+			<CardsManagerPanel
+				label={ __( 'Cards Manager', '__plugin_txtd' ) }
+				onChange={ ( attributes ) => { setAttributes( attributes ) } }
+				{ ...props }
+			/>
+			<ControlsSection label={ __( 'Display' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
 					<RangeControl
 						value={ columns }
 						onChange={ ( columns ) => setAttributes( { columns } ) }
 						min={ 2 }
 						max={ 4 }
 					/>
-				</PanelBody>
-			</InspectorControls>
+				</ControlsTab>
+			</ControlsSection>
 			<Collection hasAppender={ false } { ...props }>
 				<div className="block-editor-inner-blocks">
 					<div className="block-editor-block-list__layout">
