@@ -17990,6 +17990,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -18024,9 +18025,10 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
   }
 
   focalPointPickerClassNames = focalPointPickerClassNames.join(' ');
-  return Object(external_React_["createElement"])(slideshow_inspector_controls_InspectorControls, null, !!galleryImages.length && Object(external_React_["createElement"])(slideshow_inspector_controls_PanelBody, {
-    className: 'nova-blocks-slideshow-type-panel',
-    title: slideshow_inspector_controls_('Slides', '__plugin_txtd')
+  return Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, !!galleryImages.length && Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: slideshow_inspector_controls_('Slides')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: slideshow_inspector_controls_('General')
   }, Object(external_React_["createElement"])(gallery_options_GalleryPreview, {
     galleryImages: galleryImages,
     onSelectImage: setIndex,
@@ -18049,9 +18051,10 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
         galleryImages: newGalleryImages
       });
     }
-  }))), 'gallery' === slideshowType && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(layout_panel, props), Object(external_React_["createElement"])(slideshow_inspector_controls_PanelBody, {
-    title: slideshow_inspector_controls_('Height', '__plugin_txtd'),
-    initialOpen: false
+  })))), 'gallery' === slideshowType && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(layout_panel, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: slideshow_inspector_controls_('Layout')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: slideshow_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(slideshow_inspector_controls_RadioControl, {
     label: slideshow_inspector_controls_('Minimum Height', '__plugin_txtd'),
     selected: minHeight,
@@ -18061,7 +18064,7 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
       });
     },
     options: minHeightOptions
-  }))), 'gallery' !== slideshowType && Object(external_React_["createElement"])(slideshow_inspector_controls_PanelBody, null, slideshow_inspector_controls_('Coming Soon', '__plugin_txtd')));
+  })))));
 };
 
 /* harmony default export */ var slideshow_inspector_controls = (inspector_controls_SlideshowInspectorControls);
