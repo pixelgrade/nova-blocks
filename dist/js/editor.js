@@ -19132,6 +19132,7 @@ var preview_OpenTablePreview = /*#__PURE__*/function (_Component) {
 /**
  * WordPress dependencies
  */
+
 var opentable_inspector_controls_ = wp.i18n.__;
 var opentable_inspector_controls_Fragment = wp.element.Fragment;
 var opentable_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
@@ -19149,9 +19150,10 @@ var inspector_controls_OpenTableInspectorControls = function OpenTableInspectorC
       layoutForm = _props$attributes.layoutForm,
       showOpenTableLogo = _props$attributes.showOpenTableLogo,
       setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(opentable_inspector_controls_Fragment, null, Object(external_React_["createElement"])(opentable_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(opentable_inspector_controls_PanelBody, {
-    title: opentable_inspector_controls_('Settings', '__plugin_txtd'),
-    initialOpen: true
+  return Object(external_React_["createElement"])(opentable_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: opentable_inspector_controls_('Setup')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: opentable_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(inspector_controls_TextControl, {
     label: "Restaurant ID",
     placeholder: opentable_inspector_controls_('1'),
@@ -19193,7 +19195,11 @@ var inspector_controls_OpenTableInspectorControls = function OpenTableInspectorC
         language: nextLanguage
       });
     }
-  }), Object(external_React_["createElement"])(opentable_inspector_controls_RadioControl, {
+  }))), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: opentable_inspector_controls_('Layout')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: opentable_inspector_controls_('Customize')
+  }, Object(external_React_["createElement"])(opentable_inspector_controls_RadioControl, {
     label: opentable_inspector_controls_('Layout', '__plugin_txtd'),
     value: layoutForm,
     selected: layoutForm,
