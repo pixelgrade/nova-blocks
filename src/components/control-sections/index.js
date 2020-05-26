@@ -1,140 +1,115 @@
-import classnames from 'classnames';
-import { kebabCase } from 'lodash';
-
-const { createSlotFill } = wp.components;
-const { Component, Fragment, useState } = wp.element;
-const { __ } = wp.i18n;
-const { useBlockEditContext } = wp.blockEditor;
-const { createHigherOrderComponent } = wp.compose;
-
-const ControlsSectionsSlotFill = createSlotFill( 'ControlsSections' );
-const ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
-const ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
-
-const ControlsSlotFill = createSlotFill( 'Controls' );
-const ControlsSlot = ControlsSlotFill.Slot;
-const ControlsFill = ControlsSlotFill.Fill;
-
-import { mergeChildrenProps, getSectionsFromFills } from './utils';
+// internal dependencies
+import { groupBy } from 'lodash';
+import { getSectionsFromFills } from './utils';
+import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
+import { SectionsList, SectionsListItem } from './sections-list';
 
 import Cube from './cube';
-import { SectionsList, SectionsListItem } from './sections-list';
-import useMemoryState from "../memory-state";
+import { ActiveSectionTabs } from "./tabs";
 
-const SectionContent = ( props ) => {
+import { Drawer, Drawers, DrawerList, DrawerPanel } from "../../components/drawer";
+import {kebabCase} from "lodash";
 
-	const { section } = props;
+const { __ } = wp.i18n;
+const { useBlockEditContext } = wp.blockEditor;
 
-	if ( ! section || ! section.props.children ) {
-		return null;
-	}
+const {
+	Component,
+	Fragment,
+	useState,
+} = wp.element;
 
-	return section.props.children;
-}
-
-const ActiveSectionTabs = ( props ) => {
-
-	const {
-		title,
-		tabs,
-		onBackButtonClick,
-	} = props;
-
-
-	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( kebabCase( title ), tabs[0].props.label );
-
-	const activeTab = tabs.find( tab => tab.props.label === activeTabLabel );
-
-	const getTabClassName = ( label ) => {
-		return classnames(
-			'novablocks-sections__tab',
-			{
-				'novablocks-sections__tab--active': activeTabLabel === label
-			}
-		)
-	}
+const renderControlsSectionsList = ( sections, onSectionClick ) => {
 
 	return (
-		<div className={ `novablocks-section__controls novablocks-section__controls--${ kebabCase( activeTabLabel ) }` }>
-			<div className="novablocks-sections__controls-header">
-				<div className="novablocks-sections__controls-back" onClick={ onBackButtonClick }></div>
-				<div className="novablocks-sections__controls-title">{ title }</div>
-				<Cube />
-			</div>
-			<div className={ 'novablocks-sections__tabs' }>
-				{ tabs.map( tab => {
-					const label = tab.props.label;
-					return <div className={ getTabClassName( label, activeTabLabel ) } onClick={ () => { setActiveTabLabel( label ) } }>{ label }</div>
-				} ) }
-			</div>
-			<div className={ 'novablocks-sections__tab-content' }>
-				{ !! activeTab && activeTab.props.children }
-			</div>
-		</div>
+		sections.map( ( section, index ) => {
+			const { label } = section.props;
+
+			return (
+				<Drawer
+					key={ index }
+					target={ 0 }
+					title={ label }
+					onOpen={ () => { onSectionClick( label ) } }
+				/>
+			);
+		} )
 	)
 }
 
-const ActiveSection = ( props ) => {
+const ControlsSectionsComponent = ( props ) => {
 
-	const {
-		section,
-		onBackButtonClick,
-	} = props;
+	const { sections } = props;
 
-	if ( ! section ) {
-		return null;
-	}
+	const notModules = sections.filter( section => ! section.props.module )
+	const modules = sections.filter( section => !! section.props.module );
+
+	const groups = groupBy( sections, section => {
+		return !! section.props.group ? section.props.group : '';
+	} );
 
 	return (
+		<div className="novablocks-sections">
+			<Drawers>
+				<div className="novablocks-sections__header">
+					<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+					<Cube />
+				</div>
+				{
+					Object.keys( groups ).map( key => {
+						const sections = groups[ key ];
 
-		<ControlsSlot>
-			{
-				( fills ) => {
-					const tabs = getSectionsFromFills( fills );
+						return (
+							<DrawerList title={ key } key={ key }>
+								{ sections.map( ( section, index ) => {
+									const { label } = section.props;
 
-					if ( ! tabs.length ) {
-						return null;
-					}
-
-					return (
-						<ActiveSectionTabs
-							title={ section.props.label }
-							tabs={ tabs }
-							onBackButtonClick={ onBackButtonClick }
-						/>
-					)
+									return (
+										<Drawer
+											key={ index }
+											title={ label }
+										/>
+									);
+								} ) }
+							</DrawerList>
+						)
+					} )
 				}
-			}
-		</ControlsSlot>
-	)
+				{
+					Object.keys( groups ).map( key => {
+						const sections = groups[ key ];
+
+						return sections.map( ( section, index ) => {
+							const tabs = section.props.children.filter( child => child.type === ControlsTab );
+
+							return (
+								<DrawerPanel key={ index }>
+									<ActiveSectionTabs
+										title={ section.props.label }
+										tabs={ tabs }
+									/>
+								</DrawerPanel>
+							)
+						} );
+					} )
+				}
+			</Drawers>
+		</div>
+	);
 }
 
 const ControlsSections = ( props ) => {
-
-	const { isSelected } = props;
-	const [ activeSectionLabel, setActiveSectionLabel ] = useState( false );
 
 	return (
 		<ControlsSectionsSlot>
 			{ ( fills ) => {
 				const sections = getSectionsFromFills( fills );
-				const activeSection = sections.find( section => section.props.label === activeSectionLabel );
 
-				return !! sections.length && isSelected && (
-					<Fragment>
-						<SectionsList
-							sections={ sections }
-							activeSectionLabel={ activeSectionLabel }
-							onSectionClick={ setActiveSectionLabel }
-						/>
-						<ActiveSection
-							section={ activeSection }
-							onBackButtonClick={ () => { setActiveSectionLabel( false ) } }
-						/>
-						<SectionContent section={ activeSection } />
-					</Fragment>
-				);
+				if ( ! sections.length ) {
+					return null;
+				}
 
+				return <ControlsSectionsComponent sections={ sections } />
 			} }
 		</ControlsSectionsSlot>
 	);
@@ -142,9 +117,7 @@ const ControlsSections = ( props ) => {
 
 const ControlsTab = ( props ) => {
 	return (
-		<ControlsFill>
-			<div label={ props.label }>{ props.children }</div>
-		</ControlsFill>
+		<div label={ props.label }>{ props.children }</div>
 	)
 }
 

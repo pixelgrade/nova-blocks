@@ -5,6 +5,16 @@ const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;
 const { Fragment } = wp.element;
 
+const DrawerPanelContent = ( props ) => {
+
+	return (
+		<Fragment>
+			<button onClick={ props.goBack }>Back</button>
+			{ props.children }
+		</Fragment>
+	)
+}
+
 const withControlsSections = createHigherOrderComponent(OriginalComponent => {
 
 	return ( props ) => {

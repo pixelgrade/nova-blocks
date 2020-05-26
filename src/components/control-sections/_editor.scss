@@ -1,18 +1,17 @@
 .novablocks-sections {
-	padding: 16px;
 	border-top: 1px solid #e2e4e7;
 }
 
 .novablocks-sections__header {
 	position: relative;
-	margin-bottom: 16px;
-
-	.novablocks-sections__cube {
-		margin-right: -16px;
-	}
+	padding: 16px;
 
 	.novablocks-sections__title {
 		padding-top: 8px;
+	}
+
+	+ .novablocks-drawers__list {
+		margin-top: -16px;
 	}
 }
 
@@ -232,4 +231,16 @@
 	--novablocks-section-controls-accent: #919191;
 
 	opacity: 0.5;
+}
+
+.novablocks-panel {
+	position: relative;
+}
+
+.novablocks-subpanel {
+	position: absolute;
+	top: 0;
+	left: 100%;
+
+	width: 100%;
 }

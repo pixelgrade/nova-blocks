@@ -5,6 +5,7 @@ const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
 const SectionsListItem = ( props ) => {
+
 	const {
 		label,
 		onClick,
@@ -21,14 +22,8 @@ const SectionsList = ( props ) => {
 		onSectionClick
 	} = props;
 
-	const active = sections.find( section => section.props.label === activeSectionLabel );
-
 	const blockSections = sections.filter( section => ! section.props.module );
 	const modules = sections.filter( section => !! section.props.module );
-
-	if ( !! active ) {
-		return false;
-	}
 
 	return (
 		<div className="novablocks-sections">

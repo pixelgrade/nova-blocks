@@ -19,7 +19,7 @@ const {
 
 const ToggleGroup = ( props ) => {
 	const { toggles, onChange, label } = props;
-	const [refMap] = useState(() => new WeakMap());
+	const [ refMap ] = useState( () => new WeakMap() );
 
 	const enabledToggles = toggles.filter( toggle => !! toggle.value );
 	const disabledToggles = toggles.filter( toggle => ! toggle.value );
