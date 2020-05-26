@@ -55,7 +55,7 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<ControlsSection label={ __( 'Posts' ) }>
+				<ControlsSection label={ __( 'Posts' ) } priority={ 100 }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<QueryControls
 							enableSpecific={ true }

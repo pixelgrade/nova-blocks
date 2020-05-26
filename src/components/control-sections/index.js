@@ -63,12 +63,13 @@ const ControlsSectionsComponent = ( props ) => {
 						return (
 							<DrawerList title={ key } key={ key }>
 								{ sections.map( ( section, index ) => {
-									const { label } = section.props;
+									const { label, priority } = section.props;
 
 									return (
 										<Drawer
 											key={ index }
 											title={ label }
+											priority={ priority }
 										/>
 									);
 								} ) }
