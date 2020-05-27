@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { some, pickBy, isUndefined } from "lodash";
 import { CardsManagerPanel, Collection } from '../../components';
 import CardMedia from './media';
-import {ControlsSection, ControlsTab} from "../../components/control-sections";
+import { ControlsSection, ControlsTab } from "../../components/control-sections";
 
 const { apiFetch } = wp;
 

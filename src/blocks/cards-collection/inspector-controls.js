@@ -13,7 +13,10 @@ const {
 
 const CardsCollectionInspectorControls = ( props ) => {
 
-	const { innerBlocks } = props;
+	const {
+		innerBlocks,
+		setAttributes,
+	} = props;
 
 	const updateChildrenAttributes = ( attributes ) => {
 		innerBlocks.forEach( ( { clientId } ) => {

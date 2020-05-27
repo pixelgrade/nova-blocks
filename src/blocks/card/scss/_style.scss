@@ -56,3 +56,38 @@
 		max-height: 50%;
 	}
 }
+
+.novablocks-card__subtitle {
+
+	a {
+		text-decoration: inherit;
+		color: inherit;
+
+		//transition: var(--novablocks-transition);
+		//transition-property: opacity;
+
+		//&:hover {
+		//	opacity: 0.5;
+		//}
+	}
+}
+
+.novablocks-card {
+
+	a:not(.novablocks-card__link) {
+		position: relative;
+		z-index: 20;
+	}
+
+	a.novablocks-card__link {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 10;
+
+		display: block;
+		margin: 0;
+	}
+}

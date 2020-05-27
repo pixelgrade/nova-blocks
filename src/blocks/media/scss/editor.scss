@@ -1,11 +1,3 @@
-:root {
-	--novablocks-transition-duration: 0.5s;
-	--novablocks-transition-easing: ease;
-	--novablocks-transition: all
-		var(--novablocks-transition-duration)
-		var(--novablocks-transition-easing);
-}
-
 .novablocks-media__aside {
 
 	> .block-editor-media-placeholder {
@@ -21,7 +13,7 @@
 
 	height: 100%;
 
-	background-color: #eeeeee;
+	background-color: #EEEEEE;
 }
 
 .novablocks-media__inner-container {

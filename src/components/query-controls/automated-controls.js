@@ -117,7 +117,10 @@ const AutomatedControls = ( props ) => {
 	}
 
 	return [
-		<QueryControls key="queryControls" { ...props } />,
+		<QueryControls
+			key="queryControls" { ...props }
+			minItems={ 2 }
+		/>,
 		onAuthorsChange && (
 			<AutocompleteTokenField
 				key="authors"
