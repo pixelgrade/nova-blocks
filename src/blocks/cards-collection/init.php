@@ -38,10 +38,14 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 			if ( $attributes['blockStyle'] !== 'basic' ) {
 				$classes[] = 'has-background';
 			}
+		} else {
+			$classes[] = 'block-is-basic';
 		}
 
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
+		} else {
+			$classes[] = 'content-is-basic';
 		}
 
 		$className = join( ' ', $classes );
