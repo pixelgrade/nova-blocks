@@ -1,4 +1,5 @@
 import { useSpring, animated } from 'react-spring';
+import { orderBy } from 'lodash';
 
 const {
 	Children,
@@ -67,25 +68,37 @@ const Drawers = ( ownProps ) => {
 						const title = drawerList?.props?.title;
 						totalDrawers = totalDrawers + drawers.length;
 
+						const drawersWithTarget = drawers.map( ( drawer, index ) => {
+							const defaultTarget = totalDrawers - drawers.length + index;
+							const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : defaultTarget;
+
+							return {
+								...drawer,
+								target,
+							}
+						} );
+
+						const orderedDrawers = orderBy( drawersWithTarget, drawer => drawer.props.priority || 0, ['desc'] );
+
 						return (
 							<div className={ `novablocks-drawers__list` }>
 								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
-								{ drawers.map( ( drawer, index ) => {
-									const defaultTarget = totalDrawers - drawers.length + index;
-									const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : defaultTarget;
+								{
+									orderedDrawers.map( ( { props, target } ) => {
 
-									return (
-										<Drawer { ...drawer.props }
-											onClick={ () => {
-												setActive( target );
-												setOpen( true );
+										return (
+											<Drawer { ...props }
+												onClick={ () => {
+													setActive( target );
+													setOpen( true );
 
-												if ( typeof drawer.props.onOpen === "function" ) {
-													drawer.props.onOpen();
-												}
-											} } />
-									)
-								} ) }
+													if ( typeof props.onOpen === "function" ) {
+														props.onOpen();
+													}
+												} } />
+										)
+									} )
+								}
 							</div>
 						)
 					} ) }

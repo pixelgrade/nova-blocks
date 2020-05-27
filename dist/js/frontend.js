@@ -17471,27 +17471,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
+/* 8 */,
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18421,10 +18401,6 @@ var getMarkersCenter = function getMarkersCenter() {
 // EXTERNAL MODULE: external "jQuery"
 var external_jQuery_ = __webpack_require__(2);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(8);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
@@ -19461,15 +19437,6 @@ var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
 
 
-function utils_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function utils_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { utils_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { utils_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-var _wp$element = wp.element,
-    useEffect = _wp$element.useEffect,
-    useRef = _wp$element.useRef;
 var debounce = function debounce(func, wait) {
   var timeout = null;
   return function () {
@@ -19615,35 +19582,6 @@ var utils_getControlsWrapClassname = function getControlsWrapClassname(attribute
   return classnames_default()('novablocks-controls-wrap', {
     'novablocks-controls-wrap--dirty': !wrappedControlsMatch(attributes, compiledAttributes)
   });
-}; // https://stackoverflow.com/questions/55187563/determine-which-dependency-array-variable-caused-useeffect-hook-to-fire
-
-var usePrevious = function usePrevious(value, initialValue) {
-  var ref = useRef(initialValue);
-  useEffect(function () {
-    ref.current = value;
-  });
-  return ref.current;
-};
-var utils_useEffectDebugger = function useEffectDebugger(effectHook, dependencies) {
-  var dependencyNames = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  var previousDeps = usePrevious(dependencies, []);
-  var changedDeps = dependencies.reduce(function (accum, dependency, index) {
-    if (dependency !== previousDeps[index]) {
-      var keyName = dependencyNames[index] || index;
-      return utils_objectSpread(utils_objectSpread({}, accum), {}, defineProperty_default()({}, keyName, {
-        before: previousDeps[index],
-        after: dependency
-      }));
-    }
-
-    return accum;
-  }, {});
-
-  if (Object.keys(changedDeps).length) {
-    console.log('[use-effect-debugger] ', changedDeps);
-  }
-
-  useEffect(effectHook, dependencies);
 };
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 

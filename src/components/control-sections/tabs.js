@@ -7,8 +7,6 @@ import Cube from "./cube";
 
 import { getSectionsFromFills } from "./utils";
 
-import { useEffectDebugger } from "../../utils";
-
 const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
 
 const { __ } = wp.i18n;

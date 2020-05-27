@@ -13,7 +13,8 @@ const { Fragment } = wp.element;
 
 const enableFontSizeControlOnBlocks = [
 	'novablocks/media',
-	'novablocks/cards-collection'
+	'novablocks/cards-collection',
+	'novablocks/posts-collection',
 ];
 
 const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent => {

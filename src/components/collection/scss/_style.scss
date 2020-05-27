@@ -1,0 +1,20 @@
+@import "mixins";
+
+.novablocks-collection__layout {
+	@include novablocks-collection-layout;
+	@include novablocks-cards-columns-count;
+}
+
+@each $alignment in left, center, right {
+
+	.novablocks-collection--align-#{ $alignment } {
+		text-align: $alignment;
+	}
+}
+
+.novablocks-collection--align-right {
+
+	.wp-block-buttons {
+		flex-direction: row-reverse;
+	}
+}

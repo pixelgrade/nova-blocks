@@ -3,6 +3,7 @@ import "./filters/with-block-index";
 import "./filters/with-font-size-picker";
 import "./filters/with-emphasis-level";
 import "./filters/with-controls-sections";
+import "./filters/with-latest-posts";
 
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
@@ -24,6 +25,7 @@ import opentableInit from "./blocks/opentable";
 import openHoursInit from "./blocks/openhours";
 import cardInit from "./blocks/card";
 import cardsCollectionInit from "./blocks/cards-collection";
+import postsCollectionInit from "./blocks/posts-collection"
 
 import { STORE_NAME } from './store';
 
@@ -97,6 +99,7 @@ class novaBlocks {
 		heroInit();
 		mediaInit();
 		slideshowInit();
+		postsCollectionInit();
 	}
 }
 

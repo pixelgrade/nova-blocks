@@ -4,6 +4,8 @@
 @import './emphasis';
 
 @import '../components/alignment-controls/editor';
+@import '../components/autocomplete-tokenfield/editor';
+@import '../components/collection/scss/editor';
 @import '../components/color-controls/editor';
 @import '../components/control-sections/editor';
 @import '../components/drawer/editor';
@@ -26,7 +28,6 @@
 @import '../blocks/opentable/scss/style';
 @import '../blocks/menu-food/scss/editor';
 @import '../blocks/openhours/scss/editor';
-@import '../blocks/cards-collection/scss/editor';
 
 // Quickfix block appender visibility
 .block-list-appender__toggle {

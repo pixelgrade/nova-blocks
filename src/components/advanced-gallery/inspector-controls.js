@@ -157,7 +157,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							step={ 10 }
 						/>
 					</ControlsGroup>
-					<ControlsGroup title={ __( 'Media' ) }>
+					<ControlsGroup title={ __( 'Display' ) }>
 						<RangeControl
 							label={ __( 'Image Container Height', '__plugin_txtd' ) }
 							value={ containerHeight }
