@@ -24447,19 +24447,18 @@ var getControlsClasses = function getControlsClasses(attributes, compiledAttribu
 };
 var changeDefaults = function changeDefaults(blockType, getNewDefaults) {
   var _wp$data$select2 = wp.data.select('core/block-editor'),
-      getBlocks = _wp$data$select2.getBlocks;
+      getBlocksByClientId = _wp$data$select2.getBlocksByClientId,
+      getClientIdsWithDescendants = _wp$data$select2.getClientIdsWithDescendants;
 
   var _wp$data$select3 = wp.data.select('core/editor'),
       isEditedPostEmpty = _wp$data$select3.isEditedPostEmpty;
 
-  var blocks = getBlocks();
+  var blocks = getClientIdsWithDescendants();
   var loadedSavedBlocks = false;
   return wp.data.subscribe(function () {
-    var newBlocks = getBlocks();
-    var addedBlocks = newBlocks.filter(function (x) {
-      return !blocks.map(function (y) {
-        return y.clientId;
-      }).includes(x.clientId);
+    var newBlocks = getClientIdsWithDescendants();
+    var addedBlocks = newBlocks.filter(function (newBlock) {
+      return !blocks.includes(newBlock);
     });
 
     if (newBlocks === blocks || !addedBlocks.length) {
@@ -24473,9 +24472,10 @@ var changeDefaults = function changeDefaults(blockType, getNewDefaults) {
     }
 
     blocks = newBlocks;
-    addedBlocks.map(function (block) {
+    getBlocksByClientId(addedBlocks).map(function (block) {
       if (block.name === blockType && !block.attributes.defaultsGenerated && typeof getNewDefaults === "function") {
         var defaults = getNewDefaults();
+        console.log(defaults);
         wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, src_utils_objectSpread(src_utils_objectSpread({}, defaults), {}, {
           defaultsGenerated: true
         }));
@@ -27775,6 +27775,15 @@ var createBlock = wp.blocks.createBlock;
 // CONCATENATED MODULE: ./src/blocks/advanced-gallery/index.js
 
 
+function advanced_gallery_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function advanced_gallery_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { advanced_gallery_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { advanced_gallery_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
 
 /**
  * WordPress dependencies
@@ -27783,7 +27792,19 @@ var createBlock = wp.blocks.createBlock;
 var advanced_gallery_ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
 
+function getNewDefaults() {
+  var settings = wp.data.select(STORE_NAME).getSettings();
+  var numberOfImages = utils_getRandomBetween(2, 4);
+  var placeholderImages = settings.placeholderImages;
+  var randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
+  var randomAttributes = util_getRandomAttributes();
+  return advanced_gallery_objectSpread(advanced_gallery_objectSpread({}, randomAttributes), {}, {
+    images: randomImages
+  });
+}
+
 function init() {
+  changeDefaults('novablocks/advanced-gallery', getNewDefaults);
   registerBlockType('novablocks/advanced-gallery', {
     title: advanced_gallery_('Gallery of the Stars', '__plugin_txtd'),
     description: advanced_gallery_('Display galleries of images in unique and creative compositions.', '__plugin_txtd'),
@@ -30072,7 +30093,7 @@ var hero_registerBlockType = wp.blocks.registerBlockType;
 var hero_InnerBlocks = wp.blockEditor.InnerBlocks;
 var hero_select = wp.data.select;
 
-function getNewDefaults() {
+function hero_getNewDefaults() {
   var settings = hero_select(STORE_NAME).getSettings();
   var placeholderImages = settings.placeholderImages;
   var index = utils_getRandomBetween(0, placeholderImages.length - 1);
@@ -30085,7 +30106,7 @@ function getNewDefaults() {
 }
 
 function hero_init() {
-  changeDefaults('novablocks/hero', getNewDefaults);
+  changeDefaults('novablocks/hero', hero_getNewDefaults);
   hero_registerBlockType('novablocks/hero', {
     title: hero_('Hero of the Galaxy', '__plugin_txtd'),
     description: hero_('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
@@ -32642,6 +32663,9 @@ wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-collection-visibili
  */
 
 
+
+
+
 /**
  * WordPress dependencies
  */
@@ -32650,7 +32674,20 @@ var card_ = wp.i18n.__;
 var card_registerBlockType = wp.blocks.registerBlockType;
 var card_InnerBlocks = wp.blockEditor.InnerBlocks;
 
+function card_getNewDefaults() {
+  var settings = wp.data.select(STORE_NAME).getSettings();
+  var placeholderImages = settings.placeholderImages;
+  var randomImage = getRandomArrayFromArray(placeholderImages, 1)[0];
+  return {
+    media: {
+      id: randomImage.id,
+      url: randomImage.sizes.full.url
+    }
+  };
+}
+
 function card_init() {
+  changeDefaults('novablocks/card', card_getNewDefaults);
   card_registerBlockType('novablocks/card', {
     title: card_('Card', '__plugin_txtd'),
     description: card_('Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd'),

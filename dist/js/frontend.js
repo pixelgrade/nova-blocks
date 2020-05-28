@@ -19573,19 +19573,18 @@ var getControlsClasses = function getControlsClasses(attributes, compiledAttribu
 };
 var changeDefaults = function changeDefaults(blockType, getNewDefaults) {
   var _wp$data$select2 = wp.data.select('core/block-editor'),
-      getBlocks = _wp$data$select2.getBlocks;
+      getBlocksByClientId = _wp$data$select2.getBlocksByClientId,
+      getClientIdsWithDescendants = _wp$data$select2.getClientIdsWithDescendants;
 
   var _wp$data$select3 = wp.data.select('core/editor'),
       isEditedPostEmpty = _wp$data$select3.isEditedPostEmpty;
 
-  var blocks = getBlocks();
+  var blocks = getClientIdsWithDescendants();
   var loadedSavedBlocks = false;
   return wp.data.subscribe(function () {
-    var newBlocks = getBlocks();
-    var addedBlocks = newBlocks.filter(function (x) {
-      return !blocks.map(function (y) {
-        return y.clientId;
-      }).includes(x.clientId);
+    var newBlocks = getClientIdsWithDescendants();
+    var addedBlocks = newBlocks.filter(function (newBlock) {
+      return !blocks.includes(newBlock);
     });
 
     if (newBlocks === blocks || !addedBlocks.length) {
@@ -19599,9 +19598,10 @@ var changeDefaults = function changeDefaults(blockType, getNewDefaults) {
     }
 
     blocks = newBlocks;
-    addedBlocks.map(function (block) {
+    getBlocksByClientId(addedBlocks).map(function (block) {
       if (block.name === blockType && !block.attributes.defaultsGenerated && typeof getNewDefaults === "function") {
         var defaults = getNewDefaults();
+        console.log(defaults);
         wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, utils_objectSpread(utils_objectSpread({}, defaults), {}, {
           defaultsGenerated: true
         }));

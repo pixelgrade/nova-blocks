@@ -179,15 +179,16 @@ export const getControlsClasses = ( attributes, compiledAttributes ) => {
 }
 
 export const changeDefaults = ( blockType, getNewDefaults ) => {
-	const { getBlocks } = wp.data.select( 'core/block-editor' );
+	const { getBlocksByClientId, getClientIdsWithDescendants } = wp.data.select( 'core/block-editor' );
 	const { isEditedPostEmpty } = wp.data.select( 'core/editor' );
 
-	let blocks = getBlocks();
+	let blocks = getClientIdsWithDescendants();
 	let loadedSavedBlocks = false;
 
 	return wp.data.subscribe( () => {
-		const newBlocks = getBlocks();
-		let addedBlocks = newBlocks.filter( x => ! blocks.map( y => y.clientId ).includes( x.clientId ) );
+		const newBlocks = getClientIdsWithDescendants();
+
+		let addedBlocks = newBlocks.filter( newBlock => ! blocks.includes( newBlock ) );
 
 		if ( newBlocks === blocks || ! addedBlocks.length ) {
 			return;
@@ -201,9 +202,10 @@ export const changeDefaults = ( blockType, getNewDefaults ) => {
 
 		blocks = newBlocks;
 
-		addedBlocks.map( block => {
+		getBlocksByClientId( addedBlocks ).map( block => {
 			if ( block.name === blockType && ! block.attributes.defaultsGenerated && typeof getNewDefaults === "function" ) {
 				const defaults = getNewDefaults();
+				console.log( defaults );
 				wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, {
 					...defaults,
 					defaultsGenerated: true
