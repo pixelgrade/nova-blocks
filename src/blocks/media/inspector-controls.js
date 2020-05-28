@@ -14,7 +14,7 @@ import {
 } from "../../components/emphasis-level-controls"
 
 import {
-	getControlsWrapClassname
+	getControlsClasses
 } from "../../utils";
 
 /**
@@ -131,7 +131,7 @@ const MediaInspectorControls = function( props ) {
 				</ControlsTab>
 
 				<ControlsTab label={ __( 'Customize' ) }>
-					<div className={ getControlsWrapClassname( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) }>
+					<div className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>
 						<RangeControl
 							value={ emphasisBySpace }
 							onChange={ ( emphasisBySpace ) => {
@@ -211,7 +211,7 @@ const MediaInspectorControls = function( props ) {
 			<ControlsSection label={ __( 'Visual Balance' ) }>
 
 				<ControlsTab label={ __( 'Customize' ) }>
-					<div className={ getControlsWrapClassname( attributes, getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) ) }>
+					<div className={ classnames( getControlsClasses( attributes, getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) ) ) }>
 						<RangeControl
 							value={ balanceEmphasis }
 							onChange={ ( balanceEmphasis ) => {

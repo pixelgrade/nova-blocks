@@ -334,9 +334,7 @@ function novablocks_get_slideshow_attributes() {
 		),
 		novablocks_get_doppler_attributes(),
 		novablocks_get_alignment_attributes(),
-		novablocks_get_color_attributes(),
-		novablocks_get_content_padding_attributes(),
-		novablocks_get_content_width_attributes()
+		novablocks_get_color_attributes()
 	);
 }
 
@@ -737,11 +735,16 @@ function novablocks_add_hero_settings( $settings ) {
 			),
 			novablocks_get_doppler_attributes(),
 			novablocks_get_alignment_attributes(),
-			novablocks_get_color_attributes(),
-			novablocks_get_content_padding_attributes(),
-			novablocks_get_content_width_attributes()
+			novablocks_get_color_attributes()
 		),
 	);
+
+	$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
+		'minHeightFallback' => array(
+			'type'    => 'number',
+			'default' => 100,
+		),
+	) );
 
 	$settings['hero'] = $hero_settings;
 

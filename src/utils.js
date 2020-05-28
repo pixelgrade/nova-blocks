@@ -168,13 +168,14 @@ const wrappedControlsMatch = ( attributes, compiledAttributes ) => {
 	} );
 }
 
-export const getControlsWrapClassname = ( attributes, compiledAttributes ) => {
-	return classnames(
-		'novablocks-controls-wrap',
-		{
-			'novablocks-controls-wrap--dirty': ! wrappedControlsMatch( attributes, compiledAttributes ),
-		}
-	);
+export const getControlsClasses = ( attributes, compiledAttributes ) => {
+	const classes = ['novablocks-controls-wrap'];
+
+	if ( ! wrappedControlsMatch( attributes, compiledAttributes ) ) {
+		classes.push( 'novablocks-controls-wrap--dirty' );
+	}
+
+	return classes;
 }
 
 export const changeDefaults = ( blockType, getNewDefaults ) => {
