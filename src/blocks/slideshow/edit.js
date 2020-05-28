@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { shuffleArray } from '../../utils';
+import { shuffleArray } from '@novablocks/utils';
 
 import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';

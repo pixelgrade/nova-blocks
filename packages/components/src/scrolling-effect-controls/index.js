@@ -1,13 +1,25 @@
+import { ControlsSection, ControlsTab } from "../control-sections";
+
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { Button, FocalPointPicker, PanelBody, RadioControl, RangeControl, ToggleControl } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
 
-/**
- * Internal dependencies
- */
+
+import { __ } from '@wordpress/i18n';
+
+import {
+	Button,
+	FocalPointPicker,
+	PanelBody,
+	RadioControl,
+	RangeControl,
+	ToggleControl
+ } from '@wordpress/components';
+
+import {
+	Fragment
+} from '@wordpress/element';
+
 import { defaultSnapValues, getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
 
 const ScrollingEffectControls = function( props ) {
@@ -39,14 +51,16 @@ const ScrollingEffectPanel = ( props ) => {
 		name,
 	} = props;
 
+	console.log( settings );
+
 	const {
 		motionPresetOptions,
-		theme_support,
+		theme_support: {
+			doppler
+		}
 	} = settings;
 
-	const doppler = theme_support ? theme_support.doppler : false;
-
-	const scrollingEffectOptions = settings.scrollingEffectOptions ? [ ...settings.scrollingEffectOptions ] : [];
+	const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
 
 	if ( !! doppler && doppler.includes( name ) ) {
 		scrollingEffectOptions.push( {
@@ -56,25 +70,27 @@ const ScrollingEffectPanel = ( props ) => {
 	}
 
 	return (
-		<PanelBody title={ `Scrolling Effect:` } className={ 'novablocks-scrolling-effect-panel' }>
-			<RadioControl
-				selected={ scrollingEffect }
-				className={ 'novablocks-scrolling-effect' }
-				onChange={ ( scrollingEffect ) => {
-					let newAttributes = { scrollingEffect };
+		<ControlsSection label={ __( 'Scrolling Effect' ) }>
+			<ControlsTab label={ __( 'Customize' ) }>
+				<RadioControl
+					selected={ scrollingEffect }
+					className={ 'novablocks-scrolling-effect' }
+					onChange={ ( scrollingEffect ) => {
+						let newAttributes = { scrollingEffect };
 
-					if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
-						let newOption = motionPresetOptions.find( option => motionPreset === option.value );
-						newAttributes = Object.assign( newOption.preset, newAttributes );
-						newAttributes.minHeightFallback = 75;
-					}
+						if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
+							let newOption = motionPresetOptions.find( option => motionPreset === option.value );
+							newAttributes = Object.assign( newOption.preset, newAttributes );
+							newAttributes.minHeightFallback = 75;
+						}
 
-					setAttributes( newAttributes );
-				} }
-				options={ scrollingEffectOptions }
-			/>
-			{ props.children }
-		</PanelBody>
+						setAttributes( newAttributes );
+					} }
+					options={ scrollingEffectOptions }
+				/>
+				{ props.children }
+			</ControlsTab>
+		</ControlsSection>
 	)
 }
 

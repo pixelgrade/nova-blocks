@@ -7,9 +7,9 @@
 
 .nova-food-menu-item {
 	display: grid;
-	align-items: baseline;
 	grid-template-columns: 1fr auto;
 	grid-template-areas:
+		'label label'
 		'title prices'
 		'description description';
 
@@ -57,11 +57,6 @@
 	--item-padding: 1em;
 	--item-overflow: calc( 1.25 * var( --item-padding ) + var( --item-border-width ) );
 	--item-border-radius: 0;
-
-	grid-template-areas:
-		'label label'
-		'title prices'
-		'description description';
 
 	margin-left: calc( -1 * var( --item-overflow ) );
 	margin-right: calc( -1 * var( --item-overflow ) );
@@ -157,4 +152,25 @@
 
 .nova-food-menu__section {
 	break-inside: avoid;
+}
+
+.is-style-basic {
+	.nova-food-menu-item {
+		grid-template-areas:
+			'label'
+			'title'
+			'prices'
+			'description';
+
+		&__prices {
+			justify-content: flex-start;
+			padding-left: 0;
+		}
+
+		&__title {
+			&:before {
+				content: none;
+			}
+		}
+	}
 }

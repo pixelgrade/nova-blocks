@@ -7,8 +7,16 @@ import withSettings from '../with-settings';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { Button, ButtonGroup, RangeControl } from '@wordpress/components';
+
+import {
+	Fragment
+ } from '@wordpress/element';
+
+import {
+	Button,
+	ButtonGroup,
+	RangeControl
+ } from '@wordpress/components';
 
 const PaddingControls = function( props ) {
 	const {
@@ -21,10 +29,6 @@ const PaddingControls = function( props ) {
 			contentPaddingOptions,
 		},
 	} = props;
-
-	if ( ! contentPaddingOptions ) {
-		return false;
-	}
 
 	return (
 		<Fragment>

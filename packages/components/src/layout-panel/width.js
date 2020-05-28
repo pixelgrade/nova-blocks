@@ -6,9 +6,17 @@ import withSettings from '../with-settings';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { Button, ButtonGroup, RangeControl } from '@wordpress/components';
+import {  __  } from '@wordpress/i18n';
+
+import {
+	Fragment,
+ } from '@wordpress/element';
+
+import {
+	Button,
+	ButtonGroup,
+	RangeControl
+ } from '@wordpress/components';
 
 const WidthControls = function( props ) {
 	const {
@@ -21,10 +29,6 @@ const WidthControls = function( props ) {
 			contentWidthOptions,
 		},
 	} = props;
-
-	if ( ! contentWidthOptions ) {
-		return false;
-	}
 
 	return (
 		<Fragment>

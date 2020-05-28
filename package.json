@@ -7,11 +7,12 @@
 		"build:packages": "node ./bin/packages/build.js"
 	},
 	"dependencies": {
+		"@novablocks/block-library": "file:packages/block-library",
 		"@novablocks/components": "file:packages/components",
 		"@novablocks/easings": "file:packages/easings",
-		"@novablocks/hero": "file:packages/hero",
 		"@novablocks/icons": "file:packages/icons",
-		"@novablocks/utils": "file:packages/utils"
+		"@novablocks/utils": "file:packages/utils",
+		"js-cookie": "^2.2.1"
 	},
 	"devDependencies": {
 		"@wordpress/babel-preset-default": "^4.10.0",

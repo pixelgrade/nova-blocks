@@ -1,6 +1,4 @@
-const {
-	registerStore
-} = wp.data;
+import { registerStore } from '@wordpress/data';
 
 import reducer from './reducer';
 import * as selectors from './selectors';

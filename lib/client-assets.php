@@ -37,7 +37,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 			wp_enqueue_script(
 				$handle,
-				novablocks_get_plugin_url() . '/' . $novablocks_path ,
+				novablocks_get_plugin_url( $novablocks_path ),
 				$dependencies,
 				$version,
 				true

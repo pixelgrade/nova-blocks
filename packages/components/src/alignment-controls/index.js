@@ -11,7 +11,13 @@ import BlockVerticalAlignmentToolbar from '../block-vertical-alignment-toolbar';
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { Dropdown, IconButton, PanelRow, Toolbar } from '@wordpress/components';
+
+import {
+	Dropdown,
+	IconButton,
+	PanelRow,
+	Toolbar
+ } from '@wordpress/components';
 
 const AlignmentToolbar = function( props ) {
 	return (

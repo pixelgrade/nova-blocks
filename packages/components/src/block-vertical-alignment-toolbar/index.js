@@ -12,7 +12,6 @@ import { withViewportMatch } from '@wordpress/viewport';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
 import { createContext } from '@wordpress/element';
-
 const { Consumer } = createContext( {
 	name: '',
 	isSelected: false,

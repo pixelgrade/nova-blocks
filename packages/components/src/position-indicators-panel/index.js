@@ -1,6 +1,9 @@
 import { __ } from '@wordpress/i18n';
 
-import { PanelBody, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	ToggleControl
+} from '@wordpress/components';
 
 function PositionIndicatorsPanel( props ) {
 

@@ -1,9 +1,9 @@
-:root {
-	--novablocks-media-transition-duration: 0.5s;
-	--novablocks-media-transition-easing: ease;
-	--novablocks-media-transition: all
-		var(--novablocks-media-transition-duration)
-		var(--novablocks-media-transition-easing);
+.novablocks-media__aside {
+
+	> .block-editor-media-placeholder {
+		height: 100%;
+		margin-bottom: 0;
+	}
 }
 
 .novablocks-media__placeholder {
@@ -13,34 +13,12 @@
 
 	height: 100%;
 
-	background-color: #eeeeee;
-}
-
-.wp-block-pixelgrade-media {
-	transition: var(--novablocks-media-transition);
-	transition-property: background-color, padding;
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		transition: var(--novablocks-media-transition);
-		transition-property: color;
-	}
-}
-
-.novablocks-media {
-	transition: var(--novablocks-media-transition);
+	background-color: #EEEEEE;
 }
 
 .novablocks-media__inner-container {
 	padding-left: var(--novablocks-media-spacing);
 	padding-right: var(--novablocks-media-spacing);
-
-	transition: var(--novablocks-media-transition);
-	transition-property: padding, box-shadow;
 
 	> * {
 		margin-left: auto;
@@ -50,10 +28,5 @@
 	> [data-align='full'] {
 		margin-left: calc(-1 * var(--novablocks-media-spacing));
 		margin-right: calc(-1 * var(--novablocks-media-spacing));
-	}
-
-	&:after {
-		transition: var(--novablocks-media-transition);
-		transition-property: background-color;
 	}
 }

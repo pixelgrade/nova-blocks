@@ -1,0 +1,26 @@
+@import "style";
+
+.novablocks-openhours__modal {
+	background: url("../../src/images/opening_hours_scheme.png") #ffffff center center no-repeat;
+
+	background-size: contain;
+
+	min-height: 90vh;
+	min-width: 50vw;
+}
+
+.novablocks__label[class][class] {
+	margin-bottom: 8px;
+	&.components-button {
+		margin-bottom: 16px;
+	}
+}
+
+.novablocks__example {
+	background-color: #eee;
+	padding: 4px;
+}
+
+.novablocks__example--multi {
+	white-space: pre;
+}

@@ -1,13 +1,19 @@
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { PanelBody, RangeControl, RadioControl, ToggleControl } from '@wordpress/components';
-
-/**
  * Internal dependencies
  */
 import withSettings from '../with-settings';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+import {
+	PanelBody,
+	RangeControl,
+	RadioControl,
+	ToggleControl
+ } from '@wordpress/components';
 
 const ParallaxPanel = function( props ) {
 	const {

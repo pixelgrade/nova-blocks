@@ -1,0 +1,61 @@
+@mixin novablocks-collection-layout {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	margin-top: calc(-1 * var(--novablocks-spacing));
+	margin-left: calc(-1 * var(--novablocks-spacing));
+
+	> * {
+		--columns-below-tablet: 1;
+		--columns-below-lap: var(--columns-below-tablet);
+		--columns: var(--columns-below-lap);
+
+		--surplus: 0px;
+		--width: calc( ( 100% - var(--surplus) ) / var(--columns) - var(--novablocks-spacing));
+
+		flex: 0 1 var(--width);
+		margin-top: var(--novablocks-spacing);
+		margin-left: var(--novablocks-spacing);
+
+		@include below(lap) {
+			--columns: var(--columns-below-lap) !important;
+		}
+
+		@include below(tablet) {
+			--columns: var(--columns-below-tablet) !important;
+		}
+	}
+
+	&[class][class] > * {
+		max-width: var(--width);
+	}
+
+	> div:not([class]) {
+		display: flex;
+		flex-direction: column;
+
+		> .novablocks-card {
+			height: 100%;
+		}
+	}
+}
+
+// $surplus: number of extra elements that ar siblings of the columns
+@mixin novablocks-cards-columns-count( $surplus: 0 ) {
+
+	> * {
+
+		@include count(#{2 + $surplus}) {
+			--columns: 2;
+		}
+
+		@include count(#{3 + $surplus}) {
+			--columns: 3;
+		}
+
+		@include count(#{4 + $surplus}) {
+			--columns: 4;
+			--columns-below-lap: 2;
+		}
+	}
+}

@@ -4,7 +4,7 @@ import {
 	debounce,
 	isSafari,
 	hasTouchScreen
-} from '../../utils';
+} from '@novablocks/utils';
 
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';

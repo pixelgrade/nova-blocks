@@ -1,28 +1,26 @@
-import { createContext } from 'react';
+import { createContext } from '@wordpress/element';
 
 import { findParents } from '@novablocks/utils';
 import { easeInOutCubic, easeOutQuart } from '@novablocks/easings';
-
-import withSettings from '../with-settings';
-import ScrollingEffectControls from '../scrolling-effect-controls';
+import { ScrollingEffectControls, withSettings } from "../index";
 
 import { getStyles, getState } from './util';
 
 /**
  * WordPress dependencies
  */
-const {
+import {
 	Component,
-	Fragment,
-} = wp.element;
+	Fragment
+} from '@wordpress/element';
 
-const {
+import {
 	InspectorControls
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
-const {
-	compose,
-} = wp.compose;
+import {
+	compose
+ } from '@wordpress/compose';
 
 const ParallaxContext = createContext();
 
@@ -46,7 +44,8 @@ const withParallaxProvider = function( WrappedComponent ) {
 		getScrollContainer() {
 			return document.querySelector( '.edit-post-layout__content' ) ||
 			       document.querySelector( '.edit-post-editor-regions__content' ) ||
-			       document.querySelector( '.block-editor-editor-skeleton__content' );
+			       document.querySelector( '.block-editor-editor-skeleton__content' ) ||
+			       document.querySelector( '.interface-interface-skeleton__content' );
 		}
 
 		componentDidMount() {

@@ -8,8 +8,20 @@ import * as icons from '@novablocks/icons';
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { ColorPalette, Dropdown, IconButton, RadioControl, RangeControl, Toolbar, BaseControl } from '@wordpress/components';
-import { PanelColorSettings } from '@wordpress/block-editor';
+
+import {
+	ColorPalette,
+	Dropdown,
+	IconButton,
+	RadioControl,
+	RangeControl,
+	Toolbar,
+	BaseControl
+} from '@wordpress/components';
+
+import {
+	PanelColorSettings
+ } from '@wordpress/block-editor';
 
 const colors = [ {
 	name: __( 'Dark', '__plugin_txtd' ),

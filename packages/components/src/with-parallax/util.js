@@ -320,20 +320,22 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 			config: config,
 		} );
 
-		var $mask = $container.find( '.novablocks-mask' );
 		var $parallax = $container.find( '.novablocks-parallax' );
 
-		$container.data( 'mask', $mask );
 		$container.data( 'parallax', $parallax );
 
 		function parallaxUpdateState() {
-			var state = getState( container, config );
+			var newConfig = Object.assign( {}, config, {
+				scrollContainerHeight: window.innerHeight
+			} );
+			var state = getState( container, newConfig );
 			$container.data( 'state', state );
+			$container.data( 'config', newConfig );
 			frameRendered = false;
 		}
 
 		$( window ).on( 'scroll', parallaxUpdateState );
-		$( window ).on( 'resize', debounce( parallaxUpdateState, 100 ) );
+		$( window ).on( 'resize', parallaxUpdateState );
 	} );
 
 	function parallaxUpdateLoop() {
@@ -359,12 +361,8 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 				}
 
 				let styles = getStylesFromProps( props );
-				let { containerWidth, containerHeight } = config;
 
 				$container.data( 'parallax' ).css( styles );
-				$container.data( 'mask' ).css( {
-					clip: `rect(0 ${ containerWidth }px ${ containerHeight }px 0)`
-				} );
 			} );
 			frameRendered = true;
 		}

@@ -1,8 +1,9 @@
 /**
  * Internal dependencies
  */
-import * as icons from '../../icons';
+import * as icons from '@novablocks/icons';
 import edit from './edit';
+import transforms from './transforms';
 
 /**
  * WordPress dependencies
@@ -27,6 +28,7 @@ function init() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'full' } : {};
 		},
+		transforms
 	} )
 }
 

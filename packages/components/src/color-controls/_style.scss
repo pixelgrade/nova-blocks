@@ -1,9 +1,15 @@
-@each $color in dark, light, none {
-	.novablocks-u-background-#{$color} {
-		--element-background: var(--bg-master-#{$color});
-	}
-}
-
 .novablocks-u-background {
 	background-color: var(--element-background);
+}
+
+.novablocks-u-background-dark {
+	--element-background: #000;
+}
+
+.novablocks-u-background-light {
+	--element-background: #FFF;
+}
+
+.novablocks-u-background-none {
+	--element-background: none;
 }

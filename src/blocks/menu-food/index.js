@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '../../icons';
+import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 
@@ -25,6 +25,10 @@ function init() {
 			enableTwoColumns : {
 				type: 'boolean',
 				default: true
+			},
+			align: {
+				type: 'string',
+				default: 'wide'
 			}
 		},
 		example: {
@@ -32,6 +36,17 @@ function init() {
 				enableTwoColumns: false
 			}
 		},
+		styles: [
+			{
+				name: 'classic',
+				label: __( 'Classic' ),
+				isDefault: true
+			},
+			{
+				name: 'basic',
+				label: __( 'Basic' )
+			},
+		],
 		getEditWrapperProps() {
 			const settings = select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'wide' } : {};

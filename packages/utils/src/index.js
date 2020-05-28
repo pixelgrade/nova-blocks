@@ -1,3 +1,5 @@
+import { select } from '@wordpress/data';
+
 export const debounce = (func, wait) => {
 	let timeout = null;
 
@@ -26,7 +28,7 @@ export const withFirstBlockConditions = function( Component ) {
 
 	return function( props ) {
 
-		const { getBlocks, getSelectedBlockClientId } = wp.data.select( 'core/block-editor' );
+		const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
 		const blocks = getBlocks();
 		const selectedBlockClientId = getSelectedBlockClientId();
 		const index = blocks.findIndex( block => block.clientId === selectedBlockClientId );

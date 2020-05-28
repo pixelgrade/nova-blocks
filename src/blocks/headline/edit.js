@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import HeadingToolbar from './heading-toolbar';
+import HeadingToolbar from '../../components/heading-toolbar';
 
 const { __ } = wp.i18n;
 
@@ -7,9 +7,10 @@ const {
 	Fragment
 } = wp.element;
 
-/**
- * WordPress dependencies
- */
+const {
+	PanelBody,
+} = wp.components;
+
 const {
 	RichText,
 	AlignmentToolbar,
@@ -46,8 +47,10 @@ export default function HeadlineEdit( props ) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<p>{ __( 'Level', '__plugin_txtd' ) }</p>
-				<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				<PanelBody title={ __( 'Headline Settings', '__plugin_txtd' ) } initialOpen={ true }>
+					<p>{ __( 'Level', '__plugin_txtd' ) }</p>
+					<HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+				</PanelBody>
 			</InspectorControls>
 
 			<TagName

@@ -3,11 +3,11 @@
  * Plugin Name: Nova Blocks
  * Plugin URI: https://github.com/pixelgrade/nova-blocks/
  * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
- * Version: 1.2.1
+ * Version: 1.4.2
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
- * Tested up to: 5.3.2
+ * Tested up to: 5.4.0
  * Requires PHP: 5.4.0
  * License: GPLv2 or later
  *
@@ -40,7 +40,6 @@ require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 // load block areas functionality
 require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
 
-
-require_once dirname( __FILE__ ) . '/packages/hero/init.php';
+require_once dirname( __FILE__ ) . '/packages/block-library/src/hero-of-the-galaxy/index.php';
 
 

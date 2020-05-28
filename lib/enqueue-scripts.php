@@ -14,6 +14,7 @@ function novablocks_admin_init() {
 	$block_path = '/dist/js/editor.js';
 
 	$script_dependencies = array(
+		'lodash',
 		'wp-i18n',
 		'wp-api',
 		'wp-blocks',
@@ -35,12 +36,12 @@ function novablocks_admin_init() {
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.2.1',
+		'1.4.2',
 		true
 	);
 
 	wp_localize_script( 'nova-blocks-js', 'novablocks_urls', array(
-		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/frontend.style.css',
+		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/frontend.css',
 		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
 	) );
 
@@ -51,7 +52,7 @@ function novablocks_admin_init() {
 		'nova-blocks-editor-css',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.2.1'
+		'1.4.2'
 	);
 }
 add_action( 'admin_init', 'novablocks_admin_init' );
@@ -69,7 +70,7 @@ function novablocks_enqueue_assets() {
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.2.1'
+		'1.4.2'
 	);
 }
 add_action( 'enqueue_block_assets', 'novablocks_enqueue_assets' );
@@ -133,7 +134,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.2.1',
+		'1.4.2',
 		true
 	);
 }

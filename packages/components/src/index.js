@@ -5,27 +5,50 @@ export { default as LayoutPanel } from './layout-panel';
 export { default as ParallaxPanel } from './parallax-panel';
 export { default as PositionIndicatorsPanel } from './position-indicators-panel';
 export { default as ScrollingEffectControls } from './scrolling-effect-controls';
-
-export { default as withParallax, withParallaxContext, withParallaxControls, withParallaxProvider } from './with-parallax';
+export { default as ToggleGroup } from './toggle-group';
+export { default as HeadingToolbar } from './heading-toolbar';
+export { default as CardsManagerPanel } from './cards-manager-panel';
+export { default as Collection } from './collection';
 export { default as withSettings } from './with-settings';
+export { default as viewportObserver } from './viewport-observer';
+
+export {
+	default as withParallax,
+	withParallaxProvider,
+	withParallaxContext,
+	withParallaxControls,
+} from './with-parallax';
 
 export {
 	GalleryPreview,
-	GalleryPlaceholder,
+	GalleryPlaceholder
 } from './gallery-options';
+
+export {
+	Tabs,
+	Tab
+} from './tabs';
+
+export { default as Notice } from './notice';
 
 export {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
-	OverlayControls,
-} from './color-controls';
+	OverlayControls
+ } from './color-controls';
 
 export {
 	AlignmentControls,
-	AlignmentToolbar,
-} from './alignment-controls';
+	AlignmentToolbar
+ } from './alignment-controls';
 
 export {
-	ScrollIndicatorPanel,
-} from './scroll-indicator-panel';
+	ScrollIndicatorPanel
+ } from './scroll-indicator-panel';
+
+export {
+	ControlsTab,
+	ControlsSections,
+	ControlsSection
+ } from './control-sections';

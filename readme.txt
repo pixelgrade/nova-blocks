@@ -2,9 +2,9 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.3.2
+Tested up to: 5.4.0
 Requires PHP: 5.4.0
-Stable tag: 1.2.1
+Stable tag: 1.4.2
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,8 +64,8 @@ The Nova Blocks plugin bundles the following third-party resources:
 * [jQuery Bully plugin](http://pixelgrade.github.io/rellax/) Copyright (c) 2016 Pixelgrade - License: MIT
 * [jQuery Slick plugin](http://kenwheeler.github.io) Copyright (c) 2017 Ken Wheeler - License: MIT
 * [jQuery Velocity plugin](http://velocityjs.org/) Copyright (c) 2014-2017 Julian Shapiro - License: MIT
+* [JS Cookie](https://github.com/js-cookie/js-cookie) Copyright (c) 2018 Klaus Hartl, Fagner Brack, GitHub Contributors - License: MIT
 
-* [WP-REST-API V2 Menus](https://wordpress.org/plugins/wp-rest-api-v2-menus/) - License GPLv2
 * [Block Areas](https://wordpress.org/plugins/block-areas/) - License GPLv2
 
 == Installation ==
@@ -93,6 +93,34 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.4.2 =
+* Improved labels for Map block options in the editor
+* Improved Cards Collection block alignment
+* Fixed display of Media Card block on small devices
+* Fixed Map controls in the frontend
+
+= 1.4.0 =
+* New Block: Gallery of the Stars for creative gallery layouts
+* Enhanced block: Media Card Constellation's gallery can also use creative layouts
+
+= 1.3.2 =
+* Fix Hero block minimum height attribute
+
+= 1.3.1 =
+* Fix fatal error
+
+= 1.3.0 =
+* New Block: Open Hours to display businesses open hours
+* New Block: Cards Collection to display related items in a coherent layout
+* Added a new style for the Food Menu block
+* Fixed parallax scaling and overflow issues
+* Fixed block toolbar positioning for full width blocks
+* Fixed Media Card block images attribute parsing
+* Improved controls display and copy for the Headline block
+
+= 1.2.2 =
+* Fixed parallax scrolling for Safari browser
 
 = 1.2.1 =
 * Quick fix for blocks crashing after some class name changes in the block editor in Gutenberg 7.5

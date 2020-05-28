@@ -1,9 +1,10 @@
 /**
  * Internal dependencies
  */
-import * as icons from '../../icons';
+import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
+import transforms from './transforms';
 
 /**
  * WordPress dependencies
@@ -14,7 +15,7 @@ const { registerBlockType } = wp.blocks;
 function init() {
 	registerBlockType( 'novablocks/headline', {
 		title: __( 'Headline', '__plugin_txtd' ),
-		description: __( 'Advanced heading block with a fancier display', '__plugin_txtd' ),
+		description: __( 'Advanced heading block with a fancier display.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.headline,
 		// Additional search terms
@@ -39,6 +40,7 @@ function init() {
 		},
 		save,
 		edit,
+		transforms,
 	} )
 }
 
