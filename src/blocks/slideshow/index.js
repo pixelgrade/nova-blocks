@@ -7,7 +7,8 @@ import attributes from './attributes';
 
 import { parallaxAttributes } from '../../components/with-parallax';
 import { STORE_NAME } from "../../store";
-import { changeDefaults, getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import generateDefaults from "../../components/generate-defaults";
 
 /**
  * WordPress dependencies
@@ -30,7 +31,7 @@ function getNewDefaults() {
 
 function init() {
 
-	changeDefaults( 'novablocks/slideshow', getNewDefaults );
+	generateDefaults( 'novablocks/slideshow', getNewDefaults );
 
 	registerBlockType( 'novablocks/slideshow', {
 		title: __( 'Slideshow Me the Way', '__plugin_txtd' ),

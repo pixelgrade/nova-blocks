@@ -3,19 +3,20 @@
  */
 import * as icons from '../../icons';
 import edit from './edit';
+import save from './save';
 import deprecated from './deprecated';
 import { STORE_NAME } from "../../store";
-import { changeDefaults, getRandomBetween } from "../../utils";
+import { getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 
 import attributes from "./attributes";
+import generateDefaults from "../../components/generate-defaults";
 
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
 const { select } = wp.data;
 
 function getNewDefaults() {
@@ -34,7 +35,7 @@ function getNewDefaults() {
 
 function init() {
 
-	changeDefaults( 'novablocks/hero', getNewDefaults );
+	generateDefaults( 'novablocks/hero', getNewDefaults );
 
 	registerBlockType( 'novablocks/hero', {
 		title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
@@ -42,7 +43,12 @@ function init() {
 		category: 'nova-blocks',
 		icon: icons.hero,
 		// Additional search terms
-		keywords: [ __( 'cover', '__plugin_txtd' ), __( 'full width', '__plugin_txtd' ), __( 'hero image', '__plugin_txtd' ), __( 'cover section', '__plugin_txtd' ) ],
+		keywords: [
+			__( 'cover', '__plugin_txtd' ),
+			__( 'full width', '__plugin_txtd' ),
+			__( 'hero image', '__plugin_txtd' ),
+			__( 'cover section', '__plugin_txtd' )
+		],
 		example: {},
 		supports: {
 			anchor: true,
@@ -50,9 +56,7 @@ function init() {
 		deprecated,
 		attributes,
 		edit,
-		save() {
-			return <InnerBlocks.Content />;
-		},
+		save,
 		getEditWrapperProps() {
 			const settings = select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'full' } : {};

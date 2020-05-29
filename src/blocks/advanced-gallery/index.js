@@ -2,8 +2,9 @@ import * as icons from '../../icons';
 import edit from './edit';
 import transforms from './transforms';
 import { STORE_NAME } from "../../store";
-import { changeDefaults, getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
+import generateDefaults from "../../components/generate-defaults";
 
 /**
  * WordPress dependencies
@@ -26,7 +27,7 @@ function getNewDefaults() {
 
 function init() {
 
-	changeDefaults( 'novablocks/advanced-gallery', getNewDefaults );
+	generateDefaults( 'novablocks/advanced-gallery', getNewDefaults );
 
 	registerBlockType( 'novablocks/advanced-gallery', {
 		title: __( 'Gallery of the Stars', '__plugin_txtd' ),

@@ -143,53 +143,7 @@ function novablocks_alter_default_attributes_from_preset( $attributes ) {
 function novablocks_get_advanced_gallery_component_attributes() {
 
 	$attributes = array(
-		'gallery'            => array(
-			'type'    => 'array',
-			'items'   => array(
-				'type' => 'object',
-			),
-			'default' => array(),
-		),
-		'stylePreset'        => array(
-			'type'    => 'string',
-			'default' => 'the-cloud-atlas',
-		),
-		'sizeContrast'       => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
-		'positionShift'      => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
-		'elementsDistance'   => array(
-			'type'    => 'number',
-			'default' => 20,
-		),
-		'placementVariation' => array(
-			'type'    => 'number',
-			'default' => 25,
-		),
-		'imageRotation'      => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
-		'imageResizing'      => array(
-			'type'    => 'string',
-			'default' => 'cropped',
-		),
-		'containerHeight'    => array(
-			'type'    => 'number',
-			'default' => 50,
-		),
-		'objectPosition'     => array(
-			'type'    => 'number',
-			'default' => 50,
-		),
-		'verticalSpacing'    => array(
-			'type'    => 'number',
-			'default' => 0,
-		),
+
 	);
 
 	return $attributes;

@@ -1,5 +1,4 @@
-const { InnerBlocks } = wp.blockEditor;
-
+import save from "./save";
 import heroAttributes from "./attributes"
 import layoutAttributes from "../../components/layout-panel/attributes";
 
@@ -17,9 +16,7 @@ deprecated.push({
 			defaultsGenerated: true
 		};
 	},
-	save() {
-		return <InnerBlocks.Content />;
-	}
+	save,
 });
 
 export default deprecated;

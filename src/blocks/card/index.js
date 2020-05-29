@@ -3,9 +3,10 @@
  */
 import * as icons from '../../icons';
 import edit from './edit';
-import {changeDefaults, getRandomArrayFromArray, getRandomBetween} from "../../utils";
-import {STORE_NAME} from "../../store";
-import {getRandomAttributes} from "../../components/advanced-gallery/util";
+import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import { STORE_NAME } from "../../store";
+import { getRandomAttributes } from "../../components/advanced-gallery/util";
+import generateDefaults from "../../components/generate-defaults";
 
 /**
  * WordPress dependencies
@@ -29,7 +30,7 @@ function getNewDefaults() {
 
 function init() {
 
-	changeDefaults( 'novablocks/card', getNewDefaults );
+	generateDefaults( 'novablocks/card', getNewDefaults );
 
 	registerBlockType( 'novablocks/card', {
 		title: __( 'Card', '__plugin_txtd' ),
