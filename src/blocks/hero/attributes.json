@@ -29,6 +29,6 @@
 	},
 	"minHeightFallback": {
 		"type": "number",
-		"default": 75
+		"default": 100
 	}
 }
