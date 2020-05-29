@@ -1,9 +1,9 @@
 import save from "./save";
-import heroAttributes from "./attributes"
+import blockAttributes from "./attributes"
 import layoutAttributes from "../../components/layout-panel/attributes";
 
 const deprecated = [];
-const attributes = Object.assign( {}, heroAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
 
 deprecated.push({
 	attributes,

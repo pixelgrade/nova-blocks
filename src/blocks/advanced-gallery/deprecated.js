@@ -1,7 +1,5 @@
-import save from "./save";
-
-import blockAttributes from "./attributes"
 import galleryAttributes from "../../components/advanced-gallery/attributes";
+import blockAttributes from "./attributes";
 
 const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
 
@@ -33,7 +31,9 @@ deprecated.push({
 			images: gallery
 		};
 	},
-	save,
+	save() {
+		return false;
+	},
 });
 
 deprecated.push({
@@ -47,7 +47,9 @@ deprecated.push({
 			defaultsGenerated: true
 		};
 	},
-	save,
+	save() {
+		return false;
+	},
 });
 
 export default deprecated;

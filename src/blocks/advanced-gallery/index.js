@@ -1,5 +1,6 @@
 import * as icons from '../../icons';
 import edit from './edit';
+import deprecated from './deprecated';
 import transforms from './transforms';
 import { STORE_NAME } from "../../store";
 import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
@@ -43,6 +44,7 @@ function init() {
 		save() {
 			return false;
 		},
+		deprecated,
 		transforms,
 	} )
 }

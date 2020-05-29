@@ -59,10 +59,12 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$attributes['gallery'] = $attributes['images'];
 		}
 
+		$verticalAlignment = isset( $attributes['verticalAlignment'] ) ? $attributes['verticalAlignment'] : 'center';
+
 		$blockTopSpacing = $attributes['blockTopSpacing'];
 		$blockBottomSpacing = $attributes['blockBottomSpacing'];
-		$emphasisTopSpacing = $attributes['verticalAlignment'] === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
-		$emphasisBottomSpacing = $attributes['verticalAlignment'] === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
+		$emphasisTopSpacing = $verticalAlignment === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
+		$emphasisBottomSpacing = $verticalAlignment === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
 		$emphasisArea = $attributes['emphasisArea'];
 		$contentAreaWidth = $attributes['contentAreaWidth'];
 		$layoutGutter = $attributes['layoutGutter'];

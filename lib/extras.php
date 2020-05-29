@@ -92,63 +92,6 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 }
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
-function novablocks_get_advanced_gallery_attributes() {
-	$attributes = array_merge(
-		array(
-			'align' => array(
-				'type'    => 'string',
-				'default' => 'wide',
-			),
-		),
-	);
-
-	$attributes = novablocks_alter_default_attributes_from_preset( $attributes );
-
-	if ( isset( $attributes['imageResizing']['default'] ) ) {
-		$attributes['imageResizing']['default'] = 'original';
-	}
-
-	return $attributes;
-}
-
-function novablocks_alter_default_attributes_from_preset( $attributes ) {
-	if ( ! isset( $attributes['stylePreset']['default'] ) ) {
-		return $attributes;
-	}
-
-	$defaultPresetSlug = $attributes['stylePreset']['default'];
-	$presetOptions = novablocks_get_advanced_gallery_presets();
-
-	$defaultPreset = array();
-
-	foreach ( $presetOptions as $preset ) {
-		if ( $preset['value'] === $defaultPresetSlug ) {
-			$defaultPreset = $preset['preset'];
-		}
-	}
-
-	if ( empty( $defaultPreset ) ) {
-		return $attributes;
-	}
-
-	foreach ( $defaultPreset as $key => $value ) {
-		if ( isset( $attributes[$key] ) ) {
-			$attributes[$key]['default'] = $value;
-		}
-	}
-
-	return $attributes;
-}
-
-function novablocks_get_advanced_gallery_component_attributes() {
-
-	$attributes = array(
-
-	);
-
-	return $attributes;
-}
-
 function novablocks_get_color_attributes() {
 	return array(
 		'contentColor'          => array(
@@ -777,9 +720,7 @@ function novablocks_add_media_settings( $settings ) {
 					'default' => 'content',
 				),
 			),
-			novablocks_get_media_spacing_atttributes(),
-			novablocks_get_alignment_attributes(),
-			novablocks_get_advanced_gallery_component_attributes()
+			novablocks_get_media_spacing_atttributes()
 		),
 		'template'           => array(
 			array(
