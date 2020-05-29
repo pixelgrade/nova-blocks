@@ -20487,6 +20487,7 @@ var grid_item_GridItem = /*#__PURE__*/function () {
       imageRotation: $gallery.data('imagerotation'),
       positionVariation: $gallery.data('positionvariation'),
       elementsDistance: $gallery.data('elementsdistance'),
+      verticalSpacing: $gallery.data('verticalspacing'),
       objectPosition: $gallery.data('objectposition')
     };
     var gridItemsCollection = new grid_item_GridItemCollection(images, attributes);

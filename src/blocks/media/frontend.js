@@ -21,6 +21,7 @@ import { GridItemCollection } from "../../components/advanced-gallery/grid-item"
 			imageRotation: $gallery.data( 'imagerotation' ),
 			positionVariation: $gallery.data( 'positionvariation' ),
 			elementsDistance: $gallery.data( 'elementsdistance' ),
+			verticalSpacing: $gallery.data( 'verticalspacing' ),
 			objectPosition: $gallery.data( 'objectposition' ),
 		};
 

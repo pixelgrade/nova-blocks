@@ -27475,7 +27475,6 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
-
 var advanced_gallery_inspector_controls_ = wp.i18n.__;
 var advanced_gallery_inspector_controls_Fragment = wp.element.Fragment;
 var advanced_gallery_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
@@ -27678,8 +27677,8 @@ var block_controls_wp$components = wp.components,
 var block_controls_Fragment = wp.element.Fragment;
 
 var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryChangeMediaToolbar(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes;
+  var setAttributes = props.setAttributes,
+      images = props.attributes.images;
   var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
 
   if (!gallery || !gallery.length) {
@@ -27712,7 +27711,52 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
 
 var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
   var setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props));
+  return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props), Object(external_React_["createElement"])(block_controls_Toolbar, {
+    className: "pixelgrade-advanced-gallery-vertical-spacing-toolbar"
+  }, Object(external_React_["createElement"])(block_controls_Dropdown, {
+    position: "bottom",
+    className: "pixelgrade-hero-block-toolbar-dropdown",
+    contentClassName: "components-nova--popover",
+    renderToggle: function renderToggle(_ref2) {
+      var isOpen = _ref2.isOpen,
+          onToggle = _ref2.onToggle;
+      return Object(external_React_["createElement"])(block_controls_IconButton, {
+        onClick: onToggle,
+        icon: alignCenter,
+        "aria-expanded": isOpen,
+        label: block_controls_('Vertical Alignment', '__plugin_txtd'),
+        labelPosition: "bottom"
+      });
+    },
+    focusOnMount: false,
+    renderContent: function renderContent() {
+      return Object(external_React_["createElement"])(block_controls_Fragment, null, Object(external_React_["createElement"])(block_controls_RadioControl, {
+        label: 'Vertical Spacing',
+        selected: verticalSpacing,
+        onChange: function onChange(verticalSpacing) {
+          setAttributes({
+            verticalSpacing: parseInt(verticalSpacing, 10)
+          });
+        },
+        options: [{
+          label: '-2 Overlap',
+          value: -2
+        }, {
+          label: '-1 Overlap',
+          value: -1
+        }, {
+          label: 'None',
+          value: 0
+        }, {
+          label: '+1 Offset',
+          value: 1
+        }, {
+          label: '+2 Offset',
+          value: 2
+        }]
+      }));
+    }
+  })));
 };
 
 /* harmony default export */ var block_controls = (block_controls_AdvancedGalleryBlockControls);
