@@ -64,6 +64,8 @@ const BlockHeightControls = function( props ) {
 
 	const { minHeightFallback } = attributes;
 
+	console.log( attributes );
+
 	return (
 		<ControlsSection label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>

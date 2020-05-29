@@ -1,14 +1,13 @@
 const { InnerBlocks } = wp.blockEditor;
 
-let deprecated = [];
+import heroAttributes from "./attributes"
+import layoutAttributes from "../../components/layout-panel/attributes";
+
+const deprecated = [];
+const attributes = Object.assign( {}, heroAttributes, layoutAttributes );
 
 deprecated.push({
-	attributes: {
-		media: {
-			type: 'object',
-			default: {}
-		}
-	},
+	attributes,
 	isEligible( attributes, innerBlocks ) {
 		return "undefined" === typeof attributes.defaultsGenerated;
 	},

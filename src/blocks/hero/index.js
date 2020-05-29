@@ -47,6 +47,7 @@ function init() {
 		supports: {
 			anchor: true,
 		},
+		deprecated,
 		attributes,
 		edit,
 		save() {

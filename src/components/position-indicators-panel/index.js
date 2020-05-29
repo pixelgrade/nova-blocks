@@ -1,3 +1,5 @@
+import { ControlsSection, ControlsTab } from "../control-sections";
+
 const { __ } = wp.i18n;
 
 const {
@@ -11,13 +13,15 @@ function PositionIndicatorsPanel( props ) {
 	const { positionIndicators } = attributes;
 
 	return (
-		<PanelBody title={ __( 'Position Indicators', '__plugin_txtd' ) } initialOpen={ false }>
-			<ToggleControl
-				label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
-				checked={ positionIndicators }
-				onChange={ positionIndicators => { setAttributes( { positionIndicators } ) } }
-			/>
-		</PanelBody>
+		<ControlsSection label={ __( 'Indicators' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<ToggleControl
+					label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
+					checked={ positionIndicators }
+					onChange={ positionIndicators => { setAttributes( { positionIndicators } ) } }
+				/>
+			</ControlsTab>
+		</ControlsSection>
    )
 }
 

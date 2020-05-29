@@ -25,6 +25,10 @@
 	},
 	"defaultsGenerated": {
 		"boolean": true,
-		"defaults": false
+		"default": false
+	},
+	"minHeightFallback": {
+		"type": "number",
+		"default": 75
 	}
 }

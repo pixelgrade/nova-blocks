@@ -68,7 +68,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$contentStyle .= '--theme-dark-primary: #FFF';
 		}
 
-		$minHeight = floatval( $attributes['minHeightFallback'] );
+		$minHeight = isset( $attributes['minHeightFallback'] ) ? floatval( $attributes['minHeightFallback'] ) : 75;
 		$heroHeight = $foregroundHeight = $minHeight;
 
 		if ( 'doppler' === $attributes['scrollingEffect'] ) {

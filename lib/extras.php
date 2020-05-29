@@ -739,13 +739,6 @@ function novablocks_add_hero_settings( $settings ) {
 		),
 	);
 
-	$hero_settings['attributes'] = array_merge( $hero_settings['attributes'], array(
-		'minHeightFallback' => array(
-			'type'    => 'number',
-			'default' => 100,
-		),
-	) );
-
 	$settings['hero'] = $hero_settings;
 
 	return $settings;
