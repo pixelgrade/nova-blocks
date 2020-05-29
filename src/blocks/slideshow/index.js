@@ -3,7 +3,9 @@
  */
 import * as icons from '../../icons';
 import edit from './edit';
+import save from './save';
 import attributes from './attributes';
+import deprecated from './deprecated';
 
 import { parallaxAttributes } from '../../components/with-parallax';
 import { STORE_NAME } from "../../store";
@@ -42,9 +44,8 @@ function init() {
 		keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
 		attributes,
 		edit,
-		save() {
-			return <InnerBlocks.Content />;
-		},
+		save,
+		deprecated,
 		getEditWrapperProps() {
 			const settings = wp.data.select( 'core/block-editor' ).getSettings();
 			return settings.alignWide ? { 'data-align': 'full' } : {};

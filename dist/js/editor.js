@@ -32277,15 +32277,46 @@ var slideshow_edit_Edit = /*#__PURE__*/function (_Component) {
 }(slideshow_edit_Component);
 
 /* harmony default export */ var slideshow_edit = (slideshow_edit_createHigherOrderComponent(slideshow_edit_compose([with_settings, with_parallax]))(slideshow_edit_Edit));
+// CONCATENATED MODULE: ./src/blocks/slideshow/save.js
+
+var slideshow_save_InnerBlocks = wp.blockEditor.InnerBlocks;
+/* harmony default export */ var slideshow_save = (function () {
+  return Object(external_React_["createElement"])(slideshow_save_InnerBlocks.Content, null);
+});
 // EXTERNAL MODULE: ./src/blocks/slideshow/attributes.json
 var slideshow_attributes = __webpack_require__(117);
 
+// CONCATENATED MODULE: ./src/blocks/slideshow/deprecated.js
+
+
+function slideshow_deprecated_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function slideshow_deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { slideshow_deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { slideshow_deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+var slideshow_deprecated_deprecated = [];
+var slideshow_deprecated_attributes = Object.assign({}, slideshow_attributes, layout_panel_attributes);
+slideshow_deprecated_deprecated.push({
+  attributes: slideshow_deprecated_attributes,
+  isEligible: function isEligible(attributes, innerBlocks) {
+    return "undefined" === typeof attributes.defaultsGenerated;
+  },
+  migrate: function migrate(attributes, innerBlocks) {
+    return slideshow_deprecated_objectSpread(slideshow_deprecated_objectSpread({}, attributes), {}, {
+      defaultsGenerated: true
+    });
+  },
+  save: slideshow_save
+});
+/* harmony default export */ var slideshow_deprecated = (slideshow_deprecated_deprecated);
 // CONCATENATED MODULE: ./src/blocks/slideshow/index.js
-
-
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -32323,9 +32354,8 @@ function slideshow_init() {
     keywords: [slideshow_('slider', '__plugin_txtd'), slideshow_('carousel', '__plugin_txtd'), slideshow_('images', '__plugin_txtd'), slideshow_('cover', '__plugin_txtd')],
     attributes: slideshow_attributes,
     edit: slideshow_edit,
-    save: function save() {
-      return Object(external_React_["createElement"])(slideshow_InnerBlocks.Content, null);
-    },
+    save: slideshow_save,
+    deprecated: slideshow_deprecated,
     getEditWrapperProps: function getEditWrapperProps() {
       var settings = wp.data.select('core/block-editor').getSettings();
       return settings.alignWide ? {
