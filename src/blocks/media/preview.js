@@ -56,7 +56,7 @@ const MediaPreview = function( props ) {
 		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 		'--emphasis-area': emphasisArea,
 		'--novablocks-media-content-width': `${contentAreaWidth}%`,
-		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 8 / 100 )`,
+		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 10 / 100 )`,
 	}
 
 	const blockClassNames = classnames(
