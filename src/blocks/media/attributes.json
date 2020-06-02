@@ -46,5 +46,50 @@
 	"layoutGutter": {
 		"type": "number",
 		"default": 25
+	},
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"emphasisArea": {
+		"type": "number",
+		"default": 100
+	},
+	"balanceEmphasis": {
+		"type": "number",
+		"default": 0
+	},
+	"balanceFocalPoint": {
+		"type": "string",
+		"default": "content"
+	},
+
+	"layoutPreset": {
+		"type": "string",
+		"default": "stable"
+	},
+	"emphasisBySpace": {
+		"type": "number",
+		"default": 1
+	},
+	"enableOverlapping": {
+		"type": "boolean",
+		"default": false
+	},
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"blockBottomSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"emphasisTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"emphasisBottomSpacing": {
+		"type": "number",
+		"default": 1
 	}
 }

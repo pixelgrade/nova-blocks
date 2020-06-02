@@ -5,7 +5,7 @@
 	},
 	"stylePreset": {
 		"type": "string",
-		"default": "creative"
+		"default": "the-cloud-atlas"
 	},
 	"sizeContrast": {
 		"type": "number",

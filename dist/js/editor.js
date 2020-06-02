@@ -2632,7 +2632,7 @@ function createHigherOrderComponent(mapComponentToEnhancedComponent, modifierNam
 /* 57 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[]},\"stylePreset\":{\"type\":\"string\",\"default\":\"creative\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[]},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 58 */
@@ -2665,7 +2665,7 @@ module.exports = _objectWithoutProperties;
 /* 59 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"left\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"blockTopSpacing\":{\"type\":\"number\",\"default\":1},\"blockBottomSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisTopSpacing\":{\"type\":\"number\",\"default\":0},\"emphasisBottomSpacing\":{\"type\":\"number\",\"default\":0},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"layoutGutter\":{\"type\":\"number\",\"default\":25}}");
+module.exports = JSON.parse("{\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"left\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"blockTopSpacing\":{\"type\":\"number\",\"default\":1},\"blockBottomSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisTopSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisBottomSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"layoutGutter\":{\"type\":\"number\",\"default\":25},\"align\":{\"type\":\"string\",\"default\":\"full\"},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"emphasisBySpace\":{\"type\":\"number\",\"default\":1},\"enableOverlapping\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 60 */
@@ -25603,7 +25603,7 @@ var util_getRandomAttributes = function getRandomAttributes() {
     positionShift: utils_getRandomBetween(0, 20) * 5,
     elementsDistance: utils_getRandomBetween(0, 5) * 20,
     placementVariation: utils_getRandomBetween(1, 4) * 25,
-    stylePreset: 'custom'
+    stylePreset: 'just-my-style'
   };
 };
 var getGalleryStyle = function getGalleryStyle(attributes) {
@@ -31324,9 +31324,7 @@ var preview_MediaPreview = function MediaPreview(props) {
       layoutGutter = _props$attributes.layoutGutter,
       className = props.className,
       settings = props.settings;
-  var classNames = classnames_default()(className, "novablocks-block", "novablocks-media", "has-image-on-the-".concat(mediaPosition), "novablocks-u-valign-".concat(verticalAlignment), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
-    'has-background': blockStyle !== 'basic'
-  });
+  var classNames = classnames_default()(className, "novablocks-media", "has-image-on-the-".concat(mediaPosition), "novablocks-u-valign-".concat(verticalAlignment));
   var passedProps = props;
 
   if ("undefined" !== typeof images && images.length && typeof images[0] === 'string') {
@@ -31344,9 +31342,12 @@ var preview_MediaPreview = function MediaPreview(props) {
     '--novablocks-media-content-width': "".concat(contentAreaWidth, "%"),
     '--novablocks-media-gutter': "calc( ".concat(layoutGutter, " * var(--novablocks-spacing) * 8 / 100 )")
   };
+  var blockClassNames = classnames_default()("novablocks-block", "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
   return Object(external_React_["createElement"])("div", {
     className: classNames,
     style: cssVars
+  }, Object(external_React_["createElement"])("div", {
+    className: blockClassNames
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {
@@ -31363,7 +31364,7 @@ var preview_MediaPreview = function MediaPreview(props) {
     template: settings.media.template
   }))), Object(external_React_["createElement"])("div", {
     className: "novablocks-media__aside"
-  }, Object(external_React_["createElement"])(advanced_gallery, passedProps))))));
+  }, Object(external_React_["createElement"])(advanced_gallery, passedProps)))))));
 };
 
 /* harmony default export */ var media_preview = (preview_MediaPreview);

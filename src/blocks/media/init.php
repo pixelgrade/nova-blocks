@@ -35,7 +35,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
-		$classes[] = 'novablocks-block';
 		$classes[] = 'novablocks-media';
 
 		if ( ! empty( $attributes['verticalAlignment'] ) ) {
@@ -44,18 +43,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		if ( ! empty( $attributes['mediaPosition'] ) ) {
 			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
-		}
-
-		if ( ! empty( $attributes['blockStyle'] ) ) {
-			$classes[] = 'block-is-' . $attributes['blockStyle'];
-
-			if ( $attributes['blockStyle'] !== 'basic' ) {
-				$classes[] = 'has-background';
-			}
-		}
-
-		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$classes[] = 'content-is-' . $attributes['contentStyle'];
 		}
 
 		$classes[] = 'wp-block-group';
@@ -75,6 +62,17 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$contentAreaWidth = $attributes['contentAreaWidth'];
 		$layoutGutter = $attributes['layoutGutter'];
 
+		$blockClasses = [];
+		$blockClasses[] = 'novablocks-block';
+
+		if ( ! empty( $attributes['blockStyle'] ) ) {
+			$blockClasses[] = 'block-is-' . $attributes['blockStyle'];
+		}
+
+		if ( ! empty( $attributes['contentStyle'] ) ) {
+			$blockClasses[] = 'content-is-' . $attributes['contentStyle'];
+		}
+
 		$style =
 			'--block-top-spacing:' . $blockTopSpacing . ';' .
 			'--block-bottom-spacing:' . $blockBottomSpacing . ';' .
@@ -87,18 +85,20 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		ob_start(); ?>
 
         <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo $style ?>">
-            <div class="wp-block-group__inner-container">
-	            <div class="wp-block alignwide">
-	                <div class="novablocks-media__layout novablocks-u-content-align">
-	                    <div class="novablocks-media__content">
-		                    <div class="novablocks-media__inner-container novablocks-block__content">
-								<?php echo $content; ?>
+            <div class="<?php echo esc_attr( join( ' ', $blockClasses ) ); ?>">
+	            <div class="wp-block-group__inner-container">
+		            <div class="wp-block alignwide">
+		                <div class="novablocks-media__layout novablocks-u-content-align">
+		                    <div class="novablocks-media__content">
+			                    <div class="novablocks-media__inner-container novablocks-block__content">
+									<?php echo $content; ?>
+			                    </div>
 		                    </div>
-	                    </div>
-	                    <div class="novablocks-media__aside">
-		                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
-	                    </div>
-	                </div>
+		                    <div class="novablocks-media__aside">
+			                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
+		                    </div>
+		                </div>
+		            </div>
 	            </div>
             </div>
         </div>

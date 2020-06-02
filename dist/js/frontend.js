@@ -20141,7 +20141,7 @@ var util_getRandomAttributes = function getRandomAttributes() {
     positionShift: getRandomBetween(0, 20) * 5,
     elementsDistance: getRandomBetween(0, 5) * 20,
     placementVariation: getRandomBetween(1, 4) * 25,
-    stylePreset: 'custom'
+    stylePreset: 'just-my-style'
   };
 };
 var getGalleryStyle = function getGalleryStyle(attributes) {

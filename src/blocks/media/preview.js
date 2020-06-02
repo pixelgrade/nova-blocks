@@ -38,15 +38,9 @@ const MediaPreview = function( props ) {
 
 	const classNames = classnames(
 		className,
-		`novablocks-block`,
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`novablocks-u-valign-${ verticalAlignment }`,
-		`block-is-${ blockStyle }`,
-		`content-is-${ contentStyle }`,
-		{
-			'has-background': blockStyle !== 'basic'
-		}
 	);
 
 	const passedProps = props;
@@ -65,21 +59,29 @@ const MediaPreview = function( props ) {
 		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 8 / 100 )`,
 	}
 
+	const blockClassNames = classnames(
+		`novablocks-block`,
+		`block-is-${ blockStyle }`,
+		`content-is-${ contentStyle }`,
+	);
+
 	return (
 		<div className={ classNames } style={ cssVars }>
-			<div className="wp-block-group__inner-container">
-				<div className="wp-block" data-align="wide">
-					<div className="novablocks-media__layout novablocks-u-content-align">
-						<div className="novablocks-media__content">
-							<div className="novablocks-media__inner-container novablocks-block__content">
-								<InnerBlocks
-									allowedBlocks={ settings.media.allowedBlocks }
-									template={ settings.media.template }
-								/>
+			<div className={ blockClassNames }>
+				<div className="wp-block-group__inner-container">
+					<div className="wp-block" data-align="wide">
+						<div className="novablocks-media__layout novablocks-u-content-align">
+							<div className="novablocks-media__content">
+								<div className="novablocks-media__inner-container novablocks-block__content">
+									<InnerBlocks
+										allowedBlocks={ settings.media.allowedBlocks }
+										template={ settings.media.template }
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="novablocks-media__aside">
-							<AdvancedGallery { ...passedProps } />
+							<div className="novablocks-media__aside">
+								<AdvancedGallery { ...passedProps } />
+							</div>
 						</div>
 					</div>
 				</div>
