@@ -9,6 +9,7 @@ const {
 
 const {
 	IconButton,
+	Toolbar,
 } = wp.components;
 
 const {

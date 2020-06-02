@@ -21,19 +21,19 @@
 	},
 	"blockTopSpacing": {
 		"type": "number",
-		"default": 1
+		"default": 0
 	},
 	"blockBottomSpacing": {
 		"type": "number",
-		"default": 1
+		"default": 0
 	},
 	"emphasisTopSpacing": {
 		"type": "number",
-		"default": 0
+		"default": 1
 	},
 	"emphasisBottomSpacing": {
 		"type": "number",
-		"default": 0
+		"default": 1
 	},
 	"emphasisArea": {
 		"type": "number",
@@ -63,7 +63,6 @@
 		"type": "string",
 		"default": "content"
 	},
-
 	"layoutPreset": {
 		"type": "string",
 		"default": "stable"
@@ -75,21 +74,5 @@
 	"enableOverlapping": {
 		"type": "boolean",
 		"default": false
-	},
-	"blockTopSpacing": {
-		"type": "number",
-		"default": 1
-	},
-	"blockBottomSpacing": {
-		"type": "number",
-		"default": 1
-	},
-	"emphasisTopSpacing": {
-		"type": "number",
-		"default": 1
-	},
-	"emphasisBottomSpacing": {
-		"type": "number",
-		"default": 1
 	}
 }
