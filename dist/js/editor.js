@@ -24668,7 +24668,6 @@ var util_getRandomAttributes = function getRandomAttributes() {
 };
 var getGalleryStyle = function getGalleryStyle(attributes) {
   var containerHeight = attributes.containerHeight / 50 - 1;
-  var verticalSpacing = attributes.verticalSpacing;
   var numerator = 1;
   var denominator = 1;
   containerHeight = Math.min(Math.max(-1, containerHeight), 1);
@@ -24682,7 +24681,6 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   }
 
   return {
-    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px) )"),
     paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
@@ -26962,7 +26960,7 @@ var color_controls_wp$components = wp.components,
     IconButton = color_controls_wp$components.IconButton,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    Toolbar = color_controls_wp$components.Toolbar,
+    color_controls_Toolbar = color_controls_wp$components.Toolbar,
     BaseControl = color_controls_wp$components.BaseControl;
 var PanelColorSettings = wp.blockEditor.PanelColorSettings;
 var color_controls_colors = [{
@@ -27050,7 +27048,7 @@ var color_controls_ColorPanel = function ColorPanel(props) {
 };
 
 var color_controls_ColorToolbar = function ColorToolbar(props) {
-  return Object(external_React_["createElement"])(Toolbar, {
+  return Object(external_React_["createElement"])(color_controls_Toolbar, {
     className: "pixelgrade-hero-block-toolbar"
   }, Object(external_React_["createElement"])(Dropdown, {
     position: "bottom",
@@ -27638,11 +27636,7 @@ var block_controls_ = wp.i18n.__;
 var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
     MediaUpload = block_controls_wp$blockEditor.MediaUpload;
-var block_controls_wp$components = wp.components,
-    block_controls_Dropdown = block_controls_wp$components.Dropdown,
-    block_controls_IconButton = block_controls_wp$components.IconButton,
-    block_controls_RadioControl = block_controls_wp$components.RadioControl,
-    block_controls_Toolbar = block_controls_wp$components.Toolbar;
+var block_controls_IconButton = wp.components.IconButton;
 var block_controls_Fragment = wp.element.Fragment;
 
 var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryChangeMediaToolbar(props) {
@@ -27654,7 +27648,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
     return false;
   }
 
-  return Object(external_React_["createElement"])(block_controls_Toolbar, null, Object(external_React_["createElement"])(MediaUpload, {
+  return Object(external_React_["createElement"])(Toolbar, null, Object(external_React_["createElement"])(MediaUpload, {
     type: "image",
     multiple: true,
     gallery: true,
@@ -27680,52 +27674,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
 
 var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
   var setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props), Object(external_React_["createElement"])(block_controls_Toolbar, {
-    className: "pixelgrade-advanced-gallery-vertical-spacing-toolbar"
-  }, Object(external_React_["createElement"])(block_controls_Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref2) {
-      var isOpen = _ref2.isOpen,
-          onToggle = _ref2.onToggle;
-      return Object(external_React_["createElement"])(block_controls_IconButton, {
-        onClick: onToggle,
-        icon: alignCenter,
-        "aria-expanded": isOpen,
-        label: block_controls_('Vertical Alignment', '__plugin_txtd'),
-        labelPosition: "bottom"
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(external_React_["createElement"])(block_controls_Fragment, null, Object(external_React_["createElement"])(block_controls_RadioControl, {
-        label: 'Vertical Spacing',
-        selected: verticalSpacing,
-        onChange: function onChange(verticalSpacing) {
-          setAttributes({
-            verticalSpacing: parseInt(verticalSpacing, 10)
-          });
-        },
-        options: [{
-          label: '-2 Overlap',
-          value: -2
-        }, {
-          label: '-1 Overlap',
-          value: -1
-        }, {
-          label: 'None',
-          value: 0
-        }, {
-          label: '+1 Offset',
-          value: 1
-        }, {
-          label: '+2 Offset',
-          value: 2
-        }]
-      }));
-    }
-  })));
+  return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props));
 };
 
 /* harmony default export */ var block_controls = (block_controls_AdvancedGalleryBlockControls);
@@ -29998,14 +29947,14 @@ var hero_block_controls_ = wp.i18n.__;
 var hero_block_controls_wp$blockEditor = wp.blockEditor,
     block_controls_BlockControls = hero_block_controls_wp$blockEditor.BlockControls,
     block_controls_MediaUpload = hero_block_controls_wp$blockEditor.MediaUpload;
-var hero_block_controls_wp$components = wp.components,
-    hero_block_controls_IconButton = hero_block_controls_wp$components.IconButton,
-    hero_block_controls_Toolbar = hero_block_controls_wp$components.Toolbar;
+var block_controls_wp$components = wp.components,
+    hero_block_controls_IconButton = block_controls_wp$components.IconButton,
+    block_controls_Toolbar = block_controls_wp$components.Toolbar;
 var block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_HeroBlockControls = function HeroBlockControls(props) {
   var setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(hero_block_controls_Toolbar, null, Object(external_React_["createElement"])(block_controls_MediaUpload, {
+  return Object(external_React_["createElement"])(block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(block_controls_Toolbar, null, Object(external_React_["createElement"])(block_controls_MediaUpload, {
     allowedTypes: block_controls_ALLOWED_MEDIA_TYPES,
     onSelect: function onSelect(media) {
       return setAttributes({

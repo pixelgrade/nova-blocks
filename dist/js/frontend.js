@@ -20146,7 +20146,6 @@ var util_getRandomAttributes = function getRandomAttributes() {
 };
 var getGalleryStyle = function getGalleryStyle(attributes) {
   var containerHeight = attributes.containerHeight / 50 - 1;
-  var verticalSpacing = attributes.verticalSpacing;
   var numerator = 1;
   var denominator = 1;
   containerHeight = Math.min(Math.max(-1, containerHeight), 1);
@@ -20160,7 +20159,6 @@ var getGalleryStyle = function getGalleryStyle(attributes) {
   }
 
   return {
-    '--novablocks-advanced-gallery-vertical-spacing': "calc( ".concat(verticalSpacing * 5, " * var(--novablocks-spacing-unit, 10px) )"),
     paddingTop: "".concat(numerator * 100 / denominator, "%")
   };
 };
