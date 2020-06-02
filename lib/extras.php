@@ -1130,6 +1130,14 @@ function novablocks_get_theme_support() {
 	return $theme_support;
 }
 
+function novablocks_get_attributes_from_json( $path ) {
+	$plugin_url = novablocks_get_plugin_url();
+	$response = wp_remote_get( $plugin_url . $path );
+	$body = wp_remote_retrieve_body( $response );
+
+	return json_decode( $body, true );
+}
+
 function novablocks_render_advanced_gallery( $attributes ) {
 
 	$gallery = $attributes['gallery'];
