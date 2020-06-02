@@ -67,10 +67,14 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		if ( ! empty( $attributes['blockStyle'] ) ) {
 			$blockClasses[] = 'block-is-' . $attributes['blockStyle'];
+		} else {
+			$classes[] = 'block-is-basic';
 		}
 
 		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$blockClasses[] = 'content-is-' . $attributes['contentStyle'];
+			$classes[] = 'content-is-' . $attributes['contentStyle'];
+		} else {
+			$classes[] = 'content-is-basic';
 		}
 
 		$style =

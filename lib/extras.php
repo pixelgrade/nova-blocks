@@ -1160,10 +1160,14 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		if ( ! empty( $attributes['blockStyle'] ) ) {
 			$classes[] = 'block-is-' . $attributes['blockStyle'];
+		} else {
+			$classes[] = 'block-is-basic';
 		}
 
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
+		} else {
+			$classes[] = 'content-is-basic';
 		}
 
 		$className = join( ' ', $classes );

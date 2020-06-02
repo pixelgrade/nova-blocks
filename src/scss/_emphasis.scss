@@ -4,7 +4,7 @@
 	--novablocks-block-subtitles-color: var(--novablocks-color-1);
 	--novablocks-block-background-color: var(--novablocks-light-1);
 
-	--novablocks-block-padding: 0;
+	--novablocks-block-padding: var(--novablocks-spacing);
 	--novablocks-block-content-padding: 0;
 
 	--novablocks-block-content-text-color: var(--novablocks-dark-2);
@@ -51,6 +51,14 @@
 	transition-property: padding, box-shadow;
 
 	&[class] {
+		padding: var(--novablocks-block-content-padding) 0;
+	}
+
+	.novablocks-block:not(.content-is-basic) & {
+		padding: var(--novablocks-block-content-padding);
+	}
+
+	&[class] {
 		padding: var(--novablocks-block-content-padding);
 
 		h1, h2, h3 {
@@ -90,9 +98,21 @@
 	}
 }
 
-.block-is-moderate,
-.block-is-highlighted {
-	--novablocks-block-padding: var(--novablocks-spacing);
+@include below(tablet) {
+
+	.block-is-moderate.content-is-basic {
+		--novablocks-block-background-color: var(--novablocks-light-3);
+	}
+
+	.block-is-highlighted.content-is-basic,
+	.block-is-highlighted.content-is-moderate,
+	.block-is-basic.content-is-highlighted,
+	.block-is-moderate.content-is-highlighted {
+		--novablocks-block-background-color: var(--novablocks-dark-3);
+		--novablocks-block-content-text-color: var(--novablocks-light-1);
+		--novablocks-block-content-titles-color: var(--novablocks-light-1);
+		--novablocks-block-content-subtitles-color: var(--novablocks-light-1);
+	}
 }
 
 @include above(tablet) {
