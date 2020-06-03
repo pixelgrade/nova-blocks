@@ -57,6 +57,20 @@ const SlideshowInspectorControls = function( props ) {
 
 	focalPointPickerClassNames = focalPointPickerClassNames.join( ' ' );
 
+	let thumbnail,
+		width,
+		height;
+
+	if ( 'video' === selectedImage?.type ) {
+		thumbnail = '//cloud.pixelgrade.com/wp-content/uploads/2020/01/Screenshot-2020-01-09-at-15.59.37.png';
+		width = 218;
+		height = 170;
+	} else {
+		thumbnail = selectedImage?.sizes?.thumbnail?.url || selectedImage?.sizes?.large?.url || selectedImage?.sizes?.full?.url
+		width = selectedImage?.width;
+		height = selectedImage?.height;
+	}
+
 	return (
 		<InspectorControls>
 
@@ -74,7 +88,7 @@ const SlideshowInspectorControls = function( props ) {
 						<Fragment>
 							<FocalPointPicker
 								className={ focalPointPickerClassNames }
-								url={ selectedImage.url }
+								url={ thumbnail }
 								dimensions={ {
 									width: selectedImage.width,
 									height: selectedImage.height,

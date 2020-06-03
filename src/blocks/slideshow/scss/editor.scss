@@ -21,6 +21,7 @@
 
 	display: flex;
 	flex-wrap: wrap;
+	align-items: stretch;
 
 	margin-top: calc(-1 * var(--gallery-spacing));
 	margin-left: calc(-1 * var(--gallery-spacing));
@@ -38,9 +39,33 @@
 	padding: 4px;
 	cursor: pointer;
 
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
 	img {
 		display: block;
 		max-width: 100%;
+	}
+}
+
+.novablocks-slideshow__gallery-item--video {
+	position: relative;
+
+	&:before {
+		content: "";
+		display: block;
+		padding-top: 100%;
+		background: #EEEEEE;
+	}
+
+	img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		max-width: 30%;
 	}
 }
 

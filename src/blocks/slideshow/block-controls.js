@@ -23,6 +23,8 @@ const {
 	MediaUpload,
 } = wp.blockEditor;
 
+const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
+
 const SlideshowBlockControls = function( props ) {
 
 	const {
@@ -32,20 +34,15 @@ const SlideshowBlockControls = function( props ) {
 		setAttributes,
 	} = props;
 
-	const onChangeGallery = function( newGalleryImages ) {
-		const promises = newGalleryImages.map( ( image, index ) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( ( newImage ) => {
-				newGalleryImages[ index ] = { ...newImage, ...image };
+	const onChangeGallery = function( items ) {
+		const promises = items.map( ( item, index ) => {
+			return wp.apiRequest( { path: '/wp/v2/media/' + item.id } ).then( data => {
+				items[ index ] = { ...data, ...item };
 			} );
 		} );
 
 		Promise.all( promises ).then( () => {
-			setAttributes( { galleryImages: newGalleryImages.filter( ( image ) => {
-				if ( ! image.sizes.large ) {
-					image.sizes.large = image.sizes.full;
-				}
-				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
-			} ) } );
+			setAttributes( { galleryImages: items } );
 		} );
 	};
 
@@ -55,9 +52,8 @@ const SlideshowBlockControls = function( props ) {
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
-					type="image"
 					multiple
-					gallery
+					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					value={ galleryImages.map( ( image ) => image.id ) }
 					onSelect={ onChangeGallery }
 					render={ ( { open } ) => (

@@ -32,7 +32,7 @@ const HeroBlockControls = function( props ) {
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
-					allowedTypes={ ALLOWED_MEDIA_TYPES}
+					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					onSelect={ ( media ) => setAttributes( { media } ) }
 					render={ ( { open } ) => {
 						return <IconButton
