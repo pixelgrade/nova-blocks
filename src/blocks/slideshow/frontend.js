@@ -9,7 +9,6 @@ import {
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';
 const SLIDE_SELECTOR = '.novablocks-slideshow__slide';
-const CONTENT_SELECTOR = '.novablocks-slideshow__content';
 const BACKGROUND_SELECTOR = '.novablocks-slideshow__background';
 const FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
 const TRANSITION_DURATION = 1000;
