@@ -22,6 +22,14 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 	function novablocks_render_slideshow_block( $attributes, $content ) {
 
+		$slideshow_attributes = novablocks_get_attributes_from_json( '/src/blocks/slideshow/attributes.json' );
+		$doppler_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
+		$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
+
+		$attributes_config = array_merge( $slideshow_attributes, $doppler_attributes, $color_attributes );
+
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
 		if ( empty( $attributes['galleryImages'] ) ) {
 			return '';
 		}

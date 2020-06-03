@@ -92,23 +92,6 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 }
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
-function novablocks_get_color_attributes() {
-	return array(
-		'contentColor'          => array(
-			'type'    => 'string',
-			'default' => '#FFF'
-		),
-		'overlayFilterStyle'    => array(
-			'type'    => 'string',
-			'default' => 'dark'
-		),
-		'overlayFilterStrength' => array(
-			'type'    => 'number',
-			'default' => 30
-		),
-	);
-}
-
 function novablocks_get_alignment_attributes() {
 	return array(
 		'horizontalAlignment' => array(
@@ -230,8 +213,7 @@ function novablocks_get_slideshow_attributes() {
 			),
 		),
 		novablocks_get_doppler_attributes(),
-		novablocks_get_alignment_attributes(),
-		novablocks_get_color_attributes()
+		novablocks_get_alignment_attributes()
 	);
 }
 
@@ -334,15 +316,15 @@ function novablocks_get_posts_block_attributes() {
 	);
 }
 
-function novablocks_get_media_attributes() {
-	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
-
-	if ( ! empty( $novablocks_block_editor_settings['media']['attributes'] ) ) {
-		return $novablocks_block_editor_settings['media']['attributes'];
-	}
-
-	return array();
-}
+//function novablocks_get_media_attributes() {
+//	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
+//
+//	if ( ! empty( $novablocks_block_editor_settings['media']['attributes'] ) ) {
+//		return $novablocks_block_editor_settings['media']['attributes'];
+//	}
+//
+//	return array();
+//}
 
 function novablocks_get_card_attributes() {
 	return array(
@@ -631,8 +613,7 @@ function novablocks_add_hero_settings( $settings ) {
 				)
 			),
 			novablocks_get_doppler_attributes(),
-			novablocks_get_alignment_attributes(),
-			novablocks_get_color_attributes()
+			novablocks_get_alignment_attributes()
 		),
 	);
 
@@ -1064,7 +1045,15 @@ function novablocks_get_attributes_from_json( $path ) {
 
 function novablocks_render_advanced_gallery( $attributes ) {
 
-	$gallery = $attributes['gallery'];
+	$images = array();
+
+	if ( ! empty( $attributes['gallery'] ) ) {
+		$images = $attributes['gallery'];
+	}
+
+	if ( ! empty( $attributes['images'] ) ) {
+		$images = $attributes['images'];
+	}
 
 	$advanced_gallery_attributes = array(
 		'sizeContrast',
@@ -1087,12 +1076,12 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
 	}
 
-	if ( ! empty( $gallery ) && is_array( $gallery ) ) {
+	if ( ! empty( $images ) && is_array( $images ) ) {
 
 		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . '>';
 		echo '<div class="novablocks-advanced-gallery__grid">';
 
-		foreach ( $gallery as $image ) {
+		foreach ( $images as $image ) {
 
 			if ( is_string( $image ) ) {
 				$image = json_decode( $image );

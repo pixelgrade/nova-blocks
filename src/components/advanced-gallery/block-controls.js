@@ -36,8 +36,8 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 				multiple
 				gallery
 				value={ gallery.map( ( image ) => image.id ) }
-				onSelect={ ( gallery ) => {
-					setAttributes( { gallery } );
+				onSelect={ ( images ) => {
+					setAttributes( { images } );
 				} }
 				render={ ( { open } ) => (
 					<IconButton

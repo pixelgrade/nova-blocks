@@ -23,10 +23,16 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 	function novablocks_render_hero_block( $attributes, $content ) {
 
-	    $attributes_config = novablocks_get_hero_attributes();
-	    $attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$hero_attributes = novablocks_get_attributes_from_json( '/src/blocks/hero/attributes.json' );
+		$doppler_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
+		$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
+		$layout_attributes = novablocks_get_attributes_from_json( '/src/components/layout-panel/attributes.json' );
 
-	    $novablocks_settings = novablocks_get_block_editor_settings();
+		$attributes_config = array_merge( $hero_attributes, $doppler_attributes, $color_attributes, $layout_attributes );
+
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
+		$novablocks_settings = novablocks_get_block_editor_settings();
 
 		$classes = array_merge(
 			array( 'novablocks-hero', 'alignfull' ),

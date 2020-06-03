@@ -5,8 +5,7 @@
 	},
 	"markers": {
 		"type": "array",
-		"default": {
-		},
+		"default": [],
 		"items": {
 			"type": "string"
 		}

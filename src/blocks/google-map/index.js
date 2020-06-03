@@ -7,6 +7,11 @@ import edit from "./edit";
 import { parallaxAttributes } from '../../components/with-parallax';
 import styles from "./styles";
 
+import blockAttributes from "./attributes"
+import dopplerAttributes from "../../components/scrolling-effect-controls/attributes";
+
+const attributes = Object.assign( {}, blockAttributes, dopplerAttributes );
+
 /**
  * WordPress dependencies
  */
@@ -20,14 +25,19 @@ function init() {
 		description: __( 'Display an interactive map to show the location of your venue.', '__plugin_txtd' ),
 		category: 'nova-blocks',
 		icon: icons.map,
-		// Additional search terms
-		keywords: [ __( 'google', '__plugin_txtd' ), __( 'maps', '__plugin_txtd' ), __( 'google maps', '__plugin_txtd' ), __( 'location', '__plugin_txtd' ) ],
+		keywords: [
+			__( 'google', '__plugin_txtd' ),
+			__( 'maps', '__plugin_txtd' ),
+			__( 'google maps', '__plugin_txtd' ),
+			__( 'location', '__plugin_txtd' )
+		],
 		getEditWrapperProps( attributes ) {
 			const { align } = attributes;
 			if ( 'center' === align || 'full' === align ) {
 				return { 'data-align': align };
 			}
 		},
+		attributes,
 		edit,
 		save: function() {}
 	} )

@@ -9,7 +9,13 @@ import { STORE_NAME } from "../../store";
 import { getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 
-import attributes from "./attributes";
+import blockAttributes from "./attributes"
+import dopplerAttributes from "../../components/scrolling-effect-controls/attributes";
+import layoutAttributes from "../../components/layout-panel/attributes";
+import colorAttributes from "../../components/color-controls/attributes";
+
+const attributes = Object.assign( {}, blockAttributes, dopplerAttributes, layoutAttributes, colorAttributes );
+
 import generateDefaults from "../../components/generate-defaults";
 
 /**

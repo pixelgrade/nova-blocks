@@ -1,7 +1,8 @@
 {
 	"images": {
 		"type": "array",
-		"default": []
+		"default": [],
+		"items": "object"
 	},
 	"stylePreset": {
 		"type": "string",
