@@ -17,6 +17,13 @@
 	transition-property: margin;
 }
 
+.novablocks-collection {
+
+	.novablocks-block__content {
+		padding: 0;
+	}
+}
+
 .novablocks-collection:not(.content-is-basic) {
 
 	.novablocks-card__media-wrap {

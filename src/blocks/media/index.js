@@ -9,14 +9,14 @@ import deprecated from './deprecated';
 
 import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
+import generateDefaults from "../../components/generate-defaults";
 import { STORE_NAME } from "../../store";
 
 import blockAttributes from './attributes';
 import galleryAttributes from "../../components/advanced-gallery/attributes";
 
-import generateDefaults from "../../components/generate-defaults";
-
 const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
+
 
 /**
  * WordPress dependencies
@@ -42,8 +42,6 @@ function getNewDefaults() {
 function init() {
 
 	generateDefaults( 'novablocks/media', getNewDefaults );
-
-	console.log( attributes );
 
 	registerBlockType( 'novablocks/media', {
 		title: __( 'Media Card Constellation', '__plugin_txtd' ),

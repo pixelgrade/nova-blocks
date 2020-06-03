@@ -7,6 +7,11 @@ import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 import generateDefaults from "../../components/generate-defaults";
 
+import blockAttributes from './attributes';
+import galleryAttributes from "../../components/advanced-gallery/attributes";
+
+const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
+
 /**
  * WordPress dependencies
  */
@@ -44,6 +49,7 @@ function init() {
 		save() {
 			return false;
 		},
+		attributes,
 		deprecated,
 		transforms,
 	} )

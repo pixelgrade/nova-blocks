@@ -187,8 +187,6 @@ class SourceControls extends Component {
 		if ( 'page' === this.state.selectedType ) {
 			url = 'wp/v2/pages';
 		}
-
-		console.log( url, args );
 	}
 
 	render() {
