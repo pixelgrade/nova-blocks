@@ -179,94 +179,6 @@ function novablocks_get_block_extra_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_hero_attributes() {
-	$novablocks_block_editor_settings = novablocks_get_block_editor_settings();
-
-	if ( isset( $novablocks_block_editor_settings['hero']['attributes'] ) ) {
-		return $novablocks_block_editor_settings['hero']['attributes'];
-	}
-
-	return array();
-}
-
-function novablocks_get_slideshow_attributes() {
-	return array_merge(
-		array(
-			'galleryImages' => array(
-				'type'    => 'array',
-				'items'   => array(
-					'type' => 'object',
-				),
-				'default' => array(),
-			),
-			'slideshowType' => array(
-				'type'    => 'string',
-				'default' => 'gallery'
-			),
-			'minHeight'     => array(
-				'type'    => 'number',
-				'default' => 75,
-			),
-			'align' => array(
-				'type' => 'string',
-				'default' => 'full',
-			),
-		),
-		novablocks_get_doppler_attributes(),
-		novablocks_get_alignment_attributes()
-	);
-}
-
-function novablocks_get_google_map_attributes() {
-	return array_merge(
-		array(
-			'align'        => array(
-				'type'    => 'string',
-				'default' => 'center',
-			),
-			'markers'      => array(
-				'type'    => 'array',
-				'default' => array(),
-				'items'   => array(
-					'type' => 'string',
-				),
-			),
-			'pinColor'     => array(
-				'type'    => 'string',
-				'default' => '#222222',
-			),
-			'showControls' => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'showIcons'    => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'showLabels'   => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'styleData'    => array(
-				'type'    => 'array',
-				'default' => array(),
-				'items'   => array(
-					'type' => 'object'
-				),
-			),
-			'styleSlug'    => array(
-				'type'    => 'string',
-				'default' => 'original',
-			),
-			'zoom'         => array(
-				'type'    => 'number',
-				'default' => 17,
-			),
-		),
-		novablocks_get_doppler_attributes()
-	);
-}
-
 function novablocks_get_header_attributes() {
 	return array(
 		'align'  => array(
@@ -522,35 +434,6 @@ function novablocks_add_hero_settings( $settings ) {
 					'align' => 'center',
 				),
 			),
-		),
-		'attributes' => array_merge(
-			array(
-				'anchor'         => array(
-					'type'    => 'string',
-					'default' => null,
-				),
-				'backgroundType' => array(
-					'type'    => 'string',
-					'default' => 'image'
-				),
-				'media'          => array(
-					'type'    => 'object',
-					'default' => array(
-						'type'  => 'image',
-						'sizes' => array(
-							'full' => array(
-								'url' => 'https://images.unsplash.com/photo-1549631998-6d554b1402ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80',
-							),
-						),
-					),
-				),
-				'align' => array(
-					'type'  => 'string',
-					'default'   => 'full'
-				)
-			),
-			novablocks_get_doppler_attributes(),
-			novablocks_get_alignment_attributes()
 		),
 	);
 
