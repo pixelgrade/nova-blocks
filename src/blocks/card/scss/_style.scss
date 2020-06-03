@@ -10,25 +10,23 @@
 	}
 }
 
+.novablocks-card__media-wrap {
+	max-width: none !important;
+
+	transition: var(--novablocks-transition);
+	transition-property: margin;
+}
+
 .novablocks-collection:not(.content-is-basic) {
 
 	.novablocks-card__media-wrap {
 		margin: calc( -0.5 * var(--novablocks-block-content-padding) );
+		margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
 	}
 
 	.novablocks-block__content {
 		padding: calc( 0.5 * var(--novablocks-block-content-padding) );
 	}
-}
-
-.novablocks-card__media-wrap[class] {
-	max-width: none !important;
-
-	margin: calc( -0.5 * var(--novablocks-block-content-padding) );
-	margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
-
-	transition: var(--novablocks-transition);
-	transition-property: margin;
 }
 
 .novablocks-card__media {
