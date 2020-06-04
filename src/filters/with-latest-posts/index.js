@@ -58,6 +58,7 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 				<ControlsSection label={ __( 'Posts' ) } priority={ 100 }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<QueryControls
+							key={ 'query-controls' }
 							enableSpecific={ true }
 							numberOfItems={ postsToShow }
 							onNumberOfItemsChange={ _postsToShow =>

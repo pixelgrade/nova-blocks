@@ -110,6 +110,7 @@ const PostsEdit = ( props ) => {
 			<ControlsSection label={ __( 'Display' ) } priority={ 10 }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<RangeControl
+						key={ 'posts-collection-display-controls' }
 						value={ columns }
 						onChange={ ( columns ) => setAttributes( { columns } ) }
 						label={ __( 'Columns' ) }

@@ -17592,12 +17592,14 @@ var tabs_ActiveSectionTabs = function ActiveSectionTabs(props) {
     className: "novablocks-sections__controls-header"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__controls-back",
-    onClick: goBack
+    onClick: goBack,
+    key: 'tabs-back-button'
   }), Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__controls-title"
+    className: "novablocks-sections__controls-title",
+    key: 'tabs-title'
   }, title), Object(external_React_["createElement"])(cube, null)), tabs.length > 1 && Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__tabs'
-  }, tabs.map(function (tab) {
+  }, tabs.map(function (tab, index) {
     var label = tab.props.label;
     var className = tabs_getTabClassName(label, activeTabLabel);
 
@@ -17607,7 +17609,8 @@ var tabs_ActiveSectionTabs = function ActiveSectionTabs(props) {
 
     return Object(external_React_["createElement"])("div", {
       className: className,
-      onClick: onClick
+      onClick: onClick,
+      key: index
     }, label);
   })), Object(external_React_["createElement"])("div", {
     className: 'novablocks-sections__tab-content'
@@ -17739,13 +17742,15 @@ var drawer_Drawers = function Drawers(ownProps) {
     }, ['desc']);
 
     return Object(external_React_["createElement"])("div", {
-      className: "novablocks-drawers__list"
+      className: "novablocks-drawers__list",
+      key: "drawer-list-".concat(drawerListIndex)
     }, title && Object(external_React_["createElement"])("div", {
       className: "novablocks-drawers__list-title"
-    }, title), orderedDrawers.map(function (_ref) {
+    }, title), orderedDrawers.map(function (_ref, drawerIndex) {
       var props = _ref.props,
           target = _ref.target;
       return Object(external_React_["createElement"])(drawer_Drawer, extends_default()({}, props, {
+        key: "drawer-".concat(drawerListIndex, "-").concat(drawerIndex),
         onClick: function onClick() {
           setActive(target);
           setOpen(true);
@@ -17758,6 +17763,7 @@ var drawer_Drawers = function Drawers(ownProps) {
     }));
   })), drawerPanels.map(function (drawerPanel, index) {
     return Object(external_React_["createElement"])("div", {
+      key: "drawer-panel-".concat(index),
       className: "novablocks-drawers__panel",
       hidden: index !== active,
       ref: function ref(_ref2) {
@@ -17913,6 +17919,9 @@ var control_sections_ControlsSectionsComponent = function ControlsSectionsCompon
 
       var compiledTabs = Object.keys(groupedTabs).map(function (key) {
         var group = groupedTabs[key];
+        var children = group.reduce(function (accumulator, tab) {
+          return accumulator.concat(control_sections_Children.toArray(tab.props.children));
+        }, []);
         return {
           props: {
             label: key,
@@ -18016,6 +18025,7 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: emphasis_level_controls_('Customize')
   }, Object(external_React_["createElement"])(RangeControl, {
+    key: 'emphasis-by-contrast-controls',
     value: getEmphasisByContrastValue(),
     onChange: function onChange(contrast) {
       var blockIndex = Math.floor(contrast / 3);
@@ -18033,6 +18043,7 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
   }, Object(external_React_["createElement"])(controls_group, {
     title: emphasis_level_controls_('Contrast')
   }, Object(external_React_["createElement"])(RadioControl, {
+    key: 'block-emphasis-controls',
     label: emphasis_level_controls_('Block Emphasis', '__plugin_txtd'),
     value: blockStyle,
     selected: blockStyle,
@@ -18043,6 +18054,7 @@ var emphasis_level_controls_EmphasisLevelControls = function EmphasisLevelContro
       });
     }
   }), Object(external_React_["createElement"])(EmphasisBlockAreaSlot, null), Object(external_React_["createElement"])(RadioControl, {
+    key: 'content-emphasis-controls',
     label: emphasis_level_controls_('Content Area Emphasis', '__plugin_txtd'),
     value: contentStyle,
     selected: contentStyle,
@@ -25947,6 +25959,7 @@ var withPostsQueryControls = with_latest_posts_createHigherOrderComponent(functi
     }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
       label: with_latest_posts_('Settings')
     }, Object(external_React_["createElement"])(query_controls, {
+      key: 'query-controls',
       enableSpecific: true,
       numberOfItems: postsToShow,
       onNumberOfItemsChange: function onNumberOfItemsChange(_postsToShow) {
@@ -27547,6 +27560,7 @@ var width_WidthControls = function WidthControls(props) {
 // CONCATENATED MODULE: ./src/components/layout-panel/index.js
 
 
+
 /**
  * Internal dependencies
  */
@@ -27564,7 +27578,11 @@ var layout_panel_LayoutPanel = function LayoutPanel(props) {
     label: layout_panel_('Layout')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: layout_panel_('Settings')
-  }, Object(external_React_["createElement"])(layout_panel_padding, props), Object(external_React_["createElement"])(layout_panel_width, props)));
+  }, Object(external_React_["createElement"])(layout_panel_padding, extends_default()({
+    key: 'padding-controls'
+  }, props)), Object(external_React_["createElement"])(layout_panel_width, extends_default()({
+    key: 'width-controls'
+  }, props))));
 };
 
 /* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
@@ -27654,6 +27672,7 @@ function PositionIndicatorsPanel(props) {
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: position_indicators_panel_('Settings')
   }, Object(external_React_["createElement"])(position_indicators_panel_ToggleControl, {
+    key: 'position-indicators',
     label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
     checked: positionIndicators,
     onChange: function onChange(positionIndicators) {
@@ -27719,6 +27738,7 @@ var scrolling_effect_controls_ScrollingEffectPanel = function ScrollingEffectPan
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: scrolling_effect_controls_('Customize')
   }, Object(external_React_["createElement"])(scrolling_effect_controls_RadioControl, {
+    key: 'novablocks-scrolling-effect',
     selected: scrollingEffect,
     className: 'novablocks-scrolling-effect',
     onChange: function onChange(scrollingEffect) {
@@ -28071,7 +28091,8 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: toggle_group_('Settings')
   }, Object(external_React_["createElement"])("div", {
-    className: 'components-toggle-group__panel'
+    className: 'components-toggle-group__panel',
+    key: 'toggle-group-controls'
   }, Object(external_React_["createElement"])("div", {
     className: 'components-toggle-group'
   }, !!enabledToggles.length && Object(external_React_["createElement"])("div", {
@@ -28384,7 +28405,8 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(inspector_controls_RadioControl, {
-    label: 'Image resizing',
+    key: 'collection-image-resizing',
+    label: inspector_controls_('Image resizing'),
     selected: imageResizing,
     onChange: function onChange(imageResizing) {
       setAttributes({
@@ -28399,6 +28421,7 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
       value: 'original'
     }]
   }), Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+    key: 'collection-image-container-height',
     label: inspector_controls_('Image container height', '__plugin_txtd'),
     value: containerHeight,
     onChange: function onChange(containerHeight) {
@@ -30027,6 +30050,7 @@ var ScrollIndicatorPanel = with_settings(function (props) {
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: scroll_indicator_panel_('Settings')
   }, Object(external_React_["createElement"])(scroll_indicator_panel_ToggleControl, {
+    key: 'scroll-indicator-control',
     label: scroll_indicator_panel_('Enable Scroll Indicator', '__plugin_txtd'),
     checked: scrollIndicator,
     onChange: function onChange(scrollIndicator) {
@@ -30105,10 +30129,12 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: advanced_gallery_inspector_controls_('General')
   }, Object(external_React_["createElement"])(notice, {
+    key: 'advanced-gallery-quick-start',
     id: 'novablocks-advanced-gallery-quick-start',
     content: Object(external_React_["createElement"])("p", null, Object(external_React_["createElement"])("strong", null, "Quick start:"), " Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details"),
     dismissLabel: '✔ Ok, I got it!'
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RadioControl, {
+    key: 'advanced-gallery-style-preset',
     selected: stylePreset,
     onChange: function onChange(stylePreset) {
       var newAttributes = {
@@ -30130,13 +30156,16 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       }
     },
     options: advancedGalleryPresetOptions
-  }), stylePreset === 'just-my-style' && Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(inspector_controls_Button, {
+  }), stylePreset === 'just-my-style' && Object(external_React_["createElement"])("div", {
+    key: 'advanced-gallery-surprise-control'
+  }, Object(external_React_["createElement"])(inspector_controls_Button, {
     isLarge: true,
     isPrimary: true,
     onClick: randomize
   }, advanced_gallery_inspector_controls_('💡 Surprise me!')))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: advanced_gallery_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-crop-style',
     label: advanced_gallery_inspector_controls_('Images Crop Style', '__plugin_txtd'),
     value: imageResizing === 'cropped' ? 2 : 1,
     onChange: function onChange(cropStyle) {
@@ -30152,6 +30181,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   }, Object(external_React_["createElement"])(controls_group, {
     title: advanced_gallery_inspector_controls_('Gallery')
   }, Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-size-contrast',
     label: advanced_gallery_inspector_controls_('Size Contrast', '__plugin_txtd'),
     value: sizeContrast,
     onChange: function onChange(sizeContrast) {
@@ -30163,6 +30193,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 20
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-position-shift',
     label: advanced_gallery_inspector_controls_('Position Shift', '__plugin_txtd'),
     value: positionShift,
     onChange: function onChange(positionShift) {
@@ -30174,6 +30205,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 5
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-elements-distance',
     label: advanced_gallery_inspector_controls_('Elements Distance', '__plugin_txtd'),
     value: elementsDistance,
     onChange: function onChange(elementsDistance) {
@@ -30185,6 +30217,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 20
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-placement-variation',
     label: advanced_gallery_inspector_controls_('Placement Variation', '__plugin_txtd'),
     value: placementVariation,
     onChange: function onChange(placementVariation) {
@@ -30196,6 +30229,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 25
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-image-rotation',
     label: advanced_gallery_inspector_controls_('Image Rotation', '__plugin_txtd'),
     value: imageRotation,
     onChange: function onChange(imageRotation) {
@@ -30209,6 +30243,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   })), Object(external_React_["createElement"])(controls_group, {
     title: advanced_gallery_inspector_controls_('Display')
   }, Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-image-container-height',
     label: advanced_gallery_inspector_controls_('Image Container Height', '__plugin_txtd'),
     value: containerHeight,
     onChange: function onChange(containerHeight) {
@@ -30220,6 +30255,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     max: 100,
     step: 5
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RadioControl, {
+    key: 'advanced-gallery-image-resizing',
     label: 'Image Resizing',
     selected: imageResizing,
     onChange: function onChange(imageResizing) {
@@ -30235,6 +30271,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       value: 'original'
     }]
   }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
+    key: 'advanced-gallery-image-position',
     label: advanced_gallery_inspector_controls_('Image Position', '__plugin_txtd'),
     value: objectPosition,
     onChange: function onChange(objectPosition) {
@@ -31524,6 +31561,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
       }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
         label: google_map_inspector_controls_('Customize')
       }, Object(external_React_["createElement"])(map_style_select, extends_default()({}, this.props, {
+        key: 'google-map-style-controls',
         apiKey: savedApiKey,
         value: styleSlug,
         options: google_map_styles,
@@ -31544,6 +31582,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
       }))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
         label: google_map_inspector_controls_('Settings')
       }, Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+        key: 'google-map-show-venues-control',
         label: google_map_inspector_controls_('Show Nearby Venues', '__plugin_txtd'),
         checked: showIcons,
         onChange: function onChange() {
@@ -31552,6 +31591,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         }
       }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+        key: 'google-map-show-labels-control',
         label: google_map_inspector_controls_('Show Labels', '__plugin_txtd'),
         checked: showLabels,
         onChange: function onChange() {
@@ -31560,6 +31600,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         }
       }), Object(external_React_["createElement"])(inspector_controls_ToggleControl, {
+        key: 'google-map-show-controls',
         label: google_map_inspector_controls_('Show Controls', '__plugin_txtd'),
         checked: showControls,
         onChange: function onChange() {
@@ -31568,6 +31609,7 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           });
         }
       }), Object(external_React_["createElement"])(google_map_inspector_controls_RangeControl, {
+        key: 'google-map-zoom-controls',
         value: zoom,
         onChange: function onChange(newZoom) {
           return setAttributes({
@@ -31581,7 +31623,9 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
         label: google_map_inspector_controls_('Setup')
       }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
         label: google_map_inspector_controls_('Settings')
-      }, Object(external_React_["createElement"])(api_key_panel_body, this.props))));
+      }, Object(external_React_["createElement"])(api_key_panel_body, extends_default()({
+        key: 'google-map-api-key-controls'
+      }, this.props)))));
     }
   }]);
 
@@ -32686,6 +32730,7 @@ var edit_BlockHeightControls = function BlockHeightControls(props) {
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: hero_edit_('Settings')
   }, Object(external_React_["createElement"])(edit_RadioControl, {
+    key: 'hero-minimum-height-controls',
     label: hero_edit_('Minimum Height', '__plugin_txtd'),
     selected: minHeightFallback,
     onChange: function onChange(minHeightFallback) {
@@ -33152,6 +33197,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: media_inspector_controls_('General')
   }, Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
+    key: 'media-card-layout-preset',
     label: media_inspector_controls_('Choose a layout preset:', '__plugin_txtd'),
     selected: layoutPreset,
     onChange: function onChange(layoutPreset) {
@@ -33169,6 +33215,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: media_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])("div", {
+    key: 'media-card-spacing-customize-1',
     className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment)))
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisBySpace,
@@ -33193,6 +33240,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       setAttributes(newAttributes);
     }
   }))), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-minimum-covered-area',
     label: media_inspector_controls_('Minimum Covered Area', '__plugin_txtd'),
     value: containerHeight,
     onChange: function onChange(containerHeight) {
@@ -33208,6 +33256,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   }, Object(external_React_["createElement"])(controls_group, {
     title: media_inspector_controls_('Block Spacing')
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-block-top-spacing',
     value: blockTopSpacing,
     onChange: function onChange(blockTopSpacing) {
       return setAttributes({
@@ -33218,6 +33267,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: -3,
     max: 3
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-block-bottom-spacing',
     value: blockBottomSpacing,
     onChange: function onChange(blockBottomSpacing) {
       return setAttributes({
@@ -33230,6 +33280,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   })), Object(external_React_["createElement"])(controls_group, {
     title: media_inspector_controls_('Content Area Spacing')
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-content-top-spacing',
     value: emphasisTopSpacing,
     onChange: function onChange(emphasisTopSpacing) {
       return setAttributes({
@@ -33240,6 +33291,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     min: -3,
     max: 3
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-content-bottom-spacing',
     value: emphasisBottomSpacing,
     onChange: function onChange(emphasisBottomSpacing) {
       return setAttributes({
@@ -33254,6 +33306,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: media_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])("div", {
+    key: 'media-card-visual-balance-customize-1',
     className: classnames_default()(getControlsClasses(attributes, getBalanceAttributes(balanceEmphasis, balanceFocalPoint)))
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: balanceEmphasis,
@@ -33282,6 +33335,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   }, Object(external_React_["createElement"])(controls_group, {
     title: media_inspector_controls_('Layout')
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-content-area-width',
     value: contentAreaWidth,
     onChange: function onChange(contentAreaWidth) {
       return setAttributes({
@@ -33293,6 +33347,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     max: CONTENT_AREA_MAX_WIDTH,
     step: 5
   }), Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
+    key: 'media-card-layout-gutter',
     value: layoutGutter,
     onChange: function onChange(layoutGutter) {
       return setAttributes({
@@ -33814,10 +33869,12 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: slideshow_inspector_controls_('General')
   }, Object(external_React_["createElement"])(gallery_options_GalleryPreview, {
+    key: 'slideshow-gallery-preview',
     galleryImages: galleryImages,
     onSelectImage: setIndex,
     selected: selectedIndex
-  }), selectedImage && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(inspector_controls_FocalPointPicker, {
+  }), selectedImage && Object(external_React_["createElement"])(inspector_controls_FocalPointPicker, {
+    key: 'slideshow-focal-point-picker',
     className: focalPointPickerClassNames,
     url: thumbnail,
     dimensions: {
@@ -33835,11 +33892,12 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
         galleryImages: newGalleryImages
       });
     }
-  })))), 'gallery' === slideshowType && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(layout_panel, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+  }))), 'gallery' === slideshowType && Object(external_React_["createElement"])(slideshow_inspector_controls_Fragment, null, Object(external_React_["createElement"])(layout_panel, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: slideshow_inspector_controls_('Layout')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: slideshow_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(slideshow_inspector_controls_RadioControl, {
+    key: 'slideshow-minimum-height-controls',
     label: slideshow_inspector_controls_('Minimum Height', '__plugin_txtd'),
     selected: minHeight,
     onChange: function onChange(nextMinHeight) {
@@ -34228,6 +34286,7 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: menu_food_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(menu_food_inspector_controls_ToggleControl, {
+    key: 'menu-columns-controls',
     label: menu_food_inspector_controls_('2 columns', '__plugin_txtd'),
     checked: enableTwoColumns,
     onChange: function onChange() {
@@ -34997,9 +35056,10 @@ var inspector_controls_OpenTableInspectorControls = function OpenTableInspectorC
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: opentable_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(inspector_controls_TextControl, {
-    label: "Restaurant ID",
+    key: 'opentable-restaurant-id-controls',
+    label: opentable_inspector_controls_('Restaurant ID'),
     placeholder: opentable_inspector_controls_('1'),
-    help: "You can find your restaurant ID on the OpenTable website.",
+    help: opentable_inspector_controls_('You can find your restaurant ID on the OpenTable website.'),
     type: "number",
     value: restaurantId,
     onChange: function onChange(restaurantId) {
@@ -35008,7 +35068,8 @@ var inspector_controls_OpenTableInspectorControls = function OpenTableInspectorC
       });
     }
   }), Object(external_React_["createElement"])(opentable_inspector_controls_SelectControl, {
-    label: "Language",
+    key: 'opentable-language-controls',
+    label: opentable_inspector_controls_('Language'),
     value: language,
     options: [{
       label: 'English-EN',
@@ -35042,6 +35103,7 @@ var inspector_controls_OpenTableInspectorControls = function OpenTableInspectorC
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: opentable_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])(opentable_inspector_controls_RadioControl, {
+    key: 'opentable-layout-controls',
     label: opentable_inspector_controls_('Layout', '__plugin_txtd'),
     value: layoutForm,
     selected: layoutForm,
@@ -35058,6 +35120,7 @@ var inspector_controls_OpenTableInspectorControls = function OpenTableInspectorC
       });
     }
   }), Object(external_React_["createElement"])(opentable_inspector_controls_ToggleControl, {
+    key: 'opentable-logo-controls',
     label: opentable_inspector_controls_('Show OpenTable Logo', '__plugin_txtd'),
     checked: showOpenTableLogo,
     onChange: function onChange() {
@@ -35254,7 +35317,8 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: openhours_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(TextareaControl, {
-    label: "Write your opening hours in a simple human readable format",
+    key: 'openhours-schedule-controls',
+    label: openhours_inspector_controls_('Write your opening hours in a simple human readable format'),
     value: text,
     className: "original-text",
     onChange: function onChange(text) {
@@ -35270,6 +35334,7 @@ var inspector_controls_OpenHoursInspectorControls = function OpenHoursInspectorC
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: openhours_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(openhours_inspector_controls_RadioControl, {
+    key: 'openhours-display-controls',
     label: openhours_inspector_controls_('Displaying the opening hours', '__plugin_txtd'),
     value: openHoursStyle,
     selected: openHoursStyle,
@@ -35961,6 +36026,7 @@ var edit_PostsEdit = function PostsEdit(props) {
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: posts_collection_edit_('Settings')
   }, Object(external_React_["createElement"])(edit_RangeControl, {
+    key: 'posts-collection-display-controls',
     value: columns,
     onChange: function onChange(columns) {
       return setAttributes({

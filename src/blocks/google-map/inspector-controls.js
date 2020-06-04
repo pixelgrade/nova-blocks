@@ -55,6 +55,7 @@ class ButtonInspectorControls extends Component {
 					<ControlsTab label={ __( 'Customize' ) }>
 						<MapStyleSelectControl
 							{ ...this.props }
+							key={ 'google-map-style-controls' }
 							apiKey={ savedApiKey }
 							value={ styleSlug }
 							options={ styles }
@@ -73,21 +74,25 @@ class ButtonInspectorControls extends Component {
 					</ControlsTab>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<ToggleControl
+							key={ 'google-map-show-venues-control' }
 							label={ __( 'Show Nearby Venues', '__plugin_txtd' ) }
 							checked={ showIcons }
 							onChange={ () => setAttributes( { showIcons: ! showIcons } ) }
 						/>
 						<ToggleControl
+							key={ 'google-map-show-labels-control' }
 							label={ __( 'Show Labels', '__plugin_txtd' ) }
 							checked={ showLabels }
 							onChange={ () => setAttributes( { showLabels: ! showLabels } ) }
 						/>
 						<ToggleControl
+							key={ 'google-map-show-controls' }
 							label={ __( 'Show Controls', '__plugin_txtd' ) }
 							checked={ showControls }
 							onChange={ () => setAttributes( { showControls: ! showControls } ) }
 						/>
 						<RangeControl
+							key={ 'google-map-zoom-controls' }
 							value={ zoom }
 							onChange={ ( newZoom ) => setAttributes( { zoom: newZoom } ) }
 							min={ 5 }
@@ -98,7 +103,10 @@ class ButtonInspectorControls extends Component {
 				</ControlsSection>
 				<ControlsSection label={ __( 'Setup' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
-						<ApiKeyPanelBody { ...this.props } />
+						<ApiKeyPanelBody
+							key={ 'google-map-api-key-controls' }
+							{ ...this.props }
+						/>
 					</ControlsTab>
 				</ControlsSection>
 			</Fragment>

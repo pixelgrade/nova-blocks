@@ -68,6 +68,7 @@ const BlockHeightControls = function( props ) {
 		<ControlsSection label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<RadioControl
+					key={ 'hero-minimum-height-controls' }
 					label={ __( 'Minimum Height', '__plugin_txtd' ) }
 					selected={ minHeightFallback }
 					onChange={ minHeightFallback => {

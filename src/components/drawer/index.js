@@ -81,13 +81,14 @@ const Drawers = ( ownProps ) => {
 						const orderedDrawers = orderBy( drawersWithTarget, drawer => drawer.props.priority || 0, ['desc'] );
 
 						return (
-							<div className={ `novablocks-drawers__list` }>
+							<div className={ `novablocks-drawers__list` } key={ `drawer-list-${ drawerListIndex }` }>
 								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
 								{
-									orderedDrawers.map( ( { props, target } ) => {
+									orderedDrawers.map( ( { props, target }, drawerIndex ) => {
 
 										return (
 											<Drawer { ...props }
+												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
 													setActive( target );
 													setOpen( true );
@@ -105,7 +106,7 @@ const Drawers = ( ownProps ) => {
 				</div>
 				{ drawerPanels.map( ( drawerPanel, index ) => {
 					return (
-						<div className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+						<div key={ `drawer-panel-${ index }` } className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
 							<DrawerWithProps { ...drawerPanel.props } isActive={ index === active } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
 						</div>
 					)

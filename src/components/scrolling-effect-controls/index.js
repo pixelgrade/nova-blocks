@@ -71,6 +71,7 @@ const ScrollingEffectPanel = ( props ) => {
 		<ControlsSection label={ __( 'Scrolling Effect' ) }>
 			<ControlsTab label={ __( 'Customize' ) }>
 				<RadioControl
+					key={ 'novablocks-scrolling-effect' }
 					selected={ scrollingEffect }
 					className={ 'novablocks-scrolling-effect' }
 					onChange={ ( scrollingEffect ) => {

@@ -59,25 +59,27 @@ const CollectionInspectorControls = ( props ) => {
 			<ControlsSection label={ __( 'Display' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<RadioControl
-						label={'Image resizing'}
-						selected={imageResizing}
-						onChange={imageResizing => {
-							setAttributes( {imageResizing} )
-						}}
-						options={[
-							{label: 'Stretch to fill the container', value: 'cropped'},
-							{label: 'Shrink to fit (no crop)', value: 'original'},
-						]}
+						key={ 'collection-image-resizing' }
+						label={ __( 'Image resizing' ) }
+						selected={ imageResizing }
+						onChange={ imageResizing => {
+							setAttributes( { imageResizing } )
+						} }
+						options={ [
+							{ label: 'Stretch to fill the container', value: 'cropped' },
+							{ label: 'Shrink to fit (no crop)', value: 'original' },
+						] }
 					/>
 					<RangeControl
-						label={__( 'Image container height', '__plugin_txtd' )}
-						value={containerHeight}
-						onChange={containerHeight => {
-							setAttributes( {containerHeight} )
-						}}
-						min={0}
-						max={100}
-						step={5}
+						key={ 'collection-image-container-height' }
+						label={ __( 'Image container height', '__plugin_txtd' ) }
+						value={ containerHeight }
+						onChange={ containerHeight => {
+							setAttributes( { containerHeight } )
+						} }
+						min={ 0 }
+						max={ 100 }
+						step={ 5 }
 					/>
 				</ControlsTab>
 			</ControlsSection>

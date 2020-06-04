@@ -43,6 +43,7 @@ const ScrollIndicatorPanel = withSettings( function( props ) {
 		<ControlsSection label={ __( 'Indicators' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ToggleControl
+					key={ 'scroll-indicator-control' }
 					label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
 					checked={ scrollIndicator }
 					onChange={ scrollIndicator => { updateAttributes( { scrollIndicator } ) } }

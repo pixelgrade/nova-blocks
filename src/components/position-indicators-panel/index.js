@@ -16,6 +16,7 @@ function PositionIndicatorsPanel( props ) {
 		<ControlsSection label={ __( 'Indicators' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ToggleControl
+					key={ 'position-indicators' }
 					label={ __( 'Enable Position Indicators', '__plugin_txtd' ) }
 					checked={ positionIndicators }
 					onChange={ positionIndicators => { setAttributes( { positionIndicators } ) } }
