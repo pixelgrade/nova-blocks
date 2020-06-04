@@ -292,27 +292,6 @@ module.exports = _possibleConstructorReturn;
 
 /***/ }),
 /* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _defineProperty; });
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -334,6 +313,27 @@ function _extends() {
 }
 
 module.exports = _extends;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _defineProperty; });
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
 
 /***/ }),
 /* 14 */
@@ -532,7 +532,7 @@ function sprintf_sprintf(format) {
 }
 //# sourceMappingURL=sprintf.js.map
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var defineProperty = __webpack_require__(12);
+var defineProperty = __webpack_require__(13);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@tannin/postfix/index.js
 var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
@@ -1422,7 +1422,7 @@ __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding *
 // UNUSED EXPORTS: F10, ALT, CTRL, COMMAND, SHIFT, ZERO, modifiers, rawShortcut, displayShortcutList, displayShortcut, shortcutAriaLabel, isKeyboardEvent
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var defineProperty = __webpack_require__(12);
+var defineProperty = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
 var toConsumableArray = __webpack_require__(22);
@@ -17619,7 +17619,7 @@ var tabs_ActiveSectionTabs = function ActiveSectionTabs(props) {
 
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(13);
+var helpers_extends = __webpack_require__(12);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
 // EXTERNAL MODULE: ./node_modules/lodash/orderBy.js
@@ -18160,7 +18160,7 @@ var debounce = __webpack_require__(116);
 var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var esm_defineProperty = __webpack_require__(12);
+var esm_defineProperty = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/typeof.js
 var esm_typeof = __webpack_require__(36);
@@ -36370,3 +36370,4 @@ var withSafeTimeout = Object(_utils_create_higher_order_component__WEBPACK_IMPOR
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=editor.js.map

@@ -23443,3 +23443,4 @@ var viewportObserver_viewportObserver = /*#__PURE__*/function () {
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=frontend.js.map
