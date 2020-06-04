@@ -19944,7 +19944,6 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 var BLOCK_SELECTOR = '.novablocks-slideshow';
 var SLIDER_SELECTOR = '.novablocks-slideshow__slider';
 var SLIDE_SELECTOR = '.novablocks-slideshow__slide';
-var BACKGROUND_SELECTOR = '.novablocks-slideshow__background';
 var FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
 var TRANSITION_DURATION = 1000;
 var TRANSITION_EASING = "easeInOutCirc";
