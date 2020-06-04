@@ -1,4 +1,8 @@
 {
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
 	"galleryImages": {
 		"type": "array",
 		"items": {

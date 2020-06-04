@@ -10,11 +10,12 @@ import { getPlaceholderImages, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 
 import blockAttributes from "./attributes"
-import dopplerAttributes from "../../components/scrolling-effect-controls/attributes";
-import layoutAttributes from "../../components/layout-panel/attributes";
+import alignmentAttributes from "../../components/alignment-controls/attributes";
 import colorAttributes from "../../components/color-controls/attributes";
+import scrollingAttributes from "../../components/scrolling-effect-controls/attributes";
+import layoutAttributes from "../../components/layout-panel/attributes";
 
-const attributes = Object.assign( {}, blockAttributes, dopplerAttributes, layoutAttributes, colorAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
 import generateDefaults from "../../components/generate-defaults";
 
@@ -28,7 +29,6 @@ const { select } = wp.data;
 async function getNewDefaults() {
 	const settings = select( STORE_NAME ).getSettings();
 	const placeholderImages = await getPlaceholderImages;
-	console.log( placeholderImages );
 	const index = getRandomBetween( 0, placeholderImages.length - 1 );
 	const image = placeholderImages[index];
 

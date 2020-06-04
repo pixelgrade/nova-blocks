@@ -18,16 +18,22 @@ if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 }
 add_action( 'init', 'novablocks_slideshow_block_init' );
 
+function novablocks_get_slideshow_attributes_config() {
+	$block_attributes = novablocks_get_attributes_from_json( '/src/blocks/slideshow/attributes.json' );
+
+	$alignment_attributes = novablocks_get_attributes_from_json( '/src/components/alignment-controls/attributes.json' );
+	$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
+	$scrolling_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
+	$layout_attributes = novablocks_get_attributes_from_json( '/src/components/layout-panel/attributes.json' );
+
+	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );
+}
+
 if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 	function novablocks_render_slideshow_block( $attributes, $content ) {
 
-		$slideshow_attributes = novablocks_get_attributes_from_json( '/src/blocks/slideshow/attributes.json' );
-		$doppler_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
-		$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
-
-		$attributes_config = array_merge( $slideshow_attributes, $doppler_attributes, $color_attributes );
-
+		$attributes_config = novablocks_get_slideshow_attributes_config();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		if ( empty( $attributes['galleryImages'] ) ) {
@@ -129,8 +135,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                                     if ( ! empty( $media['title']['rendered'] ) ) {
                                         echo '<h2>' . wp_kses_post( $media['title']['rendered'] ) . '</h2>';
                                     }
-                                    if ( ! empty( $media['caption'] ) ) {
-                                        echo '<p>' . wp_kses_post( $media['caption'] ) . '</p>';
+                                    if ( ! empty( $media['caption']['rendered'] ) ) {
+                                        echo '<p>' . wp_kses_post( $media['caption']['rendered'] ) . '</p>';
                                     } ?>
                                 </div>
 	                        </div>

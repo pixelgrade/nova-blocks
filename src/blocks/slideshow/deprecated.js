@@ -1,11 +1,12 @@
 import save from "./save";
 
 import blockAttributes from "./attributes"
-import dopplerAttributes from "../../components/scrolling-effect-controls/attributes";
-import layoutAttributes from "../../components/layout-panel/attributes";
+import alignmentAttributes from "../../components/alignment-controls/attributes";
 import colorAttributes from "../../components/color-controls/attributes";
+import scrollingAttributes from "../../components/scrolling-effect-controls/attributes";
+import layoutAttributes from "../../components/layout-panel/attributes";
 
-const attributes = Object.assign( {}, blockAttributes, layoutAttributes, colorAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
 const deprecated = [];
 

@@ -2,30 +2,32 @@
 	position: relative;
 
 	display: flex;
-	align-items: center;
-	justify-content: center;
 	width: 100%;
 
 	.novablocks-u-halign-left & {
-		align-items: flex-start;
+		justify-content: flex-start;
 		text-align: left;
 	}
 
 	.novablocks-u-halign-center & {
-		align-items: center;
+		justify-content: center;
 		text-align: center;
 	}
 
 	.novablocks-u-halign-right & {
-		align-items: flex-end;
+		justify-content: flex-end;
 		text-align: right;
 	}
 
 	.novablocks-u-valign-top & {
-		justify-content: flex-start;
+		align-items: flex-start;
+	}
+
+	.novablocks-u-valign-center & {
+		align-items: center;
 	}
 
 	.novablocks-u-valign-bottom & {
-		justify-content: flex-end;
+		align-items: flex-end;
 	}
 }

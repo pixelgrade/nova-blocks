@@ -21964,6 +21964,9 @@ var normalize = function normalize(photo) {
   return {
     id: photo.id,
     url: photo.urls.full,
+    type: 'image',
+    width: photo.width,
+    height: photo.height,
     sizes: {
       full: {
         url: photo.urls.full
@@ -21972,8 +21975,12 @@ var normalize = function normalize(photo) {
         url: photo.urls.regular
       }
     },
-    description: photo.description,
-    caption: photo['alt_description']
+    title: {
+      rendered: photo.description
+    },
+    caption: {
+      rendered: photo['alt_description']
+    }
   };
 };
 
