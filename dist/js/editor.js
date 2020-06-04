@@ -29600,7 +29600,7 @@ var color_controls_Fragment = wp.element.Fragment;
 var color_controls_wp$components = wp.components,
     ColorPalette = color_controls_wp$components.ColorPalette,
     Dropdown = color_controls_wp$components.Dropdown,
-    IconButton = color_controls_wp$components.IconButton,
+    color_controls_Button = color_controls_wp$components.Button,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
     Toolbar = color_controls_wp$components.Toolbar,
@@ -29700,7 +29700,7 @@ var color_controls_ColorToolbar = function ColorToolbar(props) {
     renderToggle: function renderToggle(_ref) {
       var isOpen = _ref.isOpen,
           onToggle = _ref.onToggle;
-      return Object(external_React_["createElement"])(IconButton, {
+      return Object(external_React_["createElement"])(color_controls_Button, {
         onClick: onToggle,
         icon: invert,
         "aria-expanded": isOpen,
@@ -29955,7 +29955,7 @@ var alignment_controls_ = wp.i18n.__;
 var alignment_controls_Fragment = wp.element.Fragment;
 var alignment_controls_wp$components = wp.components,
     alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
-    alignment_controls_IconButton = alignment_controls_wp$components.IconButton,
+    alignment_controls_Button = alignment_controls_wp$components.Button,
     alignment_controls_PanelRow = alignment_controls_wp$components.PanelRow,
     alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
 
@@ -29969,7 +29969,7 @@ var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
     renderToggle: function renderToggle(_ref) {
       var isOpen = _ref.isOpen,
           onToggle = _ref.onToggle;
-      return Object(external_React_["createElement"])(alignment_controls_IconButton, {
+      return Object(external_React_["createElement"])(alignment_controls_Button, {
         onClick: onToggle,
         icon: alignment,
         "aria-expanded": isOpen,
@@ -30294,7 +30294,7 @@ var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
     MediaUpload = block_controls_wp$blockEditor.MediaUpload;
 var block_controls_wp$components = wp.components,
-    block_controls_IconButton = block_controls_wp$components.IconButton,
+    block_controls_Button = block_controls_wp$components.Button,
     block_controls_Toolbar = block_controls_wp$components.Toolbar;
 var block_controls_Fragment = wp.element.Fragment;
 
@@ -30321,7 +30321,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
     },
     render: function render(_ref) {
       var open = _ref.open;
-      return Object(external_React_["createElement"])(block_controls_IconButton, {
+      return Object(external_React_["createElement"])(block_controls_Button, {
         className: "components-icon-button components-toolbar__control",
         label: block_controls_('Change Media', '__plugin_txtd'),
         icon: swap,
@@ -32651,7 +32651,7 @@ var hero_block_controls_wp$blockEditor = wp.blockEditor,
     block_controls_BlockControls = hero_block_controls_wp$blockEditor.BlockControls,
     block_controls_MediaUpload = hero_block_controls_wp$blockEditor.MediaUpload;
 var hero_block_controls_wp$components = wp.components,
-    hero_block_controls_IconButton = hero_block_controls_wp$components.IconButton,
+    hero_block_controls_Button = hero_block_controls_wp$components.Button,
     hero_block_controls_Toolbar = hero_block_controls_wp$components.Toolbar;
 var block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
@@ -32666,7 +32666,7 @@ var block_controls_HeroBlockControls = function HeroBlockControls(props) {
     },
     render: function render(_ref) {
       var open = _ref.open;
-      return Object(external_React_["createElement"])(hero_block_controls_IconButton, {
+      return Object(external_React_["createElement"])(hero_block_controls_Button, {
         className: "components-icon-button components-toolbar__control",
         label: hero_block_controls_('Change Media', '__plugin_txtd'),
         icon: swap,
@@ -33930,7 +33930,7 @@ function slideshow_block_controls_objectSpread(target) { for (var i = 1; i < arg
 
 var slideshow_block_controls_ = wp.i18n.__;
 var slideshow_block_controls_wp$components = wp.components,
-    slideshow_block_controls_IconButton = slideshow_block_controls_wp$components.IconButton,
+    slideshow_block_controls_Button = slideshow_block_controls_wp$components.Button,
     slideshow_block_controls_Toolbar = slideshow_block_controls_wp$components.Toolbar;
 var slideshow_block_controls_BlockControls = wp.blockEditor.BlockControls;
 var slideshow_block_controls_MediaUpload = wp.blockEditor.MediaUpload;
@@ -33965,7 +33965,7 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
     onSelect: onChangeGallery,
     render: function render(_ref) {
       var open = _ref.open;
-      return Object(external_React_["createElement"])(slideshow_block_controls_IconButton, {
+      return Object(external_React_["createElement"])(slideshow_block_controls_Button, {
         className: "components-icon-button components-toolbar__control",
         label: slideshow_block_controls_('Change Media', '__plugin_txtd'),
         icon: swap,
@@ -34308,7 +34308,7 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
 var preview_ = wp.i18n.__;
 var menu_food_preview_InnerBlocks = wp.blockEditor.InnerBlocks;
 var preview_createBlock = wp.blocks.createBlock;
-var preview_IconButton = wp.components.IconButton;
+var preview_Button = wp.components.Button;
 var preview_ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 var TEMPLATE = [['novablocks/menu-food-section', {
   sectionTitle: 'Starters'
@@ -34396,7 +34396,7 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
     allowedBlocks: preview_ALLOWED_BLOCKS,
     template: TEMPLATE,
     renderAppender: false
-  }), Object(external_React_["createElement"])(preview_IconButton, {
+  }), Object(external_React_["createElement"])(preview_Button, {
     className: "components-button block-editor-button-block-appender nova-blocks-appender",
     label: preview_('Add New Menu Section', '__plugin_txtd'),
     icon: "insert",
@@ -34518,7 +34518,7 @@ var menu_food_section_preview_wp$blockEditor = wp.blockEditor,
     menu_food_section_preview_InnerBlocks = menu_food_section_preview_wp$blockEditor.InnerBlocks,
     preview_RichText = menu_food_section_preview_wp$blockEditor.RichText;
 var menu_food_section_preview_createBlock = wp.blocks.createBlock;
-var menu_food_section_preview_IconButton = wp.components.IconButton;
+var menu_food_section_preview_Button = wp.components.Button;
 /**
  * Internal dependencies.
  */
@@ -34558,7 +34558,7 @@ var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
     allowedBlocks: menu_food_section_preview_ALLOWED_BLOCKS,
     template: preview_TEMPLATE,
     renderAppender: false
-  })), Object(external_React_["createElement"])(menu_food_section_preview_IconButton, {
+  })), Object(external_React_["createElement"])(menu_food_section_preview_Button, {
     className: "components-button block-editor-button-block-appender nova-blocks-appender",
     label: menu_food_section_preview_('Add New Menu Item', '__plugin_txtd'),
     icon: "insert",

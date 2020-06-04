@@ -8,7 +8,7 @@ const {
 } = wp.blockEditor;
 
 const {
-	IconButton,
+	Button,
 	Toolbar,
 } = wp.components;
 
@@ -40,7 +40,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 					setAttributes( { images } );
 				} }
 				render={ ( { open } ) => (
-					<IconButton
+					<Button
 						className="components-icon-button components-toolbar__control"
 						label={ __( 'Change Media', '__plugin_txtd' ) }
 						icon={ swap }

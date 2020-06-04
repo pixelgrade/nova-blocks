@@ -14,7 +14,7 @@ const { Fragment } = wp.element;
 
 const {
 	Dropdown,
-	IconButton,
+	Button,
 	PanelRow,
 	Toolbar,
 } = wp.components;
@@ -27,7 +27,7 @@ const AlignmentToolbar = function( props ) {
 				className="pixelgrade-hero-block-toolbar-dropdown"
 				contentClassName="components-nova--popover"
 				renderToggle={ ( { isOpen, onToggle } ) => (
-					<IconButton
+					<Button
 						onClick={ onToggle }
 						icon={ icons.alignment }
 						aria-expanded={ isOpen }

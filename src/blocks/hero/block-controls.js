@@ -15,7 +15,7 @@ const {
 } = wp.blockEditor;
 
 const {
-	IconButton,
+	Button,
 	Toolbar,
 } = wp.components;
 
@@ -35,7 +35,7 @@ const HeroBlockControls = function( props ) {
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					onSelect={ ( media ) => setAttributes( { media } ) }
 					render={ ( { open } ) => {
-						return <IconButton
+						return <Button
 							className="components-icon-button components-toolbar__control"
 							label={ __( 'Change Media', '__plugin_txtd' ) }
 							icon={ icons.swap }

@@ -7,7 +7,7 @@ const {__} = wp.i18n;
 const {InnerBlocks} = wp.blockEditor;
 const {createBlock} = wp.blocks;
 
-const {IconButton} = wp.components;
+const {Button} = wp.components;
 
 const ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 const TEMPLATE = [
@@ -72,14 +72,14 @@ const FoodMenuPreview = function( props ) {
 				renderAppender={false}
 			/>
 
-			<IconButton
+			<Button
 				className="components-button block-editor-button-block-appender nova-blocks-appender"
 				label={__( 'Add New Menu Section', '__plugin_txtd' )}
 				icon="insert"
 				onClick={addFoodMenuSection}
 				>
 				{ __( 'Add Menu Section', '__plugin_txtd' ) }
-			</IconButton>
+			</Button>
 		</div>
 	);
 };
