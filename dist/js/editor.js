@@ -25984,6 +25984,7 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
       });
     });
     Promise.all(promises).then(function () {
+      console.log(items);
       setAttributes({
         galleryImages: items
       });
