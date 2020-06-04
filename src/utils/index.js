@@ -1,3 +1,5 @@
+export { getPlaceholderImages } from './unsplash';
+
 export const getRandomBetween = ( min, max ) => {
 	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
 	return Math.floor( random * (max - min + 1) + min );

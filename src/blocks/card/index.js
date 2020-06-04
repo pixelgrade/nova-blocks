@@ -5,7 +5,7 @@ import * as icons from '../../icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import {getPlaceholderImages, getRandomArrayFromArray, getRandomBetween} from "../../utils";
 import { STORE_NAME } from "../../store";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 import generateDefaults from "../../components/generate-defaults";
@@ -17,9 +17,9 @@ import attributes from "./attributes";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-function getNewDefaults() {
+async function getNewDefaults() {
 	const settings = wp.data.select( STORE_NAME ).getSettings();
-	const placeholderImages = settings.placeholderImages;
+	const placeholderImages = await getPlaceholderImages;
 	const randomImage = getRandomArrayFromArray( placeholderImages, 1 )[0];
 
 	return {

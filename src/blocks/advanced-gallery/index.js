@@ -3,7 +3,7 @@ import edit from './edit';
 import deprecated from './deprecated';
 import transforms from './transforms';
 import { STORE_NAME } from "../../store";
-import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 import generateDefaults from "../../components/generate-defaults";
 
@@ -18,10 +18,10 @@ const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-function getNewDefaults() {
+async function getNewDefaults() {
 	const settings = wp.data.select( STORE_NAME ).getSettings();
 	const numberOfImages = getRandomBetween( 2, 4 );
-	const placeholderImages = settings.placeholderImages;
+	const placeholderImages = await getPlaceholderImages;
 	const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
 	const randomAttributes = getRandomAttributes();
 

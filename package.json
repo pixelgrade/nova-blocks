@@ -78,5 +78,8 @@
 		"webpack-bundle-analyzer": "^3.7.0",
 		"webpack-cli": "^3.3.11",
 		"webpack-rtl-plugin": "2.0.0"
+	},
+	"dependencies": {
+		"unsplash-js": "^6.0.0"
 	}
 }

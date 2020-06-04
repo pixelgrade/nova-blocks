@@ -31,11 +31,11 @@ export default ( blockType, getNewDefaults ) => {
 
 		getBlocksByClientId( addedBlocks ).map( block => {
 			if ( block.name === blockType && ! block.attributes.defaultsGenerated && typeof getNewDefaults === "function" ) {
-				const defaults = getNewDefaults();
-
-				updateBlockAttributes( block.clientId, {
-					...defaults,
-					defaultsGenerated: true
+				getNewDefaults().then( defaults => {
+					updateBlockAttributes( block.clientId, {
+						...defaults,
+						defaultsGenerated: true
+					} );
 				} );
 			}
 		} );

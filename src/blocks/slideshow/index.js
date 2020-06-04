@@ -9,7 +9,7 @@ import deprecated from './deprecated';
 
 import { parallaxAttributes } from '../../components/with-parallax';
 import { STORE_NAME } from "../../store";
-import { getRandomArrayFromArray, getRandomBetween } from "../../utils";
+import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import generateDefaults from "../../components/generate-defaults";
 
 /**
@@ -20,9 +20,9 @@ const { registerBlockType } = wp.blocks;
 const { InnerBlocks } = wp.blockEditor;
 const { select } = wp.data;
 
-function getNewDefaults() {
+async function getNewDefaults() {
 	const settings = select( STORE_NAME ).getSettings();
-	const placeholderImages = settings.placeholderImages;
+	const placeholderImages = await getPlaceholderImages;
 	const count = getRandomBetween( 2, 4 );
 	const images = getRandomArrayFromArray( placeholderImages, count );
 

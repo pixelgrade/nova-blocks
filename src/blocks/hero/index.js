@@ -6,7 +6,7 @@ import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
 import { STORE_NAME } from "../../store";
-import { getRandomBetween } from "../../utils";
+import { getPlaceholderImages, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 
 import blockAttributes from "./attributes"
@@ -25,9 +25,10 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { select } = wp.data;
 
-function getNewDefaults() {
+async function getNewDefaults() {
 	const settings = select( STORE_NAME ).getSettings();
-	const placeholderImages = settings.placeholderImages;
+	const placeholderImages = await getPlaceholderImages;
+	console.log( placeholderImages );
 	const index = getRandomBetween( 0, placeholderImages.length - 1 );
 	const image = placeholderImages[index];
 
