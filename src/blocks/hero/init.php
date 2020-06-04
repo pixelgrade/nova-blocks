@@ -64,12 +64,15 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$media = wp_parse_args( $media, $media_args );
 
 		$heroStyle = '--novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
-		$contentStyle = '';
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
+		$contentStyle = '';
 		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
+		}
+		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
 		}
 
 		if ( ! empty( $attributes['contentColor'] ) && $attributes['contentColor'] !== '#FFF' ) {
@@ -136,7 +139,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php }
 
 				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
-                    <video muted autoplay loop class="novablocks-parallax"
+                    <video muted autoplay loop playsinline class="novablocks-parallax"
                            src="<?php echo esc_url( $media['url'] ); ?>"
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php } ?>
