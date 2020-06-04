@@ -74,30 +74,19 @@ class GalleryPreview extends Component {
 						classes.push( 'novablocks-slideshow__gallery-item--active' );
 					}
 
-					let thumb = false;
+					let thumbnail = false;
 
-					const {
-						sizes: {
-							thumbnail,
-							medium,
-							medium_large,
-							large,
-							full
-						}
-					} = img;
-
-					thumb = thumbnail || medium || medium_large || full || thumb;
-
-					if ( ! thumb || typeof thumb.url === "undefined" ) {
-						return null;
+					if ( 'video' === img.type ) {
+						thumbnail = img?.thumb?.src;
+						classes.push( 'novablocks-slideshow__gallery-item--video' );
+					} else {
+						thumbnail = img?.sizes?.thumbnail?.url || img?.sizes?.large?.url || img?.sizes?.full?.url
 					}
 
 					return (
-						<li key={ img.id || img.url } onClick={ () => {
-							onSelectImage( index );
-						} }>
+						<li key={ img.id || img.url } onClick={ () => { onSelectImage( index ); } }>
 							<div className={ classes.join( ' ' ) }>
-								<img src={ thumb.url } alt="" />
+								<img src={ thumbnail } alt="" />
 							</div>
 						</li>
 					);

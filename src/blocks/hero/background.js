@@ -28,7 +28,7 @@ const HeroBackground = function( props ) {
 				{ media.type === 'image' && typeof media.sizes !== 'undefined' &&
 					<img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } style={ styles } /> }
 				{ media.type === 'video' &&
-					<video muted autoPlay loop className="novablocks-hero__media" style={ styles } src={ media.url } /> }
+					<video muted autoPlay loop playsInline className="novablocks-hero__media" style={ styles } src={ media.url } /> }
 			</div>
 		</div>
 	);

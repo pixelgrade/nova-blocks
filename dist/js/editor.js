@@ -12541,7 +12541,7 @@ var width_WidthControls = function WidthControls(props) {
   }));
 };
 
-/* harmony default export */ var width = (with_settings(width_WidthControls));
+/* harmony default export */ var layout_panel_width = (with_settings(width_WidthControls));
 // CONCATENATED MODULE: ./src/components/layout-panel/index.js
 
 
@@ -12562,7 +12562,7 @@ var layout_panel_LayoutPanel = function LayoutPanel(props) {
     className: "pixelgrade-hero-button-group-wrapper",
     title: layout_panel_('Layout', '__plugin_txtd'),
     initialOpen: false
-  }, Object(external_React_["createElement"])(layout_panel_padding, props), Object(external_React_["createElement"])(width, props), props.children);
+  }, Object(external_React_["createElement"])(layout_panel_padding, props), Object(external_React_["createElement"])(layout_panel_width, props), props.children);
 };
 
 /* harmony default export */ var layout_panel = (layout_panel_LayoutPanel);
@@ -22130,17 +22130,17 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
           classes.push('novablocks-slideshow__gallery-item--active');
         }
 
-        var thumb = false;
-        var _img$sizes = img.sizes,
-            thumbnail = _img$sizes.thumbnail,
-            medium = _img$sizes.medium,
-            medium_large = _img$sizes.medium_large,
-            large = _img$sizes.large,
-            full = _img$sizes.full;
-        thumb = thumbnail || medium || medium_large || full || thumb;
+        var thumbnail = false;
 
-        if (!thumb || typeof thumb.url === "undefined") {
-          return null;
+        if ('video' === img.type) {
+          var _img$thumb;
+
+          thumbnail = img === null || img === void 0 ? void 0 : (_img$thumb = img.thumb) === null || _img$thumb === void 0 ? void 0 : _img$thumb.src;
+          classes.push('novablocks-slideshow__gallery-item--video');
+        } else {
+          var _img$sizes, _img$sizes$thumbnail, _img$sizes2, _img$sizes2$large, _img$sizes3, _img$sizes3$full;
+
+          thumbnail = (img === null || img === void 0 ? void 0 : (_img$sizes = img.sizes) === null || _img$sizes === void 0 ? void 0 : (_img$sizes$thumbnail = _img$sizes.thumbnail) === null || _img$sizes$thumbnail === void 0 ? void 0 : _img$sizes$thumbnail.url) || (img === null || img === void 0 ? void 0 : (_img$sizes2 = img.sizes) === null || _img$sizes2 === void 0 ? void 0 : (_img$sizes2$large = _img$sizes2.large) === null || _img$sizes2$large === void 0 ? void 0 : _img$sizes2$large.url) || (img === null || img === void 0 ? void 0 : (_img$sizes3 = img.sizes) === null || _img$sizes3 === void 0 ? void 0 : (_img$sizes3$full = _img$sizes3.full) === null || _img$sizes3$full === void 0 ? void 0 : _img$sizes3$full.url);
         }
 
         return Object(external_React_["createElement"])("li", {
@@ -22151,7 +22151,7 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
         }, Object(external_React_["createElement"])("div", {
           className: classes.join(' ')
         }, Object(external_React_["createElement"])("img", {
-          src: thumb.url,
+          src: thumbnail,
           alt: ""
         })));
       }));
@@ -25053,6 +25053,7 @@ var background_HeroBackground = function HeroBackground(props) {
     muted: true,
     autoPlay: true,
     loop: true,
+    playsInline: true,
     className: "novablocks-hero__media",
     style: styles,
     src: media.url
@@ -25640,6 +25641,8 @@ function slideshow_background_objectSpread(target) { for (var i = 1; i < argumen
  * Internal dependencies
  */
 var background_SlideshowBackground = function SlideshowBackground(props) {
+  var _previewImage$sizes, _previewImage$sizes$l, _previewImage$sizes2, _previewImage$sizes2$;
+
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
       overlayFilterStrength = _props$attributes.overlayFilterStrength,
@@ -25658,14 +25661,24 @@ var background_SlideshowBackground = function SlideshowBackground(props) {
     styles.opacity = 1 - overlayFilterStrength / 100;
   }
 
+  var imageURL = (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes = previewImage.sizes) === null || _previewImage$sizes === void 0 ? void 0 : (_previewImage$sizes$l = _previewImage$sizes.large) === null || _previewImage$sizes$l === void 0 ? void 0 : _previewImage$sizes$l.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes2 = previewImage.sizes) === null || _previewImage$sizes2 === void 0 ? void 0 : (_previewImage$sizes2$ = _previewImage$sizes2.full) === null || _previewImage$sizes2$ === void 0 ? void 0 : _previewImage$sizes2$.url);
+  var videoURL = previewImage === null || previewImage === void 0 ? void 0 : previewImage.url;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-mask"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-slideshow__background"
-  }, Object(external_React_["createElement"])("img", {
+  }, previewImage.type !== 'video' && Object(external_React_["createElement"])("img", {
     className: "novablocks-slideshow__media",
-    src: previewImage.sizes.large.url,
+    src: imageURL,
     alt: "",
+    style: styles
+  }), previewImage.type === 'video' && Object(external_React_["createElement"])("video", {
+    className: "novablocks-slideshow__media",
+    src: videoURL,
+    muted: true,
+    autoPlay: true,
+    loop: true,
+    playsInline: true,
     style: styles
   })));
 };
@@ -25737,7 +25750,9 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderContent",
     value: function renderContent() {
-      var _this2 = this;
+      var _this2 = this,
+          _previewImage$title,
+          _previewImage$caption;
 
       var _this$props = this.props,
           _this$props$attribute = _this$props.attributes,
@@ -25797,7 +25812,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__inner-container novablocks-u-content-width",
         style: styles.content
-      }, !!previewImage.title && !!previewImage.title.rendered && Object(external_React_["createElement"])("h2", null, previewImage.title.rendered), !!previewImage.caption && Object(external_React_["createElement"])("p", null, previewImage.caption)))))), Object(external_React_["createElement"])("div", {
+      }, !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$title = previewImage.title) === null || _previewImage$title === void 0 ? void 0 : _previewImage$title.rendered) && Object(external_React_["createElement"])("h2", null, previewImage.title.rendered), !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$caption = previewImage.caption) === null || _previewImage$caption === void 0 ? void 0 : _previewImage$caption.rendered) && Object(external_React_["createElement"])("p", null, previewImage.caption.rendered)))))), Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__controls"
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled",
@@ -25873,6 +25888,20 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
   }
 
   focalPointPickerClassNames = focalPointPickerClassNames.join(' ');
+  var thumbnail, width, height;
+
+  if ('video' === (selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.type)) {
+    thumbnail = '//cloud.pixelgrade.com/wp-content/uploads/2020/01/Screenshot-2020-01-09-at-15.59.37.png';
+    width = 218;
+    height = 170;
+  } else {
+    var _selectedImage$sizes, _selectedImage$sizes$, _selectedImage$sizes2, _selectedImage$sizes3, _selectedImage$sizes4, _selectedImage$sizes5;
+
+    thumbnail = (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes = selectedImage.sizes) === null || _selectedImage$sizes === void 0 ? void 0 : (_selectedImage$sizes$ = _selectedImage$sizes.thumbnail) === null || _selectedImage$sizes$ === void 0 ? void 0 : _selectedImage$sizes$.url) || (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes2 = selectedImage.sizes) === null || _selectedImage$sizes2 === void 0 ? void 0 : (_selectedImage$sizes3 = _selectedImage$sizes2.large) === null || _selectedImage$sizes3 === void 0 ? void 0 : _selectedImage$sizes3.url) || (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes4 = selectedImage.sizes) === null || _selectedImage$sizes4 === void 0 ? void 0 : (_selectedImage$sizes5 = _selectedImage$sizes4.full) === null || _selectedImage$sizes5 === void 0 ? void 0 : _selectedImage$sizes5.url);
+    width = selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.width;
+    height = selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.height;
+  }
+
   return Object(external_React_["createElement"])(slideshow_inspector_controls_InspectorControls, null, !!galleryImages.length && Object(external_React_["createElement"])(slideshow_inspector_controls_PanelBody, {
     className: 'nova-blocks-slideshow-type-panel',
     title: slideshow_inspector_controls_('Slides', '__plugin_txtd')
@@ -25882,7 +25911,7 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
     selected: selectedIndex
   }), selectedImage && Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(inspector_controls_FocalPointPicker, {
     className: focalPointPickerClassNames,
-    url: selectedImage.url,
+    url: thumbnail,
     dimensions: {
       width: selectedImage.width,
       height: selectedImage.height
@@ -25938,36 +25967,31 @@ var slideshow_block_controls_wp$components = wp.components,
     slideshow_block_controls_Toolbar = slideshow_block_controls_wp$components.Toolbar;
 var slideshow_block_controls_BlockControls = wp.blockEditor.BlockControls;
 var slideshow_block_controls_MediaUpload = wp.blockEditor.MediaUpload;
+var slideshow_block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_SlideshowBlockControls = function SlideshowBlockControls(props) {
   var galleryImages = props.attributes.galleryImages,
       setAttributes = props.setAttributes;
 
-  var onChangeGallery = function onChangeGallery(newGalleryImages) {
-    var promises = newGalleryImages.map(function (image, index) {
+  var onChangeGallery = function onChangeGallery(items) {
+    var promises = items.map(function (item, index) {
       return wp.apiRequest({
-        path: '/wp/v2/media/' + image.id
-      }).then(function (newImage) {
-        newGalleryImages[index] = slideshow_block_controls_objectSpread(slideshow_block_controls_objectSpread({}, newImage), image);
+        path: '/wp/v2/media/' + item.id
+      }).then(function (data) {
+        items[index] = slideshow_block_controls_objectSpread(slideshow_block_controls_objectSpread({}, data), item);
       });
     });
     Promise.all(promises).then(function () {
+      console.log(items);
       setAttributes({
-        galleryImages: newGalleryImages.filter(function (image) {
-          if (!image.sizes.large) {
-            image.sizes.large = image.sizes.full;
-          }
-
-          return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
-        })
+        galleryImages: items
       });
     });
   };
 
   return Object(external_React_["createElement"])(slideshow_block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(slideshow_block_controls_Toolbar, null, Object(external_React_["createElement"])(slideshow_block_controls_MediaUpload, {
-    type: "image",
     multiple: true,
-    gallery: true,
+    allowedTypes: slideshow_block_controls_ALLOWED_MEDIA_TYPES,
     value: galleryImages.map(function (image) {
       return image.id;
     }),

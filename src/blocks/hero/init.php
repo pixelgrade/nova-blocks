@@ -131,7 +131,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php }
 
 				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
-                    <video muted autoplay loop class="novablocks-parallax"
+                    <video muted autoplay loop playsinline class="novablocks-parallax"
                            src="<?php echo esc_url( $media['url'] ); ?>"
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php } ?>

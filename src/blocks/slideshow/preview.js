@@ -113,8 +113,8 @@ const SlideshowPreview = class extends Component {
 								<SlideshowBackground { ...this.props } />
 								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 									<div className="novablocks-slideshow__inner-container novablocks-u-content-width" style={ styles.content }>
-										{ !! previewImage.title && !! previewImage.title.rendered && <h2>{ previewImage.title.rendered }</h2> }
-										{ !! previewImage.caption && <p>{ previewImage.caption }</p> }
+										{ !! previewImage?.title?.rendered && <h2>{ previewImage.title.rendered }</h2> }
+										{ !! previewImage?.caption?.rendered && <p>{ previewImage.caption.rendered }</p> }
 									</div>
 								</div>
 							</Fragment> }
