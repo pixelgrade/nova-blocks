@@ -25807,14 +25807,12 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__slide"
       }, previewImage && Object(external_React_["createElement"])(preview_Fragment, null, Object(external_React_["createElement"])(slideshow_background, this.props), Object(external_React_["createElement"])("div", {
-        className: "novablocks-slideshow__content novablocks-u-content-padding",
+        className: "novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align",
         style: styles.foreground
       }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-u-content-align"
-      }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-u-content-width",
+        className: "novablocks-slideshow__inner-container novablocks-u-content-width",
         style: styles.content
-      }, !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$title = previewImage.title) === null || _previewImage$title === void 0 ? void 0 : _previewImage$title.rendered) && Object(external_React_["createElement"])("h2", null, previewImage.title.rendered), !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$caption = previewImage.caption) === null || _previewImage$caption === void 0 ? void 0 : _previewImage$caption.rendered) && Object(external_React_["createElement"])("p", null, previewImage.caption.rendered))))))), Object(external_React_["createElement"])("div", {
+      }, !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$title = previewImage.title) === null || _previewImage$title === void 0 ? void 0 : _previewImage$title.rendered) && Object(external_React_["createElement"])("h2", null, previewImage.title.rendered), !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$caption = previewImage.caption) === null || _previewImage$caption === void 0 ? void 0 : _previewImage$caption.rendered) && Object(external_React_["createElement"])("p", null, previewImage.caption.rendered)))))), Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__controls"
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled",

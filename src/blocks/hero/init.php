@@ -56,12 +56,15 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$media = wp_parse_args( $media, $media_args );
 
 		$heroStyle = '--novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
-		$contentStyle = '';
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
+		$contentStyle = '';
 		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
+		}
+		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
 		}
 
 		if ( ! empty( $attributes['contentColor'] ) && $attributes['contentColor'] !== '#FFF' ) {

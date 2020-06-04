@@ -44,8 +44,11 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		}
 
 		$contentStyle = '';
-		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' && isset( $attributes['contentWidthCustom'] ) ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
+		}
+		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
 		}
 
 		$mediaStyle = '';
