@@ -2066,7 +2066,7 @@ module.exports = _typeof;
 /* 40 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false}}");
 
 /***/ }),
 /* 41 */
@@ -2753,7 +2753,7 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"wide\
 /* 65 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"left\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"blockTopSpacing\":{\"type\":\"number\",\"default\":0},\"blockBottomSpacing\":{\"type\":\"number\",\"default\":0},\"emphasisTopSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisBottomSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"layoutGutter\":{\"type\":\"number\",\"default\":10},\"align\":{\"type\":\"string\",\"default\":\"full\"},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"emphasisBySpace\":{\"type\":\"number\",\"default\":1},\"enableOverlapping\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"blockTopSpacing\":{\"type\":\"number\",\"default\":0},\"blockBottomSpacing\":{\"type\":\"number\",\"default\":0},\"emphasisTopSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisBottomSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"layoutGutter\":{\"type\":\"number\",\"default\":10},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"emphasisBySpace\":{\"type\":\"number\",\"default\":1},\"enableOverlapping\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 66 */
@@ -29704,8 +29704,7 @@ var color_controls_ColorToolbar = function ColorToolbar(props) {
         onClick: onToggle,
         icon: invert,
         "aria-expanded": isOpen,
-        label: color_controls_('Colors', '__plugin_txtd'),
-        labelPosition: "bottom"
+        label: color_controls_('Colors', '__plugin_txtd')
       });
     },
     focusOnMount: false,
@@ -29973,8 +29972,7 @@ var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
         onClick: onToggle,
         icon: alignment,
         "aria-expanded": isOpen,
-        label: alignment_controls_('Content Position', '__plugin_txtd'),
-        labelPosition: "bottom"
+        label: alignment_controls_('Content Position', '__plugin_txtd')
       });
     },
     focusOnMount: false,

@@ -1,4 +1,8 @@
 {
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
 	"anchor": {
 		"type": "string",
 		"default": null

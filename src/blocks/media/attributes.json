@@ -1,4 +1,8 @@
 {
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
 	"mediaPosition": {
 		"type": "string",
 		"default": "left"
@@ -13,7 +17,7 @@
 	},
 	"horizontalAlignment": {
 		"type": "string",
-		"default": "left"
+		"default": "center"
 	},
 	"verticalAlignment": {
 		"type": "string",
@@ -46,10 +50,6 @@
 	"layoutGutter": {
 		"type": "number",
 		"default": 10
-	},
-	"align": {
-		"type": "string",
-		"default": "full"
 	},
 	"emphasisArea": {
 		"type": "number",

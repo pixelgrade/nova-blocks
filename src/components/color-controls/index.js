@@ -123,7 +123,6 @@ const ColorToolbar = function( props ) {
 						icon={ icons.invert }
 						aria-expanded={ isOpen }
 						label={ __( 'Colors', '__plugin_txtd' ) }
-						labelPosition="bottom"
 					/>
 				) }
 				focusOnMount={ false }

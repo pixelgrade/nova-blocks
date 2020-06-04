@@ -32,7 +32,6 @@ const AlignmentToolbar = function( props ) {
 						icon={ icons.alignment }
 						aria-expanded={ isOpen }
 						label={ __( 'Content Position', '__plugin_txtd' ) }
-						labelPosition="bottom"
 					/>
 				) }
 				focusOnMount={ false }

@@ -122,6 +122,10 @@
 			background: var(--novablocks-section-controls-accent);
 			border-color: var(--novablocks-section-controls-accent);
 		}
+
+		&:disabled {
+			color: rgba(255,255,255,0.5);
+		}
 	}
 }
 
