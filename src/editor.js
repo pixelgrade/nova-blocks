@@ -5,6 +5,10 @@ import "./filters/with-emphasis-level";
 import "./filters/with-controls-sections";
 import "./filters/with-latest-posts";
 
+import "./filters/with-advanced-gallery-attributes";
+import "./filters/with-doppler-attributes";
+import "./filters/with-overlay-color-attributes";
+
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
 

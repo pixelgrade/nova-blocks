@@ -33,26 +33,6 @@ class Edit extends Component {
 		};
 	}
 
-	componentDidMount() {
-		const {
-			attributes: {
-				galleryImages,
-			},
-			clientId,
-			settings: {
-				slideshow: {
-					defaultImages,
-				},
-			},
-		} = this.props;
-
-		if ( ! galleryImages.length ) {
-			wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, {
-				galleryImages: shuffleArray( defaultImages.slice( 0 ) ),
-			} );
-		}
-	}
-
 	onPrevArrowClick() {
 		const { attributes: { galleryImages } } = this.props;
 		const { selectedIndex } = this.state;

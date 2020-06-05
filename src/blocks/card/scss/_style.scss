@@ -10,20 +10,30 @@
 	}
 }
 
-.novablocks-collection:not(.content-is-moderate):not(.content-is-highlighted) {
-	.novablocks-block__content {
-		padding: calc( 0.5 * var(--novablocks-block-content-padding) );
-	}
-}
-
-.novablocks-card__media-wrap[class] {
+.novablocks-card__media-wrap {
 	max-width: none !important;
-
-	margin: calc( -0.5 * var(--novablocks-block-content-padding) );
-	margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
 
 	transition: var(--novablocks-transition);
 	transition-property: margin;
+}
+
+.novablocks-collection {
+
+	.novablocks-block__content {
+		padding: 0;
+	}
+}
+
+.novablocks-collection:not(.content-is-basic) {
+
+	.novablocks-card__media-wrap {
+		margin: calc( -0.5 * var(--novablocks-block-content-padding) );
+		margin-bottom: calc( 0.5 * var(--novablocks-spacing) );
+	}
+
+	.novablocks-block__content {
+		padding: calc( 0.5 * var(--novablocks-block-content-padding) );
+	}
 }
 
 .novablocks-card__media {

@@ -14,7 +14,7 @@ import {
 } from "../../components/emphasis-level-controls"
 
 import {
-	getControlsWrapClassname
+	getControlsClasses
 } from "../../utils";
 
 /**
@@ -120,6 +120,7 @@ const MediaInspectorControls = function( props ) {
 
 				<ControlsTab label={ __( 'General' ) }>
 					<RadioControl
+						key={ 'media-card-layout-preset' }
 						label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
 						selected={ layoutPreset }
 						onChange={ layoutPreset => { setAttributes( { layoutPreset } ) } }
@@ -131,7 +132,7 @@ const MediaInspectorControls = function( props ) {
 				</ControlsTab>
 
 				<ControlsTab label={ __( 'Customize' ) }>
-					<div className={ getControlsWrapClassname( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) }>
+					<div key={ 'media-card-spacing-customize-1' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>
 						<RangeControl
 							value={ emphasisBySpace }
 							onChange={ ( emphasisBySpace ) => {
@@ -162,6 +163,7 @@ const MediaInspectorControls = function( props ) {
 						</PanelRow>
 					</div>
 					<RangeControl
+						key={ 'media-card-minimum-covered-area' }
 						label={ __( 'Minimum Covered Area', '__plugin_txtd' ) }
 						value={ containerHeight }
 						onChange={ containerHeight => setAttributes( { containerHeight } ) }
@@ -174,6 +176,7 @@ const MediaInspectorControls = function( props ) {
 				<ControlsTab label={ __( 'Settings' ) }>
 					<ControlsGroup title={ __( 'Block Spacing' ) }>
 						<RangeControl
+							key={ 'media-card-block-top-spacing' }
 							value={ blockTopSpacing }
 							onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
 							label={ __( 'Top' ) }
@@ -181,6 +184,7 @@ const MediaInspectorControls = function( props ) {
 							max={ 3 }
 						/>
 						<RangeControl
+							key={ 'media-card-block-bottom-spacing' }
 							value={ blockBottomSpacing }
 							onChange={ ( blockBottomSpacing ) => setAttributes( { blockBottomSpacing } ) }
 							label={ __( 'Bottom' ) }
@@ -190,6 +194,7 @@ const MediaInspectorControls = function( props ) {
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Content Area Spacing' ) }>
 						<RangeControl
+							key={ 'media-card-content-top-spacing' }
 							value={ emphasisTopSpacing }
 							onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
 							label={ __( 'Top' ) }
@@ -197,6 +202,7 @@ const MediaInspectorControls = function( props ) {
 							max={ 3 }
 						/>
 						<RangeControl
+							key={ 'media-card-content-bottom-spacing' }
 							value={ emphasisBottomSpacing }
 							onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
 							label={ __( 'Bottom' ) }
@@ -209,9 +215,8 @@ const MediaInspectorControls = function( props ) {
 			</ControlsSection>
 
 			<ControlsSection label={ __( 'Visual Balance' ) }>
-
 				<ControlsTab label={ __( 'Customize' ) }>
-					<div className={ getControlsWrapClassname( attributes, getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) ) }>
+					<div key={ 'media-card-visual-balance-customize-1' } className={ classnames( getControlsClasses( attributes, getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) ) ) }>
 						<RangeControl
 							value={ balanceEmphasis }
 							onChange={ ( balanceEmphasis ) => {
@@ -239,6 +244,7 @@ const MediaInspectorControls = function( props ) {
 				<ControlsTab label={ __( 'Settings' ) }>
 					<ControlsGroup title={ __( 'Layout' ) }>
 						<RangeControl
+							key={ 'media-card-content-area-width' }
 							value={ contentAreaWidth }
 							onChange={ ( contentAreaWidth ) => setAttributes( { contentAreaWidth } ) }
 							label={ __( 'Content Area Width' ) }
@@ -247,6 +253,7 @@ const MediaInspectorControls = function( props ) {
 							step={ 5 }
 						/>
 						<RangeControl
+							key={ 'media-card-layout-gutter' }
 							value={ layoutGutter }
 							onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
 							label={ __( 'Layout Gutter' ) }

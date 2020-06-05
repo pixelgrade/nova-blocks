@@ -1,0 +1,78 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"mediaPosition": {
+		"type": "string",
+		"default": "left"
+	},
+	"blockStyle": {
+		"type": "string",
+		"default": "basic"
+	},
+	"contentStyle": {
+		"type": "string",
+		"default": "basic"
+	},
+	"horizontalAlignment": {
+		"type": "string",
+		"default": "center"
+	},
+	"verticalAlignment": {
+		"type": "string",
+		"default": "center"
+	},
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"blockBottomSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"emphasisBottomSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"emphasisArea": {
+		"type": "number",
+		"default": 100
+	},
+	"contentAreaWidth": {
+		"type": "number",
+		"default": 50
+	},
+	"layoutGutter": {
+		"type": "number",
+		"default": 10
+	},
+	"emphasisArea": {
+		"type": "number",
+		"default": 100
+	},
+	"balanceEmphasis": {
+		"type": "number",
+		"default": 0
+	},
+	"balanceFocalPoint": {
+		"type": "string",
+		"default": "content"
+	},
+	"layoutPreset": {
+		"type": "string",
+		"default": "stable"
+	},
+	"emphasisBySpace": {
+		"type": "number",
+		"default": 1
+	},
+	"enableOverlapping": {
+		"type": "boolean",
+		"default": false
+	}
+}

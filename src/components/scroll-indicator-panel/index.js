@@ -2,17 +2,14 @@
  * Internal dependencies
  */
 import withSettings from '../with-settings';
+import { ControlsSection, ControlsTab } from "../control-sections";
 
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
 
-const {
-	PanelBody,
-	RadioControl,
-	ToggleControl,
-} = wp.components;
+const { ToggleControl } = wp.components;
 
 const {
 	select,
@@ -43,13 +40,16 @@ const ScrollIndicatorPanel = withSettings( function( props ) {
 
 	return (
 		index === 0 &&
-		<PanelBody title={ __( 'Scroll Indicator', '__plugin_txtd' ) } initialOpen={ false }>
-			<ToggleControl
-				label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
-				checked={ scrollIndicator }
-				onChange={ scrollIndicator => { updateAttributes( { scrollIndicator } ) } }
-			/>
-		</PanelBody>
+		<ControlsSection label={ __( 'Indicators' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<ToggleControl
+					key={ 'scroll-indicator-control' }
+					label={ __( 'Enable Scroll Indicator', '__plugin_txtd' ) }
+					checked={ scrollIndicator }
+					onChange={ scrollIndicator => { updateAttributes( { scrollIndicator } ) } }
+				/>
+			</ControlsTab>
+		</ControlsSection>
 	);
 } );
 

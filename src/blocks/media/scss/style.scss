@@ -57,11 +57,38 @@
 }
 
 .novablocks-media[class][class] {
-	margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
-	margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
 
-	padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-	padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+	@include above(tablet) {
+		margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+		margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+		padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+		.novablocks-advanced-gallery {
+			margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+			margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		}
+
+		.novablocks-media__content {
+			padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		}
+	}
+
+	@include below(tablet) {
+		--novablocks-media-gutter: 0 !important;
+
+		.novablocks-block,
+		.novablocks-media__content,
+		.novablocks-media__aside {
+			padding-top: var(--novablocks-media-spacing);
+			padding-bottom: var(--novablocks-media-spacing);
+		}
+	}
+}
+
+.novablocks-media[class][class] {
 
 	background: linear-gradient(
 			var(--novablocks-media-background-direction),
@@ -70,16 +97,6 @@
 			transparent calc(var(--emphasis-area) * 1%)
 	);
 	background-size: 100% 100%;
-
-	.novablocks-advanced-gallery {
-		margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-		margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
-	}
-
-	.novablocks-media__content {
-		padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-		padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
-	}
 
 	&.has-image-on-the-left {
 		--novablocks-media-background-direction: -90deg;

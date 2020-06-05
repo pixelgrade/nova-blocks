@@ -61,7 +61,7 @@ const ToggleGroup = ( props ) => {
 	return (
 		<ControlsSection label={ label }>
 			<ControlsTab label={ __( 'Settings' ) }>
-				<div className={ 'components-toggle-group__panel' }>
+				<div className={ 'components-toggle-group__panel' } key={ 'toggle-group-controls' }>
 					<div className={ 'components-toggle-group' }>
 						{ !! enabledToggles.length &&
 						  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>

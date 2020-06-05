@@ -1,5 +1,6 @@
 const path = require( 'path' );
 const chalk = require( 'chalk' );
+const webpack = require( 'webpack' );
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -117,6 +118,16 @@ const StylesConfig = {
 /**
  * Config for compiling Gutenberg blocks JS.
  */
+
+const JSPlugins = [
+	new ProgressBarPlugin( {
+		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
+	} ),
+	new webpack.SourceMapDevToolPlugin({
+		filename: '[name].js.map',
+	})
+];
+
 const GutenbergBlocksConfig = {
 	...baseConfig,
 	externals: {
@@ -143,9 +154,7 @@ const GutenbergBlocksConfig = {
 			},
 		],
 	},
-	plugins: [ new ProgressBarPlugin( {
-		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
-	} ) ],
+	plugins: JSPlugins,
 };
 
 const BlocksFrontendConfig = {
@@ -171,9 +180,7 @@ const BlocksFrontendConfig = {
 			},
 		],
 	},
-	plugins: [ new ProgressBarPlugin( {
-		format: chalk.blue( 'Build' ) + ' [:bar] ' + chalk.green( ':percent' ) + ' :msg (:elapsed seconds)',
-	} ) ],
+	plugins: JSPlugins,
 };
 
 module.exports = [

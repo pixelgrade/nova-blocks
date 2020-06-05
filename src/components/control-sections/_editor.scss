@@ -122,6 +122,21 @@
 			background: var(--novablocks-section-controls-accent);
 			border-color: var(--novablocks-section-controls-accent);
 		}
+
+		&:disabled {
+			color: rgba(255,255,255,0.5);
+		}
+	}
+
+	.components-button.is-secondary {
+		color: #545d66;
+		border-color: #e2e4e7;
+
+		&:not(:disabled):not([aria-disabled="true"]):hover {
+			color: #191e24;
+			border-color: #e2e4e7;
+			background: #FFFFFF;
+		}
 	}
 }
 

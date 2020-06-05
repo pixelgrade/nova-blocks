@@ -1,0 +1,14 @@
+{
+	"contentColor": {
+		"type": "string",
+		"default": "#FFF"
+	},
+	"overlayFilterStyle": {
+		"type": "string",
+		"default": "dark"
+	},
+	"overlayFilterStrength": {
+		"type": "number",
+		"default": 30
+	}
+}

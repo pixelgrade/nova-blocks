@@ -90,6 +90,9 @@ const ControlsSectionsComponent = ( props ) => {
 
 							const compiledTabs = Object.keys( groupedTabs ).map( key => {
 								const group = groupedTabs[key];
+								const children = group.reduce( ( accumulator, tab ) => {
+									return accumulator.concat( Children.toArray( tab.props.children ) );
+								}, [] );
 
 								return {
 									props: {

@@ -14,7 +14,9 @@ const { __ } = wp.i18n;
 const {
 	useEffect,
 	useState,
-	Fragment
+	Fragment,
+	Component,
+	createRef,
 } = wp.element;
 
 const getTabAccentColor = ( label ) => {
@@ -65,15 +67,15 @@ const ActiveSectionTabs = ( props ) => {
 	return (
 		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
-				<div className="novablocks-sections__controls-back" onClick={ goBack }></div>
-				<div className="novablocks-sections__controls-title">{ title }</div>
+				<div className="novablocks-sections__controls-back" onClick={ goBack } key={ 'tabs-back-button' }></div>
+				<div className="novablocks-sections__controls-title" key={ 'tabs-title' }>{ title }</div>
 				<Cube />
 			</div>
 			{
 				tabs.length > 1 &&
 				<div className={'novablocks-sections__tabs'}>
 					{
-						tabs.map( tab => {
+						tabs.map( ( tab, index ) => {
 							const label = tab.props.label;
 							const className = getTabClassName( label, activeTabLabel );
 							const onClick = () => {
@@ -81,17 +83,50 @@ const ActiveSectionTabs = ( props ) => {
 							};
 
 							return (
-								<div className={className} onClick={onClick}>{label}</div>
+								<div className={ className } onClick={ onClick } key={ index }>{ label }</div>
 							);
 						} )
 					}
 				</div>
 			}
-			<div className={ 'novablocks-sections__tab-content' }>
-				{ !! activeTab && activeTab.props.children }
-			</div>
+			<TabContent activeTab={ activeTab } { ...props } />
 		</animated.div>
 	)
+}
+
+class TabContent extends Component {
+
+	constructor() {
+		super( ...arguments );
+
+		this.resizeObserver = null;
+		this.resizeElement = createRef();
+	}
+
+	componentDidMount() {
+		this.resizeObserver = new ResizeObserver( entries => {
+			this.props.updateHeight();
+		} );
+
+		this.resizeObserver.observe( this.resizeElement.current );
+	}
+
+	componentWillUnmount() {
+		if ( this.resizeObserver ) {
+			this.resizeObserver.disconnect();
+		}
+	}
+
+	render() {
+
+		const { activeTab } = this.props;
+
+		return (
+			<div className={ 'novablocks-sections__tab-content' } ref={ this.resizeElement }>
+				{ !! activeTab && activeTab.props.children }
+			</div>
+		)
+	}
 }
 
 export { ActiveSectionTabs };

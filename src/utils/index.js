@@ -1,5 +1,24 @@
-import { getProps, getState, getStylesFromProps } from "./components/with-parallax/util";
-import classnames from "classnames";
+export { getPlaceholderImages } from './unsplash';
+
+export const getRandomBetween = ( min, max ) => {
+	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
+	return Math.floor( random * (max - min + 1) + min );
+}
+
+export const getRandomArrayFromArray = ( arr, n ) => {
+
+	var result = new Array( n ),
+		len = arr.length,
+		taken = new Array( len );
+
+	while ( n -- ) {
+		var x = Math.floor( Math.random() * len );
+		result[n] = arr[x in taken ? taken[x] : x];
+		taken[x] = -- len in taken ? taken[len] : len;
+	}
+
+	return result;
+}
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -151,11 +170,12 @@ const wrappedControlsMatch = ( attributes, compiledAttributes ) => {
 	} );
 }
 
-export const getControlsWrapClassname = ( attributes, compiledAttributes ) => {
-	return classnames(
-		'novablocks-controls-wrap',
-		{
-			'novablocks-controls-wrap--dirty': ! wrappedControlsMatch( attributes, compiledAttributes ),
-		}
-	);
+export const getControlsClasses = ( attributes, compiledAttributes ) => {
+	const classes = ['novablocks-controls-wrap'];
+
+	if ( ! wrappedControlsMatch( attributes, compiledAttributes ) ) {
+		classes.push( 'novablocks-controls-wrap--dirty' );
+	}
+
+	return classes;
 }

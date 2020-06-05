@@ -24,10 +24,6 @@ import { defaultSnapValues, getSnapClassname, maybeSnapFocalPoint } from "../../
 
 const ScrollingEffectControls = function( props ) {
 
-	const {
-		attributes: { }
-	} = props;
-
 	return (
 		<Fragment>
 			<ScrollingEffectPanel { ...props }>
@@ -71,6 +67,7 @@ const ScrollingEffectPanel = ( props ) => {
 		<ControlsSection label={ __( 'Scrolling Effect' ) }>
 			<ControlsTab label={ __( 'Customize' ) }>
 				<RadioControl
+					key={ 'novablocks-scrolling-effect' }
 					selected={ scrollingEffect }
 					className={ 'novablocks-scrolling-effect' }
 					onChange={ ( scrollingEffect ) => {
@@ -147,11 +144,15 @@ const DopplerPresetsPanel = ( props ) => {
 }
 
 const getParallaxFocalPointImage = ( media ) => {
-	let mediaType = media ? media.type : false;
+	let mediaType = media?.type;
 	let parallaxFocalPointImage = false;
 
 	if ( mediaType === 'image' ) {
-		parallaxFocalPointImage = media.sizes.full;
+		parallaxFocalPointImage = {
+			url: media?.sizes?.medium?.url || media?.sizes?.large?.url || media?.url,
+			width: 218,
+			height: 170
+		}
 	}
 
 	if ( mediaType === 'video' ) {

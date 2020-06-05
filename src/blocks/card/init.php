@@ -10,7 +10,6 @@ if ( ! function_exists( 'novablocks_card_block_init' ) ) {
 	function novablocks_card_block_init() {
 		register_block_type( 'novablocks/card', array(
 			'render_callback' => 'novablocks_render_card_block',
-			'attributes' => novablocks_get_card_attributes(),
 		) );
 	}
 }
@@ -20,7 +19,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 	function novablocks_render_card_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_card_attributes();
+		$attributes_config = novablocks_get_attributes_from_json( '/src/blocks/card/attributes.json' );
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$hlevel = $attributes['level'];
@@ -44,7 +43,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 		<div class="<?php echo $className; ?>">
 
 	        <?php if ( false != $attributes['showMedia'] ) {
-		        $url = isset( $attributes['media']['url'] ) ? isset( $attributes['media']['url'] ) : '';
+		        $url = isset( $attributes['media']['url'] ) ? $attributes['media']['url'] : '';
 				echo novablocks_get_card_media_markup( $url );
 	        }
 

@@ -12,21 +12,31 @@ if ( ! function_exists( 'novablocks_hero_block_init' ) ) {
 
 	function novablocks_hero_block_init() {
 		register_block_type( 'novablocks/hero', array(
-			'attributes' => novablocks_get_hero_attributes(),
 			'render_callback' => 'novablocks_render_hero_block',
 		) );
 	}
 }
 add_action( 'init', 'novablocks_hero_block_init' );
 
+function novablocks_get_hero_attributes_config() {
+	$block_attributes = novablocks_get_attributes_from_json( '/src/blocks/hero/attributes.json' );
+
+	$alignment_attributes = novablocks_get_attributes_from_json( '/src/components/alignment-controls/attributes.json' );
+	$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
+	$scrolling_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
+	$layout_attributes = novablocks_get_attributes_from_json( '/src/components/layout-panel/attributes.json' );
+
+	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );
+}
+
 if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 	function novablocks_render_hero_block( $attributes, $content ) {
 
-	    $attributes_config = novablocks_get_hero_attributes();
-	    $attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes_config = novablocks_get_hero_attributes_config();
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-	    $novablocks_settings = novablocks_get_block_editor_settings();
+		$novablocks_settings = novablocks_get_block_editor_settings();
 
 		$classes = array_merge(
 			array( 'novablocks-hero', 'alignfull' ),
@@ -56,19 +66,22 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$media = wp_parse_args( $media, $media_args );
 
 		$heroStyle = '--novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
-		$contentStyle = '';
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
+		$contentStyle = '';
 		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
+		}
+		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
 		}
 
 		if ( ! empty( $attributes['contentColor'] ) && $attributes['contentColor'] !== '#FFF' ) {
 			$contentStyle .= '--theme-dark-primary: #FFF';
 		}
 
-		$minHeight = floatval( $attributes['minHeightFallback'] );
+		$minHeight = isset( $attributes['minHeightFallback'] ) ? floatval( $attributes['minHeightFallback'] ) : 75;
 		$heroHeight = $foregroundHeight = $minHeight;
 
 		if ( 'doppler' === $attributes['scrollingEffect'] ) {
@@ -128,7 +141,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php }
 
 				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
-                    <video muted autoplay loop class="novablocks-parallax"
+                    <video muted autoplay loop playsinline class="novablocks-parallax"
                            src="<?php echo esc_url( $media['url'] ); ?>"
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
 				<?php } ?>

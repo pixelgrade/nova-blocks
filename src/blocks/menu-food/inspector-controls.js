@@ -15,6 +15,7 @@ const FoodMenuInspectorControls = function( props ) {
 		<ControlsSection label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ToggleControl
+					key={ 'menu-columns-controls' }
 					label={__( '2 columns', '__plugin_txtd' ) }
 					checked={ enableTwoColumns }
 					onChange={ () => setAttributes( { enableTwoColumns: ! enableTwoColumns } ) }

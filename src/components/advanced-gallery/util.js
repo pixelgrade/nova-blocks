@@ -1,9 +1,18 @@
-import { debounce, isSafari } from "../../utils";
 import $ from 'jquery';
+import { debounce, isSafari, getRandomBetween } from "../../utils";
+
+export const getRandomAttributes = () => {
+	return {
+		sizeContrast: getRandomBetween(0, 5) * 20,
+		positionShift: getRandomBetween(0, 20) * 5,
+		elementsDistance: getRandomBetween(0, 5) * 20,
+		placementVariation: getRandomBetween(1, 4) * 25,
+		stylePreset: 'just-my-style',
+	};
+}
 
 export const getGalleryStyle = ( attributes ) => {
 	let containerHeight = attributes.containerHeight / 50 - 1;
-	let { verticalSpacing } = attributes;
 	let numerator = 1;
 	let denominator = 1;
 
@@ -18,7 +27,6 @@ export const getGalleryStyle = ( attributes ) => {
 	}
 
 	return {
-		'--novablocks-advanced-gallery-vertical-spacing': `calc( ${ verticalSpacing * 5 } * var(--novablocks-spacing-unit, 10px) )`,
 		paddingTop: `${ numerator * 100 / denominator }%`,
 	}
 }

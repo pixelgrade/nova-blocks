@@ -12,7 +12,6 @@ if ( ! function_exists( 'novablocks_google_maps_block_init' ) ) {
 
 	function novablocks_google_maps_block_init() {
 		register_block_type( 'novablocks/google-map', array(
-			'attributes'      => novablocks_get_google_map_attributes(),
 			'render_callback' => 'novablocks_render_google_maps_block',
 		) );
 	}
@@ -23,7 +22,11 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 
 	function novablocks_render_google_maps_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_google_map_attributes();
+		$doppler_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
+		$map_attributes = novablocks_get_attributes_from_json( '/src/blocks/google-map/attributes.json' );
+
+		$attributes_config = array_merge( $map_attributes, $doppler_attributes );
+
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(

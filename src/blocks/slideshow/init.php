@@ -12,18 +12,28 @@ if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 
 	function novablocks_slideshow_block_init() {
 		register_block_type( 'novablocks/slideshow', array(
-			'attributes' => novablocks_get_slideshow_attributes(),
 			'render_callback' => 'novablocks_render_slideshow_block',
 		) );
 	}
 }
 add_action( 'init', 'novablocks_slideshow_block_init' );
 
+function novablocks_get_slideshow_attributes_config() {
+	$block_attributes = novablocks_get_attributes_from_json( '/src/blocks/slideshow/attributes.json' );
+
+	$alignment_attributes = novablocks_get_attributes_from_json( '/src/components/alignment-controls/attributes.json' );
+	$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
+	$scrolling_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
+	$layout_attributes = novablocks_get_attributes_from_json( '/src/components/layout-panel/attributes.json' );
+
+	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );
+}
+
 if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 	function novablocks_render_slideshow_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_slideshow_attributes();
+		$attributes_config = novablocks_get_slideshow_attributes_config();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		if ( empty( $attributes['galleryImages'] ) ) {
@@ -44,8 +54,11 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		}
 
 		$contentStyle = '';
-		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' && isset( $attributes['contentWidthCustom'] ) ) {
-			$contentStyle .= 'max-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%';
+		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
+		}
+		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
+			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
 		}
 
 		$mediaStyle = '';
@@ -81,37 +94,49 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 
             <div class="novablocks-slideshow__slider">
-				<?php foreach ( $attributes['galleryImages'] as $image ) {
-					if ( empty( $image['sizes']['large']['url'] ) ) {
-						continue;
-					} ?>
+				<?php foreach ( $attributes['galleryImages'] as $media ) {
+
+                    $thisMediaStyle = $mediaStyle;
+
+                    if ( ! empty( $media['focalPoint'] ) ) {
+                        $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
+                    } ?>
+
                     <div class="novablocks-slideshow__slide">
                         <div class="novablocks-slideshow__slide-wrap">
 	                        <div class="novablocks-slideshow__background novablocks-u-background">
 								<div class="novablocks-mask">
 									<div class="novablocks-parallax">
-			                            <?php
-			                            $thisMediaStyle = $mediaStyle;
-			                            if ( ! empty( $image['focalPoint'] ) ) {
-			                                $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $image['focalPoint'] );
-			                            } ?>
-			                            <img class="novablocks-slideshow__media"
-			                                src="<?php echo esc_url( $image['sizes']['large']['url'] ); ?>"
-			                                style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-			                                data-width="<?php echo esc_attr( $image['sizes']['large']['width'] ); ?>"
-			                                data-height="<?php echo esc_attr( $image['sizes']['large']['height'] ); ?>"
-			                            >
+
+										<?php if ( 'image' === $media['type'] ) { ?>
+				                            <img class="novablocks-slideshow__media"
+				                                src="<?php echo esc_url( $media['url'] ); ?>"
+				                                style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+				                                data-width="<?php echo esc_attr( $media['width'] ); ?>"
+				                                data-height="<?php echo esc_attr( $media['height'] ); ?>"
+				                            />
+										<?php } ?>
+
+										<?php if ( 'video' === $media['type'] ) { ?>
+											<video class="novablocks-slideshow__media" muted autoplay playsInline loop
+											       src="<?php echo esc_url( $media['url'] ); ?>"
+											       style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+											       data-width="<?php echo esc_attr( $media['width'] ); ?>"
+											       data-height="<?php echo esc_attr( $media['height'] ); ?>"
+											/>
+										<?php } ?>
+
 									</div>
 								</div>
 	                        </div>
 	                        <div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
                                 <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
                                     <?php
-                                    if ( ! empty( $image['title']['rendered'] ) ) {
-                                        echo '<h2>' . wp_kses_post( $image['title']['rendered'] ) . '</h2>';
+                                    if ( ! empty( $media['title']['rendered'] ) ) {
+                                        echo '<h2>' . wp_kses_post( $media['title']['rendered'] ) . '</h2>';
                                     }
-                                    if ( ! empty( $image['caption'] ) ) {
-                                        echo '<p>' . wp_kses_post( $image['caption'] ) . '</p>';
+                                    if ( ! empty( $media['caption']['rendered'] ) ) {
+                                        echo '<p>' . wp_kses_post( $media['caption']['rendered'] ) . '</p>';
                                     } ?>
                                 </div>
 	                        </div>
