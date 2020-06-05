@@ -32,27 +32,33 @@ const WidthControls = function( props ) {
 
 	return (
 		<Fragment>
-			<label>{ __( 'Content Width', '__plugin_txtd' ) }</label>
-			<ButtonGroup label="Content Width">
-				{ contentWidthOptions.map( ( option ) =>
-					<Button
-						key={ option.value }
-						isSecondary={ option.value !== contentWidth }
-						isPrimary={ option.value === contentWidth }
-						onClick={ () => {
-							setAttributes( { contentWidth: option.value } );
-						} }>
-						{ option.label }
-					</Button>
-				) }
-			</ButtonGroup>
-			{ 'custom' === contentWidth && <RangeControl
-				value={ contentWidthCustom }
-				onChange={ ( newContentWidth ) => setAttributes( { contentWidthCustom: newContentWidth } ) }
-				min={ 20 }
-				max={ 90 }
-				step={ 10 }
-			/> }
+			<div className="components-base-control">
+				<label className="components-base-control__label">{ __( 'Content Width', '__plugin_txtd' ) }</label>
+				<ButtonGroup label="Content Width">
+					{ contentWidthOptions.map( ( option ) =>
+						<Button
+							key={ option.value }
+							isSecondary={ option.value !== contentWidth }
+							isPrimary={ option.value === contentWidth }
+							onClick={ () => {
+								setAttributes( { contentWidth: option.value } );
+							} }>
+							{ option.label }
+						</Button>
+					) }
+				</ButtonGroup>
+			</div>
+			{
+				'custom' === contentWidth &&
+				<RangeControl
+					label={ __(' Custom Content Width', '__plugin_txtd' ) }
+					value={ contentWidthCustom }
+					onChange={ ( newContentWidth ) => setAttributes( { contentWidthCustom: newContentWidth } ) }
+					min={ 20 }
+					max={ 90 }
+					step={ 10 }
+				/>
+			}
 		</Fragment>
 	);
 };

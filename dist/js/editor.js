@@ -27483,7 +27483,11 @@ var padding_PaddingControls = function PaddingControls(props) {
       contentPaddingCustom = _props$attributes.contentPaddingCustom,
       setAttributes = props.setAttributes,
       contentPaddingOptions = props.settings.contentPaddingOptions;
-  return Object(external_React_["createElement"])(padding_Fragment, null, Object(external_React_["createElement"])("label", null, padding_('Content Padding', '__plugin_txtd')), Object(external_React_["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
+  return Object(external_React_["createElement"])(padding_Fragment, null, Object(external_React_["createElement"])("div", {
+    className: "components-base-control"
+  }, Object(external_React_["createElement"])("label", {
+    className: "components-base-control__label"
+  }, padding_('Content Padding', '__plugin_txtd')), Object(external_React_["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
     return Object(external_React_["createElement"])(padding_Button, {
       key: option.value,
       isSecondary: option.value !== contentPadding,
@@ -27494,7 +27498,8 @@ var padding_PaddingControls = function PaddingControls(props) {
         });
       }
     }, option.label);
-  })), 'custom' === contentPadding && Object(external_React_["createElement"])(padding_RangeControl, {
+  }))), 'custom' === contentPadding && Object(external_React_["createElement"])(padding_RangeControl, {
+    label: padding_(' Custom Content Padding', '__plugin_txtd'),
     value: contentPaddingCustom,
     onChange: function onChange(newContentPadding) {
       return setAttributes({
@@ -27531,7 +27536,11 @@ var width_WidthControls = function WidthControls(props) {
       contentWidthCustom = _props$attributes.contentWidthCustom,
       setAttributes = props.setAttributes,
       contentWidthOptions = props.settings.contentWidthOptions;
-  return Object(external_React_["createElement"])(width_Fragment, null, Object(external_React_["createElement"])("label", null, width_('Content Width', '__plugin_txtd')), Object(external_React_["createElement"])(width_ButtonGroup, {
+  return Object(external_React_["createElement"])(width_Fragment, null, Object(external_React_["createElement"])("div", {
+    className: "components-base-control"
+  }, Object(external_React_["createElement"])("label", {
+    className: "components-base-control__label"
+  }, width_('Content Width', '__plugin_txtd')), Object(external_React_["createElement"])(width_ButtonGroup, {
     label: "Content Width"
   }, contentWidthOptions.map(function (option) {
     return Object(external_React_["createElement"])(width_Button, {
@@ -27544,7 +27553,8 @@ var width_WidthControls = function WidthControls(props) {
         });
       }
     }, option.label);
-  })), 'custom' === contentWidth && Object(external_React_["createElement"])(width_RangeControl, {
+  }))), 'custom' === contentWidth && Object(external_React_["createElement"])(width_RangeControl, {
+    label: width_(' Custom Content Width', '__plugin_txtd'),
     value: contentWidthCustom,
     onChange: function onChange(newContentWidth) {
       return setAttributes({

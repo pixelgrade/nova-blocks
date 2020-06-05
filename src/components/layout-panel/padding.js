@@ -32,26 +32,32 @@ const PaddingControls = function( props ) {
 
 	return (
 		<Fragment>
-			<label>{ __( 'Content Padding', '__plugin_txtd') }</label>
-			<ButtonGroup>
-				{ contentPaddingOptions.map( ( option ) =>
-					<Button
-						key={ option.value }
-						isSecondary={ option.value !== contentPadding }
-						isPrimary={ option.value === contentPadding }
-						onClick={ () => {
-							setAttributes( { contentPadding: option.value } );
-						} }>
-						{ option.label }
-					</Button>
-				) }
-			</ButtonGroup>
-			{ 'custom' === contentPadding && <RangeControl
-				value={ contentPaddingCustom }
-				onChange={ ( newContentPadding ) => setAttributes( { contentPaddingCustom: newContentPadding } ) }
-				min={ 0 }
-				max={ 25 }
-			/> }
+			<div className="components-base-control">
+				<label className="components-base-control__label">{ __( 'Content Padding', '__plugin_txtd' ) }</label>
+				<ButtonGroup>
+					{ contentPaddingOptions.map( ( option ) =>
+						<Button
+							key={ option.value }
+							isSecondary={ option.value !== contentPadding }
+							isPrimary={ option.value === contentPadding }
+							onClick={ () => {
+								setAttributes( { contentPadding: option.value } );
+							} }>
+							{ option.label }
+						</Button>
+					) }
+				</ButtonGroup>
+			</div>
+			{
+				'custom' === contentPadding &&
+				<RangeControl
+					label={ __(' Custom Content Padding', '__plugin_txtd' ) }
+					value={ contentPaddingCustom }
+					onChange={ ( newContentPadding ) => setAttributes( { contentPaddingCustom: newContentPadding } ) }
+					min={ 0 }
+					max={ 25 }
+				/>
+			}
 		</Fragment>
 	);
 };
