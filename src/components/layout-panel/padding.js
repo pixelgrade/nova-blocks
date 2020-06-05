@@ -37,7 +37,7 @@ const PaddingControls = function( props ) {
 				{ contentPaddingOptions.map( ( option ) =>
 					<Button
 						key={ option.value }
-						isDefault={ option.value !== contentPadding }
+						isSecondary={ option.value !== contentPadding }
 						isPrimary={ option.value === contentPadding }
 						onClick={ () => {
 							setAttributes( { contentPadding: option.value } );

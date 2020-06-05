@@ -5762,16 +5762,7 @@ module.exports = uniq;
 
 
 /***/ }),
-/* 122 */
-/***/ (function(module, exports) {
-
-function _objectDestructuringEmpty(obj) {
-  if (obj == null) throw new TypeError("Cannot destructure undefined");
-}
-
-module.exports = _objectDestructuringEmpty;
-
-/***/ }),
+/* 122 */,
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17638,6 +17629,7 @@ function drawer_ownKeys(object, enumerableOnly) { var keys = Object.keys(object)
 function drawer_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { drawer_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { drawer_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
+
 var drawer_wp$element = wp.element,
     Children = drawer_wp$element.Children,
     drawer_Fragment = drawer_wp$element.Fragment,
@@ -17762,10 +17754,12 @@ var drawer_Drawers = function Drawers(ownProps) {
       }));
     }));
   })), drawerPanels.map(function (drawerPanel, index) {
+    var className = classnames_default()('novablocks-drawers__panel', {
+      'novablocks-drawers__panel--hidden': index !== active
+    });
     return Object(external_React_["createElement"])("div", {
       key: "drawer-panel-".concat(index),
-      className: "novablocks-drawers__panel",
-      hidden: index !== active,
+      className: className,
       ref: function ref(_ref2) {
         return _ref2 && refMap.set(drawerPanel, _ref2);
       }
@@ -27492,7 +27486,7 @@ var padding_PaddingControls = function PaddingControls(props) {
   return Object(external_React_["createElement"])(padding_Fragment, null, Object(external_React_["createElement"])("label", null, padding_('Content Padding', '__plugin_txtd')), Object(external_React_["createElement"])(ButtonGroup, null, contentPaddingOptions.map(function (option) {
     return Object(external_React_["createElement"])(padding_Button, {
       key: option.value,
-      isDefault: option.value !== contentPadding,
+      isSecondary: option.value !== contentPadding,
       isPrimary: option.value === contentPadding,
       onClick: function onClick() {
         setAttributes({
@@ -27542,7 +27536,7 @@ var width_WidthControls = function WidthControls(props) {
   }, contentWidthOptions.map(function (option) {
     return Object(external_React_["createElement"])(width_Button, {
       key: option.value,
-      isDefault: option.value !== contentWidth,
+      isSecondary: option.value !== contentWidth,
       isPrimary: option.value === contentWidth,
       onClick: function onClick() {
         setAttributes({
@@ -27691,12 +27685,7 @@ function PositionIndicatorsPanel(props) {
 }
 
 /* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectDestructuringEmpty.js
-var objectDestructuringEmpty = __webpack_require__(122);
-var objectDestructuringEmpty_default = /*#__PURE__*/__webpack_require__.n(objectDestructuringEmpty);
-
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
-
 
 
 
@@ -27716,8 +27705,6 @@ var scrolling_effect_controls_Fragment = wp.element.Fragment;
 
 
 var scrolling_effect_controls_ScrollingEffectControls = function ScrollingEffectControls(props) {
-  objectDestructuringEmpty_default()(props.attributes);
-
   return Object(external_React_["createElement"])(scrolling_effect_controls_Fragment, null, Object(external_React_["createElement"])(scrolling_effect_controls_ScrollingEffectPanel, props, Object(external_React_["createElement"])(scrolling_effect_controls_DopplerPresetsPanel, props), Object(external_React_["createElement"])(scrolling_effect_controls_StartFramePanel, props), Object(external_React_["createElement"])(scrolling_effect_controls_EndFramePanel, props)));
 };
 
@@ -27812,11 +27799,17 @@ var scrolling_effect_controls_DopplerPresetsPanel = function DopplerPresetsPanel
 };
 
 var getParallaxFocalPointImage = function getParallaxFocalPointImage(media) {
-  var mediaType = media ? media.type : false;
+  var mediaType = media === null || media === void 0 ? void 0 : media.type;
   var parallaxFocalPointImage = false;
 
   if (mediaType === 'image') {
-    parallaxFocalPointImage = media.sizes.full;
+    var _media$sizes, _media$sizes$medium, _media$sizes2, _media$sizes2$large;
+
+    parallaxFocalPointImage = {
+      url: (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$medium = _media$sizes.medium) === null || _media$sizes$medium === void 0 ? void 0 : _media$sizes$medium.url) || (media === null || media === void 0 ? void 0 : (_media$sizes2 = media.sizes) === null || _media$sizes2 === void 0 ? void 0 : (_media$sizes2$large = _media$sizes2.large) === null || _media$sizes2$large === void 0 ? void 0 : _media$sizes2$large.url) || (media === null || media === void 0 ? void 0 : media.url),
+      width: 218,
+      height: 170
+    };
   }
 
   if (mediaType === 'video') {
@@ -31369,7 +31362,7 @@ var api_key_panel_body_ApiKeyPanelBody = /*#__PURE__*/function (_Component) {
         onChange: onChangeApiKey,
         help: apiKeyInstructions
       }), Object(external_React_["createElement"])(api_key_panel_body_Button, {
-        isDefault: true,
+        isSecondary: true,
         onClick: function onClick() {
           onSaveApiKey(apiKey);
         }

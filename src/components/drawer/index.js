@@ -1,5 +1,6 @@
 import { useSpring, animated } from 'react-spring';
 import { orderBy } from 'lodash';
+import classnames from 'classnames';
 
 const {
 	Children,
@@ -105,8 +106,16 @@ const Drawers = ( ownProps ) => {
 					} ) }
 				</div>
 				{ drawerPanels.map( ( drawerPanel, index ) => {
+
+					const className = classnames(
+						'novablocks-drawers__panel',
+						{
+							'novablocks-drawers__panel--hidden': index !== active
+						}
+					);
+
 					return (
-						<div key={ `drawer-panel-${ index }` } className={ `novablocks-drawers__panel` } hidden={ index !== active } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+						<div key={ `drawer-panel-${ index }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
 							<DrawerWithProps { ...drawerPanel.props } isActive={ index === active } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
 						</div>
 					)

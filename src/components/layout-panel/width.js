@@ -37,7 +37,7 @@ const WidthControls = function( props ) {
 				{ contentWidthOptions.map( ( option ) =>
 					<Button
 						key={ option.value }
-						isDefault={ option.value !== contentWidth }
+						isSecondary={ option.value !== contentWidth }
 						isPrimary={ option.value === contentWidth }
 						onClick={ () => {
 							setAttributes( { contentWidth: option.value } );
