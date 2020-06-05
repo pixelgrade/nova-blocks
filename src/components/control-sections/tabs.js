@@ -14,7 +14,9 @@ const { __ } = wp.i18n;
 const {
 	useEffect,
 	useState,
-	Fragment
+	Fragment,
+	Component,
+	createRef,
 } = wp.element;
 
 const getTabAccentColor = ( label ) => {
@@ -87,11 +89,44 @@ const ActiveSectionTabs = ( props ) => {
 					}
 				</div>
 			}
-			<div className={ 'novablocks-sections__tab-content' }>
-				{ !! activeTab && activeTab.props.children }
-			</div>
+			<TabContent activeTab={ activeTab } { ...props } />
 		</animated.div>
 	)
+}
+
+class TabContent extends Component {
+
+	constructor() {
+		super( ...arguments );
+
+		this.resizeObserver = null;
+		this.resizeElement = createRef();
+	}
+
+	componentDidMount() {
+		this.resizeObserver = new ResizeObserver( entries => {
+			this.props.updateHeight();
+		} );
+
+		this.resizeObserver.observe( this.resizeElement.current );
+	}
+
+	componentWillUnmount() {
+		if ( this.resizeObserver ) {
+			this.resizeObserver.disconnect();
+		}
+	}
+
+	render() {
+
+		const { activeTab } = this.props;
+
+		return (
+			<div className={ 'novablocks-sections__tab-content' } ref={ this.resizeElement }>
+				{ !! activeTab && activeTab.props.children }
+			</div>
+		)
+	}
 }
 
 export { ActiveSectionTabs };

@@ -15518,6 +15518,10 @@ var sections_list_SectionsList = function SectionsList(props) {
 };
 
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
+var helpers_extends = __webpack_require__(12);
+var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
 var slicedToArray = __webpack_require__(20);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
@@ -17523,12 +17527,25 @@ const extendedAnimated = apply(domElements);
 
 
 
+
+
+
+function tabs_createSuper(Derived) { var hasNativeReflectConstruct = tabs_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+
+function tabs_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
 var ACCENT_COLORS = ['rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)'];
 var tabs_ = wp.i18n.__;
 var tabs_wp$element = wp.element,
     useEffect = tabs_wp$element.useEffect,
     useState = tabs_wp$element.useState,
-    tabs_Fragment = tabs_wp$element.Fragment;
+    tabs_Fragment = tabs_wp$element.Fragment,
+    tabs_Component = tabs_wp$element.Component,
+    createRef = tabs_wp$element.createRef;
 
 var getTabAccentColor = function getTabAccentColor(label) {
   if (tabs_('General') === label) {
@@ -17603,15 +17620,58 @@ var tabs_ActiveSectionTabs = function ActiveSectionTabs(props) {
       onClick: onClick,
       key: index
     }, label);
-  })), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__tab-content'
-  }, !!activeTab && activeTab.props.children));
+  })), Object(external_React_["createElement"])(tabs_TabContent, extends_default()({
+    activeTab: activeTab
+  }, props)));
 };
 
+var tabs_TabContent = /*#__PURE__*/function (_Component) {
+  inherits_default()(TabContent, _Component);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(12);
-var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
+  var _super = tabs_createSuper(TabContent);
+
+  function TabContent() {
+    var _this;
+
+    classCallCheck_default()(this, TabContent);
+
+    _this = _super.apply(this, arguments);
+    _this.resizeObserver = null;
+    _this.resizeElement = createRef();
+    return _this;
+  }
+
+  createClass_default()(TabContent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.resizeObserver = new ResizeObserver(function (entries) {
+        _this2.props.updateHeight();
+      });
+      this.resizeObserver.observe(this.resizeElement.current);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var activeTab = this.props.activeTab;
+      return Object(external_React_["createElement"])("div", {
+        className: 'novablocks-sections__tab-content',
+        ref: this.resizeElement
+      }, !!activeTab && activeTab.props.children);
+    }
+  }]);
+
+  return TabContent;
+}(tabs_Component);
+
 
 // EXTERNAL MODULE: ./node_modules/lodash/orderBy.js
 var orderBy = __webpack_require__(115);
@@ -29450,16 +29510,16 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
 
 
 
-function tabs_createSuper(Derived) { var hasNativeReflectConstruct = tabs_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+function components_tabs_createSuper(Derived) { var hasNativeReflectConstruct = components_tabs_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
 
-function tabs_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function components_tabs_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-var tabs_Component = wp.element.Component;
+var components_tabs_Component = wp.element.Component;
 
 var tabs_Tabs = /*#__PURE__*/function (_Component) {
   inherits_default()(Tabs, _Component);
 
-  var _super = tabs_createSuper(Tabs);
+  var _super = components_tabs_createSuper(Tabs);
 
   function Tabs(props) {
     var _this;
@@ -29508,12 +29568,12 @@ var tabs_Tabs = /*#__PURE__*/function (_Component) {
   }]);
 
   return Tabs;
-}(tabs_Component);
+}(components_tabs_Component);
 
 var tabs_Tab = /*#__PURE__*/function (_Component2) {
   inherits_default()(Tab, _Component2);
 
-  var _super2 = tabs_createSuper(Tab);
+  var _super2 = components_tabs_createSuper(Tab);
 
   function Tab() {
     classCallCheck_default()(this, Tab);
@@ -29550,7 +29610,7 @@ var tabs_Tab = /*#__PURE__*/function (_Component2) {
   }]);
 
   return Tab;
-}(tabs_Component);
+}(components_tabs_Component);
 
 
 // EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
