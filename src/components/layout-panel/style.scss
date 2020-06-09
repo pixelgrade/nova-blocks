@@ -25,7 +25,7 @@
 }
 
 .novablocks-u-content-padding {
-	padding: var(--novablocks-content-padding-small) 0;
+	padding: var(--novablocks-content-padding-small);
 
 	--novablocks-content-padding: var(--novablocks-content-padding-small);
 
@@ -38,6 +38,6 @@
 	}
 
 	@include above(lap) {
-		padding: var(--novablocks-content-padding) 0;
+		padding: var(--novablocks-content-padding);
 	}
 }

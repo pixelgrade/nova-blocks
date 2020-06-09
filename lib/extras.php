@@ -104,7 +104,7 @@ function novablocks_get_content_padding_attributes() {
 		),
 		'contentPaddingCustom' => array(
 			'type'    => 'number',
-			'default' => 75
+			'default' => 20
 		),
 	);
 }
