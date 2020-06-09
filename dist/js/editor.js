@@ -27480,6 +27480,8 @@ var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
 };
 
 var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
+  var _gridItem$image, _gridItem$image$sizes, _gridItem$image$sizes2, _gridItem$image2;
+
   var gridItem = _ref.gridItem;
   // @todo standardize those damn images
   return Object(external_React_["createElement"])("div", {
@@ -27488,7 +27490,7 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
     style: gridItem.getImageStyle(),
-    src: gridItem.image.sizes.large.url || gridItem.image.url
+    src: (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image = gridItem.image) === null || _gridItem$image === void 0 ? void 0 : (_gridItem$image$sizes = _gridItem$image.sizes) === null || _gridItem$image$sizes === void 0 ? void 0 : (_gridItem$image$sizes2 = _gridItem$image$sizes.large) === null || _gridItem$image$sizes2 === void 0 ? void 0 : _gridItem$image$sizes2.url) || (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image2 = gridItem.image) === null || _gridItem$image2 === void 0 ? void 0 : _gridItem$image2.url)
   }));
 };
 
@@ -30363,6 +30365,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
 
 
 var block_controls_ = wp.i18n.__;
+var block_controls_apiFetch = wp.apiFetch;
 var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
     MediaUpload = block_controls_wp$blockEditor.MediaUpload;
@@ -30389,7 +30392,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
     }),
     onSelect: function onSelect(images) {
       setAttributes({
-        images: images
+        images: block_controls_normalize(images)
       });
     },
     render: function render(_ref) {
@@ -30402,6 +30405,15 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
       });
     }
   }));
+}; // @todo use apiFetch to get large image size
+// and normalize title, caption and description structure
+
+
+var block_controls_normalize = function normalize(images) {
+  var promises = images.map(function (image) {
+    console.log(image);
+  });
+  return images;
 };
 
 var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {

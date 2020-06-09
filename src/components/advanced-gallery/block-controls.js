@@ -1,6 +1,7 @@
 import { swap, alignCenter } from "../../icons";
 
 const { __ } = wp.i18n;
+const apiFetch = wp.apiFetch;
 
 const {
 	BlockControls,
@@ -37,7 +38,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 				gallery
 				value={ gallery.map( ( image ) => image.id ) }
 				onSelect={ ( images ) => {
-					setAttributes( { images } );
+					setAttributes( { images: normalize( images ) } );
 				} }
 				render={ ( { open } ) => (
 					<Button
@@ -50,6 +51,15 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 			/>
 		</Toolbar>
 	);
+}
+
+// @todo use apiFetch to get large image size
+// and normalize title, caption and description structure
+const normalize = ( images ) => {
+	const promises = images.map( image => {
+		console.log( image );
+	} );
+	return images;
 }
 
 const AdvancedGalleryBlockControls = ( props ) => {
