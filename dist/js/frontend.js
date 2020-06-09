@@ -19961,7 +19961,6 @@ var TRANSITION_EASING = "easeInOutCirc";
     if ($slider.children().length > 1) {
       $arrowContainer = $('<div class="novablocks-slideshow__controls">').appendTo($block);
       resetBlockMinHeight($block);
-      $block.addClass('is-ready');
       $slider.on('beforeChange', onBeforeSlideChange);
       $slider.slick({
         rows: 0,
@@ -19973,6 +19972,8 @@ var TRANSITION_EASING = "easeInOutCirc";
         speed: 0
       });
     }
+
+    $block.addClass('is-ready');
   });
   util_parallaxInit($blocks);
 
@@ -19987,6 +19988,7 @@ var TRANSITION_EASING = "easeInOutCirc";
   function resetBlockMinHeight($block) {
     $block.css('minHeight', '');
     $block.css('minHeight', getBlockMinHeight($block));
+    $(window).trigger('scroll');
   }
 
   function getBlockMinHeight($block) {

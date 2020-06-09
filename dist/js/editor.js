@@ -25750,9 +25750,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderContent",
     value: function renderContent() {
-      var _this2 = this,
-          _previewImage$title,
-          _previewImage$caption;
+      var _this2 = this;
 
       var _this$props = this.props,
           _this$props$attribute = _this$props.attributes,
@@ -25812,7 +25810,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__inner-container novablocks-u-content-width",
         style: styles.content
-      }, !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$title = previewImage.title) === null || _previewImage$title === void 0 ? void 0 : _previewImage$title.rendered) && Object(external_React_["createElement"])("h2", null, previewImage.title.rendered), !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$caption = previewImage.caption) === null || _previewImage$caption === void 0 ? void 0 : _previewImage$caption.rendered) && Object(external_React_["createElement"])("p", null, previewImage.caption.rendered)))))), Object(external_React_["createElement"])("div", {
+      }, !!(previewImage === null || previewImage === void 0 ? void 0 : previewImage.title) && Object(external_React_["createElement"])("h2", null, previewImage.title), !!(previewImage === null || previewImage === void 0 ? void 0 : previewImage.caption) && Object(external_React_["createElement"])("p", null, previewImage.caption)))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__controls"
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled",
@@ -25820,13 +25818,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       }), Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled",
         onClick: this.props.onNextArrowClick
-      }))), !galleryImages.length && Object(external_React_["createElement"])(preview_Fragment, null, Object(external_React_["createElement"])(gallery_options_GalleryPlaceholder, this.props), Object(external_React_["createElement"])("div", {
-        className: "novablocks-slideshow__controls"
-      }, Object(external_React_["createElement"])("div", {
-        className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled"
-      }), Object(external_React_["createElement"])("div", {
-        className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled"
-      }))));
+      }))), !galleryImages.length && Object(external_React_["createElement"])(gallery_options_GalleryPlaceholder, this.props));
     }
   }, {
     key: "render",
@@ -25982,7 +25974,6 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
       });
     });
     Promise.all(promises).then(function () {
-      console.log(items);
       setAttributes({
         galleryImages: items
       });
