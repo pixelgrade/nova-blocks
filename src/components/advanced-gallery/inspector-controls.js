@@ -63,7 +63,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 	return (
 		<Fragment>
 
-			<ControlsSection label={ __( 'Media' ) } group={ __( 'Modules' ) }>
+			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 
 				<ControlsTab label={ __( 'General' ) }>
 					<Notice

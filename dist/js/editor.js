@@ -30199,7 +30199,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   };
 
   return Object(external_React_["createElement"])(advanced_gallery_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: advanced_gallery_inspector_controls_('Media'),
+    label: advanced_gallery_inspector_controls_('Media Composition'),
     group: advanced_gallery_inspector_controls_('Modules')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: advanced_gallery_inspector_controls_('General')
