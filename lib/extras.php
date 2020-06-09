@@ -838,9 +838,7 @@ function novablocks_add_slideshow_settings( $settings ) {
 			),
 			array(
 				'url'     => 'https://source.unsplash.com/Gt_4iMB7hY0/1600x900',
-				'title'   => array(
-					'rendered' => esc_html__( 'This is a catchy image title', '__plugin_txtd' ),
-				),
+				'title'   => esc_html__( 'This is a catchy image title', '__plugin_txtd' ),
 				'caption' => esc_html__( 'A brilliant caption to explain its catchiness', '__plugin_txtd' ),
 				'id'      => - 2,
 				'sizes'   => array(
