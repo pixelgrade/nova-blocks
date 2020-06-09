@@ -20918,6 +20918,10 @@ var getMarkersCenter = function getMarkersCenter() {
 var external_jQuery_ = __webpack_require__(2);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(37);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -21988,6 +21992,7 @@ var normalize = function normalize(photo) {
 // CONCATENATED MODULE: ./src/utils/index.js
 
 
+
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -22154,6 +22159,19 @@ var getControlsClasses = function getControlsClasses(attributes, compiledAttribu
   }
 
   return classes;
+};
+var utils_getNewAttributesFromPreset = function getNewAttributesFromPreset(attribute, preset, presets) {
+  var newAttributes = defineProperty_default()({}, attribute, preset);
+
+  var newOption = presets.find(function (option) {
+    return preset === option.value;
+  });
+
+  if (newOption && newOption.preset) {
+    newAttributes = Object.assign(newOption.preset, newAttributes);
+  }
+
+  return newAttributes;
 };
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 
@@ -23449,6 +23467,27 @@ var viewportObserver_viewportObserver = /*#__PURE__*/function () {
 
 
 
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
 
 /***/ })
 /******/ ]);

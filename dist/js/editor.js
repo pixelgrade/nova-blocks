@@ -26991,7 +26991,8 @@ var normalize = function normalize(photo) {
 // CONCATENATED MODULE: ./src/utils/index.js
 
 
-var utils_getRandomBetween = function getRandomBetween(min, max) {
+
+var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
 };
@@ -27157,6 +27158,19 @@ var getControlsClasses = function getControlsClasses(attributes, compiledAttribu
   }
 
   return classes;
+};
+var utils_getNewAttributesFromPreset = function getNewAttributesFromPreset(attribute, preset, presets) {
+  var newAttributes = defineProperty_default()({}, attribute, preset);
+
+  var newOption = presets.find(function (option) {
+    return preset === option.value;
+  });
+
+  if (newOption && newOption.preset) {
+    newAttributes = Object.assign(newOption.preset, newAttributes);
+  }
+
+  return newAttributes;
 };
 // CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
 
@@ -27366,10 +27380,10 @@ var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery
 
 var util_getRandomAttributes = function getRandomAttributes() {
   return {
-    sizeContrast: utils_getRandomBetween(0, 5) * 20,
-    positionShift: utils_getRandomBetween(0, 20) * 5,
-    elementsDistance: utils_getRandomBetween(0, 5) * 20,
-    placementVariation: utils_getRandomBetween(1, 4) * 25,
+    sizeContrast: getRandomBetween(0, 5) * 20,
+    positionShift: getRandomBetween(0, 20) * 5,
+    elementsDistance: getRandomBetween(0, 5) * 20,
+    placementVariation: getRandomBetween(1, 4) * 25,
     stylePreset: 'just-my-style'
   };
 };
@@ -30161,6 +30175,7 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
+
 var advanced_gallery_inspector_controls_ = wp.i18n.__;
 var advanced_gallery_inspector_controls_Fragment = wp.element.Fragment;
 var advanced_gallery_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
@@ -30169,6 +30184,15 @@ var advanced_gallery_inspector_controls_wp$components = wp.components,
     advanced_gallery_inspector_controls_PanelBody = advanced_gallery_inspector_controls_wp$components.PanelBody,
     advanced_gallery_inspector_controls_RadioControl = advanced_gallery_inspector_controls_wp$components.RadioControl,
     advanced_gallery_inspector_controls_RangeControl = advanced_gallery_inspector_controls_wp$components.RangeControl;
+
+var inspector_controls_getRandomAttributes = function getRandomAttributes() {
+  return {
+    sizeContrast: getRandomBetween(0, 5) * 20,
+    positionShift: getRandomBetween(0, 20) * 5,
+    elementsDistance: getRandomBetween(0, 5) * 20,
+    placementVariation: getRandomBetween(1, 4) * 25
+  };
+};
 
 var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalleryInspectorControls(props) {
   var setAttributes = props.setAttributes,
@@ -30183,21 +30207,6 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       containerHeight = _props$attributes.containerHeight,
       imageRotation = _props$attributes.imageRotation,
       advancedGalleryPresetOptions = props.settings.advancedGalleryPresetOptions;
-
-  var getRandomBetween = function getRandomBetween(min, max) {
-    var random = Math.max(0, Math.random() - Number.MIN_VALUE);
-    return Math.floor(random * (max - min + 1) + min);
-  };
-
-  var randomize = function randomize() {
-    setAttributes({
-      sizeContrast: getRandomBetween(0, 5) * 20,
-      positionShift: getRandomBetween(0, 20) * 5,
-      elementsDistance: getRandomBetween(0, 5) * 20,
-      placementVariation: getRandomBetween(1, 4) * 25
-    });
-  };
-
   return Object(external_React_["createElement"])(advanced_gallery_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: advanced_gallery_inspector_controls_('Media Composition'),
     group: advanced_gallery_inspector_controls_('Modules')
@@ -30212,23 +30221,12 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     key: 'advanced-gallery-style-preset',
     selected: stylePreset,
     onChange: function onChange(stylePreset) {
-      var newAttributes = {
-        stylePreset: stylePreset
-      };
-      var newOption = advancedGalleryPresetOptions.find(function (option) {
-        return stylePreset === option.value;
-      });
-
-      if (newOption && newOption.preset) {
-        newAttributes = Object.assign(newOption.preset, newAttributes);
-      }
-
-      setAttributes(newAttributes);
-
-      if (newOption.value === 'just-my-style') {
-        randomize();
+      if (stylePreset === 'just-my-style') {
+        setAttributes(inspector_controls_getRandomAttributes());
         return;
       }
+
+      setAttributes(utils_getNewAttributesFromPreset(stylePreset, advancedGalleryPresetOptions));
     },
     options: advancedGalleryPresetOptions
   }), stylePreset === 'just-my-style' && Object(external_React_["createElement"])("div", {
@@ -30236,7 +30234,9 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
   }, Object(external_React_["createElement"])(inspector_controls_Button, {
     isLarge: true,
     isPrimary: true,
-    onClick: randomize
+    onClick: function onClick() {
+      setAttributes(inspector_controls_getRandomAttributes());
+    }
   }, advanced_gallery_inspector_controls_('💡 Surprise me!')))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: advanced_gallery_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
@@ -30631,7 +30631,7 @@ function _getNewDefaults() {
         switch (_context.prev = _context.next) {
           case 0:
             settings = wp.data.select(STORE_NAME).getSettings();
-            numberOfImages = utils_getRandomBetween(2, 4);
+            numberOfImages = getRandomBetween(2, 4);
             _context.next = 4;
             return getPlaceholderImages;
 
@@ -32994,7 +32994,7 @@ function blocks_hero_getNewDefaults() {
 
           case 3:
             placeholderImages = _context.sent;
-            index = utils_getRandomBetween(0, placeholderImages.length - 1);
+            index = getRandomBetween(0, placeholderImages.length - 1);
             image = placeholderImages[index];
             return _context.abrupt("return", {
               media: hero_objectSpread(hero_objectSpread({}, image), {}, {
@@ -33202,7 +33202,46 @@ var preview_MediaPreview = function MediaPreview(props) {
 };
 
 /* harmony default export */ var media_preview = (preview_MediaPreview);
+// CONCATENATED MODULE: ./src/components/preset-control/index.js
+
+
+
+
+var preset_control_RadioControl = wp.components.RadioControl;
+
+var preset_control_PresetControl = function PresetControl(props) {
+  var noop = function noop() {
+    return {};
+  };
+
+  var randomize = props.randomize,
+      attribute = props.attribute,
+      setAttributes = props.setAttributes,
+      passedProps = objectWithoutProperties_default()(props, ["randomize", "attribute", "setAttributes"]);
+
+  var options = props.options || [];
+  var randomizeAttributes = typeof randomize === "function" ? randomize : noop;
+  options.concat({
+    label: 'Just My Style',
+    value: 'just-my-style',
+    preset: {}
+  });
+  return Object(external_React_["createElement"])(preset_control_RadioControl, extends_default()({}, props, {
+    onChange: function onChange(preset) {
+      if ('just-my-style' === preset) {
+        setAttributes(randomizeAttributes());
+        return;
+      }
+
+      var newAttributes = utils_getNewAttributesFromPreset(attribute, preset, options);
+      setAttributes(newAttributes);
+    }
+  }));
+};
+
+/* harmony default export */ var preset_control = (preset_control_PresetControl);
 // CONCATENATED MODULE: ./src/blocks/media/inspector-controls.js
+
 
 
 
@@ -33226,6 +33265,8 @@ var CONTENT_AREA_MAX_WIDTH = 70;
 var CONTENT_AREA_MIN_WIDTH = 50;
 
 var inspector_controls_MediaInspectorControls = function MediaInspectorControls(props) {
+  var _props$settings, _props$settings$media, _props$settings$media2;
+
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
   var blockTopSpacing = attributes.blockTopSpacing,
@@ -33270,6 +33311,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     };
   };
 
+  var presetOptions = props === null || props === void 0 ? void 0 : (_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$media = _props$settings.media) === null || _props$settings$media === void 0 ? void 0 : (_props$settings$media2 = _props$settings$media.spaceAndSizing) === null || _props$settings$media2 === void 0 ? void 0 : _props$settings$media2.presetOptions;
   return Object(external_React_["createElement"])(media_inspector_controls_Fragment, null, Object(external_React_["createElement"])(emphasis_level_controls_EmphasisBlockAreaControls, null, blockStyle !== 'basic' && Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: emphasisArea,
     onChange: function onChange(emphasisArea) {
@@ -33283,24 +33325,15 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     step: 5
   })), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: media_inspector_controls_('Space and Sizing')
-  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+  }, !!presetOptions && Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: media_inspector_controls_('General')
-  }, Object(external_React_["createElement"])(media_inspector_controls_RadioControl, {
+  }, Object(external_React_["createElement"])(preset_control, {
     key: 'media-card-layout-preset',
     label: media_inspector_controls_('Choose a layout preset:', '__plugin_txtd'),
     selected: layoutPreset,
-    onChange: function onChange(layoutPreset) {
-      setAttributes({
-        layoutPreset: layoutPreset
-      });
-    },
-    options: [{
-      label: media_inspector_controls_('Calm and stable'),
-      value: 'stable'
-    }, {
-      label: media_inspector_controls_('Moving and dynamic'),
-      value: 'dynamic'
-    }]
+    options: presetOptions,
+    attribute: 'layoutPreset',
+    setAttributes: setAttributes
   })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: media_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])("div", {
@@ -33633,7 +33666,7 @@ function blocks_media_getNewDefaults() {
         switch (_context.prev = _context.next) {
           case 0:
             settings = media_select(STORE_NAME).getSettings();
-            numberOfImages = utils_getRandomBetween(2, 4);
+            numberOfImages = getRandomBetween(2, 4);
             _context.next = 4;
             return getPlaceholderImages;
 
@@ -34247,7 +34280,7 @@ function blocks_slideshow_getNewDefaults() {
 
           case 3:
             placeholderImages = _context.sent;
-            count = utils_getRandomBetween(2, 4);
+            count = getRandomBetween(2, 4);
             images = getRandomArrayFromArray(placeholderImages, count);
             return _context.abrupt("return", {
               galleryImages: images

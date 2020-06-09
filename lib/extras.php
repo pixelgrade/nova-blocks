@@ -502,7 +502,31 @@ function novablocks_add_media_settings( $settings ) {
 				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
 				'value' => 'highlighted',
 			),
-		)
+		),
+		'spaceAndSizing' => array(
+			'presetOptions' => array(
+				array(
+					'label'  => 'Padding',
+					'value'  => 'padding',
+					'preset' => array(
+						'blockTopSpacing' => 1,
+						'blockBottomSpacing' => 1,
+						'emphasisTopSpacing' => 1,
+						'emphasisBottomSpacing' => 1,
+					),
+				),
+				array(
+					'label'  => 'Overlap',
+					'value'  => 'overlap',
+					'preset' => array(
+						'blockTopSpacing' => -2,
+						'blockBottomSpacing' => -2,
+						'emphasisTopSpacing' => -2,
+						'emphasisBottomSpacing' => -2,
+					),
+				),
+			)
+		),
 	);
 
 	$settings['media'] = $media_settings;

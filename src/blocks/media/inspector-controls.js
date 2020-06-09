@@ -2,6 +2,7 @@ import { isMatch } from 'lodash';
 import classnames from 'classnames';
 
 import ControlsGroup from "../../components/controls-group";
+import PresetControl from "../../components/preset-control";
 import BlockVerticalAlignmentToolbar from "../../components/block-vertical-alignment-toolbar";
 
 import {
@@ -14,7 +15,7 @@ import {
 } from "../../components/emphasis-level-controls"
 
 import {
-	getControlsClasses
+	getControlsClasses,
 } from "../../utils";
 
 /**
@@ -40,7 +41,7 @@ const {
 const CONTENT_AREA_MAX_WIDTH = 70;
 const CONTENT_AREA_MIN_WIDTH = 50;
 
-const MediaInspectorControls = function( props ) {
+const MediaInspectorControls = ( props ) => {
 
 	const {
 		attributes,
@@ -99,6 +100,8 @@ const MediaInspectorControls = function( props ) {
 		}
 	}
 
+	const presetOptions = props?.settings?.media?.spaceAndSizing?.presetOptions;
+
 	return (
 		<Fragment>
 
@@ -118,18 +121,16 @@ const MediaInspectorControls = function( props ) {
 
 			<ControlsSection label={ __( 'Space and Sizing' ) }>
 
-				<ControlsTab label={ __( 'General' ) }>
-					<RadioControl
+				{ !! presetOptions && <ControlsTab label={ __( 'General' ) }>
+					<PresetControl
 						key={ 'media-card-layout-preset' }
 						label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
 						selected={ layoutPreset }
-						onChange={ layoutPreset => { setAttributes( { layoutPreset } ) } }
-						options={ [
-							{ label: __( 'Calm and stable' ), value: 'stable' },
-							{ label: __( 'Moving and dynamic' ), value: 'dynamic' },
-						] }
+						options={ presetOptions }
+						attribute={ 'layoutPreset' }
+						setAttributes={ setAttributes }
 					/>
-				</ControlsTab>
+				</ControlsTab> }
 
 				<ControlsTab label={ __( 'Customize' ) }>
 					<div key={ 'media-card-spacing-customize-1' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>

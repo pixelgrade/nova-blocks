@@ -7,6 +7,8 @@ import {
 
 import ControlsGroup from "../controls-group";
 
+import { getRandomBetween, getNewAttributesFromPreset } from "../../utils";
+
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
 
@@ -20,6 +22,15 @@ const {
 	RadioControl,
 	RangeControl,
 } = wp.components;
+
+const getRandomAttributes = () => {
+	return {
+		sizeContrast: getRandomBetween(0, 5) * 20,
+		positionShift: getRandomBetween(0, 20) * 5,
+		elementsDistance: getRandomBetween(0, 5) * 20,
+		placementVariation: getRandomBetween(1, 4) * 25,
+	}
+}
 
 const AdvancedGalleryInspectorControls = ( props ) => {
 
@@ -46,20 +57,6 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 		}
 	} = props;
 
-	const getRandomBetween = ( min, max ) => {
-		const random = Math.max(0, Math.random() - Number.MIN_VALUE );
-		return Math.floor( random * (max - min + 1) + min );
-	}
-
-	const randomize = () => {
-		setAttributes({
-			sizeContrast: getRandomBetween(0, 5) * 20,
-			positionShift: getRandomBetween(0, 20) * 5,
-			elementsDistance: getRandomBetween(0, 5) * 20,
-			placementVariation: getRandomBetween(1, 4) * 25,
-		});
-	}
-
 	return (
 		<Fragment>
 
@@ -76,19 +73,13 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						key={ 'advanced-gallery-style-preset' }
 						selected={ stylePreset }
 						onChange={ ( stylePreset ) => {
-							let newAttributes = { stylePreset };
-							let newOption = advancedGalleryPresetOptions.find( option => stylePreset === option.value );
 
-							if ( newOption && newOption.preset ) {
-								newAttributes = Object.assign( newOption.preset, newAttributes );
-							}
-
-							setAttributes( newAttributes );
-
-							if ( newOption.value === 'just-my-style' ) {
-								randomize();
+							if ( stylePreset === 'just-my-style' ) {
+								setAttributes( getRandomAttributes() );
 								return;
 							}
+
+							setAttributes( getNewAttributesFromPreset( stylePreset, advancedGalleryPresetOptions ) );
 						} }
 						options={ advancedGalleryPresetOptions }
 					/>
@@ -98,7 +89,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							<Button
 								isLarge
 								isPrimary
-								onClick={ randomize }>{ __( '💡 Surprise me!' ) }</Button>
+								onClick={ () => { setAttributes( getRandomAttributes() ) } }>{ __( '💡 Surprise me!' ) }</Button>
 						</div>
 					}
 				</ControlsTab>
