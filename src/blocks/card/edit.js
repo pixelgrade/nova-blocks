@@ -53,8 +53,10 @@ const CardEdit = ( props ) => {
 			open,
 		} = props;
 
-		if ( !! media && !! media.url ) {
-			return <img className={ `${ blockClassName }__media-image` } src={ media.url } onClick={ open } />
+		const mediaURL = media?.sizes?.large?.url || media?.url;
+
+		if ( !! mediaURL ) {
+			return <img className={ `${ blockClassName }__media-image` } src={ mediaURL } onClick={ open } />
 		}
 
 		return (

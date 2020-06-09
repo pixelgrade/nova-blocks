@@ -23,10 +23,7 @@ async function getNewDefaults() {
 	const randomImage = getRandomArrayFromArray( placeholderImages, 1 )[0];
 
 	return {
-		media: {
-			id: randomImage.id,
-			url: randomImage.sizes.full.url
-		}
+		media: randomImage
 	};
 }
 

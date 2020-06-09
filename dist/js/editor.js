@@ -35571,13 +35571,16 @@ var edit_CardEdit = function CardEdit(props) {
       setAttributes = props.setAttributes;
 
   var CardMedia = function CardMedia(props) {
+    var _media$sizes, _media$sizes$large;
+
     var media = props.attributes.media,
         open = props.open;
+    var mediaURL = (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$large = _media$sizes.large) === null || _media$sizes$large === void 0 ? void 0 : _media$sizes$large.url) || (media === null || media === void 0 ? void 0 : media.url);
 
-    if (!!media && !!media.url) {
+    if (!!mediaURL) {
       return Object(external_React_["createElement"])("img", {
         className: "".concat(blockClassName, "__media-image"),
-        src: media.url,
+        src: mediaURL,
         onClick: open
       });
     }
@@ -35783,10 +35786,7 @@ function blocks_card_getNewDefaults() {
             placeholderImages = _context.sent;
             randomImage = getRandomArrayFromArray(placeholderImages, 1)[0];
             return _context.abrupt("return", {
-              media: {
-                id: randomImage.id,
-                url: randomImage.sizes.full.url
-              }
+              media: randomImage
             });
 
           case 6:
