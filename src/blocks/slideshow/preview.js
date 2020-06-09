@@ -113,26 +113,19 @@ const SlideshowPreview = class extends Component {
 								<SlideshowBackground { ...this.props } />
 								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 									<div className="novablocks-slideshow__inner-container novablocks-u-content-width" style={ styles.content }>
-										{ !! previewImage?.title?.rendered && <h2>{ previewImage.title.rendered }</h2> }
-										{ !! previewImage?.caption?.rendered && <p>{ previewImage.caption.rendered }</p> }
+										{ !! previewImage?.title && <h2>{ previewImage.title }</h2> }
+										{ !! previewImage?.caption && <p>{ previewImage.caption }</p> }
 									</div>
 								</div>
 							</Fragment> }
 						</div>
 					</div>
-					<div className="novablocks-slideshow__controls">
+					{ galleryImages.length > 1 && <div className="novablocks-slideshow__controls">
 						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled" onClick={ this.props.onPrevArrowClick }></div>
 						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled" onClick={ this.props.onNextArrowClick }></div>
-					</div>
+					</div> }
 				</div> }
-				{ ! galleryImages.length &&
-					<Fragment>
-						<GalleryPlaceholder { ...this.props } />
-						<div className="novablocks-slideshow__controls">
-							<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled"></div>
-							<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled"></div>
-						</div>
-					</Fragment> }
+				{ ! galleryImages.length && <GalleryPlaceholder { ...this.props } /> }
 			</Fragment>
 		);
 	}
