@@ -27488,7 +27488,7 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
     style: gridItem.getImageStyle(),
-    src: gridItem.image.url || gridItem.image.sizes.large.url
+    src: gridItem.image.sizes.large.url || gridItem.image.url
   }));
 };
 
