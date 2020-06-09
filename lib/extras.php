@@ -832,10 +832,6 @@ function novablocks_get_advanced_gallery_presets() {
 				'placementVariation' => 50,
 			),
 		),
-		array(
-			'label' => 'Just My Style™',
-			'value' => 'just-my-style',
-		),
 	);
 }
 

@@ -26991,7 +26991,6 @@ var normalize = function normalize(photo) {
 // CONCATENATED MODULE: ./src/utils/index.js
 
 
-
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -27158,19 +27157,6 @@ var getControlsClasses = function getControlsClasses(attributes, compiledAttribu
   }
 
   return classes;
-};
-var utils_getNewAttributesFromPreset = function getNewAttributesFromPreset(attribute, preset, presets) {
-  var newAttributes = defineProperty_default()({}, attribute, preset);
-
-  var newOption = presets.find(function (option) {
-    return preset === option.value;
-  });
-
-  if (newOption && newOption.preset) {
-    newAttributes = Object.assign(newOption.preset, newAttributes);
-  }
-
-  return newAttributes;
 };
 // CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
 
@@ -28662,6 +28648,70 @@ var collection_Collection = function Collection(props) {
 };
 
 /* harmony default export */ var collection = (collection_Collection);
+// CONCATENATED MODULE: ./src/components/preset-control/index.js
+
+
+
+
+var preset_control_ = wp.i18n.__;
+var preset_control_wp$components = wp.components,
+    preset_control_Button = preset_control_wp$components.Button,
+    preset_control_RadioControl = preset_control_wp$components.RadioControl;
+var preset_control_Fragment = wp.element.Fragment;
+
+var preset_control_PresetControl = function PresetControl(props) {
+  var noop = function noop() {
+    return {};
+  };
+
+  var randomize = props.randomize,
+      attribute = props.attribute,
+      setAttributes = props.setAttributes,
+      passedProps = objectWithoutProperties_default()(props, ["randomize", "attribute", "setAttributes"]);
+
+  var options = Array.isArray(props.options) ? props.options.slice() : [];
+  var randomizeAttributes = typeof randomize === "function" ? randomize : noop;
+  options.push({
+    label: 'Just My Style™',
+    value: 'just-my-style',
+    preset: {}
+  });
+  return Object(external_React_["createElement"])(preset_control_Fragment, null, Object(external_React_["createElement"])(preset_control_RadioControl, extends_default()({}, props, {
+    options: options,
+    onChange: function onChange(preset) {
+      if ('just-my-style' === preset) {
+        setAttributes(Object.assign({}, randomizeAttributes(), defineProperty_default()({}, attribute, 'just-my-style')));
+        return;
+      }
+
+      var newAttributes = preset_control_getNewAttributesFromPreset(attribute, preset, options);
+      setAttributes(newAttributes);
+    }
+  })), props.selected === 'just-my-style' && Object(external_React_["createElement"])("div", {
+    key: 'advanced-gallery-surprise-control'
+  }, Object(external_React_["createElement"])(preset_control_Button, {
+    isLarge: true,
+    isPrimary: true,
+    onClick: function onClick() {
+      setAttributes(randomizeAttributes());
+    }
+  }, preset_control_('💡 Surprise me!'))));
+};
+
+var preset_control_getNewAttributesFromPreset = function getNewAttributesFromPreset(attribute, preset, presets) {
+  var newAttributes = defineProperty_default()({}, attribute, preset);
+
+  var newOption = presets.find(function (option) {
+    return preset === option.value;
+  });
+
+  if (newOption && newOption.preset) {
+    newAttributes = Object.assign(newOption.preset, newAttributes);
+  }
+
+  return newAttributes;
+};
+/* harmony default export */ var preset_control = (preset_control_PresetControl);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
 var helpers_assertThisInitialized = __webpack_require__(25);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(helpers_assertThisInitialized);
@@ -30170,7 +30220,9 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
+
 // CONCATENATED MODULE: ./src/components/advanced-gallery/inspector-controls.js
+
 
 
 
@@ -30184,15 +30236,6 @@ var advanced_gallery_inspector_controls_wp$components = wp.components,
     advanced_gallery_inspector_controls_PanelBody = advanced_gallery_inspector_controls_wp$components.PanelBody,
     advanced_gallery_inspector_controls_RadioControl = advanced_gallery_inspector_controls_wp$components.RadioControl,
     advanced_gallery_inspector_controls_RangeControl = advanced_gallery_inspector_controls_wp$components.RangeControl;
-
-var inspector_controls_getRandomAttributes = function getRandomAttributes() {
-  return {
-    sizeContrast: getRandomBetween(0, 5) * 20,
-    positionShift: getRandomBetween(0, 20) * 5,
-    elementsDistance: getRandomBetween(0, 5) * 20,
-    placementVariation: getRandomBetween(1, 4) * 25
-  };
-};
 
 var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalleryInspectorControls(props) {
   var setAttributes = props.setAttributes,
@@ -30217,27 +30260,14 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     id: 'novablocks-advanced-gallery-quick-start',
     content: Object(external_React_["createElement"])("p", null, Object(external_React_["createElement"])("strong", null, "Quick start:"), " Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details"),
     dismissLabel: '✔ Ok, I got it!'
-  }), Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RadioControl, {
+  }), Object(external_React_["createElement"])(preset_control, {
     key: 'advanced-gallery-style-preset',
+    attribute: 'stylePreset',
     selected: stylePreset,
-    onChange: function onChange(stylePreset) {
-      if (stylePreset === 'just-my-style') {
-        setAttributes(inspector_controls_getRandomAttributes());
-        return;
-      }
-
-      setAttributes(utils_getNewAttributesFromPreset(stylePreset, advancedGalleryPresetOptions));
-    },
-    options: advancedGalleryPresetOptions
-  }), stylePreset === 'just-my-style' && Object(external_React_["createElement"])("div", {
-    key: 'advanced-gallery-surprise-control'
-  }, Object(external_React_["createElement"])(inspector_controls_Button, {
-    isLarge: true,
-    isPrimary: true,
-    onClick: function onClick() {
-      setAttributes(inspector_controls_getRandomAttributes());
-    }
-  }, advanced_gallery_inspector_controls_('💡 Surprise me!')))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    options: advancedGalleryPresetOptions,
+    randomize: util_getRandomAttributes,
+    setAttributes: setAttributes
+  })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: advanced_gallery_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
     key: 'advanced-gallery-crop-style',
@@ -33202,44 +33232,6 @@ var preview_MediaPreview = function MediaPreview(props) {
 };
 
 /* harmony default export */ var media_preview = (preview_MediaPreview);
-// CONCATENATED MODULE: ./src/components/preset-control/index.js
-
-
-
-
-var preset_control_RadioControl = wp.components.RadioControl;
-
-var preset_control_PresetControl = function PresetControl(props) {
-  var noop = function noop() {
-    return {};
-  };
-
-  var randomize = props.randomize,
-      attribute = props.attribute,
-      setAttributes = props.setAttributes,
-      passedProps = objectWithoutProperties_default()(props, ["randomize", "attribute", "setAttributes"]);
-
-  var options = props.options || [];
-  var randomizeAttributes = typeof randomize === "function" ? randomize : noop;
-  options.concat({
-    label: 'Just My Style',
-    value: 'just-my-style',
-    preset: {}
-  });
-  return Object(external_React_["createElement"])(preset_control_RadioControl, extends_default()({}, props, {
-    onChange: function onChange(preset) {
-      if ('just-my-style' === preset) {
-        setAttributes(randomizeAttributes());
-        return;
-      }
-
-      var newAttributes = utils_getNewAttributesFromPreset(attribute, preset, options);
-      setAttributes(newAttributes);
-    }
-  }));
-};
-
-/* harmony default export */ var preset_control = (preset_control_PresetControl);
 // CONCATENATED MODULE: ./src/blocks/media/inspector-controls.js
 
 

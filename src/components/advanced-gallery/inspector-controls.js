@@ -1,4 +1,4 @@
-import { Notice, Tab, Tabs } from '../../components';
+import { PresetControl, Notice, Tab, Tabs } from '../../components';
 
 import {
 	ControlsSection,
@@ -7,7 +7,8 @@ import {
 
 import ControlsGroup from "../controls-group";
 
-import { getRandomBetween, getNewAttributesFromPreset } from "../../utils";
+import { getRandomBetween } from "../../utils";
+import { getRandomAttributes } from "./util";
 
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
@@ -22,15 +23,6 @@ const {
 	RadioControl,
 	RangeControl,
 } = wp.components;
-
-const getRandomAttributes = () => {
-	return {
-		sizeContrast: getRandomBetween(0, 5) * 20,
-		positionShift: getRandomBetween(0, 20) * 5,
-		elementsDistance: getRandomBetween(0, 5) * 20,
-		placementVariation: getRandomBetween(1, 4) * 25,
-	}
-}
 
 const AdvancedGalleryInspectorControls = ( props ) => {
 
@@ -69,29 +61,14 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
 						dismissLabel={ '✔ Ok, I got it!' }
 					/>
-					<RadioControl
+					<PresetControl
 						key={ 'advanced-gallery-style-preset' }
+						attribute={ 'stylePreset' }
 						selected={ stylePreset }
-						onChange={ ( stylePreset ) => {
-
-							if ( stylePreset === 'just-my-style' ) {
-								setAttributes( getRandomAttributes() );
-								return;
-							}
-
-							setAttributes( getNewAttributesFromPreset( stylePreset, advancedGalleryPresetOptions ) );
-						} }
 						options={ advancedGalleryPresetOptions }
+						randomize={ getRandomAttributes }
+						setAttributes={ setAttributes }
 					/>
-					{
-						stylePreset === 'just-my-style' &&
-						<div key={ 'advanced-gallery-surprise-control' }>
-							<Button
-								isLarge
-								isPrimary
-								onClick={ () => { setAttributes( getRandomAttributes() ) } }>{ __( '💡 Surprise me!' ) }</Button>
-						</div>
-					}
 				</ControlsTab>
 
 				<ControlsTab label={ __( 'Customize' ) }>

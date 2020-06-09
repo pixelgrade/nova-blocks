@@ -179,14 +179,3 @@ export const getControlsClasses = ( attributes, compiledAttributes ) => {
 
 	return classes;
 }
-
-export const getNewAttributesFromPreset = ( attribute, preset, presets ) => {
-	let newAttributes = { [attribute]: preset };
-	let newOption = presets.find( option => preset === option.value );
-
-	if ( newOption && newOption.preset ) {
-		newAttributes = Object.assign( newOption.preset, newAttributes );
-	}
-
-	return newAttributes;
-}
