@@ -28,7 +28,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 			$arrowContainer = $( '<div class="novablocks-slideshow__controls">' ).appendTo( $block );
 
 			resetBlockMinHeight( $block );
-			$block.addClass( 'is-ready' );
 
 			$slider.on( 'beforeChange', onBeforeSlideChange );
 
@@ -42,6 +41,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 				speed: 0,
 			});
 		}
+
+		$block.addClass( 'is-ready' );
 	});
 
 	parallaxInit( $blocks );
@@ -57,6 +58,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 	function resetBlockMinHeight( $block ) {
 		$block.css( 'minHeight', '' );
 		$block.css( 'minHeight', getBlockMinHeight( $block ) );
+
+		$( window ).trigger( 'scroll' );
 	}
 
 	function getBlockMinHeight( $block ) {

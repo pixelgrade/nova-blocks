@@ -42,7 +42,6 @@ const SlideshowBlockControls = function( props ) {
 		} );
 
 		Promise.all( promises ).then( () => {
-			console.log( items );
 			setAttributes( { galleryImages: items } );
 		} );
 	};
