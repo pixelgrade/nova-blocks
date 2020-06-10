@@ -1,11 +1,11 @@
-.novablocks-block {
+:root {
 	--novablocks-block-text-color: var(--novablocks-dark-2);
 	--novablocks-block-titles-color: var(--novablocks-dark-2);
 	--novablocks-block-subtitles-color: var(--novablocks-color-1);
 	--novablocks-block-background-color: var(--novablocks-light-1);
 
 	--novablocks-block-padding: var(--novablocks-spacing);
-	--novablocks-block-content-padding: 0;
+	--novablocks-block-content-padding: var(--novablocks-spacing);
 
 	--novablocks-block-content-text-color: var(--novablocks-dark-2);
 	--novablocks-block-content-titles-color: var(--novablocks-dark-2);
@@ -13,13 +13,21 @@
 	--novablocks-block-content-background-color: transparent;
 	--novablocks-block-content-background-opacity: 1;
 	--novablocks-block-content-box-shadow: none;
+}
+
+.novablocks-block {
+	--block-padding: 0;
+	--block-content-padding: 0;
 
 	&[class] {
+		padding: var(--block-padding) 0;
+
 		color: var(--novablocks-block-text-color);
 		background-color: var(--novablocks-block-background-color);
 
 		transition: var(--novablocks-transition);
 		transition-property: background-color, padding;
+
 
 		h1, h2, h3, h4, h5, h6 {
 			transition: var(--novablocks-transition);
@@ -42,19 +50,16 @@
 }
 
 .novablocks-block__content {
-	position: relative;
-
-	color: var(--novablocks-block-content-text-color);
-	transform: translateZ(0);
-
-	transition: var(--novablocks-transition);
-	transition-property: padding, box-shadow;
-
-	.novablocks-block:not(.content-is-basic) & {
-		padding: var(--novablocks-block-content-padding);
-	}
 
 	&[class] {
+		position: relative;
+		padding: var(--block-content-padding);
+
+		color: var(--novablocks-block-content-text-color);
+		transform: translateZ(0);
+
+		transition: var(--novablocks-transition);
+		transition-property: padding, box-shadow;
 
 		h1, h2, h3 {
 			color: var(--novablocks-block-content-titles-color);
@@ -97,6 +102,7 @@
 
 	.block-is-moderate.content-is-basic {
 		--novablocks-block-background-color: var(--novablocks-light-3);
+		--block-padding: var(--novablocks-block-padding);
 	}
 
 	.block-is-highlighted.content-is-basic,
@@ -107,6 +113,7 @@
 		--novablocks-block-content-text-color: var(--novablocks-light-1);
 		--novablocks-block-content-titles-color: var(--novablocks-light-1);
 		--novablocks-block-content-subtitles-color: var(--novablocks-light-1);
+		--block-padding: var(--novablocks-block-padding);
 	}
 }
 
@@ -118,6 +125,7 @@
 
 	.block-is-moderate {
 		--novablocks-block-background-color: var(--novablocks-light-3);
+		--block-padding: var(--novablocks-block-padding);
 	}
 
 	.block-is-highlighted {
@@ -125,11 +133,12 @@
 		--novablocks-block-text-color: var(--novablocks-light-1);
 		--novablocks-block-titles-color: var(--novablocks-light-1);
 		--novablocks-block-subtitles-color: var(--novablocks-light-1);
+		--block-padding: var(--novablocks-block-padding);
 	}
 
 	.content-is-moderate,
 	.content-is-highlighted {
-		--novablocks-block-content-padding: var(--novablocks-spacing);
+		--block-content-padding: var(--novablocks-block-content-padding);
 	}
 
 	.content-is-moderate,

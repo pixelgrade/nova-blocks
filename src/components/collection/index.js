@@ -143,7 +143,6 @@ const Collection = ( props ) => {
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
-			'has-background': blockStyle !== 'basic',
 			'has-appender': hasAppender,
 		},
 		...cardsClassNames

@@ -28570,7 +28570,6 @@ var collection_Collection = function Collection(props) {
     return toggleClass;
   });
   var className = classnames_default.a.apply(void 0, [props.className, blockClassName, 'novablocks-block', "".concat(blockClassName, "--align-").concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
-    'has-background': blockStyle !== 'basic',
     'has-appender': hasAppender
   }].concat(toConsumableArray_default()(cardsClassNames)));
   return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(inspector_controls, props), Object(external_React_["createElement"])("div", {
