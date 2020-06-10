@@ -45,7 +45,9 @@ const Drawers = ( ownProps ) => {
 
 	const { height, transform } = useSpring({
 		transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
-		height: wrapperHeight
+		height: wrapperHeight,
+		// avoid height animation on first render
+		immediate: ! open && false === active
 	} );
 
 	useEffect( () => {

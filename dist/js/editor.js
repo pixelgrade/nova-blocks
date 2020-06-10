@@ -17755,7 +17755,9 @@ var drawer_Drawers = function Drawers(ownProps) {
 
   var _useSpring = useSpring({
     transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
-    height: wrapperHeight
+    height: wrapperHeight,
+    // avoid height animation on first render
+    immediate: !open && false === active
   }),
       height = _useSpring.height,
       transform = _useSpring.transform;
