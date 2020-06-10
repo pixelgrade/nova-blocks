@@ -28378,7 +28378,6 @@ EditableText.Content = function (_ref) {
 
 
 var inspector_controls_ = wp.i18n.__;
-var inspector_controls_Fragment = wp.element.Fragment;
 var inspector_controls_wp$components = wp.components,
     inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
     PanelRow = inspector_controls_wp$components.PanelRow,
@@ -28400,24 +28399,7 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
 
   var _onChange = typeof props.onChange !== 'function' ? setAttributes : props.onChange;
 
-  return Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(emphasis_level_controls_EmphasisBlockAreaControls, null, Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
-    minLevel: 2,
-    maxLevel: 4,
-    selectedLevel: level,
-    onChange: function onChange(level) {
-      _onChange({
-        level: level
-      });
-    }
-  }))), Object(external_React_["createElement"])(emphasis_level_controls_EmphasisContentAreaControls, null, Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
-    value: contentAlign,
-    isCollapsed: false,
-    onChange: function onChange(contentAlign) {
-      _onChange({
-        contentAlign: contentAlign
-      });
-    }
-  }))), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: inspector_controls_('Display')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: inspector_controls_('Settings')
@@ -28449,6 +28431,23 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
     min: 0,
     max: 100,
     step: 5
+  }), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 2,
+    maxLevel: 4,
+    selectedLevel: level,
+    onChange: function onChange(level) {
+      _onChange({
+        level: level
+      });
+    }
+  })), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
+    value: contentAlign,
+    isCollapsed: false,
+    onChange: function onChange(contentAlign) {
+      _onChange({
+        contentAlign: contentAlign
+      });
+    }
   }))));
 };
 
@@ -30169,7 +30168,7 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 var advanced_gallery_inspector_controls_ = wp.i18n.__;
-var advanced_gallery_inspector_controls_Fragment = wp.element.Fragment;
+var inspector_controls_Fragment = wp.element.Fragment;
 var advanced_gallery_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 var advanced_gallery_inspector_controls_wp$components = wp.components,
     inspector_controls_Button = advanced_gallery_inspector_controls_wp$components.Button,
@@ -30190,7 +30189,7 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
       containerHeight = _props$attributes.containerHeight,
       imageRotation = _props$attributes.imageRotation,
       advancedGalleryPresetOptions = props.settings.advancedGalleryPresetOptions;
-  return Object(external_React_["createElement"])(advanced_gallery_inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+  return Object(external_React_["createElement"])(inspector_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: advanced_gallery_inspector_controls_('Media Composition'),
     group: advanced_gallery_inspector_controls_('Modules')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
