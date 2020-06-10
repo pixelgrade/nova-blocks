@@ -1,12 +1,6 @@
 import EmphasisLevelControls from "../../components/emphasis-level-controls";
 
-import {
-	ControlsTab,
-	ControlsSection,
-} from "../../components/control-sections";
-
 const { __ } = wp.i18n;
-const { InspectorControls } = wp.blockEditor;
 const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;
 const { Fragment } = wp.element;

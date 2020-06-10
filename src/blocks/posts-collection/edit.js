@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { some, pickBy, isUndefined } from "lodash";
-import { CardsManagerPanel, Collection } from '../../components';
+import { Collection } from '../../components';
 import CardMedia from './media';
 import { ControlsSection, ControlsTab } from "../../components/control-sections";
 
@@ -102,11 +102,6 @@ const PostsEdit = ( props ) => {
 
 	return (
 		<Fragment>
-			<CardsManagerPanel
-				label={ __( 'Cards Manager', '__plugin_txtd' ) }
-				onChange={ ( attributes ) => { setAttributes( attributes ) } }
-				{ ...props }
-			/>
 			<ControlsSection label={ __( 'Display' ) } priority={ 10 }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<RangeControl

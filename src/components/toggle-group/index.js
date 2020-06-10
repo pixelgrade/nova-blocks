@@ -16,7 +16,7 @@ const {
 } = wp.components;
 
 const ToggleGroup = ( props ) => {
-	const { toggles, onChange, label } = props;
+	const { toggles, onChange } = props;
 	const [ refMap ] = useState( () => new WeakMap() );
 
 	const enabledToggles = toggles.filter( toggle => !! toggle.value );

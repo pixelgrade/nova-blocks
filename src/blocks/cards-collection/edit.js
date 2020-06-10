@@ -1,5 +1,4 @@
 import { Collection } from "../../components";
-import InspectorControls from "./inspector-controls";
 
 /**
  * WordPress dependencies
@@ -49,7 +48,6 @@ const CardsCollectionEdit = ( props ) => {
 					renderAppender={ hasAppender ? window.undefined : false }
 				/>
 			</Collection>
-			<InspectorControls { ...props } />
 		</Fragment>
 	);
 }

@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import { kebabCase } from 'lodash';
 import EditableText from "../editable-text";
 import InspectorControls from "./inspector-controls";
-import toggles from "../../components/cards-manager-panel/toggles";
 
 const { Fragment } = wp.element;
 
@@ -125,16 +124,6 @@ const Collection = ( props ) => {
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};
 
-	const cardsClassNames = toggles.map( toggle => {
-		let toggleClass = kebabCase( toggle.attribute );
-
-		if ( ! attributes[ toggle.attribute ] ) {
-			toggleClass = toggleClass.replace( 'show', 'hide' );
-		}
-
-		return toggleClass;
-	} );
-
 	const className = classnames(
 		props.className,
 		blockClassName,
@@ -145,7 +134,6 @@ const Collection = ( props ) => {
 		{
 			'has-appender': hasAppender,
 		},
-		...cardsClassNames
 	);
 
 	return (
