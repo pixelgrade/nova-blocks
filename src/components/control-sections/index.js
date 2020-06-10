@@ -2,7 +2,6 @@
 import { groupBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
-import { SectionsList, SectionsListItem } from './sections-list';
 
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";

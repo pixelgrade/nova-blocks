@@ -146,36 +146,4 @@ const CardEdit = ( props ) => {
 	);
 }
 
-const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
-	return ( props ) => {
-		if ( 'novablocks/card' === props.name ) {
-			const { clientId } = props;
-			const { getBlock, getBlockParentsByBlockName } = select( 'core/block-editor' );
-			const block = getBlock( clientId );
-			const { innerBlocks } = block;
-
-			const parents = getBlockParentsByBlockName( clientId, 'novablocks/cards-collection' );
-			const parentClientId = parents[0];
-			const parentBlock = getBlock( parentClientId );
-
-			const newAttributes = (
-				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => (
-					{ level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta }
-				)
-			)( parentBlock.attributes );
-
-			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
-
-			innerBlocks.forEach( innerBlock => {
-				dispatch( 'core/block-editor' ).updateBlockAttributes( innerBlock.clientId, {
-					align: newAttributes.contentAlign
-				} );
-			} )
-		}
-		return <BlockListBlock { ...props } />
-	};
-}, 'withCollectionVisibilityAttributes' );
-
-wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
-
 export default CardEdit;

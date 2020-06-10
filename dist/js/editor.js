@@ -450,18 +450,18 @@ function _extends() {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(247);
+module.exports = __webpack_require__(238);
 
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(214);
+var arrayWithHoles = __webpack_require__(205);
 
-var iterableToArrayLimit = __webpack_require__(215);
+var iterableToArrayLimit = __webpack_require__(206);
 
-var nonIterableRest = __webpack_require__(216);
+var nonIterableRest = __webpack_require__(207);
 
 function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
@@ -483,11 +483,11 @@ __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport 
 // UNUSED EXPORTS: createI18n, setLocaleData, _x, _nx, isRTL
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/memize/index.js
-var memize = __webpack_require__(118);
+var memize = __webpack_require__(117);
 var memize_default = /*#__PURE__*/__webpack_require__.n(memize);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/sprintf-js/src/sprintf.js
-var sprintf = __webpack_require__(81);
+var sprintf = __webpack_require__(80);
 var sprintf_default = /*#__PURE__*/__webpack_require__.n(sprintf);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/i18n/build-module/sprintf.js
@@ -1370,7 +1370,7 @@ function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(63);
+var unsupportedIterableToArray = __webpack_require__(62);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
 function _nonIterableSpread() {
@@ -1389,11 +1389,11 @@ function _toConsumableArray(arr) {
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(221);
+var arrayWithoutHoles = __webpack_require__(212);
 
-var iterableToArray = __webpack_require__(222);
+var iterableToArray = __webpack_require__(213);
 
-var nonIterableSpread = __webpack_require__(223);
+var nonIterableSpread = __webpack_require__(214);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
@@ -1844,7 +1844,7 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(63);
+var unsupportedIterableToArray = __webpack_require__(62);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
 function _nonIterableRest() {
@@ -1867,6 +1867,33 @@ module.exports = JSON.parse("{\"focalPoint\":{\"type\":\"object\",\"default\":{\
 
 /***/ }),
 /* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(266);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports) {
 
 /**
@@ -1898,10 +1925,10 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(87);
+var freeGlobal = __webpack_require__(86);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -1913,43 +1940,16 @@ module.exports = root;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":\"object\"},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"contentColor\":{\"type\":\"string\",\"default\":\"#FFF\"},\"overlayFilterStyle\":{\"type\":\"string\",\"default\":\"dark\"},\"overlayFilterStrength\":{\"type\":\"number\",\"default\":30}}");
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var objectWithoutPropertiesLoose = __webpack_require__(266);
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 34 */
@@ -2187,8 +2187,8 @@ module.exports = isObjectLike;
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(86),
-    isLength = __webpack_require__(73);
+var isFunction = __webpack_require__(85),
+    isLength = __webpack_require__(72);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -2304,7 +2304,7 @@ function _arrayLikeToArray(arr, len) {
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -2349,8 +2349,8 @@ module.exports = isIndex;
 
 var baseMatches = __webpack_require__(155),
     baseMatchesProperty = __webpack_require__(194),
-    identity = __webpack_require__(110),
-    isArray = __webpack_require__(29),
+    identity = __webpack_require__(109),
+    isArray = __webpack_require__(30),
     property = __webpack_require__(202);
 
 /**
@@ -2528,10 +2528,10 @@ module.exports = getMapData;
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(29),
-    isKey = __webpack_require__(78),
+var isArray = __webpack_require__(30),
+    isKey = __webpack_require__(77),
     stringToPath = __webpack_require__(195),
-    toString = __webpack_require__(79);
+    toString = __webpack_require__(78);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -2582,7 +2582,7 @@ module.exports = arrayMap;
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(77);
+var baseGet = __webpack_require__(76);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -2621,48 +2621,14 @@ module.exports = get;
 /* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createCompounder = __webpack_require__(205);
-
-/**
- * Converts `string` to
- * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category String
- * @param {string} [string=''] The string to convert.
- * @returns {string} Returns the kebab cased string.
- * @example
- *
- * _.kebabCase('Foo Bar');
- * // => 'foo-bar'
- *
- * _.kebabCase('fooBar');
- * // => 'foo-bar'
- *
- * _.kebabCase('__FOO_BAR__');
- * // => 'foo-bar'
- */
-var kebabCase = createCompounder(function(result, word, index) {
-  return result + (index ? '-' : '') + word.toLowerCase();
-});
-
-module.exports = kebabCase;
-
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
 /**
  * Internal dependencies;
  */
-var isShallowEqualObjects = __webpack_require__( 225 );
-var isShallowEqualArrays = __webpack_require__( 226 );
+var isShallowEqualObjects = __webpack_require__( 216 );
+var isShallowEqualArrays = __webpack_require__( 217 );
 
 var isArray = Array.isArray;
 
@@ -2697,7 +2663,7 @@ module.exports.isShallowEqualArrays = isShallowEqualArrays;
 
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2714,7 +2680,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2750,31 +2716,31 @@ function createHigherOrderComponent(mapComponentToEnhancedComponent, modifierNam
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"wide\"}}");
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"blockTopSpacing\":{\"type\":\"number\",\"default\":0},\"blockBottomSpacing\":{\"type\":\"number\",\"default\":0},\"emphasisTopSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisBottomSpacing\":{\"type\":\"number\",\"default\":1},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"layoutGutter\":{\"type\":\"number\",\"default\":10},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"emphasisBySpace\":{\"type\":\"number\",\"default\":1},\"enableOverlapping\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"galleryImages\":{\"type\":\"array\",\"items\":{\"type\":\"object\"},\"default\":[]},\"slideshowType\":{\"type\":\"string\",\"default\":\"gallery\"},\"minHeight\":{\"type\":\"number\",\"default\":75},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"level\":{\"type\":\"number\",\"default\":2},\"media\":{\"type\":\"object\",\"default\":{}},\"title\":{\"type\":\"string\",\"default\":\"Title\"},\"subtitle\":{\"type\":\"string\",\"default\":\"Subtitle\"},\"description\":{\"type\":\"string\",\"default\":\"This is just an example of what a description for this card could look like\"},\"meta\":{\"type\":\"string\",\"default\":\"Meta\"},\"showMedia\":{\"type\":\"boolean\",\"default\":true},\"showTitle\":{\"type\":\"boolean\",\"default\":true},\"showSubtitle\":{\"type\":\"boolean\",\"default\":false},\"showDescription\":{\"type\":\"boolean\",\"default\":true},\"showButtons\":{\"type\":\"boolean\",\"default\":true},\"showMeta\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3383,8 +3349,8 @@ function deprecated(feature) {
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 70 */,
-/* 71 */
+/* 69 */,
+/* 70 */
 /***/ (function(module, exports) {
 
 var g;
@@ -3410,10 +3376,10 @@ module.exports = g;
 
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeKeys = __webpack_require__(90),
+var arrayLikeKeys = __webpack_require__(89),
     baseKeys = __webpack_require__(152),
     isArrayLike = __webpack_require__(46);
 
@@ -3453,7 +3419,7 @@ module.exports = keys;
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -3494,11 +3460,11 @@ module.exports = isLength;
 
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -3507,7 +3473,7 @@ module.exports = Map;
 
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var mapCacheClear = __webpack_require__(167),
@@ -3545,7 +3511,7 @@ module.exports = MapCache;
 
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports) {
 
 /**
@@ -3569,7 +3535,7 @@ module.exports = setToArray;
 
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(58),
@@ -3599,10 +3565,10 @@ module.exports = baseGet;
 
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(29),
+var isArray = __webpack_require__(30),
     isSymbol = __webpack_require__(47);
 
 /** Used to match property names within property paths. */
@@ -3634,7 +3600,7 @@ module.exports = isKey;
 
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseToString = __webpack_require__(198);
@@ -3668,10 +3634,10 @@ module.exports = toString;
 
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseAssignValue = __webpack_require__(85),
+var baseAssignValue = __webpack_require__(84),
     createAggregator = __webpack_require__(141);
 
 /** Used for built-in method references. */
@@ -3715,7 +3681,7 @@ module.exports = groupBy;
 
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
@@ -3953,7 +3919,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
 
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3967,35 +3933,35 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.toJson = toJson;
 
-var _constants = __webpack_require__(113);
+var _constants = __webpack_require__(112);
 
-var _utils = __webpack_require__(114);
+var _utils = __webpack_require__(113);
 
-var _auth = __webpack_require__(254);
+var _auth = __webpack_require__(245);
 
 var _auth2 = _interopRequireDefault(_auth);
 
-var _currentUser = __webpack_require__(255);
+var _currentUser = __webpack_require__(246);
 
 var _currentUser2 = _interopRequireDefault(_currentUser);
 
-var _users = __webpack_require__(256);
+var _users = __webpack_require__(247);
 
 var _users2 = _interopRequireDefault(_users);
 
-var _photos = __webpack_require__(257);
+var _photos = __webpack_require__(248);
 
 var _photos2 = _interopRequireDefault(_photos);
 
-var _collections = __webpack_require__(259);
+var _collections = __webpack_require__(250);
 
 var _collections2 = _interopRequireDefault(_collections);
 
-var _search = __webpack_require__(260);
+var _search = __webpack_require__(251);
 
 var _search2 = _interopRequireDefault(_search);
 
-var _stats = __webpack_require__(261);
+var _stats = __webpack_require__(252);
 
 var _stats2 = _interopRequireDefault(_stats);
 
@@ -4045,7 +4011,7 @@ function toJson(res) {
 }
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports) {
 
 function _readOnlyError(name) {
@@ -4055,7 +4021,7 @@ function _readOnlyError(name) {
 module.exports = _readOnlyError;
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -4228,7 +4194,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineProperty = __webpack_require__(134);
@@ -4259,7 +4225,7 @@ module.exports = baseAssignValue;
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(44),
@@ -4302,7 +4268,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -4310,10 +4276,10 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 module.exports = freeGlobal;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(70)))
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -4345,7 +4311,7 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseForOwn = __webpack_require__(144),
@@ -4365,15 +4331,15 @@ module.exports = baseEach;
 
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseTimes = __webpack_require__(147),
-    isArguments = __webpack_require__(91),
-    isArray = __webpack_require__(29),
-    isBuffer = __webpack_require__(92),
+    isArguments = __webpack_require__(90),
+    isArray = __webpack_require__(30),
+    isBuffer = __webpack_require__(91),
     isIndex = __webpack_require__(51),
-    isTypedArray = __webpack_require__(94);
+    isTypedArray = __webpack_require__(93);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -4420,7 +4386,7 @@ module.exports = arrayLikeKeys;
 
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(148),
@@ -4462,10 +4428,10 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(30),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(31),
     stubFalse = __webpack_require__(149);
 
 /** Detect free variable `exports`. */
@@ -4504,10 +4470,10 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(93)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(92)(module)))
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -4535,11 +4501,11 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsTypedArray = __webpack_require__(150),
-    baseUnary = __webpack_require__(95),
+    baseUnary = __webpack_require__(94),
     nodeUtil = __webpack_require__(151);
 
 /* Node.js helper references. */
@@ -4568,7 +4534,7 @@ module.exports = isTypedArray;
 
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports) {
 
 /**
@@ -4588,7 +4554,7 @@ module.exports = baseUnary;
 
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -4612,7 +4578,7 @@ module.exports = isPrototype;
 
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports) {
 
 /**
@@ -4633,7 +4599,7 @@ module.exports = overArg;
 
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(53),
@@ -4666,7 +4632,7 @@ module.exports = Stack;
 
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqualDeep = __webpack_require__(179),
@@ -4700,12 +4666,12 @@ module.exports = baseIsEqual;
 
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(101),
+var SetCache = __webpack_require__(100),
     arraySome = __webpack_require__(182),
-    cacheHas = __webpack_require__(102);
+    cacheHas = __webpack_require__(101);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -4789,10 +4755,10 @@ module.exports = equalArrays;
 
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(75),
+var MapCache = __webpack_require__(74),
     setCacheAdd = __webpack_require__(180),
     setCacheHas = __webpack_require__(181);
 
@@ -4822,7 +4788,7 @@ module.exports = SetCache;
 
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, exports) {
 
 /**
@@ -4841,11 +4807,11 @@ module.exports = cacheHas;
 
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(104),
-    isArray = __webpack_require__(29);
+var arrayPush = __webpack_require__(103),
+    isArray = __webpack_require__(30);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -4867,7 +4833,7 @@ module.exports = baseGetAllKeys;
 
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports) {
 
 /**
@@ -4893,11 +4859,11 @@ module.exports = arrayPush;
 
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayFilter = __webpack_require__(188),
-    stubArray = __webpack_require__(106);
+    stubArray = __webpack_require__(105);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -4929,7 +4895,7 @@ module.exports = getSymbols;
 
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports) {
 
 /**
@@ -4958,11 +4924,11 @@ module.exports = stubArray;
 
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -4971,7 +4937,7 @@ module.exports = Set;
 
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(35);
@@ -4992,7 +4958,7 @@ module.exports = isStrictComparable;
 
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports) {
 
 /**
@@ -5018,7 +4984,7 @@ module.exports = matchesStrictComparable;
 
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports) {
 
 /**
@@ -5045,10 +5011,10 @@ module.exports = identity;
 
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseEach = __webpack_require__(89),
+var baseEach = __webpack_require__(88),
     isArrayLike = __webpack_require__(46);
 
 /**
@@ -5073,7 +5039,7 @@ module.exports = baseMap;
 
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(35),
@@ -5145,7 +5111,7 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5160,7 +5126,7 @@ var OAUTH_AUTHORIZE_URL = exports.OAUTH_AUTHORIZE_URL = "https://unsplash.com/oa
 var OAUTH_TOKEN_URL = exports.OAUTH_TOKEN_URL = "https://unsplash.com/oauth/token";
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5176,13 +5142,13 @@ exports.formUrlEncode = formUrlEncode;
 exports.getUrlComponents = getUrlComponents;
 exports.buildFetchOptions = buildFetchOptions;
 
-var _querystring = __webpack_require__(115);
+var _querystring = __webpack_require__(114);
 
-var _formUrlencoded = __webpack_require__(250);
+var _formUrlencoded = __webpack_require__(241);
 
 var _formUrlencoded2 = _interopRequireDefault(_formUrlencoded);
 
-var _urlParse = __webpack_require__(251);
+var _urlParse = __webpack_require__(242);
 
 var _urlParse2 = _interopRequireDefault(_urlParse);
 
@@ -5229,22 +5195,22 @@ function buildFetchOptions(options) {
 }
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(248);
-exports.encode = exports.stringify = __webpack_require__(249);
+exports.decode = exports.parse = __webpack_require__(239);
+exports.encode = exports.stringify = __webpack_require__(240);
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseOrderBy = __webpack_require__(217),
-    isArray = __webpack_require__(29);
+var baseOrderBy = __webpack_require__(208),
+    isArray = __webpack_require__(30);
 
 /**
  * This method is like `_.sortBy` except that it allows specifying the sort
@@ -5293,12 +5259,12 @@ module.exports = orderBy;
 
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(35),
-    now = __webpack_require__(224),
-    toNumber = __webpack_require__(112);
+    now = __webpack_require__(215),
+    toNumber = __webpack_require__(111);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -5490,7 +5456,7 @@ module.exports = debounce;
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -5657,22 +5623,22 @@ module.exports = memize;
 
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(227);
+module.exports = __webpack_require__(218);
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(59),
     baseIteratee = __webpack_require__(52),
-    basePickBy = __webpack_require__(229),
-    getAllKeysIn = __webpack_require__(232);
+    basePickBy = __webpack_require__(220),
+    getAllKeysIn = __webpack_require__(223);
 
 /**
  * Creates an object composed of the `object` properties `predicate` returns
@@ -5709,7 +5675,7 @@ module.exports = pickBy;
 
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports) {
 
 /**
@@ -5737,10 +5703,10 @@ module.exports = isUndefined;
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseUniq = __webpack_require__(238);
+var baseUniq = __webpack_require__(229);
 
 /**
  * Creates a duplicate-free version of an array, using
@@ -5768,10 +5734,10 @@ module.exports = uniq;
 
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createRange = __webpack_require__(262);
+var createRange = __webpack_require__(253);
 
 /**
  * Creates an array of numbers (positive and/or negative) progressing from
@@ -5820,6 +5786,40 @@ module.exports = range;
 
 
 /***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var createCompounder = __webpack_require__(257);
+
+/**
+ * Converts `string` to
+ * [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category String
+ * @param {string} [string=''] The string to convert.
+ * @returns {string} Returns the kebab cased string.
+ * @example
+ *
+ * _.kebabCase('Foo Bar');
+ * // => 'foo-bar'
+ *
+ * _.kebabCase('fooBar');
+ * // => 'foo-bar'
+ *
+ * _.kebabCase('__FOO_BAR__');
+ * // => 'foo-bar'
+ */
+var kebabCase = createCompounder(function(result, word, index) {
+  return result + (index ? '-' : '') + word.toLowerCase();
+});
+
+module.exports = kebabCase;
+
+
+/***/ }),
 /* 124 */
 /***/ (function(module) {
 
@@ -5831,8 +5831,8 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"cente
 
 var arrayMap = __webpack_require__(59),
     baseIteratee = __webpack_require__(52),
-    baseMap = __webpack_require__(111),
-    isArray = __webpack_require__(29);
+    baseMap = __webpack_require__(110),
+    isArray = __webpack_require__(30);
 
 /**
  * Creates an array of values by running each element in `collection` thru
@@ -6399,10 +6399,10 @@ module.exports = defineProperty;
 /* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(86),
+var isFunction = __webpack_require__(85),
     isMasked = __webpack_require__(138),
     isObject = __webpack_require__(35),
-    toSource = __webpack_require__(88);
+    toSource = __webpack_require__(87);
 
 /**
  * Used to match `RegExp`
@@ -6558,7 +6558,7 @@ module.exports = isMasked;
 /* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -6592,7 +6592,7 @@ module.exports = getValue;
 var arrayAggregator = __webpack_require__(142),
     baseAggregator = __webpack_require__(143),
     baseIteratee = __webpack_require__(52),
-    isArray = __webpack_require__(29);
+    isArray = __webpack_require__(30);
 
 /**
  * Creates a function like `_.groupBy`.
@@ -6646,7 +6646,7 @@ module.exports = arrayAggregator;
 /* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseEach = __webpack_require__(89);
+var baseEach = __webpack_require__(88);
 
 /**
  * Aggregates elements of `collection` on `accumulator` with keys transformed
@@ -6674,7 +6674,7 @@ module.exports = baseAggregator;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFor = __webpack_require__(145),
-    keys = __webpack_require__(72);
+    keys = __webpack_require__(71);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -6823,7 +6823,7 @@ module.exports = stubFalse;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(44),
-    isLength = __webpack_require__(73),
+    isLength = __webpack_require__(72),
     isObjectLike = __webpack_require__(45);
 
 /** `Object#toString` result references. */
@@ -6888,7 +6888,7 @@ module.exports = baseIsTypedArray;
 /* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(87);
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(86);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -6919,13 +6919,13 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(93)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(92)(module)))
 
 /***/ }),
 /* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isPrototype = __webpack_require__(96),
+var isPrototype = __webpack_require__(95),
     nativeKeys = __webpack_require__(153);
 
 /** Used for built-in method references. */
@@ -6961,7 +6961,7 @@ module.exports = baseKeys;
 /* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(97);
+var overArg = __webpack_require__(96);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -7013,7 +7013,7 @@ module.exports = createBaseEach;
 
 var baseIsMatch = __webpack_require__(156),
     getMatchData = __webpack_require__(193),
-    matchesStrictComparable = __webpack_require__(109);
+    matchesStrictComparable = __webpack_require__(108);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -7039,8 +7039,8 @@ module.exports = baseMatches;
 /* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(98),
-    baseIsEqual = __webpack_require__(99);
+var Stack = __webpack_require__(97),
+    baseIsEqual = __webpack_require__(98);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -7332,8 +7332,8 @@ module.exports = stackHas;
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(53),
-    Map = __webpack_require__(74),
-    MapCache = __webpack_require__(75);
+    Map = __webpack_require__(73),
+    MapCache = __webpack_require__(74);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -7373,7 +7373,7 @@ module.exports = stackSet;
 
 var Hash = __webpack_require__(168),
     ListCache = __webpack_require__(53),
-    Map = __webpack_require__(74);
+    Map = __webpack_require__(73);
 
 /**
  * Removes all key-value entries from the map.
@@ -7691,14 +7691,14 @@ module.exports = mapCacheSet;
 /* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(98),
-    equalArrays = __webpack_require__(100),
+var Stack = __webpack_require__(97),
+    equalArrays = __webpack_require__(99),
     equalByTag = __webpack_require__(183),
     equalObjects = __webpack_require__(186),
     getTag = __webpack_require__(189),
-    isArray = __webpack_require__(29),
-    isBuffer = __webpack_require__(92),
-    isTypedArray = __webpack_require__(94);
+    isArray = __webpack_require__(30),
+    isBuffer = __webpack_require__(91),
+    isTypedArray = __webpack_require__(93);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -7857,9 +7857,9 @@ module.exports = arraySome;
 var Symbol = __webpack_require__(50),
     Uint8Array = __webpack_require__(184),
     eq = __webpack_require__(55),
-    equalArrays = __webpack_require__(100),
+    equalArrays = __webpack_require__(99),
     mapToArray = __webpack_require__(185),
-    setToArray = __webpack_require__(76);
+    setToArray = __webpack_require__(75);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -7972,7 +7972,7 @@ module.exports = equalByTag;
 /* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -8103,9 +8103,9 @@ module.exports = equalObjects;
 /* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(103),
-    getSymbols = __webpack_require__(105),
-    keys = __webpack_require__(72);
+var baseGetAllKeys = __webpack_require__(102),
+    getSymbols = __webpack_require__(104),
+    keys = __webpack_require__(71);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -8157,12 +8157,12 @@ module.exports = arrayFilter;
 /***/ (function(module, exports, __webpack_require__) {
 
 var DataView = __webpack_require__(190),
-    Map = __webpack_require__(74),
+    Map = __webpack_require__(73),
     Promise = __webpack_require__(191),
-    Set = __webpack_require__(107),
+    Set = __webpack_require__(106),
     WeakMap = __webpack_require__(192),
     baseGetTag = __webpack_require__(44),
-    toSource = __webpack_require__(88);
+    toSource = __webpack_require__(87);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -8221,7 +8221,7 @@ module.exports = getTag;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -8234,7 +8234,7 @@ module.exports = DataView;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -8247,7 +8247,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -8259,8 +8259,8 @@ module.exports = WeakMap;
 /* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isStrictComparable = __webpack_require__(108),
-    keys = __webpack_require__(72);
+var isStrictComparable = __webpack_require__(107),
+    keys = __webpack_require__(71);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -8289,12 +8289,12 @@ module.exports = getMatchData;
 /* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqual = __webpack_require__(99),
+var baseIsEqual = __webpack_require__(98),
     get = __webpack_require__(60),
     hasIn = __webpack_require__(199),
-    isKey = __webpack_require__(78),
-    isStrictComparable = __webpack_require__(108),
-    matchesStrictComparable = __webpack_require__(109),
+    isKey = __webpack_require__(77),
+    isStrictComparable = __webpack_require__(107),
+    matchesStrictComparable = __webpack_require__(108),
     toKey = __webpack_require__(48);
 
 /** Used to compose bitmasks for value comparisons. */
@@ -8393,7 +8393,7 @@ module.exports = memoizeCapped;
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(75);
+var MapCache = __webpack_require__(74);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -8474,7 +8474,7 @@ module.exports = memoize;
 
 var Symbol = __webpack_require__(50),
     arrayMap = __webpack_require__(59),
-    isArray = __webpack_require__(29),
+    isArray = __webpack_require__(30),
     isSymbol = __webpack_require__(47);
 
 /** Used as references for various `Number` constants. */
@@ -8575,10 +8575,10 @@ module.exports = baseHasIn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(58),
-    isArguments = __webpack_require__(91),
-    isArray = __webpack_require__(29),
+    isArguments = __webpack_require__(90),
+    isArray = __webpack_require__(30),
     isIndex = __webpack_require__(51),
-    isLength = __webpack_require__(73),
+    isLength = __webpack_require__(72),
     toKey = __webpack_require__(48);
 
 /**
@@ -8621,7 +8621,7 @@ module.exports = hasPath;
 
 var baseProperty = __webpack_require__(203),
     basePropertyDeep = __webpack_require__(204),
-    isKey = __webpack_require__(78),
+    isKey = __webpack_require__(77),
     toKey = __webpack_require__(48);
 
 /**
@@ -8677,7 +8677,7 @@ module.exports = baseProperty;
 /* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(77);
+var baseGet = __webpack_require__(76);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -8697,374 +8697,6 @@ module.exports = basePropertyDeep;
 
 /***/ }),
 /* 205 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayReduce = __webpack_require__(206),
-    deburr = __webpack_require__(207),
-    words = __webpack_require__(210);
-
-/** Used to compose unicode capture groups. */
-var rsApos = "['\u2019]";
-
-/** Used to match apostrophes. */
-var reApos = RegExp(rsApos, 'g');
-
-/**
- * Creates a function like `_.camelCase`.
- *
- * @private
- * @param {Function} callback The function to combine each word.
- * @returns {Function} Returns the new compounder function.
- */
-function createCompounder(callback) {
-  return function(string) {
-    return arrayReduce(words(deburr(string).replace(reApos, '')), callback, '');
-  };
-}
-
-module.exports = createCompounder;
-
-
-/***/ }),
-/* 206 */
-/***/ (function(module, exports) {
-
-/**
- * A specialized version of `_.reduce` for arrays without support for
- * iteratee shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @param {*} [accumulator] The initial value.
- * @param {boolean} [initAccum] Specify using the first element of `array` as
- *  the initial value.
- * @returns {*} Returns the accumulated value.
- */
-function arrayReduce(array, iteratee, accumulator, initAccum) {
-  var index = -1,
-      length = array == null ? 0 : array.length;
-
-  if (initAccum && length) {
-    accumulator = array[++index];
-  }
-  while (++index < length) {
-    accumulator = iteratee(accumulator, array[index], index, array);
-  }
-  return accumulator;
-}
-
-module.exports = arrayReduce;
-
-
-/***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var deburrLetter = __webpack_require__(208),
-    toString = __webpack_require__(79);
-
-/** Used to match Latin Unicode letters (excluding mathematical operators). */
-var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
-
-/** Used to compose unicode character classes. */
-var rsComboMarksRange = '\\u0300-\\u036f',
-    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
-    rsComboSymbolsRange = '\\u20d0-\\u20ff',
-    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange;
-
-/** Used to compose unicode capture groups. */
-var rsCombo = '[' + rsComboRange + ']';
-
-/**
- * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
- * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
- */
-var reComboMark = RegExp(rsCombo, 'g');
-
-/**
- * Deburrs `string` by converting
- * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
- * and [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
- * letters to basic Latin letters and removing
- * [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category String
- * @param {string} [string=''] The string to deburr.
- * @returns {string} Returns the deburred string.
- * @example
- *
- * _.deburr('déjà vu');
- * // => 'deja vu'
- */
-function deburr(string) {
-  string = toString(string);
-  return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
-}
-
-module.exports = deburr;
-
-
-/***/ }),
-/* 208 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var basePropertyOf = __webpack_require__(209);
-
-/** Used to map Latin Unicode letters to basic Latin letters. */
-var deburredLetters = {
-  // Latin-1 Supplement block.
-  '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
-  '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
-  '\xc7': 'C',  '\xe7': 'c',
-  '\xd0': 'D',  '\xf0': 'd',
-  '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
-  '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
-  '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
-  '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
-  '\xd1': 'N',  '\xf1': 'n',
-  '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
-  '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
-  '\xd9': 'U',  '\xda': 'U', '\xdb': 'U', '\xdc': 'U',
-  '\xf9': 'u',  '\xfa': 'u', '\xfb': 'u', '\xfc': 'u',
-  '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
-  '\xc6': 'Ae', '\xe6': 'ae',
-  '\xde': 'Th', '\xfe': 'th',
-  '\xdf': 'ss',
-  // Latin Extended-A block.
-  '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
-  '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
-  '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
-  '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
-  '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
-  '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
-  '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
-  '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
-  '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
-  '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
-  '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
-  '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
-  '\u0134': 'J',  '\u0135': 'j',
-  '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
-  '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
-  '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
-  '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
-  '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
-  '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
-  '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
-  '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
-  '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
-  '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
-  '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
-  '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
-  '\u0163': 't',  '\u0165': 't', '\u0167': 't',
-  '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
-  '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
-  '\u0174': 'W',  '\u0175': 'w',
-  '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
-  '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
-  '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
-  '\u0132': 'IJ', '\u0133': 'ij',
-  '\u0152': 'Oe', '\u0153': 'oe',
-  '\u0149': "'n", '\u017f': 's'
-};
-
-/**
- * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
- * letters to basic Latin letters.
- *
- * @private
- * @param {string} letter The matched letter to deburr.
- * @returns {string} Returns the deburred letter.
- */
-var deburrLetter = basePropertyOf(deburredLetters);
-
-module.exports = deburrLetter;
-
-
-/***/ }),
-/* 209 */
-/***/ (function(module, exports) {
-
-/**
- * The base implementation of `_.propertyOf` without support for deep paths.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Function} Returns the new accessor function.
- */
-function basePropertyOf(object) {
-  return function(key) {
-    return object == null ? undefined : object[key];
-  };
-}
-
-module.exports = basePropertyOf;
-
-
-/***/ }),
-/* 210 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var asciiWords = __webpack_require__(211),
-    hasUnicodeWord = __webpack_require__(212),
-    toString = __webpack_require__(79),
-    unicodeWords = __webpack_require__(213);
-
-/**
- * Splits `string` into an array of its words.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category String
- * @param {string} [string=''] The string to inspect.
- * @param {RegExp|string} [pattern] The pattern to match words.
- * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
- * @returns {Array} Returns the words of `string`.
- * @example
- *
- * _.words('fred, barney, & pebbles');
- * // => ['fred', 'barney', 'pebbles']
- *
- * _.words('fred, barney, & pebbles', /[^, ]+/g);
- * // => ['fred', 'barney', '&', 'pebbles']
- */
-function words(string, pattern, guard) {
-  string = toString(string);
-  pattern = guard ? undefined : pattern;
-
-  if (pattern === undefined) {
-    return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
-  }
-  return string.match(pattern) || [];
-}
-
-module.exports = words;
-
-
-/***/ }),
-/* 211 */
-/***/ (function(module, exports) {
-
-/** Used to match words composed of alphanumeric characters. */
-var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
-
-/**
- * Splits an ASCII `string` into an array of its words.
- *
- * @private
- * @param {string} The string to inspect.
- * @returns {Array} Returns the words of `string`.
- */
-function asciiWords(string) {
-  return string.match(reAsciiWord) || [];
-}
-
-module.exports = asciiWords;
-
-
-/***/ }),
-/* 212 */
-/***/ (function(module, exports) {
-
-/** Used to detect strings that need a more robust regexp to match words. */
-var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
-
-/**
- * Checks if `string` contains a word composed of Unicode symbols.
- *
- * @private
- * @param {string} string The string to inspect.
- * @returns {boolean} Returns `true` if a word is found, else `false`.
- */
-function hasUnicodeWord(string) {
-  return reHasUnicodeWord.test(string);
-}
-
-module.exports = hasUnicodeWord;
-
-
-/***/ }),
-/* 213 */
-/***/ (function(module, exports) {
-
-/** Used to compose unicode character classes. */
-var rsAstralRange = '\\ud800-\\udfff',
-    rsComboMarksRange = '\\u0300-\\u036f',
-    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
-    rsComboSymbolsRange = '\\u20d0-\\u20ff',
-    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
-    rsDingbatRange = '\\u2700-\\u27bf',
-    rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
-    rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
-    rsNonCharRange = '\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf',
-    rsPunctuationRange = '\\u2000-\\u206f',
-    rsSpaceRange = ' \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000',
-    rsUpperRange = 'A-Z\\xc0-\\xd6\\xd8-\\xde',
-    rsVarRange = '\\ufe0e\\ufe0f',
-    rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
-
-/** Used to compose unicode capture groups. */
-var rsApos = "['\u2019]",
-    rsBreak = '[' + rsBreakRange + ']',
-    rsCombo = '[' + rsComboRange + ']',
-    rsDigits = '\\d+',
-    rsDingbat = '[' + rsDingbatRange + ']',
-    rsLower = '[' + rsLowerRange + ']',
-    rsMisc = '[^' + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + ']',
-    rsFitz = '\\ud83c[\\udffb-\\udfff]',
-    rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
-    rsNonAstral = '[^' + rsAstralRange + ']',
-    rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-    rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-    rsUpper = '[' + rsUpperRange + ']',
-    rsZWJ = '\\u200d';
-
-/** Used to compose unicode regexes. */
-var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
-    rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
-    rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
-    rsOptContrUpper = '(?:' + rsApos + '(?:D|LL|M|RE|S|T|VE))?',
-    reOptMod = rsModifier + '?',
-    rsOptVar = '[' + rsVarRange + ']?',
-    rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-    rsOrdLower = '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
-    rsOrdUpper = '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
-    rsSeq = rsOptVar + reOptMod + rsOptJoin,
-    rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq;
-
-/** Used to match complex or compound words. */
-var reUnicodeWord = RegExp([
-  rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
-  rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
-  rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
-  rsUpper + '+' + rsOptContrUpper,
-  rsOrdUpper,
-  rsOrdLower,
-  rsDigits,
-  rsEmoji
-].join('|'), 'g');
-
-/**
- * Splits a Unicode `string` into an array of its words.
- *
- * @private
- * @param {string} The string to inspect.
- * @returns {Array} Returns the words of `string`.
- */
-function unicodeWords(string) {
-  return string.match(reUnicodeWord) || [];
-}
-
-module.exports = unicodeWords;
-
-
-/***/ }),
-/* 214 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -9074,7 +8706,7 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 215 */
+/* 206 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -9110,7 +8742,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 216 */
+/* 207 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -9120,16 +8752,16 @@ function _nonIterableRest() {
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 217 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(59),
     baseIteratee = __webpack_require__(52),
-    baseMap = __webpack_require__(111),
-    baseSortBy = __webpack_require__(218),
-    baseUnary = __webpack_require__(95),
-    compareMultiple = __webpack_require__(219),
-    identity = __webpack_require__(110);
+    baseMap = __webpack_require__(110),
+    baseSortBy = __webpack_require__(209),
+    baseUnary = __webpack_require__(94),
+    compareMultiple = __webpack_require__(210),
+    identity = __webpack_require__(109);
 
 /**
  * The base implementation of `_.orderBy` without param guards.
@@ -9160,7 +8792,7 @@ module.exports = baseOrderBy;
 
 
 /***/ }),
-/* 218 */
+/* 209 */
 /***/ (function(module, exports) {
 
 /**
@@ -9187,10 +8819,10 @@ module.exports = baseSortBy;
 
 
 /***/ }),
-/* 219 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var compareAscending = __webpack_require__(220);
+var compareAscending = __webpack_require__(211);
 
 /**
  * Used by `_.orderBy` to compare multiple properties of a value to another
@@ -9237,7 +8869,7 @@ module.exports = compareMultiple;
 
 
 /***/ }),
-/* 220 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isSymbol = __webpack_require__(47);
@@ -9284,7 +8916,7 @@ module.exports = compareAscending;
 
 
 /***/ }),
-/* 221 */
+/* 212 */
 /***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
@@ -9300,7 +8932,7 @@ function _arrayWithoutHoles(arr) {
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 222 */
+/* 213 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
@@ -9310,7 +8942,7 @@ function _iterableToArray(iter) {
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 223 */
+/* 214 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -9320,10 +8952,10 @@ function _nonIterableSpread() {
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 224 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -9349,7 +8981,7 @@ module.exports = now;
 
 
 /***/ }),
-/* 225 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9407,7 +9039,7 @@ module.exports = isShallowEqualObjects;
 
 
 /***/ }),
-/* 226 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9445,13 +9077,13 @@ module.exports = isShallowEqualArrays;
 
 
 /***/ }),
-/* 227 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var util = __webpack_require__(228);
+var util = __webpack_require__(219);
 
 function scrollIntoView(elem, container, config) {
   config = config || {};
@@ -9580,7 +9212,7 @@ function scrollIntoView(elem, container, config) {
 module.exports = scrollIntoView;
 
 /***/ }),
-/* 228 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10025,11 +9657,11 @@ module.exports = _extends({
 }, domUtils);
 
 /***/ }),
-/* 229 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(77),
-    baseSet = __webpack_require__(230),
+var baseGet = __webpack_require__(76),
+    baseSet = __webpack_require__(221),
     castPath = __webpack_require__(58);
 
 /**
@@ -10061,10 +9693,10 @@ module.exports = basePickBy;
 
 
 /***/ }),
-/* 230 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assignValue = __webpack_require__(231),
+var assignValue = __webpack_require__(222),
     castPath = __webpack_require__(58),
     isIndex = __webpack_require__(51),
     isObject = __webpack_require__(35),
@@ -10114,10 +9746,10 @@ module.exports = baseSet;
 
 
 /***/ }),
-/* 231 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseAssignValue = __webpack_require__(85),
+var baseAssignValue = __webpack_require__(84),
     eq = __webpack_require__(55);
 
 /** Used for built-in method references. */
@@ -10148,12 +9780,12 @@ module.exports = assignValue;
 
 
 /***/ }),
-/* 232 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(103),
-    getSymbolsIn = __webpack_require__(233),
-    keysIn = __webpack_require__(235);
+var baseGetAllKeys = __webpack_require__(102),
+    getSymbolsIn = __webpack_require__(224),
+    keysIn = __webpack_require__(226);
 
 /**
  * Creates an array of own and inherited enumerable property names and
@@ -10171,13 +9803,13 @@ module.exports = getAllKeysIn;
 
 
 /***/ }),
-/* 233 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(104),
-    getPrototype = __webpack_require__(234),
-    getSymbols = __webpack_require__(105),
-    stubArray = __webpack_require__(106);
+var arrayPush = __webpack_require__(103),
+    getPrototype = __webpack_require__(225),
+    getSymbols = __webpack_require__(104),
+    stubArray = __webpack_require__(105);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeGetSymbols = Object.getOwnPropertySymbols;
@@ -10202,10 +9834,10 @@ module.exports = getSymbolsIn;
 
 
 /***/ }),
-/* 234 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(97);
+var overArg = __webpack_require__(96);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -10214,11 +9846,11 @@ module.exports = getPrototype;
 
 
 /***/ }),
-/* 235 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeKeys = __webpack_require__(90),
-    baseKeysIn = __webpack_require__(236),
+var arrayLikeKeys = __webpack_require__(89),
+    baseKeysIn = __webpack_require__(227),
     isArrayLike = __webpack_require__(46);
 
 /**
@@ -10252,12 +9884,12 @@ module.exports = keysIn;
 
 
 /***/ }),
-/* 236 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(35),
-    isPrototype = __webpack_require__(96),
-    nativeKeysIn = __webpack_require__(237);
+    isPrototype = __webpack_require__(95),
+    nativeKeysIn = __webpack_require__(228);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -10291,7 +9923,7 @@ module.exports = baseKeysIn;
 
 
 /***/ }),
-/* 237 */
+/* 228 */
 /***/ (function(module, exports) {
 
 /**
@@ -10317,15 +9949,15 @@ module.exports = nativeKeysIn;
 
 
 /***/ }),
-/* 238 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(101),
-    arrayIncludes = __webpack_require__(239),
-    arrayIncludesWith = __webpack_require__(244),
-    cacheHas = __webpack_require__(102),
-    createSet = __webpack_require__(245),
-    setToArray = __webpack_require__(76);
+var SetCache = __webpack_require__(100),
+    arrayIncludes = __webpack_require__(230),
+    arrayIncludesWith = __webpack_require__(235),
+    cacheHas = __webpack_require__(101),
+    createSet = __webpack_require__(236),
+    setToArray = __webpack_require__(75);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -10395,10 +10027,10 @@ module.exports = baseUniq;
 
 
 /***/ }),
-/* 239 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(240);
+var baseIndexOf = __webpack_require__(231);
 
 /**
  * A specialized version of `_.includes` for arrays without support for
@@ -10418,12 +10050,12 @@ module.exports = arrayIncludes;
 
 
 /***/ }),
-/* 240 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFindIndex = __webpack_require__(241),
-    baseIsNaN = __webpack_require__(242),
-    strictIndexOf = __webpack_require__(243);
+var baseFindIndex = __webpack_require__(232),
+    baseIsNaN = __webpack_require__(233),
+    strictIndexOf = __webpack_require__(234);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -10444,7 +10076,7 @@ module.exports = baseIndexOf;
 
 
 /***/ }),
-/* 241 */
+/* 232 */
 /***/ (function(module, exports) {
 
 /**
@@ -10474,7 +10106,7 @@ module.exports = baseFindIndex;
 
 
 /***/ }),
-/* 242 */
+/* 233 */
 /***/ (function(module, exports) {
 
 /**
@@ -10492,7 +10124,7 @@ module.exports = baseIsNaN;
 
 
 /***/ }),
-/* 243 */
+/* 234 */
 /***/ (function(module, exports) {
 
 /**
@@ -10521,7 +10153,7 @@ module.exports = strictIndexOf;
 
 
 /***/ }),
-/* 244 */
+/* 235 */
 /***/ (function(module, exports) {
 
 /**
@@ -10549,12 +10181,12 @@ module.exports = arrayIncludesWith;
 
 
 /***/ }),
-/* 245 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Set = __webpack_require__(107),
-    noop = __webpack_require__(246),
-    setToArray = __webpack_require__(76);
+var Set = __webpack_require__(106),
+    noop = __webpack_require__(237),
+    setToArray = __webpack_require__(75);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -10574,7 +10206,7 @@ module.exports = createSet;
 
 
 /***/ }),
-/* 246 */
+/* 237 */
 /***/ (function(module, exports) {
 
 /**
@@ -10597,7 +10229,7 @@ module.exports = noop;
 
 
 /***/ }),
-/* 247 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11329,7 +10961,7 @@ try {
 
 
 /***/ }),
-/* 248 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11420,7 +11052,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 249 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11512,7 +11144,7 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 250 */
+/* 241 */
 /***/ (function(module, exports) {
 
 // Filename: formurlencoded.js
@@ -11580,14 +11212,14 @@ var formurlencoded = module.exports = function (data, opts) {
 
 
 /***/ }),
-/* 251 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var required = __webpack_require__(252)
-  , qs = __webpack_require__(253)
+var required = __webpack_require__(243)
+  , qs = __webpack_require__(244)
   , protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i
   , slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
 
@@ -12017,10 +11649,10 @@ Url.qs = qs;
 
 module.exports = Url;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(70)))
 
 /***/ }),
-/* 252 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12065,7 +11697,7 @@ module.exports = function required(port, protocol) {
 
 
 /***/ }),
-/* 253 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12190,7 +11822,7 @@ exports.parse = querystring;
 
 
 /***/ }),
-/* 254 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12201,11 +11833,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = auth;
 
-var _querystring = __webpack_require__(115);
+var _querystring = __webpack_require__(114);
 
 var _querystring2 = _interopRequireDefault(_querystring);
 
-var _constants = __webpack_require__(113);
+var _constants = __webpack_require__(112);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12252,7 +11884,7 @@ function auth() {
 }
 
 /***/ }),
-/* 255 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12313,7 +11945,7 @@ function currentUser() {
 }
 
 /***/ }),
-/* 256 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12415,7 +12047,7 @@ function users() {
 }
 
 /***/ }),
-/* 257 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12426,9 +12058,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = photos;
 
-var _utils = __webpack_require__(114);
+var _utils = __webpack_require__(113);
 
-var _lodash = __webpack_require__(258);
+var _lodash = __webpack_require__(249);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -12549,7 +12181,7 @@ function photos() {
 }
 
 /***/ }),
-/* 258 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -13484,10 +13116,10 @@ function get(object, path, defaultValue) {
 
 module.exports = get;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(70)))
 
 /***/ }),
-/* 259 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13609,7 +13241,7 @@ function createUpdateCollection(id, title, description, isPrivate) {
 }
 
 /***/ }),
-/* 260 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13690,7 +13322,7 @@ function search() {
 }
 
 /***/ }),
-/* 261 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13716,12 +13348,12 @@ function stats() {
 }
 
 /***/ }),
-/* 262 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseRange = __webpack_require__(263),
-    isIterateeCall = __webpack_require__(264),
-    toFinite = __webpack_require__(265);
+var baseRange = __webpack_require__(254),
+    isIterateeCall = __webpack_require__(255),
+    toFinite = __webpack_require__(256);
 
 /**
  * Creates a `_.range` or `_.rangeRight` function.
@@ -13752,7 +13384,7 @@ module.exports = createRange;
 
 
 /***/ }),
-/* 263 */
+/* 254 */
 /***/ (function(module, exports) {
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -13786,7 +13418,7 @@ module.exports = baseRange;
 
 
 /***/ }),
-/* 264 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(55),
@@ -13822,10 +13454,10 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 265 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toNumber = __webpack_require__(112);
+var toNumber = __webpack_require__(111);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -13867,6 +13499,374 @@ function toFinite(value) {
 }
 
 module.exports = toFinite;
+
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayReduce = __webpack_require__(258),
+    deburr = __webpack_require__(259),
+    words = __webpack_require__(262);
+
+/** Used to compose unicode capture groups. */
+var rsApos = "['\u2019]";
+
+/** Used to match apostrophes. */
+var reApos = RegExp(rsApos, 'g');
+
+/**
+ * Creates a function like `_.camelCase`.
+ *
+ * @private
+ * @param {Function} callback The function to combine each word.
+ * @returns {Function} Returns the new compounder function.
+ */
+function createCompounder(callback) {
+  return function(string) {
+    return arrayReduce(words(deburr(string).replace(reApos, '')), callback, '');
+  };
+}
+
+module.exports = createCompounder;
+
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+module.exports = arrayReduce;
+
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var deburrLetter = __webpack_require__(260),
+    toString = __webpack_require__(78);
+
+/** Used to match Latin Unicode letters (excluding mathematical operators). */
+var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
+
+/** Used to compose unicode character classes. */
+var rsComboMarksRange = '\\u0300-\\u036f',
+    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+    rsComboSymbolsRange = '\\u20d0-\\u20ff',
+    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange;
+
+/** Used to compose unicode capture groups. */
+var rsCombo = '[' + rsComboRange + ']';
+
+/**
+ * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
+ * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
+ */
+var reComboMark = RegExp(rsCombo, 'g');
+
+/**
+ * Deburrs `string` by converting
+ * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
+ * and [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
+ * letters to basic Latin letters and removing
+ * [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category String
+ * @param {string} [string=''] The string to deburr.
+ * @returns {string} Returns the deburred string.
+ * @example
+ *
+ * _.deburr('déjà vu');
+ * // => 'deja vu'
+ */
+function deburr(string) {
+  string = toString(string);
+  return string && string.replace(reLatin, deburrLetter).replace(reComboMark, '');
+}
+
+module.exports = deburr;
+
+
+/***/ }),
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var basePropertyOf = __webpack_require__(261);
+
+/** Used to map Latin Unicode letters to basic Latin letters. */
+var deburredLetters = {
+  // Latin-1 Supplement block.
+  '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
+  '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
+  '\xc7': 'C',  '\xe7': 'c',
+  '\xd0': 'D',  '\xf0': 'd',
+  '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
+  '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
+  '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
+  '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
+  '\xd1': 'N',  '\xf1': 'n',
+  '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
+  '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
+  '\xd9': 'U',  '\xda': 'U', '\xdb': 'U', '\xdc': 'U',
+  '\xf9': 'u',  '\xfa': 'u', '\xfb': 'u', '\xfc': 'u',
+  '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
+  '\xc6': 'Ae', '\xe6': 'ae',
+  '\xde': 'Th', '\xfe': 'th',
+  '\xdf': 'ss',
+  // Latin Extended-A block.
+  '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
+  '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
+  '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
+  '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
+  '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
+  '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
+  '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
+  '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
+  '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
+  '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
+  '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
+  '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
+  '\u0134': 'J',  '\u0135': 'j',
+  '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
+  '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
+  '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
+  '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
+  '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
+  '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
+  '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
+  '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
+  '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
+  '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
+  '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
+  '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
+  '\u0163': 't',  '\u0165': 't', '\u0167': 't',
+  '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
+  '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
+  '\u0174': 'W',  '\u0175': 'w',
+  '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
+  '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
+  '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
+  '\u0132': 'IJ', '\u0133': 'ij',
+  '\u0152': 'Oe', '\u0153': 'oe',
+  '\u0149': "'n", '\u017f': 's'
+};
+
+/**
+ * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
+ * letters to basic Latin letters.
+ *
+ * @private
+ * @param {string} letter The matched letter to deburr.
+ * @returns {string} Returns the deburred letter.
+ */
+var deburrLetter = basePropertyOf(deburredLetters);
+
+module.exports = deburrLetter;
+
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports) {
+
+/**
+ * The base implementation of `_.propertyOf` without support for deep paths.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Function} Returns the new accessor function.
+ */
+function basePropertyOf(object) {
+  return function(key) {
+    return object == null ? undefined : object[key];
+  };
+}
+
+module.exports = basePropertyOf;
+
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var asciiWords = __webpack_require__(263),
+    hasUnicodeWord = __webpack_require__(264),
+    toString = __webpack_require__(78),
+    unicodeWords = __webpack_require__(265);
+
+/**
+ * Splits `string` into an array of its words.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category String
+ * @param {string} [string=''] The string to inspect.
+ * @param {RegExp|string} [pattern] The pattern to match words.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+ * @returns {Array} Returns the words of `string`.
+ * @example
+ *
+ * _.words('fred, barney, & pebbles');
+ * // => ['fred', 'barney', 'pebbles']
+ *
+ * _.words('fred, barney, & pebbles', /[^, ]+/g);
+ * // => ['fred', 'barney', '&', 'pebbles']
+ */
+function words(string, pattern, guard) {
+  string = toString(string);
+  pattern = guard ? undefined : pattern;
+
+  if (pattern === undefined) {
+    return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
+  }
+  return string.match(pattern) || [];
+}
+
+module.exports = words;
+
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports) {
+
+/** Used to match words composed of alphanumeric characters. */
+var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
+
+/**
+ * Splits an ASCII `string` into an array of its words.
+ *
+ * @private
+ * @param {string} The string to inspect.
+ * @returns {Array} Returns the words of `string`.
+ */
+function asciiWords(string) {
+  return string.match(reAsciiWord) || [];
+}
+
+module.exports = asciiWords;
+
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports) {
+
+/** Used to detect strings that need a more robust regexp to match words. */
+var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
+
+/**
+ * Checks if `string` contains a word composed of Unicode symbols.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {boolean} Returns `true` if a word is found, else `false`.
+ */
+function hasUnicodeWord(string) {
+  return reHasUnicodeWord.test(string);
+}
+
+module.exports = hasUnicodeWord;
+
+
+/***/ }),
+/* 265 */
+/***/ (function(module, exports) {
+
+/** Used to compose unicode character classes. */
+var rsAstralRange = '\\ud800-\\udfff',
+    rsComboMarksRange = '\\u0300-\\u036f',
+    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+    rsComboSymbolsRange = '\\u20d0-\\u20ff',
+    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
+    rsDingbatRange = '\\u2700-\\u27bf',
+    rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
+    rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
+    rsNonCharRange = '\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf',
+    rsPunctuationRange = '\\u2000-\\u206f',
+    rsSpaceRange = ' \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000',
+    rsUpperRange = 'A-Z\\xc0-\\xd6\\xd8-\\xde',
+    rsVarRange = '\\ufe0e\\ufe0f',
+    rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
+
+/** Used to compose unicode capture groups. */
+var rsApos = "['\u2019]",
+    rsBreak = '[' + rsBreakRange + ']',
+    rsCombo = '[' + rsComboRange + ']',
+    rsDigits = '\\d+',
+    rsDingbat = '[' + rsDingbatRange + ']',
+    rsLower = '[' + rsLowerRange + ']',
+    rsMisc = '[^' + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + ']',
+    rsFitz = '\\ud83c[\\udffb-\\udfff]',
+    rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
+    rsNonAstral = '[^' + rsAstralRange + ']',
+    rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+    rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+    rsUpper = '[' + rsUpperRange + ']',
+    rsZWJ = '\\u200d';
+
+/** Used to compose unicode regexes. */
+var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
+    rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
+    rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
+    rsOptContrUpper = '(?:' + rsApos + '(?:D|LL|M|RE|S|T|VE))?',
+    reOptMod = rsModifier + '?',
+    rsOptVar = '[' + rsVarRange + ']?',
+    rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+    rsOrdLower = '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
+    rsOrdUpper = '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
+    rsSeq = rsOptVar + reOptMod + rsOptJoin,
+    rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq;
+
+/** Used to match complex or compound words. */
+var reUnicodeWord = RegExp([
+  rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
+  rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
+  rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
+  rsUpper + '+' + rsOptContrUpper,
+  rsOrdUpper,
+  rsOrdLower,
+  rsDigits,
+  rsEmoji
+].join('|'), 'g');
+
+/**
+ * Splits a Unicode `string` into an array of its words.
+ *
+ * @private
+ * @param {string} The string to inspect.
+ * @returns {Array} Returns the words of `string`.
+ */
+function unicodeWords(string) {
+  return string.match(reUnicodeWord) || [];
+}
+
+module.exports = unicodeWords;
 
 
 /***/ }),
@@ -15395,7 +15395,7 @@ var with_settings_withSelect = wp.data.withSelect;
   })(Component);
 }));
 // EXTERNAL MODULE: ./node_modules/lodash/groupBy.js
-var groupBy = __webpack_require__(80);
+var groupBy = __webpack_require__(79);
 var groupBy_default = /*#__PURE__*/__webpack_require__.n(groupBy);
 
 // CONCATENATED MODULE: ./src/components/control-sections/utils.js
@@ -15446,10 +15446,6 @@ var ControlsSectionsSlotFill = createSlotFill('ControlsSections');
 var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
 var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
 
-// EXTERNAL MODULE: ./node_modules/lodash/kebabCase.js
-var kebabCase = __webpack_require__(61);
-var kebabCase_default = /*#__PURE__*/__webpack_require__.n(kebabCase);
-
 // CONCATENATED MODULE: ./src/components/control-sections/cube.js
 
 
@@ -15466,63 +15462,6 @@ var cube_Cube = function Cube(props) {
 };
 
 /* harmony default export */ var cube = (cube_Cube);
-// CONCATENATED MODULE: ./src/components/control-sections/sections-list.js
-
-
-
-var sections_list_Fragment = wp.element.Fragment;
-var sections_list_ = wp.i18n.__;
-
-var sections_list_SectionsListItem = function SectionsListItem(props) {
-  var label = props.label,
-      _onClick = props.onClick;
-  return Object(external_React_["createElement"])("div", {
-    key: kebabCase_default()(label),
-    className: 'novablocks-sections__button',
-    onClick: function onClick() {
-      _onClick(label);
-    }
-  }, label);
-};
-
-var sections_list_SectionsList = function SectionsList(props) {
-  var activeSectionLabel = props.activeSectionLabel,
-      sections = props.sections,
-      onSectionClick = props.onSectionClick;
-  var blockSections = sections.filter(function (section) {
-    return !section.props.module;
-  });
-  var modules = sections.filter(function (section) {
-    return !!section.props.module;
-  });
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__header"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__title"
-  }, sections_list_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__buttons'
-  }, blockSections.map(function (section, index) {
-    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
-      key: index,
-      label: section.props.label,
-      onClick: onSectionClick
-    });
-  })), !!modules.length && Object(external_React_["createElement"])(sections_list_Fragment, null, Object(external_React_["createElement"])("div", {
-    className: "novablocks-sections__title"
-  }, sections_list_('Modules')), Object(external_React_["createElement"])("div", {
-    className: 'novablocks-sections__buttons'
-  }, modules.map(function (section, index) {
-    return Object(external_React_["createElement"])(sections_list_SectionsListItem, {
-      key: index,
-      label: section.props.label,
-      onClick: onSectionClick
-    });
-  }))));
-};
-
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
 var helpers_extends = __webpack_require__(12);
 var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
@@ -17679,7 +17618,7 @@ var tabs_TabContent = /*#__PURE__*/function (_Component) {
 
 
 // EXTERNAL MODULE: ./node_modules/lodash/orderBy.js
-var orderBy = __webpack_require__(116);
+var orderBy = __webpack_require__(115);
 var orderBy_default = /*#__PURE__*/__webpack_require__.n(orderBy);
 
 // CONCATENATED MODULE: ./src/components/drawer/index.js
@@ -17900,7 +17839,6 @@ var drawer_Drawer = function Drawer(props) {
 
 
 // CONCATENATED MODULE: ./src/components/control-sections/index.js
-
 
 
 
@@ -18217,7 +18155,7 @@ var toConsumableArray = __webpack_require__(23);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/lodash/debounce.js
-var debounce = __webpack_require__(117);
+var debounce = __webpack_require__(116);
 var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/defineProperty.js
@@ -18251,7 +18189,7 @@ var build_module = __webpack_require__(21);
 var esm_extends = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/compose/build-module/utils/create-higher-order-component/index.js
-var create_higher_order_component = __webpack_require__(64);
+var create_higher_order_component = __webpack_require__(63);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/compose/build-module/hooks/use-instance-id/index.js
 /**
@@ -18314,7 +18252,7 @@ function useInstanceId(object) {
 var keycodes_build_module = __webpack_require__(24);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/is-shallow-equal/lib/index.js
-var lib = __webpack_require__(62);
+var lib = __webpack_require__(61);
 var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/primitives/node_modules/@babel/runtime/helpers/esm/defineProperty.js
@@ -18550,7 +18488,7 @@ function esm_objectWithoutProperties_objectWithoutProperties(source, excluded) {
   return target;
 }
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/deprecated/build-module/index.js + 11 modules
-var deprecated_build_module = __webpack_require__(69);
+var deprecated_build_module = __webpack_require__(68);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/element/build-module/react.js
 
@@ -24131,7 +24069,7 @@ var token_input_TokenInput = /*#__PURE__*/function (_Component) {
 /* harmony default export */ var token_input = (token_input_TokenInput);
 //# sourceMappingURL=token-input.js.map
 // EXTERNAL MODULE: ./node_modules/dom-scroll-into-view/lib/index.js
-var dom_scroll_into_view_lib = __webpack_require__(119);
+var dom_scroll_into_view_lib = __webpack_require__(118);
 var dom_scroll_into_view_lib_default = /*#__PURE__*/__webpack_require__.n(dom_scroll_into_view_lib);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@wordpress/compose/build-module/higher-order/with-safe-timeout/index.js
@@ -25751,11 +25689,11 @@ var query_controls_QueryControls = function QueryControls(props) {
 
 /* harmony default export */ var query_controls = (query_controls_QueryControls);
 // EXTERNAL MODULE: ./node_modules/lodash/pickBy.js
-var pickBy = __webpack_require__(120);
+var pickBy = __webpack_require__(119);
 var pickBy_default = /*#__PURE__*/__webpack_require__.n(pickBy);
 
 // EXTERNAL MODULE: ./node_modules/lodash/isUndefined.js
-var isUndefined = __webpack_require__(121);
+var isUndefined = __webpack_require__(120);
 var isUndefined_default = /*#__PURE__*/__webpack_require__.n(isUndefined);
 
 // CONCATENATED MODULE: ./src/filters/with-latest-posts/utils.js
@@ -25805,7 +25743,7 @@ var utils_queryCriteriaFromAttributes = function queryCriteriaFromAttributes(att
   return criteria;
 };
 // EXTERNAL MODULE: ./node_modules/lodash/uniq.js
-var uniq = __webpack_require__(122);
+var uniq = __webpack_require__(121);
 var uniq_default = /*#__PURE__*/__webpack_require__.n(uniq);
 
 // CONCATENATED MODULE: ./src/filters/with-latest-posts/store.js
@@ -26135,7 +26073,7 @@ var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(fu
 }), withPostsQueryControls]);
 with_latest_posts_addFilter('editor.BlockEdit', 'novablocks/with-latest-posts', withLatestPosts);
 // EXTERNAL MODULE: ./src/components/advanced-gallery/attributes.json
-var advanced_gallery_attributes = __webpack_require__(31);
+var advanced_gallery_attributes = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./src/filters/with-advanced-gallery-attributes/index.js
 
@@ -26185,7 +26123,7 @@ function addDopplerAttributes(block) {
 
 with_doppler_attributes_addFilter('blocks.registerBlockType', 'novablocks/add-advanced-gallery-attributes', addDopplerAttributes);
 // EXTERNAL MODULE: ./src/components/color-controls/attributes.json
-var color_controls_attributes = __webpack_require__(32);
+var color_controls_attributes = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/filters/with-overlay-color-attributes/index.js
 
@@ -26951,7 +26889,7 @@ var icons_gallery = Object(external_React_["createElement"])("svg", {
   fill: "#6565F2"
 }));
 // EXTERNAL MODULE: ./node_modules/unsplash-js/lib/unsplash.js
-var unsplash = __webpack_require__(82);
+var unsplash = __webpack_require__(81);
 var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
 
 // CONCATENATED MODULE: ./src/utils/unsplash.js
@@ -28052,7 +27990,6 @@ var scrolling_effect_controls_EndFramePanel = function EndFramePanel(props) {
 
 
 
-
 var toggle_group_ = wp.i18n.__;
 var toggle_group_wp$element = wp.element,
     toggle_group_Fragment = toggle_group_wp$element.Fragment,
@@ -28080,11 +28017,6 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
   });
   var config = {
     initial: false,
-    from: {
-      opacity: 0,
-      height: 0,
-      left: 40
-    },
     enter: function enter(item) {
       return /*#__PURE__*/function () {
         var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(next) {
@@ -28165,11 +28097,7 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
   var disabledTransitions = useTransition(disabledToggles, function (item) {
     return item.attribute;
   }, config);
-  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: label
-  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
-    label: toggle_group_('Settings')
-  }, Object(external_React_["createElement"])("div", {
+  return Object(external_React_["createElement"])("div", {
     className: 'components-toggle-group__panel',
     key: 'toggle-group-controls'
   }, Object(external_React_["createElement"])("div", {
@@ -28222,12 +28150,12 @@ var toggle_group_ToggleGroup = function ToggleGroup(props) {
         _onChange2(defineProperty_default()({}, item.attribute, value));
       }
     }))));
-  })))))));
+  })))));
 };
 
 /* harmony default export */ var toggle_group = (toggle_group_ToggleGroup);
 // EXTERNAL MODULE: ./node_modules/lodash/range.js
-var lodash_range = __webpack_require__(123);
+var lodash_range = __webpack_require__(122);
 var range_default = /*#__PURE__*/__webpack_require__.n(lodash_range);
 
 // CONCATENATED MODULE: ./src/components/heading-level-icon/index.js
@@ -28385,11 +28313,17 @@ function cards_manager_panel_objectSpread(target) { for (var i = 1; i < argument
 
 
 
+var cards_manager_panel_ = wp.i18n.__;
+
 var cards_manager_panel_CardsManagerPanel = function CardsManagerPanel(props) {
   var label = props.label,
       onChange = props.onChange,
       attributes = props.attributes;
-  return Object(external_React_["createElement"])(toggle_group, {
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: label
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: cards_manager_panel_('Settings')
+  }, Object(external_React_["createElement"])(toggle_group, {
     label: label,
     onChange: onChange,
     toggles: cards_manager_panel_toggles.map(function (toggle) {
@@ -28397,12 +28331,16 @@ var cards_manager_panel_CardsManagerPanel = function CardsManagerPanel(props) {
         value: attributes[toggle.attribute]
       });
     })
-  });
+  })));
 };
 
 /* harmony default export */ var cards_manager_panel = (cards_manager_panel_CardsManagerPanel);
+// EXTERNAL MODULE: ./node_modules/lodash/kebabCase.js
+var kebabCase = __webpack_require__(123);
+var kebabCase_default = /*#__PURE__*/__webpack_require__.n(kebabCase);
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(33);
+var objectWithoutProperties = __webpack_require__(29);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // CONCATENATED MODULE: ./src/components/editable-text/index.js
@@ -28649,7 +28587,7 @@ var collection_Collection = function Collection(props) {
   }, props.children)))));
 };
 
-/* harmony default export */ var collection = (collection_Collection);
+/* harmony default export */ var components_collection = (collection_Collection);
 // CONCATENATED MODULE: ./src/components/preset-control/index.js
 
 
@@ -28719,7 +28657,7 @@ var helpers_assertThisInitialized = __webpack_require__(25);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(helpers_assertThisInitialized);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/readOnlyError.js
-var readOnlyError = __webpack_require__(83);
+var readOnlyError = __webpack_require__(82);
 var readOnlyError_default = /*#__PURE__*/__webpack_require__.n(readOnlyError);
 
 // CONCATENATED MODULE: ./src/easing.js
@@ -29687,7 +29625,7 @@ var tabs_Tab = /*#__PURE__*/function (_Component2) {
 
 
 // EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(84);
+var js_cookie = __webpack_require__(83);
 var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
 
 // CONCATENATED MODULE: ./src/components/notice/index.js
@@ -30481,7 +30419,7 @@ var edit_Edit = function Edit(props) {
 
 /* harmony default export */ var advanced_gallery_edit = (edit_Edit);
 // EXTERNAL MODULE: ./src/blocks/advanced-gallery/attributes.json
-var blocks_advanced_gallery_attributes = __webpack_require__(65);
+var blocks_advanced_gallery_attributes = __webpack_require__(64);
 
 // CONCATENATED MODULE: ./src/blocks/advanced-gallery/deprecated.js
 
@@ -33557,7 +33495,7 @@ var media_transforms_createBlock = wp.blocks.createBlock;
   }]
 });
 // EXTERNAL MODULE: ./src/blocks/media/attributes.json
-var media_attributes = __webpack_require__(66);
+var media_attributes = __webpack_require__(65);
 
 // CONCATENATED MODULE: ./src/blocks/media/deprecated.js
 
@@ -34198,7 +34136,7 @@ var slideshow_save_InnerBlocks = wp.blockEditor.InnerBlocks;
   return Object(external_React_["createElement"])(slideshow_save_InnerBlocks.Content, null);
 });
 // EXTERNAL MODULE: ./src/blocks/slideshow/attributes.json
-var slideshow_attributes = __webpack_require__(67);
+var slideshow_attributes = __webpack_require__(66);
 
 // CONCATENATED MODULE: ./src/blocks/slideshow/deprecated.js
 
@@ -35702,54 +35640,6 @@ var edit_CardEdit = function CardEdit(props) {
   }))));
 };
 
-var withCollectionVisibilityAttributes = card_edit_createHigherOrderComponent(function (BlockListBlock) {
-  return function (props) {
-    if ('novablocks/card' === props.name) {
-      var clientId = props.clientId;
-
-      var _select = card_edit_select('core/block-editor'),
-          getBlock = _select.getBlock,
-          getBlockParentsByBlockName = _select.getBlockParentsByBlockName;
-
-      var block = getBlock(clientId);
-      var innerBlocks = block.innerBlocks;
-      var parents = getBlockParentsByBlockName(clientId, 'novablocks/cards-collection');
-      var parentClientId = parents[0];
-      var parentBlock = getBlock(parentClientId);
-
-      var newAttributes = function (_ref2) {
-        var level = _ref2.level,
-            contentAlign = _ref2.contentAlign,
-            showMedia = _ref2.showMedia,
-            showTitle = _ref2.showTitle,
-            showSubtitle = _ref2.showSubtitle,
-            showDescription = _ref2.showDescription,
-            showButtons = _ref2.showButtons,
-            showMeta = _ref2.showMeta;
-        return {
-          level: level,
-          contentAlign: contentAlign,
-          showMedia: showMedia,
-          showTitle: showTitle,
-          showSubtitle: showSubtitle,
-          showDescription: showDescription,
-          showButtons: showButtons,
-          showMeta: showMeta
-        };
-      }(parentBlock.attributes);
-
-      edit_dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
-      innerBlocks.forEach(function (innerBlock) {
-        edit_dispatch('core/block-editor').updateBlockAttributes(innerBlock.clientId, {
-          align: newAttributes.contentAlign
-        });
-      });
-    }
-
-    return Object(external_React_["createElement"])(BlockListBlock, props);
-  };
-}, 'withCollectionVisibilityAttributes');
-wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes);
 /* harmony default export */ var card_edit = (edit_CardEdit);
 // CONCATENATED MODULE: ./src/blocks/card/save.js
 
@@ -35758,7 +35648,7 @@ var card_save_InnerBlocks = wp.blockEditor.InnerBlocks;
   return Object(external_React_["createElement"])(card_save_InnerBlocks.Content, null);
 });
 // EXTERNAL MODULE: ./src/blocks/card/attributes.json
-var card_attributes = __webpack_require__(68);
+var card_attributes = __webpack_require__(67);
 
 // CONCATENATED MODULE: ./src/blocks/card/deprecated.js
 
@@ -35904,16 +35794,20 @@ function cards_collection_edit_objectSpread(target) { for (var i = 1; i < argume
 var cards_collection_edit_wp$element = wp.element,
     cards_collection_edit_Component = cards_collection_edit_wp$element.Component,
     cards_collection_edit_Fragment = cards_collection_edit_wp$element.Fragment;
+var cards_collection_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
 var cards_collection_edit_ = wp.i18n.__;
 var cards_collection_edit_InnerBlocks = wp.blockEditor.InnerBlocks;
-var cards_collection_edit_withSelect = wp.data.withSelect;
+var cards_collection_edit_wp$data = wp.data,
+    cards_collection_edit_select = cards_collection_edit_wp$data.select,
+    cards_collection_edit_dispatch = cards_collection_edit_wp$data.dispatch,
+    cards_collection_edit_withSelect = cards_collection_edit_wp$data.withSelect;
 var edit_ALLOWED_BLOCKS = ['novablocks/card'];
 var CARDS_COLLECTION_TEMPLATE = [['novablocks/card'], ['novablocks/card'], ['novablocks/card']];
 
 var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   var innerBlocks = props.innerBlocks;
   var hasAppender = !!innerBlocks && innerBlocks.length < 4;
-  return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])(collection, extends_default()({
+  return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])(components_collection, extends_default()({
     hasAppender: hasAppender
   }, props), Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
     allowedBlocks: edit_ALLOWED_BLOCKS,
@@ -35934,6 +35828,59 @@ var withInnerBlocks = cards_collection_edit_withSelect(function (select, props) 
     innerBlocks: innerBlocks
   }, props);
 });
+var withCollectionVisibilityAttributes = cards_collection_edit_createHigherOrderComponent(function (BlockListBlock) {
+  return function (props) {
+    if ('novablocks/cards-collection' === props.name) {
+      var clientId = props.clientId,
+          attributes = props.attributes;
+
+      var _select2 = cards_collection_edit_select('core/block-editor'),
+          getBlock = _select2.getBlock;
+
+      var _dispatch = cards_collection_edit_dispatch('core/block-editor'),
+          updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+      var collection = getBlock(clientId);
+      var cards = collection.innerBlocks;
+
+      var newAttributes = function (_ref) {
+        var level = _ref.level,
+            contentAlign = _ref.contentAlign,
+            showMedia = _ref.showMedia,
+            showTitle = _ref.showTitle,
+            showSubtitle = _ref.showSubtitle,
+            showDescription = _ref.showDescription,
+            showButtons = _ref.showButtons,
+            showMeta = _ref.showMeta;
+        return {
+          level: level,
+          contentAlign: contentAlign,
+          showMedia: showMedia,
+          showTitle: showTitle,
+          showSubtitle: showSubtitle,
+          showDescription: showDescription,
+          showButtons: showButtons,
+          showMeta: showMeta
+        };
+      }(attributes);
+
+      cards.forEach(function (block) {
+        updateBlockAttributes(block.clientId, newAttributes);
+
+        if (Array.isArray(block.innerBlocks)) {
+          block.innerBlocks.forEach(function (innerBlock) {
+            updateBlockAttributes(innerBlock.clientId, {
+              align: newAttributes.contentAlign
+            });
+          });
+        }
+      });
+    }
+
+    return Object(external_React_["createElement"])(BlockListBlock, props);
+  };
+}, 'withCollectionVisibilityAttributes');
+wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes);
 /* harmony default export */ var cards_collection_edit = (withInnerBlocks(edit_CardsCollectionEdit));
 // CONCATENATED MODULE: ./src/blocks/cards-collection/index.js
 
@@ -36148,7 +36095,7 @@ var edit_PostsEdit = function PostsEdit(props) {
     label: posts_collection_edit_('Columns'),
     min: 2,
     max: 4
-  }))), Object(external_React_["createElement"])(collection, extends_default()({
+  }))), Object(external_React_["createElement"])(components_collection, extends_default()({
     hasAppender: false
   }, props), Object(external_React_["createElement"])("div", {
     className: "block-editor-inner-blocks"
@@ -36365,7 +36312,7 @@ wp.novaBlocks = new editor_novaBlocks();
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_create_higher_order_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(64);
+/* harmony import */ var _utils_create_higher_order_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(63);
 
 
 

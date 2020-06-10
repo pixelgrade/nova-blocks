@@ -9,6 +9,10 @@ const {
 	Fragment
 } = wp.element;
 
+const {
+	createHigherOrderComponent
+} = wp.compose;
+
 const { __ } = wp.i18n;
 
 const {
@@ -16,6 +20,8 @@ const {
 } = wp.blockEditor;
 
 const {
+	select,
+	dispatch,
 	withSelect,
 } = wp.data;
 
@@ -60,5 +66,37 @@ const withInnerBlocks = withSelect( ( select, props ) => {
 	}
 } );
 
-export default withInnerBlocks( CardsCollectionEdit );
+const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
+	return ( props ) => {
+		if ( 'novablocks/cards-collection' === props.name ) {
+			const { clientId, attributes } = props;
+			const { getBlock } = select( 'core/block-editor' );
+			const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+			const collection = getBlock( clientId );
+			const cards = collection.innerBlocks;
 
+			const newAttributes = (
+				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => (
+					{ level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta }
+				)
+			)( attributes );
+
+			cards.forEach( block => {
+				updateBlockAttributes( block.clientId, newAttributes );
+
+				if ( Array.isArray( block.innerBlocks ) ) {
+					block.innerBlocks.forEach( innerBlock => {
+						updateBlockAttributes( innerBlock.clientId, {
+							align: newAttributes.contentAlign
+						} );
+					} );
+				}
+			} )
+		}
+		return <BlockListBlock { ...props } />
+	};
+}, 'withCollectionVisibilityAttributes' );
+
+wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
+
+export default withInnerBlocks( CardsCollectionEdit );

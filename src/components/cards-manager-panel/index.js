@@ -1,5 +1,8 @@
 import toggles from "./toggles";
 import { ToggleGroup } from "../../components";
+import { ControlsSection, ControlsTab } from "../control-sections";
+
+const { __ } = wp.i18n;
 
 const CardsManagerPanel = ( props ) => {
 
@@ -10,16 +13,20 @@ const CardsManagerPanel = ( props ) => {
 	} = props;
 
 	return (
-		<ToggleGroup
-			label={ label }
-			onChange={ onChange }
-			toggles={ toggles.map( toggle => {
-				return {
-					...toggle,
-					value: attributes[ toggle.attribute ]
-				}
-			} ) }
-		/>
+		<ControlsSection label={ label }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<ToggleGroup
+					label={ label }
+					onChange={ onChange }
+					toggles={ toggles.map( toggle => {
+						return {
+							...toggle,
+							value: attributes[ toggle.attribute ]
+						}
+					} ) }
+				/>
+			</ControlsTab>
+		</ControlsSection>
 	);
 }
 
