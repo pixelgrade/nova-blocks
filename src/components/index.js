@@ -26,6 +26,13 @@ export {
 export { default as Notice } from './notice';
 
 export {
+	ControlsSection,
+	ControlsSections,
+	ControlsTab,
+	ControlsDrawerContent,
+} from './control-sections'
+
+export {
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,

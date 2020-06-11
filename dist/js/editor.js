@@ -7245,6 +7245,12 @@ var ControlsSectionsSlotFill = createSlotFill('ControlsSections');
 var ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;
 var ControlsSectionsFill = ControlsSectionsSlotFill.Fill;
 
+// CONCATENATED MODULE: ./src/components/control-sections/drawer-content-slot-fill.js
+var drawer_content_slot_fill_createSlotFill = wp.components.createSlotFill;
+var DrawerContentSlotFill = drawer_content_slot_fill_createSlotFill('DrawerContent');
+var DrawerContentSlot = DrawerContentSlotFill.Slot;
+var DrawerContentFill = DrawerContentSlotFill.Fill;
+
 // CONCATENATED MODULE: ./src/components/control-sections/cube.js
 
 
@@ -9420,6 +9426,49 @@ var tabs_TabContent = /*#__PURE__*/function (_Component) {
 var orderBy = __webpack_require__(115);
 var orderBy_default = /*#__PURE__*/__webpack_require__.n(orderBy);
 
+// CONCATENATED MODULE: ./src/hooks/resize-observer.js
+
+var resize_observer_wp$element = wp.element,
+    useRef = resize_observer_wp$element.useRef,
+    useLayoutEffect = resize_observer_wp$element.useLayoutEffect,
+    resize_observer_useState = resize_observer_wp$element.useState,
+    useCallback = resize_observer_wp$element.useCallback;
+
+var resize_observer_useResizeObserver = function useResizeObserver() {
+  var _useState = resize_observer_useState({}),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      entry = _useState2[0],
+      setEntry = _useState2[1];
+
+  var _useState3 = resize_observer_useState(null),
+      _useState4 = slicedToArray_default()(_useState3, 2),
+      node = _useState4[0],
+      setNode = _useState4[1];
+
+  var observer = useRef(null);
+  var disconnect = useCallback(function () {
+    var current = observer.current;
+    current && current.disconnect();
+  }, []);
+  var observe = useCallback(function () {
+    observer.current = new ResizeObserver(function (_ref) {
+      var _ref2 = slicedToArray_default()(_ref, 1),
+          entry = _ref2[0];
+
+      return setEntry(entry);
+    });
+    node && observer.current.observe(node);
+  }, [node]);
+  useLayoutEffect(function () {
+    observe();
+    return function () {
+      return disconnect();
+    };
+  }, [disconnect, observe]);
+  return [setNode, entry];
+};
+
+/* harmony default export */ var resize_observer = (resize_observer_useResizeObserver);
 // CONCATENATED MODULE: ./src/components/drawer/index.js
 
 
@@ -9433,12 +9482,13 @@ function drawer_objectSpread(target) { for (var i = 1; i < arguments.length; i++
 
 
 
+
 var drawer_wp$element = wp.element,
     Children = drawer_wp$element.Children,
-    drawer_Fragment = drawer_wp$element.Fragment,
     cloneElement = drawer_wp$element.cloneElement,
+    drawer_useCallback = drawer_wp$element.useCallback,
     drawer_useEffect = drawer_wp$element.useEffect,
-    useRef = drawer_wp$element.useRef,
+    drawer_useRef = drawer_wp$element.useRef,
     drawer_useState = drawer_wp$element.useState;
 
 var drawer_Drawers = function Drawers(ownProps) {
@@ -9449,8 +9499,11 @@ var drawer_Drawers = function Drawers(ownProps) {
   var drawerPanels = children.filter(function (child) {
     return child.type === DrawerPanel;
   });
-  var otherChildren = children.filter(function (child) {
-    return child.type !== drawer_DrawerList && child.type !== DrawerPanel;
+  var beforeChildren = children.filter(function (child) {
+    return child.type === DrawerListBefore;
+  });
+  var afterChildren = children.filter(function (child) {
+    return child.type === DrawerListAfter;
   });
 
   var _useState = drawer_useState(false),
@@ -9468,7 +9521,7 @@ var drawer_Drawers = function Drawers(ownProps) {
       wrapperHeight = _useState6[0],
       setWrapperHeight = _useState6[1];
 
-  var ref = useRef(null);
+  var ref = drawer_useRef(null);
 
   var _useState7 = drawer_useState(function () {
     return new WeakMap();
@@ -9518,7 +9571,7 @@ var drawer_Drawers = function Drawers(ownProps) {
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-drawers__front",
     ref: ref
-  }, otherChildren, drawerLists.map(function (drawerList, drawerListIndex) {
+  }, beforeChildren, drawerLists.map(function (drawerList, drawerListIndex) {
     var _drawerList$props;
 
     var drawers = getDrawersFromList(drawerList);
@@ -9558,6 +9611,17 @@ var drawer_Drawers = function Drawers(ownProps) {
         }
       }));
     }));
+  }), afterChildren.map(function (afterChild, index) {
+    var _useResizeObserver = resize_observer(),
+        _useResizeObserver2 = slicedToArray_default()(_useResizeObserver, 2),
+        childRef = _useResizeObserver2[0],
+        contentRect = _useResizeObserver2[1].contentRect;
+
+    drawer_useEffect(updateHeight, [contentRect === null || contentRect === void 0 ? void 0 : contentRect.height]);
+    return Object(external_React_["createElement"])("div", {
+      ref: childRef,
+      key: "drawer-list-after-child-".concat(index)
+    }, afterChild);
   })), drawerPanels.map(function (drawerPanel, index) {
     var className = classnames_default()('novablocks-drawers__panel', {
       'novablocks-drawers__panel--hidden': index !== active
@@ -9627,6 +9691,14 @@ var DrawerPanel = function DrawerPanel(props) {
   return props.children;
 };
 
+var DrawerListBefore = function DrawerListBefore(props) {
+  return props.children;
+};
+
+var DrawerListAfter = function DrawerListAfter(props) {
+  return props.children;
+};
+
 var drawer_Drawer = function Drawer(props) {
   var title = props.title,
       onClick = props.onClick;
@@ -9645,36 +9717,13 @@ var drawer_Drawer = function Drawer(props) {
 
 
 
+
 var control_sections_ = wp.i18n.__;
 var useBlockEditContext = wp.blockEditor.useBlockEditContext;
-var control_sections_wp$element = wp.element,
-    control_sections_Children = control_sections_wp$element.Children,
-    control_sections_Component = control_sections_wp$element.Component,
-    control_sections_Fragment = control_sections_wp$element.Fragment,
-    control_sections_useState = control_sections_wp$element.useState;
-
-var control_sections_renderControlsSectionsList = function renderControlsSectionsList(sections, onSectionClick) {
-  return sections.map(function (section, index) {
-    var label = section.props.label;
-    return Object(external_React_["createElement"])(drawer_Drawer, {
-      key: index,
-      target: 0,
-      title: label,
-      onOpen: function onOpen() {
-        onSectionClick(label);
-      }
-    });
-  });
-};
+var control_sections_Children = wp.element.Children;
 
 var control_sections_ControlsSectionsComponent = function ControlsSectionsComponent(props) {
   var sections = props.sections;
-  var notModules = sections.filter(function (section) {
-    return !section.props.module;
-  });
-  var modules = sections.filter(function (section) {
-    return !!section.props.module;
-  });
 
   var groups = groupBy_default()(sections, function (section) {
     return !!section.props.group ? section.props.group : '';
@@ -9682,11 +9731,11 @@ var control_sections_ControlsSectionsComponent = function ControlsSectionsCompon
 
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-sections"
-  }, Object(external_React_["createElement"])(drawer_Drawers, null, Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(drawer_Drawers, null, Object(external_React_["createElement"])(DrawerListBefore, null, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__header"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__title"
-  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(cube, null)), Object.keys(groups).map(function (key) {
+  }, control_sections_('Design Customization')), Object(external_React_["createElement"])(cube, null))), Object.keys(groups).map(function (key) {
     var sections = groups[key];
     return Object(external_React_["createElement"])(drawer_DrawerList, {
       title: key,
@@ -9717,9 +9766,6 @@ var control_sections_ControlsSectionsComponent = function ControlsSectionsCompon
 
       var compiledTabs = Object.keys(groupedTabs).map(function (key) {
         var group = groupedTabs[key];
-        var children = group.reduce(function (accumulator, tab) {
-          return accumulator.concat(control_sections_Children.toArray(tab.props.children));
-        }, []);
         return {
           props: {
             label: key,
@@ -9736,7 +9782,7 @@ var control_sections_ControlsSectionsComponent = function ControlsSectionsCompon
         tabs: compiledTabs
       }));
     });
-  })));
+  }), Object(external_React_["createElement"])(DrawerListAfter, null, Object(external_React_["createElement"])(DrawerContentSlot, null))));
 };
 
 var control_sections_ControlsSections = function ControlsSections(props) {
@@ -9764,6 +9810,13 @@ var control_sections_ControlsSection = function ControlsSection(props) {
       isSelected = _useBlockEditContext.isSelected;
 
   return Object(external_React_["createElement"])(ControlsSectionsFill, null, isSelected && Object(external_React_["createElement"])("div", props));
+};
+
+var control_sections_ControlsDrawerContent = function ControlsDrawerContent(props) {
+  var _useBlockEditContext2 = useBlockEditContext(),
+      isSelected = _useBlockEditContext2.isSelected;
+
+  return Object(external_React_["createElement"])(DrawerContentFill, null, isSelected && Object(external_React_["createElement"])("div", props));
 };
 
 
@@ -13192,12 +13245,12 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 
 
 
+
 // CONCATENATED MODULE: ./src/filters/with-cards-manager/index.js
 
 
 var with_cards_manager_ = wp.i18n.__;
 var with_cards_manager_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var with_cards_manager_InspectorControls = wp.blockEditor.InspectorControls;
 var with_cards_manager_addFilter = wp.hooks.addFilter;
 var with_cards_manager_Fragment = wp.element.Fragment;
 var with_cards_manager_PanelBody = wp.components.PanelBody;
@@ -13208,7 +13261,7 @@ var withCardsManager = with_cards_manager_createHigherOrderComponent(function (O
       return Object(external_React_["createElement"])(OriginalComponent, props);
     }
 
-    return Object(external_React_["createElement"])(with_cards_manager_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(with_cards_manager_InspectorControls, null, Object(external_React_["createElement"])(with_cards_manager_PanelBody, {
+    return Object(external_React_["createElement"])(with_cards_manager_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(with_cards_manager_PanelBody, {
       title: with_cards_manager_('Cards Manager', '__plugin_txtd')
     }, Object(external_React_["createElement"])(cards_manager, props))));
   };

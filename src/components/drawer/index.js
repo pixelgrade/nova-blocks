@@ -1,11 +1,12 @@
 import { useSpring, animated } from 'react-spring';
 import { orderBy } from 'lodash';
 import classnames from 'classnames';
+import useResizeObserver from '../../hooks/resize-observer';
 
 const {
 	Children,
-	Fragment,
 	cloneElement,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -17,7 +18,8 @@ const Drawers = ( ownProps ) => {
 
 	const drawerLists = children.filter( child => child.type === DrawerList );
 	const drawerPanels = children.filter( child => child.type === DrawerPanel );
-	const otherChildren = children.filter( child => child.type !== DrawerList && child.type !== DrawerPanel);
+	const beforeChildren = children.filter( child => child.type === DrawerListBefore );
+	const afterChildren = children.filter( child => child.type === DrawerListAfter );
 
 	const [ active, setActive ] = useState( false );
 	const [ open, setOpen ] = useState( false );
@@ -29,19 +31,19 @@ const Drawers = ( ownProps ) => {
 
 	const getDrawerListHeight = () => {
 		return !! ref.current ? ref.current.clientHeight : 0;
-	}
+	};
 
 	const getActiveDrawerHeight = () => {
 		const activeRef = refMap.get( drawerPanels[active] );
 		return !! activeRef ? activeRef.clientHeight : 0;
-	}
+	};
 
 	const updateHeight = () => {
 		const drawerListHeight = getDrawerListHeight();
 		const drawerPanelHeight = getActiveDrawerHeight();
 
 		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
-	}
+	};
 
 	const { height, transform } = useSpring({
 		transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
@@ -65,7 +67,7 @@ const Drawers = ( ownProps ) => {
 				className={ `novablocks-drawers__wrap` }
 				style={ { transform } }>
 				<div className={ `novablocks-drawers__front` } ref={ ref }>
-					{ otherChildren }
+					{ beforeChildren }
 					{ drawerLists.map( ( drawerList, drawerListIndex ) => {
 						const drawers = getDrawersFromList( drawerList );
 						const title = drawerList?.props?.title;
@@ -106,6 +108,17 @@ const Drawers = ( ownProps ) => {
 							</div>
 						)
 					} ) }
+					{ afterChildren.map( ( afterChild, index ) => {
+						const [ childRef, { contentRect } ] = useResizeObserver();
+
+						useEffect( updateHeight, [ contentRect?.height ] );
+
+						return (
+							<div ref={ childRef } key={ `drawer-list-after-child-${ index }` }>
+								{ afterChild }
+							</div>
+						)
+					} ) }
 				</div>
 				{
 					drawerPanels.map( ( drawerPanel, index ) => {
@@ -128,7 +141,7 @@ const Drawers = ( ownProps ) => {
 			</animated.div>
 		</animated.div>
 	);
-}
+};
 
 const DrawerWithProps = ( props ) => {
 	const { goBack, isActive, updateHeight } = props;
@@ -138,7 +151,7 @@ const DrawerWithProps = ( props ) => {
 		isActive,
 		updateHeight,
 	} );
-}
+};
 
 const addPropsToChildren = ( children, props ) => {
 
@@ -151,7 +164,7 @@ const addPropsToChildren = ( children, props ) => {
 	}
 
 	return cloneElement( children, props );
-}
+};
 
 const getDrawersFromList = ( drawerList ) => {
 
@@ -162,17 +175,25 @@ const getDrawersFromList = ( drawerList ) => {
 	}
 
 	return children.filter( child => child.type === Drawer );
-}
+};
 
 const DrawerList = ( props ) => {
 	return (
 		<div className={ 'novablocks-drawers__list' }>{ props.children }</div>
 	);
-}
+};
 
 const DrawerPanel = ( props ) => {
 	return props.children;
-}
+};
+
+const DrawerListBefore = ( props ) => {
+	return props.children;
+};
+
+const DrawerListAfter = ( props ) => {
+	return props.children;
+};
 
 const Drawer = ( props ) => {
 	const { title, onClick } = props;
@@ -180,6 +201,13 @@ const Drawer = ( props ) => {
 	return (
 		<div className={ 'novablocks-drawer' } onClick={ onClick }>{ title }</div>
 	)
-}
+};
 
-export { Drawer, Drawers, DrawerList, DrawerPanel };
+export {
+	Drawer,
+	Drawers,
+	DrawerList,
+	DrawerListBefore,
+	DrawerListAfter,
+	DrawerPanel,
+};

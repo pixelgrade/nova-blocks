@@ -1,14 +1,13 @@
-import { CardsManager } from '../../components';
+import {
+	CardsManager,
+	ControlsDrawerContent,
+} from '../../components';
 
 const { __ } = wp.i18n;
 
 const {
 	createHigherOrderComponent
 } = wp.compose;
-
-const {
-	InspectorControls
-} = wp.blockEditor;
 
 const {
 	addFilter
@@ -38,11 +37,11 @@ const withCardsManager = createHigherOrderComponent(OriginalComponent => {
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<InspectorControls>
+				<ControlsDrawerContent>
 					<PanelBody title={ __( 'Cards Manager', '__plugin_txtd' ) }>
 						<CardsManager { ...props } />
 					</PanelBody>
-				</InspectorControls>
+				</ControlsDrawerContent>
 			</Fragment>
 		);
 	};

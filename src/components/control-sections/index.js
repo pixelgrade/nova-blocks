@@ -2,47 +2,23 @@
 import { groupBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
+import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill";
 
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";
 
-import { Drawer, Drawers, DrawerList, DrawerPanel } from "../../components/drawer";
-import {kebabCase} from "lodash";
+import { Drawer, Drawers, DrawerList, DrawerPanel, DrawerListBefore, DrawerListAfter } from "../../components/drawer";
 
 const { __ } = wp.i18n;
 const { useBlockEditContext } = wp.blockEditor;
 
 const {
 	Children,
-	Component,
-	Fragment,
-	useState,
 } = wp.element;
-
-const renderControlsSectionsList = ( sections, onSectionClick ) => {
-
-	return (
-		sections.map( ( section, index ) => {
-			const { label } = section.props;
-
-			return (
-				<Drawer
-					key={ index }
-					target={ 0 }
-					title={ label }
-					onOpen={ () => { onSectionClick( label ) } }
-				/>
-			);
-		} )
-	)
-}
 
 const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
-
-	const notModules = sections.filter( section => ! section.props.module )
-	const modules = sections.filter( section => !! section.props.module );
 
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
@@ -51,10 +27,12 @@ const ControlsSectionsComponent = ( props ) => {
 	return (
 		<div className="novablocks-sections">
 			<Drawers>
-				<div className="novablocks-sections__header">
-					<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
-					<Cube />
-				</div>
+				<DrawerListBefore>
+					<div className="novablocks-sections__header">
+						<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+						<Cube />
+					</div>
+				</DrawerListBefore>
 				{
 					Object.keys( groups ).map( key => {
 						const sections = groups[ key ];
@@ -89,9 +67,6 @@ const ControlsSectionsComponent = ( props ) => {
 
 							const compiledTabs = Object.keys( groupedTabs ).map( key => {
 								const group = groupedTabs[key];
-								const children = group.reduce( ( accumulator, tab ) => {
-									return accumulator.concat( Children.toArray( tab.props.children ) );
-								}, [] );
 
 								return {
 									props: {
@@ -114,10 +89,13 @@ const ControlsSectionsComponent = ( props ) => {
 						} );
 					} )
 				}
+				<DrawerListAfter>
+					<DrawerContentSlot />
+				</DrawerListAfter>
 			</Drawers>
 		</div>
 	);
-}
+};
 
 const ControlsSections = ( props ) => {
 
@@ -134,13 +112,13 @@ const ControlsSections = ( props ) => {
 			} }
 		</ControlsSectionsSlot>
 	);
-}
+};
 
 const ControlsTab = ( props ) => {
 	return (
 		<div label={ props.label }>{ props.children }</div>
 	)
-}
+};
 
 const ControlsSection = ( props ) => {
 
@@ -151,10 +129,22 @@ const ControlsSection = ( props ) => {
 			{ isSelected && <div { ...props } /> }
 		</ControlsSectionsFill>
 	)
-}
+};
+
+const ControlsDrawerContent = ( props ) => {
+
+	const { isSelected } = useBlockEditContext();
+
+	return (
+		<DrawerContentFill>
+			{ isSelected && <div { ...props } /> }
+		</DrawerContentFill>
+	)
+};
 
 export {
 	ControlsTab,
 	ControlsSections,
 	ControlsSection,
+	ControlsDrawerContent,
 };
