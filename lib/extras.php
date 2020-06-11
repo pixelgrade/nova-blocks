@@ -428,12 +428,19 @@ function novablocks_add_hero_settings( $settings ) {
 				),
 			),
 			array(
-				'core/button',
+				'core/buttons',
 				array(
-					'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
 					'align' => 'center',
 				),
-			),
+				array(
+					array(
+						'core/button',
+						array(
+							'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
+						),
+					),
+				),
+			)
 		),
 	);
 
@@ -469,10 +476,18 @@ function novablocks_add_media_settings( $settings ) {
 				),
 			),
 			array(
-				'core/button',
+				'core/buttons',
 				array(
-					'text' => esc_html__( 'Discover More', '__plugin_txtd' ),
+					'align' => 'center',
 				),
+				array(
+					array(
+						'core/button',
+						array(
+							'text' => esc_html__( 'Discover More', '__plugin_txtd' ),
+						),
+					),
+				)
 			),
 		),
 		'contentAreaOptions' => array(
