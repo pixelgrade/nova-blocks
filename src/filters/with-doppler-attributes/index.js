@@ -1,8 +1,6 @@
 import dopplerAttributes from '../../components/scrolling-effect-controls/attributes';
 
-const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;
-const { Component, Fragment } = wp.element;
 
 const enableDopplerAttributeOnBlocks = [
 	'novablocks/hero',

@@ -10,6 +10,7 @@ import "./filters/with-doppler-attributes";
 import "./filters/with-overlay-color-attributes";
 
 import "./filters/with-controls-sections";
+import "./filters/with-space-and-sizing-controls";
 
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";

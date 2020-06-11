@@ -20,8 +20,9 @@ if ( ! function_exists( 'novablocks_media_block_init' ) ) {
 function novablocks_get_media_attributes_config() {
 	$gallery_attributes = novablocks_get_attributes_from_json( '/src/components/advanced-gallery/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( '/src/blocks/media/attributes.json' );
+	$space_and_sizing_attributes = novablocks_get_attributes_from_json( '/src/filters/with-space-and-sizing-controls/attributes.json' );
 
-	return array_merge( $media_attributes, $gallery_attributes );
+	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes );
 }
 
 add_action( 'init', 'novablocks_media_block_init' );

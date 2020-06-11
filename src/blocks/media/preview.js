@@ -10,8 +10,6 @@ import AdvancedGallery from '../../components/advanced-gallery';
  */
 const {
 	InnerBlocks,
-	MediaPlaceholder,
-	BlockIcon,
 } = wp.blockEditor;
 
 const MediaPreview = function( props ) {
@@ -23,10 +21,6 @@ const MediaPreview = function( props ) {
 			images,
 			// alignment
 			verticalAlignment,
-			blockTopSpacing,
-			blockBottomSpacing,
-			emphasisTopSpacing,
-			emphasisBottomSpacing,
 			emphasisArea,
 
 			contentAreaWidth,
@@ -50,14 +44,10 @@ const MediaPreview = function( props ) {
 	}
 
 	const cssVars = {
-		'--block-top-spacing': blockTopSpacing,
-		'--block-bottom-spacing': blockBottomSpacing,
-		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 		'--emphasis-area': emphasisArea,
 		'--novablocks-media-content-width': `${contentAreaWidth}%`,
 		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 10 / 100 )`,
-	}
+	};
 
 	const blockClassNames = classnames(
 		`novablocks-block`,

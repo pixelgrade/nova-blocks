@@ -12,6 +12,7 @@ export { default as PresetControl } from './preset-control';
 export { default as withParallax } from './with-parallax';
 export { default as withSettings } from './with-settings';
 export { default as CardsManager } from './cards-manager';
+export { default as BlockVerticalAlignmentToolbar } from './block-vertical-alignment-toolbar';
 
 export {
 	GalleryPreview,
@@ -31,6 +32,8 @@ export {
 	ControlsTab,
 	ControlsDrawerContent,
 } from './control-sections'
+
+export { default as ControlsGroup } from './controls-group';
 
 export {
 	ColorControls,
