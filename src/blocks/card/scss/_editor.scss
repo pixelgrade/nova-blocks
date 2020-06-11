@@ -1,0 +1,64 @@
+.novablocks-card__media-edit {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 100;
+
+	padding: 6px;
+
+	opacity: 0;
+	color: #FFFFFF;
+
+	&:before {
+		content: "";
+
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 10;
+
+		border-radius: 2px;
+		background-color: #000000;
+	}
+
+	svg {
+		display: block;
+		position: relative;
+		z-index: 20;
+	}
+}
+
+.novablocks-card__media-edit,
+.novablocks-card__media-image,
+.novablocks-card__media-placeholder {
+
+	&[class] {
+		transition: opacity .1s ease;
+	}
+}
+
+.novablocks-card__media {
+
+	.wp-block[data-type="novablocks/card"].is-selected &:hover {
+		cursor: pointer;
+
+		.novablocks-card__media-edit {
+			opacity: 1;
+		}
+
+		.novablocks-card__media-image,
+		.novablocks-card__media-placeholder {
+			opacity: 0.5;
+		}
+	}
+}
+
+.novablocks-card__buttons {
+
+	.block-list-appender {
+		display: none;
+	}
+}

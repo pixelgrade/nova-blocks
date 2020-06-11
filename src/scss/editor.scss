@@ -7,6 +7,7 @@
 @import '../components/collection/scss/editor';
 @import '../components/color-controls/editor';
 @import '../components/control-sections/editor';
+@import '../components/controls-group/scss/editor';
 @import '../components/drawer/editor';
 @import '../components/layout-panel/editor';
 @import '../components/notice/editor';
@@ -15,18 +16,18 @@
 @import '../components/toggle-group/editor';
 
 @import '../blocks/announcement-bar/scss/editor';
-@import '../components/controls-group/scss/editor';
-@import '../blocks/header/scss/editor';
-@import '../blocks/logo/scss/editor';
+@import '../blocks/card/scss/editor';
 @import '../blocks/google-map/scss/editor';
+@import '../blocks/header/scss/editor';
 @import '../blocks/hero/scss/editor';
+@import '../blocks/logo/scss/editor';
 @import '../blocks/media/scss/editor';
-@import '../blocks/slideshow/scss/editor';
+@import '../blocks/menu-food/scss/editor';
 @import '../blocks/navigation/scss/editor';
 @import '../blocks/opentable/scss/editor';
 @import '../blocks/opentable/scss/style';
-@import '../blocks/menu-food/scss/editor';
 @import '../blocks/openhours/scss/editor';
+@import '../blocks/slideshow/scss/editor';
 
 // Quickfix block appender visibility
 .block-list-appender__toggle {

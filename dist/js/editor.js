@@ -27361,10 +27361,7 @@ function openhours_init() {
 var card_edit_wp$blockEditor = wp.blockEditor,
     card_edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
     edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
-var card_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var card_edit_wp$data = wp.data,
-    card_edit_select = card_edit_wp$data.select,
-    edit_dispatch = card_edit_wp$data.dispatch;
+var edit_Dashicon = wp.components.Dashicon;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
@@ -27414,7 +27411,12 @@ var edit_CardEdit = function CardEdit(props) {
     className: "".concat(blockClassName, "__media-wrap block-editor-block-list__block")
   }, Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__media")
-  }, Object(external_React_["createElement"])(edit_MediaUpload, {
+  }, Object(external_React_["createElement"])("div", {
+    className: "".concat(blockClassName, "__media-edit")
+  }, Object(external_React_["createElement"])(edit_Dashicon, {
+    icon: 'edit',
+    size: 24
+  })), Object(external_React_["createElement"])(edit_MediaUpload, {
     type: "image",
     value: !!media && media.id,
     onSelect: function onSelect(media) {
@@ -27605,7 +27607,7 @@ var cards_collection_edit_ = wp.i18n.__;
 var cards_collection_edit_InnerBlocks = wp.blockEditor.InnerBlocks;
 var cards_collection_edit_wp$data = wp.data,
     cards_collection_edit_select = cards_collection_edit_wp$data.select,
-    cards_collection_edit_dispatch = cards_collection_edit_wp$data.dispatch,
+    edit_dispatch = cards_collection_edit_wp$data.dispatch,
     cards_collection_edit_withSelect = cards_collection_edit_wp$data.withSelect;
 var edit_ALLOWED_BLOCKS = ['novablocks/card'];
 var CARDS_COLLECTION_TEMPLATE = [['novablocks/card'], ['novablocks/card'], ['novablocks/card']];
@@ -27643,7 +27645,7 @@ var withCollectionVisibilityAttributes = cards_collection_edit_createHigherOrder
       var _select2 = cards_collection_edit_select('core/block-editor'),
           getBlock = _select2.getBlock;
 
-      var _dispatch = cards_collection_edit_dispatch('core/block-editor'),
+      var _dispatch = edit_dispatch('core/block-editor'),
           updateBlockAttributes = _dispatch.updateBlockAttributes;
 
       var collection = getBlock(clientId);

@@ -11,13 +11,8 @@ const {
 } = wp.blockEditor;
 
 const {
-	createHigherOrderComponent
-} = wp.compose;
-
-const {
-	select,
-	dispatch,
-} = wp.data;
+	Dashicon
+} = wp.components;
 
 const CardEdit = ( props ) => {
 
@@ -73,6 +68,9 @@ const CardEdit = ( props ) => {
 					showMedia &&
 					<div className={ `${ blockClassName }__media-wrap block-editor-block-list__block` }>
 						<div className={ `${ blockClassName }__media` }>
+							<div className={ `${ blockClassName }__media-edit` }>
+								<Dashicon icon={ 'edit' } size={ 24 } />
+							</div>
 							<MediaUpload
 								type="image"
 								value={ !! media && media.id }
