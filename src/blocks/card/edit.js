@@ -5,14 +5,12 @@
 import EditableText from '../../components/editable-text';
 import * as icons from "../../icons";
 
+const { __ } = wp.i18n;
+
 const {
 	InnerBlocks,
 	MediaUpload,
 } = wp.blockEditor;
-
-const {
-	Dashicon
-} = wp.components;
 
 const CardEdit = ( props ) => {
 
@@ -69,7 +67,7 @@ const CardEdit = ( props ) => {
 					<div className={ `${ blockClassName }__media-wrap block-editor-block-list__block` }>
 						<div className={ `${ blockClassName }__media` }>
 							<div className={ `${ blockClassName }__media-edit` }>
-								<Dashicon icon={ 'edit' } size={ 24 } />
+								<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 							</div>
 							<MediaUpload
 								type="image"
