@@ -33402,7 +33402,11 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderContent",
     value: function renderContent() {
-      var _this2 = this;
+      var _this2 = this,
+          _previewImage$title,
+          _previewImage$title2,
+          _previewImage$caption,
+          _previewImage$caption2;
 
       var _this$props = this.props,
           _this$props$attribute = _this$props.attributes,
@@ -33449,6 +33453,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       });
       var attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
       styles.slideshow.minHeight = Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px';
+      console.log(previewImage);
       return Object(external_React_["createElement"])(preview_Fragment, null, !!galleryImages.length && Object(external_React_["createElement"])("div", {
         className: classes.join(' '),
         style: styles.slideshow
@@ -33462,7 +33467,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__inner-container novablocks-u-content-width",
         style: styles.content
-      }, !!(previewImage === null || previewImage === void 0 ? void 0 : previewImage.title) && Object(external_React_["createElement"])("h2", null, previewImage.title), !!(previewImage === null || previewImage === void 0 ? void 0 : previewImage.caption) && Object(external_React_["createElement"])("p", null, previewImage.caption)))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
+      }, !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$title = previewImage.title) === null || _previewImage$title === void 0 ? void 0 : _previewImage$title.rendered) && Object(external_React_["createElement"])("h2", null, (_previewImage$title2 = previewImage.title) === null || _previewImage$title2 === void 0 ? void 0 : _previewImage$title2.rendered), !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$caption = previewImage.caption) === null || _previewImage$caption === void 0 ? void 0 : _previewImage$caption.rendered) && Object(external_React_["createElement"])("p", null, (_previewImage$caption2 = previewImage.caption) === null || _previewImage$caption2 === void 0 ? void 0 : _previewImage$caption2.rendered)))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__controls"
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled",
