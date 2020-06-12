@@ -23029,7 +23029,7 @@ var grid_item_GridItem = /*#__PURE__*/function () {
       positionShift: $gallery.data('positionshift'),
       sizeContrast: $gallery.data('sizecontrast'),
       imageRotation: $gallery.data('imagerotation'),
-      positionVariation: $gallery.data('positionvariation'),
+      placementVariation: $gallery.data('placementvariation'),
       elementsDistance: $gallery.data('elementsdistance'),
       verticalSpacing: $gallery.data('verticalspacing'),
       objectPosition: $gallery.data('objectposition')

@@ -914,7 +914,7 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		'sizeContrast',
 		'positionShift',
 		'elementsDistance',
-		'positionVariation',
+		'placementVariation',
 		'imageResizing',
 		'objectPosition',
 		'containerHeight',

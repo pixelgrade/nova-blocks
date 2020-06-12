@@ -9,7 +9,7 @@ export const getRandomAttributes = () => {
 		placementVariation: getRandomBetween(1, 4) * 25,
 		stylePreset: 'just-my-style',
 	};
-}
+};
 
 export const getGalleryStyle = ( attributes ) => {
 	let containerHeight = attributes.containerHeight / 50 - 1;
@@ -29,7 +29,7 @@ export const getGalleryStyle = ( attributes ) => {
 	return {
 		paddingTop: `${ numerator * 100 / denominator }%`,
 	}
-}
+};
 
 export const getGridStyle = ( attributes ) => {
 	const { elementsDistance } = attributes;
@@ -37,7 +37,7 @@ export const getGridStyle = ( attributes ) => {
 	return {
 		'--novablocks-advanced-gallery-grid-gap': `${ elementsDistance }px`
 	}
-}
+};
 
 export const safariHeightFix = ( grid ) => {
 
@@ -53,7 +53,7 @@ export const safariHeightFix = ( grid ) => {
 		const newHeight = $parent.outerHeight();
 
 		$grid.css( 'height', newHeight );
-	}
+	};
 
 	const debouncedResetHeight = debounce( resetHeight, 30 );
 
@@ -70,4 +70,4 @@ export const safariHeightFix = ( grid ) => {
 			debouncedResetHeight();
 		} );
 	}
-}
+};

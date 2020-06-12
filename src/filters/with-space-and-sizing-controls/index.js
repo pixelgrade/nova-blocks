@@ -76,25 +76,25 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 
 			blockTopSpacing,
 			blockBottomSpacing,
-			emphasisTopSpacing,
-			emphasisBottomSpacing,
 		} = attributes;
 
 		const verticalAlignment = attributes.verticalAlignment || 'center';
 		const presetOptions = props?.settings?.media?.spaceAndSizing?.presetOptions;
 
+		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
+		const SPACING_MAX_VALUE = 3;
 
 		const cssVars = {
 			'--block-top-spacing': blockTopSpacing,
 			'--block-bottom-spacing': blockBottomSpacing,
-			'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-			'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 		};
 
 		return (
 			<Fragment>
+				<div style={ cssVars }>
+					<OriginalComponent { ...props } />
+				</div>
 				<ControlsSection label={ __( 'Space and Sizing' ) }>
-
 					{
 						!! presetOptions &&
 						<ControlsTab label={ __( 'General' ) }>
@@ -108,7 +108,6 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 							/>
 						</ControlsTab>
 					}
-
 					<ControlsTab label={ __( 'Customize' ) }>
 						<div key={ 'space-and-sizing-customize-1' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>
 							<RangeControl
@@ -123,7 +122,6 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 							/>
 						</div>
 					</ControlsTab>
-
 					<ControlsTab label={ __( 'Settings' ) }>
 						<div key={ 'space-and-sizing-settings-1' }>
 							<ControlsGroup title={ __( 'Block Spacing' ) }>
@@ -132,25 +130,21 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 									value={ blockTopSpacing }
 									onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
 									label={ __( 'Top' ) }
-									min={ -3 }
-									max={ 3 }
+									min={ SPACING_MIN_VALUE }
+									max={ SPACING_MAX_VALUE }
 								/>
 								<RangeControl
 									key={ 'media-card-block-bottom-spacing' }
 									value={ blockBottomSpacing }
 									onChange={ ( blockBottomSpacing ) => setAttributes( { blockBottomSpacing } ) }
 									label={ __( 'Bottom' ) }
-									min={ -3 }
-									max={ 3 }
+									min={ SPACING_MIN_VALUE }
+									max={ SPACING_MAX_VALUE }
 								/>
 							</ControlsGroup>
 						</div>
 					</ControlsTab>
-
 				</ControlsSection>
-				<div style={ cssVars }>
-					<OriginalComponent { ...props } />
-				</div>
 			</Fragment>
 		);
 	};
@@ -180,10 +174,17 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
 		const verticalAlignment = attributes.verticalAlignment || 'center';
 
+		const cssVars = {
+			'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+			'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+		};
+
 		return (
 			<Fragment>
+				<div style={ cssVars }>
+					<OriginalComponent { ...props } />
+				</div>
 				<ControlsSection label={ __( 'Space and Sizing' ) }>
-
 					<ControlsTab label={ __( 'Customize' ) }>
 						<div key={ 'space-and-sizing-customize-2' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>
 							<ToggleControl
@@ -206,7 +207,6 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 							</PanelRow>
 						</div>
 					</ControlsTab>
-
 					<ControlsTab label={ __( 'Settings' ) }>
 						<ControlsGroup title={ __( 'Content Area Spacing' ) }>
 							<div key={ 'space-and-sizing-settings-2' }>
@@ -229,9 +229,7 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 							</div>
 						</ControlsGroup>
 					</ControlsTab>
-
 				</ControlsSection>
-				<OriginalComponent { ...props } />
 			</Fragment>
 		);
 	};

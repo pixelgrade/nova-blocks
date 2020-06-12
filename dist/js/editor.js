@@ -29140,18 +29140,18 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
         enableOverlapping = attributes.enableOverlapping,
         layoutPreset = attributes.layoutPreset,
         blockTopSpacing = attributes.blockTopSpacing,
-        blockBottomSpacing = attributes.blockBottomSpacing,
-        emphasisTopSpacing = attributes.emphasisTopSpacing,
-        emphasisBottomSpacing = attributes.emphasisBottomSpacing;
+        blockBottomSpacing = attributes.blockBottomSpacing;
     var verticalAlignment = attributes.verticalAlignment || 'center';
     var presetOptions = props === null || props === void 0 ? void 0 : (_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$media = _props$settings.media) === null || _props$settings$media === void 0 ? void 0 : (_props$settings$media2 = _props$settings$media.spaceAndSizing) === null || _props$settings$media2 === void 0 ? void 0 : _props$settings$media2.presetOptions;
+    var SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes(props.name) ? -3 : 0;
+    var SPACING_MAX_VALUE = 3;
     var cssVars = {
       '--block-top-spacing': blockTopSpacing,
-      '--block-bottom-spacing': blockBottomSpacing,
-      '--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-      '--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing
+      '--block-bottom-spacing': blockBottomSpacing
     };
-    return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])("div", {
+      style: cssVars
+    }, Object(external_React_["createElement"])(OriginalComponent, props)), Object(external_React_["createElement"])(control_sections_ControlsSection, {
       label: with_space_and_sizing_controls_('Space and Sizing')
     }, !!presetOptions && Object(external_React_["createElement"])(control_sections_ControlsTab, {
       label: with_space_and_sizing_controls_('General')
@@ -29191,8 +29191,8 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
         });
       },
       label: with_space_and_sizing_controls_('Top'),
-      min: -3,
-      max: 3
+      min: SPACING_MIN_VALUE,
+      max: SPACING_MAX_VALUE
     }), Object(external_React_["createElement"])(with_space_and_sizing_controls_RangeControl, {
       key: 'media-card-block-bottom-spacing',
       value: blockBottomSpacing,
@@ -29202,11 +29202,9 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
         });
       },
       label: with_space_and_sizing_controls_('Bottom'),
-      min: -3,
-      max: 3
-    }))))), Object(external_React_["createElement"])("div", {
-      style: cssVars
-    }, Object(external_React_["createElement"])(OriginalComponent, props)));
+      min: SPACING_MIN_VALUE,
+      max: SPACING_MAX_VALUE
+    }))))));
   };
 });
 with_space_and_sizing_controls_addFilter('editor.BlockEdit', 'novablocks/with-space-and-sizing', withSpaceAndSizingControls);
@@ -29223,7 +29221,13 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
         emphasisTopSpacing = attributes.emphasisTopSpacing,
         emphasisBottomSpacing = attributes.emphasisBottomSpacing;
     var verticalAlignment = attributes.verticalAlignment || 'center';
-    return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    var cssVars = {
+      '--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+      '--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing
+    };
+    return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])("div", {
+      style: cssVars
+    }, Object(external_React_["createElement"])(OriginalComponent, props)), Object(external_React_["createElement"])(control_sections_ControlsSection, {
       label: with_space_and_sizing_controls_('Space and Sizing')
     }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
       label: with_space_and_sizing_controls_('Customize')
@@ -29271,7 +29275,7 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
       label: with_space_and_sizing_controls_('Bottom'),
       min: -3,
       max: 3
-    }))))), Object(external_React_["createElement"])(OriginalComponent, props));
+    }))))));
   };
 });
 with_space_and_sizing_controls_addFilter('editor.BlockEdit', 'novablocks/with-space-and-sizing-advanced', withSpaceAndSizingControlsAdvanced);
