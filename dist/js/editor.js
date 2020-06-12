@@ -1926,6 +1926,12 @@ module.exports = isArray;
 
 /***/ }),
 /* 31 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var freeGlobal = __webpack_require__(85);
@@ -1940,22 +1946,16 @@ module.exports = root;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":\"object\"},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"contentColor\":{\"type\":\"string\",\"default\":\"#FFF\"},\"overlayFilterStyle\":{\"type\":\"string\",\"default\":\"dark\"},\"overlayFilterStrength\":{\"type\":\"number\",\"default\":30}}");
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
 
 /***/ }),
 /* 35 */
@@ -2304,7 +2304,7 @@ function _arrayLikeToArray(arr, len) {
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(32);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -3464,7 +3464,7 @@ module.exports = isLength;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(32);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -4397,7 +4397,7 @@ module.exports = isArguments;
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(31),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(32),
     stubFalse = __webpack_require__(147);
 
 /** Detect free variable `exports`. */
@@ -4894,7 +4894,7 @@ module.exports = stubArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(32);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -6490,7 +6490,7 @@ module.exports = isMasked;
 /* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(32);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -7904,7 +7904,7 @@ module.exports = equalByTag;
 /* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(32);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -8153,7 +8153,7 @@ module.exports = getTag;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(32);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -8166,7 +8166,7 @@ module.exports = DataView;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(32);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -8179,7 +8179,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(32);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -12215,7 +12215,7 @@ module.exports = _objectWithoutPropertiesLoose;
 /* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(32);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -14997,7 +14997,7 @@ var groupBy = __webpack_require__(78);
 var groupBy_default = /*#__PURE__*/__webpack_require__.n(groupBy);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(34);
+var external_jQuery_ = __webpack_require__(31);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/control-sections/utils.js
@@ -29002,7 +29002,7 @@ var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(fu
 }), withPostsQueryControls]);
 with_latest_posts_addFilter('editor.BlockEdit', 'novablocks/with-latest-posts', withLatestPosts);
 // EXTERNAL MODULE: ./src/components/advanced-gallery/attributes.json
-var advanced_gallery_attributes = __webpack_require__(32);
+var advanced_gallery_attributes = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/filters/with-advanced-gallery-attributes/index.js
 
@@ -29052,7 +29052,7 @@ function addDopplerAttributes(block) {
 
 with_doppler_attributes_addFilter('blocks.registerBlockType', 'novablocks/add-advanced-gallery-attributes', addDopplerAttributes);
 // EXTERNAL MODULE: ./src/components/color-controls/attributes.json
-var color_controls_attributes = __webpack_require__(33);
+var color_controls_attributes = __webpack_require__(34);
 
 // CONCATENATED MODULE: ./src/filters/with-overlay-color-attributes/index.js
 
