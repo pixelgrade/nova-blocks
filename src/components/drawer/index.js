@@ -29,6 +29,10 @@ const Drawers = ( ownProps ) => {
 	const ref = useRef( null );
 	const [ refMap ] = useState( () => new WeakMap() );
 
+	const noop = () => {};
+	const onOpen = typeof ownProps.onOpen === 'function' ? ownProps.onOpen : noop;
+	const onClose = typeof ownProps.onClose === 'function' ? ownProps.onClose : noop;
+
 	const getDrawerListHeight = () => {
 		return !! ref.current ? ref.current.clientHeight : 0;
 	};
@@ -97,10 +101,7 @@ const Drawers = ( ownProps ) => {
 												onClick={ () => {
 													setActive( target );
 													setOpen( true );
-
-													if ( typeof props.onOpen === "function" ) {
-														props.onOpen();
-													}
+													onOpen();
 												} } />
 										)
 									} )
@@ -132,7 +133,10 @@ const Drawers = ( ownProps ) => {
 
 						return (
 							<div key={ `drawer-panel-${ index }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
-								<DrawerWithProps { ...drawerPanel.props } isActive={ index === active } goBack={ () => { setOpen( false ) } } updateHeight={ updateHeight } />
+								<DrawerWithProps { ...drawerPanel.props } isActive={ index === active } goBack={ () => {
+									setOpen( false );
+									onClose();
+								} } updateHeight={ updateHeight } />
 							</div>
 						)
 

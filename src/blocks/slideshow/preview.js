@@ -104,8 +104,6 @@ const SlideshowPreview = class extends Component {
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 
-		console.log( previewImage );
-
 		return (
 			<Fragment>
 				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>

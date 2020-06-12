@@ -14996,6 +14996,10 @@ var with_settings_withSelect = wp.data.withSelect;
 var groupBy = __webpack_require__(78);
 var groupBy_default = /*#__PURE__*/__webpack_require__.n(groupBy);
 
+// EXTERNAL MODULE: external "jQuery"
+var external_jQuery_ = __webpack_require__(34);
+var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
+
 // CONCATENATED MODULE: ./src/components/control-sections/utils.js
 
 
@@ -17328,6 +17332,11 @@ var drawer_Drawers = function Drawers(ownProps) {
       _useState8 = slicedToArray_default()(_useState7, 1),
       refMap = _useState8[0];
 
+  var noop = function noop() {};
+
+  var onOpen = typeof ownProps.onOpen === 'function' ? ownProps.onOpen : noop;
+  var onClose = typeof ownProps.onClose === 'function' ? ownProps.onClose : noop;
+
   var getDrawerListHeight = function getDrawerListHeight() {
     return !!ref.current ? ref.current.clientHeight : 0;
   };
@@ -17403,10 +17412,7 @@ var drawer_Drawers = function Drawers(ownProps) {
         onClick: function onClick() {
           setActive(target);
           setOpen(true);
-
-          if (typeof props.onOpen === "function") {
-            props.onOpen();
-          }
+          onOpen();
         }
       }));
     }));
@@ -17435,6 +17441,7 @@ var drawer_Drawers = function Drawers(ownProps) {
       isActive: index === active,
       goBack: function goBack() {
         setOpen(false);
+        onClose();
       },
       updateHeight: updateHeight
     })));
@@ -17511,6 +17518,8 @@ var drawer_Drawer = function Drawer(props) {
 // CONCATENATED MODULE: ./src/components/control-sections/index.js
 
 
+// internal dependencies
+
 
 
 
@@ -17523,14 +17532,26 @@ var control_sections_Children = wp.element.Children;
 
 var control_sections_ControlsSectionsComponent = function ControlsSectionsComponent(props) {
   var sections = props.sections;
+  var $advancedControls = external_jQuery_default()('.block-editor-block-inspector__advanced');
 
   var groups = groupBy_default()(sections, function (section) {
     return !!section.props.group ? section.props.group : '';
   });
 
+  var onOpen = function onOpen() {
+    $advancedControls.stop(true).slideUp();
+  };
+
+  var onClose = function onClose() {
+    $advancedControls.stop(true).slideDown();
+  };
+
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-sections"
-  }, Object(external_React_["createElement"])(drawer_Drawers, null, Object(external_React_["createElement"])(DrawerListBefore, null, Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(drawer_Drawers, {
+    onOpen: onOpen,
+    onClose: onClose
+  }, Object(external_React_["createElement"])(DrawerListBefore, null, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__header"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-sections__title"
@@ -19204,10 +19225,6 @@ var easing_easeInOutBack = function easeInOutBack(x) {
   var s = 1.70158;
   return (x /= 0.5) < 1 ? 0.5 * (x * x * (((s *= (readOnlyError_default()("s"), 1.525)) + 1) * x - s)) : 0.5 * ((x -= 2) * x * (((s *= (readOnlyError_default()("s"), 1.525)) + 1) * x + s) + 2);
 };
-// EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(34);
-var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
-
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 
 
@@ -33453,7 +33470,6 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       });
       var attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
       styles.slideshow.minHeight = Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px';
-      console.log(previewImage);
       return Object(external_React_["createElement"])(preview_Fragment, null, !!galleryImages.length && Object(external_React_["createElement"])("div", {
         className: classes.join(' '),
         style: styles.slideshow

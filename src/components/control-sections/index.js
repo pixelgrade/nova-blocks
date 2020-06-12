@@ -1,4 +1,5 @@
 // internal dependencies
+import $ from 'jquery';
 import { groupBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
@@ -20,13 +21,23 @@ const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
+	const $advancedControls = $( '.block-editor-block-inspector__advanced' );
+
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
 	} );
 
+	const onOpen = () => {
+		$advancedControls.stop( true ).slideUp();
+	};
+
+	const onClose = () => {
+		$advancedControls.stop( true ).slideDown();
+	};
+
 	return (
 		<div className="novablocks-sections">
-			<Drawers>
+			<Drawers onOpen={ onOpen } onClose={ onClose }>
 				<DrawerListBefore>
 					<div className="novablocks-sections__header">
 						<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
