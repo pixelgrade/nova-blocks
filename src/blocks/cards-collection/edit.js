@@ -94,7 +94,6 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 		return <BlockListBlock { ...props } />
 	};
 }, 'withCollectionVisibilityAttributes' );
-
 wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
 
 export default withInnerBlocks( CardsCollectionEdit );

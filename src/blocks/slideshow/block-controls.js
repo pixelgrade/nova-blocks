@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import * as icons from '../../icons';
-import { AlignmentToolbar } from '../../components/alignment-controls';
 import { ColorToolbar } from '../../components/color-controls';
 
 /**
@@ -23,6 +22,8 @@ const {
 	MediaUpload,
 } = wp.blockEditor;
 
+const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
+
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const SlideshowBlockControls = function( props ) {
@@ -30,6 +31,7 @@ const SlideshowBlockControls = function( props ) {
 	const {
 		attributes: {
 			galleryImages,
+			contentPosition,
 		},
 		setAttributes,
 	} = props;
@@ -48,7 +50,13 @@ const SlideshowBlockControls = function( props ) {
 
 	return (
 		<BlockControls>
-			<AlignmentToolbar { ...props } />
+			<BlockAlignmentMatrixToolbar
+				label={ __( 'Change content position' ) }
+				value={ contentPosition }
+				onChange={ ( nextPosition ) =>
+					setAttributes( { contentPosition: nextPosition } )
+				}
+			/>
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload

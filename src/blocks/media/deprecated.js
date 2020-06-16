@@ -22,10 +22,10 @@ const deprecated = [];
 
 deprecated.push({
 	attributes: oldGalleryAttributes,
-	isEligible( attributes, innerBlocks ) {
+	isEligible( attributes ) {
 		return "undefined" === typeof attributes.images && typeof "undefined" !== attributes.gallery;
 	},
-	migrate( attributes, innerBlocks ) {
+	migrate( attributes ) {
 		const { gallery, ...newAttributes } = attributes;
 
 		return {
@@ -38,15 +38,27 @@ deprecated.push({
 
 deprecated.push({
 	attributes: oldGalleryAttributes,
-	isEligible( attributes, innerBlocks ) {
+	isEligible( attributes ) {
 		return "undefined" === typeof attributes.defaultsGenerated;
 	},
-	migrate( attributes, innerBlocks ) {
+	migrate( attributes ) {
 		return {
 			...attributes,
 			defaultsGenerated: true
 		};
 	},
+	save,
+});
+
+import alignmentDeprecated from "../../components/alignment-controls/deprecated";
+import alignmentAttributes from "../../components/alignment-controls/attributes";
+
+deprecated.push({
+	attributes: {
+		...blockAttributes,
+		...alignmentAttributes,
+	},
+	...alignmentDeprecated,
 	save,
 });
 

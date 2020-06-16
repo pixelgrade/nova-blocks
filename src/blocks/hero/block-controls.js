@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import * as icons from '../../icons';
-import { AlignmentToolbar, ColorToolbar } from '../../components';
+import { ColorToolbar } from '../../components';
 
 /**
  * WordPress dependencies
@@ -19,16 +19,28 @@ const {
 	Toolbar,
 } = wp.components;
 
+const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
+
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const HeroBlockControls = function( props ) {
+
 	const {
+		attributes: {
+			contentPosition,
+		},
 		setAttributes,
 	} = props;
 
 	return (
 		<BlockControls>
-			<AlignmentToolbar { ...props } />
+			<BlockAlignmentMatrixToolbar
+				label={ __( 'Change content position' ) }
+				value={ contentPosition }
+				onChange={ ( nextPosition ) =>
+					setAttributes( { contentPosition: nextPosition } )
+				}
+			/>
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload

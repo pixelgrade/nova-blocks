@@ -20,7 +20,7 @@ const MediaPreview = function( props ) {
 			mediaPosition,
 			images,
 			// alignment
-			verticalAlignment,
+			contentPosition,
 			emphasisArea,
 
 			contentAreaWidth,
@@ -30,11 +30,16 @@ const MediaPreview = function( props ) {
 		settings,
 	} = props;
 
+	const alignment = contentPosition.split( " " );
+	const verticalAlignment = alignment[0];
+	const horizontalAlignment = alignment[1];
+
 	const classNames = classnames(
 		className,
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`novablocks-u-valign-${ verticalAlignment }`,
+		`novablocks-u-halign-${ horizontalAlignment }`,
 	);
 
 	const passedProps = props;
@@ -45,8 +50,8 @@ const MediaPreview = function( props ) {
 
 	const cssVars = {
 		'--emphasis-area': emphasisArea,
-		'--novablocks-media-content-width': `${contentAreaWidth}%`,
-		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 10 / 100 )`,
+		'--novablocks-media-content-width': `${ contentAreaWidth }%`,
+		'--novablocks-media-gutter': `calc( ${ layoutGutter } * var(--novablocks-spacing) * 10 / 100 )`,
 	};
 
 	const blockClassNames = classnames(

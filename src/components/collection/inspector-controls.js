@@ -5,14 +5,12 @@ import { ControlsSection, ControlsTab } from "../control-sections";
 const { __ } = wp.i18n;
 
 const {
-	PanelBody,
 	PanelRow,
 	RadioControl,
 	RangeControl,
 } = wp.components;
 
 const {
-	InspectorControls,
 	AlignmentToolbar,
 } = wp.blockEditor;
 

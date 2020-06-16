@@ -50,8 +50,7 @@ const SlideshowPreview = class extends Component {
 				contentWidthCustom,
 				minHeight,
 				// alignment
-				verticalAlignment,
-				horizontalAlignment,
+				contentPosition,
 				// colors
 				contentColor,
 				overlayFilterStyle,
@@ -61,6 +60,10 @@ const SlideshowPreview = class extends Component {
 			previewImage,
 			className,
 		} = this.props;
+
+		const alignment = contentPosition.split( " " );
+		const verticalAlignment = alignment[0];
+		const horizontalAlignment = alignment[1];
 
 		const classes = [
 			className,

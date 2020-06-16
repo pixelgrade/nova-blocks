@@ -15,7 +15,6 @@ const {
 
 const {
 	Spinner,
-	TextControl,
 } = wp.components;
 
 const {
@@ -27,10 +26,6 @@ const {
 	compose,
 	createHigherOrderComponent,
 } = wp.compose;
-
-const {
-	Settings
-} = wp.api.models;
 
 // This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
 window.gm_authFailure = function() {

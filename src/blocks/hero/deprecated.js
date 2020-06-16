@@ -6,21 +6,36 @@ import colorAttributes from "../../components/color-controls/attributes";
 import layoutAttributes from "../../components/layout-panel/attributes";
 import scrollingAttributes from "../../components/scrolling-effect-controls/attributes";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
-
 const deprecated = [];
 
 deprecated.push({
-	attributes,
-	isEligible( attributes, innerBlocks ) {
+	attributes: {
+		...blockAttributes,
+		...alignmentAttributes,
+		...colorAttributes,
+		...layoutAttributes,
+		...scrollingAttributes
+	},
+	isEligible( attributes ) {
 		return "undefined" === typeof attributes.defaultsGenerated;
 	},
-	migrate( attributes, innerBlocks ) {
+	migrate( attributes ) {
 		return {
 			...attributes,
 			defaultsGenerated: true
 		};
 	},
+	save,
+});
+
+import alignmentDeprecated from "../../components/alignment-controls/deprecated";
+
+deprecated.push({
+	attributes: {
+		...blockAttributes,
+		...alignmentAttributes,
+	},
+	...alignmentDeprecated,
 	save,
 });
 

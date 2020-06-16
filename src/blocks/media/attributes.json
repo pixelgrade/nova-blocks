@@ -42,5 +42,9 @@
 	"layoutPreset": {
 		"type": "string",
 		"default": "stable"
+	},
+	"contentPosition": {
+		"type": "string",
+		"default": "center center"
 	}
 }

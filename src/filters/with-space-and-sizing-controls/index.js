@@ -4,7 +4,6 @@ import classnames from "classnames";
 import { getControlsClasses } from "../../utils";
 
 import {
-	BlockVerticalAlignmentToolbar,
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
@@ -22,6 +21,10 @@ const {
 const {
 	createHigherOrderComponent
 } = wp.compose;
+
+const {
+	BlockVerticalAlignmentToolbar
+} = wp.blockEditor;
 
 const {
 	Fragment

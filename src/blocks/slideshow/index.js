@@ -6,28 +6,23 @@ import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
 
-import { STORE_NAME } from "../../store";
 import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import generateDefaults from "../../components/generate-defaults";
 
 import blockAttributes from "./attributes"
-import alignmentAttributes from "../../components/alignment-controls/attributes";
 import colorAttributes from "../../components/color-controls/attributes";
 import scrollingAttributes from "../../components/scrolling-effect-controls/attributes";
 import layoutAttributes from "../../components/layout-panel/attributes";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
+const attributes = Object.assign( {}, blockAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
-const { select } = wp.data;
 
 async function getNewDefaults() {
-	const settings = select( STORE_NAME ).getSettings();
 	const placeholderImages = await getPlaceholderImages;
 	const count = getRandomBetween( 2, 4 );
 	const images = getRandomArrayFromArray( placeholderImages, count );

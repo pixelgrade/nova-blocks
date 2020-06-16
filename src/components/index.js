@@ -12,7 +12,6 @@ export { default as PresetControl } from './preset-control';
 export { default as withParallax } from './with-parallax';
 export { default as withSettings } from './with-settings';
 export { default as CardsManager } from './cards-manager';
-export { default as BlockVerticalAlignmentToolbar } from './block-vertical-alignment-toolbar';
 
 export {
 	GalleryPreview,
@@ -41,11 +40,6 @@ export {
 	ColorToolbar,
 	OverlayControls,
 } from './color-controls';
-
-export {
-	AlignmentControls,
-	AlignmentToolbar,
-} from './alignment-controls';
 
 export {
 	ScrollIndicatorPanel,

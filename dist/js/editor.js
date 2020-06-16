@@ -2078,7 +2078,7 @@ module.exports = _typeof;
 /* 42 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false},\"contentPosition\":{\"type\":\"string\",\"default\":\"center center\"}}");
 
 /***/ }),
 /* 43 */
@@ -2725,13 +2725,13 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"wide\
 /* 65 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"contentPosition\":{\"type\":\"string\",\"default\":\"center center\"}}");
 
 /***/ }),
 /* 66 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"galleryImages\":{\"type\":\"array\",\"items\":{\"type\":\"object\"},\"default\":[]},\"slideshowType\":{\"type\":\"string\",\"default\":\"gallery\"},\"minHeight\":{\"type\":\"number\",\"default\":75},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"galleryImages\":{\"type\":\"array\",\"items\":{\"type\":\"object\"},\"default\":[]},\"slideshowType\":{\"type\":\"string\",\"default\":\"gallery\"},\"minHeight\":{\"type\":\"number\",\"default\":75},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false},\"contentPosition\":{\"type\":\"string\",\"default\":\"center center\"}}");
 
 /***/ }),
 /* 67 */
@@ -18875,13 +18875,10 @@ EditableText.Content = function (_ref) {
 
 var inspector_controls_ = wp.i18n.__;
 var inspector_controls_wp$components = wp.components,
-    inspector_controls_PanelBody = inspector_controls_wp$components.PanelBody,
     PanelRow = inspector_controls_wp$components.PanelRow,
     inspector_controls_RadioControl = inspector_controls_wp$components.RadioControl,
     inspector_controls_RangeControl = inspector_controls_wp$components.RangeControl;
-var _wp$blockEditor = wp.blockEditor,
-    inspector_controls_InspectorControls = _wp$blockEditor.InspectorControls,
-    inspector_controls_AlignmentToolbar = _wp$blockEditor.AlignmentToolbar;
+var AlignmentToolbar = wp.blockEditor.AlignmentToolbar;
 
 var inspector_controls_CollectionInspectorControls = function CollectionInspectorControls(props) {
   var _props$attributes = props.attributes,
@@ -18936,7 +18933,7 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
         level: level
       });
     }
-  })), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(inspector_controls_AlignmentToolbar, {
+  })), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Content Alignment', '__plugin_txtd')), Object(external_React_["createElement"])(AlignmentToolbar, {
     value: contentAlign,
     isCollapsed: false,
     onChange: function onChange(contentAlign) {
@@ -19928,490 +19925,6 @@ var cards_manager_CardsManager = function CardsManager(props) {
 };
 
 /* harmony default export */ var cards_manager = (cards_manager_CardsManager);
-// CONCATENATED MODULE: ./src/icons.js
-
-var icons_wp$components = wp.components,
-    icons_SVG = icons_wp$components.SVG,
-    icons_Path = icons_wp$components.Path;
-var nova = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 36 36",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M8 21.2857C8 18.9188 9.91878 17 12.2857 17H13.4545C15.9649 17 18 19.0351 18 21.5455V23.1538C18 25.278 16.278 27 14.1538 27H13.7143C10.5584 27 8 24.4416 8 21.2857Z",
-  fill: "#FFE42E"
-}));
-var hero = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "mask0",
-  "mask-type": "alpha",
-  maskUnits: "userSpaceOnUse",
-  x: "0",
-  y: "0",
-  width: "24",
-  height: "24"
-}, Object(external_React_["createElement"])("rect", {
-  width: "24",
-  height: "24",
-  rx: "12",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("g", {
-  mask: "url(#mask0)"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM4 8.49123C4 6.01079 7.01619 4 10.7368 4H11.619C16.2477 4 20 6.50152 20 9.5873C20 12.3926 16.5888 14.6667 12.381 14.6667H11.5789C7.39321 14.6667 4 12.4045 4 9.61403V8.49123Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M7 18.7143C7 19.4244 7.57563 20 8.28571 20H15.5C16.3284 20 17 19.3284 17 18.5V18.5C17 17.6716 16.3284 17 15.5 17H8.71429C7.76751 17 7 17.7675 7 18.7143V18.7143Z",
-  fill: "#FFE42E"
-})));
-var icons_media = Object(external_React_["createElement"])("svg", {
-  width: "36",
-  height: "36",
-  viewBox: "0 0 36 36",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "path-1-outside-1",
-  maskUnits: "userSpaceOnUse",
-  x: "-2",
-  y: "-2",
-  width: "40",
-  height: "40",
-  fill: "black"
-}, Object(external_React_["createElement"])("rect", {
-  fill: "white",
-  x: "-2",
-  y: "-2",
-  width: "40",
-  height: "40"
-}), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z"
-})), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M2 18C2 9.16344 9.16344 2 18 2V-2C6.95431 -2 -2 6.95431 -2 18H2ZM18 34C9.16344 34 2 26.8366 2 18H-2C-2 29.0457 6.95431 38 18 38V34ZM34 18C34 26.8366 26.8366 34 18 34V38C29.0457 38 38 29.0457 38 18H34ZM18 2C26.8366 2 34 9.16344 34 18H38C38 6.95431 29.0457 -2 18 -2V2ZM16 19.5263C16 23.6539 19.3461 27 23.4737 27V23C21.5552 23 20 21.4448 20 19.5263H16ZM16 18.8095V19.5263H20V18.8095H16ZM24.8095 10C19.9442 10 16 13.9442 16 18.8095H20C20 16.1533 22.1533 14 24.8095 14V10ZM33 18.1905C33 13.667 29.333 10 24.8095 10V14C27.1239 14 29 15.8761 29 18.1905H33ZM33 18.8421V18.1905H29V18.8421H33ZM24.8421 27C29.3476 27 33 23.3476 33 18.8421H29C29 21.1384 27.1384 23 24.8421 23V27ZM23.4737 27H24.8421V23H23.4737V27Z",
-  fill: "white",
-  mask: "url(#path-1-outside-1)"
-}), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 30C8.68629 30 6 27.3137 6 24V14C6 9.58172 9.58172 6 14 6H16C18.728 6 20.9458 8.18475 20.999 10.9C18.0388 12.3471 16 15.3878 16 18.9048V19.8421C16 22.9484 17.9786 25.5925 20.7443 26.5829C20.0821 28.5685 18.2082 30 16 30H12Z",
-  fill: "#FFE42E"
-}));
-var slideshow = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "mask0",
-  "mask-type": "alpha",
-  maskUnits: "userSpaceOnUse",
-  x: "0",
-  y: "0",
-  width: "24",
-  height: "24"
-}, Object(external_React_["createElement"])("rect", {
-  width: "24",
-  height: "24",
-  rx: "12",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("g", {
-  mask: "url(#mask0)"
-}, Object(external_React_["createElement"])("path", {
-  d: "M0 12C0 5.37258 5.37258 0 12 0V0C18.6274 0 24 5.37258 24 12V12C24 18.6274 18.6274 24 12 24V24C5.37258 24 0 18.6274 0 12V12Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M17.3982 8.99283C17.8831 9.39282 17.8831 10.1358 17.3982 10.5357L14.9673 12.5407C14.315 13.0787 13.331 12.6147 13.331 11.7692V7.75933C13.331 6.91386 14.315 6.44992 14.9673 6.98788L17.3982 8.99283Z",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  d: "M6.60184 8.99283C6.11689 9.39282 6.11689 10.1358 6.60184 10.5357L9.03272 12.5407C9.68496 13.0787 10.669 12.6147 10.669 11.7692V7.75933C10.669 6.91386 9.68496 6.44992 9.03272 6.98788L6.60184 8.99283Z",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  d: "M7 18.2751C7 18.8033 7.42818 19.2314 7.95637 19.2314H8.2172C8.7774 19.2314 9.23154 18.7773 9.23154 18.2171V17.8582C9.23154 17.3842 8.84727 16.9999 8.37325 16.9999H8.27517C7.57091 16.9999 7 17.5708 7 18.2751V18.2751Z",
-  fill: "#FFE42E"
-}), Object(external_React_["createElement"])("path", {
-  d: "M10.7192 18.2751C10.7192 18.8033 11.1474 19.2314 11.6756 19.2314H11.9364C12.4966 19.2314 12.9508 18.7773 12.9508 18.2171V17.8582C12.9508 17.3842 12.5665 16.9999 12.0925 16.9999H11.9944C11.2901 16.9999 10.7192 17.5708 10.7192 18.2751V18.2751Z",
-  fill: "#FFE42E"
-}), Object(external_React_["createElement"])("path", {
-  d: "M14.4385 18.2751C14.4385 18.8033 14.8667 19.2314 15.3948 19.2314H15.6557C16.2159 19.2314 16.67 18.7773 16.67 18.2171V17.8582C16.67 17.3842 16.2857 16.9999 15.8117 16.9999H15.7136C15.0094 16.9999 14.4385 17.5708 14.4385 18.2751V18.2751Z",
-  fill: "#FFE42E"
-})));
-var foodmenu = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("mask", {
-  id: "mask0",
-  "mask-type": "alpha",
-  maskUnits: "userSpaceOnUse",
-  x: "0",
-  y: "0",
-  width: "24",
-  height: "24"
-}, Object(external_React_["createElement"])("path", {
-  d: "M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12Z",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("g", {
-  mask: "url(#mask0)"
-}, Object(external_React_["createElement"])("path", {
-  d: "M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z",
-  fill: "#6565F2"
-}), Object(external_React_["createElement"])("path", {
-  d: "M18.0001 9.73684C19.1047 9.73684 20.0394 8.81569 19.7116 7.76087C17.739 1.41304 6.26117 1.41304 4.28861 7.76087C3.96084 8.81569 4.89552 9.73684 6.00009 9.73684H18.0001Z",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  d: "M5 13.1429C5 13.6162 5.38376 14 5.85714 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H6.14286C5.51167 12 5 12.5117 5 13.1429ZM5 17.1429C5 17.6162 5.38376 18 5.85714 18H15C15.5523 18 16 17.5523 16 17C16 16.4477 15.5523 16 15 16H6.14286C5.51167 16 5 16.5117 5 17.1429ZM18 13.1429C18 13.6162 18.3838 14 18.8571 14H19.0909C19.593 14 20 13.593 20 13.0909V12.7692C20 12.3444 19.6556 12 19.2308 12H19.1429C18.5117 12 18 12.5117 18 13.1429ZM18 17.1429C18 17.6162 18.3838 18 18.8571 18H19.0909C19.593 18 20 17.593 20 17.0909V16.7692C20 16.3444 19.6556 16 19.2308 16H19.1429C18.5117 16 18 16.5117 18 17.1429Z",
-  fill: "#FFE42E"
-})));
-var opentable = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM8.85456 12.3999C8.85456 9.09043 11.5325 6.3999 14.8546 6.3999C18.164 6.3999 20.8419 9.09043 20.8546 12.3999C20.8546 15.7094 18.164 18.3999 14.8546 18.3999C11.5451 18.3999 8.85456 15.7094 8.85456 12.3999ZM13.3514 12.3999C13.3514 13.2336 14.0209 13.9031 14.8546 13.9031C15.6756 13.9031 16.3451 13.2336 16.3577 12.3999C16.3577 11.5662 15.6882 10.8967 14.8546 10.8967C14.0209 10.8967 13.3514 11.5662 13.3514 12.3999ZM5.82298 10.8967C4.9893 10.8967 4.31982 11.5662 4.31982 12.3999C4.31982 13.2336 4.9893 13.9031 5.82298 13.9031C6.65667 13.9031 7.32614 13.2336 7.32614 12.3999C7.32614 11.5662 6.65667 10.8967 5.82298 10.8967Z",
-  fill: "#6565F2"
-}));
-var alignBottom = Object(external_React_["createElement"])(icons_SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])(icons_Path, {
-  fill: "none",
-  d: "M0 0h24v24H0V0z"
-}), Object(external_React_["createElement"])(icons_Path, {
-  d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"
-}));
-var alignCenter = Object(external_React_["createElement"])(icons_SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])(icons_Path, {
-  fill: "none",
-  d: "M0 0h24v24H0V0z"
-}), Object(external_React_["createElement"])(icons_Path, {
-  d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
-}));
-var alignTop = Object(external_React_["createElement"])(icons_SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])(icons_Path, {
-  fill: "none",
-  d: "M0 0h24v24H0V0z"
-}), Object(external_React_["createElement"])(icons_Path, {
-  d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"
-}));
-var alignment = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M15.54 5.54L13.77 7.3L12 5.54L10.23 7.3L8.46 5.54L12 2L15.54 5.54ZM18.46 15.54L16.7 13.77L18.46 12L16.7 10.23L18.46 8.46L22 12L18.46 15.54ZM8.46 18.46L10.23 16.7L12 18.46L13.77 16.7L15.54 18.46L12 22L8.46 18.46ZM5.54 8.46L7.3 10.23L5.54 12L7.3 13.77L5.54 15.54L2 12L5.54 8.46Z",
-  fill: "currentColor"
-}), Object(external_React_["createElement"])("path", {
-  d: "M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z",
-  fill: "currentColor"
-}));
-var invert = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M20 15.3099L23.31 11.9999L20 8.68994V3.99994H15.31L12 0.689941L8.69 3.99994H4V8.68994L0.690002 11.9999L4 15.3099V19.9999H8.69L12 23.3099L15.31 19.9999H20V15.3099ZM12 17.9999V5.99994C15.31 5.99994 18 8.68994 18 11.9999C18 15.3099 15.31 17.9999 12 17.9999Z",
-  fill: "currentColor"
-}));
-var swap = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M18 2L20 6H18L16 2H13L15 6H13L11 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V14C8 14.5304 8.21071 15.0391 8.58579 15.4142C8.96086 15.7893 9.46957 16 10 16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V2H18ZM20 14H10V4.4L11.8 8H20V14Z",
-  fill: "currentColor"
-}), Object(external_React_["createElement"])("path", {
-  d: "M14 20H4V10H7V8H4C3.46957 8 2.96086 8.21071 2.58579 8.58579C2.21071 8.96086 2 9.46957 2 10V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H14C14.5304 22 15.0391 21.7893 15.4142 21.4142C15.7893 21.0391 16 20.5304 16 20V17H14V20Z",
-  fill: "currentColor"
-}), Object(external_React_["createElement"])("path", {
-  d: "M5 19H13L11.41 17H9.24L8.4 18.1L7 16.3L5 19Z",
-  fill: "currentColor"
-}));
-var map = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F2",
-  fillRule: "evenodd",
-  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM5.45 10.55a6.55 6.55 0 1113.1 0c0 2.236-2.504 5.893-4.416 8.359a2.677 2.677 0 01-4.268 0c-1.912-2.466-4.415-6.123-4.415-8.36zm3.4-.186a3.15 3.15 0 106.301 0 3.15 3.15 0 00-6.301 0z",
-  clipRule: "evenodd"
-}));
-var announcement = Object(external_React_["createElement"])("svg", {
-  width: "20",
-  height: "20",
-  viewBox: "0 0 18 18",
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F2",
-  fillRule: "evenodd",
-  d: "M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z",
-  clipRule: "evenodd"
-}));
-var headline = Object(external_React_["createElement"])("svg", {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: "24",
-  height: "24",
-  fill: "none",
-  viewBox: "0 0 24 24"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#6565F2",
-  fillRule: "evenodd",
-  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.147 16.208a1 1 0 01-.978.792h-.762a1 1 0 01-.979-1.207l.428-2.023a1 1 0 00-.978-1.207h-2.333a1 1 0 00-.978.792l-.608 2.854A1 1 0 017.98 17h-.746a1 1 0 01-.978-1.208l1.915-9A1 1 0 019.15 6h.754a1 1 0 01.978 1.207l-.403 1.9a1 1 0 00.979 1.208h2.332a1 1 0 00.978-.791l.584-2.733a1 1 0 01.978-.79h.754a1 1 0 01.978 1.207l-1.915 9z",
-  clipRule: "evenodd"
-}));
-var header = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M0 12C0 5.37258 5.37258 0 12 0c6.6274 0 12 5.37258 12 12 0 6.6274-5.3726 12-12 12-6.62742 0-12-5.3726-12-12zm10 7c-.55228 0-1-.4477-1-1s.44772-1 1-1h4c.5523 0 1 .4477 1 1s-.4477 1-1 1h-4zm0 2c-1.65685 0-3-1.3431-3-3s1.34315-3 3-3h4c1.6569 0 3 1.3431 3 3s-1.3431 3-3 3h-4zM8 4C5.79086 4 4 5.79086 4 8v3c0 1.1046.89543 2 2 2h12c1.1046 0 2-.8954 2-2V8c0-2.20914-1.7909-4-4-4H8z",
-  fill: "#6565F2"
-}));
-var logo = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zm0 7c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5 2.7614 0 5-2.2386 5-5 0-2.76142-2.2386-5-5-5zm-7 5c0 3.866 3.13401 7 7 7 3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7-3.86599 0-7 3.13401-7 7z",
-  fill: "#6565F2"
-}));
-var navigation = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
-  fill: "#6565F2"
-}));
-var openhours = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("g", {
-  clipPath: "url(#clip0)"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z",
-  fill: "#6565F2"
-})), Object(external_React_["createElement"])("defs", null, Object(external_React_["createElement"])("clipPath", {
-  id: "clip0"
-}, Object(external_React_["createElement"])("path", {
-  fill: "#fff",
-  d: "M0 0h24v24H0z"
-}))));
-var placeholder = Object(external_React_["createElement"])("svg", {
-  width: "100",
-  height: "67",
-  viewBox: "0 0 100 67",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  d: "M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z",
-  fill: "#323067"
-}), Object(external_React_["createElement"])("path", {
-  d: "M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z",
-  fill: "#323067"
-}));
-var card = Object(external_React_["createElement"])("svg", {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("rect", {
-  y: "24",
-  width: "24",
-  height: "24",
-  rx: "12",
-  transform: "rotate(-90 0 24)",
-  fill: "white"
-}), Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
-  fill: "#6565F2"
-}));
-var icons_gallery = Object(external_React_["createElement"])("svg", {
-  viewBox: "0 0 24 24",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, Object(external_React_["createElement"])("path", {
-  fillRule: "evenodd",
-  clipRule: "evenodd",
-  d: "M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM17 17C19.2091 17 21 15.2091 21 13C21 11.8954 20.1046 11 19 11H16C14.8954 11 14 11.8954 14 13V15C14 16.1046 14.8954 17 16 17H17ZM8 20C5.79086 20 4 18.2091 4 16V8C4 6.48581 4.84135 5.16813 6.08206 4.48894C7.05095 3.95855 8 4.89543 8 6V9C8 10.1046 8.89543 11 10 11C11.1046 11 12 11.8954 12 13V18C12 19.1046 11.1046 20 10 20H8ZM16 9C17.1046 9 18 8.10457 18 7C18 4.79086 16.2091 3 14 3H12C10.8954 3 10 3.89543 10 5V7C10 8.10457 10.8954 9 12 9H16Z",
-  fill: "#6565F2"
-}));
-// CONCATENATED MODULE: ./src/components/block-vertical-alignment-toolbar/index.js
-
-
-
-
-function block_vertical_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function block_vertical_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_vertical_alignment_toolbar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_vertical_alignment_toolbar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var _x = wp.i18n._x;
-var Toolbar = wp.components.Toolbar;
-var withViewportMatch = wp.viewport.withViewportMatch;
-var block_vertical_alignment_toolbar_withSelect = wp.data.withSelect;
-var block_vertical_alignment_toolbar_wp$compose = wp.compose,
-    block_vertical_alignment_toolbar_compose = block_vertical_alignment_toolbar_wp$compose.compose,
-    block_vertical_alignment_toolbar_createHigherOrderComponent = block_vertical_alignment_toolbar_wp$compose.createHigherOrderComponent;
-var block_vertical_alignment_toolbar_createContext = wp.element.createContext;
-
-var components_block_vertical_alignment_toolbar_createContext = block_vertical_alignment_toolbar_createContext({
-  name: '',
-  isSelected: false,
-  focusedElement: null,
-  setFocusedElement: function setFocusedElement() {},
-  clientId: null
-}),
-    block_vertical_alignment_toolbar_Consumer = components_block_vertical_alignment_toolbar_createContext.Consumer;
-
-var BLOCK_ALIGNMENTS_CONTROLS = {
-  top: {
-    icon: alignTop,
-    title: _x('Vertically Align Top', 'Block vertical alignment setting')
-  },
-  center: {
-    icon: alignCenter,
-    title: _x('Vertically Align Middle', 'Block vertical alignment setting')
-  },
-  bottom: {
-    icon: alignBottom,
-    title: _x('Vertically Align Bottom', 'Block vertical alignment setting')
-  }
-};
-var DEFAULT_CONTROLS = ['top', 'center', 'bottom'];
-var DEFAULT_CONTROL = 'top';
-function BlockVerticalAlignmentToolbar(_ref) {
-  var isCollapsed = _ref.isCollapsed,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      _ref$controls = _ref.controls,
-      controls = _ref$controls === void 0 ? DEFAULT_CONTROLS : _ref$controls;
-
-  function applyOrUnset(align) {
-    return function () {
-      return onChange(value === align ? undefined : align);
-    };
-  }
-
-  var activeAlignment = BLOCK_ALIGNMENTS_CONTROLS[value];
-  var defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS[DEFAULT_CONTROL];
-  return Object(external_React_["createElement"])(Toolbar, {
-    isCollapsed: isCollapsed,
-    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-    label: _x('Change Alignment', 'Block vertical alignment setting label'),
-    controls: controls.map(function (control) {
-      return block_vertical_alignment_toolbar_objectSpread(block_vertical_alignment_toolbar_objectSpread({}, BLOCK_ALIGNMENTS_CONTROLS[control]), {}, {
-        isActive: value === control,
-        onClick: applyOrUnset(control)
-      });
-    })
-  });
-} // @todo remove function declaration and use core method when exposed through the api
-
-var block_vertical_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
-  return block_vertical_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
-    return function (props) {
-      return Object(external_React_["createElement"])(block_vertical_alignment_toolbar_Consumer, null, function (context) {
-        return Object(external_React_["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
-      });
-    };
-  }, 'withBlockEditContext');
-};
-/**
- * @see https://github.com/WordPress/gutenberg/blob/master/packages/block-editor/src/components/block-vertical-alignment-toolbar/README.md
- */
-
-
-/* harmony default export */ var block_vertical_alignment_toolbar = (block_vertical_alignment_toolbar_compose(block_vertical_alignment_toolbar_withBlockEditContext(function (_ref2) {
-  var clientId = _ref2.clientId;
-  return {
-    clientId: clientId
-  };
-}), withViewportMatch({
-  isLargeViewport: 'medium'
-}), block_vertical_alignment_toolbar_withSelect(function (select, _ref3) {
-  var clientId = _ref3.clientId,
-      isLargeViewport = _ref3.isLargeViewport,
-      isCollapsed = _ref3.isCollapsed;
-
-  var _select = select('core/block-editor'),
-      getBlockRootClientId = _select.getBlockRootClientId,
-      getSettings = _select.getSettings;
-
-  return {
-    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
-  };
-}))(BlockVerticalAlignmentToolbar));
 // CONCATENATED MODULE: ./src/components/gallery-options/index.js
 
 
@@ -20684,6 +20197,377 @@ var notice_Notice = function Notice(props) {
 };
 
 /* harmony default export */ var notice = (notice_Notice);
+// CONCATENATED MODULE: ./src/icons.js
+
+var icons_wp$components = wp.components,
+    icons_SVG = icons_wp$components.SVG,
+    icons_Path = icons_wp$components.Path;
+var nova = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 36 36",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M8 21.2857C8 18.9188 9.91878 17 12.2857 17H13.4545C15.9649 17 18 19.0351 18 21.5455V23.1538C18 25.278 16.278 27 14.1538 27H13.7143C10.5584 27 8 24.4416 8 21.2857Z",
+  fill: "#FFE42E"
+}));
+var hero = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "mask0",
+  "mask-type": "alpha",
+  maskUnits: "userSpaceOnUse",
+  x: "0",
+  y: "0",
+  width: "24",
+  height: "24"
+}, Object(external_React_["createElement"])("rect", {
+  width: "24",
+  height: "24",
+  rx: "12",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("g", {
+  mask: "url(#mask0)"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM4 8.49123C4 6.01079 7.01619 4 10.7368 4H11.619C16.2477 4 20 6.50152 20 9.5873C20 12.3926 16.5888 14.6667 12.381 14.6667H11.5789C7.39321 14.6667 4 12.4045 4 9.61403V8.49123Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M7 18.7143C7 19.4244 7.57563 20 8.28571 20H15.5C16.3284 20 17 19.3284 17 18.5V18.5C17 17.6716 16.3284 17 15.5 17H8.71429C7.76751 17 7 17.7675 7 18.7143V18.7143Z",
+  fill: "#FFE42E"
+})));
+var icons_media = Object(external_React_["createElement"])("svg", {
+  width: "36",
+  height: "36",
+  viewBox: "0 0 36 36",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "path-1-outside-1",
+  maskUnits: "userSpaceOnUse",
+  x: "-2",
+  y: "-2",
+  width: "40",
+  height: "40",
+  fill: "black"
+}, Object(external_React_["createElement"])("rect", {
+  fill: "white",
+  x: "-2",
+  y: "-2",
+  width: "40",
+  height: "40"
+}), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z"
+})), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0ZM23.4737 25C20.4507 25 18 22.5493 18 19.5263V18.8095C18 15.0487 21.0487 12 24.8095 12C28.2284 12 31 14.7716 31 18.1905V18.8421C31 22.243 28.243 25 24.8421 25H23.4737Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M2 18C2 9.16344 9.16344 2 18 2V-2C6.95431 -2 -2 6.95431 -2 18H2ZM18 34C9.16344 34 2 26.8366 2 18H-2C-2 29.0457 6.95431 38 18 38V34ZM34 18C34 26.8366 26.8366 34 18 34V38C29.0457 38 38 29.0457 38 18H34ZM18 2C26.8366 2 34 9.16344 34 18H38C38 6.95431 29.0457 -2 18 -2V2ZM16 19.5263C16 23.6539 19.3461 27 23.4737 27V23C21.5552 23 20 21.4448 20 19.5263H16ZM16 18.8095V19.5263H20V18.8095H16ZM24.8095 10C19.9442 10 16 13.9442 16 18.8095H20C20 16.1533 22.1533 14 24.8095 14V10ZM33 18.1905C33 13.667 29.333 10 24.8095 10V14C27.1239 14 29 15.8761 29 18.1905H33ZM33 18.8421V18.1905H29V18.8421H33ZM24.8421 27C29.3476 27 33 23.3476 33 18.8421H29C29 21.1384 27.1384 23 24.8421 23V27ZM23.4737 27H24.8421V23H23.4737V27Z",
+  fill: "white",
+  mask: "url(#path-1-outside-1)"
+}), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 30C8.68629 30 6 27.3137 6 24V14C6 9.58172 9.58172 6 14 6H16C18.728 6 20.9458 8.18475 20.999 10.9C18.0388 12.3471 16 15.3878 16 18.9048V19.8421C16 22.9484 17.9786 25.5925 20.7443 26.5829C20.0821 28.5685 18.2082 30 16 30H12Z",
+  fill: "#FFE42E"
+}));
+var slideshow = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "mask0",
+  "mask-type": "alpha",
+  maskUnits: "userSpaceOnUse",
+  x: "0",
+  y: "0",
+  width: "24",
+  height: "24"
+}, Object(external_React_["createElement"])("rect", {
+  width: "24",
+  height: "24",
+  rx: "12",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("g", {
+  mask: "url(#mask0)"
+}, Object(external_React_["createElement"])("path", {
+  d: "M0 12C0 5.37258 5.37258 0 12 0V0C18.6274 0 24 5.37258 24 12V12C24 18.6274 18.6274 24 12 24V24C5.37258 24 0 18.6274 0 12V12Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M17.3982 8.99283C17.8831 9.39282 17.8831 10.1358 17.3982 10.5357L14.9673 12.5407C14.315 13.0787 13.331 12.6147 13.331 11.7692V7.75933C13.331 6.91386 14.315 6.44992 14.9673 6.98788L17.3982 8.99283Z",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  d: "M6.60184 8.99283C6.11689 9.39282 6.11689 10.1358 6.60184 10.5357L9.03272 12.5407C9.68496 13.0787 10.669 12.6147 10.669 11.7692V7.75933C10.669 6.91386 9.68496 6.44992 9.03272 6.98788L6.60184 8.99283Z",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  d: "M7 18.2751C7 18.8033 7.42818 19.2314 7.95637 19.2314H8.2172C8.7774 19.2314 9.23154 18.7773 9.23154 18.2171V17.8582C9.23154 17.3842 8.84727 16.9999 8.37325 16.9999H8.27517C7.57091 16.9999 7 17.5708 7 18.2751V18.2751Z",
+  fill: "#FFE42E"
+}), Object(external_React_["createElement"])("path", {
+  d: "M10.7192 18.2751C10.7192 18.8033 11.1474 19.2314 11.6756 19.2314H11.9364C12.4966 19.2314 12.9508 18.7773 12.9508 18.2171V17.8582C12.9508 17.3842 12.5665 16.9999 12.0925 16.9999H11.9944C11.2901 16.9999 10.7192 17.5708 10.7192 18.2751V18.2751Z",
+  fill: "#FFE42E"
+}), Object(external_React_["createElement"])("path", {
+  d: "M14.4385 18.2751C14.4385 18.8033 14.8667 19.2314 15.3948 19.2314H15.6557C16.2159 19.2314 16.67 18.7773 16.67 18.2171V17.8582C16.67 17.3842 16.2857 16.9999 15.8117 16.9999H15.7136C15.0094 16.9999 14.4385 17.5708 14.4385 18.2751V18.2751Z",
+  fill: "#FFE42E"
+})));
+var foodmenu = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("mask", {
+  id: "mask0",
+  "mask-type": "alpha",
+  maskUnits: "userSpaceOnUse",
+  x: "0",
+  y: "0",
+  width: "24",
+  height: "24"
+}, Object(external_React_["createElement"])("path", {
+  d: "M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12Z",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("g", {
+  mask: "url(#mask0)"
+}, Object(external_React_["createElement"])("path", {
+  d: "M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z",
+  fill: "#6565F2"
+}), Object(external_React_["createElement"])("path", {
+  d: "M18.0001 9.73684C19.1047 9.73684 20.0394 8.81569 19.7116 7.76087C17.739 1.41304 6.26117 1.41304 4.28861 7.76087C3.96084 8.81569 4.89552 9.73684 6.00009 9.73684H18.0001Z",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  d: "M5 13.1429C5 13.6162 5.38376 14 5.85714 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H6.14286C5.51167 12 5 12.5117 5 13.1429ZM5 17.1429C5 17.6162 5.38376 18 5.85714 18H15C15.5523 18 16 17.5523 16 17C16 16.4477 15.5523 16 15 16H6.14286C5.51167 16 5 16.5117 5 17.1429ZM18 13.1429C18 13.6162 18.3838 14 18.8571 14H19.0909C19.593 14 20 13.593 20 13.0909V12.7692C20 12.3444 19.6556 12 19.2308 12H19.1429C18.5117 12 18 12.5117 18 13.1429ZM18 17.1429C18 17.6162 18.3838 18 18.8571 18H19.0909C19.593 18 20 17.593 20 17.0909V16.7692C20 16.3444 19.6556 16 19.2308 16H19.1429C18.5117 16 18 16.5117 18 17.1429Z",
+  fill: "#FFE42E"
+})));
+var opentable = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM8.85456 12.3999C8.85456 9.09043 11.5325 6.3999 14.8546 6.3999C18.164 6.3999 20.8419 9.09043 20.8546 12.3999C20.8546 15.7094 18.164 18.3999 14.8546 18.3999C11.5451 18.3999 8.85456 15.7094 8.85456 12.3999ZM13.3514 12.3999C13.3514 13.2336 14.0209 13.9031 14.8546 13.9031C15.6756 13.9031 16.3451 13.2336 16.3577 12.3999C16.3577 11.5662 15.6882 10.8967 14.8546 10.8967C14.0209 10.8967 13.3514 11.5662 13.3514 12.3999ZM5.82298 10.8967C4.9893 10.8967 4.31982 11.5662 4.31982 12.3999C4.31982 13.2336 4.9893 13.9031 5.82298 13.9031C6.65667 13.9031 7.32614 13.2336 7.32614 12.3999C7.32614 11.5662 6.65667 10.8967 5.82298 10.8967Z",
+  fill: "#6565F2"
+}));
+var alignBottom = Object(external_React_["createElement"])(icons_SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])(icons_Path, {
+  fill: "none",
+  d: "M0 0h24v24H0V0z"
+}), Object(external_React_["createElement"])(icons_Path, {
+  d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"
+}));
+var alignCenter = Object(external_React_["createElement"])(icons_SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])(icons_Path, {
+  fill: "none",
+  d: "M0 0h24v24H0V0z"
+}), Object(external_React_["createElement"])(icons_Path, {
+  d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
+}));
+var alignTop = Object(external_React_["createElement"])(icons_SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])(icons_Path, {
+  fill: "none",
+  d: "M0 0h24v24H0V0z"
+}), Object(external_React_["createElement"])(icons_Path, {
+  d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"
+}));
+var icons_alignment = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M15.54 5.54L13.77 7.3L12 5.54L10.23 7.3L8.46 5.54L12 2L15.54 5.54ZM18.46 15.54L16.7 13.77L18.46 12L16.7 10.23L18.46 8.46L22 12L18.46 15.54ZM8.46 18.46L10.23 16.7L12 18.46L13.77 16.7L15.54 18.46L12 22L8.46 18.46ZM5.54 8.46L7.3 10.23L5.54 12L7.3 13.77L5.54 15.54L2 12L5.54 8.46Z",
+  fill: "currentColor"
+}), Object(external_React_["createElement"])("path", {
+  d: "M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z",
+  fill: "currentColor"
+}));
+var invert = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M20 15.3099L23.31 11.9999L20 8.68994V3.99994H15.31L12 0.689941L8.69 3.99994H4V8.68994L0.690002 11.9999L4 15.3099V19.9999H8.69L12 23.3099L15.31 19.9999H20V15.3099ZM12 17.9999V5.99994C15.31 5.99994 18 8.68994 18 11.9999C18 15.3099 15.31 17.9999 12 17.9999Z",
+  fill: "currentColor"
+}));
+var swap = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M18 2L20 6H18L16 2H13L15 6H13L11 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V14C8 14.5304 8.21071 15.0391 8.58579 15.4142C8.96086 15.7893 9.46957 16 10 16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V2H18ZM20 14H10V4.4L11.8 8H20V14Z",
+  fill: "currentColor"
+}), Object(external_React_["createElement"])("path", {
+  d: "M14 20H4V10H7V8H4C3.46957 8 2.96086 8.21071 2.58579 8.58579C2.21071 8.96086 2 9.46957 2 10V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H14C14.5304 22 15.0391 21.7893 15.4142 21.4142C15.7893 21.0391 16 20.5304 16 20V17H14V20Z",
+  fill: "currentColor"
+}), Object(external_React_["createElement"])("path", {
+  d: "M5 19H13L11.41 17H9.24L8.4 18.1L7 16.3L5 19Z",
+  fill: "currentColor"
+}));
+var map = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  fill: "none"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F2",
+  fillRule: "evenodd",
+  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM5.45 10.55a6.55 6.55 0 1113.1 0c0 2.236-2.504 5.893-4.416 8.359a2.677 2.677 0 01-4.268 0c-1.912-2.466-4.415-6.123-4.415-8.36zm3.4-.186a3.15 3.15 0 106.301 0 3.15 3.15 0 00-6.301 0z",
+  clipRule: "evenodd"
+}));
+var announcement = Object(external_React_["createElement"])("svg", {
+  width: "20",
+  height: "20",
+  viewBox: "0 0 18 18",
+  xmlns: "http://www.w3.org/2000/svg",
+  fill: "none"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F2",
+  fillRule: "evenodd",
+  d: "M2 0a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2H2zm14 2H2v4h14V2z",
+  clipRule: "evenodd"
+}));
+var headline = Object(external_React_["createElement"])("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  fill: "none",
+  viewBox: "0 0 24 24"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#6565F2",
+  fillRule: "evenodd",
+  d: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.147 16.208a1 1 0 01-.978.792h-.762a1 1 0 01-.979-1.207l.428-2.023a1 1 0 00-.978-1.207h-2.333a1 1 0 00-.978.792l-.608 2.854A1 1 0 017.98 17h-.746a1 1 0 01-.978-1.208l1.915-9A1 1 0 019.15 6h.754a1 1 0 01.978 1.207l-.403 1.9a1 1 0 00.979 1.208h2.332a1 1 0 00.978-.791l.584-2.733a1 1 0 01.978-.79h.754a1 1 0 01.978 1.207l-1.915 9z",
+  clipRule: "evenodd"
+}));
+var header = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M0 12C0 5.37258 5.37258 0 12 0c6.6274 0 12 5.37258 12 12 0 6.6274-5.3726 12-12 12-6.62742 0-12-5.3726-12-12zm10 7c-.55228 0-1-.4477-1-1s.44772-1 1-1h4c.5523 0 1 .4477 1 1s-.4477 1-1 1h-4zm0 2c-1.65685 0-3-1.3431-3-3s1.34315-3 3-3h4c1.6569 0 3 1.3431 3 3s-1.3431 3-3 3h-4zM8 4C5.79086 4 4 5.79086 4 8v3c0 1.1046.89543 2 2 2h12c1.1046 0 2-.8954 2-2V8c0-2.20914-1.7909-4-4-4H8z",
+  fill: "#6565F2"
+}));
+var logo = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zm0 7c-2.76142 0-5 2.23858-5 5 0 2.7614 2.23858 5 5 5 2.7614 0 5-2.2386 5-5 0-2.76142-2.2386-5-5-5zm-7 5c0 3.866 3.13401 7 7 7 3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7-3.86599 0-7 3.13401-7 7z",
+  fill: "#6565F2"
+}));
+var navigation = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM5.85714 8C5.38376 8 5 7.61624 5 7.14286 5 6.51167 5.51167 6 6.14286 6H18c.5523 0 1 .44772 1 1s-.4477 1-1 1H5.85714zM5 12.1429c0 .4733.38376.8571.85714.8571H18c.5523 0 1-.4477 1-1s-.4477-1-1-1H6.14286C5.51167 11 5 11.5117 5 12.1429zM5.85714 18C5.38376 18 5 17.6162 5 17.1429 5 16.5117 5.51167 16 6.14286 16H18c.5523 0 1 .4477 1 1s-.4477 1-1 1H5.85714z",
+  fill: "#6565F2"
+}));
+var openhours = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("g", {
+  clipPath: "url(#clip0)"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z",
+  fill: "#6565F2"
+})), Object(external_React_["createElement"])("defs", null, Object(external_React_["createElement"])("clipPath", {
+  id: "clip0"
+}, Object(external_React_["createElement"])("path", {
+  fill: "#fff",
+  d: "M0 0h24v24H0z"
+}))));
+var placeholder = Object(external_React_["createElement"])("svg", {
+  width: "100",
+  height: "67",
+  viewBox: "0 0 100 67",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  d: "M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z",
+  fill: "#323067"
+}), Object(external_React_["createElement"])("path", {
+  d: "M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z",
+  fill: "#323067"
+}));
+var card = Object(external_React_["createElement"])("svg", {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("rect", {
+  y: "24",
+  width: "24",
+  height: "24",
+  rx: "12",
+  transform: "rotate(-90 0 24)",
+  fill: "white"
+}), Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12ZM20 14.5455C20 17.5579 17.5579 20 14.5455 20H10.1538C6.75517 20 4 17.2448 4 13.8462C4 11.9122 5.42745 10.3116 7.28625 10.0405C8.25862 11.9925 10.2743 13.3335 12.6032 13.3335H13.2281C15.1634 13.3335 16.8296 12.1814 17.5783 10.5256C19.0187 11.2882 20 12.8022 20 14.5455ZM13.0175 12C15.0329 12 16.6667 10.3662 16.6667 8.35088V7.4386C16.6667 5.17132 14.8287 3.33333 12.5614 3.33333H12.127C9.84771 3.33333 8 5.18105 8 7.46032C8 9.96751 10.0325 12 12.5397 12H13.0175Z",
+  fill: "#6565F2"
+}));
+var icons_gallery = Object(external_React_["createElement"])("svg", {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, Object(external_React_["createElement"])("path", {
+  fillRule: "evenodd",
+  clipRule: "evenodd",
+  d: "M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM17 17C19.2091 17 21 15.2091 21 13C21 11.8954 20.1046 11 19 11H16C14.8954 11 14 11.8954 14 13V15C14 16.1046 14.8954 17 16 17H17ZM8 20C5.79086 20 4 18.2091 4 16V8C4 6.48581 4.84135 5.16813 6.08206 4.48894C7.05095 3.95855 8 4.89543 8 6V9C8 10.1046 8.89543 11 10 11C11.1046 11 12 11.8954 12 13V18C12 19.1046 11.1046 20 10 20H8ZM16 9C17.1046 9 18 8.10457 18 7C18 4.79086 16.2091 3 14 3H12C10.8954 3 10 3.89543 10 5V7C10 8.10457 10.8954 9 12 9H16Z",
+  fill: "#6565F2"
+}));
 // CONCATENATED MODULE: ./src/components/color-controls/index.js
 
 
@@ -20703,7 +20587,7 @@ var color_controls_wp$components = wp.components,
     color_controls_Button = color_controls_wp$components.Button,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
-    color_controls_Toolbar = color_controls_wp$components.Toolbar,
+    Toolbar = color_controls_wp$components.Toolbar,
     BaseControl = color_controls_wp$components.BaseControl;
 var PanelColorSettings = wp.blockEditor.PanelColorSettings;
 var color_controls_colors = [{
@@ -20791,7 +20675,7 @@ var color_controls_ColorPanel = function ColorPanel(props) {
 };
 
 var color_controls_ColorToolbar = function ColorToolbar(props) {
-  return Object(external_React_["createElement"])(color_controls_Toolbar, {
+  return Object(external_React_["createElement"])(Toolbar, {
     className: "pixelgrade-hero-block-toolbar"
   }, Object(external_React_["createElement"])(Dropdown, {
     position: "bottom",
@@ -20812,189 +20696,6 @@ var color_controls_ColorToolbar = function ColorToolbar(props) {
       return Object(external_React_["createElement"])(color_controls_Fragment, null, Object(external_React_["createElement"])(color_controls_ColorControls, props), Object(external_React_["createElement"])(color_controls_OverlayControls, props));
     }
   }));
-};
-
-
-// CONCATENATED MODULE: ./src/components/block-horizontal-alignment-toolbar/index.js
-
-
-
-
-function block_horizontal_alignment_toolbar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function block_horizontal_alignment_toolbar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_horizontal_alignment_toolbar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_horizontal_alignment_toolbar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * Internal dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-var block_horizontal_alignment_toolbar_ = wp.i18n.__;
-var block_horizontal_alignment_toolbar_Toolbar = wp.components.Toolbar;
-var block_horizontal_alignment_toolbar_withViewportMatch = wp.viewport.withViewportMatch;
-var block_horizontal_alignment_toolbar_withSelect = wp.data.withSelect;
-var block_horizontal_alignment_toolbar_wp$compose = wp.compose,
-    block_horizontal_alignment_toolbar_compose = block_horizontal_alignment_toolbar_wp$compose.compose,
-    block_horizontal_alignment_toolbar_createHigherOrderComponent = block_horizontal_alignment_toolbar_wp$compose.createHigherOrderComponent;
-var block_horizontal_alignment_toolbar_createContext = wp.element.createContext;
-
-var components_block_horizontal_alignment_toolbar_createContext = block_horizontal_alignment_toolbar_createContext({
-  name: '',
-  isSelected: false,
-  focusedElement: null,
-  setFocusedElement: function setFocusedElement() {},
-  clientId: null
-}),
-    block_horizontal_alignment_toolbar_Consumer = components_block_horizontal_alignment_toolbar_createContext.Consumer;
-
-var block_horizontal_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS = {
-  left: {
-    icon: alignTop,
-    title: block_horizontal_alignment_toolbar_('Align Left', '__plugin_txtd')
-  },
-  center: {
-    icon: alignCenter,
-    title: block_horizontal_alignment_toolbar_('Align Middle', '__plugin_txtd')
-  },
-  right: {
-    icon: alignBottom,
-    title: block_horizontal_alignment_toolbar_('Align Right', '__plugin_txtd')
-  }
-};
-var block_horizontal_alignment_toolbar_DEFAULT_CONTROLS = ['left', 'center', 'right'];
-var block_horizontal_alignment_toolbar_DEFAULT_CONTROL = 'center';
-function BlockHorizontalAlignmentToolbar(_ref) {
-  var isCollapsed = _ref.isCollapsed,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      _ref$controls = _ref.controls,
-      controls = _ref$controls === void 0 ? block_horizontal_alignment_toolbar_DEFAULT_CONTROLS : _ref$controls;
-
-  function applyOrUnset(align) {
-    return function () {
-      return onChange(value === align ? undefined : align);
-    };
-  }
-
-  var activeAlignment = block_horizontal_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[value];
-  var defaultAlignmentControl = block_horizontal_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[block_horizontal_alignment_toolbar_DEFAULT_CONTROL];
-  return Object(external_React_["createElement"])(block_horizontal_alignment_toolbar_Toolbar, {
-    isCollapsed: isCollapsed,
-    icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-    controls: controls.map(function (control) {
-      return block_horizontal_alignment_toolbar_objectSpread(block_horizontal_alignment_toolbar_objectSpread({}, block_horizontal_alignment_toolbar_BLOCK_ALIGNMENTS_CONTROLS[control]), {}, {
-        isActive: value === control,
-        onClick: applyOrUnset(control),
-        className: 'pixelgrade-hero-horizontal-alignment-button'
-      });
-    })
-  });
-} // @todo remove function declaration and use core method when exposed through the api
-
-var block_horizontal_alignment_toolbar_withBlockEditContext = function withBlockEditContext(mapContextToProps) {
-  return block_horizontal_alignment_toolbar_createHigherOrderComponent(function (OriginalComponent) {
-    return function (props) {
-      return Object(external_React_["createElement"])(block_horizontal_alignment_toolbar_Consumer, null, function (context) {
-        return Object(external_React_["createElement"])(OriginalComponent, extends_default()({}, props, mapContextToProps(context, props)));
-      });
-    };
-  }, 'withBlockEditContext');
-};
-
-/* harmony default export */ var block_horizontal_alignment_toolbar = (block_horizontal_alignment_toolbar_compose(block_horizontal_alignment_toolbar_withBlockEditContext(function (_ref2) {
-  var clientId = _ref2.clientId;
-  return {
-    clientId: clientId
-  };
-}), block_horizontal_alignment_toolbar_withViewportMatch({
-  isLargeViewport: 'medium'
-}), block_horizontal_alignment_toolbar_withSelect(function (select, _ref3) {
-  var clientId = _ref3.clientId,
-      isLargeViewport = _ref3.isLargeViewport,
-      isCollapsed = _ref3.isCollapsed;
-
-  var _select = select('core/block-editor'),
-      getBlockRootClientId = _select.getBlockRootClientId,
-      getSettings = _select.getSettings;
-
-  return {
-    isCollapsed: isCollapsed || !isLargeViewport || !getSettings().hasFixedToolbar && getBlockRootClientId(clientId)
-  };
-}))(BlockHorizontalAlignmentToolbar));
-// CONCATENATED MODULE: ./src/components/alignment-controls/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * WordPress dependencies
- */
-
-var alignment_controls_ = wp.i18n.__;
-var alignment_controls_Fragment = wp.element.Fragment;
-var alignment_controls_wp$components = wp.components,
-    alignment_controls_Dropdown = alignment_controls_wp$components.Dropdown,
-    alignment_controls_Button = alignment_controls_wp$components.Button,
-    alignment_controls_PanelRow = alignment_controls_wp$components.PanelRow,
-    alignment_controls_Toolbar = alignment_controls_wp$components.Toolbar;
-
-var alignment_controls_AlignmentToolbar = function AlignmentToolbar(props) {
-  return Object(external_React_["createElement"])(alignment_controls_Toolbar, {
-    className: "pixelgrade-hero-block-toolbar"
-  }, Object(external_React_["createElement"])(alignment_controls_Dropdown, {
-    position: "bottom",
-    className: "pixelgrade-hero-block-toolbar-dropdown",
-    contentClassName: "components-nova--popover",
-    renderToggle: function renderToggle(_ref) {
-      var isOpen = _ref.isOpen,
-          onToggle = _ref.onToggle;
-      return Object(external_React_["createElement"])(alignment_controls_Button, {
-        onClick: onToggle,
-        icon: alignment,
-        "aria-expanded": isOpen,
-        label: alignment_controls_('Content Position', '__plugin_txtd')
-      });
-    },
-    focusOnMount: false,
-    renderContent: function renderContent() {
-      return Object(external_React_["createElement"])(alignment_controls_AlignmentControls, props);
-    }
-  }));
-};
-
-var alignment_controls_AlignmentControls = function AlignmentControls(props) {
-  var _props$attributes = props.attributes,
-      horizontalAlignment = _props$attributes.horizontalAlignment,
-      verticalAlignment = _props$attributes.verticalAlignment,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(alignment_controls_Fragment, null, Object(external_React_["createElement"])(alignment_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Horizontal', '__plugin_txtd')), Object(external_React_["createElement"])(block_horizontal_alignment_toolbar, {
-    value: horizontalAlignment,
-    onChange: function onChange(nextHorizontalAlignment) {
-      wp.data.select('core/block-editor').getSelectedBlock().innerBlocks.map(function (block) {
-        wp.data.dispatch('core/block-editor').updateBlockAttributes(block.clientId, {
-          align: nextHorizontalAlignment
-        });
-        return true;
-      });
-      setAttributes({
-        horizontalAlignment: nextHorizontalAlignment
-      });
-    }
-  })), Object(external_React_["createElement"])(alignment_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, alignment_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
-    value: verticalAlignment,
-    onChange: function onChange(nextVerticalAlignment) {
-      return setAttributes({
-        verticalAlignment: nextVerticalAlignment
-      });
-    }
-  })));
 };
 
 
@@ -21050,8 +20751,6 @@ var ScrollIndicatorPanel = with_settings(function (props) {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -29108,6 +28807,7 @@ var with_space_and_sizing_controls_wp$components = wp.components,
     with_space_and_sizing_controls_RangeControl = with_space_and_sizing_controls_wp$components.RangeControl,
     with_space_and_sizing_controls_ToggleControl = with_space_and_sizing_controls_wp$components.ToggleControl;
 var with_space_and_sizing_controls_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var BlockVerticalAlignmentToolbar = wp.blockEditor.BlockVerticalAlignmentToolbar;
 var with_space_and_sizing_controls_Fragment = wp.element.Fragment;
 var with_space_and_sizing_controls_addFilter = wp.hooks.addFilter;
 var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection', 'novablocks/posts-collection'];
@@ -29241,7 +28941,7 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
         var newAttributes = getEmphasisAttributes(emphasisBySpace, !enableOverlapping, verticalAlignment);
         setAttributes(newAttributes);
       }
-    }), Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
+    }), Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(BlockVerticalAlignmentToolbar, {
       value: verticalAlignment,
       onChange: function onChange(verticalAlignment) {
         var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment);
@@ -29990,9 +29690,9 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
 /* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
 // CONCATENATED MODULE: ./src/components/advanced-gallery/placeholder.js
 
-var placeholder_wp$blockEditor = wp.blockEditor,
-    placeholder_MediaPlaceholder = placeholder_wp$blockEditor.MediaPlaceholder,
-    BlockIcon = placeholder_wp$blockEditor.BlockIcon;
+var _wp$blockEditor = wp.blockEditor,
+    placeholder_MediaPlaceholder = _wp$blockEditor.MediaPlaceholder,
+    BlockIcon = _wp$blockEditor.BlockIcon;
 
 var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
   var attributes = props.attributes,
@@ -30028,10 +29728,10 @@ var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder
 
 var advanced_gallery_inspector_controls_ = wp.i18n.__;
 var inspector_controls_Fragment = wp.element.Fragment;
-var advanced_gallery_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
+var inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
 var advanced_gallery_inspector_controls_wp$components = wp.components,
     inspector_controls_Button = advanced_gallery_inspector_controls_wp$components.Button,
-    advanced_gallery_inspector_controls_PanelBody = advanced_gallery_inspector_controls_wp$components.PanelBody,
+    inspector_controls_PanelBody = advanced_gallery_inspector_controls_wp$components.PanelBody,
     advanced_gallery_inspector_controls_RadioControl = advanced_gallery_inspector_controls_wp$components.RadioControl,
     advanced_gallery_inspector_controls_RangeControl = advanced_gallery_inspector_controls_wp$components.RangeControl;
 
@@ -31570,16 +31270,13 @@ var API_KEY_SETTING_ID = 'novablocks_google_maps_api_key';
 var edit_wp$element = wp.element,
     edit_Component = edit_wp$element.Component,
     edit_Fragment = edit_wp$element.Fragment;
-var edit_wp$components = wp.components,
-    edit_Spinner = edit_wp$components.Spinner,
-    edit_TextControl = edit_wp$components.TextControl;
+var edit_Spinner = wp.components.Spinner;
 var edit_wp$blockEditor = wp.blockEditor,
     BlockAlignmentToolbar = edit_wp$blockEditor.BlockAlignmentToolbar,
     edit_BlockControls = edit_wp$blockEditor.BlockControls;
 var edit_wp$compose = wp.compose,
     edit_compose = edit_wp$compose.compose,
-    edit_createHigherOrderComponent = edit_wp$compose.createHigherOrderComponent;
-var Settings = wp.api.models.Settings; // This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
+    edit_createHigherOrderComponent = edit_wp$compose.createHigherOrderComponent; // This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
 
 window.gm_authFailure = function () {
   window.googlemaps_authfailure = true;
@@ -32481,13 +32178,15 @@ var preview_HeroPreview = function HeroPreview(props) {
       contentPaddingCustom = attributes.contentPaddingCustom,
       contentWidth = attributes.contentWidth,
       contentWidthCustom = attributes.contentWidthCustom,
-      verticalAlignment = attributes.verticalAlignment,
-      horizontalAlignment = attributes.horizontalAlignment,
+      contentPosition = attributes.contentPosition,
       minHeightFallback = attributes.minHeightFallback,
       scrollIndicatorBlock = attributes.scrollIndicatorBlock,
       contentColor = attributes.contentColor,
       overlayFilterStyle = attributes.overlayFilterStyle,
       scrollingEffect = attributes.scrollingEffect;
+  var alignment = contentPosition.split(" ");
+  var verticalAlignment = alignment[0];
+  var horizontalAlignment = alignment[1];
   var classes = [className, 'novablocks-hero', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
   var styles = {
     hero: {
@@ -32566,11 +32265,21 @@ var hero_block_controls_wp$blockEditor = wp.blockEditor,
 var hero_block_controls_wp$components = wp.components,
     hero_block_controls_Button = hero_block_controls_wp$components.Button,
     hero_block_controls_Toolbar = hero_block_controls_wp$components.Toolbar;
+var BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
 var block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_HeroBlockControls = function HeroBlockControls(props) {
-  var setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(hero_block_controls_Toolbar, null, Object(external_React_["createElement"])(block_controls_MediaUpload, {
+  var contentPosition = props.attributes.contentPosition,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(block_controls_BlockControls, null, Object(external_React_["createElement"])(BlockAlignmentMatrixToolbar, {
+    label: hero_block_controls_('Change content position'),
+    value: contentPosition,
+    onChange: function onChange(nextPosition) {
+      return setAttributes({
+        contentPosition: nextPosition
+      });
+    }
+  }), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(hero_block_controls_Toolbar, null, Object(external_React_["createElement"])(block_controls_MediaUpload, {
     allowedTypes: block_controls_ALLOWED_MEDIA_TYPES,
     onSelect: function onSelect(media) {
       return setAttributes({
@@ -32619,9 +32328,9 @@ function hero_edit_isNativeReflectConstruct() { if (typeof Reflect === "undefine
 
 var hero_edit_ = wp.i18n.__;
 var hero_edit_InspectorControls = wp.blockEditor.InspectorControls;
-var hero_edit_wp$components = wp.components,
-    hero_edit_PanelBody = hero_edit_wp$components.PanelBody,
-    edit_RadioControl = hero_edit_wp$components.RadioControl;
+var edit_wp$components = wp.components,
+    hero_edit_PanelBody = edit_wp$components.PanelBody,
+    edit_RadioControl = edit_wp$components.RadioControl;
 var hero_edit_wp$element = wp.element,
     hero_edit_Component = hero_edit_wp$element.Component,
     hero_edit_Fragment = hero_edit_wp$element.Fragment;
@@ -32743,6 +32452,31 @@ var alignment_controls_attributes = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/components/layout-panel/attributes.json
 var layout_panel_attributes = __webpack_require__(37);
 
+// CONCATENATED MODULE: ./src/components/alignment-controls/deprecated.js
+
+
+
+
+function alignment_controls_deprecated_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function alignment_controls_deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { alignment_controls_deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { alignment_controls_deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+var alignment_controls_deprecated_deprecated = {
+  isEligible: function isEligible(attributes, innerBlocks) {
+    return !isUndefined_default()(attributes.horizontalAlignment) || !isUndefined_default()(attributes.verticalAlignment);
+  },
+  migrate: function migrate(oldAttributes, innerBlocks) {
+    var horizontalAlignment = oldAttributes.horizontalAlignment,
+        verticalAlignment = oldAttributes.verticalAlignment,
+        attributes = objectWithoutProperties_default()(oldAttributes, ["horizontalAlignment", "verticalAlignment"]);
+
+    return alignment_controls_deprecated_objectSpread(alignment_controls_deprecated_objectSpread({}, attributes), {}, {
+      contentPosition: "".concat(verticalAlignment, " ").concat(horizontalAlignment)
+    });
+  }
+};
+/* harmony default export */ var alignment_controls_deprecated = (alignment_controls_deprecated_deprecated);
 // CONCATENATED MODULE: ./src/blocks/hero/deprecated.js
 
 
@@ -32756,20 +32490,25 @@ function hero_deprecated_objectSpread(target) { for (var i = 1; i < arguments.le
 
 
 
-var hero_deprecated_attributes = Object.assign({}, hero_attributes, alignment_controls_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
 var hero_deprecated_deprecated = [];
 hero_deprecated_deprecated.push({
-  attributes: hero_deprecated_attributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
+  attributes: hero_deprecated_objectSpread(hero_deprecated_objectSpread(hero_deprecated_objectSpread(hero_deprecated_objectSpread(hero_deprecated_objectSpread({}, hero_attributes), alignment_controls_attributes), color_controls_attributes), layout_panel_attributes), scrolling_effect_controls_attributes),
+  isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.defaultsGenerated;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     return hero_deprecated_objectSpread(hero_deprecated_objectSpread({}, attributes), {}, {
       defaultsGenerated: true
     });
   },
   save: hero_save
 });
+
+hero_deprecated_deprecated.push(hero_deprecated_objectSpread(hero_deprecated_objectSpread({
+  attributes: hero_deprecated_objectSpread(hero_deprecated_objectSpread({}, hero_attributes), alignment_controls_attributes)
+}, alignment_controls_deprecated), {}, {
+  save: hero_save
+}));
 /* harmony default export */ var hero_deprecated = (hero_deprecated_deprecated);
 // CONCATENATED MODULE: ./src/blocks/hero/index.js
 
@@ -32792,10 +32531,7 @@ function hero_objectSpread(target) { for (var i = 1; i < arguments.length; i++) 
 
 
 
-
-
-
-var blocks_hero_attributes = Object.assign({}, hero_attributes, alignment_controls_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
+var blocks_hero_attributes = Object.assign({}, hero_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
 
 /**
  * WordPress dependencies
@@ -32811,16 +32547,15 @@ function hero_getNewDefaults() {
 
 function blocks_hero_getNewDefaults() {
   blocks_hero_getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, placeholderImages, index, image;
+    var placeholderImages, index, image;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = hero_select(STORE_NAME).getSettings();
-            _context.next = 3;
+            _context.next = 2;
             return getPlaceholderImages;
 
-          case 3:
+          case 2:
             placeholderImages = _context.sent;
             index = getRandomBetween(0, placeholderImages.length - 1);
             image = placeholderImages[index];
@@ -32830,7 +32565,7 @@ function blocks_hero_getNewDefaults() {
               })
             });
 
-          case 7:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -32910,18 +32645,10 @@ function block_controls_ownKeys(object, enumerableOnly) { var keys = Object.keys
 function block_controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { block_controls_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { block_controls_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /**
- * Internal dependencies
- */
-
-
-/**
  * WordPress dependencies
  */
-
 var media_block_controls_ = wp.i18n.__;
-var media_block_controls_wp$blockEditor = wp.blockEditor,
-    media_block_controls_MediaUpload = media_block_controls_wp$blockEditor.MediaUpload,
-    media_block_controls_BlockControls = media_block_controls_wp$blockEditor.BlockControls;
+var media_block_controls_BlockControls = wp.blockEditor.BlockControls;
 var media_block_controls_Toolbar = wp.components.Toolbar;
 var MEDIA_ALIGNMENTS_CONTROLS = {
   left: {
@@ -32933,12 +32660,22 @@ var MEDIA_ALIGNMENTS_CONTROLS = {
     title: media_block_controls_('Show Media on Right Side', '__plugin_txtd')
   }
 };
+var block_controls_BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
 
 var block_controls_MediaBlockControls = function MediaBlockControls(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var mediaPosition = attributes.mediaPosition;
-  return Object(external_React_["createElement"])(media_block_controls_BlockControls, null, Object(external_React_["createElement"])(media_block_controls_Toolbar, {
+  var contentPosition = attributes.contentPosition,
+      mediaPosition = attributes.mediaPosition;
+  return Object(external_React_["createElement"])(media_block_controls_BlockControls, null, Object(external_React_["createElement"])(block_controls_BlockAlignmentMatrixToolbar, {
+    label: media_block_controls_('Change content position'),
+    value: contentPosition,
+    onChange: function onChange(nextPosition) {
+      return setAttributes({
+        contentPosition: nextPosition
+      });
+    }
+  }), Object(external_React_["createElement"])(media_block_controls_Toolbar, {
     controls: Object.keys(MEDIA_ALIGNMENTS_CONTROLS).map(function (control) {
       return block_controls_objectSpread(block_controls_objectSpread({}, MEDIA_ALIGNMENTS_CONTROLS[control]), {}, {
         onClick: function onClick() {
@@ -32949,7 +32686,7 @@ var block_controls_MediaBlockControls = function MediaBlockControls(props) {
         isActive: mediaPosition === control
       });
     })
-  }), Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props));
+  }));
 };
 
 /* harmony default export */ var media_block_controls = (block_controls_MediaBlockControls);
@@ -32973,13 +32710,16 @@ var preview_MediaPreview = function MediaPreview(props) {
       blockStyle = _props$attributes.blockStyle,
       mediaPosition = _props$attributes.mediaPosition,
       images = _props$attributes.images,
-      verticalAlignment = _props$attributes.verticalAlignment,
+      contentPosition = _props$attributes.contentPosition,
       emphasisArea = _props$attributes.emphasisArea,
       contentAreaWidth = _props$attributes.contentAreaWidth,
       layoutGutter = _props$attributes.layoutGutter,
       className = props.className,
       settings = props.settings;
-  var classNames = classnames_default()(className, "novablocks-media", "has-image-on-the-".concat(mediaPosition), "novablocks-u-valign-".concat(verticalAlignment));
+  var alignment = contentPosition.split(" ");
+  var verticalAlignment = alignment[0];
+  var horizontalAlignment = alignment[1];
+  var classNames = classnames_default()(className, "novablocks-media", "has-image-on-the-".concat(mediaPosition), "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment));
   var passedProps = props;
 
   if ("undefined" !== typeof images && images.length && typeof images[0] === 'string') {
@@ -33150,6 +32890,10 @@ function media_edit_objectSpread(target) { for (var i = 1; i < arguments.length;
  */
 
 var media_edit_Fragment = wp.element.Fragment;
+var media_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var media_edit_wp$data = wp.data,
+    media_edit_select = media_edit_wp$data.select,
+    edit_dispatch = media_edit_wp$data.dispatch;
 
 var edit_MediaEdit = function MediaEdit(props) {
   function updateImages(media) {
@@ -33171,6 +32915,33 @@ var edit_MediaEdit = function MediaEdit(props) {
   })));
 };
 
+var withMediaHorizontalAlignment = media_edit_createHigherOrderComponent(function (BlockListBlock) {
+  return function (props) {
+    if ('novablocks/media' === props.name) {
+      var clientId = props.clientId,
+          attributes = props.attributes;
+
+      var _select = media_edit_select('core/block-editor'),
+          getBlock = _select.getBlock;
+
+      var _dispatch = edit_dispatch('core/block-editor'),
+          updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+      var media = getBlock(clientId);
+      var contentPosition = attributes.contentPosition;
+      var alignment = contentPosition.split(" ");
+      var horizontalAlignment = alignment[1];
+      media.innerBlocks.forEach(function (block) {
+        updateBlockAttributes(block.clientId, {
+          align: horizontalAlignment
+        });
+      });
+    }
+
+    return Object(external_React_["createElement"])(BlockListBlock, props);
+  };
+}, 'withMediaHorizontalAlignment');
+wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-media-horizontal-alignment', withMediaHorizontalAlignment);
 /* harmony default export */ var media_edit = (with_settings(edit_MediaEdit));
 // CONCATENATED MODULE: ./src/blocks/media/save.js
 
@@ -33241,10 +33012,10 @@ var deprecated_oldGalleryAttributes = media_deprecated_objectSpread(media_deprec
 var media_deprecated_deprecated = [];
 media_deprecated_deprecated.push({
   attributes: deprecated_oldGalleryAttributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
+  isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.images && typeof_default()("undefined") !== attributes.gallery;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     var gallery = attributes.gallery,
         newAttributes = objectWithoutProperties_default()(attributes, ["gallery"]);
 
@@ -33256,16 +33027,23 @@ media_deprecated_deprecated.push({
 });
 media_deprecated_deprecated.push({
   attributes: deprecated_oldGalleryAttributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
+  isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.defaultsGenerated;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     return media_deprecated_objectSpread(media_deprecated_objectSpread({}, attributes), {}, {
       defaultsGenerated: true
     });
   },
   save: media_save
 });
+
+
+media_deprecated_deprecated.push(media_deprecated_objectSpread(media_deprecated_objectSpread({
+  attributes: media_deprecated_objectSpread(media_deprecated_objectSpread({}, media_attributes), alignment_controls_attributes)
+}, alignment_controls_deprecated), {}, {
+  save: media_save
+}));
 /* harmony default export */ var media_deprecated = (media_deprecated_deprecated);
 // CONCATENATED MODULE: ./src/blocks/media/index.js
 
@@ -33492,13 +33270,15 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
           contentWidth = _this$props$attribute.contentWidth,
           contentWidthCustom = _this$props$attribute.contentWidthCustom,
           minHeight = _this$props$attribute.minHeight,
-          verticalAlignment = _this$props$attribute.verticalAlignment,
-          horizontalAlignment = _this$props$attribute.horizontalAlignment,
+          contentPosition = _this$props$attribute.contentPosition,
           contentColor = _this$props$attribute.contentColor,
           overlayFilterStyle = _this$props$attribute.overlayFilterStyle,
           galleryImages = _this$props$attribute.galleryImages,
           previewImage = _this$props.previewImage,
           className = _this$props.className;
+      var alignment = contentPosition.split(" ");
+      var verticalAlignment = alignment[0];
+      var horizontalAlignment = alignment[1];
       var classes = [className, 'novablocks-slideshow is-ready', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
       var styles = {
         slideshow: {
@@ -33687,7 +33467,6 @@ function slideshow_block_controls_objectSpread(target) { for (var i = 1; i < arg
  */
 
 
-
 /**
  * WordPress dependencies
  */
@@ -33698,10 +33477,13 @@ var slideshow_block_controls_wp$components = wp.components,
     slideshow_block_controls_Toolbar = slideshow_block_controls_wp$components.Toolbar;
 var slideshow_block_controls_BlockControls = wp.blockEditor.BlockControls;
 var slideshow_block_controls_MediaUpload = wp.blockEditor.MediaUpload;
+var slideshow_block_controls_BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
 var slideshow_block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_SlideshowBlockControls = function SlideshowBlockControls(props) {
-  var galleryImages = props.attributes.galleryImages,
+  var _props$attributes = props.attributes,
+      galleryImages = _props$attributes.galleryImages,
+      contentPosition = _props$attributes.contentPosition,
       setAttributes = props.setAttributes;
 
   var onChangeGallery = function onChangeGallery(items) {
@@ -33719,7 +33501,15 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
     });
   };
 
-  return Object(external_React_["createElement"])(slideshow_block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(slideshow_block_controls_Toolbar, null, Object(external_React_["createElement"])(slideshow_block_controls_MediaUpload, {
+  return Object(external_React_["createElement"])(slideshow_block_controls_BlockControls, null, Object(external_React_["createElement"])(slideshow_block_controls_BlockAlignmentMatrixToolbar, {
+    label: slideshow_block_controls_('Change content position'),
+    value: contentPosition,
+    onChange: function onChange(nextPosition) {
+      return setAttributes({
+        contentPosition: nextPosition
+      });
+    }
+  }), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(slideshow_block_controls_Toolbar, null, Object(external_React_["createElement"])(slideshow_block_controls_MediaUpload, {
     multiple: true,
     allowedTypes: slideshow_block_controls_ALLOWED_MEDIA_TYPES,
     value: galleryImages.map(function (image) {
@@ -33883,6 +33673,12 @@ slideshow_deprecated_deprecated.push({
   },
   save: slideshow_save
 });
+
+slideshow_deprecated_deprecated.push(slideshow_deprecated_objectSpread(slideshow_deprecated_objectSpread({
+  attributes: slideshow_deprecated_attributes
+}, alignment_controls_deprecated), {}, {
+  save: slideshow_save
+}));
 /* harmony default export */ var slideshow_deprecated = (slideshow_deprecated_deprecated);
 // CONCATENATED MODULE: ./src/blocks/slideshow/index.js
 
@@ -33901,17 +33697,13 @@ slideshow_deprecated_deprecated.push({
 
 
 
-
-
-var blocks_slideshow_attributes = Object.assign({}, slideshow_attributes, alignment_controls_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
+var blocks_slideshow_attributes = Object.assign({}, slideshow_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
 /**
  * WordPress dependencies
  */
 
 var slideshow_ = wp.i18n.__;
 var slideshow_registerBlockType = wp.blocks.registerBlockType;
-var slideshow_InnerBlocks = wp.blockEditor.InnerBlocks;
-var slideshow_select = wp.data.select;
 
 function slideshow_getNewDefaults() {
   return blocks_slideshow_getNewDefaults.apply(this, arguments);
@@ -33919,16 +33711,15 @@ function slideshow_getNewDefaults() {
 
 function blocks_slideshow_getNewDefaults() {
   blocks_slideshow_getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, placeholderImages, count, images;
+    var placeholderImages, count, images;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = slideshow_select(STORE_NAME).getSettings();
-            _context.next = 3;
+            _context.next = 2;
             return getPlaceholderImages;
 
-          case 3:
+          case 2:
             placeholderImages = _context.sent;
             count = getRandomBetween(2, 4);
             images = getRandomArrayFromArray(placeholderImages, count);
@@ -33936,7 +33727,7 @@ function blocks_slideshow_getNewDefaults() {
               galleryImages: images
             });
 
-          case 7:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -35484,7 +35275,7 @@ var cards_collection_edit_ = wp.i18n.__;
 var cards_collection_edit_InnerBlocks = wp.blockEditor.InnerBlocks;
 var cards_collection_edit_wp$data = wp.data,
     cards_collection_edit_select = cards_collection_edit_wp$data.select,
-    edit_dispatch = cards_collection_edit_wp$data.dispatch,
+    cards_collection_edit_dispatch = cards_collection_edit_wp$data.dispatch,
     cards_collection_edit_withSelect = cards_collection_edit_wp$data.withSelect;
 var edit_ALLOWED_BLOCKS = ['novablocks/card'];
 var CARDS_COLLECTION_TEMPLATE = [['novablocks/card'], ['novablocks/card'], ['novablocks/card']];
@@ -35522,7 +35313,7 @@ var withCollectionVisibilityAttributes = cards_collection_edit_createHigherOrder
       var _select2 = cards_collection_edit_select('core/block-editor'),
           getBlock = _select2.getBlock;
 
-      var _dispatch = edit_dispatch('core/block-editor'),
+      var _dispatch = cards_collection_edit_dispatch('core/block-editor'),
           updateBlockAttributes = _dispatch.updateBlockAttributes;
 
       var collection = getBlock(clientId);

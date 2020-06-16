@@ -24,4 +24,12 @@ deprecated.push({
 	save,
 });
 
+import alignmentDeprecated from "../../components/alignment-controls/deprecated";
+
+deprecated.push({
+	attributes,
+	...alignmentDeprecated,
+	save,
+});
+
 export default deprecated;
