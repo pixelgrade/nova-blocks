@@ -46,15 +46,28 @@ const getEmphasisAttributes = ( emphasis, overlap, alignment ) => {
 	const actualEmphasis = ! overlap ? emphasis : -1 * emphasis;
 
 	return {
+
+		// 	Overlapping: Enabled · Disabled
+		// 	             ^^^^^^^
 		emphasisBySpace: emphasis,
 		enableOverlapping: overlap,
-		blockTopSpacing: ( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) ? actualEmphasis : 0,
-		blockBottomSpacing: ( actualEmphasis < 0 && ['top', 'center'].includes( alignment ) ) ? actualEmphasis : 0,
-		emphasisTopSpacing: ( alignment !== 'top' ) ? actualEmphasis : 1,
-		emphasisBottomSpacing: ( alignment !== 'bottom' ) ? actualEmphasis : 1,
+		blockTopSpacing: 		( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) 	? actualEmphasis : 0,
+		blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( alignment ) ) 		? actualEmphasis : 0,
+		emphasisTopSpacing: 	( alignment !== 'top' ) 	? actualEmphasis :  1,
+		emphasisBottomSpacing: 	( alignment !== 'bottom' ) 	? actualEmphasis : 	1,
 		verticalAlignment: alignment,
+
+		// 	Overlapping: Enabled · Disabled
+		// 	             ^^^^^^^
+		// emphasisBySpace: emphasis,
+		// enableOverlapping: overlap,
+		// blockTopSpacing: 	( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) 	? -1 * actualEmphasis : actualEmphasis,
+		// blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( alignment ) ) 		? -1 * actualEmphasis : actualEmphasis,
+		// emphasisTopSpacing: 	( alignment !== 'top' ) 	? actualEmphasis :  -1 * actualEmphasis,
+		// emphasisBottomSpacing: 	( alignment !== 'bottom' ) 	? actualEmphasis : 	-1 * actualEmphasis,
+		// verticalAlignment: alignment,
 	};
-};
+}
 
 const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent => {
 
