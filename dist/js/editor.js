@@ -1867,6 +1867,33 @@ module.exports = JSON.parse("{\"focalPoint\":{\"type\":\"object\",\"default\":{\
 
 /***/ }),
 /* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(266);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports) {
 
 /**
@@ -1898,7 +1925,7 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var freeGlobal = __webpack_require__(87);
@@ -1913,43 +1940,16 @@ module.exports = root;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":\"object\"},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"contentColor\":{\"type\":\"string\",\"default\":\"#FFF\"},\"overlayFilterStyle\":{\"type\":\"string\",\"default\":\"dark\"},\"overlayFilterStrength\":{\"type\":\"number\",\"default\":30}}");
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var objectWithoutPropertiesLoose = __webpack_require__(266);
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 34 */
@@ -2304,7 +2304,7 @@ function _arrayLikeToArray(arr, len) {
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -2350,7 +2350,7 @@ module.exports = isIndex;
 var baseMatches = __webpack_require__(155),
     baseMatchesProperty = __webpack_require__(194),
     identity = __webpack_require__(110),
-    isArray = __webpack_require__(29),
+    isArray = __webpack_require__(30),
     property = __webpack_require__(202);
 
 /**
@@ -2528,7 +2528,7 @@ module.exports = getMapData;
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(29),
+var isArray = __webpack_require__(30),
     isKey = __webpack_require__(78),
     stringToPath = __webpack_require__(195),
     toString = __webpack_require__(79);
@@ -3498,7 +3498,7 @@ module.exports = isLength;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -3602,7 +3602,7 @@ module.exports = baseGet;
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(29),
+var isArray = __webpack_require__(30),
     isSymbol = __webpack_require__(47);
 
 /** Used to match property names within property paths. */
@@ -4370,7 +4370,7 @@ module.exports = baseEach;
 
 var baseTimes = __webpack_require__(147),
     isArguments = __webpack_require__(91),
-    isArray = __webpack_require__(29),
+    isArray = __webpack_require__(30),
     isBuffer = __webpack_require__(92),
     isIndex = __webpack_require__(51),
     isTypedArray = __webpack_require__(94);
@@ -4465,7 +4465,7 @@ module.exports = isArguments;
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(30),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(31),
     stubFalse = __webpack_require__(149);
 
 /** Detect free variable `exports`. */
@@ -4845,7 +4845,7 @@ module.exports = cacheHas;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayPush = __webpack_require__(104),
-    isArray = __webpack_require__(29);
+    isArray = __webpack_require__(30);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -4962,7 +4962,7 @@ module.exports = stubArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -5244,7 +5244,7 @@ exports.encode = exports.stringify = __webpack_require__(249);
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseOrderBy = __webpack_require__(217),
-    isArray = __webpack_require__(29);
+    isArray = __webpack_require__(30);
 
 /**
  * This method is like `_.sortBy` except that it allows specifying the sort
@@ -5832,7 +5832,7 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"cente
 var arrayMap = __webpack_require__(59),
     baseIteratee = __webpack_require__(52),
     baseMap = __webpack_require__(111),
-    isArray = __webpack_require__(29);
+    isArray = __webpack_require__(30);
 
 /**
  * Creates an array of values by running each element in `collection` thru
@@ -6558,7 +6558,7 @@ module.exports = isMasked;
 /* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -6592,7 +6592,7 @@ module.exports = getValue;
 var arrayAggregator = __webpack_require__(142),
     baseAggregator = __webpack_require__(143),
     baseIteratee = __webpack_require__(52),
-    isArray = __webpack_require__(29);
+    isArray = __webpack_require__(30);
 
 /**
  * Creates a function like `_.groupBy`.
@@ -7696,7 +7696,7 @@ var Stack = __webpack_require__(98),
     equalByTag = __webpack_require__(183),
     equalObjects = __webpack_require__(186),
     getTag = __webpack_require__(189),
-    isArray = __webpack_require__(29),
+    isArray = __webpack_require__(30),
     isBuffer = __webpack_require__(92),
     isTypedArray = __webpack_require__(94);
 
@@ -7972,7 +7972,7 @@ module.exports = equalByTag;
 /* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -8221,7 +8221,7 @@ module.exports = getTag;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -8234,7 +8234,7 @@ module.exports = DataView;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -8247,7 +8247,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(30);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -8474,7 +8474,7 @@ module.exports = memoize;
 
 var Symbol = __webpack_require__(50),
     arrayMap = __webpack_require__(59),
-    isArray = __webpack_require__(29),
+    isArray = __webpack_require__(30),
     isSymbol = __webpack_require__(47);
 
 /** Used as references for various `Number` constants. */
@@ -8576,7 +8576,7 @@ module.exports = baseHasIn;
 
 var castPath = __webpack_require__(58),
     isArguments = __webpack_require__(91),
-    isArray = __webpack_require__(29),
+    isArray = __webpack_require__(30),
     isIndex = __webpack_require__(51),
     isLength = __webpack_require__(73),
     toKey = __webpack_require__(48);
@@ -9323,7 +9323,7 @@ module.exports = _nonIterableSpread;
 /* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(30);
+var root = __webpack_require__(31);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -26133,7 +26133,7 @@ var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(fu
 }), withPostsQueryControls]);
 with_latest_posts_addFilter('editor.BlockEdit', 'novablocks/with-latest-posts', withLatestPosts);
 // EXTERNAL MODULE: ./src/components/advanced-gallery/attributes.json
-var advanced_gallery_attributes = __webpack_require__(31);
+var advanced_gallery_attributes = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./src/filters/with-advanced-gallery-attributes/index.js
 
@@ -26183,7 +26183,7 @@ function addDopplerAttributes(block) {
 
 with_doppler_attributes_addFilter('blocks.registerBlockType', 'novablocks/add-advanced-gallery-attributes', addDopplerAttributes);
 // EXTERNAL MODULE: ./src/components/color-controls/attributes.json
-var color_controls_attributes = __webpack_require__(32);
+var color_controls_attributes = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/filters/with-overlay-color-attributes/index.js
 
@@ -28400,7 +28400,7 @@ var cards_manager_panel_CardsManagerPanel = function CardsManagerPanel(props) {
 
 /* harmony default export */ var cards_manager_panel = (cards_manager_panel_CardsManagerPanel);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(33);
+var objectWithoutProperties = __webpack_require__(29);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // CONCATENATED MODULE: ./src/components/editable-text/index.js
@@ -33283,13 +33283,24 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   var getEmphasisAttributes = function getEmphasisAttributes(emphasis, overlap, alignment) {
     var actualEmphasis = !overlap ? emphasis : -1 * emphasis;
     return {
+      // 	Overlapping: Enabled · Disabled 		
+      // 	             ^^^^^^^  					
       emphasisBySpace: emphasis,
       enableOverlapping: overlap,
       blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(alignment) ? actualEmphasis : 0,
-      blockBottomSpacing: actualEmphasis < 0 && ['top', 'center'].includes(alignment) ? actualEmphasis : 0,
+      blockBottomSpacing: actualEmphasis < 0 && ['center', 'top'].includes(alignment) ? actualEmphasis : 0,
       emphasisTopSpacing: alignment !== 'top' ? actualEmphasis : 1,
       emphasisBottomSpacing: alignment !== 'bottom' ? actualEmphasis : 1,
-      verticalAlignment: alignment
+      verticalAlignment: alignment // 	Overlapping: Enabled · Disabled 		
+      // 	             ^^^^^^^            		
+      // emphasisBySpace: emphasis,
+      // enableOverlapping: overlap,
+      // blockTopSpacing: 	( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) 	? -1 * actualEmphasis : actualEmphasis,
+      // blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( alignment ) ) 		? -1 * actualEmphasis : actualEmphasis,
+      // emphasisTopSpacing: 	( alignment !== 'top' ) 	? actualEmphasis :  -1 * actualEmphasis,
+      // emphasisBottomSpacing: 	( alignment !== 'bottom' ) 	? actualEmphasis : 	-1 * actualEmphasis,
+      // verticalAlignment: alignment,
+
     };
   };
 
