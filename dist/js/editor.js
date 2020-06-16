@@ -28813,16 +28813,19 @@ var with_space_and_sizing_controls_addFilter = wp.hooks.addFilter;
 var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection', 'novablocks/posts-collection'];
 var ALLOWED_BLOCKS_ADVANCED = ['novablocks/media'];
 
-var getEmphasisAttributes = function getEmphasisAttributes(emphasis, overlap, alignment) {
+var getEmphasisAttributes = function getEmphasisAttributes(emphasis, overlap, contentPosition) {
   var actualEmphasis = !overlap ? emphasis : -1 * emphasis;
+  var alignment = contentPosition.split(' ');
+  var verticalAlignment = alignment[0] || 'center';
+  var horizontalAlignment = alignment[1] || 'center';
   return {
     emphasisBySpace: emphasis,
     enableOverlapping: overlap,
-    blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(alignment) ? actualEmphasis : 0,
-    blockBottomSpacing: actualEmphasis < 0 && ['top', 'center'].includes(alignment) ? actualEmphasis : 0,
-    emphasisTopSpacing: alignment !== 'top' ? actualEmphasis : 1,
-    emphasisBottomSpacing: alignment !== 'bottom' ? actualEmphasis : 1,
-    verticalAlignment: alignment
+    blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(verticalAlignment) ? actualEmphasis : 0,
+    blockBottomSpacing: actualEmphasis < 0 && ['top', 'center'].includes(verticalAlignment) ? actualEmphasis : 0,
+    emphasisTopSpacing: verticalAlignment !== 'top' ? actualEmphasis : 1,
+    emphasisBottomSpacing: verticalAlignment !== 'bottom' ? actualEmphasis : 1,
+    contentPosition: "".concat(verticalAlignment, " ").concat(horizontalAlignment)
   };
 };
 
@@ -28840,8 +28843,10 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
         enableOverlapping = attributes.enableOverlapping,
         layoutPreset = attributes.layoutPreset,
         blockTopSpacing = attributes.blockTopSpacing,
-        blockBottomSpacing = attributes.blockBottomSpacing;
-    var verticalAlignment = attributes.verticalAlignment || 'center';
+        blockBottomSpacing = attributes.blockBottomSpacing,
+        contentPosition = attributes.contentPosition;
+    var alignment = contentPosition.split(' ');
+    var verticalAlignment = alignment[0] || 'center';
     var presetOptions = props === null || props === void 0 ? void 0 : (_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$media = _props$settings.media) === null || _props$settings$media === void 0 ? void 0 : (_props$settings$media2 = _props$settings$media.spaceAndSizing) === null || _props$settings$media2 === void 0 ? void 0 : _props$settings$media2.presetOptions;
     var SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes(props.name) ? -3 : 0;
     var SPACING_MAX_VALUE = 3;
@@ -28866,11 +28871,11 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
       label: with_space_and_sizing_controls_('Customize')
     }, Object(external_React_["createElement"])("div", {
       key: 'space-and-sizing-customize-1',
-      className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment)))
+      className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, contentPosition)))
     }, Object(external_React_["createElement"])(with_space_and_sizing_controls_RangeControl, {
       value: emphasisBySpace,
       onChange: function onChange(emphasisBySpace) {
-        var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment);
+        var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, contentPosition);
         setAttributes(newAttributes);
       },
       label: with_space_and_sizing_controls_('Emphasis by Space'),
@@ -28919,8 +28924,11 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
     var emphasisBySpace = attributes.emphasisBySpace,
         enableOverlapping = attributes.enableOverlapping,
         emphasisTopSpacing = attributes.emphasisTopSpacing,
-        emphasisBottomSpacing = attributes.emphasisBottomSpacing;
-    var verticalAlignment = attributes.verticalAlignment || 'center';
+        emphasisBottomSpacing = attributes.emphasisBottomSpacing,
+        contentPosition = attributes.contentPosition;
+    var alignment = contentPosition.split(' ');
+    var verticalAlignment = alignment[0] || 'center';
+    var horizontalAlignment = alignment[1] || 'center';
     var cssVars = {
       '--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
       '--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing
@@ -28933,18 +28941,20 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
       label: with_space_and_sizing_controls_('Customize')
     }, Object(external_React_["createElement"])("div", {
       key: 'space-and-sizing-customize-2',
-      className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment)))
+      className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, contentPosition)))
     }, Object(external_React_["createElement"])(with_space_and_sizing_controls_ToggleControl, {
       label: with_space_and_sizing_controls_('Enable Overlapping'),
       checked: enableOverlapping,
       onChange: function onChange() {
-        var newAttributes = getEmphasisAttributes(emphasisBySpace, !enableOverlapping, verticalAlignment);
+        var newAttributes = getEmphasisAttributes(emphasisBySpace, !enableOverlapping, contentPosition);
         setAttributes(newAttributes);
       }
     }), Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(BlockVerticalAlignmentToolbar, {
       value: verticalAlignment,
+      isCollapsed: false,
       onChange: function onChange(verticalAlignment) {
-        var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment);
+        var contentPosition = "".concat(verticalAlignment, " ").concat(horizontalAlignment);
+        var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, contentPosition);
         setAttributes(newAttributes);
       }
     })))), Object(external_React_["createElement"])(control_sections_ControlsTab, {

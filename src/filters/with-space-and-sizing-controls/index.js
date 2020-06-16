@@ -44,18 +44,21 @@ const ALLOWED_BLOCKS_ADVANCED = [
 	'novablocks/media',
 ];
 
-const getEmphasisAttributes = ( emphasis, overlap, alignment ) => {
+const getEmphasisAttributes = ( emphasis, overlap, contentPosition ) => {
 
 	const actualEmphasis = ! overlap ? emphasis : -1 * emphasis;
+	const alignment = contentPosition.split( ' ' );
+	const verticalAlignment = alignment[0] || 'center';
+	const horizontalAlignment = alignment[1] || 'center';
 
 	return {
 		emphasisBySpace: emphasis,
 		enableOverlapping: overlap,
-		blockTopSpacing: ( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) ? actualEmphasis : 0,
-		blockBottomSpacing: ( actualEmphasis < 0 && ['top', 'center'].includes( alignment ) ) ? actualEmphasis : 0,
-		emphasisTopSpacing: ( alignment !== 'top' ) ? actualEmphasis : 1,
-		emphasisBottomSpacing: ( alignment !== 'bottom' ) ? actualEmphasis : 1,
-		verticalAlignment: alignment,
+		blockTopSpacing: ( actualEmphasis < 0 && ['center', 'bottom'].includes( verticalAlignment ) ) ? actualEmphasis : 0,
+		blockBottomSpacing: ( actualEmphasis < 0 && ['top', 'center'].includes( verticalAlignment ) ) ? actualEmphasis : 0,
+		emphasisTopSpacing: ( verticalAlignment !== 'top' ) ? actualEmphasis : 1,
+		emphasisBottomSpacing: ( verticalAlignment !== 'bottom' ) ? actualEmphasis : 1,
+		contentPosition: `${ verticalAlignment } ${ horizontalAlignment }`
 	};
 };
 
@@ -79,9 +82,13 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 
 			blockTopSpacing,
 			blockBottomSpacing,
+
+			contentPosition,
 		} = attributes;
 
-		const verticalAlignment = attributes.verticalAlignment || 'center';
+		const alignment = contentPosition.split( ' ' );
+		const verticalAlignment = alignment[0] || 'center';
+
 		const presetOptions = props?.settings?.media?.spaceAndSizing?.presetOptions;
 
 		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
@@ -112,11 +119,11 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 						</ControlsTab>
 					}
 					<ControlsTab label={ __( 'Customize' ) }>
-						<div key={ 'space-and-sizing-customize-1' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>
+						<div key={ 'space-and-sizing-customize-1' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, contentPosition ) ) ) }>
 							<RangeControl
 								value={ emphasisBySpace }
 								onChange={ ( emphasisBySpace ) => {
-									const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment );
+									const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping, contentPosition );
 									setAttributes( newAttributes );
 								} }
 								label={ __( 'Emphasis by Space' ) }
@@ -173,9 +180,13 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
 			emphasisTopSpacing,
 			emphasisBottomSpacing,
+
+			contentPosition,
 		} = attributes;
 
-		const verticalAlignment = attributes.verticalAlignment || 'center';
+		const alignment = contentPosition.split( ' ' );
+		const verticalAlignment = alignment[0] || 'center';
+		const horizontalAlignment = alignment[1] || 'center';
 
 		const cssVars = {
 			'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
@@ -189,12 +200,12 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 				</div>
 				<ControlsSection label={ __( 'Space and Sizing' ) }>
 					<ControlsTab label={ __( 'Customize' ) }>
-						<div key={ 'space-and-sizing-customize-2' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment ) ) ) }>
+						<div key={ 'space-and-sizing-customize-2' } className={ classnames( getControlsClasses( attributes, getEmphasisAttributes( emphasisBySpace, enableOverlapping, contentPosition ) ) ) }>
 							<ToggleControl
 								label={ __( 'Enable Overlapping' ) }
 								checked={ enableOverlapping }
 								onChange={ () => {
-									const newAttributes = getEmphasisAttributes( emphasisBySpace, ! enableOverlapping, verticalAlignment );
+									const newAttributes = getEmphasisAttributes( emphasisBySpace, ! enableOverlapping, contentPosition );
 									setAttributes( newAttributes );
 								} }
 							/>
@@ -202,8 +213,10 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 								<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
 								<BlockVerticalAlignmentToolbar
 									value={ verticalAlignment }
+									isCollapsed={ false }
 									onChange={ ( verticalAlignment ) => {
-										const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping, verticalAlignment );
+										const contentPosition = `${ verticalAlignment } ${ horizontalAlignment }`;
+										const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping, contentPosition );
 										setAttributes( newAttributes );
 									} }
 								/>
