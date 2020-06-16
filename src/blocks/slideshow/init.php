@@ -108,22 +108,33 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 								<div class="novablocks-mask">
 									<div class="novablocks-parallax">
 
-										<?php if ( 'image' === $media['type'] ) { ?>
-				                            <img class="novablocks-slideshow__media"
-				                                src="<?php echo esc_url( $media['url'] ); ?>"
-				                                style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-				                                data-width="<?php echo esc_attr( $media['width'] ); ?>"
-				                                data-height="<?php echo esc_attr( $media['height'] ); ?>"
-				                            />
-										<?php } ?>
+										<?php
+										if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
+											$id = attachment_url_to_postid( $media['url'] );
+
+											if ( ! empty( $id ) ) {
+												echo wp_get_attachment_image( $id, 'novablocks-huge', false, array(
+													'class' => 'novablocks-slideshow__media',
+													'style' => esc_attr( $thisMediaStyle ),
+													'data-width' => esc_attr( $media['width'] ),
+				                                    'data-height' => esc_attr( $media['height'] )
+												) );
+											} else { ?>
+											<img class="novablocks-slideshow__media"
+											     src="<?php echo esc_url( $media['url'] ); ?>"
+											     style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+											     data-width="<?php echo esc_attr( $media['width'] ); ?>"
+											     data-height="<?php echo esc_attr( $media['height'] ); ?>"
+											/>
+											<?php }
+										} ?>
 
 										<?php if ( 'video' === $media['type'] ) { ?>
 											<video class="novablocks-slideshow__media" muted autoplay playsInline loop
 											       src="<?php echo esc_url( $media['url'] ); ?>"
 											       style="<?php echo esc_attr( $thisMediaStyle ); ?>"
 											       data-width="<?php echo esc_attr( $media['width'] ); ?>"
-											       data-height="<?php echo esc_attr( $media['height'] ); ?>"
-											/>
+											       data-height="<?php echo esc_attr( $media['height'] ); ?>"/>
 										<?php } ?>
 
 									</div>

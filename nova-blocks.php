@@ -45,6 +45,15 @@ function novablocks_plugin_setup() {
 // We will do this just after themes so we give them a chance to intervene.
 add_action( 'after_setup_theme', 'novablocks_plugin_setup', 20 );
 
+function novablocks_add_image_sizes() {
+	add_image_size( 'novablocks-huge', 3840, 3840, false );
+	add_image_size( 'novablocks-large', 1366, 1366, false );
+	add_image_size( 'novablocks-medium', 1024, 1024, false );
+	add_image_size( 'novablocks-small', 768, 768, false );
+	add_image_size( 'novablocks-tiny', 480, 480, false );
+}
+add_action( 'after_setup_theme', 'novablocks_add_image_sizes', 20 );
+
 /**
  * Gets this plugin's directory file path.
  *

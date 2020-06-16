@@ -134,13 +134,23 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
 
             <div class="novablocks-mask">
-				<?php if ( $media['type'] === 'image' && ! empty( $media['sizes']['full']['url'] ) ) { ?>
-                    <img class="novablocks-parallax"
-                         src="<?php echo esc_url( $media['sizes']['full']['url'] ); ?>"
-                         style="<?php echo esc_attr( $mediaStyle ); ?>" />
-				<?php }
+	            <?php
+	            if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
+		            $id = attachment_url_to_postid( $media['url'] );
 
-				if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
+		            if ( ! empty( $id ) ) {
+			            echo wp_get_attachment_image( $id, 'novablocks-huge', false, array(
+				            'class' => 'novablocks-parallax',
+				            'style' => esc_attr( $mediaStyle )
+			            ) );
+		            } else { ?>
+			            <img class="novablocks-parallax"
+			                 src="<?php echo esc_url( $media['url'] ); ?>"
+			                 style="<?php echo esc_attr( $mediaStyle ); ?>" />
+		            <?php }
+	            } ?>
+
+				<?php if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
                     <video muted autoplay loop playsinline class="novablocks-parallax"
                            src="<?php echo esc_url( $media['url'] ); ?>"
                            style="<?php echo esc_attr( $mediaStyle ); ?>" />
