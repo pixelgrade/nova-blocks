@@ -7,10 +7,6 @@ const { __ } = wp.i18n;
 const { useBlockEditContext } = wp.blockEditor;
 
 const {
-	Fragment,
-} = wp.element;
-
-const {
 	RangeControl,
 	RadioControl,
 	createSlotFill,

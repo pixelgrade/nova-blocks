@@ -51,7 +51,7 @@ const MediaInspectorControls = ( props ) => {
 		balanceFocalPoint,
 	} = attributes;
 
-	const getBalanceAttributes = ( balanceEmphasis, balanceFocalPoint ) => {
+	const getBalanceAttributes = ( { balanceEmphasis, balanceFocalPoint } ) => {
 		const width = balanceEmphasis * ( CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MIN_WIDTH ) / 100 + CONTENT_AREA_MIN_WIDTH;
 		const contentAreaWidth = 'content' === balanceFocalPoint ? width : 100 - width;
 
@@ -82,11 +82,11 @@ const MediaInspectorControls = ( props ) => {
 
 			<ControlsSection label={ __( 'Visual Balance' ) }>
 				<ControlsTab label={ __( 'Customize' ) }>
-					<div key={ 'media-card-visual-balance-customize-1' } className={ classnames( getControlsClasses( attributes, getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) ) ) }>
+					<div key={ 'media-card-visual-balance-customize-1' } className={ getControlsClasses( attributes, getBalanceAttributes ) }>
 						<RangeControl
 							value={ balanceEmphasis }
 							onChange={ ( balanceEmphasis ) => {
-								setAttributes( getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) );
+								setAttributes( getBalanceAttributes( { ...attributes, balanceEmphasis } ) );
 							} }
 							label={ __( 'Emphasis by Balance' ) }
 							min={ 0 }
@@ -97,7 +97,7 @@ const MediaInspectorControls = ( props ) => {
 							label={ __( 'Focal Point', '__plugin_txtd' ) }
 							selected={ balanceFocalPoint }
 							onChange={ ( balanceFocalPoint ) => {
-								setAttributes( getBalanceAttributes( balanceEmphasis, balanceFocalPoint ) );
+								setAttributes( getBalanceAttributes( { ...attributes, balanceFocalPoint } ) );
 							} }
 							options={ [
 								{ label: __( 'Content Area' ), value: 'content' },

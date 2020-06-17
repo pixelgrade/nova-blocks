@@ -63,11 +63,8 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					/>
 					<PresetControl
 						key={ 'advanced-gallery-style-preset' }
-						attribute={ 'stylePreset' }
-						selected={ stylePreset }
 						options={ advancedGalleryPresetOptions }
 						randomize={ getRandomAttributes }
-						setAttributes={ setAttributes }
 					/>
 				</ControlsTab>
 

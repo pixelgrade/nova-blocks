@@ -17665,7 +17665,6 @@ var controls_group_ControlsGroup = function ControlsGroup(props) {
 
 var emphasis_level_controls_ = wp.i18n.__;
 var emphasis_level_controls_useBlockEditContext = wp.blockEditor.useBlockEditContext;
-var emphasis_level_controls_Fragment = wp.element.Fragment;
 var emphasis_level_controls_wp$components = wp.components,
     RangeControl = emphasis_level_controls_wp$components.RangeControl,
     RadioControl = emphasis_level_controls_wp$components.RadioControl,
@@ -18089,6 +18088,7 @@ var normalize = function normalize(photo) {
 // CONCATENATED MODULE: ./src/utils/index.js
 
 
+
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -18240,21 +18240,17 @@ var getSnapClassname = function getSnapClassname(focalPoint) {
 
   return classNames.join(' ');
 };
-
-var wrappedControlsMatch = function wrappedControlsMatch(attributes, compiledAttributes) {
-  return Object.keys(compiledAttributes).every(function (key) {
-    return compiledAttributes[key] === attributes[key];
-  });
-};
-
-var getControlsClasses = function getControlsClasses(attributes, compiledAttributes) {
+var utils_getControlsClasses = function getControlsClasses(attributes, compileAttributes) {
   var classes = ['novablocks-controls-wrap'];
+  var compiledAttributes = compileAttributes(attributes);
 
-  if (!wrappedControlsMatch(attributes, compiledAttributes)) {
+  if (Object.keys(compiledAttributes).some(function (key) {
+    return compiledAttributes[key] !== attributes[key];
+  })) {
     classes.push('novablocks-controls-wrap--dirty');
   }
 
-  return classes;
+  return classnames_default()(classes);
 };
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
@@ -19075,11 +19071,20 @@ var collection_Collection = function Collection(props) {
 
 
 
+function preset_control_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function preset_control_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { preset_control_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { preset_control_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 var preset_control_ = wp.i18n.__;
 var preset_control_wp$components = wp.components,
     preset_control_Button = preset_control_wp$components.Button,
     preset_control_RadioControl = preset_control_wp$components.RadioControl;
 var preset_control_Fragment = wp.element.Fragment;
+var preset_control_useBlockEditContext = wp.blockEditor.useBlockEditContext;
+var _wp$data = wp.data,
+    withDispatch = _wp$data.withDispatch,
+    preset_control_withSelect = _wp$data.withSelect;
+var preset_control_compose = wp.compose.compose;
 
 var preset_control_PresetControl = function PresetControl(props) {
   var noop = function noop() {
@@ -19087,10 +19092,8 @@ var preset_control_PresetControl = function PresetControl(props) {
   };
 
   var randomize = props.randomize,
-      attribute = props.attribute,
-      setAttributes = props.setAttributes,
-      passedProps = objectWithoutProperties_default()(props, ["randomize", "attribute", "setAttributes"]);
-
+      attributes = props.attributes,
+      setAttributes = props.setAttributes;
   var options = Array.isArray(props.options) ? props.options.slice() : [];
   var randomizeAttributes = typeof randomize === "function" ? randomize : noop;
   options.push({
@@ -19098,18 +19101,20 @@ var preset_control_PresetControl = function PresetControl(props) {
     value: 'just-my-style',
     preset: {}
   });
+  var selectedPreset = getSelectedPreset(options, attributes);
   return Object(external_React_["createElement"])(preset_control_Fragment, null, Object(external_React_["createElement"])(preset_control_RadioControl, extends_default()({}, props, {
     options: options,
+    selected: selectedPreset,
     onChange: function onChange(preset) {
       if ('just-my-style' === preset) {
-        setAttributes(Object.assign({}, randomizeAttributes(), defineProperty_default()({}, attribute, 'just-my-style')));
+        setAttributes(Object.assign({}, randomizeAttributes()));
         return;
       }
 
-      var newAttributes = preset_control_getNewAttributesFromPreset(attribute, preset, options);
+      var newAttributes = getNewAttributesFromPreset(preset, options);
       setAttributes(newAttributes);
     }
-  })), props.selected === 'just-my-style' && Object(external_React_["createElement"])("div", {
+  })), selectedPreset === 'just-my-style' && Object(external_React_["createElement"])("div", {
     key: 'advanced-gallery-surprise-control'
   }, Object(external_React_["createElement"])(preset_control_Button, {
     isLarge: true,
@@ -19120,9 +19125,8 @@ var preset_control_PresetControl = function PresetControl(props) {
   }, preset_control_('💡 Surprise me!'))));
 };
 
-var preset_control_getNewAttributesFromPreset = function getNewAttributesFromPreset(attribute, preset, presets) {
-  var newAttributes = defineProperty_default()({}, attribute, preset);
-
+var getNewAttributesFromPreset = function getNewAttributesFromPreset(preset, presets) {
+  var newAttributes = {};
   var newOption = presets.find(function (option) {
     return preset === option.value;
   });
@@ -19133,7 +19137,50 @@ var preset_control_getNewAttributesFromPreset = function getNewAttributesFromPre
 
   return newAttributes;
 };
-/* harmony default export */ var preset_control = (preset_control_PresetControl);
+var getSelectedPreset = function getSelectedPreset(presetOptions, attributes) {
+  var activePresets = presetOptions.filter(function (presetOption) {
+    var preset = presetOption.preset;
+    return Object.keys(preset).every(function (key) {
+      return preset[key] === attributes[key];
+    });
+  });
+
+  if (activePresets.length) {
+    return activePresets[0].value;
+  }
+
+  return null;
+};
+var applyWithSelect = preset_control_withSelect(function (select, props) {
+  var _useBlockEditContext = preset_control_useBlockEditContext(),
+      clientId = _useBlockEditContext.clientId;
+
+  var _select = select('core/block-editor'),
+      getBlock = _select.getBlock;
+
+  var _getBlock = getBlock(clientId),
+      attributes = _getBlock.attributes;
+
+  return preset_control_objectSpread(preset_control_objectSpread({}, props), {}, {
+    clientId: clientId,
+    attributes: attributes
+  });
+});
+var applyWithDispatch = withDispatch(function (dispatch, _ref) {
+  var clientId = _ref.clientId;
+
+  var _dispatch = dispatch('core/block-editor'),
+      updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+  var setAttributes = function setAttributes(newAttributes) {
+    return updateBlockAttributes(clientId, newAttributes);
+  };
+
+  return {
+    setAttributes: setAttributes
+  };
+});
+/* harmony default export */ var preset_control = (preset_control_compose([applyWithSelect, applyWithDispatch])(preset_control_PresetControl));
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
 var assertThisInitialized = __webpack_require__(24);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
@@ -28694,11 +28741,11 @@ function store_objectSpread(target) { for (var i = 1; i < arguments.length; i++)
 /**
  * WordPress dependencies
  */
-var _wp$data = wp.data,
-    store_registerStore = _wp$data.registerStore,
-    store_select = _wp$data.select,
-    store_subscribe = _wp$data.subscribe,
-    store_dispatch = _wp$data.dispatch;
+var store_wp$data = wp.data,
+    store_registerStore = store_wp$data.registerStore,
+    store_select = store_wp$data.select,
+    store_subscribe = store_wp$data.subscribe,
+    store_dispatch = store_wp$data.dispatch;
 /**
  * Internal dependencies
  */
@@ -28873,7 +28920,7 @@ var with_latest_posts_wp$compose = wp.compose,
     with_latest_posts_createHigherOrderComponent = with_latest_posts_wp$compose.createHigherOrderComponent;
 var with_latest_posts_wp$data = wp.data,
     with_latest_posts_withSelect = with_latest_posts_wp$data.withSelect,
-    withDispatch = with_latest_posts_wp$data.withDispatch;
+    with_latest_posts_withDispatch = with_latest_posts_wp$data.withDispatch;
 var enablePostsQueryControlsOnBlocks = ['novablocks/posts-collection'];
 var withPostsQueryControls = with_latest_posts_createHigherOrderComponent(function (OriginalComponent) {
   return function (props) {
@@ -29001,7 +29048,7 @@ var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(fu
   return {
     posts: select('core').getEntityRecords('postType', 'post', latestPostsQuery)
   };
-}), withDispatch(function (dispatch, props) {
+}), with_latest_posts_withDispatch(function (dispatch, props) {
   var attributes = props.attributes;
   var markPostsAsDisplayed = isSpecificPostModeActive(attributes) ? dispatch(store_STORE_NAME).markSpecificPostsAsDisplayed : dispatch(store_STORE_NAME).markPostsAsDisplayed;
   return {
@@ -29100,6 +29147,12 @@ var with_space_and_sizing_controls_attributes = __webpack_require__(122);
 
 
 
+function with_space_and_sizing_controls_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function with_space_and_sizing_controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { with_space_and_sizing_controls_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { with_space_and_sizing_controls_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
 
 
 var with_space_and_sizing_controls_ = wp.i18n.__;
@@ -29107,33 +29160,50 @@ var with_space_and_sizing_controls_wp$components = wp.components,
     with_space_and_sizing_controls_PanelRow = with_space_and_sizing_controls_wp$components.PanelRow,
     with_space_and_sizing_controls_RangeControl = with_space_and_sizing_controls_wp$components.RangeControl,
     with_space_and_sizing_controls_ToggleControl = with_space_and_sizing_controls_wp$components.ToggleControl;
-var with_space_and_sizing_controls_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var with_space_and_sizing_controls_wp$compose = wp.compose,
+    with_space_and_sizing_controls_compose = with_space_and_sizing_controls_wp$compose.compose,
+    with_space_and_sizing_controls_createHigherOrderComponent = with_space_and_sizing_controls_wp$compose.createHigherOrderComponent;
 var with_space_and_sizing_controls_Fragment = wp.element.Fragment;
 var with_space_and_sizing_controls_addFilter = wp.hooks.addFilter;
 var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection', 'novablocks/posts-collection'];
 var ALLOWED_BLOCKS_ADVANCED = ['novablocks/media'];
 
-var getEmphasisAttributes = function getEmphasisAttributes(emphasis, overlap, alignment) {
-  var actualEmphasis = !overlap ? emphasis : -1 * emphasis;
+var getEmphasisAttributes = function getEmphasisAttributes(_ref) {
+  var emphasisBySpace = _ref.emphasisBySpace,
+      enableOverlapping = _ref.enableOverlapping,
+      alignment = _ref.alignment;
+  var actualEmphasis = !enableOverlapping ? emphasisBySpace : -1 * emphasisBySpace;
   return {
-    // 	Overlapping: Enabled · Disabled
-    // 	             ^^^^^^^
-    emphasisBySpace: emphasis,
-    enableOverlapping: overlap,
+    emphasisBySpace: emphasisBySpace,
+    enableOverlapping: enableOverlapping,
     blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(alignment) ? actualEmphasis : 0,
     blockBottomSpacing: actualEmphasis < 0 && ['center', 'top'].includes(alignment) ? actualEmphasis : 0,
     emphasisTopSpacing: alignment !== 'top' ? actualEmphasis : 1,
     emphasisBottomSpacing: alignment !== 'bottom' ? actualEmphasis : 1,
-    verticalAlignment: alignment // 	Overlapping: Enabled · Disabled
-    // 	             ^^^^^^^
-    // emphasisBySpace: emphasis,
-    // enableOverlapping: overlap,
-    // blockTopSpacing: 	( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) 	? -1 * actualEmphasis : actualEmphasis,
-    // blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( alignment ) ) 		? -1 * actualEmphasis : actualEmphasis,
-    // emphasisTopSpacing: 	( alignment !== 'top' ) 	? actualEmphasis :  -1 * actualEmphasis,
-    // emphasisBottomSpacing: 	( alignment !== 'bottom' ) 	? actualEmphasis : 	-1 * actualEmphasis,
-    // verticalAlignment: alignment,
+    verticalAlignment: alignment
+  };
+};
 
+var with_space_and_sizing_controls_getRandomAttributes = function getRandomAttributes() {
+  var getRandomSign = function getRandomSign() {
+    return getRandomArrayFromArray([-1, 0, 1], 1)[0];
+  };
+
+  var block = getRandomBetween(0, 3);
+  var emphasis = getRandomBetween(0, 3);
+  var blockTopSign = getRandomSign();
+  var blockBottomSign = getRandomSign();
+  var emphasisTopSign = getRandomSign();
+  var emphasisBottomSign = getRandomSign();
+  var verticalAlignment = getRandomArrayFromArray(['top', 'center', 'bottom'], 1)[0];
+  var enableOverlapping = getRandomArrayFromArray([true, false], 1)[0];
+  return {
+    blockTopSpacing: block * blockTopSign,
+    blockBottomSpacing: block * blockBottomSign,
+    emphasisTopSpacing: emphasis * emphasisTopSign,
+    emphasisBottomSpacing: emphasis * emphasisBottomSign,
+    enableOverlapping: enableOverlapping,
+    verticalAlignment: verticalAlignment
   };
 };
 
@@ -29148,11 +29218,8 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
     var attributes = props.attributes,
         setAttributes = props.setAttributes;
     var emphasisBySpace = attributes.emphasisBySpace,
-        enableOverlapping = attributes.enableOverlapping,
-        layoutPreset = attributes.layoutPreset,
         blockTopSpacing = attributes.blockTopSpacing,
         blockBottomSpacing = attributes.blockBottomSpacing;
-    var verticalAlignment = attributes.verticalAlignment || 'center';
     var presetOptions = props === null || props === void 0 ? void 0 : (_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$media = _props$settings.media) === null || _props$settings$media === void 0 ? void 0 : (_props$settings$media2 = _props$settings$media.spaceAndSizing) === null || _props$settings$media2 === void 0 ? void 0 : _props$settings$media2.presetOptions;
     var SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes(props.name) ? -3 : 0;
     var SPACING_MAX_VALUE = 3;
@@ -29169,19 +29236,19 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
     }, Object(external_React_["createElement"])(preset_control, {
       key: 'media-card-layout-preset',
       label: with_space_and_sizing_controls_('Choose a layout preset:', '__plugin_txtd'),
-      selected: layoutPreset,
       options: presetOptions,
-      attribute: 'layoutPreset',
-      setAttributes: setAttributes
+      randomize: with_space_and_sizing_controls_getRandomAttributes
     })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
       label: with_space_and_sizing_controls_('Customize')
     }, Object(external_React_["createElement"])("div", {
       key: 'space-and-sizing-customize-1',
-      className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment)))
+      className: utils_getControlsClasses(attributes, getEmphasisAttributes)
     }, Object(external_React_["createElement"])(with_space_and_sizing_controls_RangeControl, {
       value: emphasisBySpace,
       onChange: function onChange(emphasisBySpace) {
-        var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment);
+        var newAttributes = getEmphasisAttributes(with_space_and_sizing_controls_objectSpread(with_space_and_sizing_controls_objectSpread({}, attributes), {}, {
+          emphasisBySpace: emphasisBySpace
+        }));
         setAttributes(newAttributes);
       },
       label: with_space_and_sizing_controls_('Emphasis by Space'),
@@ -29218,7 +29285,8 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
     }))))));
   };
 });
-with_space_and_sizing_controls_addFilter('editor.BlockEdit', 'novablocks/with-space-and-sizing', withSpaceAndSizingControls);
+var componentWithSettings = with_space_and_sizing_controls_compose([with_settings, withSpaceAndSizingControls]);
+with_space_and_sizing_controls_addFilter('editor.BlockEdit', 'novablocks/with-space-and-sizing', componentWithSettings);
 var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHigherOrderComponent(function (OriginalComponent) {
   return function (props) {
     if (!ALLOWED_BLOCKS_ADVANCED.includes(props.name)) {
@@ -29227,8 +29295,7 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
 
     var attributes = props.attributes,
         setAttributes = props.setAttributes;
-    var emphasisBySpace = attributes.emphasisBySpace,
-        enableOverlapping = attributes.enableOverlapping,
+    var enableOverlapping = attributes.enableOverlapping,
         emphasisTopSpacing = attributes.emphasisTopSpacing,
         emphasisBottomSpacing = attributes.emphasisBottomSpacing;
     var verticalAlignment = attributes.verticalAlignment || 'center';
@@ -29244,18 +29311,22 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
       label: with_space_and_sizing_controls_('Customize')
     }, Object(external_React_["createElement"])("div", {
       key: 'space-and-sizing-customize-2',
-      className: classnames_default()(getControlsClasses(attributes, getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment)))
+      className: utils_getControlsClasses(attributes, getEmphasisAttributes)
     }, Object(external_React_["createElement"])(with_space_and_sizing_controls_ToggleControl, {
       label: with_space_and_sizing_controls_('Enable Overlapping'),
       checked: enableOverlapping,
-      onChange: function onChange() {
-        var newAttributes = getEmphasisAttributes(emphasisBySpace, !enableOverlapping, verticalAlignment);
+      onChange: function onChange(enableOverlapping) {
+        var newAttributes = getEmphasisAttributes(with_space_and_sizing_controls_objectSpread(with_space_and_sizing_controls_objectSpread({}, attributes), {}, {
+          enableOverlapping: enableOverlapping
+        }));
         setAttributes(newAttributes);
       }
     }), Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
       value: verticalAlignment,
       onChange: function onChange(verticalAlignment) {
-        var newAttributes = getEmphasisAttributes(emphasisBySpace, enableOverlapping, verticalAlignment);
+        var newAttributes = getEmphasisAttributes(with_space_and_sizing_controls_objectSpread(with_space_and_sizing_controls_objectSpread({}, attributes), {}, {
+          verticalAlignment: verticalAlignment
+        }));
         setAttributes(newAttributes);
       }
     })))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
@@ -30071,11 +30142,8 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
     dismissLabel: '✔ Ok, I got it!'
   }), Object(external_React_["createElement"])(preset_control, {
     key: 'advanced-gallery-style-preset',
-    attribute: 'stylePreset',
-    selected: stylePreset,
     options: advancedGalleryPresetOptions,
-    randomize: util_getRandomAttributes,
-    setAttributes: setAttributes
+    randomize: util_getRandomAttributes
   })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: advanced_gallery_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])(advanced_gallery_inspector_controls_RangeControl, {
@@ -32122,7 +32190,7 @@ var header_edit_Edit = /*#__PURE__*/function (_Component) {
   return Edit;
 }(header_edit_Component);
 
-var applyWithSelect = edit_withSelect(function (select, props) {
+var edit_applyWithSelect = edit_withSelect(function (select, props) {
   var _select = select('core/block-editor'),
       getBlocks = _select.getBlocks;
 
@@ -32144,7 +32212,7 @@ var applyWithSelect = edit_withSelect(function (select, props) {
     variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations(props.name)
   };
 });
-var applyWithDispatch = edit_withDispatch(function (dispatch) {
+var edit_applyWithDispatch = edit_withDispatch(function (dispatch) {
   var _dispatch = dispatch('core/block-editor'),
       insertBlock = _dispatch.insertBlock,
       replaceInnerBlocks = _dispatch.replaceInnerBlocks;
@@ -32158,7 +32226,7 @@ var applyWithDispatch = edit_withDispatch(function (dispatch) {
     updateBlockAttributes: updateBlockAttributes
   };
 });
-/* harmony default export */ var header_edit = (header_edit_compose([applyWithSelect, applyWithDispatch])(header_edit_Edit));
+/* harmony default export */ var header_edit = (header_edit_compose([edit_applyWithSelect, edit_applyWithDispatch])(header_edit_Edit));
 // CONCATENATED MODULE: ./src/blocks/header/variations.js
 
 var variations_ = wp.i18n.__;
@@ -33034,6 +33102,12 @@ var preview_MediaPreview = function MediaPreview(props) {
 
 
 
+function inspector_controls_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function inspector_controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { inspector_controls_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { inspector_controls_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
 
 
 
@@ -33059,7 +33133,9 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
       balanceEmphasis = attributes.balanceEmphasis,
       balanceFocalPoint = attributes.balanceFocalPoint;
 
-  var getBalanceAttributes = function getBalanceAttributes(balanceEmphasis, balanceFocalPoint) {
+  var getBalanceAttributes = function getBalanceAttributes(_ref) {
+    var balanceEmphasis = _ref.balanceEmphasis,
+        balanceFocalPoint = _ref.balanceFocalPoint;
     var width = balanceEmphasis * (CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MIN_WIDTH) / 100 + CONTENT_AREA_MIN_WIDTH;
     var contentAreaWidth = 'content' === balanceFocalPoint ? width : 100 - width;
     return {
@@ -33086,11 +33162,13 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     label: media_inspector_controls_('Customize')
   }, Object(external_React_["createElement"])("div", {
     key: 'media-card-visual-balance-customize-1',
-    className: classnames_default()(getControlsClasses(attributes, getBalanceAttributes(balanceEmphasis, balanceFocalPoint)))
+    className: utils_getControlsClasses(attributes, getBalanceAttributes)
   }, Object(external_React_["createElement"])(media_inspector_controls_RangeControl, {
     value: balanceEmphasis,
     onChange: function onChange(balanceEmphasis) {
-      setAttributes(getBalanceAttributes(balanceEmphasis, balanceFocalPoint));
+      setAttributes(getBalanceAttributes(inspector_controls_objectSpread(inspector_controls_objectSpread({}, attributes), {}, {
+        balanceEmphasis: balanceEmphasis
+      })));
     },
     label: media_inspector_controls_('Emphasis by Balance'),
     min: 0,
@@ -33100,7 +33178,9 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
     label: media_inspector_controls_('Focal Point', '__plugin_txtd'),
     selected: balanceFocalPoint,
     onChange: function onChange(balanceFocalPoint) {
-      setAttributes(getBalanceAttributes(balanceEmphasis, balanceFocalPoint));
+      setAttributes(getBalanceAttributes(inspector_controls_objectSpread(inspector_controls_objectSpread({}, attributes), {}, {
+        balanceFocalPoint: balanceFocalPoint
+      })));
     },
     options: [{
       label: media_inspector_controls_('Content Area'),

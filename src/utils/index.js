@@ -1,3 +1,5 @@
+import classnames from "classnames";
+
 export { getPlaceholderImages } from './unsplash';
 
 export const getRandomBetween = ( min, max ) => {
@@ -164,18 +166,13 @@ export const getSnapClassname = function( focalPoint ) {
 	return classNames.join( ' ' );
 };
 
-const wrappedControlsMatch = ( attributes, compiledAttributes ) => {
-	return Object.keys( compiledAttributes ).every( key => {
-		return compiledAttributes[ key ] === attributes[ key ];
-	} );
-};
+export const getControlsClasses = ( attributes, compileAttributes ) => {
+	const classes = [ 'novablocks-controls-wrap' ];
+	const compiledAttributes = compileAttributes( attributes );
 
-export const getControlsClasses = ( attributes, compiledAttributes ) => {
-	const classes = ['novablocks-controls-wrap'];
-
-	if ( ! wrappedControlsMatch( attributes, compiledAttributes ) ) {
+	if ( Object.keys( compiledAttributes ).some( key => compiledAttributes[ key ] !== attributes[ key ] ) ) {
 		classes.push( 'novablocks-controls-wrap--dirty' );
 	}
 
-	return classes;
+	return classnames( classes );
 };

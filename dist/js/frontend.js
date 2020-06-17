@@ -21945,6 +21945,10 @@ function renderStyle(style) {
 
 
 //# sourceMappingURL=index.js.map
+// EXTERNAL MODULE: ./node_modules/classnames/index.js
+var classnames = __webpack_require__(37);
+var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
+
 // EXTERNAL MODULE: ./node_modules/unsplash-js/lib/unsplash.js
 var unsplash = __webpack_require__(9);
 var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
@@ -21986,6 +21990,7 @@ var normalize = function normalize(photo) {
 
 
 // CONCATENATED MODULE: ./src/utils/index.js
+
 
 
 var getRandomBetween = function getRandomBetween(min, max) {
@@ -22139,21 +22144,17 @@ var getSnapClassname = function getSnapClassname(focalPoint) {
 
   return classNames.join(' ');
 };
-
-var wrappedControlsMatch = function wrappedControlsMatch(attributes, compiledAttributes) {
-  return Object.keys(compiledAttributes).every(function (key) {
-    return compiledAttributes[key] === attributes[key];
-  });
-};
-
-var getControlsClasses = function getControlsClasses(attributes, compiledAttributes) {
+var utils_getControlsClasses = function getControlsClasses(attributes, compileAttributes) {
   var classes = ['novablocks-controls-wrap'];
+  var compiledAttributes = compileAttributes(attributes);
 
-  if (!wrappedControlsMatch(attributes, compiledAttributes)) {
+  if (Object.keys(compiledAttributes).some(function (key) {
+    return compiledAttributes[key] !== attributes[key];
+  })) {
     classes.push('novablocks-controls-wrap--dirty');
   }
 
-  return classes;
+  return classnames_default()(classes);
 };
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 
@@ -23448,6 +23449,63 @@ var viewportObserver_viewportObserver = /*#__PURE__*/function () {
 
 
 
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
 
 
 /***/ })

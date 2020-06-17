@@ -530,24 +530,8 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => 1,
 						'enableOverlapping' => false,
 						'verticalAlignment' => 'center',
-						// 'blockStyle' => 'basic',
-						// 'containerHeight' => 50,
 					),
 				),
-				// array(
-				// 	'label'  => 'Spacing / Top Anchoring',
-				// 	'value'  => 'spacing1',
-				// 	'preset' => array(
-				// 		'blockTopSpacing' => 1,
-				// 		'blockBottomSpacing' => 1,
-				// 		'emphasisTopSpacing' => 1,
-				// 		'emphasisBottomSpacing' => 1,
-				// 		'enableOverlapping' => false,
-				// 		'verticalAlignment' => 'top',
-				// 		'blockStyle' => 'moderate',
-				// 		// 'containerHeight' => 55,
-				// 	),
-				// ),
 				array(
 					'label'  => 'Overlap 1 / Top Anchoring',
 					'value'  => 'overlap1',
@@ -559,7 +543,6 @@ function novablocks_add_media_settings( $settings ) {
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'top',
 						'blockStyle' => 'moderate',
-						// 'containerHeight' => 65,
 					),
 				),
 				array(
@@ -572,8 +555,6 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => -2,
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'center',
-						// 'blockStyle' => 'moderate',
-						// 'containerHeight' => 65,
 					),
 				),
 				array(
@@ -586,8 +567,6 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => -2,
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'bottom',
-						// 'blockStyle' => 'moderate',
-						// 'containerHeight' => 60,
 					),
 				),
 				array(
@@ -600,8 +579,6 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => -2,
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'center',
-						// 'blockStyle' => 'moderate',
-						// 'containerHeight' => 65,
 					),
 				),
 				array(
@@ -614,8 +591,6 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => -2,
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'top',
-						// 'blockStyle' => 'moderate',
-						// 'containerHeight' => 65,
 					),
 				),
 				array(
@@ -628,8 +603,6 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => 2,
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'bottom',
-						// 'blockStyle' => 'moderate',
-						// 'containerHeight' => 65,
 					),
 				),
 			)
