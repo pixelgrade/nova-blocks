@@ -106,6 +106,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		const cssVars = {
 			'--block-top-spacing': blockTopSpacing,
 			'--block-bottom-spacing': blockBottomSpacing,
+			'--block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
 		};
 
 		return (
@@ -178,9 +179,12 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
 	return ( props ) => {
 
-		if ( ! ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ) {
+		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
 			return <OriginalComponent { ...props } />
 		}
+
+		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
+		const SPACING_MAX_VALUE = 3;
 
 		const {
 			attributes,
@@ -237,16 +241,16 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 									value={ emphasisTopSpacing }
 									onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
 									label={ __( 'Top' ) }
-									min={ -3 }
-									max={ 3 }
+									min={ SPACING_MIN_VALUE }
+									max={ SPACING_MAX_VALUE }
 								/>
 								<RangeControl
 									key={ 'media-card-content-bottom-spacing' }
 									value={ emphasisBottomSpacing }
 									onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
 									label={ __( 'Bottom' ) }
-									min={ -3 }
-									max={ 3 }
+									min={ SPACING_MIN_VALUE }
+									max={ SPACING_MAX_VALUE }
 								/>
 							</div>
 						</ControlsGroup>

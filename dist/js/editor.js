@@ -1853,33 +1853,6 @@ module.exports = JSON.parse("{\"focalPoint\":{\"type\":\"object\",\"default\":{\
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var objectWithoutPropertiesLoose = __webpack_require__(234);
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutProperties;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var arrayWithoutHoles = __webpack_require__(212);
 
 var iterableToArray = __webpack_require__(213);
@@ -1893,7 +1866,7 @@ function _toConsumableArray(arr) {
 module.exports = _toConsumableArray;
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports) {
 
 /**
@@ -1925,13 +1898,13 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = jQuery;
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var freeGlobal = __webpack_require__(85);
@@ -1946,16 +1919,43 @@ module.exports = root;
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":\"object\"},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"contentColor\":{\"type\":\"string\",\"default\":\"#FFF\"},\"overlayFilterStyle\":{\"type\":\"string\",\"default\":\"dark\"},\"overlayFilterStrength\":{\"type\":\"number\",\"default\":30}}");
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(234);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 35 */
@@ -2304,7 +2304,7 @@ function _arrayLikeToArray(arr, len) {
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(32);
+var root = __webpack_require__(31);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -2350,7 +2350,7 @@ module.exports = isIndex;
 var baseMatches = __webpack_require__(154),
     baseMatchesProperty = __webpack_require__(193),
     identity = __webpack_require__(108),
-    isArray = __webpack_require__(30),
+    isArray = __webpack_require__(29),
     property = __webpack_require__(202);
 
 /**
@@ -2528,7 +2528,7 @@ module.exports = getMapData;
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(30),
+var isArray = __webpack_require__(29),
     isKey = __webpack_require__(77),
     stringToPath = __webpack_require__(194),
     toString = __webpack_require__(197);
@@ -3464,7 +3464,7 @@ module.exports = isLength;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(32);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -3568,7 +3568,7 @@ module.exports = baseGet;
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(30),
+var isArray = __webpack_require__(29),
     isSymbol = __webpack_require__(47);
 
 /** Used to match property names within property paths. */
@@ -4302,7 +4302,7 @@ module.exports = baseEach;
 
 var baseTimes = __webpack_require__(146),
     isArguments = __webpack_require__(89),
-    isArray = __webpack_require__(30),
+    isArray = __webpack_require__(29),
     isBuffer = __webpack_require__(90),
     isIndex = __webpack_require__(51),
     isTypedArray = __webpack_require__(92);
@@ -4397,7 +4397,7 @@ module.exports = isArguments;
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(32),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(31),
     stubFalse = __webpack_require__(148);
 
 /** Detect free variable `exports`. */
@@ -4777,7 +4777,7 @@ module.exports = cacheHas;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayPush = __webpack_require__(102),
-    isArray = __webpack_require__(30);
+    isArray = __webpack_require__(29);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -4894,7 +4894,7 @@ module.exports = stubArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(32);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -5176,7 +5176,7 @@ module.exports = toNumber;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseOrderBy = __webpack_require__(208),
-    isArray = __webpack_require__(30);
+    isArray = __webpack_require__(29);
 
 /**
  * This method is like `_.sortBy` except that it allows specifying the sort
@@ -5770,7 +5770,7 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"cente
 var arrayMap = __webpack_require__(59),
     baseIteratee = __webpack_require__(52),
     baseMap = __webpack_require__(109),
-    isArray = __webpack_require__(30);
+    isArray = __webpack_require__(29);
 
 /**
  * Creates an array of values by running each element in `collection` thru
@@ -6496,7 +6496,7 @@ module.exports = isMasked;
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(32);
+var root = __webpack_require__(31);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -6530,7 +6530,7 @@ module.exports = getValue;
 var arrayAggregator = __webpack_require__(141),
     baseAggregator = __webpack_require__(142),
     baseIteratee = __webpack_require__(52),
-    isArray = __webpack_require__(30);
+    isArray = __webpack_require__(29);
 
 /**
  * Creates a function like `_.groupBy`.
@@ -7634,7 +7634,7 @@ var Stack = __webpack_require__(96),
     equalByTag = __webpack_require__(182),
     equalObjects = __webpack_require__(185),
     getTag = __webpack_require__(188),
-    isArray = __webpack_require__(30),
+    isArray = __webpack_require__(29),
     isBuffer = __webpack_require__(90),
     isTypedArray = __webpack_require__(92);
 
@@ -7910,7 +7910,7 @@ module.exports = equalByTag;
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(32);
+var root = __webpack_require__(31);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -8159,7 +8159,7 @@ module.exports = getTag;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(32);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -8172,7 +8172,7 @@ module.exports = DataView;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(32);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -8185,7 +8185,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(32);
+    root = __webpack_require__(31);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -8446,7 +8446,7 @@ module.exports = toString;
 
 var Symbol = __webpack_require__(50),
     arrayMap = __webpack_require__(59),
-    isArray = __webpack_require__(30),
+    isArray = __webpack_require__(29),
     isSymbol = __webpack_require__(47);
 
 /** Used as references for various `Number` constants. */
@@ -8548,7 +8548,7 @@ module.exports = baseHasIn;
 
 var castPath = __webpack_require__(58),
     isArguments = __webpack_require__(89),
-    isArray = __webpack_require__(30),
+    isArray = __webpack_require__(29),
     isIndex = __webpack_require__(51),
     isLength = __webpack_require__(72),
     toKey = __webpack_require__(48);
@@ -12221,7 +12221,7 @@ module.exports = _objectWithoutPropertiesLoose;
 /* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(32);
+var root = __webpack_require__(31);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -15003,7 +15003,7 @@ var groupBy = __webpack_require__(78);
 var groupBy_default = /*#__PURE__*/__webpack_require__.n(groupBy);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(31);
+var external_jQuery_ = __webpack_require__(30);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/control-sections/utils.js
@@ -18042,7 +18042,7 @@ function PositionIndicatorsPanel(props) {
 
 /* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(29);
+var toConsumableArray = __webpack_require__(28);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/unsplash-js/lib/unsplash.js
@@ -18832,7 +18832,7 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ var heading_toolbar = (heading_toolbar_HeadingToolbar);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(28);
+var objectWithoutProperties = __webpack_require__(34);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // CONCATENATED MODULE: ./src/components/editable-text/index.js
@@ -19001,26 +19001,12 @@ var collection_CollectionSubtitle = function CollectionSubtitle(props) {
 
 var collection_Collection = function Collection(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes,
-      clientId = props.clientId,
-      innerBlocks = props.innerBlocks,
       hasAppender = props.hasAppender;
   var blockStyle = attributes.blockStyle,
       contentStyle = attributes.contentStyle,
-      title = attributes.title,
-      subtitle = attributes.subtitle,
       contentAlign = attributes.contentAlign,
-      level = attributes.level,
       imageResizing = attributes.imageResizing,
-      containerHeight = attributes.containerHeight,
-      showCollectionTitle = attributes.showCollectionTitle,
-      showCollectionSubtitle = attributes.showCollectionSubtitle,
-      showMedia = attributes.showMedia,
-      showTitle = attributes.showTitle,
-      showSubtitle = attributes.showSubtitle,
-      showDescription = attributes.showDescription,
-      showButtons = attributes.showButtons,
-      showMeta = attributes.showMeta;
+      containerHeight = attributes.containerHeight;
   var blockClassName = 'novablocks-collection';
 
   var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
@@ -29057,7 +29043,7 @@ var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(fu
 }), withPostsQueryControls]);
 with_latest_posts_addFilter('editor.BlockEdit', 'novablocks/with-latest-posts', withLatestPosts);
 // EXTERNAL MODULE: ./src/components/advanced-gallery/attributes.json
-var advanced_gallery_attributes = __webpack_require__(33);
+var advanced_gallery_attributes = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./src/filters/with-advanced-gallery-attributes/index.js
 
@@ -29103,7 +29089,7 @@ function addDopplerAttributes(block) {
 
 with_doppler_attributes_addFilter('blocks.registerBlockType', 'novablocks/add-advanced-gallery-attributes', addDopplerAttributes);
 // EXTERNAL MODULE: ./src/components/color-controls/attributes.json
-var color_controls_attributes = __webpack_require__(34);
+var color_controls_attributes = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/filters/with-overlay-color-attributes/index.js
 
@@ -29225,7 +29211,8 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
     var SPACING_MAX_VALUE = 3;
     var cssVars = {
       '--block-top-spacing': blockTopSpacing,
-      '--block-bottom-spacing': blockBottomSpacing
+      '--block-bottom-spacing': blockBottomSpacing,
+      '--block-zindex': Math.max(0, -1 * (blockTopSpacing + blockBottomSpacing))
     };
     return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])("div", {
       style: cssVars
@@ -29289,10 +29276,12 @@ var componentWithSettings = with_space_and_sizing_controls_compose([with_setting
 with_space_and_sizing_controls_addFilter('editor.BlockEdit', 'novablocks/with-space-and-sizing', componentWithSettings);
 var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHigherOrderComponent(function (OriginalComponent) {
   return function (props) {
-    if (!ALLOWED_BLOCKS_ADVANCED.includes(props.name)) {
+    if (!with_space_and_sizing_controls_ALLOWED_BLOCKS.includes(props.name)) {
       return Object(external_React_["createElement"])(OriginalComponent, props);
     }
 
+    var SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes(props.name) ? -3 : 0;
+    var SPACING_MAX_VALUE = 3;
     var attributes = props.attributes,
         setAttributes = props.setAttributes;
     var enableOverlapping = attributes.enableOverlapping,
@@ -29344,8 +29333,8 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
         });
       },
       label: with_space_and_sizing_controls_('Top'),
-      min: -3,
-      max: 3
+      min: SPACING_MIN_VALUE,
+      max: SPACING_MAX_VALUE
     }), Object(external_React_["createElement"])(with_space_and_sizing_controls_RangeControl, {
       key: 'media-card-content-bottom-spacing',
       value: emphasisBottomSpacing,
@@ -29355,8 +29344,8 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
         });
       },
       label: with_space_and_sizing_controls_('Bottom'),
-      min: -3,
-      max: 3
+      min: SPACING_MIN_VALUE,
+      max: SPACING_MAX_VALUE
     }))))));
   };
 });

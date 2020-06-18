@@ -65,9 +65,6 @@ const Collection = ( props ) => {
 
 	const {
 		attributes,
-		setAttributes,
-		clientId,
-		innerBlocks,
 		hasAppender
 	} = props;
 
@@ -75,23 +72,9 @@ const Collection = ( props ) => {
 		blockStyle,
 		contentStyle,
 
-		title,
-		subtitle,
-
 		contentAlign,
-		level,
 		imageResizing,
 		containerHeight,
-
-		showCollectionTitle,
-		showCollectionSubtitle,
-
-		showMedia,
-		showTitle,
-		showSubtitle,
-		showDescription,
-		showButtons,
-		showMeta,
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';

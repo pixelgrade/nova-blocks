@@ -2,6 +2,7 @@
 @import 'mixins';
 
 @import './emphasis';
+@import './spacing';
 
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
@@ -27,67 +28,9 @@
 @import 'vendor/slick';
 @import 'vendor/slick-theme';
 
-[class*="__inner-container"] > [class*="wp-block"] {
+[class*="__inner-container"] > * {
 	margin-left: auto;
 	margin-right: auto;
-}
-
-// Transition between different alignment states
-.novablocks-media__content {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-
-	&:before,
-	&:after {
-		content: '';
-		display: block;
-		height: 0;
-		flex: 0 0 auto;
-		transition: var(--novablocks-media-transition);
-		transition-property: flex-grow;
-	}
-
-	.novablocks-u-valign-top &,
-	.novablocks-u-valign-center &,
-	.novablocks-u-valign-bottom & {
-
-		&:before,
-		&:after {
-			flex-grow: 1;
-		}
-	}
-
-	.novablocks-u-valign-top & {
-
-		&:before {
-			flex-grow: 0;
-		}
-	}
-
-	.novablocks-u-valign-bottom & {
-
-		&:after {
-			flex-grow: 0;
-		}
-	}
-}
-
-.novablocks-media__content:before,
-.novablocks-media__content:after,
-.novablocks-media__inner-container {
-	transition: var(--novablocks-transition);
-	transition-property: flex-grow;
-}
-
-.novablocks-media__inner-container {
-	flex-grow: 1;
-
-	.novablocks-u-valign-top &,
-	.novablocks-u-valign-center &,
-	.novablocks-u-valign-bottom & {
-		flex-grow: 0;
-	}
 }
 
 .novablocks-foreground[class] {

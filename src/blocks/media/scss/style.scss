@@ -7,12 +7,6 @@
 		padding-top: 1px;
 	}
 
-	// center content
-	.wp-block-group__inner-container > .wp-block {
-		margin-left: auto;
-		margin-right: auto;
-	}
-
 	// make sure negative margin used for layout doesnt overlap other blocks
 	.wp-block-group__inner-container > .wp-block {
 		display: flex;

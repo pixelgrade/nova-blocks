@@ -15,20 +15,27 @@
 	--novablocks-block-content-box-shadow: none;
 }
 
+
+.novablocks-media {
+	position: relative;
+	z-index: var(--block-zindex);
+}
+
+:root {
+	--novablocks-spacing: --theme-spacing;
+	--element-spacing: --theme-spacing;
+}
+
 .novablocks-block {
 	--block-padding: 0;
 	--block-content-padding: 0;
 
 	&[class] {
-		padding-top: calc( var(--block-top-spacing, 1) * var(--novablocks-spacing) );
-		padding-bottom: calc( var(--block-bottom-spacing, 1) * var(--novablocks-spacing) );
-
 		color: var(--novablocks-block-text-color);
 		background-color: var(--novablocks-block-background-color);
 
 		transition: var(--novablocks-transition);
 		transition-property: background-color, padding;
-
 
 		h1, h2, h3, h4, h5, h6 {
 			transition: var(--novablocks-transition);
