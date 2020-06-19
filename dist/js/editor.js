@@ -29210,9 +29210,9 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
     var SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes(props.name) ? -3 : 0;
     var SPACING_MAX_VALUE = 3;
     var cssVars = {
-      '--block-top-spacing': blockTopSpacing,
-      '--block-bottom-spacing': blockBottomSpacing,
-      '--block-zindex': Math.max(0, -1 * (blockTopSpacing + blockBottomSpacing))
+      '--novablocks-block-top-spacing': blockTopSpacing,
+      '--novablocks-block-bottom-spacing': blockBottomSpacing,
+      '--novablocks-block-zindex': Math.max(0, -1 * (blockTopSpacing + blockBottomSpacing))
     };
     return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])("div", {
       style: cssVars
@@ -29289,8 +29289,8 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
         emphasisBottomSpacing = attributes.emphasisBottomSpacing;
     var verticalAlignment = attributes.verticalAlignment || 'center';
     var cssVars = {
-      '--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-      '--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing
+      '--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+      '--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing
     };
     return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])("div", {
       style: cssVars

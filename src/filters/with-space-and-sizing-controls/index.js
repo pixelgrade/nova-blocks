@@ -104,9 +104,9 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		const SPACING_MAX_VALUE = 3;
 
 		const cssVars = {
-			'--block-top-spacing': blockTopSpacing,
-			'--block-bottom-spacing': blockBottomSpacing,
-			'--block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
+			'--novablocks-block-top-spacing': blockTopSpacing,
+			'--novablocks-block-bottom-spacing': blockBottomSpacing,
+			'--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
 		};
 
 		return (
@@ -201,8 +201,8 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 		const verticalAlignment = attributes.verticalAlignment || 'center';
 
 		const cssVars = {
-			'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-			'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+			'--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+			'--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 		};
 
 		return (

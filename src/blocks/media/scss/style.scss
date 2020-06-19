@@ -51,6 +51,10 @@
 }
 
 .novablocks-media[class][class] {
+	--block-top-spacing: var(--novablocks-block-top-spacing);
+	--block-bottom-spacing: var(--novablocks-block-bottom-spacing);
+	--emphasis-top-spacing: var(--novablocks-emphasis-top-spacing);
+	--emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing);
 
 	@include above(tablet) {
 		margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
@@ -72,6 +76,10 @@
 
 	@include below(tablet) {
 		--novablocks-media-gutter: 0 !important;
+		--block-top-spacing: 1;
+		--block-bottom-spacing: 1;
+		--emphasis-top-spacing: 0;
+		--emphasis-bottom-spacing: 0;
 
 		.novablocks-block,
 		.novablocks-media__content,
@@ -92,6 +100,10 @@
 				transparent calc(var(--emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;
+
+		@include below(tablet) {
+			--emphasis-area: 100;
+		}
 	}
 
 	&.has-image-on-the-left {
