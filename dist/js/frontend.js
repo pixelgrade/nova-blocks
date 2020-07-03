@@ -22498,7 +22498,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 
     function parallaxUpdateState() {
       var newConfig = Object.assign({}, config, {
-        scrollContainerHeight: window.innerHeight
+        scrollContainerHeight: window.screen && window.screen.availHeight || window.innerHeight
       });
       var state = getState(container, newConfig);
       $container.data('state', state);
@@ -23487,8 +23487,10 @@ var viewportObserver_viewportObserver = /*#__PURE__*/function () {
     key: "updateViewportUnits",
     value: function updateViewportUnits() {
       var root = document.documentElement;
-      var vw = window.innerWidth / 100 + 'px';
-      var vh = window.innerHeight / 100 + 'px';
+      var windowWidth = window.screen && window.screen.availWidth || window.innerWidth;
+      var windowHeight = window.screen && window.screen.availHeight || window.innerHeight;
+      var vw = windowWidth / 100 + 'px';
+      var vh = windowHeight / 100 + 'px';
       root.style.setProperty('--novablocks-1vw', vw);
       root.style.setProperty('--novablocks-1vh', vh);
     }
