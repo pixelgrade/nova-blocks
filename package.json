@@ -75,6 +75,6 @@
 		"webpack": "^4.41.0",
 		"webpack-bundle-analyzer": "^3.5.2",
 		"webpack-cli": "^3.3.9",
-		"webpack-rtl-plugin": "2.0.0"
+		"webpack-rtl-plugin": "^2.0.0"
 	}
 }
