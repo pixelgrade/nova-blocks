@@ -326,7 +326,7 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 
 		function parallaxUpdateState() {
 			var newConfig = Object.assign( {}, config, {
-				scrollContainerHeight: window.innerHeight
+				scrollContainerHeight: window.screen && window.screen.availHeight || window.innerHeight
 			} );
 			var state = getState( container, newConfig );
 			$container.data( 'state', state );

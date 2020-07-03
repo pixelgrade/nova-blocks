@@ -66,12 +66,15 @@ add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_block_editor_asse
 
 function novablocks_enqueue_assets() {
 	$style_path = '/dist/css/frontend.css';
+
 	wp_enqueue_style(
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
 		'1.4.3'
 	);
+
+	wp_style_add_data( 'nova-blocks', 'rtl', 'replace' );
 }
 add_action( 'enqueue_block_assets', 'novablocks_enqueue_assets' );
 
