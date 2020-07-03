@@ -64,7 +64,6 @@
 	border: var(--item-border-width) solid var(--nova-food-menu-item-highlight-color);
 	border-top-width: 0;
 	border-radius: var(--item-border-radius);
-	overflow: hidden;
 }
 
 .nova-food-menu-item__highlight-label {
@@ -92,6 +91,10 @@
 		background-color: var(--novablocks-light-1);
 		border-top-left-radius: var(--item-border-radius);
 		border-top-right-radius: var(--item-border-radius);
+	}
+
+	.is-style-rounded & {
+		border-radius: var(--item-border-radius) var(--item-border-radius) 0 0;
 	}
 }
 
