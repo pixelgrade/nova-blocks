@@ -24959,7 +24959,7 @@ function save_save(props) {
     className: "c-headline__secondary",
     value: secondary,
     tagName: "span"
-  }), Object(external_React_["createElement"])(save_RichText.Content, {
+  }), " ", Object(external_React_["createElement"])(save_RichText.Content, {
     className: "c-headline__primary",
     value: primary,
     tagName: "span"
