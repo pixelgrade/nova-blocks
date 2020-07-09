@@ -32,6 +32,7 @@ export default function save( props ) {
 	return (
 		<TagName className={ className ? className : undefined }>
 			<RichText.Content className="c-headline__secondary" value={ secondary } tagName="span" />
+			{ ` ` }
 			<RichText.Content className="c-headline__primary" value={ primary } tagName="span" />
 		</TagName>
 	);
