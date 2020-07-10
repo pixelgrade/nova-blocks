@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import EditableText from "../../components/editable-text";
 import InspectorControls from "./inspector-controls";
-import { withInnerBlocks } from "../../utils";
 
 /**
  * WordPress dependencies
@@ -150,5 +149,5 @@ const CardsCollectionEdit = ( props ) => {
 };
 
 
-export default withInnerBlocks( CardsCollectionEdit );
+export default CardsCollectionEdit;
 

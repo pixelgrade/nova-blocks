@@ -1,7 +1,5 @@
 import {getProps, getState, getStylesFromProps} from "./components/with-parallax/util";
 
-const { withSelect } = wp.data;
-
 export const debounce = (func, wait) => {
 	let timeout = null;
 
@@ -145,15 +143,3 @@ export const getSnapClassname = function( focalPoint ) {
 
 	return classNames.join( ' ' );
 };
-
-export const withInnerBlocks = withSelect( ( select, props ) => {
-	const { clientId } = props;
-	const { getBlock } = select( 'core/block-editor' );
-	const parentBlock = getBlock( clientId );
-	const innerBlocks = parentBlock.innerBlocks;
-
-	return {
-		innerBlocks,
-		...props
-	}
-} );

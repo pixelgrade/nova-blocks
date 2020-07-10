@@ -9,8 +9,6 @@ const { Fragment } = wp.element;
 import InspectorControls from "./inspector-controls";
 import FoodMenuPreview from "./preview";
 
-import { withInnerBlocks } from "../../utils";
-
 const FoodMenuEdit = function( props ) {
 	return (
 		<Fragment>
@@ -20,4 +18,4 @@ const FoodMenuEdit = function( props ) {
 	);
 };
 
-export default withInnerBlocks( FoodMenuEdit );
+export default FoodMenuEdit;
