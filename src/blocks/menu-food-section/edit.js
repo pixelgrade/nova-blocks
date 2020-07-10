@@ -3,6 +3,7 @@
  */
 
 const {Fragment} = wp.element;
+const {withSelect} = wp.data;
 
 /**
  * Internal dependencies
@@ -17,4 +18,16 @@ const FoodMenuSectionEdit = function( props ) {
 	);
 };
 
-export default FoodMenuSectionEdit;
+const withInnerBlocks = withSelect( ( select, props ) => {
+	const { clientId } = props;
+	const { getBlock } = select( 'core/block-editor' );
+	const parentBlock = getBlock( clientId );
+	const innerBlocks = parentBlock.innerBlocks;
+
+	return {
+		innerBlocks,
+		...props
+	}
+} );
+
+export default withInnerBlocks( FoodMenuSectionEdit );

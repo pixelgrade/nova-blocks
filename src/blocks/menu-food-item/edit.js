@@ -29,12 +29,16 @@ const FoodMenuItem = function( props ) {
 
 const withMenuVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
 	return ( props ) => {
-		console.log( props );
-		if ( 'novablocks/menu-food-section' === props.name ) {
+		if ( 'novablocks/menu-food-item' === props.name ) {
 			const { clientId } = props;
 			const { getBlock, getBlockParentsByBlockName } = select( 'core/block-editor' );
 
 			const parents = getBlockParentsByBlockName( clientId, 'novablocks/menu-food' );
+
+			if ( ! parents.length ) {
+				return;
+			}
+
 			const parentClientId = parents[0];
 			const parentBlock = getBlock( parentClientId );
 

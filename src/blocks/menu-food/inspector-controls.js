@@ -14,11 +14,22 @@ const FoodMenuInspectorControls = function( props ) {
 			showPrices,
 			showDescription
 		},
-		childrenBlocks,
 		innerBlocks,
 		setAttributes,
 	} = props;
 
+	const updateChildrenAttributes = ( attributes ) => {
+		innerBlocks.forEach( ( sectionProps ) => {
+			sectionProps.innerBlocks.forEach( ( { clientId } ) => {
+				wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, attributes );
+			} );
+		} );
+	}
+
+	const updateAttributes = ( attributes ) => {
+		setAttributes( attributes );
+		updateChildrenAttributes( attributes );
+	}
 
 	return (
 		<Fragment>
@@ -33,13 +44,13 @@ const FoodMenuInspectorControls = function( props ) {
 					<ToggleControl
 						label={__( 'Price', '__plugin_txtd' )}
 						checked={ showPrices }
-						onChange={() => setAttributes( {showPrices: ! showPrices} )}
+						onChange={() => updateAttributes( {showPrices: ! showPrices} )}
 					/>
 
 					<ToggleControl
 						label={__( 'Description', '__plugin_txtd' )}
 						checked={showDescription}
-						onChange={() => setAttributes( {showDescription: ! showDescription} )}
+						onChange={() => updateAttributes( {showDescription: ! showDescription} )}
 					/>
 				</PanelBody>
 			</InspectorControls>
