@@ -214,6 +214,27 @@ module.exports = _createClass;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = __webpack_require__(59);
@@ -231,7 +252,7 @@ function _possibleConstructorReturn(self, call) {
 module.exports = _possibleConstructorReturn;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 function _getPrototypeOf(o) {
@@ -244,7 +265,7 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var setPrototypeOf = __webpack_require__(89);
@@ -265,27 +286,6 @@ function _inherits(subClass, superClass) {
 }
 
 module.exports = _inherits;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
 
 /***/ }),
 /* 11 */
@@ -9400,15 +9400,15 @@ var createClass = __webpack_require__(6);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(7);
+var possibleConstructorReturn = __webpack_require__(8);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(8);
+var getPrototypeOf = __webpack_require__(9);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(9);
+var inherits = __webpack_require__(10);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
@@ -10688,7 +10688,7 @@ function addFontSizeAttribute(block) {
 
 with_font_size_picker_addFilter('blocks.registerBlockType', 'novablocks/add-font-size-attribute', addFontSizeAttribute);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(10);
+var defineProperty = __webpack_require__(7);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./src/store/reducer.js
@@ -26163,7 +26163,12 @@ var menu_food_inspector_controls_wp$components = wp.components,
     menu_food_inspector_controls_ToggleControl = menu_food_inspector_controls_wp$components.ToggleControl;
 
 var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorControls(props) {
-  var enableTwoColumns = props.attributes.enableTwoColumns,
+  var _props$attributes = props.attributes,
+      enableTwoColumns = _props$attributes.enableTwoColumns,
+      showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
+      childrenBlocks = props.childrenBlocks,
+      innerBlocks = props.innerBlocks,
       setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(menu_food_inspector_controls_Fragment, null, Object(external_React_["createElement"])(menu_food_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(menu_food_inspector_controls_PanelBody, {
     title: menu_food_inspector_controls_('Layout', '__plugin_txtd'),
@@ -26174,6 +26179,22 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
     onChange: function onChange() {
       return setAttributes({
         enableTwoColumns: !enableTwoColumns
+      });
+    }
+  }), Object(external_React_["createElement"])(menu_food_inspector_controls_ToggleControl, {
+    label: menu_food_inspector_controls_('Price', '__plugin_txtd'),
+    checked: showPrices,
+    onChange: function onChange() {
+      return setAttributes({
+        showPrices: !showPrices
+      });
+    }
+  }), Object(external_React_["createElement"])(menu_food_inspector_controls_ToggleControl, {
+    label: menu_food_inspector_controls_('Description', '__plugin_txtd'),
+    checked: showDescription,
+    onChange: function onChange() {
+      return setAttributes({
+        showDescription: !showDescription
       });
     }
   }))));
@@ -26259,7 +26280,10 @@ var TEMPLATE = [['novablocks/menu-food-section', {
 }]]]];
 
 var preview_FoodMenuPreview = function FoodMenuPreview(props) {
-  var enableTwoColumns = props.attributes.enableTwoColumns,
+  var _props$attributes = props.attributes,
+      enableTwoColumns = _props$attributes.enableTwoColumns,
+      showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
       clientId = props.clientId,
       className = props.className;
 
@@ -26290,10 +26314,16 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
 // CONCATENATED MODULE: ./src/blocks/menu-food/edit.js
 
 
+
+function menu_food_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function menu_food_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { menu_food_edit_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { menu_food_edit_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * WordPress dependencies
  */
 var menu_food_edit_Fragment = wp.element.Fragment;
+var menu_food_edit_withSelect = wp.data.withSelect;
 /**
  * Internal dependencies
  */
@@ -26305,7 +26335,19 @@ var edit_FoodMenuEdit = function FoodMenuEdit(props) {
   return Object(external_React_["createElement"])(menu_food_edit_Fragment, null, Object(external_React_["createElement"])(menu_food_preview, props), Object(external_React_["createElement"])(menu_food_inspector_controls, props));
 };
 
-/* harmony default export */ var menu_food_edit = (edit_FoodMenuEdit);
+var withInnerBlocks = menu_food_edit_withSelect(function (select, props) {
+  var clientId = props.clientId;
+
+  var _select = select('core/block-editor'),
+      getBlock = _select.getBlock;
+
+  var parentBlock = getBlock(clientId);
+  var innerBlocks = parentBlock.innerBlocks;
+  return menu_food_edit_objectSpread({
+    innerBlocks: innerBlocks
+  }, props);
+});
+/* harmony default export */ var menu_food_edit = (withInnerBlocks(edit_FoodMenuEdit)); //export default FoodMenuEdit;
 // CONCATENATED MODULE: ./src/blocks/menu-food/save.js
 
 
@@ -26361,6 +26403,14 @@ function menu_food_init() {
       align: {
         type: 'string',
         default: 'wide'
+      },
+      showPrices: {
+        type: 'boolean',
+        default: true
+      },
+      showDescription: {
+        type: 'boolean',
+        default: true
       }
     },
     example: {
@@ -26560,6 +26610,8 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       highlightLabel = _props$attributes.highlightLabel,
       enableSalePrice = _props$attributes.enableSalePrice,
+      showDescription = _props$attributes.showDescription,
+      showPrices = _props$attributes.showPrices,
       salePrice = _props$attributes.salePrice,
       price = _props$attributes.price,
       description = _props$attributes.description,
@@ -26596,7 +26648,7 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
         title: title
       });
     }
-  })), Object(external_React_["createElement"])("div", {
+  })), showPrices && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__prices"
   }, Object(external_React_["createElement"])(menu_food_item_preview_RichText, {
     value: price,
@@ -26620,7 +26672,7 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
       });
     },
     allowedFormats: []
-  }))), Object(external_React_["createElement"])("div", {
+  }))), showDescription && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__description"
   }, Object(external_React_["createElement"])(menu_food_item_preview_RichText, {
     value: description,
@@ -26653,6 +26705,8 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
   var _props$attributes = props.attributes,
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       enableSalePrice = _props$attributes.enableSalePrice,
+      showDescription = _props$attributes.showDescription,
+      showPrices = _props$attributes.showPrices,
       setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(menu_food_item_inspector_controls_Fragment, null, Object(external_React_["createElement"])(menu_food_item_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(menu_food_item_inspector_controls_PanelBody, {
     title: menu_food_item_inspector_controls_('Menu Item', '__plugin_txtd'),
@@ -26666,7 +26720,7 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
         enableHighlightFoodItem: !enableHighlightFoodItem
       });
     }
-  }), Object(external_React_["createElement"])(menu_food_item_inspector_controls_ToggleControl, {
+  }), showPrices && Object(external_React_["createElement"])(menu_food_item_inspector_controls_ToggleControl, {
     label: menu_food_item_inspector_controls_('On sale', '__plugin_txtd'),
     checked: enableSalePrice,
     onChange: function onChange() {
@@ -26691,12 +26745,47 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
  */
 
 var menu_food_item_edit_Fragment = wp.element.Fragment;
-var menu_food_item_edit_BlockControls = wp.blockEditor.BlockControls;
+var menu_food_item_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var edit_wp$data = wp.data,
+    menu_food_item_edit_select = edit_wp$data.select,
+    dispatch = edit_wp$data.dispatch;
 
 var edit_FoodMenuItem = function FoodMenuItem(props) {
   return Object(external_React_["createElement"])(menu_food_item_edit_Fragment, null, Object(external_React_["createElement"])(menu_food_item_preview, props), Object(external_React_["createElement"])(menu_food_item_inspector_controls, props));
 };
 
+var withMenuVisibilityAttributes = menu_food_item_edit_createHigherOrderComponent(function (BlockListBlock) {
+  return function (props) {
+    console.log(props);
+
+    if ('novablocks/menu-food-section' === props.name) {
+      var clientId = props.clientId;
+
+      var _select = menu_food_item_edit_select('core/block-editor'),
+          getBlock = _select.getBlock,
+          getBlockParentsByBlockName = _select.getBlockParentsByBlockName;
+
+      var parents = getBlockParentsByBlockName(clientId, 'novablocks/menu-food');
+      var parentClientId = parents[0];
+      var parentBlock = getBlock(parentClientId);
+
+      var newAttributes = function (_ref) {
+        var showPrices = _ref.showPrices,
+            showDescription = _ref.showDescription;
+        return {
+          showPrices: showPrices,
+          showDescription: showDescription
+        };
+      }(parentBlock.attributes);
+
+      console.log(newAttributes);
+      dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
+    }
+
+    return Object(external_React_["createElement"])(BlockListBlock, props);
+  };
+}, 'withCollectionVisibilityAttributes');
+wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-menu-visibility-attributes', withMenuVisibilityAttributes);
 /* harmony default export */ var menu_food_item_edit = (edit_FoodMenuItem);
 // CONCATENATED MODULE: ./src/blocks/menu-food-item/save.js
 
@@ -26713,6 +26802,8 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       highlightLabel = _props$attributes.highlightLabel,
       enableSalePrice = _props$attributes.enableSalePrice,
+      showDescription = _props$attributes.showDescription,
+      showPrices = _props$attributes.showPrices,
       salePrice = _props$attributes.salePrice,
       price = _props$attributes.price,
       description = _props$attributes.description,
@@ -26743,7 +26834,7 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
       });
     },
     itemprop: "name"
-  })), Object(external_React_["createElement"])("div", {
+  })), showPrices && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__prices",
     itemscope: true,
     itemtype: "http://schema.org/offers"
@@ -26761,7 +26852,7 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
     className: "nova-food-menu-item__price--sale"
   }, Object(external_React_["createElement"])("span", {
     className: "item-price--sale"
-  }, " ", salePrice, " "))), Object(external_React_["createElement"])("div", {
+  }, " ", salePrice, " "))), showDescription && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__description"
   }, Object(external_React_["createElement"])(menu_food_item_save_RichText.Content, {
     value: description,
@@ -26828,6 +26919,14 @@ function menu_food_item_init() {
       enableSalePrice: {
         type: 'boolean',
         default: false
+      },
+      showPrices: {
+        type: 'boolean',
+        default: true
+      },
+      showDescription: {
+        type: 'boolean',
+        default: true
       }
     },
     edit: menu_food_item_edit,
@@ -27365,9 +27464,9 @@ var card_edit_wp$blockEditor = wp.blockEditor,
     card_edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
     edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
 var card_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var edit_wp$data = wp.data,
-    card_edit_select = edit_wp$data.select,
-    dispatch = edit_wp$data.dispatch;
+var card_edit_wp$data = wp.data,
+    card_edit_select = card_edit_wp$data.select,
+    edit_dispatch = card_edit_wp$data.dispatch;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
@@ -27514,9 +27613,9 @@ var withCollectionVisibilityAttributes = card_edit_createHigherOrderComponent(fu
         };
       }(parentBlock.attributes);
 
-      dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
+      edit_dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
       innerBlocks.forEach(function (innerBlock) {
-        dispatch('core/block-editor').updateBlockAttributes(innerBlock.clientId, {
+        edit_dispatch('core/block-editor').updateBlockAttributes(innerBlock.clientId, {
           align: newAttributes.contentAlign
         });
       });
@@ -27813,7 +27912,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   }))))), Object(external_React_["createElement"])(cards_collection_inspector_controls, props));
 };
 
-var withInnerBlocks = cards_collection_edit_withSelect(function (select, props) {
+var edit_withInnerBlocks = cards_collection_edit_withSelect(function (select, props) {
   var clientId = props.clientId;
 
   var _select = select('core/block-editor'),
@@ -27825,7 +27924,7 @@ var withInnerBlocks = cards_collection_edit_withSelect(function (select, props) 
     innerBlocks: innerBlocks
   }, props);
 });
-/* harmony default export */ var cards_collection_edit = (withInnerBlocks(edit_CardsCollectionEdit));
+/* harmony default export */ var cards_collection_edit = (edit_withInnerBlocks(edit_CardsCollectionEdit));
 // CONCATENATED MODULE: ./src/blocks/cards-collection/index.js
 
 

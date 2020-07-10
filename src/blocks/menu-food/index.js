@@ -29,6 +29,14 @@ function init() {
 			align: {
 				type: 'string',
 				default: 'wide'
+			},
+			showPrices: {
+				type: 'boolean',
+				default: true
+			},
+			showDescription: {
+				type: 'boolean',
+				default: true
 			}
 		},
 		example: {

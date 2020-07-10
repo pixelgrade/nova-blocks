@@ -44,7 +44,9 @@ const TEMPLATE = [
 const FoodMenuPreview = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			showPrices,
+			showDescription
 		},
 		clientId,
 		className,
