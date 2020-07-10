@@ -48,8 +48,6 @@ const withMenuVisibilityAttributes = createHigherOrderComponent( ( BlockListBloc
 				)
 			)( parentBlock.attributes );
 
-			console.log( newAttributes );
-
 			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
 		}
 		return <BlockListBlock { ...props } />

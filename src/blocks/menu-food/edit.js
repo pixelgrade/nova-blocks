@@ -3,13 +3,13 @@
  */
 const { Fragment } = wp.element;
 
-const { withSelect } = wp.data;
-
 /**
  * Internal dependencies
  */
 import InspectorControls from "./inspector-controls";
 import FoodMenuPreview from "./preview";
+
+import { withInnerBlocks } from "../../utils";
 
 const FoodMenuEdit = function( props ) {
 	return (
@@ -20,18 +20,4 @@ const FoodMenuEdit = function( props ) {
 	);
 };
 
-const withInnerBlocks = withSelect( ( select, props ) => {
-	const { clientId } = props;
-	const { getBlock } = select( 'core/block-editor' );
-	const parentBlock = getBlock( clientId );
-	const innerBlocks = parentBlock.innerBlocks;
-
-	return {
-		innerBlocks,
-		...props
-	}
-} );
-
 export default withInnerBlocks( FoodMenuEdit );
-
-//export default FoodMenuEdit;

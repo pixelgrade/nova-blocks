@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import EditableText from "../../components/editable-text";
 import InspectorControls from "./inspector-controls";
+import { withInnerBlocks } from "../../utils";
 
 /**
  * WordPress dependencies
@@ -146,19 +147,8 @@ const CardsCollectionEdit = ( props ) => {
 			<InspectorControls { ...props } />
 		</Fragment>
 	);
-}
+};
 
-const withInnerBlocks = withSelect( ( select, props ) => {
-	const { clientId } = props;
-	const { getBlock } = select( 'core/block-editor' );
-	const parentBlock = getBlock( clientId );
-	const innerBlocks = parentBlock.innerBlocks;
-
-	return {
-		innerBlocks,
-		...props
-	}
-} );
 
 export default withInnerBlocks( CardsCollectionEdit );
 
