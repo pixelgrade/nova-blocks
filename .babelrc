@@ -1,4 +1,4 @@
 {
-	"plugins": [ "lodash" ],
+	"plugins": [ "@babel/plugin-proposal-optional-chaining", "lodash" ],
 	"presets": [ ["@wordpress/default", { "modules": true } ] ]
 }

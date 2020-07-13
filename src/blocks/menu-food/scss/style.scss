@@ -144,6 +144,10 @@
 		height: 0;
 		line-height: 0;
 		border-bottom: 0.2em dotted currentColor;
+
+		.price--is-hidden & {
+			content: none;
+		}
 	}
 }
 
@@ -162,8 +166,8 @@
 		grid-template-areas:
 			'label'
 			'title'
-			'prices'
-			'description';
+			'description'
+			'prices';
 
 		&__prices {
 			justify-content: flex-start;

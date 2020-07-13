@@ -7,10 +7,9 @@ import InspectorControls from "./inspector-controls";
 /**
  * WordPress dependencies
  */
-const {Fragment} = wp.element;
 const {
-	BlockControls
-} = wp.blockEditor;
+	Fragment
+} = wp.element;
 
 const FoodMenuItem = function( props ) {
 	return (

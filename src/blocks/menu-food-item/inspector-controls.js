@@ -10,7 +10,9 @@ const FoodMenuItemInspectorControls = function( props ) {
 	const {
 		attributes: {
 			enableHighlightFoodItem,
-			enableSalePrice
+			enableSalePrice,
+			showDescription,
+			showPrices
 		},
 		setAttributes,
 	} = props;
@@ -27,11 +29,11 @@ const FoodMenuItemInspectorControls = function( props ) {
 						onChange={() => setAttributes( {enableHighlightFoodItem: ! enableHighlightFoodItem} )}
 					/>
 
-					<ToggleControl
+					{ showPrices && <ToggleControl
 						label={__( 'On sale', '__plugin_txtd' )}
 						checked={enableSalePrice}
 						onChange={() => setAttributes( {enableSalePrice: ! enableSalePrice} )}
-					/>
+					/> }
 
 				</PanelBody>
 			</InspectorControls>

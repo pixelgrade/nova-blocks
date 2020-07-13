@@ -17,6 +17,8 @@ const FoodMenuItemPreview = function( props ) {
 			enableHighlightFoodItem,
 			highlightLabel,
 			enableSalePrice,
+			showDescription,
+			showPrices,
 			salePrice,
 			price,
 			description,
@@ -60,7 +62,7 @@ const FoodMenuItemPreview = function( props ) {
 				/>
 			</div>
 
-			<div className="nova-food-menu-item__prices">
+			{showPrices && <div className="nova-food-menu-item__prices">
 				<RichText
 					value={price}
 					tagName="span"
@@ -80,9 +82,9 @@ const FoodMenuItemPreview = function( props ) {
 					 />
 				 </div>
 				 }
-			</div>
+			</div> }
 
-			<div className="nova-food-menu-item__description">
+			{ showDescription && <div className="nova-food-menu-item__description">
 				<RichText
 					value={description}
 					tagName="p"
@@ -90,7 +92,7 @@ const FoodMenuItemPreview = function( props ) {
 					placeholder={__( 'Product Description', '__plugin_txtd' )}
 					onChange={description => setAttributes( {description} )}
 				/>
-			</div>
+			</div> }
 
 		</div>
 	);

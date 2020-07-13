@@ -6,7 +6,9 @@ const { PanelBody, ToggleControl } = wp.components;
 const FoodMenuInspectorControls = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			showPrices,
+			showDescription
 		},
 		setAttributes,
 	} = props;
@@ -15,10 +17,21 @@ const FoodMenuInspectorControls = function( props ) {
 		<ControlsSection label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ToggleControl
-					key={ 'menu-columns-controls' }
-					label={__( '2 columns', '__plugin_txtd' ) }
-					checked={ enableTwoColumns }
-					onChange={ () => setAttributes( { enableTwoColumns: ! enableTwoColumns } ) }
+					label={__( '2 columns', '__plugin_txtd' )}
+					checked={enableTwoColumns}
+					onChange={() => setAttributes( {enableTwoColumns: !enableTwoColumns} )}
+				/>
+
+				<ToggleControl
+					label={__( 'Price', '__plugin_txtd' )}
+					checked={showPrices}
+					onChange={() => setAttributes( {showPrices: !showPrices} )}
+				/>
+
+				<ToggleControl
+					label={__( 'Description', '__plugin_txtd' )}
+					checked={showDescription}
+					onChange={() => setAttributes( {showDescription: !showDescription} )}
 				/>
 			</ControlsTab>
 		</ControlsSection>
