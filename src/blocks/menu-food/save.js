@@ -10,7 +10,9 @@ const {InnerBlocks} = wp.blockEditor;
 const FoodMenuSave = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			showPrices,
+			showDescription
 		},
 		className,
 	} = props;
@@ -19,7 +21,8 @@ const FoodMenuSave = function( props ) {
 		className,
 		`nova-food-menu`,
 		{
-			'nova-food-menu--layout' : enableTwoColumns === true
+			'nova-food-menu--layout' : enableTwoColumns === true,
+			'price--is-hidden' : showPrices === false
 		}
 	);
 

@@ -50,19 +50,7 @@ const CardsCollectionEdit = ( props ) => {
 			</Collection>
 		</Fragment>
 	);
-}
-
-const withInnerBlocks = withSelect( ( select, props ) => {
-	const { clientId } = props;
-	const { getBlock } = select( 'core/block-editor' );
-	const parentBlock = getBlock( clientId );
-	const innerBlocks = parentBlock.innerBlocks;
-
-	return {
-		innerBlocks,
-		...props
-	}
-} );
+};
 
 const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
 	return ( props ) => {
@@ -97,4 +85,4 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 
 wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
 
-export default withInnerBlocks( CardsCollectionEdit );
+export default CardsCollectionEdit;

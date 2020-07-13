@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const {Fragment} = wp.element;
+const { Fragment } = wp.element;
 
 /**
  * Internal dependencies

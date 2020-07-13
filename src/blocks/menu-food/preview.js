@@ -14,7 +14,7 @@ const TEMPLATE = [
 	['novablocks/menu-food-section', {sectionTitle: 'Starters'},
 		[
 			['novablocks/menu-food-item', {title: 'Pea & Mint Soup', description: 'Server with focaccia bread', price: '$8.00', enableSalePrice: true, salePrice: '$5.00'}],
-			['novablocks/menu-food-item', {title: 'Beaf Meatballs', description: 'In a spicy tomato sauce', price: '$10.50'}],
+			['novablocks/menu-food-item', {title: 'Beef Meatballs', description: 'In a spicy tomato sauce', price: '$10.50'}],
 			['novablocks/menu-food-item', {title: 'Hummus & Baba Ganoush Dip', description: 'Olive & grilled flatbread', price: '$12.00'}],
 		]
 	],
@@ -44,7 +44,9 @@ const TEMPLATE = [
 const FoodMenuPreview = function( props ) {
 	const {
 		attributes: {
-			enableTwoColumns
+			enableTwoColumns,
+			showPrices,
+			showDescription
 		},
 		clientId,
 		className,
@@ -60,7 +62,8 @@ const FoodMenuPreview = function( props ) {
 		className,
 		`nova-food-menu`,
 		{
-			'nova-food-menu--layout' : enableTwoColumns === true
+			'nova-food-menu--layout' : enableTwoColumns === true,
+			'price--is-hidden' : showPrices === false
 		}
 	);
 
