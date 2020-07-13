@@ -21,11 +21,6 @@
 	z-index: var(--novablocks-block-zindex);
 }
 
-:root {
-	--novablocks-spacing: --theme-spacing;
-	--element-spacing: --theme-spacing;
-}
-
 .novablocks-block {
 	--block-padding: 0;
 	--block-content-padding: 0;
@@ -35,7 +30,7 @@
 		background-color: var(--novablocks-block-background-color);
 
 		transition: var(--novablocks-transition);
-		transition-property: background-color, padding;
+		transition-property: background-color, padding, margin;
 
 		h1, h2, h3, h4, h5, h6 {
 			transition: var(--novablocks-transition);

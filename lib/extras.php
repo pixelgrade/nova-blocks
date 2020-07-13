@@ -1071,6 +1071,30 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		$classes[] = 'alignfull';
 		$classes[] = 'novablocks-collection--align-' . $attributes[ 'contentAlign' ];
 
+		if ( ! empty( $attributes['blockTopSpacing'] ) ) {
+			$blockTopSpacing = $attributes['blockTopSpacing'];
+		} else {
+			$blockTopSpacing = 0;
+		}
+
+		if ( ! empty( $attributes['blockBottomSpacing'] ) ) {
+			$blockBottomSpacing = $attributes['blockBottomSpacing'];
+		} else {
+			$blockBottomSpacing = 0;
+		}
+
+		if ( ! empty( $attributes['emphasisTopSpacing'] ) ) {
+			$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
+		} else {
+			$emphasisTopSpacing = 0;
+		}
+
+		if ( ! empty( $attributes['emphasisBottomSpacing'] ) ) {
+			$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
+		} else {
+			$emphasisBottomSpacing = 0;
+		}
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
@@ -1090,6 +1114,10 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		$className = join( ' ', $classes );
 
 		$cssProps = array(
+			'--block-top-spacing: ' . $blockTopSpacing,
+			'--block-bottom-spacing: ' . $blockBottomSpacing,
+			'--emphasis-top-spacing: ' . $emphasisTopSpacing,
+			'--emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
 			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ),
 			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
