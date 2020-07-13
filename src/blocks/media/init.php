@@ -84,10 +84,10 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		}
 
 		$style =
-			'--block-top-spacing:' . $blockTopSpacing . ';' .
-			'--block-bottom-spacing:' . $blockBottomSpacing . ';' .
-			'--emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
-			'--emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
+			'--novablocks-block-top-spacing:' . $blockTopSpacing . ';' .
+			'--novablocks-block-bottom-spacing:' . $blockBottomSpacing . ';' .
+			'--novablocks-emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
+			'--novablocks-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
 			'--emphasis-area:' . $emphasisArea . ';' .
 			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
 			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 10 / 100 )';

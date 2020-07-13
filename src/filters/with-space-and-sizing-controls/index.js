@@ -42,18 +42,18 @@ const ALLOWED_BLOCKS_ADVANCED = [
 	'novablocks/media',
 ];
 
-const getEmphasisAttributes = ( { emphasisBySpace, enableOverlapping, alignment } ) => {
+const getEmphasisAttributes = ( { emphasisBySpace, enableOverlapping, verticalAlignment } ) => {
 
 	const actualEmphasis = ! enableOverlapping ? emphasisBySpace : -1 * emphasisBySpace;
 
 	return {
 		emphasisBySpace:        emphasisBySpace,
 		enableOverlapping:      enableOverlapping,
-		blockTopSpacing: 		( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) 	? actualEmphasis : 0,
-		blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( alignment ) ) 		? actualEmphasis : 0,
-		emphasisTopSpacing: 	( alignment !== 'top' ) 	? actualEmphasis :  1,
-		emphasisBottomSpacing: 	( alignment !== 'bottom' ) 	? actualEmphasis : 	1,
-		verticalAlignment:      alignment,
+		blockTopSpacing: 		( actualEmphasis < 0 && ['center', 'bottom'].includes( verticalAlignment ) ) 	? actualEmphasis : 0,
+		blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( verticalAlignment ) ) 		? actualEmphasis : 0,
+		emphasisTopSpacing: 	( verticalAlignment !== 'top' ) 	? actualEmphasis :  1,
+		emphasisBottomSpacing: 	( verticalAlignment !== 'bottom' ) 	? actualEmphasis : 	1,
+		verticalAlignment:      verticalAlignment,
 	};
 };
 
@@ -104,8 +104,9 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		const SPACING_MAX_VALUE = 3;
 
 		const cssVars = {
-			'--block-top-spacing': blockTopSpacing,
-			'--block-bottom-spacing': blockBottomSpacing,
+			'--novablocks-block-top-spacing': blockTopSpacing,
+			'--novablocks-block-bottom-spacing': blockBottomSpacing,
+			'--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
 		};
 
 		return (
@@ -178,9 +179,12 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
 	return ( props ) => {
 
-		if ( ! ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ) {
+		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
 			return <OriginalComponent { ...props } />
 		}
+
+		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
+		const SPACING_MAX_VALUE = 3;
 
 		const {
 			attributes,
@@ -197,8 +201,8 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 		const verticalAlignment = attributes.verticalAlignment || 'center';
 
 		const cssVars = {
-			'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-			'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+			'--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+			'--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 		};
 
 		return (
@@ -221,7 +225,7 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 								<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
 								<BlockVerticalAlignmentToolbar
 									value={ verticalAlignment }
-									onChange={ verticalAlignment => {
+									onChange={ ( verticalAlignment ) => {
 										const newAttributes = getEmphasisAttributes( { ...attributes, verticalAlignment } );
 										setAttributes( newAttributes );
 									} }
@@ -237,16 +241,16 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 									value={ emphasisTopSpacing }
 									onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
 									label={ __( 'Top' ) }
-									min={ -3 }
-									max={ 3 }
+									min={ SPACING_MIN_VALUE }
+									max={ SPACING_MAX_VALUE }
 								/>
 								<RangeControl
 									key={ 'media-card-content-bottom-spacing' }
 									value={ emphasisBottomSpacing }
 									onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
 									label={ __( 'Bottom' ) }
-									min={ -3 }
-									max={ 3 }
+									min={ SPACING_MIN_VALUE }
+									max={ SPACING_MAX_VALUE }
 								/>
 							</div>
 						</ControlsGroup>

@@ -1,0 +1,17 @@
+@import "mixins";
+
+.wp-block,
+.entry-content > *,
+.wp-block-column > *,
+[class*="__inner-container"] > * {
+	@include block-spacing;
+}
+
+.wp-block-column,
+[class*="__inner-container"] {
+	--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
+
+	& + & {
+		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+	}
+}

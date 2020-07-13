@@ -7,12 +7,6 @@
 		padding-top: 1px;
 	}
 
-	// center content
-	.wp-block-group__inner-container > .wp-block {
-		margin-left: auto;
-		margin-right: auto;
-	}
-
 	// make sure negative margin used for layout doesnt overlap other blocks
 	.wp-block-group__inner-container > .wp-block {
 		display: flex;
@@ -56,14 +50,24 @@
 	transition-property: padding, margin;
 }
 
+.novablocks-block {
+	--block-top-spacing: var(--novablocks-block-top-spacing);
+	--block-bottom-spacing: var(--novablocks-block-bottom-spacing);
+	--emphasis-top-spacing: var(--novablocks-emphasis-top-spacing);
+	--emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing);
+}
+
 .novablocks-media[class][class] {
 
 	@include above(tablet) {
-		margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
-		margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
 
-		padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		.novablocks-block {
+			margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+			margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+
+			padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		}
 
 		.novablocks-advanced-gallery {
 			margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
@@ -78,6 +82,10 @@
 
 	@include below(tablet) {
 		--novablocks-media-gutter: 0 !important;
+		--block-top-spacing: 1;
+		--block-bottom-spacing: 1;
+		--emphasis-top-spacing: 0;
+		--emphasis-bottom-spacing: 0;
 
 		.novablocks-block,
 		.novablocks-media__content,
@@ -98,6 +106,10 @@
 				transparent calc(var(--emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;
+
+		@include below(tablet) {
+			--emphasis-area: 100;
+		}
 	}
 
 	&.has-image-on-the-left {
