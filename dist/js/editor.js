@@ -29157,16 +29157,16 @@ var ALLOWED_BLOCKS_ADVANCED = ['novablocks/media'];
 var getEmphasisAttributes = function getEmphasisAttributes(_ref) {
   var emphasisBySpace = _ref.emphasisBySpace,
       enableOverlapping = _ref.enableOverlapping,
-      alignment = _ref.alignment;
+      verticalAlignment = _ref.verticalAlignment;
   var actualEmphasis = !enableOverlapping ? emphasisBySpace : -1 * emphasisBySpace;
   return {
     emphasisBySpace: emphasisBySpace,
     enableOverlapping: enableOverlapping,
-    blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(alignment) ? actualEmphasis : 0,
-    blockBottomSpacing: actualEmphasis < 0 && ['center', 'top'].includes(alignment) ? actualEmphasis : 0,
-    emphasisTopSpacing: alignment !== 'top' ? actualEmphasis : 1,
-    emphasisBottomSpacing: alignment !== 'bottom' ? actualEmphasis : 1,
-    verticalAlignment: alignment
+    blockTopSpacing: actualEmphasis < 0 && ['center', 'bottom'].includes(verticalAlignment) ? actualEmphasis : 0,
+    blockBottomSpacing: actualEmphasis < 0 && ['center', 'top'].includes(verticalAlignment) ? actualEmphasis : 0,
+    emphasisTopSpacing: verticalAlignment !== 'top' ? actualEmphasis : 1,
+    emphasisBottomSpacing: verticalAlignment !== 'bottom' ? actualEmphasis : 1,
+    verticalAlignment: verticalAlignment
   };
 };
 

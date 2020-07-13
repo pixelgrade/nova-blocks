@@ -42,18 +42,18 @@ const ALLOWED_BLOCKS_ADVANCED = [
 	'novablocks/media',
 ];
 
-const getEmphasisAttributes = ( { emphasisBySpace, enableOverlapping, alignment } ) => {
+const getEmphasisAttributes = ( { emphasisBySpace, enableOverlapping, verticalAlignment } ) => {
 
 	const actualEmphasis = ! enableOverlapping ? emphasisBySpace : -1 * emphasisBySpace;
 
 	return {
 		emphasisBySpace:        emphasisBySpace,
 		enableOverlapping:      enableOverlapping,
-		blockTopSpacing: 		( actualEmphasis < 0 && ['center', 'bottom'].includes( alignment ) ) 	? actualEmphasis : 0,
-		blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( alignment ) ) 		? actualEmphasis : 0,
-		emphasisTopSpacing: 	( alignment !== 'top' ) 	? actualEmphasis :  1,
-		emphasisBottomSpacing: 	( alignment !== 'bottom' ) 	? actualEmphasis : 	1,
-		verticalAlignment:      alignment,
+		blockTopSpacing: 		( actualEmphasis < 0 && ['center', 'bottom'].includes( verticalAlignment ) ) 	? actualEmphasis : 0,
+		blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( verticalAlignment ) ) 		? actualEmphasis : 0,
+		emphasisTopSpacing: 	( verticalAlignment !== 'top' ) 	? actualEmphasis :  1,
+		emphasisBottomSpacing: 	( verticalAlignment !== 'bottom' ) 	? actualEmphasis : 	1,
+		verticalAlignment:      verticalAlignment,
 	};
 };
 
@@ -225,7 +225,7 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 								<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
 								<BlockVerticalAlignmentToolbar
 									value={ verticalAlignment }
-									onChange={ verticalAlignment => {
+									onChange={ ( verticalAlignment ) => {
 										const newAttributes = getEmphasisAttributes( { ...attributes, verticalAlignment } );
 										setAttributes( newAttributes );
 									} }
