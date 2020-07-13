@@ -116,6 +116,9 @@
 		--novablocks-block-content-text-color: var(--novablocks-light-1);
 		--novablocks-block-content-titles-color: var(--novablocks-light-1);
 		--novablocks-block-content-subtitles-color: var(--novablocks-light-1);
+		--novablocks-block-text-color: var(--novablocks-block-content-text-color);
+		--novablocks-block-titles-color: var(--novablocks-block-content-titles-color);
+		--novablocks-block-subtitles-color: var(--novablocks-block-content-subtitles-color);
 		--block-padding: var(--novablocks-block-padding);
 	}
 }
