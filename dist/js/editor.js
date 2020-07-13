@@ -10853,6 +10853,42 @@ function addEmphasisLevelAttribute(block) {
 }
 
 with_emphasis_level_addFilter('blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addEmphasisLevelAttribute);
+// CONCATENATED MODULE: ./src/filters/with-inner-blocks/index.js
+
+
+
+function with_inner_blocks_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function with_inner_blocks_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { with_inner_blocks_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { with_inner_blocks_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var with_inner_blocks_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var with_inner_blocks_addFilter = wp.hooks.addFilter;
+var with_inner_blocks_Fragment = wp.element.Fragment;
+var with_inner_blocks_withSelect = wp.data.withSelect;
+var enableInnerBlocks = ['novablocks/menu-food', 'novablocks/menu-food-section', 'novablocks/cards-collection'];
+var withInnerBlocks = with_inner_blocks_withSelect(function (select, props) {
+  var clientId = props.clientId;
+
+  var _select = select('core/block-editor'),
+      getBlock = _select.getBlock;
+
+  var parentBlock = getBlock(clientId);
+  var innerBlocks = parentBlock.innerBlocks;
+  return with_inner_blocks_objectSpread({
+    innerBlocks: innerBlocks
+  }, props);
+});
+var withInnerBlocksComponent = with_inner_blocks_createHigherOrderComponent(function (OriginalComponent) {
+  var BetterComponent = withInnerBlocks(OriginalComponent);
+  return function (props) {
+    if (!enableInnerBlocks.includes(props.name)) {
+      return Object(external_React_["createElement"])(OriginalComponent, props);
+    }
+
+    return Object(external_React_["createElement"])(BetterComponent, props);
+  };
+});
+with_inner_blocks_addFilter('editor.BlockEdit', 'novablocks/with-inner-blocks-component', withInnerBlocksComponent);
 // CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
 // Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
 var fourSq = fourSq || {};
@@ -26163,8 +26199,27 @@ var menu_food_inspector_controls_wp$components = wp.components,
     menu_food_inspector_controls_ToggleControl = menu_food_inspector_controls_wp$components.ToggleControl;
 
 var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorControls(props) {
-  var enableTwoColumns = props.attributes.enableTwoColumns,
+  var _props$attributes = props.attributes,
+      enableTwoColumns = _props$attributes.enableTwoColumns,
+      showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
+      innerBlocks = props.innerBlocks,
       setAttributes = props.setAttributes;
+
+  var updateChildrenAttributes = function updateChildrenAttributes(attributes) {
+    innerBlocks.forEach(function (sectionProps) {
+      sectionProps.innerBlocks.forEach(function (_ref) {
+        var clientId = _ref.clientId;
+        wp.data.dispatch('core/block-editor').updateBlockAttributes(clientId, attributes);
+      });
+    });
+  };
+
+  var updateAttributes = function updateAttributes(attributes) {
+    setAttributes(attributes);
+    updateChildrenAttributes(attributes);
+  };
+
   return Object(external_React_["createElement"])(menu_food_inspector_controls_Fragment, null, Object(external_React_["createElement"])(menu_food_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(menu_food_inspector_controls_PanelBody, {
     title: menu_food_inspector_controls_('Layout', '__plugin_txtd'),
     initialOpen: true
@@ -26174,6 +26229,22 @@ var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorCon
     onChange: function onChange() {
       return setAttributes({
         enableTwoColumns: !enableTwoColumns
+      });
+    }
+  }), Object(external_React_["createElement"])(menu_food_inspector_controls_ToggleControl, {
+    label: menu_food_inspector_controls_('Price', '__plugin_txtd'),
+    checked: showPrices,
+    onChange: function onChange() {
+      return updateAttributes({
+        showPrices: !showPrices
+      });
+    }
+  }), Object(external_React_["createElement"])(menu_food_inspector_controls_ToggleControl, {
+    label: menu_food_inspector_controls_('Description', '__plugin_txtd'),
+    checked: showDescription,
+    onChange: function onChange() {
+      return updateAttributes({
+        showDescription: !showDescription
       });
     }
   }))));
@@ -26201,7 +26272,7 @@ var TEMPLATE = [['novablocks/menu-food-section', {
   enableSalePrice: true,
   salePrice: '$5.00'
 }], ['novablocks/menu-food-item', {
-  title: 'Beaf Meatballs',
+  title: 'Beef Meatballs',
   description: 'In a spicy tomato sauce',
   price: '$10.50'
 }], ['novablocks/menu-food-item', {
@@ -26259,7 +26330,10 @@ var TEMPLATE = [['novablocks/menu-food-section', {
 }]]]];
 
 var preview_FoodMenuPreview = function FoodMenuPreview(props) {
-  var enableTwoColumns = props.attributes.enableTwoColumns,
+  var _props$attributes = props.attributes,
+      enableTwoColumns = _props$attributes.enableTwoColumns,
+      showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
       clientId = props.clientId,
       className = props.className;
 
@@ -26270,7 +26344,8 @@ var preview_FoodMenuPreview = function FoodMenuPreview(props) {
   };
 
   var classNames = classnames_default()(className, "nova-food-menu", {
-    'nova-food-menu--layout': enableTwoColumns === true
+    'nova-food-menu--layout': enableTwoColumns === true,
+    'price--is-hidden': showPrices === false
   });
   return Object(external_React_["createElement"])("div", {
     className: classNames
@@ -26317,10 +26392,14 @@ var save_ = wp.i18n.__;
 var save_InnerBlocks = wp.blockEditor.InnerBlocks;
 
 var save_FoodMenuSave = function FoodMenuSave(props) {
-  var enableTwoColumns = props.attributes.enableTwoColumns,
+  var _props$attributes = props.attributes,
+      enableTwoColumns = _props$attributes.enableTwoColumns,
+      showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
       className = props.className;
   var classNames = classnames_default()(className, "nova-food-menu", {
-    'nova-food-menu--layout': enableTwoColumns === true
+    'nova-food-menu--layout': enableTwoColumns === true,
+    'price--is-hidden': showPrices === false
   });
   return Object(external_React_["createElement"])("div", {
     className: classNames,
@@ -26361,6 +26440,14 @@ function menu_food_init() {
       align: {
         type: 'string',
         default: 'wide'
+      },
+      showPrices: {
+        type: 'boolean',
+        default: true
+      },
+      showDescription: {
+        type: 'boolean',
+        default: true
       }
     },
     example: {
@@ -26560,6 +26647,8 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       highlightLabel = _props$attributes.highlightLabel,
       enableSalePrice = _props$attributes.enableSalePrice,
+      showDescription = _props$attributes.showDescription,
+      showPrices = _props$attributes.showPrices,
       salePrice = _props$attributes.salePrice,
       price = _props$attributes.price,
       description = _props$attributes.description,
@@ -26596,7 +26685,7 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
         title: title
       });
     }
-  })), Object(external_React_["createElement"])("div", {
+  })), showPrices && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__prices"
   }, Object(external_React_["createElement"])(menu_food_item_preview_RichText, {
     value: price,
@@ -26620,7 +26709,7 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
       });
     },
     allowedFormats: []
-  }))), Object(external_React_["createElement"])("div", {
+  }))), showDescription && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__description"
   }, Object(external_React_["createElement"])(menu_food_item_preview_RichText, {
     value: description,
@@ -26653,6 +26742,8 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
   var _props$attributes = props.attributes,
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       enableSalePrice = _props$attributes.enableSalePrice,
+      showDescription = _props$attributes.showDescription,
+      showPrices = _props$attributes.showPrices,
       setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(menu_food_item_inspector_controls_Fragment, null, Object(external_React_["createElement"])(menu_food_item_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(menu_food_item_inspector_controls_PanelBody, {
     title: menu_food_item_inspector_controls_('Menu Item', '__plugin_txtd'),
@@ -26666,7 +26757,7 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
         enableHighlightFoodItem: !enableHighlightFoodItem
       });
     }
-  }), Object(external_React_["createElement"])(menu_food_item_inspector_controls_ToggleControl, {
+  }), showPrices && Object(external_React_["createElement"])(menu_food_item_inspector_controls_ToggleControl, {
     label: menu_food_item_inspector_controls_('On sale', '__plugin_txtd'),
     checked: enableSalePrice,
     onChange: function onChange() {
@@ -26691,12 +26782,49 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
  */
 
 var menu_food_item_edit_Fragment = wp.element.Fragment;
-var menu_food_item_edit_BlockControls = wp.blockEditor.BlockControls;
+var menu_food_item_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+var edit_wp$data = wp.data,
+    menu_food_item_edit_select = edit_wp$data.select,
+    dispatch = edit_wp$data.dispatch;
 
 var edit_FoodMenuItem = function FoodMenuItem(props) {
   return Object(external_React_["createElement"])(menu_food_item_edit_Fragment, null, Object(external_React_["createElement"])(menu_food_item_preview, props), Object(external_React_["createElement"])(menu_food_item_inspector_controls, props));
 };
 
+var withMenuVisibilityAttributes = menu_food_item_edit_createHigherOrderComponent(function (BlockListBlock) {
+  return function (props) {
+    if ('novablocks/menu-food-item' === props.name) {
+      var clientId = props.clientId;
+
+      var _select = menu_food_item_edit_select('core/block-editor'),
+          getBlock = _select.getBlock,
+          getBlockParentsByBlockName = _select.getBlockParentsByBlockName;
+
+      var parents = getBlockParentsByBlockName(clientId, 'novablocks/menu-food');
+
+      if (!parents.length) {
+        return;
+      }
+
+      var parentClientId = parents[0];
+      var parentBlock = getBlock(parentClientId);
+
+      var newAttributes = function (_ref) {
+        var showPrices = _ref.showPrices,
+            showDescription = _ref.showDescription;
+        return {
+          showPrices: showPrices,
+          showDescription: showDescription
+        };
+      }(parentBlock.attributes);
+
+      dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
+    }
+
+    return Object(external_React_["createElement"])(BlockListBlock, props);
+  };
+}, 'withCollectionVisibilityAttributes');
+wp.hooks.addFilter('editor.BlockListBlock', 'novablocks/with-menu-visibility-attributes', withMenuVisibilityAttributes);
 /* harmony default export */ var menu_food_item_edit = (edit_FoodMenuItem);
 // CONCATENATED MODULE: ./src/blocks/menu-food-item/save.js
 
@@ -26713,6 +26841,8 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       highlightLabel = _props$attributes.highlightLabel,
       enableSalePrice = _props$attributes.enableSalePrice,
+      showDescription = _props$attributes.showDescription,
+      showPrices = _props$attributes.showPrices,
       salePrice = _props$attributes.salePrice,
       price = _props$attributes.price,
       description = _props$attributes.description,
@@ -26743,7 +26873,7 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
       });
     },
     itemprop: "name"
-  })), Object(external_React_["createElement"])("div", {
+  })), showPrices && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__prices",
     itemscope: true,
     itemtype: "http://schema.org/offers"
@@ -26761,7 +26891,7 @@ var save_FoodMenuItemSave = function FoodMenuItemSave(props) {
     className: "nova-food-menu-item__price--sale"
   }, Object(external_React_["createElement"])("span", {
     className: "item-price--sale"
-  }, " ", salePrice, " "))), Object(external_React_["createElement"])("div", {
+  }, " ", salePrice, " "))), showDescription && Object(external_React_["createElement"])("div", {
     className: "nova-food-menu-item__description"
   }, Object(external_React_["createElement"])(menu_food_item_save_RichText.Content, {
     value: description,
@@ -26828,6 +26958,14 @@ function menu_food_item_init() {
       enableSalePrice: {
         type: 'boolean',
         default: false
+      },
+      showPrices: {
+        type: 'boolean',
+        default: true
+      },
+      showDescription: {
+        type: 'boolean',
+        default: true
       }
     },
     edit: menu_food_item_edit,
@@ -27365,9 +27503,9 @@ var card_edit_wp$blockEditor = wp.blockEditor,
     card_edit_InnerBlocks = card_edit_wp$blockEditor.InnerBlocks,
     edit_MediaUpload = card_edit_wp$blockEditor.MediaUpload;
 var card_edit_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
-var edit_wp$data = wp.data,
-    card_edit_select = edit_wp$data.select,
-    dispatch = edit_wp$data.dispatch;
+var card_edit_wp$data = wp.data,
+    card_edit_select = card_edit_wp$data.select,
+    edit_dispatch = card_edit_wp$data.dispatch;
 
 var edit_CardEdit = function CardEdit(props) {
   var blockClassName = 'novablocks-card';
@@ -27514,9 +27652,9 @@ var withCollectionVisibilityAttributes = card_edit_createHigherOrderComponent(fu
         };
       }(parentBlock.attributes);
 
-      dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
+      edit_dispatch('core/block-editor').updateBlockAttributes(clientId, newAttributes);
       innerBlocks.forEach(function (innerBlock) {
-        dispatch('core/block-editor').updateBlockAttributes(innerBlock.clientId, {
+        edit_dispatch('core/block-editor').updateBlockAttributes(innerBlock.clientId, {
           align: newAttributes.contentAlign
         });
       });
@@ -27701,12 +27839,6 @@ var inspector_controls_CardsCollectionInspectorControls = function CardsCollecti
 
 
 
-function cards_collection_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function cards_collection_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { cards_collection_edit_ownKeys(source, true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { cards_collection_edit_ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
 
 /**
  * WordPress dependencies
@@ -27813,19 +27945,7 @@ var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   }))))), Object(external_React_["createElement"])(cards_collection_inspector_controls, props));
 };
 
-var withInnerBlocks = cards_collection_edit_withSelect(function (select, props) {
-  var clientId = props.clientId;
-
-  var _select = select('core/block-editor'),
-      getBlock = _select.getBlock;
-
-  var parentBlock = getBlock(clientId);
-  var innerBlocks = parentBlock.innerBlocks;
-  return cards_collection_edit_objectSpread({
-    innerBlocks: innerBlocks
-  }, props);
-});
-/* harmony default export */ var cards_collection_edit = (withInnerBlocks(edit_CardsCollectionEdit));
+/* harmony default export */ var cards_collection_edit = (edit_CardsCollectionEdit);
 // CONCATENATED MODULE: ./src/blocks/cards-collection/index.js
 
 
@@ -27864,6 +27984,7 @@ function cards_collection_init() {
 
 /* harmony default export */ var cards_collection = (cards_collection_init);
 // CONCATENATED MODULE: ./src/editor.js
+
 
 
 

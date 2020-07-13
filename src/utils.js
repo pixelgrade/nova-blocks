@@ -22,7 +22,7 @@ export const range = function( min, max ) {
 		array.push( i + min );
 	}
 	return array;
-}
+};
 
 export const withFirstBlockConditions = function( Component ) {
 
@@ -64,7 +64,7 @@ export const hasTouchScreen = function() {
 	}
 
 	return hasTouchScreen;
-}
+};
 
 export const findParents = ( target, query ) => {
 	let parents = [];
@@ -108,7 +108,7 @@ export const shuffleArray = function( array ) {
 export const defaultSnapValues = {
 	x: [0, 0.5, 1],
 	y: [0, 0.5, 1]
-}
+};
 
 export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSnapValues ) {
 	let x = parseFloat( focalPoint.x );
@@ -128,10 +128,10 @@ export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSna
 	} );
 
 	return { x, y }
-}
+};
 
 export const getSnapClassname = function( focalPoint ) {
-	const classNames = []
+	const classNames = [];
 
 	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
 		classNames.push( 'is-snapped-x' );
@@ -142,4 +142,4 @@ export const getSnapClassname = function( focalPoint ) {
 	}
 
 	return classNames.join( ' ' );
-}
+};

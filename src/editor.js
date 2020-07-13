@@ -2,6 +2,7 @@ import "./filters/with-block-id";
 import "./filters/with-block-index";
 import "./filters/with-font-size-picker";
 import "./filters/with-emphasis-level";
+import "./filters/with-inner-blocks";
 
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
