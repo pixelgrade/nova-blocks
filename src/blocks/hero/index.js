@@ -5,9 +5,7 @@ import * as icons from '../../icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { STORE_NAME } from "../../store";
 import { getPlaceholderImages, getRandomBetween } from "../../utils";
-import { getRandomAttributes } from "../../components/advanced-gallery/util";
 
 import blockAttributes from "./attributes"
 import alignmentAttributes from "../../components/alignment-controls/attributes";
@@ -27,7 +25,6 @@ const { registerBlockType } = wp.blocks;
 const { select } = wp.data;
 
 async function getNewDefaults() {
-	const settings = select( STORE_NAME ).getSettings();
 	const placeholderImages = await getPlaceholderImages;
 	const index = getRandomBetween( 0, placeholderImages.length - 1 );
 	const image = placeholderImages[index];

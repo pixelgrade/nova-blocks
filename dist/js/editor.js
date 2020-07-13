@@ -18073,6 +18073,12 @@ var normalize = function normalize(photo) {
       },
       large: {
         url: photo.urls.regular
+      },
+      medium: {
+        url: photo.urls.small
+      },
+      thumbnail: {
+        url: photo.urls.thumb
       }
     },
     title: {
@@ -30542,7 +30548,6 @@ function advanced_gallery_objectSpread(target) { for (var i = 1; i < arguments.l
 
 
 
-
 var src_blocks_advanced_gallery_attributes = Object.assign({}, blocks_advanced_gallery_attributes, advanced_gallery_attributes);
 /**
  * WordPress dependencies
@@ -30557,17 +30562,16 @@ function getNewDefaults() {
 
 function _getNewDefaults() {
   _getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, numberOfImages, placeholderImages, randomImages, randomAttributes;
+    var numberOfImages, placeholderImages, randomImages, randomAttributes;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = wp.data.select(STORE_NAME).getSettings();
             numberOfImages = getRandomBetween(2, 4);
-            _context.next = 4;
+            _context.next = 3;
             return getPlaceholderImages;
 
-          case 4:
+          case 3:
             placeholderImages = _context.sent;
             randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
             randomAttributes = util_getRandomAttributes();
@@ -30575,7 +30579,7 @@ function _getNewDefaults() {
               images: randomImages
             }));
 
-          case 8:
+          case 7:
           case "end":
             return _context.stop();
         }
@@ -32897,8 +32901,6 @@ function hero_objectSpread(target) { for (var i = 1; i < arguments.length; i++) 
 
 
 
-
-
 var blocks_hero_attributes = Object.assign({}, hero_attributes, alignment_controls_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
 
 /**
@@ -32915,16 +32917,15 @@ function hero_getNewDefaults() {
 
 function blocks_hero_getNewDefaults() {
   blocks_hero_getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, placeholderImages, index, image;
+    var placeholderImages, index, image;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = hero_select(STORE_NAME).getSettings();
-            _context.next = 3;
+            _context.next = 2;
             return getPlaceholderImages;
 
-          case 3:
+          case 2:
             placeholderImages = _context.sent;
             index = getRandomBetween(0, placeholderImages.length - 1);
             image = placeholderImages[index];
@@ -32934,7 +32935,7 @@ function blocks_hero_getNewDefaults() {
               })
             });
 
-          case 7:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -33413,8 +33414,6 @@ var blocks_media_attributes = Object.assign({}, media_attributes, advanced_galle
 
 var media_ = wp.i18n.__;
 var media_registerBlockType = wp.blocks.registerBlockType;
-var media_InnerBlocks = wp.blockEditor.InnerBlocks;
-var media_select = wp.data.select;
 
 function media_getNewDefaults() {
   return blocks_media_getNewDefaults.apply(this, arguments);
@@ -33422,17 +33421,16 @@ function media_getNewDefaults() {
 
 function blocks_media_getNewDefaults() {
   blocks_media_getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, numberOfImages, placeholderImages, randomImages, randomAttributes;
+    var numberOfImages, placeholderImages, randomImages, randomAttributes;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = media_select(STORE_NAME).getSettings();
             numberOfImages = getRandomBetween(2, 4);
-            _context.next = 4;
+            _context.next = 3;
             return getPlaceholderImages;
 
-          case 4:
+          case 3:
             placeholderImages = _context.sent;
             randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
             randomAttributes = util_getRandomAttributes();
@@ -33440,7 +33438,7 @@ function blocks_media_getNewDefaults() {
               images: randomImages
             }));
 
-          case 8:
+          case 7:
           case "end":
             return _context.stop();
         }
@@ -35469,11 +35467,11 @@ var edit_CardEdit = function CardEdit(props) {
       setAttributes = props.setAttributes;
 
   var CardMedia = function CardMedia(props) {
-    var _media$sizes, _media$sizes$large;
+    var _media$sizes, _media$sizes$medium, _media$sizes2, _media$sizes2$large;
 
     var media = props.attributes.media,
         open = props.open;
-    var mediaURL = (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$large = _media$sizes.large) === null || _media$sizes$large === void 0 ? void 0 : _media$sizes$large.url) || (media === null || media === void 0 ? void 0 : media.url);
+    var mediaURL = (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$medium = _media$sizes.medium) === null || _media$sizes$medium === void 0 ? void 0 : _media$sizes$medium.url) || (media === null || media === void 0 ? void 0 : (_media$sizes2 = media.sizes) === null || _media$sizes2 === void 0 ? void 0 : (_media$sizes2$large = _media$sizes2.large) === null || _media$sizes2$large === void 0 ? void 0 : _media$sizes2$large.url) || (media === null || media === void 0 ? void 0 : media.url);
 
     if (!!mediaURL) {
       return Object(external_React_["createElement"])("img", {
@@ -35610,8 +35608,6 @@ card_deprecated_deprecated.push({
 
 
 
-
-
 /**
  * WordPress dependencies
  */
@@ -35625,23 +35621,22 @@ function card_getNewDefaults() {
 
 function blocks_card_getNewDefaults() {
   blocks_card_getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, placeholderImages, randomImage;
+    var placeholderImages, randomImage;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = wp.data.select(STORE_NAME).getSettings();
-            _context.next = 3;
+            _context.next = 2;
             return getPlaceholderImages;
 
-          case 3:
+          case 2:
             placeholderImages = _context.sent;
             randomImage = getRandomArrayFromArray(placeholderImages, 1)[0];
             return _context.abrupt("return", {
               media: randomImage
             });
 
-          case 6:
+          case 5:
           case "end":
             return _context.stop();
         }

@@ -21,7 +21,13 @@ const normalize = photo => {
 			},
 			large: {
 				url: photo.urls.regular
-			}
+			},
+			medium: {
+				url: photo.urls.small
+			},
+			thumbnail: {
+				url: photo.urls.thumb
+			},
 		},
 		title: {
 			rendered: photo.description
