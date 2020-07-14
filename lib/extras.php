@@ -1019,6 +1019,10 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				$url = $attachment[0];
 			}
 
+			if ( empty( $url ) && isset( $image['sizes']['large']['url'] ) ) {
+				$url = $image['sizes']['large']['url'];
+			}
+
 			if ( empty( $url ) && isset( $image['sizes']['full']['url'] ) ) {
 				$url = $image['sizes']['full']['url'];
 			}
