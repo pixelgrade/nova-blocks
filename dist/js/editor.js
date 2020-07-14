@@ -33147,7 +33147,8 @@ var media_inspector_controls_wp$components = wp.components,
     media_inspector_controls_RadioControl = media_inspector_controls_wp$components.RadioControl,
     media_inspector_controls_RangeControl = media_inspector_controls_wp$components.RangeControl;
 var CONTENT_AREA_MAX_WIDTH = 70;
-var CONTENT_AREA_MIN_WIDTH = 50;
+var CONTENT_AREA_MIN_WIDTH = 30;
+var CONTENT_AREA_MID_VALUE = (CONTENT_AREA_MIN_WIDTH + CONTENT_AREA_MAX_WIDTH) * 0.5;
 
 var inspector_controls_MediaInspectorControls = function MediaInspectorControls(props) {
   var attributes = props.attributes,
@@ -33162,7 +33163,7 @@ var inspector_controls_MediaInspectorControls = function MediaInspectorControls(
   var getBalanceAttributes = function getBalanceAttributes(_ref) {
     var balanceEmphasis = _ref.balanceEmphasis,
         balanceFocalPoint = _ref.balanceFocalPoint;
-    var width = balanceEmphasis * (CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MIN_WIDTH) / 100 + CONTENT_AREA_MIN_WIDTH;
+    var width = balanceEmphasis * (CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MID_VALUE) / 100 + CONTENT_AREA_MID_VALUE;
     var contentAreaWidth = 'content' === balanceFocalPoint ? width : 100 - width;
     return {
       balanceEmphasis: balanceEmphasis,

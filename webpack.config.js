@@ -100,7 +100,6 @@ const StylesConfig = {
 	entry: {
 		'./dist/css/editor' : './src/scss/editor.scss',
 		'./dist/css/frontend' : './src/scss/style.scss',
-		'./dist/css/theme' : './src/scss/theme.scss',
 	},
 	plugins: [
 		new WebpackRTLPlugin( {

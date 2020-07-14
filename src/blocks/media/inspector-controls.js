@@ -30,7 +30,8 @@ const {
 } = wp.components;
 
 const CONTENT_AREA_MAX_WIDTH = 70;
-const CONTENT_AREA_MIN_WIDTH = 50;
+const CONTENT_AREA_MIN_WIDTH = 30;
+const CONTENT_AREA_MID_VALUE = ( CONTENT_AREA_MIN_WIDTH + CONTENT_AREA_MAX_WIDTH ) * 0.5;
 
 const MediaInspectorControls = ( props ) => {
 
@@ -52,7 +53,7 @@ const MediaInspectorControls = ( props ) => {
 	} = attributes;
 
 	const getBalanceAttributes = ( { balanceEmphasis, balanceFocalPoint } ) => {
-		const width = balanceEmphasis * ( CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MIN_WIDTH ) / 100 + CONTENT_AREA_MIN_WIDTH;
+		const width = balanceEmphasis * ( CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MID_VALUE ) / 100 + CONTENT_AREA_MID_VALUE;
 		const contentAreaWidth = 'content' === balanceFocalPoint ? width : 100 - width;
 
 		return {
