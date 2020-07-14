@@ -1,7 +1,7 @@
 import { ControlsTab, ControlsSection } from "../../components/control-sections";
 
 const { __ } = wp.i18n;
-const { PanelBody, ToggleControl } = wp.components;
+const { ToggleControl } = wp.components;
 
 const FoodMenuInspectorControls = function( props ) {
 	const {
