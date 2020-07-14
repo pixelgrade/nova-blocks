@@ -19,7 +19,9 @@ const TEMPLATE = [
 const FoodMenuSectionPreview = function( props ) {
 	const {
 		attributes: {
-			sectionTitle
+			sectionTitle,
+			showPrices,
+			showDescription
 		},
 		setAttributes,
 		clientId,

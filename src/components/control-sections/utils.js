@@ -39,4 +39,4 @@ export const getSectionsFromFills = ( fills ) => {
 	} );
 
 	return sections;
-}
+};

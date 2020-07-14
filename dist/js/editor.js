@@ -34157,9 +34157,7 @@ function navigation_init() {
 
 
 var menu_food_inspector_controls_ = wp.i18n.__;
-var menu_food_inspector_controls_wp$components = wp.components,
-    menu_food_inspector_controls_PanelBody = menu_food_inspector_controls_wp$components.PanelBody,
-    menu_food_inspector_controls_ToggleControl = menu_food_inspector_controls_wp$components.ToggleControl;
+var menu_food_inspector_controls_ToggleControl = wp.components.ToggleControl;
 
 var inspector_controls_FoodMenuInspectorControls = function FoodMenuInspectorControls(props) {
   var _props$attributes = props.attributes,
@@ -34217,64 +34215,90 @@ var TEMPLATE = [['novablocks/menu-food-section', {
   title: 'Pea & Mint Soup',
   description: 'Server with focaccia bread',
   price: '$8.00',
+  showPrices: true,
+  showDescription: true,
   enableSalePrice: true,
   salePrice: '$5.00'
 }], ['novablocks/menu-food-item', {
   title: 'Beef Meatballs',
   description: 'In a spicy tomato sauce',
-  price: '$10.50'
+  price: '$10.50',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Hummus & Baba Ganoush Dip',
   description: 'Olive & grilled flatbread',
-  price: '$12.00'
+  price: '$12.00',
+  showPrices: true,
+  showDescription: true
 }]]], ['novablocks/menu-food-section', {
   sectionTitle: 'Desserts'
 }, [['novablocks/menu-food-item', {
   title: 'Dark Chocolate & Brownie Delice',
   description: 'Fudge bits & salted caramel ice cream',
-  price: '$6.50'
+  price: '$6.50',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Berry Cheesecake Trifle',
   description: 'Fresh raspberries & strawberries, sable cookie',
   price: '$6.50',
+  showPrices: true,
+  showDescription: true,
   enableHighlightFoodItem: true,
   highlightLabel: 'New'
 }], ['novablocks/menu-food-item', {
   title: 'Caramelised Lemon Tart',
   description: 'Meringue crisps, gin & tonic ice cream',
-  price: '$6.50'
+  price: '$6.50',
+  showPrices: true,
+  showDescription: true
 }]]], ['novablocks/menu-food-section', {
   sectionTitle: 'Main Course'
 }, [['novablocks/menu-food-item', {
   title: 'The Classic Burger',
   description: 'Chargrilled, with or without bacon, on a brioche bun & fries',
-  price: '$15.50'
+  price: '$15.50',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Roast Salmon',
   description: 'Hollandaise sauce, green beans & potato galette',
-  price: '$19.50'
+  price: '$19.50',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Tagliatelle Pesto Chicken',
   description: 'Roasted Mediterranean vegetables, tomato and herb sauce',
   price: '$15.00',
+  showPrices: true,
+  showDescription: true,
   enableHighlightFoodItem: true,
   highlightLabel: 'Chef Selection'
 }], ['novablocks/menu-food-item', {
   title: 'Confit de Canard ',
   description: 'Duck confit, white bean & ham cassoulet, wilted spinach',
-  price: '$12.15'
+  price: '$12.15',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Roasted Steak Roulade',
   description: 'Mint parsley with apple cider vinegar, salt, sugar & spices',
-  price: '$14.95'
+  price: '$14.95',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Cornish-mackerel',
   description: 'Marinated tomatoes, fragrant curry, tamarillo',
-  price: '$10.45'
+  price: '$10.45',
+  showPrices: true,
+  showDescription: true
 }], ['novablocks/menu-food-item', {
   title: 'Lobster & Cucumber Soup',
   description: 'Lobster salad, smoked onion, rock samphire & sorrel',
-  price: '$24.95'
+  price: '$24.95',
+  showPrices: true,
+  showDescription: true
 }]]]];
 
 var preview_FoodMenuPreview = function FoodMenuPreview(props) {
@@ -34444,15 +34468,23 @@ function menu_food_init() {
     example: {
       attributes: {
         enableTwoColumns: false
-      }
+      },
+      innerBlocks: [{
+        name: 'novablocks/menu-food-section',
+        innerBlocks: [{
+          name: 'novablocks/menu-food-item'
+        }, {
+          name: 'novablocks/menu-food-item'
+        }]
+      }]
     },
     styles: [{
       name: 'classic',
-      label: menu_food_('Classic'),
+      label: menu_food_('Classic', '__plugin_txtd'),
       isDefault: true
     }, {
       name: 'basic',
-      label: menu_food_('Basic')
+      label: menu_food_('Basic', '__plugin_txtd')
     }],
     getEditWrapperProps: function getEditWrapperProps() {
       var settings = menu_food_select('core/block-editor').getSettings();
@@ -34487,7 +34519,10 @@ var menu_food_section_preview_ALLOWED_BLOCKS = ['novablocks/menu-food-item'];
 var preview_TEMPLATE = [['novablocks/menu-food-item']];
 
 var preview_FoodMenuSectionPreview = function FoodMenuSectionPreview(props) {
-  var sectionTitle = props.attributes.sectionTitle,
+  var _props$attributes = props.attributes,
+      sectionTitle = _props$attributes.sectionTitle,
+      showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
       setAttributes = props.setAttributes,
       clientId = props.clientId,
       className = props.className;
@@ -34722,23 +34757,21 @@ var preview_FoodMenuItemPreview = function FoodMenuItemPreview(props) {
 /**
  * WordPress dependencies
  */
+
 var menu_food_item_inspector_controls_ = wp.i18n.__;
-var menu_food_item_inspector_controls_Fragment = wp.element.Fragment;
-var menu_food_item_inspector_controls_InspectorControls = wp.blockEditor.InspectorControls;
-var menu_food_item_inspector_controls_wp$components = wp.components,
-    menu_food_item_inspector_controls_PanelBody = menu_food_item_inspector_controls_wp$components.PanelBody,
-    menu_food_item_inspector_controls_ToggleControl = menu_food_item_inspector_controls_wp$components.ToggleControl;
+var menu_food_item_inspector_controls_ToggleControl = wp.components.ToggleControl;
 
 var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInspectorControls(props) {
   var _props$attributes = props.attributes,
       enableHighlightFoodItem = _props$attributes.enableHighlightFoodItem,
       enableSalePrice = _props$attributes.enableSalePrice,
-      showDescription = _props$attributes.showDescription,
       showPrices = _props$attributes.showPrices,
+      showDescription = _props$attributes.showDescription,
       setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(menu_food_item_inspector_controls_Fragment, null, Object(external_React_["createElement"])(menu_food_item_inspector_controls_InspectorControls, null, Object(external_React_["createElement"])(menu_food_item_inspector_controls_PanelBody, {
-    title: menu_food_item_inspector_controls_('Menu Item', '__plugin_txtd'),
-    initialOpen: true
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: menu_food_item_inspector_controls_('Layout')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: menu_food_item_inspector_controls_('Settings')
   }, Object(external_React_["createElement"])(menu_food_item_inspector_controls_ToggleControl, {
     label: menu_food_item_inspector_controls_('Highlight item', '__plugin_txtd'),
     help: menu_food_item_inspector_controls_('Use it if you want to highlight some of the menu items and make them stand out.', '__plugin_txtd'),
@@ -34756,7 +34789,7 @@ var inspector_controls_FoodMenuItemInspectorControls = function FoodMenuItemInsp
         enableSalePrice: !enableSalePrice
       });
     }
-  }))));
+  })));
 };
 
 /* harmony default export */ var menu_food_item_inspector_controls = (inspector_controls_FoodMenuItemInspectorControls);

@@ -42,17 +42,30 @@ function init() {
 		example: {
 			attributes: {
 				enableTwoColumns: false
-			}
+			},
+			innerBlocks: [
+				{
+					name: 'novablocks/menu-food-section',
+					innerBlocks: [
+						{
+							name: 'novablocks/menu-food-item',
+						},
+						{
+							name: 'novablocks/menu-food-item',
+						},
+					],
+				},
+			],
 		},
 		styles: [
 			{
 				name: 'classic',
-				label: __( 'Classic' ),
+				label: __( 'Classic', '__plugin_txtd' ),
 				isDefault: true
 			},
 			{
 				name: 'basic',
-				label: __( 'Basic' )
+				label: __( 'Basic', '__plugin_txtd' )
 			},
 		],
 		getEditWrapperProps() {
