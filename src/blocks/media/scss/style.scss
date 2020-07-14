@@ -117,5 +117,54 @@
 	}
 }
 
+// Transition between different alignment states
+.novablocks-media__content {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+
+	&:before,
+	&:after {
+		content: '';
+		display: block;
+		height: 0;
+		flex: 0 0 auto;
+	}
+
+	.novablocks-u-valign-top &,
+	.novablocks-u-valign-center &,
+	.novablocks-u-valign-bottom & {
+
+		&:before,
+		&:after {
+			flex-grow: 1;
+		}
+	}
+
+	.novablocks-u-valign-top & {
+
+		&:before {
+			flex-grow: 0;
+		}
+	}
+
+	.novablocks-u-valign-bottom & {
+
+		&:after {
+			flex-grow: 0;
+		}
+	}
+}
+
+.novablocks-media__inner-container {
+	flex-grow: 1;
+
+	.novablocks-u-valign-top &,
+	.novablocks-u-valign-center &,
+	.novablocks-u-valign-bottom & {
+		flex-grow: 0;
+	}
+}
+
 @import 'content';
 @import 'aside';
