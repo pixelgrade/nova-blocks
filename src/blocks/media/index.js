@@ -32,6 +32,7 @@ async function getNewDefaults() {
 
 	return {
 		...randomAttributes,
+		verticalAlignment: "center",
 		images: randomImages
 	};
 }
