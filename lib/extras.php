@@ -542,7 +542,6 @@ function novablocks_add_media_settings( $settings ) {
 						'emphasisBottomSpacing' => -2,
 						'enableOverlapping' => true,
 						'verticalAlignment' => 'top',
-						'blockStyle' => 'moderate',
 					),
 				),
 				array(
