@@ -2725,7 +2725,7 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"wide\
 /* 65 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"\"},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"\"},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"upgradedToModerate\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 66 */
@@ -33365,6 +33365,22 @@ media_deprecated_deprecated.push({
   migrate: function migrate(attributes, innerBlocks) {
     return media_deprecated_objectSpread(media_deprecated_objectSpread({}, attributes), {}, {
       defaultsGenerated: true
+    });
+  },
+  save: media_save
+}); // migration used when padding was removed from basic content style
+// and shadow was removed from moderate content style
+
+media_deprecated_deprecated.push({
+  attributes: media_deprecated_attributes,
+  isEligible: function isEligible(attributes, innerBlocks) {
+    return "undefined" === typeof attributes.upgradedToModerate;
+  },
+  migrate: function migrate(attributes, innerBlocks) {
+    var contentStyle = attributes.contentStyle;
+    return media_deprecated_objectSpread(media_deprecated_objectSpread({}, attributes), {}, {
+      contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
+      upgradedToModerate: true
     });
   },
   save: media_save
