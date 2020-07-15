@@ -92,7 +92,7 @@ const MediaInspectorControls = ( props ) => {
 							label={ __( 'Emphasis by Balance' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 50 }
+							step={ 25 }
 						/>
 						<RadioControl
 							label={ __( 'Focal Point', '__plugin_txtd' ) }
@@ -126,7 +126,7 @@ const MediaInspectorControls = ( props ) => {
 							label={ __( 'Layout Gutter' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 5 }
+							step={ 10 }
 						/>
 					</ControlsGroup>
 				</ControlsTab>

@@ -1089,13 +1089,13 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		if ( ! empty( $attributes['emphasisTopSpacing'] ) ) {
 			$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
 		} else {
-			$emphasisTopSpacing = 0;
+			$emphasisTopSpacing = 1;
 		}
 
 		if ( ! empty( $attributes['emphasisBottomSpacing'] ) ) {
 			$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
 		} else {
-			$emphasisBottomSpacing = 0;
+			$emphasisBottomSpacing = 1;
 		}
 
 		if ( ! empty( $attributes['className'] ) ) {

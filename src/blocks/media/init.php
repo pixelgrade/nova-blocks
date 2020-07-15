@@ -90,7 +90,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--novablocks-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
 			'--emphasis-area:' . $emphasisArea . ';' .
 			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
-			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 10 / 100 )';
+			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 5 / 100 )';
 
 		ob_start(); ?>
 

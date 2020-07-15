@@ -46,7 +46,7 @@ const MediaPreview = function( props ) {
 	const cssVars = {
 		'--emphasis-area': emphasisArea,
 		'--novablocks-media-content-width': `${contentAreaWidth}%`,
-		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 10 / 100 )`,
+		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 5 / 100 )`,
 	};
 
 	const blockClassNames = classnames(

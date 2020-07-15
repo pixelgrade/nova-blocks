@@ -78,6 +78,44 @@ const getRandomAttributes = () => {
 	};
 };
 
+const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalComponent => {
+
+	return ( props ) => {
+
+		if ( ! ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ) {
+			return <OriginalComponent { ...props } />
+		}
+
+		const presetOptions = props?.settings?.media?.spaceAndSizing?.presetOptions;
+
+		return (
+			<Fragment>
+				<OriginalComponent { ...props } />
+				<ControlsSection label={ __( 'Space and Sizing' ) }>
+					{
+						!! presetOptions &&
+						<ControlsTab label={ __( 'General' ) }>
+							<PresetControl
+								key={ 'media-card-layout-preset' }
+								label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
+								options={ presetOptions }
+								randomize={ getRandomAttributes }
+							/>
+						</ControlsTab>
+					}
+				</ControlsSection>
+			</Fragment>
+		);
+	};
+});
+
+const componentWithSettings = compose( [
+	withSettings,
+	withSpaceAndSizingControlsAdvanced
+] );
+
+addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing-advanced', componentWithSettings );
+
 const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
@@ -92,18 +130,22 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		} = props;
 
 		const {
-			emphasisBySpace,
-
 			blockTopSpacing,
 			blockBottomSpacing,
+			emphasisTopSpacing,
+			emphasisBottomSpacing,
+			emphasisBySpace,
+			enableOverlapping,
 		} = attributes;
 
-		const presetOptions = props?.settings?.media?.spaceAndSizing?.presetOptions;
+		const verticalAlignment = attributes.verticalAlignment || 'center';
 
 		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
 		const SPACING_MAX_VALUE = 3;
 
 		const cssVars = {
+			'--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+			'--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
 			'--novablocks-block-top-spacing': blockTopSpacing,
 			'--novablocks-block-bottom-spacing': blockBottomSpacing,
 			'--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
@@ -115,17 +157,6 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 					<OriginalComponent { ...props } />
 				</div>
 				<ControlsSection label={ __( 'Space and Sizing' ) }>
-					{
-						!! presetOptions &&
-						<ControlsTab label={ __( 'General' ) }>
-							<PresetControl
-								key={ 'media-card-layout-preset' }
-								label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
-								options={ presetOptions }
-								randomize={ getRandomAttributes }
-							/>
-						</ControlsTab>
-					}
 					<ControlsTab label={ __( 'Customize' ) }>
 						<div key={ 'space-and-sizing-customize-1' } className={ getControlsClasses( attributes, getEmphasisAttributes ) }>
 							<RangeControl
@@ -138,6 +169,24 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 								min={ 0 }
 								max={ 3 }
 							/>
+							<ToggleControl
+								label={ __( 'Enable Overlapping' ) }
+								checked={ enableOverlapping }
+								onChange={ enableOverlapping => {
+									const newAttributes = getEmphasisAttributes( { ...attributes, enableOverlapping } );
+									setAttributes( newAttributes );
+								} }
+							/>
+							<PanelRow>
+								<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
+								<BlockVerticalAlignmentToolbar
+									value={ verticalAlignment }
+									onChange={ ( verticalAlignment ) => {
+										const newAttributes = getEmphasisAttributes( { ...attributes, verticalAlignment } );
+										setAttributes( newAttributes );
+									} }
+								/>
+							</PanelRow>
 						</div>
 					</ControlsTab>
 					<ControlsTab label={ __( 'Settings' ) }>
@@ -160,6 +209,26 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 									max={ SPACING_MAX_VALUE }
 								/>
 							</ControlsGroup>
+							<ControlsGroup title={ __( 'Content Area Spacing' ) }>
+								<div key={ 'space-and-sizing-settings-2' }>
+									<RangeControl
+										key={ 'media-card-content-top-spacing' }
+										value={ emphasisTopSpacing }
+										onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
+										label={ __( 'Top' ) }
+										min={ SPACING_MIN_VALUE }
+										max={ SPACING_MAX_VALUE }
+									/>
+									<RangeControl
+										key={ 'media-card-content-bottom-spacing' }
+										value={ emphasisBottomSpacing }
+										onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
+										label={ __( 'Bottom' ) }
+										min={ SPACING_MIN_VALUE }
+										max={ SPACING_MAX_VALUE }
+									/>
+								</div>
+							</ControlsGroup>
 						</div>
 					</ControlsTab>
 				</ControlsSection>
@@ -168,99 +237,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 	};
 });
 
-const componentWithSettings = compose( [
-	withSettings,
-	withSpaceAndSizingControls
-] );
-
-addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing', componentWithSettings );
-
-const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalComponent => {
-
-	return ( props ) => {
-
-		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
-			return <OriginalComponent { ...props } />
-		}
-
-		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
-		const SPACING_MAX_VALUE = 3;
-
-		const {
-			attributes,
-			setAttributes,
-		} = props;
-
-		const {
-			enableOverlapping,
-
-			emphasisTopSpacing,
-			emphasisBottomSpacing,
-		} = attributes;
-
-		const verticalAlignment = attributes.verticalAlignment || 'center';
-
-		const cssVars = {
-			'--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-			'--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
-		};
-
-		return (
-			<Fragment>
-				<div style={ cssVars }>
-					<OriginalComponent { ...props } />
-				</div>
-				<ControlsSection label={ __( 'Space and Sizing' ) }>
-					<ControlsTab label={ __( 'Customize' ) }>
-						<div key={ 'space-and-sizing-customize-2' } className={ getControlsClasses( attributes, getEmphasisAttributes ) }>
-							<ToggleControl
-								label={ __( 'Enable Overlapping' ) }
-								checked={ enableOverlapping }
-								onChange={ enableOverlapping => {
-									const newAttributes = getEmphasisAttributes( { ...attributes, enableOverlapping } );
-									setAttributes( newAttributes );
-								} }
-							/>
-							<PanelRow>
-								<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
-								<BlockVerticalAlignmentToolbar
-									value={ verticalAlignment }
-									onChange={ ( verticalAlignment ) => {
-										const newAttributes = getEmphasisAttributes( { ...attributes, verticalAlignment } );
-										setAttributes( newAttributes );
-									} }
-								/>
-							</PanelRow>
-						</div>
-					</ControlsTab>
-					<ControlsTab label={ __( 'Settings' ) }>
-						<ControlsGroup title={ __( 'Content Area Spacing' ) }>
-							<div key={ 'space-and-sizing-settings-2' }>
-								<RangeControl
-									key={ 'media-card-content-top-spacing' }
-									value={ emphasisTopSpacing }
-									onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
-									label={ __( 'Top' ) }
-									min={ SPACING_MIN_VALUE }
-									max={ SPACING_MAX_VALUE }
-								/>
-								<RangeControl
-									key={ 'media-card-content-bottom-spacing' }
-									value={ emphasisBottomSpacing }
-									onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
-									label={ __( 'Bottom' ) }
-									min={ SPACING_MIN_VALUE }
-									max={ SPACING_MAX_VALUE }
-								/>
-							</div>
-						</ControlsGroup>
-					</ControlsTab>
-				</ControlsSection>
-			</Fragment>
-		);
-	};
-});
-addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing-advanced', withSpaceAndSizingControlsAdvanced );
+addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing', withSpaceAndSizingControls );
 
 function addSpaceAndSizingAttributes( block ) {
 
