@@ -1,6 +1,6 @@
 {
 	"name": "nova-blocks",
-	"version": "1.4.3",
+	"version": "1.5.0",
 	"main": "blocks/index.js",
 	"license": "GPL-3.0+",
 	"scripts": {

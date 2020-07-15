@@ -2,7 +2,7 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.4.0
+Tested up to: 5.4.2
 Requires PHP: 5.4.0
 Stable tag: 1.4.3
 License: GPL v2.0 (or later)
@@ -93,6 +93,14 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.5.0 =
+* New Block: Posts Collection for displaying posts
+* Added placeholder images for most blocks
+* Added an advanced vertical alignment system for the Media Card block
+* Added new controls for the Media Card block
+* Added new controls for the Food Menu blocks
+* Improved usability of blocks by reorganising sidebar controls in sections
 
 = 1.4.3 =
 * Add video support for Slideshow Block
