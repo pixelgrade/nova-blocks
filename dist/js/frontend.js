@@ -20724,302 +20724,6 @@ var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 var createClass = __webpack_require__(4);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
-// EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(8);
-var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
-
-// CONCATENATED MODULE: ./src/blocks/announcement-bar/announcement-bar.js
-
-
-
-
-var announcement_bar_AnnouncementBar = /*#__PURE__*/function () {
-  function AnnouncementBar(element, args) {
-    classCallCheck_default()(this, AnnouncementBar);
-
-    this.element = element;
-    this.pieces = this.getPieces();
-    this.id = jQuery(element).data('id');
-    this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';
-    var disabled = js_cookie_default.a.get(this.cookieName);
-    var loggedIn = jQuery('body').hasClass('logged-in');
-
-    if (disabled && !loggedIn) {
-      return;
-    }
-
-    this.pieces.element.removeClass('is-hidden');
-    this.bindEvents();
-  }
-
-  createClass_default()(AnnouncementBar, [{
-    key: "getPieces",
-    value: function getPieces() {
-      var $element = jQuery(this.element);
-      return {
-        element: $element,
-        close: $element.find('.novablocks-announcement-bar__close')
-      };
-    }
-  }, {
-    key: "bindEvents",
-    value: function bindEvents() {
-      this.pieces.close.on('click', this.onClose.bind(this));
-    }
-  }, {
-    key: "onClose",
-    value: function onClose() {
-      var cookieName = this.cookieName;
-      this.pieces.element.addClass('is-hidden');
-      js_cookie_default.a.set(cookieName, true, {
-        expires: 365
-      });
-    }
-  }]);
-
-  return AnnouncementBar;
-}();
-
-
-// CONCATENATED MODULE: ./src/blocks/announcement-bar/frontend.js
-
-
-(function ($, window, undefined) {
-  $(function () {
-    var announcementElements = document.getElementsByClassName('novablocks-announcement-bar');
-    var announcementElementsArray = Array.from(announcementElements);
-    var AnnouncementCollection = announcementElementsArray.map(function (element) {
-      return new announcement_bar_AnnouncementBar(element);
-    });
-  });
-})(jQuery, window);
-// CONCATENATED MODULE: ./src/blocks/google-map/pin.js
-/* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fillRule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
-// CONCATENATED MODULE: ./src/blocks/google-map/default-map-center.js
-var defaultMapCenter = {
-  lat: 47.1665264,
-  lng: 27.58285479999995
-};
-/* harmony default export */ var default_map_center = (defaultMapCenter);
-// CONCATENATED MODULE: ./src/blocks/google-map/styles/customized.js
-/* harmony default export */ var customized = ([{
-  "elementType": "geometry",
-  "stylers": [{
-    "color": "#f5f5f5"
-  }]
-}, {
-  "elementType": "labels.icon",
-  "stylers": [{
-    "saturation": -100
-  }, {
-    "lightness": 60
-  }]
-}, {
-  "elementType": "labels.text.stroke",
-  "stylers": [{
-    "color": "#f5f5f5"
-  }]
-}, {
-  "featureType": "poi",
-  "elementType": "geometry",
-  "stylers": [{
-    "color": "#eeeeee"
-  }]
-}, {
-  "featureType": "poi",
-  "elementType": "labels.text.fill",
-  "stylers": [{
-    "color": "#757575"
-  }]
-}, {
-  "featureType": "road.arterial",
-  "elementType": "geometry.fill",
-  "stylers": [{
-    "color": "%ACCENT_COLOR%"
-  }, {
-    "lightness": 90
-  }]
-}, {
-  "featureType": "road.arterial",
-  "elementType": "labels.text.fill",
-  "stylers": [{
-    "color": "#757575"
-  }]
-}, {
-  "featureType": "road.highway",
-  "elementType": "geometry",
-  "stylers": [{
-    "color": "#dadada"
-  }]
-}, {
-  "featureType": "road.highway",
-  "elementType": "labels.text.fill",
-  "stylers": [{
-    "color": "#616161"
-  }]
-}, {
-  "featureType": "road.local",
-  "elementType": "geometry.fill",
-  "stylers": [{
-    "color": "%ACCENT_COLOR%"
-  }, {
-    "saturation": -25
-  }, {
-    "lightness": 70
-  }]
-}, {
-  "featureType": "road.local",
-  "elementType": "labels.text.fill",
-  "stylers": [{
-    "lightness": 30
-  }]
-}, {
-  "featureType": "transit.line",
-  "elementType": "geometry",
-  "stylers": [{
-    "color": "#e5e5e5"
-  }]
-}, {
-  "featureType": "water",
-  "elementType": "geometry",
-  "stylers": [{
-    "color": "#c9c9c9"
-  }]
-}, {
-  "featureType": "water",
-  "elementType": "geometry.fill",
-  "stylers": [{
-    "color": "%ACCENT_COLOR%"
-  }, {
-    "lightness": 60
-  }]
-}, {
-  "featureType": "water",
-  "elementType": "labels.text.fill",
-  "stylers": [{
-    "saturation": -100
-  }]
-}]);
-// CONCATENATED MODULE: ./src/blocks/google-map/styles/index.js
-
-var styles_styles = [{
-  slug: 'customized',
-  label: 'Customized',
-  styles: customized
-}, {
-  slug: 'original',
-  label: 'Original',
-  styles: []
-}];
-/* harmony default export */ var google_map_styles = (styles_styles);
-// CONCATENATED MODULE: ./src/blocks/google-map/utils.js
-
-
-var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, showIcons) {
-  if (!showLabels) {
-    styles.unshift({
-      "elementType": "labels.text",
-      "stylers": [{
-        "visibility": "off"
-      }]
-    });
-  }
-
-  if (!showIcons) {
-    styles.unshift({
-      "elementType": "labels.icon",
-      "stylers": [{
-        "visibility": "off"
-      }]
-    });
-  }
-
-  return styles;
-};
-var compileStyles = function compileStyles(styleData) {
-  var _this$props$attribute = this.props.attributes,
-      showLabels = _this$props$attribute.showLabels,
-      showIcons = _this$props$attribute.showIcons,
-      styleSlug = _this$props$attribute.styleSlug;
-  var accentColor = getMapAccentColor.call(this);
-  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
-  return JSON.parse(styleDataString);
-};
-var utils_getMapStyles = function getMapStyles() {
-  var attributes = this.props.attributes;
-  var styleData = attributes.styleData,
-      styleSlug = attributes.styleSlug;
-  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
-  var selectedStyles = google_map_styles.find(function (style) {
-    return style.slug === styleSlug;
-  });
-  var styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
-  var mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
-  return compileStyles.call(this, mapStyles);
-};
-var getMapAccentColor = function getMapAccentColor() {
-  var settings = this.props.settings;
-  var colors = settings.colors;
-  var fallbackColor = '#222222';
-
-  if (colors && colors.length) {
-    var primary = colors.find(function (color) {
-      return color.slug === 'sm-color-primary';
-    });
-    var secondary = colors.find(function (color) {
-      return color.slug === 'sm-color-secondary';
-    });
-    var tertiary = colors.find(function (color) {
-      return color.slug === 'sm-color-tertiary';
-    });
-
-    if (primary) {
-      return primary.color;
-    }
-
-    if (secondary) {
-      return secondary.color;
-    }
-
-    if (tertiary) {
-      return tertiary.color;
-    }
-
-    return colors[0].color;
-  }
-
-  return fallbackColor;
-};
-var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
-  if (typeof google === "undefined" || typeof google.maps === "undefined") {
-    return default_map_center;
-  }
-
-  var bounds = new google.maps.LatLngBounds(); // when there is only one marker bounds aren't accurate at great zoom levels
-
-  if (markers.length === 1) {
-    var center = JSON.parse(markers[0]);
-    return new google.maps.LatLng(center.geometry.location);
-  }
-
-  markers.forEach(function (markerString) {
-    var marker = JSON.parse(markerString);
-
-    if (!marker.geometry) {
-      return;
-    }
-
-    if (marker.geometry.viewport) {
-      bounds.union(marker.geometry.viewport);
-    } else {
-      bounds.extend(marker.geometry.location);
-    }
-  });
-  return bounds.getCenter();
-};
-var getMarkersCenter = function getMarkersCenter() {
-  return utils_getCenterFromMarkers(this.props.attributes.markers);
-};
 // EXTERNAL MODULE: external "jQuery"
 var external_jQuery_ = __webpack_require__(2);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
@@ -22267,6 +21971,348 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
 
   return classnames_default()(classes);
 };
+// CONCATENATED MODULE: ./src/components/viewportObserver.js
+
+
+
+
+
+var viewportObserver_viewportObserver = /*#__PURE__*/function () {
+  function viewportObserver() {
+    classCallCheck_default()(this, viewportObserver);
+
+    this.useOrientation = hasTouchScreen() && 'orientation' in window;
+    this.bindEvents();
+  }
+
+  createClass_default()(viewportObserver, [{
+    key: "bindEvents",
+    value: function bindEvents() {
+      var $window = external_jQuery_default()(window);
+      var updateViewportUnits = this.updateViewportUnits.bind(this);
+      updateViewportUnits();
+
+      if (this.useOrientation) {
+        $window.on('orientationchange', function () {
+          $window.one('resize', updateViewportUnits);
+        });
+      } else {
+        $window.on('resize', updateViewportUnits);
+      }
+    }
+  }, {
+    key: "updateViewportUnits",
+    value: function updateViewportUnits() {
+      var root = document.documentElement;
+      var windowWidth = this.useOrientation && window.screen && window.screen.availWidth || window.innerWidth;
+      var windowHeight = this.useOrientation && window.screen && window.screen.availHeight || window.innerHeight;
+      var vw = windowWidth / 100 + 'px';
+      var vh = windowHeight / 100 + 'px';
+      root.style.setProperty('--novablocks-1vw', vw);
+      root.style.setProperty('--novablocks-1vh', vh);
+    }
+  }]);
+
+  return viewportObserver;
+}();
+
+/* harmony default export */ var components_viewportObserver = (new viewportObserver_viewportObserver());
+// EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
+var js_cookie = __webpack_require__(8);
+var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
+
+// CONCATENATED MODULE: ./src/blocks/announcement-bar/announcement-bar.js
+
+
+
+
+var announcement_bar_AnnouncementBar = /*#__PURE__*/function () {
+  function AnnouncementBar(element, args) {
+    classCallCheck_default()(this, AnnouncementBar);
+
+    this.element = element;
+    this.pieces = this.getPieces();
+    this.id = jQuery(element).data('id');
+    this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';
+    var disabled = js_cookie_default.a.get(this.cookieName);
+    var loggedIn = jQuery('body').hasClass('logged-in');
+
+    if (disabled && !loggedIn) {
+      return;
+    }
+
+    this.pieces.element.removeClass('is-hidden');
+    this.bindEvents();
+  }
+
+  createClass_default()(AnnouncementBar, [{
+    key: "getPieces",
+    value: function getPieces() {
+      var $element = jQuery(this.element);
+      return {
+        element: $element,
+        close: $element.find('.novablocks-announcement-bar__close')
+      };
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      this.pieces.close.on('click', this.onClose.bind(this));
+    }
+  }, {
+    key: "onClose",
+    value: function onClose() {
+      var cookieName = this.cookieName;
+      this.pieces.element.addClass('is-hidden');
+      js_cookie_default.a.set(cookieName, true, {
+        expires: 365
+      });
+    }
+  }]);
+
+  return AnnouncementBar;
+}();
+
+
+// CONCATENATED MODULE: ./src/blocks/announcement-bar/frontend.js
+
+
+(function ($, window, undefined) {
+  $(function () {
+    var announcementElements = document.getElementsByClassName('novablocks-announcement-bar');
+    var announcementElementsArray = Array.from(announcementElements);
+    var AnnouncementCollection = announcementElementsArray.map(function (element) {
+      return new announcement_bar_AnnouncementBar(element);
+    });
+  });
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/google-map/pin.js
+/* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fillRule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
+// CONCATENATED MODULE: ./src/blocks/google-map/default-map-center.js
+var defaultMapCenter = {
+  lat: 47.1665264,
+  lng: 27.58285479999995
+};
+/* harmony default export */ var default_map_center = (defaultMapCenter);
+// CONCATENATED MODULE: ./src/blocks/google-map/styles/customized.js
+/* harmony default export */ var customized = ([{
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#f5f5f5"
+  }]
+}, {
+  "elementType": "labels.icon",
+  "stylers": [{
+    "saturation": -100
+  }, {
+    "lightness": 60
+  }]
+}, {
+  "elementType": "labels.text.stroke",
+  "stylers": [{
+    "color": "#f5f5f5"
+  }]
+}, {
+  "featureType": "poi",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#eeeeee"
+  }]
+}, {
+  "featureType": "poi",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
+  }]
+}, {
+  "featureType": "road.arterial",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "%ACCENT_COLOR%"
+  }, {
+    "lightness": 90
+  }]
+}, {
+  "featureType": "road.arterial",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
+  }]
+}, {
+  "featureType": "road.highway",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#dadada"
+  }]
+}, {
+  "featureType": "road.highway",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#616161"
+  }]
+}, {
+  "featureType": "road.local",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "%ACCENT_COLOR%"
+  }, {
+    "saturation": -25
+  }, {
+    "lightness": 70
+  }]
+}, {
+  "featureType": "road.local",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "lightness": 30
+  }]
+}, {
+  "featureType": "transit.line",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#e5e5e5"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#c9c9c9"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "%ACCENT_COLOR%"
+  }, {
+    "lightness": 60
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "saturation": -100
+  }]
+}]);
+// CONCATENATED MODULE: ./src/blocks/google-map/styles/index.js
+
+var styles_styles = [{
+  slug: 'customized',
+  label: 'Customized',
+  styles: customized
+}, {
+  slug: 'original',
+  label: 'Original',
+  styles: []
+}];
+/* harmony default export */ var google_map_styles = (styles_styles);
+// CONCATENATED MODULE: ./src/blocks/google-map/utils.js
+
+
+var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, showIcons) {
+  if (!showLabels) {
+    styles.unshift({
+      "elementType": "labels.text",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    });
+  }
+
+  if (!showIcons) {
+    styles.unshift({
+      "elementType": "labels.icon",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    });
+  }
+
+  return styles;
+};
+var compileStyles = function compileStyles(styleData) {
+  var _this$props$attribute = this.props.attributes,
+      showLabels = _this$props$attribute.showLabels,
+      showIcons = _this$props$attribute.showIcons,
+      styleSlug = _this$props$attribute.styleSlug;
+  var accentColor = getMapAccentColor.call(this);
+  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
+  return JSON.parse(styleDataString);
+};
+var utils_getMapStyles = function getMapStyles() {
+  var attributes = this.props.attributes;
+  var styleData = attributes.styleData,
+      styleSlug = attributes.styleSlug;
+  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
+  var selectedStyles = google_map_styles.find(function (style) {
+    return style.slug === styleSlug;
+  });
+  var styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
+  var mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
+  return compileStyles.call(this, mapStyles);
+};
+var getMapAccentColor = function getMapAccentColor() {
+  var settings = this.props.settings;
+  var colors = settings.colors;
+  var fallbackColor = '#222222';
+
+  if (colors && colors.length) {
+    var primary = colors.find(function (color) {
+      return color.slug === 'sm-color-primary';
+    });
+    var secondary = colors.find(function (color) {
+      return color.slug === 'sm-color-secondary';
+    });
+    var tertiary = colors.find(function (color) {
+      return color.slug === 'sm-color-tertiary';
+    });
+
+    if (primary) {
+      return primary.color;
+    }
+
+    if (secondary) {
+      return secondary.color;
+    }
+
+    if (tertiary) {
+      return tertiary.color;
+    }
+
+    return colors[0].color;
+  }
+
+  return fallbackColor;
+};
+var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
+  if (typeof google === "undefined" || typeof google.maps === "undefined") {
+    return default_map_center;
+  }
+
+  var bounds = new google.maps.LatLngBounds(); // when there is only one marker bounds aren't accurate at great zoom levels
+
+  if (markers.length === 1) {
+    var center = JSON.parse(markers[0]);
+    return new google.maps.LatLng(center.geometry.location);
+  }
+
+  markers.forEach(function (markerString) {
+    var marker = JSON.parse(markerString);
+
+    if (!marker.geometry) {
+      return;
+    }
+
+    if (marker.geometry.viewport) {
+      bounds.union(marker.geometry.viewport);
+    } else {
+      bounds.extend(marker.geometry.location);
+    }
+  });
+  return bounds.getCenter();
+};
+var getMarkersCenter = function getMarkersCenter() {
+  return utils_getCenterFromMarkers(this.props.attributes.markers);
+};
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 
 
@@ -22311,8 +22357,7 @@ var getStylesFromProps = function getStylesFromProps(props) {
       offsetX = props.offsetX,
       offsetY = props.offsetY,
       scale = props.scale,
-      focalPoint = props.focalPoint,
-      containerBox = props.containerBox;
+      focalPoint = props.focalPoint;
   return {
     width: width || '',
     height: height || '',
@@ -22516,8 +22561,15 @@ var getState = function getState(container, config) {
     scrollContainerBox: scrollContainerBox
   };
 };
-var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
+
+function getScrollContainerHeight() {
+  var useOrientation = hasTouchScreen() && 'orientation' in window;
+  return useOrientation && window.screen && window.screen.availHeight || window.innerHeight;
+}
+
+var util_parallaxInit = function parallaxInit($blocks) {
   var frameRendered = false;
+  var scrollContainerHeight = getScrollContainerHeight();
   $blocks.each(function (i, container) {
     var $container = external_jQuery_default()(container);
     var followThroughStart = !!$container.data('smooth-start');
@@ -22527,7 +22579,6 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     var finalFocalPoint = $container.data('final-focal-point');
     var initialBackgroundScale = $container.data('initial-background-scale');
     var finalBackgroundScale = $container.data('final-background-scale');
-    var scrollContainerHeight = window.innerHeight;
     var scrollContainerBox = {
       top: 0,
       left: 0
@@ -22552,7 +22603,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 
     function parallaxUpdateState() {
       var newConfig = Object.assign({}, config, {
-        scrollContainerHeight: window.screen && window.screen.availHeight || window.innerHeight
+        scrollContainerHeight: getScrollContainerHeight()
       });
       var state = getState(container, newConfig);
       $container.data('state', state);
@@ -23508,52 +23559,6 @@ var parseContent = function parseContent(currentValue) {
     util_safariHeightFix(obj);
   });
 })(jQuery, window);
-// CONCATENATED MODULE: ./src/components/viewportObserver.js
-
-
-
-
-
-var viewportObserver_viewportObserver = /*#__PURE__*/function () {
-  function viewportObserver() {
-    classCallCheck_default()(this, viewportObserver);
-
-    this.bindEvents();
-  }
-
-  createClass_default()(viewportObserver, [{
-    key: "bindEvents",
-    value: function bindEvents() {
-      var $window = external_jQuery_default()(window);
-      var updateViewportUnits = this.updateViewportUnits.bind(this);
-      var useOrientation = hasTouchScreen() && 'orientation' in window;
-      updateViewportUnits();
-
-      if (useOrientation) {
-        $window.on('orientationchange', function () {
-          $window.one('resize', updateViewportUnits);
-        });
-      } else {
-        $window.on('resize', updateViewportUnits);
-      }
-    }
-  }, {
-    key: "updateViewportUnits",
-    value: function updateViewportUnits() {
-      var root = document.documentElement;
-      var windowWidth = window.screen && window.screen.availWidth || window.innerWidth;
-      var windowHeight = window.screen && window.screen.availHeight || window.innerHeight;
-      var vw = windowWidth / 100 + 'px';
-      var vh = windowHeight / 100 + 'px';
-      root.style.setProperty('--novablocks-1vw', vw);
-      root.style.setProperty('--novablocks-1vh', vh);
-    }
-  }]);
-
-  return viewportObserver;
-}();
-
-/* harmony default export */ var components_viewportObserver = (new viewportObserver_viewportObserver());
 // CONCATENATED MODULE: ./src/frontend.js
 
 

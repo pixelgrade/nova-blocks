@@ -19313,8 +19313,7 @@ var getStylesFromProps = function getStylesFromProps(props) {
       offsetX = props.offsetX,
       offsetY = props.offsetY,
       scale = props.scale,
-      focalPoint = props.focalPoint,
-      containerBox = props.containerBox;
+      focalPoint = props.focalPoint;
   return {
     width: width || '',
     height: height || '',
@@ -19518,8 +19517,15 @@ var getState = function getState(container, config) {
     scrollContainerBox: scrollContainerBox
   };
 };
-var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
+
+function getScrollContainerHeight() {
+  var useOrientation = hasTouchScreen() && 'orientation' in window;
+  return useOrientation && window.screen && window.screen.availHeight || window.innerHeight;
+}
+
+var util_parallaxInit = function parallaxInit($blocks) {
   var frameRendered = false;
+  var scrollContainerHeight = getScrollContainerHeight();
   $blocks.each(function (i, container) {
     var $container = external_jQuery_default()(container);
     var followThroughStart = !!$container.data('smooth-start');
@@ -19529,7 +19535,6 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     var finalFocalPoint = $container.data('final-focal-point');
     var initialBackgroundScale = $container.data('initial-background-scale');
     var finalBackgroundScale = $container.data('final-background-scale');
-    var scrollContainerHeight = window.innerHeight;
     var scrollContainerBox = {
       top: 0,
       left: 0
@@ -19554,7 +19559,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 
     function parallaxUpdateState() {
       var newConfig = Object.assign({}, config, {
-        scrollContainerHeight: window.screen && window.screen.availHeight || window.innerHeight
+        scrollContainerHeight: getScrollContainerHeight()
       });
       var state = getState(container, newConfig);
       $container.data('state', state);
@@ -30332,9 +30337,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
 
 
 var block_controls_normalize = function normalize(images) {
-  var promises = images.map(function (image) {
-    console.log(image);
-  });
+  var promises = images.map(function (image) {});
   return images;
 };
 

@@ -57,7 +57,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 // and normalize title, caption and description structure
 const normalize = ( images ) => {
 	const promises = images.map( image => {
-		console.log( image );
+
 	} );
 	return images;
 }
