@@ -1218,10 +1218,26 @@ function novablocks_get_image_url( $image, $size ) {
 function novablocks_get_media_title( $media ) {
 
 	if ( ! empty( $media['title'] ) ) {
-		return wp_kses_post( $media['title'] );
+		return wp_filter_nohtml_kses( $media['title'] );
 	}
 
 	return '';
+}
+
+function novablocks_the_media_title( $media, $before = '', $after = '', $echo = true ) {
+	$title = novablocks_get_media_title( $media );
+
+	if ( strlen( $title ) == 0 ) {
+		return '';
+	}
+
+	$title = $before . $title . $after;
+
+	if ( $echo ) {
+		echo $title;
+	} else {
+		return $title;
+	}
 }
 
 function novablocks_get_media_caption( $media ) {
@@ -1231,4 +1247,9 @@ function novablocks_get_media_caption( $media ) {
 	}
 
 	return '';
+}
+
+function novablocks_the_media_caption( $media ) {
+	$caption = novablocks_get_media_caption( $media );
+	echo apply_filters( 'the_content', $caption );
 }

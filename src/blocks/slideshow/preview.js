@@ -75,7 +75,9 @@ const SlideshowPreview = class extends Component {
 		];
 
 		const styles = {
-			slideshow: { color: contentColor },
+			slideshow: {
+				'--novablocks-slideshow-text-color': contentColor,
+			},
 			content: {},
 			foreground: {},
 		};
@@ -104,7 +106,7 @@ const SlideshowPreview = class extends Component {
 		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
-		console.log( previewImage );
+
 		return (
 			<Fragment>
 				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
@@ -113,9 +115,14 @@ const SlideshowPreview = class extends Component {
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
 								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
-									<div className="novablocks-slideshow__inner-container novablocks-u-content-width" style={ styles.content }>
-										{ getMediaTitle( previewImage ) }
-										{ getMediaCaption( previewImage ) }
+									<div
+										className="novablocks-slideshow__inner-container novablocks-u-content-width"
+										style={ styles.content }
+										dangerouslySetInnerHTML={ {
+											__html:
+												( typeof previewImage.title === 'string' && `<h2>${ previewImage.title }</h2>` || '' ) +
+												( typeof previewImage.caption === 'string' && previewImage.caption || '' )
+										} }>
 									</div>
 								</div>
 							</Fragment> }

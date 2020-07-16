@@ -18257,40 +18257,6 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
 
   return classnames_default()(classes);
 };
-var getMediaTitle = function getMediaTitle(image) {
-  var _image$title, _image$title2;
-
-  if (typeof (image === null || image === void 0 ? void 0 : image.title) === 'string') {
-    return "<h2>".concat(image.title, "</h2>");
-  }
-
-  if (!!(image === null || image === void 0 ? void 0 : (_image$title = image.title) === null || _image$title === void 0 ? void 0 : _image$title.raw)) {
-    return "<h2>".concat(image.title.raw, "</h2>");
-  }
-
-  if (!!(image === null || image === void 0 ? void 0 : (_image$title2 = image.title) === null || _image$title2 === void 0 ? void 0 : _image$title2.rendered)) {
-    return image.title.rendered;
-  }
-
-  return '';
-};
-var getMediaCaption = function getMediaCaption(image) {
-  var _image$caption, _image$caption2;
-
-  if (typeof (image === null || image === void 0 ? void 0 : image.caption) === 'string') {
-    return image.caption;
-  }
-
-  if (!!(image === null || image === void 0 ? void 0 : (_image$caption = image.caption) === null || _image$caption === void 0 ? void 0 : _image$caption.rendered)) {
-    return image.caption.rendered;
-  }
-
-  if (!!(image === null || image === void 0 ? void 0 : (_image$caption2 = image.caption) === null || _image$caption2 === void 0 ? void 0 : _image$caption2.raw)) {
-    return "<p>".concat(image.caption.raw, "</p>");
-  }
-
-  return '';
-};
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
 
@@ -33663,7 +33629,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       var classes = [className, 'novablocks-slideshow is-ready', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
       var styles = {
         slideshow: {
-          color: contentColor
+          '--novablocks-slideshow-text-color': contentColor
         },
         content: {},
         foreground: {}
@@ -33691,7 +33657,6 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       });
       var attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
       styles.slideshow.minHeight = Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px';
-      console.log(previewImage);
       return Object(external_React_["createElement"])(preview_Fragment, null, !!galleryImages.length && Object(external_React_["createElement"])("div", {
         className: classes.join(' '),
         style: styles.slideshow
@@ -33704,8 +33669,11 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
         style: styles.foreground
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__inner-container novablocks-u-content-width",
-        style: styles.content
-      }, getMediaTitle(previewImage), getMediaCaption(previewImage)))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
+        style: styles.content,
+        dangerouslySetInnerHTML: {
+          __html: (typeof previewImage.title === 'string' && "<h2>".concat(previewImage.title, "</h2>") || '') + (typeof previewImage.caption === 'string' && previewImage.caption || '')
+        }
+      }))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__controls"
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled",
