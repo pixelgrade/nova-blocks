@@ -43,7 +43,8 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 		<div class="<?php echo $className; ?>">
 
 	        <?php if ( false != $attributes['showMedia'] ) {
-		        $url = isset( $attributes['media']['url'] ) ? $attributes['media']['url'] : '';
+	        	$url = novablocks_get_image_url( $attributes['media'], 'medium' );
+
 				echo novablocks_get_card_media_markup( $url );
 	        }
 
