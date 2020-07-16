@@ -25,7 +25,7 @@ const { registerBlockType } = wp.blocks;
 const { select } = wp.data;
 
 async function getNewDefaults() {
-	const placeholderImages = await getPlaceholderImages;
+	const placeholderImages = await getPlaceholderImages();
 	const index = getRandomBetween( 0, placeholderImages.length - 1 );
 	const image = placeholderImages[index];
 

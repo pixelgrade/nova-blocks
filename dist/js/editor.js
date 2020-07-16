@@ -18046,19 +18046,62 @@ var toConsumableArray = __webpack_require__(28);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/unsplash-js/lib/unsplash.js
-var unsplash = __webpack_require__(79);
-var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
+var lib_unsplash = __webpack_require__(79);
+var unsplash_default = /*#__PURE__*/__webpack_require__.n(lib_unsplash);
 
 // CONCATENATED MODULE: ./src/utils/unsplash.js
 
-var APP_ACCESS_KEY = 'UuNmeU7dAHYEpk8VQ0v0v876vxSWKveEtovqYug-6M8';
+
+
 var COLLECTION_ID = 10606015;
-var unsplash_unsplash = new unsplash_default.a({
-  accessKey: APP_ACCESS_KEY
-});
-var getPlaceholderImages = unsplash_unsplash.collections.getCollectionPhotos(COLLECTION_ID).then(unsplash["toJson"]).then(function (photos) {
-  return photos.map(normalize);
-});
+
+var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
+  function PlaceholderImagesCollection() {
+    var _window, _window$pixcare, _window$pixcare$theme;
+
+    classCallCheck_default()(this, PlaceholderImagesCollection);
+
+    this.fetchedImages = false;
+    this.images = [];
+    var apiKey = (_window = window) === null || _window === void 0 ? void 0 : (_window$pixcare = _window.pixcare) === null || _window$pixcare === void 0 ? void 0 : (_window$pixcare$theme = _window$pixcare.themeConfig) === null || _window$pixcare$theme === void 0 ? void 0 : _window$pixcare$theme.unsplashApiKey;
+
+    if (!!apiKey) {
+      this.api = new unsplash_default.a({
+        accessKey: apiKey
+      });
+    } else {
+      this.fetchedImages = true;
+    }
+  }
+
+  createClass_default()(PlaceholderImagesCollection, [{
+    key: "fetch",
+    value: function fetch() {
+      var _this = this;
+
+      return this.api.collections.getCollectionPhotos(COLLECTION_ID).then(lib_unsplash["toJson"]).then(function (photos) {
+        _this.images = photos.map(normalize);
+        return _this.images;
+      }).finally(function () {
+        _this.fetchedImages = true;
+      });
+    }
+  }, {
+    key: "get",
+    value: function get() {
+      if (this.fetchedImages) {
+        return this.images;
+      }
+
+      return this.fetch();
+    }
+  }]);
+
+  return PlaceholderImagesCollection;
+}();
+
+var unsplash_instance = new unsplash_PlaceholderImagesCollection();
+var getPlaceholderImages = unsplash_instance.get.bind(unsplash_instance);
 
 var normalize = function normalize(photo) {
   return {
@@ -18084,7 +18127,7 @@ var normalize = function normalize(photo) {
     title: photo.description,
     caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
     download: function download() {
-      unsplash_unsplash.photos.downloadPhoto(photo);
+      unsplash.photos.downloadPhoto(photo);
     }
   };
 };
@@ -18102,6 +18145,10 @@ var getRandomArrayFromArray = function getRandomArrayFromArray(arr, n) {
   var result = new Array(n),
       len = arr.length,
       taken = new Array(len);
+
+  if (!len) {
+    return [];
+  }
 
   while (n--) {
     var x = Math.floor(Math.random() * len);
@@ -21710,9 +21757,9 @@ var esm_slicedToArray = __webpack_require__(26);
  * Browser dependencies
  */
 
-var _window = window,
-    DOMParser = _window.DOMParser,
-    getComputedStyle = _window.getComputedStyle;
+var dom_window = window,
+    DOMParser = dom_window.DOMParser,
+    getComputedStyle = dom_window.getComputedStyle;
 var _window$Node = window.Node,
     TEXT_NODE = _window$Node.TEXT_NODE,
     ELEMENT_NODE = _window$Node.ELEMENT_NODE,
@@ -30553,7 +30600,7 @@ function _getNewDefaults() {
           case 0:
             numberOfImages = getRandomBetween(2, 4);
             _context.next = 3;
-            return getPlaceholderImages;
+            return getPlaceholderImages();
 
           case 3:
             placeholderImages = _context.sent;
@@ -32912,7 +32959,7 @@ function blocks_hero_getNewDefaults() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return getPlaceholderImages;
+            return getPlaceholderImages();
 
           case 2:
             placeholderImages = _context.sent;
@@ -33438,7 +33485,7 @@ function blocks_media_getNewDefaults() {
           case 0:
             numberOfImages = getRandomBetween(2, 4);
             _context.next = 3;
-            return getPlaceholderImages;
+            return getPlaceholderImages();
 
           case 3:
             placeholderImages = _context.sent;
@@ -34053,7 +34100,7 @@ function blocks_slideshow_getNewDefaults() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return getPlaceholderImages;
+            return getPlaceholderImages();
 
           case 2:
             placeholderImages = _context.sent;
@@ -35678,7 +35725,7 @@ function blocks_card_getNewDefaults() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return getPlaceholderImages;
+            return getPlaceholderImages();
 
           case 2:
             placeholderImages = _context.sent;

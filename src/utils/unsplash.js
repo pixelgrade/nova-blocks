@@ -1,12 +1,45 @@
 import Unsplash, { toJson } from "unsplash-js";
 
-const APP_ACCESS_KEY = 'UuNmeU7dAHYEpk8VQ0v0v876vxSWKveEtovqYug-6M8';
 const COLLECTION_ID = 10606015;
-const unsplash = new Unsplash({ accessKey: APP_ACCESS_KEY } );
 
-const getPlaceholderImages = unsplash.collections.getCollectionPhotos( COLLECTION_ID )
-                                     .then( toJson )
-                                     .then( photos => photos.map( normalize ) );
+class PlaceholderImagesCollection {
+
+	constructor() {
+		this.fetchedImages = false;
+		this.images = [];
+
+		const apiKey = window?.pixcare?.themeConfig?.unsplashApiKey;
+
+		if ( !! apiKey ) {
+			this.api = new Unsplash( { accessKey: apiKey } );
+		} else {
+			this.fetchedImages = true;
+		}
+	}
+
+	fetch() {
+		return this.api.collections.getCollectionPhotos( COLLECTION_ID )
+		               .then( toJson )
+		               .then( photos => {
+			                this.images = photos.map( normalize );
+			                return this.images;
+		               } )
+		               .finally( () => {
+		               	    this.fetchedImages = true;
+		               } );
+	}
+
+	get() {
+		if ( this.fetchedImages ) {
+			return this.images;
+		}
+
+		return this.fetch();
+	}
+}
+
+const instance = new PlaceholderImagesCollection();
+const getPlaceholderImages = instance.get.bind( instance );
 
 const normalize = photo => {
 	return {
