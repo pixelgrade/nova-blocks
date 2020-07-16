@@ -92,8 +92,8 @@ const SlideshowPreview = class extends Component {
 		let mediaMinHeight = 0;
 
 		galleryImages.map( ( image ) => {
-			if ( !! image.sizes && !! image.sizes.large && !! image.sizes.large.width ) {
-				const aspectRatio = image.sizes.large.width / image.sizes.large.height;
+			if ( !! image.sizes && !! image.sizes.full && !! image.width && !! image.height ) {
+				const aspectRatio = image.width / image.height;
 				maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
 				mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
 			}

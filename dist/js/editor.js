@@ -33621,8 +33621,8 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       var maxAspectRatio = 0;
       var mediaMinHeight = 0;
       galleryImages.map(function (image) {
-        if (!!image.sizes && !!image.sizes.large && !!image.sizes.large.width) {
-          var aspectRatio = image.sizes.large.width / image.sizes.large.height;
+        if (!!image.sizes && !!image.sizes.full && !!image.width && !!image.height) {
+          var aspectRatio = image.width / image.height;
           maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
           mediaMinHeight = _this2.state.dimensions.width / maxAspectRatio;
         }
