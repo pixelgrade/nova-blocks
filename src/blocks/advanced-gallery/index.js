@@ -19,7 +19,7 @@ const { registerBlockType } = wp.blocks;
 
 async function getNewDefaults() {
 	const numberOfImages = getRandomBetween( 2, 4 );
-	const placeholderImages = await getPlaceholderImages;
+	const placeholderImages = await getPlaceholderImages();
 	const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
 	const randomAttributes = getRandomAttributes();
 

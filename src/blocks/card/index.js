@@ -16,7 +16,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 async function getNewDefaults() {
-	const placeholderImages = await getPlaceholderImages;
+	const placeholderImages = await getPlaceholderImages();
 	const randomImage = getRandomArrayFromArray( placeholderImages, 1 )[0];
 
 	if ( typeof randomImage.download === "function" ) {
