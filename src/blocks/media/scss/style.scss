@@ -90,8 +90,8 @@
 		.novablocks-block,
 		.novablocks-media__content,
 		.novablocks-media__aside {
-			padding-top: var(--novablocks-media-spacing);
-			padding-bottom: var(--novablocks-media-spacing);
+			padding-top: calc( var(--novablocks-media-spacing) * 0.5 );
+			padding-bottom: calc( var(--novablocks-media-spacing) * 0.5 );
 		}
 	}
 }

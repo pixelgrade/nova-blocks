@@ -50,4 +50,24 @@ deprecated.push({
 	save,
 });
 
+// migration used when padding was removed from basic content style
+// and shadow was removed from moderate content style
+deprecated.push({
+	attributes,
+	isEligible( attributes, innerBlocks ) {
+		return "undefined" === typeof attributes.upgradedToModerate;
+	},
+	migrate( attributes, innerBlocks ) {
+
+		const { contentStyle } = attributes;
+
+		return {
+			...attributes,
+			contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
+			upgradedToModerate: true
+		};
+	},
+	save,
+});
+
 export default deprecated;

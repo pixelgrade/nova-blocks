@@ -10,7 +10,6 @@ import deprecated from './deprecated';
 import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
 import generateDefaults from "../../components/generate-defaults";
-import { STORE_NAME } from "../../store";
 
 import blockAttributes from './attributes';
 import galleryAttributes from "../../components/advanced-gallery/attributes";
@@ -29,6 +28,12 @@ async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages;
 	const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
 	const randomAttributes = getRandomAttributes();
+
+	randomImages.forEach( image => {
+		if ( typeof image.download === "function" ) {
+			image.download();
+		}
+	} );
 
 	return {
 		...randomAttributes,

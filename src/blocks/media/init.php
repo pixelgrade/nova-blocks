@@ -32,11 +32,24 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 	function novablocks_render_media_block( $attributes, $content ) {
 
 		$classes = array( 'novablocks-media' );
+		$blockClasses = [];
 
 		// having no default value makes the card stretch vertically which is a desired outcome
 		if ( ! empty( $attributes['verticalAlignment'] ) ) {
 			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
 		}
+
+		if ( ! empty( $attributes['contentStyle'] ) ) {
+			$contentStyle = $attributes['contentStyle'];
+		} else {
+			$contentStyle = 'basic';
+		}
+
+		if ( ! isset( $attributes['upgradedToModerate'] ) && $contentStyle === 'basic' ) {
+			$contentStyle = 'moderate';
+		}
+
+		$blockClasses[] = 'content-is-' . $contentStyle;
 
 		$attributes_config = novablocks_get_media_attributes_config();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -68,19 +81,12 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$contentAreaWidth = $attributes['contentAreaWidth'];
 		$layoutGutter = $attributes['layoutGutter'];
 
-		$blockClasses = [];
 		$blockClasses[] = 'novablocks-block';
 
 		if ( ! empty( $attributes['blockStyle'] ) ) {
 			$blockClasses[] = 'block-is-' . $attributes['blockStyle'];
 		} else {
 			$blockClasses[] = 'block-is-basic';
-		}
-
-		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$blockClasses[] = 'content-is-' . $attributes['contentStyle'];
-		} else {
-			$blockClasses[] = 'content-is-basic';
 		}
 
 		$style =

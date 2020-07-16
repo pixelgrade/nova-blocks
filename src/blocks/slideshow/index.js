@@ -23,14 +23,17 @@ const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colo
  */
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InnerBlocks } = wp.blockEditor;
-const { select } = wp.data;
 
 async function getNewDefaults() {
-	const settings = select( STORE_NAME ).getSettings();
 	const placeholderImages = await getPlaceholderImages;
 	const count = getRandomBetween( 2, 4 );
 	const images = getRandomArrayFromArray( placeholderImages, count );
+
+	images.forEach( image => {
+		if ( typeof image.download === "function" ) {
+			image.download();
+		}
+	} );
 
 	return {
 		galleryImages: images,

@@ -42,5 +42,9 @@
 	"layoutPreset": {
 		"type": "string",
 		"default": "stable"
+	},
+	"upgradedToModerate": {
+		"type": "boolean",
+		"default": false
 	}
 }

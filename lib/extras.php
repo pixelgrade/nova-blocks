@@ -1018,16 +1018,8 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				$url = $attachment[0];
 			}
 
-			if ( empty( $url ) && isset( $image['sizes']['large']['url'] ) ) {
-				$url = $image['sizes']['large']['url'];
-			}
-
-			if ( empty( $url ) && isset( $image['sizes']['full']['url'] ) ) {
-				$url = $image['sizes']['full']['url'];
-			}
-
-			if ( empty( $url ) && isset( $image['url'] ) ) {
-				$url = $image['url'];
+			if ( empty( $url ) ) {
+				$url = novablocks_get_image_url( $image, 'large' );
 			}
 
 			if ( ! empty( $url ) ) {
@@ -1208,4 +1200,17 @@ function novablocks_build_articles_query( $attributes ) {
 		}
 	}
 	return $args;
+}
+
+function novablocks_get_image_url( $image, $size ) {
+
+	if ( isset( $image['sizes'][ $size ][ 'url' ] ) ) {
+		return $image['sizes'][ $size ][ 'url' ];
+	}
+
+	if ( isset( $image['url'] ) ) {
+		return $image['url'];
+	}
+
+	return '';
 }

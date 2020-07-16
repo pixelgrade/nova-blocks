@@ -22096,6 +22096,9 @@ var normalize = function normalize(photo) {
     },
     caption: {
       rendered: photo['alt_description']
+    },
+    download: function download() {
+      unsplash_unsplash.photos.downloadPhoto(photo);
     }
   };
 };

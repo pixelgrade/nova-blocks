@@ -19,6 +19,10 @@ async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages;
 	const randomImage = getRandomArrayFromArray( placeholderImages, 1 )[0];
 
+	if ( typeof randomImage.download === "function" ) {
+		randomImage.download();
+	}
+
 	return {
 		media: randomImage
 	};
