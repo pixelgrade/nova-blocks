@@ -143,12 +143,9 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 	                        <div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
                                 <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
                                     <?php
-                                    if ( ! empty( $media['title']['rendered'] ) ) {
-                                        echo '<h2>' . wp_kses_post( $media['title']['rendered'] ) . '</h2>';
-                                    }
-                                    if ( ! empty( $media['caption']['rendered'] ) ) {
-                                        echo '<p>' . wp_kses_post( $media['caption']['rendered'] ) . '</p>';
-                                    } ?>
+                                    echo novablocks_get_media_title( $media );
+                                    echo novablocks_get_media_caption( $media );
+                                    ?>
                                 </div>
 	                        </div>
                         </div>

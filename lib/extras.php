@@ -1214,3 +1214,21 @@ function novablocks_get_image_url( $image, $size ) {
 
 	return '';
 }
+
+function novablocks_get_media_title( $media ) {
+
+	if ( ! empty( $media['title'] ) ) {
+		return wp_kses_post( $media['title'] );
+	}
+
+	return '';
+}
+
+function novablocks_get_media_caption( $media ) {
+
+	if ( ! empty( $media['caption'] ) ) {
+		return wp_kses_post( $media['caption'] );
+	}
+
+	return '';
+}

@@ -22091,12 +22091,8 @@ var normalize = function normalize(photo) {
         url: photo.urls.thumb
       }
     },
-    title: {
-      rendered: photo.description
-    },
-    caption: {
-      rendered: photo['alt_description']
-    },
+    title: photo.description,
+    caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
     download: function download() {
       unsplash_unsplash.photos.downloadPhoto(photo);
     }
@@ -22270,6 +22266,40 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
   }
 
   return classnames_default()(classes);
+};
+var getMediaTitle = function getMediaTitle(image) {
+  var _image$title, _image$title2;
+
+  if (typeof (image === null || image === void 0 ? void 0 : image.title) === 'string') {
+    return "<h2>".concat(image.title, "</h2>");
+  }
+
+  if (!!(image === null || image === void 0 ? void 0 : (_image$title = image.title) === null || _image$title === void 0 ? void 0 : _image$title.raw)) {
+    return "<h2>".concat(image.title.raw, "</h2>");
+  }
+
+  if (!!(image === null || image === void 0 ? void 0 : (_image$title2 = image.title) === null || _image$title2 === void 0 ? void 0 : _image$title2.rendered)) {
+    return image.title.rendered;
+  }
+
+  return '';
+};
+var getMediaCaption = function getMediaCaption(image) {
+  var _image$caption, _image$caption2;
+
+  if (typeof (image === null || image === void 0 ? void 0 : image.caption) === 'string') {
+    return image.caption;
+  }
+
+  if (!!(image === null || image === void 0 ? void 0 : (_image$caption = image.caption) === null || _image$caption === void 0 ? void 0 : _image$caption.rendered)) {
+    return image.caption.rendered;
+  }
+
+  if (!!(image === null || image === void 0 ? void 0 : (_image$caption2 = image.caption) === null || _image$caption2 === void 0 ? void 0 : _image$caption2.raw)) {
+    return "<p>".concat(image.caption.raw, "</p>");
+  }
+
+  return '';
 };
 // CONCATENATED MODULE: ./src/components/with-parallax/util.js
 

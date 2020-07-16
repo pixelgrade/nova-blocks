@@ -3,6 +3,7 @@
  */
 import SlideshowBackground from './background';
 import { GalleryPlaceholder } from '../../components';
+import { getMediaTitle, getMediaCaption } from "../../utils";
 
 /**
  * WordPress dependencies
@@ -103,7 +104,7 @@ const SlideshowPreview = class extends Component {
 		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
-
+		console.log( previewImage );
 		return (
 			<Fragment>
 				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
@@ -113,8 +114,8 @@ const SlideshowPreview = class extends Component {
 								<SlideshowBackground { ...this.props } />
 								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 									<div className="novablocks-slideshow__inner-container novablocks-u-content-width" style={ styles.content }>
-										{ !! previewImage?.title?.rendered && <h2>{ previewImage.title?.rendered }</h2> }
-										{ !! previewImage?.caption?.rendered && <p>{ previewImage.caption?.rendered }</p> }
+										{ getMediaTitle( previewImage ) }
+										{ getMediaCaption( previewImage ) }
 									</div>
 								</div>
 							</Fragment> }

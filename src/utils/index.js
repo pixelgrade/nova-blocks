@@ -152,7 +152,7 @@ export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSna
 	return { x, y }
 };
 
-export const getSnapClassname = function( focalPoint ) {
+export const getSnapClassname = focalPoint => {
 	const classNames = [];
 
 	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
@@ -175,4 +175,38 @@ export const getControlsClasses = ( attributes, compileAttributes ) => {
 	}
 
 	return classnames( classes );
+};
+
+export const getMediaTitle = image => {
+
+	if ( typeof image?.title === 'string' ) {
+		return `<h2>${ image.title }</h2>`;
+	}
+
+	if ( !! image?.title?.raw ) {
+		return `<h2>${ image.title.raw }</h2>`;
+	}
+
+	if ( !! image?.title?.rendered ) {
+		return image.title.rendered;
+	}
+
+	return '';
+};
+
+export const getMediaCaption = image => {
+
+	if ( typeof image?.caption === 'string' ) {
+		return image.caption;
+	}
+
+	if ( !! image?.caption?.rendered ) {
+		return image.caption.rendered;
+	}
+
+	if ( !! image?.caption?.raw ) {
+		return `<p>${ image.caption.raw }</p>`;
+	}
+
+	return '';
 };
