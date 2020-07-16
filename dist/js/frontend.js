@@ -22091,12 +22091,8 @@ var normalize = function normalize(photo) {
         url: photo.urls.thumb
       }
     },
-    title: {
-      rendered: photo.description
-    },
-    caption: {
-      rendered: photo['alt_description']
-    },
+    title: photo.description,
+    caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
     download: function download() {
       unsplash_unsplash.photos.downloadPhoto(photo);
     }

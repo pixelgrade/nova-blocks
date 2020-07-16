@@ -29,12 +29,8 @@ const normalize = photo => {
 				url: photo.urls.thumb
 			},
 		},
-		title: {
-			rendered: photo.description
-		},
-		caption: {
-			rendered: photo['alt_description']
-		},
+		title: photo.description,
+		caption: `<p>Photo by <a href="${ photo.user.links.html }">${ photo.user.name }</a> on <a href="https://unsplash.com">Unsplash</a></p>`,
 		download: () => {
 			unsplash.photos.downloadPhoto( photo );
 		},

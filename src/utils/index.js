@@ -152,7 +152,7 @@ export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSna
 	return { x, y }
 };
 
-export const getSnapClassname = function( focalPoint ) {
+export const getSnapClassname = focalPoint => {
 	const classNames = [];
 
 	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {

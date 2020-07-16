@@ -18081,12 +18081,8 @@ var normalize = function normalize(photo) {
         url: photo.urls.thumb
       }
     },
-    title: {
-      rendered: photo.description
-    },
-    caption: {
-      rendered: photo['alt_description']
-    },
+    title: photo.description,
+    caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
     download: function download() {
       unsplash_unsplash.photos.downloadPhoto(photo);
     }
@@ -33564,6 +33560,7 @@ function preview_isNativeReflectConstruct() { if (typeof Reflect === "undefined"
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -33613,11 +33610,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderContent",
     value: function renderContent() {
-      var _this2 = this,
-          _previewImage$title,
-          _previewImage$title2,
-          _previewImage$caption,
-          _previewImage$caption2;
+      var _this2 = this;
 
       var _this$props = this.props,
           _this$props$attribute = _this$props.attributes,
@@ -33636,7 +33629,7 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
       var classes = [className, 'novablocks-slideshow is-ready', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
       var styles = {
         slideshow: {
-          color: contentColor
+          '--novablocks-slideshow-text-color': contentColor
         },
         content: {},
         foreground: {}
@@ -33676,8 +33669,11 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
         style: styles.foreground
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__inner-container novablocks-u-content-width",
-        style: styles.content
-      }, !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$title = previewImage.title) === null || _previewImage$title === void 0 ? void 0 : _previewImage$title.rendered) && Object(external_React_["createElement"])("h2", null, (_previewImage$title2 = previewImage.title) === null || _previewImage$title2 === void 0 ? void 0 : _previewImage$title2.rendered), !!(previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$caption = previewImage.caption) === null || _previewImage$caption === void 0 ? void 0 : _previewImage$caption.rendered) && Object(external_React_["createElement"])("p", null, (_previewImage$caption2 = previewImage.caption) === null || _previewImage$caption2 === void 0 ? void 0 : _previewImage$caption2.rendered)))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
+        style: styles.content,
+        dangerouslySetInnerHTML: {
+          __html: (typeof previewImage.title === 'string' && "<h2>".concat(previewImage.title, "</h2>") || '') + (typeof previewImage.caption === 'string' && previewImage.caption || '')
+        }
+      }))))), galleryImages.length > 1 && Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__controls"
       }, Object(external_React_["createElement"])("div", {
         className: "novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled",

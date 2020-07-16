@@ -88,7 +88,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
             ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			style="<?php echo esc_attr( 'color: ' . $attributes['contentColor'] ); ?>"
+			style="<?php echo esc_attr( '--novablocks-slideshow-text-color: ' . $attributes['contentColor'] ); ?>"
 			data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
@@ -143,12 +143,9 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 	                        <div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
                                 <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
                                     <?php
-                                    if ( ! empty( $media['title']['rendered'] ) ) {
-                                        echo '<h2>' . wp_kses_post( $media['title']['rendered'] ) . '</h2>';
-                                    }
-                                    if ( ! empty( $media['caption']['rendered'] ) ) {
-                                        echo '<p>' . wp_kses_post( $media['caption']['rendered'] ) . '</p>';
-                                    } ?>
+                                    novablocks_the_media_title( $media, '<h2>', '</h2>' );
+                                    novablocks_the_media_caption( $media );
+                                    ?>
                                 </div>
 	                        </div>
                         </div>
