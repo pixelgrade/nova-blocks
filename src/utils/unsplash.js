@@ -35,6 +35,9 @@ const normalize = photo => {
 		caption: {
 			rendered: photo['alt_description']
 		},
+		download: () => {
+			unsplash.photos.downloadPhoto( photo );
+		},
 	};
 };
 

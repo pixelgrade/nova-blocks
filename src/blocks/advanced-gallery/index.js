@@ -23,6 +23,12 @@ async function getNewDefaults() {
 	const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
 	const randomAttributes = getRandomAttributes();
 
+	randomImages.forEach( image => {
+		if ( typeof image.download === "function" ) {
+			image.download();
+		}
+	} );
+
 	return {
 		...randomAttributes,
 		images: randomImages

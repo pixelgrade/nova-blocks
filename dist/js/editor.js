@@ -18086,6 +18086,9 @@ var normalize = function normalize(photo) {
     },
     caption: {
       rendered: photo['alt_description']
+    },
+    download: function download() {
+      unsplash_unsplash.photos.downloadPhoto(photo);
     }
   };
 };
@@ -30560,11 +30563,16 @@ function _getNewDefaults() {
             placeholderImages = _context.sent;
             randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
             randomAttributes = util_getRandomAttributes();
+            randomImages.forEach(function (image) {
+              if (typeof image.download === "function") {
+                image.download();
+              }
+            });
             return _context.abrupt("return", advanced_gallery_objectSpread(advanced_gallery_objectSpread({}, randomAttributes), {}, {
               images: randomImages
             }));
 
-          case 7:
+          case 8:
           case "end":
             return _context.stop();
         }
@@ -32914,13 +32922,18 @@ function blocks_hero_getNewDefaults() {
             placeholderImages = _context.sent;
             index = getRandomBetween(0, placeholderImages.length - 1);
             image = placeholderImages[index];
+
+            if (typeof image.download === "function") {
+              image.download();
+            }
+
             return _context.abrupt("return", {
               media: hero_objectSpread(hero_objectSpread({}, image), {}, {
                 type: 'image'
               })
             });
 
-          case 6:
+          case 7:
           case "end":
             return _context.stop();
         }
@@ -33408,7 +33421,6 @@ function media_objectSpread(target) { for (var i = 1; i < arguments.length; i++)
 
 
 
-
 var blocks_media_attributes = Object.assign({}, media_attributes, advanced_gallery_attributes);
 /**
  * WordPress dependencies
@@ -33436,12 +33448,17 @@ function blocks_media_getNewDefaults() {
             placeholderImages = _context.sent;
             randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
             randomAttributes = util_getRandomAttributes();
+            randomImages.forEach(function (image) {
+              if (typeof image.download === "function") {
+                image.download();
+              }
+            });
             return _context.abrupt("return", media_objectSpread(media_objectSpread({}, randomAttributes), {}, {
               verticalAlignment: "center",
               images: randomImages
             }));
 
-          case 7:
+          case 8:
           case "end":
             return _context.stop();
         }
@@ -34027,8 +34044,6 @@ var blocks_slideshow_attributes = Object.assign({}, slideshow_attributes, alignm
 
 var slideshow_ = wp.i18n.__;
 var slideshow_registerBlockType = wp.blocks.registerBlockType;
-var slideshow_InnerBlocks = wp.blockEditor.InnerBlocks;
-var slideshow_select = wp.data.select;
 
 function slideshow_getNewDefaults() {
   return blocks_slideshow_getNewDefaults.apply(this, arguments);
@@ -34036,19 +34051,23 @@ function slideshow_getNewDefaults() {
 
 function blocks_slideshow_getNewDefaults() {
   blocks_slideshow_getNewDefaults = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-    var settings, placeholderImages, count, images;
+    var placeholderImages, count, images;
     return regenerator_default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            settings = slideshow_select(STORE_NAME).getSettings();
-            _context.next = 3;
+            _context.next = 2;
             return getPlaceholderImages;
 
-          case 3:
+          case 2:
             placeholderImages = _context.sent;
             count = getRandomBetween(2, 4);
             images = getRandomArrayFromArray(placeholderImages, count);
+            images.forEach(function (image) {
+              if (typeof image.download === "function") {
+                image.download();
+              }
+            });
             return _context.abrupt("return", {
               galleryImages: images
             });
@@ -35668,11 +35687,16 @@ function blocks_card_getNewDefaults() {
           case 2:
             placeholderImages = _context.sent;
             randomImage = getRandomArrayFromArray(placeholderImages, 1)[0];
+
+            if (typeof randomImage.download === "function") {
+              randomImage.download();
+            }
+
             return _context.abrupt("return", {
               media: randomImage
             });
 
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }

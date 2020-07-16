@@ -29,6 +29,10 @@ async function getNewDefaults() {
 	const index = getRandomBetween( 0, placeholderImages.length - 1 );
 	const image = placeholderImages[index];
 
+	if ( typeof image.download === "function" ) {
+		image.download();
+	}
+
 	return {
 		media: {
 			...image,
