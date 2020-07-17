@@ -18958,9 +18958,8 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
       containerHeight = _props$attributes.containerHeight,
       imageResizing = _props$attributes.imageResizing,
       level = _props$attributes.level,
-      showMedia = _props$attributes.showMedia,
-      setAttributes = props.setAttributes,
-      isSelected = props.isSelected;
+      imagePadding = _props$attributes.imagePadding,
+      setAttributes = props.setAttributes;
 
   var _onChange = typeof props.onChange !== 'function' ? setAttributes : props.onChange;
 
@@ -18996,6 +18995,18 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
     min: 0,
     max: 100,
     step: 5
+  }), Object(external_React_["createElement"])(inspector_controls_RangeControl, {
+    key: 'collection-image-padding',
+    label: inspector_controls_('Image padding', '__plugin_txtd'),
+    value: imagePadding,
+    onChange: function onChange(imagePadding) {
+      setAttributes({
+        imagePadding: imagePadding
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 50
   }), Object(external_React_["createElement"])(PanelRow, null, Object(external_React_["createElement"])("span", null, inspector_controls_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 2,
     maxLevel: 4,
@@ -19079,7 +19090,8 @@ var collection_Collection = function Collection(props) {
       contentStyle = attributes.contentStyle,
       contentAlign = attributes.contentAlign,
       imageResizing = attributes.imageResizing,
-      containerHeight = attributes.containerHeight;
+      containerHeight = attributes.containerHeight,
+      imagePadding = attributes.imagePadding;
   var blockClassName = 'novablocks-collection';
 
   var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
@@ -19105,6 +19117,7 @@ var collection_Collection = function Collection(props) {
   };
 
   var style = {
+    '--card-media-padding': imagePadding,
     '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
     '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
   };
