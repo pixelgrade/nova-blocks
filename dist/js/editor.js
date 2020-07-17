@@ -18064,8 +18064,8 @@ var toConsumableArray = __webpack_require__(28);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // EXTERNAL MODULE: ./node_modules/unsplash-js/lib/unsplash.js
-var lib_unsplash = __webpack_require__(79);
-var unsplash_default = /*#__PURE__*/__webpack_require__.n(lib_unsplash);
+var unsplash = __webpack_require__(79);
+var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
 
 // CONCATENATED MODULE: ./src/utils/unsplash.js
 
@@ -18097,7 +18097,8 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
     value: function fetch() {
       var _this = this;
 
-      return this.api.collections.getCollectionPhotos(COLLECTION_ID).then(lib_unsplash["toJson"]).then(function (photos) {
+      var normalize = this.normalize.bind(this);
+      return this.api.collections.getCollectionPhotos(COLLECTION_ID).then(unsplash["toJson"]).then(function (photos) {
         _this.images = photos.map(normalize);
         return _this.images;
       }).finally(function () {
@@ -18113,6 +18114,38 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
 
       return this.fetch();
     }
+  }, {
+    key: "normalize",
+    value: function normalize(photo) {
+      var _this2 = this;
+
+      return {
+        id: photo.id,
+        url: photo.urls.full,
+        type: 'image',
+        width: photo.width,
+        height: photo.height,
+        sizes: {
+          full: {
+            url: photo.urls.full
+          },
+          large: {
+            url: photo.urls.regular
+          },
+          medium: {
+            url: photo.urls.small
+          },
+          thumbnail: {
+            url: photo.urls.thumb
+          }
+        },
+        title: photo.description,
+        caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
+        download: function download() {
+          _this2.api.photos.downloadPhoto(photo);
+        }
+      };
+    }
   }]);
 
   return PlaceholderImagesCollection;
@@ -18120,36 +18153,6 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
 
 var unsplash_instance = new unsplash_PlaceholderImagesCollection();
 var getPlaceholderImages = unsplash_instance.get.bind(unsplash_instance);
-
-var normalize = function normalize(photo) {
-  return {
-    id: photo.id,
-    url: photo.urls.full,
-    type: 'image',
-    width: photo.width,
-    height: photo.height,
-    sizes: {
-      full: {
-        url: photo.urls.full
-      },
-      large: {
-        url: photo.urls.regular
-      },
-      medium: {
-        url: photo.urls.small
-      },
-      thumbnail: {
-        url: photo.urls.thumb
-      }
-    },
-    title: photo.description,
-    caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
-    download: function download() {
-      unsplash.photos.downloadPhoto(photo);
-    }
-  };
-};
-
 
 // CONCATENATED MODULE: ./src/utils/index.js
 
