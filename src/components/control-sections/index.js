@@ -21,19 +21,35 @@ const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
-	const $advancedControls = $( '.block-editor-block-inspector__advanced' );
+	const advancedButton = document.querySelector( '.block-editor-block-inspector__advanced' );
+	const advancedWrapper = !! advancedButton && advancedButton.parentNode;
+
+	if ( !! advancedWrapper ) {
+		advancedWrapper.style.setProperty( 'transition', 'height .3s ease-out' );
+		advancedWrapper.style.setProperty( 'overflow', 'hidden' );
+	}
+
+	const onOpen = () => {
+		if ( !! advancedWrapper?.style ) {
+			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px`, );
+			requestAnimationFrame( () => {
+				advancedWrapper.style.setProperty( 'height', 0 );
+			} );
+		}
+	};
+
+	const onClose = () => {
+		if ( !! advancedWrapper?.style ) {
+			advancedWrapper.addEventListener( 'transitionend', () => {
+				advancedWrapper.style.removeProperty( 'height' );
+			}, { once: true } );
+			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px` );
+		}
+	};
 
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
 	} );
-
-	const onOpen = () => {
-		$advancedControls.stop( true ).slideUp();
-	};
-
-	const onClose = () => {
-		$advancedControls.stop( true ).slideDown();
-	};
 
 	return (
 		<div className="novablocks-sections">

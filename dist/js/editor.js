@@ -2725,7 +2725,7 @@ module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"wide\
 /* 65 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"\"},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"upgradedToModerate\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"mediaPosition\":{\"type\":\"string\",\"default\":\"left\"},\"blockStyle\":{\"type\":\"string\",\"default\":\"basic\"},\"contentStyle\":{\"type\":\"string\",\"default\":\"moderate\"},\"horizontalAlignment\":{\"type\":\"string\",\"default\":\"center\"},\"verticalAlignment\":{\"type\":\"string\",\"default\":\"\"},\"emphasisArea\":{\"type\":\"number\",\"default\":100},\"contentAreaWidth\":{\"type\":\"number\",\"default\":50},\"balanceEmphasis\":{\"type\":\"number\",\"default\":0},\"balanceFocalPoint\":{\"type\":\"string\",\"default\":\"content\"},\"layoutPreset\":{\"type\":\"string\",\"default\":\"stable\"},\"upgradedToModerate\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 66 */
@@ -17538,19 +17538,37 @@ var control_sections_Children = wp.element.Children;
 
 var control_sections_ControlsSectionsComponent = function ControlsSectionsComponent(props) {
   var sections = props.sections;
-  var $advancedControls = external_jQuery_default()('.block-editor-block-inspector__advanced');
+  var advancedButton = document.querySelector('.block-editor-block-inspector__advanced');
+  var advancedWrapper = !!advancedButton && advancedButton.parentNode;
+
+  if (!!advancedWrapper) {
+    advancedWrapper.style.setProperty('transition', 'height .3s ease-out');
+    advancedWrapper.style.setProperty('overflow', 'hidden');
+  }
+
+  var onOpen = function onOpen() {
+    if (!!(advancedWrapper === null || advancedWrapper === void 0 ? void 0 : advancedWrapper.style)) {
+      advancedWrapper.style.setProperty('height', " ".concat(advancedButton.offsetHeight, "px"));
+      requestAnimationFrame(function () {
+        advancedWrapper.style.setProperty('height', 0);
+      });
+    }
+  };
+
+  var onClose = function onClose() {
+    if (!!(advancedWrapper === null || advancedWrapper === void 0 ? void 0 : advancedWrapper.style)) {
+      advancedWrapper.addEventListener('transitionend', function () {
+        advancedWrapper.style.removeProperty('height');
+      }, {
+        once: true
+      });
+      advancedWrapper.style.setProperty('height', " ".concat(advancedButton.offsetHeight, "px"));
+    }
+  };
 
   var groups = groupBy_default()(sections, function (section) {
     return !!section.props.group ? section.props.group : '';
   });
-
-  var onOpen = function onOpen() {
-    $advancedControls.stop(true).slideUp();
-  };
-
-  var onClose = function onClose() {
-    $advancedControls.stop(true).slideDown();
-  };
 
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-sections"

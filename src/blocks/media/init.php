@@ -42,7 +42,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$contentStyle = $attributes['contentStyle'];
 		} else {
-			$contentStyle = 'basic';
+			$contentStyle = 'moderate';
 		}
 
 		if ( ! isset( $attributes['upgradedToModerate'] ) && $contentStyle === 'basic' ) {

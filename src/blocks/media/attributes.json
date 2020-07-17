@@ -13,7 +13,7 @@
 	},
 	"contentStyle": {
 		"type": "string",
-		"default": "basic"
+		"default": "moderate"
 	},
 	"horizontalAlignment": {
 		"type": "string",
