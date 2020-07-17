@@ -30631,7 +30631,7 @@ function _getNewDefaults() {
             randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
             randomAttributes = util_getRandomAttributes();
             randomImages.forEach(function (image) {
-              if (typeof image.download === "function") {
+              if (typeof (image === null || image === void 0 ? void 0 : image.download) === "function") {
                 image.download();
               }
             });
@@ -32990,7 +32990,7 @@ function blocks_hero_getNewDefaults() {
             index = getRandomBetween(0, placeholderImages.length - 1);
             image = placeholderImages[index];
 
-            if (typeof image.download === "function") {
+            if (typeof (image === null || image === void 0 ? void 0 : image.download) === "function") {
               image.download();
             }
 
@@ -33516,7 +33516,7 @@ function blocks_media_getNewDefaults() {
             randomImages = getRandomArrayFromArray(placeholderImages, numberOfImages);
             randomAttributes = util_getRandomAttributes();
             randomImages.forEach(function (image) {
-              if (typeof image.download === "function") {
+              if (typeof (image === null || image === void 0 ? void 0 : image.download) === "function") {
                 image.download();
               }
             });
@@ -34131,7 +34131,7 @@ function blocks_slideshow_getNewDefaults() {
             count = getRandomBetween(2, 4);
             images = getRandomArrayFromArray(placeholderImages, count);
             images.forEach(function (image) {
-              if (typeof image.download === "function") {
+              if (typeof (image === null || image === void 0 ? void 0 : image.download) === "function") {
                 image.download();
               }
             });
@@ -35755,7 +35755,7 @@ function blocks_card_getNewDefaults() {
             placeholderImages = _context.sent;
             randomImage = getRandomArrayFromArray(placeholderImages, 1)[0];
 
-            if (typeof randomImage.download === "function") {
+            if (typeof (randomImage === null || randomImage === void 0 ? void 0 : randomImage.download) === "function") {
               randomImage.download();
             }
 

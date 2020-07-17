@@ -30,7 +30,7 @@ async function getNewDefaults() {
 	const randomAttributes = getRandomAttributes();
 
 	randomImages.forEach( image => {
-		if ( typeof image.download === "function" ) {
+		if ( typeof image?.download === "function" ) {
 			image.download();
 		}
 	} );
