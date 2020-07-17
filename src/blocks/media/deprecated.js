@@ -7,7 +7,7 @@ const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
 
 const { images, ...attributesWithoutImages } = attributes;
 
-const oldGalleryAttributes = {
+const oldAttributes = {
 	...attributesWithoutImages,
 	gallery: {
 		type: 'array',
@@ -21,7 +21,7 @@ const oldGalleryAttributes = {
 const deprecated = [];
 
 deprecated.push({
-	attributes: oldGalleryAttributes,
+	attributes: oldAttributes,
 	isEligible( attributes, innerBlocks ) {
 		return "undefined" === typeof attributes.images && typeof "undefined" !== attributes.gallery;
 	},
@@ -37,7 +37,7 @@ deprecated.push({
 });
 
 deprecated.push({
-	attributes: oldGalleryAttributes,
+	attributes: oldAttributes,
 	isEligible( attributes, innerBlocks ) {
 		return "undefined" === typeof attributes.defaultsGenerated;
 	},
@@ -53,12 +53,11 @@ deprecated.push({
 // migration used when padding was removed from basic content style
 // and shadow was removed from moderate content style
 deprecated.push({
-	attributes,
-	isEligible( attributes, innerBlocks ) {
+	attributes: oldAttributes,
+	isEligible( attributes ) {
 		return "undefined" === typeof attributes.upgradedToModerate;
 	},
-	migrate( attributes, innerBlocks ) {
-
+	migrate( attributes ) {
 		const { contentStyle } = attributes;
 
 		return {

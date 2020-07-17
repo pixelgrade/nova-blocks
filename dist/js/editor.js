@@ -33408,7 +33408,7 @@ var media_deprecated_attributes = Object.assign({}, media_attributes, advanced_g
 var media_deprecated_images = media_deprecated_attributes.images,
     deprecated_attributesWithoutImages = objectWithoutProperties_default()(media_deprecated_attributes, ["images"]);
 
-var deprecated_oldGalleryAttributes = media_deprecated_objectSpread(media_deprecated_objectSpread({}, deprecated_attributesWithoutImages), {}, {
+var oldAttributes = media_deprecated_objectSpread(media_deprecated_objectSpread({}, deprecated_attributesWithoutImages), {}, {
   gallery: {
     type: 'array',
     items: {
@@ -33420,7 +33420,7 @@ var deprecated_oldGalleryAttributes = media_deprecated_objectSpread(media_deprec
 
 var media_deprecated_deprecated = [];
 media_deprecated_deprecated.push({
-  attributes: deprecated_oldGalleryAttributes,
+  attributes: oldAttributes,
   isEligible: function isEligible(attributes, innerBlocks) {
     return "undefined" === typeof attributes.images && typeof_default()("undefined") !== attributes.gallery;
   },
@@ -33435,7 +33435,7 @@ media_deprecated_deprecated.push({
   save: media_save
 });
 media_deprecated_deprecated.push({
-  attributes: deprecated_oldGalleryAttributes,
+  attributes: oldAttributes,
   isEligible: function isEligible(attributes, innerBlocks) {
     return "undefined" === typeof attributes.defaultsGenerated;
   },
@@ -33449,11 +33449,11 @@ media_deprecated_deprecated.push({
 // and shadow was removed from moderate content style
 
 media_deprecated_deprecated.push({
-  attributes: media_deprecated_attributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
+  attributes: oldAttributes,
+  isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.upgradedToModerate;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     var contentStyle = attributes.contentStyle;
     return media_deprecated_objectSpread(media_deprecated_objectSpread({}, attributes), {}, {
       contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
