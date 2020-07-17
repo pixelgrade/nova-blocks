@@ -161,16 +161,4 @@
 	.content-is-highlighted:not(.block-is-highlighted) {
 		--novablocks-block-content-background-color: var(--novablocks-dark-3);
 	}
-
-	.novablocks-collection {
-
-		&.content-is-moderate {
-			--novablocks-block-content-current-box-shadow: var(--novablocks-block-content-box-shadow);
-		}
-
-		&.content-is-moderate.block-is-highlighted {
-			--novablocks-block-content-background-color: var(--novablocks-light-1);
-			--novablocks-block-content-background-opacity: 0.2;
-		}
-	}
 }
