@@ -1899,12 +1899,6 @@ module.exports = isArray;
 
 /***/ }),
 /* 30 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
-
-/***/ }),
-/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var freeGlobal = __webpack_require__(85);
@@ -1919,19 +1913,19 @@ module.exports = root;
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":\"object\"},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"contentColor\":{\"type\":\"string\",\"default\":\"#FFF\"},\"overlayFilterStyle\":{\"type\":\"string\",\"default\":\"dark\"},\"overlayFilterStrength\":{\"type\":\"number\",\"default\":30}}");
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var objectWithoutPropertiesLoose = __webpack_require__(234);
@@ -1956,6 +1950,12 @@ function _objectWithoutProperties(source, excluded) {
 }
 
 module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
 
 /***/ }),
 /* 35 */
@@ -2304,7 +2304,7 @@ function _arrayLikeToArray(arr, len) {
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(30);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -3464,7 +3464,7 @@ module.exports = isLength;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(30);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -4397,7 +4397,7 @@ module.exports = isArguments;
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(31),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(30),
     stubFalse = __webpack_require__(148);
 
 /** Detect free variable `exports`. */
@@ -4894,7 +4894,7 @@ module.exports = stubArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(30);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -6496,7 +6496,7 @@ module.exports = isMasked;
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(30);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -7910,7 +7910,7 @@ module.exports = equalByTag;
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(30);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -8159,7 +8159,7 @@ module.exports = getTag;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(30);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -8172,7 +8172,7 @@ module.exports = DataView;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(30);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -8185,7 +8185,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(40),
-    root = __webpack_require__(31);
+    root = __webpack_require__(30);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -12221,7 +12221,7 @@ module.exports = _objectWithoutPropertiesLoose;
 /* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(31);
+var root = __webpack_require__(30);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -15003,7 +15003,7 @@ var groupBy = __webpack_require__(78);
 var groupBy_default = /*#__PURE__*/__webpack_require__.n(groupBy);
 
 // EXTERNAL MODULE: external "jQuery"
-var external_jQuery_ = __webpack_require__(30);
+var external_jQuery_ = __webpack_require__(34);
 var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
 
 // CONCATENATED MODULE: ./src/components/control-sections/utils.js
@@ -18902,7 +18902,7 @@ var heading_toolbar_HeadingToolbar = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ var heading_toolbar = (heading_toolbar_HeadingToolbar);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
-var objectWithoutProperties = __webpack_require__(34);
+var objectWithoutProperties = __webpack_require__(33);
 var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
 
 // CONCATENATED MODULE: ./src/components/editable-text/index.js
@@ -19378,8 +19378,7 @@ var getStylesFromProps = function getStylesFromProps(props) {
       offsetX = props.offsetX,
       offsetY = props.offsetY,
       scale = props.scale,
-      focalPoint = props.focalPoint,
-      containerBox = props.containerBox;
+      focalPoint = props.focalPoint;
   return {
     width: width || '',
     height: height || '',
@@ -19583,8 +19582,15 @@ var getState = function getState(container, config) {
     scrollContainerBox: scrollContainerBox
   };
 };
-var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
+
+function getScrollContainerHeight() {
+  var useOrientation = hasTouchScreen() && 'orientation' in window;
+  return useOrientation && window.screen && window.screen.availHeight || window.innerHeight;
+}
+
+var util_parallaxInit = function parallaxInit($blocks) {
   var frameRendered = false;
+  var scrollContainerHeight = getScrollContainerHeight();
   $blocks.each(function (i, container) {
     var $container = external_jQuery_default()(container);
     var followThroughStart = !!$container.data('smooth-start');
@@ -19594,7 +19600,6 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
     var finalFocalPoint = $container.data('final-focal-point');
     var initialBackgroundScale = $container.data('initial-background-scale');
     var finalBackgroundScale = $container.data('final-background-scale');
-    var scrollContainerHeight = window.innerHeight;
     var scrollContainerBox = {
       top: 0,
       left: 0
@@ -19619,7 +19624,7 @@ var util_parallaxInit = function parallaxInit($blocks, foregroundSelector) {
 
     function parallaxUpdateState() {
       var newConfig = Object.assign({}, config, {
-        scrollContainerHeight: window.screen && window.screen.availHeight || window.innerHeight
+        scrollContainerHeight: getScrollContainerHeight()
       });
       var state = getState(container, newConfig);
       $container.data('state', state);
@@ -29113,7 +29118,7 @@ var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(fu
 }), withPostsQueryControls]);
 with_latest_posts_addFilter('editor.BlockEdit', 'novablocks/with-latest-posts', withLatestPosts);
 // EXTERNAL MODULE: ./src/components/advanced-gallery/attributes.json
-var advanced_gallery_attributes = __webpack_require__(32);
+var advanced_gallery_attributes = __webpack_require__(31);
 
 // CONCATENATED MODULE: ./src/filters/with-advanced-gallery-attributes/index.js
 
@@ -29159,7 +29164,7 @@ function addDopplerAttributes(block) {
 
 with_doppler_attributes_addFilter('blocks.registerBlockType', 'novablocks/add-advanced-gallery-attributes', addDopplerAttributes);
 // EXTERNAL MODULE: ./src/components/color-controls/attributes.json
-var color_controls_attributes = __webpack_require__(33);
+var color_controls_attributes = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./src/filters/with-overlay-color-attributes/index.js
 
@@ -30397,9 +30402,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
 
 
 var block_controls_normalize = function normalize(images) {
-  var promises = images.map(function (image) {
-    console.log(image);
-  });
+  var promises = images.map(function (image) {});
   return images;
 };
 
