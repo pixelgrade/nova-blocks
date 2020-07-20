@@ -178,7 +178,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 								} }
 							/>
 							<PanelRow>
-								<span>{ __( 'Vertical', '__plugin_txtd' ) }</span>
+								<span>{ __( 'Vertical Anchoring', '__plugin_txtd' ) }</span>
 								<BlockVerticalAlignmentToolbar
 									value={ verticalAlignment }
 									onChange={ ( verticalAlignment ) => {
@@ -191,6 +191,15 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 					</ControlsTab>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<div key={ 'space-and-sizing-settings-1' }>
+							<ControlsGroup>
+								<PanelRow>
+									<span>{ __( 'Vertical Anchoring', '__plugin_txtd' ) }</span>
+									<BlockVerticalAlignmentToolbar
+										value={ verticalAlignment }
+										onChange={ ( nextVerticalAlignment ) => setAttributes( { verticalAlignment: nextVerticalAlignment } ) }
+									/>
+								</PanelRow>
+							</ControlsGroup>
 							<ControlsGroup title={ __( 'Block Spacing' ) }>
 								<RangeControl
 									key={ 'media-card-block-top-spacing' }

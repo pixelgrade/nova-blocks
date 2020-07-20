@@ -29372,7 +29372,7 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
         }));
         setAttributes(newAttributes);
       }
-    }), Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
+    }), Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical Anchoring', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
       value: verticalAlignment,
       onChange: function onChange(verticalAlignment) {
         var newAttributes = getEmphasisAttributes(with_space_and_sizing_controls_objectSpread(with_space_and_sizing_controls_objectSpread({}, attributes), {}, {
@@ -29384,7 +29384,14 @@ var withSpaceAndSizingControls = with_space_and_sizing_controls_createHigherOrde
       label: with_space_and_sizing_controls_('Settings')
     }, Object(external_React_["createElement"])("div", {
       key: 'space-and-sizing-settings-1'
-    }, Object(external_React_["createElement"])(controls_group, {
+    }, Object(external_React_["createElement"])(controls_group, null, Object(external_React_["createElement"])(with_space_and_sizing_controls_PanelRow, null, Object(external_React_["createElement"])("span", null, with_space_and_sizing_controls_('Vertical Anchoring', '__plugin_txtd')), Object(external_React_["createElement"])(block_vertical_alignment_toolbar, {
+      value: verticalAlignment,
+      onChange: function onChange(nextVerticalAlignment) {
+        return setAttributes({
+          verticalAlignment: nextVerticalAlignment
+        });
+      }
+    }))), Object(external_React_["createElement"])(controls_group, {
       title: with_space_and_sizing_controls_('Block Spacing')
     }, Object(external_React_["createElement"])(with_space_and_sizing_controls_RangeControl, {
       key: 'media-card-block-top-spacing',
