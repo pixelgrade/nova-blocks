@@ -63,6 +63,7 @@
 		padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
 		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
 
+		.components-placeholder,
 		.novablocks-advanced-gallery {
 			margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
 			margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
