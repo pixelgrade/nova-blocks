@@ -11,7 +11,7 @@
 [class*="__inner-container"] {
 	--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
 
-	& + & {
+	& > & {
 		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
 	}
 }
