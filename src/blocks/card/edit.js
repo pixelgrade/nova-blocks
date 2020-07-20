@@ -5,19 +5,12 @@
 import EditableText from '../../components/editable-text';
 import * as icons from "../../icons";
 
+const { __ } = wp.i18n;
+
 const {
 	InnerBlocks,
 	MediaUpload,
 } = wp.blockEditor;
-
-const {
-	createHigherOrderComponent
-} = wp.compose;
-
-const {
-	select,
-	dispatch,
-} = wp.data;
 
 const CardEdit = ( props ) => {
 
@@ -53,8 +46,10 @@ const CardEdit = ( props ) => {
 			open,
 		} = props;
 
-		if ( !! media && !! media.url ) {
-			return <img className={ `${ blockClassName }__media-image` } src={ media.url } onClick={ open } />
+		const mediaURL = media?.sizes?.novablocks_medium?.url || media?.sizes?.novablocks_large?.url || media?.url;
+
+		if ( !! mediaURL ) {
+			return <img className={ `${ blockClassName }__media-image` } src={ mediaURL } onClick={ open } />
 		}
 
 		return (
@@ -71,6 +66,9 @@ const CardEdit = ( props ) => {
 					showMedia &&
 					<div className={ `${ blockClassName }__media-wrap block-editor-block-list__block` }>
 						<div className={ `${ blockClassName }__media` }>
+							<div className={ `${ blockClassName }__media-edit` }>
+								<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
+							</div>
 							<MediaUpload
 								type="image"
 								value={ !! media && media.id }
@@ -143,37 +141,5 @@ const CardEdit = ( props ) => {
 		</div>
 	);
 }
-
-const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
-	return ( props ) => {
-		if ( 'novablocks/card' === props.name ) {
-			const { clientId } = props;
-			const { getBlock, getBlockParentsByBlockName } = select( 'core/block-editor' );
-			const block = getBlock( clientId );
-			const { innerBlocks } = block;
-
-			const parents = getBlockParentsByBlockName( clientId, 'novablocks/cards-collection' );
-			const parentClientId = parents[0];
-			const parentBlock = getBlock( parentClientId );
-
-			const newAttributes = (
-				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => (
-					{ level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta }
-				)
-			)( parentBlock.attributes );
-
-			dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, newAttributes );
-
-			innerBlocks.forEach( innerBlock => {
-				dispatch( 'core/block-editor' ).updateBlockAttributes( innerBlock.clientId, {
-					align: newAttributes.contentAlign
-				} );
-			} )
-		}
-		return <BlockListBlock { ...props } />
-	};
-}, 'withCollectionVisibilityAttributes' );
-
-wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
 
 export default CardEdit;

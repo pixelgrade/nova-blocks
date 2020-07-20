@@ -8,6 +8,7 @@ const {
 
 const {
 	Component,
+	Fragment
 } = wp.element;
 
 class ApiKeyPanelBody extends Component {
@@ -30,17 +31,18 @@ class ApiKeyPanelBody extends Component {
 		}
 
 		return (
-			<PanelBody title={ __( 'Google Maps API Key', '__plugin_txtd' ) }>
+			<Fragment>
 				<TextControl
 					placeholder={ __( 'Paste API key here', '__plugin_txtd' ) }
 					value={ apiKey }
+					label={ __( 'Google Maps API Key', '__plugin_txtd' ) }
 					onChange={ onChangeApiKey }
 					help={ apiKeyInstructions }
 				/>
-				<Button isDefault onClick={ () => { onSaveApiKey( apiKey ) } }>
+				<Button isSecondary onClick={ () => { onSaveApiKey( apiKey ) } }>
 					{ __( 'Save', '__plugin_txtd' ) }
 				</Button>
-			</PanelBody>
+			</Fragment>
 		)
 	}
 }

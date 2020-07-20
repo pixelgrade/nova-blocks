@@ -12,7 +12,7 @@ const { Fragment } = wp.element;
 const {
 	ColorPalette,
 	Dropdown,
-	IconButton,
+	Button,
 	RadioControl,
 	RangeControl,
 	Toolbar,
@@ -118,12 +118,11 @@ const ColorToolbar = function( props ) {
 				className="pixelgrade-hero-block-toolbar-dropdown"
 				contentClassName="components-nova--popover"
 				renderToggle={ ( { isOpen, onToggle } ) => (
-					<IconButton
+					<Button
 						onClick={ onToggle }
 						icon={ icons.invert }
 						aria-expanded={ isOpen }
 						label={ __( 'Colors', '__plugin_txtd' ) }
-						labelPosition="bottom"
 					/>
 				) }
 				focusOnMount={ false }

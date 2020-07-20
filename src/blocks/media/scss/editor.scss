@@ -1,11 +1,3 @@
-:root {
-	--novablocks-transition-duration: 0.5s;
-	--novablocks-transition-easing: ease;
-	--novablocks-transition: all
-		var(--novablocks-transition-duration)
-		var(--novablocks-transition-easing);
-}
-
 .novablocks-media__aside {
 
 	> .block-editor-media-placeholder {
@@ -21,20 +13,22 @@
 
 	height: 100%;
 
-	background-color: #eeeeee;
+	background-color: #EEEEEE;
 }
 
 .novablocks-media__inner-container {
 	padding-left: var(--novablocks-media-spacing);
 	padding-right: var(--novablocks-media-spacing);
 
-	> * {
-		margin-left: auto;
-		margin-right: auto;
-	}
-
 	> [data-align='full'] {
 		margin-left: calc(-1 * var(--novablocks-media-spacing));
 		margin-right: calc(-1 * var(--novablocks-media-spacing));
 	}
+}
+
+.novablocks-media__content:before,
+.novablocks-media__content:after,
+.novablocks-media__inner-container {
+	transition: var(--novablocks-transition);
+	transition-property: flex-grow;
 }

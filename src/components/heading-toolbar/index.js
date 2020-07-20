@@ -6,7 +6,7 @@ import { range } from 'lodash';
 const { __, sprintf } = wp.i18n;
 
 const { Component } = wp.element;
-import { ToolbarGroup } from '@wordpress/components';
+const { ToolbarGroup } = wp.components;
 
 /**
  * Internal dependencies

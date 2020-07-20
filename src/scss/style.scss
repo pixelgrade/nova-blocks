@@ -1,7 +1,8 @@
 @import 'variables';
 @import 'mixins';
 
-@import './emphasis';
+@import 'components/emphasis/style';
+@import 'components/spacing/style';
 
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
@@ -16,18 +17,18 @@
 @import '../blocks/opentable/scss/style';
 @import '../blocks/openhours/scss/style';
 @import '../blocks/card/scss/style';
-@import '../blocks/cards-collection/scss/style';
-
-@import '../components/alignment-controls/style';
-@import '../components/color-controls/style';
-@import '../components/layout-panel/style';
 
 @import '../components/advanced-gallery/scss/style';
+@import '../components/alignment-controls/style';
+@import '../components/collection/scss/style';
+@import '../components/color-controls/style';
+@import '../components/layout-panel/style';
+@import '../components/scrolling-effect-controls/style';
 
 @import 'vendor/slick';
 @import 'vendor/slick-theme';
 
-[class*="__inner-container"] > [class*="wp-block"] {
+[class*="__inner-container"] > * {
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -56,4 +57,17 @@
 	.scrolling-effect-static & {
 		position: static;
 	}
+}
+
+.wp-block-novablocks-posts .wp-block {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-block-novablocks-posts .wp-block.alignwide {
+	max-width: var(--theme-content-width-wide) !important;
+}
+
+.wp-block-novablocks-posts .novablocks-media__inner-container {
+	padding: 5em;
 }

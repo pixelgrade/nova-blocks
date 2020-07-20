@@ -1,0 +1,38 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"anchor": {
+		"type": "string",
+		"default": null
+	},
+	"media": {
+		"type": "object",
+		"default": null
+	},
+	"minHeightFallback": {
+		"type": "number",
+		"default": 100
+	},
+	"scrollIndicator": {
+		"type": "boolean",
+		"source": "meta",
+		"meta": "novablocks_hero_scroll_indicator",
+		"default": false
+	},
+	"positionIndicators": {
+		"type": "boolean",
+		"source": "meta",
+		"meta": "novablocks_hero_position_indicators",
+		"default": true
+	},
+	"defaultsGenerated": {
+		"boolean": true,
+		"default": false
+	},
+	"minHeightFallback": {
+		"type": "number",
+		"default": 100
+	}
+}

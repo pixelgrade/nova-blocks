@@ -3,6 +3,7 @@
  */
 import SlideshowBackground from './background';
 import { GalleryPlaceholder } from '../../components';
+import { getMediaTitle, getMediaCaption } from "../../utils";
 
 /**
  * WordPress dependencies
@@ -74,7 +75,9 @@ const SlideshowPreview = class extends Component {
 		];
 
 		const styles = {
-			slideshow: { color: contentColor },
+			slideshow: {
+				'--novablocks-slideshow-text-color': contentColor,
+			},
 			content: {},
 			foreground: {},
 		};
@@ -92,8 +95,8 @@ const SlideshowPreview = class extends Component {
 		let mediaMinHeight = 0;
 
 		galleryImages.map( ( image ) => {
-			if ( !! image.sizes && !! image.sizes.large && !! image.sizes.large.width ) {
-				const aspectRatio = image.sizes.large.width / image.sizes.large.height;
+			if ( !! image.sizes && !! image.sizes.full && !! image.width && !! image.height ) {
+				const aspectRatio = image.width / image.height;
 				maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
 				mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
 			}
@@ -112,9 +115,14 @@ const SlideshowPreview = class extends Component {
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
 								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
-									<div className="novablocks-slideshow__inner-container novablocks-u-content-width" style={ styles.content }>
-										{ !! previewImage?.title && <h2>{ previewImage.title }</h2> }
-										{ !! previewImage?.caption && <p>{ previewImage.caption }</p> }
+									<div
+										className="novablocks-slideshow__inner-container novablocks-u-content-width"
+										style={ styles.content }
+										dangerouslySetInnerHTML={ {
+											__html:
+												( typeof previewImage.title === 'string' && `<h2>${ previewImage.title }</h2>` || '' ) +
+												( typeof previewImage.caption === 'string' && previewImage.caption || '' )
+										} }>
 									</div>
 								</div>
 							</Fragment> }

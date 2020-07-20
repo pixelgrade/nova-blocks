@@ -13,6 +13,7 @@ const {
 } = wp.data;
 
 const HeroPreview = function( props ) {
+
 	const {
 		attributes,
 		className,

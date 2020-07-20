@@ -4,27 +4,21 @@
 import PaddingControls from './padding';
 import WidthControls from './width';
 
+import { ControlsTab, ControlsSection } from "../control-sections";
+
 /**
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
 
-const {
-	PanelBody,
-} = wp.components;
-
 const LayoutPanel = function( props ) {
 	return (
-		<PanelBody
-			className="pixelgrade-hero-button-group-wrapper"
-			title={ __( 'Layout', '__plugin_txtd' ) }
-			initialOpen={ false }>
-
-			<PaddingControls { ...props } />
-			<WidthControls { ...props } />
-
-			{ props.children }
-		</PanelBody>
+		<ControlsSection label={ __( 'Layout' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<PaddingControls key={ 'padding-controls' } { ...props } />
+				<WidthControls key={ 'width-controls' } { ...props } />
+			</ControlsTab>
+		</ControlsSection>
 	);
 };
 

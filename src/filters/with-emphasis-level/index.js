@@ -1,13 +1,14 @@
 import EmphasisLevelControls from "../../components/emphasis-level-controls";
 
-const { InspectorControls } = wp.blockEditor;
+const { __ } = wp.i18n;
 const { createHigherOrderComponent } = wp.compose;
 const { addFilter } = wp.hooks;
 const { Fragment } = wp.element;
 
 const enableFontSizeControlOnBlocks = [
 	'novablocks/media',
-	'novablocks/cards-collection'
+	'novablocks/cards-collection',
+	'novablocks/posts-collection',
 ];
 
 const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent => {
@@ -21,9 +22,7 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<InspectorControls>
-					<EmphasisLevelControls { ...props } />
-				</InspectorControls>
+				<EmphasisLevelControls { ...props } />
 			</Fragment>
 		);
 	};
@@ -48,7 +47,11 @@ function addEmphasisLevelAttribute( block ) {
 		},
 		contentStyle: {
 			type: 'string',
-			default: 'basic',
+			default: block.name === 'novablocks/media' ? 'moderate' : 'basic',
+		},
+		emphasisByContrast: {
+			number: 'number',
+			default: 1
 		}
 	});
 

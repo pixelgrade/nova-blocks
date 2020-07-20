@@ -6,7 +6,7 @@ import classnames from 'classnames';
 const {__} = wp.i18n;
 const {InnerBlocks, RichText} = wp.blockEditor;
 const {createBlock} = wp.blocks;
-const {IconButton} = wp.components;
+const {Button} = wp.components;
 
 /**
  * Internal dependencies.
@@ -19,7 +19,9 @@ const TEMPLATE = [
 const FoodMenuSectionPreview = function( props ) {
 	const {
 		attributes: {
-			sectionTitle
+			sectionTitle,
+			showPrices,
+			showDescription
 		},
 		setAttributes,
 		clientId,
@@ -56,14 +58,14 @@ const FoodMenuSectionPreview = function( props ) {
 				/>
 			</div>
 
-			<IconButton
+			<Button
 				className="components-button block-editor-button-block-appender nova-blocks-appender"
 				label={__( 'Add New Menu Item', '__plugin_txtd' )}
 				icon="insert"
 				onClick={addFoodMenuItem}
 			>
 				{ __( 'Add Menu Item', '__plugin_txtd' ) }
-			</IconButton>
+			</Button>
 
 		</div>
 

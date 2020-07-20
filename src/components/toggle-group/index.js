@@ -3,6 +3,8 @@ import {
 	animated,
 } from 'react-spring';
 
+const { __ } = wp.i18n;
+
 const {
 	Fragment,
 	useState,
@@ -14,19 +16,14 @@ const {
 } = wp.components;
 
 const ToggleGroup = ( props ) => {
-	const { toggles, onChange, label } = props;
-	const [refMap] = useState(() => new WeakMap());
+	const { toggles, onChange } = props;
+	const [ refMap ] = useState( () => new WeakMap() );
 
 	const enabledToggles = toggles.filter( toggle => !! toggle.value );
 	const disabledToggles = toggles.filter( toggle => ! toggle.value );
 
 	const config = {
 		initial: false,
-		from: {
-			opacity: 0,
-			height: 0,
-			left: 40,
-		},
 		enter: item => async next => {
 			const ref = refMap.get(item);
 
@@ -55,7 +52,7 @@ const ToggleGroup = ( props ) => {
 	const disabledTransitions = useTransition( disabledToggles, item => item.attribute, config );
 
 	return (
-		<PanelBody initialOpen={ true } title={ label } className={ 'components-toggle-group__panel' }>
+		<div className={ 'components-toggle-group__panel' } key={ 'toggle-group-controls' }>
 			<div className={ 'components-toggle-group' }>
 				{ !! enabledToggles.length &&
 				  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>
@@ -99,7 +96,7 @@ const ToggleGroup = ( props ) => {
 				  </Fragment>
 				}
 			</div>
-		</PanelBody>
+		</div>
 	);
 };
 

@@ -3,7 +3,7 @@
  * Plugin Name: Nova Blocks
  * Plugin URI: https://github.com/pixelgrade/nova-blocks/
  * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
- * Version: 1.4.3
+ * Version: 1.5.0
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
@@ -44,6 +44,15 @@ function novablocks_plugin_setup() {
 }
 // We will do this just after themes so we give them a chance to intervene.
 add_action( 'after_setup_theme', 'novablocks_plugin_setup', 20 );
+
+function novablocks_add_image_sizes() {
+	add_image_size( 'novablocks_huge', 3840, 3840, false );
+	add_image_size( 'novablocks_large', 1366, 1366, false );
+	add_image_size( 'novablocks_medium', 1024, 1024, false );
+	add_image_size( 'novablocks_small', 768, 768, false );
+	add_image_size( 'novablocks_tiny', 480, 480, false );
+}
+add_action( 'after_setup_theme', 'novablocks_add_image_sizes', 20 );
 
 /**
  * Gets this plugin's directory file path.

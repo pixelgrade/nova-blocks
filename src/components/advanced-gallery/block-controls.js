@@ -1,6 +1,7 @@
 import { swap, alignCenter } from "../../icons";
 
 const { __ } = wp.i18n;
+const apiFetch = wp.apiFetch;
 
 const {
 	BlockControls,
@@ -8,9 +9,7 @@ const {
 } = wp.blockEditor;
 
 const {
-	Dropdown,
-	IconButton,
-	RadioControl,
+	Button,
 	Toolbar,
 } = wp.components;
 
@@ -21,8 +20,8 @@ const {
 const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 
 	const {
-		attributes,
 		setAttributes,
+		attributes,
 	} = props;
 
 	const gallery = ( attributes.gallery && attributes.gallery.length ) ? attributes.gallery : attributes.images;
@@ -38,11 +37,11 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 				multiple
 				gallery
 				value={ gallery.map( ( image ) => image.id ) }
-				onSelect={ ( gallery ) => {
-					setAttributes( { gallery } );
+				onSelect={ ( images ) => {
+					setAttributes( { images: normalize( images ) } );
 				} }
 				render={ ( { open } ) => (
-					<IconButton
+					<Button
 						className="components-icon-button components-toolbar__control"
 						label={ __( 'Change Media', '__plugin_txtd' ) }
 						icon={ swap }
@@ -54,51 +53,24 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 	);
 }
 
+// @todo use apiFetch to get large image size
+// and normalize title, caption and description structure
+const normalize = ( images ) => {
+	const promises = images.map( image => {
+
+	} );
+	return images;
+}
+
 const AdvancedGalleryBlockControls = ( props ) => {
 
 	const {
 		setAttributes,
-		attributes: {
-			verticalSpacing,
-		}
 	} = props;
 
 	return (
 		<BlockControls>
 			<AdvancedGalleryChangeMediaToolbar { ...props } />
-			<Toolbar className="pixelgrade-advanced-gallery-vertical-spacing-toolbar">
-				<Dropdown
-					position="bottom"
-					className="pixelgrade-hero-block-toolbar-dropdown"
-					contentClassName="components-nova--popover"
-					renderToggle={ ( { isOpen, onToggle } ) => (
-						<IconButton
-							onClick={ onToggle }
-							icon={ alignCenter }
-							aria-expanded={ isOpen }
-							label={ __( 'Vertical Alignment', '__plugin_txtd' ) }
-							labelPosition="bottom"
-						/>
-					) }
-					focusOnMount={ false }
-					renderContent={ () => <Fragment>
-						<RadioControl
-							label={ 'Vertical Spacing' }
-							selected={ verticalSpacing }
-							onChange={ verticalSpacing => {
-								setAttributes( { verticalSpacing: parseInt( verticalSpacing, 10 ) } )
-							} }
-							options={ [
-								{ label: '-2 Overlap', value: -2 },
-								{ label: '-1 Overlap', value: -1 },
-								{ label: 'None', value: 0 },
-								{ label: '+1 Offset', value: 1 },
-								{ label: '+2 Offset', value: 2 },
-							] }
-						/>
-					</Fragment> }
-				/>
-			</Toolbar>
 		</BlockControls>
 	)
 }

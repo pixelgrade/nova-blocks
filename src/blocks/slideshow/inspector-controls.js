@@ -7,6 +7,7 @@ import {
 } from '../../components';
 
 import {getSnapClassname, maybeSnapFocalPoint} from "../../utils";
+import {ControlsSection, ControlsTab} from "../../components/control-sections";
 
 /**
  * WordPress dependencies
@@ -66,27 +67,28 @@ const SlideshowInspectorControls = function( props ) {
 		width = 218;
 		height = 170;
 	} else {
-		thumbnail = selectedImage?.sizes?.thumbnail?.url || selectedImage?.sizes?.large?.url || selectedImage?.sizes?.full?.url
+		thumbnail = selectedImage?.sizes?.novablocks_tiny?.url || selectedImage?.sizes?.novablocks_large?.url || selectedImage?.sizes?.novablocks_huge?.url
 		width = selectedImage?.width;
 		height = selectedImage?.height;
 	}
 
 	return (
-		<InspectorControls>
+		<Fragment>
 
-			{ !! galleryImages.length &&
-				<PanelBody
-					className={ 'nova-blocks-slideshow-type-panel' }
-					title={ __( 'Slides', '__plugin_txtd' ) }>
-					<GalleryPreview
-						galleryImages={ galleryImages }
-						onSelectImage={ setIndex }
-						selected={ selectedIndex }
-					/>
-					{
-						selectedImage &&
-						<Fragment>
+			{
+				!! galleryImages.length &&
+				<ControlsSection label={ __( 'Slides' ) }>
+					<ControlsTab label={ __( 'General' ) }>
+						<GalleryPreview
+							key={ 'slideshow-gallery-preview' }
+							galleryImages={ galleryImages }
+							onSelectImage={ setIndex }
+							selected={ selectedIndex }
+						/>
+						{
+							selectedImage &&
 							<FocalPointPicker
+								key={ 'slideshow-focal-point-picker' }
 								className={ focalPointPickerClassNames }
 								url={ thumbnail }
 								dimensions={ {
@@ -100,32 +102,31 @@ const SlideshowInspectorControls = function( props ) {
 									setAttributes( { galleryImages: newGalleryImages } );
 								} }
 							/>
-						</Fragment>
-					}
-				</PanelBody> }
+						}
+					</ControlsTab>
+				</ControlsSection>
+			}
 
-			{ 'gallery' === slideshowType && <Fragment>
-
-				<LayoutPanel { ...props } />
-
-				<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-					<RadioControl
-						label={ __( 'Minimum Height', '__plugin_txtd' ) }
-						selected={ minHeight }
-						onChange={ ( nextMinHeight ) => {
-							setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
-						} }
-						options={ minHeightOptions }
-					/>
-				</PanelBody>
-
-			</Fragment> }
-
-			{ 'gallery' !== slideshowType && <PanelBody>
-				{ __( 'Coming Soon', '__plugin_txtd' ) }
-			</PanelBody> }
-
-		</InspectorControls>
+			{
+				'gallery' === slideshowType &&
+				<Fragment>
+					<LayoutPanel { ...props } />
+					<ControlsSection label={ __( 'Layout' ) }>
+						<ControlsTab label={ __( 'Settings' ) }>
+							<RadioControl
+								key={ 'slideshow-minimum-height-controls' }
+								label={ __( 'Minimum Height', '__plugin_txtd' ) }
+								selected={ minHeight }
+								onChange={ ( nextMinHeight ) => {
+									setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
+								} }
+								options={ minHeightOptions }
+							/>
+						</ControlsTab>
+					</ControlsSection>
+				</Fragment>
+			}
+		</Fragment>
 	);
 };
 

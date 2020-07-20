@@ -1,31 +1,32 @@
-$nova-blue: #203ab6 !default;
-$nova-blue-dark: #323067 !default;
-$nova-blue-darker: #000043 !default;
-
-$nova-yellow: #ffe42e !default;
-$nova-text-color: #272743 !default;
-
-$nova-white: #ffffff !default;
-$nova-gray: #edf0f1 !default;
-
 :root {
-	--novablocks-color-1: #{$nova-blue};
-	--novablocks-color-2: #{$nova-yellow};
-	--novablocks-color-3: #{$nova-blue-dark};
+	--novablocks-color-1: #203AB6;
+	--novablocks-color-2: #FFE42E;
+	--novablocks-color-3: #323067;
 
-	--novablocks-dark-1: #{$nova-blue-dark};
-	--novablocks-dark-2: #{$nova-text-color};
-	--novablocks-dark-3: #{$nova-blue-darker};
+	--novablocks-dark-1: #323067;
+	--novablocks-dark-2: #272743;
+	--novablocks-dark-3: #000043;
 
-	--novablocks-light-1: #{$nova-white};
-	--novablocks-light-2: #{$nova-gray};
-	--novablocks-light-3: #{$nova-gray};
-
-	--bg-master-dark: #000000;
-	--bg-master-light: #FFFFFF;
-	--bg-master-none: transparent;
+	--novablocks-light-1: #FFFFFF;
+	--novablocks-light-2: #EDF0F1;
+	--novablocks-light-3: #EDF0F1;
 
 	--novablocks-spacing: 24px;
 	--novablocks-sides-spacings: var(--novablocks-spacing);
 	--novablocks-media-spacing: var(--novablocks-spacing);
+	--novablocks-media-gutter: var(--novablocks-spacing);
+	--novablocks-media-background-direction: 90deg;
+
+	--novablocks-transition-duration: 0.5s;
+	--novablocks-transition-easing: ease;
+	--novablocks-transition: all var(--novablocks-transition-duration) var(--novablocks-transition-easing);
+
+	--novablocks-element-spacing-level-1-multiplier: 1;
+	--novablocks-element-spacing-level-2-multiplier: 0.5;
+	--novablocks-element-spacing-level-3-multiplier: 0.25;
+
+	--novablocks-block-content-box-shadow:
+		0 32px 128px rgba(42, 54, 52, 0.1),
+		0 16px 64px rgba(42, 54, 52, 0.1),
+		0 8px 16px rgba(42, 54, 52, 0.1);
 }

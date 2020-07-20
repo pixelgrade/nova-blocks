@@ -41,9 +41,10 @@ const AdvancedGalleryPreview = ( props ) => {
 }
 
 const AdvancedGalleryItem = ( { gridItem } ) => {
+	// @todo standardize those damn images
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
-			<img className={ `novablocks-advanced-gallery__image` } style={ gridItem.getImageStyle() } src={ gridItem.image.url } />
+			<img className={ `novablocks-advanced-gallery__image` } style={ gridItem.getImageStyle() } src={ gridItem?.image?.sizes?.novablocks_medium?.url || gridItem?.image?.url } />
 		</div>
 	);
 }

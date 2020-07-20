@@ -1,4 +1,30 @@
-import {getProps, getState, getStylesFromProps} from "./components/with-parallax/util";
+import classnames from "classnames";
+
+export { getPlaceholderImages } from './unsplash';
+
+export const getRandomBetween = ( min, max ) => {
+	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
+	return Math.floor( random * (max - min + 1) + min );
+};
+
+export const getRandomArrayFromArray = ( arr, n ) => {
+
+	let result = new Array( n ),
+		len = arr.length,
+		taken = new Array( len );
+
+	if ( ! len ) {
+		return [];
+	}
+
+	while ( n -- ) {
+		const x = Math.floor( Math.random() * len );
+		result[n] = arr[x in taken ? taken[x] : x];
+		taken[x] = -- len in taken ? taken[len] : len;
+	}
+
+	return result;
+};
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -130,7 +156,7 @@ export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSna
 	return { x, y }
 };
 
-export const getSnapClassname = function( focalPoint ) {
+export const getSnapClassname = focalPoint => {
 	const classNames = [];
 
 	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
@@ -142,4 +168,15 @@ export const getSnapClassname = function( focalPoint ) {
 	}
 
 	return classNames.join( ' ' );
+};
+
+export const getControlsClasses = ( attributes, compileAttributes ) => {
+	const classes = [ 'novablocks-controls-wrap' ];
+	const compiledAttributes = compileAttributes( attributes );
+
+	if ( Object.keys( compiledAttributes ).some( key => compiledAttributes[ key ] !== attributes[ key ] ) ) {
+		classes.push( 'novablocks-controls-wrap--dirty' );
+	}
+
+	return classnames( classes );
 };

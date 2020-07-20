@@ -10,6 +10,10 @@ import {
 	withSettings,
 } from '../../components';
 
+import heroAttributes from './attributes';
+
+import { ControlsTab, ControlsSection } from "../../components/control-sections";
+
 import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';
@@ -61,18 +65,21 @@ const BlockHeightControls = function( props ) {
 	const { minHeightFallback } = attributes;
 
 	return (
-		<PanelBody title={ __( 'Height', '__plugin_txtd' ) } initialOpen={ false }>
-			<RadioControl
-				label={ __( 'Minimum Height', '__plugin_txtd' ) }
-				selected={ minHeightFallback }
-				onChange={ minHeightFallback => {
-					setAttributes( {
-						minHeightFallback: parseFloat( minHeightFallback )
-					} );
-				} }
-				options={ settings.minimumHeightOptions }
-			/>
-		</PanelBody>
+		<ControlsSection label={ __( 'Layout' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<RadioControl
+					key={ 'hero-minimum-height-controls' }
+					label={ __( 'Minimum Height', '__plugin_txtd' ) }
+					selected={ minHeightFallback }
+					onChange={ minHeightFallback => {
+						setAttributes( {
+							minHeightFallback: parseFloat( minHeightFallback )
+						} );
+					} }
+					options={ settings.minimumHeightOptions }
+				/>
+			</ControlsTab>
+		</ControlsSection>
 	);
 }
 
@@ -85,7 +92,7 @@ class HeroEdit extends Component {
 
 		if ( settings.usePostMetaAttributes ) {
 			if ( ! scrollIndicator ) {
-				defaults.scrollIndicator = settings.hero.attributes.scrollIndicator.default;
+				defaults.scrollIndicator = heroAttributes.scrollIndicator.default;
 			}
 		}
 

@@ -22,7 +22,7 @@ const SlideshowBackground = function( props ) {
 		styles.opacity = 1 - ( overlayFilterStrength / 100 );
 	}
 
-	const imageURL = previewImage?.sizes?.large?.url || previewImage?.sizes?.full?.url;
+	const imageURL = previewImage?.sizes?.novablocks_large?.url || previewImage?.sizes?.novablocks_huge?.url;
 	const videoURL = previewImage?.url;
 
 	return (

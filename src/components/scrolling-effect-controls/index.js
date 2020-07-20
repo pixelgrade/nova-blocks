@@ -1,3 +1,5 @@
+import { ControlsSection, ControlsTab } from "../control-sections";
+
 /**
  * WordPress dependencies
  */
@@ -21,10 +23,6 @@ const {
 import { defaultSnapValues, getSnapClassname, maybeSnapFocalPoint } from "../../utils";
 
 const ScrollingEffectControls = function( props ) {
-
-	const {
-		attributes: { }
-	} = props;
 
 	return (
 		<Fragment>
@@ -66,25 +64,28 @@ const ScrollingEffectPanel = ( props ) => {
 	}
 
 	return (
-		<PanelBody title={ `Scrolling Effect:` } className={ 'novablocks-scrolling-effect-panel' }>
-			<RadioControl
-				selected={ scrollingEffect }
-				className={ 'novablocks-scrolling-effect' }
-				onChange={ ( scrollingEffect ) => {
-					let newAttributes = { scrollingEffect };
+		<ControlsSection label={ __( 'Scrolling Effect' ) }>
+			<ControlsTab label={ __( 'Customize' ) }>
+				<RadioControl
+					key={ 'novablocks-scrolling-effect' }
+					selected={ scrollingEffect }
+					className={ 'novablocks-scrolling-effect' }
+					onChange={ ( scrollingEffect ) => {
+						let newAttributes = { scrollingEffect };
 
-					if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
-						let newOption = motionPresetOptions.find( option => motionPreset === option.value );
-						newAttributes = Object.assign( newOption.preset, newAttributes );
-						newAttributes.minHeightFallback = 75;
-					}
+						if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
+							let newOption = motionPresetOptions.find( option => motionPreset === option.value );
+							newAttributes = Object.assign( newOption.preset, newAttributes );
+							newAttributes.minHeightFallback = 75;
+						}
 
-					setAttributes( newAttributes );
-				} }
-				options={ scrollingEffectOptions }
-			/>
-			{ props.children }
-		</PanelBody>
+						setAttributes( newAttributes );
+					} }
+					options={ scrollingEffectOptions }
+				/>
+				{ props.children }
+			</ControlsTab>
+		</ControlsSection>
 	)
 }
 
@@ -143,11 +144,15 @@ const DopplerPresetsPanel = ( props ) => {
 }
 
 const getParallaxFocalPointImage = ( media ) => {
-	let mediaType = media ? media.type : false;
+	let mediaType = media?.type;
 	let parallaxFocalPointImage = false;
 
 	if ( mediaType === 'image' ) {
-		parallaxFocalPointImage = media.sizes.full;
+		parallaxFocalPointImage = {
+			url: media?.sizes?.novablocks_large?.url || media?.sizes?.novablocks_huge?.url || media?.url,
+			width: 218,
+			height: 170
+		}
 	}
 
 	if ( mediaType === 'video' ) {

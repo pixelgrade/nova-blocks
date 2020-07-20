@@ -1,6 +1,6 @@
 @import "mixins";
 
-.novablocks-cards-collection__title[class] {
+.novablocks-collection__title[class] {
 
 	&[class] {
 		margin-top: 0;
@@ -13,7 +13,7 @@
 	}
 }
 
-.novablocks-cards-collection__subtitle[class] {
+.novablocks-collection__subtitle[class] {
 
 	> p {
 		margin-top: 0;
@@ -21,7 +21,7 @@
 	}
 }
 
-.novablocks-cards-collection__layout[class] {
+.novablocks-collection__layout[class] {
 
 	// in editor the layout is handled by .block-editor-block-list__layout
 	// but frontend styles are also loaded in editor
@@ -34,7 +34,8 @@
 		margin: 0;
 	}
 
-	.block-editor-block-list__block[data-type="core/buttons"][data-align] {
+	.block-editor-block-list__block[data-type="core/buttons"][data-align],
+	.novablocks-card__buttons .wp-block[data-align] {
 		height: auto;
 
 		> .is-block-content {
@@ -44,14 +45,14 @@
 		}
 	}
 
-	> .block-editor-inner-blocks > .block-editor-block-list__layout {
-		@include novablocks-cards-collection-layout;
+	> .block-editor-inner-blocks > .block-editor-block-list__layout[class] {
+		@include novablocks-collection-layout;
 
 		.wp-block[class][class] {
 			margin-right: 0;
 		}
 
-		.novablocks-cards-collection.has-appender & {
+		.novablocks-collection.has-appender & {
 			@include novablocks-cards-columns-count(1);
 
 			--apender-width: 60px;
@@ -68,7 +69,7 @@
 			}
 		}
 
-		.novablocks-cards-collection:not(.has-appender) & {
+		.novablocks-collection:not(.has-appender) & {
 			@include novablocks-cards-columns-count;
 		}
 	}

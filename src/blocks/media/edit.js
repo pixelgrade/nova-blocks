@@ -4,6 +4,7 @@
 import withSettings from '../../components/with-settings';
 import BlockControls from './block-controls';
 import MediaPreview from './preview';
+import InspectorControls from './inspector-controls';
 
 /**
  * WordPress dependencies
@@ -19,6 +20,7 @@ const MediaEdit = function( props ) {
 
 	return (
 		<Fragment>
+			<InspectorControls { ...props } />
 			<MediaPreview { ...{ ...props, updateImages } } />
 			<BlockControls { ...{ ...props, updateImages } } />
 		</Fragment>
