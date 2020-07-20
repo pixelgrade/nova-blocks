@@ -12,6 +12,7 @@
 
 .novablocks-card__media-wrap {
 	max-width: none !important;
+	padding: calc( var(--novablocks-spacing) * var(--card-media-padding, 0) / 100 );
 
 	transition: var(--novablocks-transition);
 	transition-property: margin;

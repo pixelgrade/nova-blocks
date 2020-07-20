@@ -75,6 +75,7 @@ const Collection = ( props ) => {
 		contentAlign,
 		imageResizing,
 		containerHeight,
+		imagePadding,
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
@@ -103,6 +104,7 @@ const Collection = ( props ) => {
 	}
 
 	const style = {
+		'--card-media-padding': imagePadding,
 		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};

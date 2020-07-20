@@ -24,10 +24,9 @@ const CollectionInspectorControls = ( props ) => {
 			containerHeight,
 			imageResizing,
 			level,
-			showMedia,
+			imagePadding,
 		},
 		setAttributes,
-		isSelected,
 	} = props;
 
 	const onChange = typeof props.onChange !== 'function' ? setAttributes : props.onChange;
@@ -57,6 +56,17 @@ const CollectionInspectorControls = ( props ) => {
 					min={ 0 }
 					max={ 100 }
 					step={ 5 }
+				/>
+				<RangeControl
+					key={ 'collection-image-padding' }
+					label={ __( 'Image padding', '__plugin_txtd' ) }
+					value={ imagePadding }
+					onChange={ imagePadding => {
+						setAttributes( { imagePadding } )
+					} }
+					min={ 0 }
+					max={ 100 }
+					step={ 50 }
 				/>
 				<PanelRow>
 					<span>{__( 'Title Level', '__plugin_txtd' )}</span>

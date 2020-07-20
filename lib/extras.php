@@ -250,6 +250,10 @@ function novablocks_get_collection_attributes() {
 			'type'    => 'number',
 			'default' => 50
 		),
+		'imagePadding'           => array(
+			'type'    => 'number',
+			'default' => 0
+		),
 		'title'                  => array(
 			'type'    => 'string',
 			'default' => 'Collection Title',
@@ -1113,6 +1117,7 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 			'--block-bottom-spacing: ' . $blockBottomSpacing,
 			'--emphasis-top-spacing: ' . $emphasisTopSpacing,
 			'--emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
+			'--card-media-padding: ' . $attributes['imagePadding'],
 			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ),
 			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
