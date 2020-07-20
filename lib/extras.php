@@ -684,7 +684,7 @@ function novablocks_get_block_editor_settings() {
 	foreach ( $unsplashPlaceHolderImagesIds as $id ) {
 
 		$sizes = array();
-		$default_image_sizes = array( 'thumbnail', 'medium', 'large' );
+		$default_image_sizes = array( 'novablocks_tiny', 'novablocks_medium', 'novablocks_large' );
 
 		foreach ( $default_image_sizes as $size ) {
 			$width = intval( get_option( "{$size}_size_w" ) );
@@ -1014,7 +1014,7 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				$image = ( array ) $image;
 			}
 
-			$attachment = wp_get_attachment_image_src( $image['id'], 'large' );
+			$attachment = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
 			$url = '';
 
 			// fallback for import
@@ -1023,7 +1023,7 @@ function novablocks_render_advanced_gallery( $attributes ) {
 			}
 
 			if ( empty( $url ) ) {
-				$url = novablocks_get_image_url( $image, 'large' );
+				$url = novablocks_get_image_url( $image, 'novablocks_large' );
 			}
 
 			if ( ! empty( $url ) ) {
