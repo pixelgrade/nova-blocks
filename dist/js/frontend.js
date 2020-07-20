@@ -21833,6 +21833,18 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           },
           thumbnail: {
             url: photo.urls.thumb
+          },
+          novablocks_huge: {
+            url: photo.urls.full
+          },
+          novablocks_large: {
+            url: photo.urls.regular
+          },
+          novablocks_medium: {
+            url: photo.urls.small
+          },
+          novablocks_tiny: {
+            url: photo.urls.thumb
           }
         },
         title: photo.description,

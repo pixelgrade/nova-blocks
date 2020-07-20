@@ -18137,6 +18137,18 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           },
           thumbnail: {
             url: photo.urls.thumb
+          },
+          novablocks_huge: {
+            url: photo.urls.full
+          },
+          novablocks_large: {
+            url: photo.urls.regular
+          },
+          novablocks_medium: {
+            url: photo.urls.small
+          },
+          novablocks_tiny: {
+            url: photo.urls.thumb
           }
         },
         title: photo.description,
@@ -18443,10 +18455,10 @@ var getParallaxFocalPointImage = function getParallaxFocalPointImage(media) {
   var parallaxFocalPointImage = false;
 
   if (mediaType === 'image') {
-    var _media$sizes, _media$sizes$medium, _media$sizes2, _media$sizes2$large;
+    var _media$sizes, _media$sizes$novabloc, _media$sizes2, _media$sizes2$novablo;
 
     parallaxFocalPointImage = {
-      url: (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$medium = _media$sizes.medium) === null || _media$sizes$medium === void 0 ? void 0 : _media$sizes$medium.url) || (media === null || media === void 0 ? void 0 : (_media$sizes2 = media.sizes) === null || _media$sizes2 === void 0 ? void 0 : (_media$sizes2$large = _media$sizes2.large) === null || _media$sizes2$large === void 0 ? void 0 : _media$sizes2$large.url) || (media === null || media === void 0 ? void 0 : media.url),
+      url: (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$novabloc = _media$sizes.novablocks_large) === null || _media$sizes$novabloc === void 0 ? void 0 : _media$sizes$novabloc.url) || (media === null || media === void 0 ? void 0 : (_media$sizes2 = media.sizes) === null || _media$sizes2 === void 0 ? void 0 : (_media$sizes2$novablo = _media$sizes2.novablocks_huge) === null || _media$sizes2$novablo === void 0 ? void 0 : _media$sizes2$novablo.url) || (media === null || media === void 0 ? void 0 : media.url),
       width: 218,
       height: 170
     };
@@ -20619,9 +20631,9 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
           thumbnail = img === null || img === void 0 ? void 0 : (_img$thumb = img.thumb) === null || _img$thumb === void 0 ? void 0 : _img$thumb.src;
           classes.push('novablocks-slideshow__gallery-item--video');
         } else {
-          var _img$sizes, _img$sizes$thumbnail, _img$sizes2, _img$sizes2$large, _img$sizes3, _img$sizes3$full;
+          var _img$sizes, _img$sizes$novablocks, _img$sizes2, _img$sizes2$novablock, _img$sizes3, _img$sizes3$novablock;
 
-          thumbnail = (img === null || img === void 0 ? void 0 : (_img$sizes = img.sizes) === null || _img$sizes === void 0 ? void 0 : (_img$sizes$thumbnail = _img$sizes.thumbnail) === null || _img$sizes$thumbnail === void 0 ? void 0 : _img$sizes$thumbnail.url) || (img === null || img === void 0 ? void 0 : (_img$sizes2 = img.sizes) === null || _img$sizes2 === void 0 ? void 0 : (_img$sizes2$large = _img$sizes2.large) === null || _img$sizes2$large === void 0 ? void 0 : _img$sizes2$large.url) || (img === null || img === void 0 ? void 0 : (_img$sizes3 = img.sizes) === null || _img$sizes3 === void 0 ? void 0 : (_img$sizes3$full = _img$sizes3.full) === null || _img$sizes3$full === void 0 ? void 0 : _img$sizes3$full.url);
+          thumbnail = (img === null || img === void 0 ? void 0 : (_img$sizes = img.sizes) === null || _img$sizes === void 0 ? void 0 : (_img$sizes$novablocks = _img$sizes.novablocks_tiny) === null || _img$sizes$novablocks === void 0 ? void 0 : _img$sizes$novablocks.url) || (img === null || img === void 0 ? void 0 : (_img$sizes2 = img.sizes) === null || _img$sizes2 === void 0 ? void 0 : (_img$sizes2$novablock = _img$sizes2.novablocks_large) === null || _img$sizes2$novablock === void 0 ? void 0 : _img$sizes2$novablock.url) || (img === null || img === void 0 ? void 0 : (_img$sizes3 = img.sizes) === null || _img$sizes3 === void 0 ? void 0 : (_img$sizes3$novablock = _img$sizes3.novablocks_huge) === null || _img$sizes3$novablock === void 0 ? void 0 : _img$sizes3$novablock.url);
         }
 
         return Object(external_React_["createElement"])("li", {
@@ -30153,7 +30165,7 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
     style: gridItem.getImageStyle(),
-    src: (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image = gridItem.image) === null || _gridItem$image === void 0 ? void 0 : (_gridItem$image$sizes = _gridItem$image.sizes) === null || _gridItem$image$sizes === void 0 ? void 0 : (_gridItem$image$sizes2 = _gridItem$image$sizes.large) === null || _gridItem$image$sizes2 === void 0 ? void 0 : _gridItem$image$sizes2.url) || (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image2 = gridItem.image) === null || _gridItem$image2 === void 0 ? void 0 : _gridItem$image2.url)
+    src: (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image = gridItem.image) === null || _gridItem$image === void 0 ? void 0 : (_gridItem$image$sizes = _gridItem$image.sizes) === null || _gridItem$image$sizes === void 0 ? void 0 : (_gridItem$image$sizes2 = _gridItem$image$sizes.novablocks_medium) === null || _gridItem$image$sizes2 === void 0 ? void 0 : _gridItem$image$sizes2.url) || (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image2 = gridItem.image) === null || _gridItem$image2 === void 0 ? void 0 : _gridItem$image2.url)
   }));
 };
 
@@ -33571,7 +33583,7 @@ function slideshow_background_objectSpread(target) { for (var i = 1; i < argumen
  * Internal dependencies
  */
 var background_SlideshowBackground = function SlideshowBackground(props) {
-  var _previewImage$sizes, _previewImage$sizes$l, _previewImage$sizes2, _previewImage$sizes2$;
+  var _previewImage$sizes, _previewImage$sizes$n, _previewImage$sizes2, _previewImage$sizes2$;
 
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
@@ -33591,7 +33603,7 @@ var background_SlideshowBackground = function SlideshowBackground(props) {
     styles.opacity = 1 - overlayFilterStrength / 100;
   }
 
-  var imageURL = (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes = previewImage.sizes) === null || _previewImage$sizes === void 0 ? void 0 : (_previewImage$sizes$l = _previewImage$sizes.large) === null || _previewImage$sizes$l === void 0 ? void 0 : _previewImage$sizes$l.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes2 = previewImage.sizes) === null || _previewImage$sizes2 === void 0 ? void 0 : (_previewImage$sizes2$ = _previewImage$sizes2.full) === null || _previewImage$sizes2$ === void 0 ? void 0 : _previewImage$sizes2$.url);
+  var imageURL = (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes = previewImage.sizes) === null || _previewImage$sizes === void 0 ? void 0 : (_previewImage$sizes$n = _previewImage$sizes.novablocks_large) === null || _previewImage$sizes$n === void 0 ? void 0 : _previewImage$sizes$n.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes2 = previewImage.sizes) === null || _previewImage$sizes2 === void 0 ? void 0 : (_previewImage$sizes2$ = _previewImage$sizes2.novablocks_huge) === null || _previewImage$sizes2$ === void 0 ? void 0 : _previewImage$sizes2$.url);
   var videoURL = previewImage === null || previewImage === void 0 ? void 0 : previewImage.url;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-mask"
@@ -33824,7 +33836,7 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
   } else {
     var _selectedImage$sizes, _selectedImage$sizes$, _selectedImage$sizes2, _selectedImage$sizes3, _selectedImage$sizes4, _selectedImage$sizes5;
 
-    thumbnail = (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes = selectedImage.sizes) === null || _selectedImage$sizes === void 0 ? void 0 : (_selectedImage$sizes$ = _selectedImage$sizes.thumbnail) === null || _selectedImage$sizes$ === void 0 ? void 0 : _selectedImage$sizes$.url) || (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes2 = selectedImage.sizes) === null || _selectedImage$sizes2 === void 0 ? void 0 : (_selectedImage$sizes3 = _selectedImage$sizes2.large) === null || _selectedImage$sizes3 === void 0 ? void 0 : _selectedImage$sizes3.url) || (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes4 = selectedImage.sizes) === null || _selectedImage$sizes4 === void 0 ? void 0 : (_selectedImage$sizes5 = _selectedImage$sizes4.full) === null || _selectedImage$sizes5 === void 0 ? void 0 : _selectedImage$sizes5.url);
+    thumbnail = (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes = selectedImage.sizes) === null || _selectedImage$sizes === void 0 ? void 0 : (_selectedImage$sizes$ = _selectedImage$sizes.novablocks_tiny) === null || _selectedImage$sizes$ === void 0 ? void 0 : _selectedImage$sizes$.url) || (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes2 = selectedImage.sizes) === null || _selectedImage$sizes2 === void 0 ? void 0 : (_selectedImage$sizes3 = _selectedImage$sizes2.novablocks_large) === null || _selectedImage$sizes3 === void 0 ? void 0 : _selectedImage$sizes3.url) || (selectedImage === null || selectedImage === void 0 ? void 0 : (_selectedImage$sizes4 = selectedImage.sizes) === null || _selectedImage$sizes4 === void 0 ? void 0 : (_selectedImage$sizes5 = _selectedImage$sizes4.novablocks_huge) === null || _selectedImage$sizes5 === void 0 ? void 0 : _selectedImage$sizes5.url);
     width = selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.width;
     height = selectedImage === null || selectedImage === void 0 ? void 0 : selectedImage.height;
   }
@@ -35589,11 +35601,11 @@ var edit_CardEdit = function CardEdit(props) {
       setAttributes = props.setAttributes;
 
   var CardMedia = function CardMedia(props) {
-    var _media$sizes, _media$sizes$medium, _media$sizes2, _media$sizes2$large;
+    var _media$sizes, _media$sizes$novabloc, _media$sizes2, _media$sizes2$novablo;
 
     var media = props.attributes.media,
         open = props.open;
-    var mediaURL = (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$medium = _media$sizes.medium) === null || _media$sizes$medium === void 0 ? void 0 : _media$sizes$medium.url) || (media === null || media === void 0 ? void 0 : (_media$sizes2 = media.sizes) === null || _media$sizes2 === void 0 ? void 0 : (_media$sizes2$large = _media$sizes2.large) === null || _media$sizes2$large === void 0 ? void 0 : _media$sizes2$large.url) || (media === null || media === void 0 ? void 0 : media.url);
+    var mediaURL = (media === null || media === void 0 ? void 0 : (_media$sizes = media.sizes) === null || _media$sizes === void 0 ? void 0 : (_media$sizes$novabloc = _media$sizes.novablocks_medium) === null || _media$sizes$novabloc === void 0 ? void 0 : _media$sizes$novabloc.url) || (media === null || media === void 0 ? void 0 : (_media$sizes2 = media.sizes) === null || _media$sizes2 === void 0 ? void 0 : (_media$sizes2$novablo = _media$sizes2.novablocks_large) === null || _media$sizes2$novablo === void 0 ? void 0 : _media$sizes2$novablo.url) || (media === null || media === void 0 ? void 0 : media.url);
 
     if (!!mediaURL) {
       return Object(external_React_["createElement"])("img", {

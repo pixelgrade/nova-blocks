@@ -67,7 +67,7 @@ const SlideshowInspectorControls = function( props ) {
 		width = 218;
 		height = 170;
 	} else {
-		thumbnail = selectedImage?.sizes?.thumbnail?.url || selectedImage?.sizes?.large?.url || selectedImage?.sizes?.full?.url
+		thumbnail = selectedImage?.sizes?.novablocks_tiny?.url || selectedImage?.sizes?.novablocks_large?.url || selectedImage?.sizes?.novablocks_huge?.url
 		width = selectedImage?.width;
 		height = selectedImage?.height;
 	}

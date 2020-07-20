@@ -149,7 +149,7 @@ const getParallaxFocalPointImage = ( media ) => {
 
 	if ( mediaType === 'image' ) {
 		parallaxFocalPointImage = {
-			url: media?.sizes?.medium?.url || media?.sizes?.large?.url || media?.url,
+			url: media?.sizes?.novablocks_large?.url || media?.sizes?.novablocks_huge?.url || media?.url,
 			width: 218,
 			height: 170
 		}

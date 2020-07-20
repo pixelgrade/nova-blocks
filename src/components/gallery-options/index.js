@@ -80,7 +80,7 @@ class GalleryPreview extends Component {
 						thumbnail = img?.thumb?.src;
 						classes.push( 'novablocks-slideshow__gallery-item--video' );
 					} else {
-						thumbnail = img?.sizes?.thumbnail?.url || img?.sizes?.large?.url || img?.sizes?.full?.url
+						thumbnail = img?.sizes?.novablocks_tiny?.url || img?.sizes?.novablocks_large?.url || img?.sizes?.novablocks_huge?.url
 					}
 
 					return (

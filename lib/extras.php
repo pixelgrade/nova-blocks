@@ -1253,3 +1253,15 @@ function novablocks_the_media_caption( $media ) {
 	$caption = novablocks_get_media_caption( $media );
 	echo apply_filters( 'the_content', $caption );
 }
+
+add_filter( 'image_size_names_choose', 'novablocks_custom_image_sizes' );
+
+function novablocks_custom_image_sizes( $sizes ) {
+	return array_merge( $sizes, array(
+		'novablocks_huge' => __('Nova Blocks Huge'),
+		'novablocks_large' => __('Nova Blocks Large'),
+		'novablocks_medium' => __('Nova Blocks Medium'),
+		'novablocks_small' => __('Nova Blocks Small'),
+		'novablocks_tiny' => __('Nova Blocks Tiny'),
+	) );
+}
