@@ -22,10 +22,10 @@ const deprecated = [];
 
 deprecated.push({
 	attributes: oldAttributes,
-	isEligible( attributes, innerBlocks ) {
+	isEligible( attributes ) {
 		return "undefined" === typeof attributes.images && typeof "undefined" !== attributes.gallery;
 	},
-	migrate( attributes, innerBlocks ) {
+	migrate( attributes ) {
 		const { gallery, ...newAttributes } = attributes;
 
 		return {
@@ -38,24 +38,8 @@ deprecated.push({
 
 deprecated.push({
 	attributes: oldAttributes,
-	isEligible( attributes, innerBlocks ) {
-		return "undefined" === typeof attributes.defaultsGenerated;
-	},
-	migrate( attributes, innerBlocks ) {
-		return {
-			...attributes,
-			defaultsGenerated: true
-		};
-	},
-	save,
-});
-
-// migration used when padding was removed from basic content style
-// and shadow was removed from moderate content style
-deprecated.push({
-	attributes: oldAttributes,
 	isEligible( attributes ) {
-		return "undefined" === typeof attributes.upgradedToModerate;
+		return "undefined" === typeof attributes.defaultsGenerated;
 	},
 	migrate( attributes ) {
 		const { contentStyle } = attributes;
@@ -63,7 +47,8 @@ deprecated.push({
 		return {
 			...attributes,
 			contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
-			upgradedToModerate: true
+			upgradedToModerate: true,
+			defaultsGenerated: true
 		};
 	},
 	save,
