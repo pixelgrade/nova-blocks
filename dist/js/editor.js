@@ -33437,10 +33437,10 @@ var oldAttributes = media_deprecated_objectSpread(media_deprecated_objectSpread(
 var media_deprecated_deprecated = [];
 media_deprecated_deprecated.push({
   attributes: oldAttributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
+  isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.images && typeof_default()("undefined") !== attributes.gallery;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     var gallery = attributes.gallery,
         newAttributes = objectWithoutProperties_default()(attributes, ["gallery"]);
 
@@ -33452,28 +33452,15 @@ media_deprecated_deprecated.push({
 });
 media_deprecated_deprecated.push({
   attributes: oldAttributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
-    return "undefined" === typeof attributes.defaultsGenerated;
-  },
-  migrate: function migrate(attributes, innerBlocks) {
-    return media_deprecated_objectSpread(media_deprecated_objectSpread({}, attributes), {}, {
-      defaultsGenerated: true
-    });
-  },
-  save: media_save
-}); // migration used when padding was removed from basic content style
-// and shadow was removed from moderate content style
-
-media_deprecated_deprecated.push({
-  attributes: oldAttributes,
   isEligible: function isEligible(attributes) {
-    return "undefined" === typeof attributes.upgradedToModerate;
+    return "undefined" === typeof attributes.defaultsGenerated;
   },
   migrate: function migrate(attributes) {
     var contentStyle = attributes.contentStyle;
     return media_deprecated_objectSpread(media_deprecated_objectSpread({}, attributes), {}, {
       contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
-      upgradedToModerate: true
+      upgradedToModerate: true,
+      defaultsGenerated: true
     });
   },
   save: media_save
