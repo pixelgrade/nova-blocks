@@ -667,48 +667,6 @@ add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separato
 
 function novablocks_get_block_editor_settings() {
 
-	$unsplashPlaceHolderImagesIds = array(
-		'Nvq1vngu4ZQ',
-		'U1mQ3wGcvtQ',
-		'Tno1Zd3T6yY',
-		'o0uSd05QeeI',
-		'nRDjLxvexjA',
-		'2UpMepuEeak',
-		'hgThOxNqQq0',
-		'TIrXot28Znc',
-		'Z3g8miECz9s',
-	);
-
-	$placeholderImages = array();
-
-	foreach ( $unsplashPlaceHolderImagesIds as $id ) {
-
-		$sizes = array();
-		$default_image_sizes = array( 'novablocks_tiny', 'novablocks_medium', 'novablocks_large' );
-
-		foreach ( $default_image_sizes as $size ) {
-			$width = intval( get_option( "{$size}_size_w" ) );
-			$height = intval( get_option( "{$size}_size_h" ) );
-
-			$sizes[$size] = array(
-				'url' => 'https://source.unsplash.com/' . $id . '/' . $width . 'x' . $height,
-			);
-		}
-
-		$sizes['full'] = array(
-			'url' => 'https://source.unsplash.com/' . $id . '/1600x900',
-		);
-
-		if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) ) {
-			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
-		}
-
-		$placeholderImages[] = array(
-			'id'    => -1,
-			'sizes' => $sizes,
-		);
-	}
-
 	$settings = array(
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'minimumHeightOptions'         => array(
@@ -826,7 +784,6 @@ function novablocks_get_block_editor_settings() {
 			),
 		),
 		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
-		'placeholderImages' => $placeholderImages,
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
