@@ -113,7 +113,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 											$id = attachment_url_to_postid( $media['url'] );
 
 											if ( ! empty( $id ) ) {
-												echo wp_get_attachment_image( $id, 'novablocks-huge', false, array(
+												echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
 													'class' => 'novablocks-slideshow__media',
 													'style' => esc_attr( $thisMediaStyle ),
 													'data-width' => esc_attr( $media['width'] ),
