@@ -4,6 +4,7 @@
 	align-items: stretch;
 	margin-top: calc(-1 * var(--novablocks-spacing));
 	margin-left: calc(-0.5 * var(--novablocks-spacing));
+	pointer-events: none;
 
 	> * {
 		--columns-below-tablet: 1;
@@ -16,6 +17,7 @@
 		flex: 0 1 var(--width);
 		margin-top: var(--novablocks-spacing);
 		margin-left: calc(0.5 * var(--novablocks-spacing));
+		pointer-events: auto;
 
 		@include below(lap) {
 			--columns: var(--columns-below-lap) !important;

@@ -20,10 +20,12 @@
 .novablocks-media__layout {
 	margin-top: calc( -1 * var(--novablocks-media-gutter) );
 	margin-left: calc( -1 * var(--novablocks-media-gutter) );
+	pointer-events: none;
 
 	> * {
 		padding-left: var(--novablocks-media-gutter);
 		margin-top: var(--novablocks-media-gutter);
+		pointer-events: auto;
 	}
 
 	@include above(tablet) {
