@@ -171,8 +171,10 @@ const PostsEdit = ( props ) => {
 											showButtons &&
 											<div className="wp-block">
 												<div className="novablocks-card__buttons">
-													<div className="wp-block-button">
-														<div className="wp-block-button__link">Read More</div>
+													<div class="wp-block-buttons alignleft">
+														<div className="wp-block-button is-style-text">
+															<div className="wp-block-button__link">Read More</div>
+														</div>
 													</div>
 												</div>
 											</div>

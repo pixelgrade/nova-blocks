@@ -36143,10 +36143,12 @@ var edit_PostsEdit = function PostsEdit(props) {
     }, Object(external_React_["createElement"])("div", {
       className: "novablocks-card__buttons"
     }, Object(external_React_["createElement"])("div", {
-      className: "wp-block-button"
+      class: "wp-block-buttons alignleft"
+    }, Object(external_React_["createElement"])("div", {
+      className: "wp-block-button is-style-text"
     }, Object(external_React_["createElement"])("div", {
       className: "wp-block-button__link"
-    }, "Read More")))));
+    }, "Read More"))))));
   })))));
 };
 

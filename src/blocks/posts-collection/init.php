@@ -107,9 +107,11 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 		<?php if ( false != $attributes['showButtons'] ) { ?>
 
 			<div class="novablocks-card__buttons">
-				<div class="wp-block-button">
-					<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">Read More</a>
-				</div>
+                <div class="wp-block-buttons alignleft">
+                    <div class="wp-block-button is-style-text">
+                        <a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">Read More</a>
+                    </div>
+                </div>
 			</div>
 
 		<?php } else { ?>
