@@ -23220,14 +23220,12 @@ var grid_item_GridItem = /*#__PURE__*/function () {
   }, {
     key: "getImageStyle",
     value: function getImageStyle() {
-      var idx = this.idx,
-          row = this.row,
+      var row = this.row,
           col = this.col,
           objectPosition = this.objectPosition,
           imageResizing = this.imageResizing;
       var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
       var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
       return {
         objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
         objectPosition: "".concat(positionX, "% ").concat(positionY, "%")

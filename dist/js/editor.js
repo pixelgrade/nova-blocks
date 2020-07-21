@@ -30037,14 +30037,12 @@ var grid_item_GridItem = /*#__PURE__*/function () {
   }, {
     key: "getImageStyle",
     value: function getImageStyle() {
-      var idx = this.idx,
-          row = this.row,
+      var row = this.row,
           col = this.col,
           objectPosition = this.objectPosition,
           imageResizing = this.imageResizing;
       var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
       var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
       return {
         objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
         objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
@@ -30175,18 +30173,24 @@ var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
 };
 
 var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
-  var _gridItem$image, _gridItem$image$sizes, _gridItem$image$sizes2, _gridItem$image2;
+  var _image$sizes, _image$sizes$novabloc;
 
   var gridItem = _ref.gridItem;
-  // @todo standardize those damn images
+  var image = gridItem === null || gridItem === void 0 ? void 0 : gridItem.image;
+  var imageURL = (image === null || image === void 0 ? void 0 : (_image$sizes = image.sizes) === null || _image$sizes === void 0 ? void 0 : (_image$sizes$novabloc = _image$sizes.novablocks_medium) === null || _image$sizes$novabloc === void 0 ? void 0 : _image$sizes$novabloc.url) || (image === null || image === void 0 ? void 0 : image.url);
+  var imageCaption = image === null || image === void 0 ? void 0 : image.caption;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-media",
+    style: gridItem.getImageStyle()
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
-    style: gridItem.getImageStyle(),
-    src: (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image = gridItem.image) === null || _gridItem$image === void 0 ? void 0 : (_gridItem$image$sizes = _gridItem$image.sizes) === null || _gridItem$image$sizes === void 0 ? void 0 : (_gridItem$image$sizes2 = _gridItem$image$sizes.novablocks_medium) === null || _gridItem$image$sizes2 === void 0 ? void 0 : _gridItem$image$sizes2.url) || (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image2 = gridItem.image) === null || _gridItem$image2 === void 0 ? void 0 : _gridItem$image2.url)
-  }));
+    src: imageURL
+  })), typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-caption"
+  }, imageCaption));
 };
 
 /* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
@@ -33648,7 +33652,6 @@ function preview_isNativeReflectConstruct() { if (typeof Reflect === "undefined"
 /**
  * Internal dependencies
  */
-
 
 
 /**

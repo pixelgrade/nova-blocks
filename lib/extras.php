@@ -985,7 +985,14 @@ function novablocks_render_advanced_gallery( $attributes ) {
 
 			if ( ! empty( $url ) ) {
 				echo '<div class="novablocks-advanced-gallery__grid-item">';
+				echo '<div class="novablocks-advanced-gallery__grid-item-media">';
 				echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
+				echo '</div>';
+
+				if ( ! empty( $image['caption'] ) ) {
+					echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+				}
+
 				echo '</div>';
 			}
 		}
