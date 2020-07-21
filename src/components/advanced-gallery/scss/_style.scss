@@ -36,6 +36,10 @@
 
 	display: flex;
 	flex-direction: column;
+
+	.credits {
+		--font-size: 12;
+	}
 }
 
 .novablocks-advanced-gallery__grid-item-media {
@@ -46,7 +50,24 @@
 .novablocks-advanced-gallery__grid-item-caption {
 	flex: 0 1 auto;
 
-	margin-top: calc(0.125 * var(--novablocks-spacing));
+	padding-top: calc(0.125 * var(--novablocks-spacing));
+
+	.novablocks-media.show-captions-on-hover & {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+
+		opacity: 0;
+		pointer-events: none;
+		transition: var(--novablocks-transition);
+		transition-property: opacity;
+	}
+
+	.novablocks-media.show-captions-on-hover .novablocks-advanced-gallery__grid-item:hover & {
+		opacity: 1;
+		pointer-events: auto;
+	}
 }
 
 .novablocks-advanced-gallery__image[class] {

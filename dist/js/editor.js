@@ -18152,7 +18152,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           }
         },
         title: photo.description,
-        caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
+        caption: "<p class=\"credits hover\">Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
         download: function download() {
           _this2.api.photos.downloadPhoto(photo);
         }
@@ -30189,8 +30189,11 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
     className: "novablocks-advanced-gallery__image",
     src: imageURL
   })), typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
-    className: "novablocks-advanced-gallery__grid-item-caption"
-  }, imageCaption));
+    className: "novablocks-advanced-gallery__grid-item-caption",
+    dangerouslySetInnerHTML: {
+      __html: imageCaption
+    }
+  }));
 };
 
 /* harmony default export */ var preview = (preview_AdvancedGalleryPreview);

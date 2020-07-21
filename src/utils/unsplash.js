@@ -73,7 +73,7 @@ class PlaceholderImagesCollection {
 				},
 			},
 			title: photo.description,
-			caption: `<p>Photo by <a href="${ photo.user.links.html }">${ photo.user.name }</a> on <a href="https://unsplash.com">Unsplash</a></p>`,
+			caption: `<p class="credits hover">Photo by <a href="${ photo.user.links.html }">${ photo.user.name }</a> on <a href="https://unsplash.com">Unsplash</a></p>`,
 			download: () => {
 				this.api.photos.downloadPhoto( photo );
 			},

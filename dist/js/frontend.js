@@ -21848,7 +21848,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           }
         },
         title: photo.description,
-        caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
+        caption: "<p class=\"credits hover\">Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
         download: function download() {
           _this2.api.photos.downloadPhoto(photo);
         }
