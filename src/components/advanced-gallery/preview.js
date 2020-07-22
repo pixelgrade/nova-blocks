@@ -2,7 +2,6 @@ import { isSafari } from "../../utils";
 
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./util";
-import AdvancedGallery from "./index";
 
 const { useState, useEffect, useRef } = wp.element;
 
@@ -45,16 +44,23 @@ const AdvancedGalleryItem = ( { gridItem } ) => {
 	const image = gridItem?.image;
 	const imageURL = image?.sizes?.novablocks_medium?.url || image?.url;
 	const imageCaption = image?.caption;
+	const imageDescription = image?.description;
 
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` } style={ gridItem.getImageStyle() }>
 				<img className={ `novablocks-advanced-gallery__image` } src={ imageURL } />
 			</div>
-			{ typeof imageCaption === 'string' && <div
-				className={ `novablocks-advanced-gallery__grid-item-caption` }
-				dangerouslySetInnerHTML={ { __html: imageCaption } }>
-			</div> }
+			<div className="novablocks-advanced-gallery__grid-item-info">
+				{ typeof imageCaption === 'string' && <div
+					className={ `novablocks-advanced-gallery__grid-item-caption` }
+					dangerouslySetInnerHTML={ { __html: imageCaption } }>
+				</div> }
+				{ typeof imageDescription === 'string' && <div
+					className={ `novablocks-advanced-gallery__grid-item-description` }
+					dangerouslySetInnerHTML={ { __html: imageDescription } }>
+				</div> }
+			</div>
 		</div>
 	);
 };

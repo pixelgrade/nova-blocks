@@ -47,7 +47,7 @@
 	flex: 1 1 0;
 }
 
-.novablocks-advanced-gallery__grid-item-caption {
+.novablocks-advanced-gallery__grid-item-info {
 	flex: 0 1 auto;
 
 	padding-top: calc(0.125 * var(--novablocks-spacing));
@@ -61,6 +61,7 @@
 		opacity: 0;
 		pointer-events: none;
 		transition: var(--novablocks-transition);
+		--novablocks-transition-duration: 0.15s;
 		transition-property: opacity;
 	}
 

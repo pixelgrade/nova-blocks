@@ -18170,6 +18170,7 @@ var getPlaceholderImages = unsplash_instance.get.bind(unsplash_instance);
 
 
 
+var apiFetch = wp.apiFetch;
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -18336,6 +18337,21 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
   }
 
   return classnames_default()(classes);
+};
+var normalizeImages = function normalizeImages(images) {
+  var promises = images.map(function (image) {
+    return apiFetch({
+      path: "/wp/v2/media/".concat(image.id)
+    }).then(function (data) {
+      var _data$description;
+
+      var newImage = Object.assign({}, image, {
+        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
+      });
+      return newImage;
+    });
+  });
+  return Promise.all(promises);
 };
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
@@ -28511,13 +28527,13 @@ var autocomplete_tokenfield_AutocompleteTokenField = /*#__PURE__*/function (_Com
 // CONCATENATED MODULE: ./src/components/query-controls/manual-controls.js
 
 
-var apiFetch = wp.apiFetch;
+var manual_controls_apiFetch = wp.apiFetch;
 var addQueryArgs = wp.url.addQueryArgs;
 var decodeEntities = wp.htmlEntities.decodeEntities;
 var manual_controls_ = wp.i18n.__;
 
 var fetchPostSuggestions = function fetchPostSuggestions(search) {
-  return apiFetch({
+  return manual_controls_apiFetch({
     path: addQueryArgs('/wp/v2/search', {
       search: search,
       per_page: 20,
@@ -28536,7 +28552,7 @@ var fetchPostSuggestions = function fetchPostSuggestions(search) {
 };
 
 var fetchSavedPosts = function fetchSavedPosts(postIDs) {
-  return apiFetch({
+  return manual_controls_apiFetch({
     path: addQueryArgs('/wp/v2/posts', {
       per_page: 100,
       include: postIDs.join(','),
@@ -30124,7 +30140,6 @@ var util_safariHeightFix = function safariHeightFix(grid) {
 
 
 
-
 var preview_wp$element = wp.element,
     preview_useState = preview_wp$element.useState,
     preview_useEffect = preview_wp$element.useEffect,
@@ -30179,6 +30194,7 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
   var image = gridItem === null || gridItem === void 0 ? void 0 : gridItem.image;
   var imageURL = (image === null || image === void 0 ? void 0 : (_image$sizes = image.sizes) === null || _image$sizes === void 0 ? void 0 : (_image$sizes$novabloc = _image$sizes.novablocks_medium) === null || _image$sizes$novabloc === void 0 ? void 0 : _image$sizes$novabloc.url) || (image === null || image === void 0 ? void 0 : image.url);
   var imageCaption = image === null || image === void 0 ? void 0 : image.caption;
+  var imageDescription = image === null || image === void 0 ? void 0 : image.description;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
@@ -30188,12 +30204,19 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
     src: imageURL
-  })), typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
+  })), Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-info"
+  }, typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item-caption",
     dangerouslySetInnerHTML: {
       __html: imageCaption
     }
-  }));
+  }), typeof imageDescription === 'string' && Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-description",
+    dangerouslySetInnerHTML: {
+      __html: imageDescription
+    }
+  })));
 };
 
 /* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
@@ -30205,7 +30228,7 @@ var placeholder_wp$blockEditor = wp.blockEditor,
 
 var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes;
+      onSelectImages = props.onSelectImages;
   var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
 
   if (!!gallery && !!gallery.length) {
@@ -30216,11 +30239,7 @@ var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder
     icon: Object(external_React_["createElement"])(BlockIcon, {
       icon: "format-gallery"
     }),
-    onSelect: function onSelect(images) {
-      setAttributes({
-        images: images
-      });
-    },
+    onSelect: onSelectImages,
     accept: "image/*",
     allowedTypes: ['image'],
     multiple: true
@@ -30398,18 +30417,17 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
 // CONCATENATED MODULE: ./src/components/advanced-gallery/block-controls.js
 
 
+
 var block_controls_ = wp.i18n.__;
-var block_controls_apiFetch = wp.apiFetch;
 var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
     MediaUpload = block_controls_wp$blockEditor.MediaUpload;
 var block_controls_wp$components = wp.components,
     block_controls_Button = block_controls_wp$components.Button,
     block_controls_Toolbar = block_controls_wp$components.Toolbar;
-var block_controls_Fragment = wp.element.Fragment;
 
 var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryChangeMediaToolbar(props) {
-  var setAttributes = props.setAttributes,
+  var onSelectImages = props.onSelectImages,
       attributes = props.attributes;
   var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
 
@@ -30424,11 +30442,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
     value: gallery.map(function (image) {
       return image.id;
     }),
-    onSelect: function onSelect(images) {
-      setAttributes({
-        images: block_controls_normalize(images)
-      });
-    },
+    onSelect: onSelectImages,
     render: function render(_ref) {
       var open = _ref.open;
       return Object(external_React_["createElement"])(block_controls_Button, {
@@ -30439,17 +30453,9 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
       });
     }
   }));
-}; // @todo use apiFetch to get large image size
-// and normalize title, caption and description structure
-
-
-var block_controls_normalize = function normalize(images) {
-  var promises = images.map(function (image) {});
-  return images;
 };
 
 var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
-  var setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props));
 };
 
@@ -30461,10 +30467,24 @@ var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockC
 
 
 
+
 var advanced_gallery_Fragment = wp.element.Fragment;
 
 var advanced_gallery_AdvancedGallery = function AdvancedGallery(props) {
-  return Object(external_React_["createElement"])(advanced_gallery_Fragment, null, Object(external_React_["createElement"])(advanced_gallery_placeholder, props), Object(external_React_["createElement"])(preview, props), Object(external_React_["createElement"])(advanced_gallery_inspector_controls, props), Object(external_React_["createElement"])(block_controls, props));
+  var setAttributes = props.setAttributes;
+
+  var onSelectImages = function onSelectImages(images) {
+    normalizeImages(images).then(function (newImages) {
+      setAttributes({
+        images: newImages
+      });
+    });
+  };
+
+  var newProps = Object.assign({}, props, {
+    onSelectImages: onSelectImages
+  });
+  return Object(external_React_["createElement"])(advanced_gallery_Fragment, null, Object(external_React_["createElement"])(advanced_gallery_placeholder, newProps), Object(external_React_["createElement"])(preview, newProps), Object(external_React_["createElement"])(advanced_gallery_inspector_controls, newProps), Object(external_React_["createElement"])(block_controls, newProps));
 };
 
 /* harmony default export */ var advanced_gallery = (with_settings(advanced_gallery_AdvancedGallery));
