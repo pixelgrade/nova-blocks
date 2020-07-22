@@ -1,7 +1,6 @@
 import classnames from "classnames";
 
 export { getPlaceholderImages } from './unsplash';
-const apiFetch = wp.apiFetch;
 
 export const getRandomBetween = ( min, max ) => {
 	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
@@ -180,19 +179,4 @@ export const getControlsClasses = ( attributes, compileAttributes ) => {
 	}
 
 	return classnames( classes );
-};
-
-export const normalizeImages = ( images ) => {
-	const promises = images.map( image => {
-		return apiFetch( {
-			path: `/wp/v2/media/${ image.id }`,
-		} ).then( data => {
-			const newImage = Object.assign( {}, image, {
-				description: data?.description?.raw
-			} );
-			return newImage;
-		} )
-	} );
-
-	return Promise.all( promises );
 };

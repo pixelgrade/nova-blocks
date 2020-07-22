@@ -1,5 +1,4 @@
 import { swap } from "../../icons";
-import { normalizeImages } from "../../utils";
 
 const { __ } = wp.i18n;
 

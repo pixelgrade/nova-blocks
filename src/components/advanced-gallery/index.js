@@ -3,7 +3,7 @@ import AdvancedGalleryPreview from './preview';
 import AdvancedGalleryPlaceholder from './placeholder';
 import AdvancedGalleryInspectorControls from './inspector-controls';
 import AdvancedGalleryBlockControls from './block-controls';
-import { normalizeImages } from "../../utils";
+import { normalizeImages } from "../../utils/images";
 
 const {
 	Fragment

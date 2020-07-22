@@ -18170,7 +18170,6 @@ var getPlaceholderImages = unsplash_instance.get.bind(unsplash_instance);
 
 
 
-var apiFetch = wp.apiFetch;
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -18337,21 +18336,6 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
   }
 
   return classnames_default()(classes);
-};
-var normalizeImages = function normalizeImages(images) {
-  var promises = images.map(function (image) {
-    return apiFetch({
-      path: "/wp/v2/media/".concat(image.id)
-    }).then(function (data) {
-      var _data$description;
-
-      var newImage = Object.assign({}, image, {
-        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
-      });
-      return newImage;
-    });
-  });
-  return Promise.all(promises);
 };
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
@@ -28527,13 +28511,13 @@ var autocomplete_tokenfield_AutocompleteTokenField = /*#__PURE__*/function (_Com
 // CONCATENATED MODULE: ./src/components/query-controls/manual-controls.js
 
 
-var manual_controls_apiFetch = wp.apiFetch;
+var apiFetch = wp.apiFetch;
 var addQueryArgs = wp.url.addQueryArgs;
 var decodeEntities = wp.htmlEntities.decodeEntities;
 var manual_controls_ = wp.i18n.__;
 
 var fetchPostSuggestions = function fetchPostSuggestions(search) {
-  return manual_controls_apiFetch({
+  return apiFetch({
     path: addQueryArgs('/wp/v2/search', {
       search: search,
       per_page: 20,
@@ -28552,7 +28536,7 @@ var fetchPostSuggestions = function fetchPostSuggestions(search) {
 };
 
 var fetchSavedPosts = function fetchSavedPosts(postIDs) {
-  return manual_controls_apiFetch({
+  return apiFetch({
     path: addQueryArgs('/wp/v2/posts', {
       per_page: 100,
       include: postIDs.join(','),
@@ -30417,7 +30401,6 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
 // CONCATENATED MODULE: ./src/components/advanced-gallery/block-controls.js
 
 
-
 var block_controls_ = wp.i18n.__;
 var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
@@ -30460,6 +30443,23 @@ var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockC
 };
 
 /* harmony default export */ var block_controls = (block_controls_AdvancedGalleryBlockControls);
+// CONCATENATED MODULE: ./src/utils/images.js
+var images_apiFetch = wp.apiFetch;
+var normalizeImages = function normalizeImages(images) {
+  var promises = images.map(function (image) {
+    return images_apiFetch({
+      path: "/wp/v2/media/".concat(image.id)
+    }).then(function (data) {
+      var _data$description;
+
+      var newImage = Object.assign({}, image, {
+        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
+      });
+      return newImage;
+    });
+  });
+  return Promise.all(promises);
+};
 // CONCATENATED MODULE: ./src/components/advanced-gallery/index.js
 
 

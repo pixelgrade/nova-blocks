@@ -21866,7 +21866,6 @@ var getPlaceholderImages = instance.get.bind(instance);
 
 
 
-var apiFetch = wp.apiFetch;
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -22033,21 +22032,6 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
   }
 
   return classnames_default()(classes);
-};
-var normalizeImages = function normalizeImages(images) {
-  var promises = images.map(function (image) {
-    return apiFetch({
-      path: "/wp/v2/media/".concat(image.id)
-    }).then(function (data) {
-      var _data$description;
-
-      var newImage = Object.assign({}, image, {
-        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
-      });
-      return newImage;
-    });
-  });
-  return Promise.all(promises);
 };
 // CONCATENATED MODULE: ./src/components/viewportObserver.js
 
