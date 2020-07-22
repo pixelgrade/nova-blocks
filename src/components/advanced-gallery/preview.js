@@ -2,14 +2,13 @@ import { isSafari } from "../../utils";
 
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./util";
-import AdvancedGallery from "./index";
 
 const { useState, useEffect, useRef } = wp.element;
 
 const AdvancedGalleryPreview = ( props ) => {
 
 	const { attributes } = props;
-	const gallery = ( attributes.gallery && attributes.gallery.length ) ? attributes.gallery : attributes.images;
+	const gallery = attributes.gallery || attributes.images;
 
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );

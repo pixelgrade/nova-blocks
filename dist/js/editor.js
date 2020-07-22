@@ -1916,7 +1916,7 @@ module.exports = root;
 /* 31 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":{\"type\":\"object\"}},\"gallery\":{\"type\":\"array\",\"default\":[],\"items\":{\"type\":\"object\"}},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":{\"type\":\"object\"}},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 32 */
@@ -30126,7 +30126,6 @@ var util_safariHeightFix = function safariHeightFix(grid) {
 
 
 
-
 var preview_wp$element = wp.element,
     preview_useState = preview_wp$element.useState,
     preview_useEffect = preview_wp$element.useEffect,
@@ -30134,7 +30133,7 @@ var preview_wp$element = wp.element,
 
 var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
   var attributes = props.attributes;
-  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
+  var gallery = attributes.gallery || attributes.images;
 
   var _useState = preview_useState(0),
       _useState2 = slicedToArray_default()(_useState, 2),
@@ -30199,7 +30198,7 @@ var placeholder_wp$blockEditor = wp.blockEditor,
 var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var gallery = attributes.gallery && attributes.gallery.length ? attributes.gallery : attributes.images;
+  var gallery = attributes.gallery || attributes.images;
 
   if (!!gallery && !!gallery.length) {
     return false;
@@ -30480,7 +30479,6 @@ var blocks_advanced_gallery_attributes = __webpack_require__(64);
 
 
 
-
 function deprecated_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -30496,7 +30494,7 @@ var deprecated = [];
 deprecated.push({
   attributes: oldGalleryAttributes,
   isEligible: function isEligible(attributes) {
-    return typeof_default()("undefined") !== attributes.gallery;
+    return "undefined" !== typeof attributes.gallery;
   },
   migrate: function migrate(attributes) {
     var gallery = attributes.gallery,
@@ -33420,7 +33418,6 @@ var media_attributes = __webpack_require__(65);
 
 
 
-
 function media_deprecated_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function media_deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { media_deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { media_deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -33437,7 +33434,7 @@ var media_deprecated_deprecated = [];
 media_deprecated_deprecated.push({
   attributes: oldAttributes,
   isEligible: function isEligible(attributes) {
-    return typeof_default()("undefined") !== attributes.gallery;
+    return "undefined" !== typeof attributes.gallery;
   },
   migrate: function migrate(attributes) {
     var gallery = attributes.gallery,

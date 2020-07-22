@@ -10,7 +10,7 @@ const deprecated = [];
 deprecated.push({
 	attributes: oldGalleryAttributes,
 	isEligible( attributes ) {
-		return typeof "undefined" !== attributes.gallery;
+		return "undefined" !== typeof attributes.gallery;
 	},
 	migrate( attributes ) {
 		const { gallery, ...newAttributes } = attributes;

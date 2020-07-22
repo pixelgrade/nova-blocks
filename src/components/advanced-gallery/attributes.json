@@ -6,13 +6,6 @@
 			"type": "object"
 		}
 	},
-	"gallery": {
-		"type": "array",
-		"default": [],
-		"items": {
-			"type": "object"
-		}
-	},
 	"stylePreset": {
 		"type": "string",
 		"default": "the-cloud-atlas"
