@@ -18154,7 +18154,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           }
         },
         title: photo.description,
-        caption: "<p class=\"credits\">Photo by <a href=\"".concat(photo.user.links.html, "?").concat(URL_PARAMS, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com?").concat(URL_PARAMS, "\">Unsplash</a></p>"),
+        caption: "<p class=\"credits\">Photo by <a target=\"_blank\" href=\"".concat(photo.user.links.html, "?").concat(URL_PARAMS, "\">").concat(photo.user.name, "</a> on <a target=\"_blank\" href=\"https://unsplash.com?").concat(URL_PARAMS, "\">Unsplash</a></p>"),
         download: function download() {
           _this2.api.photos.downloadPhoto(photo);
         }
