@@ -33457,7 +33457,7 @@ var media_deprecated_deprecated = [];
 media_deprecated_deprecated.push({
   attributes: oldAttributes,
   isEligible: function isEligible(attributes) {
-    return "undefined" === typeof attributes.images && typeof_default()("undefined") !== attributes.gallery;
+    return typeof_default()("undefined") !== attributes.gallery;
   },
   migrate: function migrate(attributes) {
     var gallery = attributes.gallery,
