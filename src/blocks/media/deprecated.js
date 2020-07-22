@@ -5,7 +5,18 @@ import galleryAttributes from "../../components/advanced-gallery/attributes";
 
 const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
 
-const { images, ...oldAttributes } = attributes;
+const { images, ...attributesWithoutImages } = attributes;
+
+const oldAttributes = {
+	...attributesWithoutImages,
+	gallery: {
+		type: 'array',
+		items: {
+			type: 'object',
+		},
+		default: [],
+	}
+};
 
 const deprecated = [];
 
@@ -15,10 +26,10 @@ deprecated.push({
 		return "undefined" !== typeof attributes.gallery;
 	},
 	migrate( attributes ) {
-		const { gallery, ...newAttributes } = attributes;
+		const { gallery, ...otherAttributes } = attributes;
 
 		return {
-			...newAttributes,
+			...otherAttributes,
 			images: gallery
 		};
 	},
