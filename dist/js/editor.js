@@ -1916,7 +1916,7 @@ module.exports = root;
 /* 31 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":\"object\"},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"images\":{\"type\":\"array\",\"default\":[],\"items\":{\"type\":\"object\"}},\"gallery\":{\"type\":\"array\",\"default\":[],\"items\":{\"type\":\"object\"}},\"stylePreset\":{\"type\":\"string\",\"default\":\"the-cloud-atlas\"},\"sizeContrast\":{\"type\":\"number\",\"default\":0},\"positionShift\":{\"type\":\"number\",\"default\":0},\"elementsDistance\":{\"type\":\"number\",\"default\":20},\"placementVariation\":{\"type\":\"number\",\"default\":25},\"imageRotation\":{\"type\":\"number\",\"default\":0},\"imageResizing\":{\"type\":\"string\",\"default\":\"cropped\"},\"containerHeight\":{\"type\":\"number\",\"default\":50},\"objectPosition\":{\"type\":\"number\",\"default\":50},\"defaultsGenerated\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 32 */
@@ -30490,25 +30490,15 @@ function deprecated_objectSpread(target) { for (var i = 1; i < arguments.length;
 var deprecated_attributes = Object.assign({}, blocks_advanced_gallery_attributes, advanced_gallery_attributes);
 
 var deprecated_images = deprecated_attributes.images,
-    attributesWithoutImages = objectWithoutProperties_default()(deprecated_attributes, ["images"]);
-
-var oldGalleryAttributes = deprecated_objectSpread(deprecated_objectSpread({}, attributesWithoutImages), {}, {
-  gallery: {
-    type: 'array',
-    items: {
-      type: 'object'
-    },
-    default: []
-  }
-});
+    oldGalleryAttributes = objectWithoutProperties_default()(deprecated_attributes, ["images"]);
 
 var deprecated = [];
 deprecated.push({
   attributes: oldGalleryAttributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
-    return "undefined" === typeof attributes.images && typeof_default()("undefined") !== attributes.gallery;
+  isEligible: function isEligible(attributes) {
+    return typeof_default()("undefined") !== attributes.gallery;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     var gallery = attributes.gallery,
         newAttributes = objectWithoutProperties_default()(attributes, ["gallery"]);
 
@@ -30522,10 +30512,10 @@ deprecated.push({
 });
 deprecated.push({
   attributes: oldGalleryAttributes,
-  isEligible: function isEligible(attributes, innerBlocks) {
+  isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.defaultsGenerated;
   },
-  migrate: function migrate(attributes, innerBlocks) {
+  migrate: function migrate(attributes) {
     return deprecated_objectSpread(deprecated_objectSpread({}, attributes), {}, {
       defaultsGenerated: true
     });
@@ -33441,17 +33431,7 @@ function media_deprecated_objectSpread(target) { for (var i = 1; i < arguments.l
 var media_deprecated_attributes = Object.assign({}, media_attributes, advanced_gallery_attributes);
 
 var media_deprecated_images = media_deprecated_attributes.images,
-    deprecated_attributesWithoutImages = objectWithoutProperties_default()(media_deprecated_attributes, ["images"]);
-
-var oldAttributes = media_deprecated_objectSpread(media_deprecated_objectSpread({}, deprecated_attributesWithoutImages), {}, {
-  gallery: {
-    type: 'array',
-    items: {
-      type: 'object'
-    },
-    default: []
-  }
-});
+    oldAttributes = objectWithoutProperties_default()(media_deprecated_attributes, ["images"]);
 
 var media_deprecated_deprecated = [];
 media_deprecated_deprecated.push({

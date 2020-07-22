@@ -2,7 +2,16 @@
 	"images": {
 		"type": "array",
 		"default": [],
-		"items": "object"
+		"items": {
+			"type": "object"
+		}
+	},
+	"gallery": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "object"
+		}
 	},
 	"stylePreset": {
 		"type": "string",

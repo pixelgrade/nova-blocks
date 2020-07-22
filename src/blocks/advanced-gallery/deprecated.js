@@ -3,27 +3,16 @@ import blockAttributes from "./attributes";
 
 const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
 
-const { images, ...attributesWithoutImages } = attributes;
-
-const oldGalleryAttributes = {
-	...attributesWithoutImages,
-	gallery: {
-		type: 'array',
-		items: {
-			type: 'object',
-		},
-		default: [],
-	}
-};
+const { images, ...oldGalleryAttributes } = attributes;
 
 const deprecated = [];
 
 deprecated.push({
 	attributes: oldGalleryAttributes,
-	isEligible( attributes, innerBlocks ) {
-		return "undefined" === typeof attributes.images && typeof "undefined" !== attributes.gallery;
+	isEligible( attributes ) {
+		return typeof "undefined" !== attributes.gallery;
 	},
-	migrate( attributes, innerBlocks ) {
+	migrate( attributes ) {
 		const { gallery, ...newAttributes } = attributes;
 
 		return {
@@ -38,10 +27,10 @@ deprecated.push({
 
 deprecated.push({
 	attributes: oldGalleryAttributes,
-	isEligible( attributes, innerBlocks ) {
+	isEligible( attributes ) {
 		return "undefined" === typeof attributes.defaultsGenerated;
 	},
-	migrate( attributes, innerBlocks ) {
+	migrate( attributes ) {
 		return {
 			...attributes,
 			defaultsGenerated: true
