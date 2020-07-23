@@ -8,7 +8,7 @@ const { useState, useEffect, useRef } = wp.element;
 const AdvancedGalleryPreview = ( props ) => {
 
 	const { attributes } = props;
-	const gallery = !! attributes?.gallery?.length ? attributes.gallery : attributes.images;
+	const gallery = attributes?.images;
 
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
