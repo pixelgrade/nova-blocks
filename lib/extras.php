@@ -927,12 +927,12 @@ function novablocks_render_advanced_gallery( $attributes ) {
 
 	$images = array();
 
-	if ( ! empty( $attributes['gallery'] ) ) {
-		$images = $attributes['gallery'];
-	}
-
 	if ( ! empty( $attributes['images'] ) ) {
 		$images = $attributes['images'];
+	}
+
+	if ( ! empty( $attributes['gallery'] ) ) {
+		$images = $attributes['gallery'];
 	}
 
 	$advanced_gallery_attributes = array(

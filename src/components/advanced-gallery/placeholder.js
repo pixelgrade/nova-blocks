@@ -10,7 +10,7 @@ const AdvancedGalleryPlaceholder = ( props ) => {
 		onSelectImages,
 	} = props;
 
-	const gallery = ( attributes.gallery && attributes.gallery.length ) ? attributes.gallery : attributes.images;
+	const gallery = attributes?.images;
 
 	if ( !! gallery && !! gallery.length ) {
 		return false;

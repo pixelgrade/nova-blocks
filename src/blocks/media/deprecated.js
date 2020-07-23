@@ -1,57 +1,34 @@
 import save from "./save";
+import { omit } from 'lodash';
 
 import blockAttributes from "./attributes"
 import galleryAttributes from "../../components/advanced-gallery/attributes";
 
 const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
 
-const { images, ...attributesWithoutImages } = attributes;
-
-const oldAttributes = {
-	...attributesWithoutImages,
-	gallery: {
-		type: 'array',
-		items: {
-			type: 'object',
+const deprecated = [
+	{
+		attributes: {
+			...omit( attributes, ['images'] ),
+			gallery: attributes.images
 		},
-		default: [],
+		isEligible( attributes ) {
+			return "undefined" === typeof attributes.defaultsGenerated;
+		},
+		migrate( attributes ) {
+			const { contentStyle, gallery } = attributes;
+			const images = Array.isArray( gallery ) && !! gallery.length ? gallery : attributes.images;
+
+			return {
+				...omit( attributes, ['gallery'] ),
+				images: images,
+				contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
+				upgradedToModerate: true,
+				defaultsGenerated: true
+			};
+		},
+		save
 	}
-};
-
-const deprecated = [];
-
-deprecated.push({
-	attributes: oldAttributes,
-	isEligible( attributes ) {
-		return "undefined" === typeof attributes.images && typeof "undefined" !== attributes.gallery;
-	},
-	migrate( attributes ) {
-		const { gallery, ...newAttributes } = attributes;
-
-		return {
-			...newAttributes,
-			images: gallery
-		};
-	},
-	save,
-});
-
-deprecated.push({
-	attributes: oldAttributes,
-	isEligible( attributes ) {
-		return "undefined" === typeof attributes.defaultsGenerated;
-	},
-	migrate( attributes ) {
-		const { contentStyle } = attributes;
-
-		return {
-			...attributes,
-			contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
-			upgradedToModerate: true,
-			defaultsGenerated: true
-		};
-	},
-	save,
-});
+];
 
 export default deprecated;

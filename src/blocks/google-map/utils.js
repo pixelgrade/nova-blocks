@@ -18,7 +18,7 @@ export const addVisibilityToStyles = function( styles, showLabels, showIcons ) {
 	}
 
 	return styles;
-}
+};
 
 export const compileStyles = function( styleData ) {
 	const {
@@ -32,17 +32,17 @@ export const compileStyles = function( styleData ) {
 	const accentColor = getMapAccentColor.call( this );
 	const styleDataString = JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, accentColor );
 	return JSON.parse( styleDataString );
-}
+};
 
 export const getMapStyles = function() {
 	const { attributes } = this.props;
 	const { styleData, styleSlug } = attributes;
-	const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
+	const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
 	const selectedStyles = styles.find( style => style.slug === styleSlug );
 	const styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
 	const mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
 	return compileStyles.call( this, mapStyles );
-}
+};
 
 export const getMapAccentColor = function() {
 	const { settings } = this.props;
@@ -71,7 +71,7 @@ export const getMapAccentColor = function() {
 	}
 
 	return fallbackColor;
-}
+};
 
 export const getCenterFromMarkers = function( markers ) {
 
@@ -102,8 +102,8 @@ export const getCenterFromMarkers = function( markers ) {
 	} );
 
 	return bounds.getCenter();
-}
+};
 
 export const getMarkersCenter = function() {
 	return getCenterFromMarkers( this.props.attributes.markers );
-}
+};
