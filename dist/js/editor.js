@@ -31515,6 +31515,7 @@ var preview_wp$element = wp.element,
 var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
   var attributes = props.attributes;
   var gallery = attributes === null || attributes === void 0 ? void 0 : attributes.images;
+  console.log(attributes.contentAreaWidth);
 
   var _useState = preview_useState(0),
       _useState2 = slicedToArray_default()(_useState, 2),
@@ -31853,6 +31854,10 @@ var edit_Edit = function Edit(props) {
 };
 
 /* harmony default export */ var advanced_gallery_edit = (edit_Edit);
+// EXTERNAL MODULE: ./node_modules/lodash/omit.js
+var omit = __webpack_require__(136);
+var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
+
 // EXTERNAL MODULE: ./src/blocks/advanced-gallery/attributes.json
 var blocks_advanced_gallery_attributes = __webpack_require__(68);
 
@@ -31867,52 +31872,25 @@ function deprecated_objectSpread(target) { for (var i = 1; i < arguments.length;
 
 
 var deprecated_attributes = Object.assign({}, blocks_advanced_gallery_attributes, advanced_gallery_attributes);
-
-var deprecated_images = deprecated_attributes.images,
-    attributesWithoutImages = objectWithoutProperties_default()(deprecated_attributes, ["images"]);
-
-var oldGalleryAttributes = deprecated_objectSpread(deprecated_objectSpread({}, attributesWithoutImages), {}, {
-  gallery: {
-    type: 'array',
-    items: {
-      type: 'object'
-    },
-    default: []
-  }
-});
-
-var deprecated = [];
-deprecated.push({
-  attributes: oldGalleryAttributes,
-  isEligible: function isEligible(attributes) {
-    return "undefined" !== typeof attributes.gallery;
-  },
-  migrate: function migrate(attributes) {
-    var gallery = attributes.gallery,
-        otherAttributes = objectWithoutProperties_default()(attributes, ["gallery"]);
-
-    return deprecated_objectSpread(deprecated_objectSpread({}, otherAttributes), {}, {
-      images: gallery
-    });
-  },
-  save: function save() {
-    return false;
-  }
-});
-deprecated.push({
-  attributes: oldGalleryAttributes,
+var deprecated = [{
+  attributes: deprecated_objectSpread(deprecated_objectSpread({}, omit_default()(deprecated_attributes, ['images'])), {}, {
+    gallery: deprecated_attributes.images
+  }),
   isEligible: function isEligible(attributes) {
     return "undefined" === typeof attributes.defaultsGenerated;
   },
   migrate: function migrate(attributes) {
-    return deprecated_objectSpread(deprecated_objectSpread({}, attributes), {}, {
+    var gallery = attributes.gallery;
+    var images = Array.isArray(gallery) && !!gallery.length ? gallery : attributes.images;
+    return deprecated_objectSpread(deprecated_objectSpread({}, omit_default()(attributes, ['gallery'])), {}, {
+      images: images,
       defaultsGenerated: true
     });
   },
   save: function save() {
     return false;
   }
-});
+}];
 /* harmony default export */ var advanced_gallery_deprecated = (deprecated);
 // CONCATENATED MODULE: ./src/blocks/advanced-gallery/transforms.js
 var createBlock = wp.blocks.createBlock;
@@ -32092,7 +32070,7 @@ function announcement_bar_deprecated_ownKeys(object, enumerableOnly) { var keys 
 function announcement_bar_deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { announcement_bar_deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { announcement_bar_deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var _lodash = lodash,
-    omit = _lodash.omit;
+    deprecated_omit = _lodash.omit;
 var deprecated_createBlock = wp.blocks.createBlock;
 var blockAttributes = {
   align: {
@@ -32119,7 +32097,7 @@ var deprecated_deprecated = [{
     }
   }, blockAttributes),
   migrate: function migrate(attributes, innerBlocks) {
-    return [omit(attributes, 'content'), [deprecated_createBlock('core/paragraph', {
+    return [deprecated_omit(attributes, 'content'), [deprecated_createBlock('core/paragraph', {
       content: attributes.content
     })].concat(toConsumableArray_default()(innerBlocks))];
   },
@@ -34802,9 +34780,8 @@ var media_transforms_createBlock = wp.blocks.createBlock;
     }
   }]
 });
-// EXTERNAL MODULE: ./node_modules/lodash/omit.js
-var lodash_omit = __webpack_require__(136);
-var omit_default = /*#__PURE__*/__webpack_require__.n(lodash_omit);
+// EXTERNAL MODULE: ./src/blocks/media/attributes.json
+var media_attributes = __webpack_require__(137);
 
 // CONCATENATED MODULE: ./src/blocks/media/deprecated.js
 
@@ -34815,81 +34792,22 @@ function media_deprecated_ownKeys(object, enumerableOnly) { var keys = Object.ke
 function media_deprecated_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { media_deprecated_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { media_deprecated_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
+
+
+var media_deprecated_attributes = Object.assign({}, media_attributes, advanced_gallery_attributes);
 var media_deprecated_deprecated = [{
-  attributes: {
-    align: {
-      type: 'string',
-      default: 'full'
-    },
-    mediaPosition: {
-      type: 'string',
-      default: 'left'
-    },
-    horizontalAlignment: {
-      type: 'string',
-      default: 'center'
-    },
-    verticalAlignment: {
-      type: 'string',
-      default: 'center'
-    },
-    gallery: {
-      type: 'array',
-      items: {
-        type: 'object'
-      },
-      default: {}
-    },
-    stylePreset: {
-      type: 'string',
-      default: 'the-cloud-atlas'
-    },
-    sizeContrast: {
-      type: 'number',
-      default: 0
-    },
-    positionShift: {
-      type: 'number',
-      default: 0
-    },
-    elementsDistance: {
-      type: 'number',
-      default: 20
-    },
-    placementVariation: {
-      type: 'number',
-      default: 25
-    },
-    imageRotation: {
-      type: 'number',
-      default: 0
-    },
-    imageResizing: {
-      type: 'string',
-      default: 'cropped'
-    },
-    containerHeight: {
-      type: 'number',
-      default: 50
-    },
-    objectPosition: {
-      type: 'number',
-      default: 50
-    },
-    verticalSpacing: {
-      type: 'number',
-      default: 0
-    }
-  },
+  attributes: media_deprecated_objectSpread(media_deprecated_objectSpread({}, omit_default()(media_deprecated_attributes, ['images'])), {}, {
+    gallery: media_deprecated_attributes.images
+  }),
   isEligible: function isEligible(attributes) {
-    console.log(attributes);
-    return "undefined" !== typeof attributes.gallery;
+    return "undefined" === typeof attributes.defaultsGenerated;
   },
   migrate: function migrate(attributes) {
     var contentStyle = attributes.contentStyle,
         gallery = attributes.gallery;
+    var images = Array.isArray(gallery) && !!gallery.length ? gallery : attributes.images;
     return media_deprecated_objectSpread(media_deprecated_objectSpread({}, omit_default()(attributes, ['gallery'])), {}, {
-      images: gallery,
+      images: images,
       contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
       upgradedToModerate: true,
       defaultsGenerated: true
@@ -34898,9 +34816,6 @@ var media_deprecated_deprecated = [{
   save: media_save
 }];
 /* harmony default export */ var media_deprecated = (media_deprecated_deprecated);
-// EXTERNAL MODULE: ./src/blocks/media/attributes.json
-var media_attributes = __webpack_require__(137);
-
 // CONCATENATED MODULE: ./src/blocks/media/index.js
 
 

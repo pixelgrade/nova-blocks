@@ -1,83 +1,27 @@
 import save from "./save";
 import { omit } from 'lodash';
 
+import blockAttributes from "./attributes"
+import galleryAttributes from "../../components/advanced-gallery/attributes";
+
+const attributes = Object.assign( {}, blockAttributes, galleryAttributes );
+
 const deprecated = [
 	{
 		attributes: {
-			align: {
-				type: 'string',
-				default: 'full'
-			},
-			mediaPosition: {
-				type: 'string',
-				default: 'left',
-			},
-			horizontalAlignment: {
-				type: 'string',
-				default: 'center',
-			},
-			verticalAlignment: {
-				type: 'string',
-				default: 'center'
-			},
-			gallery: {
-				type: 'array',
-				items: {
-					type: 'object',
-				},
-				default: {},
-			},
-			stylePreset: {
-				type: 'string',
-				default: 'the-cloud-atlas',
-			},
-			sizeContrast: {
-				type: 'number',
-				default: 0,
-			},
-			positionShift: {
-				type: 'number',
-				default: 0,
-			},
-			elementsDistance: {
-				type: 'number',
-				default: 20,
-			},
-			placementVariation: {
-				type: 'number',
-				default: 25,
-			},
-			imageRotation: {
-				type: 'number',
-				default: 0,
-			},
-			imageResizing: {
-				type: 'string',
-				default: 'cropped',
-			},
-			containerHeight: {
-				type: 'number',
-				default: 50,
-			},
-			objectPosition: {
-				type: 'number',
-				default: 50,
-			},
-			verticalSpacing: {
-				type: 'number',
-				default: 0,
-			},
+			...omit( attributes, ['images'] ),
+			gallery: attributes.images
 		},
 		isEligible( attributes ) {
-			console.log( attributes );
-			return "undefined" !== typeof attributes.gallery;
+			return "undefined" === typeof attributes.defaultsGenerated;
 		},
 		migrate( attributes ) {
 			const { contentStyle, gallery } = attributes;
+			const images = Array.isArray( gallery ) && !! gallery.length ? gallery : attributes.images;
 
 			return {
 				...omit( attributes, ['gallery'] ),
-				images: gallery,
+				images: images,
 				contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
 				upgradedToModerate: true,
 				defaultsGenerated: true
