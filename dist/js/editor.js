@@ -21937,14 +21937,9 @@ var block_vertical_alignment_toolbar_withBlockEditContext = function withBlockEd
 
 
 
-
 function gallery_options_createSuper(Derived) { var hasNativeReflectConstruct = gallery_options_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
 
 function gallery_options_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function gallery_options_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function gallery_options_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { gallery_options_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { gallery_options_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /**
  * WordPress dependencies
@@ -21955,26 +21950,9 @@ var MediaPlaceholder = wp.blockEditor.MediaPlaceholder;
 var ALLOWED_MEDIA_TYPES = ['image'];
 
 var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
-  var galleryImages = props.attributes.galleryImages;
+  var galleryImages = props.attributes.galleryImages,
+      onSelectImages = props.onSelectImages;
   var hasImages = !!galleryImages.length;
-
-  function onChangeGallery(newGalleryImages) {
-    var promises = newGalleryImages.map(function (image, index) {
-      return wp.apiRequest({
-        path: '/wp/v2/media/' + image.id
-      }).then(function (newImage) {
-        newGalleryImages[index] = gallery_options_objectSpread(gallery_options_objectSpread({}, newImage), image);
-      });
-    });
-    Promise.all(promises).then(function () {
-      props.setAttributes({
-        galleryImages: newGalleryImages.filter(function (image) {
-          return !!image.id && !!image.sizes && !!image.sizes.large && !!image.sizes.large.url;
-        })
-      });
-    });
-  }
-
   return Object(external_React_["createElement"])(MediaPlaceholder, {
     addToGallery: hasImages,
     className: "",
@@ -21982,7 +21960,7 @@ var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
       title: '',
       instructions: gallery_options_('Drag images, upload new ones or select files from your library.', '__plugin_txtd')
     },
-    onSelect: onChangeGallery,
+    onSelect: onSelectImages,
     accept: "image/*",
     allowedTypes: ALLOWED_MEDIA_TYPES,
     multiple: true,
@@ -34920,7 +34898,7 @@ function slideshow_background_objectSpread(target) { for (var i = 1; i < argumen
  * Internal dependencies
  */
 var background_SlideshowBackground = function SlideshowBackground(props) {
-  var _previewImage$sizes, _previewImage$sizes$n, _previewImage$sizes2, _previewImage$sizes2$;
+  var _previewImage$sizes, _previewImage$sizes$n, _previewImage$sizes2, _previewImage$sizes2$, _previewImage$sizes3, _previewImage$sizes3$, _previewImage$sizes4, _previewImage$sizes4$;
 
   var _props$attributes = props.attributes,
       overlayFilterStyle = _props$attributes.overlayFilterStyle,
@@ -34940,7 +34918,7 @@ var background_SlideshowBackground = function SlideshowBackground(props) {
     styles.opacity = 1 - overlayFilterStrength / 100;
   }
 
-  var imageURL = (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes = previewImage.sizes) === null || _previewImage$sizes === void 0 ? void 0 : (_previewImage$sizes$n = _previewImage$sizes.novablocks_large) === null || _previewImage$sizes$n === void 0 ? void 0 : _previewImage$sizes$n.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes2 = previewImage.sizes) === null || _previewImage$sizes2 === void 0 ? void 0 : (_previewImage$sizes2$ = _previewImage$sizes2.novablocks_huge) === null || _previewImage$sizes2$ === void 0 ? void 0 : _previewImage$sizes2$.url);
+  var imageURL = (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes = previewImage.sizes) === null || _previewImage$sizes === void 0 ? void 0 : (_previewImage$sizes$n = _previewImage$sizes.novablocks_large) === null || _previewImage$sizes$n === void 0 ? void 0 : _previewImage$sizes$n.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes2 = previewImage.sizes) === null || _previewImage$sizes2 === void 0 ? void 0 : (_previewImage$sizes2$ = _previewImage$sizes2.novablocks_huge) === null || _previewImage$sizes2$ === void 0 ? void 0 : _previewImage$sizes2$.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes3 = previewImage.sizes) === null || _previewImage$sizes3 === void 0 ? void 0 : (_previewImage$sizes3$ = _previewImage$sizes3.large) === null || _previewImage$sizes3$ === void 0 ? void 0 : _previewImage$sizes3$.url) || (previewImage === null || previewImage === void 0 ? void 0 : (_previewImage$sizes4 = previewImage.sizes) === null || _previewImage$sizes4 === void 0 ? void 0 : (_previewImage$sizes4$ = _previewImage$sizes4.full) === null || _previewImage$sizes4$ === void 0 ? void 0 : _previewImage$sizes4$.url) || (previewImage === null || previewImage === void 0 ? void 0 : previewImage.url);
   var videoURL = previewImage === null || previewImage === void 0 ? void 0 : previewImage.url;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-mask"
@@ -35227,11 +35205,6 @@ var inspector_controls_SlideshowInspectorControls = function SlideshowInspectorC
 // CONCATENATED MODULE: ./src/blocks/slideshow/block-controls.js
 
 
-
-function slideshow_block_controls_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function slideshow_block_controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { slideshow_block_controls_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { slideshow_block_controls_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 /**
  * Internal dependencies
  */
@@ -35252,30 +35225,14 @@ var slideshow_block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 var block_controls_SlideshowBlockControls = function SlideshowBlockControls(props) {
   var galleryImages = props.attributes.galleryImages,
-      setAttributes = props.setAttributes;
-
-  var onChangeGallery = function onChangeGallery(items) {
-    var promises = items.map(function (item, index) {
-      return wp.apiRequest({
-        path: '/wp/v2/media/' + item.id
-      }).then(function (data) {
-        items[index] = slideshow_block_controls_objectSpread(slideshow_block_controls_objectSpread({}, data), item);
-      });
-    });
-    Promise.all(promises).then(function () {
-      setAttributes({
-        galleryImages: items
-      });
-    });
-  };
-
+      onSelectImages = props.onSelectImages;
   return Object(external_React_["createElement"])(slideshow_block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(slideshow_block_controls_Toolbar, null, Object(external_React_["createElement"])(slideshow_block_controls_MediaUpload, {
     multiple: true,
     allowedTypes: slideshow_block_controls_ALLOWED_MEDIA_TYPES,
     value: galleryImages.map(function (image) {
       return image.id;
     }),
-    onSelect: onChangeGallery,
+    onSelect: onSelectImages,
     render: function render(_ref) {
       var open = _ref.open;
       return Object(external_React_["createElement"])(slideshow_block_controls_Button, {
@@ -35289,6 +35246,23 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
 };
 
 /* harmony default export */ var slideshow_block_controls = (block_controls_SlideshowBlockControls);
+// CONCATENATED MODULE: ./src/utils/images.js
+var images_apiFetch = wp.apiFetch;
+var normalizeImages = function normalizeImages(images) {
+  var promises = images.map(function (image) {
+    return images_apiFetch({
+      path: "/wp/v2/media/".concat(image.id)
+    }).then(function (data) {
+      var _data$description;
+
+      var newImage = Object.assign({}, image, {
+        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
+      });
+      return newImage;
+    });
+  });
+  return Promise.all(promises);
+};
 // CONCATENATED MODULE: ./src/blocks/slideshow/edit.js
 
 
@@ -35310,6 +35284,7 @@ function slideshow_edit_isNativeReflectConstruct() { if (typeof Reflect === "und
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -35372,9 +35347,23 @@ var slideshow_edit_Edit = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "onSelectImages",
+    value: function onSelectImages(images) {
+      var setAttributes = this.props.setAttributes;
+      normalizeImages(images).then(function (newImages) {
+        setAttributes({
+          galleryImages: newImages
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var galleryImages = this.props.attributes.galleryImages;
+      var onSelectImages = this.onSelectImages.bind(this);
+      var newProps = Object.assign({}, this.props, {
+        onSelectImages: onSelectImages
+      });
       var setIndex = this.setIndex.bind(this);
       var selectedIndex = this.state.selectedIndex;
 
@@ -35382,14 +35371,14 @@ var slideshow_edit_Edit = /*#__PURE__*/function (_Component) {
         selectedIndex = galleryImages.length - 1;
       }
 
-      return Object(external_React_["createElement"])(slideshow_edit_Fragment, null, Object(external_React_["createElement"])(slideshow_preview, extends_default()({}, this.props, {
+      return Object(external_React_["createElement"])(slideshow_edit_Fragment, null, Object(external_React_["createElement"])(slideshow_preview, extends_default()({}, newProps, {
         previewImage: galleryImages[selectedIndex],
         onPrevArrowClick: this.onPrevArrowClick.bind(this),
         onNextArrowClick: this.onNextArrowClick.bind(this)
-      })), Object(external_React_["createElement"])(slideshow_inspector_controls, slideshow_edit_objectSpread(slideshow_edit_objectSpread({}, this.props), {}, {
+      })), Object(external_React_["createElement"])(slideshow_inspector_controls, slideshow_edit_objectSpread(slideshow_edit_objectSpread({}, newProps), {}, {
         setIndex: setIndex,
         selectedIndex: selectedIndex
-      })), Object(external_React_["createElement"])(slideshow_block_controls, this.props));
+      })), Object(external_React_["createElement"])(slideshow_block_controls, newProps));
     }
   }]);
 

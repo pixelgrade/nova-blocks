@@ -24,10 +24,10 @@ const TRANSITION_EASING = "easeInOutCirc";
 			$slider = $block.find( SLIDER_SELECTOR ),
 			$arrowContainer;
 
+		resetBlockMinHeight( $block );
+
 		if ( $slider.children().length > 1 ) {
 			$arrowContainer = $( '<div class="novablocks-slideshow__controls">' ).appendTo( $block );
-
-			resetBlockMinHeight( $block );
 
 			$slider.on( 'beforeChange', onBeforeSlideChange );
 

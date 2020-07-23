@@ -8,6 +8,7 @@ import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
 import { withSettings, withParallax } from '../../components';
+import {normalizeImages} from "../../utils/images";
 
 /**
  * WordPress dependencies
@@ -25,6 +26,7 @@ const {
 } = wp.compose;
 
 class Edit extends Component {
+
 	constructor() {
 		super( ...arguments );
 
@@ -51,6 +53,17 @@ class Edit extends Component {
 		this.setState( { selectedIndex } );
 	}
 
+	onSelectImages( images ) {
+
+		const {
+			setAttributes
+		} = this.props;
+
+		normalizeImages( images ).then( newImages => {
+			setAttributes( { galleryImages: newImages } );
+		} )
+	};
+
 	render() {
 
 		const {
@@ -58,6 +71,9 @@ class Edit extends Component {
 				galleryImages,
 			},
 		} = this.props;
+
+		const onSelectImages = this.onSelectImages.bind( this );
+		const newProps = Object.assign( {}, this.props, { onSelectImages } );
 
 		const setIndex = this.setIndex.bind( this );
 
@@ -71,14 +87,14 @@ class Edit extends Component {
 			<Fragment>
 
 				<SlideshowPreview
-					{ ...this.props }
+					{ ...newProps }
 					previewImage={ galleryImages[ selectedIndex ] }
 					onPrevArrowClick={ this.onPrevArrowClick.bind( this ) }
 					onNextArrowClick={ this.onNextArrowClick.bind( this ) }
 				/>
 
-				<InspectorControls { ...{ ...this.props, setIndex, selectedIndex } } />
-				<BlockControls { ...this.props } />
+				<InspectorControls { ...{ ...newProps, setIndex, selectedIndex } } />
+				<BlockControls { ...newProps } />
 
 			</Fragment>
 		);

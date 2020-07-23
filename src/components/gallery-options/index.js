@@ -18,23 +18,10 @@ const GalleryPlaceholder = function( props ) {
 		attributes: {
 			galleryImages,
 		},
+		onSelectImages
 	} = props;
 
 	const hasImages = !! galleryImages.length;
-
-	function onChangeGallery( newGalleryImages ) {
-		const promises = newGalleryImages.map( ( image, index ) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( ( newImage ) => {
-				newGalleryImages[ index ] = { ...newImage, ...image };
-			} );
-		} );
-
-		Promise.all( promises ).then( () => {
-			props.setAttributes( { galleryImages: newGalleryImages.filter( ( image ) => {
-				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
-			} ) } );
-		} );
-	}
 
 	return (
 		<MediaPlaceholder
@@ -44,7 +31,7 @@ const GalleryPlaceholder = function( props ) {
 				title: '',
 				instructions: __( 'Drag images, upload new ones or select files from your library.', '__plugin_txtd' ),
 			} }
-			onSelect={ onChangeGallery }
+			onSelect={ onSelectImages }
 			accept="image/*"
 			allowedTypes={ ALLOWED_MEDIA_TYPES }
 			multiple

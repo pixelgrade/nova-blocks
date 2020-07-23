@@ -31,20 +31,8 @@ const SlideshowBlockControls = function( props ) {
 		attributes: {
 			galleryImages,
 		},
-		setAttributes,
+		onSelectImages,
 	} = props;
-
-	const onChangeGallery = function( items ) {
-		const promises = items.map( ( item, index ) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + item.id } ).then( data => {
-				items[ index ] = { ...data, ...item };
-			} );
-		} );
-
-		Promise.all( promises ).then( () => {
-			setAttributes( { galleryImages: items } );
-		} );
-	};
 
 	return (
 		<BlockControls>
@@ -55,7 +43,7 @@ const SlideshowBlockControls = function( props ) {
 					multiple
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					value={ galleryImages.map( ( image ) => image.id ) }
-					onSelect={ onChangeGallery }
+					onSelect={ onSelectImages }
 					render={ ( { open } ) => (
 						<Button
 							className="components-icon-button components-toolbar__control"
