@@ -10,8 +10,6 @@ const AdvancedGalleryPreview = ( props ) => {
 	const { attributes } = props;
 	const gallery = attributes?.images;
 
-	console.log( attributes.contentAreaWidth );
-
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
 
