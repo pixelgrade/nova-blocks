@@ -31110,7 +31110,7 @@ var utils_getMapStyles = function getMapStyles() {
   var attributes = this.props.attributes;
   var styleData = attributes.styleData,
       styleSlug = attributes.styleSlug;
-  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
+  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
   var selectedStyles = google_map_styles.find(function (style) {
     return style.slug === styleSlug;
   });
