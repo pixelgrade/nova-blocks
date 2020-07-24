@@ -1,20 +1,8 @@
-import classnames from 'classnames';
-import { some, pickBy, isUndefined } from "lodash";
 import { Collection } from '../../components';
 import CardMedia from './media';
 import { ControlsSection, ControlsTab } from "../../components/control-sections";
 
 const { apiFetch } = wp;
-
-const {
-	compose
-} = wp.compose;
-
-const {
-	BlockIcon,
-	RichText,
-	InspectorControls,
-} = wp.blockEditor;
 
 const { __ } = wp.i18n;
 
@@ -25,10 +13,7 @@ const {
 } = wp.date;
 
 const {
-	PanelBody,
-	Placeholder,
 	RangeControl,
-	Spinner
 } = wp.components;
 
 const {
@@ -76,7 +61,6 @@ const PostsEdit = ( props ) => {
 	const {
 		attributes,
 		setAttributes,
-		className,
 		posts,
 		clientId,
 		markPostsAsDisplayed,
@@ -93,7 +77,6 @@ const PostsEdit = ( props ) => {
 		showSubtitle,
 	} = attributes;
 
-	const hasPosts = Array.isArray( posts ) && posts.length;
 	const TitleTagName = `h${ level + 1 }`;
 	const SubtitleTagName = `h${ level + 2 }`;
 	const dateFormat = __experimentalGetSettings().formats.date;
@@ -188,6 +171,6 @@ const PostsEdit = ( props ) => {
 			</Collection>
 		</Fragment>
 	)
-}
+};
 
 export default PostsEdit;

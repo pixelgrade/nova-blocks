@@ -1,0 +1,58 @@
+{
+	"gridColumns": {
+		"type": "number",
+		"default": 6
+	},
+	"minGridColumns": {
+		"type": "number",
+		"default": 1
+	},
+	"maxGridColumns": {
+		"type": "number",
+		"default": 10
+	},
+	"gridRows": {
+		"type": "number",
+		"default": 6
+	},
+	"minGridRows": {
+		"type": "number",
+		"default": 1
+	},
+	"maxGridRows": {
+		"type": "number",
+		"default": 10
+	},
+	"featureSize": {
+		"type": "number",
+		"default": 2
+	},
+	"featurePosition": {
+		"type": "number",
+		"default": 2
+	},
+	"columnsFragmentation": {
+		"type": "number",
+		"default": 5
+	},
+	"boostFeatureEmphasis": {
+		"type": "boolean",
+		"default": true
+	},
+	"subFeature": {
+		"type": "boolean",
+		"default": false
+	},
+	"balanceMDandIW": {
+		"type": "boolean",
+		"default": false
+	},
+	"hierarchyCrossing": {
+		"type": "number",
+		"default": 0
+	},
+	"flipColsAndRows": {
+		"type": "boolean",
+		"default": false
+	}
+}

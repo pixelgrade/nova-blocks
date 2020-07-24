@@ -12,6 +12,7 @@ import "./filters/with-overlay-color-attributes";
 import "./filters/with-controls-sections";
 import "./filters/with-space-and-sizing-controls";
 import "./filters/with-inner-blocks";
+import "./filters/with-grid-generator";
 
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
