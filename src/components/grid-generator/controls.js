@@ -45,32 +45,30 @@ const MinMaxControl = ( props ) => {
 				min={ minValue }
 				max={ maxValue }
 			/>
-			<div hidden>
-				<RangeControl
-					label={ __( `Min ${ label }`, '__plugin_txtd' ) }
-					value={ minValue }
-					onChange={ minValue => {
-						setAttributes( {
-							[minAttributeName]: minValue,
-							[attributeName]: Math.min( Math.max( minValue, value ), maxValue )
-						} );
-					} }
-					min={ absMinValue }
-					max={ maxValue }
-				/>
-				<RangeControl
-					label={ __( `Max ${ label }`, '__plugin_txtd' ) }
-					value={ maxValue }
-					onChange={ maxValue => {
-						setAttributes( {
-							[maxAttributeName]: maxValue,
-							[attributeName]: Math.min( Math.max( minValue, value ), maxValue )
-						} );
-					} }
-					min={ minValue }
-					max={ absMaxValue }
-				/>
-			</div>
+			<RangeControl
+				label={ __( `Min ${ label }`, '__plugin_txtd' ) }
+				value={ minValue }
+				onChange={ minValue => {
+					setAttributes( {
+						[minAttributeName]: minValue,
+						[attributeName]: Math.min( Math.max( minValue, value ), maxValue )
+					} );
+				} }
+				min={ absMinValue }
+				max={ maxValue }
+			/>
+			<RangeControl
+				label={ __( `Max ${ label }`, '__plugin_txtd' ) }
+				value={ maxValue }
+				onChange={ maxValue => {
+					setAttributes( {
+						[maxAttributeName]: maxValue,
+						[attributeName]: Math.min( Math.max( minValue, value ), maxValue )
+					} );
+				} }
+				min={ minValue }
+				max={ absMaxValue }
+			/>
 		</Fragment>
 	);
 };
@@ -127,6 +125,11 @@ const GridGenerator = ( props ) => {
 		featureSize,
 		featurePosition,
 		columnsFragmentation,
+
+		imageWeightLeft,
+		imageWeightRight,
+		metaWeightLeft,
+		metaWeightRight,
 
 		boostFeatureEmphasis,
 		subFeature,
@@ -186,6 +189,34 @@ const GridGenerator = ( props ) => {
 						} }
 						min={ getMinColumnsFragmentation( attributes ) }
 						max={ getMaxColumnsFragmentation( attributes ) }
+					/>
+					<RangeControl
+						label={ __( `Image Weight Left`, '__plugin_txtd' ) }
+						value={ imageWeightLeft }
+						onChange={ imageWeightLeft => { setAttributes( { imageWeightLeft } ) } }
+						min={ 0 }
+						max={ 10 }
+					/>
+					<RangeControl
+						label={ __( `Image Weight Right`, '__plugin_txtd' ) }
+						value={ imageWeightRight }
+						onChange={ imageWeightRight => { setAttributes( { imageWeightRight } ) } }
+						min={ 0 }
+						max={ 10 }
+					/>
+					<RangeControl
+						label={ __( `Meta Weight Left`, '__plugin_txtd' ) }
+						value={ metaWeightLeft }
+						onChange={ metaWeightLeft => { setAttributes( { metaWeightLeft } ) } }
+						min={ 0 }
+						max={ 10 }
+					/>
+					<RangeControl
+						label={ __( `Meta Weight Right`, '__plugin_txtd' ) }
+						value={ metaWeightRight }
+						onChange={ metaWeightRight => { setAttributes( { metaWeightRight } ) } }
+						min={ 0 }
+						max={ 10 }
 					/>
 				</ControlsGroup>
 				<ControlsGroup title={ __( 'Playful parameters' ) }>

@@ -1,5 +1,3 @@
-import { isUndefined, pickBy } from "lodash";
-
 import QueryControls from '../../components/query-controls';
 
 import {
@@ -8,15 +6,13 @@ import {
 } from "./utils";
 
 import { STORE_NAME, registerQueryStore } from "./store";
-import {ControlsSection, ControlsTab} from "../../components/control-sections";
+import { ControlsSection, ControlsTab } from "../../components/control-sections";
 
 registerQueryStore( `novablocks/${ STORE_NAME }` );
 
 const { __ } = wp.i18n;
 const { addFilter } = wp.hooks;
 const { Fragment } = wp.element;
-const { InspectorControls } = wp.blockEditor;
-const { PanelBody } = wp.components;
 
 const {
 	compose,

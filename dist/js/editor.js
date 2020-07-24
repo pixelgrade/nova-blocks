@@ -14975,7 +14975,7 @@ module.exports = isShallowEqualArrays;
 /* 299 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"gridColumns\":{\"type\":\"number\",\"default\":6},\"minGridColumns\":{\"type\":\"number\",\"default\":1},\"maxGridColumns\":{\"type\":\"number\",\"default\":10},\"gridRows\":{\"type\":\"number\",\"default\":6},\"minGridRows\":{\"type\":\"number\",\"default\":1},\"maxGridRows\":{\"type\":\"number\",\"default\":10},\"featureSize\":{\"type\":\"number\",\"default\":2},\"featurePosition\":{\"type\":\"number\",\"default\":2},\"columnsFragmentation\":{\"type\":\"number\",\"default\":5},\"boostFeatureEmphasis\":{\"type\":\"boolean\",\"default\":true},\"subFeature\":{\"type\":\"boolean\",\"default\":false},\"balanceMDandIW\":{\"type\":\"boolean\",\"default\":false},\"hierarchyCrossing\":{\"type\":\"number\",\"default\":0},\"flipColsAndRows\":{\"type\":\"boolean\",\"default\":false}}");
+module.exports = JSON.parse("{\"gridColumns\":{\"type\":\"number\",\"default\":6},\"minGridColumns\":{\"type\":\"number\",\"default\":1},\"maxGridColumns\":{\"type\":\"number\",\"default\":10},\"gridRows\":{\"type\":\"number\",\"default\":6},\"minGridRows\":{\"type\":\"number\",\"default\":1},\"maxGridRows\":{\"type\":\"number\",\"default\":10},\"featureSize\":{\"type\":\"number\",\"default\":2},\"featurePosition\":{\"type\":\"number\",\"default\":2},\"columnsFragmentation\":{\"type\":\"number\",\"default\":5},\"imageWeightLeft\":{\"type\":\"number\",\"default\":8},\"imageWeightRight\":{\"type\":\"number\",\"default\":0},\"metaWeightLeft\":{\"type\":\"number\",\"default\":7},\"metaWeightRight\":{\"type\":\"number\",\"default\":0},\"boostFeatureEmphasis\":{\"type\":\"boolean\",\"default\":true},\"subFeature\":{\"type\":\"boolean\",\"default\":false},\"balanceMDandIW\":{\"type\":\"boolean\",\"default\":false},\"hierarchyCrossing\":{\"type\":\"number\",\"default\":0},\"flipColsAndRows\":{\"type\":\"boolean\",\"default\":false}}");
 
 /***/ }),
 /* 300 */,
@@ -31307,8 +31307,6 @@ store_registerQueryStore("novablocks/".concat(store_STORE_NAME));
 var with_latest_posts_ = wp.i18n.__;
 var with_latest_posts_addFilter = wp.hooks.addFilter;
 var with_latest_posts_Fragment = wp.element.Fragment;
-var with_latest_posts_InspectorControls = wp.blockEditor.InspectorControls;
-var with_latest_posts_PanelBody = wp.components.PanelBody;
 var with_latest_posts_wp$compose = wp.compose,
     with_latest_posts_compose = with_latest_posts_wp$compose.compose,
     with_latest_posts_createHigherOrderComponent = with_latest_posts_wp$compose.createHigherOrderComponent;
@@ -31842,9 +31840,7 @@ var controls_MinMaxControl = function MinMaxControl(props) {
     },
     min: minValue,
     max: maxValue
-  }), Object(external_React_["createElement"])("div", {
-    hidden: true
-  }, Object(external_React_["createElement"])(controls_RangeControl, {
+  }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Min ".concat(label), '__plugin_txtd'),
     value: minValue,
     onChange: function onChange(minValue) {
@@ -31864,7 +31860,7 @@ var controls_MinMaxControl = function MinMaxControl(props) {
     },
     min: minValue,
     max: absMaxValue
-  })));
+  }));
 };
 
 var getMinFeatureSize = function getMinFeatureSize(attributes) {
@@ -31909,6 +31905,10 @@ var controls_GridGenerator = function GridGenerator(props) {
   var featureSize = attributes.featureSize,
       featurePosition = attributes.featurePosition,
       columnsFragmentation = attributes.columnsFragmentation,
+      imageWeightLeft = attributes.imageWeightLeft,
+      imageWeightRight = attributes.imageWeightRight,
+      metaWeightLeft = attributes.metaWeightLeft,
+      metaWeightRight = attributes.metaWeightRight,
       boostFeatureEmphasis = attributes.boostFeatureEmphasis,
       subFeature = attributes.subFeature,
       balanceMDandIW = attributes.balanceMDandIW,
@@ -31968,6 +31968,46 @@ var controls_GridGenerator = function GridGenerator(props) {
     },
     min: getMinColumnsFragmentation(attributes),
     max: getMaxColumnsFragmentation(attributes)
+  }), Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Image Weight Left", '__plugin_txtd'),
+    value: imageWeightLeft,
+    onChange: function onChange(imageWeightLeft) {
+      setAttributes({
+        imageWeightLeft: imageWeightLeft
+      });
+    },
+    min: 0,
+    max: 10
+  }), Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Image Weight Right", '__plugin_txtd'),
+    value: imageWeightRight,
+    onChange: function onChange(imageWeightRight) {
+      setAttributes({
+        imageWeightRight: imageWeightRight
+      });
+    },
+    min: 0,
+    max: 10
+  }), Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Meta Weight Left", '__plugin_txtd'),
+    value: metaWeightLeft,
+    onChange: function onChange(metaWeightLeft) {
+      setAttributes({
+        metaWeightLeft: metaWeightLeft
+      });
+    },
+    min: 0,
+    max: 10
+  }), Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Meta Weight Right", '__plugin_txtd'),
+    value: metaWeightRight,
+    onChange: function onChange(metaWeightRight) {
+      setAttributes({
+        metaWeightRight: metaWeightRight
+      });
+    },
+    min: 0,
+    max: 10
   })), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Playful parameters')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
@@ -38448,13 +38488,42 @@ function cards_collection_init() {
 }
 
 /* harmony default export */ var cards_collection = (cards_collection_init);
-// CONCATENATED MODULE: ./src/blocks/posts-collection/media.js
+// CONCATENATED MODULE: ./src/blocks/posts-collection/controls.js
+
+
+var posts_collection_controls_ = wp.i18n.__;
+var posts_collection_controls_RangeControl = wp.components.RangeControl;
+
+var controls_Controls = function Controls(props) {
+  var columns = props.attributes.columns,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: posts_collection_controls_('Display'),
+    priority: 10
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: posts_collection_controls_('Settings')
+  }, Object(external_React_["createElement"])(posts_collection_controls_RangeControl, {
+    key: 'posts-collection-display-controls',
+    value: columns,
+    onChange: function onChange(columns) {
+      return setAttributes({
+        columns: columns
+      });
+    },
+    label: posts_collection_controls_('Columns'),
+    min: 2,
+    max: 4
+  })));
+};
+
+/* harmony default export */ var posts_collection_controls = (controls_Controls);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/components/media.js
 
 
 
-function posts_collection_media_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function components_media_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function posts_collection_media_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { posts_collection_media_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { posts_collection_media_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function components_media_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { components_media_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { components_media_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 
 var media_withSelect = wp.data.withSelect;
@@ -38475,7 +38544,7 @@ var media_CardMedia = function CardMedia(_ref) {
   }, placeholder);
 };
 
-/* harmony default export */ var posts_collection_media = (media_withSelect(function (select, ownProps) {
+/* harmony default export */ var components_media = (media_withSelect(function (select, ownProps) {
   var _select = select('core'),
       getMedia = _select.getMedia;
 
@@ -38488,44 +38557,30 @@ var media_CardMedia = function CardMedia(_ref) {
   var featured_media_obj = getMedia(post.featured_media);
   var featured_media_url = featured_media_obj ? featured_media_obj.source_url : null;
   return {
-    post: posts_collection_media_objectSpread(posts_collection_media_objectSpread({}, post), {}, {
+    post: components_media_objectSpread(components_media_objectSpread({}, post), {}, {
       featured_media_url: featured_media_url
     })
   };
 })(media_CardMedia));
-// CONCATENATED MODULE: ./src/blocks/posts-collection/edit.js
+// CONCATENATED MODULE: ./src/blocks/posts-collection/components/category.js
 
 
 
 
 
 
+function category_createSuper(Derived) { var hasNativeReflectConstruct = category_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
 
-
-function posts_collection_edit_createSuper(Derived) { var hasNativeReflectConstruct = posts_collection_edit_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
-
-function posts_collection_edit_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-
-
+function category_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 var _wp = wp,
-    edit_apiFetch = _wp.apiFetch;
-var posts_collection_edit_ = wp.i18n.__;
-var _wp$date = wp.date,
-    __experimentalGetSettings = _wp$date.__experimentalGetSettings,
-    dateI18n = _wp$date.dateI18n,
-    format = _wp$date.format;
-var edit_RangeControl = wp.components.RangeControl;
-var posts_collection_edit_wp$element = wp.element,
-    posts_collection_edit_Component = posts_collection_edit_wp$element.Component,
-    posts_collection_edit_Fragment = posts_collection_edit_wp$element.Fragment,
-    edit_RawHTML = posts_collection_edit_wp$element.RawHTML;
+    category_apiFetch = _wp.apiFetch;
+var category_Component = wp.element.Component;
 
-var edit_Category = /*#__PURE__*/function (_Component) {
+var category_Category = /*#__PURE__*/function (_Component) {
   inherits_default()(Category, _Component);
 
-  var _super = posts_collection_edit_createSuper(Category);
+  var _super = category_createSuper(Category);
 
   function Category() {
     var _this;
@@ -38546,7 +38601,7 @@ var edit_Category = /*#__PURE__*/function (_Component) {
 
       var id = this.props.id;
       this.isStillMounted = true;
-      this.fetchRequest = edit_apiFetch({
+      this.fetchRequest = category_apiFetch({
         path: "/wp/v2/categories/".concat(id)
       }).then(function (category) {
         if (_this2.isStillMounted) {
@@ -38569,11 +38624,721 @@ var edit_Category = /*#__PURE__*/function (_Component) {
   }]);
 
   return Category;
-}(posts_collection_edit_Component);
+}(category_Component);
 
-var edit_PostsEdit = function PostsEdit(props) {
+/* harmony default export */ var category = (category_Category);
+// CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
+// This is the main workhorse containing the logic of our layout "engine".
+// Given a state, it will return a list of posts with details to handle their layout.
+var applyLayoutEngine = function applyLayoutEngine(state) {
+  var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
+  // we need to do a couple of preliminary calculations.
+  // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
+  // This way we gain an easier understanding of what is going on at each step of the logic.
+  // In each matrix we will ignore index 0 since it is easier to start from 1,
+  // the same way CSS grid columns and rows behave.
+  // The order of these operation is important!
+  debug ? console.log("\nGenerating a new layout...\n\n") : false; // The "null" character:
+
+  var emptyChar = "X"; // These are the matrices we are going to calculate:
+  // The nth matrix: a bidimensional matrix the same size as the grid, holding in each cell what nth post should that cell belong to.
+  // From this matrix we can extrapolate many details since the same nth value will be used to fill all the cells belonging to a post.
+  // So we know the position and dimensions.
+
+  var nthMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The image weight matrix
+
+  var imageWeightMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The meta-details matrix
+
+  var metaDetailsMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // Helper matrices.
+  // The columns width matrix
+
+  var widthMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar); // The vertical fragment size matrix
+
+  var verticalFragmentSizeMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar);
+  var i, j; // Lets start PRELIMINARY CALCULATIONS!
+
+  /*
+  1. Calculate the columns width matrix.
+     We will take into account the feature position, feature size and fragmentation value.
+     The fragmentation value is interpreted in it's bit format, where 1 means a "cut".
+     The fragmentation value represents the fragmentation of the remaining gridcolumns after the feature size was deducted.
+   */
+
+  var widthIdx = 1; // First, mark the feature.
+
+  for (i = state.featureposition; i < state.featureposition + state.featuresize; i++) {
+    widthMatrix[i] = widthIdx;
+  } // Next, go from left to right in the columns width matrix, and fill each columns with the same unique number,
+  // Taking into account the fragmentation.
+  // And remember the positions we are int the virtual matrix without the feature.
+
+
+  var frgIdx = 0;
+  widthIdx++;
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    if (widthMatrix[i] === emptyChar) {
+      frgIdx++; // If the previous position has a different number than the current one, it is clear we should increment and write.
+
+      if (widthMatrix[i - 1] !== widthIdx) {
+        widthIdx++;
+      } else {
+        // If the previous position has the same value as the current one, we need to determine
+        // if the fragmentation bit pattern imposes a "cut".
+        var cutMarker = 1 << state.gridcolumns - state.featuresize - frgIdx; // If there is a 1 at this position, make a cut aka increase the number.
+
+        if ((cutMarker & state.fragmentation) === cutMarker) {
+          widthIdx++;
+        }
+      }
+
+      widthMatrix[i] = widthIdx;
+    }
+  }
+
+  debug ? console.log("The width matrix: ".padEnd(45, ' ') + widthMatrix) : false;
+  /*
+  2. Calculate the image weight matrix.
+     We will spread the image weight range left-to-right. Each column will consume the range according to its width.
+     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
+    */
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var end = i;
+
+    while (widthMatrix[end + 1] === widthMatrix[i]) {
+      end++;
+    } // Now calculate.
+
+
+    if (i === 1) {
+      imageWeightMatrix[1][i] = state.imageweightleft;
+    } else if (end === state.gridcolumns) {
+      imageWeightMatrix[1][i] = state.imageweightright;
+    } else {
+      imageWeightMatrix[1][i] = Math.round(state.imageweightleft - (state.imageweightleft - state.imageweightright) * (i + end - 1) / (2 * state.gridcolumns));
+    } // Fill the entire column with the same meta-details value.
+
+
+    for (j = i; j <= end; j++) {
+      imageWeightMatrix[1][j] = imageWeightMatrix[1][i];
+    }
+
+    i = end;
+  } // Copy the first row to all of the rest.
+
+
+  for (i = 2; i <= state.gridrows; i++) {
+    imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+  }
+
+  debug ? console.log("The image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
+  /*
+  3. Calculate the meta-details matrix.
+     We will spread the meta-details range left-to-right. Each column will consume the range according to its width.
+     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
+   */
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var _end = i;
+
+    while (widthMatrix[_end + 1] === widthMatrix[i]) {
+      _end++;
+    } // Now calculate.
+
+
+    if (i === 1) {
+      metaDetailsMatrix[1][i] = state.metadetailsleft;
+    } else if (_end === state.gridcolumns) {
+      metaDetailsMatrix[1][i] = state.metadetailsright;
+    } else {
+      metaDetailsMatrix[1][i] = state.metadetailsleft - (state.metadetailsleft - state.metadetailsright) * (i + _end - 1) / (2 * state.gridcolumns); // If we are instructed to balance MD with IW, we will multiply the MD value with the "distance" of the IW value from the "center" of the IW range.
+
+      if (state.balancemdandiw && 0 !== state.imageweightleft - state.imageweightright) {
+        metaDetailsMatrix[1][i] = metaDetailsMatrix[1][i] * (Math.abs(state.imageweightleft - state.imageweightright) / 2 / imageWeightMatrix[1][i]);
+      }
+
+      metaDetailsMatrix[1][i] = Math.round(metaDetailsMatrix[1][i]);
+    } // Fill the entire column with the same meta-details value.
+
+
+    for (j = i; j <= _end; j++) {
+      metaDetailsMatrix[1][j] = metaDetailsMatrix[1][i];
+    }
+
+    i = _end;
+  } // Copy the first row to all of the rest.
+
+
+  for (i = 2; i <= state.gridrows; i++) {
+    metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+  }
+
+  debug ? console.log("The meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
+  /*
+  4. Handle the boost feature emphasis.
+     We will assign the maximum meta-details and image weight value to the feature, and assign its current value to the column holding the maximum values.
+  */
+
+  if (state.boostfeature && state.featuresize > 0) {
+    // Find column with maximum meta-details value, if the feature isn't already at the max.
+    var maxMetaDetailsPos = 1,
+        maxImageWeightPos = 1;
+
+    for (i = 1; i <= state.gridcolumns; i++) {
+      if (metaDetailsMatrix[1][i] > metaDetailsMatrix[1][maxMetaDetailsPos]) {
+        maxMetaDetailsPos = i;
+      }
+
+      if (imageWeightMatrix[1][i] > imageWeightMatrix[1][maxImageWeightPos]) {
+        maxImageWeightPos = i;
+      }
+    }
+
+    if (maxMetaDetailsPos !== state.featureposition) {
+      // We have something to switch.
+      var featureValue = metaDetailsMatrix[1][state.featureposition];
+      var maxValue = metaDetailsMatrix[1][maxMetaDetailsPos]; // Go and fill each column with the switched values.
+
+      i = maxMetaDetailsPos;
+
+      while (widthMatrix[i] === widthMatrix[maxMetaDetailsPos]) {
+        metaDetailsMatrix[1][i] = featureValue;
+        i++;
+      }
+
+      i = state.featureposition;
+
+      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
+        metaDetailsMatrix[1][i] = maxValue;
+        i++;
+      } // Copy the first row to all of the rest.
+
+
+      for (i = 2; i <= state.gridrows; i++) {
+        metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+      }
+
+      debug ? console.log("The boosted feature meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
+    }
+
+    if (maxImageWeightPos !== state.featureposition) {
+      // We have something to switch.
+      var _featureValue = imageWeightMatrix[1][state.featureposition];
+      var _maxValue = imageWeightMatrix[1][maxImageWeightPos]; // Go and fill each column with the switched values.
+
+      i = maxImageWeightPos;
+
+      while (widthMatrix[i] === widthMatrix[maxImageWeightPos]) {
+        imageWeightMatrix[1][i] = _featureValue;
+        i++;
+      }
+
+      i = state.featureposition;
+
+      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
+        imageWeightMatrix[1][i] = _maxValue;
+        i++;
+      } // Copy the first row to all of the rest.
+
+
+      for (i = 2; i <= state.gridrows; i++) {
+        imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+      }
+
+      debug ? console.log("The boosted feature image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
+    }
+  }
+  /*
+  5. Determine the vertical fragment size matrix.
+     The fragment size will range in the number of grid rows and 1.
+  */
+  // First determine the max meta-details and image weight value.
+
+
+  var maxMetaDetailsValue = metaDetailsMatrix[1][1],
+      maxImageWeightValue = imageWeightMatrix[1][1];
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    if (metaDetailsMatrix[1][i] > maxMetaDetailsValue) {
+      maxMetaDetailsValue = metaDetailsMatrix[1][i];
+    }
+
+    if (imageWeightMatrix[1][i] > maxImageWeightValue) {
+      maxImageWeightValue = imageWeightMatrix[1][i];
+    }
+  } // For the purpose of these calculations, maxMetaDetailsValue and maxImageWeightValue can't be zero.
+
+
+  if (maxImageWeightValue < 1) {
+    maxImageWeightValue = 1;
+  }
+
+  if (maxMetaDetailsValue < 1) {
+    maxMetaDetailsValue = 1;
+  }
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var _end2 = i;
+
+    while (widthMatrix[_end2 + 1] === widthMatrix[i]) {
+      _end2++;
+    } // Now calculate.
+
+
+    verticalFragmentSizeMatrix[i] = Math.round((metaDetailsMatrix[1][i] / maxMetaDetailsValue + imageWeightMatrix[1][i] / maxImageWeightValue) / 2 * state.gridrows); // The vertical fragment size can't be more than 3 times the column width (a really tall post).
+
+    if (verticalFragmentSizeMatrix[i] > (_end2 - i + 1) * 3) {
+      verticalFragmentSizeMatrix[i] = (_end2 - i + 1) * 3;
+    } // Also the vertical fragment size can't be less than 1.
+
+
+    if (verticalFragmentSizeMatrix[i] < 1) {
+      verticalFragmentSizeMatrix[i] = 1;
+    } // If the sub feature option is active, and we have a single column for the feature, reduce the vertical fragmentation with 25%.
+
+
+    if (state.subfeature && i === state.featureposition && state.featuresize > 0 && verticalFragmentSizeMatrix[i] === state.gridrows) {
+      verticalFragmentSizeMatrix[i] = Math.floor(verticalFragmentSizeMatrix[i] * 0.75);
+    } // Safety measures.
+
+
+    if (verticalFragmentSizeMatrix[i] < 1) {
+      verticalFragmentSizeMatrix[i] = 1;
+    } else if (verticalFragmentSizeMatrix[i] > state.gridrows) {
+      verticalFragmentSizeMatrix[i] = state.gridrows;
+    } // Fill the entire column with the same fragment size.
+
+
+    for (j = i; j <= _end2; j++) {
+      verticalFragmentSizeMatrix[j] = verticalFragmentSizeMatrix[i];
+    }
+
+    i = _end2;
+  }
+
+  debug ? console.log("The vertical fragment size matrix: ".padEnd(45, ' ') + verticalFragmentSizeMatrix) : false;
+  /*
+  6. Determine the nth bidimensional matrix.
+     Each grid cell will be filled with the nth post that cell belongs to. From this matrix we can determine the post grid coordinates,
+     its aspect ratio, area, etc.
+  */
+  // We start with the first post in the list.
+
+  var currentNth = 1; // Start with the feature column.
+
+  if (state.featuresize > 0) {
+    i = 1;
+
+    while (i <= verticalFragmentSizeMatrix[state.featureposition]) {
+      j = state.featureposition;
+
+      do {
+        nthMatrix[i][j] = currentNth;
+        j++;
+      } while (widthMatrix[state.featureposition] === widthMatrix[j]);
+
+      i++;
+    }
+
+    currentNth++;
+
+    if (i <= state.gridrows) {
+      // We have room under the feature for a secondary feature post.
+      // We will reduce the meta-details and image weight by 33% that of the main feature post.
+      while (i <= state.gridrows) {
+        j = state.featureposition;
+
+        do {
+          nthMatrix[i][j] = currentNth; // Adjust the meta-details and image weight.
+
+          metaDetailsMatrix[i][j] = Math.round(metaDetailsMatrix[i][j] * 0.66);
+          imageWeightMatrix[i][j] = Math.round(imageWeightMatrix[i][j] * 0.66);
+          j++;
+        } while (widthMatrix[state.featureposition] === widthMatrix[j]);
+
+        i++;
+      }
+
+      currentNth++;
+    }
+  } // Now start from the left top corner and go through each column, left to right.
+
+
+  var currentColumnStartCol = 1;
+  var currentPostStartRow;
+
+  while (currentColumnStartCol <= state.gridcolumns) {
+    if (nthMatrix[1][currentColumnStartCol] !== emptyChar) {
+      currentColumnStartCol++;
+      continue;
+    } // Fill the current column with posts.
+
+
+    currentPostStartRow = 1;
+
+    while (currentPostStartRow <= state.gridrows) {
+      i = currentPostStartRow;
+
+      while (i <= currentPostStartRow + verticalFragmentSizeMatrix[currentColumnStartCol] - 1 && i <= state.gridrows) {
+        j = currentColumnStartCol;
+
+        do {
+          nthMatrix[i][j] = currentNth;
+          j++;
+        } while (widthMatrix[currentColumnStartCol] === widthMatrix[j]);
+
+        i++;
+      }
+
+      currentNth++;
+      currentPostStartRow = i;
+    }
+  }
+
+  if (debug) {
+    console.log("\nThe nth matrix: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
+
+    for (i = 1; i < nthMatrix.length; i++) {
+      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
+    }
+  }
+  /*
+  7. Handle the hierarchy crossing.
+     We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
+     We will only cross if the left post matches in height a post or more on the right.
+     The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
+     Also, crossing at the top of the layout is more expensive than crossing at a lower row.
+  */
+  // We start with the first post in the list.
+
+
+  var maxNth = currentNth;
+  var hierachyCrossingStrenth = state.hierarchycrossing;
+  currentNth = 1;
+
+  while (hierachyCrossingStrenth > 0 && currentNth <= maxNth) {
+    var _currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (false === _currentPostDetails) {
+      currentNth++;
+      continue;
+    } // If the current post is all the way to the right edge, stop.
+
+
+    if (_currentPostDetails.endGridColumn === state.gridcolumns) {
+      break;
+    } // Now identify its right-side neighbors.
+
+
+    var topNeighborPostDetails = getNthPostDetails(nthMatrix[_currentPostDetails.startGridRow][_currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+    var bottomNeighborPostDetails = getNthPostDetails(nthMatrix[_currentPostDetails.endGridRow][_currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix); // If the neighbors don't match the height in rows of the current post, skip this post from crossing.
+
+    if (topNeighborPostDetails.startGridRow !== _currentPostDetails.startGridRow || bottomNeighborPostDetails.endGridRow !== _currentPostDetails.endGridRow) {
+      currentNth++;
+      continue;
+    } // Calculate the score of the to-be replaced post(s).
+    // Each post's score correlated to its nth value. The lower the nth value the bigger the score boost.
+
+
+    var replacedPostScore = maxNth / topNeighborPostDetails.nth * (topNeighborPostDetails.area + topNeighborPostDetails.imageWeight + topNeighborPostDetails.metaDetails);
+
+    if (bottomNeighborPostDetails.nth !== topNeighborPostDetails.nth) {
+      var counter = 1;
+
+      for (i = topNeighborPostDetails.nth + 1; i <= bottomNeighborPostDetails.nth; i++) {
+        var postDetails = getNthPostDetails(i, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+        if (false === postDetails) {
+          continue;
+        }
+
+        counter++; // It is increasingly "harder" to replace multiple posts.
+
+        replacedPostScore += maxNth / postDetails.nth * (postDetails.area + postDetails.imageWeight + postDetails.metaDetails * counter) * counter;
+      }
+    } // If the to-be replaced post(s) score is larger than the remaining hierarchy crossing strength, nothing to do.
+
+
+    if (hierachyCrossingStrenth < replacedPostScore) {
+      currentNth++;
+      continue;
+    }
+
+    var currentPostScore = maxNth / _currentPostDetails.nth * (_currentPostDetails.area + _currentPostDetails.imageWeight + _currentPostDetails.metaDetails) * Math.pow(2 * hierachyCrossingStrenth / 50, 3); // If the current post score is bigger than the to-be replaced post(s) score, it's a go.
+
+    if (currentPostScore > replacedPostScore) {
+      // Expand the current post over the replaced ones.
+      for (i = topNeighborPostDetails.startGridRow; i <= bottomNeighborPostDetails.endGridRow; i++) {
+        for (j = topNeighborPostDetails.startGridColumn; j <= topNeighborPostDetails.endGridColumn; j++) {
+          nthMatrix[i][j] = currentNth; // Also replace the image weight and meta-details.
+
+          imageWeightMatrix[i][j] = _currentPostDetails.imageWeight;
+          metaDetailsMatrix[i][j] = _currentPostDetails.metaDetails;
+        }
+      } // Decrease the crossing strength.
+
+
+      hierachyCrossingStrenth -= replacedPostScore; // We now have a gap in the post list. We need to renumber the posts after the replaced ones and adjust the maxnth.
+      // The image weight and meta-details remain unchanged.
+      // Work with the new maxNth.
+
+      maxNth = renumberNthMatrix(nthMatrix);
+    }
+
+    currentNth++;
+  }
+
+  if (debug) {
+    console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
+
+    for (i = 1; i < nthMatrix.length; i++) {
+      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
+    }
+
+    console.log("\nThe final image weight full matrix: ".padEnd(42, ' ') + '0 - ' + imageWeightMatrix[0].join(' '));
+
+    for (i = 1; i < imageWeightMatrix.length; i++) {
+      console.log(' '.padEnd(41, ' ') + i + ' - ' + imageWeightMatrix[i].join(' '));
+    }
+
+    console.log("\nThe final meta-details full matrix: ".padEnd(42, ' ') + '0 - ' + metaDetailsMatrix[0].join(' '));
+
+    for (i = 1; i < metaDetailsMatrix.length; i++) {
+      console.log(' '.padEnd(41, ' ') + i + ' - ' + metaDetailsMatrix[i].join(' '));
+    }
+  }
+  /*
+  8. Finally, generate the posts list.
+  */
+
+
+  var postsList = [];
+  currentNth = 1;
+  var currentPostDetails = {};
+
+  while (currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix)) {
+    var newLayoutPost = {
+      'nthPost': currentNth,
+      'gridArea': "".concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.endGridRow + 1, " / ").concat(currentPostDetails.endGridColumn + 1),
+      'imageWeight': currentPostDetails.imageWeight,
+      'metaDetails': currentPostDetails.metaDetails
+    }; // If we should flip rows and columns, simply flip them in the gridArea.
+
+    if (state.flipcolsrows) {
+      newLayoutPost.gridArea = "".concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.endGridColumn + 1, " / ").concat(currentPostDetails.endGridRow + 1);
+    }
+
+    postsList.push(newLayoutPost);
+    currentNth++;
+  }
+
+  console.log(postsList);
+  return postsList;
+};
+
+var renumberNthMatrix = function renumberNthMatrix(nthMatrix) {
+  var newNth = 1;
+  var postDetails;
+
+  for (var nth = 1; nth <= getMaxNth(nthMatrix); nth++) {
+    // If we can't find a nth post, it means it was removed and we need to adjust.
+    postDetails = getNthPostDetails(nth, nthMatrix);
+
+    if (false === postDetails) {
+      continue;
+    }
+
+    if (postDetails.nth > newNth) {
+      // Change the current post's nth.
+      for (var i = postDetails.startGridRow; i <= postDetails.endGridRow; i++) {
+        for (var j = postDetails.startGridColumn; j <= postDetails.endGridColumn; j++) {
+          nthMatrix[i][j] = newNth;
+        }
+      }
+    }
+
+    newNth++;
+  } // Return the maxNth.
+
+
+  return newNth - 1;
+};
+
+var getMaxNth = function getMaxNth(nthMatrix) {
+  var maxNth = 0;
+
+  for (var i = 1; i < nthMatrix.length; i++) {
+    for (var j = 1; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] > maxNth) {
+        maxNth = nthMatrix[i][j];
+      }
+    }
+  }
+
+  return maxNth;
+};
+
+var getNthPostDetails = function getNthPostDetails(nth, nthMatrix) {
+  var metaDetailsMatrix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var imageWeightMatrix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var postDetails = false; // Go through the nthMatrix and search for the currentNth value.
+
+  for (var i = 1; i < nthMatrix.length; i++) {
+    for (var j = 1; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] === nth) {
+        // Found the left top corner.
+        postDetails = {
+          'nth': nth,
+          'startGridColumn': j,
+          'startGridRow': i,
+          'endGridColumn': j,
+          'endGridRow': i,
+          'metaDetails': metaDetailsMatrix ? metaDetailsMatrix[i][j] : false,
+          'imageWeight': imageWeightMatrix ? imageWeightMatrix[i][j] : false,
+          'area': 1
+        }; // Find the right bottom corner.
+
+        while (j < nthMatrix[i].length && nthMatrix[i][j] === nthMatrix[i][j + 1]) {
+          j++;
+        }
+
+        postDetails.endGridColumn = j;
+
+        while (i < nthMatrix.length && nthMatrix[i][j] === nthMatrix[i + 1][j]) {
+          i++;
+        }
+
+        postDetails.endGridRow = i; // Calculate the area.
+
+        postDetails.area = (postDetails.endGridRow - postDetails.startGridRow + 1) * (postDetails.endGridColumn - postDetails.startGridColumn + 1);
+        return postDetails;
+      }
+    }
+  }
+
+  return postDetails;
+};
+
+var initUnidimensionalMatrix = function initUnidimensionalMatrix(matrix, length) {
+  var character = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "X";
+  // The 0 index will be filled with a different character for easier logic.
+  matrix.push("/"); // Go to equal the length, since the 0 index will be ignored.
+  // Fill with "null" entries with the provided character.
+
+  for (var i = 1; i <= length; i++) {
+    matrix.push(character);
+  } // Put an extra entry for easier logic.
+
+
+  matrix.push("/");
+  return matrix;
+};
+
+var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, height, nullChar) {
+  // Put in a guard row, at index 0.
+  matrix.push(initUnidimensionalMatrix([], width, "/")); // Go to equal the width, since the 0 index will be ignored.
+
+  for (var i = 0; i < height; i++) {
+    matrix.push(initUnidimensionalMatrix([], width, nullChar));
+  } // Put in an extra guard row.
+
+
+  matrix.push(initUnidimensionalMatrix([], width, "/"));
+  return matrix;
+};
+// CONCATENATED MODULE: ./src/components/grid-generator/utils.js
+
+
+var prepareAttributes = function prepareAttributes(attributes) {
+  var state = {
+    gridcolumns: attributes === null || attributes === void 0 ? void 0 : attributes.gridColumns,
+    gridrows: attributes === null || attributes === void 0 ? void 0 : attributes.gridRows,
+    featuresize: attributes === null || attributes === void 0 ? void 0 : attributes.featureSize,
+    featureposition: attributes === null || attributes === void 0 ? void 0 : attributes.featurePosition,
+    fragmentation: attributes === null || attributes === void 0 ? void 0 : attributes.columnsFragmentation,
+    imageweightleft: attributes === null || attributes === void 0 ? void 0 : attributes.imageWeightLeft,
+    imageweightright: attributes === null || attributes === void 0 ? void 0 : attributes.imageWeightRight,
+    metadetailsleft: attributes === null || attributes === void 0 ? void 0 : attributes.metaWeightLeft,
+    metadetailsright: attributes === null || attributes === void 0 ? void 0 : attributes.metaWeightRight,
+    boostfeature: attributes === null || attributes === void 0 ? void 0 : attributes.boostFeatureEmphasis,
+    subfeature: attributes === null || attributes === void 0 ? void 0 : attributes.subFeature,
+    balancemdandiw: attributes === null || attributes === void 0 ? void 0 : attributes.balanceMDandIW,
+    hierarchycrossing: attributes === null || attributes === void 0 ? void 0 : attributes.hierarchyCrossing,
+    flipcolsrows: attributes === null || attributes === void 0 ? void 0 : attributes.flipColsAndRows
+  };
+  return state;
+};
+
+var utils_getGridItems = function getGridItems(attributes) {
+  var gridItems = applyLayoutEngine(prepareAttributes(attributes));
+  return gridItems.map(function (gridItem) {
+    return Object.assign({}, gridItem, {
+      class: getGridItemClassname(gridItem),
+      style: getGridItemStyle(gridItem)
+    });
+  });
+};
+var utils_getGridStyle = function getGridStyle(attributes) {
+  var gridColumns = attributes.gridColumns,
+      gridRows = attributes.gridRows,
+      flipColsAndRows = attributes.flipColsAndRows;
+  return {
+    display: 'grid',
+    gridTemplateColumns: "repeat( ".concat(!flipColsAndRows ? gridColumns : gridRows, ", 1fr )"),
+    gridTemplateRows: "repeat( ".concat(!flipColsAndRows ? gridRows : gridColumns, ", auto )")
+  };
+};
+var getGridItemStyle = function getGridItemStyle(gridItem, attributes) {
+  var styles = {
+    gridArea: gridItem.gridArea
+  };
+  styles['--grid-item-image-display'] = gridItem.imageWeight > 0 ? 'block' : 'none';
+  styles['--grid-item-image-weight'] = gridItem.imageWeight;
+  styles['--grid-item-subtitle-display'] = gridItem.metaDetails > 2 ? 'block' : 'none';
+  styles['--grid-item-buttons-display'] = gridItem.metaDetails > 3 ? 'block' : 'none';
+  styles['--grid-item-meta-display'] = gridItem.metaDetails > 4 ? 'block' : 'none';
+  styles['--grid-item-content-display'] = gridItem.metaDetails > 5 ? 'block' : 'none';
+  return styles;
+};
+var getGridItemClassname = function getGridItemClassname(gridItem, attributes) {
+  var classes = ['novablocks-grid__item'];
+  var gridArea = gridItem.gridArea.split(' / ').map(function (value) {
+    return parseInt(value, 10);
+  });
+  var isLandscape = gridArea[3] - gridArea[1] > gridArea[2] - gridArea[0];
+
+  if (isLandscape) {
+    classes.push('novablocks-grid__item--portrait');
+  }
+
+  if (gridItem.imageWeight > 3 && gridItem.metaDetails > 5) {
+    classes.push('novablocks-grid__item--larger-title');
+  }
+
+  if (isLandscape && gridItem.metaDetails < 3 || gridItem.metaDetails < 2) {
+    classes.push('novablocks-grid__item--smaller-title');
+  }
+
+  return classes.join(" ");
+};
+// CONCATENATED MODULE: ./src/blocks/posts-collection/preview.js
+
+
+
+
+var _wp$date = wp.date,
+    __experimentalGetSettings = _wp$date.__experimentalGetSettings,
+    dateI18n = _wp$date.dateI18n,
+    format = _wp$date.format;
+var preview_RawHTML = wp.element.RawHTML;
+
+var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes,
       posts = props.posts,
       clientId = props.clientId,
       markPostsAsDisplayed = props.markPostsAsDisplayed;
@@ -38591,64 +39356,57 @@ var edit_PostsEdit = function PostsEdit(props) {
   var dateFormat = __experimentalGetSettings().formats.date;
 
   markPostsAsDisplayed(clientId, posts);
-  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: posts_collection_edit_('Display'),
-    priority: 10
-  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
-    label: posts_collection_edit_('Settings')
-  }, Object(external_React_["createElement"])(edit_RangeControl, {
-    key: 'posts-collection-display-controls',
-    value: columns,
-    onChange: function onChange(columns) {
-      return setAttributes({
-        columns: columns
-      });
-    },
-    label: posts_collection_edit_('Columns'),
-    min: 2,
-    max: 4
-  }))), Object(external_React_["createElement"])(components_collection, extends_default()({
-    hasAppender: false
-  }, props), Object(external_React_["createElement"])("div", {
-    className: "block-editor-inner-blocks"
+  var gridItems = utils_getGridItems(attributes);
+  return Object(external_React_["createElement"])("div", {
+    className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {
-    className: "block-editor-block-list__layout"
+    className: "novablocks-grid",
+    style: utils_getGridStyle(attributes)
   }, !!posts && posts.map(function (post, idx) {
     var style = {
       '--columns': columns
     };
+    var gridItem = gridItems[idx];
+
+    if (typeof gridItem === "undefined") {
+      return false;
+    }
+
     return Object(external_React_["createElement"])("div", {
+      className: getGridItemClassname(gridItem, attributes),
+      style: getGridItemStyle(gridItem, attributes)
+    }, Object(external_React_["createElement"])("div", {
       className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
       key: idx,
       style: style
-    }, showMedia && Object(external_React_["createElement"])("div", {
-      className: "wp-block"
+    }, Object(external_React_["createElement"])("div", {
+      className: "wp-block novablocks-grid__item-image"
     }, Object(external_React_["createElement"])("div", {
       className: "novablocks-card__media-wrap"
     }, Object(external_React_["createElement"])("div", {
       className: "novablocks-card__media"
-    }, Object(external_React_["createElement"])(posts_collection_media, {
+    }, Object(external_React_["createElement"])(components_media, {
       post: post
-    })))), showMeta && Object(external_React_["createElement"])("div", {
-      className: "wp-block"
+    })))), Object(external_React_["createElement"])("div", {
+      className: "wp-block novablocks-grid__item-meta"
     }, Object(external_React_["createElement"])("div", {
       className: "novablocks-card__meta"
     }, Object(external_React_["createElement"])("time", {
       dateTime: format('c', post.date_gmt)
-    }, dateI18n(dateFormat, post.date_gmt)))), showTitle && Object(external_React_["createElement"])("div", {
-      className: "wp-block"
+    }, dateI18n(dateFormat, post.date_gmt)))), Object(external_React_["createElement"])("div", {
+      className: "wp-block novablocks-grid__item-title"
     }, Object(external_React_["createElement"])(TitleTagName, {
       className: "novablocks-card__title"
-    }, post.title.raw)), showSubtitle && post.categories.length && Object(external_React_["createElement"])("div", {
-      className: "wp-block"
+    }, post.title.raw)), post.categories.length && Object(external_React_["createElement"])("div", {
+      className: "wp-block novablocks-grid__item-subtitle"
     }, Object(external_React_["createElement"])(SubtitleTagName, {
       className: "novablocks-card__subtitle"
-    }, Object(external_React_["createElement"])(edit_Category, {
+    }, Object(external_React_["createElement"])(category, {
       id: post.categories[0]
-    }))), showDescription && Object(external_React_["createElement"])(edit_RawHTML, {
-      className: "wp-block novablocks-card__description"
-    }, post.excerpt.rendered), showButtons && Object(external_React_["createElement"])("div", {
-      className: "wp-block"
+    }))), Object(external_React_["createElement"])(preview_RawHTML, {
+      className: "wp-block novablocks-grid__item-content novablocks-card__description"
+    }, post.excerpt.rendered), Object(external_React_["createElement"])("div", {
+      className: "wp-block novablocks-grid__item-buttons"
     }, Object(external_React_["createElement"])("div", {
       className: "novablocks-card__buttons"
     }, Object(external_React_["createElement"])("div", {
@@ -38657,8 +39415,19 @@ var edit_PostsEdit = function PostsEdit(props) {
       className: "wp-block-button is-style-text"
     }, Object(external_React_["createElement"])("div", {
       className: "wp-block-button__link"
-    }, "Read More"))))));
-  })))));
+    }, "Read More")))))));
+  })));
+};
+
+/* harmony default export */ var posts_collection_preview = (preview_Preview);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/edit.js
+
+
+
+var posts_collection_edit_Fragment = wp.element.Fragment;
+
+var edit_PostsEdit = function PostsEdit(props) {
+  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_controls, props), Object(external_React_["createElement"])(posts_collection_preview, props));
 };
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);

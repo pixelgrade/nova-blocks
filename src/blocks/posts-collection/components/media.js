@@ -1,4 +1,4 @@
-import * as icons from "../../icons";
+import * as icons from "../../../icons";
 
 const {
 	withSelect,
@@ -12,7 +12,7 @@ const CardMedia = ( { post } ) => {
 	}
 
 	return <div className={`novablocks-card__media-placeholder`}>{ icons.placeholder }</div>
-}
+};
 
 export default withSelect( ( select, ownProps ) => {
 	const { getMedia } = select( 'core' );

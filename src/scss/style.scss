@@ -71,3 +71,79 @@
 .wp-block-novablocks-posts .novablocks-media__inner-container {
 	padding: 5em;
 }
+
+// preview
+.novablocks-grid {
+	grid-gap: 40px;
+
+	//width: 200%;
+	//transform: scale(0.5);
+	//transform-origin: 50% 0;
+	//margin-left: -50%;
+
+	.novablocks-grid__item {
+		background: rgba(0,0,0,0.1);
+		--theme-content-width-normal: 100%;
+	}
+}
+
+// quick implementation of portrait card
+.novablocks-grid__item--portrait {
+
+	.novablocks-card {
+		display: grid;
+		grid-template-columns: calc(50% + 10px) calc(50% - 10px);
+
+		> * {
+			width: 100%;
+			grid-column: 2 / span 1;
+		}
+
+		> .novablocks-grid__item-image {
+			width: 100%;
+			grid-column: 1 / span 1;
+			grid-row: 1 / 10;
+			padding-right: 20px;
+		}
+	}
+}
+
+
+.novablocks-card__title[class] {
+
+	.novablocks-grid__item--larger-title & {
+		font-size: calc( 1.5 * var(--final-font-size) );
+	}
+
+	.novablocks-grid__item--smaller-title & {
+		font-size: calc( 0.5 * var(--final-font-size) );
+	}
+}
+
+.novablocks-grid__item-image {
+	display: var(--grid-item-image-display, block);
+}
+
+.novablocks-grid__item-content {
+	display: var(--grid-item-content-display, block);
+}
+
+.novablocks-grid__item-title {
+	display: var(--grid-item-title-display, block);
+}
+
+.novablocks-grid__item-subtitle {
+	display: var(--grid-item-subtitle-display, block);
+}
+
+.novablocks-grid__item-content {
+	display: var(--grid-item-content-display, block);
+}
+
+.novablocks-grid__item-buttons {
+	display: var(--grid-item-buttons-display, block);
+}
+
+.novablocks-grid__item-meta {
+	display: var(--grid-item-meta-display, block);
+}

@@ -35,6 +35,22 @@
 		"type": "number",
 		"default": 5
 	},
+	"imageWeightLeft":  {
+		"type": "number",
+		"default": 8
+	},
+	"imageWeightRight":  {
+		"type":  "number",
+		"default": 0
+	},
+	"metaWeightLeft":  {
+		"type":  "number",
+		"default": 7
+	},
+	"metaWeightRight":  {
+		"type":  "number",
+		"default": 0
+	},
 	"boostFeatureEmphasis": {
 		"type": "boolean",
 		"default": true
