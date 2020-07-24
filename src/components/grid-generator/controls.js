@@ -136,6 +136,8 @@ const GridGenerator = ( props ) => {
 		balanceMDandIW,
 		hierarchyCrossing,
 		flipColsAndRows,
+
+		toggleScale,
 	} = attributes;
 
 	const setAttributes = ( newAttributes ) => {
@@ -147,6 +149,11 @@ const GridGenerator = ( props ) => {
 		<ControlsSection label={ __( 'Grid Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ControlsGroup title={ __( 'Main Parameters' ) }>
+					<ToggleControl
+						label={__( 'Toggle Preview Scale', '__plugin_txtd' )}
+						checked={ ! toggleScale }
+						onChange={ () => setAttributes( { toggleScale : ! toggleScale } )}
+					/>
 					<MinMaxControl
 						{ ...props }
 						setAttributes={ setAttributes }
@@ -231,7 +238,7 @@ const GridGenerator = ( props ) => {
 						onChange={ () => setAttributes( { subFeature : ! subFeature } )}
 					/>
 					<ToggleControl
-						label={__( 'Sub Feature', '__plugin_txtd' )}
+						label={__( 'Balance MD and IW', '__plugin_txtd' )}
 						checked={ balanceMDandIW }
 						onChange={ () => setAttributes( { balanceMDandIW : ! balanceMDandIW } )}
 					/>

@@ -490,7 +490,6 @@ export const applyLayoutEngine = (state, debug = false) => {
 		currentNth++;
 	}
 
-	console.log( postsList );
 	return postsList;
 }
 

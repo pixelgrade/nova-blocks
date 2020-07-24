@@ -76,15 +76,17 @@
 .novablocks-grid {
 	grid-gap: 40px;
 
-	//width: 200%;
-	//transform: scale(0.5);
-	//transform-origin: 50% 0;
-	//margin-left: -50%;
-
 	.novablocks-grid__item {
 		background: rgba(0,0,0,0.1);
 		--theme-content-width-normal: 100%;
 	}
+}
+
+.novablocks-grid--scaled {
+	width: 200%;
+	transform: scale(0.5);
+	transform-origin: 50% 0;
+	margin-left: -50%;
 }
 
 // quick implementation of portrait card

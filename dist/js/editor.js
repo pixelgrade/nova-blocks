@@ -31913,7 +31913,8 @@ var controls_GridGenerator = function GridGenerator(props) {
       subFeature = attributes.subFeature,
       balanceMDandIW = attributes.balanceMDandIW,
       hierarchyCrossing = attributes.hierarchyCrossing,
-      flipColsAndRows = attributes.flipColsAndRows;
+      flipColsAndRows = attributes.flipColsAndRows,
+      toggleScale = attributes.toggleScale;
 
   var setAttributes = function setAttributes(newAttributes) {
     var normalizedAttributes = normalizeAttributes(newAttributes, attributes);
@@ -31926,7 +31927,15 @@ var controls_GridGenerator = function GridGenerator(props) {
     label: controls_('Settings')
   }, Object(external_React_["createElement"])(controls_group, {
     title: controls_('Main Parameters')
-  }, Object(external_React_["createElement"])(controls_MinMaxControl, extends_default()({}, props, {
+  }, Object(external_React_["createElement"])(controls_ToggleControl, {
+    label: controls_('Toggle Preview Scale', '__plugin_txtd'),
+    checked: !toggleScale,
+    onChange: function onChange() {
+      return setAttributes({
+        toggleScale: !toggleScale
+      });
+    }
+  }), Object(external_React_["createElement"])(controls_MinMaxControl, extends_default()({}, props, {
     setAttributes: setAttributes,
     label: 'Columns',
     attributeName: 'gridColumns',
@@ -32027,7 +32036,7 @@ var controls_GridGenerator = function GridGenerator(props) {
       });
     }
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
-    label: controls_('Sub Feature', '__plugin_txtd'),
+    label: controls_('Balance MD and IW', '__plugin_txtd'),
     checked: balanceMDandIW,
     onChange: function onChange() {
       return setAttributes({
@@ -39137,7 +39146,6 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
     currentNth++;
   }
 
-  console.log(postsList);
   return postsList;
 };
 
@@ -39344,12 +39352,7 @@ var preview_Preview = function Preview(props) {
       markPostsAsDisplayed = props.markPostsAsDisplayed;
   var columns = attributes.columns,
       level = attributes.level,
-      showButtons = attributes.showButtons,
-      showDescription = attributes.showDescription,
-      showMedia = attributes.showMedia,
-      showMeta = attributes.showMeta,
-      showTitle = attributes.showTitle,
-      showSubtitle = attributes.showSubtitle;
+      toggleScale = attributes.toggleScale;
   var TitleTagName = "h".concat(level + 1);
   var SubtitleTagName = "h".concat(level + 2);
 
@@ -39360,7 +39363,7 @@ var preview_Preview = function Preview(props) {
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-grid",
+    className: "novablocks-grid ".concat(!!toggleScale ? 'novablocks-grid--scaled' : ''),
     style: utils_getGridStyle(attributes)
   }, !!posts && posts.map(function (post, idx) {
     var style = {
