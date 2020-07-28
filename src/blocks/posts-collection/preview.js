@@ -25,7 +25,8 @@ const Preview = ( props ) => {
 		columns,
 		level,
 
-		toggleScale
+		toggleScale,
+		toggleMask
 	} = attributes;
 
 	const TitleTagName = `h${ level + 1 }`;
@@ -38,7 +39,7 @@ const Preview = ( props ) => {
 
 	return (
 		<div className="wp-block-group__inner-container">
-			<div className={ `novablocks-grid ${ !! toggleScale ? 'novablocks-grid--scaled' : '' }` } style={ getGridStyle( attributes ) }>
+			<div className={ `novablocks-grid ${ toggleScale ? '' : 'novablocks-grid--scaled' } ${ toggleMask ? '' : 'novablocks-grid--mask' }` } style={ getGridStyle( attributes ) }>
 				{
 					!! posts && posts.map( ( post, idx ) => {
 

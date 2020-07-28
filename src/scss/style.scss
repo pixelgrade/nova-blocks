@@ -74,19 +74,33 @@
 
 // preview
 .novablocks-grid {
-	grid-gap: 40px;
+	grid-gap: 2em;
 
 	.novablocks-grid__item {
-		background: rgba(0,0,0,0.1);
 		--theme-content-width-normal: 100%;
 	}
 }
 
+.novablocks-grid--mask {
+	.novablocks-grid__item { 
+		border: 2px dashed var(--novablocks-green);
+		// padding: 0.5em;
+
+		.novablocks-block__content {
+			opacity: 0;
+		}
+	}
+
+}
 .novablocks-grid--scaled {
-	width: 200%;
+	// width: 200%;
 	transform: scale(0.5);
 	transform-origin: 50% 0;
-	margin-left: -50%;
+	// margin-left: -50%;
+
+	.novablocks-grid__item { 
+		
+	}
 }
 
 // quick implementation of portrait card

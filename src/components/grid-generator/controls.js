@@ -138,6 +138,7 @@ const GridGenerator = ( props ) => {
 		flipColsAndRows,
 
 		toggleScale,
+		toggleMask,
 	} = attributes;
 
 	const setAttributes = ( newAttributes ) => {
@@ -148,12 +149,19 @@ const GridGenerator = ( props ) => {
 	return (
 		<ControlsSection label={ __( 'Grid Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
-				<ControlsGroup title={ __( 'Main Parameters' ) }>
+				<ControlsGroup title={ __( 'Debug Parameters' ) }>
 					<ToggleControl
-						label={__( 'Toggle Preview Scale', '__plugin_txtd' )}
+						label={__( 'Display Preview Scale', '__plugin_txtd' )}
 						checked={ ! toggleScale }
 						onChange={ () => setAttributes( { toggleScale : ! toggleScale } )}
 					/>
+					<ToggleControl
+						label={__( 'Display Preview Mask', '__plugin_txtd' )}
+						checked={ ! toggleMask }
+						onChange={ () => setAttributes( { toggleMask : ! toggleMask } )}
+					/>
+				</ControlsGroup>
+				<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
 					<MinMaxControl
 						{ ...props }
 						setAttributes={ setAttributes }
@@ -170,6 +178,8 @@ const GridGenerator = ( props ) => {
 						minAttributeName={ 'minGridRows' }
 						maxAttributeName={ 'maxGridRows' }
 					/>
+				</ControlsGroup>
+				<ControlsGroup title={ __( 'Main Parameters' ) }>
 					<RangeControl
 						label={ __( `Feature Size`, '__plugin_txtd' ) }
 						value={ featureSize }
@@ -197,6 +207,8 @@ const GridGenerator = ( props ) => {
 						min={ getMinColumnsFragmentation( attributes ) }
 						max={ getMaxColumnsFragmentation( attributes ) }
 					/>
+				</ControlsGroup>
+				<ControlsGroup title={ __( 'Elements Granularity' ) }>
 					<RangeControl
 						label={ __( `Image Weight Left`, '__plugin_txtd' ) }
 						value={ imageWeightLeft }
