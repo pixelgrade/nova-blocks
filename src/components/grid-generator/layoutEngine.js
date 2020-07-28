@@ -377,6 +377,7 @@ export const applyLayoutEngine = (state, debug = false) => {
 	let hierachyCrossingStrenth = state.hierarchycrossing;
 
 	currentNth = 1;
+
 	while (hierachyCrossingStrenth > 0 && currentNth <= maxNth) {
 		let currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
 		if (false === currentPostDetails) {
@@ -447,6 +448,9 @@ export const applyLayoutEngine = (state, debug = false) => {
 		currentNth++;
 	}
 
+//	handleHierarchyCrossing( state, currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+	findMergeableAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+
 	if (debug) {
 		console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
 		for (i = 1; i < nthMatrix.length; i++) {
@@ -467,10 +471,116 @@ export const applyLayoutEngine = (state, debug = false) => {
 	/*
 	8. Finally, generate the posts list.
 	*/
+	return getPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+};
 
+/**
+ *
+ * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
+ * We will only cross if the left post matches in height a post or more on the right.
+ * The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
+ * Also, crossing at the top of the layout is more expensive than crossing at a lower row.
+ *
+ */
+const handleHierarchyCrossing = ( state, maxNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+
+};
+
+const findMergeableAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+	let currentPostDetails;
+
+	for ( let currentNth = 1; currentNth <= getMaxNth( nthMatrix ); currentNth++  ) {
+		currentPostDetails = getNthPostDetails( currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+		if ( currentPostDetails ) {
+			mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+		}
+	}
+};
+
+const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+	let width = getAreaWidth( row, col, nthMatrix );
+	let height = getAreaHeight( row, col, nthMatrix );
+
+	let nextRow,
+		nextCol,
+		nextWidth,
+		nextHeight,
+		searching = true,
+		mergeable = false;
+
+	while ( searching ) {
+		nextRow = row + height;
+		nextWidth = getAreaWidth( nextRow, col, nthMatrix );
+		nextHeight = getAreaHeight( nextRow, col, nthMatrix );
+
+		if ( width === nextWidth &&
+		     metaDetailsMatrix[row][col] === metaDetailsMatrix[nextRow][col] &&
+		     imageWeightMatrix[row][col] === imageWeightMatrix[nextRow][col] ) {
+			height = height + nextHeight;
+			mergeable = true;
+		} else {
+			searching = false;
+		}
+	}
+
+	searching = ! mergeable;
+
+	while ( searching ) {
+		nextCol = col + width;
+		nextWidth = getAreaWidth( row, nextCol, nthMatrix );
+		nextHeight = getAreaHeight( row, nextCol, nthMatrix );
+
+		if ( height === nextHeight &&
+		     metaDetailsMatrix[row][col] === metaDetailsMatrix[row][nextCol] &&
+		     imageWeightMatrix[row][col] === imageWeightMatrix[row][nextCol] ) {
+			width = width + nextWidth;
+			mergeable = true;
+		} else {
+			searching = false;
+		}
+	}
+
+	fillArea( nthMatrix, row, col, width, height );
+};
+
+const fillArea = ( nthMatrix, row, col, width, height ) => {
+	for (let i = row; i < row + height; i++) {
+		for (let j = col; j < col + width; j++) {
+			nthMatrix[i][j] = nthMatrix[row][col];
+		}
+	}
+	console.log( nthMatrix );
+};
+
+const getAreaWidth = ( row, col, nthMatrix ) => {
+	let currentNth = nthMatrix[row][col];
+	let width = 1;
+
+
+	while ( currentNth === nthMatrix[row][col + width] ) {
+		width = width + 1;
+	}
+
+	return width;
+};
+
+
+
+const getAreaHeight = ( row, col, nthMatrix ) => {
+	let currentNth = nthMatrix[row][col];
+	let height = 1;
+
+	while ( "undefined" !== typeof nthMatrix[row + height] && currentNth === nthMatrix[row + height][col] ) {
+		height = height + 1;
+	}
+
+	return height;
+};
+
+const getPostAreas = ( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
 	const postsList = [];
-	currentNth = 1;
-	let currentPostDetails = {}
+	let currentNth = 1;
+	let currentPostDetails;
 
 	while (currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix)) {
 		const newLayoutPost = {
