@@ -23,7 +23,7 @@ const prepareAttributes = ( attributes ) => {
 };
 
 export const getGridItems = ( attributes ) => {
-	const gridItems = applyLayoutEngine( prepareAttributes( attributes ), true );
+	const gridItems = applyLayoutEngine( prepareAttributes( attributes ) );
 
 	return gridItems.map( gridItem => {
 

@@ -38178,7 +38178,8 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
   } //	handleHierarchyCrossing( state, currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 
 
-  findMergeableAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+  mregeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+  normalizeNthValues(nthMatrix);
 
   if (debug) {
     console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
@@ -38206,6 +38207,44 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
 
   return getPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
 };
+
+function getNthValues(nthMatrix) {
+  var values = [];
+  var value;
+
+  for (var i = 1; i < nthMatrix.length - 1; i++) {
+    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
+      value = nthMatrix[i][j];
+
+      if (values.indexOf(value) === -1) {
+        values.push(value);
+      }
+    }
+  }
+
+  return values;
+}
+
+function normalizeNthValues(nthMatrix) {
+  var values = getNthValues(nthMatrix);
+  values.sort();
+
+  for (var i = 0; i < values.length; i++) {
+    if (i + 1 !== values[i]) {
+      replaceNth(values[i], i + 1, nthMatrix);
+    }
+  }
+}
+
+function replaceNth(nth1, nth2, nthMatrix) {
+  for (var i = 1; i < nthMatrix.length - 1; i++) {
+    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
+      if (nthMatrix[i][j] === nth1) {
+        nthMatrix[i][j] = nth2;
+      }
+    }
+  }
+}
 /**
  *
  * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
@@ -38215,9 +38254,8 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
  *
  */
 
-var handleHierarchyCrossing = function handleHierarchyCrossing(state, maxNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {};
 
-var findMergeableAreas = function findMergeableAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+var mregeSimilarAreas = function mregeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
   var currentPostDetails;
 
   for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
@@ -38276,8 +38314,6 @@ var fillArea = function fillArea(nthMatrix, row, col, width, height) {
       nthMatrix[i][j] = nthMatrix[row][col];
     }
   }
-
-  console.log(nthMatrix);
 };
 
 var getAreaWidth = function getAreaWidth(row, col, nthMatrix) {
@@ -38460,7 +38496,7 @@ var prepareAttributes = function prepareAttributes(attributes) {
 };
 
 var utils_getGridItems = function getGridItems(attributes) {
-  var gridItems = applyLayoutEngine(prepareAttributes(attributes), true);
+  var gridItems = applyLayoutEngine(prepareAttributes(attributes));
   return gridItems.map(function (gridItem) {
     return Object.assign({}, gridItem, {
       class: getGridItemClassname(gridItem),

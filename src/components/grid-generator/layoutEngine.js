@@ -449,7 +449,8 @@ export const applyLayoutEngine = (state, debug = false) => {
 	}
 
 //	handleHierarchyCrossing( state, currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
-	findMergeableAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+	mregeSimilarAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+	normalizeNthValues( nthMatrix );
 
 	if (debug) {
 		console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
@@ -474,6 +475,43 @@ export const applyLayoutEngine = (state, debug = false) => {
 	return getPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 };
 
+function getNthValues( nthMatrix ) {
+	let values = [];
+	let value;
+
+	for ( let i = 1; i < nthMatrix.length - 1; i ++ ) {
+		for ( let j = 1; j < nthMatrix[i].length - 1; j ++ ) {
+			value = nthMatrix[i][j];
+			if ( values.indexOf( value ) === -1 ) {
+				values.push( value );
+			}
+		}
+	}
+
+	return values;
+}
+
+function normalizeNthValues( nthMatrix ) {
+	const values = getNthValues( nthMatrix );
+	values.sort();
+
+	for ( let i = 0; i < values.length; i ++ ) {
+		if ( i + 1 !== values[i] ) {
+			replaceNth( values[i], i + 1, nthMatrix );
+		}
+	}
+}
+
+function replaceNth( nth1, nth2, nthMatrix ) {
+	for ( let i = 1; i < nthMatrix.length - 1; i ++ ) {
+		for ( let j = 1; j < nthMatrix[i].length - 1; j ++ ) {
+			if ( nthMatrix[i][j] === nth1 ) {
+				nthMatrix[i][j] = nth2;
+			}
+		}
+	}
+}
+
 /**
  *
  * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
@@ -482,11 +520,8 @@ export const applyLayoutEngine = (state, debug = false) => {
  * Also, crossing at the top of the layout is more expensive than crossing at a lower row.
  *
  */
-const handleHierarchyCrossing = ( state, maxNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
 
-};
-
-const findMergeableAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+const mregeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
 	let currentPostDetails;
 
 	for ( let currentNth = 1; currentNth <= getMaxNth( nthMatrix ); currentNth++  ) {
@@ -549,7 +584,6 @@ const fillArea = ( nthMatrix, row, col, width, height ) => {
 			nthMatrix[i][j] = nthMatrix[row][col];
 		}
 	}
-	console.log( nthMatrix );
 };
 
 const getAreaWidth = ( row, col, nthMatrix ) => {
