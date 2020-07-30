@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import Media from "./components/media";
 import Category from "./components/category";
 import { prepareAttributes, getGridStyle, getGridItemStyle, getGridItemClassname } from "../../components/grid-generator/utils";
@@ -31,7 +32,10 @@ const Preview = ( props ) => {
 		level,
 
 		toggleScale,
-		toggleMask
+		toggleMask,
+
+		gridColumns,
+		gridRows,
 	} = attributes;
 
 	const TitleTagName = `h${ level + 1 }`;
@@ -41,6 +45,7 @@ const Preview = ( props ) => {
 	markPostsAsDisplayed( clientId, posts );
 
 	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
+
 	let postsAdded = 0;
 
 	if ( ! posts ) {
@@ -67,66 +72,74 @@ const Preview = ( props ) => {
 			<div className={ `novablocks-grid ${ toggleScale ? '' : 'novablocks-grid--scaled' } ${ toggleMask ? '' : 'novablocks-grid--mask' }` } style={ getGridStyle( attributes ) }>
 				{
 					!! areaColumns && areaColumns.map( ( areaColumn, idx ) => {
-						let { areas, col, width } = areaColumn;
+						let { areas, nth, row, col, width, height } = areaColumn;
 
 						const style = {
 							gridColumnStart: col,
-							gridColumnEnd: col + width
+							gridColumnEnd: col + width,
+							gridRowStart: row,
+							gridRowEnd: row + height,
 						};
 
 						return (
-							<div style={ style }>
+							<div className={ `novablocks-grid__column` } style={ style }>
 								{ areas.map( area => {
+
 									return (
-										area.posts.map( post => {
-											return (
-												<div className={getGridItemClassname( area, attributes )}>
-													<div
-														className={`novablocks-card novablocks-card__inner-container novablocks-block__content`}
-														key={idx} style={style}>
-														<div className="wp-block novablocks-grid__item-image">
-															<div className="novablocks-card__media-wrap">
-																<div className="novablocks-card__media">
-																	<Media post={post}/>
+										<div className={ getAreaClassName( area, attributes ) }>
+											{
+												area.posts.map( post => {
+
+													return (
+														<div className="novablocks-grid__item">
+															<div
+																className={`novablocks-card novablocks-card__inner-container novablocks-block__content`}
+																key={idx} style={style}>
+																<div className="wp-block novablocks-grid__item-image">
+																	<div className="novablocks-card__media-wrap">
+																		<div className="novablocks-card__media">
+																			<Media post={post}/>
+																		</div>
+																	</div>
 																</div>
-															</div>
-														</div>
-														<div className="wp-block novablocks-grid__item-meta">
-															<div className="novablocks-card__meta">
-																<time dateTime={format( 'c', post.date_gmt )}>
-																	{dateI18n( dateFormat, post.date_gmt )}
-																</time>
-															</div>
-														</div>
-														<div className="wp-block novablocks-grid__item-title">
-															<TitleTagName
-																className="novablocks-card__title">{post.title.raw}</TitleTagName>
-														</div>
-														{
-															post.categories.length &&
-															<div className="wp-block novablocks-grid__item-subtitle">
-																<SubtitleTagName className="novablocks-card__subtitle">
-																	<Category id={post.categories[0]}/>
-																</SubtitleTagName>
-															</div>
-														}
-														<RawHTML
-															className="wp-block novablocks-grid__item-content novablocks-card__description">
-															{post.excerpt.rendered}
-														</RawHTML>
-														<div className="wp-block novablocks-grid__item-buttons">
-															<div className="novablocks-card__buttons">
-																<div className="wp-block-buttons alignleft">
-																	<div className="wp-block-button is-style-text">
-																		<div className="wp-block-button__link">Read More</div>
+																<div className="wp-block novablocks-grid__item-meta">
+																	<div className="novablocks-card__meta">
+																		<time dateTime={format( 'c', post.date_gmt )}>
+																			{dateI18n( dateFormat, post.date_gmt )}
+																		</time>
+																	</div>
+																</div>
+																<div className="wp-block novablocks-grid__item-title">
+																	<TitleTagName
+																		className="novablocks-card__title">{post.title.raw}</TitleTagName>
+																</div>
+																{
+																	post.categories.length &&
+																	<div className="wp-block novablocks-grid__item-subtitle">
+																		<SubtitleTagName className="novablocks-card__subtitle">
+																			<Category id={post.categories[0]}/>
+																		</SubtitleTagName>
+																	</div>
+																}
+																<RawHTML
+																	className="wp-block novablocks-grid__item-content novablocks-card__description">
+																	{post.excerpt.rendered}
+																</RawHTML>
+																<div className="wp-block novablocks-grid__item-buttons">
+																	<div className="novablocks-card__buttons">
+																		<div className="wp-block-buttons alignleft">
+																			<div className="wp-block-button is-style-text">
+																				<div className="wp-block-button__link">Read More</div>
+																			</div>
+																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</div>
-											);
-										} )
+													);
+												} )
+											}
+										</div>
 									)
 								} ) }
 							</div>
@@ -136,6 +149,33 @@ const Preview = ( props ) => {
 			</div>
 		</div>
 	)
+};
+
+const getAreaClassName = ( area, attributes ) => {
+	const { gridColumns, gridRows } = attributes;
+	const { nth, width, height } = area;
+
+	function isLandscape() {
+
+		console.log( area );
+
+		if ( width / gridColumns > height / gridRows ) {
+			return true;
+		}
+
+		if ( width / gridColumns < 0.35 && nth > 3 ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	return classnames([
+		'novablocks-grid__area',
+		{
+			'novablocks-grid__area--landscape': isLandscape(),
+		}
+	]);
 };
 
 export default Preview;

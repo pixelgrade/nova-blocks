@@ -480,8 +480,10 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
 
 	let columns = areasArray.map( area => {
 		return {
+			row: area.row,
 			col: area.col,
-			width: area.width
+			width: area.width,
+			height: area.height,
 		}
 	} );
 
@@ -494,13 +496,19 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
 	} );
 
 	return columns.map( column => {
+		const areas = areasArray.filter( area => {
+			return column.col === area.col &&
+			       column.width === area.width;
+		} );
+
 		return {
+			row: column.row,
 			col: column.col,
 			width: column.width,
-			areas: areasArray.filter( area => {
-				return column.col === area.col &&
-				       column.width === area.width;
-			} )
+			height: areas.reduce( ( newHeight, area ) => {
+				return newHeight + area.height;
+			}, 0 ),
+			areas: areas,
 		};
 	} );
 }
@@ -599,6 +607,7 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 
 			if ( currentAreaIndex > -1 ) {
 				areasArray[currentAreaIndex].postsCount += 1;
+				areasArray[currentAreaIndex].height = height;
 			}
 		} else {
 			searching = false;
@@ -619,7 +628,8 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 			mergeable = true;
 
 			if ( currentAreaIndex > -1 ) {
-				areasArray[currentAreaIndex].posts += 1;
+				areasArray[currentAreaIndex].postsCount += 1;
+				areasArray[currentAreaIndex].width = width;
 			}
 		} else {
 			searching = false;

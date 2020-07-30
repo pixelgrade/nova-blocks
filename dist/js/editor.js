@@ -38210,8 +38210,10 @@ function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMat
   areasArray = normalizeAreas(nthMatrix, areasArray);
   var columns = areasArray.map(function (area) {
     return {
+      row: area.row,
       col: area.col,
-      width: area.width
+      width: area.width,
+      height: area.height
     };
   });
   columns = columns.filter(function (data, index) {
@@ -38221,12 +38223,17 @@ function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMat
     return index === foundIndex;
   });
   return columns.map(function (column) {
+    var areas = areasArray.filter(function (area) {
+      return column.col === area.col && column.width === area.width;
+    });
     return {
+      row: column.row,
       col: column.col,
       width: column.width,
-      areas: areasArray.filter(function (area) {
-        return column.col === area.col && column.width === area.width;
-      })
+      height: areas.reduce(function (newHeight, area) {
+        return newHeight + area.height;
+      }, 0),
+      areas: areas
     };
   });
 }
@@ -38327,6 +38334,7 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
 
       if (currentAreaIndex > -1) {
         areasArray[currentAreaIndex].postsCount += 1;
+        areasArray[currentAreaIndex].height = height;
       }
     } else {
       searching = false;
@@ -38345,7 +38353,8 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
       mergeable = true;
 
       if (currentAreaIndex > -1) {
-        areasArray[currentAreaIndex].posts += 1;
+        areasArray[currentAreaIndex].postsCount += 1;
+        areasArray[currentAreaIndex].width = width;
       }
     } else {
       searching = false;
@@ -38595,23 +38604,8 @@ var getGridItemStyle = function getGridItemStyle(gridItem, attributes) {
   styles['--grid-item-content-display'] = gridItem.metaDetails > 5 ? 'block' : 'none';
   return styles;
 };
-var getGridItemClassname = function getGridItemClassname(gridItem, attributes) {
-  var classes = ['novablocks-grid__item']; //	const gridArea = gridItem.gridArea.split( ' / ' ).map( value => parseInt( value, 10 ) );
-  //	const isLandscape = gridArea[3] - gridArea[1] > gridArea[2] - gridArea[0];
-  //	if ( isLandscape ) {
-  //		classes.push( 'novablocks-grid__item--portrait' );
-  //	}
-
-  if (gridItem.imageWeight > 3 && gridItem.metaDetails > 5) {
-    classes.push('novablocks-grid__item--larger-title');
-  } //	if ( isLandscape && gridItem.metaDetails < 3 || gridItem.metaDetails < 2 ) {
-  //		classes.push( 'novablocks-grid__item--smaller-title' );
-  //	}
-
-
-  return classes.join(" ");
-};
 // CONCATENATED MODULE: ./src/blocks/posts-collection/preview.js
+
 
 
 
@@ -38633,7 +38627,9 @@ var preview_Preview = function Preview(props) {
   var columns = attributes.columns,
       level = attributes.level,
       toggleScale = attributes.toggleScale,
-      toggleMask = attributes.toggleMask;
+      toggleMask = attributes.toggleMask,
+      gridColumns = attributes.gridColumns,
+      gridRows = attributes.gridRows;
   var TitleTagName = "h".concat(level + 1);
   var SubtitleTagName = "h".concat(level + 2);
 
@@ -38670,18 +38666,26 @@ var preview_Preview = function Preview(props) {
     style: utils_getGridStyle(attributes)
   }, !!areaColumns && areaColumns.map(function (areaColumn, idx) {
     var areas = areaColumn.areas,
+        nth = areaColumn.nth,
+        row = areaColumn.row,
         col = areaColumn.col,
-        width = areaColumn.width;
+        width = areaColumn.width,
+        height = areaColumn.height;
     var style = {
       gridColumnStart: col,
-      gridColumnEnd: col + width
+      gridColumnEnd: col + width,
+      gridRowStart: row,
+      gridRowEnd: row + height
     };
     return Object(external_React_["createElement"])("div", {
+      className: "novablocks-grid__column",
       style: style
     }, areas.map(function (area) {
-      return area.posts.map(function (post) {
+      return Object(external_React_["createElement"])("div", {
+        className: preview_getAreaClassName(area, attributes)
+      }, area.posts.map(function (post) {
         return Object(external_React_["createElement"])("div", {
-          className: getGridItemClassname(area, attributes)
+          className: "novablocks-grid__item"
         }, Object(external_React_["createElement"])("div", {
           className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
           key: idx,
@@ -38723,9 +38727,35 @@ var preview_Preview = function Preview(props) {
         }, Object(external_React_["createElement"])("div", {
           className: "wp-block-button__link"
         }, "Read More")))))));
-      });
+      }));
     }));
   })));
+};
+
+var preview_getAreaClassName = function getAreaClassName(area, attributes) {
+  var gridColumns = attributes.gridColumns,
+      gridRows = attributes.gridRows;
+  var nth = area.nth,
+      width = area.width,
+      height = area.height;
+
+  function isLandscape() {
+    console.log(area);
+
+    if (width / gridColumns > height / gridRows) {
+      return true;
+    }
+
+    if (width / gridColumns < 0.35 && nth > 3) {
+      return true;
+    }
+
+    return false;
+  }
+
+  return classnames_default()(['novablocks-grid__area', {
+    'novablocks-grid__area--landscape': isLandscape()
+  }]);
 };
 
 /* harmony default export */ var posts_collection_preview = (preview_Preview);

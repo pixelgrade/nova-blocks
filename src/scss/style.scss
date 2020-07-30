@@ -81,10 +81,21 @@
 	}
 }
 
+.novablocks-grid__area {
+
+	& + & {
+		margin-top: 2em;
+	}
+}
+
 .novablocks-grid--mask {
-	.novablocks-grid__item { 
+
+	.novablocks-grid__area {
+		border: 2px dashed var(--novablocks-purple);
+	}
+
+	.novablocks-grid__item {
 		border: 2px dashed var(--novablocks-green);
-		// padding: 0.5em;
 
 		.novablocks-block__content {
 			opacity: 0;
@@ -98,13 +109,13 @@
 	transform-origin: 50% 0;
 	// margin-left: -50%;
 
-	.novablocks-grid__item { 
-		
+	.novablocks-grid__item {
+
 	}
 }
 
 // quick implementation of portrait card
-.novablocks-grid__item--portrait {
+.novablocks-grid__area--landscape {
 
 	.novablocks-card {
 		display: grid;
