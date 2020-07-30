@@ -38308,6 +38308,8 @@ var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix,
 var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
   var width = getAreaWidth(row, col, nthMatrix);
   var height = getAreaHeight(row, col, nthMatrix);
+  var initialWidth = width;
+  var initialHeight = height;
   var currentAreaIndex = -1;
 
   if (Array.isArray(areasArray)) {
@@ -38328,7 +38330,7 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
     nextWidth = getAreaWidth(nextRow, col, nthMatrix);
     nextHeight = getAreaHeight(nextRow, col, nthMatrix);
 
-    if (width === nextWidth && metaDetailsMatrix[row][col] === metaDetailsMatrix[nextRow][col] && imageWeightMatrix[row][col] === imageWeightMatrix[nextRow][col]) {
+    if (width === nextWidth && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
       height = height + nextHeight;
       mergeable = true;
 
@@ -38348,7 +38350,7 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
     nextWidth = getAreaWidth(row, nextCol, nthMatrix);
     nextHeight = getAreaHeight(row, nextCol, nthMatrix);
 
-    if (height === nextHeight && metaDetailsMatrix[row][col] === metaDetailsMatrix[row][nextCol] && imageWeightMatrix[row][col] === imageWeightMatrix[row][nextCol]) {
+    if (height === nextHeight && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {
       width = width + nextWidth;
       mergeable = true;
 

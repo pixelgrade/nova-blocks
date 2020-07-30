@@ -579,6 +579,8 @@ const mergeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix, are
 const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray ) => {
 	let width = getAreaWidth( row, col, nthMatrix );
 	let height = getAreaHeight( row, col, nthMatrix );
+	let initialWidth = width;
+	let initialHeight = height;
 	let currentAreaIndex = -1;
 
 	if ( Array.isArray( areasArray ) ) {
@@ -600,8 +602,9 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		nextHeight = getAreaHeight( nextRow, col, nthMatrix );
 
 		if ( width === nextWidth &&
-		     metaDetailsMatrix[row][col] === metaDetailsMatrix[nextRow][col] &&
-		     imageWeightMatrix[row][col] === imageWeightMatrix[nextRow][col] ) {
+		     Math.abs( initialHeight - nextHeight ) <= 1 &&
+		     Math.abs( metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col] ) <= 1 &&
+		     Math.abs( imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col] ) <= 1 ) {
 			height = height + nextHeight;
 			mergeable = true;
 
@@ -622,8 +625,9 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		nextHeight = getAreaHeight( row, nextCol, nthMatrix );
 
 		if ( height === nextHeight &&
-		     metaDetailsMatrix[row][col] === metaDetailsMatrix[row][nextCol] &&
-		     imageWeightMatrix[row][col] === imageWeightMatrix[row][nextCol] ) {
+		     Math.abs( initialWidth - nextWidth ) <= 1 &&
+		     Math.abs( metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol] ) <= 1 &&
+		     Math.abs( imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol] ) <= 1 ) {
 			width = width + nextWidth;
 			mergeable = true;
 
