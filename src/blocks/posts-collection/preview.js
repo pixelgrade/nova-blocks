@@ -174,6 +174,11 @@ const getAreaClassName = ( area, attributes ) => {
 		'novablocks-grid__area',
 		{
 			'novablocks-grid__area--landscape': isLandscape(),
+			'novablocks-grid__area--width-xs': width / gridColumns < 0.34,
+			'novablocks-grid__area--width-s': 0.34 <= width / gridColumns && width / gridColumns < 0.5,
+			'novablocks-grid__area--width-m': 0.5 <= width / gridColumns && width / gridColumns < 0.66,
+			'novablocks-grid__area--width-l': 0.66 <= width / gridColumns && width / gridColumns < 0.75,
+			'novablocks-grid__area--width-xl': 0.75 <= width / gridColumns,
 		}
 	]);
 };

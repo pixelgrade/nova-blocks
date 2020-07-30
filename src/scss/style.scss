@@ -119,7 +119,7 @@
 
 	.novablocks-card {
 		display: grid;
-		grid-template-columns: calc(50% + 10px) calc(50% - 10px);
+		grid-template-columns: calc(var(--card-image-width, 50%) + 10px) auto;
 
 		> * {
 			width: 100%;
@@ -133,6 +133,12 @@
 			padding-right: 20px;
 		}
 	}
+}
+
+.novablocks-grid__area--width-xs {
+	--card-image-width: 50px;
+	--grid-item-content-display: none;
+	--grid-item-buttons-display: none;
 }
 
 
