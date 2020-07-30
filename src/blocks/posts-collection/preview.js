@@ -44,28 +44,13 @@ const Preview = ( props ) => {
 
 	markPostsAsDisplayed( clientId, posts );
 
-	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ), true );
+	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
 
-	let postsAdded = 0;
-
-	if ( ! posts ) {
+	if ( ! posts || ! posts.length ) {
 		return null;
 	}
 
-	for ( let i = 0; i < areaColumns.length; i++ ) {
-		let areaColumn = areaColumns[i];
-		let { areas, col, width } = areaColumn;
-
-		for ( let j = 0; j < areas.length; j++ ) {
-			let area = areas[j];
-			area.posts = posts.slice(postsAdded, postsAdded + area.postsCount);
-			postsAdded += area.posts.length;
-
-			if ( postsAdded >= posts.length ) break;
-		}
-
-		if ( postsAdded >= posts.length ) break;
-	}
+	fillAreaColumnsWithPosts( areaColumns, posts );
 
 	return (
 		<div className="wp-block-group__inner-container">
@@ -158,19 +143,59 @@ const Preview = ( props ) => {
 	)
 };
 
+const fillAreaColumnsWithPosts = ( areaColumns, posts ) => {
+	let totalPosts = posts.length;
+	let totalSpots = 0;
+	let remainingPosts = totalPosts;
+	let remainingSpots = 0;
+
+	for ( let i = 0; i < areaColumns.length; i++ ) {
+		let areaColumn = areaColumns[i];
+
+		for ( let j = 0; j < areaColumn.areas.length; j++ ) {
+			let area = areaColumn.areas[j];
+			totalSpots += area.postsCount;
+		}
+	}
+
+	remainingSpots = totalSpots;
+
+	for ( let i = 0; i < areaColumns.length; i++ ) {
+		let areaColumn = areaColumns[i];
+		let { areas } = areaColumn;
+
+		for ( let j = 0; j < areas.length; j++ ) {
+			let area = areas[j];
+			let postsToAdd = area.postsCount;
+
+			if ( area.nth !== 1 && remainingPosts > remainingSpots ) {
+				postsToAdd = Math.floor( area.postsCount * remainingPosts / remainingSpots );
+			}
+
+			if ( i === areaColumns.length - 1 && j === areas.length - 1 ) {
+				postsToAdd = remainingPosts;
+			}
+
+			area.posts = posts.slice( totalPosts - remainingPosts, totalPosts - remainingPosts + postsToAdd );
+			remainingSpots -= area.postsCount;
+			remainingPosts -= area.posts.length;
+
+			if ( remainingPosts <= 0 ) return;
+		}
+	}
+}
+
 const getAreaClassName = ( area, attributes ) => {
 	const { gridColumns, gridRows } = attributes;
 	const { nth, width, height } = area;
 
 	function isLandscape() {
 
-		console.log( area );
-
 		if ( width / gridColumns > height / gridRows ) {
 			return true;
 		}
 
-		if ( width / gridColumns < 0.35 && nth > 3 ) {
+		if ( 0.25 < width / gridColumns && width / gridColumns < 0.5 && nth > 3 ) {
 			return true;
 		}
 

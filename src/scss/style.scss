@@ -81,6 +81,10 @@
 	}
 }
 
+.novablocks-grid__column {
+	overflow: hidden;
+}
+
 .novablocks-grid__area {
 
 	& + & {
@@ -132,6 +136,7 @@
 	display: none;
 	padding: 10px;
 }
+
 .novablocks-grid__area--landscape {
 
 	.novablocks-card {

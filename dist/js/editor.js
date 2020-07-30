@@ -38669,29 +38669,13 @@ var preview_Preview = function Preview(props) {
   var dateFormat = __experimentalGetSettings().formats.date;
 
   markPostsAsDisplayed(clientId, posts);
-  var areaColumns = applyLayoutEngine(prepareAttributes(attributes), true);
-  var postsAdded = 0;
+  var areaColumns = applyLayoutEngine(prepareAttributes(attributes));
 
-  if (!posts) {
+  if (!posts || !posts.length) {
     return null;
   }
 
-  for (var i = 0; i < areaColumns.length; i++) {
-    var areaColumn = areaColumns[i];
-    var areas = areaColumn.areas,
-        col = areaColumn.col,
-        width = areaColumn.width;
-
-    for (var j = 0; j < areas.length; j++) {
-      var area = areas[j];
-      area.posts = posts.slice(postsAdded, postsAdded + area.postsCount);
-      postsAdded += area.posts.length;
-      if (postsAdded >= posts.length) break;
-    }
-
-    if (postsAdded >= posts.length) break;
-  }
-
+  fillAreaColumnsWithPosts(areaColumns, posts);
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {
@@ -38767,6 +38751,47 @@ var preview_Preview = function Preview(props) {
   })));
 };
 
+var fillAreaColumnsWithPosts = function fillAreaColumnsWithPosts(areaColumns, posts) {
+  var totalPosts = posts.length;
+  var totalSpots = 0;
+  var remainingPosts = totalPosts;
+  var remainingSpots = 0;
+
+  for (var i = 0; i < areaColumns.length; i++) {
+    var areaColumn = areaColumns[i];
+
+    for (var j = 0; j < areaColumn.areas.length; j++) {
+      var area = areaColumn.areas[j];
+      totalSpots += area.postsCount;
+    }
+  }
+
+  remainingSpots = totalSpots;
+
+  for (var _i = 0; _i < areaColumns.length; _i++) {
+    var _areaColumn = areaColumns[_i];
+    var areas = _areaColumn.areas;
+
+    for (var _j = 0; _j < areas.length; _j++) {
+      var _area = areas[_j];
+      var postsToAdd = _area.postsCount;
+
+      if (_area.nth !== 1 && remainingPosts > remainingSpots) {
+        postsToAdd = Math.floor(_area.postsCount * remainingPosts / remainingSpots);
+      }
+
+      if (_i === areaColumns.length - 1 && _j === areas.length - 1) {
+        postsToAdd = remainingPosts;
+      }
+
+      _area.posts = posts.slice(totalPosts - remainingPosts, totalPosts - remainingPosts + postsToAdd);
+      remainingSpots -= _area.postsCount;
+      remainingPosts -= _area.posts.length;
+      if (remainingPosts <= 0) return;
+    }
+  }
+};
+
 var preview_getAreaClassName = function getAreaClassName(area, attributes) {
   var gridColumns = attributes.gridColumns,
       gridRows = attributes.gridRows;
@@ -38775,13 +38800,11 @@ var preview_getAreaClassName = function getAreaClassName(area, attributes) {
       height = area.height;
 
   function isLandscape() {
-    console.log(area);
-
     if (width / gridColumns > height / gridRows) {
       return true;
     }
 
-    if (width / gridColumns < 0.35 && nth > 3) {
+    if (0.25 < width / gridColumns && width / gridColumns < 0.5 && nth > 3) {
       return true;
     }
 
