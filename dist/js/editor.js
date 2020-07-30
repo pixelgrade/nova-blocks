@@ -38687,7 +38687,7 @@ var preview_Preview = function Preview(props) {
         className: preview_getAreaClassName(area, attributes)
       }, Object(external_React_["createElement"])("div", {
         className: 'novablocks-grid__debug'
-      }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails)), area.posts.map(function (post) {
+      }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width)), area.posts.map(function (post) {
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-grid__item"
         }, Object(external_React_["createElement"])("div", {

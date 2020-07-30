@@ -90,7 +90,9 @@ const Preview = ( props ) => {
 											<div className={ 'novablocks-grid__debug' }>
 												{`nth: ${ area.nth }`}<br />
 												{`image weight: ${ area.imageWeight }`}<br />
-												{`meta details: ${ area.metaDetails }`}
+												{`meta details: ${ area.metaDetails }`}<br />
+												{`height: ${ area.height }`}<br />
+												{`width: ${ area.width }`}
 											</div>
 											{
 												area.posts.map( post => {
