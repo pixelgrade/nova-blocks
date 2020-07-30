@@ -448,10 +448,6 @@ export const applyLayoutEngine = (state, debug = false) => {
 		currentNth++;
 	}
 
-//	handleHierarchyCrossing( state, currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
-	mregeSimilarAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
-	normalizeNthValues( nthMatrix );
-
 	if (debug) {
 		console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
 		for (i = 1; i < nthMatrix.length; i++) {
@@ -472,8 +468,42 @@ export const applyLayoutEngine = (state, debug = false) => {
 	/*
 	8. Finally, generate the posts list.
 	*/
-	return getPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+	return getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 };
+
+// @todo make use of state.flipcolsrows
+function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) {
+	let areasArray = getAreasArray( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+
+	mergeSimilarAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray );
+	areasArray = normalizeAreas( nthMatrix, areasArray );
+
+	let columns = areasArray.map( area => {
+		return {
+			col: area.col,
+			width: area.width
+		}
+	} );
+
+	columns = columns.filter( ( data, index ) => {
+		const foundIndex = columns.findIndex( column => {
+			return column.col === data.col &&
+			       column.width === data.width;
+		} );
+		return index === foundIndex;
+	} );
+
+	return columns.map( column => {
+		return {
+			col: column.col,
+			width: column.width,
+			areas: areasArray.filter( area => {
+				return column.col === area.col &&
+				       column.width === area.width;
+			} )
+		};
+	} );
+}
 
 function getNthValues( nthMatrix ) {
 	let values = [];
@@ -491,7 +521,7 @@ function getNthValues( nthMatrix ) {
 	return values;
 }
 
-function normalizeNthValues( nthMatrix ) {
+function normalizeAreas( nthMatrix, areasArray ) {
 	const values = getNthValues( nthMatrix );
 	values.sort();
 
@@ -500,6 +530,12 @@ function normalizeNthValues( nthMatrix ) {
 			replaceNth( values[i], i + 1, nthMatrix );
 		}
 	}
+
+	return values.map( ( nth, index ) => {
+		const area = areasArray.find( area => area.nth === nth );
+		area.nth = index + 1;
+		return area;
+	} );
 }
 
 function replaceNth( nth1, nth2, nthMatrix ) {
@@ -521,20 +557,27 @@ function replaceNth( nth1, nth2, nthMatrix ) {
  *
  */
 
-const mregeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+const mergeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray ) => {
 	let currentPostDetails;
 
 	for ( let currentNth = 1; currentNth <= getMaxNth( nthMatrix ); currentNth++  ) {
 		currentPostDetails = getNthPostDetails( currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 		if ( currentPostDetails ) {
-			mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+			mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray );
 		}
 	}
 };
 
-const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray ) => {
 	let width = getAreaWidth( row, col, nthMatrix );
 	let height = getAreaHeight( row, col, nthMatrix );
+	let currentAreaIndex = -1;
+
+	if ( Array.isArray( areasArray ) ) {
+		currentAreaIndex = areasArray.findIndex( area => {
+			return area.nth === nthMatrix[row][col];
+		} )
+	}
 
 	let nextRow,
 		nextCol,
@@ -553,6 +596,10 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		     imageWeightMatrix[row][col] === imageWeightMatrix[nextRow][col] ) {
 			height = height + nextHeight;
 			mergeable = true;
+
+			if ( currentAreaIndex > -1 ) {
+				areasArray[currentAreaIndex].postsCount += 1;
+			}
 		} else {
 			searching = false;
 		}
@@ -570,6 +617,10 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		     imageWeightMatrix[row][col] === imageWeightMatrix[row][nextCol] ) {
 			width = width + nextWidth;
 			mergeable = true;
+
+			if ( currentAreaIndex > -1 ) {
+				areasArray[currentAreaIndex].posts += 1;
+			}
 		} else {
 			searching = false;
 		}
@@ -676,6 +727,32 @@ const getMaxNth = (nthMatrix) => {
 
 	return maxNth;
 }
+
+const getAreasArray = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
+
+	let currentPostDetails;
+	let areasArray = [];
+
+	for ( let currentNth = 1; currentNth <= getMaxNth( nthMatrix ); currentNth++  ) {
+		currentPostDetails = getNthPostDetails( currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+
+		if ( currentPostDetails ) {
+
+			areasArray.push( {
+				nth: currentPostDetails.nth,
+				col: currentPostDetails.startGridColumn,
+				row: currentPostDetails.startGridRow,
+				width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
+				height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
+				metaDetails: currentPostDetails.metaDetails,
+				imageWeightMatrix: currentPostDetails.imageWeight,
+				postsCount: 1,
+			} )
+		}
+	}
+
+	return areasArray;
+};
 
 const getNthPostDetails = (nth, nthMatrix, metaDetailsMatrix = false, imageWeightMatrix = false) => {
 	let postDetails = false;

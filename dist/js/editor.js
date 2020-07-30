@@ -38175,11 +38175,7 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
     }
 
     currentNth++;
-  } //	handleHierarchyCrossing( state, currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
-
-
-  mregeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-  normalizeNthValues(nthMatrix);
+  }
 
   if (debug) {
     console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
@@ -38205,8 +38201,35 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
   */
 
 
-  return getPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-};
+  return getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+}; // @todo make use of state.flipcolsrows
+
+function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
+  areasArray = normalizeAreas(nthMatrix, areasArray);
+  var columns = areasArray.map(function (area) {
+    return {
+      col: area.col,
+      width: area.width
+    };
+  });
+  columns = columns.filter(function (data, index) {
+    var foundIndex = columns.findIndex(function (column) {
+      return column.col === data.col && column.width === data.width;
+    });
+    return index === foundIndex;
+  });
+  return columns.map(function (column) {
+    return {
+      col: column.col,
+      width: column.width,
+      areas: areasArray.filter(function (area) {
+        return column.col === area.col && column.width === area.width;
+      })
+    };
+  });
+}
 
 function getNthValues(nthMatrix) {
   var values = [];
@@ -38225,7 +38248,7 @@ function getNthValues(nthMatrix) {
   return values;
 }
 
-function normalizeNthValues(nthMatrix) {
+function normalizeAreas(nthMatrix, areasArray) {
   var values = getNthValues(nthMatrix);
   values.sort();
 
@@ -38234,6 +38257,14 @@ function normalizeNthValues(nthMatrix) {
       replaceNth(values[i], i + 1, nthMatrix);
     }
   }
+
+  return values.map(function (nth, index) {
+    var area = areasArray.find(function (area) {
+      return area.nth === nth;
+    });
+    area.nth = index + 1;
+    return area;
+  });
 }
 
 function replaceNth(nth1, nth2, nthMatrix) {
@@ -38255,21 +38286,29 @@ function replaceNth(nth1, nth2, nthMatrix) {
  */
 
 
-var mregeSimilarAreas = function mregeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
   var currentPostDetails;
 
   for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
     currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
 
     if (currentPostDetails) {
-      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
     }
   }
 };
 
-var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
   var width = getAreaWidth(row, col, nthMatrix);
   var height = getAreaHeight(row, col, nthMatrix);
+  var currentAreaIndex = -1;
+
+  if (Array.isArray(areasArray)) {
+    currentAreaIndex = areasArray.findIndex(function (area) {
+      return area.nth === nthMatrix[row][col];
+    });
+  }
+
   var nextRow,
       nextCol,
       nextWidth,
@@ -38285,6 +38324,10 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
     if (width === nextWidth && metaDetailsMatrix[row][col] === metaDetailsMatrix[nextRow][col] && imageWeightMatrix[row][col] === imageWeightMatrix[nextRow][col]) {
       height = height + nextHeight;
       mergeable = true;
+
+      if (currentAreaIndex > -1) {
+        areasArray[currentAreaIndex].postsCount += 1;
+      }
     } else {
       searching = false;
     }
@@ -38300,6 +38343,10 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
     if (height === nextHeight && metaDetailsMatrix[row][col] === metaDetailsMatrix[row][nextCol] && imageWeightMatrix[row][col] === imageWeightMatrix[row][nextCol]) {
       width = width + nextWidth;
       mergeable = true;
+
+      if (currentAreaIndex > -1) {
+        areasArray[currentAreaIndex].posts += 1;
+      }
     } else {
       searching = false;
     }
@@ -38404,6 +38451,30 @@ var getMaxNth = function getMaxNth(nthMatrix) {
   return maxNth;
 };
 
+var getAreasArray = function getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var currentPostDetails;
+  var areasArray = [];
+
+  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
+    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (currentPostDetails) {
+      areasArray.push({
+        nth: currentPostDetails.nth,
+        col: currentPostDetails.startGridColumn,
+        row: currentPostDetails.startGridRow,
+        width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
+        height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
+        metaDetails: currentPostDetails.metaDetails,
+        imageWeightMatrix: currentPostDetails.imageWeight,
+        postsCount: 1
+      });
+    }
+  }
+
+  return areasArray;
+};
+
 var getNthPostDetails = function getNthPostDetails(nth, nthMatrix) {
   var metaDetailsMatrix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var imageWeightMatrix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
@@ -38474,7 +38545,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 };
 // CONCATENATED MODULE: ./src/components/grid-generator/utils.js
 
-
 var prepareAttributes = function prepareAttributes(attributes) {
   var state = {
     gridcolumns: attributes === null || attributes === void 0 ? void 0 : attributes.gridColumns,
@@ -38494,7 +38564,6 @@ var prepareAttributes = function prepareAttributes(attributes) {
   };
   return state;
 };
-
 var utils_getGridItems = function getGridItems(attributes) {
   var gridItems = applyLayoutEngine(prepareAttributes(attributes));
   return gridItems.map(function (gridItem) {
@@ -38527,27 +38596,23 @@ var getGridItemStyle = function getGridItemStyle(gridItem, attributes) {
   return styles;
 };
 var getGridItemClassname = function getGridItemClassname(gridItem, attributes) {
-  var classes = ['novablocks-grid__item'];
-  var gridArea = gridItem.gridArea.split(' / ').map(function (value) {
-    return parseInt(value, 10);
-  });
-  var isLandscape = gridArea[3] - gridArea[1] > gridArea[2] - gridArea[0];
-
-  if (isLandscape) {
-    classes.push('novablocks-grid__item--portrait');
-  }
+  var classes = ['novablocks-grid__item']; //	const gridArea = gridItem.gridArea.split( ' / ' ).map( value => parseInt( value, 10 ) );
+  //	const isLandscape = gridArea[3] - gridArea[1] > gridArea[2] - gridArea[0];
+  //	if ( isLandscape ) {
+  //		classes.push( 'novablocks-grid__item--portrait' );
+  //	}
 
   if (gridItem.imageWeight > 3 && gridItem.metaDetails > 5) {
     classes.push('novablocks-grid__item--larger-title');
-  }
+  } //	if ( isLandscape && gridItem.metaDetails < 3 || gridItem.metaDetails < 2 ) {
+  //		classes.push( 'novablocks-grid__item--smaller-title' );
+  //	}
 
-  if (isLandscape && gridItem.metaDetails < 3 || gridItem.metaDetails < 2) {
-    classes.push('novablocks-grid__item--smaller-title');
-  }
 
   return classes.join(" ");
 };
 // CONCATENATED MODULE: ./src/blocks/posts-collection/preview.js
+
 
 
 
@@ -38557,6 +38622,8 @@ var _wp$date = wp.date,
     dateI18n = _wp$date.dateI18n,
     format = _wp$date.format;
 var preview_RawHTML = wp.element.RawHTML;
+
+var CardGroup = function CardGroup() {};
 
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
@@ -38573,66 +38640,91 @@ var preview_Preview = function Preview(props) {
   var dateFormat = __experimentalGetSettings().formats.date;
 
   markPostsAsDisplayed(clientId, posts);
-  var gridItems = utils_getGridItems(attributes);
+  var areaColumns = applyLayoutEngine(prepareAttributes(attributes));
+  var postsAdded = 0;
+
+  if (!posts) {
+    return null;
+  }
+
+  for (var i = 0; i < areaColumns.length; i++) {
+    var areaColumn = areaColumns[i];
+    var areas = areaColumn.areas,
+        col = areaColumn.col,
+        width = areaColumn.width;
+
+    for (var j = 0; j < areas.length; j++) {
+      var area = areas[j];
+      area.posts = posts.slice(postsAdded, postsAdded + area.postsCount);
+      postsAdded += area.posts.length;
+      if (postsAdded >= posts.length) break;
+    }
+
+    if (postsAdded >= posts.length) break;
+  }
+
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-grid ".concat(toggleScale ? '' : 'novablocks-grid--scaled', " ").concat(toggleMask ? '' : 'novablocks-grid--mask'),
     style: utils_getGridStyle(attributes)
-  }, !!posts && posts.map(function (post, idx) {
+  }, !!areaColumns && areaColumns.map(function (areaColumn, idx) {
+    var areas = areaColumn.areas,
+        col = areaColumn.col,
+        width = areaColumn.width;
     var style = {
-      '--columns': columns
+      gridColumnStart: col,
+      gridColumnEnd: col + width
     };
-    var gridItem = gridItems[idx];
-
-    if (typeof gridItem === "undefined") {
-      return false;
-    }
-
     return Object(external_React_["createElement"])("div", {
-      className: getGridItemClassname(gridItem, attributes),
-      style: getGridItemStyle(gridItem, attributes)
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
-      key: idx,
       style: style
-    }, Object(external_React_["createElement"])("div", {
-      className: "wp-block novablocks-grid__item-image"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-card__media-wrap"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-card__media"
-    }, Object(external_React_["createElement"])(components_media, {
-      post: post
-    })))), Object(external_React_["createElement"])("div", {
-      className: "wp-block novablocks-grid__item-meta"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-card__meta"
-    }, Object(external_React_["createElement"])("time", {
-      dateTime: format('c', post.date_gmt)
-    }, dateI18n(dateFormat, post.date_gmt)))), Object(external_React_["createElement"])("div", {
-      className: "wp-block novablocks-grid__item-title"
-    }, Object(external_React_["createElement"])(TitleTagName, {
-      className: "novablocks-card__title"
-    }, post.title.raw)), post.categories.length && Object(external_React_["createElement"])("div", {
-      className: "wp-block novablocks-grid__item-subtitle"
-    }, Object(external_React_["createElement"])(SubtitleTagName, {
-      className: "novablocks-card__subtitle"
-    }, Object(external_React_["createElement"])(category, {
-      id: post.categories[0]
-    }))), Object(external_React_["createElement"])(preview_RawHTML, {
-      className: "wp-block novablocks-grid__item-content novablocks-card__description"
-    }, post.excerpt.rendered), Object(external_React_["createElement"])("div", {
-      className: "wp-block novablocks-grid__item-buttons"
-    }, Object(external_React_["createElement"])("div", {
-      className: "novablocks-card__buttons"
-    }, Object(external_React_["createElement"])("div", {
-      class: "wp-block-buttons alignleft"
-    }, Object(external_React_["createElement"])("div", {
-      className: "wp-block-button is-style-text"
-    }, Object(external_React_["createElement"])("div", {
-      className: "wp-block-button__link"
-    }, "Read More")))))));
+    }, areas.map(function (area) {
+      return area.posts.map(function (post) {
+        return Object(external_React_["createElement"])("div", {
+          className: getGridItemClassname(area, attributes)
+        }, Object(external_React_["createElement"])("div", {
+          className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
+          key: idx,
+          style: style
+        }, Object(external_React_["createElement"])("div", {
+          className: "wp-block novablocks-grid__item-image"
+        }, Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__media-wrap"
+        }, Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__media"
+        }, Object(external_React_["createElement"])(components_media, {
+          post: post
+        })))), Object(external_React_["createElement"])("div", {
+          className: "wp-block novablocks-grid__item-meta"
+        }, Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__meta"
+        }, Object(external_React_["createElement"])("time", {
+          dateTime: format('c', post.date_gmt)
+        }, dateI18n(dateFormat, post.date_gmt)))), Object(external_React_["createElement"])("div", {
+          className: "wp-block novablocks-grid__item-title"
+        }, Object(external_React_["createElement"])(TitleTagName, {
+          className: "novablocks-card__title"
+        }, post.title.raw)), post.categories.length && Object(external_React_["createElement"])("div", {
+          className: "wp-block novablocks-grid__item-subtitle"
+        }, Object(external_React_["createElement"])(SubtitleTagName, {
+          className: "novablocks-card__subtitle"
+        }, Object(external_React_["createElement"])(category, {
+          id: post.categories[0]
+        }))), Object(external_React_["createElement"])(preview_RawHTML, {
+          className: "wp-block novablocks-grid__item-content novablocks-card__description"
+        }, post.excerpt.rendered), Object(external_React_["createElement"])("div", {
+          className: "wp-block novablocks-grid__item-buttons"
+        }, Object(external_React_["createElement"])("div", {
+          className: "novablocks-card__buttons"
+        }, Object(external_React_["createElement"])("div", {
+          className: "wp-block-buttons alignleft"
+        }, Object(external_React_["createElement"])("div", {
+          className: "wp-block-button is-style-text"
+        }, Object(external_React_["createElement"])("div", {
+          className: "wp-block-button__link"
+        }, "Read More")))))));
+      });
+    }));
   })));
 };
 

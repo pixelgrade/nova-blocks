@@ -1,6 +1,6 @@
 import { applyLayoutEngine } from "./layoutEngine";
 
-const prepareAttributes = ( attributes ) => {
+export const prepareAttributes = ( attributes ) => {
 
 	const state = {
 		gridcolumns: attributes?.gridColumns,
@@ -69,20 +69,20 @@ export const getGridItemStyle = ( gridItem, attributes ) => {
 export const getGridItemClassname = ( gridItem, attributes ) => {
 
 	const classes = [ 'novablocks-grid__item' ];
-	const gridArea = gridItem.gridArea.split( ' / ' ).map( value => parseInt( value, 10 ) );
-	const isLandscape = gridArea[3] - gridArea[1] > gridArea[2] - gridArea[0];
+//	const gridArea = gridItem.gridArea.split( ' / ' ).map( value => parseInt( value, 10 ) );
+//	const isLandscape = gridArea[3] - gridArea[1] > gridArea[2] - gridArea[0];
 
-	if ( isLandscape ) {
-		classes.push( 'novablocks-grid__item--portrait' );
-	}
+//	if ( isLandscape ) {
+//		classes.push( 'novablocks-grid__item--portrait' );
+//	}
 
 	if ( gridItem.imageWeight > 3 && gridItem.metaDetails > 5 ) {
 		classes.push( 'novablocks-grid__item--larger-title' );
 	}
 
-	if ( isLandscape && gridItem.metaDetails < 3 || gridItem.metaDetails < 2 ) {
-		classes.push( 'novablocks-grid__item--smaller-title' );
-	}
+//	if ( isLandscape && gridItem.metaDetails < 3 || gridItem.metaDetails < 2 ) {
+//		classes.push( 'novablocks-grid__item--smaller-title' );
+//	}
 
 	return classes.join( " " );
 };
