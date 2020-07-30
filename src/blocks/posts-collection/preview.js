@@ -44,7 +44,7 @@ const Preview = ( props ) => {
 
 	markPostsAsDisplayed( clientId, posts );
 
-	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
+	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ), true );
 
 	let postsAdded = 0;
 
@@ -91,8 +91,8 @@ const Preview = ( props ) => {
 												{`nth: ${ area.nth }`}<br />
 												{`image weight: ${ area.imageWeight }`}<br />
 												{`meta details: ${ area.metaDetails }`}<br />
-												{`height: ${ area.height }`}<br />
-												{`width: ${ area.width }`}
+												{`width: ${ area.width }`}<br />
+												{`height: ${ area.height }`}
 											</div>
 											{
 												area.posts.map( post => {

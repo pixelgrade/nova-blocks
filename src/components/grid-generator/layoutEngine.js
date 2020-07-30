@@ -577,8 +577,9 @@ const mergeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix, are
 };
 
 const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray ) => {
-	let width = getAreaWidth( row, col, nthMatrix );
-	let height = getAreaHeight( row, col, nthMatrix );
+	let nth = nthMatrix[row][col];
+	let width = getAreaWidth( nth, nthMatrix );
+	let height = getAreaHeight( nth, nthMatrix );
 	let initialWidth = width;
 	let initialHeight = height;
 	let currentAreaIndex = -1;
@@ -593,19 +594,28 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		nextCol,
 		nextWidth,
 		nextHeight,
+		nextNth,
+		nextNthStart,
 		searching = true,
 		mergeable = false;
 
 	while ( searching ) {
-		nextRow = row + height;
-		nextWidth = getAreaWidth( nextRow, col, nthMatrix );
-		nextHeight = getAreaHeight( nextRow, col, nthMatrix );
+		nextNth = nthMatrix[row + height][col];
+		nextNthStart = getFirstOccurence( nextNth, nthMatrix );
+		nextRow = nextNthStart.row;
+		nextCol = nextNthStart.col;
+
+		nextWidth = getAreaWidth( nextNth, nthMatrix );
+		nextHeight = getAreaHeight( nextNth, nthMatrix );
 
 		if ( width === nextWidth &&
+		     col === nextCol &&
 		     Math.abs( initialHeight - nextHeight ) <= 1 &&
 		     Math.abs( metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col] ) <= 1 &&
 		     Math.abs( imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col] ) <= 1 ) {
 			height = height + nextHeight;
+
+			console.log( `merge down. new height is ${ height }` );
 			mergeable = true;
 
 			if ( currentAreaIndex > -1 ) {
@@ -620,15 +630,21 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 	searching = ! mergeable;
 
 	while ( searching ) {
-		nextCol = col + width;
-		nextWidth = getAreaWidth( row, nextCol, nthMatrix );
-		nextHeight = getAreaHeight( row, nextCol, nthMatrix );
+		nextNth = nthMatrix[row][col + width];
+		nextNthStart = getFirstOccurence( nextNth, nthMatrix );
+		nextRow = nextNthStart.row;
+		nextCol = nextNthStart.col;
+
+		nextWidth = getAreaWidth( nextNth, nthMatrix );
+		nextHeight = getAreaHeight( nextNth, nthMatrix );
 
 		if ( height === nextHeight &&
+		     row === nextRow &&
 		     Math.abs( initialWidth - nextWidth ) <= 1 &&
 		     Math.abs( metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol] ) <= 1 &&
 		     Math.abs( imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol] ) <= 1 ) {
 			width = width + nextWidth;
+
 			mergeable = true;
 
 			if ( currentAreaIndex > -1 ) {
@@ -651,12 +667,26 @@ const fillArea = ( nthMatrix, row, col, width, height ) => {
 	}
 };
 
-const getAreaWidth = ( row, col, nthMatrix ) => {
-	let currentNth = nthMatrix[row][col];
+const getFirstOccurence = ( nth, nthMatrix ) => {
+	for ( let i = 0; i < nthMatrix.length; i++ ) {
+		for ( let j = 0; j < nthMatrix[i].length; j++ ) {
+			if ( nthMatrix[i][j] === nth ) {
+				return {
+					row: i,
+					column: j,
+				};
+			}
+		}
+	}
+
+	return {};
+};
+
+const getAreaWidth = ( nth, nthMatrix ) => {
+	const { row, col } = getFirstOccurence( nth, nthMatrix );
 	let width = 1;
 
-
-	while ( currentNth === nthMatrix[row][col + width] ) {
+	while ( nth === nthMatrix[row][col + width] ) {
 		width = width + 1;
 	}
 
@@ -665,11 +695,11 @@ const getAreaWidth = ( row, col, nthMatrix ) => {
 
 
 
-const getAreaHeight = ( row, col, nthMatrix ) => {
-	let currentNth = nthMatrix[row][col];
+const getAreaHeight = ( nth, nthMatrix ) => {
+	const { row, col } = getFirstOccurence( nth, nthMatrix );
 	let height = 1;
 
-	while ( "undefined" !== typeof nthMatrix[row + height] && currentNth === nthMatrix[row + height][col] ) {
+	while ( "undefined" !== typeof nthMatrix[row + height] && nth === nthMatrix[row + height][col] ) {
 		height = height + 1;
 	}
 

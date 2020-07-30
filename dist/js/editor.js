@@ -38306,8 +38306,9 @@ var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix,
 };
 
 var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
-  var width = getAreaWidth(row, col, nthMatrix);
-  var height = getAreaHeight(row, col, nthMatrix);
+  var nth = nthMatrix[row][col];
+  var width = getAreaWidth(nth, nthMatrix);
+  var height = getAreaHeight(nth, nthMatrix);
   var initialWidth = width;
   var initialHeight = height;
   var currentAreaIndex = -1;
@@ -38322,16 +38323,22 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
       nextCol,
       nextWidth,
       nextHeight,
+      nextNth,
+      nextNthStart,
       searching = true,
       mergeable = false;
 
   while (searching) {
-    nextRow = row + height;
-    nextWidth = getAreaWidth(nextRow, col, nthMatrix);
-    nextHeight = getAreaHeight(nextRow, col, nthMatrix);
+    nextNth = nthMatrix[row + height][col];
+    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
+    nextRow = nextNthStart.row;
+    nextCol = nextNthStart.col;
+    nextWidth = getAreaWidth(nextNth, nthMatrix);
+    nextHeight = getAreaHeight(nextNth, nthMatrix);
 
-    if (width === nextWidth && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
+    if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
       height = height + nextHeight;
+      console.log("merge down. new height is ".concat(height));
       mergeable = true;
 
       if (currentAreaIndex > -1) {
@@ -38346,11 +38353,14 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
   searching = !mergeable;
 
   while (searching) {
-    nextCol = col + width;
-    nextWidth = getAreaWidth(row, nextCol, nthMatrix);
-    nextHeight = getAreaHeight(row, nextCol, nthMatrix);
+    nextNth = nthMatrix[row][col + width];
+    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
+    nextRow = nextNthStart.row;
+    nextCol = nextNthStart.col;
+    nextWidth = getAreaWidth(nextNth, nthMatrix);
+    nextHeight = getAreaHeight(nextNth, nthMatrix);
 
-    if (height === nextHeight && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {
+    if (height === nextHeight && row === nextRow && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {
       width = width + nextWidth;
       mergeable = true;
 
@@ -38374,22 +38384,43 @@ var fillArea = function fillArea(nthMatrix, row, col, width, height) {
   }
 };
 
-var getAreaWidth = function getAreaWidth(row, col, nthMatrix) {
-  var currentNth = nthMatrix[row][col];
+var getFirstOccurence = function getFirstOccurence(nth, nthMatrix) {
+  for (var i = 0; i < nthMatrix.length; i++) {
+    for (var j = 0; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] === nth) {
+        return {
+          row: i,
+          column: j
+        };
+      }
+    }
+  }
+
+  return {};
+};
+
+var getAreaWidth = function getAreaWidth(nth, nthMatrix) {
+  var _getFirstOccurence = getFirstOccurence(nth, nthMatrix),
+      row = _getFirstOccurence.row,
+      col = _getFirstOccurence.col;
+
   var width = 1;
 
-  while (currentNth === nthMatrix[row][col + width]) {
+  while (nth === nthMatrix[row][col + width]) {
     width = width + 1;
   }
 
   return width;
 };
 
-var getAreaHeight = function getAreaHeight(row, col, nthMatrix) {
-  var currentNth = nthMatrix[row][col];
+var getAreaHeight = function getAreaHeight(nth, nthMatrix) {
+  var _getFirstOccurence2 = getFirstOccurence(nth, nthMatrix),
+      row = _getFirstOccurence2.row,
+      col = _getFirstOccurence2.col;
+
   var height = 1;
 
-  while ("undefined" !== typeof nthMatrix[row + height] && currentNth === nthMatrix[row + height][col]) {
+  while ("undefined" !== typeof nthMatrix[row + height] && nth === nthMatrix[row + height][col]) {
     height = height + 1;
   }
 
@@ -38638,7 +38669,7 @@ var preview_Preview = function Preview(props) {
   var dateFormat = __experimentalGetSettings().formats.date;
 
   markPostsAsDisplayed(clientId, posts);
-  var areaColumns = applyLayoutEngine(prepareAttributes(attributes));
+  var areaColumns = applyLayoutEngine(prepareAttributes(attributes), true);
   var postsAdded = 0;
 
   if (!posts) {
@@ -38687,7 +38718,7 @@ var preview_Preview = function Preview(props) {
         className: preview_getAreaClassName(area, attributes)
       }, Object(external_React_["createElement"])("div", {
         className: 'novablocks-grid__debug'
-      }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width)), area.posts.map(function (post) {
+      }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height)), area.posts.map(function (post) {
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-grid__item"
         }, Object(external_React_["createElement"])("div", {
