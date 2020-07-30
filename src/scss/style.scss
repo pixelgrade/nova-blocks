@@ -157,12 +157,15 @@
 	}
 }
 
+.novablocks-grid__area--width-s,
 .novablocks-grid__area--width-xs {
-	--card-image-width: 50px;
 	--grid-item-content-display: none;
 	--grid-item-buttons-display: none;
 }
 
+.novablocks-grid__area--width-xs {
+	--card-image-width: 50px;
+}
 
 .novablocks-card__title[class] {
 
