@@ -87,6 +87,11 @@ const Preview = ( props ) => {
 
 									return (
 										<div className={ getAreaClassName( area, attributes ) }>
+											<div className={ 'novablocks-grid__debug' }>
+												{`nth: ${ area.nth }`}<br />
+												{`image weight: ${ area.imageWeight }`}<br />
+												{`meta details: ${ area.metaDetails }`}
+											</div>
 											{
 												area.posts.map( post => {
 

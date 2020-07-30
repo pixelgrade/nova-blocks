@@ -755,7 +755,7 @@ const getAreasArray = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
 				width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
 				height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
 				metaDetails: currentPostDetails.metaDetails,
-				imageWeightMatrix: currentPostDetails.imageWeight,
+				imageWeight: currentPostDetails.imageWeight,
 				postsCount: 1,
 			} )
 		}

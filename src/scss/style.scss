@@ -90,6 +90,10 @@
 
 .novablocks-grid--mask {
 
+	.novablocks-grid__debug {
+		display: block;
+	}
+
 	.novablocks-grid__area {
 		border: 2px dashed var(--novablocks-purple);
 	}
@@ -115,6 +119,19 @@
 }
 
 // quick implementation of portrait card
+.novablocks-grid__area {
+	position: relative;
+}
+
+.novablocks-grid__debug {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: none;
+	padding: 10px;
+}
 .novablocks-grid__area--landscape {
 
 	.novablocks-card {

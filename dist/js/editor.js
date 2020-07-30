@@ -38475,7 +38475,7 @@ var getAreasArray = function getAreasArray(nthMatrix, metaDetailsMatrix, imageWe
         width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
         height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
         metaDetails: currentPostDetails.metaDetails,
-        imageWeightMatrix: currentPostDetails.imageWeight,
+        imageWeight: currentPostDetails.imageWeight,
         postsCount: 1
       });
     }
@@ -38683,7 +38683,9 @@ var preview_Preview = function Preview(props) {
     }, areas.map(function (area) {
       return Object(external_React_["createElement"])("div", {
         className: preview_getAreaClassName(area, attributes)
-      }, area.posts.map(function (post) {
+      }, Object(external_React_["createElement"])("div", {
+        className: 'novablocks-grid__debug'
+      }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails)), area.posts.map(function (post) {
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-grid__item"
         }, Object(external_React_["createElement"])("div", {
