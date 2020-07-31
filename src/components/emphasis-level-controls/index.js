@@ -45,7 +45,6 @@ const EmphasisLevelControls = ( props ) => {
 
 	return (
 		<ControlsSection label={ __( 'Color Contrast' ) }>
-
 			<ControlsTab label={ __( 'Customize' ) }>
 				<RangeControl
 					key={ 'emphasis-by-contrast-controls' }

@@ -1,7 +1,6 @@
-import classnames from "classnames";
 import Media from "./components/media";
 import Category from "./components/category";
-import { prepareAttributes, getGridStyle, getGridItemStyle, getGridItemClassname } from "../../components/grid-generator/utils";
+import { prepareAttributes, getGridStyle, fillAreaColumnsWithPosts, getAreaClassName } from "../../components/grid-generator/utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 
 const {
@@ -13,10 +12,6 @@ const {
 const {
 	RawHTML
 } = wp.element;
-
-const CardGroup = () => {
-
-}
 
 const Preview = ( props ) => {
 
@@ -77,10 +72,11 @@ const Preview = ( props ) => {
 												{`image weight: ${ area.imageWeight }`}<br />
 												{`meta details: ${ area.metaDetails }`}<br />
 												{`width: ${ area.width }`}<br />
-												{`height: ${ area.height }`}
+												{`height: ${ area.height }`}<br />
+												{`spot ratio: ${ area.spotRatio }`}
 											</div>
 											{
-												area.posts.map( post => {
+												area.posts && area.posts.map( post => {
 
 													return (
 														<div className="novablocks-grid__item">
@@ -141,86 +137,6 @@ const Preview = ( props ) => {
 			</div>
 		</div>
 	)
-};
-
-const fillAreaColumnsWithPosts = ( areaColumns, posts ) => {
-	let totalPosts = posts.length;
-	let totalSpots = 0;
-	let remainingPosts = totalPosts;
-	let remainingSpots = 0;
-
-	for ( let i = 0; i < areaColumns.length; i++ ) {
-		let areaColumn = areaColumns[i];
-
-		for ( let j = 0; j < areaColumn.areas.length; j++ ) {
-			let area = areaColumn.areas[j];
-			totalSpots += area.postsCount;
-		}
-	}
-
-	remainingSpots = totalSpots;
-
-	for ( let i = 0; i < areaColumns.length; i++ ) {
-		let areaColumn = areaColumns[i];
-		let { areas } = areaColumn;
-
-		for ( let j = 0; j < areas.length; j++ ) {
-			let area = areas[j];
-			let postsToAdd = area.postsCount;
-
-			if ( area.nth !== 1 && remainingPosts > remainingSpots ) {
-				postsToAdd = Math.floor( area.postsCount * remainingPosts / remainingSpots );
-			}
-
-			if ( i === areaColumns.length - 1 && j === areas.length - 1 ) {
-				postsToAdd = remainingPosts;
-			}
-
-			area.posts = posts.slice( totalPosts - remainingPosts, totalPosts - remainingPosts + postsToAdd );
-			remainingSpots -= area.postsCount;
-			remainingPosts -= area.posts.length;
-
-			if ( remainingPosts <= 0 ) return;
-		}
-	}
-}
-
-const getAreaClassName = ( area, attributes ) => {
-	const { gridColumns, gridRows } = attributes;
-	const { nth, width, height } = area;
-
-	function isLandscape() {
-
-		if ( width / gridColumns > height / gridRows ) {
-			return true;
-		}
-
-		if ( 0.25 < width / gridColumns && width / gridColumns < 0.5 && nth > 3 ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	return classnames([
-		'novablocks-grid__area',
-		`novablocks-grid__area--nth-${ nth }`,
-		{
-			'novablocks-grid__area--landscape': isLandscape(),
-
-			'novablocks-grid__area--width-xs': width / gridColumns < 0.34,
-			'novablocks-grid__area--width-s': 0.34 <= width / gridColumns && width / gridColumns < 0.5,
-			'novablocks-grid__area--width-m': 0.5 <= width / gridColumns && width / gridColumns < 0.66,
-			'novablocks-grid__area--width-l': 0.66 <= width / gridColumns && width / gridColumns < 0.75,
-			'novablocks-grid__area--width-xl': 0.75 <= width / gridColumns,
-
-			'novablocks-grid__area--height-xs': height / gridRows < 0.34,
-			'novablocks-grid__area--height-s': 0.34 <= height / gridRows && height / gridRows < 0.5,
-			'novablocks-grid__area--height-m': 0.5 <= height / gridRows && height / gridRows < 0.66,
-			'novablocks-grid__area--height-l': 0.66 <= height / gridRows && height / gridRows < 0.75,
-			'novablocks-grid__area--height-xl': 0.75 <= height / gridRows,
-		}
-	]);
 };
 
 export default Preview;

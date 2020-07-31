@@ -1,4 +1,7 @@
 import { ControlsSection, ControlsTab } from "../control-sections";
+import { getControlsClasses } from "../../utils";
+import { prepareAttributes, getPostsCount } from "../../components/grid-generator/utils";
+import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import ControlsGroup from "../controls-group";
 
 const { __ } = wp.i18n;
@@ -139,12 +142,20 @@ const GridGenerator = ( props ) => {
 
 		toggleScale,
 		toggleMask,
+		automaticPostsNumber,
+		postsToShow,
 	} = attributes;
+
+	// used to store previous values of postsToShow
+	const tempPostsToShow = attributes.tempPostsToShow || postsToShow;
 
 	const setAttributes = ( newAttributes ) => {
 		const normalizedAttributes = normalizeAttributes( newAttributes, attributes );
 		props.setAttributes( normalizedAttributes );
 	};
+
+	const areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
+	const autoPostsCount = getPostsCount( areaColumns );
 
 	return (
 		<ControlsSection label={ __( 'Grid Layout' ) }>
@@ -160,6 +171,38 @@ const GridGenerator = ( props ) => {
 						checked={ ! toggleMask }
 						onChange={ () => setAttributes( { toggleMask : ! toggleMask } )}
 					/>
+				</ControlsGroup>
+				<ControlsGroup title={ __( 'Posts Count' ) }>
+					<ToggleControl
+						label={__( 'Automatic Posts Number', '__plugin_txtd' )}
+						checked={ automaticPostsNumber }
+						onChange={ ( automaticPostsNumber ) => {
+							setAttributes( {
+								postsToShow: automaticPostsNumber ? autoPostsCount : tempPostsToShow,
+								tempPostsToShow: postsToShow,
+								automaticPostsNumber
+							} )
+						} }
+					/>
+					<div className={ getControlsClasses( attributes, ( { automaticPostsNumber, postsToShow } ) => {
+						return {
+							postsToShow: automaticPostsNumber ? -1 : postsToShow
+						}
+					} ) }>
+						<RangeControl
+							label={ __( `Posts to show`, '__plugin_txtd' ) }
+							value={ postsToShow }
+							onChange={ postsToShow => {
+								setAttributes( {
+									postsToShow,
+									tempPostsToShow: postsToShow,
+									automaticPostsNumber: false,
+								} );
+							} }
+							min={ 1 }
+							max={ 20 }
+						/>
+					</div>
 				</ControlsGroup>
 				<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
 					<MinMaxControl
