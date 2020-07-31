@@ -107,7 +107,7 @@ export const fillAreaColumnsWithPosts = ( areaColumns, posts ) => {
 			let area = areas[j];
 			let postsToAdd = area.postsCount;
 
-			if ( area.nth !== 1 && totalPosts > totalSpots ) {
+			if ( totalPosts > totalSpots ) {
 				postsToAdd += Math.floor( ( totalPosts - totalSpots ) * area.spotRatio / totalRatio );
 			}
 

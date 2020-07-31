@@ -31827,7 +31827,7 @@ var fillAreaColumnsWithPosts = function fillAreaColumnsWithPosts(areaColumns, po
       var _area = areas[_j];
       var postsToAdd = _area.postsCount;
 
-      if (_area.nth !== 1 && totalPosts > totalSpots) {
+      if (totalPosts > totalSpots) {
         postsToAdd += Math.floor((totalPosts - totalSpots) * _area.spotRatio / totalRatio);
       }
 
