@@ -161,3 +161,11 @@ export const getAreaClassName = ( area, attributes ) => {
 		}
 	]);
 };
+
+export const transposeMatrix = ( source ) => {
+	return Object.keys( source[0] ).map( function( column ) {
+		return source.map( function( row ) {
+			return row[column];
+		} );
+	} );
+};

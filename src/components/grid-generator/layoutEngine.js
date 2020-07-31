@@ -1,3 +1,5 @@
+import { transposeMatrix } from './utils';
+
 // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
 export const applyLayoutEngine = (state, debug = false) => {
@@ -465,10 +467,15 @@ export const applyLayoutEngine = (state, debug = false) => {
 		}
 	}
 
+	// Transpose all matrices if flipcolssrows attribute is set to true
+	const finalNthMatrix = ! state.flipcolsrows ? nthMatrix : transposeMatrix( nthMatrix );
+	const finalMetaMatrix = ! state.flipcolsrows ? metaDetailsMatrix : transposeMatrix( metaDetailsMatrix );
+	const finalImageMatrix = ! state.flipcolsrows ? imageWeightMatrix : transposeMatrix( imageWeightMatrix );
+
 	/*
 	8. Finally, generate the posts list.
 	*/
-	return getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
+	return getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );
 };
 
 // @todo make use of state.flipcolsrows

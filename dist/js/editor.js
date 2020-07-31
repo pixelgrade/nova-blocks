@@ -30862,9 +30862,10 @@ with_inner_blocks_addFilter('editor.BlockEdit', 'novablocks/with-inner-blocks-co
 var with_grid_generator_attributes = __webpack_require__(136);
 
 // CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
-// This is the main workhorse containing the logic of our layout "engine".
+ // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
-var applyLayoutEngine = function applyLayoutEngine(state) {
+
+var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
   var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
   // we need to do a couple of preliminary calculations.
@@ -31345,13 +31346,17 @@ var applyLayoutEngine = function applyLayoutEngine(state) {
     for (i = 1; i < metaDetailsMatrix.length; i++) {
       console.log(' '.padEnd(41, ' ') + i + ' - ' + metaDetailsMatrix[i].join(' '));
     }
-  }
+  } // Transpose all matrices if flipcolssrows attribute is set to true
+
+
+  var finalNthMatrix = !state.flipcolsrows ? nthMatrix : transposeMatrix(nthMatrix);
+  var finalMetaMatrix = !state.flipcolsrows ? metaDetailsMatrix : transposeMatrix(metaDetailsMatrix);
+  var finalImageMatrix = !state.flipcolsrows ? imageWeightMatrix : transposeMatrix(imageWeightMatrix);
   /*
   8. Finally, generate the posts list.
   */
 
-
-  return getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+  return getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);
 }; // @todo make use of state.flipcolsrows
 
 function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
@@ -31758,7 +31763,7 @@ var prepareAttributes = function prepareAttributes(attributes) {
   return state;
 };
 var utils_getGridItems = function getGridItems(attributes) {
-  var gridItems = applyLayoutEngine(prepareAttributes(attributes));
+  var gridItems = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   return gridItems.map(function (gridItem) {
     return Object.assign({}, gridItem, {
       class: getGridItemClassname(gridItem),
@@ -31874,6 +31879,13 @@ var utils_getAreaClassName = function getAreaClassName(area, attributes) {
     'novablocks-grid__area--height-l': 0.66 <= height / gridRows && height / gridRows < 0.75,
     'novablocks-grid__area--height-xl': 0.75 <= height / gridRows
   }]);
+};
+var transposeMatrix = function transposeMatrix(source) {
+  return Object.keys(source[0]).map(function (column) {
+    return source.map(function (row) {
+      return row[column];
+    });
+  });
 };
 // CONCATENATED MODULE: ./src/components/grid-generator/controls.js
 
@@ -32003,7 +32015,7 @@ var controls_GridGenerator = function GridGenerator(props) {
     props.setAttributes(normalizedAttributes);
   };
 
-  var areaColumns = applyLayoutEngine(prepareAttributes(attributes));
+  var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   var autoPostsCount = getPostsCount(areaColumns);
   return Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: controls_('Grid Layout')
@@ -38795,7 +38807,7 @@ var preview_Preview = function Preview(props) {
   var dateFormat = __experimentalGetSettings().formats.date;
 
   markPostsAsDisplayed(clientId, posts);
-  var areaColumns = applyLayoutEngine(prepareAttributes(attributes));
+  var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
 
   if (!posts || !posts.length) {
     return null;
