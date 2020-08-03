@@ -52,7 +52,7 @@
 
 	padding-top: calc(0.125 * var(--novablocks-spacing));
 
-	.novablocks-media.show-captions-on-hover & {
+	.show-captions-on-hover & {
 		position: absolute;
 		top: 100%;
 		left: 0;
@@ -65,7 +65,7 @@
 		transition-property: opacity;
 	}
 
-	.novablocks-media.show-captions-on-hover .novablocks-advanced-gallery__grid-item:hover & {
+	.show-captions-on-hover .novablocks-advanced-gallery__grid-item:hover & {
 		opacity: 1;
 		pointer-events: auto;
 	}
