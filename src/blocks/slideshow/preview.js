@@ -3,7 +3,6 @@
  */
 import SlideshowBackground from './background';
 import { GalleryPlaceholder } from '../../components';
-import { getMediaTitle, getMediaCaption } from "../../utils";
 
 /**
  * WordPress dependencies

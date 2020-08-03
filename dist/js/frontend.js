@@ -21767,7 +21767,9 @@ var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
 
 
 
+var APP_NAME = 'Nova Blocks';
 var COLLECTION_ID = 10606015;
+var URL_PARAMS = encodeURI("utm_source=".concat(APP_NAME, "&utm_medium=referral"));
 
 var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
   function PlaceholderImagesCollection() {
@@ -21848,7 +21850,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           }
         },
         title: photo.description,
-        caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
+        caption: "<p class=\"credits\">Photo by <a target=\"_blank\" href=\"".concat(photo.user.links.html, "?").concat(URL_PARAMS, "\">").concat(photo.user.name, "</a> on <a target=\"_blank\" href=\"https://unsplash.com?").concat(URL_PARAMS, "\">Unsplash</a></p>"),
         download: function download() {
           _this2.api.photos.downloadPhoto(photo);
         }
@@ -22304,7 +22306,7 @@ var utils_getMapStyles = function getMapStyles() {
   var attributes = this.props.attributes;
   var styleData = attributes.styleData,
       styleSlug = attributes.styleSlug;
-  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length === 0;
+  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
   var selectedStyles = google_map_styles.find(function (style) {
     return style.slug === styleSlug;
   });
@@ -23220,14 +23222,12 @@ var grid_item_GridItem = /*#__PURE__*/function () {
   }, {
     key: "getImageStyle",
     value: function getImageStyle() {
-      var idx = this.idx,
-          row = this.row,
+      var row = this.row,
           col = this.col,
           objectPosition = this.objectPosition,
           imageResizing = this.imageResizing;
       var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
       var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
       return {
         objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
         objectPosition: "".concat(positionX, "% ").concat(positionY, "%")

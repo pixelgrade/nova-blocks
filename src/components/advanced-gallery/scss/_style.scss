@@ -12,6 +12,7 @@
 .novablocks-advanced-gallery__grid {
 	display: grid;
 	grid-auto-rows: 1fr;
+	grid-auto-columns: 1fr;
 
 	position: absolute;
 	top: 0;
@@ -30,10 +31,44 @@
 }
 
 .novablocks-advanced-gallery__grid-item {
-	position: relative;
-
 	margin-top: var(--novablocks-advanced-gallery-grid-gap);
 	margin-left: var(--novablocks-advanced-gallery-grid-gap);
+
+	display: flex;
+	flex-direction: column;
+
+	.credits {
+		--font-size: 12;
+	}
+}
+
+.novablocks-advanced-gallery__grid-item-media {
+	position: relative;
+	flex: 1 1 0;
+}
+
+.novablocks-advanced-gallery__grid-item-info {
+	flex: 0 1 auto;
+
+	padding-top: calc(0.125 * var(--novablocks-spacing));
+
+	.show-captions-on-hover & {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+
+		opacity: 0;
+		pointer-events: none;
+		transition: var(--novablocks-transition);
+		--novablocks-transition-duration: 0.15s;
+		transition-property: opacity;
+	}
+
+	.show-captions-on-hover .novablocks-advanced-gallery__grid-item:hover & {
+		opacity: 1;
+		pointer-events: auto;
+	}
 }
 
 .novablocks-advanced-gallery__image[class] {
