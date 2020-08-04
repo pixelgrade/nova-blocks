@@ -13,3 +13,13 @@
 		justify-content: center;
 	}
 }
+
+.novablocks-announcement-bar {
+	.block-editor-inner-blocks {
+		padding: var(--novablocks-announcement-bar-padding) calc(2*var(--novablocks-announcement-bar-padding) + var(--novablocks-announcement-bar-close-width));
+	}
+
+	.block-list-appender {
+		margin: 0 !important;
+	}
+}
