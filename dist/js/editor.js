@@ -34385,7 +34385,6 @@ function hero_init() {
     icon: hero,
     // Additional search terms
     keywords: [hero_('cover', '__plugin_txtd'), hero_('full width', '__plugin_txtd'), hero_('hero image', '__plugin_txtd'), hero_('cover section', '__plugin_txtd')],
-    example: {},
     supports: {
       anchor: true
     },

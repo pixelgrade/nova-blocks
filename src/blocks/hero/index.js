@@ -57,7 +57,6 @@ function init() {
 			__( 'hero image', '__plugin_txtd' ),
 			__( 'cover section', '__plugin_txtd' )
 		],
-		example: {},
 		supports: {
 			anchor: true,
 		},
