@@ -21954,16 +21954,15 @@ var gallery_options_GalleryPlaceholder = function GalleryPlaceholder(props) {
       onSelectImages = props.onSelectImages;
   var hasImages = !!galleryImages.length;
   return Object(external_React_["createElement"])(MediaPlaceholder, {
+    accept: "image/*",
     addToGallery: hasImages,
-    className: "",
+    allowedTypes: ALLOWED_MEDIA_TYPES,
     labels: {
       title: '',
       instructions: gallery_options_('Drag images, upload new ones or select files from your library.', '__plugin_txtd')
     },
-    onSelect: onSelectImages,
-    accept: "image/*",
-    allowedTypes: ALLOWED_MEDIA_TYPES,
     multiple: true,
+    onSelect: onSelectImages,
     value: hasImages ? galleryImages : undefined
   });
 };
@@ -35225,12 +35224,13 @@ var slideshow_block_controls_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 var block_controls_SlideshowBlockControls = function SlideshowBlockControls(props) {
   var galleryImages = props.attributes.galleryImages,
       onSelectImages = props.onSelectImages;
+  var hasImages = !!galleryImages.length;
   return Object(external_React_["createElement"])(slideshow_block_controls_BlockControls, null, Object(external_React_["createElement"])(alignment_controls_AlignmentToolbar, props), Object(external_React_["createElement"])(color_controls_ColorToolbar, props), Object(external_React_["createElement"])(slideshow_block_controls_Toolbar, null, Object(external_React_["createElement"])(slideshow_block_controls_MediaUpload, {
-    multiple: true,
+    accept: "image/*",
+    addToGallery: hasImages,
     allowedTypes: slideshow_block_controls_ALLOWED_MEDIA_TYPES,
-    value: galleryImages.map(function (image) {
-      return image.id;
-    }),
+    gallery: true,
+    multiple: true,
     onSelect: onSelectImages,
     render: function render(_ref) {
       var open = _ref.open;
@@ -35240,7 +35240,10 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
         icon: swap,
         onClick: open
       });
-    }
+    },
+    value: galleryImages.map(function (image) {
+      return image.id;
+    })
   })));
 };
 

@@ -34,15 +34,19 @@ const SlideshowBlockControls = function( props ) {
 		onSelectImages,
 	} = props;
 
+	const hasImages = !! galleryImages.length;
+
 	return (
 		<BlockControls>
 			<AlignmentToolbar { ...props } />
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
-					multiple
+					accept="image/*"
+					addToGallery={ hasImages }
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
-					value={ galleryImages.map( ( image ) => image.id ) }
+					gallery={ true }
+					multiple
 					onSelect={ onSelectImages }
 					render={ ( { open } ) => (
 						<Button
@@ -52,6 +56,7 @@ const SlideshowBlockControls = function( props ) {
 							onClick={ open }
 						/>
 					) }
+					value={ galleryImages.map( ( image ) => image.id ) }
 				/>
 			</Toolbar>
 		</BlockControls>
