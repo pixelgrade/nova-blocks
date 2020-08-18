@@ -31,6 +31,10 @@
 		"boolean": true,
 		"default": false
 	},
+	"templateInserted": {
+		"boolean": true,
+		"default": false
+	},
 	"minHeightFallback": {
 		"type": "number",
 		"default": 100

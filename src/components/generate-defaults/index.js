@@ -6,7 +6,6 @@ const {
 
 export default ( blockType, getNewDefaults ) => {
 	const { getBlocksByClientId, getClientIdsWithDescendants } = select( 'core/block-editor' );
-	const { isEditedPostEmpty } = select( 'core/editor' );
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' );
 
 	let blocks = getClientIdsWithDescendants();

@@ -2164,7 +2164,7 @@ module.exports = toKey;
 /* 45 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false},\"templateInserted\":{\"boolean\":true,\"default\":false}}");
 
 /***/ }),
 /* 46 */
@@ -31914,9 +31914,6 @@ var generate_defaults_wp$data = wp.data,
       getBlocksByClientId = _select.getBlocksByClientId,
       getClientIdsWithDescendants = _select.getClientIdsWithDescendants;
 
-  var _select2 = generate_defaults_select('core/editor'),
-      isEditedPostEmpty = _select2.isEditedPostEmpty;
-
   var _dispatch = generate_defaults_dispatch('core/block-editor'),
       updateBlockAttributes = _dispatch.updateBlockAttributes;
 
@@ -34072,9 +34069,7 @@ var preview_HeroPreview = function HeroPreview(props) {
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-hero__inner-container novablocks-u-content-width",
     style: styles.content
-  }, Object(external_React_["createElement"])(preview_InnerBlocks, {
-    template: settings.hero.template
-  })), scrollIndicator && Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(preview_InnerBlocks, null)), scrollIndicator && Object(external_React_["createElement"])("div", {
     className: "novablocks-hero__indicator"
   })));
 };
@@ -34304,6 +34299,70 @@ hero_deprecated_deprecated.push({
   save: hero_save
 });
 /* harmony default export */ var hero_deprecated = (hero_deprecated_deprecated);
+// CONCATENATED MODULE: ./src/components/insert-template/index.js
+
+var insert_template_createBlock = wp.blocks.createBlock;
+var insert_template_wp$data = wp.data,
+    insert_template_dispatch = insert_template_wp$data.dispatch,
+    insert_template_select = insert_template_wp$data.select,
+    insert_template_subscribe = insert_template_wp$data.subscribe; // Copied over from the Columns block. It seems like it should become part of public API.
+
+var insert_template_createBlocksFromInnerBlocksTemplate = function createBlocksFromInnerBlocksTemplate() {
+  var innerBlocksTemplate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return innerBlocksTemplate.map(function (_ref) {
+    var _ref2 = slicedToArray_default()(_ref, 3),
+        name = _ref2[0],
+        attributes = _ref2[1],
+        _ref2$ = _ref2[2],
+        innerBlocks = _ref2$ === void 0 ? [] : _ref2$;
+
+    return insert_template_createBlock(name, attributes, createBlocksFromInnerBlocksTemplate(innerBlocks));
+  });
+};
+
+/* harmony default export */ var insert_template = (function (blockType, template) {
+  var _select = insert_template_select('core/block-editor'),
+      getBlocksByClientId = _select.getBlocksByClientId,
+      getClientIdsWithDescendants = _select.getClientIdsWithDescendants;
+
+  var _dispatch = insert_template_dispatch('core/block-editor'),
+      insertBlocks = _dispatch.insertBlocks,
+      updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+  var blocks = getClientIdsWithDescendants();
+  var loadedSavedBlocks = false;
+  return insert_template_subscribe(function () {
+    var newBlocks = getClientIdsWithDescendants();
+    var addedBlocks = newBlocks.filter(function (newBlock) {
+      return !blocks.includes(newBlock);
+    });
+
+    if (newBlocks === blocks || !addedBlocks.length) {
+      return;
+    } // if this is the first set of added blocks
+
+
+    if (!loadedSavedBlocks) {
+      loadedSavedBlocks = true;
+      return;
+    }
+
+    blocks = newBlocks;
+    getBlocksByClientId(addedBlocks).map(function (block) {
+      var _block$innerBlocks;
+
+      if (block.name === blockType && !block.attributes.templateInserted && !((_block$innerBlocks = block.innerBlocks) === null || _block$innerBlocks === void 0 ? void 0 : _block$innerBlocks.length)) {
+        var _blocks = insert_template_createBlocksFromInnerBlocksTemplate(template);
+
+        console.log(block);
+        insertBlocks(_blocks, 0, block.clientId);
+        updateBlockAttributes(block.clientId, {
+          templateInserted: true
+        });
+      }
+    });
+  });
+});
 // CONCATENATED MODULE: ./src/blocks/hero/index.js
 
 
@@ -34328,6 +34387,7 @@ function hero_objectSpread(target) { for (var i = 1; i < arguments.length; i++) 
 
 var blocks_hero_attributes = Object.assign({}, hero_attributes, alignment_controls_attributes, color_controls_attributes, layout_panel_attributes, scrolling_effect_controls_attributes);
 
+
 /**
  * WordPress dependencies
  */
@@ -34335,6 +34395,7 @@ var blocks_hero_attributes = Object.assign({}, hero_attributes, alignment_contro
 var hero_ = wp.i18n.__;
 var hero_registerBlockType = wp.blocks.registerBlockType;
 var hero_select = wp.data.select;
+
 
 function hero_getNewDefaults() {
   return blocks_hero_getNewDefaults.apply(this, arguments);
@@ -34376,7 +34437,9 @@ function blocks_hero_getNewDefaults() {
 }
 
 function hero_init() {
+  var settings = hero_select(STORE_NAME).getSettings();
   generate_defaults('novablocks/hero', hero_getNewDefaults);
+  insert_template('novablocks/hero', settings.hero.template);
   hero_registerBlockType('novablocks/hero', {
     title: hero_('Hero of the Galaxy', '__plugin_txtd'),
     description: hero_('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
