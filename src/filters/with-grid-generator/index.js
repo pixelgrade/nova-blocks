@@ -7,6 +7,7 @@ const { addFilter } = wp.hooks;
 const { Fragment } = wp.element;
 
 const enableGridGeneratorControls = [
+	'novablocks/cards-collection',
 	'novablocks/posts-collection',
 ];
 

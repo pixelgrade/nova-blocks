@@ -32213,7 +32213,7 @@ var with_grid_generator_ = wp.i18n.__;
 var with_grid_generator_createHigherOrderComponent = wp.compose.createHigherOrderComponent;
 var with_grid_generator_addFilter = wp.hooks.addFilter;
 var with_grid_generator_Fragment = wp.element.Fragment;
-var enableGridGeneratorControls = ['novablocks/posts-collection'];
+var enableGridGeneratorControls = ['novablocks/cards-collection', 'novablocks/posts-collection'];
 var withGridGeneratorControls = with_grid_generator_createHigherOrderComponent(function (OriginalComponent) {
   return function (props) {
     if (!enableGridGeneratorControls.includes(props.name)) {
