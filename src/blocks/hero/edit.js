@@ -4,7 +4,9 @@
 import {
 	LayoutPanel,
 	withParallax,
-	withSettings, ToggleGroup,
+	withSettings,
+	ToggleGroup,
+	ControlsDrawerContent,
 } from '../../components';
 
 import heroAttributes from './attributes';
@@ -22,6 +24,7 @@ const {
 
 const {
 	RadioControl,
+	PanelBody
 } = wp.components;
 
 const {
@@ -145,8 +148,8 @@ class HeroEdit extends Component {
 				<InspectorControls>
 					<LayoutPanel { ...this.props } />
 					<BlockHeightControls { ...this.props } />
-					<ControlsSection label={ __( 'Indicators' ) }>
-						<ControlsTab label={ __( 'Settings' ) }>
+					<ControlsDrawerContent>
+						<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
 							<ToggleGroup
 								onChange={ updateAttributes }
 								toggles={ toggles.map( toggle => {
@@ -156,8 +159,8 @@ class HeroEdit extends Component {
 									}
 								} ) }
 							/>
-						</ControlsTab>
-					</ControlsSection>
+						</PanelBody>
+					</ControlsDrawerContent>
 				</InspectorControls>
 			</Fragment>
 		);

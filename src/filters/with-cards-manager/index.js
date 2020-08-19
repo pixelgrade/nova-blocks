@@ -38,7 +38,7 @@ const withCardsManager = createHigherOrderComponent(OriginalComponent => {
 			<Fragment>
 				<OriginalComponent { ...props } />
 				<ControlsDrawerContent>
-					<PanelBody title={ __( 'Cards Manager', '__plugin_txtd' ) }>
+					<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
 						<CardsManager { ...props } />
 					</PanelBody>
 				</ControlsDrawerContent>

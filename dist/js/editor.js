@@ -22485,7 +22485,7 @@ var withCardsManager = with_cards_manager_createHigherOrderComponent(function (O
     }
 
     return Object(external_React_["createElement"])(with_cards_manager_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(with_cards_manager_PanelBody, {
-      title: with_cards_manager_('Cards Manager', '__plugin_txtd')
+      title: with_cards_manager_('Set up elements for this block', '__plugin_txtd')
     }, Object(external_React_["createElement"])(cards_manager, props))));
   };
 });
@@ -34051,7 +34051,9 @@ function hero_edit_isNativeReflectConstruct() { if (typeof Reflect === "undefine
 
 var hero_edit_ = wp.i18n.__;
 var hero_edit_InspectorControls = wp.blockEditor.InspectorControls;
-var edit_RadioControl = wp.components.RadioControl;
+var hero_edit_wp$components = wp.components,
+    edit_RadioControl = hero_edit_wp$components.RadioControl,
+    hero_edit_PanelBody = hero_edit_wp$components.PanelBody;
 var hero_edit_wp$element = wp.element,
     hero_edit_Component = hero_edit_wp$element.Component,
     hero_edit_Fragment = hero_edit_wp$element.Fragment;
@@ -34172,10 +34174,8 @@ var edit_HeroEdit = /*#__PURE__*/function (_Component) {
         });
       }
 
-      return Object(external_React_["createElement"])(hero_edit_Fragment, null, Object(external_React_["createElement"])(hero_preview, this.props), Object(external_React_["createElement"])(hero_block_controls, this.props), Object(external_React_["createElement"])(hero_edit_InspectorControls, null, Object(external_React_["createElement"])(layout_panel, this.props), Object(external_React_["createElement"])(edit_BlockHeightControls, this.props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
-        label: hero_edit_('Indicators')
-      }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
-        label: hero_edit_('Settings')
+      return Object(external_React_["createElement"])(hero_edit_Fragment, null, Object(external_React_["createElement"])(hero_preview, this.props), Object(external_React_["createElement"])(hero_block_controls, this.props), Object(external_React_["createElement"])(hero_edit_InspectorControls, null, Object(external_React_["createElement"])(layout_panel, this.props), Object(external_React_["createElement"])(edit_BlockHeightControls, this.props), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(hero_edit_PanelBody, {
+        title: hero_edit_('Set up elements for this block', '__plugin_txtd')
       }, Object(external_React_["createElement"])(toggle_group, {
         onChange: updateAttributes,
         toggles: toggles.map(function (toggle) {
