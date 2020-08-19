@@ -38778,34 +38778,80 @@ var category_Category = /*#__PURE__*/function (_Component) {
 }(category_Component);
 
 /* harmony default export */ var category = (category_Category);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/post.js
+
+var _wp$date = wp.date,
+    __experimentalGetSettings = _wp$date.__experimentalGetSettings,
+    dateI18n = _wp$date.dateI18n,
+    format = _wp$date.format;
+var post_RawHTML = wp.element.RawHTML;
+
+
+
+var post_Post = function Post(props) {
+  var post = props.post,
+      attributes = props.attributes;
+  var level = attributes.level;
+  var TitleTagName = "h".concat(level + 1);
+  var SubtitleTagName = "h".concat(level + 2);
+
+  var dateFormat = __experimentalGetSettings().formats.date;
+
+  return Object(external_React_["createElement"])("div", {
+    className: "novablocks-card novablocks-card__inner-container novablocks-block__content"
+  }, Object(external_React_["createElement"])("div", {
+    className: "wp-block novablocks-grid__item-image"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__media-wrap"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__media"
+  }, Object(external_React_["createElement"])(components_media, {
+    post: post
+  })))), Object(external_React_["createElement"])("div", {
+    className: "wp-block novablocks-grid__item-meta"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__meta"
+  }, Object(external_React_["createElement"])("time", {
+    dateTime: format('c', post.date_gmt)
+  }, dateI18n(dateFormat, post.date_gmt)))), Object(external_React_["createElement"])("div", {
+    className: "wp-block novablocks-grid__item-title"
+  }, Object(external_React_["createElement"])(TitleTagName, {
+    className: "novablocks-card__title"
+  }, post.title.raw)), post.categories.length && Object(external_React_["createElement"])("div", {
+    className: "wp-block novablocks-grid__item-subtitle"
+  }, Object(external_React_["createElement"])(SubtitleTagName, {
+    className: "novablocks-card__subtitle"
+  }, Object(external_React_["createElement"])(category, {
+    id: post.categories[0]
+  }))), Object(external_React_["createElement"])(post_RawHTML, {
+    className: "wp-block novablocks-grid__item-content novablocks-card__description"
+  }, post.excerpt.rendered), Object(external_React_["createElement"])("div", {
+    className: "wp-block novablocks-grid__item-buttons"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__buttons"
+  }, Object(external_React_["createElement"])("div", {
+    className: "wp-block-buttons alignleft"
+  }, Object(external_React_["createElement"])("div", {
+    className: "wp-block-button is-style-text"
+  }, Object(external_React_["createElement"])("div", {
+    className: "wp-block-button__link"
+  }, "Read More"))))));
+};
+
+/* harmony default export */ var posts_collection_post = (post_Post);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/preview.js
 
 
 
 
 
-var _wp$date = wp.date,
-    __experimentalGetSettings = _wp$date.__experimentalGetSettings,
-    dateI18n = _wp$date.dateI18n,
-    format = _wp$date.format;
-var preview_RawHTML = wp.element.RawHTML;
-
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
       posts = props.posts,
       clientId = props.clientId,
       markPostsAsDisplayed = props.markPostsAsDisplayed;
-  var columns = attributes.columns,
-      level = attributes.level,
-      toggleScale = attributes.toggleScale,
-      toggleMask = attributes.toggleMask,
-      gridColumns = attributes.gridColumns,
-      gridRows = attributes.gridRows;
-  var TitleTagName = "h".concat(level + 1);
-  var SubtitleTagName = "h".concat(level + 2);
-
-  var dateFormat = __experimentalGetSettings().formats.date;
-
+  var toggleScale = attributes.toggleScale,
+      toggleMask = attributes.toggleMask;
   markPostsAsDisplayed(clientId, posts);
   var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
 
@@ -38843,47 +38889,10 @@ var preview_Preview = function Preview(props) {
       }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio)), area.posts && area.posts.map(function (post) {
         return Object(external_React_["createElement"])("div", {
           className: "novablocks-grid__item"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card novablocks-card__inner-container novablocks-block__content",
-          key: idx,
-          style: style
-        }, Object(external_React_["createElement"])("div", {
-          className: "wp-block novablocks-grid__item-image"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__media-wrap"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__media"
-        }, Object(external_React_["createElement"])(components_media, {
-          post: post
-        })))), Object(external_React_["createElement"])("div", {
-          className: "wp-block novablocks-grid__item-meta"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__meta"
-        }, Object(external_React_["createElement"])("time", {
-          dateTime: format('c', post.date_gmt)
-        }, dateI18n(dateFormat, post.date_gmt)))), Object(external_React_["createElement"])("div", {
-          className: "wp-block novablocks-grid__item-title"
-        }, Object(external_React_["createElement"])(TitleTagName, {
-          className: "novablocks-card__title"
-        }, post.title.raw)), post.categories.length && Object(external_React_["createElement"])("div", {
-          className: "wp-block novablocks-grid__item-subtitle"
-        }, Object(external_React_["createElement"])(SubtitleTagName, {
-          className: "novablocks-card__subtitle"
-        }, Object(external_React_["createElement"])(category, {
-          id: post.categories[0]
-        }))), Object(external_React_["createElement"])(preview_RawHTML, {
-          className: "wp-block novablocks-grid__item-content novablocks-card__description"
-        }, post.excerpt.rendered), Object(external_React_["createElement"])("div", {
-          className: "wp-block novablocks-grid__item-buttons"
-        }, Object(external_React_["createElement"])("div", {
-          className: "novablocks-card__buttons"
-        }, Object(external_React_["createElement"])("div", {
-          className: "wp-block-buttons alignleft"
-        }, Object(external_React_["createElement"])("div", {
-          className: "wp-block-button is-style-text"
-        }, Object(external_React_["createElement"])("div", {
-          className: "wp-block-button__link"
-        }, "Read More")))))));
+        }, Object(external_React_["createElement"])(posts_collection_post, {
+          post: post,
+          attributes: attributes
+        }));
       }));
     }));
   })));
