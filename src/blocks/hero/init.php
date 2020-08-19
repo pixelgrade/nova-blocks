@@ -158,7 +158,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
             </div>
             <div class="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style="<?php echo esc_attr( $foregroundStyle ); ?>">
                 <div class="novablocks-hero__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
-					<?php echo $content ?>
+					<?php if ( ! empty( $attributes['displayInnerContent'] ) ) {
+						echo $content;
+					} ?>
                 </div>
 				<?php if ( $scrollIndicator ) { ?>
                     <div class="<?php echo $scrollIndicatorClass; ?>">

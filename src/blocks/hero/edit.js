@@ -3,18 +3,13 @@
  */
 import {
 	LayoutPanel,
-	ScrollIndicatorPanel,
-	PositionIndicatorsPanel,
-	AdvancedScrollAnimationControls,
 	withParallax,
-	withSettings,
+	withSettings, ToggleGroup,
 } from '../../components';
 
 import heroAttributes from './attributes';
 
 import { ControlsTab, ControlsSection } from "../../components/control-sections";
-
-import { withFirstBlockConditions } from '../../utils';
 
 import HeroPreview from './preview';
 import BlockControls from './block-controls';
@@ -26,7 +21,6 @@ const {
 } = wp.blockEditor;
 
 const {
-	PanelBody,
 	RadioControl,
 } = wp.components;
 
@@ -43,16 +37,6 @@ const {
 const {
 	select
 } = wp.data;
-
-const FirstBlockControls = withFirstBlockConditions( function( props ) {
-
-	return (
-		<Fragment>
-			<ScrollIndicatorPanel { ...props } />
-			<PositionIndicatorsPanel { ...props } />
-		</Fragment>
-	);
-} );
 
 const BlockHeightControls = function( props ) {
 
@@ -81,7 +65,7 @@ const BlockHeightControls = function( props ) {
 			</ControlsTab>
 		</ControlsSection>
 	);
-}
+};
 
 class HeroEdit extends Component {
 
@@ -120,7 +104,7 @@ class HeroEdit extends Component {
 		const { attributes, setAttributes } = this.props;
 		const defaults = this.getDefaults( attributes );
 		const computedAttributes = this.getNewAttributes( { ...attributes, ...defaults, ...newAttributes } );
-		setAttributes( computedAttributes );
+		setAttributes( Object.assign( {}, newAttributes, computedAttributes ) );
 	}
 
 	componentDidMount() {
@@ -128,9 +112,31 @@ class HeroEdit extends Component {
 	}
 
 	render() {
-		const { settings } = this.props;
-		const { usePostMetaAttributes } = settings;
+		const { attributes } = this.props;
 		const updateAttributes = this.updateAttributes.bind( this );
+
+		const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
+
+		const heroBlocks = getBlocks().filter( ( block ) => {
+			return block.name === 'novablocks/hero';
+		} );
+
+		const index = heroBlocks.findIndex( block => block.clientId === getSelectedBlockClientId() );
+
+		const toggles = [{
+			label: __( 'Inner Content' ),
+			attribute: 'displayInnerContent'
+		}];
+
+		if ( index === 0 ) {
+			toggles.push({
+				label: __( 'Position Indicators' ),
+				attribute: 'positionIndicators'
+			}, {
+				label: __( 'Scroll Indicator' ),
+				attribute: 'scrollIndicator'
+			});
+		}
 
 		return (
 			<Fragment>
@@ -139,7 +145,19 @@ class HeroEdit extends Component {
 				<InspectorControls>
 					<LayoutPanel { ...this.props } />
 					<BlockHeightControls { ...this.props } />
-					{ usePostMetaAttributes && <FirstBlockControls { ...this.props } updateAttributes={ updateAttributes } /> }
+					<ControlsSection label={ __( 'Indicators' ) }>
+						<ControlsTab label={ __( 'Settings' ) }>
+							<ToggleGroup
+								onChange={ updateAttributes }
+								toggles={ toggles.map( toggle => {
+									return {
+										...toggle,
+										value: attributes[ toggle.attribute ]
+									}
+								} ) }
+							/>
+						</ControlsTab>
+					</ControlsSection>
 				</InspectorControls>
 			</Fragment>
 		);
