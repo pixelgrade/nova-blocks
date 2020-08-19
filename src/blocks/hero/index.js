@@ -16,6 +16,7 @@ import layoutAttributes from "../../components/layout-panel/attributes";
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
 import generateDefaults from "../../components/generate-defaults";
+import insertTemplate from "../../components/insert-template";
 
 /**
  * WordPress dependencies
@@ -23,6 +24,8 @@ import generateDefaults from "../../components/generate-defaults";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { select } = wp.data;
+
+import { STORE_NAME } from "../../store";
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();
@@ -43,7 +46,10 @@ async function getNewDefaults() {
 
 function init() {
 
+	const settings = select( STORE_NAME ).getSettings();
+
 	generateDefaults( 'novablocks/hero', getNewDefaults );
+	insertTemplate( 'novablocks/hero', settings.hero.template );
 
 	registerBlockType( 'novablocks/hero', {
 		title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
