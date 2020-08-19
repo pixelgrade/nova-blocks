@@ -31801,8 +31801,7 @@ var getPostsCount = function getPostsCount(areaColumns) {
     }, 0);
   }, 0);
 };
-var fillAreaColumnsWithPosts = function fillAreaColumnsWithPosts(areaColumns, posts) {
-  var totalPosts = posts.length;
+var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, totalPosts) {
   var totalSpots = 0;
   var remainingPosts = totalPosts;
   var totalRatio = 0;
@@ -31840,9 +31839,8 @@ var fillAreaColumnsWithPosts = function fillAreaColumnsWithPosts(areaColumns, po
         postsToAdd = remainingPosts;
       }
 
-      _area.posts = posts.slice(totalPosts - remainingPosts, totalPosts - remainingPosts + postsToAdd);
+      _area.postsClount += postsToAdd;
       remainingSpots -= _area.postsCount;
-      remainingPosts -= _area.posts.length;
       if (remainingPosts <= 0) return;
     }
   }
@@ -38668,6 +38666,68 @@ var controls_Controls = function Controls(props) {
 };
 
 /* harmony default export */ var posts_collection_controls = (controls_Controls);
+// CONCATENATED MODULE: ./src/components/grid-generator/areaDebug.js
+
+
+var areaDebug_AreaDebug = function AreaDebug(_ref) {
+  var area = _ref.area;
+  return Object(external_React_["createElement"])("div", {
+    className: 'novablocks-grid__debug'
+  }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio));
+};
+
+/* harmony default export */ var areaDebug = (areaDebug_AreaDebug);
+// CONCATENATED MODULE: ./src/components/grid-generator/preview.js
+
+
+
+
+
+var preview_GridLayoutPreview = function GridLayoutPreview(props) {
+  var attributes = props.attributes,
+      getContent = props.getContent,
+      cardsCount = props.cardsCount;
+  var toggleScale = attributes.toggleScale,
+      toggleMask = attributes.toggleMask;
+  var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
+  var addedCards = 0;
+  redistributeCardsInAreas(areaColumns, cardsCount);
+  return Object(external_React_["createElement"])("div", {
+    className: "wp-block-group__inner-container"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-grid ".concat(toggleScale ? '' : 'novablocks-grid--scaled', " ").concat(toggleMask ? '' : 'novablocks-grid--mask'),
+    style: getGridStyle(attributes)
+  }, !!areaColumns && areaColumns.map(function (areaColumn) {
+    var areas = areaColumn.areas,
+        row = areaColumn.row,
+        col = areaColumn.col,
+        width = areaColumn.width,
+        height = areaColumn.height;
+    var style = {
+      gridColumnStart: col,
+      gridColumnEnd: col + width,
+      gridRowStart: row,
+      gridRowEnd: row + height
+    };
+    return Object(external_React_["createElement"])("div", {
+      className: "novablocks-grid__column",
+      style: style
+    }, areas.map(function (area) {
+      return Object(external_React_["createElement"])("div", {
+        className: utils_getAreaClassName(area, attributes)
+      }, Object(external_React_["createElement"])(areaDebug, {
+        area: area
+      }), Array.from(Array(area.postsCount).keys()).map(function (i) {
+        addedCards += area.postsCount;
+        return Object(external_React_["createElement"])("div", {
+          className: "novablocks-grid__item"
+        }, getContent(addedCards - area.postsCount + i, attributes));
+      }));
+    }));
+  })));
+};
+
+/* harmony default export */ var grid_generator_preview = (preview_GridLayoutPreview);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/components/media.js
 
 
@@ -38844,58 +38904,30 @@ var post_Post = function Post(props) {
 
 
 
-
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
       posts = props.posts,
       clientId = props.clientId,
       markPostsAsDisplayed = props.markPostsAsDisplayed;
-  var toggleScale = attributes.toggleScale,
-      toggleMask = attributes.toggleMask;
   markPostsAsDisplayed(clientId, posts);
-  var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
 
   if (!posts || !posts.length) {
     return null;
   }
 
-  fillAreaColumnsWithPosts(areaColumns, posts);
-  return Object(external_React_["createElement"])("div", {
-    className: "wp-block-group__inner-container"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-grid ".concat(toggleScale ? '' : 'novablocks-grid--scaled', " ").concat(toggleMask ? '' : 'novablocks-grid--mask'),
-    style: getGridStyle(attributes)
-  }, !!areaColumns && areaColumns.map(function (areaColumn, idx) {
-    var areas = areaColumn.areas,
-        nth = areaColumn.nth,
-        row = areaColumn.row,
-        col = areaColumn.col,
-        width = areaColumn.width,
-        height = areaColumn.height;
-    var style = {
-      gridColumnStart: col,
-      gridColumnEnd: col + width,
-      gridRowStart: row,
-      gridRowEnd: row + height
-    };
-    return Object(external_React_["createElement"])("div", {
-      className: "novablocks-grid__column",
-      style: style
-    }, areas.map(function (area) {
-      return Object(external_React_["createElement"])("div", {
-        className: utils_getAreaClassName(area, attributes)
-      }, Object(external_React_["createElement"])("div", {
-        className: 'novablocks-grid__debug'
-      }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio)), area.posts && area.posts.map(function (post) {
-        return Object(external_React_["createElement"])("div", {
-          className: "novablocks-grid__item"
-        }, Object(external_React_["createElement"])(posts_collection_post, {
-          post: post,
-          attributes: attributes
-        }));
-      }));
-    }));
-  })));
+  var getContent = function getContent(index) {
+    var post = posts === null || posts === void 0 ? void 0 : posts[index];
+    return post && Object(external_React_["createElement"])(posts_collection_post, {
+      post: post,
+      attributes: attributes
+    });
+  };
+
+  return Object(external_React_["createElement"])(grid_generator_preview, {
+    getContent: getContent,
+    cardsCount: posts.count,
+    attributes: attributes
+  });
 };
 
 /* harmony default export */ var posts_collection_preview = (preview_Preview);

@@ -76,8 +76,7 @@ export const getPostsCount = ( areaColumns ) => {
 	}, 0 );
 };
 
-export const fillAreaColumnsWithPosts = ( areaColumns, posts ) => {
-	let totalPosts = posts.length;
+export const redistributeCardsInAreas = ( areaColumns, totalPosts ) => {
 	let totalSpots = 0;
 	let remainingPosts = totalPosts;
 	let totalRatio = 0;
@@ -115,14 +114,13 @@ export const fillAreaColumnsWithPosts = ( areaColumns, posts ) => {
 				postsToAdd = remainingPosts;
 			}
 
-			area.posts = posts.slice( totalPosts - remainingPosts, totalPosts - remainingPosts + postsToAdd );
+			area.postsClount += postsToAdd;
 			remainingSpots -= area.postsCount;
-			remainingPosts -= area.posts.length;
 
 			if ( remainingPosts <= 0 ) return;
 		}
 	}
-}
+};
 
 export const getAreaClassName = ( area, attributes ) => {
 	const { gridColumns, gridRows } = attributes;
