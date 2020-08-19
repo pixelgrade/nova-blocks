@@ -917,8 +917,7 @@ function novablocks_get_theme_support() {
 
 function novablocks_get_attributes_from_json( $path ) {
 	$plugin_url = novablocks_get_plugin_url();
-	$response = wp_remote_get( $plugin_url . $path );
-	$body = wp_remote_retrieve_body( $response );
+	$body = file_get_contents( $plugin_url . $path );
 
 	return json_decode( $body, true );
 }
