@@ -47,7 +47,8 @@ export const getPostsCount = ( areaColumns ) => {
 	}, 0 );
 };
 
-export const redistributeCardsInAreas = ( areaColumns, totalPosts ) => {
+export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
+	let totalPosts = cardsCount;
 	let totalSpots = 0;
 	let remainingPosts = totalPosts;
 	let totalRatio = 0;
@@ -85,7 +86,7 @@ export const redistributeCardsInAreas = ( areaColumns, totalPosts ) => {
 				postsToAdd = remainingPosts;
 			}
 
-			area.postsClount += postsToAdd;
+			area.postsCount += postsToAdd;
 			remainingSpots -= area.postsCount;
 
 			if ( remainingPosts <= 0 ) return;

@@ -31771,7 +31771,8 @@ var getPostsCount = function getPostsCount(areaColumns) {
     }, 0);
   }, 0);
 };
-var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, totalPosts) {
+var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount) {
+  var totalPosts = cardsCount;
   var totalSpots = 0;
   var remainingPosts = totalPosts;
   var totalRatio = 0;
@@ -31809,7 +31810,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, to
         postsToAdd = remainingPosts;
       }
 
-      _area.postsClount += postsToAdd;
+      _area.postsCount += postsToAdd;
       remainingSpots -= _area.postsCount;
       if (remainingPosts <= 0) return;
     }
@@ -38934,7 +38935,7 @@ var preview_Preview = function Preview(props) {
 
   return Object(external_React_["createElement"])(grid_generator_preview, {
     getContent: getContent,
-    cardsCount: posts.count,
+    cardsCount: posts.length,
     attributes: attributes
   });
 };
