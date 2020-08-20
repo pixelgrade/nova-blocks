@@ -22,6 +22,7 @@
 @import '../components/alignment-controls/style';
 @import '../components/collection/scss/style';
 @import '../components/color-controls/style';
+@import '../components/grid-generator/scss/style';
 @import '../components/layout-panel/style';
 @import '../components/scrolling-effect-controls/style';
 
@@ -72,99 +73,24 @@
 	padding: 5em;
 }
 
-// preview
-.novablocks-grid {
-	grid-gap: 2em;
+.novablocks-card--landscape {
 
-	.novablocks-grid__item {
-		--theme-content-width-normal: 100%;
-	}
-}
-
-.novablocks-grid__column {
-	overflow: hidden;
-}
-
-.novablocks-grid__area {
-
-	& + & {
-		margin-top: 2em;
-	}
-}
-
-.novablocks-grid--mask {
-
-	.novablocks-grid__debug {
-		display: block;
-	}
-
-	.novablocks-grid__area {
-		border: 2px dashed var(--novablocks-purple);
-	}
-
-	.novablocks-grid__item {
-		border: 2px dashed var(--novablocks-green);
-
-		.novablocks-block__content {
-			opacity: 0;
-		}
-	}
-
-}
-.novablocks-grid--scaled {
-	// width: 200%;
-	transform: scale(0.5);
-	transform-origin: 50% 0;
-	// margin-left: -50%;
-
-	.novablocks-grid__item {
-
-	}
-}
-
-// quick implementation of portrait card
-.novablocks-grid__area {
-	position: relative;
-}
-
-.novablocks-grid__debug {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	display: none;
-	padding: 10px;
-}
-
-.novablocks-grid__area--landscape {
-
-	.novablocks-card {
+	.novablocks-card__layout {
 		display: grid;
 		grid-template-columns: calc(var(--card-image-width, 50%) + 10px) auto;
 
-		> * {
-			width: 100%;
-			grid-column: 2 / span 1;
-		}
-
-		> .novablocks-grid__item-image {
+		> .novablocks-card__layout-media {
 			width: 100%;
 			grid-column: 1 / span 1;
 			grid-row: 1 / 10;
 			padding-right: 20px;
 		}
+
+		> .novablocks-card__layout-content {
+			width: 100%;
+			grid-column: 2 / span 1;
+		}
 	}
-}
-
-.novablocks-grid__area--width-s,
-.novablocks-grid__area--width-xs {
-	--grid-item-content-display: none;
-	--grid-item-buttons-display: none;
-}
-
-.novablocks-grid__area--width-xs {
-	--card-image-width: 50px;
 }
 
 .novablocks-card__title[class] {
@@ -176,32 +102,4 @@
 	.novablocks-grid__item--smaller-title & {
 		font-size: calc( 0.5 * var(--final-font-size) );
 	}
-}
-
-.novablocks-grid__item-image {
-	display: var(--grid-item-image-display, block);
-}
-
-.novablocks-grid__item-content {
-	display: var(--grid-item-content-display, block);
-}
-
-.novablocks-grid__item-title {
-	display: var(--grid-item-title-display, block);
-}
-
-.novablocks-grid__item-subtitle {
-	display: var(--grid-item-subtitle-display, block);
-}
-
-.novablocks-grid__item-content {
-	display: var(--grid-item-content-display, block);
-}
-
-.novablocks-grid__item-buttons {
-	display: var(--grid-item-buttons-display, block);
-}
-
-.novablocks-grid__item-meta {
-	display: var(--grid-item-meta-display, block);
 }

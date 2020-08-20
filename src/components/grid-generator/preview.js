@@ -1,6 +1,6 @@
 import AreaDebug from "./areaDebug";
 import { applyLayoutEngine } from "./layoutEngine";
-import { getAreaClassName, getGridStyle, prepareAttributes, redistributeCardsInAreas } from "./utils";
+import { getAreaClassName, getGridStyle, prepareAttributes, redistributeCardsInAreas, isLandscape } from "./utils";
 
 const GridLayoutPreview = ( props ) => {
 
@@ -22,12 +22,12 @@ const GridLayoutPreview = ( props ) => {
 
 	return (
 		<div className="wp-block-group__inner-container">
-			<div className={ `novablocks-grid ${ toggleScale ? '' : 'novablocks-grid--scaled' } ${ toggleMask ? '' : 'novablocks-grid--mask' }` } style={ getGridStyle( attributes ) }>
+			<div className={ `novablocks-grid ${ toggleScale ? 'novablocks-grid--scaled' : '' } ${ toggleMask ? 'novablocks-grid--mask' : '' }` } style={ getGridStyle( attributes ) }>
 				{
 					!! areaColumns && areaColumns.map( areaColumn => {
 						let { areas, row, col, width, height } = areaColumn;
 
-						const style = {
+						const areaColumnStyle = {
 							gridColumnStart: col,
 							gridColumnEnd: col + width,
 							gridRowStart: row,
@@ -35,14 +35,16 @@ const GridLayoutPreview = ( props ) => {
 						};
 
 						return (
-							<div className={ `novablocks-grid__column` } style={ style }>
+							<div className={ `novablocks-grid__column` } style={ areaColumnStyle }>
 								{ areas.map( area => {
 									addedCards += area.postsCount;
+
 									return (
 										<div className={ getAreaClassName( area, attributes ) }>
 											<AreaDebug area={ area } />
 											{ Array.from( Array( area.postsCount ).keys() ).map( i => {
-												const content = getContent( addedCards - area.postsCount + i, attributes );
+												const landscape = isLandscape( area, attributes );
+												const content = getContent( addedCards - area.postsCount + i, attributes, landscape );
 
 												return (
 													content && <div className="novablocks-grid__item">

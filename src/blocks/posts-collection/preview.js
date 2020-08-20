@@ -16,11 +16,9 @@ const Preview = ( props ) => {
 		return null;
 	}
 
-	const getContent = ( index ) => {
+	const getContent = ( index, attributes, isLandscape ) => {
 		const post = posts?.[index];
-
-		console.log( posts, index );
-		return post && <Post post={ post } attributes={ attributes } />;
+		return post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />;
 	};
 
 	return (

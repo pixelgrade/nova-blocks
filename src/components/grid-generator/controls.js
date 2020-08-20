@@ -163,12 +163,12 @@ const GridGenerator = ( props ) => {
 				<ControlsGroup title={ __( 'Debug Parameters' ) }>
 					<ToggleControl
 						label={__( 'Display Preview Scale', '__plugin_txtd' )}
-						checked={ ! toggleScale }
+						checked={ toggleScale }
 						onChange={ () => setAttributes( { toggleScale : ! toggleScale } )}
 					/>
 					<ToggleControl
 						label={__( 'Display Preview Mask', '__plugin_txtd' )}
-						checked={ ! toggleMask }
+						checked={ toggleMask }
 						onChange={ () => setAttributes( { toggleMask : ! toggleMask } )}
 					/>
 				</ControlsGroup>
