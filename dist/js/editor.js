@@ -31329,23 +31329,9 @@ var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
   }
 
   if (debug) {
-    console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
-
-    for (i = 1; i < nthMatrix.length; i++) {
-      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
-    }
-
-    console.log("\nThe final image weight full matrix: ".padEnd(42, ' ') + '0 - ' + imageWeightMatrix[0].join(' '));
-
-    for (i = 1; i < imageWeightMatrix.length; i++) {
-      console.log(' '.padEnd(41, ' ') + i + ' - ' + imageWeightMatrix[i].join(' '));
-    }
-
-    console.log("\nThe final meta-details full matrix: ".padEnd(42, ' ') + '0 - ' + metaDetailsMatrix[0].join(' '));
-
-    for (i = 1; i < metaDetailsMatrix.length; i++) {
-      console.log(' '.padEnd(41, ' ') + i + ' - ' + metaDetailsMatrix[i].join(' '));
-    }
+    logMatrix(nthMatrix);
+    logMatrix(imageWeightMatrix);
+    logMatrix(metaDetailsMatrix);
   } // Transpose all matrices if flipcolssrows attribute is set to true
 
 
@@ -31357,7 +31343,13 @@ var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
   */
 
   return getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);
-}; // @todo make use of state.flipcolsrows
+};
+
+var logMatrix = function logMatrix(matrix) {
+  for (var i = 0; i < matrix.length; i++) {
+    console.log(' '.padEnd(41, ' ') + i + ' - ' + matrix[i].join(' '));
+  }
+};
 
 function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
   var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
@@ -31493,7 +31485,6 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
 
     if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
       height = height + nextHeight;
-      console.log("merge down. new height is ".concat(height));
       mergeable = true;
 
       if (currentAreaIndex > -1) {
@@ -31545,7 +31536,7 @@ var getFirstOccurence = function getFirstOccurence(nth, nthMatrix) {
       if (nthMatrix[i][j] === nth) {
         return {
           row: i,
-          column: j
+          col: j
         };
       }
     }
@@ -38673,7 +38664,7 @@ var areaDebug_AreaDebug = function AreaDebug(_ref) {
   var area = _ref.area;
   return Object(external_React_["createElement"])("div", {
     className: 'novablocks-grid__debug'
-  }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "image weight: ".concat(area.imageWeight), Object(external_React_["createElement"])("br", null), "meta details: ".concat(area.metaDetails), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio));
+  }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "posts: ".concat(area.postsCount), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio));
 };
 
 /* harmony default export */ var areaDebug = (areaDebug_AreaDebug);
@@ -38713,15 +38704,16 @@ var preview_GridLayoutPreview = function GridLayoutPreview(props) {
       className: "novablocks-grid__column",
       style: style
     }, areas.map(function (area) {
+      addedCards += area.postsCount;
       return Object(external_React_["createElement"])("div", {
         className: utils_getAreaClassName(area, attributes)
       }, Object(external_React_["createElement"])(areaDebug, {
         area: area
       }), Array.from(Array(area.postsCount).keys()).map(function (i) {
-        addedCards += area.postsCount;
-        return Object(external_React_["createElement"])("div", {
+        var content = getContent(addedCards - area.postsCount + i, attributes);
+        return content && Object(external_React_["createElement"])("div", {
           className: "novablocks-grid__item"
-        }, getContent(addedCards - area.postsCount + i, attributes));
+        }, content);
       }));
     }));
   })));
@@ -38917,6 +38909,7 @@ var preview_Preview = function Preview(props) {
 
   var getContent = function getContent(index) {
     var post = posts === null || posts === void 0 ? void 0 : posts[index];
+    console.log(posts, index);
     return post && Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
       attributes: attributes

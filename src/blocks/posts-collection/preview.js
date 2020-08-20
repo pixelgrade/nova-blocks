@@ -18,6 +18,8 @@ const Preview = ( props ) => {
 
 	const getContent = ( index ) => {
 		const post = posts?.[index];
+
+		console.log( posts, index );
 		return post && <Post post={ post } attributes={ attributes } />;
 	};
 

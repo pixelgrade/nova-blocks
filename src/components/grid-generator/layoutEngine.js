@@ -451,20 +451,9 @@ export const applyLayoutEngine = (state, debug = false) => {
 	}
 
 	if (debug) {
-		console.log("\nThe nth matrix after hierarchy crossing: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
-		for (i = 1; i < nthMatrix.length; i++) {
-			console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
-		}
-
-		console.log("\nThe final image weight full matrix: ".padEnd(42, ' ') + '0 - ' + imageWeightMatrix[0].join(' '));
-		for (i = 1; i < imageWeightMatrix.length; i++) {
-			console.log(' '.padEnd(41, ' ') + i + ' - ' + imageWeightMatrix[i].join(' '));
-		}
-
-		console.log("\nThe final meta-details full matrix: ".padEnd(42, ' ') + '0 - ' + metaDetailsMatrix[0].join(' '));
-		for (i = 1; i < metaDetailsMatrix.length; i++) {
-			console.log(' '.padEnd(41, ' ') + i + ' - ' + metaDetailsMatrix[i].join(' '));
-		}
+		logMatrix( nthMatrix );
+		logMatrix( imageWeightMatrix );
+		logMatrix( metaDetailsMatrix );
 	}
 
 	// Transpose all matrices if flipcolssrows attribute is set to true
@@ -478,7 +467,12 @@ export const applyLayoutEngine = (state, debug = false) => {
 	return getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );
 };
 
-// @todo make use of state.flipcolsrows
+const logMatrix = ( matrix ) =>{
+	for (let i = 0; i < matrix.length; i++) {
+		console.log(' '.padEnd(41, ' ') + i + ' - ' + matrix[i].join(' '));
+	}
+};
+
 function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) {
 	let areasArray = getAreasArray( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 
@@ -622,7 +616,6 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		     Math.abs( imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col] ) <= 1 ) {
 			height = height + nextHeight;
 
-			console.log( `merge down. new height is ${ height }` );
 			mergeable = true;
 
 			if ( currentAreaIndex > -1 ) {
@@ -680,7 +673,7 @@ const getFirstOccurence = ( nth, nthMatrix ) => {
 			if ( nthMatrix[i][j] === nth ) {
 				return {
 					row: i,
-					column: j,
+					col: j,
 				};
 			}
 		}

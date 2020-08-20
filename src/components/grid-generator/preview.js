@@ -37,14 +37,16 @@ const GridLayoutPreview = ( props ) => {
 						return (
 							<div className={ `novablocks-grid__column` } style={ style }>
 								{ areas.map( area => {
+									addedCards += area.postsCount;
 									return (
 										<div className={ getAreaClassName( area, attributes ) }>
 											<AreaDebug area={ area } />
 											{ Array.from( Array( area.postsCount ).keys() ).map( i => {
-												addedCards += area.postsCount;
+												const content = getContent( addedCards - area.postsCount + i, attributes );
+
 												return (
-													<div className="novablocks-grid__item">
-														{ getContent( addedCards - area.postsCount + i, attributes ) }
+													content && <div className="novablocks-grid__item">
+														{ content }
 													</div>
 												);
 											} ) }
