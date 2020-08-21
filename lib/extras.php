@@ -917,7 +917,8 @@ function novablocks_get_theme_support() {
 
 function novablocks_get_attributes_from_json( $path ) {
 	$plugin_path = novablocks_get_plugin_path();
-	$body = file_get_contents( $plugin_path . $path );
+	$filename = trailingslashit( $plugin_path ) . $path;
+	$body = file_get_contents( $filename );
 
 	return json_decode( $body, true );
 }
