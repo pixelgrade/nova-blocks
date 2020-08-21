@@ -77,13 +77,12 @@
 
 	.novablocks-card__layout {
 		display: grid;
-		grid-template-columns: calc(var(--card-image-width, 50%) + 10px) auto;
+		grid-template-columns: var(--card-image-width, 1fr) 1fr;
+		grid-gap: calc(0.5 * var(--novablocks-spacing));
 
 		> .novablocks-card__layout-media {
 			width: 100%;
 			grid-column: 1 / span 1;
-			grid-row: 1 / 10;
-			padding-right: 20px;
 		}
 
 		> .novablocks-card__layout-content {

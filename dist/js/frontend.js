@@ -21887,6 +21887,9 @@ var getRandomArrayFromArray = function getRandomArrayFromArray(arr, n) {
 
   return result;
 };
+var getRandomBooleanValue = function getRandomBooleanValue() {
+  return getRandomArrayFromArray([true, false], 1)[0];
+};
 var debounce = function debounce(func, wait) {
   var timeout = null;
   return function () {

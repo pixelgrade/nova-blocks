@@ -3,6 +3,8 @@ import { getControlsClasses } from "../../utils";
 import { prepareAttributes, getPostsCount } from "../../components/grid-generator/utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import ControlsGroup from "../controls-group";
+import { PresetControl } from "../../components";
+import { getRandomBetween, getRandomArrayFromArray, getRandomBooleanValue } from "../../utils";
 
 const { __ } = wp.i18n;
 
@@ -59,6 +61,55 @@ const normalizeAttributes = ( newAttributes, attributes ) => {
 	return atts;
 };
 
+const getRandomAttributes = () => {
+
+	const postsToShow = getRandomBetween( 3, 20 );
+	const gridColumns = getRandomBetween( 2, 12 );
+	const gridRows = getRandomBetween( 2, 12 );
+
+	const minFeatureSize = Math.ceil( gridColumns * 0.25 );
+	const maxFeatureSize = Math.ceil( gridColumns * 0.75 );
+	const featureSize = getRandomBetween( minFeatureSize, maxFeatureSize );
+
+	const minFeaturePosition = 1;
+	const maxFeaturePosition = gridColumns - featureSize + 1;
+	const featurePosition = getRandomBetween( minFeaturePosition, maxFeaturePosition );
+
+	const minColumnsFragmentation = 0;
+	const maxColumnsFragmentation = Math.max( 0, Math.pow( 2, gridColumns - featureSize - 1 ) - 1 );
+	const columnsFragmentation = getRandomBetween( minColumnsFragmentation, maxColumnsFragmentation );
+
+	const imageWeightLeft = getRandomBetween(0, 10);
+	const imageWeightRight = getRandomBetween(0, 10);
+	const metaWeightLeft = getRandomBetween(0, 10);
+	const metaWeightRight = getRandomBetween(0, 10);
+
+	const boostFeatureEmphasis = getRandomBooleanValue();
+	const subFeature = getRandomBooleanValue();
+	const balanceMDandIW = getRandomBooleanValue();
+	const hierarchyCrossing = getRandomBetween(0, 200);
+	const flipColsAndRows = getRandomBooleanValue();
+
+	return {
+		layoutStyle: 'parametric',
+		postsToShow,
+		gridColumns,
+		gridRows,
+		featureSize,
+		featurePosition,
+		columnsFragmentation,
+		imageWeightLeft,
+		imageWeightRight,
+		metaWeightLeft,
+		metaWeightRight,
+		boostFeatureEmphasis,
+		subFeature,
+		balanceMDandIW,
+		hierarchyCrossing,
+		flipColsAndRows
+	}
+};
+
 const LayoutControls = ( props ) => {
 
 	const {
@@ -70,6 +121,106 @@ const LayoutControls = ( props ) => {
 
 	return (
 		<ControlsSection label={ __( 'Layout' ) }>
+			<ControlsTab label={ __( 'General' ) }>
+				<PresetControl
+					key={ 'novablocks-collection-layout-preset' }
+					label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
+					options={ [ {
+						label: 'Classic',
+						value: 'classic',
+						preset: {
+							layoutStyle: 'classic',
+							postsToShow: 9,
+							columns: 3,
+						}
+					}, {
+						label: 'Case 1',
+						value: 'case1',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 6,
+							gridColumns: 6,
+							gridRows: 5,
+							featureSize: 4,
+							featurePosition: 1,
+							columnsFragmentation: 1,
+							imageWeightLeft: 1,
+							imageWeightRight: 2,
+							metaWeightLeft: 10,
+							metaWeightRight: 6,
+							boostFeatureEmphasis: false,
+							subFeature: true,
+							balanceMDandIW: false,
+							hierarchyCrossing: 30,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'Case 2',
+						value: 'case2',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 6,
+							gridColumns: 6,
+							gridRows: 6,
+							featureSize: 2,
+							featurePosition: 4,
+							columnsFragmentation: 0,
+							imageWeightLeft: 8,
+							imageWeightRight: 2,
+							metaWeightLeft: 7,
+							metaWeightRight: 2,
+							boostFeatureEmphasis: false,
+							subFeature: false,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'Julia',
+						value: 'julia',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 8,
+							gridColumns: 4,
+							gridRows: 8,
+							featureSize: 2,
+							featurePosition: 2,
+							columnsFragmentation: 0,
+							imageWeightLeft: 1,
+							imageWeightRight: 0,
+							metaWeightLeft: 0,
+							metaWeightRight: 3,
+							boostFeatureEmphasis: false,
+							subFeature: true,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'Julia 6',
+						value: 'julia6',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 6,
+							gridColumns: 5,
+							gridRows: 4,
+							featureSize: 2,
+							featurePosition: 2,
+							columnsFragmentation: 0,
+							imageWeightLeft: 1,
+							imageWeightRight: 0,
+							metaWeightLeft: 6,
+							metaWeightRight: 3,
+							boostFeatureEmphasis: false,
+							subFeature: false,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					} ] }
+					randomize={ getRandomAttributes }
+				/>
+			</ControlsTab>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<RadioControl
 					key={ 'novablocks-collection-layout-style-controls' }
@@ -209,7 +360,7 @@ const ParametricLayoutControls = ( props ) => {
 					onChange={ gridColumns => {
 						setAttributes( { gridColumns } );
 					} }
-					min={ 0 }
+					min={ 1 }
 					max={ 12 }
 				/>
 				<RangeControl
@@ -218,7 +369,7 @@ const ParametricLayoutControls = ( props ) => {
 					onChange={ gridRows => {
 						setAttributes( { gridRows } );
 					} }
-					min={ 0 }
+					min={ 1 }
 					max={ 12 }
 				/>
 			</ControlsGroup>

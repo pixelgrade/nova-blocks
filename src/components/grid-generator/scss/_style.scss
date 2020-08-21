@@ -6,19 +6,19 @@
 .novablocks-grid__area--portrait {
 
 	&.novablocks-grid__area--width-xl {
-		--novablocks-card-title-font-size-modifier: 1.5;
+		--novablocks-card-title-font-size-modifier: 1.6;
 	}
 
 	&.novablocks-grid__area--width-l {
-		--novablocks-card-title-font-size-modifier: 1.25;
+		--novablocks-card-title-font-size-modifier: 1.4;
 	}
 
 	&.novablocks-grid__area--width-m {
-		--novablocks-card-title-font-size-modifier: 1;
+		--novablocks-card-title-font-size-modifier: 1.2;
 	}
 
 	&.novablocks-grid__area--width-s {
-		--novablocks-card-title-font-size-modifier: 0.8;
+		--novablocks-card-title-font-size-modifier: 1;
 	}
 
 	&.novablocks-grid__area--width-xs {
@@ -139,7 +139,10 @@
 	padding: 10px;
 }
 
-.novablocks-grid__area--width-s,
+.novablocks-grid__area--width-s {
+	--card-image-width: 40%;
+}
+
 .novablocks-grid__area--width-xs {
 	--card-image-width: 50px;
 }

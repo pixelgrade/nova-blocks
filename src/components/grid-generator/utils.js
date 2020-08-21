@@ -122,17 +122,17 @@ export const getAreaClassName = ( area, attributes ) => {
 			'novablocks-grid__area--portrait': ! isLandscape( area, attributes ),
 			'novablocks-grid__area--landscape': isLandscape( area, attributes ),
 
-			'novablocks-grid__area--width-xs': width / gridColumns < 0.26,
-			'novablocks-grid__area--width-s': 0.26 <= width / gridColumns && width / gridColumns < 0.42,
-			'novablocks-grid__area--width-m': 0.42 <= width / gridColumns && width / gridColumns < 0.58,
-			'novablocks-grid__area--width-l': 0.58 <= width / gridColumns && width / gridColumns < 0.74,
-			'novablocks-grid__area--width-xl': 0.74 <= width / gridColumns,
+			'novablocks-grid__area--width-xs': width / gridColumns < 0.34,
+			'novablocks-grid__area--width-s': 0.34 <= width / gridColumns && width / gridColumns < 0.5,
+			'novablocks-grid__area--width-m': 0.5 <= width / gridColumns && width / gridColumns < 0.66,
+			'novablocks-grid__area--width-l': 0.66 <= width / gridColumns && width / gridColumns < 0.84,
+			'novablocks-grid__area--width-xl': 0.84 <= width / gridColumns,
 
-			'novablocks-grid__area--height-xs': height / gridRows < 0.26,
-			'novablocks-grid__area--height-s': 0.26 <= height / gridRows && height / gridRows < 0.42,
-			'novablocks-grid__area--height-m': 0.42 <= height / gridRows && height / gridRows < 0.58,
-			'novablocks-grid__area--height-l': 0.58 <= height / gridRows && height / gridRows < 0.74,
-			'novablocks-grid__area--height-xl': 0.74 <= height / gridRows,
+			'novablocks-grid__area--height-xs': height / gridRows < 0.34,
+			'novablocks-grid__area--height-s': 0.34 <= height / gridRows && height / gridRows < 0.5,
+			'novablocks-grid__area--height-m': 0.5 <= height / gridRows && height / gridRows < 0.66,
+			'novablocks-grid__area--height-l': 0.66 <= height / gridRows && height / gridRows < 0.84,
+			'novablocks-grid__area--height-xl': 0.84 <= height / gridRows,
 		}
 	]);
 };

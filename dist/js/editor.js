@@ -19578,6 +19578,9 @@ var getRandomArrayFromArray = function getRandomArrayFromArray(arr, n) {
 
   return result;
 };
+var getRandomBooleanValue = function getRandomBooleanValue() {
+  return getRandomArrayFromArray([true, false], 1)[0];
+};
 var debounce = function debounce(func, wait) {
   var timeout = null;
   return function () {
@@ -31841,16 +31844,16 @@ var utils_getAreaClassName = function getAreaClassName(area, attributes) {
   return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth), {
     'novablocks-grid__area--portrait': !utils_isLandscape(area, attributes),
     'novablocks-grid__area--landscape': utils_isLandscape(area, attributes),
-    'novablocks-grid__area--width-xs': width / gridColumns < 0.26,
-    'novablocks-grid__area--width-s': 0.26 <= width / gridColumns && width / gridColumns < 0.42,
-    'novablocks-grid__area--width-m': 0.42 <= width / gridColumns && width / gridColumns < 0.58,
-    'novablocks-grid__area--width-l': 0.58 <= width / gridColumns && width / gridColumns < 0.74,
-    'novablocks-grid__area--width-xl': 0.74 <= width / gridColumns,
-    'novablocks-grid__area--height-xs': height / gridRows < 0.26,
-    'novablocks-grid__area--height-s': 0.26 <= height / gridRows && height / gridRows < 0.42,
-    'novablocks-grid__area--height-m': 0.42 <= height / gridRows && height / gridRows < 0.58,
-    'novablocks-grid__area--height-l': 0.58 <= height / gridRows && height / gridRows < 0.74,
-    'novablocks-grid__area--height-xl': 0.74 <= height / gridRows
+    'novablocks-grid__area--width-xs': width / gridColumns < 0.34,
+    'novablocks-grid__area--width-s': 0.34 <= width / gridColumns && width / gridColumns < 0.5,
+    'novablocks-grid__area--width-m': 0.5 <= width / gridColumns && width / gridColumns < 0.66,
+    'novablocks-grid__area--width-l': 0.66 <= width / gridColumns && width / gridColumns < 0.84,
+    'novablocks-grid__area--width-xl': 0.84 <= width / gridColumns,
+    'novablocks-grid__area--height-xs': height / gridRows < 0.34,
+    'novablocks-grid__area--height-s': 0.34 <= height / gridRows && height / gridRows < 0.5,
+    'novablocks-grid__area--height-m': 0.5 <= height / gridRows && height / gridRows < 0.66,
+    'novablocks-grid__area--height-l': 0.66 <= height / gridRows && height / gridRows < 0.84,
+    'novablocks-grid__area--height-xl': 0.84 <= height / gridRows
   }]);
 };
 var transposeMatrix = function transposeMatrix(source) {
@@ -31867,6 +31870,8 @@ var transposeMatrix = function transposeMatrix(source) {
 function controls_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { controls_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { controls_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
 
 
 
@@ -31917,12 +31922,153 @@ var normalizeAttributes = function normalizeAttributes(newAttributes, attributes
   return atts;
 };
 
+var controls_getRandomAttributes = function getRandomAttributes() {
+  var postsToShow = getRandomBetween(3, 20);
+  var gridColumns = getRandomBetween(2, 12);
+  var gridRows = getRandomBetween(2, 12);
+  var minFeatureSize = Math.ceil(gridColumns * 0.25);
+  var maxFeatureSize = Math.ceil(gridColumns * 0.75);
+  var featureSize = getRandomBetween(minFeatureSize, maxFeatureSize);
+  var minFeaturePosition = 1;
+  var maxFeaturePosition = gridColumns - featureSize + 1;
+  var featurePosition = getRandomBetween(minFeaturePosition, maxFeaturePosition);
+  var minColumnsFragmentation = 0;
+  var maxColumnsFragmentation = Math.max(0, Math.pow(2, gridColumns - featureSize - 1) - 1);
+  var columnsFragmentation = getRandomBetween(minColumnsFragmentation, maxColumnsFragmentation);
+  var imageWeightLeft = getRandomBetween(0, 10);
+  var imageWeightRight = getRandomBetween(0, 10);
+  var metaWeightLeft = getRandomBetween(0, 10);
+  var metaWeightRight = getRandomBetween(0, 10);
+  var boostFeatureEmphasis = getRandomBooleanValue();
+  var subFeature = getRandomBooleanValue();
+  var balanceMDandIW = getRandomBooleanValue();
+  var hierarchyCrossing = getRandomBetween(0, 200);
+  var flipColsAndRows = getRandomBooleanValue();
+  return {
+    layoutStyle: 'parametric',
+    postsToShow: postsToShow,
+    gridColumns: gridColumns,
+    gridRows: gridRows,
+    featureSize: featureSize,
+    featurePosition: featurePosition,
+    columnsFragmentation: columnsFragmentation,
+    imageWeightLeft: imageWeightLeft,
+    imageWeightRight: imageWeightRight,
+    metaWeightLeft: metaWeightLeft,
+    metaWeightRight: metaWeightRight,
+    boostFeatureEmphasis: boostFeatureEmphasis,
+    subFeature: subFeature,
+    balanceMDandIW: balanceMDandIW,
+    hierarchyCrossing: hierarchyCrossing,
+    flipColsAndRows: flipColsAndRows
+  };
+};
+
 var controls_LayoutControls = function LayoutControls(props) {
   var layoutStyle = props.attributes.layoutStyle,
       setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: controls_('Layout')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: controls_('General')
+  }, Object(external_React_["createElement"])(preset_control, {
+    key: 'novablocks-collection-layout-preset',
+    label: controls_('Choose a layout preset:', '__plugin_txtd'),
+    options: [{
+      label: 'Classic',
+      value: 'classic',
+      preset: {
+        layoutStyle: 'classic',
+        postsToShow: 9,
+        columns: 3
+      }
+    }, {
+      label: 'Case 1',
+      value: 'case1',
+      preset: {
+        layoutStyle: 'parametric',
+        postsToShow: 6,
+        gridColumns: 6,
+        gridRows: 5,
+        featureSize: 4,
+        featurePosition: 1,
+        columnsFragmentation: 1,
+        imageWeightLeft: 1,
+        imageWeightRight: 2,
+        metaWeightLeft: 10,
+        metaWeightRight: 6,
+        boostFeatureEmphasis: false,
+        subFeature: true,
+        balanceMDandIW: false,
+        hierarchyCrossing: 30,
+        flipColsAndRows: false
+      }
+    }, {
+      label: 'Case 2',
+      value: 'case2',
+      preset: {
+        layoutStyle: 'parametric',
+        postsToShow: 6,
+        gridColumns: 6,
+        gridRows: 6,
+        featureSize: 2,
+        featurePosition: 4,
+        columnsFragmentation: 0,
+        imageWeightLeft: 8,
+        imageWeightRight: 2,
+        metaWeightLeft: 7,
+        metaWeightRight: 2,
+        boostFeatureEmphasis: false,
+        subFeature: false,
+        balanceMDandIW: false,
+        hierarchyCrossing: 0,
+        flipColsAndRows: false
+      }
+    }, {
+      label: 'Julia',
+      value: 'julia',
+      preset: {
+        layoutStyle: 'parametric',
+        postsToShow: 8,
+        gridColumns: 4,
+        gridRows: 8,
+        featureSize: 2,
+        featurePosition: 2,
+        columnsFragmentation: 0,
+        imageWeightLeft: 1,
+        imageWeightRight: 0,
+        metaWeightLeft: 0,
+        metaWeightRight: 3,
+        boostFeatureEmphasis: false,
+        subFeature: true,
+        balanceMDandIW: false,
+        hierarchyCrossing: 0,
+        flipColsAndRows: false
+      }
+    }, {
+      label: 'Julia 6',
+      value: 'julia6',
+      preset: {
+        layoutStyle: 'parametric',
+        postsToShow: 6,
+        gridColumns: 5,
+        gridRows: 4,
+        featureSize: 2,
+        featurePosition: 2,
+        columnsFragmentation: 0,
+        imageWeightLeft: 1,
+        imageWeightRight: 0,
+        metaWeightLeft: 6,
+        metaWeightRight: 3,
+        boostFeatureEmphasis: false,
+        subFeature: false,
+        balanceMDandIW: false,
+        hierarchyCrossing: 0,
+        flipColsAndRows: false
+      }
+    }],
+    randomize: controls_getRandomAttributes
+  })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: controls_('Settings')
   }, Object(external_React_["createElement"])(controls_RadioControl, {
     key: 'novablocks-collection-layout-style-controls',
@@ -32036,7 +32182,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
         gridColumns: gridColumns
       });
     },
-    min: 0,
+    min: 1,
     max: 12
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Rows", '__plugin_txtd'),
@@ -32046,7 +32192,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
         gridRows: gridRows
       });
     },
-    min: 0,
+    min: 1,
     max: 12
   })), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Main Parameters')
@@ -38693,55 +38839,6 @@ function cards_collection_init() {
 }
 
 /* harmony default export */ var cards_collection = (cards_collection_init);
-// CONCATENATED MODULE: ./src/blocks/posts-collection/controls.js
-
-
-var posts_collection_controls_ = wp.i18n.__;
-var posts_collection_controls_wp$components = wp.components,
-    posts_collection_controls_RadioControl = posts_collection_controls_wp$components.RadioControl,
-    posts_collection_controls_RangeControl = posts_collection_controls_wp$components.RangeControl;
-
-var controls_Controls = function Controls(props) {
-  var _props$attributes = props.attributes,
-      columns = _props$attributes.columns,
-      layoutStyle = _props$attributes.layoutStyle,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: posts_collection_controls_('Display'),
-    priority: 10
-  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
-    label: posts_collection_controls_('Settings')
-  }, Object(external_React_["createElement"])(posts_collection_controls_RadioControl, {
-    key: 'novablocks-collection-layout-style-controls',
-    selected: layoutStyle,
-    className: 'novablocks-collection-layout',
-    onChange: function onChange(layoutStyle) {
-      setAttributes({
-        layoutStyle: layoutStyle
-      });
-    },
-    options: [{
-      label: 'Classic',
-      value: 'classic'
-    }, {
-      label: 'Parametric',
-      value: 'parametric'
-    }]
-  }), Object(external_React_["createElement"])(posts_collection_controls_RangeControl, {
-    key: 'posts-collection-display-controls',
-    value: columns,
-    onChange: function onChange(columns) {
-      return setAttributes({
-        columns: columns
-      });
-    },
-    label: posts_collection_controls_('Columns'),
-    min: 2,
-    max: 4
-  })));
-};
-
-/* harmony default export */ var posts_collection_controls = (controls_Controls);
 // CONCATENATED MODULE: ./src/components/grid-generator/areaDebug.js
 
 
@@ -39158,11 +39255,10 @@ var preview_Header = function Header(props) {
 // CONCATENATED MODULE: ./src/blocks/posts-collection/edit.js
 
 
-
 var posts_collection_edit_Fragment = wp.element.Fragment;
 
 var edit_PostsEdit = function PostsEdit(props) {
-  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_controls, props), Object(external_React_["createElement"])(posts_collection_preview, props));
+  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props));
 };
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);

@@ -26,6 +26,10 @@ export const getRandomArrayFromArray = ( arr, n ) => {
 	return result;
 };
 
+export const getRandomBooleanValue = () => {
+	return getRandomArrayFromArray( [ true, false ], 1 )[0];
+};
+
 export const debounce = (func, wait) => {
 	let timeout = null;
 
