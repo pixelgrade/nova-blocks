@@ -20485,7 +20485,7 @@ var collection_CollectionSubtitle = function CollectionSubtitle(props) {
   }));
 };
 
-var collection_Collection = function Collection(props) {
+var collection_CollectionPreview = function CollectionPreview(props) {
   var attributes = props.attributes,
       hasAppender = props.hasAppender;
   var blockStyle = attributes.blockStyle,
@@ -20526,7 +20526,7 @@ var collection_Collection = function Collection(props) {
   var className = classnames_default()(props.className, blockClassName, 'novablocks-block', "".concat(blockClassName, "--align-").concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), {
     'has-appender': hasAppender
   });
-  return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(inspector_controls, props), Object(external_React_["createElement"])("div", {
+  return Object(external_React_["createElement"])("div", {
     className: className,
     style: style
   }, Object(external_React_["createElement"])("div", {
@@ -20536,7 +20536,11 @@ var collection_Collection = function Collection(props) {
     "data-align": "wide"
   }, Object(external_React_["createElement"])("div", {
     className: "".concat(blockClassName, "__layout")
-  }, props.children)))));
+  }, props.children))));
+};
+
+var collection_Collection = function Collection(props) {
+  return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(inspector_controls, props), Object(external_React_["createElement"])(collection_CollectionPreview, props));
 };
 
 /* harmony default export */ var components_collection = (collection_Collection);
@@ -30619,7 +30623,8 @@ var with_space_and_sizing_controls_wp$compose = wp.compose,
     with_space_and_sizing_controls_createHigherOrderComponent = with_space_and_sizing_controls_wp$compose.createHigherOrderComponent;
 var with_space_and_sizing_controls_Fragment = wp.element.Fragment;
 var with_space_and_sizing_controls_addFilter = wp.hooks.addFilter;
-var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection', 'novablocks/posts-collection'];
+var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection' //	'novablocks/posts-collection',
+];
 var ALLOWED_BLOCKS_ADVANCED = ['novablocks/media'];
 
 var getEmphasisAttributes = function getEmphasisAttributes(_ref) {
@@ -38940,7 +38945,7 @@ var preview_ClassicLayoutPreview = function ClassicLayoutPreview(props) {
 
   var dateFormat = __experimentalGetSettings().formats.date;
 
-  return Object(external_React_["createElement"])(components_collection, extends_default()({
+  return Object(external_React_["createElement"])(collection_CollectionPreview, extends_default()({
     hasAppender: false
   }, props), Object(external_React_["createElement"])("div", {
     className: "block-editor-inner-blocks"

@@ -1,5 +1,5 @@
 import AreaDebug from "./areaDebug";
-import Collection from "../../components/collection";
+import { CollectionPreview } from "../../components/collection";
 import CardMedia from "../../components/card-media";
 import { applyLayoutEngine } from "./layoutEngine";
 import {
@@ -45,7 +45,7 @@ const ClassicLayoutPreview = ( props ) => {
 	const dateFormat = __experimentalGetSettings().formats.date;
 
 	return (
-		<Collection hasAppender={ false } { ...props }>
+		<CollectionPreview hasAppender={ false } { ...props }>
 			<div className="block-editor-inner-blocks">
 				<div className="block-editor-block-list__layout">
 					{
@@ -112,7 +112,7 @@ const ClassicLayoutPreview = ( props ) => {
 					}
 				</div>
 			</div>
-		</Collection>
+		</CollectionPreview>
 	);
 };
 

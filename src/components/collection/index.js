@@ -60,7 +60,7 @@ const CollectionSubtitle = ( props ) => {
 	)
 }
 
-const Collection = ( props ) => {
+export const CollectionPreview = ( props ) => {
 
 	const {
 		attributes,
@@ -121,19 +121,25 @@ const Collection = ( props ) => {
 	);
 
 	return (
-		<Fragment>
-			<InspectorControls { ...props } />
-			<div className={ className } style={ style }>
-				<div className="wp-block-group__inner-container">
-					<CollectionTitle { ...props } />
-					<CollectionSubtitle { ...props } />
-					<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
-						<div className={ `${ blockClassName }__layout` }>
-							{ props.children }
-						</div>
+		<div className={ className } style={ style }>
+			<div className="wp-block-group__inner-container">
+				<CollectionTitle { ...props } />
+				<CollectionSubtitle { ...props } />
+				<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
+					<div className={ `${ blockClassName }__layout` }>
+						{ props.children }
 					</div>
 				</div>
 			</div>
+		</div>
+	)
+}
+
+const Collection = ( props ) => {
+	return (
+		<Fragment>
+			<InspectorControls { ...props } />
+			<CollectionPreview { ...props } />
 		</Fragment>
 	)
 }
