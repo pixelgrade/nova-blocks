@@ -25,16 +25,15 @@ const GalleryPlaceholder = function( props ) {
 
 	return (
 		<MediaPlaceholder
+			accept="image/*"
 			addToGallery={ hasImages }
-			className=""
+			allowedTypes={ ALLOWED_MEDIA_TYPES }
 			labels={ {
 				title: '',
 				instructions: __( 'Drag images, upload new ones or select files from your library.', '__plugin_txtd' ),
 			} }
-			onSelect={ onSelectImages }
-			accept="image/*"
-			allowedTypes={ ALLOWED_MEDIA_TYPES }
 			multiple
+			onSelect={ onSelectImages }
 			value={ hasImages ? galleryImages : undefined }
 		/>
 	);
