@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { kebabCase } from 'lodash';
 import EditableText from "../editable-text";
 import InspectorControls from "./inspector-controls";
 

@@ -9,7 +9,7 @@ const {
 	RawHTML
 } = wp.element;
 
-import Media from "./components/media";
+import CardMedia from "../../components/card-media";
 import Category from "./components/category";
 
 const Card = ( props ) => {
@@ -39,25 +39,13 @@ const CardPortrait = ( props ) => {
 	return (
 		<div className={ `novablocks-card novablocks-card--portrait novablocks-card__inner-container novablocks-block__content` }>
 			<div className="wp-block">
-				<CardMedia { ...props } />
+				<div className="novablocks-grid__item-image">
+					<CardMedia { ...props } />
+				</div>
 			</div>
 			<CardContents { ...props } />
 		</div>
 	);
-};
-
-const CardMedia = ( props ) => {
-	const { post } = props;
-
-	return (
-		<div className="novablocks-grid__item-image">
-			<div className="novablocks-card__media-wrap">
-				<div className="novablocks-card__media">
-					<Media post={ post } />
-				</div>
-			</div>
-		</div>
-	)
 };
 
 const CardContents = ( props ) => {

@@ -30,7 +30,7 @@ const Preview = ( props ) => {
 	};
 
 	return (
-		<GridLayoutPreview getContent={ getContent } cardsCount={ posts.length } attributes={ attributes } />
+		<GridLayoutPreview getContent={ getContent } cardsCount={ posts.length } attributes={ attributes } posts={ posts } />
 	)
 };
 
