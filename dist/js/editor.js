@@ -31773,7 +31773,6 @@ var getPostsCount = function getPostsCount(areaColumns) {
 };
 var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount) {
   var totalPosts = cardsCount;
-  var totalSpots = 0;
   var remainingPosts = totalPosts;
   var totalRatio = 0;
 
@@ -31786,12 +31785,12 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
       area.spotRatio = area.postsCount / area.height;
       areaColumnSpotRatio += area.spotRatio;
       totalRatio += area.spotRatio;
-      totalSpots += area.postsCount;
     }
 
     areaColumn.spotRatio = areaColumnSpotRatio;
   }
 
+  var totalSpots = getPostsCount(areaColumns);
   var remainingSpots = totalSpots;
 
   for (var _i = 0; _i < areaColumns.length; _i++) {
@@ -38667,6 +38666,7 @@ var preview_GridLayoutPreview = function GridLayoutPreview(props) {
       toggleMask = attributes.toggleMask;
   var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   var addedCards = 0;
+  var totalPosts = getPostsCount(areaColumns);
   redistributeCardsInAreas(areaColumns, cardsCount);
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"

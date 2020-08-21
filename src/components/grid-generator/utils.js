@@ -49,7 +49,6 @@ export const getPostsCount = ( areaColumns ) => {
 
 export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 	let totalPosts = cardsCount;
-	let totalSpots = 0;
 	let remainingPosts = totalPosts;
 	let totalRatio = 0;
 
@@ -62,12 +61,12 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 			area.spotRatio = area.postsCount / area.height;
 			areaColumnSpotRatio += area.spotRatio;
 			totalRatio += area.spotRatio;
-			totalSpots += area.postsCount;
 		}
 
 		areaColumn.spotRatio = areaColumnSpotRatio;
 	}
 
+	const totalSpots = getPostsCount( areaColumns );
 	let remainingSpots = totalSpots;
 
 	for ( let i = 0; i < areaColumns.length; i++ ) {

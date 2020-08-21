@@ -1,6 +1,13 @@
 import AreaDebug from "./areaDebug";
 import { applyLayoutEngine } from "./layoutEngine";
-import { getAreaClassName, getGridStyle, prepareAttributes, redistributeCardsInAreas, isLandscape } from "./utils";
+import {
+	getAreaClassName,
+	getGridStyle,
+	prepareAttributes,
+	redistributeCardsInAreas,
+	isLandscape,
+	getPostsCount
+} from "./utils";
 
 const GridLayoutPreview = ( props ) => {
 
@@ -18,6 +25,7 @@ const GridLayoutPreview = ( props ) => {
 	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
 	let addedCards = 0;
 
+	const totalPosts = getPostsCount( areaColumns );
 	redistributeCardsInAreas( areaColumns, cardsCount );
 
 	return (
