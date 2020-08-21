@@ -916,8 +916,8 @@ function novablocks_get_theme_support() {
 }
 
 function novablocks_get_attributes_from_json( $path ) {
-	$plugin_url = novablocks_get_plugin_url();
-	$body = file_get_contents( $plugin_url . $path );
+	$plugin_path = novablocks_get_plugin_path();
+	$body = file_get_contents( $plugin_path . $path );
 
 	return json_decode( $body, true );
 }
