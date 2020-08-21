@@ -38913,6 +38913,7 @@ var post_CardContents = function CardContents(props) {
 
 
 
+
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
       posts = props.posts,
@@ -38925,7 +38926,13 @@ var preview_Preview = function Preview(props) {
   }
 
   var getContent = function getContent(index, attributes, isLandscape) {
-    var post = posts === null || posts === void 0 ? void 0 : posts[index];
+    console.log(index);
+
+    if (index === 0) {
+      return Object(external_React_["createElement"])(preview_Header, props);
+    }
+
+    var post = posts === null || posts === void 0 ? void 0 : posts[index - 1];
     return post && Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
       isLandscape: isLandscape,
@@ -38938,6 +38945,30 @@ var preview_Preview = function Preview(props) {
     cardsCount: posts.length,
     attributes: attributes
   });
+};
+
+var preview_Header = function Header(props) {
+  var _props$attributes = props.attributes,
+      collectionTitle = _props$attributes.collectionTitle,
+      collectionDescription = _props$attributes.collectionDescription,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(editable_text, {
+    tagName: 'h2',
+    value: collectionTitle,
+    onChange: function onChange(collectionTitle) {
+      setAttributes({
+        collectionTitle: collectionTitle
+      });
+    }
+  }), Object(external_React_["createElement"])(editable_text, {
+    tagName: 'p',
+    value: collectionDescription,
+    onChange: function onChange(collectionDescription) {
+      setAttributes({
+        collectionDescription: collectionDescription
+      });
+    }
+  }));
 };
 
 /* harmony default export */ var posts_collection_preview = (preview_Preview);

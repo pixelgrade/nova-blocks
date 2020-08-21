@@ -325,6 +325,14 @@ function novablocks_get_posts_collection_attributes() {
 				'type'    => 'number',
 				'default' => 3,
 			),
+			'collectionTitle' => array(
+				'type' => 'string',
+				'default' => 'Title'
+			),
+			'collectionDescription' => array(
+				'type' => 'string',
+				'default' => 'Description',
+			)
 		),
 		novablocks_get_source_attributes(),
 		novablocks_get_collection_attributes()
