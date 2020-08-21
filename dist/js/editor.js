@@ -31772,17 +31772,23 @@ var getPostsCount = function getPostsCount(areaColumns) {
   }, 0);
 };
 var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount) {
+  var totalSpots = getPostsCount(areaColumns);
   var totalPosts = cardsCount;
   var remainingPosts = totalPosts;
   var totalRatio = 0;
+
+  if (totalSpots === totalPosts) {
+    return;
+  }
 
   for (var i = 0; i < areaColumns.length; i++) {
     var areaColumn = areaColumns[i];
     var areaColumnSpotRatio = 0;
 
     for (var j = 0; j < areaColumn.areas.length; j++) {
-      var area = areaColumn.areas[j];
-      area.spotRatio = area.postsCount / area.height;
+      var area = areaColumn.areas[j]; // we shouldn't fill the area with the featured card
+
+      area.spotRatio = i === 0 && j === 0 ? 0 : area.postsCount / area.height;
       areaColumnSpotRatio += area.spotRatio;
       totalRatio += area.spotRatio;
     }
@@ -31790,8 +31796,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     areaColumn.spotRatio = areaColumnSpotRatio;
   }
 
-  var totalSpots = getPostsCount(areaColumns);
-  var remainingSpots = totalSpots;
+  var remainingSpots = Math.min(totalSpots, totalPosts);
 
   for (var _i = 0; _i < areaColumns.length; _i++) {
     var _areaColumn = areaColumns[_i];
@@ -31799,17 +31804,13 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
 
     for (var _j = 0; _j < areas.length; _j++) {
       var _area = areas[_j];
-      var postsToAdd = _area.postsCount;
-
-      if (totalPosts > totalSpots) {
-        postsToAdd += Math.floor((totalPosts - totalSpots) * _area.spotRatio / totalRatio);
-      }
+      _area.postsCount += Math.round((totalPosts - totalSpots) * _area.spotRatio / totalRatio);
 
       if (_i === areaColumns.length - 1 && _j === areas.length - 1) {
-        postsToAdd = remainingPosts;
+        _area.postsCount = remainingPosts;
       }
 
-      _area.postsCount += postsToAdd;
+      _area.postsCount = Math.max(_area.postsCount, 0);
       remainingSpots -= _area.postsCount;
       if (remainingPosts <= 0) return;
     }
@@ -38926,13 +38927,11 @@ var preview_Preview = function Preview(props) {
   }
 
   var getContent = function getContent(index, attributes, isLandscape) {
-    console.log(index);
-
-    if (index === 0) {
-      return Object(external_React_["createElement"])(preview_Header, props);
-    }
-
-    var post = posts === null || posts === void 0 ? void 0 : posts[index - 1];
+    //		console.log( index );
+    //		if ( index === 0 ) {
+    //			return <Header { ...props } />
+    //		}
+    var post = posts === null || posts === void 0 ? void 0 : posts[index];
     return post && Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
       isLandscape: isLandscape,

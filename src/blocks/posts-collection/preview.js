@@ -18,13 +18,13 @@ const Preview = ( props ) => {
 	}
 
 	const getContent = ( index, attributes, isLandscape ) => {
-		console.log( index );
+//		console.log( index );
 
-		if ( index === 0 ) {
-			return <Header { ...props } />
-		}
+//		if ( index === 0 ) {
+//			return <Header { ...props } />
+//		}
 
-		const post = posts?.[index - 1];
+		const post = posts?.[index];
 
 		return post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />;
 	};

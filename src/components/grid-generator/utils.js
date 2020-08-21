@@ -48,17 +48,23 @@ export const getPostsCount = ( areaColumns ) => {
 };
 
 export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
+	let totalSpots = getPostsCount( areaColumns );
 	let totalPosts = cardsCount;
 	let remainingPosts = totalPosts;
 	let totalRatio = 0;
+
+	if ( totalSpots === totalPosts ) {
+		return;
+	}
 
 	for ( let i = 0; i < areaColumns.length; i++ ) {
 		let areaColumn = areaColumns[i];
 		let areaColumnSpotRatio = 0;
 
-		for ( let j = 0; j < areaColumn.areas.length; j++ ) {
+		for ( let j = 0; j < areaColumn.areas.length; j ++ ) {
 			let area = areaColumn.areas[j];
-			area.spotRatio = area.postsCount / area.height;
+			// we shouldn't fill the area with the featured card
+			area.spotRatio = ( i === 0 && j === 0 ) ? 0 : area.postsCount / area.height;
 			areaColumnSpotRatio += area.spotRatio;
 			totalRatio += area.spotRatio;
 		}
@@ -66,8 +72,7 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 		areaColumn.spotRatio = areaColumnSpotRatio;
 	}
 
-	const totalSpots = getPostsCount( areaColumns );
-	let remainingSpots = totalSpots;
+	let remainingSpots = Math.min( totalSpots, totalPosts );
 
 	for ( let i = 0; i < areaColumns.length; i++ ) {
 		let areaColumn = areaColumns[i];
@@ -75,17 +80,14 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 
 		for ( let j = 0; j < areas.length; j++ ) {
 			let area = areas[j];
-			let postsToAdd = area.postsCount;
 
-			if ( totalPosts > totalSpots ) {
-				postsToAdd += Math.floor( ( totalPosts - totalSpots ) * area.spotRatio / totalRatio );
-			}
+			area.postsCount += Math.round( ( totalPosts - totalSpots ) * area.spotRatio / totalRatio );
 
 			if ( i === areaColumns.length - 1 && j === areas.length - 1 ) {
-				postsToAdd = remainingPosts;
+				area.postsCount = remainingPosts;
 			}
 
-			area.postsCount += postsToAdd;
+			area.postsCount = Math.max( area.postsCount, 0 );
 			remainingSpots -= area.postsCount;
 
 			if ( remainingPosts <= 0 ) return;
