@@ -19,12 +19,12 @@ if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 add_action( 'init', 'novablocks_slideshow_block_init' );
 
 function novablocks_get_slideshow_attributes_config() {
-	$block_attributes = novablocks_get_attributes_from_json( '/src/blocks/slideshow/attributes.json' );
+	$block_attributes = novablocks_get_attributes_from_json( 'src/blocks/slideshow/attributes.json' );
 
-	$alignment_attributes = novablocks_get_attributes_from_json( '/src/components/alignment-controls/attributes.json' );
-	$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
-	$scrolling_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
-	$layout_attributes = novablocks_get_attributes_from_json( '/src/components/layout-panel/attributes.json' );
+	$alignment_attributes = novablocks_get_attributes_from_json( 'src/components/alignment-controls/attributes.json' );
+	$color_attributes = novablocks_get_attributes_from_json( 'src/components/color-controls/attributes.json' );
+	$scrolling_attributes = novablocks_get_attributes_from_json( 'src/components/scrolling-effect-controls/attributes.json' );
+	$layout_attributes = novablocks_get_attributes_from_json( 'src/components/layout-panel/attributes.json' );
 
 	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );
 }
