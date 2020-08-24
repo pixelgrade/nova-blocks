@@ -35105,14 +35105,13 @@ var preview_SlideshowPreview = /*#__PURE__*/function (_Component) {
 
       var maxAspectRatio = 0;
       var mediaMinHeight = 0;
-      galleryImages.map(function (image) {
-        if (!!image.sizes && !!image.sizes.full && !!image.width && !!image.height) {
-          var aspectRatio = image.width / image.height;
-          maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
-          mediaMinHeight = _this2.state.dimensions.width / maxAspectRatio;
-        }
+      galleryImages.forEach(function (image) {
+        var _image$sizes;
 
-        return true;
+        var imageSize = image === null || image === void 0 ? void 0 : (_image$sizes = image.sizes) === null || _image$sizes === void 0 ? void 0 : _image$sizes.full;
+        var aspectRatio = !!imageSize ? imageSize.width / imageSize.height : 0;
+        maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+        mediaMinHeight = _this2.state.dimensions.width / maxAspectRatio;
       });
       var attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
       styles.slideshow.minHeight = Math.max(attributesHeight, mediaMinHeight, maxAspectRatio) + 'px';

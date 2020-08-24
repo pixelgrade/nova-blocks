@@ -916,9 +916,9 @@ function novablocks_get_theme_support() {
 }
 
 function novablocks_get_attributes_from_json( $path ) {
-	$plugin_url = novablocks_get_plugin_url();
-	$response = wp_remote_get( $plugin_url . $path );
-	$body = wp_remote_retrieve_body( $response );
+	$plugin_path = novablocks_get_plugin_path();
+	$filename = trailingslashit( $plugin_path ) . $path;
+	$body = file_get_contents( $filename );
 
 	return json_decode( $body, true );
 }

@@ -29,7 +29,7 @@ const SlideshowPreview = class extends Component {
 	}
 
 	updateDimensions() {
-		if ( !this.container ) {
+		if ( ! this.container ) {
 			return;
 		}
 
@@ -94,13 +94,11 @@ const SlideshowPreview = class extends Component {
 		let maxAspectRatio = 0;
 		let mediaMinHeight = 0;
 
-		galleryImages.map( ( image ) => {
-			if ( !! image.sizes && !! image.sizes.full && !! image.width && !! image.height ) {
-				const aspectRatio = image.width / image.height;
-				maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
-				mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
-			}
-			return true;
+		galleryImages.forEach( image => {
+			const imageSize = image?.sizes?.full;
+			const aspectRatio = !! imageSize ? ( imageSize.width / imageSize.height ) : 0;
+			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+			mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
 		} );
 
 		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
