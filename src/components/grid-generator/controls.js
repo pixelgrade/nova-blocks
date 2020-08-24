@@ -126,21 +126,21 @@ const LayoutControls = ( props ) => {
 					key={ 'novablocks-collection-layout-preset' }
 					label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
 					options={ [ {
-						label: 'Classic',
-						value: 'classic',
+						label: 'TR 03: Classic Triphasic',
+						value: 'tear0down3',
 						preset: {
 							layoutStyle: 'classic',
-							postsToShow: 9,
+							postsToShow: 6,
 							columns: 3,
 						}
-					}, {
-						label: 'Case 1',
-						value: 'case1',
+					},  {
+						label: 'TR 27: Figma 1',
+						value: 'tear2down7',
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,
 							gridColumns: 6,
-							gridRows: 5,
+							gridRows: 6,
 							featureSize: 4,
 							featurePosition: 1,
 							columnsFragmentation: 1,
@@ -155,8 +155,8 @@ const LayoutControls = ( props ) => {
 							flipColsAndRows: false
 						}
 					}, {
-						label: 'Case 2',
-						value: 'case2',
+						label: 'TR 15: Figma 2',
+						value: 'tear1down5',
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,
@@ -176,8 +176,134 @@ const LayoutControls = ( props ) => {
 							flipColsAndRows: false
 						}
 					}, {
-						label: 'Julia',
-						value: 'julia',
+						label: 'TR 47: Circular',
+						value: 'tear4down7',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 5,
+							gridColumns: 12,
+							gridRows: 8,
+							featureSize: 7,
+							featurePosition: 3,
+							columnsFragmentation: 0,
+							imageWeightLeft: 1,
+							imageWeightRight: 0,
+							metaWeightLeft: 0,
+							metaWeightRight: 10,
+							boostFeatureEmphasis: true,
+							subFeature: true,
+							balanceMDandIW: false,
+							hierarchyCrossing: 153,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'TR 19: New Yorker',
+						value: 'tear1down9',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 8,
+							gridColumns: 6,
+							gridRows: 8,
+							featureSize: 3,
+							featurePosition: 2,
+							columnsFragmentation: 2,
+							imageWeightLeft: 1,
+							imageWeightRight: 0,
+							metaWeightLeft: 0,
+							metaWeightRight: 10,
+							boostFeatureEmphasis: false,
+							subFeature: true,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'TR 45: By the book',
+						value: 'tear4down5',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 6,
+							gridColumns: 8,
+							gridRows: 6,
+							featureSize: 4,
+							featurePosition: 1,
+							columnsFragmentation: 2,
+							imageWeightLeft: 8,
+							imageWeightRight: 8,
+							metaWeightLeft: 7,
+							metaWeightRight: 2,
+							boostFeatureEmphasis: false,
+							subFeature: false,
+							balanceMDandIW: false,
+							hierarchyCrossing: 120,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'TR 10: Abundance',
+						value: 'tear1down0',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 10,
+							gridColumns: 10,
+							gridRows: 6,
+							featureSize: 3,
+							featurePosition: 6,
+							columnsFragmentation: 0,
+							imageWeightLeft: 1,
+							imageWeightRight: 0,
+							metaWeightLeft: 0,
+							metaWeightRight: 0,
+							boostFeatureEmphasis: false,
+							subFeature: false,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'TR 12: Half in Half',
+						value: 'tear1down2',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 7,
+							gridColumns: 6,
+							gridRows: 3,
+							featureSize: 3,
+							featurePosition: 1,
+							columnsFragmentation: 3,
+							imageWeightLeft: 10,
+							imageWeightRight: 0,
+							metaWeightLeft: 0,
+							metaWeightRight: 0,
+							boostFeatureEmphasis: false,
+							subFeature: false,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'TR 30: Julia',
+						value: 'tear3down0',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 5,
+							gridColumns: 4,
+							gridRows: 8,
+							featureSize: 2,
+							featurePosition: 2,
+							columnsFragmentation: 0,
+							imageWeightLeft: 1,
+							imageWeightRight: 0,
+							metaWeightLeft: 0,
+							metaWeightRight: 3,
+							boostFeatureEmphasis: false,
+							subFeature: true,
+							balanceMDandIW: false,
+							hierarchyCrossing: 0,
+							flipColsAndRows: false
+						}
+					}, {
+						label: 'TR 32: Julia+',
+						value: 'tear3down2',
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 8,
@@ -197,8 +323,8 @@ const LayoutControls = ( props ) => {
 							flipColsAndRows: false
 						}
 					}, {
-						label: 'Julia 6',
-						value: 'julia6',
+						label: 'TR 13: Julia X',
+						value: 'tear1down3',
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,

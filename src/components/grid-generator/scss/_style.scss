@@ -6,15 +6,15 @@
 .novablocks-grid__area--portrait {
 
 	&.novablocks-grid__area--width-xl {
-		--novablocks-card-title-font-size-modifier: 1.6;
+		--novablocks-card-title-font-size-modifier: 1.8;
 	}
 
 	&.novablocks-grid__area--width-l {
-		--novablocks-card-title-font-size-modifier: 1.4;
+		--novablocks-card-title-font-size-modifier: 1.6;
 	}
 
 	&.novablocks-grid__area--width-m {
-		--novablocks-card-title-font-size-modifier: 1.2;
+		--novablocks-card-title-font-size-modifier: 1.4;
 	}
 
 	&.novablocks-grid__area--width-s {
@@ -29,12 +29,16 @@
 
 .novablocks-grid__area--landscape {
 
+	&.novablocks-grid__area--width-full {
+		--novablocks-card-title-font-size-modifier: 1.6;
+	}
+
 	&.novablocks-grid__area--width-xl {
-		--novablocks-card-title-font-size-modifier: 1;
+		--novablocks-card-title-font-size-modifier: 1.4;
 	}
 
 	&.novablocks-grid__area--width-l {
-		--novablocks-card-title-font-size-modifier: 0.9;
+		--novablocks-card-title-font-size-modifier: 1;
 	}
 
 	&.novablocks-grid__area--width-m {
@@ -42,12 +46,12 @@
 	}
 
 	&.novablocks-grid__area--width-s {
-		--novablocks-card-title-font-size-modifier: 0.7;
+		--novablocks-card-title-font-size-modifier: 0.6;
 		--grid-item-content-display: none;
 	}
 
 	&.novablocks-grid__area--width-xs {
-		--novablocks-card-title-font-size-modifier: 0.6;
+		--novablocks-card-title-font-size-modifier: 0.5;
 		--grid-item-content-display: none;
 	}
 }
