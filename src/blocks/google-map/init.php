@@ -22,8 +22,8 @@ if ( ! function_exists( 'novablocks_render_google_maps_block' ) ) {
 
 	function novablocks_render_google_maps_block( $attributes, $content ) {
 
-		$doppler_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
-		$map_attributes = novablocks_get_attributes_from_json( '/src/blocks/google-map/attributes.json' );
+		$doppler_attributes = novablocks_get_attributes_from_json( 'src/components/scrolling-effect-controls/attributes.json' );
+		$map_attributes = novablocks_get_attributes_from_json( 'src/blocks/google-map/attributes.json' );
 
 		$attributes_config = array_merge( $map_attributes, $doppler_attributes );
 

@@ -19,12 +19,12 @@ if ( ! function_exists( 'novablocks_slideshow_block_init' ) ) {
 add_action( 'init', 'novablocks_slideshow_block_init' );
 
 function novablocks_get_slideshow_attributes_config() {
-	$block_attributes = novablocks_get_attributes_from_json( '/src/blocks/slideshow/attributes.json' );
+	$block_attributes = novablocks_get_attributes_from_json( 'src/blocks/slideshow/attributes.json' );
 
-	$alignment_attributes = novablocks_get_attributes_from_json( '/src/components/alignment-controls/attributes.json' );
-	$color_attributes = novablocks_get_attributes_from_json( '/src/components/color-controls/attributes.json' );
-	$scrolling_attributes = novablocks_get_attributes_from_json( '/src/components/scrolling-effect-controls/attributes.json' );
-	$layout_attributes = novablocks_get_attributes_from_json( '/src/components/layout-panel/attributes.json' );
+	$alignment_attributes = novablocks_get_attributes_from_json( 'src/components/alignment-controls/attributes.json' );
+	$color_attributes = novablocks_get_attributes_from_json( 'src/components/color-controls/attributes.json' );
+	$scrolling_attributes = novablocks_get_attributes_from_json( 'src/components/scrolling-effect-controls/attributes.json' );
+	$layout_attributes = novablocks_get_attributes_from_json( 'src/components/layout-panel/attributes.json' );
 
 	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );
 }
@@ -111,20 +111,22 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 										<?php
 										if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
 											$id = attachment_url_to_postid( $media['url'] );
+											$width = $media['sizes']['full']['width'];
+											$height = $media['sizes']['full']['height'];
 
 											if ( ! empty( $id ) ) {
 												echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
 													'class' => 'novablocks-slideshow__media',
 													'style' => esc_attr( $thisMediaStyle ),
-													'data-width' => esc_attr( $media['width'] ),
-				                                    'data-height' => esc_attr( $media['height'] )
+													'data-width' => esc_attr( $width ),
+				                                    'data-height' => esc_attr( $height )
 												) );
 											} else { ?>
 											<img class="novablocks-slideshow__media"
 											     src="<?php echo esc_url( $media['url'] ); ?>"
 											     style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-											     data-width="<?php echo esc_attr( $media['width'] ); ?>"
-											     data-height="<?php echo esc_attr( $media['height'] ); ?>"
+											     data-width="<?php echo esc_attr( $width ); ?>"
+											     data-height="<?php echo esc_attr( $height ); ?>"
 											/>
 											<?php }
 										} ?>
@@ -133,8 +135,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 											<video class="novablocks-slideshow__media" muted autoplay playsInline loop
 											       src="<?php echo esc_url( $media['url'] ); ?>"
 											       style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-											       data-width="<?php echo esc_attr( $media['width'] ); ?>"
-											       data-height="<?php echo esc_attr( $media['height'] ); ?>"/>
+											       data-width="<?php echo esc_attr( $width ); ?>"
+											       data-height="<?php echo esc_attr( $height ); ?>"/>
 										<?php } ?>
 
 									</div>
