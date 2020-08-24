@@ -2164,7 +2164,7 @@ module.exports = toKey;
 /* 45 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false},\"templateInserted\":{\"boolean\":true,\"default\":false}}");
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false},\"templateInserted\":{\"boolean\":true,\"default\":false},\"displayInnerContent\":{\"type\":\"boolean\",\"default\":true}}");
 
 /***/ }),
 /* 46 */
@@ -19411,35 +19411,6 @@ var parallax_panel_ParallaxPanel = function ParallaxPanel(props) {
 };
 
 /* harmony default export */ var parallax_panel = (with_settings(parallax_panel_ParallaxPanel));
-// CONCATENATED MODULE: ./src/components/position-indicators-panel/index.js
-
-
-var position_indicators_panel_ = wp.i18n.__;
-var position_indicators_panel_wp$components = wp.components,
-    position_indicators_panel_PanelBody = position_indicators_panel_wp$components.PanelBody,
-    position_indicators_panel_ToggleControl = position_indicators_panel_wp$components.ToggleControl;
-
-function PositionIndicatorsPanel(props) {
-  var attributes = props.attributes,
-      setAttributes = props.setAttributes;
-  var positionIndicators = attributes.positionIndicators;
-  return Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: position_indicators_panel_('Indicators')
-  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
-    label: position_indicators_panel_('Settings')
-  }, Object(external_React_["createElement"])(position_indicators_panel_ToggleControl, {
-    key: 'position-indicators',
-    label: position_indicators_panel_('Enable Position Indicators', '__plugin_txtd'),
-    checked: positionIndicators,
-    onChange: function onChange(positionIndicators) {
-      setAttributes({
-        positionIndicators: positionIndicators
-      });
-    }
-  })));
-}
-
-/* harmony default export */ var position_indicators_panel = (PositionIndicatorsPanel);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
 var toConsumableArray = __webpack_require__(29);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
@@ -19550,7 +19521,6 @@ var getPlaceholderImages = unsplash_instance.get.bind(unsplash_instance);
 // CONCATENATED MODULE: ./src/utils/index.js
 
 
-
 var getRandomBetween = function getRandomBetween(min, max) {
   var random = Math.max(0, Math.random() - Number.MIN_VALUE);
   return Math.floor(random * (max - min + 1) + min);
@@ -19594,21 +19564,6 @@ var utils_range = function range(min, max) {
   }
 
   return array;
-};
-var utils_withFirstBlockConditions = function withFirstBlockConditions(Component) {
-  return function (props) {
-    var _wp$data$select = wp.data.select('core/block-editor'),
-        getBlocks = _wp$data$select.getBlocks,
-        getSelectedBlockClientId = _wp$data$select.getSelectedBlockClientId;
-
-    var blocks = getBlocks();
-    var selectedBlockClientId = getSelectedBlockClientId();
-    var index = blocks.findIndex(function (block) {
-      return block.clientId === selectedBlockClientId;
-    });
-    var show = index === 0 && props.clientId === selectedBlockClientId;
-    return show && Object(external_React_["createElement"])(Component, props);
-  };
 };
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 var hasTouchScreen = function hasTouchScreen() {
@@ -22492,60 +22447,10 @@ var alignment_controls_AlignmentControls = function AlignmentControls(props) {
 };
 
 
-// CONCATENATED MODULE: ./src/components/scroll-indicator-panel/index.js
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-var scroll_indicator_panel_ = wp.i18n.__;
-var scroll_indicator_panel_ToggleControl = wp.components.ToggleControl;
-var scroll_indicator_panel_select = wp.data.select;
-var scroll_indicator_panel_Component = wp.element.Component;
-var ScrollIndicatorPanel = with_settings(function (props) {
-  var settings = props.settings,
-      scrollIndicator = props.attributes.scrollIndicator,
-      setAttributes = props.setAttributes,
-      updateAttributes = props.updateAttributes;
-
-  var _select = scroll_indicator_panel_select('core/block-editor'),
-      getBlocks = _select.getBlocks,
-      getSelectedBlockClientId = _select.getSelectedBlockClientId;
-
-  var heroBlocks = getBlocks().filter(function (block) {
-    return block.name === 'novablocks/hero';
-  });
-  var index = heroBlocks.findIndex(function (block) {
-    return block.clientId === getSelectedBlockClientId();
-  });
-  return index === 0 && Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: scroll_indicator_panel_('Indicators')
-  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
-    label: scroll_indicator_panel_('Settings')
-  }, Object(external_React_["createElement"])(scroll_indicator_panel_ToggleControl, {
-    key: 'scroll-indicator-control',
-    label: scroll_indicator_panel_('Enable Scroll Indicator', '__plugin_txtd'),
-    checked: scrollIndicator,
-    onChange: function onChange(scrollIndicator) {
-      updateAttributes({
-        scrollIndicator: scrollIndicator
-      });
-    }
-  })));
-});
-
 // CONCATENATED MODULE: ./src/components/index.js
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -22580,7 +22485,7 @@ var withCardsManager = with_cards_manager_createHigherOrderComponent(function (O
     }
 
     return Object(external_React_["createElement"])(with_cards_manager_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(with_cards_manager_PanelBody, {
-      title: with_cards_manager_('Cards Manager', '__plugin_txtd')
+      title: with_cards_manager_('Set up elements for this block', '__plugin_txtd')
     }, Object(external_React_["createElement"])(cards_manager, props))));
   };
 });
@@ -34017,7 +33922,8 @@ var preview_HeroPreview = function HeroPreview(props) {
       scrollIndicatorBlock = attributes.scrollIndicatorBlock,
       contentColor = attributes.contentColor,
       overlayFilterStyle = attributes.overlayFilterStyle,
-      scrollingEffect = attributes.scrollingEffect;
+      scrollingEffect = attributes.scrollingEffect,
+      displayInnerContent = attributes.displayInnerContent;
   var classes = [className, 'novablocks-hero', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
   var styles = {
     hero: {
@@ -34069,7 +33975,7 @@ var preview_HeroPreview = function HeroPreview(props) {
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-hero__inner-container novablocks-u-content-width",
     style: styles.content
-  }, Object(external_React_["createElement"])(preview_InnerBlocks, null)), scrollIndicator && Object(external_React_["createElement"])("div", {
+  }, displayInnerContent && Object(external_React_["createElement"])(preview_InnerBlocks, null)), scrollIndicator && Object(external_React_["createElement"])("div", {
     className: "novablocks-hero__indicator"
   })));
 };
@@ -34127,7 +34033,6 @@ var block_controls_HeroBlockControls = function HeroBlockControls(props) {
 
 
 
-
 function edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -34144,12 +34049,11 @@ function hero_edit_isNativeReflectConstruct() { if (typeof Reflect === "undefine
 
 
 
-
 var hero_edit_ = wp.i18n.__;
 var hero_edit_InspectorControls = wp.blockEditor.InspectorControls;
 var hero_edit_wp$components = wp.components,
-    hero_edit_PanelBody = hero_edit_wp$components.PanelBody,
-    edit_RadioControl = hero_edit_wp$components.RadioControl;
+    edit_RadioControl = hero_edit_wp$components.RadioControl,
+    hero_edit_PanelBody = hero_edit_wp$components.PanelBody;
 var hero_edit_wp$element = wp.element,
     hero_edit_Component = hero_edit_wp$element.Component,
     hero_edit_Fragment = hero_edit_wp$element.Fragment;
@@ -34157,9 +34061,6 @@ var hero_edit_wp$compose = wp.compose,
     hero_edit_compose = hero_edit_wp$compose.compose,
     hero_edit_createHigherOrderComponent = hero_edit_wp$compose.createHigherOrderComponent;
 var edit_select = wp.data.select;
-var FirstBlockControls = utils_withFirstBlockConditions(function (props) {
-  return Object(external_React_["createElement"])(hero_edit_Fragment, null, Object(external_React_["createElement"])(ScrollIndicatorPanel, props), Object(external_React_["createElement"])(position_indicators_panel, props));
-});
 
 var edit_BlockHeightControls = function BlockHeightControls(props) {
   var attributes = props.attributes,
@@ -34235,7 +34136,7 @@ var edit_HeroEdit = /*#__PURE__*/function (_Component) {
           setAttributes = _this$props.setAttributes;
       var defaults = this.getDefaults(attributes);
       var computedAttributes = this.getNewAttributes(edit_objectSpread(edit_objectSpread(edit_objectSpread({}, attributes), defaults), newAttributes));
-      setAttributes(computedAttributes);
+      setAttributes(Object.assign({}, newAttributes, computedAttributes));
     }
   }, {
     key: "componentDidMount",
@@ -34245,12 +34146,44 @@ var edit_HeroEdit = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var settings = this.props.settings;
-      var usePostMetaAttributes = settings.usePostMetaAttributes;
+      var attributes = this.props.attributes;
       var updateAttributes = this.updateAttributes.bind(this);
-      return Object(external_React_["createElement"])(hero_edit_Fragment, null, Object(external_React_["createElement"])(hero_preview, this.props), Object(external_React_["createElement"])(hero_block_controls, this.props), Object(external_React_["createElement"])(hero_edit_InspectorControls, null, Object(external_React_["createElement"])(layout_panel, this.props), Object(external_React_["createElement"])(edit_BlockHeightControls, this.props), usePostMetaAttributes && Object(external_React_["createElement"])(FirstBlockControls, extends_default()({}, this.props, {
-        updateAttributes: updateAttributes
-      }))));
+
+      var _select = edit_select('core/block-editor'),
+          getBlocks = _select.getBlocks,
+          getSelectedBlockClientId = _select.getSelectedBlockClientId;
+
+      var heroBlocks = getBlocks().filter(function (block) {
+        return block.name === 'novablocks/hero';
+      });
+      var index = heroBlocks.findIndex(function (block) {
+        return block.clientId === getSelectedBlockClientId();
+      });
+      var toggles = [{
+        label: hero_edit_('Inner Content'),
+        attribute: 'displayInnerContent'
+      }];
+
+      if (index === 0) {
+        toggles.push({
+          label: hero_edit_('Position Indicators'),
+          attribute: 'positionIndicators'
+        }, {
+          label: hero_edit_('Scroll Indicator'),
+          attribute: 'scrollIndicator'
+        });
+      }
+
+      return Object(external_React_["createElement"])(hero_edit_Fragment, null, Object(external_React_["createElement"])(hero_preview, this.props), Object(external_React_["createElement"])(hero_block_controls, this.props), Object(external_React_["createElement"])(hero_edit_InspectorControls, null, Object(external_React_["createElement"])(layout_panel, this.props), Object(external_React_["createElement"])(edit_BlockHeightControls, this.props), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(hero_edit_PanelBody, {
+        title: hero_edit_('Set up elements for this block', '__plugin_txtd')
+      }, Object(external_React_["createElement"])(toggle_group, {
+        onChange: updateAttributes,
+        toggles: toggles.map(function (toggle) {
+          return edit_objectSpread(edit_objectSpread({}, toggle), {}, {
+            value: attributes[toggle.attribute]
+          });
+        })
+      })))));
     }
   }]);
 
@@ -34354,7 +34287,6 @@ var insert_template_createBlocksFromInnerBlocksTemplate = function createBlocksF
       if (block.name === blockType && !block.attributes.templateInserted && !((_block$innerBlocks = block.innerBlocks) === null || _block$innerBlocks === void 0 ? void 0 : _block$innerBlocks.length)) {
         var _blocks = insert_template_createBlocksFromInnerBlocksTemplate(template);
 
-        console.log(block);
         insertBlocks(_blocks, 0, block.clientId);
         updateBlockAttributes(block.clientId, {
           templateInserted: true
