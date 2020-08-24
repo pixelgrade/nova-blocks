@@ -31350,16 +31350,21 @@ var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
   */
 
   var areaColumns = getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);
-  ; // reorder first by row and then by width
+  ;
+  moveLargestColumnToStart(areaColumns);
+  return areaColumns;
+};
 
-  areaColumns.sort(function (col1, col2) {
-    // reorder columns so the widest columns are first
-    if (col1.row === col2.row) {
-      return col2.width - col1.width;
-    }
-
-    return col1.row - col2.row;
+var moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {
+  var firstRowColumns = areaColumns.filter(function (column) {
+    return column.row === 1;
+  }).sort(function (col1, col2) {
+    return col2.width - col1.width;
   });
+  var largestColumnIndex = areaColumns.findIndex(function (column) {
+    return column === firstRowColumns[0];
+  });
+  areaColumns.splice(0, 0, areaColumns.splice(largestColumnIndex, 1)[0]);
   return areaColumns;
 };
 

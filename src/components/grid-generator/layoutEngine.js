@@ -465,17 +465,16 @@ export const applyLayoutEngine = (state, debug = false) => {
 	8. Finally, generate the posts list.
 	*/
 	const areaColumns = getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );;
+	moveLargestColumnToStart( areaColumns );
 
-	// reorder first by row and then by width
-	areaColumns.sort( ( col1, col2 ) => {
+	return areaColumns;
+};
 
-		// reorder columns so the widest columns are first
-		if ( col1.row === col2.row ) {
-			return col2.width - col1.width;
-		}
-
-		return col1.row - col2.row;
-	} );
+const moveLargestColumnToStart = ( areaColumns ) => {
+	const firstRowColumns = areaColumns.filter( column => column.row === 1 )
+	                                   .sort( ( col1, col2 ) => col2.width - col1.width );
+	const largestColumnIndex = areaColumns.findIndex( column => column === firstRowColumns[0] );
+	areaColumns.splice(0, 0, areaColumns.splice(largestColumnIndex, 1)[0]);
 
 	return areaColumns;
 };
