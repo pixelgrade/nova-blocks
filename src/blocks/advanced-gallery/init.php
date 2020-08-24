@@ -19,8 +19,8 @@ if ( ! function_exists( 'novablocks_advanced_gallery_block_init' ) ) {
 add_action( 'init', 'novablocks_advanced_gallery_block_init', 20 );
 
 function novablocks_get_gallery_of_the_stars_attributes_config() {
-	$gallery_attributes = novablocks_get_attributes_from_json( '/src/components/advanced-gallery/attributes.json' );
-	$media_attributes = novablocks_get_attributes_from_json( '/src/blocks/advanced-gallery/attributes.json' );
+	$gallery_attributes = novablocks_get_attributes_from_json( 'src/components/advanced-gallery/attributes.json' );
+	$media_attributes = novablocks_get_attributes_from_json( 'src/blocks/advanced-gallery/attributes.json' );
 
 	return array_merge( $media_attributes, $gallery_attributes );
 }

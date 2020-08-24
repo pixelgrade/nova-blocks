@@ -47,7 +47,6 @@ export default ( blockType, template ) => {
 		getBlocksByClientId( addedBlocks ).map( block => {
 			if ( block.name === blockType && ! block.attributes.templateInserted && ! block.innerBlocks?.length ) {
 				const blocks = createBlocksFromInnerBlocksTemplate( template );
-				console.log( block );
 
 				insertBlocks( blocks, 0, block.clientId );
 
