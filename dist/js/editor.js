@@ -21957,9 +21957,9 @@ var gallery_options_GalleryPreview = /*#__PURE__*/function (_Component) {
           thumbnail = img === null || img === void 0 ? void 0 : (_img$thumb = img.thumb) === null || _img$thumb === void 0 ? void 0 : _img$thumb.src;
           classes.push('novablocks-slideshow__gallery-item--video');
         } else {
-          var _img$sizes, _img$sizes$novablocks, _img$sizes2, _img$sizes2$novablock, _img$sizes3, _img$sizes3$novablock;
+          var _img$sizes, _img$sizes$novablocks, _img$sizes2, _img$sizes2$thumbnail, _img$sizes3, _img$sizes3$novablock, _img$sizes4, _img$sizes4$large, _img$sizes5, _img$sizes5$novablock, _img$sizes6, _img$sizes6$full;
 
-          thumbnail = (img === null || img === void 0 ? void 0 : (_img$sizes = img.sizes) === null || _img$sizes === void 0 ? void 0 : (_img$sizes$novablocks = _img$sizes.novablocks_tiny) === null || _img$sizes$novablocks === void 0 ? void 0 : _img$sizes$novablocks.url) || (img === null || img === void 0 ? void 0 : (_img$sizes2 = img.sizes) === null || _img$sizes2 === void 0 ? void 0 : (_img$sizes2$novablock = _img$sizes2.novablocks_large) === null || _img$sizes2$novablock === void 0 ? void 0 : _img$sizes2$novablock.url) || (img === null || img === void 0 ? void 0 : (_img$sizes3 = img.sizes) === null || _img$sizes3 === void 0 ? void 0 : (_img$sizes3$novablock = _img$sizes3.novablocks_huge) === null || _img$sizes3$novablock === void 0 ? void 0 : _img$sizes3$novablock.url);
+          thumbnail = (img === null || img === void 0 ? void 0 : (_img$sizes = img.sizes) === null || _img$sizes === void 0 ? void 0 : (_img$sizes$novablocks = _img$sizes.novablocks_tiny) === null || _img$sizes$novablocks === void 0 ? void 0 : _img$sizes$novablocks.url) || (img === null || img === void 0 ? void 0 : (_img$sizes2 = img.sizes) === null || _img$sizes2 === void 0 ? void 0 : (_img$sizes2$thumbnail = _img$sizes2.thumbnail) === null || _img$sizes2$thumbnail === void 0 ? void 0 : _img$sizes2$thumbnail.url) || (img === null || img === void 0 ? void 0 : (_img$sizes3 = img.sizes) === null || _img$sizes3 === void 0 ? void 0 : (_img$sizes3$novablock = _img$sizes3.novablocks_large) === null || _img$sizes3$novablock === void 0 ? void 0 : _img$sizes3$novablock.url) || (img === null || img === void 0 ? void 0 : (_img$sizes4 = img.sizes) === null || _img$sizes4 === void 0 ? void 0 : (_img$sizes4$large = _img$sizes4.large) === null || _img$sizes4$large === void 0 ? void 0 : _img$sizes4$large.url) || (img === null || img === void 0 ? void 0 : (_img$sizes5 = img.sizes) === null || _img$sizes5 === void 0 ? void 0 : (_img$sizes5$novablock = _img$sizes5.novablocks_huge) === null || _img$sizes5$novablock === void 0 ? void 0 : _img$sizes5$novablock.url) || (img === null || img === void 0 ? void 0 : (_img$sizes6 = img.sizes) === null || _img$sizes6 === void 0 ? void 0 : (_img$sizes6$full = _img$sizes6.full) === null || _img$sizes6$full === void 0 ? void 0 : _img$sizes6$full.url) || (img === null || img === void 0 ? void 0 : img.url);
         }
 
         return Object(external_React_["createElement"])("li", {
@@ -31441,6 +31441,7 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
 
   var gridItem = _ref.gridItem;
   // @todo standardize those damn images
+  console.log(gridItem.image);
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
