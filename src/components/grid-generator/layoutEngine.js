@@ -464,7 +464,20 @@ export const applyLayoutEngine = (state, debug = false) => {
 	/*
 	8. Finally, generate the posts list.
 	*/
-	return getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );
+	const areaColumns = getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );;
+
+	// reorder first by row and then by width
+	areaColumns.sort( ( col1, col2 ) => {
+
+		// reorder columns so the widest columns are first
+		if ( col1.row === col2.row ) {
+			return col2.width - col1.width;
+		}
+
+		return col1.row - col2.row;
+	} );
+
+	return areaColumns;
 };
 
 const logMatrix = ( matrix ) =>{
