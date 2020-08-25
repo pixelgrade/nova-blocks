@@ -19727,6 +19727,27 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
 
   return classnames_default()(classes);
 };
+var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
+  var compiledHeight = containerHeight / 50 - 1;
+
+  if (compiledHeight < 0) {
+    compiledHeight *= 3;
+  }
+
+  var numerator = 1;
+  var denominator = 1;
+  compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
+
+  if (compiledHeight > 0) {
+    numerator = 1 + compiledHeight;
+  }
+
+  if (compiledHeight < 0) {
+    denominator = 1 + Math.abs(compiledHeight);
+  }
+
+  return "".concat(numerator * 100 / denominator, "%");
+};
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
 
@@ -21475,6 +21496,7 @@ var transposeMatrix = function transposeMatrix(source) {
  // @todo this is bad mojo
 
 
+
 var collection_Fragment = wp.element.Fragment;
 
 var collection_CollectionTitle = function CollectionTitle(props) {
@@ -21538,29 +21560,6 @@ var collection_CollectionPreview = function CollectionPreview(props) {
       postsToShow = attributes.postsToShow,
       isLandscape = attributes.isLandscape;
   var blockClassName = 'novablocks-collection';
-
-  var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
-    var compiledHeight = containerHeight / 50 - 1;
-
-    if (compiledHeight < 0) {
-      compiledHeight *= 3;
-    }
-
-    var numerator = 1;
-    var denominator = 1;
-    compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
-
-    if (compiledHeight > 0) {
-      numerator = 1 + compiledHeight;
-    }
-
-    if (compiledHeight < 0) {
-      denominator = 1 + Math.abs(compiledHeight);
-    }
-
-    return "".concat(numerator * 100 / denominator, "%");
-  };
-
   var style = {
     '--card-media-padding': imagePadding,
     '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
@@ -39286,6 +39285,13 @@ var post_Post = function Post(props) {
 
 
 
+function preview_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function preview_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { preview_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { preview_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
 
 
 
@@ -39321,16 +39327,25 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
       getContent = props.getContent,
       cardsCount = props.cardsCount;
   var toggleScale = attributes.toggleScale,
-      toggleMask = attributes.toggleMask;
+      toggleMask = attributes.toggleMask,
+      containerHeight = attributes.containerHeight,
+      imagePadding = attributes.imagePadding,
+      imageResizing = attributes.imageResizing;
   var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   var addedCards = 0;
-  var totalPosts = getPostsCount(areaColumns);
   redistributeCardsInAreas(areaColumns, cardsCount);
+
+  var style = preview_objectSpread({
+    '--card-media-padding': imagePadding,
+    '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
+    '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
+  }, getGridStyle(attributes));
+
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
     className: "novablocks-grid ".concat(toggleScale ? 'novablocks-grid--scaled' : '', " ").concat(toggleMask ? 'novablocks-grid--mask' : ''),
-    style: getGridStyle(attributes)
+    style: style
   }, !!areaColumns && areaColumns.map(function (areaColumn) {
     var areas = areaColumn.areas,
         row = areaColumn.row,
@@ -39406,10 +39421,31 @@ var preview_Preview = function Preview(props) {
 // CONCATENATED MODULE: ./src/blocks/posts-collection/edit.js
 
 
+
 var posts_collection_edit_Fragment = wp.element.Fragment;
+var edit_RangeControl = wp.components.RangeControl;
+var posts_collection_edit_ = wp.i18n.__;
 
 var edit_PostsEdit = function PostsEdit(props) {
-  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props));
+  var containerHeight = props.attributes.containerHeight,
+      setAttributes = props.setAttributes;
+  return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: posts_collection_edit_('Display')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: posts_collection_edit_('Settings')
+  }, Object(external_React_["createElement"])(edit_RangeControl, {
+    key: 'collection-image-container-height',
+    label: posts_collection_edit_('Image container height', '__plugin_txtd'),
+    value: containerHeight,
+    onChange: function onChange(containerHeight) {
+      setAttributes({
+        containerHeight: containerHeight
+      });
+    },
+    min: 0,
+    max: 100,
+    step: 5
+  }))));
 };
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);

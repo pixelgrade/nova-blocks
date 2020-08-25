@@ -184,3 +184,26 @@ export const getControlsClasses = ( attributes, compileAttributes ) => {
 
 	return classnames( classes );
 };
+
+export const getCardMediaPaddingTop = ( containerHeight ) => {
+	let compiledHeight = containerHeight / 50 - 1;
+
+	if ( compiledHeight < 0 ) {
+		compiledHeight *= 3;
+	}
+
+	let numerator = 1;
+	let denominator = 1;
+
+	compiledHeight = Math.min( Math.max( -3, compiledHeight ), 1 );
+
+	if ( compiledHeight > 0 ) {
+		numerator = 1 + compiledHeight;
+	}
+
+	if ( compiledHeight < 0 ) {
+		denominator = 1 + Math.abs( compiledHeight );
+	}
+
+	return `${ numerator * 100 / denominator }%`;
+};

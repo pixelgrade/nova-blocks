@@ -11,6 +11,7 @@ import {
 } from "./utils";
 
 import Post from "../../blocks/posts-collection/post";
+import {getCardMediaPaddingTop} from "../../utils";
 
 const {
 	Fragment,
@@ -60,18 +61,28 @@ const ParametricLayoutPreview = ( props ) => {
 	const {
 		toggleScale,
 		toggleMask,
+
+		containerHeight,
+		imagePadding,
+		imageResizing,
 	} = attributes;
 
 	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
 	let addedCards = 0;
 
-	const totalPosts = getPostsCount( areaColumns );
 	redistributeCardsInAreas( areaColumns, cardsCount );
+
+	const style = {
+		'--card-media-padding': imagePadding,
+		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
+		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
+		...getGridStyle( attributes ),
+	};
 
 	return (
 		<div className="wp-block-group__inner-container">
 			<CollectionHeader { ...props } />
-			<div className={ `novablocks-grid ${ toggleScale ? 'novablocks-grid--scaled' : '' } ${ toggleMask ? 'novablocks-grid--mask' : '' }` } style={ getGridStyle( attributes ) }>
+			<div className={ `novablocks-grid ${ toggleScale ? 'novablocks-grid--scaled' : '' } ${ toggleMask ? 'novablocks-grid--mask' : '' }` } style={ style }>
 				{
 					!! areaColumns && areaColumns.map( areaColumn => {
 						let { areas, row, col, width, height } = areaColumn;
