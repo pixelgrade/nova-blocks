@@ -7,12 +7,8 @@
 	pointer-events: none;
 
 	> * {
-		--columns-below-tablet: 1;
-		--columns-below-lap: var(--columns-below-tablet);
-		--columns: var(--columns-below-lap);
-
 		--surplus: 0px;
-		--width: calc( ( 100% - var(--surplus) ) / var(--columns) - 0.5 * var(--novablocks-spacing));
+		--width: calc( ( 100% - var(--surplus) ) / var(--columns, 1) - 0.5 * var(--novablocks-spacing));
 
 		flex: 0 1 var(--width);
 		margin-top: var(--novablocks-spacing);
@@ -20,11 +16,11 @@
 		pointer-events: auto;
 
 		@include below(lap) {
-			--columns: var(--columns-below-lap) !important;
+			--columns: var(--columns-below-lap, 1) !important;
 		}
 
 		@include below(tablet) {
-			--columns: var(--columns-below-tablet) !important;
+			--columns: var(--columns-below-tablet, 1) !important;
 		}
 	}
 

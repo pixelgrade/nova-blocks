@@ -1,9 +1,8 @@
 import AreaDebug from "./areaDebug";
 import { CollectionPreview, CollectionHeader } from "../../components/collection";
-import CardMedia from "../../components/card-media";
 import { applyLayoutEngine } from "./layoutEngine";
 import {
-	getAreaClassName,
+	getParametricLayoutAreaClassName,
 	getGridStyle,
 	prepareAttributes,
 	redistributeCardsInAreas,
@@ -11,16 +10,11 @@ import {
 	getPostsCount
 } from "./utils";
 
-const {
-	Fragment,
-	RawHTML
-} = wp.element;
+import Post from "../../blocks/posts-collection/post";
 
 const {
-	__experimentalGetSettings,
-	dateI18n,
-	format
-} = wp.date;
+	Fragment,
+} = wp.element;
 
 const ClassicLayoutPreview = ( props ) => {
 
@@ -31,82 +25,21 @@ const ClassicLayoutPreview = ( props ) => {
 
 	const {
 		columns,
-		level,
-		showButtons,
-		showDescription,
-		showMedia,
-		showMeta,
-		showTitle,
-		showSubtitle,
+		isLandscape,
 	} = attributes;
 
-	const TitleTagName = `h${ level + 1 }`;
-	const SubtitleTagName = `h${ level + 2 }`;
-	const dateFormat = __experimentalGetSettings().formats.date;
+	const style = {
+		'--columns': columns
+	};
 
 	return (
 		<CollectionPreview hasAppender={ false } { ...props }>
 			<div className="block-editor-inner-blocks">
-				<div className="block-editor-block-list__layout">
+				<div className="block-editor-block-list__layout" style={ style }>
 					{
 						!! posts && posts.map( ( post, idx ) => {
-
-							const style = {
-								'--columns': columns,
-							};
-
 							return (
-								<div className={ `novablocks-card novablocks-card__inner-container novablocks-block__content` } key={ idx } style={ style }>
-									{
-										showMedia &&
-										<div className="wp-block">
-											<CardMedia post={ post } />
-										</div>
-									}
-									{
-										showMeta &&
-										<div className="wp-block">
-											<div className="novablocks-card__meta">
-												<time dateTime={ format( 'c', post.date_gmt ) }>
-													{ dateI18n( dateFormat, post.date_gmt ) }
-												</time>
-											</div>
-										</div>
-									}
-									{
-										showTitle &&
-										<div className="wp-block">
-											<TitleTagName className="novablocks-card__title">{ post.title.raw }</TitleTagName>
-										</div>
-									}
-									{
-										showSubtitle &&
-										post.categories.length &&
-										<div className="wp-block">
-											<SubtitleTagName className="novablocks-card__subtitle">
-												<Category id={ post.categories[0] } />
-											</SubtitleTagName>
-										</div>
-									}
-									{
-										showDescription &&
-										<RawHTML className="wp-block novablocks-card__description">
-											{ post.excerpt.rendered }
-										</RawHTML>
-									}
-									{
-										showButtons &&
-										<div className="wp-block">
-											<div className="novablocks-card__buttons">
-												<div class="wp-block-buttons alignleft">
-													<div className="wp-block-button is-style-text">
-														<div className="wp-block-button__link">Read More</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									}
-								</div>
+								<Post key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
 							);
 						} )
 					}
@@ -156,7 +89,7 @@ const ParametricLayoutPreview = ( props ) => {
 									addedCards += area.postsCount;
 
 									return (
-										<div className={ getAreaClassName( area, attributes ) }>
+										<div className={ getParametricLayoutAreaClassName( area, attributes ) }>
 											<AreaDebug area={ area } />
 											{ Array.from( Array( area.postsCount ).keys() ).map( i => {
 												const landscape = isLandscape( area, attributes );

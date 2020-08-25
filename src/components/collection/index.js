@@ -2,6 +2,9 @@ import classnames from 'classnames';
 import EditableText from "../editable-text";
 import InspectorControls from "./inspector-controls";
 
+// @todo this is bad mojo
+import { getAreaClassnameByWidthRatio, getAreaClassnameByHeightRatio } from '../grid-generator/utils'
+
 const { Fragment } = wp.element;
 
 const CollectionTitle = ( props ) => {
@@ -75,6 +78,10 @@ export const CollectionPreview = ( props ) => {
 		imageResizing,
 		containerHeight,
 		imagePadding,
+
+		columns,
+		postsToShow,
+		isLandscape
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
@@ -100,13 +107,16 @@ export const CollectionPreview = ( props ) => {
 		}
 
 		return `${ numerator * 100 / denominator }%`;
-	}
+	};
 
 	const style = {
 		'--card-media-padding': imagePadding,
 		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};
+
+	const widthRatio = 1 / columns;
+	const heightRatio = 1 / Math.ceil( postsToShow / columns );
 
 	const className = classnames(
 		props.className,
@@ -118,6 +128,14 @@ export const CollectionPreview = ( props ) => {
 		{
 			'has-appender': hasAppender,
 		},
+		//
+		'novablocks-grid__area',
+		{
+			'novablocks-grid__area--portrait': ! isLandscape,
+			'novablocks-grid__area--landscape': isLandscape,
+		},
+		getAreaClassnameByWidthRatio( widthRatio ),
+		getAreaClassnameByHeightRatio( heightRatio ),
 	);
 
 	return (

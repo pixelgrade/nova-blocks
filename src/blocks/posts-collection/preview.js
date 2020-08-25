@@ -1,6 +1,5 @@
 import GridLayoutPreview from "../../components/grid-generator/preview";
 import Post from "./post";
-import EditableText from "../../components/editable-text";
 
 const Preview = ( props ) => {
 
