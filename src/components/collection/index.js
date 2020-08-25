@@ -123,8 +123,7 @@ export const CollectionPreview = ( props ) => {
 	return (
 		<div className={ className } style={ style }>
 			<div className="wp-block-group__inner-container">
-				<CollectionTitle { ...props } />
-				<CollectionSubtitle { ...props } />
+				<CollectionHeader { ...props } />
 				<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
 					<div className={ `${ blockClassName }__layout` }>
 						{ props.children }
@@ -133,7 +132,7 @@ export const CollectionPreview = ( props ) => {
 			</div>
 		</div>
 	)
-}
+};
 
 const Collection = ( props ) => {
 	return (
@@ -142,6 +141,16 @@ const Collection = ( props ) => {
 			<CollectionPreview { ...props } />
 		</Fragment>
 	)
-}
+};
+
+export const CollectionHeader = ( props ) => {
+
+	return (
+		<Fragment>
+			<CollectionTitle { ...props } />
+			<CollectionSubtitle { ...props } />
+		</Fragment>
+	)
+};
 
 export default Collection;

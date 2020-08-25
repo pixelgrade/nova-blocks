@@ -20531,7 +20531,7 @@ var collection_CollectionPreview = function CollectionPreview(props) {
     style: style
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
-  }, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props), Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
     className: "block-editor-block-list__block wp-block novablocks-collection__cards",
     "data-align": "wide"
   }, Object(external_React_["createElement"])("div", {
@@ -20543,6 +20543,9 @@ var collection_Collection = function Collection(props) {
   return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(inspector_controls, props), Object(external_React_["createElement"])(collection_CollectionPreview, props));
 };
 
+var collection_CollectionHeader = function CollectionHeader(props) {
+  return Object(external_React_["createElement"])(collection_Fragment, null, Object(external_React_["createElement"])(collection_CollectionTitle, props), Object(external_React_["createElement"])(collection_CollectionSubtitle, props));
+};
 /* harmony default export */ var components_collection = (collection_Collection);
 // CONCATENATED MODULE: ./src/components/preset-control/index.js
 
@@ -39150,7 +39153,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
   redistributeCardsInAreas(areaColumns, cardsCount);
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
-  }, Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
     className: "novablocks-grid ".concat(toggleScale ? 'novablocks-grid--scaled' : '', " ").concat(toggleMask ? 'novablocks-grid--mask' : ''),
     style: getGridStyle(attributes)
   }, !!areaColumns && areaColumns.map(function (areaColumn) {
@@ -39360,10 +39363,6 @@ var preview_Preview = function Preview(props) {
   }
 
   var getContent = function getContent(index, attributes, isLandscape) {
-    //		console.log( index );
-    //		if ( index === 0 ) {
-    //			return <Header { ...props } />
-    //		}
     var post = posts === null || posts === void 0 ? void 0 : posts[index];
     return post && Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
@@ -39378,30 +39377,6 @@ var preview_Preview = function Preview(props) {
     attributes: attributes,
     posts: posts
   });
-};
-
-var preview_Header = function Header(props) {
-  var _props$attributes = props.attributes,
-      collectionTitle = _props$attributes.collectionTitle,
-      collectionDescription = _props$attributes.collectionDescription,
-      setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(editable_text, {
-    tagName: 'h2',
-    value: collectionTitle,
-    onChange: function onChange(collectionTitle) {
-      setAttributes({
-        collectionTitle: collectionTitle
-      });
-    }
-  }), Object(external_React_["createElement"])(editable_text, {
-    tagName: 'p',
-    value: collectionDescription,
-    onChange: function onChange(collectionDescription) {
-      setAttributes({
-        collectionDescription: collectionDescription
-      });
-    }
-  }));
 };
 
 /* harmony default export */ var posts_collection_preview = (preview_Preview);

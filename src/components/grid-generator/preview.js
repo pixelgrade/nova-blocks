@@ -1,5 +1,5 @@
 import AreaDebug from "./areaDebug";
-import { CollectionPreview } from "../../components/collection";
+import { CollectionPreview, CollectionHeader } from "../../components/collection";
 import CardMedia from "../../components/card-media";
 import { applyLayoutEngine } from "./layoutEngine";
 import {
@@ -137,6 +137,7 @@ const ParametricLayoutPreview = ( props ) => {
 
 	return (
 		<div className="wp-block-group__inner-container">
+			<CollectionHeader { ...props } />
 			<div className={ `novablocks-grid ${ toggleScale ? 'novablocks-grid--scaled' : '' } ${ toggleMask ? 'novablocks-grid--mask' : '' }` } style={ getGridStyle( attributes ) }>
 				{
 					!! areaColumns && areaColumns.map( areaColumn => {
