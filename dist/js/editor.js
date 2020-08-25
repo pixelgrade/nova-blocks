@@ -30877,8 +30877,8 @@ fourSq.util.HoursParser = {
 
     text = text.replace(/([0-9])(h|:|\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...
     // if they both have separators
-
-    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5'); // if only the start time has a separator
+    //    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5');
+    // if only the start time has a separator
 
     text = text.replace(/([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator
     //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$2$3$5');
@@ -31441,7 +31441,6 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
 
   var gridItem = _ref.gridItem;
   // @todo standardize those damn images
-  console.log(gridItem.image);
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
