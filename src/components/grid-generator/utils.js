@@ -25,16 +25,12 @@ export const prepareAttributes = ( attributes ) => {
 
 export const getGridStyle = ( attributes ) => {
 
-	const {
-		gridColumns,
-		gridRows,
-		flipColsAndRows,
-	} = attributes;
+	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 
 	return {
 		display: 'grid',
-		gridTemplateColumns: `repeat( ${ ! flipColsAndRows ? gridColumns : gridRows }, 1fr )`,
-		gridTemplateRows: `repeat( ${ ! flipColsAndRows ? gridRows : gridColumns }, auto )`,
+		gridTemplateColumns: `repeat( ${ gridColumns }, 1fr )`,
+		gridTemplateRows: `repeat( ${ gridRows }, auto )`,
 	};
 };
 
@@ -97,7 +93,7 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 
 
 export const isLandscape = ( area, attributes ) => {
-	const { gridColumns, gridRows } = attributes;
+	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height } = area;
 
 	if ( width / gridColumns > height / gridRows ) {
@@ -112,7 +108,7 @@ export const isLandscape = ( area, attributes ) => {
 };
 
 export const getAreaClassName = ( area, attributes ) => {
-	const { gridColumns, gridRows } = attributes;
+	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height } = area;
 
 	return classnames([
@@ -136,6 +132,13 @@ export const getAreaClassName = ( area, attributes ) => {
 			'novablocks-grid__area--height-xl': 0.80 <= height / gridRows,
 		}
 	]);
+};
+
+const getGridColumnsAndRows = ( attributes ) => {
+	return {
+		gridColumns: ! attributes.flipColsAndRows ? attributes.gridColumns : attributes.gridRows,
+		gridRows: ! attributes.flipColsAndRows ? attributes.gridRows : attributes.gridColumns,
+	}
 };
 
 export const transposeMatrix = ( source ) => {

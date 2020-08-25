@@ -31780,13 +31780,14 @@ var prepareAttributes = function prepareAttributes(attributes) {
   return state;
 };
 var getGridStyle = function getGridStyle(attributes) {
-  var gridColumns = attributes.gridColumns,
-      gridRows = attributes.gridRows,
-      flipColsAndRows = attributes.flipColsAndRows;
+  var _getGridColumnsAndRow = getGridColumnsAndRows(attributes),
+      gridColumns = _getGridColumnsAndRow.gridColumns,
+      gridRows = _getGridColumnsAndRow.gridRows;
+
   return {
     display: 'grid',
-    gridTemplateColumns: "repeat( ".concat(!flipColsAndRows ? gridColumns : gridRows, ", 1fr )"),
-    gridTemplateRows: "repeat( ".concat(!flipColsAndRows ? gridRows : gridColumns, ", auto )")
+    gridTemplateColumns: "repeat( ".concat(gridColumns, ", 1fr )"),
+    gridTemplateRows: "repeat( ".concat(gridRows, ", auto )")
   };
 }; // Sums optimal posts count value from each area
 
@@ -31843,8 +31844,10 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
   }
 };
 var utils_isLandscape = function isLandscape(area, attributes) {
-  var gridColumns = attributes.gridColumns,
-      gridRows = attributes.gridRows;
+  var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),
+      gridColumns = _getGridColumnsAndRow2.gridColumns,
+      gridRows = _getGridColumnsAndRow2.gridRows;
+
   var nth = area.nth,
       width = area.width,
       height = area.height;
@@ -31860,8 +31863,10 @@ var utils_isLandscape = function isLandscape(area, attributes) {
   return false;
 };
 var utils_getAreaClassName = function getAreaClassName(area, attributes) {
-  var gridColumns = attributes.gridColumns,
-      gridRows = attributes.gridRows;
+  var _getGridColumnsAndRow3 = getGridColumnsAndRows(attributes),
+      gridColumns = _getGridColumnsAndRow3.gridColumns,
+      gridRows = _getGridColumnsAndRow3.gridRows;
+
   var nth = area.nth,
       width = area.width,
       height = area.height;
@@ -31881,6 +31886,14 @@ var utils_getAreaClassName = function getAreaClassName(area, attributes) {
     'novablocks-grid__area--height-xl': 0.80 <= height / gridRows
   }]);
 };
+
+var getGridColumnsAndRows = function getGridColumnsAndRows(attributes) {
+  return {
+    gridColumns: !attributes.flipColsAndRows ? attributes.gridColumns : attributes.gridRows,
+    gridRows: !attributes.flipColsAndRows ? attributes.gridRows : attributes.gridColumns
+  };
+};
+
 var transposeMatrix = function transposeMatrix(source) {
   return Object.keys(source[0]).map(function (column) {
     return source.map(function (row) {
