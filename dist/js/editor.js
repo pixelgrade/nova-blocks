@@ -16216,7 +16216,7 @@ var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 // CONCATENATED MODULE: ./src/filters/with-font-size-picker/index.js
 
 
-var __ = wp.i18n.__;
+var with_font_size_picker_ = wp.i18n.__;
 var _wp$compose = wp.compose,
     compose = _wp$compose.compose,
     with_font_size_picker_createHigherOrderComponent = _wp$compose.createHigherOrderComponent;
@@ -16232,19 +16232,19 @@ var with_font_size_picker_addFilter = wp.hooks.addFilter;
 var enableFontSizeControlOnBlocks = ['core/quote', 'core/pullquote', 'core/heading', 'novablocks/headline'];
 var fontSizeOptions = [{
   value: 'smallest',
-  label: __('Smallest', '__plugin_txtd')
+  label: with_font_size_picker_('Smallest', '__plugin_txtd')
 }, {
   value: 'smaller',
-  label: __('Smaller', '__plugin_txtd')
+  label: with_font_size_picker_('Smaller', '__plugin_txtd')
 }, {
   value: 'normal',
-  label: __('Normal', '__plugin_txtd')
+  label: with_font_size_picker_('Normal', '__plugin_txtd')
 }, {
   value: 'larger',
-  label: __('Larger', '__plugin_txtd')
+  label: with_font_size_picker_('Larger', '__plugin_txtd')
 }, {
   value: 'largest',
-  label: __('Largest', '__plugin_txtd')
+  label: with_font_size_picker_('Largest', '__plugin_txtd')
 }];
 var defaultFontSize = 'normal';
 
@@ -16269,10 +16269,10 @@ function withFontSizePicker(WrappedComponent) {
       return x.value === fontSize;
     }) ? fontSize : defaultFontSize;
     return Object(external_React_["createElement"])(Fragment, null, Object(external_React_["createElement"])(WrappedComponent, props), Object(external_React_["createElement"])(InspectorControls, null, Object(external_React_["createElement"])(PanelBody, {
-      title: __('Text Settings', '__plugin_txtd'),
+      title: with_font_size_picker_('Text Settings', '__plugin_txtd'),
       className: "blocks-custom-font-size"
     }, Object(external_React_["createElement"])(SelectControl, {
-      label: __('Font Size', '__plugin_txtd'),
+      label: with_font_size_picker_('Font Size', '__plugin_txtd'),
       value: selectValue,
       options: fontSizeOptions,
       onChange: function onChange(nextFontSize) {
@@ -39309,13 +39309,15 @@ var post_CardContents = function CardContents(props) {
     className: "novablocks-card__meta"
   }, Object(external_React_["createElement"])("time", {
     dateTime: post_format('c', post.date_gmt)
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__meta-size-modifier"
   }, post_dateI18n(dateFormat, post.date_gmt), post.categories.length && Object(external_React_["createElement"])(post_Fragment, null, Object(external_React_["createElement"])(post_RawHTML, {
     style: {
       display: 'inline'
     }
   }, '&mdash;'), Object(external_React_["createElement"])(category, {
     id: post.categories[0]
-  }))))), Object(external_React_["createElement"])("div", {
+  })))))), Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-title"
   }, Object(external_React_["createElement"])(TitleTagName, {
     className: "novablocks-card__title"
@@ -39323,7 +39325,9 @@ var post_CardContents = function CardContents(props) {
     className: "novablocks-card__title-size-modifier"
   }, post.title.raw))), Object(external_React_["createElement"])(post_RawHTML, {
     className: "wp-block novablocks-grid__item-content novablocks-card__description"
-  }, post.excerpt.rendered), Object(external_React_["createElement"])("div", {
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__content-size-modifier"
+  }, post.excerpt.rendered)), Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-buttons"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__buttons"
@@ -39333,7 +39337,9 @@ var post_CardContents = function CardContents(props) {
     className: "wp-block-button is-style-text"
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-button__link"
-  }, "Read More"))))));
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__content-size-modifier"
+  }, __('Read More'))))))));
 };
 
 /* harmony default export */ var posts_collection_post = (post_Card);

@@ -14,7 +14,6 @@ import Category from "./components/category";
 
 const Card = ( props ) => {
 	const isLandscape = props.isLandscape || false;
-
 	return isLandscape ? <CardLandscape { ...props } /> : <CardPortrait { ...props } />;
 };
 
@@ -60,29 +59,39 @@ const CardContents = ( props ) => {
 			<div className="wp-block novablocks-grid__item-meta">
 				<div className="novablocks-card__meta">
 					<time dateTime={ format( 'c', post.date_gmt ) }>
-						{ dateI18n( dateFormat, post.date_gmt ) }
-						{ post.categories.length &&
-						  <Fragment>
-							  <RawHTML style={ { display: 'inline' } }>{ '&mdash;' }</RawHTML>
-							  <Category id={ post.categories[0] } />
-						  </Fragment>
-						}
+						<div className="novablocks-card__meta-size-modifier">
+							{ dateI18n( dateFormat, post.date_gmt ) }
+							{ post.categories.length &&
+							  <Fragment>
+								  <RawHTML style={ { display: 'inline' } }>{ '&mdash;' }</RawHTML>
+								  <Category id={ post.categories[0] } />
+							  </Fragment>
+							}
+						</div>
 					</time>
 				</div>
 			</div>
 			<div className="wp-block novablocks-grid__item-title">
 				<TitleTagName className="novablocks-card__title">
-					<div className="novablocks-card__title-size-modifier">{ post.title.raw }</div>
+					<div className="novablocks-card__title-size-modifier">
+						{ post.title.raw }
+					</div>
 				</TitleTagName>
 			</div>
 			<RawHTML className="wp-block novablocks-grid__item-content novablocks-card__description">
-				{ post.excerpt.rendered }
+				<div className="novablocks-card__content-size-modifier">
+					{ post.excerpt.rendered }
+				</div>
 			</RawHTML>
 			<div className="wp-block novablocks-grid__item-buttons">
 				<div className="novablocks-card__buttons">
 					<div className="wp-block-buttons alignleft">
 						<div className="wp-block-button is-style-text">
-							<div className="wp-block-button__link">Read More</div>
+							<div className="wp-block-button__link">
+								<div className="novablocks-card__content-size-modifier">
+									{ __( 'Read More' ) }
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
