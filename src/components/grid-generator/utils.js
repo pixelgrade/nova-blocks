@@ -47,7 +47,7 @@ export const getPostsCount = ( areaColumns ) => {
 	}, 0 );
 };
 
-export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
+export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) => {
 	let totalSpots = getPostsCount( areaColumns );
 	let totalPosts = cardsCount;
 	let remainingPosts = totalPosts;
@@ -64,7 +64,7 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 		for ( let j = 0; j < areaColumn.areas.length; j ++ ) {
 			let area = areaColumn.areas[j];
 			// we shouldn't fill the area with the featured card
-			area.spotRatio = ( i === 0 && j === 0 ) ? 0 : area.postsCount / area.height;
+			area.spotRatio = ( i === 0 && j === 0 ) ? 0 : getCardRatio( area, attributes );
 			areaColumnSpotRatio += area.spotRatio;
 			totalRatio += area.spotRatio;
 		}
@@ -95,12 +95,22 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount ) => {
 	}
 };
 
+const getCardRatio = ( area, attributes ) => {
+	const { width, height, postsCount } = area;
+	let ratio = postsCount / height;
+
+	if ( isLandscape( area, attributes ) ) {
+		ratio *= 2;
+	}
+
+	return ratio;
+}
 
 export const isLandscape = ( area, attributes ) => {
 	const { gridColumns, gridRows } = attributes;
-	const { nth, width, height } = area;
+	const { nth, width, height, postsCount } = area;
 
-	if ( width / gridColumns > height / gridRows ) {
+	if ( width > height / postsCount ) {
 		return true;
 	}
 

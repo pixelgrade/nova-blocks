@@ -31487,6 +31487,11 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
     currentAreaIndex = areasArray.findIndex(function (area) {
       return area.nth === nthMatrix[row][col];
     });
+  } // Featured area should not be merged
+
+
+  if (nth === 1) {
+    return;
   }
 
   var nextRow,
@@ -31506,7 +31511,8 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
     nextWidth = getAreaWidth(nextNth, nthMatrix);
     nextHeight = getAreaHeight(nextNth, nthMatrix);
 
-    if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
+    if (width === nextWidth && col === nextCol && //		     Math.abs( initialHeight - nextHeight ) <= 1 &&
+    Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
       height = height + nextHeight;
       mergeable = true;
 
@@ -31794,7 +31800,7 @@ var getPostsCount = function getPostsCount(areaColumns) {
     }, 0);
   }, 0);
 };
-var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount) {
+var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount, attributes) {
   var totalSpots = getPostsCount(areaColumns);
   var totalPosts = cardsCount;
   var remainingPosts = totalPosts;
@@ -31811,7 +31817,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     for (var j = 0; j < areaColumn.areas.length; j++) {
       var area = areaColumn.areas[j]; // we shouldn't fill the area with the featured card
 
-      area.spotRatio = i === 0 && j === 0 ? 0 : area.postsCount / area.height;
+      area.spotRatio = i === 0 && j === 0 ? 0 : getCardRatio(area, attributes);
       areaColumnSpotRatio += area.spotRatio;
       totalRatio += area.spotRatio;
     }
@@ -31839,14 +31845,29 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     }
   }
 };
+
+var getCardRatio = function getCardRatio(area, attributes) {
+  var width = area.width,
+      height = area.height,
+      postsCount = area.postsCount;
+  var ratio = postsCount / height;
+
+  if (utils_isLandscape(area, attributes)) {
+    ratio *= 2;
+  }
+
+  return ratio;
+};
+
 var utils_isLandscape = function isLandscape(area, attributes) {
   var gridColumns = attributes.gridColumns,
       gridRows = attributes.gridRows;
   var nth = area.nth,
       width = area.width,
-      height = area.height;
+      height = area.height,
+      postsCount = area.postsCount;
 
-  if (width / gridColumns > height / gridRows) {
+  if (width > height / postsCount) {
     return true;
   }
 
@@ -32300,7 +32321,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
 
   var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   var autoPostsCount = getPostsCount(areaColumns);
-  return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(controls_group, {
+  return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(controls_DebugControls, props), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Posts Count')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Automatic Posts Number', '__plugin_txtd'),
@@ -32466,7 +32487,8 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
 var controls_DebugControls = function DebugControls(props) {
   var _props$attributes = props.attributes,
       toggleScale = _props$attributes.toggleScale,
-      toggleMask = _props$attributes.toggleMask;
+      toggleMask = _props$attributes.toggleMask,
+      setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(controls_group, {
     title: controls_('Debug Parameters')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
@@ -39147,7 +39169,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
   var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   var addedCards = 0;
   var totalPosts = getPostsCount(areaColumns);
-  redistributeCardsInAreas(areaColumns, cardsCount);
+  redistributeCardsInAreas(areaColumns, cardsCount, attributes);
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])("div", {

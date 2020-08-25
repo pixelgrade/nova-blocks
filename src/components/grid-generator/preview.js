@@ -133,7 +133,7 @@ const ParametricLayoutPreview = ( props ) => {
 	let addedCards = 0;
 
 	const totalPosts = getPostsCount( areaColumns );
-	redistributeCardsInAreas( areaColumns, cardsCount );
+	redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
 	return (
 		<div className="wp-block-group__inner-container">

@@ -603,6 +603,11 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 		} )
 	}
 
+	// Featured area should not be merged
+	if ( nth === 1 ) {
+		return;
+	}
+
 	let nextRow,
 		nextCol,
 		nextWidth,
@@ -623,7 +628,7 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 
 		if ( width === nextWidth &&
 		     col === nextCol &&
-		     Math.abs( initialHeight - nextHeight ) <= 1 &&
+//		     Math.abs( initialHeight - nextHeight ) <= 1 &&
 		     Math.abs( metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col] ) <= 1 &&
 		     Math.abs( imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col] ) <= 1 ) {
 			height = height + nextHeight;

@@ -459,6 +459,7 @@ const ParametricLayoutControls = ( props ) => {
 
 	return (
 		<Fragment>
+			<DebugControls { ...props } />
 			<ControlsGroup title={ __( 'Posts Count' ) }>
 				<ToggleControl
 					label={__( 'Automatic Posts Number', '__plugin_txtd' )}
@@ -599,7 +600,8 @@ const DebugControls = ( props ) => {
 		attributes: {
 			toggleScale,
 			toggleMask,
-		}
+		},
+		setAttributes
 	} = props;
 
 
