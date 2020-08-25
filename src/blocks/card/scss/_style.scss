@@ -1,5 +1,11 @@
 .novablocks-card {
 	@include clearfix;
+	--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+
+	> .novablocks-grid__item-image + *,
+	> .novablocks-grid__item-buttons {
+		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
+	}
 
 	.wp-block-buttons[class] {
 		float: none;

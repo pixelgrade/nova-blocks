@@ -15,18 +15,3 @@
 		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
 	}
 }
-
-.novablocks-collection > {
-
-	.wp-block-group__inner-container {
-
-		> :not(:first-child) {
-			--novablocks-element-spacing-multiplier: 1;
-		}
-
-		> :not(.novablocks-collection__cards) {
-			--novablocks-element-spacing-multiplier: 0.25;
-		}
-	}
-}
-
