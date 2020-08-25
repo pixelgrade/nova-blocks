@@ -78,7 +78,7 @@
 	.novablocks-card__layout {
 		display: grid;
 		grid-template-columns: var(--card-image-width, 1fr) 1fr;
-		grid-gap: calc(0.5 * var(--novablocks-spacing));
+		grid-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
 
 		> .novablocks-card__layout-media {
 			width: 100%;
@@ -89,16 +89,5 @@
 			width: 100%;
 			grid-column: 2 / span 1;
 		}
-	}
-}
-
-.novablocks-card__title[class] {
-
-	.novablocks-grid__item--larger-title & {
-		font-size: calc( 1.5 * var(--final-font-size) );
-	}
-
-	.novablocks-grid__item--smaller-title & {
-		font-size: calc( 0.5 * var(--final-font-size) );
 	}
 }

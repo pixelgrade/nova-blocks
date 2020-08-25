@@ -46,11 +46,13 @@
 	}
 
 	&.novablocks-grid__area--width-s {
+		--novablocks-card-spacing-modifier: 0.25;
 		--novablocks-card-title-font-size-modifier: 0.6;
 		--grid-item-content-display: none;
 	}
 
 	&.novablocks-grid__area--width-xs {
+		--novablocks-card-spacing-modifier: 0.25;
 		--novablocks-card-title-font-size-modifier: 0.5;
 		--grid-item-content-display: none;
 	}
