@@ -70,7 +70,6 @@ const ParametricLayoutPreview = ( props ) => {
 	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
 	let addedCards = 0;
 
-	const totalPosts = getPostsCount( areaColumns );
 	redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
 	const style = {

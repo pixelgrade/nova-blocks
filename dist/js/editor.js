@@ -20452,6 +20452,12 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
 
 /* harmony default export */ var inspector_controls = (inspector_controls_CollectionInspectorControls);
 // CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
+
+
+function layoutEngine_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function layoutEngine_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { layoutEngine_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { layoutEngine_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
  // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
 
@@ -20961,6 +20967,11 @@ function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMat
   var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
   mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
   areasArray = normalizeAreas(nthMatrix, areasArray);
+  areasArray = areasArray.map(function (area) {
+    return layoutEngine_objectSpread({
+      initialPostsCount: area.postsCount
+    }, area);
+  });
   var columns = areasArray.map(function (area) {
     return {
       row: area.row,
@@ -21390,10 +21401,6 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
   var remainingPosts = totalPosts;
   var totalRatio = 0;
 
-  if (totalSpots === totalPosts) {
-    return;
-  }
-
   for (var i = 0; i < areaColumns.length; i++) {
     var areaColumn = areaColumns[i];
     var areaColumnSpotRatio = 0;
@@ -21410,6 +21417,10 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
   }
 
   var remainingSpots = Math.min(totalSpots, totalPosts);
+
+  if (totalSpots === totalPosts) {
+    return;
+  }
 
   for (var _i = 0; _i < areaColumns.length; _i++) {
     var _areaColumn = areaColumns[_i];
@@ -21451,9 +21462,9 @@ var utils_isLandscape = function isLandscape(area, attributes) {
   var nth = area.nth,
       width = area.width,
       height = area.height,
-      postsCount = area.postsCount;
+      initialPostsCount = area.initialPostsCount;
 
-  if (width > height / postsCount) {
+  if (width > height / initialPostsCount) {
     return true;
   }
 
@@ -32127,21 +32138,43 @@ var controls_LayoutControls = function LayoutControls(props) {
       value: 'tear1down9',
       preset: {
         layoutStyle: 'parametric',
-        postsToShow: 8,
+        postsToShow: 9,
         gridColumns: 6,
-        gridRows: 8,
+        gridRows: 5,
         featureSize: 3,
         featurePosition: 2,
         columnsFragmentation: 2,
         imageWeightLeft: 1,
         imageWeightRight: 0,
         metaWeightLeft: 0,
-        metaWeightRight: 10,
+        metaWeightRight: 0,
         boostFeatureEmphasis: false,
         subFeature: true,
         balanceMDandIW: false,
         hierarchyCrossing: 0,
         flipColsAndRows: false
+      }
+    }, {
+      label: 'TR 19: New Yorker+',
+      value: 'tear1down9bis',
+      preset: {
+        layoutStyle: 'parametric',
+        postsToShow: 9,
+        gridColumns: 7,
+        gridRows: 5,
+        featureSize: 3,
+        featurePosition: 3,
+        columnsFragmentation: 2,
+        imageWeightLeft: 1,
+        imageWeightRight: 0,
+        metaWeightLeft: 0,
+        metaWeightRight: 0,
+        boostFeatureEmphasis: false,
+        subFeature: true,
+        balanceMDandIW: false,
+        hierarchyCrossing: 0,
+        flipColsAndRows: false,
+        containerHeight: 45
       }
     }, {
       label: 'TR 45: By the book',
@@ -39068,7 +39101,7 @@ var areaDebug_AreaDebug = function AreaDebug(_ref) {
   var area = _ref.area;
   return Object(external_React_["createElement"])("div", {
     className: 'novablocks-grid__debug'
-  }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "posts: ".concat(area.postsCount), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio));
+  }, "nth: ".concat(area.nth), Object(external_React_["createElement"])("br", null), "posts count: ".concat(area.postsCount), Object(external_React_["createElement"])("br", null), "initial posts count: ".concat(area.initialPostsCount), Object(external_React_["createElement"])("br", null), "width: ".concat(area.width), Object(external_React_["createElement"])("br", null), "height: ".concat(area.height), Object(external_React_["createElement"])("br", null), "spot ratio: ".concat(area.spotRatio));
 };
 
 /* harmony default export */ var areaDebug = (areaDebug_AreaDebug);
@@ -39355,7 +39388,6 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
       imageResizing = attributes.imageResizing;
   var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
   var addedCards = 0;
-  var totalPosts = getPostsCount(areaColumns);
   redistributeCardsInAreas(areaColumns, cardsCount, attributes);
 
   var style = preview_objectSpread({

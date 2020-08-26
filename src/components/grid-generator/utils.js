@@ -49,10 +49,6 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 	let remainingPosts = totalPosts;
 	let totalRatio = 0;
 
-	if ( totalSpots === totalPosts ) {
-		return;
-	}
-
 	for ( let i = 0; i < areaColumns.length; i++ ) {
 		let areaColumn = areaColumns[i];
 		let areaColumnSpotRatio = 0;
@@ -69,6 +65,10 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 	}
 
 	let remainingSpots = Math.min( totalSpots, totalPosts );
+
+	if ( totalSpots === totalPosts ) {
+		return;
+	}
 
 	for ( let i = 0; i < areaColumns.length; i++ ) {
 		let areaColumn = areaColumns[i];
@@ -100,13 +100,13 @@ const getCardRatio = ( area, attributes ) => {
 	}
 
 	return ratio;
-}
+};
 
 export const isLandscape = ( area, attributes ) => {
 	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
-	const { nth, width, height, postsCount } = area;
+	const { nth, width, height, initialPostsCount } = area;
 
-	if ( width > height / postsCount ) {
+	if ( width > height / initialPostsCount ) {
 		return true;
 	}
 

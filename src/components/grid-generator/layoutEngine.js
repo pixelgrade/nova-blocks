@@ -490,6 +490,12 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
 
 	mergeSimilarAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray );
 	areasArray = normalizeAreas( nthMatrix, areasArray );
+	areasArray = areasArray.map( area => {
+		return {
+			initialPostsCount: area.postsCount,
+			...area
+		}
+	} );
 
 	let columns = areasArray.map( area => {
 		return {
