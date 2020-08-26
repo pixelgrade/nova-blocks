@@ -92,12 +92,18 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 };
 
 const getCardRatio = ( area, attributes ) => {
+	const { gridColumns } = getGridColumnsAndRows( attributes );
 	const { width, height, postsCount } = area;
 	let ratio = postsCount / height;
 
-	if ( isLandscape( area, attributes ) ) {
-		ratio *= 2;
+	// when the card is landscape and very small
+	// we hide the content so the ratio should be bigger
+	if ( isLandscape( area, attributes ) && width / gridColumns < 0.3 ) {
+		ratio *= 1.5;
 	}
+
+	// balance the ratio
+	ratio += 0.25;
 
 	return ratio;
 };
@@ -106,15 +112,13 @@ export const isLandscape = ( area, attributes ) => {
 	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height, initialPostsCount } = area;
 
-	if ( width > height / initialPostsCount ) {
-		return true;
+	const isLandscape = width * initialPostsCount / height > 1.33;
+
+	if ( width / gridColumns >= 0.5 ) {
+		return isLandscape || ( attributes.subFeature && nth === 2 );
 	}
 
-	if ( 0.25 < width / gridColumns && width / gridColumns < 0.5 && nth > 3 ) {
-		return true;
-	}
-
-	return false;
+	return isLandscape;
 };
 
 export const getParametricLayoutAreaClassName = ( area, attributes ) => {

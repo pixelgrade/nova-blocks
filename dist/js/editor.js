@@ -21441,42 +21441,45 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
 };
 
 var getCardRatio = function getCardRatio(area, attributes) {
+  var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),
+      gridColumns = _getGridColumnsAndRow2.gridColumns;
+
   var width = area.width,
       height = area.height,
       postsCount = area.postsCount;
-  var ratio = postsCount / height;
+  var ratio = postsCount / height; // when the card is landscape and very small
+  // we hide the content so the ratio should be bigger
 
-  if (utils_isLandscape(area, attributes)) {
-    ratio *= 2;
-  }
+  if (utils_isLandscape(area, attributes) && width / gridColumns < 0.3) {
+    ratio *= 1.5;
+  } // balance the ratio
 
+
+  ratio += 0.25;
   return ratio;
 };
 
 var utils_isLandscape = function isLandscape(area, attributes) {
-  var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),
-      gridColumns = _getGridColumnsAndRow2.gridColumns,
-      gridRows = _getGridColumnsAndRow2.gridRows;
+  var _getGridColumnsAndRow3 = getGridColumnsAndRows(attributes),
+      gridColumns = _getGridColumnsAndRow3.gridColumns,
+      gridRows = _getGridColumnsAndRow3.gridRows;
 
   var nth = area.nth,
       width = area.width,
       height = area.height,
       initialPostsCount = area.initialPostsCount;
+  var isLandscape = width * initialPostsCount / height > 1.33;
 
-  if (width > height / initialPostsCount) {
-    return true;
+  if (width / gridColumns >= 0.5) {
+    return isLandscape || attributes.subFeature && nth === 2;
   }
 
-  if (0.25 < width / gridColumns && width / gridColumns < 0.5 && nth > 3) {
-    return true;
-  }
-
-  return false;
+  return isLandscape;
 };
 var utils_getParametricLayoutAreaClassName = function getParametricLayoutAreaClassName(area, attributes) {
-  var _getGridColumnsAndRow3 = getGridColumnsAndRows(attributes),
-      gridColumns = _getGridColumnsAndRow3.gridColumns,
-      gridRows = _getGridColumnsAndRow3.gridRows;
+  var _getGridColumnsAndRow4 = getGridColumnsAndRows(attributes),
+      gridColumns = _getGridColumnsAndRow4.gridColumns,
+      gridRows = _getGridColumnsAndRow4.gridRows;
 
   var nth = area.nth,
       width = area.width,
