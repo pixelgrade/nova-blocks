@@ -2,6 +2,10 @@ import classnames from 'classnames';
 import EditableText from "../editable-text";
 import InspectorControls from "./inspector-controls";
 
+// @todo this is bad mojo
+import { getAreaClassnameByWidthRatio, getAreaClassnameByHeightRatio } from '../grid-generator/utils'
+import { getCardMediaPaddingTop } from '../../utils'
+
 const { Fragment } = wp.element;
 
 const CollectionTitle = ( props ) => {
@@ -75,38 +79,22 @@ export const CollectionPreview = ( props ) => {
 		imageResizing,
 		containerHeight,
 		imagePadding,
+
+		columns,
+		postsToShow,
+		isLandscape
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
-
-	const getCardMediaPaddingTop = ( containerHeight ) => {
-		let compiledHeight = containerHeight / 50 - 1;
-
-		if ( compiledHeight < 0 ) {
-			compiledHeight *= 3;
-		}
-
-		let numerator = 1;
-		let denominator = 1;
-
-		compiledHeight = Math.min( Math.max( -3, compiledHeight ), 1 );
-
-		if ( compiledHeight > 0 ) {
-			numerator = 1 + compiledHeight;
-		}
-
-		if ( compiledHeight < 0 ) {
-			denominator = 1 + Math.abs( compiledHeight );
-		}
-
-		return `${ numerator * 100 / denominator }%`;
-	}
 
 	const style = {
 		'--card-media-padding': imagePadding,
 		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};
+
+	const widthRatio = 1 / columns;
+	const heightRatio = 1 / Math.ceil( postsToShow / columns );
 
 	const className = classnames(
 		props.className,
@@ -118,13 +106,20 @@ export const CollectionPreview = ( props ) => {
 		{
 			'has-appender': hasAppender,
 		},
+		//
+		'novablocks-grid__area',
+		{
+			'novablocks-grid__area--portrait': ! isLandscape,
+			'novablocks-grid__area--landscape': isLandscape,
+		},
+		getAreaClassnameByWidthRatio( widthRatio ),
+		getAreaClassnameByHeightRatio( heightRatio ),
 	);
 
 	return (
 		<div className={ className } style={ style }>
 			<div className="wp-block-group__inner-container">
-				<CollectionTitle { ...props } />
-				<CollectionSubtitle { ...props } />
+				<CollectionHeader { ...props } />
 				<div className="block-editor-block-list__block wp-block novablocks-collection__cards" data-align="wide">
 					<div className={ `${ blockClassName }__layout` }>
 						{ props.children }
@@ -133,7 +128,7 @@ export const CollectionPreview = ( props ) => {
 			</div>
 		</div>
 	)
-}
+};
 
 const Collection = ( props ) => {
 	return (
@@ -142,6 +137,16 @@ const Collection = ( props ) => {
 			<CollectionPreview { ...props } />
 		</Fragment>
 	)
-}
+};
+
+export const CollectionHeader = ( props ) => {
+
+	return (
+		<Fragment>
+			<CollectionTitle { ...props } />
+			<CollectionSubtitle { ...props } />
+		</Fragment>
+	)
+};
 
 export default Collection;

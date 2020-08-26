@@ -4,11 +4,10 @@ const {
 	withSelect,
 } = wp.data;
 
-const Media = ( { post } ) => {
-	const { featured_media_url } = post;
+const Media = ( { src } ) => {
 
-	if ( !! featured_media_url ) {
-		return <img className={`novablocks-card__media-image`} src={ featured_media_url }/>
+	if ( !! src ) {
+		return <img className={`novablocks-card__media-image`} src={ src }/>
 	}
 
 	return <div className={`novablocks-card__media-placeholder`}>{ icons.placeholder }</div>
@@ -16,31 +15,27 @@ const Media = ( { post } ) => {
 
 const MediaWithSelect = withSelect( ( select, ownProps ) => {
 	const { getMedia } = select( 'core' );
-	const { post } = ownProps;
+	const { id } = ownProps;
 
-	if ( ! post.featured_media ) {
-		return {};
+	if ( ! id ) {
+		return null;
 	}
 
-	const featured_media_obj = getMedia( post.featured_media );
-	const featured_media_url = featured_media_obj ? featured_media_obj.source_url : null;
+	const mediaObject = getMedia( id );
+	const src = mediaObject?.source_url;
 
 	return {
-		post: {
-			...post,
-			featured_media_url
-		}
+		src
 	}
 } )( Media );
 
 
-const CardMedia = ( props ) => {
-	const { post } = props;
+const CardMedia = ( { id } ) => {
 
 	return (
 		<div className="novablocks-card__media-wrap">
 			<div className="novablocks-card__media">
-				<MediaWithSelect post={ post } />
+				<MediaWithSelect id={ id } />
 			</div>
 		</div>
 	)

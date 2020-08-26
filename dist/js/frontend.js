@@ -22036,6 +22036,27 @@ var utils_getControlsClasses = function getControlsClasses(attributes, compileAt
 
   return classnames_default()(classes);
 };
+var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
+  var compiledHeight = containerHeight / 50 - 1;
+
+  if (compiledHeight < 0) {
+    compiledHeight *= 3;
+  }
+
+  var numerator = 1;
+  var denominator = 1;
+  compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
+
+  if (compiledHeight > 0) {
+    numerator = 1 + compiledHeight;
+  }
+
+  if (compiledHeight < 0) {
+    denominator = 1 + Math.abs(compiledHeight);
+  }
+
+  return "".concat(numerator * 100 / denominator, "%");
+};
 // CONCATENATED MODULE: ./src/components/viewportObserver.js
 
 

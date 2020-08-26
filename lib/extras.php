@@ -332,7 +332,11 @@ function novablocks_get_posts_collection_attributes() {
 			'collectionDescription' => array(
 				'type' => 'string',
 				'default' => 'Description',
-			)
+			),
+			'isLandscape' => array(
+				'type' => 'boolean',
+				'default' => false,
+			),
 		),
 		novablocks_get_source_attributes(),
 		novablocks_get_collection_attributes()

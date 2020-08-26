@@ -25,16 +25,12 @@ export const prepareAttributes = ( attributes ) => {
 
 export const getGridStyle = ( attributes ) => {
 
-	const {
-		gridColumns,
-		gridRows,
-		flipColsAndRows,
-	} = attributes;
+	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 
 	return {
 		display: 'grid',
-		gridTemplateColumns: `repeat( ${ ! flipColsAndRows ? gridColumns : gridRows }, 1fr )`,
-		gridTemplateRows: `repeat( ${ ! flipColsAndRows ? gridRows : gridColumns }, auto )`,
+		gridTemplateColumns: `repeat( ${ gridColumns }, 1fr )`,
+		gridTemplateRows: `repeat( ${ gridRows }, auto )`,
 	};
 };
 
@@ -107,7 +103,7 @@ const getCardRatio = ( area, attributes ) => {
 }
 
 export const isLandscape = ( area, attributes ) => {
-	const { gridColumns, gridRows } = attributes;
+	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height, postsCount } = area;
 
 	if ( width > height / postsCount ) {
@@ -121,31 +117,48 @@ export const isLandscape = ( area, attributes ) => {
 	return false;
 };
 
-export const getAreaClassName = ( area, attributes ) => {
-	const { gridColumns, gridRows } = attributes;
+export const getParametricLayoutAreaClassName = ( area, attributes ) => {
+	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height } = area;
 
 	return classnames([
 		'novablocks-grid__area',
 		`novablocks-grid__area--nth-${ nth }`,
+		getAreaClassnameByWidthRatio( width / gridColumns ),
+		getAreaClassnameByHeightRatio( height / gridRows ),
 		{
 			'novablocks-grid__area--portrait': ! isLandscape( area, attributes ),
 			'novablocks-grid__area--landscape': isLandscape( area, attributes ),
-
-			'novablocks-grid__area--width-xs': width / gridColumns < 0.3,
-			'novablocks-grid__area--width-s': 0.3 <= width / gridColumns && width / gridColumns < 0.5,
-			'novablocks-grid__area--width-m': 0.5 <= width / gridColumns && width / gridColumns < 0.66,
-			'novablocks-grid__area--width-l': 0.66 <= width / gridColumns && width / gridColumns < 0.80,
-			'novablocks-grid__area--width-xl': 0.80 <= width / gridColumns && width / gridColumns < 0.95,
-			'novablocks-grid__area--width-full': 0.95 <= width / gridColumns,
-
-			'novablocks-grid__area--height-xs': height / gridRows < 0.34,
-			'novablocks-grid__area--height-s': 0.34 <= height / gridRows && height / gridRows < 0.5,
-			'novablocks-grid__area--height-m': 0.5 <= height / gridRows && height / gridRows < 0.66,
-			'novablocks-grid__area--height-l': 0.66 <= height / gridRows && height / gridRows < 0.80,
-			'novablocks-grid__area--height-xl': 0.80 <= height / gridRows,
 		}
 	]);
+};
+
+export const getAreaClassnameByWidthRatio = ( widthRatio ) => {
+	return classnames([{
+		'novablocks-grid__area--width-xs': widthRatio < 0.3,
+		'novablocks-grid__area--width-s': 0.3 <= widthRatio && widthRatio < 0.5,
+		'novablocks-grid__area--width-m': 0.5 <= widthRatio && widthRatio < 0.66,
+		'novablocks-grid__area--width-l': 0.66 <= widthRatio && widthRatio < 0.80,
+		'novablocks-grid__area--width-xl': 0.80 <= widthRatio && widthRatio < 0.95,
+		'novablocks-grid__area--width-full': 0.95 <= widthRatio,
+	}]);
+};
+
+export const getAreaClassnameByHeightRatio = ( heightRatio ) => {
+	return classnames([{
+		'novablocks-grid__area--height-xs': heightRatio < 0.34,
+		'novablocks-grid__area--height-s': 0.34 <= heightRatio && heightRatio < 0.5,
+		'novablocks-grid__area--height-m': 0.5 <= heightRatio && heightRatio < 0.66,
+		'novablocks-grid__area--height-l': 0.66 <= heightRatio && heightRatio < 0.80,
+		'novablocks-grid__area--height-xl': 0.80 <= heightRatio,
+	}])
+};
+
+const getGridColumnsAndRows = ( attributes ) => {
+	return {
+		gridColumns: ! attributes.flipColsAndRows ? attributes.gridColumns : attributes.gridRows,
+		gridRows: ! attributes.flipColsAndRows ? attributes.gridRows : attributes.gridColumns,
+	}
 };
 
 export const transposeMatrix = ( source ) => {

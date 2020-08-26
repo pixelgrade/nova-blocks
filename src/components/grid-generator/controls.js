@@ -371,7 +371,8 @@ const ClassicLayoutControls = ( props ) => {
 
 	const {
 		attributes: {
-			columns
+			columns,
+			isLandscape
 		},
 		setAttributes
 	} = props;
@@ -386,6 +387,18 @@ const ClassicLayoutControls = ( props ) => {
 				label={ __( 'Columns' ) }
 				min={ 2 }
 				max={ 4 }
+			/>
+			<RadioControl
+				key={ 'novablocks-card-layout-controls' }
+				selected={ isLandscape ? 'landscape' : 'portrait' }
+				className={ 'novablocks-card-layout' }
+				onChange={ ( value ) => {
+					setAttributes( { isLandscape: value === 'landscape' } );
+				} }
+				options={ [
+					{ label: 'Portrait', value: 'portrait' },
+					{ label: 'Landscape', value: 'landscape' }
+				] }
 			/>
 		</Fragment>
 	)
