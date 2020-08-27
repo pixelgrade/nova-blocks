@@ -111,20 +111,22 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 										<?php
 										if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
 											$id = attachment_url_to_postid( $media['url'] );
+											$width = $media['sizes']['full']['width'];
+											$height = $media['sizes']['full']['height'];
 
 											if ( ! empty( $id ) ) {
 												echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
 													'class' => 'novablocks-slideshow__media',
 													'style' => esc_attr( $thisMediaStyle ),
-													'data-width' => esc_attr( $media['width'] ),
-				                                    'data-height' => esc_attr( $media['height'] )
+													'data-width' => esc_attr( $width ),
+				                                    'data-height' => esc_attr( $height )
 												) );
 											} else { ?>
 											<img class="novablocks-slideshow__media"
 											     src="<?php echo esc_url( $media['url'] ); ?>"
 											     style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-											     data-width="<?php echo esc_attr( $media['width'] ); ?>"
-											     data-height="<?php echo esc_attr( $media['height'] ); ?>"
+											     data-width="<?php echo esc_attr( $width ); ?>"
+											     data-height="<?php echo esc_attr( $height ); ?>"
 											/>
 											<?php }
 										} ?>
@@ -133,8 +135,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 											<video class="novablocks-slideshow__media" muted autoplay playsInline loop
 											       src="<?php echo esc_url( $media['url'] ); ?>"
 											       style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-											       data-width="<?php echo esc_attr( $media['width'] ); ?>"
-											       data-height="<?php echo esc_attr( $media['height'] ); ?>"/>
+											       data-width="<?php echo esc_attr( $width ); ?>"
+											       data-height="<?php echo esc_attr( $height ); ?>"/>
 										<?php } ?>
 
 									</div>

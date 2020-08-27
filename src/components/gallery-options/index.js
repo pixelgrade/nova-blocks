@@ -66,7 +66,13 @@ class GalleryPreview extends Component {
 						thumbnail = img?.thumb?.src;
 						classes.push( 'novablocks-slideshow__gallery-item--video' );
 					} else {
-						thumbnail = img?.sizes?.novablocks_tiny?.url || img?.sizes?.novablocks_large?.url || img?.sizes?.novablocks_huge?.url
+						thumbnail = img?.sizes?.novablocks_tiny?.url ||
+						            img?.sizes?.thumbnail?.url ||
+						            img?.sizes?.novablocks_large?.url ||
+						            img?.sizes?.large?.url ||
+						            img?.sizes?.novablocks_huge?.url ||
+						            img?.sizes?.full?.url ||
+						            img?.url;
 					}
 
 					return (

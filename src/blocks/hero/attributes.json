@@ -38,5 +38,9 @@
 	"minHeightFallback": {
 		"type": "number",
 		"default": 100
+	},
+	"displayInnerContent": {
+		"type": "boolean",
+		"default": true
 	}
 }

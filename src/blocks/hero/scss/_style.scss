@@ -27,7 +27,7 @@
 .novablocks-hero__indicator {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	bottom: var(--novablocks-spacing);
 	left: 50%;
 
 	display: flex;

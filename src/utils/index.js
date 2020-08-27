@@ -54,22 +54,6 @@ export const range = function( min, max ) {
 	return array;
 };
 
-export const withFirstBlockConditions = function( Component ) {
-
-	return function( props ) {
-
-		const { getBlocks, getSelectedBlockClientId } = wp.data.select( 'core/block-editor' );
-		const blocks = getBlocks();
-		const selectedBlockClientId = getSelectedBlockClientId();
-		const index = blocks.findIndex( block => block.clientId === selectedBlockClientId );
-		const show = index === 0 && props.clientId === selectedBlockClientId;
-
-		return show && <Component { ...props } />;
-
-	}
-
-};
-
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export const hasTouchScreen = function() {

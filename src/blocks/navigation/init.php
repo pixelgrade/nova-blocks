@@ -48,6 +48,7 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 				wp_nav_menu( array(
                     'theme_location' => $attributes['slug'],
                     'container' => '',
+                    'fallback_cb'    => false,
 	            ) );
 			?>
 		</div>

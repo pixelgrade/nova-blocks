@@ -39,6 +39,7 @@ const HeroPreview = function( props ) {
 		overlayFilterStyle,
 
 		scrollingEffect,
+		displayInnerContent,
 	} = attributes;
 
 	const classes = [
@@ -98,7 +99,7 @@ const HeroPreview = function( props ) {
 			<HeroBackground { ...props } />
 			<div className="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 				<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
-					<InnerBlocks />
+					{ displayInnerContent && <InnerBlocks /> }
 				</div>
 				{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }
 			</div>

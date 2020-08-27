@@ -77,7 +77,7 @@ class Block_Areas {
 		$content = capital_P_dangit( $content );
 		$content = do_shortcode( $content );
 		$content = shortcode_unautop( $content );
-		$content = wp_make_content_images_responsive( $content );
+		$content = wp_filter_content_tags( $content );
 
 		// Apply one custom filter to allow others to have a say.
 		echo apply_filters( 'novablocks_block_areas_the_content', $content );
