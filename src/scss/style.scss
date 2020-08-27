@@ -73,10 +73,14 @@
 	padding: 5em;
 }
 
+.novablocks-card__layout {
+	display: grid;
+	grid-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
+}
+
 .novablocks-card--landscape {
 
 	.novablocks-card__layout {
-		display: grid;
 		grid-template-columns: var(--card-image-width, 1fr) 1fr;
 		grid-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
 
@@ -88,6 +92,7 @@
 		> .novablocks-card__layout-content {
 			width: 100%;
 			grid-column: 2 / span 1;
+			align-self: center;
 		}
 	}
 }

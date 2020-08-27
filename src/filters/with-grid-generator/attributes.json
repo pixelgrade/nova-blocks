@@ -1,73 +1,57 @@
 {
-	"gridColumns": {
+	"gridcolumns": {
 		"type": "number",
 		"default": 6
 	},
-	"minGridColumns": {
-		"type": "number",
-		"default": 1
-	},
-	"maxGridColumns": {
-		"type": "number",
-		"default": 10
-	},
-	"gridRows": {
+	"gridrows": {
 		"type": "number",
 		"default": 6
 	},
-	"minGridRows": {
-		"type": "number",
-		"default": 1
-	},
-	"maxGridRows": {
-		"type": "number",
-		"default": 10
-	},
-	"featureSize": {
+	"featuresize": {
 		"type": "number",
 		"default": 2
 	},
-	"featurePosition": {
+	"featureposition": {
 		"type": "number",
 		"default": 2
 	},
-	"columnsFragmentation": {
+	"fragmentation": {
 		"type": "number",
 		"default": 5
 	},
-	"imageWeightLeft":  {
+	"imageweightleft":  {
 		"type": "number",
 		"default": 8
 	},
-	"imageWeightRight":  {
+	"imageweightright":  {
 		"type":  "number",
 		"default": 0
 	},
-	"metaWeightLeft":  {
+	"metadetailsleft":  {
 		"type":  "number",
 		"default": 7
 	},
-	"metaWeightRight":  {
+	"metadetailsright":  {
 		"type":  "number",
 		"default": 0
 	},
-	"boostFeatureEmphasis": {
+	"boostfeature": {
 		"type": "boolean",
 		"default": true
 	},
-	"subFeature": {
+	"subfeature": {
 		"type": "boolean",
 		"default": false
 	},
-	"balanceMDandIW": {
+	"balancemdandiw": {
 		"type": "boolean",
 		"default": false
 	},
-	"hierarchyCrossing": {
+	"hierarchycrossing": {
 		"type": "number",
 		"default": 0
 	},
-	"flipColsAndRows": {
+	"flipcolsrows": {
 		"type": "boolean",
 		"default": false
 	},

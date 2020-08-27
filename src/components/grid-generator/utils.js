@@ -1,36 +1,13 @@
-import { applyLayoutEngine } from "./layoutEngine";
 import classnames from "classnames";
-
-export const prepareAttributes = ( attributes ) => {
-
-	const state = {
-		gridcolumns: attributes?.gridColumns,
-		gridrows: attributes?.gridRows,
-		featuresize: attributes?.featureSize,
-		featureposition: attributes?.featurePosition,
-		fragmentation: attributes?.columnsFragmentation,
-		imageweightleft: attributes?.imageWeightLeft,
-		imageweightright: attributes?.imageWeightRight,
-		metadetailsleft: attributes?.metaWeightLeft,
-		metadetailsright: attributes?.metaWeightRight,
-		boostfeature: attributes?.boostFeatureEmphasis,
-		subfeature: attributes?.subFeature,
-		balancemdandiw: attributes?.balanceMDandIW,
-		hierarchycrossing: attributes?.hierarchyCrossing,
-		flipcolsrows: attributes?.flipColsAndRows,
-	};
-
-	return state;
-};
 
 export const getGridStyle = ( attributes ) => {
 
-	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
+	const { gridcolumns, gridrows } = getGridColumnsAndRows( attributes );
 
 	return {
 		display: 'grid',
-		gridTemplateColumns: `repeat( ${ gridColumns }, 1fr )`,
-		gridTemplateRows: `repeat( ${ gridRows }, auto )`,
+		gridTemplateColumns: `repeat( ${ gridcolumns }, 1fr )`,
+		gridTemplateRows: `repeat( ${ gridrows }, auto )`,
 	};
 };
 
@@ -92,13 +69,13 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 };
 
 const getCardRatio = ( area, attributes ) => {
-	const { gridColumns } = getGridColumnsAndRows( attributes );
+	const { gridcolumns } = getGridColumnsAndRows( attributes );
 	const { width, height, postsCount } = area;
 	let ratio = postsCount / height;
 
 	// when the card is landscape and very small
 	// we hide the content so the ratio should be bigger
-	if ( isLandscape( area, attributes ) && width / gridColumns < 0.3 ) {
+	if ( isLandscape( area, attributes ) && width / gridcolumns < 0.3 ) {
 		ratio *= 1.5;
 	}
 
@@ -109,27 +86,27 @@ const getCardRatio = ( area, attributes ) => {
 };
 
 export const isLandscape = ( area, attributes ) => {
-	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
+	const { gridcolumns, gridrows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height, initialPostsCount } = area;
 
 	const isLandscape = width * initialPostsCount / height > 1.33;
 
-	if ( width / gridColumns >= 0.5 ) {
-		return isLandscape || ( attributes.subFeature && nth === 2 );
+	if ( width / gridcolumns >= 0.5 ) {
+		return isLandscape || ( attributes.subfeature && nth === 2 );
 	}
 
 	return isLandscape;
 };
 
 export const getParametricLayoutAreaClassName = ( area, attributes ) => {
-	const { gridColumns, gridRows } = getGridColumnsAndRows( attributes );
+	const { gridcolumns, gridrows } = getGridColumnsAndRows( attributes );
 	const { nth, width, height } = area;
 
 	return classnames([
 		'novablocks-grid__area',
 		`novablocks-grid__area--nth-${ nth }`,
-		getAreaClassnameByWidthRatio( width / gridColumns ),
-		getAreaClassnameByHeightRatio( height / gridRows ),
+		getAreaClassnameByWidthRatio( width / gridcolumns ),
+		getAreaClassnameByHeightRatio( height / gridrows ),
 		{
 			'novablocks-grid__area--portrait': ! isLandscape( area, attributes ),
 			'novablocks-grid__area--landscape': isLandscape( area, attributes ),
@@ -158,10 +135,10 @@ export const getAreaClassnameByHeightRatio = ( heightRatio ) => {
 	}])
 };
 
-const getGridColumnsAndRows = ( attributes ) => {
+export const getGridColumnsAndRows = ( attributes ) => {
 	return {
-		gridColumns: ! attributes.flipColsAndRows ? attributes.gridColumns : attributes.gridRows,
-		gridRows: ! attributes.flipColsAndRows ? attributes.gridRows : attributes.gridColumns,
+		gridcolumns: ! attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows,
+		gridrows: ! attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns,
 	}
 };
 

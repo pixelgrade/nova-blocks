@@ -6182,7 +6182,7 @@ module.exports = JSON.parse("{\"emphasisBySpace\":{\"type\":\"number\",\"default
 /* 136 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"gridColumns\":{\"type\":\"number\",\"default\":6},\"minGridColumns\":{\"type\":\"number\",\"default\":1},\"maxGridColumns\":{\"type\":\"number\",\"default\":10},\"gridRows\":{\"type\":\"number\",\"default\":6},\"minGridRows\":{\"type\":\"number\",\"default\":1},\"maxGridRows\":{\"type\":\"number\",\"default\":10},\"featureSize\":{\"type\":\"number\",\"default\":2},\"featurePosition\":{\"type\":\"number\",\"default\":2},\"columnsFragmentation\":{\"type\":\"number\",\"default\":5},\"imageWeightLeft\":{\"type\":\"number\",\"default\":8},\"imageWeightRight\":{\"type\":\"number\",\"default\":0},\"metaWeightLeft\":{\"type\":\"number\",\"default\":7},\"metaWeightRight\":{\"type\":\"number\",\"default\":0},\"boostFeatureEmphasis\":{\"type\":\"boolean\",\"default\":true},\"subFeature\":{\"type\":\"boolean\",\"default\":false},\"balanceMDandIW\":{\"type\":\"boolean\",\"default\":false},\"hierarchyCrossing\":{\"type\":\"number\",\"default\":0},\"flipColsAndRows\":{\"type\":\"boolean\",\"default\":false},\"layoutStyle\":{\"type\":\"string\",\"default\":\"classic\"}}");
+module.exports = JSON.parse("{\"gridcolumns\":{\"type\":\"number\",\"default\":6},\"gridrows\":{\"type\":\"number\",\"default\":6},\"featuresize\":{\"type\":\"number\",\"default\":2},\"featureposition\":{\"type\":\"number\",\"default\":2},\"fragmentation\":{\"type\":\"number\",\"default\":5},\"imageweightleft\":{\"type\":\"number\",\"default\":8},\"imageweightright\":{\"type\":\"number\",\"default\":0},\"metadetailsleft\":{\"type\":\"number\",\"default\":7},\"metadetailsright\":{\"type\":\"number\",\"default\":0},\"boostfeature\":{\"type\":\"boolean\",\"default\":true},\"subfeature\":{\"type\":\"boolean\",\"default\":false},\"balancemdandiw\":{\"type\":\"boolean\",\"default\":false},\"hierarchycrossing\":{\"type\":\"number\",\"default\":0},\"flipcolsrows\":{\"type\":\"boolean\",\"default\":false},\"layoutStyle\":{\"type\":\"string\",\"default\":\"classic\"}}");
 
 /***/ }),
 /* 137 */
@@ -20406,939 +20406,17 @@ var inspector_controls_CollectionInspectorControls = function CollectionInspecto
 };
 
 /* harmony default export */ var inspector_controls = (inspector_controls_CollectionInspectorControls);
-// CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
-
-
-function layoutEngine_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function layoutEngine_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { layoutEngine_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { layoutEngine_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
- // This is the main workhorse containing the logic of our layout "engine".
-// Given a state, it will return a list of posts with details to handle their layout.
-
-var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
-  var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
-  // we need to do a couple of preliminary calculations.
-  // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
-  // This way we gain an easier understanding of what is going on at each step of the logic.
-  // In each matrix we will ignore index 0 since it is easier to start from 1,
-  // the same way CSS grid columns and rows behave.
-  // The order of these operation is important!
-  debug ? console.log("\nGenerating a new layout...\n\n") : false; // The "null" character:
-
-  var emptyChar = "X"; // These are the matrices we are going to calculate:
-  // The nth matrix: a bidimensional matrix the same size as the grid, holding in each cell what nth post should that cell belong to.
-  // From this matrix we can extrapolate many details since the same nth value will be used to fill all the cells belonging to a post.
-  // So we know the position and dimensions.
-
-  var nthMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The image weight matrix
-
-  var imageWeightMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The meta-details matrix
-
-  var metaDetailsMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // Helper matrices.
-  // The columns width matrix
-
-  var widthMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar); // The vertical fragment size matrix
-
-  var verticalFragmentSizeMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar);
-  var i, j; // Lets start PRELIMINARY CALCULATIONS!
-
-  /*
-  1. Calculate the columns width matrix.
-     We will take into account the feature position, feature size and fragmentation value.
-     The fragmentation value is interpreted in it's bit format, where 1 means a "cut".
-     The fragmentation value represents the fragmentation of the remaining gridcolumns after the feature size was deducted.
-   */
-
-  var widthIdx = 1; // First, mark the feature.
-
-  for (i = state.featureposition; i < state.featureposition + state.featuresize; i++) {
-    widthMatrix[i] = widthIdx;
-  } // Next, go from left to right in the columns width matrix, and fill each columns with the same unique number,
-  // Taking into account the fragmentation.
-  // And remember the positions we are int the virtual matrix without the feature.
-
-
-  var frgIdx = 0;
-  widthIdx++;
-
-  for (i = 1; i <= state.gridcolumns; i++) {
-    if (widthMatrix[i] === emptyChar) {
-      frgIdx++; // If the previous position has a different number than the current one, it is clear we should increment and write.
-
-      if (widthMatrix[i - 1] !== widthIdx) {
-        widthIdx++;
-      } else {
-        // If the previous position has the same value as the current one, we need to determine
-        // if the fragmentation bit pattern imposes a "cut".
-        var cutMarker = 1 << state.gridcolumns - state.featuresize - frgIdx; // If there is a 1 at this position, make a cut aka increase the number.
-
-        if ((cutMarker & state.fragmentation) === cutMarker) {
-          widthIdx++;
-        }
-      }
-
-      widthMatrix[i] = widthIdx;
-    }
-  }
-
-  debug ? console.log("The width matrix: ".padEnd(45, ' ') + widthMatrix) : false;
-  /*
-  2. Calculate the image weight matrix.
-     We will spread the image weight range left-to-right. Each column will consume the range according to its width.
-     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
-    */
-
-  for (i = 1; i <= state.gridcolumns; i++) {
-    // Determine the other end of the current column.
-    var end = i;
-
-    while (widthMatrix[end + 1] === widthMatrix[i]) {
-      end++;
-    } // Now calculate.
-
-
-    if (i === 1) {
-      imageWeightMatrix[1][i] = state.imageweightleft;
-    } else if (end === state.gridcolumns) {
-      imageWeightMatrix[1][i] = state.imageweightright;
-    } else {
-      imageWeightMatrix[1][i] = Math.round(state.imageweightleft - (state.imageweightleft - state.imageweightright) * (i + end - 1) / (2 * state.gridcolumns));
-    } // Fill the entire column with the same meta-details value.
-
-
-    for (j = i; j <= end; j++) {
-      imageWeightMatrix[1][j] = imageWeightMatrix[1][i];
-    }
-
-    i = end;
-  } // Copy the first row to all of the rest.
-
-
-  for (i = 2; i <= state.gridrows; i++) {
-    imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
-  }
-
-  debug ? console.log("The image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
-  /*
-  3. Calculate the meta-details matrix.
-     We will spread the meta-details range left-to-right. Each column will consume the range according to its width.
-     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
-   */
-
-  for (i = 1; i <= state.gridcolumns; i++) {
-    // Determine the other end of the current column.
-    var _end = i;
-
-    while (widthMatrix[_end + 1] === widthMatrix[i]) {
-      _end++;
-    } // Now calculate.
-
-
-    if (i === 1) {
-      metaDetailsMatrix[1][i] = state.metadetailsleft;
-    } else if (_end === state.gridcolumns) {
-      metaDetailsMatrix[1][i] = state.metadetailsright;
-    } else {
-      metaDetailsMatrix[1][i] = state.metadetailsleft - (state.metadetailsleft - state.metadetailsright) * (i + _end - 1) / (2 * state.gridcolumns); // If we are instructed to balance MD with IW, we will multiply the MD value with the "distance" of the IW value from the "center" of the IW range.
-
-      if (state.balancemdandiw && 0 !== state.imageweightleft - state.imageweightright) {
-        metaDetailsMatrix[1][i] = metaDetailsMatrix[1][i] * (Math.abs(state.imageweightleft - state.imageweightright) / 2 / imageWeightMatrix[1][i]);
-      }
-
-      metaDetailsMatrix[1][i] = Math.round(metaDetailsMatrix[1][i]);
-    } // Fill the entire column with the same meta-details value.
-
-
-    for (j = i; j <= _end; j++) {
-      metaDetailsMatrix[1][j] = metaDetailsMatrix[1][i];
-    }
-
-    i = _end;
-  } // Copy the first row to all of the rest.
-
-
-  for (i = 2; i <= state.gridrows; i++) {
-    metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
-  }
-
-  debug ? console.log("The meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
-  /*
-  4. Handle the boost feature emphasis.
-     We will assign the maximum meta-details and image weight value to the feature, and assign its current value to the column holding the maximum values.
-  */
-
-  if (state.boostfeature && state.featuresize > 0) {
-    // Find column with maximum meta-details value, if the feature isn't already at the max.
-    var maxMetaDetailsPos = 1,
-        maxImageWeightPos = 1;
-
-    for (i = 1; i <= state.gridcolumns; i++) {
-      if (metaDetailsMatrix[1][i] > metaDetailsMatrix[1][maxMetaDetailsPos]) {
-        maxMetaDetailsPos = i;
-      }
-
-      if (imageWeightMatrix[1][i] > imageWeightMatrix[1][maxImageWeightPos]) {
-        maxImageWeightPos = i;
-      }
-    }
-
-    if (maxMetaDetailsPos !== state.featureposition) {
-      // We have something to switch.
-      var featureValue = metaDetailsMatrix[1][state.featureposition];
-      var maxValue = metaDetailsMatrix[1][maxMetaDetailsPos]; // Go and fill each column with the switched values.
-
-      i = maxMetaDetailsPos;
-
-      while (widthMatrix[i] === widthMatrix[maxMetaDetailsPos]) {
-        metaDetailsMatrix[1][i] = featureValue;
-        i++;
-      }
-
-      i = state.featureposition;
-
-      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
-        metaDetailsMatrix[1][i] = maxValue;
-        i++;
-      } // Copy the first row to all of the rest.
-
-
-      for (i = 2; i <= state.gridrows; i++) {
-        metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
-      }
-
-      debug ? console.log("The boosted feature meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
-    }
-
-    if (maxImageWeightPos !== state.featureposition) {
-      // We have something to switch.
-      var _featureValue = imageWeightMatrix[1][state.featureposition];
-      var _maxValue = imageWeightMatrix[1][maxImageWeightPos]; // Go and fill each column with the switched values.
-
-      i = maxImageWeightPos;
-
-      while (widthMatrix[i] === widthMatrix[maxImageWeightPos]) {
-        imageWeightMatrix[1][i] = _featureValue;
-        i++;
-      }
-
-      i = state.featureposition;
-
-      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
-        imageWeightMatrix[1][i] = _maxValue;
-        i++;
-      } // Copy the first row to all of the rest.
-
-
-      for (i = 2; i <= state.gridrows; i++) {
-        imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
-      }
-
-      debug ? console.log("The boosted feature image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
-    }
-  }
-  /*
-  5. Determine the vertical fragment size matrix.
-     The fragment size will range in the number of grid rows and 1.
-  */
-  // First determine the max meta-details and image weight value.
-
-
-  var maxMetaDetailsValue = metaDetailsMatrix[1][1],
-      maxImageWeightValue = imageWeightMatrix[1][1];
-
-  for (i = 1; i <= state.gridcolumns; i++) {
-    if (metaDetailsMatrix[1][i] > maxMetaDetailsValue) {
-      maxMetaDetailsValue = metaDetailsMatrix[1][i];
-    }
-
-    if (imageWeightMatrix[1][i] > maxImageWeightValue) {
-      maxImageWeightValue = imageWeightMatrix[1][i];
-    }
-  } // For the purpose of these calculations, maxMetaDetailsValue and maxImageWeightValue can't be zero.
-
-
-  if (maxImageWeightValue < 1) {
-    maxImageWeightValue = 1;
-  }
-
-  if (maxMetaDetailsValue < 1) {
-    maxMetaDetailsValue = 1;
-  }
-
-  for (i = 1; i <= state.gridcolumns; i++) {
-    // Determine the other end of the current column.
-    var _end2 = i;
-
-    while (widthMatrix[_end2 + 1] === widthMatrix[i]) {
-      _end2++;
-    } // Now calculate.
-
-
-    verticalFragmentSizeMatrix[i] = Math.round((metaDetailsMatrix[1][i] / maxMetaDetailsValue + imageWeightMatrix[1][i] / maxImageWeightValue) / 2 * state.gridrows); // The vertical fragment size can't be more than 3 times the column width (a really tall post).
-
-    if (verticalFragmentSizeMatrix[i] > (_end2 - i + 1) * 3) {
-      verticalFragmentSizeMatrix[i] = (_end2 - i + 1) * 3;
-    } // Also the vertical fragment size can't be less than 1.
-
-
-    if (verticalFragmentSizeMatrix[i] < 1) {
-      verticalFragmentSizeMatrix[i] = 1;
-    } // If the sub feature option is active, and we have a single column for the feature, reduce the vertical fragmentation with 25%.
-
-
-    if (state.subfeature && i === state.featureposition && state.featuresize > 0 && verticalFragmentSizeMatrix[i] === state.gridrows) {
-      verticalFragmentSizeMatrix[i] = Math.floor(verticalFragmentSizeMatrix[i] * 0.75);
-    } // Safety measures.
-
-
-    if (verticalFragmentSizeMatrix[i] < 1) {
-      verticalFragmentSizeMatrix[i] = 1;
-    } else if (verticalFragmentSizeMatrix[i] > state.gridrows) {
-      verticalFragmentSizeMatrix[i] = state.gridrows;
-    } // Fill the entire column with the same fragment size.
-
-
-    for (j = i; j <= _end2; j++) {
-      verticalFragmentSizeMatrix[j] = verticalFragmentSizeMatrix[i];
-    }
-
-    i = _end2;
-  }
-
-  debug ? console.log("The vertical fragment size matrix: ".padEnd(45, ' ') + verticalFragmentSizeMatrix) : false;
-  /*
-  6. Determine the nth bidimensional matrix.
-     Each grid cell will be filled with the nth post that cell belongs to. From this matrix we can determine the post grid coordinates,
-     its aspect ratio, area, etc.
-  */
-  // We start with the first post in the list.
-
-  var currentNth = 1; // Start with the feature column.
-
-  if (state.featuresize > 0) {
-    i = 1;
-
-    while (i <= verticalFragmentSizeMatrix[state.featureposition]) {
-      j = state.featureposition;
-
-      do {
-        nthMatrix[i][j] = currentNth;
-        j++;
-      } while (widthMatrix[state.featureposition] === widthMatrix[j]);
-
-      i++;
-    }
-
-    currentNth++;
-
-    if (i <= state.gridrows) {
-      // We have room under the feature for a secondary feature post.
-      // We will reduce the meta-details and image weight by 33% that of the main feature post.
-      while (i <= state.gridrows) {
-        j = state.featureposition;
-
-        do {
-          nthMatrix[i][j] = currentNth; // Adjust the meta-details and image weight.
-
-          metaDetailsMatrix[i][j] = Math.round(metaDetailsMatrix[i][j] * 0.66);
-          imageWeightMatrix[i][j] = Math.round(imageWeightMatrix[i][j] * 0.66);
-          j++;
-        } while (widthMatrix[state.featureposition] === widthMatrix[j]);
-
-        i++;
-      }
-
-      currentNth++;
-    }
-  } // Now start from the left top corner and go through each column, left to right.
-
-
-  var currentColumnStartCol = 1;
-  var currentPostStartRow;
-
-  while (currentColumnStartCol <= state.gridcolumns) {
-    if (nthMatrix[1][currentColumnStartCol] !== emptyChar) {
-      currentColumnStartCol++;
-      continue;
-    } // Fill the current column with posts.
-
-
-    currentPostStartRow = 1;
-
-    while (currentPostStartRow <= state.gridrows) {
-      i = currentPostStartRow;
-
-      while (i <= currentPostStartRow + verticalFragmentSizeMatrix[currentColumnStartCol] - 1 && i <= state.gridrows) {
-        j = currentColumnStartCol;
-
-        do {
-          nthMatrix[i][j] = currentNth;
-          j++;
-        } while (widthMatrix[currentColumnStartCol] === widthMatrix[j]);
-
-        i++;
-      }
-
-      currentNth++;
-      currentPostStartRow = i;
-    }
-  }
-
-  if (debug) {
-    console.log("\nThe nth matrix: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
-
-    for (i = 1; i < nthMatrix.length; i++) {
-      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
-    }
-  }
-  /*
-  7. Handle the hierarchy crossing.
-     We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
-     We will only cross if the left post matches in height a post or more on the right.
-     The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
-     Also, crossing at the top of the layout is more expensive than crossing at a lower row.
-  */
-  // We start with the first post in the list.
-
-
-  var maxNth = currentNth;
-  var hierachyCrossingStrenth = state.hierarchycrossing;
-  currentNth = 1;
-
-  while (hierachyCrossingStrenth > 0 && currentNth <= maxNth) {
-    var currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-
-    if (false === currentPostDetails) {
-      currentNth++;
-      continue;
-    } // If the current post is all the way to the right edge, stop.
-
-
-    if (currentPostDetails.endGridColumn === state.gridcolumns) {
-      break;
-    } // Now identify its right-side neighbors.
-
-
-    var topNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.startGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-    var bottomNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.endGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix); // If the neighbors don't match the height in rows of the current post, skip this post from crossing.
-
-    if (topNeighborPostDetails.startGridRow !== currentPostDetails.startGridRow || bottomNeighborPostDetails.endGridRow !== currentPostDetails.endGridRow) {
-      currentNth++;
-      continue;
-    } // Calculate the score of the to-be replaced post(s).
-    // Each post's score correlated to its nth value. The lower the nth value the bigger the score boost.
-
-
-    var replacedPostScore = maxNth / topNeighborPostDetails.nth * (topNeighborPostDetails.area + topNeighborPostDetails.imageWeight + topNeighborPostDetails.metaDetails);
-
-    if (bottomNeighborPostDetails.nth !== topNeighborPostDetails.nth) {
-      var counter = 1;
-
-      for (i = topNeighborPostDetails.nth + 1; i <= bottomNeighborPostDetails.nth; i++) {
-        var postDetails = getNthPostDetails(i, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-
-        if (false === postDetails) {
-          continue;
-        }
-
-        counter++; // It is increasingly "harder" to replace multiple posts.
-
-        replacedPostScore += maxNth / postDetails.nth * (postDetails.area + postDetails.imageWeight + postDetails.metaDetails * counter) * counter;
-      }
-    } // If the to-be replaced post(s) score is larger than the remaining hierarchy crossing strength, nothing to do.
-
-
-    if (hierachyCrossingStrenth < replacedPostScore) {
-      currentNth++;
-      continue;
-    }
-
-    var currentPostScore = maxNth / currentPostDetails.nth * (currentPostDetails.area + currentPostDetails.imageWeight + currentPostDetails.metaDetails) * Math.pow(2 * hierachyCrossingStrenth / 50, 3); // If the current post score is bigger than the to-be replaced post(s) score, it's a go.
-
-    if (currentPostScore > replacedPostScore) {
-      // Expand the current post over the replaced ones.
-      for (i = topNeighborPostDetails.startGridRow; i <= bottomNeighborPostDetails.endGridRow; i++) {
-        for (j = topNeighborPostDetails.startGridColumn; j <= topNeighborPostDetails.endGridColumn; j++) {
-          nthMatrix[i][j] = currentNth; // Also replace the image weight and meta-details.
-
-          imageWeightMatrix[i][j] = currentPostDetails.imageWeight;
-          metaDetailsMatrix[i][j] = currentPostDetails.metaDetails;
-        }
-      } // Decrease the crossing strength.
-
-
-      hierachyCrossingStrenth -= replacedPostScore; // We now have a gap in the post list. We need to renumber the posts after the replaced ones and adjust the maxnth.
-      // The image weight and meta-details remain unchanged.
-      // Work with the new maxNth.
-
-      maxNth = renumberNthMatrix(nthMatrix);
-    }
-
-    currentNth++;
-  }
-
-  if (debug) {
-    logMatrix(nthMatrix);
-    logMatrix(imageWeightMatrix);
-    logMatrix(metaDetailsMatrix);
-  } // Transpose all matrices if flipcolssrows attribute is set to true
-
-
-  var finalNthMatrix = !state.flipcolsrows ? nthMatrix : transposeMatrix(nthMatrix);
-  var finalMetaMatrix = !state.flipcolsrows ? metaDetailsMatrix : transposeMatrix(metaDetailsMatrix);
-  var finalImageMatrix = !state.flipcolsrows ? imageWeightMatrix : transposeMatrix(imageWeightMatrix);
-  /*
-  8. Finally, generate the posts list.
-  */
-
-  var areaColumns = getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);
-  ;
-  moveLargestColumnToStart(areaColumns);
-  return areaColumns;
-};
-
-var moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {
-  var firstRowColumns = areaColumns.filter(function (column) {
-    return column.row === 1;
-  }).sort(function (col1, col2) {
-    return col2.width - col1.width;
-  });
-  var largestColumnIndex = areaColumns.findIndex(function (column) {
-    return column === firstRowColumns[0];
-  });
-  areaColumns.splice(0, 0, areaColumns.splice(largestColumnIndex, 1)[0]);
-  return areaColumns;
-};
-
-var logMatrix = function logMatrix(matrix) {
-  for (var i = 0; i < matrix.length; i++) {
-    console.log(' '.padEnd(41, ' ') + i + ' - ' + matrix[i].join(' '));
-  }
-};
-
-function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
-  var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
-  areasArray = normalizeAreas(nthMatrix, areasArray);
-  areasArray = areasArray.map(function (area) {
-    return layoutEngine_objectSpread({
-      initialPostsCount: area.postsCount
-    }, area);
-  });
-  var columns = areasArray.map(function (area) {
-    return {
-      row: area.row,
-      col: area.col,
-      width: area.width,
-      height: area.height
-    };
-  });
-  columns = columns.filter(function (data, index) {
-    var foundIndex = columns.findIndex(function (column) {
-      return column.col === data.col && column.width === data.width;
-    });
-    return index === foundIndex;
-  });
-  return columns.map(function (column) {
-    var areas = areasArray.filter(function (area) {
-      return column.col === area.col && column.width === area.width;
-    });
-    return {
-      row: column.row,
-      col: column.col,
-      width: column.width,
-      height: areas.reduce(function (newHeight, area) {
-        return newHeight + area.height;
-      }, 0),
-      areas: areas
-    };
-  });
-}
-
-function getNthValues(nthMatrix) {
-  var values = [];
-  var value;
-
-  for (var i = 1; i < nthMatrix.length - 1; i++) {
-    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
-      value = nthMatrix[i][j];
-
-      if (values.indexOf(value) === -1) {
-        values.push(value);
-      }
-    }
-  }
-
-  return values;
-}
-
-function normalizeAreas(nthMatrix, areasArray) {
-  var values = getNthValues(nthMatrix);
-  values.sort();
-
-  for (var i = 0; i < values.length; i++) {
-    if (i + 1 !== values[i]) {
-      replaceNth(values[i], i + 1, nthMatrix);
-    }
-  }
-
-  return values.map(function (nth, index) {
-    var area = areasArray.find(function (area) {
-      return area.nth === nth;
-    });
-    area.nth = index + 1;
-    return area;
-  });
-}
-
-function replaceNth(nth1, nth2, nthMatrix) {
-  for (var i = 1; i < nthMatrix.length - 1; i++) {
-    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
-      if (nthMatrix[i][j] === nth1) {
-        nthMatrix[i][j] = nth2;
-      }
-    }
-  }
-}
-/**
- *
- * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
- * We will only cross if the left post matches in height a post or more on the right.
- * The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
- * Also, crossing at the top of the layout is more expensive than crossing at a lower row.
- *
- */
-
-
-var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
-  var currentPostDetails;
-
-  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
-    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-
-    if (currentPostDetails) {
-      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
-    }
-  }
-};
-
-var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
-  var nth = nthMatrix[row][col];
-  var width = getAreaWidth(nth, nthMatrix);
-  var height = getAreaHeight(nth, nthMatrix);
-  var initialWidth = width;
-  var initialHeight = height;
-  var currentAreaIndex = -1;
-
-  if (Array.isArray(areasArray)) {
-    currentAreaIndex = areasArray.findIndex(function (area) {
-      return area.nth === nthMatrix[row][col];
-    });
-  } // Featured area should not be merged
-
-
-  if (nth === 1) {
-    return;
-  }
-
-  var nextRow,
-      nextCol,
-      nextWidth,
-      nextHeight,
-      nextNth,
-      nextNthStart,
-      searching = true,
-      mergeable = false;
-
-  while (searching) {
-    nextNth = nthMatrix[row + height][col];
-    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
-    nextRow = nextNthStart.row;
-    nextCol = nextNthStart.col;
-    nextWidth = getAreaWidth(nextNth, nthMatrix);
-    nextHeight = getAreaHeight(nextNth, nthMatrix);
-
-    if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
-      height = height + nextHeight;
-      mergeable = true;
-
-      if (currentAreaIndex > -1) {
-        areasArray[currentAreaIndex].postsCount += 1;
-        areasArray[currentAreaIndex].height = height;
-      }
-    } else {
-      searching = false;
-    }
-  }
-
-  searching = !mergeable;
-
-  while (searching) {
-    nextNth = nthMatrix[row][col + width];
-    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
-    nextRow = nextNthStart.row;
-    nextCol = nextNthStart.col;
-    nextWidth = getAreaWidth(nextNth, nthMatrix);
-    nextHeight = getAreaHeight(nextNth, nthMatrix);
-
-    if (height === nextHeight && row === nextRow && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {
-      width = width + nextWidth;
-      mergeable = true;
-
-      if (currentAreaIndex > -1) {
-        areasArray[currentAreaIndex].postsCount += 1;
-        areasArray[currentAreaIndex].width = width;
-      }
-    } else {
-      searching = false;
-    }
-  }
-
-  fillArea(nthMatrix, row, col, width, height);
-};
-
-var fillArea = function fillArea(nthMatrix, row, col, width, height) {
-  for (var i = row; i < row + height; i++) {
-    for (var j = col; j < col + width; j++) {
-      nthMatrix[i][j] = nthMatrix[row][col];
-    }
-  }
-};
-
-var getFirstOccurence = function getFirstOccurence(nth, nthMatrix) {
-  for (var i = 0; i < nthMatrix.length; i++) {
-    for (var j = 0; j < nthMatrix[i].length; j++) {
-      if (nthMatrix[i][j] === nth) {
-        return {
-          row: i,
-          col: j
-        };
-      }
-    }
-  }
-
-  return {};
-};
-
-var getAreaWidth = function getAreaWidth(nth, nthMatrix) {
-  var _getFirstOccurence = getFirstOccurence(nth, nthMatrix),
-      row = _getFirstOccurence.row,
-      col = _getFirstOccurence.col;
-
-  var width = 1;
-
-  while (nth === nthMatrix[row][col + width]) {
-    width = width + 1;
-  }
-
-  return width;
-};
-
-var getAreaHeight = function getAreaHeight(nth, nthMatrix) {
-  var _getFirstOccurence2 = getFirstOccurence(nth, nthMatrix),
-      row = _getFirstOccurence2.row,
-      col = _getFirstOccurence2.col;
-
-  var height = 1;
-
-  while ("undefined" !== typeof nthMatrix[row + height] && nth === nthMatrix[row + height][col]) {
-    height = height + 1;
-  }
-
-  return height;
-};
-
-var getPostAreas = function getPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
-  var postsList = [];
-  var currentNth = 1;
-  var currentPostDetails;
-
-  while (currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix)) {
-    var newLayoutPost = {
-      'nthPost': currentNth,
-      'gridArea': "".concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.endGridRow + 1, " / ").concat(currentPostDetails.endGridColumn + 1),
-      'imageWeight': currentPostDetails.imageWeight,
-      'metaDetails': currentPostDetails.metaDetails
-    }; // If we should flip rows and columns, simply flip them in the gridArea.
-
-    if (state.flipcolsrows) {
-      newLayoutPost.gridArea = "".concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.endGridColumn + 1, " / ").concat(currentPostDetails.endGridRow + 1);
-    }
-
-    postsList.push(newLayoutPost);
-    currentNth++;
-  }
-
-  return postsList;
-};
-
-var renumberNthMatrix = function renumberNthMatrix(nthMatrix) {
-  var newNth = 1;
-  var postDetails;
-
-  for (var nth = 1; nth <= getMaxNth(nthMatrix); nth++) {
-    // If we can't find a nth post, it means it was removed and we need to adjust.
-    postDetails = getNthPostDetails(nth, nthMatrix);
-
-    if (false === postDetails) {
-      continue;
-    }
-
-    if (postDetails.nth > newNth) {
-      // Change the current post's nth.
-      for (var i = postDetails.startGridRow; i <= postDetails.endGridRow; i++) {
-        for (var j = postDetails.startGridColumn; j <= postDetails.endGridColumn; j++) {
-          nthMatrix[i][j] = newNth;
-        }
-      }
-    }
-
-    newNth++;
-  } // Return the maxNth.
-
-
-  return newNth - 1;
-};
-
-var getMaxNth = function getMaxNth(nthMatrix) {
-  var maxNth = 0;
-
-  for (var i = 1; i < nthMatrix.length; i++) {
-    for (var j = 1; j < nthMatrix[i].length; j++) {
-      if (nthMatrix[i][j] > maxNth) {
-        maxNth = nthMatrix[i][j];
-      }
-    }
-  }
-
-  return maxNth;
-};
-
-var getAreasArray = function getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
-  var currentPostDetails;
-  var areasArray = [];
-
-  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
-    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-
-    if (currentPostDetails) {
-      areasArray.push({
-        nth: currentPostDetails.nth,
-        col: currentPostDetails.startGridColumn,
-        row: currentPostDetails.startGridRow,
-        width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
-        height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
-        metaDetails: currentPostDetails.metaDetails,
-        imageWeight: currentPostDetails.imageWeight,
-        postsCount: 1
-      });
-    }
-  }
-
-  return areasArray;
-};
-
-var getNthPostDetails = function getNthPostDetails(nth, nthMatrix) {
-  var metaDetailsMatrix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var imageWeightMatrix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-  var postDetails = false; // Go through the nthMatrix and search for the currentNth value.
-
-  for (var i = 1; i < nthMatrix.length; i++) {
-    for (var j = 1; j < nthMatrix[i].length; j++) {
-      if (nthMatrix[i][j] === nth) {
-        // Found the left top corner.
-        postDetails = {
-          'nth': nth,
-          'startGridColumn': j,
-          'startGridRow': i,
-          'endGridColumn': j,
-          'endGridRow': i,
-          'metaDetails': metaDetailsMatrix ? metaDetailsMatrix[i][j] : false,
-          'imageWeight': imageWeightMatrix ? imageWeightMatrix[i][j] : false,
-          'area': 1
-        }; // Find the right bottom corner.
-
-        while (j < nthMatrix[i].length && nthMatrix[i][j] === nthMatrix[i][j + 1]) {
-          j++;
-        }
-
-        postDetails.endGridColumn = j;
-
-        while (i < nthMatrix.length && nthMatrix[i][j] === nthMatrix[i + 1][j]) {
-          i++;
-        }
-
-        postDetails.endGridRow = i; // Calculate the area.
-
-        postDetails.area = (postDetails.endGridRow - postDetails.startGridRow + 1) * (postDetails.endGridColumn - postDetails.startGridColumn + 1);
-        return postDetails;
-      }
-    }
-  }
-
-  return postDetails;
-};
-
-var initUnidimensionalMatrix = function initUnidimensionalMatrix(matrix, length) {
-  var character = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "X";
-  // The 0 index will be filled with a different character for easier logic.
-  matrix.push("/"); // Go to equal the length, since the 0 index will be ignored.
-  // Fill with "null" entries with the provided character.
-
-  for (var i = 1; i <= length; i++) {
-    matrix.push(character);
-  } // Put an extra entry for easier logic.
-
-
-  matrix.push("/");
-  return matrix;
-};
-
-var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, height, nullChar) {
-  // Put in a guard row, at index 0.
-  matrix.push(initUnidimensionalMatrix([], width, "/")); // Go to equal the width, since the 0 index will be ignored.
-
-  for (var i = 0; i < height; i++) {
-    matrix.push(initUnidimensionalMatrix([], width, nullChar));
-  } // Put in an extra guard row.
-
-
-  matrix.push(initUnidimensionalMatrix([], width, "/"));
-  return matrix;
-};
 // CONCATENATED MODULE: ./src/components/grid-generator/utils.js
 
-
-var prepareAttributes = function prepareAttributes(attributes) {
-  var state = {
-    gridcolumns: attributes === null || attributes === void 0 ? void 0 : attributes.gridColumns,
-    gridrows: attributes === null || attributes === void 0 ? void 0 : attributes.gridRows,
-    featuresize: attributes === null || attributes === void 0 ? void 0 : attributes.featureSize,
-    featureposition: attributes === null || attributes === void 0 ? void 0 : attributes.featurePosition,
-    fragmentation: attributes === null || attributes === void 0 ? void 0 : attributes.columnsFragmentation,
-    imageweightleft: attributes === null || attributes === void 0 ? void 0 : attributes.imageWeightLeft,
-    imageweightright: attributes === null || attributes === void 0 ? void 0 : attributes.imageWeightRight,
-    metadetailsleft: attributes === null || attributes === void 0 ? void 0 : attributes.metaWeightLeft,
-    metadetailsright: attributes === null || attributes === void 0 ? void 0 : attributes.metaWeightRight,
-    boostfeature: attributes === null || attributes === void 0 ? void 0 : attributes.boostFeatureEmphasis,
-    subfeature: attributes === null || attributes === void 0 ? void 0 : attributes.subFeature,
-    balancemdandiw: attributes === null || attributes === void 0 ? void 0 : attributes.balanceMDandIW,
-    hierarchycrossing: attributes === null || attributes === void 0 ? void 0 : attributes.hierarchyCrossing,
-    flipcolsrows: attributes === null || attributes === void 0 ? void 0 : attributes.flipColsAndRows
-  };
-  return state;
-};
 var getGridStyle = function getGridStyle(attributes) {
   var _getGridColumnsAndRow = getGridColumnsAndRows(attributes),
-      gridColumns = _getGridColumnsAndRow.gridColumns,
-      gridRows = _getGridColumnsAndRow.gridRows;
+      gridcolumns = _getGridColumnsAndRow.gridcolumns,
+      gridrows = _getGridColumnsAndRow.gridrows;
 
   return {
     display: 'grid',
-    gridTemplateColumns: "repeat( ".concat(gridColumns, ", 1fr )"),
-    gridTemplateRows: "repeat( ".concat(gridRows, ", auto )")
+    gridTemplateColumns: "repeat( ".concat(gridcolumns, ", 1fr )"),
+    gridTemplateRows: "repeat( ".concat(gridrows, ", auto )")
   };
 }; // Sums optimal posts count value from each area
 
@@ -21397,7 +20475,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
 
 var getCardRatio = function getCardRatio(area, attributes) {
   var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),
-      gridColumns = _getGridColumnsAndRow2.gridColumns;
+      gridcolumns = _getGridColumnsAndRow2.gridcolumns;
 
   var width = area.width,
       height = area.height,
@@ -21405,7 +20483,7 @@ var getCardRatio = function getCardRatio(area, attributes) {
   var ratio = postsCount / height; // when the card is landscape and very small
   // we hide the content so the ratio should be bigger
 
-  if (utils_isLandscape(area, attributes) && width / gridColumns < 0.3) {
+  if (utils_isLandscape(area, attributes) && width / gridcolumns < 0.3) {
     ratio *= 1.5;
   } // balance the ratio
 
@@ -21416,8 +20494,8 @@ var getCardRatio = function getCardRatio(area, attributes) {
 
 var utils_isLandscape = function isLandscape(area, attributes) {
   var _getGridColumnsAndRow3 = getGridColumnsAndRows(attributes),
-      gridColumns = _getGridColumnsAndRow3.gridColumns,
-      gridRows = _getGridColumnsAndRow3.gridRows;
+      gridcolumns = _getGridColumnsAndRow3.gridcolumns,
+      gridrows = _getGridColumnsAndRow3.gridrows;
 
   var nth = area.nth,
       width = area.width,
@@ -21425,21 +20503,21 @@ var utils_isLandscape = function isLandscape(area, attributes) {
       initialPostsCount = area.initialPostsCount;
   var isLandscape = width * initialPostsCount / height > 1.33;
 
-  if (width / gridColumns >= 0.5) {
-    return isLandscape || attributes.subFeature && nth === 2;
+  if (width / gridcolumns >= 0.5) {
+    return isLandscape || attributes.subfeature && nth === 2;
   }
 
   return isLandscape;
 };
 var utils_getParametricLayoutAreaClassName = function getParametricLayoutAreaClassName(area, attributes) {
   var _getGridColumnsAndRow4 = getGridColumnsAndRows(attributes),
-      gridColumns = _getGridColumnsAndRow4.gridColumns,
-      gridRows = _getGridColumnsAndRow4.gridRows;
+      gridcolumns = _getGridColumnsAndRow4.gridcolumns,
+      gridrows = _getGridColumnsAndRow4.gridrows;
 
   var nth = area.nth,
       width = area.width,
       height = area.height;
-  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth), utils_getAreaClassnameByWidthRatio(width / gridColumns), utils_getAreaClassnameByHeightRatio(height / gridRows), {
+  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth), utils_getAreaClassnameByWidthRatio(width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), {
     'novablocks-grid__area--portrait': !utils_isLandscape(area, attributes),
     'novablocks-grid__area--landscape': utils_isLandscape(area, attributes)
   }]);
@@ -21463,14 +20541,12 @@ var utils_getAreaClassnameByHeightRatio = function getAreaClassnameByHeightRatio
     'novablocks-grid__area--height-xl': 0.80 <= heightRatio
   }]);
 };
-
 var getGridColumnsAndRows = function getGridColumnsAndRows(attributes) {
   return {
-    gridColumns: !attributes.flipColsAndRows ? attributes.gridColumns : attributes.gridRows,
-    gridRows: !attributes.flipColsAndRows ? attributes.gridRows : attributes.gridColumns
+    gridcolumns: !attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows,
+    gridrows: !attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns
   };
 };
-
 var transposeMatrix = function transposeMatrix(source) {
   return Object.keys(source[0]).map(function (column) {
     return source.map(function (row) {
@@ -31858,6 +30934,908 @@ with_inner_blocks_addFilter('editor.BlockEdit', 'novablocks/with-inner-blocks-co
 // EXTERNAL MODULE: ./src/filters/with-grid-generator/attributes.json
 var with_grid_generator_attributes = __webpack_require__(136);
 
+// CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
+
+
+function layoutEngine_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function layoutEngine_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { layoutEngine_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { layoutEngine_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+ // This is the main workhorse containing the logic of our layout "engine".
+// Given a state, it will return a list of posts with details to handle their layout.
+
+var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
+  var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
+  // we need to do a couple of preliminary calculations.
+  // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
+  // This way we gain an easier understanding of what is going on at each step of the logic.
+  // In each matrix we will ignore index 0 since it is easier to start from 1,
+  // the same way CSS grid columns and rows behave.
+  // The order of these operation is important!
+  debug ? console.log("\nGenerating a new layout...\n\n") : false; // The "null" character:
+
+  var emptyChar = "X"; // These are the matrices we are going to calculate:
+  // The nth matrix: a bidimensional matrix the same size as the grid, holding in each cell what nth post should that cell belong to.
+  // From this matrix we can extrapolate many details since the same nth value will be used to fill all the cells belonging to a post.
+  // So we know the position and dimensions.
+
+  var nthMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The image weight matrix
+
+  var imageWeightMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The meta-details matrix
+
+  var metaDetailsMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // Helper matrices.
+  // The columns width matrix
+
+  var widthMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar); // The vertical fragment size matrix
+
+  var verticalFragmentSizeMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar);
+  var i, j; // Lets start PRELIMINARY CALCULATIONS!
+
+  /*
+  1. Calculate the columns width matrix.
+     We will take into account the feature position, feature size and fragmentation value.
+     The fragmentation value is interpreted in it's bit format, where 1 means a "cut".
+     The fragmentation value represents the fragmentation of the remaining gridcolumns after the feature size was deducted.
+   */
+
+  var widthIdx = 1; // First, mark the feature.
+
+  for (i = state.featureposition; i < state.featureposition + state.featuresize; i++) {
+    widthMatrix[i] = widthIdx;
+  } // Next, go from left to right in the columns width matrix, and fill each columns with the same unique number,
+  // Taking into account the fragmentation.
+  // And remember the positions we are int the virtual matrix without the feature.
+
+
+  var frgIdx = 0;
+  widthIdx++;
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    if (widthMatrix[i] === emptyChar) {
+      frgIdx++; // If the previous position has a different number than the current one, it is clear we should increment and write.
+
+      if (widthMatrix[i - 1] !== widthIdx) {
+        widthIdx++;
+      } else {
+        // If the previous position has the same value as the current one, we need to determine
+        // if the fragmentation bit pattern imposes a "cut".
+        var cutMarker = 1 << state.gridcolumns - state.featuresize - frgIdx; // If there is a 1 at this position, make a cut aka increase the number.
+
+        if ((cutMarker & state.fragmentation) === cutMarker) {
+          widthIdx++;
+        }
+      }
+
+      widthMatrix[i] = widthIdx;
+    }
+  }
+
+  debug ? console.log("The width matrix: ".padEnd(45, ' ') + widthMatrix) : false;
+  /*
+  2. Calculate the image weight matrix.
+     We will spread the image weight range left-to-right. Each column will consume the range according to its width.
+     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
+    */
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var end = i;
+
+    while (widthMatrix[end + 1] === widthMatrix[i]) {
+      end++;
+    } // Now calculate.
+
+
+    if (i === 1) {
+      imageWeightMatrix[1][i] = state.imageweightleft;
+    } else if (end === state.gridcolumns) {
+      imageWeightMatrix[1][i] = state.imageweightright;
+    } else {
+      imageWeightMatrix[1][i] = Math.round(state.imageweightleft - (state.imageweightleft - state.imageweightright) * (i + end - 1) / (2 * state.gridcolumns));
+    } // Fill the entire column with the same meta-details value.
+
+
+    for (j = i; j <= end; j++) {
+      imageWeightMatrix[1][j] = imageWeightMatrix[1][i];
+    }
+
+    i = end;
+  } // Copy the first row to all of the rest.
+
+
+  for (i = 2; i <= state.gridrows; i++) {
+    imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+  }
+
+  debug ? console.log("The image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
+  /*
+  3. Calculate the meta-details matrix.
+     We will spread the meta-details range left-to-right. Each column will consume the range according to its width.
+     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
+   */
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var _end = i;
+
+    while (widthMatrix[_end + 1] === widthMatrix[i]) {
+      _end++;
+    } // Now calculate.
+
+
+    if (i === 1) {
+      metaDetailsMatrix[1][i] = state.metadetailsleft;
+    } else if (_end === state.gridcolumns) {
+      metaDetailsMatrix[1][i] = state.metadetailsright;
+    } else {
+      metaDetailsMatrix[1][i] = state.metadetailsleft - (state.metadetailsleft - state.metadetailsright) * (i + _end - 1) / (2 * state.gridcolumns); // If we are instructed to balance MD with IW, we will multiply the MD value with the "distance" of the IW value from the "center" of the IW range.
+
+      if (state.balancemdandiw && 0 !== state.imageweightleft - state.imageweightright) {
+        metaDetailsMatrix[1][i] = metaDetailsMatrix[1][i] * (Math.abs(state.imageweightleft - state.imageweightright) / 2 / imageWeightMatrix[1][i]);
+      }
+
+      metaDetailsMatrix[1][i] = Math.round(metaDetailsMatrix[1][i]);
+    } // Fill the entire column with the same meta-details value.
+
+
+    for (j = i; j <= _end; j++) {
+      metaDetailsMatrix[1][j] = metaDetailsMatrix[1][i];
+    }
+
+    i = _end;
+  } // Copy the first row to all of the rest.
+
+
+  for (i = 2; i <= state.gridrows; i++) {
+    metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+  }
+
+  debug ? console.log("The meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
+  /*
+  4. Handle the boost feature emphasis.
+     We will assign the maximum meta-details and image weight value to the feature, and assign its current value to the column holding the maximum values.
+  */
+
+  if (state.boostfeature && state.featuresize > 0) {
+    // Find column with maximum meta-details value, if the feature isn't already at the max.
+    var maxMetaDetailsPos = 1,
+        maxImageWeightPos = 1;
+
+    for (i = 1; i <= state.gridcolumns; i++) {
+      if (metaDetailsMatrix[1][i] > metaDetailsMatrix[1][maxMetaDetailsPos]) {
+        maxMetaDetailsPos = i;
+      }
+
+      if (imageWeightMatrix[1][i] > imageWeightMatrix[1][maxImageWeightPos]) {
+        maxImageWeightPos = i;
+      }
+    }
+
+    if (maxMetaDetailsPos !== state.featureposition) {
+      // We have something to switch.
+      var featureValue = metaDetailsMatrix[1][state.featureposition];
+      var maxValue = metaDetailsMatrix[1][maxMetaDetailsPos]; // Go and fill each column with the switched values.
+
+      i = maxMetaDetailsPos;
+
+      while (widthMatrix[i] === widthMatrix[maxMetaDetailsPos]) {
+        metaDetailsMatrix[1][i] = featureValue;
+        i++;
+      }
+
+      i = state.featureposition;
+
+      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
+        metaDetailsMatrix[1][i] = maxValue;
+        i++;
+      } // Copy the first row to all of the rest.
+
+
+      for (i = 2; i <= state.gridrows; i++) {
+        metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+      }
+
+      debug ? console.log("The boosted feature meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
+    }
+
+    if (maxImageWeightPos !== state.featureposition) {
+      // We have something to switch.
+      var _featureValue = imageWeightMatrix[1][state.featureposition];
+      var _maxValue = imageWeightMatrix[1][maxImageWeightPos]; // Go and fill each column with the switched values.
+
+      i = maxImageWeightPos;
+
+      while (widthMatrix[i] === widthMatrix[maxImageWeightPos]) {
+        imageWeightMatrix[1][i] = _featureValue;
+        i++;
+      }
+
+      i = state.featureposition;
+
+      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
+        imageWeightMatrix[1][i] = _maxValue;
+        i++;
+      } // Copy the first row to all of the rest.
+
+
+      for (i = 2; i <= state.gridrows; i++) {
+        imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+      }
+
+      debug ? console.log("The boosted feature image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
+    }
+  }
+  /*
+  5. Determine the vertical fragment size matrix.
+     The fragment size will range in the number of grid rows and 1.
+  */
+  // First determine the max meta-details and image weight value.
+
+
+  var maxMetaDetailsValue = metaDetailsMatrix[1][1],
+      maxImageWeightValue = imageWeightMatrix[1][1];
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    if (metaDetailsMatrix[1][i] > maxMetaDetailsValue) {
+      maxMetaDetailsValue = metaDetailsMatrix[1][i];
+    }
+
+    if (imageWeightMatrix[1][i] > maxImageWeightValue) {
+      maxImageWeightValue = imageWeightMatrix[1][i];
+    }
+  } // For the purpose of these calculations, maxMetaDetailsValue and maxImageWeightValue can't be zero.
+
+
+  if (maxImageWeightValue < 1) {
+    maxImageWeightValue = 1;
+  }
+
+  if (maxMetaDetailsValue < 1) {
+    maxMetaDetailsValue = 1;
+  }
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var _end2 = i;
+
+    while (widthMatrix[_end2 + 1] === widthMatrix[i]) {
+      _end2++;
+    } // Now calculate.
+
+
+    verticalFragmentSizeMatrix[i] = Math.round((metaDetailsMatrix[1][i] / maxMetaDetailsValue + imageWeightMatrix[1][i] / maxImageWeightValue) / 2 * state.gridrows); // The vertical fragment size can't be more than 3 times the column width (a really tall post).
+
+    if (verticalFragmentSizeMatrix[i] > (_end2 - i + 1) * 3) {
+      verticalFragmentSizeMatrix[i] = (_end2 - i + 1) * 3;
+    } // Also the vertical fragment size can't be less than 1.
+
+
+    if (verticalFragmentSizeMatrix[i] < 1) {
+      verticalFragmentSizeMatrix[i] = 1;
+    } // If the sub feature option is active, and we have a single column for the feature, reduce the vertical fragmentation with 25%.
+
+
+    if (state.subfeature && i === state.featureposition && state.featuresize > 0 && verticalFragmentSizeMatrix[i] === state.gridrows) {
+      verticalFragmentSizeMatrix[i] = Math.floor(verticalFragmentSizeMatrix[i] * 0.75);
+    } // Safety measures.
+
+
+    if (verticalFragmentSizeMatrix[i] < 1) {
+      verticalFragmentSizeMatrix[i] = 1;
+    } else if (verticalFragmentSizeMatrix[i] > state.gridrows) {
+      verticalFragmentSizeMatrix[i] = state.gridrows;
+    } // Fill the entire column with the same fragment size.
+
+
+    for (j = i; j <= _end2; j++) {
+      verticalFragmentSizeMatrix[j] = verticalFragmentSizeMatrix[i];
+    }
+
+    i = _end2;
+  }
+
+  debug ? console.log("The vertical fragment size matrix: ".padEnd(45, ' ') + verticalFragmentSizeMatrix) : false;
+  /*
+  6. Determine the nth bidimensional matrix.
+     Each grid cell will be filled with the nth post that cell belongs to. From this matrix we can determine the post grid coordinates,
+     its aspect ratio, area, etc.
+  */
+  // We start with the first post in the list.
+
+  var currentNth = 1; // Start with the feature column.
+
+  if (state.featuresize > 0) {
+    i = 1;
+
+    while (i <= verticalFragmentSizeMatrix[state.featureposition]) {
+      j = state.featureposition;
+
+      do {
+        nthMatrix[i][j] = currentNth;
+        j++;
+      } while (widthMatrix[state.featureposition] === widthMatrix[j]);
+
+      i++;
+    }
+
+    currentNth++;
+
+    if (i <= state.gridrows) {
+      // We have room under the feature for a secondary feature post.
+      // We will reduce the meta-details and image weight by 33% that of the main feature post.
+      while (i <= state.gridrows) {
+        j = state.featureposition;
+
+        do {
+          nthMatrix[i][j] = currentNth; // Adjust the meta-details and image weight.
+
+          metaDetailsMatrix[i][j] = Math.round(metaDetailsMatrix[i][j] * 0.66);
+          imageWeightMatrix[i][j] = Math.round(imageWeightMatrix[i][j] * 0.66);
+          j++;
+        } while (widthMatrix[state.featureposition] === widthMatrix[j]);
+
+        i++;
+      }
+
+      currentNth++;
+    }
+  } // Now start from the left top corner and go through each column, left to right.
+
+
+  var currentColumnStartCol = 1;
+  var currentPostStartRow;
+
+  while (currentColumnStartCol <= state.gridcolumns) {
+    if (nthMatrix[1][currentColumnStartCol] !== emptyChar) {
+      currentColumnStartCol++;
+      continue;
+    } // Fill the current column with posts.
+
+
+    currentPostStartRow = 1;
+
+    while (currentPostStartRow <= state.gridrows) {
+      i = currentPostStartRow;
+
+      while (i <= currentPostStartRow + verticalFragmentSizeMatrix[currentColumnStartCol] - 1 && i <= state.gridrows) {
+        j = currentColumnStartCol;
+
+        do {
+          nthMatrix[i][j] = currentNth;
+          j++;
+        } while (widthMatrix[currentColumnStartCol] === widthMatrix[j]);
+
+        i++;
+      }
+
+      currentNth++;
+      currentPostStartRow = i;
+    }
+  }
+
+  if (debug) {
+    console.log("\nThe nth matrix: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
+
+    for (i = 1; i < nthMatrix.length; i++) {
+      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
+    }
+  }
+  /*
+  7. Handle the hierarchy crossing.
+     We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
+     We will only cross if the left post matches in height a post or more on the right.
+     The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
+     Also, crossing at the top of the layout is more expensive than crossing at a lower row.
+  */
+  // We start with the first post in the list.
+
+
+  var maxNth = currentNth;
+  var hierachyCrossingStrenth = state.hierarchycrossing;
+  currentNth = 1;
+
+  while (hierachyCrossingStrenth > 0 && currentNth <= maxNth) {
+    var currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (false === currentPostDetails) {
+      currentNth++;
+      continue;
+    } // If the current post is all the way to the right edge, stop.
+
+
+    if (currentPostDetails.endGridColumn === state.gridcolumns) {
+      break;
+    } // Now identify its right-side neighbors.
+
+
+    var topNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.startGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+    var bottomNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.endGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix); // If the neighbors don't match the height in rows of the current post, skip this post from crossing.
+
+    if (topNeighborPostDetails.startGridRow !== currentPostDetails.startGridRow || bottomNeighborPostDetails.endGridRow !== currentPostDetails.endGridRow) {
+      currentNth++;
+      continue;
+    } // Calculate the score of the to-be replaced post(s).
+    // Each post's score correlated to its nth value. The lower the nth value the bigger the score boost.
+
+
+    var replacedPostScore = maxNth / topNeighborPostDetails.nth * (topNeighborPostDetails.area + topNeighborPostDetails.imageWeight + topNeighborPostDetails.metaDetails);
+
+    if (bottomNeighborPostDetails.nth !== topNeighborPostDetails.nth) {
+      var counter = 1;
+
+      for (i = topNeighborPostDetails.nth + 1; i <= bottomNeighborPostDetails.nth; i++) {
+        var postDetails = getNthPostDetails(i, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+        if (false === postDetails) {
+          continue;
+        }
+
+        counter++; // It is increasingly "harder" to replace multiple posts.
+
+        replacedPostScore += maxNth / postDetails.nth * (postDetails.area + postDetails.imageWeight + postDetails.metaDetails * counter) * counter;
+      }
+    } // If the to-be replaced post(s) score is larger than the remaining hierarchy crossing strength, nothing to do.
+
+
+    if (hierachyCrossingStrenth < replacedPostScore) {
+      currentNth++;
+      continue;
+    }
+
+    var currentPostScore = maxNth / currentPostDetails.nth * (currentPostDetails.area + currentPostDetails.imageWeight + currentPostDetails.metaDetails) * Math.pow(2 * hierachyCrossingStrenth / 50, 3); // If the current post score is bigger than the to-be replaced post(s) score, it's a go.
+
+    if (currentPostScore > replacedPostScore) {
+      // Expand the current post over the replaced ones.
+      for (i = topNeighborPostDetails.startGridRow; i <= bottomNeighborPostDetails.endGridRow; i++) {
+        for (j = topNeighborPostDetails.startGridColumn; j <= topNeighborPostDetails.endGridColumn; j++) {
+          nthMatrix[i][j] = currentNth; // Also replace the image weight and meta-details.
+
+          imageWeightMatrix[i][j] = currentPostDetails.imageWeight;
+          metaDetailsMatrix[i][j] = currentPostDetails.metaDetails;
+        }
+      } // Decrease the crossing strength.
+
+
+      hierachyCrossingStrenth -= replacedPostScore; // We now have a gap in the post list. We need to renumber the posts after the replaced ones and adjust the maxnth.
+      // The image weight and meta-details remain unchanged.
+      // Work with the new maxNth.
+
+      maxNth = renumberNthMatrix(nthMatrix);
+    }
+
+    currentNth++;
+  }
+
+  if (debug) {
+    logMatrix(nthMatrix);
+    logMatrix(imageWeightMatrix);
+    logMatrix(metaDetailsMatrix);
+  } // Transpose all matrices if flipcolssrows attribute is set to true
+
+
+  var finalNthMatrix = !state.flipcolsrows ? nthMatrix : transposeMatrix(nthMatrix);
+  var finalMetaMatrix = !state.flipcolsrows ? metaDetailsMatrix : transposeMatrix(metaDetailsMatrix);
+  var finalImageMatrix = !state.flipcolsrows ? imageWeightMatrix : transposeMatrix(imageWeightMatrix);
+  /*
+  8. Finally, generate the posts list.
+  */
+
+  var areaColumns = getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);
+  ;
+  moveLargestColumnToStart(areaColumns);
+  return areaColumns;
+};
+
+var moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {
+  var firstRowColumns = areaColumns.filter(function (column) {
+    return column.row === 1;
+  }).sort(function (col1, col2) {
+    return col2.width - col1.width;
+  });
+  var largestColumnIndex = areaColumns.findIndex(function (column) {
+    return column === firstRowColumns[0];
+  });
+  areaColumns.splice(0, 0, areaColumns.splice(largestColumnIndex, 1)[0]);
+  return areaColumns;
+};
+
+var logMatrix = function logMatrix(matrix) {
+  for (var i = 0; i < matrix.length; i++) {
+    console.log(' '.padEnd(41, ' ') + i + ' - ' + matrix[i].join(' '));
+  }
+};
+
+function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
+  areasArray = normalizeAreas(nthMatrix, areasArray);
+  areasArray = areasArray.map(function (area) {
+    return layoutEngine_objectSpread({
+      initialPostsCount: area.postsCount
+    }, area);
+  });
+  var columns = areasArray.map(function (area) {
+    return {
+      row: area.row,
+      col: area.col,
+      width: area.width,
+      height: area.height
+    };
+  });
+  columns = columns.filter(function (data, index) {
+    var foundIndex = columns.findIndex(function (column) {
+      return column.col === data.col && column.width === data.width;
+    });
+    return index === foundIndex;
+  });
+  return columns.map(function (column) {
+    var areas = areasArray.filter(function (area) {
+      return column.col === area.col && column.width === area.width;
+    });
+    return {
+      row: column.row,
+      col: column.col,
+      width: column.width,
+      height: areas.reduce(function (newHeight, area) {
+        return newHeight + area.height;
+      }, 0),
+      areas: areas
+    };
+  });
+}
+
+function getNthValues(nthMatrix) {
+  var values = [];
+  var value;
+
+  for (var i = 1; i < nthMatrix.length - 1; i++) {
+    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
+      value = nthMatrix[i][j];
+
+      if (values.indexOf(value) === -1) {
+        values.push(value);
+      }
+    }
+  }
+
+  return values;
+}
+
+function normalizeAreas(nthMatrix, areasArray) {
+  var values = getNthValues(nthMatrix);
+  values.sort();
+
+  for (var i = 0; i < values.length; i++) {
+    if (i + 1 !== values[i]) {
+      replaceNth(values[i], i + 1, nthMatrix);
+    }
+  }
+
+  return values.map(function (nth, index) {
+    var area = areasArray.find(function (area) {
+      return area.nth === nth;
+    });
+    area.nth = index + 1;
+    return area;
+  });
+}
+
+function replaceNth(nth1, nth2, nthMatrix) {
+  for (var i = 1; i < nthMatrix.length - 1; i++) {
+    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
+      if (nthMatrix[i][j] === nth1) {
+        nthMatrix[i][j] = nth2;
+      }
+    }
+  }
+}
+/**
+ *
+ * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
+ * We will only cross if the left post matches in height a post or more on the right.
+ * The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
+ * Also, crossing at the top of the layout is more expensive than crossing at a lower row.
+ *
+ */
+
+
+var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
+  var currentPostDetails;
+
+  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
+    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (currentPostDetails) {
+      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
+    }
+  }
+};
+
+var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
+  var nth = nthMatrix[row][col];
+  var width = getAreaWidth(nth, nthMatrix);
+  var height = getAreaHeight(nth, nthMatrix);
+  var initialWidth = width;
+  var initialHeight = height;
+  var currentAreaIndex = -1;
+
+  if (Array.isArray(areasArray)) {
+    currentAreaIndex = areasArray.findIndex(function (area) {
+      return area.nth === nthMatrix[row][col];
+    });
+  } // Featured area should not be merged
+
+
+  if (nth === 1) {
+    return;
+  }
+
+  var nextRow,
+      nextCol,
+      nextWidth,
+      nextHeight,
+      nextNth,
+      nextNthStart,
+      searching = true,
+      mergeable = false;
+
+  while (searching) {
+    nextNth = nthMatrix[row + height][col];
+    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
+    nextRow = nextNthStart.row;
+    nextCol = nextNthStart.col;
+    nextWidth = getAreaWidth(nextNth, nthMatrix);
+    nextHeight = getAreaHeight(nextNth, nthMatrix);
+
+    if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
+      height = height + nextHeight;
+      mergeable = true;
+
+      if (currentAreaIndex > -1) {
+        areasArray[currentAreaIndex].postsCount += 1;
+        areasArray[currentAreaIndex].height = height;
+      }
+    } else {
+      searching = false;
+    }
+  }
+
+  searching = !mergeable;
+
+  while (searching) {
+    nextNth = nthMatrix[row][col + width];
+    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
+    nextRow = nextNthStart.row;
+    nextCol = nextNthStart.col;
+    nextWidth = getAreaWidth(nextNth, nthMatrix);
+    nextHeight = getAreaHeight(nextNth, nthMatrix);
+
+    if (height === nextHeight && row === nextRow && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {
+      width = width + nextWidth;
+      mergeable = true;
+
+      if (currentAreaIndex > -1) {
+        areasArray[currentAreaIndex].postsCount += 1;
+        areasArray[currentAreaIndex].width = width;
+      }
+    } else {
+      searching = false;
+    }
+  }
+
+  fillArea(nthMatrix, row, col, width, height);
+};
+
+var fillArea = function fillArea(nthMatrix, row, col, width, height) {
+  for (var i = row; i < row + height; i++) {
+    for (var j = col; j < col + width; j++) {
+      nthMatrix[i][j] = nthMatrix[row][col];
+    }
+  }
+};
+
+var getFirstOccurence = function getFirstOccurence(nth, nthMatrix) {
+  for (var i = 0; i < nthMatrix.length; i++) {
+    for (var j = 0; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] === nth) {
+        return {
+          row: i,
+          col: j
+        };
+      }
+    }
+  }
+
+  return {};
+};
+
+var getAreaWidth = function getAreaWidth(nth, nthMatrix) {
+  var _getFirstOccurence = getFirstOccurence(nth, nthMatrix),
+      row = _getFirstOccurence.row,
+      col = _getFirstOccurence.col;
+
+  var width = 1;
+
+  while (nth === nthMatrix[row][col + width]) {
+    width = width + 1;
+  }
+
+  return width;
+};
+
+var getAreaHeight = function getAreaHeight(nth, nthMatrix) {
+  var _getFirstOccurence2 = getFirstOccurence(nth, nthMatrix),
+      row = _getFirstOccurence2.row,
+      col = _getFirstOccurence2.col;
+
+  var height = 1;
+
+  while ("undefined" !== typeof nthMatrix[row + height] && nth === nthMatrix[row + height][col]) {
+    height = height + 1;
+  }
+
+  return height;
+};
+
+var getPostAreas = function getPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var postsList = [];
+  var currentNth = 1;
+  var currentPostDetails;
+
+  while (currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix)) {
+    var newLayoutPost = {
+      'nthPost': currentNth,
+      'gridArea': "".concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.endGridRow + 1, " / ").concat(currentPostDetails.endGridColumn + 1),
+      'imageWeight': currentPostDetails.imageWeight,
+      'metaDetails': currentPostDetails.metaDetails
+    }; // If we should flip rows and columns, simply flip them in the gridArea.
+
+    if (state.flipcolsrows) {
+      newLayoutPost.gridArea = "".concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.endGridColumn + 1, " / ").concat(currentPostDetails.endGridRow + 1);
+    }
+
+    postsList.push(newLayoutPost);
+    currentNth++;
+  }
+
+  return postsList;
+};
+
+var renumberNthMatrix = function renumberNthMatrix(nthMatrix) {
+  var newNth = 1;
+  var postDetails;
+
+  for (var nth = 1; nth <= getMaxNth(nthMatrix); nth++) {
+    // If we can't find a nth post, it means it was removed and we need to adjust.
+    postDetails = getNthPostDetails(nth, nthMatrix);
+
+    if (false === postDetails) {
+      continue;
+    }
+
+    if (postDetails.nth > newNth) {
+      // Change the current post's nth.
+      for (var i = postDetails.startGridRow; i <= postDetails.endGridRow; i++) {
+        for (var j = postDetails.startGridColumn; j <= postDetails.endGridColumn; j++) {
+          nthMatrix[i][j] = newNth;
+        }
+      }
+    }
+
+    newNth++;
+  } // Return the maxNth.
+
+
+  return newNth - 1;
+};
+
+var getMaxNth = function getMaxNth(nthMatrix) {
+  var maxNth = 0;
+
+  for (var i = 1; i < nthMatrix.length; i++) {
+    for (var j = 1; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] > maxNth) {
+        maxNth = nthMatrix[i][j];
+      }
+    }
+  }
+
+  return maxNth;
+};
+
+var getAreasArray = function getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var currentPostDetails;
+  var areasArray = [];
+
+  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
+    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (currentPostDetails) {
+      areasArray.push({
+        nth: currentPostDetails.nth,
+        col: currentPostDetails.startGridColumn,
+        row: currentPostDetails.startGridRow,
+        width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
+        height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
+        metaDetails: currentPostDetails.metaDetails,
+        imageWeight: currentPostDetails.imageWeight,
+        postsCount: 1
+      });
+    }
+  }
+
+  return areasArray;
+};
+
+var getNthPostDetails = function getNthPostDetails(nth, nthMatrix) {
+  var metaDetailsMatrix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var imageWeightMatrix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var postDetails = false; // Go through the nthMatrix and search for the currentNth value.
+
+  for (var i = 1; i < nthMatrix.length; i++) {
+    for (var j = 1; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] === nth) {
+        // Found the left top corner.
+        postDetails = {
+          'nth': nth,
+          'startGridColumn': j,
+          'startGridRow': i,
+          'endGridColumn': j,
+          'endGridRow': i,
+          'metaDetails': metaDetailsMatrix ? metaDetailsMatrix[i][j] : false,
+          'imageWeight': imageWeightMatrix ? imageWeightMatrix[i][j] : false,
+          'area': 1
+        }; // Find the right bottom corner.
+
+        while (j < nthMatrix[i].length && nthMatrix[i][j] === nthMatrix[i][j + 1]) {
+          j++;
+        }
+
+        postDetails.endGridColumn = j;
+
+        while (i < nthMatrix.length && nthMatrix[i][j] === nthMatrix[i + 1][j]) {
+          i++;
+        }
+
+        postDetails.endGridRow = i; // Calculate the area.
+
+        postDetails.area = (postDetails.endGridRow - postDetails.startGridRow + 1) * (postDetails.endGridColumn - postDetails.startGridColumn + 1);
+        return postDetails;
+      }
+    }
+  }
+
+  return postDetails;
+};
+
+var initUnidimensionalMatrix = function initUnidimensionalMatrix(matrix, length) {
+  var character = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "X";
+  // The 0 index will be filled with a different character for easier logic.
+  matrix.push("/"); // Go to equal the length, since the 0 index will be ignored.
+  // Fill with "null" entries with the provided character.
+
+  for (var i = 1; i <= length; i++) {
+    matrix.push(character);
+  } // Put an extra entry for easier logic.
+
+
+  matrix.push("/");
+  return matrix;
+};
+
+var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, height, nullChar) {
+  // Put in a guard row, at index 0.
+  matrix.push(initUnidimensionalMatrix([], width, "/")); // Go to equal the width, since the 0 index will be ignored.
+
+  for (var i = 0; i < height; i++) {
+    matrix.push(initUnidimensionalMatrix([], width, nullChar));
+  } // Put in an extra guard row.
+
+
+  matrix.push(initUnidimensionalMatrix([], width, "/"));
+  return matrix;
+};
 // CONCATENATED MODULE: ./src/components/grid-generator/controls.js
 
 
@@ -31881,11 +31859,11 @@ var controls_wp$components = wp.components,
     controls_ToggleControl = controls_wp$components.ToggleControl;
 
 var getMinFeatureSize = function getMinFeatureSize(attributes) {
-  return Math.ceil(attributes.gridColumns * 0.25);
+  return Math.ceil(attributes.gridcolumns * 0.25);
 };
 
 var getMaxFeatureSize = function getMaxFeatureSize(attributes) {
-  return Math.ceil(attributes.gridColumns * 0.75);
+  return Math.ceil(attributes.gridcolumns * 0.75);
 };
 
 var getMinFeaturePosition = function getMinFeaturePosition(attributes) {
@@ -31893,7 +31871,7 @@ var getMinFeaturePosition = function getMinFeaturePosition(attributes) {
 };
 
 var getMaxFeaturePosition = function getMaxFeaturePosition(attributes) {
-  return attributes.gridColumns - attributes.featureSize + 1;
+  return attributes.gridcolumns - attributes.featuresize + 1;
 };
 
 var getMinColumnsFragmentation = function getMinColumnsFragmentation(attributes) {
@@ -31901,7 +31879,7 @@ var getMinColumnsFragmentation = function getMinColumnsFragmentation(attributes)
 };
 
 var getMaxColumnsFragmentation = function getMaxColumnsFragmentation(attributes) {
-  return Math.max(0, Math.pow(2, attributes.gridColumns - attributes.featureSize - 1) - 1);
+  return Math.max(0, Math.pow(2, attributes.gridcolumns - attributes.featuresize - 1) - 1);
 };
 
 var clamp = function clamp(number, min, max) {
@@ -31911,51 +31889,51 @@ var clamp = function clamp(number, min, max) {
 var normalizeAttributes = function normalizeAttributes(newAttributes, attributes) {
   var atts = controls_objectSpread(controls_objectSpread({}, attributes), newAttributes);
 
-  atts.featureSize = clamp(atts.featureSize, getMinFeatureSize(atts), getMaxFeatureSize(atts));
-  atts.featurePosition = clamp(atts.featurePosition, getMinFeaturePosition(atts), getMaxFeaturePosition(atts));
-  atts.columnsFragmentation = clamp(atts.columnsFragmentation, getMinColumnsFragmentation(atts), getMaxColumnsFragmentation(atts));
+  atts.featuresize = clamp(atts.featuresize, getMinFeatureSize(atts), getMaxFeatureSize(atts));
+  atts.featureposition = clamp(atts.featureposition, getMinFeaturePosition(atts), getMaxFeaturePosition(atts));
+  atts.fragmentation = clamp(atts.fragmentation, getMinColumnsFragmentation(atts), getMaxColumnsFragmentation(atts));
   return atts;
 };
 
 var controls_getRandomAttributes = function getRandomAttributes() {
   var postsToShow = getRandomBetween(3, 20);
-  var gridColumns = getRandomBetween(2, 12);
-  var gridRows = getRandomBetween(2, 12);
-  var minFeatureSize = Math.ceil(gridColumns * 0.25);
-  var maxFeatureSize = Math.ceil(gridColumns * 0.75);
-  var featureSize = getRandomBetween(minFeatureSize, maxFeatureSize);
+  var gridcolumns = getRandomBetween(2, 12);
+  var gridrows = getRandomBetween(2, 12);
+  var minFeatureSize = Math.ceil(gridcolumns * 0.25);
+  var maxFeatureSize = Math.ceil(gridcolumns * 0.75);
+  var featuresize = getRandomBetween(minFeatureSize, maxFeatureSize);
   var minFeaturePosition = 1;
-  var maxFeaturePosition = gridColumns - featureSize + 1;
-  var featurePosition = getRandomBetween(minFeaturePosition, maxFeaturePosition);
+  var maxFeaturePosition = gridcolumns - featuresize + 1;
+  var featureposition = getRandomBetween(minFeaturePosition, maxFeaturePosition);
   var minColumnsFragmentation = 0;
-  var maxColumnsFragmentation = Math.max(0, Math.pow(2, gridColumns - featureSize - 1) - 1);
-  var columnsFragmentation = getRandomBetween(minColumnsFragmentation, maxColumnsFragmentation);
-  var imageWeightLeft = getRandomBetween(0, 10);
-  var imageWeightRight = getRandomBetween(0, 10);
-  var metaWeightLeft = getRandomBetween(0, 10);
-  var metaWeightRight = getRandomBetween(0, 10);
-  var boostFeatureEmphasis = getRandomBooleanValue();
-  var subFeature = getRandomBooleanValue();
-  var balanceMDandIW = getRandomBooleanValue();
-  var hierarchyCrossing = getRandomBetween(0, 200);
-  var flipColsAndRows = getRandomBooleanValue();
+  var maxColumnsFragmentation = Math.max(0, Math.pow(2, gridcolumns - featuresize - 1) - 1);
+  var fragmentation = getRandomBetween(minColumnsFragmentation, maxColumnsFragmentation);
+  var imageweightleft = getRandomBetween(0, 10);
+  var imageweightright = getRandomBetween(0, 10);
+  var metadetailsleft = getRandomBetween(0, 10);
+  var metadetailsright = getRandomBetween(0, 10);
+  var boostfeature = getRandomBooleanValue();
+  var subfeature = getRandomBooleanValue();
+  var balancemdandiw = getRandomBooleanValue();
+  var hierarchycrossing = getRandomBetween(0, 200);
+  var flipcolsrows = getRandomBooleanValue();
   return {
     layoutStyle: 'parametric',
     postsToShow: postsToShow,
-    gridColumns: gridColumns,
-    gridRows: gridRows,
-    featureSize: featureSize,
-    featurePosition: featurePosition,
-    columnsFragmentation: columnsFragmentation,
-    imageWeightLeft: imageWeightLeft,
-    imageWeightRight: imageWeightRight,
-    metaWeightLeft: metaWeightLeft,
-    metaWeightRight: metaWeightRight,
-    boostFeatureEmphasis: boostFeatureEmphasis,
-    subFeature: subFeature,
-    balanceMDandIW: balanceMDandIW,
-    hierarchyCrossing: hierarchyCrossing,
-    flipColsAndRows: flipColsAndRows
+    gridcolumns: gridcolumns,
+    gridrows: gridrows,
+    featuresize: featuresize,
+    featureposition: featureposition,
+    fragmentation: fragmentation,
+    imageweightleft: imageweightleft,
+    imageweightright: imageweightright,
+    metadetailsleft: metadetailsleft,
+    metadetailsright: metadetailsright,
+    boostfeature: boostfeature,
+    subfeature: subfeature,
+    balancemdandiw: balancemdandiw,
+    hierarchycrossing: hierarchycrossing,
+    flipcolsrows: flipcolsrows
   };
 };
 
@@ -31983,20 +31961,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 6,
-        gridColumns: 6,
-        gridRows: 6,
-        featureSize: 4,
-        featurePosition: 1,
-        columnsFragmentation: 1,
-        imageWeightLeft: 1,
-        imageWeightRight: 2,
-        metaWeightLeft: 10,
-        metaWeightRight: 6,
-        boostFeatureEmphasis: false,
-        subFeature: true,
-        balanceMDandIW: false,
-        hierarchyCrossing: 30,
-        flipColsAndRows: false
+        gridcolumns: 6,
+        gridrows: 6,
+        featuresize: 4,
+        featureposition: 1,
+        fragmentation: 1,
+        imageweightleft: 1,
+        imageweightright: 2,
+        metadetailsleft: 10,
+        metadetailsright: 6,
+        boostfeature: false,
+        subfeature: true,
+        balancemdandiw: false,
+        hierarchycrossing: 30,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 15: Figma 2',
@@ -32004,20 +31982,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 6,
-        gridColumns: 6,
-        gridRows: 6,
-        featureSize: 2,
-        featurePosition: 4,
-        columnsFragmentation: 0,
-        imageWeightLeft: 8,
-        imageWeightRight: 2,
-        metaWeightLeft: 7,
-        metaWeightRight: 2,
-        boostFeatureEmphasis: false,
-        subFeature: false,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 6,
+        gridrows: 6,
+        featuresize: 2,
+        featureposition: 4,
+        fragmentation: 0,
+        imageweightleft: 8,
+        imageweightright: 2,
+        metadetailsleft: 7,
+        metadetailsright: 2,
+        boostfeature: false,
+        subfeature: false,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 47: Circular',
@@ -32025,20 +32003,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 5,
-        gridColumns: 12,
-        gridRows: 8,
-        featureSize: 7,
-        featurePosition: 3,
-        columnsFragmentation: 0,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 0,
-        metaWeightRight: 10,
-        boostFeatureEmphasis: true,
-        subFeature: true,
-        balanceMDandIW: false,
-        hierarchyCrossing: 153,
-        flipColsAndRows: false
+        gridcolumns: 12,
+        gridrows: 8,
+        featuresize: 7,
+        featureposition: 3,
+        fragmentation: 0,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 0,
+        metadetailsright: 10,
+        boostfeature: true,
+        subfeature: true,
+        balancemdandiw: false,
+        hierarchycrossing: 153,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 19: New Yorker',
@@ -32046,20 +32024,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 9,
-        gridColumns: 6,
-        gridRows: 5,
-        featureSize: 3,
-        featurePosition: 2,
-        columnsFragmentation: 2,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 0,
-        metaWeightRight: 0,
-        boostFeatureEmphasis: false,
-        subFeature: true,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 6,
+        gridrows: 5,
+        featuresize: 3,
+        featureposition: 2,
+        fragmentation: 2,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 0,
+        metadetailsright: 0,
+        boostfeature: false,
+        subfeature: true,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 19: New Yorker+',
@@ -32067,20 +32045,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 9,
-        gridColumns: 7,
-        gridRows: 5,
-        featureSize: 3,
-        featurePosition: 3,
-        columnsFragmentation: 2,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 0,
-        metaWeightRight: 0,
-        boostFeatureEmphasis: false,
-        subFeature: true,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false,
+        gridcolumns: 7,
+        gridrows: 5,
+        featuresize: 3,
+        featureposition: 3,
+        fragmentation: 2,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 0,
+        metadetailsright: 0,
+        boostfeature: false,
+        subfeature: true,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false,
         containerHeight: 45
       }
     }, {
@@ -32089,20 +32067,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 6,
-        gridColumns: 8,
-        gridRows: 6,
-        featureSize: 4,
-        featurePosition: 1,
-        columnsFragmentation: 2,
-        imageWeightLeft: 8,
-        imageWeightRight: 8,
-        metaWeightLeft: 7,
-        metaWeightRight: 2,
-        boostFeatureEmphasis: false,
-        subFeature: false,
-        balanceMDandIW: false,
-        hierarchyCrossing: 120,
-        flipColsAndRows: false
+        gridcolumns: 8,
+        gridrows: 6,
+        featuresize: 4,
+        featureposition: 1,
+        fragmentation: 2,
+        imageweightleft: 8,
+        imageweightright: 8,
+        metadetailsleft: 7,
+        metadetailsright: 2,
+        boostfeature: false,
+        subfeature: false,
+        balancemdandiw: false,
+        hierarchycrossing: 120,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 10: Abundance',
@@ -32110,20 +32088,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 10,
-        gridColumns: 10,
-        gridRows: 6,
-        featureSize: 3,
-        featurePosition: 6,
-        columnsFragmentation: 0,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 0,
-        metaWeightRight: 0,
-        boostFeatureEmphasis: false,
-        subFeature: false,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 10,
+        gridrows: 6,
+        featuresize: 3,
+        featureposition: 6,
+        fragmentation: 0,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 0,
+        metadetailsright: 0,
+        boostfeature: false,
+        subfeature: false,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 12: Half in Half',
@@ -32131,20 +32109,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 7,
-        gridColumns: 6,
-        gridRows: 4,
-        featureSize: 3,
-        featurePosition: 1,
-        columnsFragmentation: 3,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 7,
-        metaWeightRight: 0,
-        boostFeatureEmphasis: false,
-        subFeature: false,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 6,
+        gridrows: 4,
+        featuresize: 3,
+        featureposition: 1,
+        fragmentation: 3,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 7,
+        metadetailsright: 0,
+        boostfeature: false,
+        subfeature: false,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 30: Julia',
@@ -32152,20 +32130,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 5,
-        gridColumns: 4,
-        gridRows: 8,
-        featureSize: 2,
-        featurePosition: 2,
-        columnsFragmentation: 0,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 0,
-        metaWeightRight: 3,
-        boostFeatureEmphasis: false,
-        subFeature: true,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 4,
+        gridrows: 8,
+        featuresize: 2,
+        featureposition: 2,
+        fragmentation: 0,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 0,
+        metadetailsright: 3,
+        boostfeature: false,
+        subfeature: true,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 32: Julia+',
@@ -32173,20 +32151,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 8,
-        gridColumns: 4,
-        gridRows: 8,
-        featureSize: 2,
-        featurePosition: 2,
-        columnsFragmentation: 0,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 0,
-        metaWeightRight: 3,
-        boostFeatureEmphasis: false,
-        subFeature: true,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 4,
+        gridrows: 8,
+        featuresize: 2,
+        featureposition: 2,
+        fragmentation: 0,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 0,
+        metadetailsright: 3,
+        boostfeature: false,
+        subfeature: true,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }, {
       label: 'TR 13: Julia X',
@@ -32194,20 +32172,20 @@ var controls_LayoutControls = function LayoutControls(props) {
       preset: {
         layoutStyle: 'parametric',
         postsToShow: 6,
-        gridColumns: 5,
-        gridRows: 4,
-        featureSize: 2,
-        featurePosition: 2,
-        columnsFragmentation: 0,
-        imageWeightLeft: 1,
-        imageWeightRight: 0,
-        metaWeightLeft: 6,
-        metaWeightRight: 3,
-        boostFeatureEmphasis: false,
-        subFeature: false,
-        balanceMDandIW: false,
-        hierarchyCrossing: 0,
-        flipColsAndRows: false
+        gridcolumns: 5,
+        gridrows: 4,
+        featuresize: 2,
+        featureposition: 2,
+        fragmentation: 0,
+        imageweightleft: 1,
+        imageweightright: 0,
+        metadetailsleft: 6,
+        metadetailsright: 3,
+        boostfeature: false,
+        subfeature: false,
+        balancemdandiw: false,
+        hierarchycrossing: 0,
+        flipcolsrows: false
       }
     }],
     randomize: controls_getRandomAttributes
@@ -32287,20 +32265,20 @@ var controls_PostsCountControl = function PostsCountControl(props) {
 
 var controls_ParametricLayoutControls = function ParametricLayoutControls(props) {
   var attributes = props.attributes;
-  var featureSize = attributes.featureSize,
-      featurePosition = attributes.featurePosition,
-      columnsFragmentation = attributes.columnsFragmentation,
-      gridColumns = attributes.gridColumns,
-      gridRows = attributes.gridRows,
-      imageWeightLeft = attributes.imageWeightLeft,
-      imageWeightRight = attributes.imageWeightRight,
-      metaWeightLeft = attributes.metaWeightLeft,
-      metaWeightRight = attributes.metaWeightRight,
-      boostFeatureEmphasis = attributes.boostFeatureEmphasis,
-      subFeature = attributes.subFeature,
-      balanceMDandIW = attributes.balanceMDandIW,
-      hierarchyCrossing = attributes.hierarchyCrossing,
-      flipColsAndRows = attributes.flipColsAndRows,
+  var featuresize = attributes.featuresize,
+      featureposition = attributes.featureposition,
+      fragmentation = attributes.fragmentation,
+      gridcolumns = attributes.gridcolumns,
+      gridrows = attributes.gridrows,
+      imageweightleft = attributes.imageweightleft,
+      imageweightright = attributes.imageweightright,
+      metadetailsleft = attributes.metadetailsleft,
+      metadetailsright = attributes.metadetailsright,
+      boostfeature = attributes.boostfeature,
+      subfeature = attributes.subfeature,
+      balancemdandiw = attributes.balancemdandiw,
+      hierarchycrossing = attributes.hierarchycrossing,
+      flipcolsrows = attributes.flipcolsrows,
       automaticPostsNumber = attributes.automaticPostsNumber,
       postsToShow = attributes.postsToShow; // used to store previous values of postsToShow
 
@@ -32311,7 +32289,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     props.setAttributes(normalizedAttributes);
   };
 
-  var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
+  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var autoPostsCount = getPostsCount(areaColumns);
   return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(controls_DebugControls, props), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Posts Count')
@@ -32337,20 +32315,20 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     title: controls_('Grid Columns + Rows')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Columns", '__plugin_txtd'),
-    value: gridColumns,
-    onChange: function onChange(gridColumns) {
+    value: gridcolumns,
+    onChange: function onChange(gridcolumns) {
       setAttributes({
-        gridColumns: gridColumns
+        gridcolumns: gridcolumns
       });
     },
     min: 1,
     max: 12
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Rows", '__plugin_txtd'),
-    value: gridRows,
-    onChange: function onChange(gridRows) {
+    value: gridrows,
+    onChange: function onChange(gridrows) {
       setAttributes({
-        gridRows: gridRows
+        gridrows: gridrows
       });
     },
     min: 1,
@@ -32359,30 +32337,30 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     title: controls_('Main Parameters')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Feature Size", '__plugin_txtd'),
-    value: featureSize,
-    onChange: function onChange(featureSize) {
+    value: featuresize,
+    onChange: function onChange(featuresize) {
       setAttributes({
-        featureSize: featureSize
+        featuresize: featuresize
       });
     },
     min: getMinFeatureSize(attributes),
     max: getMaxFeatureSize(attributes)
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Feature Position", '__plugin_txtd'),
-    value: featurePosition,
-    onChange: function onChange(featurePosition) {
+    value: featureposition,
+    onChange: function onChange(featureposition) {
       setAttributes({
-        featurePosition: featurePosition
+        featureposition: featureposition
       });
     },
     min: getMinFeaturePosition(attributes),
     max: getMaxFeaturePosition(attributes)
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Columns Fragmentation", '__plugin_txtd'),
-    value: columnsFragmentation,
-    onChange: function onChange(columnsFragmentation) {
+    value: fragmentation,
+    onChange: function onChange(fragmentation) {
       setAttributes({
-        columnsFragmentation: columnsFragmentation
+        fragmentation: fragmentation
       });
     },
     min: getMinColumnsFragmentation(attributes),
@@ -32391,40 +32369,40 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     title: controls_('Elements Granularity')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Image Weight Left", '__plugin_txtd'),
-    value: imageWeightLeft,
-    onChange: function onChange(imageWeightLeft) {
+    value: imageweightleft,
+    onChange: function onChange(imageweightleft) {
       setAttributes({
-        imageWeightLeft: imageWeightLeft
+        imageweightleft: imageweightleft
       });
     },
     min: 0,
     max: 10
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Image Weight Right", '__plugin_txtd'),
-    value: imageWeightRight,
-    onChange: function onChange(imageWeightRight) {
+    value: imageweightright,
+    onChange: function onChange(imageweightright) {
       setAttributes({
-        imageWeightRight: imageWeightRight
+        imageweightright: imageweightright
       });
     },
     min: 0,
     max: 10
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Meta Weight Left", '__plugin_txtd'),
-    value: metaWeightLeft,
-    onChange: function onChange(metaWeightLeft) {
+    value: metadetailsleft,
+    onChange: function onChange(metadetailsleft) {
       setAttributes({
-        metaWeightLeft: metaWeightLeft
+        metadetailsleft: metadetailsleft
       });
     },
     min: 0,
     max: 10
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Meta Weight Right", '__plugin_txtd'),
-    value: metaWeightRight,
-    onChange: function onChange(metaWeightRight) {
+    value: metadetailsright,
+    onChange: function onChange(metadetailsright) {
       setAttributes({
-        metaWeightRight: metaWeightRight
+        metadetailsright: metadetailsright
       });
     },
     min: 0,
@@ -32433,44 +32411,44 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     title: controls_('Playful parameters')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Boost Feature Emphasis', '__plugin_txtd'),
-    checked: boostFeatureEmphasis,
+    checked: boostfeature,
     onChange: function onChange() {
       return setAttributes({
-        boostFeatureEmphasis: !boostFeatureEmphasis
+        boostfeature: !boostfeature
       });
     }
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Sub Feature', '__plugin_txtd'),
-    checked: subFeature,
+    checked: subfeature,
     onChange: function onChange() {
       return setAttributes({
-        subFeature: !subFeature
+        subfeature: !subfeature
       });
     }
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Balance MD and IW', '__plugin_txtd'),
-    checked: balanceMDandIW,
+    checked: balancemdandiw,
     onChange: function onChange() {
       return setAttributes({
-        balanceMDandIW: !balanceMDandIW
+        balancemdandiw: !balancemdandiw
       });
     }
   }), Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Hierarchy Crossing", '__plugin_txtd'),
-    value: hierarchyCrossing,
-    onChange: function onChange(hierarchyCrossing) {
+    value: hierarchycrossing,
+    onChange: function onChange(hierarchycrossing) {
       setAttributes({
-        hierarchyCrossing: hierarchyCrossing
+        hierarchycrossing: hierarchycrossing
       });
     },
     min: 0,
     max: 200
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Flip Cols and Rows', '__plugin_txtd'),
-    checked: flipColsAndRows,
+    checked: flipcolsrows,
     onChange: function onChange() {
       return setAttributes({
-        flipColsAndRows: !flipColsAndRows
+        flipcolsrows: !flipcolsrows
       });
     }
   })));
@@ -39096,12 +39074,8 @@ var card_wp$element = wp.element,
 
 var card_Card = function Card(props) {
   var isLandscape = props.isLandscape || false;
-  return isLandscape ? Object(external_React_["createElement"])(card_CardLandscape, props) : Object(external_React_["createElement"])(card_CardPortrait, props);
-};
-
-var card_CardLandscape = function CardLandscape(props) {
   return Object(external_React_["createElement"])("div", {
-    className: "novablocks-card novablocks-card--landscape novablocks-card__inner-container novablocks-block__content"
+    className: "novablocks-card novablocks-card--".concat(isLandscape ? 'landscape' : 'portrait', " novablocks-block__content")
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout"
   }, Object(external_React_["createElement"])("div", {
@@ -39109,18 +39083,8 @@ var card_CardLandscape = function CardLandscape(props) {
   }, Object(external_React_["createElement"])(card_media, {
     id: props === null || props === void 0 ? void 0 : props.mediaId
   })), Object(external_React_["createElement"])("div", {
-    className: "novablocks-card__layout-content"
+    className: "novablocks-card__layout-content novablocks-card__inner-container"
   }, Object(external_React_["createElement"])(card_CardContents, props))));
-};
-
-var card_CardPortrait = function CardPortrait(props) {
-  return Object(external_React_["createElement"])("div", {
-    className: "novablocks-card novablocks-card--portrait novablocks-card__inner-container novablocks-block__content"
-  }, Object(external_React_["createElement"])("div", {
-    className: "wp-block novablocks-grid__item-image"
-  }, Object(external_React_["createElement"])(card_media, {
-    id: props === null || props === void 0 ? void 0 : props.mediaId
-  })), Object(external_React_["createElement"])(card_CardContents, props));
 };
 
 var card_CardContents = function CardContents(props) {
@@ -39135,21 +39099,17 @@ var card_CardContents = function CardContents(props) {
     className: "novablocks-card__meta"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__meta-size-modifier"
-  }, meta))), Object(external_React_["createElement"])("div", {
-    className: "wp-block novablocks-grid__item-title"
-  }, Object(external_React_["createElement"])(TitleTagName, {
-    className: "novablocks-card__title"
+  }, meta))), Object(external_React_["createElement"])(TitleTagName, {
+    className: "wp-block novablocks-grid__item-title novablocks-card__title"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__title-size-modifier"
-  }, title))), Object(external_React_["createElement"])("div", {
+  }, title)), Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-content novablocks-card__description"
   }, Object(external_React_["createElement"])(card_RawHTML, {
     className: "novablocks-card__content-size-modifier"
   }, content)), Object(external_React_["createElement"])("div", {
-    className: "wp-block novablocks-grid__item-buttons"
-  }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-card__buttons"
-  }, buttons)));
+    className: "wp-block novablocks-grid__item-buttons novablocks-card__buttons"
+  }, buttons));
 };
 
 /* harmony default export */ var components_card = (card_Card);
@@ -39319,7 +39279,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
       containerHeight = attributes.containerHeight,
       imagePadding = attributes.imagePadding,
       imageResizing = attributes.imageResizing;
-  var areaColumns = layoutEngine_applyLayoutEngine(prepareAttributes(attributes));
+  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var addedCards = 0;
   redistributeCardsInAreas(areaColumns, cardsCount, attributes);
 

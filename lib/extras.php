@@ -1093,18 +1093,11 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		$style = join( '; ', $cssProps );
 
-		$titleTag = 'h' . $attributes['level'];
-
 		ob_start(); ?>
 
 		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
 			<div class="wp-block-group__inner-container">
-				<?php if ( ! empty( $attributes['showCollectionTitle'] ) ) {
-					echo '<' . $titleTag . ' class="novablocks-collection__title">' . $attributes['title'] . '</' . $titleTag . '>';
-				}
-				if ( ! empty( $attributes['showCollectionSubtitle'] ) ) { ?>
-					<p class="novablocks-collection__subtitle is-style-lead"><?php echo $attributes['subtitle']; ?></p>
-				<?php } ?>
+				<?php echo novablocks_get_collection_header_output( $attributes ); ?>
 				<div class="novablocks-collection__cards wp-block alignwide">
 					<div class="novablocks-collection__layout">
 						<?php echo $content; ?>
@@ -1115,6 +1108,22 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		<?php return ob_get_clean();
 	}
+}
+
+function novablocks_get_collection_header_output( $attributes ) {
+	$titleTag = 'h' . $attributes['level'];
+
+	ob_start();
+
+	if ( ! empty( $attributes['showCollectionTitle'] ) ) {
+		echo '<' . $titleTag . ' class="novablocks-collection__title">' . $attributes['title'] . '</' . $titleTag . '>';
+	}
+
+	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) { ?>
+		<p class="novablocks-collection__subtitle is-style-lead"><?php echo $attributes['subtitle']; ?></p>
+	<?php }
+
+	return ob_get_clean();
 }
 
 function novablocks_get_card_media_markup( $url ) {

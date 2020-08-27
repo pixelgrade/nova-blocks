@@ -11,8 +11,7 @@
 	}
 }
 
-.novablocks-card,
-.novablocks-card__layout-content {
+.novablocks-card__layout-content[class] {
 
 	> .novablocks-grid__item-image + *,
 	> .novablocks-grid__item-buttons {

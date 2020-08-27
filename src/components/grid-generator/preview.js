@@ -4,10 +4,8 @@ import { applyLayoutEngine } from "./layoutEngine";
 import {
 	getParametricLayoutAreaClassName,
 	getGridStyle,
-	prepareAttributes,
 	redistributeCardsInAreas,
 	isLandscape,
-	getPostsCount
 } from "./utils";
 
 import Post from "../../blocks/posts-collection/post";
@@ -67,7 +65,7 @@ const ParametricLayoutPreview = ( props ) => {
 		imageResizing,
 	} = attributes;
 
-	let areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
+	let areaColumns = applyLayoutEngine( attributes );
 	let addedCards = 0;
 
 	redistributeCardsInAreas( areaColumns, cardsCount, attributes );

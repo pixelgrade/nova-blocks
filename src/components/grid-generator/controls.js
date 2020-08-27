@@ -1,10 +1,10 @@
 import { ControlsSection, ControlsTab } from "../control-sections";
 import { getControlsClasses } from "../../utils";
-import { prepareAttributes, getPostsCount } from "../../components/grid-generator/utils";
+import { getPostsCount } from "../../components/grid-generator/utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import ControlsGroup from "../controls-group";
 import { PresetControl } from "../../components";
-import { getRandomBetween, getRandomArrayFromArray, getRandomBooleanValue } from "../../utils";
+import { getRandomBetween, getRandomBooleanValue } from "../../utils";
 
 const { __ } = wp.i18n;
 
@@ -20,11 +20,11 @@ const {
 
 
 const getMinFeatureSize = ( attributes ) => {
-	return Math.ceil( attributes.gridColumns * 0.25 );
+	return Math.ceil( attributes.gridcolumns * 0.25 );
 };
 
 const getMaxFeatureSize = ( attributes ) => {
-	return Math.ceil( attributes.gridColumns * 0.75 );
+	return Math.ceil( attributes.gridcolumns * 0.75 );
 };
 
 const getMinFeaturePosition = ( attributes ) => {
@@ -32,7 +32,7 @@ const getMinFeaturePosition = ( attributes ) => {
 };
 
 const getMaxFeaturePosition = ( attributes ) => {
-	return attributes.gridColumns - attributes.featureSize + 1;
+	return attributes.gridcolumns - attributes.featuresize + 1;
 };
 
 const getMinColumnsFragmentation = ( attributes ) => {
@@ -40,7 +40,7 @@ const getMinColumnsFragmentation = ( attributes ) => {
 };
 
 const getMaxColumnsFragmentation = ( attributes ) => {
-	return Math.max( 0, Math.pow( 2, attributes.gridColumns - attributes.featureSize - 1 ) - 1 );
+	return Math.max( 0, Math.pow( 2, attributes.gridcolumns - attributes.featuresize - 1 ) - 1 );
 };
 
 const clamp = ( number, min, max ) => {
@@ -54,9 +54,9 @@ const normalizeAttributes = ( newAttributes, attributes ) => {
 		...newAttributes
 	};
 
-	atts.featureSize = clamp( atts.featureSize, getMinFeatureSize( atts ), getMaxFeatureSize( atts ) );
-	atts.featurePosition = clamp( atts.featurePosition, getMinFeaturePosition( atts ), getMaxFeaturePosition( atts ) );
-	atts.columnsFragmentation = clamp( atts.columnsFragmentation, getMinColumnsFragmentation( atts ), getMaxColumnsFragmentation( atts ) );
+	atts.featuresize = clamp( atts.featuresize, getMinFeatureSize( atts ), getMaxFeatureSize( atts ) );
+	atts.featureposition = clamp( atts.featureposition, getMinFeaturePosition( atts ), getMaxFeaturePosition( atts ) );
+	atts.fragmentation = clamp( atts.fragmentation, getMinColumnsFragmentation( atts ), getMaxColumnsFragmentation( atts ) );
 
 	return atts;
 };
@@ -64,49 +64,49 @@ const normalizeAttributes = ( newAttributes, attributes ) => {
 const getRandomAttributes = () => {
 
 	const postsToShow = getRandomBetween( 3, 20 );
-	const gridColumns = getRandomBetween( 2, 12 );
-	const gridRows = getRandomBetween( 2, 12 );
+	const gridcolumns = getRandomBetween( 2, 12 );
+	const gridrows = getRandomBetween( 2, 12 );
 
-	const minFeatureSize = Math.ceil( gridColumns * 0.25 );
-	const maxFeatureSize = Math.ceil( gridColumns * 0.75 );
-	const featureSize = getRandomBetween( minFeatureSize, maxFeatureSize );
+	const minFeatureSize = Math.ceil( gridcolumns * 0.25 );
+	const maxFeatureSize = Math.ceil( gridcolumns * 0.75 );
+	const featuresize = getRandomBetween( minFeatureSize, maxFeatureSize );
 
 	const minFeaturePosition = 1;
-	const maxFeaturePosition = gridColumns - featureSize + 1;
-	const featurePosition = getRandomBetween( minFeaturePosition, maxFeaturePosition );
+	const maxFeaturePosition = gridcolumns - featuresize + 1;
+	const featureposition = getRandomBetween( minFeaturePosition, maxFeaturePosition );
 
 	const minColumnsFragmentation = 0;
-	const maxColumnsFragmentation = Math.max( 0, Math.pow( 2, gridColumns - featureSize - 1 ) - 1 );
-	const columnsFragmentation = getRandomBetween( minColumnsFragmentation, maxColumnsFragmentation );
+	const maxColumnsFragmentation = Math.max( 0, Math.pow( 2, gridcolumns - featuresize - 1 ) - 1 );
+	const fragmentation = getRandomBetween( minColumnsFragmentation, maxColumnsFragmentation );
 
-	const imageWeightLeft = getRandomBetween(0, 10);
-	const imageWeightRight = getRandomBetween(0, 10);
-	const metaWeightLeft = getRandomBetween(0, 10);
-	const metaWeightRight = getRandomBetween(0, 10);
+	const imageweightleft = getRandomBetween(0, 10);
+	const imageweightright = getRandomBetween(0, 10);
+	const metadetailsleft = getRandomBetween(0, 10);
+	const metadetailsright = getRandomBetween(0, 10);
 
-	const boostFeatureEmphasis = getRandomBooleanValue();
-	const subFeature = getRandomBooleanValue();
-	const balanceMDandIW = getRandomBooleanValue();
-	const hierarchyCrossing = getRandomBetween(0, 200);
-	const flipColsAndRows = getRandomBooleanValue();
+	const boostfeature = getRandomBooleanValue();
+	const subfeature = getRandomBooleanValue();
+	const balancemdandiw = getRandomBooleanValue();
+	const hierarchycrossing = getRandomBetween(0, 200);
+	const flipcolsrows = getRandomBooleanValue();
 
 	return {
 		layoutStyle: 'parametric',
 		postsToShow,
-		gridColumns,
-		gridRows,
-		featureSize,
-		featurePosition,
-		columnsFragmentation,
-		imageWeightLeft,
-		imageWeightRight,
-		metaWeightLeft,
-		metaWeightRight,
-		boostFeatureEmphasis,
-		subFeature,
-		balanceMDandIW,
-		hierarchyCrossing,
-		flipColsAndRows
+		gridcolumns,
+		gridrows,
+		featuresize,
+		featureposition,
+		fragmentation,
+		imageweightleft,
+		imageweightright,
+		metadetailsleft,
+		metadetailsright,
+		boostfeature,
+		subfeature,
+		balancemdandiw,
+		hierarchycrossing,
+		flipcolsrows
 	}
 };
 
@@ -139,20 +139,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,
-							gridColumns: 6,
-							gridRows: 6,
-							featureSize: 4,
-							featurePosition: 1,
-							columnsFragmentation: 1,
-							imageWeightLeft: 1,
-							imageWeightRight: 2,
-							metaWeightLeft: 10,
-							metaWeightRight: 6,
-							boostFeatureEmphasis: false,
-							subFeature: true,
-							balanceMDandIW: false,
-							hierarchyCrossing: 30,
-							flipColsAndRows: false
+							gridcolumns: 6,
+							gridrows: 6,
+							featuresize: 4,
+							featureposition: 1,
+							fragmentation: 1,
+							imageweightleft: 1,
+							imageweightright: 2,
+							metadetailsleft: 10,
+							metadetailsright: 6,
+							boostfeature: false,
+							subfeature: true,
+							balancemdandiw: false,
+							hierarchycrossing: 30,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 15: Figma 2',
@@ -160,20 +160,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,
-							gridColumns: 6,
-							gridRows: 6,
-							featureSize: 2,
-							featurePosition: 4,
-							columnsFragmentation: 0,
-							imageWeightLeft: 8,
-							imageWeightRight: 2,
-							metaWeightLeft: 7,
-							metaWeightRight: 2,
-							boostFeatureEmphasis: false,
-							subFeature: false,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 6,
+							gridrows: 6,
+							featuresize: 2,
+							featureposition: 4,
+							fragmentation: 0,
+							imageweightleft: 8,
+							imageweightright: 2,
+							metadetailsleft: 7,
+							metadetailsright: 2,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 47: Circular',
@@ -181,20 +181,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 5,
-							gridColumns: 12,
-							gridRows: 8,
-							featureSize: 7,
-							featurePosition: 3,
-							columnsFragmentation: 0,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 0,
-							metaWeightRight: 10,
-							boostFeatureEmphasis: true,
-							subFeature: true,
-							balanceMDandIW: false,
-							hierarchyCrossing: 153,
-							flipColsAndRows: false
+							gridcolumns: 12,
+							gridrows: 8,
+							featuresize: 7,
+							featureposition: 3,
+							fragmentation: 0,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 0,
+							metadetailsright: 10,
+							boostfeature: true,
+							subfeature: true,
+							balancemdandiw: false,
+							hierarchycrossing: 153,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 19: New Yorker',
@@ -202,20 +202,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 9,
-							gridColumns: 6,
-							gridRows: 5,
-							featureSize: 3,
-							featurePosition: 2,
-							columnsFragmentation: 2,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 0,
-							metaWeightRight: 0,
-							boostFeatureEmphasis: false,
-							subFeature: true,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 6,
+							gridrows: 5,
+							featuresize: 3,
+							featureposition: 2,
+							fragmentation: 2,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 0,
+							metadetailsright: 0,
+							boostfeature: false,
+							subfeature: true,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 19: New Yorker+',
@@ -223,20 +223,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 9,
-							gridColumns: 7,
-							gridRows: 5,
-							featureSize: 3,
-							featurePosition: 3,
-							columnsFragmentation: 2,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 0,
-							metaWeightRight: 0,
-							boostFeatureEmphasis: false,
-							subFeature: true,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false,
+							gridcolumns: 7,
+							gridrows: 5,
+							featuresize: 3,
+							featureposition: 3,
+							fragmentation: 2,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 0,
+							metadetailsright: 0,
+							boostfeature: false,
+							subfeature: true,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false,
 							containerHeight: 45,
 						}
 					}, {
@@ -245,20 +245,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,
-							gridColumns: 8,
-							gridRows: 6,
-							featureSize: 4,
-							featurePosition: 1,
-							columnsFragmentation: 2,
-							imageWeightLeft: 8,
-							imageWeightRight: 8,
-							metaWeightLeft: 7,
-							metaWeightRight: 2,
-							boostFeatureEmphasis: false,
-							subFeature: false,
-							balanceMDandIW: false,
-							hierarchyCrossing: 120,
-							flipColsAndRows: false
+							gridcolumns: 8,
+							gridrows: 6,
+							featuresize: 4,
+							featureposition: 1,
+							fragmentation: 2,
+							imageweightleft: 8,
+							imageweightright: 8,
+							metadetailsleft: 7,
+							metadetailsright: 2,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 120,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 10: Abundance',
@@ -266,20 +266,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 10,
-							gridColumns: 10,
-							gridRows: 6,
-							featureSize: 3,
-							featurePosition: 6,
-							columnsFragmentation: 0,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 0,
-							metaWeightRight: 0,
-							boostFeatureEmphasis: false,
-							subFeature: false,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 10,
+							gridrows: 6,
+							featuresize: 3,
+							featureposition: 6,
+							fragmentation: 0,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 0,
+							metadetailsright: 0,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 12: Half in Half',
@@ -287,20 +287,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 7,
-							gridColumns: 6,
-							gridRows: 4,
-							featureSize: 3,
-							featurePosition: 1,
-							columnsFragmentation: 3,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 7,
-							metaWeightRight: 0,
-							boostFeatureEmphasis: false,
-							subFeature: false,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 6,
+							gridrows: 4,
+							featuresize: 3,
+							featureposition: 1,
+							fragmentation: 3,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 7,
+							metadetailsright: 0,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 30: Julia',
@@ -308,20 +308,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 5,
-							gridColumns: 4,
-							gridRows: 8,
-							featureSize: 2,
-							featurePosition: 2,
-							columnsFragmentation: 0,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 0,
-							metaWeightRight: 3,
-							boostFeatureEmphasis: false,
-							subFeature: true,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 4,
+							gridrows: 8,
+							featuresize: 2,
+							featureposition: 2,
+							fragmentation: 0,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 0,
+							metadetailsright: 3,
+							boostfeature: false,
+							subfeature: true,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 32: Julia+',
@@ -329,20 +329,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 8,
-							gridColumns: 4,
-							gridRows: 8,
-							featureSize: 2,
-							featurePosition: 2,
-							columnsFragmentation: 0,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 0,
-							metaWeightRight: 3,
-							boostFeatureEmphasis: false,
-							subFeature: true,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 4,
+							gridrows: 8,
+							featuresize: 2,
+							featureposition: 2,
+							fragmentation: 0,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 0,
+							metadetailsright: 3,
+							boostfeature: false,
+							subfeature: true,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					}, {
 						label: 'TR 13: Julia X',
@@ -350,20 +350,20 @@ const LayoutControls = ( props ) => {
 						preset: {
 							layoutStyle: 'parametric',
 							postsToShow: 6,
-							gridColumns: 5,
-							gridRows: 4,
-							featureSize: 2,
-							featurePosition: 2,
-							columnsFragmentation: 0,
-							imageWeightLeft: 1,
-							imageWeightRight: 0,
-							metaWeightLeft: 6,
-							metaWeightRight: 3,
-							boostFeatureEmphasis: false,
-							subFeature: false,
-							balanceMDandIW: false,
-							hierarchyCrossing: 0,
-							flipColsAndRows: false
+							gridcolumns: 5,
+							gridrows: 4,
+							featuresize: 2,
+							featureposition: 2,
+							fragmentation: 0,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 6,
+							metadetailsright: 3,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false
 						}
 					} ] }
 					randomize={ getRandomAttributes }
@@ -459,23 +459,23 @@ const ParametricLayoutControls = ( props ) => {
 	} = props;
 
 	const {
-		featureSize,
-		featurePosition,
-		columnsFragmentation,
+		featuresize,
+		featureposition,
+		fragmentation,
 
-		gridColumns,
-		gridRows,
+		gridcolumns,
+		gridrows,
 
-		imageWeightLeft,
-		imageWeightRight,
-		metaWeightLeft,
-		metaWeightRight,
+		imageweightleft,
+		imageweightright,
+		metadetailsleft,
+		metadetailsright,
 
-		boostFeatureEmphasis,
-		subFeature,
-		balanceMDandIW,
-		hierarchyCrossing,
-		flipColsAndRows,
+		boostfeature,
+		subfeature,
+		balancemdandiw,
+		hierarchycrossing,
+		flipcolsrows,
 
 		automaticPostsNumber,
 		postsToShow,
@@ -489,7 +489,7 @@ const ParametricLayoutControls = ( props ) => {
 		props.setAttributes( normalizedAttributes );
 	};
 
-	const areaColumns = applyLayoutEngine( prepareAttributes( attributes ) );
+	const areaColumns = applyLayoutEngine( attributes );
 	const autoPostsCount = getPostsCount( areaColumns );
 
 	return (
@@ -518,18 +518,18 @@ const ParametricLayoutControls = ( props ) => {
 			<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
 				<RangeControl
 					label={ __( `Columns`, '__plugin_txtd' ) }
-					value={ gridColumns }
-					onChange={ gridColumns => {
-						setAttributes( { gridColumns } );
+					value={ gridcolumns }
+					onChange={ gridcolumns => {
+						setAttributes( { gridcolumns } );
 					} }
 					min={ 1 }
 					max={ 12 }
 				/>
 				<RangeControl
 					label={ __( `Rows`, '__plugin_txtd' ) }
-					value={ gridRows }
-					onChange={ gridRows => {
-						setAttributes( { gridRows } );
+					value={ gridrows }
+					onChange={ gridrows => {
+						setAttributes( { gridrows } );
 					} }
 					min={ 1 }
 					max={ 12 }
@@ -538,27 +538,27 @@ const ParametricLayoutControls = ( props ) => {
 			<ControlsGroup title={ __( 'Main Parameters' ) }>
 				<RangeControl
 					label={ __( `Feature Size`, '__plugin_txtd' ) }
-					value={ featureSize }
-					onChange={ featureSize => {
-						setAttributes( { featureSize } );
+					value={ featuresize }
+					onChange={ featuresize => {
+						setAttributes( { featuresize } );
 					} }
 					min={ getMinFeatureSize( attributes ) }
 					max={ getMaxFeatureSize( attributes ) }
 				/>
 				<RangeControl
 					label={ __( `Feature Position`, '__plugin_txtd' ) }
-					value={ featurePosition }
-					onChange={ featurePosition => {
-						setAttributes( { featurePosition } );
+					value={ featureposition }
+					onChange={ featureposition => {
+						setAttributes( { featureposition } );
 					} }
 					min={ getMinFeaturePosition( attributes ) }
 					max={ getMaxFeaturePosition( attributes ) }
 				/>
 				<RangeControl
 					label={ __( `Columns Fragmentation`, '__plugin_txtd' ) }
-					value={ columnsFragmentation }
-					onChange={ columnsFragmentation => {
-						setAttributes( { columnsFragmentation } );
+					value={ fragmentation }
+					onChange={ fragmentation => {
+						setAttributes( { fragmentation } );
 					} }
 					min={ getMinColumnsFragmentation( attributes ) }
 					max={ getMaxColumnsFragmentation( attributes ) }
@@ -567,29 +567,29 @@ const ParametricLayoutControls = ( props ) => {
 			<ControlsGroup title={ __( 'Elements Granularity' ) }>
 				<RangeControl
 					label={ __( `Image Weight Left`, '__plugin_txtd' ) }
-					value={ imageWeightLeft }
-					onChange={ imageWeightLeft => { setAttributes( { imageWeightLeft } ) } }
+					value={ imageweightleft }
+					onChange={ imageweightleft => { setAttributes( { imageweightleft } ) } }
 					min={ 0 }
 					max={ 10 }
 				/>
 				<RangeControl
 					label={ __( `Image Weight Right`, '__plugin_txtd' ) }
-					value={ imageWeightRight }
-					onChange={ imageWeightRight => { setAttributes( { imageWeightRight } ) } }
+					value={ imageweightright }
+					onChange={ imageweightright => { setAttributes( { imageweightright } ) } }
 					min={ 0 }
 					max={ 10 }
 				/>
 				<RangeControl
 					label={ __( `Meta Weight Left`, '__plugin_txtd' ) }
-					value={ metaWeightLeft }
-					onChange={ metaWeightLeft => { setAttributes( { metaWeightLeft } ) } }
+					value={ metadetailsleft }
+					onChange={ metadetailsleft => { setAttributes( { metadetailsleft } ) } }
 					min={ 0 }
 					max={ 10 }
 				/>
 				<RangeControl
 					label={ __( `Meta Weight Right`, '__plugin_txtd' ) }
-					value={ metaWeightRight }
-					onChange={ metaWeightRight => { setAttributes( { metaWeightRight } ) } }
+					value={ metadetailsright }
+					onChange={ metadetailsright => { setAttributes( { metadetailsright } ) } }
 					min={ 0 }
 					max={ 10 }
 				/>
@@ -597,32 +597,32 @@ const ParametricLayoutControls = ( props ) => {
 			<ControlsGroup title={ __( 'Playful parameters' ) }>
 				<ToggleControl
 					label={__( 'Boost Feature Emphasis', '__plugin_txtd' )}
-					checked={ boostFeatureEmphasis }
-					onChange={ () => setAttributes( { boostFeatureEmphasis : ! boostFeatureEmphasis } )}
+					checked={ boostfeature }
+					onChange={ () => setAttributes( { boostfeature : ! boostfeature } )}
 				/>
 				<ToggleControl
 					label={__( 'Sub Feature', '__plugin_txtd' )}
-					checked={ subFeature }
-					onChange={ () => setAttributes( { subFeature : ! subFeature } )}
+					checked={ subfeature }
+					onChange={ () => setAttributes( { subfeature : ! subfeature } )}
 				/>
 				<ToggleControl
 					label={__( 'Balance MD and IW', '__plugin_txtd' )}
-					checked={ balanceMDandIW }
-					onChange={ () => setAttributes( { balanceMDandIW : ! balanceMDandIW } )}
+					checked={ balancemdandiw }
+					onChange={ () => setAttributes( { balancemdandiw : ! balancemdandiw } )}
 				/>
 				<RangeControl
 					label={ __( `Hierarchy Crossing`, '__plugin_txtd' ) }
-					value={ hierarchyCrossing }
-					onChange={ hierarchyCrossing => {
-						setAttributes( { hierarchyCrossing } );
+					value={ hierarchycrossing }
+					onChange={ hierarchycrossing => {
+						setAttributes( { hierarchycrossing } );
 					} }
 					min={ 0 }
 					max={ 200 }
 				/>
 				<ToggleControl
 					label={__( 'Flip Cols and Rows', '__plugin_txtd' )}
-					checked={ flipColsAndRows }
-					onChange={ () => setAttributes( { flipColsAndRows : ! flipColsAndRows } )}
+					checked={ flipcolsrows }
+					onChange={ () => setAttributes( { flipcolsrows : ! flipcolsrows } )}
 				/>
 			</ControlsGroup>
 		</Fragment>
