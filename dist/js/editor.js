@@ -39322,7 +39322,7 @@ var post_Post = function Post(props) {
   }, Object(external_React_["createElement"])("div", {
     className: "wp-block-button__link"
   }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-card__content-size-modifier"
+    className: "novablocks-buttons-size-modifier"
   }, post_('Read More')))));
   var cardProps = {
     mediaId: post.featured_media,
