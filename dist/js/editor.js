@@ -19423,7 +19423,9 @@ var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
 
 
 
+var APP_NAME = 'Nova Blocks';
 var COLLECTION_ID = 10606015;
+var URL_PARAMS = encodeURI("utm_source=".concat(APP_NAME, "&utm_medium=referral"));
 
 var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
   function PlaceholderImagesCollection() {
@@ -19508,7 +19510,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
           }
         },
         title: photo.description,
-        caption: "<p>Photo by <a href=\"".concat(photo.user.links.html, "\">").concat(photo.user.name, "</a> on <a href=\"https://unsplash.com\">Unsplash</a></p>"),
+        caption: "<p class=\"credits\">Photo by <a target=\"_blank\" href=\"".concat(photo.user.links.html, "?").concat(URL_PARAMS, "\">").concat(photo.user.name, "</a> on <a target=\"_blank\" href=\"https://unsplash.com?").concat(URL_PARAMS, "\">Unsplash</a></p>"),
         download: function download() {
           _this2.api.photos.downloadPhoto(photo);
         }
@@ -31304,14 +31306,12 @@ var grid_item_GridItem = /*#__PURE__*/function () {
   }, {
     key: "getImageStyle",
     value: function getImageStyle() {
-      var idx = this.idx,
-          row = this.row,
+      var row = this.row,
           col = this.col,
           objectPosition = this.objectPosition,
           imageResizing = this.imageResizing;
       var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
       var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-      var objPos = imageResizing === 'original' ? "".concat(positionX, "% ").concat(positionY, "%") : '';
       return {
         objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
         objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
@@ -31441,18 +31441,35 @@ var preview_AdvancedGalleryPreview = function AdvancedGalleryPreview(props) {
 };
 
 var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
-  var _gridItem$image, _gridItem$image$sizes, _gridItem$image$sizes2, _gridItem$image2;
+  var _image$sizes, _image$sizes$novabloc;
 
   var gridItem = _ref.gridItem;
-  // @todo standardize those damn images
+  var image = gridItem === null || gridItem === void 0 ? void 0 : gridItem.image;
+  var imageURL = (image === null || image === void 0 ? void 0 : (_image$sizes = image.sizes) === null || _image$sizes === void 0 ? void 0 : (_image$sizes$novabloc = _image$sizes.novablocks_medium) === null || _image$sizes$novabloc === void 0 ? void 0 : _image$sizes$novabloc.url) || (image === null || image === void 0 ? void 0 : image.url);
+  var imageCaption = image === null || image === void 0 ? void 0 : image.caption;
+  var imageDescription = image === null || image === void 0 ? void 0 : image.description;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-media",
+    style: gridItem.getImageStyle()
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
-    style: gridItem.getImageStyle(),
-    src: (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image = gridItem.image) === null || _gridItem$image === void 0 ? void 0 : (_gridItem$image$sizes = _gridItem$image.sizes) === null || _gridItem$image$sizes === void 0 ? void 0 : (_gridItem$image$sizes2 = _gridItem$image$sizes.novablocks_medium) === null || _gridItem$image$sizes2 === void 0 ? void 0 : _gridItem$image$sizes2.url) || (gridItem === null || gridItem === void 0 ? void 0 : (_gridItem$image2 = gridItem.image) === null || _gridItem$image2 === void 0 ? void 0 : _gridItem$image2.url)
-  }));
+    src: imageURL
+  })), Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-info"
+  }, typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-caption",
+    dangerouslySetInnerHTML: {
+      __html: imageCaption
+    }
+  }), typeof imageDescription === 'string' && Object(external_React_["createElement"])("div", {
+    className: "novablocks-advanced-gallery__grid-item-description",
+    dangerouslySetInnerHTML: {
+      __html: imageDescription
+    }
+  })));
 };
 
 /* harmony default export */ var preview = (preview_AdvancedGalleryPreview);
@@ -31464,7 +31481,7 @@ var placeholder_wp$blockEditor = wp.blockEditor,
 
 var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes;
+      onSelectImages = props.onSelectImages;
   var gallery = attributes === null || attributes === void 0 ? void 0 : attributes.images;
 
   if (!!gallery && !!gallery.length) {
@@ -31475,11 +31492,7 @@ var placeholder_AdvancedGalleryPlaceholder = function AdvancedGalleryPlaceholder
     icon: Object(external_React_["createElement"])(BlockIcon, {
       icon: "format-gallery"
     }),
-    onSelect: function onSelect(images) {
-      setAttributes({
-        images: images
-      });
-    },
+    onSelect: onSelectImages,
     accept: "image/*",
     allowedTypes: ['image'],
     multiple: true
@@ -31658,17 +31671,15 @@ var inspector_controls_AdvancedGalleryInspectorControls = function AdvancedGalle
 
 
 var block_controls_ = wp.i18n.__;
-var block_controls_apiFetch = wp.apiFetch;
 var block_controls_wp$blockEditor = wp.blockEditor,
     BlockControls = block_controls_wp$blockEditor.BlockControls,
     MediaUpload = block_controls_wp$blockEditor.MediaUpload;
 var block_controls_wp$components = wp.components,
     block_controls_Button = block_controls_wp$components.Button,
     block_controls_Toolbar = block_controls_wp$components.Toolbar;
-var block_controls_Fragment = wp.element.Fragment;
 
 var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryChangeMediaToolbar(props) {
-  var setAttributes = props.setAttributes,
+  var onSelectImages = props.onSelectImages,
       attributes = props.attributes;
   var gallery = attributes === null || attributes === void 0 ? void 0 : attributes.images;
 
@@ -31683,11 +31694,7 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
     value: gallery.map(function (image) {
       return image.id;
     }),
-    onSelect: function onSelect(images) {
-      setAttributes({
-        images: block_controls_normalize(images)
-      });
-    },
+    onSelect: onSelectImages,
     render: function render(_ref) {
       var open = _ref.open;
       return Object(external_React_["createElement"])(block_controls_Button, {
@@ -31698,22 +31705,32 @@ var block_controls_AdvancedGalleryChangeMediaToolbar = function AdvancedGalleryC
       });
     }
   }));
-}; // @todo use apiFetch to get large image size
-// and normalize title, caption and description structure
-
-
-var block_controls_normalize = function normalize(images) {
-  var promises = images.map(function (image) {});
-  return images;
 };
 
 var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockControls(props) {
-  var setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(BlockControls, null, Object(external_React_["createElement"])(block_controls_AdvancedGalleryChangeMediaToolbar, props));
 };
 
 /* harmony default export */ var block_controls = (block_controls_AdvancedGalleryBlockControls);
+// CONCATENATED MODULE: ./src/utils/images.js
+var images_apiFetch = wp.apiFetch;
+var normalizeImages = function normalizeImages(images) {
+  var promises = images.map(function (image) {
+    return images_apiFetch({
+      path: "/wp/v2/media/".concat(image.id)
+    }).then(function (data) {
+      var _data$description;
+
+      var newImage = Object.assign({}, image, {
+        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
+      });
+      return newImage;
+    });
+  });
+  return Promise.all(promises);
+};
 // CONCATENATED MODULE: ./src/components/advanced-gallery/index.js
+
 
 
 
@@ -31723,7 +31740,20 @@ var block_controls_AdvancedGalleryBlockControls = function AdvancedGalleryBlockC
 var advanced_gallery_Fragment = wp.element.Fragment;
 
 var advanced_gallery_AdvancedGallery = function AdvancedGallery(props) {
-  return Object(external_React_["createElement"])(advanced_gallery_Fragment, null, Object(external_React_["createElement"])(advanced_gallery_placeholder, props), Object(external_React_["createElement"])(preview, props), Object(external_React_["createElement"])(advanced_gallery_inspector_controls, props), Object(external_React_["createElement"])(block_controls, props));
+  var setAttributes = props.setAttributes;
+
+  var onSelectImages = function onSelectImages(images) {
+    normalizeImages(images).then(function (newImages) {
+      setAttributes({
+        images: newImages
+      });
+    });
+  };
+
+  var newProps = Object.assign({}, props, {
+    onSelectImages: onSelectImages
+  });
+  return Object(external_React_["createElement"])(advanced_gallery_Fragment, null, Object(external_React_["createElement"])(advanced_gallery_placeholder, newProps), Object(external_React_["createElement"])(preview, newProps), Object(external_React_["createElement"])(advanced_gallery_inspector_controls, newProps), Object(external_React_["createElement"])(block_controls, newProps));
 };
 
 /* harmony default export */ var advanced_gallery = (with_settings(advanced_gallery_AdvancedGallery));
@@ -34955,7 +34985,6 @@ function preview_isNativeReflectConstruct() { if (typeof Reflect === "undefined"
  */
 
 
-
 /**
  * WordPress dependencies
  */
@@ -35246,23 +35275,6 @@ var block_controls_SlideshowBlockControls = function SlideshowBlockControls(prop
 };
 
 /* harmony default export */ var slideshow_block_controls = (block_controls_SlideshowBlockControls);
-// CONCATENATED MODULE: ./src/utils/images.js
-var images_apiFetch = wp.apiFetch;
-var normalizeImages = function normalizeImages(images) {
-  var promises = images.map(function (image) {
-    return images_apiFetch({
-      path: "/wp/v2/media/".concat(image.id)
-    }).then(function (data) {
-      var _data$description;
-
-      var newImage = Object.assign({}, image, {
-        description: data === null || data === void 0 ? void 0 : (_data$description = data.description) === null || _data$description === void 0 ? void 0 : _data$description.raw
-      });
-      return newImage;
-    });
-  });
-  return Promise.all(promises);
-};
 // CONCATENATED MODULE: ./src/blocks/slideshow/edit.js
 
 

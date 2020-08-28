@@ -971,12 +971,13 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				$image = ( array ) $image;
 			}
 
-			$attachment = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
+			$attachment = get_post( $image['id'] );
+			$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
 			$url = '';
 
 			// fallback for import
-			if ( ! empty( $attachment ) ) {
-				$url = $attachment[0];
+			if ( ! empty( $attachment_src ) ) {
+				$url = $attachment_src[0];
 			}
 
 			if ( empty( $url ) ) {
@@ -985,7 +986,22 @@ function novablocks_render_advanced_gallery( $attributes ) {
 
 			if ( ! empty( $url ) ) {
 				echo '<div class="novablocks-advanced-gallery__grid-item">';
+				echo '<div class="novablocks-advanced-gallery__grid-item-media">';
 				echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
+				echo '</div>';
+
+				echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+
+				if ( ! empty( $image['caption'] ) ) {
+					echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+				}
+
+				if ( ! empty( $attachment->post_content ) ) {
+					echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
+				}
+
+				echo '</div>';
+
 				echo '</div>';
 			}
 		}
@@ -1227,3 +1243,11 @@ function novablocks_custom_image_sizes( $sizes ) {
 		'novablocks_tiny' => __('Nova Blocks Tiny'),
 	) );
 }
+
+function novablocks_rest_prepare_attachment( $response, $post, $request ) {
+	if ( ! empty( $response->data['description'] ) ) {
+		$response->data['description']['raw'] = $post->post_content;
+	}
+	return $response;
+}
+add_filter( 'rest_prepare_attachment', 'novablocks_rest_prepare_attachment', 10, 3 );
