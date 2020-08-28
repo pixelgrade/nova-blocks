@@ -11,11 +11,10 @@
 	}
 }
 
-.novablocks-card__layout-content[class] {
+.novablocks-card__layout-content[class][class] {
 
-	> .novablocks-grid__item-image + *,
 	> .novablocks-grid__item-buttons {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
+		margin-top: calc( 2 * var(--element-spacing) );
 	}
 }
 
