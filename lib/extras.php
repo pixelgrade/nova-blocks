@@ -1196,7 +1196,15 @@ function novablocks_get_image_url( $image, $size ) {
 function novablocks_get_media_title( $media ) {
 
 	if ( ! empty( $media['title'] ) ) {
-		return wp_filter_nohtml_kses( $media['title']['rendered'] );
+
+		if ( is_string( $media['title'] ) ) {
+			return $media['title'];
+		}
+
+		if ( isset( $media['title']['rendered'] ) ) {
+			return wp_filter_nohtml_kses( $media['title']['rendered'] );
+		}
+
 	}
 
 	return '';
