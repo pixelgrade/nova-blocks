@@ -19427,29 +19427,31 @@ var COLLECTION_ID = 10606015;
 
 var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
   function PlaceholderImagesCollection() {
-    var _window, _window$pixcare, _window$pixcare$theme;
-
     classCallCheck_default()(this, PlaceholderImagesCollection);
 
     this.fetchedImages = false;
     this.images = [];
-    var apiKey = (_window = window) === null || _window === void 0 ? void 0 : (_window$pixcare = _window.pixcare) === null || _window$pixcare === void 0 ? void 0 : (_window$pixcare$theme = _window$pixcare.themeConfig) === null || _window$pixcare$theme === void 0 ? void 0 : _window$pixcare$theme.unsplashApiKey;
-
-    if (!!apiKey) {
-      this.api = new unsplash_default.a({
-        accessKey: apiKey
-      });
-    } else {
-      this.fetchedImages = true;
-    }
   }
 
   createClass_default()(PlaceholderImagesCollection, [{
     key: "fetch",
     value: function fetch() {
-      var _this = this;
+      var _window,
+          _window$pixcare,
+          _window$pixcare$theme,
+          _this = this;
 
       var normalize = this.normalize.bind(this);
+      var apiKey = (_window = window) === null || _window === void 0 ? void 0 : (_window$pixcare = _window.pixcare) === null || _window$pixcare === void 0 ? void 0 : (_window$pixcare$theme = _window$pixcare.themeConfig) === null || _window$pixcare$theme === void 0 ? void 0 : _window$pixcare$theme.unsplashApiKey;
+
+      if (!apiKey) {
+        this.fetchedImages = true;
+        return [];
+      }
+
+      this.api = new unsplash_default.a({
+        accessKey: apiKey
+      });
       return this.api.collections.getCollectionPhotos(COLLECTION_ID).then(unsplash["toJson"]).then(function (photos) {
         _this.images = photos.map(normalize);
         return _this.images;
@@ -19479,7 +19481,9 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
         height: photo.height,
         sizes: {
           full: {
-            url: photo.urls.full
+            url: photo.urls.full,
+            width: photo.width,
+            height: photo.height
           },
           large: {
             url: photo.urls.regular

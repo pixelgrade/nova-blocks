@@ -7,18 +7,18 @@ class PlaceholderImagesCollection {
 	constructor() {
 		this.fetchedImages = false;
 		this.images = [];
-
-		const apiKey = window?.pixcare?.themeConfig?.unsplashApiKey;
-
-		if ( !! apiKey ) {
-			this.api = new Unsplash( { accessKey: apiKey } );
-		} else {
-			this.fetchedImages = true;
-		}
 	}
 
 	fetch() {
 		const normalize = this.normalize.bind( this );
+		const apiKey = window?.pixcare?.themeConfig?.unsplashApiKey;
+
+		if ( ! apiKey ) {
+			this.fetchedImages = true;
+			return [];
+		}
+
+		this.api = new Unsplash( { accessKey: apiKey } );
 
 		return this.api.collections.getCollectionPhotos( COLLECTION_ID )
 		               .then( toJson )
@@ -48,7 +48,9 @@ class PlaceholderImagesCollection {
 			height: photo.height,
 			sizes: {
 				full: {
-					url: photo.urls.full
+					url: photo.urls.full,
+					width: photo.width,
+					height: photo.height,
 				},
 				large: {
 					url: photo.urls.regular
