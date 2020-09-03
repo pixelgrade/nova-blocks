@@ -19703,6 +19703,19 @@ var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
 
   return "".concat(numerator * 100 / denominator, "%");
 };
+var breakpoints = {
+  desktop: 1366,
+  lap: 1024,
+  tablet: 768
+};
+var below = function below(breakpoint) {
+  var width = breakpoints[breakpoint];
+  return window.innerWidth < width;
+};
+var above = function above(breakpoint) {
+  var width = breakpoints[breakpoint];
+  return window.innerWidth >= width;
+};
 // CONCATENATED MODULE: ./src/components/scrolling-effect-controls/index.js
 
 

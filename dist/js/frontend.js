@@ -3333,6 +3333,19 @@ var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
 
   return "".concat(numerator * 100 / denominator, "%");
 };
+var breakpoints = {
+  desktop: 1366,
+  lap: 1024,
+  tablet: 768
+};
+var below = function below(breakpoint) {
+  var width = breakpoints[breakpoint];
+  return window.innerWidth < width;
+};
+var above = function above(breakpoint) {
+  var width = breakpoints[breakpoint];
+  return window.innerWidth >= width;
+};
 // CONCATENATED MODULE: ./src/components/viewportObserver.js
 
 
@@ -5654,8 +5667,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     var $posts = $block.children('.novablocks-card');
     var attributes = $block.data();
     var cardsCount = $posts.length;
-    var areaColumns = layoutEngine_applyLayoutEngine(attributes);
-    var addedCards = 0;
+    var addedCards;
 
     if (attributes.layoutstyle !== 'parametric') {
       $block.removeClass('novablocks-grid');
@@ -5663,61 +5675,88 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       return;
     }
 
-    $posts.detach();
     var gridcolumns = attributes.gridcolumns;
-
-    if (window.innerWidth < 1280) {
-      gridcolumns -= removeSmallestColumn(areaColumns);
-
-      if (window.innerWidth < 1024) {
-        gridcolumns -= removeSmallestColumn(areaColumns);
-
-        if (window.innerWidth < 768) {// collapse all areas
-        }
-      }
-    }
-
-    redistributeCardsInAreas(areaColumns, cardsCount, attributes);
-    $block.css(utils_getGridStyle(Object.assign({}, attributes, {
-      gridcolumns: gridcolumns
-    })));
     block.style.setProperty('--card-media-padding', attributes.imagepadding);
     block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.containerheight));
     block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
 
-    for (var _i = 0; _i < areaColumns.length; _i++) {
-      var areaColumn = areaColumns[_i];
-      var areas = areaColumn.areas,
-          row = areaColumn.row,
-          col = areaColumn.col,
-          width = areaColumn.width,
-          height = areaColumn.height;
-      var $column = $('<div class="novablocks-grid__column">');
-      $column.css('grid-area', "".concat(row, " / ").concat(col, " / span ").concat(height, " / span ").concat(width));
+    function createLayout() {
+      $posts.detach();
+      $block.empty();
+      addedCards = 0;
+      var areaColumns = layoutEngine_applyLayoutEngine(attributes);
+      var columnsCount = areaColumns.length;
+      var firstSet = Math.floor((columnsCount - 1) / 2);
+      var secondSet = columnsCount - 1 - firstSet;
 
-      var _loop = function _loop(j) {
-        var area = areas[j];
-        var areaClassName = utils_getParametricLayoutAreaClassName(area, attributes);
-        addedCards += area.postsCount;
-        var $area = $("<div class=\"".concat(areaClassName, "\">"));
-        Array.from(Array(area.postsCount).keys()).map(function (i) {
-          var $gridItem = $('<div class="novablocks-grid__item">');
-          var $card = $posts.eq(addedCards - area.postsCount + i);
-          var landscape = isLandscape(area, attributes);
-          $card.toggleClass('novablocks-card--landscape', !!landscape);
-          $card.toggleClass('novablocks-card--portrait', !landscape);
-          $card.appendTo($gridItem);
-          $gridItem.appendTo($area);
-        });
-        $area.appendTo($column);
-      };
+      if (below('desktop')) {
+        for (var _i = 0; _i < firstSet; _i++) {
+          gridcolumns -= removeSmallestColumn(areaColumns);
+        }
 
-      for (var j = 0; j < areas.length; j++) {
-        _loop(j);
+        if (below('lap')) {
+          for (var _i2 = 0; _i2 < secondSet; _i2++) {
+            gridcolumns -= removeSmallestColumn(areaColumns);
+          }
+        }
       }
 
-      $column.appendTo($block);
+      redistributeCardsInAreas(areaColumns, cardsCount, attributes);
+      $block.css(utils_getGridStyle(Object.assign({}, attributes, {
+        gridcolumns: gridcolumns
+      })));
+
+      for (var _i3 = 0; _i3 < areaColumns.length; _i3++) {
+        var areaColumn = areaColumns[_i3];
+        var areas = areaColumn.areas,
+            row = areaColumn.row,
+            col = areaColumn.col,
+            width = areaColumn.width,
+            height = areaColumn.height;
+        var $column = $('<div class="novablocks-grid__column">');
+        $column.css('grid-area', "".concat(row, " / ").concat(col, " / span ").concat(height, " / span ").concat(width));
+
+        var _loop = function _loop(j) {
+          var area = areas[j];
+          var areaClassName = below('tablet') ? 'novablocks-grid__area' : utils_getParametricLayoutAreaClassName(area, attributes);
+          addedCards += area.postsCount;
+          var $area = $("<div class=\"".concat(areaClassName, "\">"));
+          Array.from(Array(area.postsCount).keys()).map(function (i) {
+            var $gridItem = $('<div class="novablocks-grid__item">');
+            var $card = $posts.eq(addedCards - area.postsCount + i);
+            var landscape = isLandscape(area, attributes) && above('tablet');
+            $card.toggleClass('novablocks-card--landscape', !!landscape);
+            $card.toggleClass('novablocks-card--portrait', !landscape);
+            $card.appendTo($gridItem);
+            $gridItem.appendTo($area);
+          });
+          $area.appendTo($column);
+        };
+
+        for (var j = 0; j < areas.length; j++) {
+          _loop(j);
+        }
+
+        $column.appendTo($block);
+      }
     }
+
+    createLayout();
+
+    function recreateLayout() {
+      $block.contents().replaceWith($posts);
+      $block.css({
+        display: '',
+        gridTemplateColumns: '',
+        gridTemplateRowss: ''
+      });
+      $posts.removeClass('novablocks-card--portrait');
+      $posts.removeClass('novablocks-card--landscape');
+      createLayout();
+    }
+
+    var onResize = debounce(recreateLayout, 100);
+    $(window).on('resize', onResize);
   });
 
   function removeSmallestColumn(areaColumns) {

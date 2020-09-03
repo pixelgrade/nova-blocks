@@ -1,4 +1,4 @@
-import { getCardMediaPaddingTop } from "../../utils";
+import { getCardMediaPaddingTop, debounce, below, above } from "../../utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import { getGridStyle } from "../../components/grid-generator/utils";
 
@@ -16,8 +16,7 @@ import {
 		const attributes = $block.data();
 		const cardsCount = $posts.length;
 
-		let areaColumns = applyLayoutEngine( attributes );
-		let addedCards = 0;
+		let addedCards;
 
 		if ( attributes.layoutstyle !== 'parametric' ) {
 			$block.removeClass( 'novablocks-grid' );
@@ -25,60 +24,95 @@ import {
 			return;
 		}
 
-		$posts.detach();
-
 		let gridcolumns = attributes.gridcolumns;
 
-		if ( window.innerWidth < 1280 ) {
-			gridcolumns -= removeSmallestColumn( areaColumns );
-
-			if ( window.innerWidth < 1024 ) {
-				gridcolumns -= removeSmallestColumn( areaColumns );
-
-				if ( window.innerWidth < 768 ) {
-					// collapse all areas
-				}
-			}
-		}
-
-		redistributeCardsInAreas( areaColumns, cardsCount, attributes );
-
-		$block.css( getGridStyle( Object.assign( {}, attributes, { gridcolumns } ) ) );
 		block.style.setProperty( '--card-media-padding', attributes.imagepadding );
 		block.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.containerheight ) );
 		block.style.setProperty( '--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down' );
 
-		for ( let i = 0; i < areaColumns.length; i++ ) {
-			const areaColumn = areaColumns[i];
-			const { areas, row, col, width, height } = areaColumn;
+		function createLayout() {
 
-			const $column = $( '<div class="novablocks-grid__column">' );
-			$column.css( 'grid-area', `${ row } / ${ col } / span ${ height } / span ${ width }` );
+			$posts.detach();
+			$block.empty();
 
-			for ( let j = 0; j < areas.length; j++ ) {
-				const area = areas[j];
-				const areaClassName = getParametricLayoutAreaClassName( area, attributes );
-				addedCards += area.postsCount;
+			addedCards = 0;
 
-				const $area = $( `<div class="${ areaClassName }">` );
+			let areaColumns = applyLayoutEngine( attributes );
+			let columnsCount = areaColumns.length;
+			let firstSet = Math.floor( ( columnsCount - 1 ) / 2 );
+			let secondSet = columnsCount - 1 - firstSet;
 
-				Array.from( Array( area.postsCount ).keys() ).map( i => {
-					const $gridItem = $( '<div class="novablocks-grid__item">' );
-					const $card = $posts.eq( addedCards - area.postsCount + i );
-					const landscape = isLandscape( area, attributes );
+			if ( below( 'desktop' ) ) {
 
-					$card.toggleClass( 'novablocks-card--landscape', !! landscape );
-					$card.toggleClass( 'novablocks-card--portrait', ! landscape );
+				for ( let i = 0; i < firstSet; i++ ) {
+					gridcolumns -= removeSmallestColumn( areaColumns );
+				}
 
-					$card.appendTo( $gridItem );
-					$gridItem.appendTo( $area );
-				} );
+				if ( below( 'lap' ) ) {
 
-				$area.appendTo( $column );
+					for ( let i = 0; i < secondSet; i++ ) {
+						gridcolumns -= removeSmallestColumn( areaColumns );
+					}
+				}
 			}
 
-			$column.appendTo( $block );
+			redistributeCardsInAreas( areaColumns, cardsCount, attributes );
+
+			$block.css( getGridStyle( Object.assign( {}, attributes, { gridcolumns } ) ) );
+
+			for ( let i = 0; i < areaColumns.length; i++ ) {
+				const areaColumn = areaColumns[i];
+				const { areas, row, col, width, height } = areaColumn;
+
+				const $column = $( '<div class="novablocks-grid__column">' );
+				$column.css( 'grid-area', `${ row } / ${ col } / span ${ height } / span ${ width }` );
+
+				for ( let j = 0; j < areas.length; j++ ) {
+					const area = areas[j];
+					const areaClassName = below( 'tablet' ) ? 'novablocks-grid__area' : getParametricLayoutAreaClassName( area, attributes );
+					addedCards += area.postsCount;
+
+					const $area = $( `<div class="${ areaClassName }">` );
+
+					Array.from( Array( area.postsCount ).keys() ).map( i => {
+						const $gridItem = $( '<div class="novablocks-grid__item">' );
+						const $card = $posts.eq( addedCards - area.postsCount + i );
+						const landscape = isLandscape( area, attributes ) && above( 'tablet' );
+
+						$card.toggleClass( 'novablocks-card--landscape', !! landscape );
+						$card.toggleClass( 'novablocks-card--portrait', ! landscape );
+
+						$card.appendTo( $gridItem );
+						$gridItem.appendTo( $area );
+					} );
+
+					$area.appendTo( $column );
+				}
+
+				$column.appendTo( $block );
+			}
 		}
+
+		createLayout();
+
+		function recreateLayout() {
+			$block.contents().replaceWith( $posts );
+
+			$block.css( {
+				display: '',
+				gridTemplateColumns: '',
+				gridTemplateRowss: '',
+			} );
+
+			$posts.removeClass( 'novablocks-card--portrait' );
+			$posts.removeClass( 'novablocks-card--landscape' );
+
+			createLayout();
+		}
+
+		const onResize = debounce( recreateLayout, 100 );
+
+		$( window ).on( 'resize', onResize );
 
 	} );
 
