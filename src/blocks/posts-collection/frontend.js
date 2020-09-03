@@ -138,7 +138,6 @@ import {
 		let colToRemove = areaColumns[indexToRemove].col;
 		let widthToRemove = areaColumns[indexToRemove].width;
 
-		console.log( indexToRemove, colToRemove, widthToRemove );
 		areaColumns.splice( indexToRemove, 1 );
 
 		for ( let i = 0; i < areaColumns.length; i++ ) {

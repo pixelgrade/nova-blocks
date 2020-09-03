@@ -5777,7 +5777,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
     var colToRemove = areaColumns[indexToRemove].col;
     var widthToRemove = areaColumns[indexToRemove].width;
-    console.log(indexToRemove, colToRemove, widthToRemove);
     areaColumns.splice(indexToRemove, 1);
 
     for (var i = 0; i < areaColumns.length; i++) {
