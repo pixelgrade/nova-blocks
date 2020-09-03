@@ -1,24 +1,26 @@
 import Unsplash, { toJson } from "unsplash-js";
 
+const APP_NAME = 'Nova Blocks';
 const COLLECTION_ID = 10606015;
+const URL_PARAMS = encodeURI( `utm_source=${ APP_NAME }&utm_medium=referral` );
 
 class PlaceholderImagesCollection {
 
 	constructor() {
 		this.fetchedImages = false;
 		this.images = [];
-
-		const apiKey = window?.pixcare?.themeConfig?.unsplashApiKey;
-
-		if ( !! apiKey ) {
-			this.api = new Unsplash( { accessKey: apiKey } );
-		} else {
-			this.fetchedImages = true;
-		}
 	}
 
 	fetch() {
 		const normalize = this.normalize.bind( this );
+		const apiKey = window?.pixcare?.themeConfig?.unsplashApiKey;
+
+		if ( ! apiKey ) {
+			this.fetchedImages = true;
+			return [];
+		}
+
+		this.api = new Unsplash( { accessKey: apiKey } );
 
 		return this.api.collections.getCollectionPhotos( COLLECTION_ID )
 		               .then( toJson )
@@ -48,7 +50,9 @@ class PlaceholderImagesCollection {
 			height: photo.height,
 			sizes: {
 				full: {
-					url: photo.urls.full
+					url: photo.urls.full,
+					width: photo.width,
+					height: photo.height,
 				},
 				large: {
 					url: photo.urls.regular
@@ -73,7 +77,7 @@ class PlaceholderImagesCollection {
 				},
 			},
 			title: photo.description,
-			caption: `<p>Photo by <a href="${ photo.user.links.html }">${ photo.user.name }</a> on <a href="https://unsplash.com">Unsplash</a></p>`,
+			caption: `<p class="credits">Photo by <a target="_blank" href="${ photo.user.links.html }?${ URL_PARAMS }">${ photo.user.name }</a> on <a target="_blank" href="https://unsplash.com?${ URL_PARAMS }">Unsplash</a></p>`,
 			download: () => {
 				this.api.photos.downloadPhoto( photo );
 			},

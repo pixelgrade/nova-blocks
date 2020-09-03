@@ -36,7 +36,7 @@ function novablocks_admin_init() {
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.5.2',
+		'1.5.3',
 		true
 	);
 
@@ -52,7 +52,7 @@ function novablocks_admin_init() {
 		'nova-blocks-editor-css',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.5.2'
+		'1.5.3'
 	);
 }
 add_action( 'admin_init', 'novablocks_admin_init' );
@@ -71,7 +71,7 @@ function novablocks_enqueue_assets() {
 		'nova-blocks',
 		novablocks_get_plugin_url() . $style_path,
 		array(),
-		'1.5.2'
+		'1.5.3'
 	);
 
 	wp_style_add_data( 'nova-blocks', 'rtl', 'replace' );
@@ -137,7 +137,7 @@ function novablocks_enqueue_frontend_assets() {
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
 		$script_dependencies,
-		'1.5.2',
+		'1.5.3',
 		true
 	);
 }

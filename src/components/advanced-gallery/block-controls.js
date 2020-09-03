@@ -1,7 +1,6 @@
-import { swap, alignCenter } from "../../icons";
+import { swap } from "../../icons";
 
 const { __ } = wp.i18n;
-const apiFetch = wp.apiFetch;
 
 const {
 	BlockControls,
@@ -13,14 +12,10 @@ const {
 	Toolbar,
 } = wp.components;
 
-const {
-	Fragment
-} = wp.element;
-
 const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 
 	const {
-		setAttributes,
+		onSelectImages,
 		attributes,
 	} = props;
 
@@ -37,9 +32,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 				multiple
 				gallery
 				value={ gallery.map( ( image ) => image.id ) }
-				onSelect={ ( images ) => {
-					setAttributes( { images: normalize( images ) } );
-				} }
+				onSelect={ onSelectImages }
 				render={ ( { open } ) => (
 					<Button
 						className="components-icon-button components-toolbar__control"
@@ -51,28 +44,15 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 			/>
 		</Toolbar>
 	);
-}
-
-// @todo use apiFetch to get large image size
-// and normalize title, caption and description structure
-const normalize = ( images ) => {
-	const promises = images.map( image => {
-
-	} );
-	return images;
-}
+};
 
 const AdvancedGalleryBlockControls = ( props ) => {
-
-	const {
-		setAttributes,
-	} = props;
 
 	return (
 		<BlockControls>
 			<AdvancedGalleryChangeMediaToolbar { ...props } />
 		</BlockControls>
 	)
-}
+};
 
 export default AdvancedGalleryBlockControls;

@@ -157,10 +157,9 @@ export default class GridItem {
 	}
 
 	getImageStyle() {
-		const { idx, row, col, objectPosition, imageResizing } = this;
+		const { row, col, objectPosition, imageResizing } = this;
 		const positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
 		const positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
-		const objPos = imageResizing === 'original' ? `${ positionX }% ${ positionY }%` : '';
 
 		return {
 			objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
