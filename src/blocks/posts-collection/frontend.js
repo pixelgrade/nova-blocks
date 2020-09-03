@@ -27,9 +27,23 @@ import {
 
 		$posts.detach();
 
+		let gridcolumns = attributes.gridcolumns;
+
+		if ( window.innerWidth < 1280 ) {
+			gridcolumns -= removeSmallestColumn( areaColumns );
+
+			if ( window.innerWidth < 1024 ) {
+				gridcolumns -= removeSmallestColumn( areaColumns );
+
+				if ( window.innerWidth < 768 ) {
+					// collapse all areas
+				}
+			}
+		}
+
 		redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
-		$block.css( getGridStyle( attributes ) );
+		$block.css( getGridStyle( Object.assign( {}, attributes, { gridcolumns } ) ) );
 		block.style.setProperty( '--card-media-padding', attributes.imagepadding );
 		block.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.containerheight ) );
 		block.style.setProperty( '--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down' );
@@ -67,5 +81,39 @@ import {
 		}
 
 	} );
+
+	function removeSmallestColumn( areaColumns ) {
+
+		let data = areaColumns.map( ( area, index ) => {
+			return {
+				area,
+				index,
+			}
+		} );
+
+		data.sort( ( obj1, obj2 ) => {
+			return obj1.area.width - obj2.area.width;
+		} );
+
+		let indexToRemove = data[0].index;
+
+		if ( data[0].area.nth === 1 ) {
+			indexToRemove = data[data.length].index;
+		}
+
+		let colToRemove = areaColumns[indexToRemove].col;
+		let widthToRemove = areaColumns[indexToRemove].width;
+
+		console.log( indexToRemove, colToRemove, widthToRemove );
+		areaColumns.splice( indexToRemove, 1 );
+
+		for ( let i = 0; i < areaColumns.length; i++ ) {
+			if ( areaColumns[i].col > colToRemove ) {
+				areaColumns[i].col -= widthToRemove;
+			}
+		}
+
+		return widthToRemove;
+	}
 
 })(jQuery, window);

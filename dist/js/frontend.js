@@ -5664,8 +5664,23 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     }
 
     $posts.detach();
+    var gridcolumns = attributes.gridcolumns;
+
+    if (window.innerWidth < 1280) {
+      gridcolumns -= removeSmallestColumn(areaColumns);
+
+      if (window.innerWidth < 1024) {
+        gridcolumns -= removeSmallestColumn(areaColumns);
+
+        if (window.innerWidth < 768) {// collapse all areas
+        }
+      }
+    }
+
     redistributeCardsInAreas(areaColumns, cardsCount, attributes);
-    $block.css(utils_getGridStyle(attributes));
+    $block.css(utils_getGridStyle(Object.assign({}, attributes, {
+      gridcolumns: gridcolumns
+    })));
     block.style.setProperty('--card-media-padding', attributes.imagepadding);
     block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.containerheight));
     block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
@@ -5704,6 +5719,36 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       $column.appendTo($block);
     }
   });
+
+  function removeSmallestColumn(areaColumns) {
+    var data = areaColumns.map(function (area, index) {
+      return {
+        area: area,
+        index: index
+      };
+    });
+    data.sort(function (obj1, obj2) {
+      return obj1.area.width - obj2.area.width;
+    });
+    var indexToRemove = data[0].index;
+
+    if (data[0].area.nth === 1) {
+      indexToRemove = data[data.length].index;
+    }
+
+    var colToRemove = areaColumns[indexToRemove].col;
+    var widthToRemove = areaColumns[indexToRemove].width;
+    console.log(indexToRemove, colToRemove, widthToRemove);
+    areaColumns.splice(indexToRemove, 1);
+
+    for (var i = 0; i < areaColumns.length; i++) {
+      if (areaColumns[i].col > colToRemove) {
+        areaColumns[i].col -= widthToRemove;
+      }
+    }
+
+    return widthToRemove;
+  }
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
 // Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
