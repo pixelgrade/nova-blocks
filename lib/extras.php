@@ -1129,17 +1129,17 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 function novablocks_get_collection_header_output( $attributes ) {
 	$titleTag = 'h' . $attributes['level'];
 
-	ob_start();
+	$output = '';
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) ) {
-		echo '<' . $titleTag . ' class="novablocks-collection__title">' . $attributes['title'] . '</' . $titleTag . '>';
+		$output .= '<' . $titleTag . ' class="novablocks-collection__title">' . $attributes['title'] . '</' . $titleTag . '>';
 	}
 
-	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) { ?>
-		<p class="novablocks-collection__subtitle is-style-lead"><?php echo $attributes['subtitle']; ?></p>
-	<?php }
+	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) {
+		$output .= '<p class="novablocks-collection__subtitle is-style-lead">' . $attributes['subtitle'] . '</p>';
+	}
 
-	return ob_get_clean();
+	return $output;
 }
 
 function novablocks_get_card_media_markup( $url ) {

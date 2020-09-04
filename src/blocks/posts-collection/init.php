@@ -71,7 +71,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
 		}
 
-		echo novablocks_get_collection_header_output( $attributes );
+//		echo novablocks_get_collection_header_output( $attributes );
 
 		echo '<div class="novablocks-grid alignwide" ' . join( ' ', $data_attributes ) . '>';
 
@@ -83,11 +83,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		echo '</div>';
 
-		$output = ob_get_contents();
-
-		ob_end_flush();
-
-		return $output;
+		return ob_get_clean();
 	}
 }
 
