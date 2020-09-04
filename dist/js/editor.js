@@ -39368,6 +39368,7 @@ var preview_LayoutPreview = function LayoutPreview(props) {
 
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
+      setAttributes = props.setAttributes,
       posts = props.posts,
       clientId = props.clientId,
       markPostsAsDisplayed = props.markPostsAsDisplayed;
@@ -39390,6 +39391,7 @@ var preview_Preview = function Preview(props) {
     getContent: getContent,
     cardsCount: posts.length,
     attributes: attributes,
+    setAttributes: setAttributes,
     posts: posts
   });
 };

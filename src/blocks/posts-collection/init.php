@@ -83,7 +83,11 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		echo '</div>';
 
-		return ob_get_clean();
+		$output = ob_get_contents();
+
+		ob_end_flush();
+
+		return $output;
 	}
 }
 

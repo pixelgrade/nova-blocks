@@ -5,6 +5,7 @@ const Preview = ( props ) => {
 
 	const {
 		attributes,
+		setAttributes,
 		posts,
 		clientId,
 		markPostsAsDisplayed,
@@ -23,7 +24,13 @@ const Preview = ( props ) => {
 	};
 
 	return (
-		<GridLayoutPreview getContent={ getContent } cardsCount={ posts.length } attributes={ attributes } posts={ posts } />
+		<GridLayoutPreview
+			getContent={ getContent }
+			cardsCount={ posts.length }
+			attributes={ attributes }
+			setAttributes={ setAttributes }
+			posts={ posts }
+		/>
 	)
 };
 
