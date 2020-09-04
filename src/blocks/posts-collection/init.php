@@ -34,6 +34,20 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		$args  = novablocks_build_articles_query( $attributes );
 		$posts = get_posts( $args );
 
+		$cssProps = novablocks_get_spacing_css( $attributes );
+		$style = join( '; ', $cssProps );
+
+		$classes = array(
+			'novablocks-block',
+			'alignfull',
+			'novablocks-block--parametric-grid',
+			'novablocks-collection',
+			'novablocks-collection--align-left'
+		);
+
+		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
+		$className = join( ' ', $classes );
+
 		ob_start();
 
 		$posts_collection_attributes = array(
@@ -71,8 +85,9 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
 		}
 
+		echo '<div class="' . $className . '" ' . $style . '>';
+		echo '<div class="wp-block-group__inner-container">';
 		echo novablocks_get_collection_header_output( $attributes );
-
 		echo '<div class="novablocks-grid alignwide" ' . join( ' ', $data_attributes ) . '>';
 
 		foreach ( $posts as $post ) {
@@ -81,6 +96,8 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			echo apply_filters( 'novablocks_post_card_markup', $card_markup, $post, $attributes );
 		}
 
+		echo '</div>';
+		echo '</div>';
 		echo '</div>';
 
 		return ob_get_clean();

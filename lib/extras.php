@@ -1047,6 +1047,59 @@ function novablocks_get_card_media_padding_top( $containerHeight ) {
 	return ( $numerator * 100 / $denominator ) . '%';
 }
 
+function novablocks_get_color_classes( $attributes ) {
+
+	$classes = array();
+
+	if ( ! empty( $attributes['blockStyle'] ) ) {
+		$classes[] = 'block-is-' . $attributes['blockStyle'];
+	} else {
+		$classes[] = 'block-is-basic';
+	}
+
+	if ( ! empty( $attributes['contentStyle'] ) ) {
+		$classes[] = 'content-is-' . $attributes['contentStyle'];
+	} else {
+		$classes[] = 'content-is-basic';
+	}
+
+	return $classes;
+}
+
+function novablocks_get_spacing_css( $attributes ) {
+
+	if ( ! empty( $attributes['blockTopSpacing'] ) ) {
+		$blockTopSpacing = $attributes['blockTopSpacing'];
+	} else {
+		$blockTopSpacing = 0;
+	}
+
+	if ( ! empty( $attributes['blockBottomSpacing'] ) ) {
+		$blockBottomSpacing = $attributes['blockBottomSpacing'];
+	} else {
+		$blockBottomSpacing = 0;
+	}
+
+	if ( ! empty( $attributes['emphasisTopSpacing'] ) ) {
+		$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
+	} else {
+		$emphasisTopSpacing = 1;
+	}
+
+	if ( ! empty( $attributes['emphasisBottomSpacing'] ) ) {
+		$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
+	} else {
+		$emphasisBottomSpacing = 1;
+	}
+
+	return array(
+		'--block-top-spacing: ' . $blockTopSpacing,
+		'--block-bottom-spacing: ' . $blockBottomSpacing,
+		'--emphasis-top-spacing: ' . $emphasisTopSpacing,
+		'--emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
+	);
+}
+
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
@@ -1055,59 +1108,21 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		$classes[] = 'alignfull';
 		$classes[] = 'novablocks-collection--align-' . $attributes[ 'contentAlign' ];
 
-		if ( ! empty( $attributes['blockTopSpacing'] ) ) {
-			$blockTopSpacing = $attributes['blockTopSpacing'];
-		} else {
-			$blockTopSpacing = 0;
-		}
-
-		if ( ! empty( $attributes['blockBottomSpacing'] ) ) {
-			$blockBottomSpacing = $attributes['blockBottomSpacing'];
-		} else {
-			$blockBottomSpacing = 0;
-		}
-
-		if ( ! empty( $attributes['emphasisTopSpacing'] ) ) {
-			$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
-		} else {
-			$emphasisTopSpacing = 1;
-		}
-
-		if ( ! empty( $attributes['emphasisBottomSpacing'] ) ) {
-			$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
-		} else {
-			$emphasisBottomSpacing = 1;
-		}
-
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
 
-		if ( ! empty( $attributes['blockStyle'] ) ) {
-			$classes[] = 'block-is-' . $attributes['blockStyle'];
-		} else {
-			$classes[] = 'block-is-basic';
-		}
-
-		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$classes[] = 'content-is-' . $attributes['contentStyle'];
-		} else {
-			$classes[] = 'content-is-basic';
-		}
-
-		$className = join( ' ', $classes );
-
 		$cssProps = array(
-			'--block-top-spacing: ' . $blockTopSpacing,
-			'--block-bottom-spacing: ' . $blockBottomSpacing,
-			'--emphasis-top-spacing: ' . $emphasisTopSpacing,
-			'--emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
 			'--card-media-padding: ' . $attributes['imagePadding'],
 			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ),
 			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
 
+		$cssProps = array_merge( $cssProps, novablocks_get_spacing_css( $attributes ) );
 		$style = join( '; ', $cssProps );
+
+		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
+		$className = join( ' ', $classes );
 
 		ob_start(); ?>
 
