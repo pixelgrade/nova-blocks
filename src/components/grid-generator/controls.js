@@ -88,7 +88,7 @@ const getRandomAttributes = () => {
 	const subfeature = getRandomBooleanValue();
 	const balancemdandiw = getRandomBooleanValue();
 	const hierarchycrossing = getRandomBetween(0, 200);
-	const flipcolsrows = getRandomBooleanValue();
+	const flipcolsrows = false;
 
 	return {
 		layoutStyle: 'parametric',

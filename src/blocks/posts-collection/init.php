@@ -187,9 +187,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 			</div>
 		</div>
 
-		<?php if ( false == $attributes['showButtons'] ) { ?>
-			<a class="novablocks-card__link" href="<?php echo get_permalink( $post ); ?>"></a>
-		<?php } ?>
+		<a class="novablocks-card__link" href="<?php echo get_permalink( $post ); ?>"></a>
 
 	</div>
 
