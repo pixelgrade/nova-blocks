@@ -141,7 +141,7 @@
 
 	.content-is-moderate,
 	.content-is-highlighted {
-		--block-content-padding: var(--novablocks-block-content-padding);
+		--block-content-padding: calc( var(--novablocks-block-content-padding) * var(--novablocks-block-content-padding-multiplier, 1) );
 	}
 
 	.content-is-moderate.block-is-moderate {

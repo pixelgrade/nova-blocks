@@ -30708,8 +30708,7 @@ var with_space_and_sizing_controls_wp$compose = wp.compose,
     with_space_and_sizing_controls_createHigherOrderComponent = with_space_and_sizing_controls_wp$compose.createHigherOrderComponent;
 var with_space_and_sizing_controls_Fragment = wp.element.Fragment;
 var with_space_and_sizing_controls_addFilter = wp.hooks.addFilter;
-var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection' //	'novablocks/posts-collection',
-];
+var with_space_and_sizing_controls_ALLOWED_BLOCKS = ['novablocks/media', 'novablocks/cards-collection', 'novablocks/posts-collection'];
 var ALLOWED_BLOCKS_ADVANCED = ['novablocks/media'];
 
 var getEmphasisAttributes = function getEmphasisAttributes(_ref) {
@@ -39272,6 +39271,7 @@ function preview_objectSpread(target) { for (var i = 1; i < arguments.length; i+
 
 
 
+
 var grid_generator_preview_Fragment = wp.element.Fragment;
 
 var preview_ClassicLayoutPreview = function ClassicLayoutPreview(props) {
@@ -39308,6 +39308,10 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
       containerHeight = attributes.containerHeight,
       imagePadding = attributes.imagePadding,
       imageResizing = attributes.imageResizing;
+  var classname = classnames_default()("novablocks-grid", {
+    'novablocks-grid--scaled': toggleScale,
+    'novablocks-grid--mask': toggleMask
+  });
   var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var addedCards = 0;
   redistributeCardsInAreas(areaColumns, cardsCount, attributes);
@@ -39321,7 +39325,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
-    className: "novablocks-grid ".concat(toggleScale ? 'novablocks-grid--scaled' : '', " ").concat(toggleMask ? 'novablocks-grid--mask' : ''),
+    className: classname,
     style: style
   }, !!areaColumns && areaColumns.map(function (areaColumn) {
     var areas = areaColumn.areas,
@@ -39356,8 +39360,15 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
 };
 
 var preview_LayoutPreview = function LayoutPreview(props) {
-  var layoutStyle = props.attributes.layoutStyle;
-  return Object(external_React_["createElement"])(grid_generator_preview_Fragment, null, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, props));
+  var _props$attributes = props.attributes,
+      layoutStyle = _props$attributes.layoutStyle,
+      contentAlign = _props$attributes.contentAlign,
+      contentStyle = _props$attributes.contentStyle,
+      blockStyle = _props$attributes.blockStyle;
+  var classname = classnames_default()('novablocks-block', 'novablocks-block--parametric-grid', "novablocks-collection", "novablocks-collection--align-".concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
+  return Object(external_React_["createElement"])("div", {
+    className: classname
+  }, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, props));
 };
 
 /* harmony default export */ var grid_generator_preview = (preview_LayoutPreview);

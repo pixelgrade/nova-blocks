@@ -119,10 +119,29 @@
 }
 
 .novablocks-grid {
-	grid-gap: 2em;
+	--novablocks-grid-spacing: calc( var(--novablocks-spacing) * 0.5 );
+	grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
 
 	.novablocks-grid__item {
 		--theme-content-width-normal: 100%;
+	}
+}
+
+.block-is-basic.content-is-highlighted,
+
+.block-is-moderate.content-is-moderate,
+.block-is-moderate.content-is-highlighted,
+
+.block-is-highlighted.content-is-moderate,
+.block-is-highlighted.content-is-highlighted {
+	--novablocks-grid-spacing-modifier: 0.5;
+}
+
+.novablocks-block--parametric-grid {
+	--novablocks-block-content-padding-multiplier: 0.5;
+
+	.novablocks-card__media-wrap[class] {
+		margin: 0;
 	}
 }
 
@@ -130,13 +149,9 @@
 	overflow: hidden;
 }
 
-.novablocks-grid__area {
-	--novablocks-card-spacing: calc( var(--novablocks-spacing) * 0.5 );
-}
-
 .novablocks-grid__area + .novablocks-grid__area,
 .novablocks-grid__item + .novablocks-grid__item {
-	margin-top: var(--novablocks-card-spacing);
+	margin-top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
 }
 
 .novablocks-grid--mask {

@@ -71,7 +71,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
 		}
 
-//		echo novablocks_get_collection_header_output( $attributes );
+		echo novablocks_get_collection_header_output( $attributes );
 
 		echo '<div class="novablocks-grid alignwide" ' . join( ' ', $data_attributes ) . '>';
 

@@ -9,7 +9,8 @@ import {
 } from "./utils";
 
 import Post from "../../blocks/posts-collection/post";
-import {getCardMediaPaddingTop} from "../../utils";
+import { getCardMediaPaddingTop } from "../../utils";
+import classnames from "classnames";
 
 const {
 	Fragment,
@@ -65,6 +66,14 @@ const ParametricLayoutPreview = ( props ) => {
 		imageResizing,
 	} = attributes;
 
+	const classname = classnames(
+		`novablocks-grid`,
+		{
+			'novablocks-grid--scaled': toggleScale,
+			'novablocks-grid--mask': toggleMask,
+		}
+	);
+
 	let areaColumns = applyLayoutEngine( attributes );
 	let addedCards = 0;
 
@@ -80,7 +89,7 @@ const ParametricLayoutPreview = ( props ) => {
 	return (
 		<div className="wp-block-group__inner-container">
 			<CollectionHeader { ...props } />
-			<div className={ `novablocks-grid ${ toggleScale ? 'novablocks-grid--scaled' : '' } ${ toggleMask ? 'novablocks-grid--mask' : '' }` } style={ style }>
+			<div className={ classname } style={ style }>
 				{
 					!! areaColumns && areaColumns.map( areaColumn => {
 						let { areas, row, col, width, height } = areaColumn;
@@ -126,15 +135,29 @@ const LayoutPreview = ( props ) => {
 
 	const {
 		attributes: {
-			layoutStyle
+			layoutStyle,
+
+			contentAlign,
+			contentStyle,
+			blockStyle,
 		}
 	} = props;
 
+	const classname = classnames(
+		'novablocks-block',
+		'novablocks-block--parametric-grid',
+
+		`novablocks-collection`,
+		`novablocks-collection--align-${ contentAlign }`,
+		`block-is-${ blockStyle }`,
+		`content-is-${ contentStyle }`,
+	);
+
 	return (
-		<Fragment>
+		<div className={ classname }>
 			{ layoutStyle === 'classic' && <ClassicLayoutPreview { ...props } /> }
 			{ layoutStyle === 'parametric' && <ParametricLayoutPreview { ...props } /> }
-		</Fragment>
+		</div>
 	)
 };
 

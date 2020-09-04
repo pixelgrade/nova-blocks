@@ -35,7 +35,7 @@ const {
 const ALLOWED_BLOCKS = [
 	'novablocks/media',
 	'novablocks/cards-collection',
-//	'novablocks/posts-collection',
+	'novablocks/posts-collection',
 ];
 
 const ALLOWED_BLOCKS_ADVANCED = [
