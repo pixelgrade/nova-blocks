@@ -3,7 +3,7 @@ import { getControlsClasses } from "../../utils";
 import { getPostsCount } from "../../components/grid-generator/utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import ControlsGroup from "../controls-group";
-import { PresetControl } from "../../components";
+import { PresetControl, withSettings } from "../../components";
 import { getRandomBetween, getRandomBooleanValue } from "../../utils";
 
 const { __ } = wp.i18n;
@@ -629,16 +629,20 @@ const ParametricLayoutControls = ( props ) => {
 	)
 };
 
-const DebugControls = ( props ) => {
+const DebugControls = withSettings(( props ) => {
 
 	const {
 		attributes: {
 			toggleScale,
 			toggleMask,
 		},
-		setAttributes
+		setAttributes,
+		settings
 	} = props;
 
+	if ( ! settings?.debug ) {
+		return null;
+	}
 
 	return (
 		<ControlsGroup title={ __( 'Debug Parameters' ) }>
@@ -655,6 +659,6 @@ const DebugControls = ( props ) => {
 		</ControlsGroup>
 
 	);
-};
+});
 
 export default LayoutControls;

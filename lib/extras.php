@@ -680,6 +680,7 @@ add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separato
 function novablocks_get_block_editor_settings() {
 
 	$settings = array(
+		'debug'                        => defined( 'NOVABLOCKS_DEBUG' ) && NOVABLOCKS_DEBUG,
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'minimumHeightOptions'         => array(
 			array(

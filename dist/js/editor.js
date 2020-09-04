@@ -32309,7 +32309,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
 
   var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var autoPostsCount = getPostsCount(areaColumns);
-  return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(controls_DebugControls, props), Object(external_React_["createElement"])(controls_group, {
+  return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(DebugControls, props), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Posts Count')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Automatic Posts Number', '__plugin_txtd'),
@@ -32472,11 +32472,17 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
   })));
 };
 
-var controls_DebugControls = function DebugControls(props) {
+var DebugControls = with_settings(function (props) {
   var _props$attributes2 = props.attributes,
       toggleScale = _props$attributes2.toggleScale,
       toggleMask = _props$attributes2.toggleMask,
-      setAttributes = props.setAttributes;
+      setAttributes = props.setAttributes,
+      settings = props.settings;
+
+  if (!(settings === null || settings === void 0 ? void 0 : settings.debug)) {
+    return null;
+  }
+
   return Object(external_React_["createElement"])(controls_group, {
     title: controls_('Debug Parameters')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
@@ -32496,8 +32502,7 @@ var controls_DebugControls = function DebugControls(props) {
       });
     }
   }));
-};
-
+});
 /* harmony default export */ var grid_generator_controls = (controls_LayoutControls);
 // CONCATENATED MODULE: ./src/filters/with-grid-generator/index.js
 
