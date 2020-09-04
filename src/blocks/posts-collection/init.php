@@ -115,7 +115,6 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	$hlevel      = $attributes['level'];
 	$titleTag    = 'h' . ( $hlevel + 1 );
-	$subtitleTag = 'h' . ( $hlevel + 2 );
 
 	$classes = array(
 		'novablocks-card',
@@ -135,7 +134,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 			<div class="novablocks-card__layout-content novablocks-card__inner-container">
 
-				<?php if ( false != $attributes['showMeta'] && ! empty( $dateReadable ) ) { ?>
+				<?php if ( ! empty( $dateReadable ) ) { ?>
 					<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
 						<div class="novablocks-card__meta-size-modifier">
 						<?php
@@ -149,11 +148,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 							$category_url = get_category_link( $category_id );
 
 							if ( ! is_wp_error( $category ) ) {
-								echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">';
-								echo '<a href="' . $category_url . '">';
-								echo $category;
-								echo '</a>';
-								echo '</' . $subtitleTag . '>';
+								echo ' &mdash; ' . $category;
 							}
 						}
 						?>
