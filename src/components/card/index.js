@@ -21,7 +21,7 @@ const Card = ( props ) => {
 			<div className="novablocks-card__layout">
 				{
 					showMedia &&
-					<div className="novablocks-card__layout-media">
+					<div className="novablocks-card__layout-media novablocks-grid__item-media">
 						<CardMedia id={ props?.mediaId } />
 					</div>
 				}

@@ -134,7 +134,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 		<div class="novablocks-card__layout">
 
 			<?php if ( ! empty( $attributes['showMedia'] ) ) { ?>
-				<div class="novablocks-card__layout-media">
+				<div class="novablocks-card__layout-media novablocks-grid__item-media">
 					<?php echo novablocks_get_card_media_markup( $media, $attributes ); ?>
 				</div>
 			<?php } ?>

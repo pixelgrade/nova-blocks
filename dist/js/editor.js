@@ -39117,7 +39117,7 @@ var card_Card = function Card(props) {
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout"
   }, showMedia && Object(external_React_["createElement"])("div", {
-    className: "novablocks-card__layout-media"
+    className: "novablocks-card__layout-media novablocks-grid__item-media"
   }, Object(external_React_["createElement"])(card_media, {
     id: props === null || props === void 0 ? void 0 : props.mediaId
   })), (showMeta || showTitle || showContent || showButtons) && Object(external_React_["createElement"])("div", {
