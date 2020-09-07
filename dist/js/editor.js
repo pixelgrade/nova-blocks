@@ -31522,10 +31522,13 @@ function getNthValues(nthMatrix) {
 
 function normalizeAreas(nthMatrix, areasArray) {
   var values = getNthValues(nthMatrix);
-  values.sort();
+  values.sort(function (a, b) {
+    return a - b;
+  });
 
   for (var i = 0; i < values.length; i++) {
     if (i + 1 !== values[i]) {
+      console.log("replace ".concat(values[i], " with ").concat(i + 1));
       replaceNth(values[i], i + 1, nthMatrix);
     }
   }
@@ -39121,7 +39124,7 @@ var card_Card = function Card(props) {
   }, Object(external_React_["createElement"])(card_media, {
     id: props === null || props === void 0 ? void 0 : props.mediaId
   })), (showMeta || showTitle || showContent || showButtons) && Object(external_React_["createElement"])("div", {
-    className: "novablocks-card__layout-content novablocks-card__inner-container"
+    className: "novablocks-card__layout-content novablocks-card__inner-container is-style-meta"
   }, Object(external_React_["createElement"])(card_CardContents, props))));
 };
 

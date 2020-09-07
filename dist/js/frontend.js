@@ -5327,10 +5327,13 @@ function getNthValues(nthMatrix) {
 
 function normalizeAreas(nthMatrix, areasArray) {
   var values = getNthValues(nthMatrix);
-  values.sort();
+  values.sort(function (a, b) {
+    return a - b;
+  });
 
   for (var i = 0; i < values.length; i++) {
     if (i + 1 !== values[i]) {
+      console.log("replace ".concat(values[i], " with ").concat(i + 1));
       replaceNth(values[i], i + 1, nthMatrix);
     }
   }

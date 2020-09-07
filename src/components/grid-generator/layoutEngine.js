@@ -550,10 +550,13 @@ function getNthValues( nthMatrix ) {
 
 function normalizeAreas( nthMatrix, areasArray ) {
 	const values = getNthValues( nthMatrix );
-	values.sort();
+	values.sort( ( a, b ) => {
+		return a - b;
+	} );
 
 	for ( let i = 0; i < values.length; i ++ ) {
 		if ( i + 1 !== values[i] ) {
+			console.log( `replace ${ values[i] } with ${ i + 1 }` );
 			replaceNth( values[i], i + 1, nthMatrix );
 		}
 	}

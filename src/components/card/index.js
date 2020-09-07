@@ -27,7 +27,7 @@ const Card = ( props ) => {
 				}
 				{
 					( showMeta || showTitle || showContent || showButtons ) &&
-					<div className="novablocks-card__layout-content novablocks-card__inner-container">
+					<div className="novablocks-card__layout-content novablocks-card__inner-container is-style-meta">
 						<CardContents { ...props } />
 					</div>
 				}
