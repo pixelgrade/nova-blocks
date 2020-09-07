@@ -39297,8 +39297,6 @@ function preview_objectSpread(target) { for (var i = 1; i < arguments.length; i+
 
 
 
-var grid_generator_preview_Fragment = wp.element.Fragment;
-
 var preview_ClassicLayoutPreview = function ClassicLayoutPreview(props) {
   var attributes = props.attributes,
       posts = props.posts;
@@ -39323,7 +39321,6 @@ var preview_ClassicLayoutPreview = function ClassicLayoutPreview(props) {
     });
   }))));
 };
-
 var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
   var attributes = props.attributes,
       getContent = props.getContent,
@@ -39383,21 +39380,8 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
     }));
   })));
 };
-
-var preview_LayoutPreview = function LayoutPreview(props) {
-  var _props$attributes = props.attributes,
-      layoutStyle = _props$attributes.layoutStyle,
-      contentAlign = _props$attributes.contentAlign,
-      contentStyle = _props$attributes.contentStyle,
-      blockStyle = _props$attributes.blockStyle;
-  var classname = classnames_default()('novablocks-block', 'novablocks-block--parametric-grid', "novablocks-collection", "novablocks-collection--align-".concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle));
-  return Object(external_React_["createElement"])("div", {
-    className: classname
-  }, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, props));
-};
-
-/* harmony default export */ var grid_generator_preview = (preview_LayoutPreview);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/preview.js
+
 
 
 
@@ -39407,7 +39391,12 @@ var preview_Preview = function Preview(props) {
       setAttributes = props.setAttributes,
       posts = props.posts,
       clientId = props.clientId,
-      markPostsAsDisplayed = props.markPostsAsDisplayed;
+      markPostsAsDisplayed = props.markPostsAsDisplayed,
+      className = props.className;
+  var layoutStyle = attributes.layoutStyle,
+      contentAlign = attributes.contentAlign,
+      contentStyle = attributes.contentStyle,
+      blockStyle = attributes.blockStyle;
   markPostsAsDisplayed(clientId, posts);
 
   if (!posts || !posts.length) {
@@ -39423,13 +39412,16 @@ var preview_Preview = function Preview(props) {
     });
   };
 
-  return Object(external_React_["createElement"])(grid_generator_preview, {
+  var classname = classnames_default()('novablocks-block', 'novablocks-block--parametric-grid', "novablocks-collection", "novablocks-collection--align-".concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), className);
+  return Object(external_React_["createElement"])("div", {
+    className: classname
+  }, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, {
     getContent: getContent,
     cardsCount: posts.length,
     attributes: attributes,
     setAttributes: setAttributes,
     posts: posts
-  });
+  }));
 };
 
 /* harmony default export */ var posts_collection_preview = (preview_Preview);

@@ -39,11 +39,15 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		$classes = array(
 			'novablocks-block',
-			'alignfull',
 			'novablocks-block--parametric-grid',
 			'novablocks-collection',
-			'novablocks-collection--align-left'
+			'novablocks-collection--align-left',
+			'alignfull',
 		);
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
 		$className = join( ' ', $classes );
@@ -85,7 +89,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
 		}
 
-		echo '<div class="' . $className . '" ' . $style . '>';
+		echo '<div class="' . $className . '" ' . 'style="'. $style . '">';
 		echo '<div class="wp-block-group__inner-container">';
 		echo novablocks_get_collection_header_output( $attributes );
 		echo '<div class="novablocks-grid alignwide" ' . join( ' ', $data_attributes ) . '>';

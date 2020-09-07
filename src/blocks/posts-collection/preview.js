@@ -1,5 +1,6 @@
-import GridLayoutPreview from "../../components/grid-generator/preview";
+import { ClassicLayoutPreview, ParametricLayoutPreview } from "../../components/grid-generator/preview";
 import Post from "./post";
+import classnames from "classnames";
 
 const Preview = ( props ) => {
 
@@ -9,7 +10,15 @@ const Preview = ( props ) => {
 		posts,
 		clientId,
 		markPostsAsDisplayed,
+		className,
 	} = props;
+
+	const {
+		layoutStyle,
+		contentAlign,
+		contentStyle,
+		blockStyle,
+	} = attributes;
 
 	markPostsAsDisplayed( clientId, posts );
 
@@ -23,14 +32,34 @@ const Preview = ( props ) => {
 		return post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />;
 	};
 
+	const classname = classnames(
+		'novablocks-block',
+		'novablocks-block--parametric-grid',
+
+		`novablocks-collection`,
+		`novablocks-collection--align-${ contentAlign }`,
+		`block-is-${ blockStyle }`,
+		`content-is-${ contentStyle }`,
+		className
+	);
+
 	return (
-		<GridLayoutPreview
-			getContent={ getContent }
-			cardsCount={ posts.length }
-			attributes={ attributes }
-			setAttributes={ setAttributes }
-			posts={ posts }
-		/>
+		<div className={ classname }>
+			{
+				layoutStyle === 'classic' &&
+				<ClassicLayoutPreview { ...props } />
+			}
+			{
+				layoutStyle === 'parametric' &&
+				<ParametricLayoutPreview
+					getContent={ getContent }
+					cardsCount={ posts.length }
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					posts={ posts }
+				/>
+			}
+		</div>
 	)
 };
 

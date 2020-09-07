@@ -12,11 +12,7 @@ import Post from "../../blocks/posts-collection/post";
 import { getCardMediaPaddingTop } from "../../utils";
 import classnames from "classnames";
 
-const {
-	Fragment,
-} = wp.element;
-
-const ClassicLayoutPreview = ( props ) => {
+export const ClassicLayoutPreview = ( props ) => {
 
 	const {
 		attributes,
@@ -49,7 +45,7 @@ const ClassicLayoutPreview = ( props ) => {
 	);
 };
 
-const ParametricLayoutPreview = ( props ) => {
+export const ParametricLayoutPreview = ( props ) => {
 
 	const {
 		attributes,
@@ -130,35 +126,3 @@ const ParametricLayoutPreview = ( props ) => {
 		</div>
 	)
 };
-
-const LayoutPreview = ( props ) => {
-
-	const {
-		attributes: {
-			layoutStyle,
-
-			contentAlign,
-			contentStyle,
-			blockStyle,
-		}
-	} = props;
-
-	const classname = classnames(
-		'novablocks-block',
-		'novablocks-block--parametric-grid',
-
-		`novablocks-collection`,
-		`novablocks-collection--align-${ contentAlign }`,
-		`block-is-${ blockStyle }`,
-		`content-is-${ contentStyle }`,
-	);
-
-	return (
-		<div className={ classname }>
-			{ layoutStyle === 'classic' && <ClassicLayoutPreview { ...props } /> }
-			{ layoutStyle === 'parametric' && <ParametricLayoutPreview { ...props } /> }
-		</div>
-	)
-};
-
-export default LayoutPreview;
