@@ -31478,28 +31478,34 @@ function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMat
       row: area.row,
       col: area.col,
       width: area.width,
-      height: area.height
+      height: area.height,
+      areas: [area]
     };
-  });
-  columns = columns.filter(function (data, index) {
-    var foundIndex = columns.findIndex(function (column) {
-      return column.col === data.col && column.width === data.width;
+  }); // loop through columns
+
+  columns.forEach(function (currentColumn) {
+    // loop through "current" column's areas
+    currentColumn.areas.forEach(function (currentArea, i) {
+      // loop again through columns except the current column
+      columns.filter(function (column) {
+        return column !== currentColumn;
+      }).forEach(function (compareColumn) {
+        // loop through the "compare" column's areas
+        compareColumn.areas.forEach(function (compareArea, j) {
+          // check if the areas have the same column and the same width
+          if (currentArea.col === compareArea.col && currentArea.width === compareArea.width && ( // and if the two areas are contigous
+          currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height)) {
+            // if so, move the compared area to the current column's areas array and update the column height
+            currentColumn.areas.push(compareArea);
+            compareColumn.height += compareArea.height;
+            compareColumn.areas.splice(j, 1);
+          }
+        });
+      });
     });
-    return index === foundIndex;
   });
-  return columns.map(function (column) {
-    var areas = areasArray.filter(function (area) {
-      return column.col === area.col && column.width === area.width;
-    });
-    return {
-      row: column.row,
-      col: column.col,
-      width: column.width,
-      height: areas.reduce(function (newHeight, area) {
-        return newHeight + area.height;
-      }, 0),
-      areas: areas
-    };
+  return columns.filter(function (randomColumn) {
+    return randomColumn.areas.length > 0;
   });
 }
 

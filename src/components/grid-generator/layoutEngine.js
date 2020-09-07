@@ -503,33 +503,34 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
 			col: area.col,
 			width: area.width,
 			height: area.height,
+			areas: [ area ]
 		}
 	} );
 
-	columns = columns.filter( ( data, index ) => {
-		const foundIndex = columns.findIndex( column => {
-			return column.col === data.col &&
-			       column.width === data.width;
-		} );
-		return index === foundIndex;
+	// loop through columns
+	columns.forEach( currentColumn => {
+		// loop through "current" column's areas
+		currentColumn.areas.forEach( ( currentArea, i ) => {
+			// loop again through columns except the current column
+			columns.filter( column => column !== currentColumn ).forEach( compareColumn => {
+				// loop through the "compare" column's areas
+				compareColumn.areas.forEach( ( compareArea, j ) => {
+					// check if the areas have the same column and the same width
+					if ( currentArea.col === compareArea.col &&
+					     currentArea.width === compareArea.width &&
+					     // and if the two areas are contigous
+					     ( currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height ) ) {
+						// if so, move the compared area to the current column's areas array and update the column height
+						currentColumn.areas.push( compareArea );
+						compareColumn.height += compareArea.height;
+						compareColumn.areas.splice( j, 1 );
+					}
+				} );
+			} );
+		} )
 	} );
 
-	return columns.map( column => {
-		const areas = areasArray.filter( area => {
-			return column.col === area.col &&
-			       column.width === area.width;
-		} );
-
-		return {
-			row: column.row,
-			col: column.col,
-			width: column.width,
-			height: areas.reduce( ( newHeight, area ) => {
-				return newHeight + area.height;
-			}, 0 ),
-			areas: areas,
-		};
-	} );
+	return columns.filter( randomColumn => randomColumn.areas.length > 0 );
 }
 
 function getNthValues( nthMatrix ) {
