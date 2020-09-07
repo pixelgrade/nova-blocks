@@ -31943,7 +31943,7 @@ var controls_getRandomAttributes = function getRandomAttributes() {
   var subfeature = getRandomBooleanValue();
   var balancemdandiw = getRandomBooleanValue();
   var hierarchycrossing = getRandomBetween(0, 200);
-  var flipcolsrows = false;
+  var flipcolsrows = getRandomBooleanValue();
   return {
     layoutStyle: 'parametric',
     postsToShow: postsToShow,
