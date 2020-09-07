@@ -4643,7 +4643,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     for (var j = 0; j < areaColumn.areas.length; j++) {
       var area = areaColumn.areas[j]; // we shouldn't fill the area with the featured card
 
-      area.spotRatio = i === 0 && j === 0 ? 0 : getCardRatio(area, attributes);
+      area.spotRatio = getCardRatio(area, attributes);
       areaColumnSpotRatio += area.spotRatio;
       totalRatio += area.spotRatio;
     }
@@ -5339,7 +5339,6 @@ function normalizeAreas(nthMatrix, areasArray) {
 
   for (var i = 0; i < values.length; i++) {
     if (i + 1 !== values[i]) {
-      console.log("replace ".concat(values[i], " with ").concat(i + 1));
       replaceNth(values[i], i + 1, nthMatrix);
     }
   }

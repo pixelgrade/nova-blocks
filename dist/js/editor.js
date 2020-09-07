@@ -20459,7 +20459,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     for (var j = 0; j < areaColumn.areas.length; j++) {
       var area = areaColumn.areas[j]; // we shouldn't fill the area with the featured card
 
-      area.spotRatio = i === 0 && j === 0 ? 0 : getCardRatio(area, attributes);
+      area.spotRatio = getCardRatio(area, attributes);
       areaColumnSpotRatio += area.spotRatio;
       totalRatio += area.spotRatio;
     }
@@ -31534,7 +31534,6 @@ function normalizeAreas(nthMatrix, areasArray) {
 
   for (var i = 0; i < values.length; i++) {
     if (i + 1 !== values[i]) {
-      console.log("replace ".concat(values[i], " with ").concat(i + 1));
       replaceNth(values[i], i + 1, nthMatrix);
     }
   }
@@ -31886,11 +31885,11 @@ var controls_wp$components = wp.components,
     controls_ToggleControl = controls_wp$components.ToggleControl;
 
 var getMinFeatureSize = function getMinFeatureSize(attributes) {
-  return Math.ceil(attributes.gridcolumns * 0.25);
+  return 1;
 };
 
 var getMaxFeatureSize = function getMaxFeatureSize(attributes) {
-  return Math.ceil(attributes.gridcolumns * 0.75);
+  return attributes.gridcolumns;
 };
 
 var getMinFeaturePosition = function getMinFeaturePosition(attributes) {
@@ -31926,7 +31925,7 @@ var controls_getRandomAttributes = function getRandomAttributes() {
   var postsToShow = getRandomBetween(3, 20);
   var gridcolumns = getRandomBetween(2, 12);
   var gridrows = getRandomBetween(2, 12);
-  var minFeatureSize = Math.ceil(gridcolumns * 0.25);
+  var minFeatureSize = 1;
   var maxFeatureSize = Math.ceil(gridcolumns * 0.75);
   var featuresize = getRandomBetween(minFeatureSize, maxFeatureSize);
   var minFeaturePosition = 1;
@@ -31947,6 +31946,7 @@ var controls_getRandomAttributes = function getRandomAttributes() {
   return {
     layoutStyle: 'parametric',
     postsToShow: postsToShow,
+    automaticPostsNumber: true,
     gridcolumns: gridcolumns,
     gridrows: gridrows,
     featuresize: featuresize,

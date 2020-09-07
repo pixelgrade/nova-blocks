@@ -557,7 +557,6 @@ function normalizeAreas( nthMatrix, areasArray ) {
 
 	for ( let i = 0; i < values.length; i ++ ) {
 		if ( i + 1 !== values[i] ) {
-			console.log( `replace ${ values[i] } with ${ i + 1 }` );
 			replaceNth( values[i], i + 1, nthMatrix );
 		}
 	}

@@ -20,11 +20,11 @@ const {
 
 
 const getMinFeatureSize = ( attributes ) => {
-	return Math.ceil( attributes.gridcolumns * 0.25 );
+	return 1;
 };
 
 const getMaxFeatureSize = ( attributes ) => {
-	return Math.ceil( attributes.gridcolumns * 0.75 );
+	return attributes.gridcolumns;
 };
 
 const getMinFeaturePosition = ( attributes ) => {
@@ -67,7 +67,7 @@ const getRandomAttributes = () => {
 	const gridcolumns = getRandomBetween( 2, 12 );
 	const gridrows = getRandomBetween( 2, 12 );
 
-	const minFeatureSize = Math.ceil( gridcolumns * 0.25 );
+	const minFeatureSize = 1;
 	const maxFeatureSize = Math.ceil( gridcolumns * 0.75 );
 	const featuresize = getRandomBetween( minFeatureSize, maxFeatureSize );
 
@@ -93,6 +93,7 @@ const getRandomAttributes = () => {
 	return {
 		layoutStyle: 'parametric',
 		postsToShow,
+		automaticPostsNumber: true,
 		gridcolumns,
 		gridrows,
 		featuresize,
