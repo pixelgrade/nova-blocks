@@ -22670,7 +22670,7 @@ var with_cards_manager_createHigherOrderComponent = wp.compose.createHigherOrder
 var with_cards_manager_addFilter = wp.hooks.addFilter;
 var with_cards_manager_Fragment = wp.element.Fragment;
 var with_cards_manager_PanelBody = wp.components.PanelBody;
-var ALLOWED_BLOCKS = ['novablocks/cards-collection', 'novablocks/posts-collection'];
+var ALLOWED_BLOCKS = ['novablocks/cards-collection'];
 var withCardsManager = with_cards_manager_createHigherOrderComponent(function (OriginalComponent) {
   return function (props) {
     if (!ALLOWED_BLOCKS.includes(props.name)) {
@@ -39107,15 +39107,20 @@ var card_wp$element = wp.element,
 
 var card_Card = function Card(props) {
   var isLandscape = props.isLandscape || false;
+  var showMedia = props.showMedia,
+      showMeta = props.showMeta,
+      showTitle = props.showTitle,
+      showContent = props.showContent,
+      showButtons = props.showButtons;
   return Object(external_React_["createElement"])("div", {
     className: "novablocks-card novablocks-card--".concat(isLandscape ? 'landscape' : 'portrait', " novablocks-block__content")
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout"
-  }, Object(external_React_["createElement"])("div", {
+  }, showMedia && Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout-media"
   }, Object(external_React_["createElement"])(card_media, {
     id: props === null || props === void 0 ? void 0 : props.mediaId
-  })), Object(external_React_["createElement"])("div", {
+  })), (showMeta || showTitle || showContent || showButtons) && Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout-content novablocks-card__inner-container"
   }, Object(external_React_["createElement"])(card_CardContents, props))));
 };
@@ -39124,23 +39129,27 @@ var card_CardContents = function CardContents(props) {
   var meta = props.meta,
       title = props.title,
       content = props.content,
-      buttons = props.buttons;
+      buttons = props.buttons,
+      showMeta = props.showMeta,
+      showTitle = props.showTitle,
+      showContent = props.showContent,
+      showButtons = props.showButtons;
   var TitleTagName = props.titleTagName || 'h3';
-  return Object(external_React_["createElement"])(card_Fragment, null, Object(external_React_["createElement"])("div", {
+  return Object(external_React_["createElement"])(card_Fragment, null, showMeta && Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-meta"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__meta"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__meta-size-modifier"
-  }, meta))), Object(external_React_["createElement"])(TitleTagName, {
+  }, meta))), showTitle && Object(external_React_["createElement"])(TitleTagName, {
     className: "wp-block novablocks-grid__item-title novablocks-card__title"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__title-size-modifier"
-  }, title)), Object(external_React_["createElement"])("div", {
+  }, title)), showContent && Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-content novablocks-card__description"
   }, Object(external_React_["createElement"])(card_RawHTML, {
     className: "novablocks-card__content-size-modifier"
-  }, content)), Object(external_React_["createElement"])("div", {
+  }, content)), showButtons && Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-buttons novablocks-card__buttons"
   }, buttons));
 };
@@ -39225,7 +39234,13 @@ var post_ = wp.i18n.__;
 
 
 var post_Post = function Post(props) {
-  var level = props.attributes.level,
+  var _props$attributes = props.attributes,
+      level = _props$attributes.level,
+      showMedia = _props$attributes.showMedia,
+      showMeta = _props$attributes.showMeta,
+      showTitle = _props$attributes.showTitle,
+      showDescription = _props$attributes.showDescription,
+      showButtons = _props$attributes.showButtons,
       post = props.post;
 
   var dateFormat = __experimentalGetSettings().formats.date;
@@ -39236,7 +39251,7 @@ var post_Post = function Post(props) {
     style: {
       display: 'inline'
     }
-  }, '&mdash;'), Object(external_React_["createElement"])(category, {
+  }, ' &mdash; '), Object(external_React_["createElement"])(category, {
     id: post.categories[0]
   })));
   var buttons = Object(external_React_["createElement"])("div", {
@@ -39255,7 +39270,12 @@ var post_Post = function Post(props) {
     titleTagName: "h".concat(level + 1),
     content: post.excerpt.rendered,
     buttons: buttons,
-    isLandscape: props.isLandscape || false
+    isLandscape: props.isLandscape || false,
+    showMedia: showMedia,
+    showMeta: showMeta,
+    showTitle: showTitle,
+    showContent: showDescription,
+    showButtons: showButtons
   };
   return Object(external_React_["createElement"])(components_card, cardProps);
 };
@@ -39417,13 +39437,24 @@ var preview_Preview = function Preview(props) {
 
 
 
-var posts_collection_edit_Fragment = wp.element.Fragment;
-var edit_RangeControl = wp.components.RangeControl;
+function posts_collection_edit_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function posts_collection_edit_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { posts_collection_edit_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { posts_collection_edit_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
 var posts_collection_edit_ = wp.i18n.__;
+var posts_collection_edit_Fragment = wp.element.Fragment;
+var posts_collection_edit_wp$components = wp.components,
+    edit_RangeControl = posts_collection_edit_wp$components.RangeControl,
+    posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody;
 
 var edit_PostsEdit = function PostsEdit(props) {
-  var containerHeight = props.attributes.containerHeight,
+  var attributes = props.attributes,
       setAttributes = props.setAttributes;
+  var containerHeight = attributes.containerHeight;
   return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: posts_collection_edit_('Display')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
@@ -39440,6 +39471,17 @@ var edit_PostsEdit = function PostsEdit(props) {
     min: 0,
     max: 100,
     step: 5
+  }))), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
+    title: posts_collection_edit_('Set up elements for this block', '__plugin_txtd')
+  }, Object(external_React_["createElement"])(toggle_group, {
+    onChange: setAttributes,
+    toggles: cards_manager_toggles.filter(function (toggle) {
+      return toggle.attribute !== 'showSubtitle';
+    }).map(function (toggle) {
+      return posts_collection_edit_objectSpread(posts_collection_edit_objectSpread({}, toggle), {}, {
+        value: attributes[toggle.attribute]
+      });
+    })
   }))));
 };
 

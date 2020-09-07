@@ -23,7 +23,6 @@ const {
 
 const ALLOWED_BLOCKS = [
 	'novablocks/cards-collection',
-	'novablocks/posts-collection',
 ];
 
 const withCardsManager = createHigherOrderComponent(OriginalComponent => {

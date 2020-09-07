@@ -19,6 +19,12 @@ const Post = ( props ) => {
 	const {
 		attributes: {
 			level,
+
+			showMedia,
+			showMeta,
+			showTitle,
+			showDescription,
+			showButtons,
 		},
 		post,
 	} = props;
@@ -33,7 +39,7 @@ const Post = ( props ) => {
 			{
 				post.categories.length &&
 			    <Fragment>
-				    <RawHTML style={ { display: 'inline' } }>{ '&mdash;' }</RawHTML>
+				    <RawHTML style={ { display: 'inline' } }>{ ' &mdash; ' }</RawHTML>
 				    <Category id={ post.categories[0] } />
 			    </Fragment>
 			}
@@ -60,6 +66,12 @@ const Post = ( props ) => {
 		content: post.excerpt.rendered,
 		buttons,
 		isLandscape: props.isLandscape || false,
+
+		showMedia,
+		showMeta,
+		showTitle,
+		showContent: showDescription,
+		showButtons,
 	};
 
 	return <Card { ...cardProps } />

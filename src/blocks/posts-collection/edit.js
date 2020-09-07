@@ -1,18 +1,27 @@
 import Preview from "./preview";
-import { ControlsSection, ControlsTab } from "../../components/control-sections";
+import { ControlsDrawerContent, ControlsSection, ControlsTab } from "../../components/control-sections";
+import toggles from "../../components/cards-manager/toggles";
+import { ToggleGroup } from "../../components";
+
+const { __ } = wp.i18n;
 
 const { Fragment } = wp.element;
-const { RangeControl } = wp.components;
-const { __ } = wp.i18n;
+
+const {
+	RangeControl,
+	PanelBody
+} = wp.components;
 
 const PostsEdit = ( props ) => {
 
 	const {
-		attributes: {
-			containerHeight
-		},
+		attributes,
 		setAttributes
 	} = props;
+
+	const {
+		containerHeight
+	} = attributes;
 
 	return (
 		<Fragment>
@@ -32,6 +41,21 @@ const PostsEdit = ( props ) => {
 					/>
 				</ControlsTab>
 			</ControlsSection>
+			<ControlsDrawerContent>
+				<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+					<ToggleGroup
+						onChange={ setAttributes }
+						toggles={ toggles.filter( toggle => {
+							return toggle.attribute !== 'showSubtitle';
+						} ).map( toggle => {
+							return {
+								...toggle,
+								value: attributes[ toggle.attribute ]
+							}
+						} ) }
+					/>
+				</PanelBody>
+			</ControlsDrawerContent>
 		</Fragment>
 	)
 };

@@ -74,25 +74,33 @@
 }
 
 .novablocks-card__layout {
-	display: grid;
-	grid-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
+	--card-layout-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
+
+	display: flex;
+	flex-direction: column;
+	margin-top: calc( -1 * var(--card-layout-gap) );
+	margin-left: calc( -1 * var(--card-layout-gap) );
+
+	&[class][class] > * {
+		padding-top: var(--card-layout-gap);
+		padding-left: var(--card-layout-gap);
+	}
 }
 
 .novablocks-card--landscape {
 
 	.novablocks-card__layout {
-		grid-template-columns: var(--card-image-width, 1fr) 1fr;
-		grid-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
+		flex-direction: row;
 
 		> .novablocks-card__layout-media {
-			width: 100%;
-			grid-column: 1 / span 1;
+			flex-grow: 0;
+			flex-shrink: 0;
+			flex-basis: var(--card-image-width, 50%);
 		}
 
 		> .novablocks-card__layout-content {
-			width: 100%;
-			grid-column: 2 / span 1;
 			align-self: center;
+			flex: 1 1 0;
 		}
 	}
 }
