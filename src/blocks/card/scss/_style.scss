@@ -14,7 +14,7 @@
 .novablocks-card__layout-content[class][class] {
 
 	> .novablocks-grid__item-buttons {
-		margin-top: calc( 2 * var(--element-spacing) );
+		--novablocks-element-spacing-multiplier: 2;
 	}
 }
 
