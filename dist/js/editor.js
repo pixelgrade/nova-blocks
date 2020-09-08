@@ -6182,7 +6182,7 @@ module.exports = JSON.parse("{\"emphasisBySpace\":{\"type\":\"number\",\"default
 /* 136 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"gridcolumns\":{\"type\":\"number\",\"default\":6},\"gridrows\":{\"type\":\"number\",\"default\":6},\"featuresize\":{\"type\":\"number\",\"default\":2},\"featureposition\":{\"type\":\"number\",\"default\":2},\"fragmentation\":{\"type\":\"number\",\"default\":5},\"imageweightleft\":{\"type\":\"number\",\"default\":8},\"imageweightright\":{\"type\":\"number\",\"default\":0},\"metadetailsleft\":{\"type\":\"number\",\"default\":7},\"metadetailsright\":{\"type\":\"number\",\"default\":0},\"boostfeature\":{\"type\":\"boolean\",\"default\":true},\"subfeature\":{\"type\":\"boolean\",\"default\":false},\"balancemdandiw\":{\"type\":\"boolean\",\"default\":false},\"hierarchycrossing\":{\"type\":\"number\",\"default\":0},\"flipcolsrows\":{\"type\":\"boolean\",\"default\":false},\"layoutStyle\":{\"type\":\"string\",\"default\":\"classic\"}}");
+module.exports = JSON.parse("{\"gridcolumns\":{\"type\":\"number\",\"default\":6},\"gridrows\":{\"type\":\"number\",\"default\":6},\"featuresize\":{\"type\":\"number\",\"default\":2},\"featureposition\":{\"type\":\"number\",\"default\":2},\"fragmentation\":{\"type\":\"number\",\"default\":5},\"imageweightleft\":{\"type\":\"number\",\"default\":8},\"imageweightright\":{\"type\":\"number\",\"default\":0},\"metadetailsleft\":{\"type\":\"number\",\"default\":7},\"metadetailsright\":{\"type\":\"number\",\"default\":0},\"boostfeature\":{\"type\":\"boolean\",\"default\":true},\"subfeature\":{\"type\":\"boolean\",\"default\":false},\"balancemdandiw\":{\"type\":\"boolean\",\"default\":false},\"hierarchycrossing\":{\"type\":\"number\",\"default\":0},\"flipcolsrows\":{\"type\":\"boolean\",\"default\":false},\"layoutStyle\":{\"type\":\"string\",\"default\":\"classic\"},\"headerPosition\":{\"type\":\"number\",\"default\":0}}");
 
 /***/ }),
 /* 137 */
@@ -20642,7 +20642,8 @@ var collection_CollectionPreview = function CollectionPreview(props) {
       imagePadding = attributes.imagePadding,
       columns = attributes.columns,
       postsToShow = attributes.postsToShow,
-      isLandscape = attributes.isLandscape;
+      isLandscape = attributes.isLandscape,
+      headerPosition = attributes.headerPosition;
   var blockClassName = 'novablocks-collection';
   var style = {
     '--card-media-padding': imagePadding,
@@ -32290,6 +32291,14 @@ var controls_PostsCountControl = function PostsCountControl(props) {
   });
 };
 
+var getMinHeaderPosition = function getMinHeaderPosition() {
+  return 0;
+};
+
+var getMaxHeaderPosition = function getMaxHeaderPosition() {
+  return 10;
+};
+
 var controls_ParametricLayoutControls = function ParametricLayoutControls(props) {
   var attributes = props.attributes;
   var featuresize = attributes.featuresize,
@@ -32307,7 +32316,8 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
       hierarchycrossing = attributes.hierarchycrossing,
       flipcolsrows = attributes.flipcolsrows,
       automaticPostsNumber = attributes.automaticPostsNumber,
-      postsToShow = attributes.postsToShow; // used to store previous values of postsToShow
+      postsToShow = attributes.postsToShow,
+      headerPosition = attributes.headerPosition; // used to store previous values of postsToShow
 
   var tempPostsToShow = attributes.tempPostsToShow || postsToShow;
 
@@ -32339,6 +32349,18 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
       };
     })
   }, Object(external_React_["createElement"])(controls_PostsCountControl, props))), Object(external_React_["createElement"])(controls_group, {
+    title: controls_('Header')
+  }, Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Header Position", '__plugin_txtd'),
+    value: headerPosition,
+    onChange: function onChange(headerPosition) {
+      setAttributes({
+        headerPosition: headerPosition
+      });
+    },
+    min: getMinHeaderPosition(),
+    max: getMaxHeaderPosition(attributes)
+  })), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Grid Columns + Rows')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Columns", '__plugin_txtd'),
@@ -39338,7 +39360,8 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
       toggleMask = attributes.toggleMask,
       containerHeight = attributes.containerHeight,
       imagePadding = attributes.imagePadding,
-      imageResizing = attributes.imageResizing;
+      imageResizing = attributes.imageResizing,
+      headerPosition = attributes.headerPosition;
   var classname = classnames_default()("novablocks-grid", {
     'novablocks-grid--scaled': toggleScale,
     'novablocks-grid--mask': toggleMask
@@ -39355,7 +39378,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
 
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
-  }, Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
+  }, headerPosition === 0 && Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
     className: classname,
     style: style
   }, !!areaColumns && areaColumns.map(function (areaColumn) {
@@ -39395,6 +39418,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
 
 
 
+
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes,
@@ -39405,7 +39429,8 @@ var preview_Preview = function Preview(props) {
   var layoutStyle = attributes.layoutStyle,
       contentAlign = attributes.contentAlign,
       contentStyle = attributes.contentStyle,
-      blockStyle = attributes.blockStyle;
+      blockStyle = attributes.blockStyle,
+      headerPosition = attributes.headerPosition;
   markPostsAsDisplayed(clientId, posts);
 
   if (!posts || !posts.length) {
@@ -39413,7 +39438,13 @@ var preview_Preview = function Preview(props) {
   }
 
   var getContent = function getContent(index, attributes, isLandscape) {
-    var post = posts === null || posts === void 0 ? void 0 : posts[index];
+    var idx = headerPosition !== 0 && headerPosition - 1 < index ? index - 1 : index;
+    var post = posts === null || posts === void 0 ? void 0 : posts[idx];
+
+    if (headerPosition - 1 === index) {
+      return Object(external_React_["createElement"])(collection_CollectionHeader, props);
+    }
+
     return post && Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
       isLandscape: isLandscape,

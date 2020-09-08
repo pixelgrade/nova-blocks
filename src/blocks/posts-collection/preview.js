@@ -1,6 +1,7 @@
 import { ClassicLayoutPreview, ParametricLayoutPreview } from "../../components/grid-generator/preview";
 import Post from "./post";
 import classnames from "classnames";
+import { CollectionHeader } from "../../components/collection";
 
 const Preview = ( props ) => {
 
@@ -18,6 +19,8 @@ const Preview = ( props ) => {
 		contentAlign,
 		contentStyle,
 		blockStyle,
+
+		headerPosition,
 	} = attributes;
 
 	markPostsAsDisplayed( clientId, posts );
@@ -27,7 +30,12 @@ const Preview = ( props ) => {
 	}
 
 	const getContent = ( index, attributes, isLandscape ) => {
-		const post = posts?.[index];
+		const idx = headerPosition !== 0 && headerPosition - 1 < index ? index - 1 : index;
+		const post = posts?.[idx];
+
+		if ( headerPosition - 1 === index ) {
+			return <CollectionHeader { ...props } />
+		}
 
 		return post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />;
 	};

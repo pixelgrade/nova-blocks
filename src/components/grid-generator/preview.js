@@ -60,6 +60,8 @@ export const ParametricLayoutPreview = ( props ) => {
 		containerHeight,
 		imagePadding,
 		imageResizing,
+
+		headerPosition,
 	} = attributes;
 
 	const classname = classnames(
@@ -84,7 +86,7 @@ export const ParametricLayoutPreview = ( props ) => {
 
 	return (
 		<div className="wp-block-group__inner-container">
-			<CollectionHeader { ...props } />
+			{ headerPosition === 0 && <CollectionHeader { ...props } /> }
 			<div className={ classname } style={ style }>
 				{
 					!! areaColumns && areaColumns.map( areaColumn => {

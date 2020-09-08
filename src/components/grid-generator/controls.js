@@ -453,6 +453,14 @@ const PostsCountControl = ( props ) => {
 	);
 }
 
+const getMinHeaderPosition = () => {
+	return 0;
+};
+
+const getMaxHeaderPosition = () => {
+	return 10;
+};
+
 const ParametricLayoutControls = ( props ) => {
 
 	const {
@@ -480,6 +488,7 @@ const ParametricLayoutControls = ( props ) => {
 
 		automaticPostsNumber,
 		postsToShow,
+		headerPosition,
 	} = attributes;
 
 	// used to store previous values of postsToShow
@@ -515,6 +524,17 @@ const ParametricLayoutControls = ( props ) => {
 				} ) }>
 					<PostsCountControl { ...props } />
 				</div>
+			</ControlsGroup>
+			<ControlsGroup title={ __( 'Header' ) }>
+				<RangeControl
+					label={ __( `Header Position`, '__plugin_txtd' ) }
+					value={ headerPosition }
+					onChange={ headerPosition => {
+						setAttributes( { headerPosition } );
+					} }
+					min={ getMinHeaderPosition() }
+					max={ getMaxHeaderPosition( attributes ) }
+				/>
 			</ControlsGroup>
 			<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
 				<RangeControl

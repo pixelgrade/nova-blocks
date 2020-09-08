@@ -58,5 +58,9 @@
 	"layoutStyle": {
 		"type": "string",
 		"default": "classic"
+	},
+	"headerPosition": {
+		"type": "number",
+		"default": 0
 	}
 }
