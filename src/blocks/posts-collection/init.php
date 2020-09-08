@@ -139,9 +139,9 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 				</div>
 			<?php } ?>
 
-			<?php if ( ! empty( $attributes['showMeta'] ) &&
-			           ! empty( $attributes['showTitle'] ) &&
-			           ! empty( $attributes['showDescription'] ) &&
+			<?php if ( ! empty( $attributes['showMeta'] ) ||
+			           ! empty( $attributes['showTitle'] ) ||
+			           ! empty( $attributes['showDescription'] ) ||
 			           ! empty( $attributes['showButtons'] ) ) { ?>
 
 				<div class="novablocks-card__layout-content novablocks-card__inner-container">
