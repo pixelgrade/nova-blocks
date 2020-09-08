@@ -61,7 +61,7 @@ const Preview = ( props ) => {
 				layoutStyle === 'parametric' &&
 				<ParametricLayoutPreview
 					getContent={ getContent }
-					cardsCount={ posts.length }
+					cardsCount={ posts.length + ( headerPosition !== 0 ? 1 : 0 ) }
 					attributes={ attributes }
 					setAttributes={ setAttributes }
 					posts={ posts }

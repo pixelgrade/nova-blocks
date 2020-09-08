@@ -31961,7 +31961,8 @@ var controls_getRandomAttributes = function getRandomAttributes() {
     subfeature: subfeature,
     balancemdandiw: balancemdandiw,
     hierarchycrossing: hierarchycrossing,
-    flipcolsrows: flipcolsrows
+    flipcolsrows: flipcolsrows,
+    headerPosition: getRandomBetween(0, 1)
   };
 };
 
@@ -32002,7 +32003,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: true,
         balancemdandiw: false,
         hierarchycrossing: 30,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 15: Figma 2',
@@ -32023,7 +32025,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: false,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 47: Circular',
@@ -32044,7 +32047,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: true,
         balancemdandiw: false,
         hierarchycrossing: 153,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 19: New Yorker',
@@ -32065,7 +32069,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: true,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 19: New Yorker+',
@@ -32087,7 +32092,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         balancemdandiw: false,
         hierarchycrossing: 0,
         flipcolsrows: false,
-        containerHeight: 45
+        containerHeight: 45,
+        headerPosition: 0
       }
     }, {
       label: 'TR 45: By the book',
@@ -32108,7 +32114,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: false,
         balancemdandiw: false,
         hierarchycrossing: 120,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 10: Abundance',
@@ -32129,7 +32136,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: false,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 12: Half in Half',
@@ -32150,7 +32158,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: false,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 30: Julia',
@@ -32171,7 +32180,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: true,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 32: Julia+',
@@ -32192,7 +32202,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: true,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }, {
       label: 'TR 13: Julia X',
@@ -32213,7 +32224,8 @@ var controls_LayoutControls = function LayoutControls(props) {
         subfeature: false,
         balancemdandiw: false,
         hierarchycrossing: 0,
-        flipcolsrows: false
+        flipcolsrows: false,
+        headerPosition: 0
       }
     }],
     randomize: controls_getRandomAttributes
@@ -32291,14 +32303,6 @@ var controls_PostsCountControl = function PostsCountControl(props) {
   });
 };
 
-var getMinHeaderPosition = function getMinHeaderPosition() {
-  return 0;
-};
-
-var getMaxHeaderPosition = function getMaxHeaderPosition() {
-  return 10;
-};
-
 var controls_ParametricLayoutControls = function ParametricLayoutControls(props) {
   var attributes = props.attributes;
   var featuresize = attributes.featuresize,
@@ -32358,8 +32362,8 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
         headerPosition: headerPosition
       });
     },
-    min: getMinHeaderPosition(),
-    max: getMaxHeaderPosition(attributes)
+    min: 0,
+    max: postsToShow + 1
   })), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Grid Columns + Rows')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
@@ -39457,7 +39461,7 @@ var preview_Preview = function Preview(props) {
     className: classname
   }, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, {
     getContent: getContent,
-    cardsCount: posts.length,
+    cardsCount: posts.length + (headerPosition !== 0 ? 1 : 0),
     attributes: attributes,
     setAttributes: setAttributes,
     posts: posts

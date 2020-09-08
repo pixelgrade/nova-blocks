@@ -107,7 +107,8 @@ const getRandomAttributes = () => {
 		subfeature,
 		balancemdandiw,
 		hierarchycrossing,
-		flipcolsrows
+		flipcolsrows,
+		headerPosition: getRandomBetween(0, 1),
 	}
 };
 
@@ -153,7 +154,8 @@ const LayoutControls = ( props ) => {
 							subfeature: true,
 							balancemdandiw: false,
 							hierarchycrossing: 30,
-							flipcolsrows: false
+							flipcolsrows: false,
+								headerPosition: 0,
 						}
 					}, {
 						label: 'TR 15: Figma 2',
@@ -174,7 +176,8 @@ const LayoutControls = ( props ) => {
 							subfeature: false,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+								headerPosition: 0,
 						}
 					}, {
 						label: 'TR 47: Circular',
@@ -195,7 +198,8 @@ const LayoutControls = ( props ) => {
 							subfeature: true,
 							balancemdandiw: false,
 							hierarchycrossing: 153,
-							flipcolsrows: false
+							flipcolsrows: false,
+								headerPosition: 0,
 						}
 					}, {
 						label: 'TR 19: New Yorker',
@@ -216,7 +220,8 @@ const LayoutControls = ( props ) => {
 							subfeature: true,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+								headerPosition: 0,
 						}
 					}, {
 						label: 'TR 19: New Yorker+',
@@ -239,6 +244,7 @@ const LayoutControls = ( props ) => {
 							hierarchycrossing: 0,
 							flipcolsrows: false,
 							containerHeight: 45,
+							headerPosition: 0,
 						}
 					}, {
 						label: 'TR 45: By the book',
@@ -259,7 +265,8 @@ const LayoutControls = ( props ) => {
 							subfeature: false,
 							balancemdandiw: false,
 							hierarchycrossing: 120,
-							flipcolsrows: false
+							flipcolsrows: false,
+							headerPosition: 0,
 						}
 					}, {
 						label: 'TR 10: Abundance',
@@ -280,7 +287,8 @@ const LayoutControls = ( props ) => {
 							subfeature: false,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+							headerPosition: 0,
 						}
 					}, {
 						label: 'TR 12: Half in Half',
@@ -301,7 +309,8 @@ const LayoutControls = ( props ) => {
 							subfeature: false,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+							headerPosition: 0,
 						}
 					}, {
 						label: 'TR 30: Julia',
@@ -322,7 +331,8 @@ const LayoutControls = ( props ) => {
 							subfeature: true,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+							headerPosition: 0,
 						}
 					}, {
 						label: 'TR 32: Julia+',
@@ -343,7 +353,8 @@ const LayoutControls = ( props ) => {
 							subfeature: true,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+							headerPosition: 0,
 						}
 					}, {
 						label: 'TR 13: Julia X',
@@ -364,7 +375,8 @@ const LayoutControls = ( props ) => {
 							subfeature: false,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
-							flipcolsrows: false
+							flipcolsrows: false,
+							headerPosition: 0,
 						}
 					} ] }
 					randomize={ getRandomAttributes }
@@ -451,14 +463,6 @@ const PostsCountControl = ( props ) => {
 			max={ 20 }
 		/>
 	);
-}
-
-const getMinHeaderPosition = () => {
-	return 0;
-};
-
-const getMaxHeaderPosition = () => {
-	return 10;
 };
 
 const ParametricLayoutControls = ( props ) => {
@@ -532,8 +536,8 @@ const ParametricLayoutControls = ( props ) => {
 					onChange={ headerPosition => {
 						setAttributes( { headerPosition } );
 					} }
-					min={ getMinHeaderPosition() }
-					max={ getMaxHeaderPosition( attributes ) }
+					min={ 0 }
+					max={ postsToShow + 1 }
 				/>
 			</ControlsGroup>
 			<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
