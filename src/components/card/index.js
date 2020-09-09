@@ -27,7 +27,7 @@ const Card = ( props ) => {
 				}
 				{
 					( showMeta || showTitle || showContent || showButtons ) &&
-					<div className="novablocks-card__layout-content novablocks-card__inner-container is-style-meta">
+					<div className="novablocks-card__layout-content novablocks-card__inner-container">
 						<CardContents { ...props } />
 					</div>
 				}
@@ -36,7 +36,7 @@ const Card = ( props ) => {
 	);
 };
 
-const CardContents = ( props ) => {
+export const CardContents = ( props ) => {
 
 	const {
 		meta,
@@ -57,7 +57,7 @@ const CardContents = ( props ) => {
 			{
 				showMeta &&
 				<div className="wp-block novablocks-grid__item-meta">
-					<div className="novablocks-card__meta">
+					<div className="novablocks-card__meta is-style-meta">
 						<div className="novablocks-card__meta-size-modifier">
 							{ meta }
 						</div>

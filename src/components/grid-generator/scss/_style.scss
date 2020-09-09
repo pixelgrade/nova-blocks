@@ -144,14 +144,6 @@
 	--novablocks-grid-spacing-modifier: 0.5;
 }
 
-.novablocks-block--parametric-grid {
-	--novablocks-block-content-padding-multiplier: 0.5;
-
-	.novablocks-card__media-wrap[class] {
-		margin: 0;
-	}
-}
-
 .novablocks-grid__column {
 	overflow: hidden;
 }

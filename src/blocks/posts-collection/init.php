@@ -35,11 +35,13 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		$posts = get_posts( $args );
 
 		$cssProps = novablocks_get_spacing_css( $attributes );
+
+		$cssProps[] = '--card-media-padding: ' . $attributes['imagePadding'];
+
 		$style = join( '; ', $cssProps );
 
 		$classes = array(
 			'novablocks-block',
-			'novablocks-block--parametric-grid',
 			'novablocks-collection',
 			'novablocks-collection--align-left',
 			'alignfull',
@@ -55,7 +57,6 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		ob_start();
 
 		$posts_collection_attributes = array(
-			'imagePadding',
 			'imageResizing',
 			'containerHeight',
 
@@ -124,6 +125,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	$classes = array(
 		'novablocks-card',
+		'novablocks-card--' . ( $attributes['isLandscape'] ? 'landscape' : 'portrait' ),
 		'novablocks-block__content'
 	);
 
