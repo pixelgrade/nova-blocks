@@ -33,10 +33,9 @@
 	.novablocks-block__content {
 		padding: 0;
 	}
-}
 
-.novablocks-collection {
-
+	// proper spacing inside collection header
+	// and between collection header and cards
 	> .wp-block-group__inner-container[class] {
 
 		> * {
@@ -45,6 +44,20 @@
 
 		> .novablocks-collection__cards[class] {
 			--novablocks-element-spacing-multiplier: 1;
+		}
+	}
+}
+
+// avoid collection layout overlapping collection header
+// fix inspector view and pointer events for collection header elements
+.novablocks-collection__cards {
+	border-top: 1px solid transparent;
+
+	> .novablocks-collection__layout {
+		pointer-events: none;
+
+		> * {
+			pointer-events: auto;
 		}
 	}
 }
