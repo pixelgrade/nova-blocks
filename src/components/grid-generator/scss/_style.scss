@@ -126,7 +126,7 @@
 }
 
 .novablocks-grid {
-	--novablocks-grid-spacing: calc( var(--novablocks-spacing) * 0.5 );
+	--novablocks-grid-spacing: var(--novablocks-spacing);
 	grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
 
 	.novablocks-grid__item {
@@ -141,7 +141,10 @@
 
 .block-is-highlighted.content-is-moderate,
 .block-is-highlighted.content-is-highlighted {
-	--novablocks-grid-spacing-modifier: 0.5;
+
+	@include above(tablet) {
+		--novablocks-grid-spacing-modifier: 0.5;
+	}
 }
 
 .novablocks-grid__column {
