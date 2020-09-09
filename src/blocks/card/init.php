@@ -64,9 +64,11 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 				<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
 			<?php }
 
-			if ( false != $attributes['showButtons'] && ! empty( $content ) ) {
-				echo $content;
-			} ?>
+			if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>
+				<div class="novablocks-card__buttons">
+					<?php echo $content; ?>
+				</div>
+			<?php } ?>
 
 		</div>
 		</div>

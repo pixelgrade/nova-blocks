@@ -146,61 +146,63 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 			           ! empty( $attributes['showDescription'] ) ||
 			           ! empty( $attributes['showButtons'] ) ) { ?>
 
-				<div class="novablocks-card__layout-content novablocks-card__inner-container">
+				<div class="novablocks-card__layout-content">
+					<div class="novablocks-card__inner-container">
 
-					<?php if ( ! empty( $dateReadable ) && ! empty( $attributes['showMeta'] ) ) { ?>
-						<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
-							<div class="novablocks-card__meta-size-modifier">
-							<?php
-							echo $dateReadable;
+						<?php if ( ! empty( $dateReadable ) && ! empty( $attributes['showMeta'] ) ) { ?>
+							<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+								<div class="novablocks-card__meta-size-modifier">
+								<?php
+								echo $dateReadable;
 
-							$categories = wp_get_post_categories( $post->ID );
+								$categories = wp_get_post_categories( $post->ID );
 
-							if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
-								$category_id  = $categories[0];
-								$category     = get_the_category_by_ID( $category_id );
-								$category_url = get_category_link( $category_id );
+								if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+									$category_id  = $categories[0];
+									$category     = get_the_category_by_ID( $category_id );
+									$category_url = get_category_link( $category_id );
 
-								if ( ! is_wp_error( $category ) ) {
-									echo ' &mdash; ' . $category;
+									if ( ! is_wp_error( $category ) ) {
+										echo ' &mdash; ' . $category;
+									}
 								}
-							}
-							?>
-							</div>
-						</div>
-					<?php }
-
-					if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-						echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
-						echo '<div class="novablocks-card__title-size-modifier">';
-						echo $title;
-						echo '</div>';
-						echo '</' . $titleTag . '>';
-					}
-
-
-					if ( ! empty( $excerpt ) && ! empty( $attributes['showDescription'] ) ) { ?>
-						<div class="novablocks-grid__item-content novablocks-card__description">
-							<div class="novablocks-card__content-size-modifier">
-								<?php echo $excerpt; ?>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if ( ! empty( $attributes['showButtons'] ) ) { ?>
-						<div class="novablocks-grid__item-buttons novablocks-card__buttons">
-							<div class="wp-block-buttons alignleft">
-								<div class="wp-block-button is-style-text">
-									<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">
-										<span class="novablocks-buttons-size-modifier">
-											Read More
-										</span>
-									</a>
+								?>
 								</div>
 							</div>
-						</div>
-					<?php } ?>
+						<?php }
 
+						if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
+							echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
+							echo '<div class="novablocks-card__title-size-modifier">';
+							echo $title;
+							echo '</div>';
+							echo '</' . $titleTag . '>';
+						}
+
+
+						if ( ! empty( $excerpt ) && ! empty( $attributes['showDescription'] ) ) { ?>
+							<div class="novablocks-grid__item-content novablocks-card__description">
+								<div class="novablocks-card__content-size-modifier">
+									<?php echo $excerpt; ?>
+								</div>
+							</div>
+						<?php } ?>
+
+						<?php if ( ! empty( $attributes['showButtons'] ) ) { ?>
+							<div class="novablocks-grid__item-buttons novablocks-card__buttons">
+								<div class="wp-block-buttons alignleft">
+									<div class="wp-block-button is-style-text">
+										<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">
+											<span class="novablocks-buttons-size-modifier">
+												Read More
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
+
+					</div>
 				</div>
 
 			<?php } ?>
