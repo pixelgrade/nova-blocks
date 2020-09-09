@@ -39354,6 +39354,10 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
   return Object(external_React_["createElement"])("div", {
     className: "wp-block-group__inner-container"
   }, Object(external_React_["createElement"])(collection_CollectionHeader, props), Object(external_React_["createElement"])("div", {
+    className: "novablocks-collection__cards block-editor-block-list__block"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-collection__layout"
+  }, Object(external_React_["createElement"])("div", {
     className: classname,
     style: style
   }, !!areaColumns && areaColumns.map(function (areaColumn) {
@@ -39385,7 +39389,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
         }, content);
       }));
     }));
-  })));
+  })))));
 };
 // CONCATENATED MODULE: ./src/blocks/posts-collection/preview.js
 

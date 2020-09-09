@@ -35,6 +35,20 @@
 	}
 }
 
+.novablocks-collection {
+
+	> .wp-block-group__inner-container[class] {
+
+		> * {
+			--novablocks-element-spacing-multiplier: 0.25;
+		}
+
+		> .novablocks-collection__cards[class] {
+			--novablocks-element-spacing-multiplier: 1;
+		}
+	}
+}
+
 .novablocks-collection:not(.content-is-basic) {
 
 	.novablocks-card__media-wrap {
