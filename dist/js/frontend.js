@@ -4687,11 +4687,9 @@ var getCardRatio = function getCardRatio(area, attributes) {
   // we hide the content so the ratio should be bigger
 
   if (isLandscape(area, attributes) && width / gridcolumns < 0.3) {
-    ratio *= 1.5;
-  } // balance the ratio
+    ratio *= 7;
+  }
 
-
-  ratio += 0.25;
   return ratio;
 };
 
