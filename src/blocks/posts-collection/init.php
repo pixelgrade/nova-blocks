@@ -61,6 +61,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'containerHeight',
 
 			'layoutStyle',
+			'columns',
 
 			'postsToShow',
 			'gridcolumns',
