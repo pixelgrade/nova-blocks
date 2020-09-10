@@ -11,9 +11,10 @@
 	}
 }
 
-.novablocks-card__layout-content[class][class] {
+.novablocks-card__layout-content {
+	overflow: hidden;
 
-	> .novablocks-grid__item-buttons {
+	> .novablocks-grid__item-buttons[class][class] {
 		margin-top: calc( 2 * var(--element-spacing) );
 	}
 }
@@ -21,10 +22,9 @@
 .novablocks-card__media-wrap {
 	max-width: none !important;
 	padding: calc( var(--novablocks-spacing) * var(--card-media-padding, 0) / 100 );
-	padding-bottom: 0;
 
 	transition: var(--novablocks-transition);
-	transition-property: margin;
+	transition-property: margin, padding;
 }
 
 .novablocks-card__media {

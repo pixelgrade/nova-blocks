@@ -35,11 +35,13 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		$posts = get_posts( $args );
 
 		$cssProps = novablocks_get_spacing_css( $attributes );
+
+		$cssProps[] = '--card-media-padding: ' . $attributes['imagePadding'];
+
 		$style = join( '; ', $cssProps );
 
 		$classes = array(
 			'novablocks-block',
-			'novablocks-block--parametric-grid',
 			'novablocks-collection',
 			'novablocks-collection--align-left',
 			'alignfull',
@@ -55,11 +57,11 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		ob_start();
 
 		$posts_collection_attributes = array(
-			'imagePadding',
 			'imageResizing',
 			'containerHeight',
 
 			'layoutStyle',
+			'columns',
 
 			'postsToShow',
 			'gridcolumns',
@@ -92,7 +94,8 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		echo '<div class="' . $className . '" ' . 'style="'. $style . '">';
 		echo '<div class="wp-block-group__inner-container">';
 		echo novablocks_get_collection_header_output( $attributes );
-		echo '<div class="novablocks-grid alignwide" ' . join( ' ', $data_attributes ) . '>';
+		echo '<div class="novablocks-collection__cards alignwide">';
+		echo '<div class="novablocks-grid" ' . join( ' ', $data_attributes ) . '>';
 
 		foreach ( $posts as $post ) {
 			array_push( $novablocks_rendered_posts_ids, $post->ID );
@@ -100,6 +103,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			echo apply_filters( 'novablocks_post_card_markup', $card_markup, $post, $attributes );
 		}
 
+		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 		echo '</div>';
@@ -122,6 +126,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	$classes = array(
 		'novablocks-card',
+		'novablocks-card--' . ( $attributes['isLandscape'] ? 'landscape' : 'portrait' ),
 		'novablocks-block__content'
 	);
 
@@ -139,66 +144,68 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 				</div>
 			<?php } ?>
 
-			<?php if ( ! empty( $attributes['showMeta'] ) &&
-			           ! empty( $attributes['showTitle'] ) &&
-			           ! empty( $attributes['showDescription'] ) &&
+			<?php if ( ! empty( $attributes['showMeta'] ) ||
+			           ! empty( $attributes['showTitle'] ) ||
+			           ! empty( $attributes['showDescription'] ) ||
 			           ! empty( $attributes['showButtons'] ) ) { ?>
 
-				<div class="novablocks-card__layout-content novablocks-card__inner-container">
+				<div class="novablocks-card__layout-content">
+					<div class="novablocks-card__inner-container">
 
-					<?php if ( ! empty( $dateReadable ) && ! empty( $attributes['showMeta'] ) ) { ?>
-						<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
-							<div class="novablocks-card__meta-size-modifier">
-							<?php
-							echo $dateReadable;
+						<?php if ( ! empty( $dateReadable ) && ! empty( $attributes['showMeta'] ) ) { ?>
+							<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+								<div class="novablocks-card__meta-size-modifier">
+								<?php
+								echo $dateReadable;
 
-							$categories = wp_get_post_categories( $post->ID );
+								$categories = wp_get_post_categories( $post->ID );
 
-							if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
-								$category_id  = $categories[0];
-								$category     = get_the_category_by_ID( $category_id );
-								$category_url = get_category_link( $category_id );
+								if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+									$category_id  = $categories[0];
+									$category     = get_the_category_by_ID( $category_id );
+									$category_url = get_category_link( $category_id );
 
-								if ( ! is_wp_error( $category ) ) {
-									echo ' &mdash; ' . $category;
+									if ( ! is_wp_error( $category ) ) {
+										echo ' &mdash; ' . $category;
+									}
 								}
-							}
-							?>
-							</div>
-						</div>
-					<?php }
-
-					if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-						echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
-						echo '<div class="novablocks-card__title-size-modifier">';
-						echo $title;
-						echo '</div>';
-						echo '</' . $titleTag . '>';
-					}
-
-
-					if ( ! empty( $excerpt ) && ! empty( $attributes['showDescription'] ) ) { ?>
-						<div class="novablocks-grid__item-content novablocks-card__description">
-							<div class="novablocks-card__content-size-modifier">
-								<?php echo $excerpt; ?>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if ( ! empty( $attributes['showButtons'] ) ) { ?>
-						<div class="novablocks-grid__item-buttons novablocks-card__buttons">
-							<div class="wp-block-buttons alignleft">
-								<div class="wp-block-button is-style-text">
-									<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">
-										<span class="novablocks-buttons-size-modifier">
-											Read More
-										</span>
-									</a>
+								?>
 								</div>
 							</div>
-						</div>
-					<?php } ?>
+						<?php }
 
+						if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
+							echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
+							echo '<div class="novablocks-card__title-size-modifier">';
+							echo $title;
+							echo '</div>';
+							echo '</' . $titleTag . '>';
+						}
+
+
+						if ( ! empty( $excerpt ) && ! empty( $attributes['showDescription'] ) ) { ?>
+							<div class="novablocks-grid__item-content novablocks-card__description">
+								<div class="novablocks-card__content-size-modifier">
+									<?php echo $excerpt; ?>
+								</div>
+							</div>
+						<?php } ?>
+
+						<?php if ( ! empty( $attributes['showButtons'] ) ) { ?>
+							<div class="novablocks-grid__item-buttons novablocks-card__buttons">
+								<div class="wp-block-buttons alignleft">
+									<div class="wp-block-button is-style-text">
+										<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">
+											<span class="novablocks-buttons-size-modifier">
+												Read More
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
+
+					</div>
 				</div>
 
 			<?php } ?>

@@ -76,11 +76,8 @@ const getCardRatio = ( area, attributes ) => {
 	// when the card is landscape and very small
 	// we hide the content so the ratio should be bigger
 	if ( isLandscape( area, attributes ) && width / gridcolumns < 0.3 ) {
-		ratio *= 1.5;
+		ratio *= 7;
 	}
-
-	// balance the ratio
-	ratio += 0.25;
 
 	return ratio;
 };

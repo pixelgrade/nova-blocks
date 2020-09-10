@@ -20,7 +20,8 @@ const PostsEdit = ( props ) => {
 	} = props;
 
 	const {
-		containerHeight
+		containerHeight,
+		imagePadding,
 	} = attributes;
 
 	return (
@@ -38,6 +39,17 @@ const PostsEdit = ( props ) => {
 						min={ 0 }
 						max={ 100 }
 						step={ 5 }
+					/>
+					<RangeControl
+						key={ 'collection-image-padding' }
+						label={ __( 'Image padding', '__plugin_txtd' ) }
+						value={ imagePadding }
+						onChange={ imagePadding => {
+							setAttributes( { imagePadding } )
+						} }
+						min={ 0 }
+						max={ 100 }
+						step={ 50 }
 					/>
 				</ControlsTab>
 			</ControlsSection>

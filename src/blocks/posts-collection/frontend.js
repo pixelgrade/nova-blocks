@@ -1,6 +1,6 @@
 import { getCardMediaPaddingTop, debounce, below, above } from "../../utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
-import { getGridStyle } from "../../components/grid-generator/utils";
+import {getAreaClassnameByWidthRatio, getGridStyle} from "../../components/grid-generator/utils";
 
 import {
 	getParametricLayoutAreaClassName,
@@ -20,7 +20,8 @@ import {
 
 		if ( attributes.layoutstyle !== 'parametric' ) {
 			$block.removeClass( 'novablocks-grid' );
-			$block.addClass( 'novablocks-collection__layout' );
+			$block.addClass( 'novablocks-collection__layout spanac' );
+			$block.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
 			return;
 		}
 

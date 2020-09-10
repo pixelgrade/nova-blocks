@@ -87,43 +87,47 @@ export const ParametricLayoutPreview = ( props ) => {
 	return (
 		<div className="wp-block-group__inner-container">
 			{ headerPosition === 0 && <CollectionHeader { ...props } /> }
-			<div className={ classname } style={ style }>
-				{
-					!! areaColumns && areaColumns.map( areaColumn => {
-						let { areas, row, col, width, height } = areaColumn;
+			<div className="novablocks-collection__cards block-editor-block-list__block">
+				<div className="novablocks-collection__layout">
+					<div className={ classname } style={ style }>
+						{
+							!! areaColumns && areaColumns.map( areaColumn => {
+								let { areas, row, col, width, height } = areaColumn;
 
-						const areaColumnStyle = {
-							gridColumnStart: col,
-							gridColumnEnd: col + width,
-							gridRowStart: row,
-							gridRowEnd: row + height,
-						};
+								const areaColumnStyle = {
+									gridColumnStart: col,
+									gridColumnEnd: col + width,
+									gridRowStart: row,
+									gridRowEnd: row + height,
+								};
 
-						return (
-							<div className={ `novablocks-grid__column` } style={ areaColumnStyle }>
-								{ areas.map( area => {
-									addedCards += area.postsCount;
+								return (
+									<div className={ `novablocks-grid__column` } style={ areaColumnStyle }>
+										{ areas.map( area => {
+											addedCards += area.postsCount;
 
-									return (
-										<div className={ getParametricLayoutAreaClassName( area, attributes ) }>
-											<AreaDebug area={ area } />
-											{ Array.from( Array( area.postsCount ).keys() ).map( i => {
-												const landscape = isLandscape( area, attributes );
-												const content = getContent( addedCards - area.postsCount + i, attributes, landscape );
+											return (
+												<div className={ getParametricLayoutAreaClassName( area, attributes ) }>
+													<AreaDebug area={ area } />
+													{ Array.from( Array( area.postsCount ).keys() ).map( i => {
+														const landscape = isLandscape( area, attributes );
+														const content = getContent( addedCards - area.postsCount + i, attributes, landscape );
 
-												return (
-													content && <div className="novablocks-grid__item">
-														{ content }
-													</div>
-												);
-											} ) }
-										</div>
-									)
-								} ) }
-							</div>
-						);
-					} )
-				}
+														return (
+															content && <div className="novablocks-grid__item">
+																{ content }
+															</div>
+														);
+													} ) }
+												</div>
+											)
+										} ) }
+									</div>
+								);
+							} )
+						}
+					</div>
+				</div>
 			</div>
 		</div>
 	)

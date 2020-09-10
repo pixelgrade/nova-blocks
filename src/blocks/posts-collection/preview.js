@@ -42,7 +42,6 @@ const Preview = ( props ) => {
 
 	const classname = classnames(
 		'novablocks-block',
-		'novablocks-block--parametric-grid',
 
 		`novablocks-collection`,
 		`novablocks-collection--align-${ contentAlign }`,
