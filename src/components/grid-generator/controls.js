@@ -420,7 +420,7 @@ const ClassicLayoutControls = ( props ) => {
 				value={ columns }
 				onChange={ ( columns ) => setAttributes( { columns } ) }
 				label={ __( 'Columns' ) }
-				min={ 2 }
+				min={ 1 }
 				max={ 4 }
 			/>
 			<RadioControl

@@ -32262,7 +32262,7 @@ var controls_ClassicLayoutControls = function ClassicLayoutControls(props) {
       });
     },
     label: controls_('Columns'),
-    min: 2,
+    min: 1,
     max: 4
   }), Object(external_React_["createElement"])(controls_RadioControl, {
     key: 'novablocks-card-layout-controls',
