@@ -266,6 +266,14 @@ function novablocks_get_collection_attributes() {
 			'type'    => 'boolean',
 			'default' => true,
 		),
+		'collectionTitleLinkOpensInNewTab'    => array(
+			'type'    => 'boolean',
+			'default' => false,
+		),
+		'collectionTitleLinkURL'    => array(
+			'type'    => 'string',
+			'default' => '',
+		),
 		'showCollectionSubtitle' => array(
 			'type'    => 'boolean',
 			'default' => true,
@@ -1144,11 +1152,26 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 function novablocks_get_collection_header_output( $attributes ) {
 	$titleTag = 'h' . $attributes['level'];
+	$titleURL = $attributes['collectionTitleLinkURL'];
+	$titleURLTarget   = ! empty( $attributes['collectionTitleLinkOpensInNewTab'] ) ? 'target="_blank"' : '';
 
 	$output = '';
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) ) {
-		$output .= '<' . $titleTag . ' class="novablocks-collection__title">' . $attributes['title'] . '</' . $titleTag . '>';
+
+		$output .= '<' . $titleTag . ' class="novablocks-collection__title">';
+
+		if ( ! empty( $titleURL ) ) {
+			$output .= '<a href="' . $titleURL . '" ' . $titleURLTarget . '>';
+		}
+
+		$output .= $attributes['title'];
+
+		if ( ! empty( $titleURL ) ) {
+			$output .= '</a>';
+		}
+
+		$output .= '</' . $titleTag . '>';
 	}
 
 	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) {

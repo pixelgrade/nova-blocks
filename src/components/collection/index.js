@@ -6,17 +6,26 @@ import InspectorControls from "./inspector-controls";
 import { getAreaClassnameByWidthRatio, getAreaClassnameByHeightRatio } from '../grid-generator/utils'
 import { getCardMediaPaddingTop } from '../../utils'
 
+const { __ } = wp.i18n;
 const { Fragment } = wp.element;
+const {
+	BaseControl,
+	ToggleControl,
+} = wp.components;
+const { URLInput } = wp.blockEditor;
 
 const CollectionTitle = ( props ) => {
 
 	const {
 		attributes: {
 			showCollectionTitle,
+			collectionTitleLinkOpensInNewTab,
+			collectionTitleLinkURL,
 			title,
 			level,
 		},
 		setAttributes,
+		isSelected,
 	} = props;
 
 	if ( ! showCollectionTitle ) {
@@ -32,6 +41,31 @@ const CollectionTitle = ( props ) => {
 					setAttributes( { title } );
 				} }
 			/>
+			{
+				isSelected &&
+				<div className="novablocks-collection__title-url-field-wrapper">
+					<BaseControl
+						label={ __( 'Add a link to make the Collection Title clickable.', '__plugin_txtd' ) }
+						className="wp-block-button__inline-link">
+						<URLInput
+							className="wp-block-button__inline-link-input"
+							value={ collectionTitleLinkURL }
+							autoFocus={ false }
+							onChange={ ( value ) => setAttributes( { collectionTitleLinkURL: value } ) }
+							disableSuggestions={ ! isSelected }
+							isFullWidth
+							hasBorder
+						/>
+					</BaseControl>
+					<ToggleControl
+						checked={ collectionTitleLinkOpensInNewTab }
+						onChange={ ( collectionTitleLinkOpensInNewTab ) => {
+							setAttributes( { collectionTitleLinkOpensInNewTab } );
+						} }
+						label={ __( 'Open in new tab', '__plugin_txtd' ) }
+					/>
+				</div>
+			}
 		</div>
 	);
 }

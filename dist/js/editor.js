@@ -20579,14 +20579,22 @@ var transposeMatrix = function transposeMatrix(source) {
 
 
 
+var collection_ = wp.i18n.__;
 var collection_Fragment = wp.element.Fragment;
+var collection_wp$components = wp.components,
+    BaseControl = collection_wp$components.BaseControl,
+    collection_ToggleControl = collection_wp$components.ToggleControl;
+var URLInput = wp.blockEditor.URLInput;
 
 var collection_CollectionTitle = function CollectionTitle(props) {
   var _props$attributes = props.attributes,
       showCollectionTitle = _props$attributes.showCollectionTitle,
+      collectionTitleLinkOpensInNewTab = _props$attributes.collectionTitleLinkOpensInNewTab,
+      collectionTitleLinkURL = _props$attributes.collectionTitleLinkURL,
       title = _props$attributes.title,
       level = _props$attributes.level,
-      setAttributes = props.setAttributes;
+      setAttributes = props.setAttributes,
+      isSelected = props.isSelected;
 
   if (!showCollectionTitle) {
     return null;
@@ -20602,7 +20610,32 @@ var collection_CollectionTitle = function CollectionTitle(props) {
         title: title
       });
     }
-  }));
+  }), isSelected && Object(external_React_["createElement"])("div", {
+    className: "novablocks-collection__title-url-field-wrapper"
+  }, Object(external_React_["createElement"])(BaseControl, {
+    label: collection_('Add a link to make the Collection Title clickable.', '__plugin_txtd'),
+    className: "wp-block-button__inline-link"
+  }, Object(external_React_["createElement"])(URLInput, {
+    className: "wp-block-button__inline-link-input",
+    value: collectionTitleLinkURL,
+    autoFocus: false,
+    onChange: function onChange(value) {
+      return setAttributes({
+        collectionTitleLinkURL: value
+      });
+    },
+    disableSuggestions: !isSelected,
+    isFullWidth: true,
+    hasBorder: true
+  })), Object(external_React_["createElement"])(collection_ToggleControl, {
+    checked: collectionTitleLinkOpensInNewTab,
+    onChange: function onChange(collectionTitleLinkOpensInNewTab) {
+      setAttributes({
+        collectionTitleLinkOpensInNewTab: collectionTitleLinkOpensInNewTab
+      });
+    },
+    label: collection_('Open in new tab', '__plugin_txtd')
+  })));
 };
 
 var collection_CollectionSubtitle = function CollectionSubtitle(props) {
@@ -22345,7 +22378,7 @@ var color_controls_wp$components = wp.components,
     color_controls_RadioControl = color_controls_wp$components.RadioControl,
     color_controls_RangeControl = color_controls_wp$components.RangeControl,
     color_controls_Toolbar = color_controls_wp$components.Toolbar,
-    BaseControl = color_controls_wp$components.BaseControl;
+    color_controls_BaseControl = color_controls_wp$components.BaseControl;
 var PanelColorSettings = wp.blockEditor.PanelColorSettings;
 var color_controls_colors = [{
   name: color_controls_('Dark', '__plugin_txtd'),
@@ -22395,7 +22428,7 @@ var color_controls_OverlayControls = function OverlayControls(props) {
 var color_controls_ColorControls = function ColorControls(props) {
   var contentColor = props.attributes.contentColor,
       setAttributes = props.setAttributes;
-  return Object(external_React_["createElement"])(BaseControl, {
+  return Object(external_React_["createElement"])(color_controls_BaseControl, {
     label: color_controls_('Content Color', '__plugin_txtd')
   }, Object(external_React_["createElement"])(ColorPalette, {
     className: "nova-hide-clear-color",
@@ -33843,7 +33876,7 @@ var announcement_bar_wp$components = wp.components,
     announcement_bar_BaseControl = announcement_bar_wp$components.BaseControl,
     announcement_bar_ToggleControl = announcement_bar_wp$components.ToggleControl;
 var announcement_bar_wp$blockEditor = wp.blockEditor,
-    URLInput = announcement_bar_wp$blockEditor.URLInput,
+    announcement_bar_URLInput = announcement_bar_wp$blockEditor.URLInput,
     InnerBlocks = announcement_bar_wp$blockEditor.InnerBlocks;
 var announcement_bar_ALLOWED_BLOCKS = ['novablocks/openhours', 'core/paragraph'];
 var ANNOUNCEMENT_BAR_TEMPLATE = [['novablocks/openhours', {
@@ -33908,7 +33941,7 @@ function announcement_bar_init() {
       }, Object(external_React_["createElement"])(announcement_bar_BaseControl, {
         label: announcement_bar_('Add a link to make the whole Announcement Bar clickable.', '__plugin_txtd'),
         className: "wp-block-button__inline-link"
-      }, Object(external_React_["createElement"])(URLInput, {
+      }, Object(external_React_["createElement"])(announcement_bar_URLInput, {
         className: "wp-block-button__inline-link-input",
         value: url,
         autoFocus: false,

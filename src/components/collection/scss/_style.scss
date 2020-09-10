@@ -48,6 +48,13 @@
 	}
 }
 
+.novablocks-collection__title {
+
+	a {
+		text-decoration: inherit;
+	}
+}
+
 // avoid collection layout overlapping collection header
 // fix inspector view and pointer events for collection header elements
 .novablocks-collection__cards {
