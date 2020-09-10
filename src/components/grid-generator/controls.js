@@ -545,7 +545,9 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Columns`, '__plugin_txtd' ) }
 					value={ gridcolumns }
 					onChange={ gridcolumns => {
-						setAttributes( { gridcolumns } );
+						if ( !! gridcolumns ) {
+							setAttributes( { gridcolumns } );
+						}
 					} }
 					min={ 1 }
 					max={ 12 }
@@ -554,7 +556,9 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Rows`, '__plugin_txtd' ) }
 					value={ gridrows }
 					onChange={ gridrows => {
-						setAttributes( { gridrows } );
+						if ( !! gridrows ) {
+							setAttributes( { gridrows } );
+						}
 					} }
 					min={ 1 }
 					max={ 12 }
@@ -565,7 +569,9 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Feature Size`, '__plugin_txtd' ) }
 					value={ featuresize }
 					onChange={ featuresize => {
-						setAttributes( { featuresize } );
+						if ( !! featuresize ) {
+							setAttributes( { featuresize } );
+						}
 					} }
 					min={ getMinFeatureSize( attributes ) }
 					max={ getMaxFeatureSize( attributes ) }
@@ -574,7 +580,9 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Feature Position`, '__plugin_txtd' ) }
 					value={ featureposition }
 					onChange={ featureposition => {
-						setAttributes( { featureposition } );
+						if ( !! featureposition ) {
+							setAttributes( { featureposition } );
+						}
 					} }
 					min={ getMinFeaturePosition( attributes ) }
 					max={ getMaxFeaturePosition( attributes ) }
@@ -583,7 +591,9 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Columns Fragmentation`, '__plugin_txtd' ) }
 					value={ fragmentation }
 					onChange={ fragmentation => {
-						setAttributes( { fragmentation } );
+						if ( !! fragmentation ) {
+							setAttributes( { fragmentation } );
+						}
 					} }
 					min={ getMinColumnsFragmentation( attributes ) }
 					max={ getMaxColumnsFragmentation( attributes ) }
@@ -593,28 +603,44 @@ const ParametricLayoutControls = ( props ) => {
 				<RangeControl
 					label={ __( `Image Weight Left`, '__plugin_txtd' ) }
 					value={ imageweightleft }
-					onChange={ imageweightleft => { setAttributes( { imageweightleft } ) } }
+					onChange={ imageweightleft => {
+						if ( !! imageweightleft ) {
+							setAttributes( { imageweightleft } )
+						}
+					} }
 					min={ 0 }
 					max={ 10 }
 				/>
 				<RangeControl
 					label={ __( `Image Weight Right`, '__plugin_txtd' ) }
 					value={ imageweightright }
-					onChange={ imageweightright => { setAttributes( { imageweightright } ) } }
+					onChange={ imageweightright => {
+						if ( !! imageweightright ) {
+							setAttributes( { imageweightright } )
+						}
+					} }
 					min={ 0 }
 					max={ 10 }
 				/>
 				<RangeControl
 					label={ __( `Meta Weight Left`, '__plugin_txtd' ) }
 					value={ metadetailsleft }
-					onChange={ metadetailsleft => { setAttributes( { metadetailsleft } ) } }
+					onChange={ metadetailsleft => {
+						if ( !! metadetailsleft ) {
+							setAttributes( { metadetailsleft } )
+						}
+					} }
 					min={ 0 }
 					max={ 10 }
 				/>
 				<RangeControl
 					label={ __( `Meta Weight Right`, '__plugin_txtd' ) }
 					value={ metadetailsright }
-					onChange={ metadetailsright => { setAttributes( { metadetailsright } ) } }
+					onChange={ metadetailsright => {
+						if ( !! metadetailsright ) {
+							setAttributes( { metadetailsright } )
+						}
+					} }
 					min={ 0 }
 					max={ 10 }
 				/>
@@ -623,23 +649,31 @@ const ParametricLayoutControls = ( props ) => {
 				<ToggleControl
 					label={__( 'Boost Feature Emphasis', '__plugin_txtd' )}
 					checked={ boostfeature }
-					onChange={ () => setAttributes( { boostfeature : ! boostfeature } )}
+					onChange={ () => {
+						setAttributes( { boostfeature : ! boostfeature } )
+					} }
 				/>
 				<ToggleControl
 					label={__( 'Sub Feature', '__plugin_txtd' )}
 					checked={ subfeature }
-					onChange={ () => setAttributes( { subfeature : ! subfeature } )}
+					onChange={ () => {
+						setAttributes( { subfeature : ! subfeature } )
+					} }
 				/>
 				<ToggleControl
 					label={__( 'Balance MD and IW', '__plugin_txtd' )}
 					checked={ balancemdandiw }
-					onChange={ () => setAttributes( { balancemdandiw : ! balancemdandiw } )}
+					onChange={ () => {
+						setAttributes( { balancemdandiw : ! balancemdandiw } )
+					} }
 				/>
 				<RangeControl
 					label={ __( `Hierarchy Crossing`, '__plugin_txtd' ) }
 					value={ hierarchycrossing }
 					onChange={ hierarchycrossing => {
-						setAttributes( { hierarchycrossing } );
+						if ( !! hierarchycrossing ) {
+							setAttributes( { hierarchycrossing } );
+						}
 					} }
 					min={ 0 }
 					max={ 200 }
@@ -647,7 +681,9 @@ const ParametricLayoutControls = ( props ) => {
 				<ToggleControl
 					label={__( 'Flip Cols and Rows', '__plugin_txtd' )}
 					checked={ flipcolsrows }
-					onChange={ () => setAttributes( { flipcolsrows : ! flipcolsrows } )}
+					onChange={ () => {
+						setAttributes( { flipcolsrows : ! flipcolsrows } )
+					} }
 				/>
 			</ControlsGroup>
 		</Fragment>

@@ -32401,9 +32401,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Columns", '__plugin_txtd'),
     value: gridcolumns,
     onChange: function onChange(gridcolumns) {
-      setAttributes({
-        gridcolumns: gridcolumns
-      });
+      if (!!gridcolumns) {
+        setAttributes({
+          gridcolumns: gridcolumns
+        });
+      }
     },
     min: 1,
     max: 12
@@ -32411,9 +32413,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Rows", '__plugin_txtd'),
     value: gridrows,
     onChange: function onChange(gridrows) {
-      setAttributes({
-        gridrows: gridrows
-      });
+      if (!!gridrows) {
+        setAttributes({
+          gridrows: gridrows
+        });
+      }
     },
     min: 1,
     max: 12
@@ -32423,9 +32427,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Feature Size", '__plugin_txtd'),
     value: featuresize,
     onChange: function onChange(featuresize) {
-      setAttributes({
-        featuresize: featuresize
-      });
+      if (!!featuresize) {
+        setAttributes({
+          featuresize: featuresize
+        });
+      }
     },
     min: getMinFeatureSize(attributes),
     max: getMaxFeatureSize(attributes)
@@ -32433,9 +32439,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Feature Position", '__plugin_txtd'),
     value: featureposition,
     onChange: function onChange(featureposition) {
-      setAttributes({
-        featureposition: featureposition
-      });
+      if (!!featureposition) {
+        setAttributes({
+          featureposition: featureposition
+        });
+      }
     },
     min: getMinFeaturePosition(attributes),
     max: getMaxFeaturePosition(attributes)
@@ -32443,9 +32451,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Columns Fragmentation", '__plugin_txtd'),
     value: fragmentation,
     onChange: function onChange(fragmentation) {
-      setAttributes({
-        fragmentation: fragmentation
-      });
+      if (!!fragmentation) {
+        setAttributes({
+          fragmentation: fragmentation
+        });
+      }
     },
     min: getMinColumnsFragmentation(attributes),
     max: getMaxColumnsFragmentation(attributes)
@@ -32455,9 +32465,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Image Weight Left", '__plugin_txtd'),
     value: imageweightleft,
     onChange: function onChange(imageweightleft) {
-      setAttributes({
-        imageweightleft: imageweightleft
-      });
+      if (!!imageweightleft) {
+        setAttributes({
+          imageweightleft: imageweightleft
+        });
+      }
     },
     min: 0,
     max: 10
@@ -32465,9 +32477,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Image Weight Right", '__plugin_txtd'),
     value: imageweightright,
     onChange: function onChange(imageweightright) {
-      setAttributes({
-        imageweightright: imageweightright
-      });
+      if (!!imageweightright) {
+        setAttributes({
+          imageweightright: imageweightright
+        });
+      }
     },
     min: 0,
     max: 10
@@ -32475,9 +32489,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Meta Weight Left", '__plugin_txtd'),
     value: metadetailsleft,
     onChange: function onChange(metadetailsleft) {
-      setAttributes({
-        metadetailsleft: metadetailsleft
-      });
+      if (!!metadetailsleft) {
+        setAttributes({
+          metadetailsleft: metadetailsleft
+        });
+      }
     },
     min: 0,
     max: 10
@@ -32485,9 +32501,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Meta Weight Right", '__plugin_txtd'),
     value: metadetailsright,
     onChange: function onChange(metadetailsright) {
-      setAttributes({
-        metadetailsright: metadetailsright
-      });
+      if (!!metadetailsright) {
+        setAttributes({
+          metadetailsright: metadetailsright
+        });
+      }
     },
     min: 0,
     max: 10
@@ -32497,7 +32515,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_('Boost Feature Emphasis', '__plugin_txtd'),
     checked: boostfeature,
     onChange: function onChange() {
-      return setAttributes({
+      setAttributes({
         boostfeature: !boostfeature
       });
     }
@@ -32505,7 +32523,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_('Sub Feature', '__plugin_txtd'),
     checked: subfeature,
     onChange: function onChange() {
-      return setAttributes({
+      setAttributes({
         subfeature: !subfeature
       });
     }
@@ -32513,7 +32531,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_('Balance MD and IW', '__plugin_txtd'),
     checked: balancemdandiw,
     onChange: function onChange() {
-      return setAttributes({
+      setAttributes({
         balancemdandiw: !balancemdandiw
       });
     }
@@ -32521,9 +32539,11 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Hierarchy Crossing", '__plugin_txtd'),
     value: hierarchycrossing,
     onChange: function onChange(hierarchycrossing) {
-      setAttributes({
-        hierarchycrossing: hierarchycrossing
-      });
+      if (!!hierarchycrossing) {
+        setAttributes({
+          hierarchycrossing: hierarchycrossing
+        });
+      }
     },
     min: 0,
     max: 200
@@ -32531,7 +32551,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_('Flip Cols and Rows', '__plugin_txtd'),
     checked: flipcolsrows,
     onChange: function onChange() {
-      return setAttributes({
+      setAttributes({
         flipcolsrows: !flipcolsrows
       });
     }
