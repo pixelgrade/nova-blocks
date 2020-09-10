@@ -39061,6 +39061,7 @@ function card_init() {
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -39081,9 +39082,12 @@ var CARDS_COLLECTION_TEMPLATE = [['novablocks/card'], ['novablocks/card'], ['nov
 var edit_CardsCollectionEdit = function CardsCollectionEdit(props) {
   var innerBlocks = props.innerBlocks;
   var hasAppender = !!innerBlocks && innerBlocks.length < 4;
+  var passedProps = Object.assign({}, props, {
+    className: classnames_default()(props.className, 'novablocks-cards-collection')
+  });
   return Object(external_React_["createElement"])(cards_collection_edit_Fragment, null, Object(external_React_["createElement"])(components_collection, extends_default()({
     hasAppender: hasAppender
-  }, props), Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
+  }, passedProps), Object(external_React_["createElement"])(cards_collection_edit_InnerBlocks, {
     allowedBlocks: edit_ALLOWED_BLOCKS,
     template: CARDS_COLLECTION_TEMPLATE,
     renderAppender: hasAppender ? window.undefined : false

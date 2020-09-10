@@ -52,7 +52,7 @@
 			margin-right: 0;
 		}
 
-		.novablocks-collection.has-appender & {
+		.novablocks-cards-collection.has-appender & {
 			@include novablocks-cards-columns-count(1);
 
 			--apender-width: 60px;
@@ -69,7 +69,7 @@
 			}
 		}
 
-		.novablocks-collection:not(.has-appender) & {
+		.novablocks-cards-collection:not(.has-appender) & {
 			@include novablocks-cards-columns-count;
 		}
 	}

@@ -2,7 +2,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
-	margin-top: calc(-1 * var(--novablocks-spacing));
+	margin-top: calc(-0.5 * var(--novablocks-spacing));
 	margin-left: calc(-0.5 * var(--novablocks-spacing));
 	pointer-events: none;
 
@@ -11,7 +11,7 @@
 		--width: calc( ( 100% - var(--surplus) ) / var(--columns, 1) - 0.5 * var(--novablocks-spacing));
 
 		flex: 0 1 var(--width);
-		margin-top: var(--novablocks-spacing);
+		margin-top: calc(0.5 * var(--novablocks-spacing));
 		margin-left: calc(0.5 * var(--novablocks-spacing));
 		pointer-events: auto;
 

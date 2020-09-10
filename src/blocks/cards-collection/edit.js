@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import { Collection } from "../../components";
 
 /**
@@ -38,10 +39,16 @@ const CardsCollectionEdit = ( props ) => {
 	} = props;
 
 	const hasAppender = !! innerBlocks && innerBlocks.length < 4;
+	const passedProps = Object.assign( {}, props, {
+		className: classnames(
+			props.className,
+			'novablocks-cards-collection'
+		)
+	} );
 
 	return (
 		<Fragment>
-			<Collection hasAppender={ hasAppender } { ...props }>
+			<Collection hasAppender={ hasAppender } { ...passedProps }>
 				<InnerBlocks
 					allowedBlocks={ ALLOWED_BLOCKS }
 					template={ CARDS_COLLECTION_TEMPLATE }
