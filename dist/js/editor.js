@@ -20673,8 +20673,7 @@ var collection_CollectionPreview = function CollectionPreview(props) {
       imagePadding = attributes.imagePadding,
       columns = attributes.columns,
       postsToShow = attributes.postsToShow,
-      isLandscape = attributes.isLandscape,
-      headerPosition = attributes.headerPosition;
+      isLandscape = attributes.isLandscape;
   var blockClassName = 'novablocks-collection';
   var style = {
     '--card-media-padding': imagePadding,
@@ -39485,6 +39484,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
 
 
 
+var posts_collection_preview_Fragment = wp.element.Fragment;
 
 var preview_Preview = function Preview(props) {
   var attributes = props.attributes,
@@ -39505,18 +39505,12 @@ var preview_Preview = function Preview(props) {
   }
 
   var getContent = function getContent(index, attributes, isLandscape) {
-    var idx = headerPosition !== 0 && headerPosition - 1 < index ? index - 1 : index;
-    var post = posts === null || posts === void 0 ? void 0 : posts[idx];
-
-    if (headerPosition - 1 === index) {
-      return Object(external_React_["createElement"])(collection_CollectionHeader, props);
-    }
-
-    return post && Object(external_React_["createElement"])(posts_collection_post, {
+    var post = posts === null || posts === void 0 ? void 0 : posts[index];
+    return Object(external_React_["createElement"])(posts_collection_preview_Fragment, null, headerPosition - 1 === index && Object(external_React_["createElement"])(collection_CollectionHeader, props), post && Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
       isLandscape: isLandscape,
       attributes: attributes
-    });
+    }));
   };
 
   var classname = classnames_default()('novablocks-block', "novablocks-collection", "novablocks-collection--align-".concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), className);

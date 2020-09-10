@@ -117,7 +117,6 @@ export const CollectionPreview = ( props ) => {
 		columns,
 		postsToShow,
 		isLandscape,
-		headerPosition,
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';

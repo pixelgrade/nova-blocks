@@ -3,6 +3,10 @@ import Post from "./post";
 import classnames from "classnames";
 import { CollectionHeader } from "../../components/collection";
 
+const {
+	Fragment
+} = wp.element;
+
 const Preview = ( props ) => {
 
 	const {
@@ -30,14 +34,14 @@ const Preview = ( props ) => {
 	}
 
 	const getContent = ( index, attributes, isLandscape ) => {
-		const idx = headerPosition !== 0 && headerPosition - 1 < index ? index - 1 : index;
-		const post = posts?.[idx];
+		const post = posts?.[index];
 
-		if ( headerPosition - 1 === index ) {
-			return <CollectionHeader { ...props } />
-		}
-
-		return post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />;
+		return (
+			<Fragment>
+				{ headerPosition - 1 === index && <CollectionHeader { ...props } /> }
+				{ post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } /> }
+			</Fragment>
+		)
 	};
 
 	const classname = classnames(
