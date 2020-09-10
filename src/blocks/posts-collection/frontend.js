@@ -1,6 +1,12 @@
-import { getCardMediaPaddingTop, debounce, below, above } from "../../utils";
+import classnames from "classnames";
+import { getCardMediaPaddingTop, debounce, below } from "../../utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
-import {getAreaClassnameByWidthRatio, getGridStyle} from "../../components/grid-generator/utils";
+import {
+	getAreaBaseClassname, getAreaClassnameByAspectRatio,
+	getAreaClassnameByHeightRatio,
+	getAreaClassnameByWidthRatio,
+	getGridStyle
+} from "../../components/grid-generator/utils";
 
 import {
 	getParametricLayoutAreaClassName,
@@ -9,6 +15,8 @@ import {
 } from "../../components/grid-generator/utils";
 
 (function($, window, undefined) {
+
+	const defaultBlockWidth = 1162; // magic
 
 	$( '.novablocks-grid' ).each( function( i, block ) {
 		const $block = $( block );
@@ -25,13 +33,15 @@ import {
 			return;
 		}
 
-		let gridcolumns = attributes.gridcolumns;
-
 		block.style.setProperty( '--card-media-padding', attributes.imagepadding );
 		block.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.containerheight ) );
 		block.style.setProperty( '--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down' );
 
 		function createLayout() {
+
+			let gridcolumns = attributes.gridcolumns;
+			let gridrows = attributes.gridrows;
+			let blockWidth = $block.outerWidth();
 
 			$posts.detach();
 			$block.empty();
@@ -70,7 +80,15 @@ import {
 
 				for ( let j = 0; j < areas.length; j++ ) {
 					const area = areas[j];
-					const areaClassName = getParametricLayoutAreaClassName( area, attributes );
+					const blockWidthRatio = Math.min( 1, blockWidth / defaultBlockWidth );
+					console.log( blockWidth, defaultBlockWidth, blockWidthRatio, width, gridcolumns, blockWidthRatio * width / gridcolumns );
+
+					const areaClassName = classnames([
+						getAreaBaseClassname( area ),
+						getAreaClassnameByWidthRatio( blockWidthRatio * width / gridcolumns ),
+						getAreaClassnameByHeightRatio( height / gridrows ),
+						getAreaClassnameByAspectRatio( area, attributes )
+					]);
 					addedCards += area.postsCount;
 
 					const $area = $( `<div class="${ areaClassName }">` );

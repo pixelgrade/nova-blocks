@@ -97,13 +97,27 @@ export const isLandscape = ( area, attributes ) => {
 
 export const getParametricLayoutAreaClassName = ( area, attributes ) => {
 	const { gridcolumns, gridrows } = getGridColumnsAndRows( attributes );
-	const { nth, width, height } = area;
+	const { width, height } = area;
+
+	return classnames([
+		getAreaBaseClassname( area ),
+		getAreaClassnameByWidthRatio( width / gridcolumns ),
+		getAreaClassnameByHeightRatio( height / gridrows ),
+		getAreaClassnameByAspectRatio( area, attributes )
+	]);
+};
+
+export const getAreaBaseClassname = ( area ) => {
+	const { nth } = area;
 
 	return classnames([
 		'novablocks-grid__area',
 		`novablocks-grid__area--nth-${ nth }`,
-		getAreaClassnameByWidthRatio( width / gridcolumns ),
-		getAreaClassnameByHeightRatio( height / gridrows ),
+	]);
+};
+
+export const getAreaClassnameByAspectRatio = ( area, attributes ) => {
+	return classnames([
 		{
 			'novablocks-grid__area--portrait': ! isLandscape( area, attributes ),
 			'novablocks-grid__area--landscape': isLandscape( area, attributes ),

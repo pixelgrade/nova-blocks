@@ -4715,10 +4715,16 @@ var utils_getParametricLayoutAreaClassName = function getParametricLayoutAreaCla
       gridcolumns = _getGridColumnsAndRow4.gridcolumns,
       gridrows = _getGridColumnsAndRow4.gridrows;
 
-  var nth = area.nth,
-      width = area.width,
+  var width = area.width,
       height = area.height;
-  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth), utils_getAreaClassnameByWidthRatio(width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), {
+  return classnames_default()([utils_getAreaBaseClassname(area), utils_getAreaClassnameByWidthRatio(width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), utils_getAreaClassnameByAspectRatio(area, attributes)]);
+};
+var utils_getAreaBaseClassname = function getAreaBaseClassname(area) {
+  var nth = area.nth;
+  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth)]);
+};
+var utils_getAreaClassnameByAspectRatio = function getAreaClassnameByAspectRatio(area, attributes) {
+  return classnames_default()([{
     'novablocks-grid__area--portrait': !isLandscape(area, attributes),
     'novablocks-grid__area--landscape': isLandscape(area, attributes)
   }]);
@@ -5671,7 +5677,10 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
 
 
+
 (function ($, window, undefined) {
+  var defaultBlockWidth = 1162; // magic
+
   $('.novablocks-grid').each(function (i, block) {
     var $block = $(block);
     var $posts = $block.children('.novablocks-card');
@@ -5686,12 +5695,14 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       return;
     }
 
-    var gridcolumns = attributes.gridcolumns;
     block.style.setProperty('--card-media-padding', attributes.imagepadding);
     block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.containerheight));
     block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
 
     function createLayout() {
+      var gridcolumns = attributes.gridcolumns;
+      var gridrows = attributes.gridrows;
+      var blockWidth = $block.outerWidth();
       $posts.detach();
       $block.empty();
       addedCards = 0;
@@ -5729,7 +5740,9 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
         var _loop = function _loop(j) {
           var area = areas[j];
-          var areaClassName = utils_getParametricLayoutAreaClassName(area, attributes);
+          var blockWidthRatio = Math.min(1, blockWidth / defaultBlockWidth);
+          console.log(blockWidth, defaultBlockWidth, blockWidthRatio, width, gridcolumns, blockWidthRatio * width / gridcolumns);
+          var areaClassName = classnames_default()([utils_getAreaBaseClassname(area), utils_getAreaClassnameByWidthRatio(blockWidthRatio * width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), utils_getAreaClassnameByAspectRatio(area, attributes)]);
           addedCards += area.postsCount;
           var $area = $("<div class=\"".concat(areaClassName, "\">"));
           Array.from(Array(area.postsCount).keys()).map(function (i) {

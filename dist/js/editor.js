@@ -20531,10 +20531,16 @@ var utils_getParametricLayoutAreaClassName = function getParametricLayoutAreaCla
       gridcolumns = _getGridColumnsAndRow4.gridcolumns,
       gridrows = _getGridColumnsAndRow4.gridrows;
 
-  var nth = area.nth,
-      width = area.width,
+  var width = area.width,
       height = area.height;
-  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth), utils_getAreaClassnameByWidthRatio(width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), {
+  return classnames_default()([utils_getAreaBaseClassname(area), utils_getAreaClassnameByWidthRatio(width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), utils_getAreaClassnameByAspectRatio(area, attributes)]);
+};
+var utils_getAreaBaseClassname = function getAreaBaseClassname(area) {
+  var nth = area.nth;
+  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth)]);
+};
+var utils_getAreaClassnameByAspectRatio = function getAreaClassnameByAspectRatio(area, attributes) {
+  return classnames_default()([{
     'novablocks-grid__area--portrait': !utils_isLandscape(area, attributes),
     'novablocks-grid__area--landscape': utils_isLandscape(area, attributes)
   }]);
