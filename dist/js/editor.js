@@ -39542,17 +39542,21 @@ var posts_collection_edit_ = wp.i18n.__;
 var posts_collection_edit_Fragment = wp.element.Fragment;
 var posts_collection_edit_wp$components = wp.components,
     edit_RangeControl = posts_collection_edit_wp$components.RangeControl,
-    posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody;
+    posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody,
+    edit_PanelRow = posts_collection_edit_wp$components.PanelRow;
 
 var edit_PostsEdit = function PostsEdit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
   var containerHeight = attributes.containerHeight,
-      imagePadding = attributes.imagePadding;
+      imagePadding = attributes.imagePadding,
+      level = attributes.level;
   return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: posts_collection_edit_('Display')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: posts_collection_edit_('Settings')
+  }, Object(external_React_["createElement"])(controls_group, {
+    title: posts_collection_edit_('Card Media')
   }, Object(external_React_["createElement"])(edit_RangeControl, {
     key: 'collection-image-container-height',
     label: posts_collection_edit_('Image container height', '__plugin_txtd'),
@@ -39577,7 +39581,18 @@ var edit_PostsEdit = function PostsEdit(props) {
     min: 0,
     max: 100,
     step: 50
-  }))), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
+  })), Object(external_React_["createElement"])(controls_group, {
+    title: posts_collection_edit_('Card Text')
+  }, Object(external_React_["createElement"])(edit_PanelRow, null, Object(external_React_["createElement"])("span", null, posts_collection_edit_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 2,
+    maxLevel: 4,
+    selectedLevel: level,
+    onChange: function onChange(level) {
+      setAttributes({
+        level: level
+      });
+    }
+  }))))), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
     title: posts_collection_edit_('Set up elements for this block', '__plugin_txtd')
   }, Object(external_React_["createElement"])(toggle_group, {
     onChange: setAttributes,
