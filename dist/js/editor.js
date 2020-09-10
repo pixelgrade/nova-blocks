@@ -31922,7 +31922,7 @@ var normalizeAttributes = function normalizeAttributes(newAttributes, attributes
 
 var controls_getRandomAttributes = function getRandomAttributes() {
   var postsToShow = getRandomBetween(3, 20);
-  var gridcolumns = getRandomBetween(2, 12);
+  var gridcolumns = getRandomBetween(2, 6);
   var gridrows = getRandomBetween(2, 12);
   var minFeatureSize = 1;
   var maxFeatureSize = Math.ceil(gridcolumns * 0.75);

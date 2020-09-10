@@ -5729,13 +5729,13 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
         var _loop = function _loop(j) {
           var area = areas[j];
-          var areaClassName = below('tablet') ? 'novablocks-grid__area' : utils_getParametricLayoutAreaClassName(area, attributes);
+          var areaClassName = utils_getParametricLayoutAreaClassName(area, attributes);
           addedCards += area.postsCount;
           var $area = $("<div class=\"".concat(areaClassName, "\">"));
           Array.from(Array(area.postsCount).keys()).map(function (i) {
             var $gridItem = $('<div class="novablocks-grid__item">');
             var $card = $posts.eq(addedCards - area.postsCount + i);
-            var landscape = isLandscape(area, attributes) && above('tablet');
+            var landscape = isLandscape(area, attributes);
             $card.toggleClass('novablocks-card--landscape', !!landscape);
             $card.toggleClass('novablocks-card--portrait', !landscape);
             $card.appendTo($gridItem);

@@ -64,7 +64,7 @@ const normalizeAttributes = ( newAttributes, attributes ) => {
 const getRandomAttributes = () => {
 
 	const postsToShow = getRandomBetween( 3, 20 );
-	const gridcolumns = getRandomBetween( 2, 12 );
+	const gridcolumns = getRandomBetween( 2, 6 );
 	const gridrows = getRandomBetween( 2, 12 );
 
 	const minFeatureSize = 1;

@@ -70,7 +70,7 @@ import {
 
 				for ( let j = 0; j < areas.length; j++ ) {
 					const area = areas[j];
-					const areaClassName = below( 'tablet' ) ? 'novablocks-grid__area' : getParametricLayoutAreaClassName( area, attributes );
+					const areaClassName = getParametricLayoutAreaClassName( area, attributes );
 					addedCards += area.postsCount;
 
 					const $area = $( `<div class="${ areaClassName }">` );
@@ -78,7 +78,7 @@ import {
 					Array.from( Array( area.postsCount ).keys() ).map( i => {
 						const $gridItem = $( '<div class="novablocks-grid__item">' );
 						const $card = $posts.eq( addedCards - area.postsCount + i );
-						const landscape = isLandscape( area, attributes ) && above( 'tablet' );
+						const landscape = isLandscape( area, attributes );
 
 						$card.toggleClass( 'novablocks-card--landscape', !! landscape );
 						$card.toggleClass( 'novablocks-card--portrait', ! landscape );
