@@ -31011,12 +31011,7 @@ with_inner_blocks_addFilter('editor.BlockEdit', 'novablocks/with-inner-blocks-co
 // EXTERNAL MODULE: ./src/filters/with-grid-generator/attributes.json
 var with_grid_generator_attributes = __webpack_require__(136);
 
-// EXTERNAL MODULE: ./node_modules/lodash/memoize.js
-var memoize = __webpack_require__(205);
-var memoize_default = /*#__PURE__*/__webpack_require__.n(memoize);
-
 // CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
-
 
 
 function layoutEngine_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -31026,7 +31021,7 @@ function layoutEngine_objectSpread(target) { for (var i = 1; i < arguments.lengt
  // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
 
-var applyLayoutEngine = memoize_default()(function (state) {
+var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
   var debug = false; // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
   // we need to do a couple of preliminary calculations.
   // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
@@ -31507,7 +31502,7 @@ var applyLayoutEngine = memoize_default()(function (state) {
   ;
   moveLargestColumnToStart(areaColumns);
   return areaColumns;
-});
+};
 
 var moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {
   var firstRowColumns = areaColumns.filter(function (column) {
@@ -32368,7 +32363,7 @@ var controls_PostsCountControl = function PostsCountControl(props) {
 
 var controls_getAttributesByHeaderColumn = function getAttributesByHeaderColumn(attributes) {
   var headerColumn = attributes.headerColumn;
-  var areaColumns = applyLayoutEngine(attributes);
+  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var headerOptimalPositions = getOptimalHeaderPosition(areaColumns);
   return controls_objectSpread(controls_objectSpread({}, attributes), {}, {
     headerPosition: headerOptimalPositions[headerColumn]
@@ -32403,7 +32398,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     props.setAttributes(normalizedAttributes);
   };
 
-  var areaColumns = applyLayoutEngine(attributes);
+  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var autoPostsCount = getPostsCount(areaColumns);
   var headerOptimalPositions = getOptimalHeaderPosition(areaColumns);
   return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(DebugControls, props), Object(external_React_["createElement"])(controls_group, {
@@ -39486,7 +39481,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
     'novablocks-grid--scaled': toggleScale,
     'novablocks-grid--mask': toggleMask
   });
-  var areaColumns = applyLayoutEngine(attributes);
+  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
   var addedCards = 0;
   redistributeCardsInAreas(areaColumns, cardsCount, attributes);
 

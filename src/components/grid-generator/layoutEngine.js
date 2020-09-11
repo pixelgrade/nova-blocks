@@ -3,7 +3,7 @@ import { transposeMatrix } from './utils';
 
 // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
-export const applyLayoutEngine = memoize( state => {
+export const applyLayoutEngine = state => {
 
 	const debug = false;
 
@@ -472,7 +472,7 @@ export const applyLayoutEngine = memoize( state => {
 	moveLargestColumnToStart( areaColumns );
 
 	return areaColumns;
-} );
+};
 
 const moveLargestColumnToStart = ( areaColumns ) => {
 	const firstRowColumns = areaColumns.filter( column => column.row === 1 )
