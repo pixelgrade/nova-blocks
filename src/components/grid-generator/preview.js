@@ -111,13 +111,7 @@ export const ParametricLayoutPreview = ( props ) => {
 													<AreaDebug area={ area } />
 													{ Array.from( Array( area.postsCount ).keys() ).map( i => {
 														const landscape = isLandscape( area, attributes );
-														const content = getContent( addedCards - area.postsCount + i, attributes, landscape );
-
-														return (
-															content && <div className="novablocks-grid__item">
-																{ content }
-															</div>
-														);
+														return getContent( addedCards - area.postsCount + i, attributes, landscape );
 													} ) }
 												</div>
 											)

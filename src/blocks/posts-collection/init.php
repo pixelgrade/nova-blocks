@@ -57,8 +57,10 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		ob_start();
 
 		$posts_collection_attributes = array(
+			'imagePadding',
 			'imageResizing',
 			'containerHeight',
+			'headerPosition',
 
 			'layoutStyle',
 			'columns',
@@ -78,7 +80,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'subfeature',
 			'balancemdandiw',
 			'hierarchycrossing',
-			'flipcolsrows'
+			'flipcolsrows',
 		);
 
 		$data_attributes = array();

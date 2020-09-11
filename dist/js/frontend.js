@@ -5709,16 +5709,19 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
   var defaultBlockWidth = 1162; // magic
 
   $('.novablocks-grid').each(function (i, block) {
-    var $block = $(block);
-    var $posts = $block.children('.novablocks-card');
-    var attributes = $block.data();
+    var $grid = $(block);
+    var $block = $grid.closest('.novablocks-block');
+    var $posts = $grid.children('.novablocks-card');
+    var attributes = $grid.data();
     var cardsCount = $posts.length;
+    var $title = $block.find('.novablocks-collection__title').detach();
+    var $subtitle = $block.find('.novablocks-collection__subtitle').detach();
     var addedCards;
 
     if (attributes.layoutstyle !== 'parametric') {
-      $block.removeClass('novablocks-grid');
-      $block.addClass('novablocks-collection__layout spanac');
-      $block.addClass(utils_getAreaClassnameByWidthRatio(1 / attributes.columns));
+      $grid.removeClass('novablocks-grid');
+      $grid.addClass('novablocks-collection__layout spanac');
+      $grid.addClass(utils_getAreaClassnameByWidthRatio(1 / attributes.columns));
       return;
     }
 
@@ -5729,9 +5732,9 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     function createLayout() {
       var gridcolumns = attributes.gridcolumns;
       var gridrows = attributes.gridrows;
-      var blockWidth = $block.outerWidth();
+      var blockWidth = $grid.outerWidth();
       $posts.detach();
-      $block.empty();
+      $grid.empty();
       addedCards = 0;
       var areaColumns = applyLayoutEngine(attributes);
       var columnsCount = areaColumns.length;
@@ -5751,9 +5754,15 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       }
 
       redistributeCardsInAreas(areaColumns, cardsCount, attributes);
-      $block.css(utils_getGridStyle(Object.assign({}, attributes, {
+      $grid.css(utils_getGridStyle(Object.assign({}, attributes, {
         gridcolumns: gridcolumns
       })));
+      $('.js-collection-element-clone').remove();
+
+      if (below('desktop') || attributes.headerposition === 0) {
+        $title.clone().addClass('js-collection-element-clone').appendTo($grid);
+        $subtitle.clone().addClass('js-collection-element-clone').appendTo($grid);
+      }
 
       for (var _i3 = 0; _i3 < areaColumns.length; _i3++) {
         var areaColumn = areaColumns[_i3];
@@ -5779,6 +5788,13 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
             $card.toggleClass('novablocks-card--portrait', !landscape);
             $card.appendTo($gridItem);
             $gridItem.appendTo($area);
+
+            if (attributes.headerposition === addedCards - area.postsCount + i) {
+              var $header = $('<div class="novablocks-grid__item js-collection-element-clone">');
+              $title.clone().appendTo($header);
+              $subtitle.clone().appendTo($header);
+              $header.prependTo($area);
+            }
           });
           $area.appendTo($column);
         };
@@ -5787,15 +5803,15 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
           _loop(j);
         }
 
-        $column.appendTo($block);
+        $column.appendTo($grid);
       }
     }
 
     createLayout();
 
     function recreateLayout() {
-      $block.contents().replaceWith($posts);
-      $block.css({
+      $grid.contents().replaceWith($posts);
+      $grid.css({
         display: '',
         gridTemplateColumns: '',
         gridTemplateRowss: ''

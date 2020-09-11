@@ -36,15 +36,12 @@
 
 	// proper spacing inside collection header
 	// and between collection header and cards
-	> .wp-block-group__inner-container[class] {
+	.novablocks-collection__title + .novablocks-collection__subtitle {
+		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+	}
 
-		> * {
-			--novablocks-element-spacing-multiplier: 0.25;
-		}
-
-		> .novablocks-collection__cards[class] {
-			--novablocks-element-spacing-multiplier: 1;
-		}
+	.novablocks-collection__cards {
+		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
 	}
 }
 

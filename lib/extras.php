@@ -1159,7 +1159,7 @@ function novablocks_get_collection_header_output( $attributes ) {
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) ) {
 
-		$output .= '<' . $titleTag . ' class="novablocks-collection__title">';
+		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block">';
 
 		if ( ! empty( $titleURL ) ) {
 			$output .= '<a href="' . $titleURL . '" ' . $titleURLTarget . '>';
@@ -1175,7 +1175,7 @@ function novablocks_get_collection_header_output( $attributes ) {
 	}
 
 	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) {
-		$output .= '<p class="novablocks-collection__subtitle is-style-lead">' . $attributes['subtitle'] . '</p>';
+		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead">' . $attributes['subtitle'] . '</p>';
 	}
 
 	return $output;

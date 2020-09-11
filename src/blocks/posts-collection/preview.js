@@ -16,6 +16,7 @@ const Preview = ( props ) => {
 		clientId,
 		markPostsAsDisplayed,
 		className,
+		isSelected,
 	} = props;
 
 	const {
@@ -38,8 +39,18 @@ const Preview = ( props ) => {
 
 		return (
 			<Fragment>
-				{ headerPosition - 1 === index && <CollectionHeader { ...props } /> }
-				{ post && <Post post={ post } isLandscape={ isLandscape } attributes={ attributes } /> }
+				{
+					headerPosition - 1 === index &&
+				    <div className="novablocks-grid__item">
+					    <CollectionHeader { ...props } />
+				    </div>
+				}
+				{
+					post &&
+					<div className="novablocks-grid__item">
+						<Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+					</div>
+				}
 			</Fragment>
 		)
 	};
@@ -64,10 +75,11 @@ const Preview = ( props ) => {
 				layoutStyle === 'parametric' &&
 				<ParametricLayoutPreview
 					getContent={ getContent }
-					cardsCount={ posts.length + ( headerPosition !== 0 ? 1 : 0 ) }
+					cardsCount={ posts.length }
 					attributes={ attributes }
 					setAttributes={ setAttributes }
 					posts={ posts }
+					isSelected={ isSelected }
 				/>
 			}
 		</div>

@@ -9,7 +9,6 @@ import {
 } from "../../components/grid-generator/utils";
 
 import {
-	getOptimalHeaderPosition,
 	redistributeCardsInAreas,
 	isLandscape,
 } from "../../components/grid-generator/utils";
@@ -19,17 +18,20 @@ import {
 	const defaultBlockWidth = 1162; // magic
 
 	$( '.novablocks-grid' ).each( function( i, block ) {
-		const $block = $( block );
-		const $posts = $block.children( '.novablocks-card' );
-		const attributes = $block.data();
+		const $grid = $( block );
+		const $block = $grid.closest( '.novablocks-block' );
+		const $posts = $grid.children( '.novablocks-card' );
+		const attributes = $grid.data();
 		const cardsCount = $posts.length;
+		const $title = $block.find( '.novablocks-collection__title' ).detach();
+		const $subtitle = $block.find( '.novablocks-collection__subtitle' ).detach();
 
 		let addedCards;
 
 		if ( attributes.layoutstyle !== 'parametric' ) {
-			$block.removeClass( 'novablocks-grid' );
-			$block.addClass( 'novablocks-collection__layout spanac' );
-			$block.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
+			$grid.removeClass( 'novablocks-grid' );
+			$grid.addClass( 'novablocks-collection__layout spanac' );
+			$grid.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
 			return;
 		}
 
@@ -41,10 +43,10 @@ import {
 
 			let gridcolumns = attributes.gridcolumns;
 			let gridrows = attributes.gridrows;
-			let blockWidth = $block.outerWidth();
+			let blockWidth = $grid.outerWidth();
 
 			$posts.detach();
-			$block.empty();
+			$grid.empty();
 
 			addedCards = 0;
 
@@ -69,7 +71,13 @@ import {
 
 			redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
-			$block.css( getGridStyle( Object.assign( {}, attributes, { gridcolumns } ) ) );
+			$grid.css( getGridStyle( Object.assign( {}, attributes, { gridcolumns } ) ) );
+			$( '.js-collection-element-clone' ).remove();
+
+			if ( below( 'desktop' ) || attributes.headerposition === 0 ) {
+				$title.clone().addClass( 'js-collection-element-clone' ).appendTo( $grid );
+				$subtitle.clone().addClass( 'js-collection-element-clone' ).appendTo( $grid );
+			}
 
 			for ( let i = 0; i < areaColumns.length; i++ ) {
 				const areaColumn = areaColumns[i];
@@ -101,22 +109,30 @@ import {
 						$card.toggleClass( 'novablocks-card--portrait', ! landscape );
 
 						$card.appendTo( $gridItem );
+
 						$gridItem.appendTo( $area );
+
+						if ( attributes.headerposition === addedCards - area.postsCount + i ) {
+							const $header = $( '<div class="novablocks-grid__item js-collection-element-clone">' );
+							$title.clone().appendTo( $header );
+							$subtitle.clone().appendTo( $header );
+							$header.prependTo( $area );
+						}
 					} );
 
 					$area.appendTo( $column );
 				}
 
-				$column.appendTo( $block );
+				$column.appendTo( $grid );
 			}
 		}
 
 		createLayout();
 
 		function recreateLayout() {
-			$block.contents().replaceWith( $posts );
+			$grid.contents().replaceWith( $posts );
 
-			$block.css( {
+			$grid.css( {
 				display: '',
 				gridTemplateColumns: '',
 				gridTemplateRowss: '',

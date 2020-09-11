@@ -39528,10 +39528,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
         area: area
       }), Array.from(Array(area.postsCount).keys()).map(function (i) {
         var landscape = utils_isLandscape(area, attributes);
-        var content = getContent(addedCards - area.postsCount + i, attributes, landscape);
-        return content && Object(external_React_["createElement"])("div", {
-          className: "novablocks-grid__item"
-        }, content);
+        return getContent(addedCards - area.postsCount + i, attributes, landscape);
       }));
     }));
   })))));
@@ -39550,7 +39547,8 @@ var preview_Preview = function Preview(props) {
       posts = props.posts,
       clientId = props.clientId,
       markPostsAsDisplayed = props.markPostsAsDisplayed,
-      className = props.className;
+      className = props.className,
+      isSelected = props.isSelected;
   var layoutStyle = attributes.layoutStyle,
       contentAlign = attributes.contentAlign,
       contentStyle = attributes.contentStyle,
@@ -39564,11 +39562,15 @@ var preview_Preview = function Preview(props) {
 
   var getContent = function getContent(index, attributes, isLandscape) {
     var post = posts === null || posts === void 0 ? void 0 : posts[index];
-    return Object(external_React_["createElement"])(posts_collection_preview_Fragment, null, headerPosition - 1 === index && Object(external_React_["createElement"])(collection_CollectionHeader, props), post && Object(external_React_["createElement"])(posts_collection_post, {
+    return Object(external_React_["createElement"])(posts_collection_preview_Fragment, null, headerPosition - 1 === index && Object(external_React_["createElement"])("div", {
+      className: "novablocks-grid__item"
+    }, Object(external_React_["createElement"])(collection_CollectionHeader, props)), post && Object(external_React_["createElement"])("div", {
+      className: "novablocks-grid__item"
+    }, Object(external_React_["createElement"])(posts_collection_post, {
       post: post,
       isLandscape: isLandscape,
       attributes: attributes
-    }));
+    })));
   };
 
   var classname = classnames_default()('novablocks-block', "novablocks-collection", "novablocks-collection--align-".concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), className);
@@ -39576,10 +39578,11 @@ var preview_Preview = function Preview(props) {
     className: classname
   }, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, {
     getContent: getContent,
-    cardsCount: posts.length + (headerPosition !== 0 ? 1 : 0),
+    cardsCount: posts.length,
     attributes: attributes,
     setAttributes: setAttributes,
-    posts: posts
+    posts: posts,
+    isSelected: isSelected
   }));
 };
 
