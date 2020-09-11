@@ -157,10 +157,6 @@
 	}
 }
 
-.novablocks-grid__column {
-	overflow: hidden;
-}
-
 .novablocks-grid__area + .novablocks-grid__area,
 .novablocks-grid__item + .novablocks-grid__item {
 	margin-top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
@@ -192,6 +188,12 @@
 
 .novablocks-grid__area {
 	position: relative;
+	overflow: hidden;
+
+	.novablocks-grid__column:first-child &:first-child:last-child {
+		position: sticky;
+		top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+	}
 }
 
 .novablocks-grid__debug {
