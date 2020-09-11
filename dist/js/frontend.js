@@ -5787,14 +5787,15 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
             $card.toggleClass('novablocks-card--landscape', !!landscape);
             $card.toggleClass('novablocks-card--portrait', !landscape);
             $card.appendTo($gridItem);
-            $gridItem.appendTo($area);
 
-            if (attributes.headerposition === addedCards - area.postsCount + i) {
+            if (attributes.headerposition === addedCards - area.postsCount + i + 1) {
               var $header = $('<div class="novablocks-grid__item js-collection-element-clone">');
               $title.clone().appendTo($header);
               $subtitle.clone().appendTo($header);
-              $header.prependTo($area);
+              $header.appendTo($area);
             }
+
+            $gridItem.appendTo($area);
           });
           $area.appendTo($column);
         };
