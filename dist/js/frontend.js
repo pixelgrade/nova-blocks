@@ -5711,6 +5711,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
   $('.novablocks-grid').each(function (i, block) {
     var $grid = $(block);
     var $block = $grid.closest('.novablocks-block');
+    var $cards = $grid.closest('.novablocks-collection__cards');
     var $posts = $grid.children('.novablocks-card');
     var attributes = $grid.data();
     var cardsCount = $posts.length;
@@ -5760,8 +5761,8 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       $('.js-collection-element-clone').remove();
 
       if (below('desktop') || attributes.headerposition === 0) {
-        $title.clone().addClass('js-collection-element-clone').appendTo($grid);
-        $subtitle.clone().addClass('js-collection-element-clone').appendTo($grid);
+        $title.clone().addClass('js-collection-element-clone').insertBefore($cards);
+        $subtitle.clone().addClass('js-collection-element-clone').insertBefore($cards);
       }
 
       for (var _i3 = 0; _i3 < areaColumns.length; _i3++) {
@@ -5788,7 +5789,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
             $card.toggleClass('novablocks-card--portrait', !landscape);
             $card.appendTo($gridItem);
 
-            if (attributes.headerposition === addedCards - area.postsCount + i + 1) {
+            if (!below('desktop') && attributes.headerposition === addedCards - area.postsCount + i + 1) {
               var $header = $('<div class="novablocks-grid__item js-collection-element-clone">');
               $title.clone().appendTo($header);
               $subtitle.clone().appendTo($header);

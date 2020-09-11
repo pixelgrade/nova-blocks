@@ -20,6 +20,7 @@ import {
 	$( '.novablocks-grid' ).each( function( i, block ) {
 		const $grid = $( block );
 		const $block = $grid.closest( '.novablocks-block' );
+		const $cards = $grid.closest( '.novablocks-collection__cards' );
 		const $posts = $grid.children( '.novablocks-card' );
 		const attributes = $grid.data();
 		const cardsCount = $posts.length;
@@ -75,8 +76,8 @@ import {
 			$( '.js-collection-element-clone' ).remove();
 
 			if ( below( 'desktop' ) || attributes.headerposition === 0 ) {
-				$title.clone().addClass( 'js-collection-element-clone' ).appendTo( $grid );
-				$subtitle.clone().addClass( 'js-collection-element-clone' ).appendTo( $grid );
+				$title.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
+				$subtitle.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
 			}
 
 			for ( let i = 0; i < areaColumns.length; i++ ) {
@@ -110,7 +111,7 @@ import {
 
 						$card.appendTo( $gridItem );
 
-						if ( attributes.headerposition === addedCards - area.postsCount + i + 1 ) {
+						if ( ! below( 'desktop' ) && attributes.headerposition === addedCards - area.postsCount + i + 1 ) {
 							const $header = $( '<div class="novablocks-grid__item js-collection-element-clone">' );
 							$title.clone().appendTo( $header );
 							$subtitle.clone().appendTo( $header );
