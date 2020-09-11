@@ -9,7 +9,7 @@ import {
 } from "../../components/grid-generator/utils";
 
 import {
-	getParametricLayoutAreaClassName,
+	getOptimalHeaderPosition,
 	redistributeCardsInAreas,
 	isLandscape,
 } from "../../components/grid-generator/utils";
@@ -81,7 +81,6 @@ import {
 				for ( let j = 0; j < areas.length; j++ ) {
 					const area = areas[j];
 					const blockWidthRatio = Math.min( 1, blockWidth / defaultBlockWidth );
-					console.log( blockWidth, defaultBlockWidth, blockWidthRatio, width, gridcolumns, blockWidthRatio * width / gridcolumns );
 
 					const areaClassName = classnames([
 						getAreaBaseClassname( area ),

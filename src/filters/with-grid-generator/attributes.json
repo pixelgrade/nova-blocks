@@ -62,5 +62,9 @@
 	"headerPosition": {
 		"type": "number",
 		"default": 0
+	},
+	"headerColumn": {
+		"type": "number",
+		"default": 0
 	}
 }

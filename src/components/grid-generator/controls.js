@@ -1,6 +1,6 @@
 import { ControlsSection, ControlsTab } from "../control-sections";
 import { getControlsClasses } from "../../utils";
-import { getPostsCount } from "../../components/grid-generator/utils";
+import {getOptimalHeaderPosition, getPostsCount} from "../../components/grid-generator/utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import ControlsGroup from "../controls-group";
 import { PresetControl, withSettings } from "../../components";
@@ -465,6 +465,18 @@ const PostsCountControl = ( props ) => {
 	);
 };
 
+const getAttributesByHeaderColumn = ( attributes ) => {
+
+	const { headerColumn } = attributes;
+	const areaColumns = applyLayoutEngine( attributes );
+	const headerOptimalPositions = getOptimalHeaderPosition( areaColumns );
+
+	return {
+		...attributes,
+		headerPosition: headerOptimalPositions[ headerColumn ],
+	}
+};
+
 const ParametricLayoutControls = ( props ) => {
 
 	const {
@@ -493,6 +505,7 @@ const ParametricLayoutControls = ( props ) => {
 		automaticPostsNumber,
 		postsToShow,
 		headerPosition,
+		headerColumn,
 	} = attributes;
 
 	// used to store previous values of postsToShow
@@ -505,6 +518,7 @@ const ParametricLayoutControls = ( props ) => {
 
 	const areaColumns = applyLayoutEngine( attributes );
 	const autoPostsCount = getPostsCount( areaColumns );
+	const headerOptimalPositions = getOptimalHeaderPosition( areaColumns );
 
 	return (
 		<Fragment>
@@ -539,6 +553,19 @@ const ParametricLayoutControls = ( props ) => {
 					min={ 0 }
 					max={ postsToShow + 1 }
 				/>
+
+				<div key={ 'header-position-customize-1' } className={ getControlsClasses( attributes, getAttributesByHeaderColumn ) }>
+					<RangeControl
+						value={ headerColumn }
+						onChange={ ( headerColumn ) => {
+							const newAttributes = getAttributesByHeaderColumn( { ...attributes, headerColumn } );
+							setAttributes( newAttributes );
+						} }
+						label={ __( 'Header Column' ) }
+						min={ 0 }
+						max={ headerOptimalPositions.length - 1 }
+					/>
+				</div>
 			</ControlsGroup>
 			<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
 				<RangeControl

@@ -6182,7 +6182,7 @@ module.exports = JSON.parse("{\"emphasisBySpace\":{\"type\":\"number\",\"default
 /* 136 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"gridcolumns\":{\"type\":\"number\",\"default\":6},\"gridrows\":{\"type\":\"number\",\"default\":6},\"featuresize\":{\"type\":\"number\",\"default\":2},\"featureposition\":{\"type\":\"number\",\"default\":2},\"fragmentation\":{\"type\":\"number\",\"default\":5},\"imageweightleft\":{\"type\":\"number\",\"default\":8},\"imageweightright\":{\"type\":\"number\",\"default\":0},\"metadetailsleft\":{\"type\":\"number\",\"default\":7},\"metadetailsright\":{\"type\":\"number\",\"default\":0},\"boostfeature\":{\"type\":\"boolean\",\"default\":true},\"subfeature\":{\"type\":\"boolean\",\"default\":false},\"balancemdandiw\":{\"type\":\"boolean\",\"default\":false},\"hierarchycrossing\":{\"type\":\"number\",\"default\":0},\"flipcolsrows\":{\"type\":\"boolean\",\"default\":false},\"layoutStyle\":{\"type\":\"string\",\"default\":\"classic\"},\"headerPosition\":{\"type\":\"number\",\"default\":0}}");
+module.exports = JSON.parse("{\"gridcolumns\":{\"type\":\"number\",\"default\":6},\"gridrows\":{\"type\":\"number\",\"default\":6},\"featuresize\":{\"type\":\"number\",\"default\":2},\"featureposition\":{\"type\":\"number\",\"default\":2},\"fragmentation\":{\"type\":\"number\",\"default\":5},\"imageweightleft\":{\"type\":\"number\",\"default\":8},\"imageweightright\":{\"type\":\"number\",\"default\":0},\"metadetailsleft\":{\"type\":\"number\",\"default\":7},\"metadetailsright\":{\"type\":\"number\",\"default\":0},\"boostfeature\":{\"type\":\"boolean\",\"default\":true},\"subfeature\":{\"type\":\"boolean\",\"default\":false},\"balancemdandiw\":{\"type\":\"boolean\",\"default\":false},\"hierarchycrossing\":{\"type\":\"number\",\"default\":0},\"flipcolsrows\":{\"type\":\"boolean\",\"default\":false},\"layoutStyle\":{\"type\":\"string\",\"default\":\"classic\"},\"headerPosition\":{\"type\":\"number\",\"default\":0},\"headerColumn\":{\"type\":\"number\",\"default\":0}}");
 
 /***/ }),
 /* 137 */
@@ -20491,6 +20491,28 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     }
   }
 };
+var getOptimalHeaderPosition = function getOptimalHeaderPosition(areaColumns) {
+  var index = 1;
+  var positions = [0];
+
+  for (var columnIndex = 0; columnIndex < areaColumns.length; columnIndex++) {
+    var areaColumn = areaColumns[columnIndex];
+    var areas = areaColumn.areas,
+        row = areaColumn.row;
+
+    for (var areaIndex = 0; areaIndex < areas.length; areaIndex++) {
+      var area = areas[areaIndex];
+
+      if (row === 1 && areaIndex === 0) {
+        positions.push(index);
+      }
+
+      index += area.postsCount;
+    }
+  }
+
+  return positions;
+};
 
 var getCardRatio = function getCardRatio(area, attributes) {
   var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),
@@ -30989,7 +31011,12 @@ with_inner_blocks_addFilter('editor.BlockEdit', 'novablocks/with-inner-blocks-co
 // EXTERNAL MODULE: ./src/filters/with-grid-generator/attributes.json
 var with_grid_generator_attributes = __webpack_require__(136);
 
+// EXTERNAL MODULE: ./node_modules/lodash/memoize.js
+var memoize = __webpack_require__(205);
+var memoize_default = /*#__PURE__*/__webpack_require__.n(memoize);
+
 // CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
+
 
 
 function layoutEngine_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -30999,15 +31026,15 @@ function layoutEngine_objectSpread(target) { for (var i = 1; i < arguments.lengt
  // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
 
-var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
-  var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
+var applyLayoutEngine = memoize_default()(function (state) {
+  var debug = false; // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
   // we need to do a couple of preliminary calculations.
   // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
   // This way we gain an easier understanding of what is going on at each step of the logic.
   // In each matrix we will ignore index 0 since it is easier to start from 1,
   // the same way CSS grid columns and rows behave.
   // The order of these operation is important!
+
   debug ? console.log("\nGenerating a new layout...\n\n") : false; // The "null" character:
 
   var emptyChar = "X"; // These are the matrices we are going to calculate:
@@ -31480,7 +31507,7 @@ var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
   ;
   moveLargestColumnToStart(areaColumns);
   return areaColumns;
-};
+});
 
 var moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {
   var firstRowColumns = areaColumns.filter(function (column) {
@@ -32339,6 +32366,15 @@ var controls_PostsCountControl = function PostsCountControl(props) {
   });
 };
 
+var controls_getAttributesByHeaderColumn = function getAttributesByHeaderColumn(attributes) {
+  var headerColumn = attributes.headerColumn;
+  var areaColumns = applyLayoutEngine(attributes);
+  var headerOptimalPositions = getOptimalHeaderPosition(areaColumns);
+  return controls_objectSpread(controls_objectSpread({}, attributes), {}, {
+    headerPosition: headerOptimalPositions[headerColumn]
+  });
+};
+
 var controls_ParametricLayoutControls = function ParametricLayoutControls(props) {
   var attributes = props.attributes;
   var featuresize = attributes.featuresize,
@@ -32357,7 +32393,8 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
       flipcolsrows = attributes.flipcolsrows,
       automaticPostsNumber = attributes.automaticPostsNumber,
       postsToShow = attributes.postsToShow,
-      headerPosition = attributes.headerPosition; // used to store previous values of postsToShow
+      headerPosition = attributes.headerPosition,
+      headerColumn = attributes.headerColumn; // used to store previous values of postsToShow
 
   var tempPostsToShow = attributes.tempPostsToShow || postsToShow;
 
@@ -32366,8 +32403,9 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     props.setAttributes(normalizedAttributes);
   };
 
-  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
+  var areaColumns = applyLayoutEngine(attributes);
   var autoPostsCount = getPostsCount(areaColumns);
+  var headerOptimalPositions = getOptimalHeaderPosition(areaColumns);
   return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(DebugControls, props), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Posts Count')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
@@ -32400,7 +32438,21 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     },
     min: 0,
     max: postsToShow + 1
-  })), Object(external_React_["createElement"])(controls_group, {
+  }), Object(external_React_["createElement"])("div", {
+    key: 'header-position-customize-1',
+    className: utils_getControlsClasses(attributes, controls_getAttributesByHeaderColumn)
+  }, Object(external_React_["createElement"])(controls_RangeControl, {
+    value: headerColumn,
+    onChange: function onChange(headerColumn) {
+      var newAttributes = controls_getAttributesByHeaderColumn(controls_objectSpread(controls_objectSpread({}, attributes), {}, {
+        headerColumn: headerColumn
+      }));
+      setAttributes(newAttributes);
+    },
+    label: controls_('Header Column'),
+    min: 0,
+    max: headerOptimalPositions.length - 1
+  }))), Object(external_React_["createElement"])(controls_group, {
     title: controls_('Grid Columns + Rows')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Columns", '__plugin_txtd'),
@@ -39434,7 +39486,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
     'novablocks-grid--scaled': toggleScale,
     'novablocks-grid--mask': toggleMask
   });
-  var areaColumns = layoutEngine_applyLayoutEngine(attributes);
+  var areaColumns = applyLayoutEngine(attributes);
   var addedCards = 0;
   redistributeCardsInAreas(areaColumns, cardsCount, attributes);
 

@@ -1,8 +1,12 @@
+import { memoize } from "lodash";
 import { transposeMatrix } from './utils';
 
 // This is the main workhorse containing the logic of our layout "engine".
 // Given a state, it will return a list of posts with details to handle their layout.
-export const applyLayoutEngine = (state, debug = false) => {
+export const applyLayoutEngine = memoize( state => {
+
+	const debug = false;
+
 	// Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
 	// we need to do a couple of preliminary calculations.
 	// To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
@@ -468,7 +472,7 @@ export const applyLayoutEngine = (state, debug = false) => {
 	moveLargestColumnToStart( areaColumns );
 
 	return areaColumns;
-};
+} );
 
 const moveLargestColumnToStart = ( areaColumns ) => {
 	const firstRowColumns = areaColumns.filter( column => column.row === 1 )

@@ -68,6 +68,28 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 	}
 };
 
+export const getOptimalHeaderPosition = areaColumns => {
+	let index = 1;
+	let positions = [0];
+
+	for ( let columnIndex = 0; columnIndex < areaColumns.length; columnIndex++ ) {
+		const areaColumn = areaColumns[columnIndex];
+		const { areas, row } = areaColumn;
+
+		for ( let areaIndex = 0; areaIndex < areas.length; areaIndex++ ) {
+			const area = areas[areaIndex];
+
+			if ( row === 1 && areaIndex === 0 ) {
+				positions.push( index );
+			}
+
+			index += area.postsCount;
+		}
+	}
+
+	return positions;
+};
+
 const getCardRatio = ( area, attributes ) => {
 	const { gridcolumns } = getGridColumnsAndRows( attributes );
 	const { width, height, postsCount } = area;
