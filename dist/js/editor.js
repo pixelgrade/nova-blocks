@@ -39751,10 +39751,13 @@ var editor_novaBlocks = /*#__PURE__*/function () {
         blocks_advanced_gallery();
       }
 
+      if (supports.indexOf('posts-collection') > -1) {
+        posts_collection();
+      }
+
       blocks_hero();
       blocks_media();
       blocks_slideshow();
-      posts_collection();
     }
   }]);
 

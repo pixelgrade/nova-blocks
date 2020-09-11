@@ -61,54 +61,57 @@ class novaBlocks {
 
 		const supports = ( typeof settings[ 'theme_support' ] === 'object' ) ? Object.values( settings[ 'theme_support' ] ) : settings[ 'theme_support' ];
 
-		if ( supports.indexOf('announcement-bar') > -1 ) {
+		if ( supports.indexOf( 'announcement-bar' ) > - 1 ) {
 			announcementBarBlockInit();
 		}
 
-		if ( supports.indexOf('google-map') > -1 ) {
+		if ( supports.indexOf( 'google-map' ) > - 1 ) {
 			googleMapBlockInit();
 		}
 
-		if ( supports.indexOf('header') > -1 ) {
+		if ( supports.indexOf( 'header' ) > - 1 ) {
 			headerBlockInit();
 			logoInit();
 		}
 
-		if ( supports.indexOf('headline') > -1 ) {
+		if ( supports.indexOf( 'headline' ) > - 1 ) {
 			headlineInit();
 		}
 
-		if ( supports.indexOf('navigation') > -1 ) {
+		if ( supports.indexOf( 'navigation' ) > - 1 ) {
 			navigationInit();
 		}
 
-		if ( supports.indexOf('menu-food') > -1 ) {
+		if ( supports.indexOf( 'menu-food' ) > - 1 ) {
 			menuFoodInit();
 			menuFoodSectionInit();
 			menuFoodItemInit();
 		}
 
-		if ( supports.indexOf('opentable') > -1 ) {
+		if ( supports.indexOf( 'opentable' ) > - 1 ) {
 			opentableInit();
 		}
 
-		if ( supports.indexOf('cards-collection') > -1 ) {
+		if ( supports.indexOf( 'cards-collection' ) > - 1 ) {
 			cardInit();
 			cardsCollectionInit();
 		}
 
-		if ( supports.indexOf( 'openhours' ) > -1 ) {
+		if ( supports.indexOf( 'openhours' ) > - 1 ) {
 			openHoursInit();
 		}
 
-		if ( supports.indexOf( 'advanced-gallery' ) > -1 ) {
+		if ( supports.indexOf( 'advanced-gallery' ) > - 1 ) {
 			advancedGalleryInit();
+		}
+
+		if ( supports.indexOf( 'posts-collection' ) > - 1 ) {
+			postsCollectionInit();
 		}
 
 		heroInit();
 		mediaInit();
 		slideshowInit();
-		postsCollectionInit();
 	}
 }
 
