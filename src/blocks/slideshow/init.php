@@ -115,7 +115,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 											$height = $media['sizes']['full']['height'];
 
 											if ( ! empty( $id ) ) {
-												echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
+												echo wp_get_attachment_image( $id, 'novablocks_large', false, array(
 													'class' => 'novablocks-slideshow__media',
 													'style' => esc_attr( $thisMediaStyle ),
 													'data-width' => esc_attr( $width ),
@@ -123,7 +123,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 												) );
 											} else { ?>
 											<img class="novablocks-slideshow__media"
-											     src="<?php echo esc_url( $media['url'] ); ?>"
+											     src="<?php echo esc_url( $media['sizes']['large']['url'] ); ?>"
 											     style="<?php echo esc_attr( $thisMediaStyle ); ?>"
 											     data-width="<?php echo esc_attr( $width ); ?>"
 											     data-height="<?php echo esc_attr( $height ); ?>"
