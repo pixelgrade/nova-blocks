@@ -5685,7 +5685,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
 
     function createLayout() {
-      var gridcolumns = attributes.gridcolumns;
       var blockWidth = $grid.outerWidth();
       $posts.detach();
       $grid.empty();
@@ -5697,20 +5696,32 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
       if (below('desktop')) {
         for (var _i = 0; _i < firstSet; _i++) {
-          gridcolumns -= removeSmallestColumn(areaColumns);
+          removeSmallestColumn(areaColumns);
         }
 
         if (below('lap')) {
           for (var _i2 = 0; _i2 < secondSet; _i2++) {
-            gridcolumns -= removeSmallestColumn(areaColumns);
+            removeSmallestColumn(areaColumns);
           }
         }
       }
 
       redistributeCardsInAreas(areaColumns, cardsCount, attributes);
-      $grid.css(utils_getGridStyle(Object.assign({}, attributes, {
-        gridcolumns: gridcolumns
-      })));
+      var gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
+      var gridrows = attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows;
+      var maxcolumns = areaColumns.reduce(function (acc, column) {
+        return Math.max(acc, column.col + column.width - 1);
+      }, 0);
+      var maxrows = areaColumns.reduce(function (acc, column) {
+        return Math.max(acc, column.row + column.height - 1);
+      }, 0);
+      gridcolumns = Math.min(gridcolumns, maxcolumns);
+      gridrows = Math.min(gridrows, maxrows);
+      var compiledAttributes = Object.assign({}, attributes, {
+        gridcolumns: attributes.flipcolsrows ? gridrows : gridcolumns,
+        gridrows: attributes.flipcolsrows ? gridcolumns : gridrows
+      });
+      $grid.css(utils_getGridStyle(compiledAttributes));
       $('.js-collection-element-clone').remove();
 
       if (below('desktop') || attributes.headerposition === 0) {
@@ -5809,15 +5820,59 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       indexToRemove = data[data.length].index;
     }
 
-    var colToRemove = areaColumns[indexToRemove].col;
-    var widthToRemove = areaColumns[indexToRemove].width;
-    areaColumns.splice(indexToRemove, 1); //		for ( let i = 0; i < areaColumns.length; i++ ) {
-    //			if ( areaColumns[i].col > colToRemove ) {
-    //				areaColumns[i].col -= widthToRemove;
-    //			}
-    //		}
+    areaColumns.splice(indexToRemove, 1);
+    normalizeColumns(areaColumns);
+  }
 
-    return widthToRemove;
+  function normalizeColumns(areaColumns) {
+    moveColumnsToLeft(areaColumns);
+    moveColumnsToTop(areaColumns);
+  }
+
+  function moveColumnsToLeft(areaColumns) {
+    areaColumns.forEach(function (areaColumn) {
+      var spaceLeft = 0;
+      var movingLeft = true;
+
+      while (movingLeft) {
+        var overlapLeft = areaColumns.filter(function (compareColumn) {
+          return compareColumn !== areaColumn;
+        }).some(function (compareColumn) {
+          return !(areaColumn.col + areaColumn.width - 1 < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row > compareColumn.row + compareColumn.height - 1 || areaColumn.col - (spaceLeft + 1) > compareColumn.col + compareColumn.width - 1);
+        });
+
+        if (overlapLeft || areaColumn.col - spaceLeft <= 1) {
+          movingLeft = false;
+        } else {
+          spaceLeft++;
+        }
+      }
+
+      areaColumn.col = areaColumn.col - spaceLeft;
+    });
+  }
+
+  function moveColumnsToTop(areaColumns) {
+    areaColumns.forEach(function (areaColumn) {
+      var spaceTop = 0;
+      var movingTop = true;
+
+      while (movingTop) {
+        var overlapTop = areaColumns.filter(function (compareColumn) {
+          return compareColumn !== areaColumn;
+        }).some(function (compareColumn) {
+          return !(areaColumn.col + areaColumn.width - 1 < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row - (spaceTop + 1) > compareColumn.row + compareColumn.height - 1 || areaColumn.col > compareColumn.col + compareColumn.width - 1);
+        });
+
+        if (overlapTop || areaColumn.row - spaceTop <= 1) {
+          movingTop = false;
+        } else {
+          spaceTop++;
+        }
+      }
+
+      areaColumn.row = areaColumn.row - spaceTop;
+    });
   }
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js

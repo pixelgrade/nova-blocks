@@ -44,7 +44,6 @@ import {
 
 		function createLayout() {
 
-			let gridcolumns = attributes.gridcolumns;
 			let blockWidth = $grid.outerWidth();
 
 			$posts.detach();
@@ -60,20 +59,40 @@ import {
 			if ( below( 'desktop' ) ) {
 
 				for ( let i = 0; i < firstSet; i++ ) {
-					gridcolumns -= removeSmallestColumn( areaColumns );
+					removeSmallestColumn( areaColumns );
 				}
 
 				if ( below( 'lap' ) ) {
 
 					for ( let i = 0; i < secondSet; i++ ) {
-						gridcolumns -= removeSmallestColumn( areaColumns );
+						removeSmallestColumn( areaColumns );
 					}
 				}
 			}
 
 			redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
-			$grid.css( getGridStyle( Object.assign( {}, attributes, { gridcolumns } ) ) );
+			let gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
+			let gridrows = attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows;
+
+			let maxcolumns = areaColumns.reduce( ( acc, column ) => {
+				return Math.max( acc, column.col + column.width - 1 );
+			}, 0);
+
+			let maxrows = areaColumns.reduce( ( acc, column ) => {
+				return Math.max( acc, column.row + column.height - 1 );
+			}, 0);
+
+			gridcolumns = Math.min( gridcolumns, maxcolumns );
+			gridrows = Math.min( gridrows, maxrows );
+
+			const compiledAttributes = Object.assign( {}, attributes, {
+				gridcolumns: attributes.flipcolsrows ? gridrows : gridcolumns,
+				gridrows: attributes.flipcolsrows ? gridcolumns : gridrows,
+			} );
+
+			$grid.css( getGridStyle( compiledAttributes ) );
+
 			$( '.js-collection-element-clone' ).remove();
 
 			if ( below( 'desktop' ) || attributes.headerposition === 0 ) {
@@ -180,18 +199,66 @@ import {
 			indexToRemove = data[data.length].index;
 		}
 
-		let colToRemove = areaColumns[indexToRemove].col;
-		let widthToRemove = areaColumns[indexToRemove].width;
-
 		areaColumns.splice( indexToRemove, 1 );
 
-//		for ( let i = 0; i < areaColumns.length; i++ ) {
-//			if ( areaColumns[i].col > colToRemove ) {
-//				areaColumns[i].col -= widthToRemove;
-//			}
-//		}
+		normalizeColumns( areaColumns );
+	}
 
-		return widthToRemove;
+	function normalizeColumns( areaColumns ) {
+		moveColumnsToLeft( areaColumns );
+		moveColumnsToTop( areaColumns );
+	}
+
+	function moveColumnsToLeft( areaColumns ) {
+
+		areaColumns.forEach( areaColumn => {
+			let spaceLeft = 0;
+			let movingLeft = true;
+
+			while ( movingLeft ) {
+
+				const overlapLeft = areaColumns.filter( compareColumn => compareColumn !== areaColumn ).some( compareColumn => {
+					return ! ( areaColumn.col + areaColumn.width - 1 < compareColumn.col ||
+					           areaColumn.row + areaColumn.height - 1 < compareColumn.row ||
+					           areaColumn.row > compareColumn.row + compareColumn.height - 1 ||
+					           areaColumn.col - ( spaceLeft + 1 ) > compareColumn.col + compareColumn.width - 1 );
+				} );
+
+				if ( overlapLeft || areaColumn.col - spaceLeft <= 1 ) {
+					movingLeft = false;
+				} else {
+					spaceLeft++;
+				}
+			}
+
+			areaColumn.col = areaColumn.col - spaceLeft;
+		} );
+	}
+
+	function moveColumnsToTop( areaColumns ) {
+
+		areaColumns.forEach( areaColumn => {
+			let spaceTop = 0;
+			let movingTop = true;
+
+			while ( movingTop ) {
+
+				const overlapTop = areaColumns.filter( compareColumn => compareColumn !== areaColumn ).some( compareColumn => {
+					return ! ( areaColumn.col + areaColumn.width - 1 < compareColumn.col ||
+					           areaColumn.row + areaColumn.height - 1 < compareColumn.row ||
+					           areaColumn.row - ( spaceTop + 1 ) > compareColumn.row + compareColumn.height - 1 ||
+					           areaColumn.col > compareColumn.col + compareColumn.width - 1 );
+				} );
+
+				if ( overlapTop || areaColumn.row - spaceTop <= 1 ) {
+					movingTop = false;
+				} else {
+					spaceTop++;
+				}
+			}
+
+			areaColumn.row = areaColumn.row - spaceTop;
+		} );
 	}
 
 })(jQuery, window);
