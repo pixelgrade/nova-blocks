@@ -57,7 +57,7 @@ export const ParametricLayoutPreview = ( props ) => {
 		toggleScale,
 		toggleMask,
 
-		containerHeight,
+		thumbnailAspectRatio,
 		imagePadding,
 		imageResizing,
 
@@ -79,7 +79,7 @@ export const ParametricLayoutPreview = ( props ) => {
 
 	const style = {
 		'--card-media-padding': imagePadding,
-		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
+		'--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 		...getGridStyle( attributes ),
 	};

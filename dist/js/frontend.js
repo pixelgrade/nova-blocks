@@ -3322,7 +3322,7 @@ var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
   var compiledHeight = containerHeight / 50 - 1;
 
   if (compiledHeight < 0) {
-    compiledHeight *= 3;
+    compiledHeight *= 2;
   }
 
   var numerator = 1;

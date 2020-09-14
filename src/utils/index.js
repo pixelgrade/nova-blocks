@@ -173,7 +173,7 @@ export const getCardMediaPaddingTop = ( containerHeight ) => {
 	let compiledHeight = containerHeight / 50 - 1;
 
 	if ( compiledHeight < 0 ) {
-		compiledHeight *= 3;
+		compiledHeight *= 2;
 	}
 
 	let numerator = 1;

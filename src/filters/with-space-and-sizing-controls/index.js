@@ -91,7 +91,7 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<ControlsSection label={ __( 'Space and Sizing' ) }>
+				<ControlsSection label={ __( 'Space and Sizing' ) } priority={ 30 }>
 					{
 						!! presetOptions &&
 						<ControlsTab label={ __( 'General' ) }>

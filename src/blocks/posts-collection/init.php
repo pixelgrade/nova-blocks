@@ -57,9 +57,11 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		ob_start();
 
 		$posts_collection_attributes = array(
+			'thumbnailAspectRatioString',
+			'thumbnailAspectRatio',
+
 			'imagePadding',
 			'imageResizing',
-			'containerHeight',
 			'headerPosition',
 
 			'layoutStyle',

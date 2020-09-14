@@ -230,75 +230,95 @@ function novablocks_get_posts_block_attributes() {
 
 function novablocks_get_collection_attributes() {
 	return array(
-		'align'                  => array(
+		'align'                            => array(
 			'type'    => 'string',
 			'default' => 'full'
 		),
-		'contentAlign'           => array(
+		'contentAlign'                     => array(
 			'type'    => 'string',
 			'default' => 'left'
 		),
-		'level'                  => array(
+		'level'                            => array(
 			'type'    => 'number',
 			'default' => 2,
 		),
-		'imageResizing'          => array(
+		'collectionTitleLevel'             => array(
+			'type'    => 'number',
+			'default' => 2,
+		),
+		'cardTitleLevel'                   => array(
+			'type'    => 'number',
+			'default' => 3,
+		),
+		'metadataPosition'                 => array(
+			'type'    => 'string',
+			'default' => 'above-title'
+		),
+		'imageResizing'                    => array(
 			'type'    => 'string',
 			'default' => 'cropped'
 		),
-		'containerHeight'        => array(
+		'containerHeight'                  => array(
 			'type'    => 'number',
 			'default' => 50
 		),
-		'imagePadding'           => array(
+		'thumbnailAspectRatioString'       => array(
+			'type'    => 'string',
+			'default' => 'landscape'
+		),
+		'thumbnailAspectRatio'             => array(
+			'type'    => 'number',
+			'default' => 50
+		),
+		'imagePadding'                     => array(
 			'type'    => 'number',
 			'default' => 0
 		),
-		'title'                  => array(
+		'title'                            => array(
 			'type'    => 'string',
 			'default' => 'Collection Title',
 		),
-		'subtitle'               => array(
+		'subtitle'                         => array(
 			'type'    => 'string',
 			'default' => 'Collection Subtitle',
 		),
-		'showCollectionTitle'    => array(
+		'showCollectionTitle'              => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'collectionTitleLinkOpensInNewTab'    => array(
+		'collectionTitleLinkOpensInNewTab' => array(
 			'type'    => 'boolean',
 			'default' => false,
 		),
-		'collectionTitleLinkURL'    => array(
+		'collectionTitleLinkURL'           => array(
 			'type'    => 'string',
 			'default' => '',
 		),
-		'showCollectionSubtitle' => array(
+		'showCollectionSubtitle'           => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'showMedia'              => array(
+		'showMedia'                        => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'showTitle'              => array(
+		'showTitle'                        => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'showSubtitle'           => array(
+		'showSubtitle'                     => array(
 			'type'    => 'boolean',
 			'default' => false,
 		),
-		'showDescription'        => array(
+		'showDescription'                  => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'showButtons'            => array(
+		'showButtons'                      => array(
 			'type'    => 'boolean',
 			'default' => true,
 		),
-		'showMeta'               => array(
+		'showMeta'                         => array(
 			'type'    => 'boolean',
 			'default' => false,
 		),

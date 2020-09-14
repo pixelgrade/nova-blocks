@@ -19692,7 +19692,7 @@ var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
   var compiledHeight = containerHeight / 50 - 1;
 
   if (compiledHeight < 0) {
-    compiledHeight *= 3;
+    compiledHeight *= 2;
   }
 
   var numerator = 1;
@@ -30536,8 +30536,8 @@ var withPostsQueryControls = with_latest_posts_createHigherOrderComponent(functi
         categories = attributes.categories,
         tags = attributes.tags;
     return Object(external_React_["createElement"])(with_latest_posts_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
-      label: with_latest_posts_('Posts'),
-      priority: 100
+      label: with_latest_posts_('Content Filter'),
+      group: with_latest_posts_('Block Modules')
     }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
       label: with_latest_posts_('Settings')
     }, Object(external_React_["createElement"])(query_controls, {
@@ -30816,7 +30816,8 @@ var withSpaceAndSizingControlsAdvanced = with_space_and_sizing_controls_createHi
 
     var presetOptions = props === null || props === void 0 ? void 0 : (_props$settings = props.settings) === null || _props$settings === void 0 ? void 0 : (_props$settings$media = _props$settings.media) === null || _props$settings$media === void 0 ? void 0 : (_props$settings$media2 = _props$settings$media.spaceAndSizing) === null || _props$settings$media2 === void 0 ? void 0 : _props$settings$media2.presetOptions;
     return Object(external_React_["createElement"])(with_space_and_sizing_controls_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
-      label: with_space_and_sizing_controls_('Space and Sizing')
+      label: with_space_and_sizing_controls_('Space and Sizing'),
+      priority: 30
     }, !!presetOptions && Object(external_React_["createElement"])(control_sections_ControlsTab, {
       label: with_space_and_sizing_controls_('General')
     }, Object(external_React_["createElement"])(preset_control, {
@@ -31987,7 +31988,8 @@ var controls_LayoutControls = function LayoutControls(props) {
   var layoutStyle = props.attributes.layoutStyle,
       setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: controls_('Layout')
+    label: controls_('Grid Layout'),
+    priority: 100
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: controls_('General')
   }, Object(external_React_["createElement"])(preset_control, {
@@ -39432,7 +39434,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
       cardsCount = props.cardsCount;
   var toggleScale = attributes.toggleScale,
       toggleMask = attributes.toggleMask,
-      containerHeight = attributes.containerHeight,
+      thumbnailAspectRatio = attributes.thumbnailAspectRatio,
       imagePadding = attributes.imagePadding,
       imageResizing = attributes.imageResizing,
       headerPosition = attributes.headerPosition;
@@ -39446,7 +39448,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
 
   var style = preview_objectSpread({
     '--card-media-padding': imagePadding,
-    '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
+    '--card-media-padding-top': getCardMediaPaddingTop(thumbnailAspectRatio),
     '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
   }, getGridStyle(attributes));
 
@@ -39553,37 +39555,128 @@ function posts_collection_edit_objectSpread(target) { for (var i = 1; i < argume
 
 
 
+
 var posts_collection_edit_ = wp.i18n.__;
 var posts_collection_edit_Fragment = wp.element.Fragment;
 var posts_collection_edit_wp$components = wp.components,
+    edit_PanelRow = posts_collection_edit_wp$components.PanelRow,
+    posts_collection_edit_RadioControl = posts_collection_edit_wp$components.RadioControl,
     edit_RangeControl = posts_collection_edit_wp$components.RangeControl,
-    posts_collection_edit_PanelBody = posts_collection_edit_wp$components.PanelBody,
-    edit_PanelRow = posts_collection_edit_wp$components.PanelRow;
+    edit_SelectControl = posts_collection_edit_wp$components.SelectControl;
+
+function getLevelAttributes(attributes) {
+  var level = attributes.level;
+  return {
+    level: level,
+    collectionTitleLevel: level,
+    cardTitleLevel: level + 1
+  };
+}
+
+function getAspectRatioAttributes(attributes) {
+  var thumbnailAspectRatioString = attributes.thumbnailAspectRatioString;
+  var thumbnailAspectRatio = attributes.thumbnailAspectRatio;
+
+  if (thumbnailAspectRatioString === 'landscape') {
+    thumbnailAspectRatio = 45;
+  }
+
+  if (thumbnailAspectRatioString === 'portrait') {
+    thumbnailAspectRatio = 65;
+  }
+
+  return {
+    thumbnailAspectRatioString: thumbnailAspectRatioString,
+    thumbnailAspectRatio: thumbnailAspectRatio
+  };
+}
 
 var edit_PostsEdit = function PostsEdit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var containerHeight = attributes.containerHeight,
+  var level = attributes.level,
+      collectionTitleLevel = attributes.collectionTitleLevel,
+      cardTitleLevel = attributes.cardTitleLevel,
+      metadataPosition = attributes.metadataPosition,
+      thumbnailAspectRatioString = attributes.thumbnailAspectRatioString,
+      thumbnailAspectRatio = attributes.thumbnailAspectRatio,
+      imageResizing = attributes.imageResizing,
       imagePadding = attributes.imagePadding,
-      level = attributes.level;
+      primaryMetadata = attributes.primaryMetadata,
+      secondaryMetadata = attributes.secondaryMetadata;
   return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
-    label: posts_collection_edit_('Display')
+    label: posts_collection_edit_('Card Details')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: posts_collection_edit_('Customize')
+  }, Object(external_React_["createElement"])(controls_group, {
+    title: posts_collection_edit_('Thumbnail Aspect Ratio')
+  }, Object(external_React_["createElement"])("div", {
+    key: 'thumbnail-aspect-ratio-customize-1',
+    className: utils_getControlsClasses(attributes, getAspectRatioAttributes)
+  }, Object(external_React_["createElement"])(posts_collection_edit_RadioControl, {
+    key: 'thumbnail-aspect-ratio',
+    selected: thumbnailAspectRatioString,
+    onChange: function onChange(thumbnailAspectRatioString) {
+      var newAttributes = getAspectRatioAttributes(posts_collection_edit_objectSpread(posts_collection_edit_objectSpread({}, attributes), {}, {
+        thumbnailAspectRatioString: thumbnailAspectRatioString
+      }));
+      setAttributes(newAttributes);
+    },
+    options: [{
+      label: 'Landscape',
+      value: 'landscape'
+    }, {
+      label: 'Portrait',
+      value: 'portrait'
+    }, {
+      label: 'Auto',
+      value: 'auto'
+    }]
+  })), Object(external_React_["createElement"])("div", {
+    key: 'title-level-customize-1',
+    className: utils_getControlsClasses(attributes, getLevelAttributes)
+  }, Object(external_React_["createElement"])(edit_PanelRow, null, Object(external_React_["createElement"])("span", null, posts_collection_edit_('Title Starting Size', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 2,
+    maxLevel: 4,
+    selectedLevel: level,
+    onChange: function onChange(level) {
+      var newAttributes = getLevelAttributes(posts_collection_edit_objectSpread(posts_collection_edit_objectSpread({}, attributes), {}, {
+        level: level
+      }));
+      setAttributes(newAttributes);
+    }
+  }))))), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: posts_collection_edit_('Settings')
   }, Object(external_React_["createElement"])(controls_group, {
-    title: posts_collection_edit_('Card Media')
+    title: posts_collection_edit_('Thumbnail')
   }, Object(external_React_["createElement"])(edit_RangeControl, {
     key: 'collection-image-container-height',
     label: posts_collection_edit_('Image container height', '__plugin_txtd'),
-    value: containerHeight,
-    onChange: function onChange(containerHeight) {
+    value: thumbnailAspectRatio,
+    onChange: function onChange(thumbnailAspectRatio) {
       setAttributes({
-        containerHeight: containerHeight
+        thumbnailAspectRatio: thumbnailAspectRatio
       });
     },
     min: 0,
     max: 100,
     step: 5
+  }), Object(external_React_["createElement"])(posts_collection_edit_RadioControl, {
+    key: 'collection-image-resizing',
+    label: posts_collection_edit_('Image resizing'),
+    selected: imageResizing,
+    onChange: function onChange(imageResizing) {
+      setAttributes({
+        imageResizing: imageResizing
+      });
+    },
+    options: [{
+      label: 'Stretch to fill the container',
+      value: 'cropped'
+    }, {
+      label: 'Shrink to fit (no crop)',
+      value: 'original'
+    }]
   }), Object(external_React_["createElement"])(edit_RangeControl, {
     key: 'collection-image-padding',
     label: posts_collection_edit_('Image padding', '__plugin_txtd'),
@@ -39597,17 +39690,63 @@ var edit_PostsEdit = function PostsEdit(props) {
     max: 100,
     step: 50
   })), Object(external_React_["createElement"])(controls_group, {
-    title: posts_collection_edit_('Card Text')
-  }, Object(external_React_["createElement"])(edit_PanelRow, null, Object(external_React_["createElement"])("span", null, posts_collection_edit_('Title Level', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
-    minLevel: 2,
-    maxLevel: 4,
-    selectedLevel: level,
-    onChange: function onChange(level) {
+    title: posts_collection_edit_('Content')
+  }, Object(external_React_["createElement"])("div", {
+    className: "components-base-control"
+  }, Object(external_React_["createElement"])("div", {
+    className: "components-base-control__field"
+  }, Object(external_React_["createElement"])("label", {
+    className: 'components-base-control__label '
+  }, posts_collection_edit_('Collection Title Heading', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 1,
+    maxLevel: 5,
+    selectedLevel: collectionTitleLevel,
+    onChange: function onChange(collectionTitleLevel) {
       setAttributes({
-        level: level
+        collectionTitleLevel: collectionTitleLevel
       });
     }
-  }))))), Object(external_React_["createElement"])(control_sections_ControlsDrawerContent, null, Object(external_React_["createElement"])(posts_collection_edit_PanelBody, {
+  }))), Object(external_React_["createElement"])("div", {
+    className: "components-base-control"
+  }, Object(external_React_["createElement"])("div", {
+    className: "components-base-control__field"
+  }, Object(external_React_["createElement"])("label", {
+    className: 'components-base-control__label '
+  }, posts_collection_edit_('Card Title Heading', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
+    minLevel: 1,
+    maxLevel: 5,
+    selectedLevel: cardTitleLevel,
+    onChange: function onChange(cardTitleLevel) {
+      setAttributes({
+        cardTitleLevel: cardTitleLevel
+      });
+    }
+  })))), Object(external_React_["createElement"])(controls_group, {
+    title: posts_collection_edit_('Metadata Position')
+  }, Object(external_React_["createElement"])(posts_collection_edit_RadioControl, {
+    key: 'collection-image-resizing',
+    selected: metadataPosition,
+    onChange: function onChange(metadataPosition) {
+      setAttributes({
+        metadataPosition: metadataPosition
+      });
+    },
+    options: [{
+      label: 'Above Title',
+      value: 'above-title'
+    }, {
+      label: 'Below Title',
+      value: 'below-title'
+    }, {
+      label: 'Split (Above Title / Below Content)',
+      value: 'split'
+    }]
+  })))), Object(external_React_["createElement"])(control_sections_ControlsSection, {
+    label: posts_collection_edit_('Display'),
+    group: posts_collection_edit_('Block Modules')
+  }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
+    label: posts_collection_edit_('Settings')
+  }, Object(external_React_["createElement"])(controls_group, {
     title: posts_collection_edit_('Set up elements for this block', '__plugin_txtd')
   }, Object(external_React_["createElement"])(toggle_group, {
     onChange: setAttributes,
@@ -39618,7 +39757,35 @@ var edit_PostsEdit = function PostsEdit(props) {
         value: attributes[toggle.attribute]
       });
     })
-  }))));
+  })), Object(external_React_["createElement"])(controls_group, {
+    title: posts_collection_edit_('Additional Information', '__plugin_txtd')
+  }, Object(external_React_["createElement"])(edit_SelectControl, {
+    key: 'primary-metadata-source',
+    label: posts_collection_edit_('Primary Metadata'),
+    selected: primaryMetadata,
+    onChange: function onChange(primaryMetadata) {
+      setAttributes({
+        primaryMetadata: primaryMetadata
+      });
+    },
+    options: [{
+      label: 'Date',
+      value: 'date'
+    }]
+  }), Object(external_React_["createElement"])(edit_SelectControl, {
+    key: 'secondary-metadata-source',
+    label: posts_collection_edit_('Secondary Metadata'),
+    selected: secondaryMetadata,
+    onChange: function onChange(secondaryMetadata) {
+      setAttributes({
+        secondaryMetadata: secondaryMetadata
+      });
+    },
+    options: [{
+      label: 'Author',
+      value: 'author'
+    }]
+  })))));
 };
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);

@@ -122,7 +122,7 @@ const LayoutControls = ( props ) => {
 	} = props;
 
 	return (
-		<ControlsSection label={ __( 'Layout' ) }>
+		<ControlsSection label={ __( 'Grid Layout' ) } priority={ 100 }>
 			<ControlsTab label={ __( 'General' ) }>
 				<PresetControl
 					key={ 'novablocks-collection-layout-preset' }
