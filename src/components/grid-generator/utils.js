@@ -41,7 +41,7 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 		areaColumn.spotRatio = areaColumnSpotRatio;
 	}
 
-	let remainingSpots = Math.min( totalSpots, totalPosts );
+	let extraPosts = totalPosts - totalSpots;
 
 	if ( totalSpots === totalPosts ) {
 		return;
@@ -53,15 +53,10 @@ export const redistributeCardsInAreas = ( areaColumns, cardsCount, attributes ) 
 
 		for ( let j = 0; j < areas.length; j++ ) {
 			let area = areas[j];
-
-			area.postsCount += Math.round( ( totalPosts - totalSpots ) * area.spotRatio / totalRatio );
-
-			if ( i === areaColumns.length - 1 && j === areas.length - 1 ) {
-				area.postsCount = remainingPosts;
-			}
-
-			area.postsCount = Math.max( area.postsCount, 0 );
-			remainingSpots -= area.postsCount;
+			let areaExtraPosts = Math.round( extraPosts * area.spotRatio / totalRatio );
+			area.postsCount = Math.max( 0, area.postsCount + areaExtraPosts );
+			totalRatio -= area.spotRatio;
+			extraPosts -= areaExtraPosts;
 
 			if ( remainingPosts <= 0 ) return;
 		}
@@ -97,9 +92,11 @@ const getCardRatio = ( area, attributes ) => {
 
 	// when the card is landscape and very small
 	// we hide the content so the ratio should be bigger
-	if ( isLandscape( area, attributes ) && width / gridcolumns < 0.3 ) {
-		ratio *= 7;
+	if ( isLandscape( area, attributes ) ) {
+		ratio *= 2;
 	}
+
+	ratio *= gridcolumns / width;
 
 	return ratio;
 };

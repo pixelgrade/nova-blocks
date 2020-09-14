@@ -1,4 +1,3 @@
-import { memoize } from "lodash";
 import { transposeMatrix } from './utils';
 
 // This is the main workhorse containing the logic of our layout "engine".
@@ -454,12 +453,6 @@ export const applyLayoutEngine = state => {
 		currentNth++;
 	}
 
-	if (debug) {
-		logMatrix( nthMatrix );
-		logMatrix( imageWeightMatrix );
-		logMatrix( metaDetailsMatrix );
-	}
-
 	// Transpose all matrices if flipcolssrows attribute is set to true
 	const finalNthMatrix = ! state.flipcolsrows ? nthMatrix : transposeMatrix( nthMatrix );
 	const finalMetaMatrix = ! state.flipcolsrows ? metaDetailsMatrix : transposeMatrix( metaDetailsMatrix );
@@ -492,7 +485,7 @@ const logMatrix = ( matrix ) =>{
 function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) {
 	let areasArray = getAreasArray( nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 
-	mergeSimilarAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray );
+	mergeSimilarAreas( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state );
 	areasArray = normalizeAreas( nthMatrix, areasArray );
 	areasArray = areasArray.map( area => {
 		return {
@@ -520,11 +513,14 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
 				// loop through the "compare" column's areas
 				compareColumn.areas.forEach( ( compareArea, j ) => {
 					// check if the areas have the same column and the same width
-					if ( currentArea.col === compareArea.col &&
+					if ( ! compareArea.merged &&
+					     currentArea.col === compareArea.col &&
 					     currentArea.width === compareArea.width &&
-					     // and if the two areas are contigous
+					     // and if the two areas are continuous
 					     ( currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height ) ) {
+
 						// if so, move the compared area to the current column's areas array and update the column height
+						compareArea.merged = true;
 						currentColumn.areas.push( compareArea );
 						compareColumn.height += compareArea.height;
 						compareColumn.areas.splice( j, 1 );
@@ -582,27 +578,18 @@ function replaceNth( nth1, nth2, nthMatrix ) {
 	}
 }
 
-/**
- *
- * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
- * We will only cross if the left post matches in height a post or more on the right.
- * The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
- * Also, crossing at the top of the layout is more expensive than crossing at a lower row.
- *
- */
-
-const mergeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray ) => {
+const mergeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state ) => {
 	let currentPostDetails;
 
 	for ( let currentNth = 1; currentNth <= getMaxNth( nthMatrix ); currentNth++  ) {
 		currentPostDetails = getNthPostDetails( currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
 		if ( currentPostDetails ) {
-			mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray );
+			mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state );
 		}
 	}
 };
 
-const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray ) => {
+const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state ) => {
 	let nth = nthMatrix[row][col];
 	let width = getAreaWidth( nth, nthMatrix );
 	let height = getAreaHeight( nth, nthMatrix );
@@ -659,7 +646,7 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 
 	searching = ! mergeable;
 
-	while ( searching ) {
+	while ( searching && ! state.flipcolsrows ) {
 		nextNth = nthMatrix[row][col + width];
 		nextNthStart = getFirstOccurence( nextNth, nthMatrix );
 		nextRow = nextNthStart.row;
@@ -735,32 +722,6 @@ const getAreaHeight = ( nth, nthMatrix ) => {
 
 	return height;
 };
-
-const getPostAreas = ( state, nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
-	const postsList = [];
-	let currentNth = 1;
-	let currentPostDetails;
-
-	while (currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix)) {
-		const newLayoutPost = {
-			'nthPost': currentNth,
-			'gridArea': `${currentPostDetails.startGridRow} / ${currentPostDetails.startGridColumn} / ${currentPostDetails.endGridRow + 1} / ${currentPostDetails.endGridColumn + 1}`,
-			'imageWeight': currentPostDetails.imageWeight,
-			'metaDetails': currentPostDetails.metaDetails,
-		};
-
-		// If we should flip rows and columns, simply flip them in the gridArea.
-		if ( state.flipcolsrows ) {
-			newLayoutPost.gridArea = `${currentPostDetails.startGridColumn} / ${currentPostDetails.startGridRow} / ${currentPostDetails.endGridColumn + 1} / ${currentPostDetails.endGridRow + 1}`;
-		}
-
-		postsList.push(newLayoutPost);
-
-		currentNth++;
-	}
-
-	return postsList;
-}
 
 const renumberNthMatrix = (nthMatrix) => {
 	let newNth = 1;

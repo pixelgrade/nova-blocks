@@ -20467,7 +20467,7 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
     areaColumn.spotRatio = areaColumnSpotRatio;
   }
 
-  var remainingSpots = Math.min(totalSpots, totalPosts);
+  var extraPosts = totalPosts - totalSpots;
 
   if (totalSpots === totalPosts) {
     return;
@@ -20479,14 +20479,10 @@ var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, ca
 
     for (var _j = 0; _j < areas.length; _j++) {
       var _area = areas[_j];
-      _area.postsCount += Math.round((totalPosts - totalSpots) * _area.spotRatio / totalRatio);
-
-      if (_i === areaColumns.length - 1 && _j === areas.length - 1) {
-        _area.postsCount = remainingPosts;
-      }
-
-      _area.postsCount = Math.max(_area.postsCount, 0);
-      remainingSpots -= _area.postsCount;
+      var areaExtraPosts = Math.round(extraPosts * _area.spotRatio / totalRatio);
+      _area.postsCount = Math.max(0, _area.postsCount + areaExtraPosts);
+      totalRatio -= _area.spotRatio;
+      extraPosts -= areaExtraPosts;
       if (remainingPosts <= 0) return;
     }
   }
@@ -20524,10 +20520,11 @@ var getCardRatio = function getCardRatio(area, attributes) {
   var ratio = postsCount / height; // when the card is landscape and very small
   // we hide the content so the ratio should be bigger
 
-  if (utils_isLandscape(area, attributes) && width / gridcolumns < 0.3) {
-    ratio *= 7;
+  if (utils_isLandscape(area, attributes)) {
+    ratio *= 2;
   }
 
+  ratio *= gridcolumns / width;
   return ratio;
 };
 
@@ -31482,12 +31479,6 @@ var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
     }
 
     currentNth++;
-  }
-
-  if (debug) {
-    logMatrix(nthMatrix);
-    logMatrix(imageWeightMatrix);
-    logMatrix(metaDetailsMatrix);
   } // Transpose all matrices if flipcolssrows attribute is set to true
 
 
@@ -31525,7 +31516,7 @@ var logMatrix = function logMatrix(matrix) {
 
 function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
   var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
-  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
+  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state);
   areasArray = normalizeAreas(nthMatrix, areasArray);
   areasArray = areasArray.map(function (area) {
     return layoutEngine_objectSpread({
@@ -31552,9 +31543,10 @@ function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMat
         // loop through the "compare" column's areas
         compareColumn.areas.forEach(function (compareArea, j) {
           // check if the areas have the same column and the same width
-          if (currentArea.col === compareArea.col && currentArea.width === compareArea.width && ( // and if the two areas are contigous
+          if (!compareArea.merged && currentArea.col === compareArea.col && currentArea.width === compareArea.width && ( // and if the two areas are continuous
           currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height)) {
             // if so, move the compared area to the current column's areas array and update the column height
+            compareArea.merged = true;
             currentColumn.areas.push(compareArea);
             compareColumn.height += compareArea.height;
             compareColumn.areas.splice(j, 1);
@@ -31615,29 +31607,20 @@ function replaceNth(nth1, nth2, nthMatrix) {
     }
   }
 }
-/**
- *
- * We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
- * We will only cross if the left post matches in height a post or more on the right.
- * The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
- * Also, crossing at the top of the layout is more expensive than crossing at a lower row.
- *
- */
 
-
-var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
+var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state) {
   var currentPostDetails;
 
   for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
     currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
 
     if (currentPostDetails) {
-      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray);
+      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state);
     }
   }
 };
 
-var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray) {
+var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state) {
   var nth = nthMatrix[row][col];
   var width = getAreaWidth(nth, nthMatrix);
   var height = getAreaHeight(nth, nthMatrix);
@@ -31688,7 +31671,7 @@ var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, meta
 
   searching = !mergeable;
 
-  while (searching) {
+  while (searching && !state.flipcolsrows) {
     nextNth = nthMatrix[row][col + width];
     nextNthStart = getFirstOccurence(nextNth, nthMatrix);
     nextRow = nextNthStart.row;
@@ -31761,30 +31744,6 @@ var getAreaHeight = function getAreaHeight(nth, nthMatrix) {
   }
 
   return height;
-};
-
-var getPostAreas = function getPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
-  var postsList = [];
-  var currentNth = 1;
-  var currentPostDetails;
-
-  while (currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix)) {
-    var newLayoutPost = {
-      'nthPost': currentNth,
-      'gridArea': "".concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.endGridRow + 1, " / ").concat(currentPostDetails.endGridColumn + 1),
-      'imageWeight': currentPostDetails.imageWeight,
-      'metaDetails': currentPostDetails.metaDetails
-    }; // If we should flip rows and columns, simply flip them in the gridArea.
-
-    if (state.flipcolsrows) {
-      newLayoutPost.gridArea = "".concat(currentPostDetails.startGridColumn, " / ").concat(currentPostDetails.startGridRow, " / ").concat(currentPostDetails.endGridColumn + 1, " / ").concat(currentPostDetails.endGridRow + 1);
-    }
-
-    postsList.push(newLayoutPost);
-    currentNth++;
-  }
-
-  return postsList;
 };
 
 var renumberNthMatrix = function renumberNthMatrix(nthMatrix) {

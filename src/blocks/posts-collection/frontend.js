@@ -2,10 +2,12 @@ import classnames from "classnames";
 import { getCardMediaPaddingTop, debounce, below } from "../../utils";
 import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
 import {
-	getAreaBaseClassname, getAreaClassnameByAspectRatio,
+	getAreaBaseClassname,
+	getAreaClassnameByAspectRatio,
 	getAreaClassnameByHeightRatio,
 	getAreaClassnameByWidthRatio,
-	getGridStyle
+	getGridStyle,
+	getGridColumnsAndRows
 } from "../../components/grid-generator/utils";
 
 import {
@@ -43,7 +45,6 @@ import {
 		function createLayout() {
 
 			let gridcolumns = attributes.gridcolumns;
-			let gridrows = attributes.gridrows;
 			let blockWidth = $grid.outerWidth();
 
 			$posts.detach();
@@ -86,17 +87,13 @@ import {
 
 				const $column = $( '<div class="novablocks-grid__column">' );
 				$column.css( 'grid-area', `${ row } / ${ col } / span ${ height } / span ${ width }` );
+				$column.attr( 'data-area', `${ row } / ${ col } / span ${ height } / span ${ width }` );
 
 				for ( let j = 0; j < areas.length; j++ ) {
 					const area = areas[j];
 					const blockWidthRatio = Math.min( 1, blockWidth / defaultBlockWidth );
+					const areaClassName = getAreaClassname( area, attributes, blockWidthRatio );
 
-					const areaClassName = classnames([
-						getAreaBaseClassname( area ),
-						getAreaClassnameByWidthRatio( blockWidthRatio * width / gridcolumns ),
-						getAreaClassnameByHeightRatio( height / gridrows ),
-						getAreaClassnameByAspectRatio( area, attributes )
-					]);
 					addedCards += area.postsCount;
 
 					const $area = $( `<div class="${ areaClassName }">` );
@@ -151,6 +148,19 @@ import {
 
 	} );
 
+	function getAreaClassname( area, attributes, widthRatioMultiplier = 1 ) {
+		const { width, height } = area;
+		const { gridcolumns, gridrows } = getGridColumnsAndRows( attributes );
+
+		return classnames([
+			getAreaBaseClassname( area ),
+			getAreaClassnameByWidthRatio( widthRatioMultiplier * width / gridcolumns ),
+			getAreaClassnameByHeightRatio( height / gridrows ),
+			getAreaClassnameByAspectRatio( area, attributes )
+		]);
+
+	}
+
 	function removeSmallestColumn( areaColumns ) {
 
 		let data = areaColumns.map( ( area, index ) => {
@@ -175,11 +185,11 @@ import {
 
 		areaColumns.splice( indexToRemove, 1 );
 
-		for ( let i = 0; i < areaColumns.length; i++ ) {
-			if ( areaColumns[i].col > colToRemove ) {
-				areaColumns[i].col -= widthToRemove;
-			}
-		}
+//		for ( let i = 0; i < areaColumns.length; i++ ) {
+//			if ( areaColumns[i].col > colToRemove ) {
+//				areaColumns[i].col -= widthToRemove;
+//			}
+//		}
 
 		return widthToRemove;
 	}
