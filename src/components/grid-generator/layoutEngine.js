@@ -518,11 +518,10 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
 					     currentArea.width === compareArea.width &&
 					     // and if the two areas are continuous
 					     ( currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height ) ) {
-
 						// if so, move the compared area to the current column's areas array and update the column height
 						compareArea.merged = true;
 						currentColumn.areas.push( compareArea );
-						compareColumn.height += compareArea.height;
+						currentColumn.height += compareArea.height;
 						compareColumn.areas.splice( j, 1 );
 					}
 				} );
