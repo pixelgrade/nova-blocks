@@ -18,3 +18,10 @@
 		flex-direction: row-reverse;
 	}
 }
+
+.novablocks-collection--align-center {
+
+	.wp-block-buttons {
+		justify-content: center;
+	}
+}
