@@ -31452,11 +31452,11 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
   }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-advanced-gallery__grid-item-media",
-    style: gridItem.getImageStyle()
+    className: "novablocks-advanced-gallery__grid-item-media"
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
-    src: imageURL
+    src: imageURL,
+    style: gridItem.getImageStyle()
   })), Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item-info"
   }, typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
@@ -32367,10 +32367,6 @@ var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, s
   return styles;
 };
 var compileStyles = function compileStyles(styleData) {
-  var _this$props$attribute = this.props.attributes,
-      showLabels = _this$props$attribute.showLabels,
-      showIcons = _this$props$attribute.showIcons,
-      styleSlug = _this$props$attribute.styleSlug;
   var accentColor = getMapAccentColor.call(this);
   var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
   return JSON.parse(styleDataString);
@@ -32388,37 +32384,9 @@ var utils_getMapStyles = function getMapStyles() {
   return compileStyles.call(this, mapStyles);
 };
 var getMapAccentColor = function getMapAccentColor() {
-  var settings = this.props.settings;
-  var colors = settings.colors;
-  var fallbackColor = '#222222';
+  var _this$props, _this$props$settings, _this$props$settings$;
 
-  if (colors && colors.length) {
-    var primary = colors.find(function (color) {
-      return color.slug === 'sm-color-primary';
-    });
-    var secondary = colors.find(function (color) {
-      return color.slug === 'sm-color-secondary';
-    });
-    var tertiary = colors.find(function (color) {
-      return color.slug === 'sm-color-tertiary';
-    });
-
-    if (primary) {
-      return primary.color;
-    }
-
-    if (secondary) {
-      return secondary.color;
-    }
-
-    if (tertiary) {
-      return tertiary.color;
-    }
-
-    return colors[0].color;
-  }
-
-  return fallbackColor;
+  return (this === null || this === void 0 ? void 0 : (_this$props = this.props) === null || _this$props === void 0 ? void 0 : (_this$props$settings = _this$props.settings) === null || _this$props$settings === void 0 ? void 0 : (_this$props$settings$ = _this$props$settings.map) === null || _this$props$settings$ === void 0 ? void 0 : _this$props$settings$.accentColor) || '#222222';
 };
 var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
   if (typeof google === "undefined" || typeof google.maps === "undefined") {
@@ -32951,13 +32919,10 @@ var inspector_controls_ButtonInspectorControls = /*#__PURE__*/function (_Compone
           var mapStyles = google_map_styles.find(function (style) {
             return style.slug === newStyleSlug;
           }).styles;
-
-          var newStyles = _this2.compileStyles(mapStyles);
-
           var newPinColor = newStyleSlug === 'customized' ? getMapAccentColor.call(_this2) : '#222222';
           setAttributes({
             styleSlug: newStyleSlug,
-            styleData: newStyles,
+            styleData: mapStyles,
             pinColor: newPinColor
           });
         }
