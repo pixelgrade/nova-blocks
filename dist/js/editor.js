@@ -19477,7 +19477,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
 
       return {
         id: photo.id,
-        url: photo.urls.full,
+        url: photo.urls.regular,
         type: 'image',
         width: photo.width,
         height: photo.height,
@@ -19497,7 +19497,7 @@ var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
             url: photo.urls.thumb
           },
           novablocks_huge: {
-            url: photo.urls.full
+            url: photo.urls.regular
           },
           novablocks_large: {
             url: photo.urls.regular
