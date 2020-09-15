@@ -3553,10 +3553,6 @@ var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, s
   return styles;
 };
 var compileStyles = function compileStyles(styleData) {
-  var _this$props$attribute = this.props.attributes,
-      showLabels = _this$props$attribute.showLabels,
-      showIcons = _this$props$attribute.showIcons,
-      styleSlug = _this$props$attribute.styleSlug;
   var accentColor = getMapAccentColor.call(this);
   var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
   return JSON.parse(styleDataString);
@@ -3574,37 +3570,9 @@ var utils_getMapStyles = function getMapStyles() {
   return compileStyles.call(this, mapStyles);
 };
 var getMapAccentColor = function getMapAccentColor() {
-  var settings = this.props.settings;
-  var colors = settings.colors;
-  var fallbackColor = '#222222';
+  var _this$props, _this$props$settings, _this$props$settings$;
 
-  if (colors && colors.length) {
-    var primary = colors.find(function (color) {
-      return color.slug === 'sm-color-primary';
-    });
-    var secondary = colors.find(function (color) {
-      return color.slug === 'sm-color-secondary';
-    });
-    var tertiary = colors.find(function (color) {
-      return color.slug === 'sm-color-tertiary';
-    });
-
-    if (primary) {
-      return primary.color;
-    }
-
-    if (secondary) {
-      return secondary.color;
-    }
-
-    if (tertiary) {
-      return tertiary.color;
-    }
-
-    return colors[0].color;
-  }
-
-  return fallbackColor;
+  return (this === null || this === void 0 ? void 0 : (_this$props = this.props) === null || _this$props === void 0 ? void 0 : (_this$props$settings = _this$props.settings) === null || _this$props$settings === void 0 ? void 0 : (_this$props$settings$ = _this$props$settings.map) === null || _this$props$settings$ === void 0 ? void 0 : _this$props$settings$.accentColor) || '#222222';
 };
 var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
   if (typeof google === "undefined" || typeof google.maps === "undefined") {
@@ -3978,33 +3946,36 @@ var util_parallaxInit = function parallaxInit($blocks) {
   mapInit();
 
   function mapInit() {
+    var _window$parent, _window$parent$wp;
+
     if (typeof google === "undefined" || typeof google.maps === "undefined") {
       return;
     }
 
     $('.js-novablocks-google-map').each(function (i, obj) {
       var $obj = $(obj),
+          accentColor = $obj.data('accent-color'),
           markers = $obj.data('markers'),
           showLabels = $obj.data('show-labels'),
           showIcons = $obj.data('show-icons'),
           styles = $obj.data('styles'),
+          stylesWithColor = addColorToStyles(styles, accentColor),
           zoom = $obj.data('zoom'),
           hideControls = !$obj.data('controls'),
-          pinColor = $obj.data('pin-color'),
           mapOptions = {
         mapTypeId: 'roadmap',
         center: utils_getCenterFromMarkers(markers),
         zoom: zoom,
-        styles: addVisibilityToStyles(styles, showLabels, showIcons),
+        styles: addVisibilityToStyles(stylesWithColor, showLabels, showIcons),
         disableDefaultUI: hideControls,
         clickableIcons: false,
         keyboardShortcuts: false
       },
           map = new google.maps.Map(obj, mapOptions);
-      var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
-      markers.forEach(function (markerString) {
+      var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, accentColor);
+      var mapMarkers = markers.map(function (markerString) {
         var marker = JSON.parse(markerString);
-        new google.maps.Marker({
+        return new google.maps.Marker({
           map: map,
           icon: {
             url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
@@ -4013,7 +3984,40 @@ var util_parallaxInit = function parallaxInit($blocks) {
           position: marker.geometry.location
         });
       });
+      $obj.data('map', map);
+      $obj.data('mapMarkers', mapMarkers);
     });
+    var api = window === null || window === void 0 ? void 0 : (_window$parent = window.parent) === null || _window$parent === void 0 ? void 0 : (_window$parent$wp = _window$parent.wp) === null || _window$parent$wp === void 0 ? void 0 : _window$parent$wp.customize;
+
+    if (!!api) {
+      api('sm_color_primary').bind(function (new_value) {
+        $('.js-novablocks-google-map').each(function (i, obj) {
+          var $obj = $(obj);
+          var map = $obj.data('map');
+          var mapMarkers = $obj.data('mapMarkers');
+          var styles = $obj.data('styles');
+          var stylesWithColor = addColorToStyles(styles, new_value);
+          var showLabels = $obj.data('show-labels');
+          var showIcons = $obj.data('show-icons');
+          var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, new_value);
+          console.log('after', addVisibilityToStyles(styles, showLabels, showIcons));
+          map.setOptions({
+            styles: addVisibilityToStyles(stylesWithColor, showLabels, showIcons)
+          });
+          mapMarkers.forEach(function (mapMarker) {
+            mapMarker.setOptions({
+              icon: {
+                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+              }
+            });
+          });
+        });
+      });
+    }
+  }
+
+  function addColorToStyles(styleData, color) {
+    return JSON.parse(JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, color));
   }
 })(jQuery, window);
 // CONCATENATED MODULE: ./src/blocks/hero/frontend.js
