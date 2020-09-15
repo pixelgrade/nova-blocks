@@ -37584,6 +37584,10 @@ var editor_novaBlocks = /*#__PURE__*/function () {
         cards_collection();
       }
 
+      if (supports.indexOf('posts-collection') > -1) {
+        posts_collection();
+      }
+
       if (supports.indexOf('openhours') > -1) {
         blocks_openhours();
       }
@@ -37595,7 +37599,6 @@ var editor_novaBlocks = /*#__PURE__*/function () {
       blocks_hero();
       blocks_media();
       blocks_slideshow();
-      posts_collection();
     }
   }]);
 

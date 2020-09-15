@@ -96,6 +96,10 @@ class novaBlocks {
 			cardsCollectionInit();
 		}
 
+		if ( supports.indexOf( 'posts-collection' ) > -1 ) {
+			postsCollectionInit();
+		}
+
 		if ( supports.indexOf( 'openhours' ) > -1 ) {
 			openHoursInit();
 		}
@@ -107,7 +111,6 @@ class novaBlocks {
 		heroInit();
 		mediaInit();
 		slideshowInit();
-		postsCollectionInit();
 	}
 }
 
