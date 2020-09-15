@@ -64,9 +64,6 @@ const PostsEdit = ( props ) => {
 
 		imageResizing,
 		imagePadding,
-
-		primaryMetadata,
-		secondaryMetadata,
 	} = attributes;
 
 	return (
@@ -91,7 +88,6 @@ const PostsEdit = ( props ) => {
 								] }
 							/>
 						</div>
-
 
 						<div key={ 'title-level-customize-1' } className={ getControlsClasses( attributes, getLevelAttributes ) }>
 							<PanelRow>
@@ -220,34 +216,53 @@ const PostsEdit = ( props ) => {
 							} ) }
 						/>
 					</ControlsGroup>
-					<ControlsGroup title={ __( 'Additional Information', '__plugin_txtd' ) }>
-						<SelectControl
-							key={ 'primary-metadata-source' }
-							label={ __( 'Primary Metadata' ) }
-							selected={ primaryMetadata }
-							onChange={ primaryMetadata => {
-								setAttributes( { primaryMetadata } )
-							} }
-							options={ [
-								{ label: 'Date', value: 'date' },
-							] }
-						/>
-						<SelectControl
-							key={ 'secondary-metadata-source' }
-							label={ __( 'Secondary Metadata' ) }
-							selected={ secondaryMetadata }
-							onChange={ secondaryMetadata => {
-								setAttributes( { secondaryMetadata } )
-							} }
-							options={ [
-								{ label: 'Author', value: 'author' },
-							] }
-						/>
-					</ControlsGroup>
+					<MetaSource { ...props } />
 				</ControlsTab>
 			</ControlsSection>
 		</Fragment>
 	)
 };
+
+const MetaSource = ( props ) => {
+
+	const {
+		attributes: {
+			primaryMetadata,
+			secondaryMetadata,
+		},
+		setAttributes
+	} = props;
+
+	const metaSourceOptions = [
+		{ label: 'Author', value: 'author' },
+		{ label: 'Category', value: 'category' },
+		{ label: 'Comments', value: 'comments' },
+		{ label: 'Date', value: 'date' },
+		{ label: 'Tags', value: 'tags' },
+	];
+
+	return (
+		<ControlsGroup title={ __( 'Additional Information', '__plugin_txtd' ) }>
+			<SelectControl
+				key={ 'primary-metadata-source' }
+				label={ __( 'Primary Metadata' ) }
+				selected={ primaryMetadata }
+				onChange={ primaryMetadata => {
+					setAttributes( { primaryMetadata } )
+				} }
+				options={ metaSourceOptions }
+			/>
+			<SelectControl
+				key={ 'secondary-metadata-source' }
+				label={ __( 'Secondary Metadata' ) }
+				selected={ secondaryMetadata }
+				onChange={ secondaryMetadata => {
+					setAttributes( { secondaryMetadata } )
+				} }
+				options={ metaSourceOptions }
+			/>
+		</ControlsGroup>
+	)
+}
 
 export default PostsEdit;

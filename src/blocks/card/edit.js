@@ -61,7 +61,7 @@ const CardEdit = ( props ) => {
 	};
 
 	return (
-		<div className={ `novablocks-card novablocks-card--portrait novablocks-block__content` }>
+		<div className={ `novablocks-card novablocks-card--fixed-media-aspect-ratio novablocks-card--portrait novablocks-block__content` }>
 			<div className="novablocks-card__layout">
 				{
 					showMedia &&

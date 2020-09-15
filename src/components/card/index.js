@@ -50,7 +50,8 @@ const Card = ( props ) => {
 export const CardContents = ( props ) => {
 
 	const {
-		meta,
+		metaAboveTitle,
+		metaBelowTitle,
 		title,
 		content,
 		buttons,
@@ -66,11 +67,11 @@ export const CardContents = ( props ) => {
 	return (
 		<Fragment>
 			{
-				showMeta &&
+				showMeta && metaAboveTitle &&
 				<div className="wp-block novablocks-grid__item-meta">
 					<div className="novablocks-card__meta is-style-meta">
 						<div className="novablocks-card__meta-size-modifier">
-							{ meta }
+							{ metaAboveTitle }
 						</div>
 					</div>
 				</div>
@@ -82,6 +83,16 @@ export const CardContents = ( props ) => {
 						{ title }
 					</div>
 				</TitleTagName>
+			}
+			{
+				showMeta && metaBelowTitle &&
+				<div className="wp-block novablocks-grid__item-meta">
+					<div className="novablocks-card__meta is-style-meta">
+						<div className="novablocks-card__meta-size-modifier">
+							{ metaBelowTitle }
+						</div>
+					</div>
+				</div>
 			}
 			{
 				showContent &&

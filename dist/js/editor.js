@@ -38860,7 +38860,8 @@ var card_Card = function Card(props) {
 };
 
 var card_CardContents = function CardContents(props) {
-  var meta = props.meta,
+  var metaAboveTitle = props.metaAboveTitle,
+      metaBelowTitle = props.metaBelowTitle,
       title = props.title,
       content = props.content,
       buttons = props.buttons,
@@ -38869,17 +38870,23 @@ var card_CardContents = function CardContents(props) {
       showContent = props.showContent,
       showButtons = props.showButtons;
   var TitleTagName = props.titleTagName || 'h3';
-  return Object(external_React_["createElement"])(card_Fragment, null, showMeta && Object(external_React_["createElement"])("div", {
+  return Object(external_React_["createElement"])(card_Fragment, null, showMeta && metaAboveTitle && Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-meta"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__meta is-style-meta"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__meta-size-modifier"
-  }, meta))), showTitle && Object(external_React_["createElement"])(TitleTagName, {
+  }, metaAboveTitle))), showTitle && Object(external_React_["createElement"])(TitleTagName, {
     className: "wp-block novablocks-grid__item-title novablocks-card__title"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__title-size-modifier"
-  }, title)), showContent && Object(external_React_["createElement"])("div", {
+  }, title)), showMeta && metaBelowTitle && Object(external_React_["createElement"])("div", {
+    className: "wp-block novablocks-grid__item-meta"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__meta is-style-meta"
+  }, Object(external_React_["createElement"])("div", {
+    className: "novablocks-card__meta-size-modifier"
+  }, metaBelowTitle))), showContent && Object(external_React_["createElement"])("div", {
     className: "wp-block novablocks-grid__item-content novablocks-card__description"
   }, Object(external_React_["createElement"])(card_RawHTML, {
     className: "novablocks-card__content-size-modifier"
@@ -38944,7 +38951,7 @@ var edit_CardEdit = function CardEdit(props) {
   };
 
   return Object(external_React_["createElement"])("div", {
-    className: "novablocks-card novablocks-card--portrait novablocks-block__content"
+    className: "novablocks-card novablocks-card--fixed-media-aspect-ratio novablocks-card--portrait novablocks-block__content"
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout"
   }, showMedia && Object(external_React_["createElement"])("div", {
@@ -39267,6 +39274,71 @@ var areaDebug_AreaDebug = function AreaDebug(_ref) {
 };
 
 /* harmony default export */ var areaDebug = (areaDebug_AreaDebug);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/components/author.js
+
+
+
+
+
+
+function author_createSuper(Derived) { var hasNativeReflectConstruct = author_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+
+function author_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var _wp = wp,
+    author_apiFetch = _wp.apiFetch;
+var author_Component = wp.element.Component;
+
+var author_Author = /*#__PURE__*/function (_Component) {
+  inherits_default()(Author, _Component);
+
+  var _super = author_createSuper(Author);
+
+  function Author() {
+    var _this;
+
+    classCallCheck_default()(this, Author);
+
+    _this = _super.apply(this, arguments);
+    _this.state = {
+      name: null
+    };
+    return _this;
+  }
+
+  createClass_default()(Author, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var id = this.props.id;
+      this.isStillMounted = true;
+      this.fetchRequest = author_apiFetch({
+        path: "/wp/v2/users/".concat(id)
+      }).then(function (category) {
+        if (_this2.isStillMounted) {
+          _this2.setState({
+            name: category.name
+          });
+        }
+      }).catch(function () {});
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.isStillMounted = false;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return this.state.name;
+    }
+  }]);
+
+  return Author;
+}(author_Component);
+
+/* harmony default export */ var author = (author_Author);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/components/category.js
 
 
@@ -39278,8 +39350,8 @@ function category_createSuper(Derived) { var hasNativeReflectConstruct = categor
 
 function category_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-var _wp = wp,
-    category_apiFetch = _wp.apiFetch;
+var category_wp = wp,
+    category_apiFetch = category_wp.apiFetch;
 var category_Component = wp.element.Component;
 
 var category_Category = /*#__PURE__*/function (_Component) {
@@ -39332,6 +39404,76 @@ var category_Category = /*#__PURE__*/function (_Component) {
 }(category_Component);
 
 /* harmony default export */ var category = (category_Category);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/components/tags.js
+
+
+
+
+
+
+function tags_createSuper(Derived) { var hasNativeReflectConstruct = tags_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+
+function tags_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var tags_wp = wp,
+    tags_apiFetch = tags_wp.apiFetch;
+var tags_Component = wp.element.Component;
+
+var tags_Tags = /*#__PURE__*/function (_Component) {
+  inherits_default()(Tags, _Component);
+
+  var _super = tags_createSuper(Tags);
+
+  function Tags() {
+    var _this;
+
+    classCallCheck_default()(this, Tags);
+
+    _this = _super.apply(this, arguments);
+    _this.state = {
+      name: null
+    };
+    return _this;
+  }
+
+  createClass_default()(Tags, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var tags = this.props.tags;
+      this.isStillMounted = true;
+      var promises = tags.map(function (id) {
+        return tags_apiFetch({
+          path: "/wp/v2/tags/".concat(id)
+        });
+      });
+      Promise.all(promises).then(function (tags) {
+        if (_this2.isStillMounted) {
+          _this2.setState({
+            name: tags.map(function (tag) {
+              return tag.name;
+            }).join(', ')
+          });
+        }
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.isStillMounted = false;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return this.state.name;
+    }
+  }]);
+
+  return Tags;
+}(tags_Component);
+
+/* harmony default export */ var components_tags = (tags_Tags);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/post.js
 
 var _wp$date = wp.date,
@@ -39345,6 +39487,54 @@ var post_ = wp.i18n.__;
 
 
 
+
+
+var post_SecondaryMeta = function SecondaryMeta(props) {
+  return Object(external_React_["createElement"])(post_Fragment, null, Object(external_React_["createElement"])(post_RawHTML, {
+    style: {
+      display: 'inline'
+    }
+  }, ' &mdash; '), props.children);
+};
+
+var post_getMeta = function getMeta(post, meta) {
+  if (meta === 'author') {
+    return (post === null || post === void 0 ? void 0 : post.author) && Object(external_React_["createElement"])(author, {
+      id: post.author
+    });
+  }
+
+  if (meta === 'category') {
+    var _post$categories;
+
+    return !!(post === null || post === void 0 ? void 0 : (_post$categories = post.categories) === null || _post$categories === void 0 ? void 0 : _post$categories.length) && Object(external_React_["createElement"])(category, {
+      id: post.categories[0]
+    });
+  }
+
+  if (meta === 'tags') {
+    var _post$tags;
+
+    return !!(post === null || post === void 0 ? void 0 : (_post$tags = post.tags) === null || _post$tags === void 0 ? void 0 : _post$tags.length) && Object(external_React_["createElement"])(components_tags, {
+      tags: post.tags
+    });
+  }
+
+  if (meta === 'date') {
+    var dateFormat = __experimentalGetSettings().formats.date;
+
+    return Object(external_React_["createElement"])("time", {
+      dateTime: format('c', post.date_gmt)
+    }, dateI18n(dateFormat, post.date_gmt));
+  }
+
+  return null;
+};
+
+var post_getMetaComponent = function getMetaComponent(primaryMeta, secondaryMeta) {
+  return Object(external_React_["createElement"])(post_Fragment, null, primaryMeta, Object(external_React_["createElement"])(post_SecondaryMeta, null, secondaryMeta));
+};
+
 var post_Post = function Post(props) {
   var _props$attributes = props.attributes,
       cardTitleLevel = _props$attributes.cardTitleLevel,
@@ -39354,19 +39544,35 @@ var post_Post = function Post(props) {
       showTitle = _props$attributes.showTitle,
       showDescription = _props$attributes.showDescription,
       showButtons = _props$attributes.showButtons,
+      metadataPosition = _props$attributes.metadataPosition,
+      primaryMetadata = _props$attributes.primaryMetadata,
+      secondaryMetadata = _props$attributes.secondaryMetadata,
       post = props.post;
+  var primaryMeta = post_getMeta(post, primaryMetadata);
+  var secondaryMeta = post_getMeta(post, secondaryMetadata);
+  var combinedMeta;
+  var metaAboveTitle;
+  var metaBelowTitle;
 
-  var dateFormat = __experimentalGetSettings().formats.date;
+  if (primaryMeta && secondaryMeta) {
+    combinedMeta = Object(external_React_["createElement"])(post_Fragment, null, primaryMeta, Object(external_React_["createElement"])(post_SecondaryMeta, null, secondaryMeta));
+  } else {
+    combinedMeta = primaryMeta || secondaryMeta;
+  }
 
-  var meta = Object(external_React_["createElement"])(post_Fragment, null, Object(external_React_["createElement"])("time", {
-    dateTime: format('c', post.date_gmt)
-  }, dateI18n(dateFormat, post.date_gmt)), post.categories.length && Object(external_React_["createElement"])(post_Fragment, null, Object(external_React_["createElement"])(post_RawHTML, {
-    style: {
-      display: 'inline'
-    }
-  }, ' &mdash; '), Object(external_React_["createElement"])(category, {
-    id: post.categories[0]
-  })));
+  if (metadataPosition === 'above-title') {
+    metaAboveTitle = combinedMeta;
+  }
+
+  if (metadataPosition === 'below-title') {
+    metaBelowTitle = combinedMeta;
+  }
+
+  if (metadataPosition === 'split') {
+    metaAboveTitle = primaryMeta;
+    metaBelowTitle = secondaryMeta;
+  }
+
   var buttons = Object(external_React_["createElement"])("div", {
     className: "wp-block-buttons alignleft"
   }, Object(external_React_["createElement"])("div", {
@@ -39378,7 +39584,8 @@ var post_Post = function Post(props) {
   }, post_('Read More')))));
   var cardProps = {
     mediaId: post.featured_media,
-    meta: meta,
+    metaAboveTitle: metaAboveTitle,
+    metaBelowTitle: metaBelowTitle,
     title: post.title.raw,
     titleTagName: "h".concat(cardTitleLevel),
     content: post.excerpt.rendered,
@@ -39609,9 +39816,7 @@ var edit_PostsEdit = function PostsEdit(props) {
       thumbnailAspectRatioString = attributes.thumbnailAspectRatioString,
       thumbnailAspectRatio = attributes.thumbnailAspectRatio,
       imageResizing = attributes.imageResizing,
-      imagePadding = attributes.imagePadding,
-      primaryMetadata = attributes.primaryMetadata,
-      secondaryMetadata = attributes.secondaryMetadata;
+      imagePadding = attributes.imagePadding;
   return Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(posts_collection_preview, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
     label: posts_collection_edit_('Card Details')
   }, Object(external_React_["createElement"])(control_sections_ControlsTab, {
@@ -39775,7 +39980,31 @@ var edit_PostsEdit = function PostsEdit(props) {
         value: attributes[toggle.attribute]
       });
     })
-  })), Object(external_React_["createElement"])(controls_group, {
+  })), Object(external_React_["createElement"])(edit_MetaSource, props))));
+};
+
+var edit_MetaSource = function MetaSource(props) {
+  var _props$attributes = props.attributes,
+      primaryMetadata = _props$attributes.primaryMetadata,
+      secondaryMetadata = _props$attributes.secondaryMetadata,
+      setAttributes = props.setAttributes;
+  var metaSourceOptions = [{
+    label: 'Author',
+    value: 'author'
+  }, {
+    label: 'Category',
+    value: 'category'
+  }, {
+    label: 'Comments',
+    value: 'comments'
+  }, {
+    label: 'Date',
+    value: 'date'
+  }, {
+    label: 'Tags',
+    value: 'tags'
+  }];
+  return Object(external_React_["createElement"])(controls_group, {
     title: posts_collection_edit_('Additional Information', '__plugin_txtd')
   }, Object(external_React_["createElement"])(edit_SelectControl, {
     key: 'primary-metadata-source',
@@ -39786,10 +40015,7 @@ var edit_PostsEdit = function PostsEdit(props) {
         primaryMetadata: primaryMetadata
       });
     },
-    options: [{
-      label: 'Date',
-      value: 'date'
-    }]
+    options: metaSourceOptions
   }), Object(external_React_["createElement"])(edit_SelectControl, {
     key: 'secondary-metadata-source',
     label: posts_collection_edit_('Secondary Metadata'),
@@ -39799,11 +40025,8 @@ var edit_PostsEdit = function PostsEdit(props) {
         secondaryMetadata: secondaryMetadata
       });
     },
-    options: [{
-      label: 'Author',
-      value: 'author'
-    }]
-  })))));
+    options: metaSourceOptions
+  }));
 };
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);

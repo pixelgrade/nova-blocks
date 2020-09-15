@@ -254,6 +254,14 @@ function novablocks_get_collection_attributes() {
 			'type'    => 'string',
 			'default' => 'above-title'
 		),
+		'primaryMetadata'                  => array(
+			'type'    => 'string',
+			'default' => 'category'
+		),
+		'secondaryMetadata'                => array(
+			'type'    => 'string',
+			'default' => 'date'
+		),
 		'imageResizing'                    => array(
 			'type'    => 'string',
 			'default' => 'cropped'
