@@ -119,14 +119,11 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	$media        = get_the_post_thumbnail_url( $post );
-	$date         = esc_attr( get_the_date( 'c', $post ) );
 	$dateReadable = esc_html( get_the_date( '', $post ) );
 	$title        = get_the_title( $post );
-	$postLink     = esc_url( get_permalink( $post ) );
 	$excerpt      = get_the_excerpt( $post );
 
-	$hlevel      = $attributes['level'];
-	$titleTag    = 'h' . ( $hlevel + 1 );
+	$titleTag    = 'h' . $attributes['cardTitleLevel'];
 
 	$classes = array(
 		'novablocks-card',
@@ -167,7 +164,6 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 								if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
 									$category_id  = $categories[0];
 									$category     = get_the_category_by_ID( $category_id );
-									$category_url = get_category_link( $category_id );
 
 									if ( ! is_wp_error( $category ) ) {
 										echo ' &mdash; ' . $category;

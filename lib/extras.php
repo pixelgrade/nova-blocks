@@ -1171,7 +1171,7 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 }
 
 function novablocks_get_collection_header_output( $attributes ) {
-	$titleTag = 'h' . $attributes['level'];
+	$titleTag = 'h' . $attributes['collectionTitleLevel'];
 	$titleURL = $attributes['collectionTitleLinkURL'];
 	$titleURLTarget   = ! empty( $attributes['collectionTitleLinkOpensInNewTab'] ) ? 'target="_blank"' : '';
 

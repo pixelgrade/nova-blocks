@@ -22,7 +22,8 @@ const CollectionTitle = ( props ) => {
 			collectionTitleLinkOpensInNewTab,
 			collectionTitleLinkURL,
 			title,
-			level,
+
+			collectionTitleLevel,
 		},
 		setAttributes,
 		isSelected,
@@ -35,7 +36,7 @@ const CollectionTitle = ( props ) => {
 	return (
 		<div className="block-editor-block-list__block wp-block novablocks-collection__title">
 			<EditableText
-				tagName={ `h${ level }` }
+				tagName={ `h${ collectionTitleLevel }` }
 				value={ title }
 				onChange={ title => {
 					setAttributes( { title } );

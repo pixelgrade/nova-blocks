@@ -20617,7 +20617,7 @@ var collection_CollectionTitle = function CollectionTitle(props) {
       collectionTitleLinkOpensInNewTab = _props$attributes.collectionTitleLinkOpensInNewTab,
       collectionTitleLinkURL = _props$attributes.collectionTitleLinkURL,
       title = _props$attributes.title,
-      level = _props$attributes.level,
+      collectionTitleLevel = _props$attributes.collectionTitleLevel,
       setAttributes = props.setAttributes,
       isSelected = props.isSelected;
 
@@ -20628,7 +20628,7 @@ var collection_CollectionTitle = function CollectionTitle(props) {
   return Object(external_React_["createElement"])("div", {
     className: "block-editor-block-list__block wp-block novablocks-collection__title"
   }, Object(external_React_["createElement"])(editable_text, {
-    tagName: "h".concat(level),
+    tagName: "h".concat(collectionTitleLevel),
     value: title,
     onChange: function onChange(title) {
       setAttributes({
@@ -39342,7 +39342,7 @@ var post_ = wp.i18n.__;
 
 var post_Post = function Post(props) {
   var _props$attributes = props.attributes,
-      level = _props$attributes.level,
+      cardTitleLevel = _props$attributes.cardTitleLevel,
       showMedia = _props$attributes.showMedia,
       showMeta = _props$attributes.showMeta,
       showTitle = _props$attributes.showTitle,
@@ -39374,7 +39374,7 @@ var post_Post = function Post(props) {
     mediaId: post.featured_media,
     meta: meta,
     title: post.title.raw,
-    titleTagName: "h".concat(level + 1),
+    titleTagName: "h".concat(cardTitleLevel),
     content: post.excerpt.rendered,
     buttons: buttons,
     isLandscape: props.isLandscape || false,

@@ -18,7 +18,7 @@ const Post = ( props ) => {
 
 	const {
 		attributes: {
-			level,
+			cardTitleLevel,
 
 			showMedia,
 			showMeta,
@@ -62,7 +62,7 @@ const Post = ( props ) => {
 		mediaId: post.featured_media,
 		meta,
 		title: post.title.raw,
-		titleTagName: `h${ level + 1 }`,
+		titleTagName: `h${ cardTitleLevel }`,
 		content: post.excerpt.rendered,
 		buttons,
 		isLandscape: props.isLandscape || false,
