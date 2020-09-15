@@ -48,8 +48,8 @@ const AdvancedGalleryItem = ( { gridItem } ) => {
 
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
-			<div className={ `novablocks-advanced-gallery__grid-item-media` } style={ gridItem.getImageStyle() }>
-				<img className={ `novablocks-advanced-gallery__image` } src={ imageURL } />
+			<div className={ `novablocks-advanced-gallery__grid-item-media` } >
+				<img className={ `novablocks-advanced-gallery__image` } src={ imageURL } style={ gridItem.getImageStyle() } />
 			</div>
 			<div className="novablocks-advanced-gallery__grid-item-info">
 				{ typeof imageCaption === 'string' && <div

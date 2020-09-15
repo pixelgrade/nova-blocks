@@ -31452,11 +31452,11 @@ var preview_AdvancedGalleryItem = function AdvancedGalleryItem(_ref) {
     className: "novablocks-advanced-gallery__grid-item",
     style: gridItem.getStyle()
   }, Object(external_React_["createElement"])("div", {
-    className: "novablocks-advanced-gallery__grid-item-media",
-    style: gridItem.getImageStyle()
+    className: "novablocks-advanced-gallery__grid-item-media"
   }, Object(external_React_["createElement"])("img", {
     className: "novablocks-advanced-gallery__image",
-    src: imageURL
+    src: imageURL,
+    style: gridItem.getImageStyle()
   })), Object(external_React_["createElement"])("div", {
     className: "novablocks-advanced-gallery__grid-item-info"
   }, typeof imageCaption === 'string' && Object(external_React_["createElement"])("div", {
