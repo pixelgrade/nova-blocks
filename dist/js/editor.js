@@ -38830,19 +38830,24 @@ var card_media_CardMedia = function CardMedia(_ref2) {
 // CONCATENATED MODULE: ./src/components/card/index.js
 
 
+
 var card_wp$element = wp.element,
     card_Fragment = card_wp$element.Fragment,
     card_RawHTML = card_wp$element.RawHTML;
 
 var card_Card = function Card(props) {
-  var isLandscape = props.isLandscape || false;
+  var isLandscape = !!props.isLandscape;
+  var hasFixedAspectRatio = !!props.hasFixedAspectRatio;
   var showMedia = props.showMedia,
       showMeta = props.showMeta,
       showTitle = props.showTitle,
       showContent = props.showContent,
       showButtons = props.showButtons;
+  var className = classnames_default()('novablocks-card', "novablocks-card--".concat(isLandscape ? 'landscape' : 'portrait'), "novablocks-block__content", {
+    'novablocks-card--fixed-media-aspect-ratio': hasFixedAspectRatio
+  });
   return Object(external_React_["createElement"])("div", {
-    className: "novablocks-card novablocks-card--".concat(isLandscape ? 'landscape' : 'portrait', " novablocks-block__content")
+    className: className
   }, Object(external_React_["createElement"])("div", {
     className: "novablocks-card__layout"
   }, showMedia && Object(external_React_["createElement"])("div", {
@@ -39343,6 +39348,7 @@ var post_ = wp.i18n.__;
 var post_Post = function Post(props) {
   var _props$attributes = props.attributes,
       cardTitleLevel = _props$attributes.cardTitleLevel,
+      thumbnailAspectRatioString = _props$attributes.thumbnailAspectRatioString,
       showMedia = _props$attributes.showMedia,
       showMeta = _props$attributes.showMeta,
       showTitle = _props$attributes.showTitle,
@@ -39382,7 +39388,8 @@ var post_Post = function Post(props) {
     showMeta: showMeta,
     showTitle: showTitle,
     showContent: showDescription,
-    showButtons: showButtons
+    showButtons: showButtons,
+    hasFixedAspectRatio: thumbnailAspectRatioString !== 'auto'
   };
   return Object(external_React_["createElement"])(components_card, cardProps);
 };
@@ -39562,7 +39569,8 @@ var posts_collection_edit_wp$components = wp.components,
     edit_PanelRow = posts_collection_edit_wp$components.PanelRow,
     posts_collection_edit_RadioControl = posts_collection_edit_wp$components.RadioControl,
     edit_RangeControl = posts_collection_edit_wp$components.RangeControl,
-    edit_SelectControl = posts_collection_edit_wp$components.SelectControl;
+    edit_SelectControl = posts_collection_edit_wp$components.SelectControl,
+    edit_ToggleControl = posts_collection_edit_wp$components.ToggleControl;
 
 function getLevelAttributes(attributes) {
   var level = attributes.level;
@@ -39649,7 +39657,17 @@ var edit_PostsEdit = function PostsEdit(props) {
     label: posts_collection_edit_('Settings')
   }, Object(external_React_["createElement"])(controls_group, {
     title: posts_collection_edit_('Thumbnail')
-  }, Object(external_React_["createElement"])(edit_RangeControl, {
+  }, Object(external_React_["createElement"])(edit_ToggleControl, {
+    label: posts_collection_edit_('Enable Image Container Editing'),
+    checked: thumbnailAspectRatioString !== 'auto',
+    onChange: function onChange(newValue) {
+      var currentOrientation = thumbnailAspectRatio <= 50 ? 'portrait' : 'landscape';
+      var thumbnailAspectRatioString = !newValue ? 'auto' : currentOrientation;
+      setAttributes({
+        thumbnailAspectRatioString: thumbnailAspectRatioString
+      });
+    }
+  }), thumbnailAspectRatioString !== 'auto' && Object(external_React_["createElement"])(posts_collection_edit_Fragment, null, Object(external_React_["createElement"])(edit_RangeControl, {
     key: 'collection-image-container-height',
     label: posts_collection_edit_('Image container height', '__plugin_txtd'),
     value: thumbnailAspectRatio,
@@ -39677,7 +39695,7 @@ var edit_PostsEdit = function PostsEdit(props) {
       label: 'Shrink to fit (no crop)',
       value: 'original'
     }]
-  }), Object(external_React_["createElement"])(edit_RangeControl, {
+  })), Object(external_React_["createElement"])(edit_RangeControl, {
     key: 'collection-image-padding',
     label: posts_collection_edit_('Image padding', '__plugin_txtd'),
     value: imagePadding,

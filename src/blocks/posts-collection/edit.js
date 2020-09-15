@@ -13,6 +13,7 @@ const {
 	RadioControl,
 	RangeControl,
 	SelectControl,
+	ToggleControl,
 } = wp.components;
 
 function getLevelAttributes( attributes ) {
@@ -111,29 +112,43 @@ const PostsEdit = ( props ) => {
 				</ControlsTab>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<ControlsGroup title={ __( 'Thumbnail' ) }>
-						<RangeControl
-							key={ 'collection-image-container-height' }
-							label={ __( 'Image container height', '__plugin_txtd' ) }
-							value={ thumbnailAspectRatio }
-							onChange={ thumbnailAspectRatio => {
-								setAttributes( { thumbnailAspectRatio } )
+						<ToggleControl
+							label={ __( 'Enable Image Container Editing' ) }
+							checked={ thumbnailAspectRatioString !== 'auto' }
+							onChange={ newValue => {
+								let currentOrientation = thumbnailAspectRatio <= 50 ? 'portrait' : 'landscape';
+								let thumbnailAspectRatioString = ! newValue ? 'auto' : currentOrientation;
+								setAttributes( { thumbnailAspectRatioString } );
 							} }
-							min={ 0 }
-							max={ 100 }
-							step={ 5 }
 						/>
-						<RadioControl
-							key={ 'collection-image-resizing' }
-							label={ __( 'Image resizing' ) }
-							selected={ imageResizing }
-							onChange={ imageResizing => {
-								setAttributes( { imageResizing } )
-							} }
-							options={ [
-								{ label: 'Stretch to fill the container', value: 'cropped' },
-								{ label: 'Shrink to fit (no crop)', value: 'original' },
-							] }
-						/>
+						{
+							thumbnailAspectRatioString !== 'auto' &&
+							<Fragment>
+								<RangeControl
+									key={ 'collection-image-container-height' }
+									label={ __( 'Image container height', '__plugin_txtd' ) }
+									value={ thumbnailAspectRatio }
+									onChange={ thumbnailAspectRatio => {
+										setAttributes( { thumbnailAspectRatio } )
+									} }
+									min={ 0 }
+									max={ 100 }
+									step={ 5 }
+								/>
+								<RadioControl
+									key={ 'collection-image-resizing' }
+									label={ __( 'Image resizing' ) }
+									selected={ imageResizing }
+									onChange={ imageResizing => {
+										setAttributes( { imageResizing } )
+									} }
+									options={ [
+										{ label: 'Stretch to fill the container', value: 'cropped' },
+										{ label: 'Shrink to fit (no crop)', value: 'original' },
+									] }
+								/>
+							</Fragment>
+						}
 						<RangeControl
 							key={ 'collection-image-padding' }
 							label={ __( 'Image padding', '__plugin_txtd' ) }

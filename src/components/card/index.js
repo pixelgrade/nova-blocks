@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import CardMedia from "../card-media";
 
 const {
@@ -6,7 +7,8 @@ const {
 } = wp.element;
 
 const Card = ( props ) => {
-	const isLandscape = props.isLandscape || false;
+	const isLandscape = !! props.isLandscape;
+	const hasFixedAspectRatio = !! props.hasFixedAspectRatio;
 
 	const {
 		showMedia,
@@ -16,8 +18,17 @@ const Card = ( props ) => {
 		showButtons,
 	} = props;
 
+	const className = classnames(
+		'novablocks-card',
+		`novablocks-card--${ isLandscape ? 'landscape' : 'portrait' }`,
+		`novablocks-block__content`,
+		{
+			'novablocks-card--fixed-media-aspect-ratio': hasFixedAspectRatio
+		}
+	);
+
 	return (
-		<div className={ `novablocks-card novablocks-card--${ isLandscape ? 'landscape' : 'portrait' } novablocks-block__content` }>
+		<div className={ className }>
 			<div className="novablocks-card__layout">
 				{
 					showMedia &&

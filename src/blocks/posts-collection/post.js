@@ -19,6 +19,7 @@ const Post = ( props ) => {
 	const {
 		attributes: {
 			cardTitleLevel,
+			thumbnailAspectRatioString,
 
 			showMedia,
 			showMeta,
@@ -72,6 +73,7 @@ const Post = ( props ) => {
 		showTitle,
 		showContent: showDescription,
 		showButtons,
+		hasFixedAspectRatio: thumbnailAspectRatioString !== 'auto'
 	};
 
 	return <Card { ...cardProps } />
