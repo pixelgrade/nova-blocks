@@ -66,23 +66,25 @@ const Preview = ( props ) => {
 	);
 
 	return (
-		<div className={ classname }>
+		<Fragment>
 			{
 				layoutStyle === 'classic' &&
 				<ClassicLayoutPreview { ...props } />
 			}
 			{
 				layoutStyle === 'parametric' &&
-				<ParametricLayoutPreview
-					getContent={ getContent }
-					cardsCount={ posts.length }
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-					posts={ posts }
-					isSelected={ isSelected }
-				/>
+				<div className={ classname }>
+					<ParametricLayoutPreview
+						getContent={ getContent }
+						cardsCount={ posts.length }
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						posts={ posts }
+						isSelected={ isSelected }
+					/>
+				</div>
 			}
-		</div>
+		</Fragment>
 	)
 };
 

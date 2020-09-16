@@ -5669,8 +5669,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     var $posts = $grid.children('.novablocks-card');
     var attributes = $grid.data();
     var cardsCount = $posts.length;
-    var $title = $block.find('.novablocks-collection__title').detach();
-    var $subtitle = $block.find('.novablocks-collection__subtitle').detach();
     var addedCards;
 
     if (attributes.layoutstyle !== 'parametric') {
@@ -5680,6 +5678,8 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       return;
     }
 
+    var $title = $block.find('.novablocks-collection__title').detach();
+    var $subtitle = $block.find('.novablocks-collection__subtitle').detach();
     block.style.setProperty('--card-media-padding', attributes.imagepadding);
     block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.containerheight));
     block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');

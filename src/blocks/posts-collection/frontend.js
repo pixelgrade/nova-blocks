@@ -26,8 +26,6 @@ import {
 		const $posts = $grid.children( '.novablocks-card' );
 		const attributes = $grid.data();
 		const cardsCount = $posts.length;
-		const $title = $block.find( '.novablocks-collection__title' ).detach();
-		const $subtitle = $block.find( '.novablocks-collection__subtitle' ).detach();
 
 		let addedCards;
 
@@ -37,6 +35,9 @@ import {
 			$grid.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
 			return;
 		}
+
+		const $title = $block.find( '.novablocks-collection__title' ).detach();
+		const $subtitle = $block.find( '.novablocks-collection__subtitle' ).detach();
 
 		block.style.setProperty( '--card-media-padding', attributes.imagepadding );
 		block.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.containerheight ) );

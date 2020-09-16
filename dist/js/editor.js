@@ -39816,16 +39816,16 @@ var preview_Preview = function Preview(props) {
   };
 
   var classname = classnames_default()('novablocks-block', "novablocks-collection", "novablocks-collection--align-".concat(contentAlign), "block-is-".concat(blockStyle), "content-is-".concat(contentStyle), className);
-  return Object(external_React_["createElement"])("div", {
+  return Object(external_React_["createElement"])(posts_collection_preview_Fragment, null, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])("div", {
     className: classname
-  }, layoutStyle === 'classic' && Object(external_React_["createElement"])(preview_ClassicLayoutPreview, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(preview_ParametricLayoutPreview, {
+  }, Object(external_React_["createElement"])(preview_ParametricLayoutPreview, {
     getContent: getContent,
     cardsCount: posts.length,
     attributes: attributes,
     setAttributes: setAttributes,
     posts: posts,
     isSelected: isSelected
-  }));
+  })));
 };
 
 /* harmony default export */ var posts_collection_preview = (preview_Preview);
