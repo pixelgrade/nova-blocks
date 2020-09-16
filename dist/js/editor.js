@@ -188,8 +188,7 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 
 /***/ }),
-/* 5 */,
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 function _classCallCheck(instance, Constructor) {
@@ -201,7 +200,7 @@ function _classCallCheck(instance, Constructor) {
 module.exports = _classCallCheck;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 function _defineProperties(target, props) {
@@ -223,6 +222,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 module.exports = _createClass;
 
 /***/ }),
+/* 7 */,
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -261,19 +261,6 @@ module.exports = _inherits;
 
 /***/ }),
 /* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _getPrototypeOf; });
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = __webpack_require__(95);
@@ -289,6 +276,19 @@ function _possibleConstructorReturn(self, call) {
 }
 
 module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _getPrototypeOf; });
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
 
 /***/ }),
 /* 12 */
@@ -15013,11 +15013,11 @@ var helpers_typeof = __webpack_require__(95);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(6);
+var classCallCheck = __webpack_require__(5);
 var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(7);
+var createClass = __webpack_require__(6);
 var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
@@ -15025,7 +15025,7 @@ var inherits = __webpack_require__(9);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(11);
+var possibleConstructorReturn = __webpack_require__(10);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
@@ -22762,7 +22762,7 @@ var esm_assertThisInitialized = __webpack_require__(8);
 var esm_possibleConstructorReturn = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
-var esm_getPrototypeOf = __webpack_require__(10);
+var esm_getPrototypeOf = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./node_modules/@wordpress/components/node_modules/@babel/runtime/helpers/esm/inherits.js + 1 modules
 var esm_inherits = __webpack_require__(17);
@@ -32250,6 +32250,8 @@ var controls_LayoutControls = function LayoutControls(props) {
     randomize: controls_getRandomAttributes
   })), Object(external_React_["createElement"])(control_sections_ControlsTab, {
     label: controls_('Settings')
+  }, Object(external_React_["createElement"])(controls_group, {
+    title: controls_('Grid Anatomy')
   }, Object(external_React_["createElement"])(controls_RadioControl, {
     key: 'novablocks-collection-layout-style-controls',
     selected: layoutStyle,
@@ -32260,13 +32262,13 @@ var controls_LayoutControls = function LayoutControls(props) {
       });
     },
     options: [{
-      label: 'Classic',
-      value: 'classic'
-    }, {
-      label: 'Parametric',
+      label: 'Parametric Grid',
       value: 'parametric'
+    }, {
+      label: 'Classic Grid',
+      value: 'classic'
     }]
-  }), layoutStyle === 'classic' && Object(external_React_["createElement"])(controls_ClassicLayoutControls, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(controls_ParametricLayoutControls, props)));
+  })), layoutStyle === 'classic' && Object(external_React_["createElement"])(controls_ClassicLayoutControls, props), layoutStyle === 'parametric' && Object(external_React_["createElement"])(controls_ParametricLayoutControls, props)));
 };
 
 var controls_ClassicLayoutControls = function ClassicLayoutControls(props) {
@@ -32308,7 +32310,7 @@ var controls_PostsCountControl = function PostsCountControl(props) {
   var postsToShow = props.attributes.postsToShow,
       setAttributes = props.setAttributes;
   return Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Posts to show", '__plugin_txtd'),
+    label: controls_("Number of Items", '__plugin_txtd'),
     value: postsToShow,
     onChange: function onChange(postsToShow) {
       setAttributes({
@@ -32363,53 +32365,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
   var autoPostsCount = getPostsCount(areaColumns);
   var headerOptimalPositions = getOptimalHeaderPosition(areaColumns);
   return Object(external_React_["createElement"])(controls_Fragment, null, Object(external_React_["createElement"])(DebugControls, props), Object(external_React_["createElement"])(controls_group, {
-    title: controls_('Posts Count')
-  }, Object(external_React_["createElement"])(controls_ToggleControl, {
-    label: controls_('Automatic Posts Number', '__plugin_txtd'),
-    checked: automaticPostsNumber,
-    onChange: function onChange(automaticPostsNumber) {
-      setAttributes({
-        postsToShow: automaticPostsNumber ? autoPostsCount : tempPostsToShow,
-        tempPostsToShow: postsToShow,
-        automaticPostsNumber: automaticPostsNumber
-      });
-    }
-  }), Object(external_React_["createElement"])("div", {
-    className: utils_getControlsClasses(attributes, function (_ref) {
-      var automaticPostsNumber = _ref.automaticPostsNumber,
-          postsToShow = _ref.postsToShow;
-      return {
-        postsToShow: automaticPostsNumber ? -1 : postsToShow
-      };
-    })
-  }, Object(external_React_["createElement"])(controls_PostsCountControl, props))), Object(external_React_["createElement"])(controls_group, {
-    title: controls_('Header')
-  }, Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Header Position", '__plugin_txtd'),
-    value: headerPosition,
-    onChange: function onChange(headerPosition) {
-      setAttributes({
-        headerPosition: headerPosition
-      });
-    },
-    min: 0,
-    max: postsToShow + 1
-  }), Object(external_React_["createElement"])("div", {
-    key: 'header-position-customize-1',
-    className: utils_getControlsClasses(attributes, controls_getAttributesByHeaderColumn)
-  }, Object(external_React_["createElement"])(controls_RangeControl, {
-    value: headerColumn,
-    onChange: function onChange(headerColumn) {
-      var newAttributes = controls_getAttributesByHeaderColumn(controls_objectSpread(controls_objectSpread({}, attributes), {}, {
-        headerColumn: headerColumn
-      }));
-      setAttributes(newAttributes);
-    },
-    label: controls_('Header Column'),
-    min: 0,
-    max: headerOptimalPositions.length - 1
-  }))), Object(external_React_["createElement"])(controls_group, {
-    title: controls_('Grid Columns + Rows')
+    title: controls_('Grid Anatomy')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Columns", '__plugin_txtd'),
     value: gridcolumns,
@@ -32435,9 +32391,9 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: 1,
     max: 12
   })), Object(external_React_["createElement"])(controls_group, {
-    title: controls_('Main Parameters')
+    title: controls_('Breaking the Grid')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Feature Size", '__plugin_txtd'),
+    label: controls_("Featured Area Size", '__plugin_txtd'),
     value: featuresize,
     onChange: function onChange(featuresize) {
       if (!!featuresize) {
@@ -32449,7 +32405,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: getMinFeatureSize(attributes),
     max: getMaxFeatureSize(attributes)
   }), Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Feature Position", '__plugin_txtd'),
+    label: controls_("Featured Area Position", '__plugin_txtd'),
     value: featureposition,
     onChange: function onChange(featureposition) {
       if (!!featureposition) {
@@ -32461,7 +32417,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: getMinFeaturePosition(attributes),
     max: getMaxFeaturePosition(attributes)
   }), Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Columns Fragmentation", '__plugin_txtd'),
+    label: controls_("Grid Areas Fragmentation", '__plugin_txtd'),
     value: fragmentation,
     onChange: function onChange(fragmentation) {
       if (!!fragmentation) {
@@ -32472,10 +32428,42 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     },
     min: getMinColumnsFragmentation(attributes),
     max: getMaxColumnsFragmentation(attributes)
+  }), Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Grid Areas Crossing", '__plugin_txtd'),
+    value: hierarchycrossing,
+    onChange: function onChange(hierarchycrossing) {
+      if (!!hierarchycrossing) {
+        setAttributes({
+          hierarchycrossing: hierarchycrossing
+        });
+      }
+    },
+    min: 0,
+    max: 200
   })), Object(external_React_["createElement"])(controls_group, {
-    title: controls_('Elements Granularity')
+    title: controls_('Items Count')
+  }, Object(external_React_["createElement"])("div", {
+    className: utils_getControlsClasses(attributes, function (_ref) {
+      var automaticPostsNumber = _ref.automaticPostsNumber,
+          postsToShow = _ref.postsToShow;
+      return {
+        postsToShow: automaticPostsNumber ? -1 : postsToShow
+      };
+    })
+  }, Object(external_React_["createElement"])(controls_PostsCountControl, props)), Object(external_React_["createElement"])(controls_ToggleControl, {
+    label: controls_('Auto-count Items Number', '__plugin_txtd'),
+    checked: automaticPostsNumber,
+    onChange: function onChange(automaticPostsNumber) {
+      setAttributes({
+        postsToShow: automaticPostsNumber ? autoPostsCount : tempPostsToShow,
+        tempPostsToShow: postsToShow,
+        automaticPostsNumber: automaticPostsNumber
+      });
+    }
+  })), Object(external_React_["createElement"])(controls_group, {
+    title: controls_('Items Regulariry')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Image Weight Left", '__plugin_txtd'),
+    label: controls_("Start of Image Variance", '__plugin_txtd'),
     value: imageweightleft,
     onChange: function onChange(imageweightleft) {
       if (!!imageweightleft) {
@@ -32487,7 +32475,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: 0,
     max: 10
   }), Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Image Weight Right", '__plugin_txtd'),
+    label: controls_("End of Image Variance", '__plugin_txtd'),
     value: imageweightright,
     onChange: function onChange(imageweightright) {
       if (!!imageweightright) {
@@ -32499,7 +32487,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: 0,
     max: 10
   }), Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Meta Weight Left", '__plugin_txtd'),
+    label: controls_("Start of Meta Fidelity", '__plugin_txtd'),
     value: metadetailsleft,
     onChange: function onChange(metadetailsleft) {
       if (!!metadetailsleft) {
@@ -32511,7 +32499,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: 0,
     max: 10
   }), Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Meta Weight Right", '__plugin_txtd'),
+    label: controls_("End of Meta Fidelity", '__plugin_txtd'),
     value: metadetailsright,
     onChange: function onChange(metadetailsright) {
       if (!!metadetailsright) {
@@ -32523,9 +32511,9 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     min: 0,
     max: 10
   })), Object(external_React_["createElement"])(controls_group, {
-    title: controls_('Playful parameters')
+    title: controls_('Miscellanous Parameters')
   }, Object(external_React_["createElement"])(controls_ToggleControl, {
-    label: controls_('Boost Feature Emphasis', '__plugin_txtd'),
+    label: controls_('Boost Featured Area Emphasis', '__plugin_txtd'),
     checked: boostfeature,
     onChange: function onChange() {
       setAttributes({
@@ -32533,7 +32521,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
       });
     }
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
-    label: controls_('Sub Feature', '__plugin_txtd'),
+    label: controls_('Display Sub-featured Area', '__plugin_txtd'),
     checked: subfeature,
     onChange: function onChange() {
       setAttributes({
@@ -32541,25 +32529,13 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
       });
     }
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
-    label: controls_('Balance MD and IW', '__plugin_txtd'),
+    label: controls_('Balance Meta and Image', '__plugin_txtd'),
     checked: balancemdandiw,
     onChange: function onChange() {
       setAttributes({
         balancemdandiw: !balancemdandiw
       });
     }
-  }), Object(external_React_["createElement"])(controls_RangeControl, {
-    label: controls_("Hierarchy Crossing", '__plugin_txtd'),
-    value: hierarchycrossing,
-    onChange: function onChange(hierarchycrossing) {
-      if (!!hierarchycrossing) {
-        setAttributes({
-          hierarchycrossing: hierarchycrossing
-        });
-      }
-    },
-    min: 0,
-    max: 200
   }), Object(external_React_["createElement"])(controls_ToggleControl, {
     label: controls_('Flip Cols and Rows', '__plugin_txtd'),
     checked: flipcolsrows,
@@ -32568,7 +32544,33 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
         flipcolsrows: !flipcolsrows
       });
     }
-  })));
+  })), Object(external_React_["createElement"])(controls_group, {
+    title: controls_('Block Header')
+  }, Object(external_React_["createElement"])(controls_RangeControl, {
+    label: controls_("Header Placement Area", '__plugin_txtd'),
+    value: headerPosition,
+    onChange: function onChange(headerPosition) {
+      setAttributes({
+        headerPosition: headerPosition
+      });
+    },
+    min: 0,
+    max: postsToShow + 1
+  }), Object(external_React_["createElement"])("div", {
+    key: 'header-position-customize-1',
+    className: utils_getControlsClasses(attributes, controls_getAttributesByHeaderColumn)
+  }, Object(external_React_["createElement"])(controls_RangeControl, {
+    value: headerColumn,
+    onChange: function onChange(headerColumn) {
+      var newAttributes = controls_getAttributesByHeaderColumn(controls_objectSpread(controls_objectSpread({}, attributes), {}, {
+        headerColumn: headerColumn
+      }));
+      setAttributes(newAttributes);
+    },
+    label: controls_('Header Item Location'),
+    min: 0,
+    max: headerOptimalPositions.length - 1
+  }))));
 };
 
 var DebugControls = with_settings(function (props) {
@@ -39404,6 +39406,77 @@ var category_Category = /*#__PURE__*/function (_Component) {
 }(category_Component);
 
 /* harmony default export */ var category = (category_Category);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/components/comments.js
+
+
+
+
+
+
+function comments_createSuper(Derived) { var hasNativeReflectConstruct = comments_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+
+function comments_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var comments_wp = wp,
+    comments_apiFetch = comments_wp.apiFetch;
+var comments_addQueryArgs = wp.url.addQueryArgs;
+var comments_ = wp.i18n.__;
+var comments_Component = wp.element.Component;
+
+var comments_Comments = /*#__PURE__*/function (_Component) {
+  inherits_default()(Comments, _Component);
+
+  var _super = comments_createSuper(Comments);
+
+  function Comments() {
+    var _this;
+
+    classCallCheck_default()(this, Comments);
+
+    _this = _super.apply(this, arguments);
+    _this.state = {
+      name: null
+    };
+    return _this;
+  }
+
+  createClass_default()(Comments, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var postId = this.props.postId;
+      this.isStillMounted = true;
+      this.fetchRequest = comments_apiFetch({
+        path: comments_addQueryArgs("/wp/v2/comments", {
+          post: postId
+        })
+      }).then(function (comments) {
+        if (_this2.isStillMounted) {
+          var count = comments.length;
+
+          _this2.setState({
+            name: !count ? comments_('No Comments') : "".concat(count, " Comment").concat(count > 1 ? 's' : '')
+          });
+        }
+      }).catch(function () {});
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.isStillMounted = false;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return this.state.name;
+    }
+  }]);
+
+  return Comments;
+}(comments_Component);
+
+/* harmony default export */ var comments = (comments_Comments);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/components/tags.js
 
 
@@ -39489,6 +39562,7 @@ var post_ = wp.i18n.__;
 
 
 
+
 var post_SecondaryMeta = function SecondaryMeta(props) {
   return Object(external_React_["createElement"])(post_Fragment, null, Object(external_React_["createElement"])(post_RawHTML, {
     style: {
@@ -39509,6 +39583,12 @@ var post_getMeta = function getMeta(post, meta) {
 
     return !!(post === null || post === void 0 ? void 0 : (_post$categories = post.categories) === null || _post$categories === void 0 ? void 0 : _post$categories.length) && Object(external_React_["createElement"])(category, {
       id: post.categories[0]
+    });
+  }
+
+  if (meta === 'comments') {
+    return Object(external_React_["createElement"])(comments, {
+      postId: post.id
     });
   }
 
@@ -39988,6 +40068,7 @@ var edit_MetaSource = function MetaSource(props) {
       primaryMetadata = _props$attributes.primaryMetadata,
       secondaryMetadata = _props$attributes.secondaryMetadata,
       setAttributes = props.setAttributes;
+  console.log(props);
   var metaSourceOptions = [{
     label: 'Author',
     value: 'author'
@@ -40009,7 +40090,7 @@ var edit_MetaSource = function MetaSource(props) {
   }, Object(external_React_["createElement"])(edit_SelectControl, {
     key: 'primary-metadata-source',
     label: posts_collection_edit_('Primary Metadata'),
-    selected: primaryMetadata,
+    value: primaryMetadata,
     onChange: function onChange(primaryMetadata) {
       setAttributes({
         primaryMetadata: primaryMetadata
@@ -40019,7 +40100,7 @@ var edit_MetaSource = function MetaSource(props) {
   }), Object(external_React_["createElement"])(edit_SelectControl, {
     key: 'secondary-metadata-source',
     label: posts_collection_edit_('Secondary Metadata'),
-    selected: secondaryMetadata,
+    value: secondaryMetadata,
     onChange: function onChange(secondaryMetadata) {
       setAttributes({
         secondaryMetadata: secondaryMetadata
@@ -40195,7 +40276,7 @@ wp.novaBlocks = new editor_novaBlocks();
 /* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
 /* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
 /* harmony import */ var _babel_runtime_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(16);
-/* harmony import */ var _babel_runtime_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(10);
+/* harmony import */ var _babel_runtime_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11);
 /* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(17);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(0);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);

@@ -233,6 +233,8 @@ const MetaSource = ( props ) => {
 		setAttributes
 	} = props;
 
+	console.log( props );
+
 	const metaSourceOptions = [
 		{ label: 'Author', value: 'author' },
 		{ label: 'Category', value: 'category' },
@@ -246,7 +248,7 @@ const MetaSource = ( props ) => {
 			<SelectControl
 				key={ 'primary-metadata-source' }
 				label={ __( 'Primary Metadata' ) }
-				selected={ primaryMetadata }
+				value={ primaryMetadata }
 				onChange={ primaryMetadata => {
 					setAttributes( { primaryMetadata } )
 				} }
@@ -255,7 +257,7 @@ const MetaSource = ( props ) => {
 			<SelectControl
 				key={ 'secondary-metadata-source' }
 				label={ __( 'Secondary Metadata' ) }
-				selected={ secondaryMetadata }
+				value={ secondaryMetadata }
 				onChange={ secondaryMetadata => {
 					setAttributes( { secondaryMetadata } )
 				} }

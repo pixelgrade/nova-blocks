@@ -15,6 +15,7 @@ import Card from "../../components/card";
 
 import Author from "./components/author";
 import Category from "./components/category";
+import Comments from "./components/comments";
 import Tags from "./components/tags";
 
 const SecondaryMeta = ( props ) => {
@@ -34,6 +35,10 @@ const getMeta = ( post, meta ) => {
 
 	if ( meta === 'category' ) {
 		return !! post?.categories?.length && <Category id={ post.categories[0] } />
+	}
+
+	if ( meta === 'comments' ) {
+		return <Comments postId={ post.id } />
 	}
 
 	if ( meta === 'tags' ) {

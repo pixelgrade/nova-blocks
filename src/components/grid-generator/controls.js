@@ -383,18 +383,20 @@ const LayoutControls = ( props ) => {
 				/>
 			</ControlsTab>
 			<ControlsTab label={ __( 'Settings' ) }>
-				<RadioControl
-					key={ 'novablocks-collection-layout-style-controls' }
-					selected={ layoutStyle }
-					className={ 'novablocks-collection-layout' }
-					onChange={ ( layoutStyle ) => {
-						setAttributes( { layoutStyle } );
-					} }
-					options={ [
-						{ label: 'Classic', value: 'classic' },
-						{ label: 'Parametric', value: 'parametric' }
-					] }
-				/>
+				<ControlsGroup title={ __( 'Grid Anatomy' ) }>
+					<RadioControl
+						key={ 'novablocks-collection-layout-style-controls' }
+						selected={ layoutStyle }
+						className={ 'novablocks-collection-layout' }
+						onChange={ ( layoutStyle ) => {
+							setAttributes( { layoutStyle } );
+						} }
+						options={ [
+							{ label: 'Parametric Grid', value: 'parametric' },
+							{ label: 'Classic Grid', value: 'classic' },
+						] }
+					/>
+				</ControlsGroup>
 				{ layoutStyle === 'classic' && <ClassicLayoutControls { ...props } /> }
 				{ layoutStyle === 'parametric' && <ParametricLayoutControls { ...props } /> }
 			</ControlsTab>
@@ -450,7 +452,7 @@ const PostsCountControl = ( props ) => {
 
 	return (
 		<RangeControl
-			label={ __( `Posts to show`, '__plugin_txtd' ) }
+			label={ __( `Number of Items`, '__plugin_txtd' ) }
 			value={ postsToShow }
 			onChange={ postsToShow => {
 				setAttributes( {
@@ -523,51 +525,7 @@ const ParametricLayoutControls = ( props ) => {
 	return (
 		<Fragment>
 			<DebugControls { ...props } />
-			<ControlsGroup title={ __( 'Posts Count' ) }>
-				<ToggleControl
-					label={__( 'Automatic Posts Number', '__plugin_txtd' )}
-					checked={ automaticPostsNumber }
-					onChange={ ( automaticPostsNumber ) => {
-						setAttributes( {
-							postsToShow: automaticPostsNumber ? autoPostsCount : tempPostsToShow,
-							tempPostsToShow: postsToShow,
-							automaticPostsNumber
-						} )
-					} }
-				/>
-				<div className={ getControlsClasses( attributes, ( { automaticPostsNumber, postsToShow } ) => {
-					return {
-						postsToShow: automaticPostsNumber ? -1 : postsToShow
-					}
-				} ) }>
-					<PostsCountControl { ...props } />
-				</div>
-			</ControlsGroup>
-			<ControlsGroup title={ __( 'Header' ) }>
-				<RangeControl
-					label={ __( `Header Position`, '__plugin_txtd' ) }
-					value={ headerPosition }
-					onChange={ headerPosition => {
-						setAttributes( { headerPosition } );
-					} }
-					min={ 0 }
-					max={ postsToShow + 1 }
-				/>
-
-				<div key={ 'header-position-customize-1' } className={ getControlsClasses( attributes, getAttributesByHeaderColumn ) }>
-					<RangeControl
-						value={ headerColumn }
-						onChange={ ( headerColumn ) => {
-							const newAttributes = getAttributesByHeaderColumn( { ...attributes, headerColumn } );
-							setAttributes( newAttributes );
-						} }
-						label={ __( 'Header Column' ) }
-						min={ 0 }
-						max={ headerOptimalPositions.length - 1 }
-					/>
-				</div>
-			</ControlsGroup>
-			<ControlsGroup title={ __( 'Grid Columns + Rows' ) }>
+			<ControlsGroup title={ __( 'Grid Anatomy' ) }>
 				<RangeControl
 					label={ __( `Columns`, '__plugin_txtd' ) }
 					value={ gridcolumns }
@@ -591,9 +549,9 @@ const ParametricLayoutControls = ( props ) => {
 					max={ 12 }
 				/>
 			</ControlsGroup>
-			<ControlsGroup title={ __( 'Main Parameters' ) }>
+			<ControlsGroup title={ __( 'Breaking the Grid' ) }>
 				<RangeControl
-					label={ __( `Feature Size`, '__plugin_txtd' ) }
+					label={ __( `Featured Area Size`, '__plugin_txtd' ) }
 					value={ featuresize }
 					onChange={ featuresize => {
 						if ( !! featuresize ) {
@@ -604,7 +562,7 @@ const ParametricLayoutControls = ( props ) => {
 					max={ getMaxFeatureSize( attributes ) }
 				/>
 				<RangeControl
-					label={ __( `Feature Position`, '__plugin_txtd' ) }
+					label={ __( `Featured Area Position`, '__plugin_txtd' ) }
 					value={ featureposition }
 					onChange={ featureposition => {
 						if ( !! featureposition ) {
@@ -615,7 +573,7 @@ const ParametricLayoutControls = ( props ) => {
 					max={ getMaxFeaturePosition( attributes ) }
 				/>
 				<RangeControl
-					label={ __( `Columns Fragmentation`, '__plugin_txtd' ) }
+					label={ __( `Grid Areas Fragmentation`, '__plugin_txtd' ) }
 					value={ fragmentation }
 					onChange={ fragmentation => {
 						if ( !! fragmentation ) {
@@ -625,10 +583,41 @@ const ParametricLayoutControls = ( props ) => {
 					min={ getMinColumnsFragmentation( attributes ) }
 					max={ getMaxColumnsFragmentation( attributes ) }
 				/>
-			</ControlsGroup>
-			<ControlsGroup title={ __( 'Elements Granularity' ) }>
 				<RangeControl
-					label={ __( `Image Weight Left`, '__plugin_txtd' ) }
+					label={ __( `Grid Areas Crossing`, '__plugin_txtd' ) }
+					value={ hierarchycrossing }
+					onChange={ hierarchycrossing => {
+						if ( !! hierarchycrossing ) {
+							setAttributes( { hierarchycrossing } );
+						}
+					} }
+					min={ 0 }
+					max={ 200 }
+				/>
+			</ControlsGroup>
+			<ControlsGroup title={ __( 'Items Count' ) }>
+				<div className={ getControlsClasses( attributes, ( { automaticPostsNumber, postsToShow } ) => {
+					return {
+						postsToShow: automaticPostsNumber ? -1 : postsToShow
+					}
+				} ) }>
+					<PostsCountControl { ...props } />
+				</div>
+				<ToggleControl
+					label={__( 'Auto-count Items Number', '__plugin_txtd' )}
+					checked={ automaticPostsNumber }
+					onChange={ ( automaticPostsNumber ) => {
+						setAttributes( {
+							postsToShow: automaticPostsNumber ? autoPostsCount : tempPostsToShow,
+							tempPostsToShow: postsToShow,
+							automaticPostsNumber
+						} )
+					} }
+				/>
+			</ControlsGroup>
+			<ControlsGroup title={ __( 'Items Regulariry' ) }>
+				<RangeControl
+					label={ __( `Start of Image Variance`, '__plugin_txtd' ) }
 					value={ imageweightleft }
 					onChange={ imageweightleft => {
 						if ( !! imageweightleft ) {
@@ -639,7 +628,7 @@ const ParametricLayoutControls = ( props ) => {
 					max={ 10 }
 				/>
 				<RangeControl
-					label={ __( `Image Weight Right`, '__plugin_txtd' ) }
+					label={ __( `End of Image Variance`, '__plugin_txtd' ) }
 					value={ imageweightright }
 					onChange={ imageweightright => {
 						if ( !! imageweightright ) {
@@ -650,7 +639,7 @@ const ParametricLayoutControls = ( props ) => {
 					max={ 10 }
 				/>
 				<RangeControl
-					label={ __( `Meta Weight Left`, '__plugin_txtd' ) }
+					label={ __( `Start of Meta Fidelity`, '__plugin_txtd' ) }
 					value={ metadetailsleft }
 					onChange={ metadetailsleft => {
 						if ( !! metadetailsleft ) {
@@ -661,7 +650,7 @@ const ParametricLayoutControls = ( props ) => {
 					max={ 10 }
 				/>
 				<RangeControl
-					label={ __( `Meta Weight Right`, '__plugin_txtd' ) }
+					label={ __( `End of Meta Fidelity`, '__plugin_txtd' ) }
 					value={ metadetailsright }
 					onChange={ metadetailsright => {
 						if ( !! metadetailsright ) {
@@ -672,38 +661,27 @@ const ParametricLayoutControls = ( props ) => {
 					max={ 10 }
 				/>
 			</ControlsGroup>
-			<ControlsGroup title={ __( 'Playful parameters' ) }>
+			<ControlsGroup title={ __( 'Miscellanous Parameters' ) }>
 				<ToggleControl
-					label={__( 'Boost Feature Emphasis', '__plugin_txtd' )}
+					label={__( 'Boost Featured Area Emphasis', '__plugin_txtd' )}
 					checked={ boostfeature }
 					onChange={ () => {
 						setAttributes( { boostfeature : ! boostfeature } )
 					} }
 				/>
 				<ToggleControl
-					label={__( 'Sub Feature', '__plugin_txtd' )}
+					label={__( 'Display Sub-featured Area', '__plugin_txtd' )}
 					checked={ subfeature }
 					onChange={ () => {
 						setAttributes( { subfeature : ! subfeature } )
 					} }
 				/>
 				<ToggleControl
-					label={__( 'Balance MD and IW', '__plugin_txtd' )}
+					label={__( 'Balance Meta and Image', '__plugin_txtd' )}
 					checked={ balancemdandiw }
 					onChange={ () => {
 						setAttributes( { balancemdandiw : ! balancemdandiw } )
 					} }
-				/>
-				<RangeControl
-					label={ __( `Hierarchy Crossing`, '__plugin_txtd' ) }
-					value={ hierarchycrossing }
-					onChange={ hierarchycrossing => {
-						if ( !! hierarchycrossing ) {
-							setAttributes( { hierarchycrossing } );
-						}
-					} }
-					min={ 0 }
-					max={ 200 }
 				/>
 				<ToggleControl
 					label={__( 'Flip Cols and Rows', '__plugin_txtd' )}
@@ -712,6 +690,29 @@ const ParametricLayoutControls = ( props ) => {
 						setAttributes( { flipcolsrows : ! flipcolsrows } )
 					} }
 				/>
+			</ControlsGroup>
+			<ControlsGroup title={ __( 'Block Header' ) }>
+				<RangeControl
+					label={ __( `Header Placement Area`, '__plugin_txtd' ) }
+					value={ headerPosition }
+					onChange={ headerPosition => {
+						setAttributes( { headerPosition } );
+					} }
+					min={ 0 }
+					max={ postsToShow + 1 }
+				/>
+				<div key={ 'header-position-customize-1' } className={ getControlsClasses( attributes, getAttributesByHeaderColumn ) }>
+					<RangeControl
+						value={ headerColumn }
+						onChange={ ( headerColumn ) => {
+							const newAttributes = getAttributesByHeaderColumn( { ...attributes, headerColumn } );
+							setAttributes( newAttributes );
+						} }
+						label={ __( 'Header Item Location' ) }
+						min={ 0 }
+						max={ headerOptimalPositions.length - 1 }
+					/>
+				</div>
 			</ControlsGroup>
 		</Fragment>
 	)
