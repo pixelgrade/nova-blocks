@@ -18,15 +18,6 @@ import Category from "./components/category";
 import Comments from "./components/comments";
 import Tags from "./components/tags";
 
-const SecondaryMeta = ( props ) => {
-	return (
-		<Fragment>
-			<RawHTML style={ { display: 'inline' } }>{ ' &mdash; ' }</RawHTML>
-			{ props.children }
-		</Fragment>
-	);
-};
-
 const getMeta = ( post, meta ) => {
 
 	if ( meta === 'author' ) {
@@ -41,10 +32,6 @@ const getMeta = ( post, meta ) => {
 		return <Comments postId={ post.id } />
 	}
 
-	if ( meta === 'tags' ) {
-		return !! post?.tags?.length && <Tags tags={ post.tags } />
-	}
-
 	if ( meta === 'date' ) {
 		const dateFormat = __experimentalGetSettings().formats.date;
 
@@ -55,18 +42,12 @@ const getMeta = ( post, meta ) => {
 		)
 	}
 
+	if ( meta === 'tags' ) {
+		return !! post?.tags?.length && <Tags tags={ post.tags } />
+	}
+
 	return null;
 
-};
-
-const getMetaComponent = ( primaryMeta, secondaryMeta ) => {
-
-	return (
-		<Fragment>
-			{ primaryMeta }
-			<SecondaryMeta>{ secondaryMeta }</SecondaryMeta>
-		</Fragment>
-	);
 };
 
 const Post = ( props ) => {
@@ -100,7 +81,8 @@ const Post = ( props ) => {
 		combinedMeta = (
 			<Fragment>
 				{ primaryMeta }
-				<SecondaryMeta>{ secondaryMeta }</SecondaryMeta>
+				<RawHTML style={ { display: 'inline' } }>{ ' &mdash; ' }</RawHTML>
+				{ secondaryMeta }
 			</Fragment>
 		);
 	} else {

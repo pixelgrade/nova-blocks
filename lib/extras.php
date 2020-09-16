@@ -1145,6 +1145,10 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		$classes[] = 'alignfull';
 		$classes[] = 'novablocks-collection--align-' . $attributes[ 'contentAlign' ];
 
+		if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
+			$classes[] = 'novablocks-card--fixed-media-aspect-ratio';
+		}
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}

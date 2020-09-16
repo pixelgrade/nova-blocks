@@ -39563,14 +39563,6 @@ var post_ = wp.i18n.__;
 
 
 
-var post_SecondaryMeta = function SecondaryMeta(props) {
-  return Object(external_React_["createElement"])(post_Fragment, null, Object(external_React_["createElement"])(post_RawHTML, {
-    style: {
-      display: 'inline'
-    }
-  }, ' &mdash; '), props.children);
-};
-
 var post_getMeta = function getMeta(post, meta) {
   if (meta === 'author') {
     return (post === null || post === void 0 ? void 0 : post.author) && Object(external_React_["createElement"])(author, {
@@ -39592,14 +39584,6 @@ var post_getMeta = function getMeta(post, meta) {
     });
   }
 
-  if (meta === 'tags') {
-    var _post$tags;
-
-    return !!(post === null || post === void 0 ? void 0 : (_post$tags = post.tags) === null || _post$tags === void 0 ? void 0 : _post$tags.length) && Object(external_React_["createElement"])(components_tags, {
-      tags: post.tags
-    });
-  }
-
   if (meta === 'date') {
     var dateFormat = __experimentalGetSettings().formats.date;
 
@@ -39608,11 +39592,15 @@ var post_getMeta = function getMeta(post, meta) {
     }, dateI18n(dateFormat, post.date_gmt));
   }
 
-  return null;
-};
+  if (meta === 'tags') {
+    var _post$tags;
 
-var post_getMetaComponent = function getMetaComponent(primaryMeta, secondaryMeta) {
-  return Object(external_React_["createElement"])(post_Fragment, null, primaryMeta, Object(external_React_["createElement"])(post_SecondaryMeta, null, secondaryMeta));
+    return !!(post === null || post === void 0 ? void 0 : (_post$tags = post.tags) === null || _post$tags === void 0 ? void 0 : _post$tags.length) && Object(external_React_["createElement"])(components_tags, {
+      tags: post.tags
+    });
+  }
+
+  return null;
 };
 
 var post_Post = function Post(props) {
@@ -39635,7 +39623,11 @@ var post_Post = function Post(props) {
   var metaBelowTitle;
 
   if (primaryMeta && secondaryMeta) {
-    combinedMeta = Object(external_React_["createElement"])(post_Fragment, null, primaryMeta, Object(external_React_["createElement"])(post_SecondaryMeta, null, secondaryMeta));
+    combinedMeta = Object(external_React_["createElement"])(post_Fragment, null, primaryMeta, Object(external_React_["createElement"])(post_RawHTML, {
+      style: {
+        display: 'inline'
+      }
+    }, ' &mdash; '), secondaryMeta);
   } else {
     combinedMeta = primaryMeta || secondaryMeta;
   }

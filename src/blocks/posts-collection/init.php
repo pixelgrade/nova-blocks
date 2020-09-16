@@ -116,10 +116,68 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 	}
 }
 
+function novablocks_get_meta( $post, $meta ) {
+
+	if ( $meta === 'author' ) {
+		return get_the_author_meta( 'display_name', $post->post_author );
+	}
+
+	if ( $meta === 'category' ) {
+		$categories = wp_get_post_categories( $post->ID );
+
+		if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+			$category_id  = $categories[0];
+			$category     = get_the_category_by_ID( $category_id );
+
+			return $category;
+		}
+	}
+
+	if ( $meta === 'comments' ) {
+		$comments_number = absint( get_comments_number( $post->ID ) );
+
+		if ( $comments_number === 0 ) {
+			return __( 'No Comments', '__plugin_txtd' );
+		}
+
+		return esc_html(
+			sprintf(
+				_nx(
+					'%1$s Comment',
+					'%1$s Comments',
+					$comments_number,
+					'comments title',
+					'__plugin_txtd'
+				),
+				number_format_i18n( $comments_number )
+			)
+		);
+	}
+
+	if ( $meta === 'date' ) {
+		return esc_html( get_the_date( '', $post ) );
+	}
+
+	if ( $meta === 'tags' ) {
+		$tags = get_the_tags( $post->ID );
+
+		if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
+			$tag_names = array_map( 'novablocks_get_tag_name', $tags );
+
+			return join( ', ', $tag_names );
+		}
+	}
+
+	return '';
+}
+
+function novablocks_get_tag_name( $tag ) {
+	return $tag->name;
+}
+
 function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	$media        = get_the_post_thumbnail_url( $post );
-	$dateReadable = esc_html( get_the_date( '', $post ) );
 	$title        = get_the_title( $post );
 	$excerpt      = get_the_excerpt( $post );
 
@@ -130,6 +188,32 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 		'novablocks-card--' . ( $attributes['isLandscape'] ? 'landscape' : 'portrait' ),
 		'novablocks-block__content'
 	);
+
+	if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
+		$classes[] = 'novablocks-card--fixed-media-aspect-ratio';
+	}
+
+	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
+	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+
+	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
+		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
+	} else {
+		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
+	}
+
+	if ( 'above-title' === $attributes[ 'metadataPosition' ] ) {
+		$aboveTitleMeta = $combinedMeta;
+	}
+
+	if ( 'below-title' === $attributes[ 'metadataPosition' ] ) {
+		$belowTitleMeta = $combinedMeta;
+	}
+
+	if ( 'split' === $attributes[ 'metadataPosition' ] ) {
+		$aboveTitleMeta = $primaryMeta;
+		$belowTitleMeta = $secondaryMeta;
+	}
 
 	$className = join( ' ', $classes );
 
@@ -153,23 +237,10 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 				<div class="novablocks-card__layout-content">
 					<div class="novablocks-card__inner-container">
 
-						<?php if ( ! empty( $dateReadable ) && ! empty( $attributes['showMeta'] ) ) { ?>
+						<?php if ( ! empty( $attributes['showMeta'] ) && ! empty( $aboveTitleMeta ) ) { ?>
 							<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
 								<div class="novablocks-card__meta-size-modifier">
-								<?php
-								echo $dateReadable;
-
-								$categories = wp_get_post_categories( $post->ID );
-
-								if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
-									$category_id  = $categories[0];
-									$category     = get_the_category_by_ID( $category_id );
-
-									if ( ! is_wp_error( $category ) ) {
-										echo ' &mdash; ' . $category;
-									}
-								}
-								?>
+									<?php echo $aboveTitleMeta; ?>
 								</div>
 							</div>
 						<?php }
@@ -182,6 +253,13 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 							echo '</' . $titleTag . '>';
 						}
 
+						if ( ! empty( $attributes['showMeta'] ) && ! empty( $belowTitleMeta ) ) { ?>
+							<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+								<div class="novablocks-card__meta-size-modifier">
+									<?php echo $belowTitleMeta; ?>
+								</div>
+							</div>
+						<?php }
 
 						if ( ! empty( $excerpt ) && ! empty( $attributes['showDescription'] ) ) { ?>
 							<div class="novablocks-grid__item-content novablocks-card__description">
