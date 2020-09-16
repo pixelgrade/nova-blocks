@@ -16,7 +16,7 @@ function init() {
 		title: __( 'Posts Collection', '__plugin_txtd' ),
 		description: __( 'Show Latest Posts', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.card,
+		icon: icons.postsCollection,
 		edit,
 		save() {
 			return <InnerBlocks.Content />;

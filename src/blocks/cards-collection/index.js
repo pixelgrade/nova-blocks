@@ -16,7 +16,7 @@ function init() {
 		title: __( 'Cards Collection', '__plugin_txtd' ),
 		description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
 		category: 'nova-blocks',
-		icon: icons.card,
+		icon: icons.cardsCollection,
 		keywords: [ __( 'grid', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'collection', '__plugin_txtd' ), __( 'group', '__plugin_txtd' ) ],
 		edit,
 		save() {
