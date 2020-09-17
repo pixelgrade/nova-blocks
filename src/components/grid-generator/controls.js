@@ -508,6 +508,9 @@ const ParametricLayoutControls = ( props ) => {
 		postsToShow,
 		headerPosition,
 		headerColumn,
+
+		showCollectionTitle,
+		showCollectionSubtitle,
 	} = attributes;
 
 	// used to store previous values of postsToShow
@@ -691,29 +694,32 @@ const ParametricLayoutControls = ( props ) => {
 					} }
 				/>
 			</ControlsGroup>
-			<ControlsGroup title={ __( 'Block Header' ) }>
-				<RangeControl
-					label={ __( `Header Placement Area`, '__plugin_txtd' ) }
-					value={ headerPosition }
-					onChange={ headerPosition => {
-						setAttributes( { headerPosition } );
-					} }
-					min={ 0 }
-					max={ postsToShow + 1 }
-				/>
-				<div key={ 'header-position-customize-1' } className={ getControlsClasses( attributes, getAttributesByHeaderColumn ) }>
+			{
+				( showCollectionTitle || showCollectionSubtitle ) &&
+				<ControlsGroup title={ __( 'Block Header' ) }>
 					<RangeControl
-						value={ headerColumn }
-						onChange={ ( headerColumn ) => {
-							const newAttributes = getAttributesByHeaderColumn( { ...attributes, headerColumn } );
-							setAttributes( newAttributes );
+						label={ __( `Header Placement Area`, '__plugin_txtd' ) }
+						value={ headerPosition }
+						onChange={ headerPosition => {
+							setAttributes( { headerPosition } );
 						} }
-						label={ __( 'Header Item Location' ) }
 						min={ 0 }
-						max={ headerOptimalPositions.length - 1 }
+						max={ postsToShow + 1 }
 					/>
-				</div>
-			</ControlsGroup>
+					<div key={ 'header-position-customize-1' } className={ getControlsClasses( attributes, getAttributesByHeaderColumn ) }>
+						<RangeControl
+							value={ headerColumn }
+							onChange={ ( headerColumn ) => {
+								const newAttributes = getAttributesByHeaderColumn( { ...attributes, headerColumn } );
+								setAttributes( newAttributes );
+							} }
+							label={ __( 'Header Item Location' ) }
+							min={ 0 }
+							max={ headerOptimalPositions.length - 1 }
+						/>
+					</div>
+				</ControlsGroup>
+			}
 		</Fragment>
 	)
 };

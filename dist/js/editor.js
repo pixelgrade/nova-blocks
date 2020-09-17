@@ -32407,7 +32407,9 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
       automaticPostsNumber = attributes.automaticPostsNumber,
       postsToShow = attributes.postsToShow,
       headerPosition = attributes.headerPosition,
-      headerColumn = attributes.headerColumn; // used to store previous values of postsToShow
+      headerColumn = attributes.headerColumn,
+      showCollectionTitle = attributes.showCollectionTitle,
+      showCollectionSubtitle = attributes.showCollectionSubtitle; // used to store previous values of postsToShow
 
   var tempPostsToShow = attributes.tempPostsToShow || postsToShow;
 
@@ -32599,7 +32601,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
         flipcolsrows: !flipcolsrows
       });
     }
-  })), Object(external_React_["createElement"])(controls_group, {
+  })), (showCollectionTitle || showCollectionSubtitle) && Object(external_React_["createElement"])(controls_group, {
     title: controls_('Block Header')
   }, Object(external_React_["createElement"])(controls_RangeControl, {
     label: controls_("Header Placement Area", '__plugin_txtd'),
