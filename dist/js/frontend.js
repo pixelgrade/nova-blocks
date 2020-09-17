@@ -5676,7 +5676,8 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
     if (attributes.layoutstyle !== 'parametric') {
       $grid.removeClass('novablocks-grid');
-      $grid.addClass('novablocks-collection__layout spanac');
+      $grid.addClass('novablocks-collection__layout');
+      $grid.addClass("novablocks-grid__area--".concat(attributes.islandscape ? 'landscape' : 'portrait'));
       $grid.addClass(utils_getAreaClassnameByWidthRatio(1 / attributes.columns));
       return;
     }

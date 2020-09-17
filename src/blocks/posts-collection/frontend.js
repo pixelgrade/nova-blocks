@@ -35,7 +35,8 @@ import {
 
 		if ( attributes.layoutstyle !== 'parametric' ) {
 			$grid.removeClass( 'novablocks-grid' );
-			$grid.addClass( 'novablocks-collection__layout spanac' );
+			$grid.addClass( 'novablocks-collection__layout' );
+			$grid.addClass( `novablocks-grid__area--${ attributes.islandscape ? 'landscape' : 'portrait' }` );
 			$grid.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
 			return;
 		}
