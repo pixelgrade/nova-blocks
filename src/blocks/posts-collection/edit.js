@@ -235,6 +235,7 @@ const MetaSource = ( props ) => {
 	} = props;
 
 	const metaSourceOptions = [
+		{ label: 'None', value: 'none' },
 		{ label: 'Author', value: 'author' },
 		{ label: 'Category', value: 'category' },
 		{ label: 'Comments', value: 'comments' },

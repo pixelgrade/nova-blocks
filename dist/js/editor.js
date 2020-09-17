@@ -39973,6 +39973,9 @@ var edit_MetaSource = function MetaSource(props) {
       secondaryMetadata = _props$attributes.secondaryMetadata,
       setAttributes = props.setAttributes;
   var metaSourceOptions = [{
+    label: 'None',
+    value: 'none'
+  }, {
     label: 'Author',
     value: 'author'
   }, {
