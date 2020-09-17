@@ -1242,18 +1242,24 @@ function novablocks_build_articles_query( $attributes ) {
 		$novablocks_rendered_posts_ids = array();
 	}
 
-	$authors        = isset( $attributes['authors'] ) ? $attributes['authors'] : array();
-	$categories     = isset( $attributes['categories'] ) ? $attributes['categories'] : array();
-	$tags           = isset( $attributes['tags'] ) ? $attributes['tags'] : array();
-	$specific_posts = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : array();
-	$posts_to_show  = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
-	$manual_mode    = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
+	$authors                 = isset( $attributes['authors'] ) ? $attributes['authors'] : array();
+	$categories              = isset( $attributes['categories'] ) ? $attributes['categories'] : array();
+	$tags                    = isset( $attributes['tags'] ) ? $attributes['tags'] : array();
+	$specific_posts          = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : array();
+	$posts_to_show           = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
+	$manual_mode             = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
+	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
+
 	$args           = array(
 		'post_status'         => 'publish',
 		'suppress_filters'    => false,
 		'ignore_sticky_posts' => true,
-		'post__not_in'        => $novablocks_rendered_posts_ids,
 	);
+
+	if ( $prevent_duplicate_posts ) {
+		$args[ 'post__not_in' ] = $novablocks_rendered_posts_ids;
+	}
+
 	if ( $manual_mode && $specific_posts ) {
 		$args['post__in'] = $specific_posts;
 		$args['orderby']  = 'post__in';

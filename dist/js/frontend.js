@@ -5670,6 +5670,9 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     var attributes = $grid.data();
     var cardsCount = $posts.length;
     var addedCards;
+    block.style.setProperty('--card-media-padding', attributes.imagepadding);
+    block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.thumbnailaspectratio));
+    block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
 
     if (attributes.layoutstyle !== 'parametric') {
       $grid.removeClass('novablocks-grid');
@@ -5680,9 +5683,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
     var $title = $block.find('.novablocks-collection__title').detach();
     var $subtitle = $block.find('.novablocks-collection__subtitle').detach();
-    block.style.setProperty('--card-media-padding', attributes.imagepadding);
-    block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.containerheight));
-    block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
 
     function createLayout() {
       var blockWidth = $grid.outerWidth();

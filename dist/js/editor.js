@@ -20700,9 +20700,10 @@ var collection_CollectionPreview = function CollectionPreview(props) {
       postsToShow = attributes.postsToShow,
       isLandscape = attributes.isLandscape;
   var blockClassName = 'novablocks-collection';
+  var thumbnailAspectRatio = attributes.thumbnailAspectRatio || containerHeight;
   var style = {
     '--card-media-padding': imagePadding,
-    '--card-media-padding-top': getCardMediaPaddingTop(containerHeight),
+    '--card-media-padding-top': getCardMediaPaddingTop(thumbnailAspectRatio),
     '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down'
   };
   var widthRatio = 1 / columns;

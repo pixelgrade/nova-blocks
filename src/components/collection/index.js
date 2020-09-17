@@ -121,10 +121,11 @@ export const CollectionPreview = ( props ) => {
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
+	const thumbnailAspectRatio = attributes.thumbnailAspectRatio || containerHeight;
 
 	const style = {
 		'--card-media-padding': imagePadding,
-		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
+		'--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};
 
