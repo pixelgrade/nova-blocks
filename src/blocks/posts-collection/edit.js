@@ -234,8 +234,6 @@ const MetaSource = ( props ) => {
 		setAttributes
 	} = props;
 
-	console.log( props );
-
 	const metaSourceOptions = [
 		{ label: 'Author', value: 'author' },
 		{ label: 'Category', value: 'category' },
