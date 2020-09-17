@@ -30121,10 +30121,12 @@ var manual_controls_ManualControls = function ManualControls(props) {
 // CONCATENATED MODULE: ./src/components/query-controls/automated-controls.js
 
 
-var automated_controls_QueryControls = wp.components.QueryControls;
 var automated_controls_apiFetch = wp.apiFetch;
 var automated_controls_addQueryArgs = wp.url.addQueryArgs;
 var automated_controls_decodeEntities = wp.htmlEntities.decodeEntities;
+var automated_controls_wp$components = wp.components,
+    automated_controls_QueryControls = automated_controls_wp$components.QueryControls,
+    automated_controls_ToggleControl = automated_controls_wp$components.ToggleControl;
 var automated_controls_ = wp.i18n.__;
 
 
@@ -30236,18 +30238,25 @@ var fetchSavedTags = function fetchSavedTags(tagIDs) {
 
 var automated_controls_AutomatedControls = function AutomatedControls(props) {
   var authors = props.authors,
-      onAuthorsChange = props.onAuthorsChange,
       categories = props.categories,
-      onCategoriesChange = props.onCategoriesChange,
+      loadingMode = props.loadingMode,
+      preventDuplicatePosts = props.preventDuplicatePosts,
       tags = props.tags,
-      onTagsChange = props.onTagsChange,
-      loadingMode = props.loadingMode;
+      onAuthorsChange = props.onAuthorsChange,
+      onCategoriesChange = props.onCategoriesChange,
+      onPreventDuplicatePostsChange = props.onPreventDuplicatePostsChange,
+      onTagsChange = props.onTagsChange;
 
   if ('automated' !== loadingMode) {
     return null;
   }
 
-  return [Object(external_React_["createElement"])(automated_controls_QueryControls, extends_default()({
+  return [Object(external_React_["createElement"])(automated_controls_ToggleControl, {
+    label: automated_controls_("Prevent Duplicate Posts"),
+    help: automated_controls_("The posts displayed by other blocks won't show up in this block"),
+    checked: preventDuplicatePosts,
+    onChange: onPreventDuplicatePostsChange
+  }), Object(external_React_["createElement"])(automated_controls_QueryControls, extends_default()({
     key: "queryControls"
   }, props, {
     minItems: 2
@@ -30567,7 +30576,8 @@ var withPostsQueryControls = with_latest_posts_createHigherOrderComponent(functi
         specificPosts = attributes.specificPosts,
         authors = attributes.authors,
         categories = attributes.categories,
-        tags = attributes.tags;
+        tags = attributes.tags,
+        preventDuplicatePosts = attributes.preventDuplicatePosts;
     return Object(external_React_["createElement"])(with_latest_posts_Fragment, null, Object(external_React_["createElement"])(OriginalComponent, props), Object(external_React_["createElement"])(control_sections_ControlsSection, {
       label: with_latest_posts_('Content Filter'),
       group: with_latest_posts_('Block Modules')
@@ -30576,6 +30586,12 @@ var withPostsQueryControls = with_latest_posts_createHigherOrderComponent(functi
     }, Object(external_React_["createElement"])(query_controls, {
       key: 'query-controls',
       enableSpecific: true,
+      preventDuplicatePosts: preventDuplicatePosts,
+      onPreventDuplicatePostsChange: function onPreventDuplicatePostsChange(_preventDuplicatePosts) {
+        setAttributes({
+          preventDuplicatePosts: _preventDuplicatePosts
+        });
+      },
       numberOfItems: postsToShow,
       onNumberOfItemsChange: function onNumberOfItemsChange(_postsToShow) {
         return setAttributes({
@@ -30641,6 +30657,10 @@ function withPostsQueryAttributes(block) {
         type: "integer"
       }
     },
+    preventDuplicatePosts: {
+      type: "boolean",
+      default: true
+    },
     authors: {
       type: "array",
       default: [],
@@ -30670,9 +30690,10 @@ with_latest_posts_addFilter('blocks.registerBlockType', 'novablocks/with-posts-q
 var withLatestPosts = with_latest_posts_compose([with_latest_posts_withSelect(function (select, props) {
   var attributes = props.attributes,
       clientId = props.clientId;
+  var preventDuplicatePosts = attributes.preventDuplicatePosts;
   var latestPostsQuery = utils_queryCriteriaFromAttributes(attributes);
 
-  if (!isSpecificPostModeActive(attributes)) {
+  if (!isSpecificPostModeActive(attributes) && preventDuplicatePosts) {
     var postIdsToExclude = select(store_STORE_NAME).previousPostIds(clientId);
     latestPostsQuery.exclude = postIdsToExclude.join(',');
   }

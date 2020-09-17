@@ -1,7 +1,11 @@
-const { QueryControls } = wp.components;
 const apiFetch = wp.apiFetch;
 const { addQueryArgs } = wp.url;
 const { decodeEntities } = wp.htmlEntities;
+
+const {
+	QueryControls,
+	ToggleControl
+} = wp.components;
 
 const { __ } = wp.i18n;
 import AutocompleteTokenField from "../autocomplete-tokenfield";
@@ -98,18 +102,21 @@ const fetchSavedTags = ( tagIDs ) => {
 			label: decodeEntities( tag.name ) || __( '(no title)' ),
 		} ) );
 	} );
-}
+};
 
 const AutomatedControls = ( props ) => {
 
 	const {
 		authors,
-		onAuthorsChange,
 		categories,
-		onCategoriesChange,
-		tags,
-		onTagsChange,
 		loadingMode,
+		preventDuplicatePosts,
+		tags,
+
+		onAuthorsChange,
+		onCategoriesChange,
+		onPreventDuplicatePostsChange,
+		onTagsChange,
 	} = props;
 
 	if ( 'automated' !== loadingMode ) {
@@ -117,6 +124,12 @@ const AutomatedControls = ( props ) => {
 	}
 
 	return [
+		<ToggleControl
+			label={ __( "Prevent Duplicate Posts" ) }
+			help={ __( "The posts displayed by other blocks won't show up in this block" ) }
+			checked={ preventDuplicatePosts }
+			onChange={ onPreventDuplicatePostsChange }
+		/>,
 		<QueryControls
 			key="queryControls" { ...props }
 			minItems={ 2 }
@@ -152,6 +165,6 @@ const AutomatedControls = ( props ) => {
 			/>
 		),
 	]
-}
+};
 
 export default AutomatedControls;

@@ -46,6 +46,7 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 			authors,
 			categories,
 			tags,
+			preventDuplicatePosts,
 		} = attributes;
 
 		return (
@@ -56,6 +57,10 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 						<QueryControls
 							key={ 'query-controls' }
 							enableSpecific={ true }
+							preventDuplicatePosts={ preventDuplicatePosts }
+							onPreventDuplicatePostsChange={ _preventDuplicatePosts => {
+								setAttributes( { preventDuplicatePosts: _preventDuplicatePosts } )
+							} }
 							numberOfItems={ postsToShow }
 							onNumberOfItemsChange={ _postsToShow =>
 								setAttributes( { postsToShow: _postsToShow } )
@@ -114,6 +119,10 @@ function withPostsQueryAttributes( block ) {
 				type: "integer"
 			}
 		},
+		preventDuplicatePosts: {
+			type: "boolean",
+			default: true,
+		},
 		authors: {
 			type: "array",
 			default: [],
@@ -144,10 +153,11 @@ addFilter( 'blocks.registerBlockType', 'novablocks/with-posts-query-attributes',
 const withLatestPosts = compose( [
 	withSelect( ( select, props ) => {
 		const { attributes, clientId } = props;
+		const { preventDuplicatePosts } = attributes;
 
 		const latestPostsQuery = queryCriteriaFromAttributes( attributes );
 
-		if ( ! isSpecificPostModeActive( attributes ) ) {
+		if ( ! isSpecificPostModeActive( attributes ) && preventDuplicatePosts ) {
 			const postIdsToExclude = select( STORE_NAME ).previousPostIds( clientId );
 			latestPostsQuery.exclude = postIdsToExclude.join( ',' );
 		}

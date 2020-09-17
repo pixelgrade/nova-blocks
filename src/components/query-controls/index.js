@@ -32,6 +32,6 @@ const QueryControls = ( props ) => {
 		<AutomatedControls { ...props } />,
 		<ManualControls { ...props } />
 	];
-}
+};
 
 export default QueryControls;
