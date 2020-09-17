@@ -284,11 +284,11 @@ function novablocks_get_collection_attributes() {
 		),
 		'title'                            => array(
 			'type'    => 'string',
-			'default' => 'Collection Title',
+			'default' => 'Latest Posts',
 		),
 		'subtitle'                         => array(
 			'type'    => 'string',
-			'default' => 'Collection Subtitle',
+			'default' => 'A collection of our latest articles displayed in a cohesive layout',
 		),
 		'showCollectionTitle'              => array(
 			'type'    => 'boolean',
