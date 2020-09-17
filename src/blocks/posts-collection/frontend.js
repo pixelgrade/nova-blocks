@@ -51,6 +51,8 @@ import {
 			$posts.detach();
 			$grid.empty();
 
+			$block.find( '.js-collection-element-clone' ).remove();
+
 			addedCards = 0;
 
 			let areaColumns = applyLayoutEngine( attributes );
@@ -147,7 +149,6 @@ import {
 		createLayout();
 
 		function recreateLayout() {
-			$( '.js-collection-element-clone' ).remove();
 			$grid.contents().replaceWith( $posts );
 
 			$grid.css( {

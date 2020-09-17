@@ -5689,6 +5689,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       var blockWidth = $grid.outerWidth();
       $posts.detach();
       $grid.empty();
+      $block.find('.js-collection-element-clone').remove();
       addedCards = 0;
       var areaColumns = layoutEngine_applyLayoutEngine(attributes);
       var columnsCount = areaColumns.length;
@@ -5777,7 +5778,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     createLayout();
 
     function recreateLayout() {
-      $('.js-collection-element-clone').remove();
       $grid.contents().replaceWith($posts);
       $grid.css({
         display: '',
