@@ -1,44 +1,14 @@
-const { apiFetch } = wp;
+import useApiFetch from "../../../hooks/api-fetch";
 
-const {
-	Component,
-} = wp.element;
+const Tags = ( props ) => {
 
-class Tags extends Component {
+	const tags = props.tags.map( id => {
+		const { data } = useApiFetch( `/wp/v2/tags/${ id }` );
+		return data;
+	} );
 
-	constructor() {
-		super( ...arguments );
+	return tags.map( tag => tag.name ).join( ', ' ) || '';
 
-		this.state = {
-			name: null
-		};
-	}
-
-	componentDidMount() {
-		const { tags } = this.props;
-
-		this.isStillMounted = true;
-
-		const promises = tags.map( id => {
-			return apiFetch( {
-				path: `/wp/v2/tags/${ id }`,
-			} )
-		} );
-
-		Promise.all( promises ).then( tags => {
-			if ( this.isStillMounted ) {
-				this.setState( { name: tags.map( tag => tag.name ).join( ', ' ) } )
-			}
-		} );
-	}
-
-	componentWillUnmount() {
-		this.isStillMounted = false;
-	}
-
-	render() {
-		return this.state.name;
-	}
-}
+};
 
 export default Tags;

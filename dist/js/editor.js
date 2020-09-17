@@ -38862,7 +38862,84 @@ var card_media_CardMedia = function CardMedia(_ref2) {
 };
 
 /* harmony default export */ var card_media = (card_media_CardMedia);
+// CONCATENATED MODULE: ./src/hooks/api-fetch.js
+
+
+
+var api_fetch_wp$element = wp.element,
+    api_fetch_useState = api_fetch_wp$element.useState,
+    api_fetch_useEffect = api_fetch_wp$element.useEffect;
+var _wp = wp,
+    api_fetch_apiFetch = _wp.apiFetch;
+var cache = {};
+
+var api_fetch_useApiFetch = function useApiFetch(url) {
+  var _useState = api_fetch_useState([]),
+      _useState2 = slicedToArray_default()(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  api_fetch_useEffect(function () {
+    if (!url) {
+      return;
+    }
+
+    var fetchData = /*#__PURE__*/function () {
+      var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+        return regenerator_default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (cache[url]) {
+                  _context.next = 4;
+                  break;
+                }
+
+                _context.next = 3;
+                return api_fetch_apiFetch({
+                  path: url
+                });
+
+              case 3:
+                cache[url] = _context.sent;
+
+              case 4:
+                setData(cache[url]);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, [url]);
+  return {
+    data: data
+  };
+};
+
+/* harmony default export */ var api_fetch = (api_fetch_useApiFetch);
+// CONCATENATED MODULE: ./src/blocks/posts-collection/components/category.js
+
+
+var category_Category = function Category(props) {
+  var _useApiFetch = api_fetch("/wp/v2/categories/".concat(props.id)),
+      data = _useApiFetch.data;
+
+  return (data === null || data === void 0 ? void 0 : data.name) || '';
+};
+
+/* harmony default export */ var category = (category_Category);
 // CONCATENATED MODULE: ./src/components/card/index.js
+
 
 
 
@@ -39312,272 +39389,44 @@ var areaDebug_AreaDebug = function AreaDebug(_ref) {
 // CONCATENATED MODULE: ./src/blocks/posts-collection/components/author.js
 
 
+var author_Author = function Author(props) {
+  var _useApiFetch = api_fetch("/wp/v2/users/".concat(props.id)),
+      data = _useApiFetch.data;
 
-
-
-
-function author_createSuper(Derived) { var hasNativeReflectConstruct = author_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
-
-function author_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-var _wp = wp,
-    author_apiFetch = _wp.apiFetch;
-var author_Component = wp.element.Component;
-
-var author_Author = /*#__PURE__*/function (_Component) {
-  inherits_default()(Author, _Component);
-
-  var _super = author_createSuper(Author);
-
-  function Author() {
-    var _this;
-
-    classCallCheck_default()(this, Author);
-
-    _this = _super.apply(this, arguments);
-    _this.state = {
-      name: null
-    };
-    return _this;
-  }
-
-  createClass_default()(Author, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var id = this.props.id;
-      this.isStillMounted = true;
-      this.fetchRequest = author_apiFetch({
-        path: "/wp/v2/users/".concat(id)
-      }).then(function (category) {
-        if (_this2.isStillMounted) {
-          _this2.setState({
-            name: category.name
-          });
-        }
-      }).catch(function () {});
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.isStillMounted = false;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return this.state.name;
-    }
-  }]);
-
-  return Author;
-}(author_Component);
+  return (data === null || data === void 0 ? void 0 : data.name) || '';
+};
 
 /* harmony default export */ var author = (author_Author);
-// CONCATENATED MODULE: ./src/blocks/posts-collection/components/category.js
-
-
-
-
-
-
-function category_createSuper(Derived) { var hasNativeReflectConstruct = category_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
-
-function category_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-var category_wp = wp,
-    category_apiFetch = category_wp.apiFetch;
-var category_Component = wp.element.Component;
-
-var category_Category = /*#__PURE__*/function (_Component) {
-  inherits_default()(Category, _Component);
-
-  var _super = category_createSuper(Category);
-
-  function Category() {
-    var _this;
-
-    classCallCheck_default()(this, Category);
-
-    _this = _super.apply(this, arguments);
-    _this.state = {
-      name: null
-    };
-    return _this;
-  }
-
-  createClass_default()(Category, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var id = this.props.id;
-      this.isStillMounted = true;
-      this.fetchRequest = category_apiFetch({
-        path: "/wp/v2/categories/".concat(id)
-      }).then(function (category) {
-        if (_this2.isStillMounted) {
-          _this2.setState({
-            name: category.name
-          });
-        }
-      }).catch(function () {});
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.isStillMounted = false;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return this.state.name;
-    }
-  }]);
-
-  return Category;
-}(category_Component);
-
-/* harmony default export */ var category = (category_Category);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/components/comments.js
 
-
-
-
-
-
-function comments_createSuper(Derived) { var hasNativeReflectConstruct = comments_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
-
-function comments_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-var comments_wp = wp,
-    comments_apiFetch = comments_wp.apiFetch;
 var comments_addQueryArgs = wp.url.addQueryArgs;
 var comments_ = wp.i18n.__;
-var comments_Component = wp.element.Component;
 
-var comments_Comments = /*#__PURE__*/function (_Component) {
-  inherits_default()(Comments, _Component);
+var comments_Comments = function Comments(props) {
+  var _useApiFetch = api_fetch(comments_addQueryArgs("/wp/v2/comments", {
+    post: props.postId
+  })),
+      data = _useApiFetch.data;
 
-  var _super = comments_createSuper(Comments);
-
-  function Comments() {
-    var _this;
-
-    classCallCheck_default()(this, Comments);
-
-    _this = _super.apply(this, arguments);
-    _this.state = {
-      name: null
-    };
-    return _this;
-  }
-
-  createClass_default()(Comments, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var postId = this.props.postId;
-      this.isStillMounted = true;
-      this.fetchRequest = comments_apiFetch({
-        path: comments_addQueryArgs("/wp/v2/comments", {
-          post: postId
-        })
-      }).then(function (comments) {
-        if (_this2.isStillMounted) {
-          var count = comments.length;
-
-          _this2.setState({
-            name: !count ? comments_('No Comments') : "".concat(count, " Comment").concat(count > 1 ? 's' : '')
-          });
-        }
-      }).catch(function () {});
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.isStillMounted = false;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return this.state.name;
-    }
-  }]);
-
-  return Comments;
-}(comments_Component);
+  var count = data.length;
+  return !count ? comments_('No Comments') : "".concat(count, " Comment").concat(count > 1 ? 's' : '');
+};
 
 /* harmony default export */ var comments = (comments_Comments);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/components/tags.js
 
 
+var tags_Tags = function Tags(props) {
+  var tags = props.tags.map(function (id) {
+    var _useApiFetch = api_fetch("/wp/v2/tags/".concat(id)),
+        data = _useApiFetch.data;
 
-
-
-
-function tags_createSuper(Derived) { var hasNativeReflectConstruct = tags_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = getPrototypeOf_default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
-
-function tags_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-var tags_wp = wp,
-    tags_apiFetch = tags_wp.apiFetch;
-var tags_Component = wp.element.Component;
-
-var tags_Tags = /*#__PURE__*/function (_Component) {
-  inherits_default()(Tags, _Component);
-
-  var _super = tags_createSuper(Tags);
-
-  function Tags() {
-    var _this;
-
-    classCallCheck_default()(this, Tags);
-
-    _this = _super.apply(this, arguments);
-    _this.state = {
-      name: null
-    };
-    return _this;
-  }
-
-  createClass_default()(Tags, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var tags = this.props.tags;
-      this.isStillMounted = true;
-      var promises = tags.map(function (id) {
-        return tags_apiFetch({
-          path: "/wp/v2/tags/".concat(id)
-        });
-      });
-      Promise.all(promises).then(function (tags) {
-        if (_this2.isStillMounted) {
-          _this2.setState({
-            name: tags.map(function (tag) {
-              return tag.name;
-            }).join(', ')
-          });
-        }
-      });
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.isStillMounted = false;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return this.state.name;
-    }
-  }]);
-
-  return Tags;
-}(tags_Component);
+    return data;
+  });
+  return tags.map(function (tag) {
+    return tag.name;
+  }).join(', ') || '';
+};
 
 /* harmony default export */ var components_tags = (tags_Tags);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/post.js
@@ -39875,6 +39724,7 @@ function posts_collection_edit_objectSpread(target) { for (var i = 1; i < argume
 
 
 
+
 var posts_collection_edit_ = wp.i18n.__;
 var posts_collection_edit_Fragment = wp.element.Fragment;
 var posts_collection_edit_wp$components = wp.components,
@@ -40133,6 +39983,16 @@ var edit_MetaSource = function MetaSource(props) {
     },
     options: metaSourceOptions
   }));
+};
+
+var edit_PostsEditTestCache = function PostsEditTestCache(props) {
+  return Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(category, {
+    id: 19
+  })), Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(category, {
+    id: 19
+  })), Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(category, {
+    id: 20
+  })));
 };
 
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);

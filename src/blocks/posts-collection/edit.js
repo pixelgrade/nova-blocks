@@ -3,6 +3,7 @@ import { ControlsSection, ControlsTab } from "../../components/control-sections"
 import toggles from "../../components/cards-manager/toggles";
 import { ControlsGroup, HeadingToolbar, ToggleGroup } from "../../components";
 import { getControlsClasses } from "../../utils";
+import Category from "./components/category";
 
 const { __ } = wp.i18n;
 
@@ -264,6 +265,16 @@ const MetaSource = ( props ) => {
 				options={ metaSourceOptions }
 			/>
 		</ControlsGroup>
+	)
+}
+
+const PostsEditTestCache = ( props ) => {
+	return (
+		<div>
+			<div><Category id={ 19 } /></div>
+			<div><Category id={ 19 } /></div>
+			<div><Category id={ 20 } /></div>
+		</div>
 	)
 }
 

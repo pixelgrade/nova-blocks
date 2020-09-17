@@ -1,41 +1,11 @@
-const { apiFetch } = wp;
+import useApiFetch from "../../../hooks/api-fetch";
 
-const {
-	Component,
-} = wp.element;
+const Category = ( props ) => {
 
-class Category extends Component {
+	const { data } = useApiFetch( `/wp/v2/categories/${ props.id }` );
 
-	constructor() {
-		super( ...arguments );
+	return data?.name || '';
 
-		this.state = {
-			name: null
-		};
-	}
-
-	componentDidMount() {
-		const { id } = this.props;
-
-		this.isStillMounted = true;
-		this.fetchRequest = apiFetch( {
-			path: `/wp/v2/categories/${id}`,
-		} )
-		.then( ( category ) => {
-				if ( this.isStillMounted ) {
-					this.setState( { name: category.name } )
-				}
-			}
-		).catch( () => {} );
-	}
-
-	componentWillUnmount() {
-		this.isStillMounted = false;
-	}
-
-	render() {
-		return this.state.name;
-	}
-}
+};
 
 export default Category;

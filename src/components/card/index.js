@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import CardMedia from "../card-media";
+import Category from "../../blocks/posts-collection/components/category";
 
 const {
 	Fragment,
