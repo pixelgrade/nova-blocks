@@ -39984,16 +39984,6 @@ var edit_MetaSource = function MetaSource(props) {
   }));
 };
 
-var edit_PostsEditTestCache = function PostsEditTestCache(props) {
-  return Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(category, {
-    id: 19
-  })), Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(category, {
-    id: 19
-  })), Object(external_React_["createElement"])("div", null, Object(external_React_["createElement"])(category, {
-    id: 20
-  })));
-};
-
 /* harmony default export */ var posts_collection_edit = (edit_PostsEdit);
 // CONCATENATED MODULE: ./src/blocks/posts-collection/index.js
 

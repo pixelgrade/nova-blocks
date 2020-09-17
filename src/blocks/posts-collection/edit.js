@@ -264,16 +264,6 @@ const MetaSource = ( props ) => {
 			/>
 		</ControlsGroup>
 	)
-}
-
-const PostsEditTestCache = ( props ) => {
-	return (
-		<div>
-			<div><Category id={ 19 } /></div>
-			<div><Category id={ 19 } /></div>
-			<div><Category id={ 20 } /></div>
-		</div>
-	)
-}
+};
 
 export default PostsEdit;
