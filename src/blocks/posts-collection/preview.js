@@ -3,9 +3,8 @@ import Post from "./post";
 import classnames from "classnames";
 import { CollectionHeader } from "../../components/collection";
 
-const {
-	Fragment
-} = wp.element;
+const { __ } = wp.i18n;
+const { Fragment } = wp.element;
 
 const Preview = ( props ) => {
 
@@ -30,8 +29,16 @@ const Preview = ( props ) => {
 
 	markPostsAsDisplayed( clientId, posts );
 
-	if ( ! posts || ! posts.length ) {
+	if ( ! posts ) {
 		return null;
+	}
+
+	if ( Array.isArray( posts ) && ! posts.length ) {
+		return (
+			<div className={ 'wp-block__inner-container' }>
+				<p>{ __( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.' ) }</p>
+			</div>
+		)
 	}
 
 	const getContent = ( index, attributes, isLandscape ) => {

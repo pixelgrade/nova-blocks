@@ -34,6 +34,14 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		$args  = novablocks_build_articles_query( $attributes );
 		$posts = get_posts( $args );
 
+		if ( empty( $posts ) ) {
+			if ( is_user_logged_in() ) {
+				return '<p>' . __( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.' ) . '</p>';
+			} else {
+				return '';
+			}
+		}
+
 		$cssProps = novablocks_get_spacing_css( $attributes );
 
 		$cssProps[] = '--card-media-padding: ' . $attributes['imagePadding'];

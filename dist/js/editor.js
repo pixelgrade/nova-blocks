@@ -39684,6 +39684,7 @@ var preview_ParametricLayoutPreview = function ParametricLayoutPreview(props) {
 
 
 
+var posts_collection_preview_ = wp.i18n.__;
 var posts_collection_preview_Fragment = wp.element.Fragment;
 
 var preview_Preview = function Preview(props) {
@@ -39701,8 +39702,14 @@ var preview_Preview = function Preview(props) {
       headerPosition = attributes.headerPosition;
   markPostsAsDisplayed(clientId, posts);
 
-  if (!posts || !posts.length) {
+  if (!posts) {
     return null;
+  }
+
+  if (Array.isArray(posts) && !posts.length) {
+    return Object(external_React_["createElement"])("div", {
+      className: 'wp-block__inner-container'
+    }, Object(external_React_["createElement"])("p", null, posts_collection_preview_('There are no posts to be displayed in this block. Try changing the Content Filter settings.')));
   }
 
   var getContent = function getContent(index, attributes, isLandscape) {
