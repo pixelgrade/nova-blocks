@@ -5722,7 +5722,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
         gridrows: attributes.flipcolsrows ? gridcolumns : gridrows
       });
       $grid.css(utils_getGridStyle(compiledAttributes));
-      $('.js-collection-element-clone').remove();
 
       if (below('desktop') || attributes.headerposition === 0) {
         $title.clone().addClass('js-collection-element-clone').insertBefore($cards);
@@ -5777,6 +5776,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     createLayout();
 
     function recreateLayout() {
+      $('.js-collection-element-clone').remove();
       $grid.contents().replaceWith($posts);
       $grid.css({
         display: '',

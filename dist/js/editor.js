@@ -39898,11 +39898,7 @@ var edit_PostsEdit = function PostsEdit(props) {
     step: 50
   })), Object(external_React_["createElement"])(controls_group, {
     title: posts_collection_edit_('Content')
-  }, Object(external_React_["createElement"])("div", {
-    className: "components-base-control"
-  }, Object(external_React_["createElement"])("div", {
-    className: "components-base-control__field"
-  }, Object(external_React_["createElement"])("label", {
+  }, Object(external_React_["createElement"])(edit_PanelRow, null, Object(external_React_["createElement"])("span", {
     className: 'components-base-control__label '
   }, posts_collection_edit_('Collection Title Heading', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 1,
@@ -39913,11 +39909,7 @@ var edit_PostsEdit = function PostsEdit(props) {
         collectionTitleLevel: collectionTitleLevel
       });
     }
-  }))), Object(external_React_["createElement"])("div", {
-    className: "components-base-control"
-  }, Object(external_React_["createElement"])("div", {
-    className: "components-base-control__field"
-  }, Object(external_React_["createElement"])("label", {
+  })), Object(external_React_["createElement"])(edit_PanelRow, null, Object(external_React_["createElement"])("span", {
     className: 'components-base-control__label '
   }, posts_collection_edit_('Card Title Heading', '__plugin_txtd')), Object(external_React_["createElement"])(heading_toolbar, {
     minLevel: 1,
@@ -39928,7 +39920,7 @@ var edit_PostsEdit = function PostsEdit(props) {
         cardTitleLevel: cardTitleLevel
       });
     }
-  })))), Object(external_React_["createElement"])(controls_group, {
+  }))), Object(external_React_["createElement"])(controls_group, {
     title: posts_collection_edit_('Metadata Position')
   }, Object(external_React_["createElement"])(posts_collection_edit_RadioControl, {
     key: 'collection-image-resizing',

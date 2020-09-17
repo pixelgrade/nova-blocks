@@ -159,32 +159,28 @@ const PostsEdit = ( props ) => {
 						/>
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Content' ) }>
-						<div className="components-base-control">
-							<div className="components-base-control__field">
-								<label className={'components-base-control__label '}>{__( 'Collection Title Heading', '__plugin_txtd' )}</label>
-								<HeadingToolbar
-									minLevel={ 1 }
-									maxLevel={ 5 }
-									selectedLevel={ collectionTitleLevel }
-									onChange={ collectionTitleLevel => {
-										setAttributes( { collectionTitleLevel } );
-									} }
-								/>
-							</div>
-						</div>
-						<div className="components-base-control">
-							<div className="components-base-control__field">
-								<label className={'components-base-control__label '}>{__( 'Card Title Heading', '__plugin_txtd' )}</label>
-								<HeadingToolbar
-									minLevel={ 1 }
-									maxLevel={ 5 }
-									selectedLevel={ cardTitleLevel }
-									onChange={ cardTitleLevel => {
-										setAttributes( { cardTitleLevel } );
-									} }
-								/>
-							</div>
-						</div>
+						<PanelRow>
+							<span className={'components-base-control__label '}>{__( 'Collection Title Heading', '__plugin_txtd' )}</span>
+							<HeadingToolbar
+								minLevel={ 1 }
+								maxLevel={ 5 }
+								selectedLevel={ collectionTitleLevel }
+								onChange={ collectionTitleLevel => {
+									setAttributes( { collectionTitleLevel } );
+								} }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<span className={'components-base-control__label '}>{__( 'Card Title Heading', '__plugin_txtd' )}</span>
+							<HeadingToolbar
+								minLevel={ 1 }
+								maxLevel={ 5 }
+								selectedLevel={ cardTitleLevel }
+								onChange={ cardTitleLevel => {
+									setAttributes( { cardTitleLevel } );
+								} }
+							/>
+						</PanelRow>
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Metadata Position' ) }>
 						<RadioControl
