@@ -3342,7 +3342,8 @@ var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
 var breakpoints = {
   desktop: 1366,
   lap: 1024,
-  tablet: 768
+  tablet: 768,
+  mobile: 480
 };
 var below = function below(breakpoint) {
   var width = breakpoints[breakpoint];
@@ -5660,7 +5661,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
 
 (function ($, window, undefined) {
-  var defaultBlockWidth = 1162; // magic
+  var defaultBlockWidth = 1152; // magic
 
   $('.novablocks-grid').each(function (i, block) {
     var $grid = $(block);
@@ -5696,12 +5697,12 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       var firstSet = Math.floor((columnsCount - 1) / 2);
       var secondSet = columnsCount - 1 - firstSet;
 
-      if (below('desktop')) {
+      if (below('lap')) {
         for (var _i = 0; _i < firstSet; _i++) {
           removeSmallestColumn(areaColumns);
         }
 
-        if (below('lap')) {
+        if (below('tablet')) {
           for (var _i2 = 0; _i2 < secondSet; _i2++) {
             removeSmallestColumn(areaColumns);
           }
@@ -5725,7 +5726,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       });
       $grid.css(utils_getGridStyle(compiledAttributes));
 
-      if (below('desktop') || attributes.headerposition === 0) {
+      if (below('lap') || attributes.headerposition === 0) {
         $title.clone().addClass('js-collection-element-clone').insertBefore($cards);
         $subtitle.clone().addClass('js-collection-element-clone').insertBefore($cards);
       }
@@ -5755,7 +5756,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
             $card.toggleClass('novablocks-card--portrait', !landscape);
             $card.appendTo($gridItem);
 
-            if (!below('desktop') && attributes.headerposition === addedCards - area.postsCount + i + 1) {
+            if (!below('lap') && attributes.headerposition === addedCards - area.postsCount + i + 1) {
               var $header = $('<div class="novablocks-grid__item js-collection-element-clone">');
               $title.clone().appendTo($header);
               $subtitle.clone().appendTo($header);

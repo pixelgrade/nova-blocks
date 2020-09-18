@@ -19712,7 +19712,8 @@ var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
 var breakpoints = {
   desktop: 1366,
   lap: 1024,
-  tablet: 768
+  tablet: 768,
+  mobile: 480
 };
 var below = function below(breakpoint) {
   var width = breakpoints[breakpoint];

@@ -17,7 +17,7 @@ import {
 
 (function($, window, undefined) {
 
-	const defaultBlockWidth = 1162; // magic
+	const defaultBlockWidth = 1152; // magic
 
 	$( '.novablocks-grid' ).each( function( i, block ) {
 		const $grid = $( block );
@@ -60,13 +60,13 @@ import {
 			let firstSet = Math.floor( ( columnsCount - 1 ) / 2 );
 			let secondSet = columnsCount - 1 - firstSet;
 
-			if ( below( 'desktop' ) ) {
+			if ( below( 'lap' ) ) {
 
 				for ( let i = 0; i < firstSet; i++ ) {
 					removeSmallestColumn( areaColumns );
 				}
 
-				if ( below( 'lap' ) ) {
+				if ( below( 'tablet' ) ) {
 
 					for ( let i = 0; i < secondSet; i++ ) {
 						removeSmallestColumn( areaColumns );
@@ -97,7 +97,7 @@ import {
 
 			$grid.css( getGridStyle( compiledAttributes ) );
 
-			if ( below( 'desktop' ) || attributes.headerposition === 0 ) {
+			if ( below( 'lap' ) || attributes.headerposition === 0 ) {
 				$title.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
 				$subtitle.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
 			}
@@ -129,7 +129,7 @@ import {
 
 						$card.appendTo( $gridItem );
 
-						if ( ! below( 'desktop' ) && attributes.headerposition === addedCards - area.postsCount + i + 1 ) {
+						if ( ! below( 'lap' ) && attributes.headerposition === addedCards - area.postsCount + i + 1 ) {
 							const $header = $( '<div class="novablocks-grid__item js-collection-element-clone">' );
 							$title.clone().appendTo( $header );
 							$subtitle.clone().appendTo( $header );

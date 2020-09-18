@@ -195,7 +195,8 @@ export const getCardMediaPaddingTop = ( containerHeight ) => {
 const breakpoints = {
 	desktop: 1366,
 	lap: 1024,
-	tablet: 768
+	tablet: 768,
+	mobile: 480,
 };
 
 export const below = ( breakpoint ) => {
