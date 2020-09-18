@@ -74,6 +74,7 @@ import {
 				}
 			}
 
+			normalizeColumns( areaColumns, attributes );
 			redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
 			let gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
@@ -202,12 +203,11 @@ import {
 		}
 
 		areaColumns.splice( indexToRemove, 1 );
-
-		normalizeColumns( areaColumns );
 	}
 
-	function normalizeColumns( areaColumns ) {
+	function normalizeColumns( areaColumns, attributes ) {
 		moveColumnsToLeft( areaColumns );
+		growColumnsToRight( areaColumns, attributes );
 		moveColumnsToTop( areaColumns );
 	}
 
@@ -234,6 +234,33 @@ import {
 			}
 
 			areaColumn.col = areaColumn.col - spaceLeft;
+		} );
+	}
+
+	function growColumnsToRight( areaColumns, attributes ) {
+		const { gridcolumns } = attributes;
+
+		areaColumns.forEach( areaColumn => {
+			let spaceRight = 0;
+			let growingRight = true;
+
+			while ( growingRight ) {
+
+				const overlapRight = areaColumns.filter( compareColumn => compareColumn !== areaColumn ).some( compareColumn => {
+					return ! ( areaColumn.col + areaColumn.width + spaceRight < compareColumn.col ||
+					           areaColumn.row + areaColumn.height - 1 < compareColumn.row ||
+					           areaColumn.row > compareColumn.row + compareColumn.height - 1 ||
+					           areaColumn.col > compareColumn.col + compareColumn.width - 1 );
+				} );
+
+				if ( overlapRight || areaColumn.col + areaColumn.width + spaceRight - 1 >= gridcolumns ) {
+					growingRight = false;
+				} else {
+					spaceRight++;
+				}
+			}
+
+			areaColumn.width = areaColumn.width + spaceRight;
 		} );
 	}
 

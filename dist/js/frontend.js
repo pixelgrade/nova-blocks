@@ -5709,6 +5709,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
         }
       }
 
+      normalizeColumns(areaColumns, attributes);
       redistributeCardsInAreas(areaColumns, cardsCount, attributes);
       var gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
       var gridrows = attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows;
@@ -5823,11 +5824,11 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     }
 
     areaColumns.splice(indexToRemove, 1);
-    normalizeColumns(areaColumns);
   }
 
-  function normalizeColumns(areaColumns) {
+  function normalizeColumns(areaColumns, attributes) {
     moveColumnsToLeft(areaColumns);
+    growColumnsToRight(areaColumns, attributes);
     moveColumnsToTop(areaColumns);
   }
 
@@ -5851,6 +5852,30 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       }
 
       areaColumn.col = areaColumn.col - spaceLeft;
+    });
+  }
+
+  function growColumnsToRight(areaColumns, attributes) {
+    var gridcolumns = attributes.gridcolumns;
+    areaColumns.forEach(function (areaColumn) {
+      var spaceRight = 0;
+      var growingRight = true;
+
+      while (growingRight) {
+        var overlapRight = areaColumns.filter(function (compareColumn) {
+          return compareColumn !== areaColumn;
+        }).some(function (compareColumn) {
+          return !(areaColumn.col + areaColumn.width + spaceRight < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row > compareColumn.row + compareColumn.height - 1 || areaColumn.col > compareColumn.col + compareColumn.width - 1);
+        });
+
+        if (overlapRight || areaColumn.col + areaColumn.width + spaceRight - 1 >= gridcolumns) {
+          growingRight = false;
+        } else {
+          spaceRight++;
+        }
+      }
+
+      areaColumn.width = areaColumn.width + spaceRight;
     });
   }
 
