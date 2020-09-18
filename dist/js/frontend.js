@@ -81,621 +81,6145 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/frontend.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
-  \******************************************************************/
-/*! no static exports found */
+/******/ ([
+/* 0 */
 /***/ (function(module, exports) {
 
-eval("function _arrayWithoutHoles(arr) {\n  if (Array.isArray(arr)) {\n    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {\n      arr2[i] = arr[i];\n    }\n\n    return arr2;\n  }\n}\n\nmodule.exports = _arrayWithoutHoles;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js?");
+module.exports = jQuery;
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
-  \***************************************************************/
-/*! no static exports found */
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
-eval("function _classCallCheck(instance, Constructor) {\n  if (!(instance instanceof Constructor)) {\n    throw new TypeError(\"Cannot call a class as a function\");\n  }\n}\n\nmodule.exports = _classCallCheck;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/classCallCheck.js?");
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
 
 /***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
-  \************************************************************/
-/*! no static exports found */
+/* 3 */
 /***/ (function(module, exports) {
 
-eval("function _defineProperties(target, props) {\n  for (var i = 0; i < props.length; i++) {\n    var descriptor = props[i];\n    descriptor.enumerable = descriptor.enumerable || false;\n    descriptor.configurable = true;\n    if (\"value\" in descriptor) descriptor.writable = true;\n    Object.defineProperty(target, descriptor.key, descriptor);\n  }\n}\n\nfunction _createClass(Constructor, protoProps, staticProps) {\n  if (protoProps) _defineProperties(Constructor.prototype, protoProps);\n  if (staticProps) _defineProperties(Constructor, staticProps);\n  return Constructor;\n}\n\nmodule.exports = _createClass;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/createClass.js?");
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
-  \***************************************************************/
-/*! no static exports found */
+var arrayWithoutHoles = __webpack_require__(26);
+
+var iterableToArray = __webpack_require__(27);
+
+var nonIterableSpread = __webpack_require__(28);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.toJson = toJson;
+
+var _constants = __webpack_require__(7);
+
+var _utils = __webpack_require__(8);
+
+var _auth = __webpack_require__(18);
+
+var _auth2 = _interopRequireDefault(_auth);
+
+var _currentUser = __webpack_require__(19);
+
+var _currentUser2 = _interopRequireDefault(_currentUser);
+
+var _users = __webpack_require__(20);
+
+var _users2 = _interopRequireDefault(_users);
+
+var _photos = __webpack_require__(21);
+
+var _photos2 = _interopRequireDefault(_photos);
+
+var _collections = __webpack_require__(23);
+
+var _collections2 = _interopRequireDefault(_collections);
+
+var _search = __webpack_require__(24);
+
+var _search2 = _interopRequireDefault(_search);
+
+var _stats = __webpack_require__(25);
+
+var _stats2 = _interopRequireDefault(_stats);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Unsplash = function () {
+  function Unsplash(options) {
+    _classCallCheck(this, Unsplash);
+
+    this._apiUrl = options.apiUrl || _constants.API_URL;
+    this._apiVersion = options.apiVersion || _constants.API_VERSION;
+    this._accessKey = options.accessKey;
+    this._secret = options.secret;
+    this._callbackUrl = options.callbackUrl;
+    this._bearerToken = options.bearerToken;
+    this._headers = options.headers || {};
+    this._timeout = options.timeout || 0; // 0 defaults to the OS timeout behaviour.
+
+    this.auth = _auth2.default.bind(this)();
+    this.currentUser = _currentUser2.default.bind(this)();
+    this.users = _users2.default.bind(this)();
+    this.photos = _photos2.default.bind(this)();
+    this.collections = _collections2.default.bind(this)();
+    this.search = _search2.default.bind(this)();
+    this.stats = _stats2.default.bind(this)();
+  }
+
+  _createClass(Unsplash, [{
+    key: "request",
+    value: function request(requestOptions) {
+      var _buildFetchOptions$bi = _utils.buildFetchOptions.bind(this)(requestOptions),
+          url = _buildFetchOptions$bi.url,
+          options = _buildFetchOptions$bi.options;
+
+      return fetch(url, options);
+    }
+  }]);
+
+  return Unsplash;
+}();
+
+exports.default = Unsplash;
+function toJson(res) {
+  return typeof res.json === "function" ? res.json() : res;
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+;(function (factory) {
+	var registeredInModuleLoader;
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		registeredInModuleLoader = true;
+	}
+	if (true) {
+		module.exports = factory();
+		registeredInModuleLoader = true;
+	}
+	if (!registeredInModuleLoader) {
+		var OldCookies = window.Cookies;
+		var api = window.Cookies = factory();
+		api.noConflict = function () {
+			window.Cookies = OldCookies;
+			return api;
+		};
+	}
+}(function () {
+	function extend () {
+		var i = 0;
+		var result = {};
+		for (; i < arguments.length; i++) {
+			var attributes = arguments[ i ];
+			for (var key in attributes) {
+				result[key] = attributes[key];
+			}
+		}
+		return result;
+	}
+
+	function decode (s) {
+		return s.replace(/(%[0-9A-Z]{2})+/g, decodeURIComponent);
+	}
+
+	function init (converter) {
+		function api() {}
+
+		function set (key, value, attributes) {
+			if (typeof document === 'undefined') {
+				return;
+			}
+
+			attributes = extend({
+				path: '/'
+			}, api.defaults, attributes);
+
+			if (typeof attributes.expires === 'number') {
+				attributes.expires = new Date(new Date() * 1 + attributes.expires * 864e+5);
+			}
+
+			// We're using "expires" because "max-age" is not supported by IE
+			attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
+
+			try {
+				var result = JSON.stringify(value);
+				if (/^[\{\[]/.test(result)) {
+					value = result;
+				}
+			} catch (e) {}
+
+			value = converter.write ?
+				converter.write(value, key) :
+				encodeURIComponent(String(value))
+					.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+
+			key = encodeURIComponent(String(key))
+				.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)
+				.replace(/[\(\)]/g, escape);
+
+			var stringifiedAttributes = '';
+			for (var attributeName in attributes) {
+				if (!attributes[attributeName]) {
+					continue;
+				}
+				stringifiedAttributes += '; ' + attributeName;
+				if (attributes[attributeName] === true) {
+					continue;
+				}
+
+				// Considers RFC 6265 section 5.2:
+				// ...
+				// 3.  If the remaining unparsed-attributes contains a %x3B (";")
+				//     character:
+				// Consume the characters of the unparsed-attributes up to,
+				// not including, the first %x3B (";") character.
+				// ...
+				stringifiedAttributes += '=' + attributes[attributeName].split(';')[0];
+			}
+
+			return (document.cookie = key + '=' + value + stringifiedAttributes);
+		}
+
+		function get (key, json) {
+			if (typeof document === 'undefined') {
+				return;
+			}
+
+			var jar = {};
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all.
+			var cookies = document.cookie ? document.cookie.split('; ') : [];
+			var i = 0;
+
+			for (; i < cookies.length; i++) {
+				var parts = cookies[i].split('=');
+				var cookie = parts.slice(1).join('=');
+
+				if (!json && cookie.charAt(0) === '"') {
+					cookie = cookie.slice(1, -1);
+				}
+
+				try {
+					var name = decode(parts[0]);
+					cookie = (converter.read || converter)(cookie, name) ||
+						decode(cookie);
+
+					if (json) {
+						try {
+							cookie = JSON.parse(cookie);
+						} catch (e) {}
+					}
+
+					jar[name] = cookie;
+
+					if (key === name) {
+						break;
+					}
+				} catch (e) {}
+			}
+
+			return key ? jar[key] : jar;
+		}
+
+		api.set = set;
+		api.get = function (key) {
+			return get(key, false /* read as raw */);
+		};
+		api.getJSON = function (key) {
+			return get(key, true /* read as json */);
+		};
+		api.remove = function (key, attributes) {
+			set(key, '', extend(attributes, {
+				expires: -1
+			}));
+		};
+
+		api.defaults = {};
+
+		api.withConverter = init;
+
+		return api;
+	}
+
+	return init(function () {});
+}));
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var API_URL = exports.API_URL = "https://api.unsplash.com";
+var API_VERSION = exports.API_VERSION = "v1";
+var OAUTH_AUTHORIZE_URL = exports.OAUTH_AUTHORIZE_URL = "https://unsplash.com/oauth/authorize";
+var OAUTH_TOKEN_URL = exports.OAUTH_TOKEN_URL = "https://unsplash.com/oauth/token";
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.formUrlEncode = formUrlEncode;
+exports.getUrlComponents = getUrlComponents;
+exports.buildFetchOptions = buildFetchOptions;
+
+var _querystring = __webpack_require__(9);
+
+var _formUrlencoded = __webpack_require__(14);
+
+var _formUrlencoded2 = _interopRequireDefault(_formUrlencoded);
+
+var _urlParse = __webpack_require__(15);
+
+var _urlParse2 = _interopRequireDefault(_urlParse);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function formUrlEncode(body) {
+  return (0, _formUrlencoded2.default)(body);
+}
+
+function getUrlComponents(uri) {
+  return (0, _urlParse2.default)(uri, {}, true);
+}
+
+function buildFetchOptions(options) {
+  var method = options.method,
+      query = options.query,
+      oauth = options.oauth,
+      body = options.body;
+
+  var url = oauth === true ? options.url : "" + this._apiUrl + options.url;
+  var headers = _extends({}, this._headers, options.headers, {
+    "Accept-Version": this._apiVersion,
+    "Authorization": this._bearerToken ? "Bearer " + this._bearerToken : "Client-ID " + this._accessKey
+  });
+  var timeout = this._timeout;
+
+  if (body) {
+    headers["Content-Type"] = "application/x-www-form-urlencoded";
+  }
+
+  if (query) {
+    url = decodeURIComponent(url + "?" + (0, _querystring.stringify)(query));
+  }
+
+  return {
+    url: url,
+    options: {
+      method: method,
+      headers: headers,
+      timeout: timeout,
+      body: method !== "GET" && body ? formUrlEncode(body) : undefined
+    }
+  };
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.decode = exports.parse = __webpack_require__(12);
+exports.encode = exports.stringify = __webpack_require__(13);
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
-eval("function _defineProperty(obj, key, value) {\n  if (key in obj) {\n    Object.defineProperty(obj, key, {\n      value: value,\n      enumerable: true,\n      configurable: true,\n      writable: true\n    });\n  } else {\n    obj[key] = value;\n  }\n\n  return obj;\n}\n\nmodule.exports = _defineProperty;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/defineProperty.js?");
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/iterableToArray.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
-  \****************************************************************/
-/*! no static exports found */
+/* 11 */
 /***/ (function(module, exports) {
 
-eval("function _iterableToArray(iter) {\n  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === \"[object Arguments]\") return Array.from(iter);\n}\n\nmodule.exports = _iterableToArray;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/iterableToArray.js?");
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
 
 /***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
-  \******************************************************************/
-/*! no static exports found */
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return map(objectKeys(obj), function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map (xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports) {
 
-eval("function _nonIterableSpread() {\n  throw new TypeError(\"Invalid attempt to spread non-iterable instance\");\n}\n\nmodule.exports = _nonIterableSpread;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/nonIterableSpread.js?");
+// Filename: formurlencoded.js
+// Timestamp: 2016.01.18-15:36:37 (last modified)
+// Author(s): Bumblehead (www.bumblehead.com), JBlashill (james@blashill.com)
+//
+// http://www.w3.org/TR/html5/forms.html#url-encoded-form-data
+// input: {one:1,two:2} return: '[one]=1&[two]=2'
+
+var formurlencoded = module.exports = function (data, opts) {
+  opts = typeof opts === 'object' ? opts : {};
+
+  function encode (value) {
+    return String(value)
+      .replace(/[^ !'()~\*]*/g, encodeURIComponent)
+      .replace(/ /g, '+')
+      .replace(/[!'()~\*]/g, function (ch) {
+        return '%' + ch.charCodeAt().toString(16).slice(-2).toUpperCase();
+      });
+  }
+
+  function keys (obj) {
+    var keys = Object.keys(obj);
+
+    return opts.sorted ? keys.sort() : keys;
+  }
+
+  function filterjoin (arr) {
+    return arr.filter(function (e) { return e; }).join('&');
+  }
+
+  function objnest (name, obj) {
+    return filterjoin(keys(obj).map(function (key) {
+      return nest(name + '[' + key + ']', obj[key]);
+    }));
+  }
+
+  function arrnest (name, arr) {
+    return filterjoin(arr.map(function (elem) {
+      return nest(name + '[]', elem);
+    }));
+  }
+
+  function nest (name, value) {
+    var type = typeof value,
+        f = null;
+
+    if (value === f) {
+      f = opts.ignorenull ? f : encode(name) + '=' + f;
+    } else if (/string|number|boolean/.test(type)) {
+      f = encode(name) + '=' + encode(value);
+    } else if (Array.isArray(value)) {
+      f = arrnest(name, value);
+    } else if (type === 'object') {
+      f = objnest(name, value);
+    }
+
+    return f;
+  }
+
+  return filterjoin(keys(data).map(function (key) {
+    return nest(key, data[key]);
+  }));
+};
+
 
 /***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/toConsumableArray.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
-  \******************************************************************/
-/*! no static exports found */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles */ \"./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js\");\n\nvar iterableToArray = __webpack_require__(/*! ./iterableToArray */ \"./node_modules/@babel/runtime/helpers/iterableToArray.js\");\n\nvar nonIterableSpread = __webpack_require__(/*! ./nonIterableSpread */ \"./node_modules/@babel/runtime/helpers/nonIterableSpread.js\");\n\nfunction _toConsumableArray(arr) {\n  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();\n}\n\nmodule.exports = _toConsumableArray;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/toConsumableArray.js?");
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+var required = __webpack_require__(16)
+  , qs = __webpack_require__(17)
+  , protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i
+  , slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
+
+/**
+ * These are the parse rules for the URL parser, it informs the parser
+ * about:
+ *
+ * 0. The char it Needs to parse, if it's a string it should be done using
+ *    indexOf, RegExp using exec and NaN means set as current value.
+ * 1. The property we should set when parsing this value.
+ * 2. Indication if it's backwards or forward parsing, when set as number it's
+ *    the value of extra chars that should be split off.
+ * 3. Inherit from location if non existing in the parser.
+ * 4. `toLowerCase` the resulting value.
+ */
+var rules = [
+  ['#', 'hash'],                        // Extract from the back.
+  ['?', 'query'],                       // Extract from the back.
+  function sanitize(address) {          // Sanitize what is left of the address
+    return address.replace('\\', '/');
+  },
+  ['/', 'pathname'],                    // Extract from the back.
+  ['@', 'auth', 1],                     // Extract from the front.
+  [NaN, 'host', undefined, 1, 1],       // Set left over value.
+  [/:(\d+)$/, 'port', undefined, 1],    // RegExp the back.
+  [NaN, 'hostname', undefined, 1, 1]    // Set left over.
+];
+
+/**
+ * These properties should not be copied or inherited from. This is only needed
+ * for all non blob URL's as a blob URL does not include a hash, only the
+ * origin.
+ *
+ * @type {Object}
+ * @private
+ */
+var ignore = { hash: 1, query: 1 };
+
+/**
+ * The location object differs when your code is loaded through a normal page,
+ * Worker or through a worker using a blob. And with the blobble begins the
+ * trouble as the location object will contain the URL of the blob, not the
+ * location of the page where our code is loaded in. The actual origin is
+ * encoded in the `pathname` so we can thankfully generate a good "default"
+ * location from it so we can generate proper relative URL's again.
+ *
+ * @param {Object|String} loc Optional default location object.
+ * @returns {Object} lolcation object.
+ * @public
+ */
+function lolcation(loc) {
+  var globalVar;
+
+  if (typeof window !== 'undefined') globalVar = window;
+  else if (typeof global !== 'undefined') globalVar = global;
+  else if (typeof self !== 'undefined') globalVar = self;
+  else globalVar = {};
+
+  var location = globalVar.location || {};
+  loc = loc || location;
+
+  var finaldestination = {}
+    , type = typeof loc
+    , key;
+
+  if ('blob:' === loc.protocol) {
+    finaldestination = new Url(unescape(loc.pathname), {});
+  } else if ('string' === type) {
+    finaldestination = new Url(loc, {});
+    for (key in ignore) delete finaldestination[key];
+  } else if ('object' === type) {
+    for (key in loc) {
+      if (key in ignore) continue;
+      finaldestination[key] = loc[key];
+    }
+
+    if (finaldestination.slashes === undefined) {
+      finaldestination.slashes = slashes.test(loc.href);
+    }
+  }
+
+  return finaldestination;
+}
+
+/**
+ * @typedef ProtocolExtract
+ * @type Object
+ * @property {String} protocol Protocol matched in the URL, in lowercase.
+ * @property {Boolean} slashes `true` if protocol is followed by "//", else `false`.
+ * @property {String} rest Rest of the URL that is not part of the protocol.
+ */
+
+/**
+ * Extract protocol information from a URL with/without double slash ("//").
+ *
+ * @param {String} address URL we want to extract from.
+ * @return {ProtocolExtract} Extracted information.
+ * @private
+ */
+function extractProtocol(address) {
+  var match = protocolre.exec(address);
+
+  return {
+    protocol: match[1] ? match[1].toLowerCase() : '',
+    slashes: !!match[2],
+    rest: match[3]
+  };
+}
+
+/**
+ * Resolve a relative URL pathname against a base URL pathname.
+ *
+ * @param {String} relative Pathname of the relative URL.
+ * @param {String} base Pathname of the base URL.
+ * @return {String} Resolved pathname.
+ * @private
+ */
+function resolve(relative, base) {
+  var path = (base || '/').split('/').slice(0, -1).concat(relative.split('/'))
+    , i = path.length
+    , last = path[i - 1]
+    , unshift = false
+    , up = 0;
+
+  while (i--) {
+    if (path[i] === '.') {
+      path.splice(i, 1);
+    } else if (path[i] === '..') {
+      path.splice(i, 1);
+      up++;
+    } else if (up) {
+      if (i === 0) unshift = true;
+      path.splice(i, 1);
+      up--;
+    }
+  }
+
+  if (unshift) path.unshift('');
+  if (last === '.' || last === '..') path.push('');
+
+  return path.join('/');
+}
+
+/**
+ * The actual URL instance. Instead of returning an object we've opted-in to
+ * create an actual constructor as it's much more memory efficient and
+ * faster and it pleases my OCD.
+ *
+ * It is worth noting that we should not use `URL` as class name to prevent
+ * clashes with the global URL instance that got introduced in browsers.
+ *
+ * @constructor
+ * @param {String} address URL we want to parse.
+ * @param {Object|String} [location] Location defaults for relative paths.
+ * @param {Boolean|Function} [parser] Parser for the query string.
+ * @private
+ */
+function Url(address, location, parser) {
+  if (!(this instanceof Url)) {
+    return new Url(address, location, parser);
+  }
+
+  var relative, extracted, parse, instruction, index, key
+    , instructions = rules.slice()
+    , type = typeof location
+    , url = this
+    , i = 0;
+
+  //
+  // The following if statements allows this module two have compatibility with
+  // 2 different API:
+  //
+  // 1. Node.js's `url.parse` api which accepts a URL, boolean as arguments
+  //    where the boolean indicates that the query string should also be parsed.
+  //
+  // 2. The `URL` interface of the browser which accepts a URL, object as
+  //    arguments. The supplied object will be used as default values / fall-back
+  //    for relative paths.
+  //
+  if ('object' !== type && 'string' !== type) {
+    parser = location;
+    location = null;
+  }
+
+  if (parser && 'function' !== typeof parser) parser = qs.parse;
+
+  location = lolcation(location);
+
+  //
+  // Extract protocol information before running the instructions.
+  //
+  extracted = extractProtocol(address || '');
+  relative = !extracted.protocol && !extracted.slashes;
+  url.slashes = extracted.slashes || relative && location.slashes;
+  url.protocol = extracted.protocol || location.protocol || '';
+  address = extracted.rest;
+
+  //
+  // When the authority component is absent the URL starts with a path
+  // component.
+  //
+  if (!extracted.slashes) instructions[3] = [/(.*)/, 'pathname'];
+
+  for (; i < instructions.length; i++) {
+    instruction = instructions[i];
+
+    if (typeof instruction === 'function') {
+      address = instruction(address);
+      continue;
+    }
+
+    parse = instruction[0];
+    key = instruction[1];
+
+    if (parse !== parse) {
+      url[key] = address;
+    } else if ('string' === typeof parse) {
+      if (~(index = address.indexOf(parse))) {
+        if ('number' === typeof instruction[2]) {
+          url[key] = address.slice(0, index);
+          address = address.slice(index + instruction[2]);
+        } else {
+          url[key] = address.slice(index);
+          address = address.slice(0, index);
+        }
+      }
+    } else if ((index = parse.exec(address))) {
+      url[key] = index[1];
+      address = address.slice(0, index.index);
+    }
+
+    url[key] = url[key] || (
+      relative && instruction[3] ? location[key] || '' : ''
+    );
+
+    //
+    // Hostname, host and protocol should be lowercased so they can be used to
+    // create a proper `origin`.
+    //
+    if (instruction[4]) url[key] = url[key].toLowerCase();
+  }
+
+  //
+  // Also parse the supplied query string in to an object. If we're supplied
+  // with a custom parser as function use that instead of the default build-in
+  // parser.
+  //
+  if (parser) url.query = parser(url.query);
+
+  //
+  // If the URL is relative, resolve the pathname against the base URL.
+  //
+  if (
+      relative
+    && location.slashes
+    && url.pathname.charAt(0) !== '/'
+    && (url.pathname !== '' || location.pathname !== '')
+  ) {
+    url.pathname = resolve(url.pathname, location.pathname);
+  }
+
+  //
+  // We should not add port numbers if they are already the default port number
+  // for a given protocol. As the host also contains the port number we're going
+  // override it with the hostname which contains no port number.
+  //
+  if (!required(url.port, url.protocol)) {
+    url.host = url.hostname;
+    url.port = '';
+  }
+
+  //
+  // Parse down the `auth` for the username and password.
+  //
+  url.username = url.password = '';
+  if (url.auth) {
+    instruction = url.auth.split(':');
+    url.username = instruction[0] || '';
+    url.password = instruction[1] || '';
+  }
+
+  url.origin = url.protocol && url.host && url.protocol !== 'file:'
+    ? url.protocol +'//'+ url.host
+    : 'null';
+
+  //
+  // The href is just the compiled result.
+  //
+  url.href = url.toString();
+}
+
+/**
+ * This is convenience method for changing properties in the URL instance to
+ * insure that they all propagate correctly.
+ *
+ * @param {String} part          Property we need to adjust.
+ * @param {Mixed} value          The newly assigned value.
+ * @param {Boolean|Function} fn  When setting the query, it will be the function
+ *                               used to parse the query.
+ *                               When setting the protocol, double slash will be
+ *                               removed from the final url if it is true.
+ * @returns {URL} URL instance for chaining.
+ * @public
+ */
+function set(part, value, fn) {
+  var url = this;
+
+  switch (part) {
+    case 'query':
+      if ('string' === typeof value && value.length) {
+        value = (fn || qs.parse)(value);
+      }
+
+      url[part] = value;
+      break;
+
+    case 'port':
+      url[part] = value;
+
+      if (!required(value, url.protocol)) {
+        url.host = url.hostname;
+        url[part] = '';
+      } else if (value) {
+        url.host = url.hostname +':'+ value;
+      }
+
+      break;
+
+    case 'hostname':
+      url[part] = value;
+
+      if (url.port) value += ':'+ url.port;
+      url.host = value;
+      break;
+
+    case 'host':
+      url[part] = value;
+
+      if (/:\d+$/.test(value)) {
+        value = value.split(':');
+        url.port = value.pop();
+        url.hostname = value.join(':');
+      } else {
+        url.hostname = value;
+        url.port = '';
+      }
+
+      break;
+
+    case 'protocol':
+      url.protocol = value.toLowerCase();
+      url.slashes = !fn;
+      break;
+
+    case 'pathname':
+    case 'hash':
+      if (value) {
+        var char = part === 'pathname' ? '/' : '#';
+        url[part] = value.charAt(0) !== char ? char + value : value;
+      } else {
+        url[part] = value;
+      }
+      break;
+
+    default:
+      url[part] = value;
+  }
+
+  for (var i = 0; i < rules.length; i++) {
+    var ins = rules[i];
+
+    if (ins[4]) url[ins[1]] = url[ins[1]].toLowerCase();
+  }
+
+  url.origin = url.protocol && url.host && url.protocol !== 'file:'
+    ? url.protocol +'//'+ url.host
+    : 'null';
+
+  url.href = url.toString();
+
+  return url;
+}
+
+/**
+ * Transform the properties back in to a valid and full URL string.
+ *
+ * @param {Function} stringify Optional query stringify function.
+ * @returns {String} Compiled version of the URL.
+ * @public
+ */
+function toString(stringify) {
+  if (!stringify || 'function' !== typeof stringify) stringify = qs.stringify;
+
+  var query
+    , url = this
+    , protocol = url.protocol;
+
+  if (protocol && protocol.charAt(protocol.length - 1) !== ':') protocol += ':';
+
+  var result = protocol + (url.slashes ? '//' : '');
+
+  if (url.username) {
+    result += url.username;
+    if (url.password) result += ':'+ url.password;
+    result += '@';
+  }
+
+  result += url.host + url.pathname;
+
+  query = 'object' === typeof url.query ? stringify(url.query) : url.query;
+  if (query) result += '?' !== query.charAt(0) ? '?'+ query : query;
+
+  if (url.hash) result += url.hash;
+
+  return result;
+}
+
+Url.prototype = { set: set, toString: toString };
+
+//
+// Expose the URL parser and some additional properties that might be useful for
+// others or testing.
+//
+Url.extractProtocol = extractProtocol;
+Url.location = lolcation;
+Url.qs = qs;
+
+module.exports = Url;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(10)))
 
 /***/ }),
-
-/***/ "./node_modules/classnames/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/classnames/index.js ***!
-  \******************************************/
-/*! no static exports found */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!\n  Copyright (c) 2017 Jed Watson.\n  Licensed under the MIT License (MIT), see\n  http://jedwatson.github.io/classnames\n*/\n/* global define */\n\n(function () {\n\t'use strict';\n\n\tvar hasOwn = {}.hasOwnProperty;\n\n\tfunction classNames () {\n\t\tvar classes = [];\n\n\t\tfor (var i = 0; i < arguments.length; i++) {\n\t\t\tvar arg = arguments[i];\n\t\t\tif (!arg) continue;\n\n\t\t\tvar argType = typeof arg;\n\n\t\t\tif (argType === 'string' || argType === 'number') {\n\t\t\t\tclasses.push(arg);\n\t\t\t} else if (Array.isArray(arg) && arg.length) {\n\t\t\t\tvar inner = classNames.apply(null, arg);\n\t\t\t\tif (inner) {\n\t\t\t\t\tclasses.push(inner);\n\t\t\t\t}\n\t\t\t} else if (argType === 'object') {\n\t\t\t\tfor (var key in arg) {\n\t\t\t\t\tif (hasOwn.call(arg, key) && arg[key]) {\n\t\t\t\t\t\tclasses.push(key);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\treturn classes.join(' ');\n\t}\n\n\tif ( true && module.exports) {\n\t\tclassNames.default = classNames;\n\t\tmodule.exports = classNames;\n\t} else if (true) {\n\t\t// register as 'classnames', consistent with npm package name\n\t\t!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {\n\t\t\treturn classNames;\n\t\t}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n\t} else {}\n}());\n\n\n//# sourceURL=webpack:///./node_modules/classnames/index.js?");
+"use strict";
+
+
+/**
+ * Check if we're required to add a port number.
+ *
+ * @see https://url.spec.whatwg.org/#default-port
+ * @param {Number|String} port Port number we need to check
+ * @param {String} protocol Protocol we need to check against.
+ * @returns {Boolean} Is it a default port for the given protocol
+ * @api private
+ */
+module.exports = function required(port, protocol) {
+  protocol = protocol.split(':')[0];
+  port = +port;
+
+  if (!port) return false;
+
+  switch (protocol) {
+    case 'http':
+    case 'ws':
+    return port !== 80;
+
+    case 'https':
+    case 'wss':
+    return port !== 443;
+
+    case 'ftp':
+    return port !== 21;
+
+    case 'gopher':
+    return port !== 70;
+
+    case 'file':
+    return false;
+  }
+
+  return port !== 0;
+};
+
 
 /***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ "./node_modules/form-urlencoded/form-urlencoded.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/form-urlencoded/form-urlencoded.js ***!
-  \*********************************************************/
-/*! no static exports found */
+"use strict";
+
+
+var has = Object.prototype.hasOwnProperty
+  , undef;
+
+/**
+ * Decode a URI encoded string.
+ *
+ * @param {String} input The URI encoded string.
+ * @returns {String|Null} The decoded string.
+ * @api private
+ */
+function decode(input) {
+  try {
+    return decodeURIComponent(input.replace(/\+/g, ' '));
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Attempts to encode a given input.
+ *
+ * @param {String} input The string that needs to be encoded.
+ * @returns {String|Null} The encoded string.
+ * @api private
+ */
+function encode(input) {
+  try {
+    return encodeURIComponent(input);
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Simple query string parser.
+ *
+ * @param {String} query The query string that needs to be parsed.
+ * @returns {Object}
+ * @api public
+ */
+function querystring(query) {
+  var parser = /([^=?&]+)=?([^&]*)/g
+    , result = {}
+    , part;
+
+  while (part = parser.exec(query)) {
+    var key = decode(part[1])
+      , value = decode(part[2]);
+
+    //
+    // Prevent overriding of existing properties. This ensures that build-in
+    // methods like `toString` or __proto__ are not overriden by malicious
+    // querystrings.
+    //
+    // In the case if failed decoding, we want to omit the key/value pairs
+    // from the result.
+    //
+    if (key === null || value === null || key in result) continue;
+    result[key] = value;
+  }
+
+  return result;
+}
+
+/**
+ * Transform a query string to an object.
+ *
+ * @param {Object} obj Object that should be transformed.
+ * @param {String} prefix Optional prefix.
+ * @returns {String}
+ * @api public
+ */
+function querystringify(obj, prefix) {
+  prefix = prefix || '';
+
+  var pairs = []
+    , value
+    , key;
+
+  //
+  // Optionally prefix with a '?' if needed
+  //
+  if ('string' !== typeof prefix) prefix = '?';
+
+  for (key in obj) {
+    if (has.call(obj, key)) {
+      value = obj[key];
+
+      //
+      // Edge cases where we actually want to encode the value to an empty
+      // string instead of the stringified value.
+      //
+      if (!value && (value === null || value === undef || isNaN(value))) {
+        value = '';
+      }
+
+      key = encodeURIComponent(key);
+      value = encodeURIComponent(value);
+
+      //
+      // If we failed to encode the strings, we should bail out as we don't
+      // want to add invalid strings to the query.
+      //
+      if (key === null || value === null) continue;
+      pairs.push(key +'='+ value);
+    }
+  }
+
+  return pairs.length ? prefix + pairs.join('&') : '';
+}
+
+//
+// Expose the module.
+//
+exports.stringify = querystringify;
+exports.parse = querystring;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = auth;
+
+var _querystring = __webpack_require__(9);
+
+var _querystring2 = _interopRequireDefault(_querystring);
+
+var _constants = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function auth() {
+  var _this = this;
+
+  return {
+    getAuthenticationUrl: function getAuthenticationUrl() {
+      var scope = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ["public"];
+
+      var querystrings = _querystring2.default.stringify({
+        client_id: _this._accessKey,
+        redirect_uri: _this._callbackUrl,
+        response_type: "code",
+        scope: scope.length > 1 ? scope.join("+") : scope.toString()
+      });
+
+      return decodeURIComponent(_constants.OAUTH_AUTHORIZE_URL + "?" + querystrings);
+    },
+
+    userAuthentication: function userAuthentication(code) {
+      var url = _constants.OAUTH_TOKEN_URL;
+
+      return _this.request({
+        url: url,
+        method: "POST",
+        body: {
+          client_id: _this._accessKey,
+          client_secret: _this._secret,
+          redirect_uri: _this._callbackUrl,
+          grant_type: "authorization_code",
+          code: code
+        },
+        oauth: true
+      });
+    },
+
+    setBearerToken: function setBearerToken(accessToken) {
+      if (accessToken) {
+        _this._bearerToken = accessToken;
+      }
+    }
+  };
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = currentUser;
+function currentUser() {
+  var _this = this;
+
+  return {
+    profile: function profile() {
+      var url = "/me";
+
+      return _this.request({
+        url: url,
+        method: "GET"
+      });
+    },
+
+    updateProfile: function updateProfile(options) {
+      var endpointUrl = "/me";
+      var username = options.username,
+          firstName = options.firstName,
+          lastName = options.lastName,
+          email = options.email,
+          url = options.url,
+          location = options.location,
+          bio = options.bio,
+          instagramUsername = options.instagramUsername;
+
+      var body = {
+        username: username,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        url: url,
+        location: location,
+        bio: bio,
+        instagram_username: instagramUsername
+      };
+
+      Object.keys(body).forEach(function (key) {
+        if (!body[key]) {
+          delete body[key];
+        }
+      });
+
+      return _this.request({
+        url: endpointUrl,
+        method: "PUT",
+        body: body
+      });
+    }
+  };
+}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = users;
+function users() {
+  var _this = this;
+
+  return {
+    profile: function profile(username) {
+      var url = "/users/" + username;
+
+      return _this.request({
+        url: url,
+        method: "GET"
+      });
+    },
+
+    photos: function photos(username) {
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+      var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "latest";
+      var stats = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+
+      var url = "/users/" + username + "/photos";
+      var query = {
+        page: page,
+        per_page: perPage,
+        order_by: orderBy,
+        stats: stats
+      };
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    },
+
+    likes: function likes(username) {
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+      var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "latest";
+
+      var url = "/users/" + username + "/likes";
+      var query = {
+        page: page,
+        per_page: perPage,
+        order_by: orderBy
+      };
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    },
+
+    collections: function collections(username) {
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+      var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "published";
+
+      var url = "/users/" + username + "/collections";
+      var query = {
+        page: page,
+        per_page: perPage,
+        order_by: orderBy
+      };
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    },
+
+    statistics: function statistics(username) {
+      var resolution = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "days";
+      var quantity = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 30;
+
+      var url = "/users/" + username + "/statistics";
+      var query = {
+        resolution: resolution,
+        quantity: quantity
+      };
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    }
+  };
+}
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = photos;
+
+var _utils = __webpack_require__(8);
+
+var _lodash = __webpack_require__(22);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function photos() {
+  var _this = this;
+
+  return {
+    listPhotos: function listPhotos() {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+      var orderBy = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "latest";
+
+      var url = "/photos";
+      var query = {
+        page: page,
+        per_page: perPage,
+        order_by: orderBy
+      };
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    },
+
+    getPhoto: function getPhoto(id) {
+      var url = "/photos/" + id;
+
+      return _this.request({
+        url: url,
+        method: "GET"
+      });
+    },
+
+    getPhotoStats: function getPhotoStats(id) {
+      var url = "/photos/" + id + "/statistics";
+
+      return _this.request({
+        url: url,
+        method: "GET"
+      });
+    },
+
+    getRandomPhoto: function getRandomPhoto() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      var url = "/photos/random";
+      var collections = options.collections || [];
+
+      var query = {
+        featured: options.featured,
+        username: options.username,
+        orientation: options.orientation,
+        collections: collections.join(),
+        query: options.query,
+        c: options.cacheBuster || new Date().getTime(), // Avoid ajax response caching
+        count: options.count
+      };
+
+      Object.keys(query).forEach(function (key) {
+        if (!query[key]) {
+          delete query[key];
+        }
+      });
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    },
+
+    likePhoto: function likePhoto(id) {
+      if (!_this._bearerToken) {
+        throw new Error("Requires a bearerToken to be set.");
+      }
+
+      var url = "/photos/" + id + "/like";
+
+      return _this.request({
+        url: url,
+        method: "POST"
+      });
+    },
+
+    unlikePhoto: function unlikePhoto(id) {
+      if (!_this._bearerToken) {
+        throw new Error("Requires a bearerToken to be set.");
+      }
+
+      var url = "/photos/" + id + "/like";
+
+      return _this.request({
+        url: url,
+        method: "DELETE"
+      });
+    },
+
+    downloadPhoto: function downloadPhoto(photo) {
+      var downloadLocation = (0, _lodash2.default)(photo, "links.download_location", undefined);
+
+      if (downloadLocation === undefined) {
+        throw new Error("Object received is not a photo. " + photo);
+      }
+
+      var urlComponents = (0, _utils.getUrlComponents)(downloadLocation);
+
+      return _this.request({
+        url: urlComponents.pathname,
+        method: "GET",
+        query: urlComponents.query
+      });
+    }
+  };
+}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    symbolTag = '[object Symbol]';
+
+/** Used to match property names within property paths. */
+var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
+    reIsPlainProp = /^\w*$/,
+    reLeadingDot = /^\./,
+    rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match backslashes in property paths. */
+var reEscapeChar = /\\(\\)?/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Symbol = root.Symbol,
+    splice = arrayProto.splice;
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.get` without support for default values.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @returns {*} Returns the resolved value.
+ */
+function baseGet(object, path) {
+  path = isKey(path, object) ? [path] : castPath(path);
+
+  var index = 0,
+      length = path.length;
+
+  while (object != null && index < length) {
+    object = object[toKey(path[index++])];
+  }
+  return (index && index == length) ? object : undefined;
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.toString` which doesn't convert nullish
+ * values to empty strings.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Casts `value` to a path array if it's not one.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {Array} Returns the cast property path array.
+ */
+function castPath(value) {
+  return isArray(value) ? value : stringToPath(value);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is a property name and not a property path.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {Object} [object] The object to query keys on.
+ * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+ */
+function isKey(value, object) {
+  if (isArray(value)) {
+    return false;
+  }
+  var type = typeof value;
+  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+      value == null || isSymbol(value)) {
+    return true;
+  }
+  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object));
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Converts `string` to a property path array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the property path array.
+ */
+var stringToPath = memoize(function(string) {
+  string = toString(string);
+
+  var result = [];
+  if (reLeadingDot.test(string)) {
+    result.push('');
+  }
+  string.replace(rePropName, function(match, number, quote, string) {
+    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+});
+
+/**
+ * Converts `value` to a string key if it's not a string or symbol.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @returns {string|symbol} Returns the key.
+ */
+function toKey(value) {
+  if (typeof value == 'string' || isSymbol(value)) {
+    return value;
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * Creates a function that memoizes the result of `func`. If `resolver` is
+ * provided, it determines the cache key for storing the result based on the
+ * arguments provided to the memoized function. By default, the first argument
+ * provided to the memoized function is used as the map cache key. The `func`
+ * is invoked with the `this` binding of the memoized function.
+ *
+ * **Note:** The cache is exposed as the `cache` property on the memoized
+ * function. Its creation may be customized by replacing the `_.memoize.Cache`
+ * constructor with one whose instances implement the
+ * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
+ * method interface of `delete`, `get`, `has`, and `set`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to have its output memoized.
+ * @param {Function} [resolver] The function to resolve the cache key.
+ * @returns {Function} Returns the new memoized function.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ * var other = { 'c': 3, 'd': 4 };
+ *
+ * var values = _.memoize(_.values);
+ * values(object);
+ * // => [1, 2]
+ *
+ * values(other);
+ * // => [3, 4]
+ *
+ * object.a = 2;
+ * values(object);
+ * // => [1, 2]
+ *
+ * // Modify the result cache.
+ * values.cache.set(object, ['a', 'b']);
+ * values(object);
+ * // => ['a', 'b']
+ *
+ * // Replace `_.memoize.Cache`.
+ * _.memoize.Cache = WeakMap;
+ */
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result);
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || MapCache);
+  return memoized;
+}
+
+// Assign cache to `_.memoize`.
+memoize.Cache = MapCache;
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a string. An empty string is returned for `null`
+ * and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is returned in its place.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.7.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @param {Array|string} path The path of the property to get.
+ * @param {*} [defaultValue] The value returned for `undefined` resolved values.
+ * @returns {*} Returns the resolved value.
+ * @example
+ *
+ * var object = { 'a': [{ 'b': { 'c': 3 } }] };
+ *
+ * _.get(object, 'a[0].b.c');
+ * // => 3
+ *
+ * _.get(object, ['a', '0', 'b', 'c']);
+ * // => 3
+ *
+ * _.get(object, 'a.b.c', 'default');
+ * // => 'default'
+ */
+function get(object, path, defaultValue) {
+  var result = object == null ? undefined : baseGet(object, path);
+  return result === undefined ? defaultValue : result;
+}
+
+module.exports = get;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(10)))
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = collections;
+function collections() {
+  var _this = this;
+
+  return {
+    listCollections: function listCollections() {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+
+      var url = "/collections";
+
+      var query = {
+        page: page,
+        per_page: perPage
+      };
+
+      return _this.request({
+        url: url,
+        method: "GET",
+        query: query
+      });
+    },
+
+    getCollection: collection.bind(this),
+
+    getCollectionPhotos: collectionPhotos.bind(this),
+
+    createCollection: createUpdateCollection.bind(this, null),
+
+    updateCollection: createUpdateCollection.bind(this),
+
+    deleteCollection: function deleteCollection(id) {
+      var url = "/collections/" + id;
+
+      return _this.request({
+        url: url,
+        method: "DELETE"
+      });
+    },
+
+    addPhotoToCollection: function addPhotoToCollection(collectionId, photoId) {
+      var url = "/collections/" + collectionId + "/add";
+
+      return _this.request({
+        url: url,
+        method: "POST",
+        body: {
+          photo_id: photoId
+        }
+      });
+    },
+
+    removePhotoFromCollection: function removePhotoFromCollection(collectionId, photoId) {
+      var url = "/collections/" + collectionId + "/remove?photo_id=" + photoId;
+
+      return _this.request({
+        url: url,
+        method: "DELETE"
+      });
+    },
+
+    listRelatedCollections: function listRelatedCollections(collectionId) {
+      var url = "/collections/" + collectionId + "/related";
+
+      return _this.request({
+        url: url,
+        method: "GET"
+      });
+    }
+  };
+}
+
+function collection(id) {
+  return this.request({
+    url: "/collections/" + id,
+    method: "GET"
+  });
+}
+
+function collectionPhotos(id) {
+  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+  var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "latest";
+
+  var query = {
+    page: page,
+    per_page: perPage,
+    order_by: orderBy
+  };
+
+  return this.request({
+    url: "/collections/" + id + "/photos",
+    method: "GET",
+    query: query
+  });
+}
+
+function createUpdateCollection(id, title, description, isPrivate) {
+  var url = id ? "/collections/" + id : "/collections";
+  var body = {
+    title: title,
+    description: description,
+    "private": isPrivate
+  };
+
+  return this.request({
+    url: url,
+    method: id ? "PUT" : "POST",
+    body: body
+  });
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = search;
+function search() {
+  var _this = this;
+
+  return {
+    photos: function photos() {
+      var keyword = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+      var filters = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+      var collections = filters.collections || [];
+      var query = {
+        query: encodeURIComponent(keyword),
+        per_page: perPage,
+        orientation: filters.orientation,
+        collections: collections.join(),
+        page: page
+      };
+
+      Object.keys(query).forEach(function (key) {
+        if (!query[key] && key != "query") {
+          delete query[key];
+        }
+      });
+
+      return _this.request({
+        url: "/search/photos",
+        method: "GET",
+        query: query
+      });
+    },
+
+    users: function users() {
+      var keyword = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+
+      var query = {
+        query: encodeURIComponent(keyword),
+        per_page: perPage,
+        page: page
+      };
+
+      return _this.request({
+        url: "/search/users",
+        method: "GET",
+        query: query
+      });
+    },
+
+    collections: function collections() {
+      var keyword = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+
+      var query = {
+        query: encodeURIComponent(keyword),
+        per_page: perPage,
+        page: page
+      };
+
+      return _this.request({
+        url: "/search/collections",
+        method: "GET",
+        query: query
+      });
+    }
+  };
+}
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = stats;
+function stats() {
+  var _this = this;
+
+  return {
+    total: function total() {
+      var url = "/stats/total";
+
+      return _this.request({
+        url: url,
+        method: "GET"
+      });
+    }
+  };
+}
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports) {
 
-eval("// Filename: formurlencoded.js\n// Timestamp: 2016.01.18-15:36:37 (last modified)\n// Author(s): Bumblehead (www.bumblehead.com), JBlashill (james@blashill.com)\n//\n// http://www.w3.org/TR/html5/forms.html#url-encoded-form-data\n// input: {one:1,two:2} return: '[one]=1&[two]=2'\n\nvar formurlencoded = module.exports = function (data, opts) {\n  opts = typeof opts === 'object' ? opts : {};\n\n  function encode (value) {\n    return String(value)\n      .replace(/[^ !'()~\\*]*/g, encodeURIComponent)\n      .replace(/ /g, '+')\n      .replace(/[!'()~\\*]/g, function (ch) {\n        return '%' + ch.charCodeAt().toString(16).slice(-2).toUpperCase();\n      });\n  }\n\n  function keys (obj) {\n    var keys = Object.keys(obj);\n\n    return opts.sorted ? keys.sort() : keys;\n  }\n\n  function filterjoin (arr) {\n    return arr.filter(function (e) { return e; }).join('&');\n  }\n\n  function objnest (name, obj) {\n    return filterjoin(keys(obj).map(function (key) {\n      return nest(name + '[' + key + ']', obj[key]);\n    }));\n  }\n\n  function arrnest (name, arr) {\n    return filterjoin(arr.map(function (elem) {\n      return nest(name + '[]', elem);\n    }));\n  }\n\n  function nest (name, value) {\n    var type = typeof value,\n        f = null;\n\n    if (value === f) {\n      f = opts.ignorenull ? f : encode(name) + '=' + f;\n    } else if (/string|number|boolean/.test(type)) {\n      f = encode(name) + '=' + encode(value);\n    } else if (Array.isArray(value)) {\n      f = arrnest(name, value);\n    } else if (type === 'object') {\n      f = objnest(name, value);\n    }\n\n    return f;\n  }\n\n  return filterjoin(keys(data).map(function (key) {\n    return nest(key, data[key]);\n  }));\n};\n\n\n//# sourceURL=webpack:///./node_modules/form-urlencoded/form-urlencoded.js?");
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
 
 /***/ }),
-
-/***/ "./node_modules/js-cookie/src/js.cookie.js":
-/*!*************************************************!*\
-  !*** ./node_modules/js-cookie/src/js.cookie.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!\n * JavaScript Cookie v2.2.1\n * https://github.com/js-cookie/js-cookie\n *\n * Copyright 2006, 2015 Klaus Hartl & Fagner Brack\n * Released under the MIT license\n */\n;(function (factory) {\n\tvar registeredInModuleLoader;\n\tif (true) {\n\t\t!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?\n\t\t\t\t(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :\n\t\t\t\t__WEBPACK_AMD_DEFINE_FACTORY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n\t\tregisteredInModuleLoader = true;\n\t}\n\tif (true) {\n\t\tmodule.exports = factory();\n\t\tregisteredInModuleLoader = true;\n\t}\n\tif (!registeredInModuleLoader) {\n\t\tvar OldCookies = window.Cookies;\n\t\tvar api = window.Cookies = factory();\n\t\tapi.noConflict = function () {\n\t\t\twindow.Cookies = OldCookies;\n\t\t\treturn api;\n\t\t};\n\t}\n}(function () {\n\tfunction extend () {\n\t\tvar i = 0;\n\t\tvar result = {};\n\t\tfor (; i < arguments.length; i++) {\n\t\t\tvar attributes = arguments[ i ];\n\t\t\tfor (var key in attributes) {\n\t\t\t\tresult[key] = attributes[key];\n\t\t\t}\n\t\t}\n\t\treturn result;\n\t}\n\n\tfunction decode (s) {\n\t\treturn s.replace(/(%[0-9A-Z]{2})+/g, decodeURIComponent);\n\t}\n\n\tfunction init (converter) {\n\t\tfunction api() {}\n\n\t\tfunction set (key, value, attributes) {\n\t\t\tif (typeof document === 'undefined') {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tattributes = extend({\n\t\t\t\tpath: '/'\n\t\t\t}, api.defaults, attributes);\n\n\t\t\tif (typeof attributes.expires === 'number') {\n\t\t\t\tattributes.expires = new Date(new Date() * 1 + attributes.expires * 864e+5);\n\t\t\t}\n\n\t\t\t// We're using \"expires\" because \"max-age\" is not supported by IE\n\t\t\tattributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';\n\n\t\t\ttry {\n\t\t\t\tvar result = JSON.stringify(value);\n\t\t\t\tif (/^[\\{\\[]/.test(result)) {\n\t\t\t\t\tvalue = result;\n\t\t\t\t}\n\t\t\t} catch (e) {}\n\n\t\t\tvalue = converter.write ?\n\t\t\t\tconverter.write(value, key) :\n\t\t\t\tencodeURIComponent(String(value))\n\t\t\t\t\t.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);\n\n\t\t\tkey = encodeURIComponent(String(key))\n\t\t\t\t.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)\n\t\t\t\t.replace(/[\\(\\)]/g, escape);\n\n\t\t\tvar stringifiedAttributes = '';\n\t\t\tfor (var attributeName in attributes) {\n\t\t\t\tif (!attributes[attributeName]) {\n\t\t\t\t\tcontinue;\n\t\t\t\t}\n\t\t\t\tstringifiedAttributes += '; ' + attributeName;\n\t\t\t\tif (attributes[attributeName] === true) {\n\t\t\t\t\tcontinue;\n\t\t\t\t}\n\n\t\t\t\t// Considers RFC 6265 section 5.2:\n\t\t\t\t// ...\n\t\t\t\t// 3.  If the remaining unparsed-attributes contains a %x3B (\";\")\n\t\t\t\t//     character:\n\t\t\t\t// Consume the characters of the unparsed-attributes up to,\n\t\t\t\t// not including, the first %x3B (\";\") character.\n\t\t\t\t// ...\n\t\t\t\tstringifiedAttributes += '=' + attributes[attributeName].split(';')[0];\n\t\t\t}\n\n\t\t\treturn (document.cookie = key + '=' + value + stringifiedAttributes);\n\t\t}\n\n\t\tfunction get (key, json) {\n\t\t\tif (typeof document === 'undefined') {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tvar jar = {};\n\t\t\t// To prevent the for loop in the first place assign an empty array\n\t\t\t// in case there are no cookies at all.\n\t\t\tvar cookies = document.cookie ? document.cookie.split('; ') : [];\n\t\t\tvar i = 0;\n\n\t\t\tfor (; i < cookies.length; i++) {\n\t\t\t\tvar parts = cookies[i].split('=');\n\t\t\t\tvar cookie = parts.slice(1).join('=');\n\n\t\t\t\tif (!json && cookie.charAt(0) === '\"') {\n\t\t\t\t\tcookie = cookie.slice(1, -1);\n\t\t\t\t}\n\n\t\t\t\ttry {\n\t\t\t\t\tvar name = decode(parts[0]);\n\t\t\t\t\tcookie = (converter.read || converter)(cookie, name) ||\n\t\t\t\t\t\tdecode(cookie);\n\n\t\t\t\t\tif (json) {\n\t\t\t\t\t\ttry {\n\t\t\t\t\t\t\tcookie = JSON.parse(cookie);\n\t\t\t\t\t\t} catch (e) {}\n\t\t\t\t\t}\n\n\t\t\t\t\tjar[name] = cookie;\n\n\t\t\t\t\tif (key === name) {\n\t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t} catch (e) {}\n\t\t\t}\n\n\t\t\treturn key ? jar[key] : jar;\n\t\t}\n\n\t\tapi.set = set;\n\t\tapi.get = function (key) {\n\t\t\treturn get(key, false /* read as raw */);\n\t\t};\n\t\tapi.getJSON = function (key) {\n\t\t\treturn get(key, true /* read as json */);\n\t\t};\n\t\tapi.remove = function (key, attributes) {\n\t\t\tset(key, '', extend(attributes, {\n\t\t\t\texpires: -1\n\t\t\t}));\n\t\t};\n\n\t\tapi.defaults = {};\n\n\t\tapi.withConverter = init;\n\n\t\treturn api;\n\t}\n\n\treturn init(function () {});\n}));\n\n\n//# sourceURL=webpack:///./node_modules/js-cookie/src/js.cookie.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash.get/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash.get/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("/* WEBPACK VAR INJECTION */(function(global) {/**\n * lodash (Custom Build) <https://lodash.com/>\n * Build: `lodash modularize exports=\"npm\" -o ./`\n * Copyright jQuery Foundation and other contributors <https://jquery.org/>\n * Released under MIT license <https://lodash.com/license>\n * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>\n * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors\n */\n\n/** Used as the `TypeError` message for \"Functions\" methods. */\nvar FUNC_ERROR_TEXT = 'Expected a function';\n\n/** Used to stand-in for `undefined` hash values. */\nvar HASH_UNDEFINED = '__lodash_hash_undefined__';\n\n/** Used as references for various `Number` constants. */\nvar INFINITY = 1 / 0;\n\n/** `Object#toString` result references. */\nvar funcTag = '[object Function]',\n    genTag = '[object GeneratorFunction]',\n    symbolTag = '[object Symbol]';\n\n/** Used to match property names within property paths. */\nvar reIsDeepProp = /\\.|\\[(?:[^[\\]]*|([\"'])(?:(?!\\1)[^\\\\]|\\\\.)*?\\1)\\]/,\n    reIsPlainProp = /^\\w*$/,\n    reLeadingDot = /^\\./,\n    rePropName = /[^.[\\]]+|\\[(?:(-?\\d+(?:\\.\\d+)?)|([\"'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2)\\]|(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))/g;\n\n/**\n * Used to match `RegExp`\n * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).\n */\nvar reRegExpChar = /[\\\\^$.*+?()[\\]{}|]/g;\n\n/** Used to match backslashes in property paths. */\nvar reEscapeChar = /\\\\(\\\\)?/g;\n\n/** Used to detect host constructors (Safari). */\nvar reIsHostCtor = /^\\[object .+?Constructor\\]$/;\n\n/** Detect free variable `global` from Node.js. */\nvar freeGlobal = typeof global == 'object' && global && global.Object === Object && global;\n\n/** Detect free variable `self`. */\nvar freeSelf = typeof self == 'object' && self && self.Object === Object && self;\n\n/** Used as a reference to the global object. */\nvar root = freeGlobal || freeSelf || Function('return this')();\n\n/**\n * Gets the value at `key` of `object`.\n *\n * @private\n * @param {Object} [object] The object to query.\n * @param {string} key The key of the property to get.\n * @returns {*} Returns the property value.\n */\nfunction getValue(object, key) {\n  return object == null ? undefined : object[key];\n}\n\n/**\n * Checks if `value` is a host object in IE < 9.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a host object, else `false`.\n */\nfunction isHostObject(value) {\n  // Many host objects are `Object` objects that can coerce to strings\n  // despite having improperly defined `toString` methods.\n  var result = false;\n  if (value != null && typeof value.toString != 'function') {\n    try {\n      result = !!(value + '');\n    } catch (e) {}\n  }\n  return result;\n}\n\n/** Used for built-in method references. */\nvar arrayProto = Array.prototype,\n    funcProto = Function.prototype,\n    objectProto = Object.prototype;\n\n/** Used to detect overreaching core-js shims. */\nvar coreJsData = root['__core-js_shared__'];\n\n/** Used to detect methods masquerading as native. */\nvar maskSrcKey = (function() {\n  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');\n  return uid ? ('Symbol(src)_1.' + uid) : '';\n}());\n\n/** Used to resolve the decompiled source of functions. */\nvar funcToString = funcProto.toString;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * Used to resolve the\n * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)\n * of values.\n */\nvar objectToString = objectProto.toString;\n\n/** Used to detect if a method is native. */\nvar reIsNative = RegExp('^' +\n  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\\\$&')\n  .replace(/hasOwnProperty|(function).*?(?=\\\\\\()| for .+?(?=\\\\\\])/g, '$1.*?') + '$'\n);\n\n/** Built-in value references. */\nvar Symbol = root.Symbol,\n    splice = arrayProto.splice;\n\n/* Built-in method references that are verified to be native. */\nvar Map = getNative(root, 'Map'),\n    nativeCreate = getNative(Object, 'create');\n\n/** Used to convert symbols to primitives and strings. */\nvar symbolProto = Symbol ? Symbol.prototype : undefined,\n    symbolToString = symbolProto ? symbolProto.toString : undefined;\n\n/**\n * Creates a hash object.\n *\n * @private\n * @constructor\n * @param {Array} [entries] The key-value pairs to cache.\n */\nfunction Hash(entries) {\n  var index = -1,\n      length = entries ? entries.length : 0;\n\n  this.clear();\n  while (++index < length) {\n    var entry = entries[index];\n    this.set(entry[0], entry[1]);\n  }\n}\n\n/**\n * Removes all key-value entries from the hash.\n *\n * @private\n * @name clear\n * @memberOf Hash\n */\nfunction hashClear() {\n  this.__data__ = nativeCreate ? nativeCreate(null) : {};\n}\n\n/**\n * Removes `key` and its value from the hash.\n *\n * @private\n * @name delete\n * @memberOf Hash\n * @param {Object} hash The hash to modify.\n * @param {string} key The key of the value to remove.\n * @returns {boolean} Returns `true` if the entry was removed, else `false`.\n */\nfunction hashDelete(key) {\n  return this.has(key) && delete this.__data__[key];\n}\n\n/**\n * Gets the hash value for `key`.\n *\n * @private\n * @name get\n * @memberOf Hash\n * @param {string} key The key of the value to get.\n * @returns {*} Returns the entry value.\n */\nfunction hashGet(key) {\n  var data = this.__data__;\n  if (nativeCreate) {\n    var result = data[key];\n    return result === HASH_UNDEFINED ? undefined : result;\n  }\n  return hasOwnProperty.call(data, key) ? data[key] : undefined;\n}\n\n/**\n * Checks if a hash value for `key` exists.\n *\n * @private\n * @name has\n * @memberOf Hash\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction hashHas(key) {\n  var data = this.__data__;\n  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);\n}\n\n/**\n * Sets the hash `key` to `value`.\n *\n * @private\n * @name set\n * @memberOf Hash\n * @param {string} key The key of the value to set.\n * @param {*} value The value to set.\n * @returns {Object} Returns the hash instance.\n */\nfunction hashSet(key, value) {\n  var data = this.__data__;\n  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;\n  return this;\n}\n\n// Add methods to `Hash`.\nHash.prototype.clear = hashClear;\nHash.prototype['delete'] = hashDelete;\nHash.prototype.get = hashGet;\nHash.prototype.has = hashHas;\nHash.prototype.set = hashSet;\n\n/**\n * Creates an list cache object.\n *\n * @private\n * @constructor\n * @param {Array} [entries] The key-value pairs to cache.\n */\nfunction ListCache(entries) {\n  var index = -1,\n      length = entries ? entries.length : 0;\n\n  this.clear();\n  while (++index < length) {\n    var entry = entries[index];\n    this.set(entry[0], entry[1]);\n  }\n}\n\n/**\n * Removes all key-value entries from the list cache.\n *\n * @private\n * @name clear\n * @memberOf ListCache\n */\nfunction listCacheClear() {\n  this.__data__ = [];\n}\n\n/**\n * Removes `key` and its value from the list cache.\n *\n * @private\n * @name delete\n * @memberOf ListCache\n * @param {string} key The key of the value to remove.\n * @returns {boolean} Returns `true` if the entry was removed, else `false`.\n */\nfunction listCacheDelete(key) {\n  var data = this.__data__,\n      index = assocIndexOf(data, key);\n\n  if (index < 0) {\n    return false;\n  }\n  var lastIndex = data.length - 1;\n  if (index == lastIndex) {\n    data.pop();\n  } else {\n    splice.call(data, index, 1);\n  }\n  return true;\n}\n\n/**\n * Gets the list cache value for `key`.\n *\n * @private\n * @name get\n * @memberOf ListCache\n * @param {string} key The key of the value to get.\n * @returns {*} Returns the entry value.\n */\nfunction listCacheGet(key) {\n  var data = this.__data__,\n      index = assocIndexOf(data, key);\n\n  return index < 0 ? undefined : data[index][1];\n}\n\n/**\n * Checks if a list cache value for `key` exists.\n *\n * @private\n * @name has\n * @memberOf ListCache\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction listCacheHas(key) {\n  return assocIndexOf(this.__data__, key) > -1;\n}\n\n/**\n * Sets the list cache `key` to `value`.\n *\n * @private\n * @name set\n * @memberOf ListCache\n * @param {string} key The key of the value to set.\n * @param {*} value The value to set.\n * @returns {Object} Returns the list cache instance.\n */\nfunction listCacheSet(key, value) {\n  var data = this.__data__,\n      index = assocIndexOf(data, key);\n\n  if (index < 0) {\n    data.push([key, value]);\n  } else {\n    data[index][1] = value;\n  }\n  return this;\n}\n\n// Add methods to `ListCache`.\nListCache.prototype.clear = listCacheClear;\nListCache.prototype['delete'] = listCacheDelete;\nListCache.prototype.get = listCacheGet;\nListCache.prototype.has = listCacheHas;\nListCache.prototype.set = listCacheSet;\n\n/**\n * Creates a map cache object to store key-value pairs.\n *\n * @private\n * @constructor\n * @param {Array} [entries] The key-value pairs to cache.\n */\nfunction MapCache(entries) {\n  var index = -1,\n      length = entries ? entries.length : 0;\n\n  this.clear();\n  while (++index < length) {\n    var entry = entries[index];\n    this.set(entry[0], entry[1]);\n  }\n}\n\n/**\n * Removes all key-value entries from the map.\n *\n * @private\n * @name clear\n * @memberOf MapCache\n */\nfunction mapCacheClear() {\n  this.__data__ = {\n    'hash': new Hash,\n    'map': new (Map || ListCache),\n    'string': new Hash\n  };\n}\n\n/**\n * Removes `key` and its value from the map.\n *\n * @private\n * @name delete\n * @memberOf MapCache\n * @param {string} key The key of the value to remove.\n * @returns {boolean} Returns `true` if the entry was removed, else `false`.\n */\nfunction mapCacheDelete(key) {\n  return getMapData(this, key)['delete'](key);\n}\n\n/**\n * Gets the map value for `key`.\n *\n * @private\n * @name get\n * @memberOf MapCache\n * @param {string} key The key of the value to get.\n * @returns {*} Returns the entry value.\n */\nfunction mapCacheGet(key) {\n  return getMapData(this, key).get(key);\n}\n\n/**\n * Checks if a map value for `key` exists.\n *\n * @private\n * @name has\n * @memberOf MapCache\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction mapCacheHas(key) {\n  return getMapData(this, key).has(key);\n}\n\n/**\n * Sets the map `key` to `value`.\n *\n * @private\n * @name set\n * @memberOf MapCache\n * @param {string} key The key of the value to set.\n * @param {*} value The value to set.\n * @returns {Object} Returns the map cache instance.\n */\nfunction mapCacheSet(key, value) {\n  getMapData(this, key).set(key, value);\n  return this;\n}\n\n// Add methods to `MapCache`.\nMapCache.prototype.clear = mapCacheClear;\nMapCache.prototype['delete'] = mapCacheDelete;\nMapCache.prototype.get = mapCacheGet;\nMapCache.prototype.has = mapCacheHas;\nMapCache.prototype.set = mapCacheSet;\n\n/**\n * Gets the index at which the `key` is found in `array` of key-value pairs.\n *\n * @private\n * @param {Array} array The array to inspect.\n * @param {*} key The key to search for.\n * @returns {number} Returns the index of the matched value, else `-1`.\n */\nfunction assocIndexOf(array, key) {\n  var length = array.length;\n  while (length--) {\n    if (eq(array[length][0], key)) {\n      return length;\n    }\n  }\n  return -1;\n}\n\n/**\n * The base implementation of `_.get` without support for default values.\n *\n * @private\n * @param {Object} object The object to query.\n * @param {Array|string} path The path of the property to get.\n * @returns {*} Returns the resolved value.\n */\nfunction baseGet(object, path) {\n  path = isKey(path, object) ? [path] : castPath(path);\n\n  var index = 0,\n      length = path.length;\n\n  while (object != null && index < length) {\n    object = object[toKey(path[index++])];\n  }\n  return (index && index == length) ? object : undefined;\n}\n\n/**\n * The base implementation of `_.isNative` without bad shim checks.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a native function,\n *  else `false`.\n */\nfunction baseIsNative(value) {\n  if (!isObject(value) || isMasked(value)) {\n    return false;\n  }\n  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;\n  return pattern.test(toSource(value));\n}\n\n/**\n * The base implementation of `_.toString` which doesn't convert nullish\n * values to empty strings.\n *\n * @private\n * @param {*} value The value to process.\n * @returns {string} Returns the string.\n */\nfunction baseToString(value) {\n  // Exit early for strings to avoid a performance hit in some environments.\n  if (typeof value == 'string') {\n    return value;\n  }\n  if (isSymbol(value)) {\n    return symbolToString ? symbolToString.call(value) : '';\n  }\n  var result = (value + '');\n  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;\n}\n\n/**\n * Casts `value` to a path array if it's not one.\n *\n * @private\n * @param {*} value The value to inspect.\n * @returns {Array} Returns the cast property path array.\n */\nfunction castPath(value) {\n  return isArray(value) ? value : stringToPath(value);\n}\n\n/**\n * Gets the data for `map`.\n *\n * @private\n * @param {Object} map The map to query.\n * @param {string} key The reference key.\n * @returns {*} Returns the map data.\n */\nfunction getMapData(map, key) {\n  var data = map.__data__;\n  return isKeyable(key)\n    ? data[typeof key == 'string' ? 'string' : 'hash']\n    : data.map;\n}\n\n/**\n * Gets the native function at `key` of `object`.\n *\n * @private\n * @param {Object} object The object to query.\n * @param {string} key The key of the method to get.\n * @returns {*} Returns the function if it's native, else `undefined`.\n */\nfunction getNative(object, key) {\n  var value = getValue(object, key);\n  return baseIsNative(value) ? value : undefined;\n}\n\n/**\n * Checks if `value` is a property name and not a property path.\n *\n * @private\n * @param {*} value The value to check.\n * @param {Object} [object] The object to query keys on.\n * @returns {boolean} Returns `true` if `value` is a property name, else `false`.\n */\nfunction isKey(value, object) {\n  if (isArray(value)) {\n    return false;\n  }\n  var type = typeof value;\n  if (type == 'number' || type == 'symbol' || type == 'boolean' ||\n      value == null || isSymbol(value)) {\n    return true;\n  }\n  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||\n    (object != null && value in Object(object));\n}\n\n/**\n * Checks if `value` is suitable for use as unique object key.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is suitable, else `false`.\n */\nfunction isKeyable(value) {\n  var type = typeof value;\n  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')\n    ? (value !== '__proto__')\n    : (value === null);\n}\n\n/**\n * Checks if `func` has its source masked.\n *\n * @private\n * @param {Function} func The function to check.\n * @returns {boolean} Returns `true` if `func` is masked, else `false`.\n */\nfunction isMasked(func) {\n  return !!maskSrcKey && (maskSrcKey in func);\n}\n\n/**\n * Converts `string` to a property path array.\n *\n * @private\n * @param {string} string The string to convert.\n * @returns {Array} Returns the property path array.\n */\nvar stringToPath = memoize(function(string) {\n  string = toString(string);\n\n  var result = [];\n  if (reLeadingDot.test(string)) {\n    result.push('');\n  }\n  string.replace(rePropName, function(match, number, quote, string) {\n    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));\n  });\n  return result;\n});\n\n/**\n * Converts `value` to a string key if it's not a string or symbol.\n *\n * @private\n * @param {*} value The value to inspect.\n * @returns {string|symbol} Returns the key.\n */\nfunction toKey(value) {\n  if (typeof value == 'string' || isSymbol(value)) {\n    return value;\n  }\n  var result = (value + '');\n  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;\n}\n\n/**\n * Converts `func` to its source code.\n *\n * @private\n * @param {Function} func The function to process.\n * @returns {string} Returns the source code.\n */\nfunction toSource(func) {\n  if (func != null) {\n    try {\n      return funcToString.call(func);\n    } catch (e) {}\n    try {\n      return (func + '');\n    } catch (e) {}\n  }\n  return '';\n}\n\n/**\n * Creates a function that memoizes the result of `func`. If `resolver` is\n * provided, it determines the cache key for storing the result based on the\n * arguments provided to the memoized function. By default, the first argument\n * provided to the memoized function is used as the map cache key. The `func`\n * is invoked with the `this` binding of the memoized function.\n *\n * **Note:** The cache is exposed as the `cache` property on the memoized\n * function. Its creation may be customized by replacing the `_.memoize.Cache`\n * constructor with one whose instances implement the\n * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)\n * method interface of `delete`, `get`, `has`, and `set`.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Function\n * @param {Function} func The function to have its output memoized.\n * @param {Function} [resolver] The function to resolve the cache key.\n * @returns {Function} Returns the new memoized function.\n * @example\n *\n * var object = { 'a': 1, 'b': 2 };\n * var other = { 'c': 3, 'd': 4 };\n *\n * var values = _.memoize(_.values);\n * values(object);\n * // => [1, 2]\n *\n * values(other);\n * // => [3, 4]\n *\n * object.a = 2;\n * values(object);\n * // => [1, 2]\n *\n * // Modify the result cache.\n * values.cache.set(object, ['a', 'b']);\n * values(object);\n * // => ['a', 'b']\n *\n * // Replace `_.memoize.Cache`.\n * _.memoize.Cache = WeakMap;\n */\nfunction memoize(func, resolver) {\n  if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {\n    throw new TypeError(FUNC_ERROR_TEXT);\n  }\n  var memoized = function() {\n    var args = arguments,\n        key = resolver ? resolver.apply(this, args) : args[0],\n        cache = memoized.cache;\n\n    if (cache.has(key)) {\n      return cache.get(key);\n    }\n    var result = func.apply(this, args);\n    memoized.cache = cache.set(key, result);\n    return result;\n  };\n  memoized.cache = new (memoize.Cache || MapCache);\n  return memoized;\n}\n\n// Assign cache to `_.memoize`.\nmemoize.Cache = MapCache;\n\n/**\n * Performs a\n * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)\n * comparison between two values to determine if they are equivalent.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to compare.\n * @param {*} other The other value to compare.\n * @returns {boolean} Returns `true` if the values are equivalent, else `false`.\n * @example\n *\n * var object = { 'a': 1 };\n * var other = { 'a': 1 };\n *\n * _.eq(object, object);\n * // => true\n *\n * _.eq(object, other);\n * // => false\n *\n * _.eq('a', 'a');\n * // => true\n *\n * _.eq('a', Object('a'));\n * // => false\n *\n * _.eq(NaN, NaN);\n * // => true\n */\nfunction eq(value, other) {\n  return value === other || (value !== value && other !== other);\n}\n\n/**\n * Checks if `value` is classified as an `Array` object.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is an array, else `false`.\n * @example\n *\n * _.isArray([1, 2, 3]);\n * // => true\n *\n * _.isArray(document.body.children);\n * // => false\n *\n * _.isArray('abc');\n * // => false\n *\n * _.isArray(_.noop);\n * // => false\n */\nvar isArray = Array.isArray;\n\n/**\n * Checks if `value` is classified as a `Function` object.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a function, else `false`.\n * @example\n *\n * _.isFunction(_);\n * // => true\n *\n * _.isFunction(/abc/);\n * // => false\n */\nfunction isFunction(value) {\n  // The use of `Object#toString` avoids issues with the `typeof` operator\n  // in Safari 8-9 which returns 'object' for typed array and other constructors.\n  var tag = isObject(value) ? objectToString.call(value) : '';\n  return tag == funcTag || tag == genTag;\n}\n\n/**\n * Checks if `value` is the\n * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)\n * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is an object, else `false`.\n * @example\n *\n * _.isObject({});\n * // => true\n *\n * _.isObject([1, 2, 3]);\n * // => true\n *\n * _.isObject(_.noop);\n * // => true\n *\n * _.isObject(null);\n * // => false\n */\nfunction isObject(value) {\n  var type = typeof value;\n  return !!value && (type == 'object' || type == 'function');\n}\n\n/**\n * Checks if `value` is object-like. A value is object-like if it's not `null`\n * and has a `typeof` result of \"object\".\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is object-like, else `false`.\n * @example\n *\n * _.isObjectLike({});\n * // => true\n *\n * _.isObjectLike([1, 2, 3]);\n * // => true\n *\n * _.isObjectLike(_.noop);\n * // => false\n *\n * _.isObjectLike(null);\n * // => false\n */\nfunction isObjectLike(value) {\n  return !!value && typeof value == 'object';\n}\n\n/**\n * Checks if `value` is classified as a `Symbol` primitive or object.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.\n * @example\n *\n * _.isSymbol(Symbol.iterator);\n * // => true\n *\n * _.isSymbol('abc');\n * // => false\n */\nfunction isSymbol(value) {\n  return typeof value == 'symbol' ||\n    (isObjectLike(value) && objectToString.call(value) == symbolTag);\n}\n\n/**\n * Converts `value` to a string. An empty string is returned for `null`\n * and `undefined` values. The sign of `-0` is preserved.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to process.\n * @returns {string} Returns the string.\n * @example\n *\n * _.toString(null);\n * // => ''\n *\n * _.toString(-0);\n * // => '-0'\n *\n * _.toString([1, 2, 3]);\n * // => '1,2,3'\n */\nfunction toString(value) {\n  return value == null ? '' : baseToString(value);\n}\n\n/**\n * Gets the value at `path` of `object`. If the resolved value is\n * `undefined`, the `defaultValue` is returned in its place.\n *\n * @static\n * @memberOf _\n * @since 3.7.0\n * @category Object\n * @param {Object} object The object to query.\n * @param {Array|string} path The path of the property to get.\n * @param {*} [defaultValue] The value returned for `undefined` resolved values.\n * @returns {*} Returns the resolved value.\n * @example\n *\n * var object = { 'a': [{ 'b': { 'c': 3 } }] };\n *\n * _.get(object, 'a[0].b.c');\n * // => 3\n *\n * _.get(object, ['a', '0', 'b', 'c']);\n * // => 3\n *\n * _.get(object, 'a.b.c', 'default');\n * // => 'default'\n */\nfunction get(object, path, defaultValue) {\n  var result = object == null ? undefined : baseGet(object, path);\n  return result === undefined ? defaultValue : result;\n}\n\nmodule.exports = get;\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./node_modules/lodash.get/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/querystring-es3/decode.js":
-/*!************************************************!*\
-  !*** ./node_modules/querystring-es3/decode.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("// Copyright Joyent, Inc. and other Node contributors.\n//\n// Permission is hereby granted, free of charge, to any person obtaining a\n// copy of this software and associated documentation files (the\n// \"Software\"), to deal in the Software without restriction, including\n// without limitation the rights to use, copy, modify, merge, publish,\n// distribute, sublicense, and/or sell copies of the Software, and to permit\n// persons to whom the Software is furnished to do so, subject to the\n// following conditions:\n//\n// The above copyright notice and this permission notice shall be included\n// in all copies or substantial portions of the Software.\n//\n// THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS\n// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN\n// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,\n// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR\n// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE\n// USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\n\n// If obj.hasOwnProperty has been overridden, then calling\n// obj.hasOwnProperty(prop) will break.\n// See: https://github.com/joyent/node/issues/1707\nfunction hasOwnProperty(obj, prop) {\n  return Object.prototype.hasOwnProperty.call(obj, prop);\n}\n\nmodule.exports = function(qs, sep, eq, options) {\n  sep = sep || '&';\n  eq = eq || '=';\n  var obj = {};\n\n  if (typeof qs !== 'string' || qs.length === 0) {\n    return obj;\n  }\n\n  var regexp = /\\+/g;\n  qs = qs.split(sep);\n\n  var maxKeys = 1000;\n  if (options && typeof options.maxKeys === 'number') {\n    maxKeys = options.maxKeys;\n  }\n\n  var len = qs.length;\n  // maxKeys <= 0 means that we should not limit keys count\n  if (maxKeys > 0 && len > maxKeys) {\n    len = maxKeys;\n  }\n\n  for (var i = 0; i < len; ++i) {\n    var x = qs[i].replace(regexp, '%20'),\n        idx = x.indexOf(eq),\n        kstr, vstr, k, v;\n\n    if (idx >= 0) {\n      kstr = x.substr(0, idx);\n      vstr = x.substr(idx + 1);\n    } else {\n      kstr = x;\n      vstr = '';\n    }\n\n    k = decodeURIComponent(kstr);\n    v = decodeURIComponent(vstr);\n\n    if (!hasOwnProperty(obj, k)) {\n      obj[k] = v;\n    } else if (isArray(obj[k])) {\n      obj[k].push(v);\n    } else {\n      obj[k] = [obj[k], v];\n    }\n  }\n\n  return obj;\n};\n\nvar isArray = Array.isArray || function (xs) {\n  return Object.prototype.toString.call(xs) === '[object Array]';\n};\n\n\n//# sourceURL=webpack:///./node_modules/querystring-es3/decode.js?");
-
-/***/ }),
-
-/***/ "./node_modules/querystring-es3/encode.js":
-/*!************************************************!*\
-  !*** ./node_modules/querystring-es3/encode.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("// Copyright Joyent, Inc. and other Node contributors.\n//\n// Permission is hereby granted, free of charge, to any person obtaining a\n// copy of this software and associated documentation files (the\n// \"Software\"), to deal in the Software without restriction, including\n// without limitation the rights to use, copy, modify, merge, publish,\n// distribute, sublicense, and/or sell copies of the Software, and to permit\n// persons to whom the Software is furnished to do so, subject to the\n// following conditions:\n//\n// The above copyright notice and this permission notice shall be included\n// in all copies or substantial portions of the Software.\n//\n// THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS\n// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN\n// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,\n// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR\n// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE\n// USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\n\nvar stringifyPrimitive = function(v) {\n  switch (typeof v) {\n    case 'string':\n      return v;\n\n    case 'boolean':\n      return v ? 'true' : 'false';\n\n    case 'number':\n      return isFinite(v) ? v : '';\n\n    default:\n      return '';\n  }\n};\n\nmodule.exports = function(obj, sep, eq, name) {\n  sep = sep || '&';\n  eq = eq || '=';\n  if (obj === null) {\n    obj = undefined;\n  }\n\n  if (typeof obj === 'object') {\n    return map(objectKeys(obj), function(k) {\n      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;\n      if (isArray(obj[k])) {\n        return map(obj[k], function(v) {\n          return ks + encodeURIComponent(stringifyPrimitive(v));\n        }).join(sep);\n      } else {\n        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));\n      }\n    }).join(sep);\n\n  }\n\n  if (!name) return '';\n  return encodeURIComponent(stringifyPrimitive(name)) + eq +\n         encodeURIComponent(stringifyPrimitive(obj));\n};\n\nvar isArray = Array.isArray || function (xs) {\n  return Object.prototype.toString.call(xs) === '[object Array]';\n};\n\nfunction map (xs, f) {\n  if (xs.map) return xs.map(f);\n  var res = [];\n  for (var i = 0; i < xs.length; i++) {\n    res.push(f(xs[i], i));\n  }\n  return res;\n}\n\nvar objectKeys = Object.keys || function (obj) {\n  var res = [];\n  for (var key in obj) {\n    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);\n  }\n  return res;\n};\n\n\n//# sourceURL=webpack:///./node_modules/querystring-es3/encode.js?");
-
-/***/ }),
-
-/***/ "./node_modules/querystring-es3/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/querystring-es3/index.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nexports.decode = exports.parse = __webpack_require__(/*! ./decode */ \"./node_modules/querystring-es3/decode.js\");\nexports.encode = exports.stringify = __webpack_require__(/*! ./encode */ \"./node_modules/querystring-es3/encode.js\");\n\n\n//# sourceURL=webpack:///./node_modules/querystring-es3/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/querystringify/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/querystringify/index.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nvar has = Object.prototype.hasOwnProperty\n  , undef;\n\n/**\n * Decode a URI encoded string.\n *\n * @param {String} input The URI encoded string.\n * @returns {String|Null} The decoded string.\n * @api private\n */\nfunction decode(input) {\n  try {\n    return decodeURIComponent(input.replace(/\\+/g, ' '));\n  } catch (e) {\n    return null;\n  }\n}\n\n/**\n * Attempts to encode a given input.\n *\n * @param {String} input The string that needs to be encoded.\n * @returns {String|Null} The encoded string.\n * @api private\n */\nfunction encode(input) {\n  try {\n    return encodeURIComponent(input);\n  } catch (e) {\n    return null;\n  }\n}\n\n/**\n * Simple query string parser.\n *\n * @param {String} query The query string that needs to be parsed.\n * @returns {Object}\n * @api public\n */\nfunction querystring(query) {\n  var parser = /([^=?&]+)=?([^&]*)/g\n    , result = {}\n    , part;\n\n  while (part = parser.exec(query)) {\n    var key = decode(part[1])\n      , value = decode(part[2]);\n\n    //\n    // Prevent overriding of existing properties. This ensures that build-in\n    // methods like `toString` or __proto__ are not overriden by malicious\n    // querystrings.\n    //\n    // In the case if failed decoding, we want to omit the key/value pairs\n    // from the result.\n    //\n    if (key === null || value === null || key in result) continue;\n    result[key] = value;\n  }\n\n  return result;\n}\n\n/**\n * Transform a query string to an object.\n *\n * @param {Object} obj Object that should be transformed.\n * @param {String} prefix Optional prefix.\n * @returns {String}\n * @api public\n */\nfunction querystringify(obj, prefix) {\n  prefix = prefix || '';\n\n  var pairs = []\n    , value\n    , key;\n\n  //\n  // Optionally prefix with a '?' if needed\n  //\n  if ('string' !== typeof prefix) prefix = '?';\n\n  for (key in obj) {\n    if (has.call(obj, key)) {\n      value = obj[key];\n\n      //\n      // Edge cases where we actually want to encode the value to an empty\n      // string instead of the stringified value.\n      //\n      if (!value && (value === null || value === undef || isNaN(value))) {\n        value = '';\n      }\n\n      key = encodeURIComponent(key);\n      value = encodeURIComponent(value);\n\n      //\n      // If we failed to encode the strings, we should bail out as we don't\n      // want to add invalid strings to the query.\n      //\n      if (key === null || value === null) continue;\n      pairs.push(key +'='+ value);\n    }\n  }\n\n  return pairs.length ? prefix + pairs.join('&') : '';\n}\n\n//\n// Expose the module.\n//\nexports.stringify = querystringify;\nexports.parse = querystring;\n\n\n//# sourceURL=webpack:///./node_modules/querystringify/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/requires-port/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/requires-port/index.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\n/**\n * Check if we're required to add a port number.\n *\n * @see https://url.spec.whatwg.org/#default-port\n * @param {Number|String} port Port number we need to check\n * @param {String} protocol Protocol we need to check against.\n * @returns {Boolean} Is it a default port for the given protocol\n * @api private\n */\nmodule.exports = function required(port, protocol) {\n  protocol = protocol.split(':')[0];\n  port = +port;\n\n  if (!port) return false;\n\n  switch (protocol) {\n    case 'http':\n    case 'ws':\n    return port !== 80;\n\n    case 'https':\n    case 'wss':\n    return port !== 443;\n\n    case 'ftp':\n    return port !== 21;\n\n    case 'gopher':\n    return port !== 70;\n\n    case 'file':\n    return false;\n  }\n\n  return port !== 0;\n};\n\n\n//# sourceURL=webpack:///./node_modules/requires-port/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/constants/index.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/constants/index.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar API_URL = exports.API_URL = \"https://api.unsplash.com\";\nvar API_VERSION = exports.API_VERSION = \"v1\";\nvar OAUTH_AUTHORIZE_URL = exports.OAUTH_AUTHORIZE_URL = \"https://unsplash.com/oauth/authorize\";\nvar OAUTH_TOKEN_URL = exports.OAUTH_TOKEN_URL = \"https://unsplash.com/oauth/token\";\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/constants/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/auth.js":
-/*!******************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/auth.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = auth;\n\nvar _querystring = __webpack_require__(/*! querystring */ \"./node_modules/querystring-es3/index.js\");\n\nvar _querystring2 = _interopRequireDefault(_querystring);\n\nvar _constants = __webpack_require__(/*! ../constants */ \"./node_modules/unsplash-js/lib/constants/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction auth() {\n  var _this = this;\n\n  return {\n    getAuthenticationUrl: function getAuthenticationUrl() {\n      var scope = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [\"public\"];\n\n      var querystrings = _querystring2.default.stringify({\n        client_id: _this._accessKey,\n        redirect_uri: _this._callbackUrl,\n        response_type: \"code\",\n        scope: scope.length > 1 ? scope.join(\"+\") : scope.toString()\n      });\n\n      return decodeURIComponent(_constants.OAUTH_AUTHORIZE_URL + \"?\" + querystrings);\n    },\n\n    userAuthentication: function userAuthentication(code) {\n      var url = _constants.OAUTH_TOKEN_URL;\n\n      return _this.request({\n        url: url,\n        method: \"POST\",\n        body: {\n          client_id: _this._accessKey,\n          client_secret: _this._secret,\n          redirect_uri: _this._callbackUrl,\n          grant_type: \"authorization_code\",\n          code: code\n        },\n        oauth: true\n      });\n    },\n\n    setBearerToken: function setBearerToken(accessToken) {\n      if (accessToken) {\n        _this._bearerToken = accessToken;\n      }\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/auth.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/collections.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/collections.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = collections;\nfunction collections() {\n  var _this = this;\n\n  return {\n    listCollections: function listCollections() {\n      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;\n      var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;\n\n      var url = \"/collections\";\n\n      var query = {\n        page: page,\n        per_page: perPage\n      };\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    getCollection: collection.bind(this),\n\n    getCollectionPhotos: collectionPhotos.bind(this),\n\n    createCollection: createUpdateCollection.bind(this, null),\n\n    updateCollection: createUpdateCollection.bind(this),\n\n    deleteCollection: function deleteCollection(id) {\n      var url = \"/collections/\" + id;\n\n      return _this.request({\n        url: url,\n        method: \"DELETE\"\n      });\n    },\n\n    addPhotoToCollection: function addPhotoToCollection(collectionId, photoId) {\n      var url = \"/collections/\" + collectionId + \"/add\";\n\n      return _this.request({\n        url: url,\n        method: \"POST\",\n        body: {\n          photo_id: photoId\n        }\n      });\n    },\n\n    removePhotoFromCollection: function removePhotoFromCollection(collectionId, photoId) {\n      var url = \"/collections/\" + collectionId + \"/remove?photo_id=\" + photoId;\n\n      return _this.request({\n        url: url,\n        method: \"DELETE\"\n      });\n    },\n\n    listRelatedCollections: function listRelatedCollections(collectionId) {\n      var url = \"/collections/\" + collectionId + \"/related\";\n\n      return _this.request({\n        url: url,\n        method: \"GET\"\n      });\n    }\n  };\n}\n\nfunction collection(id) {\n  return this.request({\n    url: \"/collections/\" + id,\n    method: \"GET\"\n  });\n}\n\nfunction collectionPhotos(id) {\n  var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n  var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n  var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : \"latest\";\n\n  var query = {\n    page: page,\n    per_page: perPage,\n    order_by: orderBy\n  };\n\n  return this.request({\n    url: \"/collections/\" + id + \"/photos\",\n    method: \"GET\",\n    query: query\n  });\n}\n\nfunction createUpdateCollection(id, title, description, isPrivate) {\n  var url = id ? \"/collections/\" + id : \"/collections\";\n  var body = {\n    title: title,\n    description: description,\n    \"private\": isPrivate\n  };\n\n  return this.request({\n    url: url,\n    method: id ? \"PUT\" : \"POST\",\n    body: body\n  });\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/collections.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/currentUser.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/currentUser.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = currentUser;\nfunction currentUser() {\n  var _this = this;\n\n  return {\n    profile: function profile() {\n      var url = \"/me\";\n\n      return _this.request({\n        url: url,\n        method: \"GET\"\n      });\n    },\n\n    updateProfile: function updateProfile(options) {\n      var endpointUrl = \"/me\";\n      var username = options.username,\n          firstName = options.firstName,\n          lastName = options.lastName,\n          email = options.email,\n          url = options.url,\n          location = options.location,\n          bio = options.bio,\n          instagramUsername = options.instagramUsername;\n\n      var body = {\n        username: username,\n        first_name: firstName,\n        last_name: lastName,\n        email: email,\n        url: url,\n        location: location,\n        bio: bio,\n        instagram_username: instagramUsername\n      };\n\n      Object.keys(body).forEach(function (key) {\n        if (!body[key]) {\n          delete body[key];\n        }\n      });\n\n      return _this.request({\n        url: endpointUrl,\n        method: \"PUT\",\n        body: body\n      });\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/currentUser.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/photos.js":
-/*!********************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/photos.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = photos;\n\nvar _utils = __webpack_require__(/*! ../utils */ \"./node_modules/unsplash-js/lib/utils/index.js\");\n\nvar _lodash = __webpack_require__(/*! lodash.get */ \"./node_modules/lodash.get/index.js\");\n\nvar _lodash2 = _interopRequireDefault(_lodash);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction photos() {\n  var _this = this;\n\n  return {\n    listPhotos: function listPhotos() {\n      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;\n      var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;\n      var orderBy = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : \"latest\";\n\n      var url = \"/photos\";\n      var query = {\n        page: page,\n        per_page: perPage,\n        order_by: orderBy\n      };\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    getPhoto: function getPhoto(id) {\n      var url = \"/photos/\" + id;\n\n      return _this.request({\n        url: url,\n        method: \"GET\"\n      });\n    },\n\n    getPhotoStats: function getPhotoStats(id) {\n      var url = \"/photos/\" + id + \"/statistics\";\n\n      return _this.request({\n        url: url,\n        method: \"GET\"\n      });\n    },\n\n    getRandomPhoto: function getRandomPhoto() {\n      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n\n      var url = \"/photos/random\";\n      var collections = options.collections || [];\n\n      var query = {\n        featured: options.featured,\n        username: options.username,\n        orientation: options.orientation,\n        collections: collections.join(),\n        query: options.query,\n        c: options.cacheBuster || new Date().getTime(), // Avoid ajax response caching\n        count: options.count\n      };\n\n      Object.keys(query).forEach(function (key) {\n        if (!query[key]) {\n          delete query[key];\n        }\n      });\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    likePhoto: function likePhoto(id) {\n      if (!_this._bearerToken) {\n        throw new Error(\"Requires a bearerToken to be set.\");\n      }\n\n      var url = \"/photos/\" + id + \"/like\";\n\n      return _this.request({\n        url: url,\n        method: \"POST\"\n      });\n    },\n\n    unlikePhoto: function unlikePhoto(id) {\n      if (!_this._bearerToken) {\n        throw new Error(\"Requires a bearerToken to be set.\");\n      }\n\n      var url = \"/photos/\" + id + \"/like\";\n\n      return _this.request({\n        url: url,\n        method: \"DELETE\"\n      });\n    },\n\n    downloadPhoto: function downloadPhoto(photo) {\n      var downloadLocation = (0, _lodash2.default)(photo, \"links.download_location\", undefined);\n\n      if (downloadLocation === undefined) {\n        throw new Error(\"Object received is not a photo. \" + photo);\n      }\n\n      var urlComponents = (0, _utils.getUrlComponents)(downloadLocation);\n\n      return _this.request({\n        url: urlComponents.pathname,\n        method: \"GET\",\n        query: urlComponents.query\n      });\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/photos.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/search.js":
-/*!********************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/search.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = search;\nfunction search() {\n  var _this = this;\n\n  return {\n    photos: function photos() {\n      var keyword = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n      var filters = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};\n\n      var collections = filters.collections || [];\n      var query = {\n        query: encodeURIComponent(keyword),\n        per_page: perPage,\n        orientation: filters.orientation,\n        collections: collections.join(),\n        page: page\n      };\n\n      Object.keys(query).forEach(function (key) {\n        if (!query[key] && key != \"query\") {\n          delete query[key];\n        }\n      });\n\n      return _this.request({\n        url: \"/search/photos\",\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    users: function users() {\n      var keyword = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n\n      var query = {\n        query: encodeURIComponent(keyword),\n        per_page: perPage,\n        page: page\n      };\n\n      return _this.request({\n        url: \"/search/users\",\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    collections: function collections() {\n      var keyword = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"\";\n      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n\n      var query = {\n        query: encodeURIComponent(keyword),\n        per_page: perPage,\n        page: page\n      };\n\n      return _this.request({\n        url: \"/search/collections\",\n        method: \"GET\",\n        query: query\n      });\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/search.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/stats.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/stats.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = stats;\nfunction stats() {\n  var _this = this;\n\n  return {\n    total: function total() {\n      var url = \"/stats/total\";\n\n      return _this.request({\n        url: url,\n        method: \"GET\"\n      });\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/stats.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/methods/users.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/methods/users.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = users;\nfunction users() {\n  var _this = this;\n\n  return {\n    profile: function profile(username) {\n      var url = \"/users/\" + username;\n\n      return _this.request({\n        url: url,\n        method: \"GET\"\n      });\n    },\n\n    photos: function photos(username) {\n      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n      var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : \"latest\";\n      var stats = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;\n\n      var url = \"/users/\" + username + \"/photos\";\n      var query = {\n        page: page,\n        per_page: perPage,\n        order_by: orderBy,\n        stats: stats\n      };\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    likes: function likes(username) {\n      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n      var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : \"latest\";\n\n      var url = \"/users/\" + username + \"/likes\";\n      var query = {\n        page: page,\n        per_page: perPage,\n        order_by: orderBy\n      };\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    collections: function collections(username) {\n      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;\n      var perPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;\n      var orderBy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : \"published\";\n\n      var url = \"/users/\" + username + \"/collections\";\n      var query = {\n        page: page,\n        per_page: perPage,\n        order_by: orderBy\n      };\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    },\n\n    statistics: function statistics(username) {\n      var resolution = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : \"days\";\n      var quantity = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 30;\n\n      var url = \"/users/\" + username + \"/statistics\";\n      var query = {\n        resolution: resolution,\n        quantity: quantity\n      };\n\n      return _this.request({\n        url: url,\n        method: \"GET\",\n        query: query\n      });\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/methods/users.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/unsplash.js":
-/*!**************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/unsplash.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nexports.toJson = toJson;\n\nvar _constants = __webpack_require__(/*! ./constants */ \"./node_modules/unsplash-js/lib/constants/index.js\");\n\nvar _utils = __webpack_require__(/*! ./utils */ \"./node_modules/unsplash-js/lib/utils/index.js\");\n\nvar _auth = __webpack_require__(/*! ./methods/auth */ \"./node_modules/unsplash-js/lib/methods/auth.js\");\n\nvar _auth2 = _interopRequireDefault(_auth);\n\nvar _currentUser = __webpack_require__(/*! ./methods/currentUser */ \"./node_modules/unsplash-js/lib/methods/currentUser.js\");\n\nvar _currentUser2 = _interopRequireDefault(_currentUser);\n\nvar _users = __webpack_require__(/*! ./methods/users */ \"./node_modules/unsplash-js/lib/methods/users.js\");\n\nvar _users2 = _interopRequireDefault(_users);\n\nvar _photos = __webpack_require__(/*! ./methods/photos */ \"./node_modules/unsplash-js/lib/methods/photos.js\");\n\nvar _photos2 = _interopRequireDefault(_photos);\n\nvar _collections = __webpack_require__(/*! ./methods/collections */ \"./node_modules/unsplash-js/lib/methods/collections.js\");\n\nvar _collections2 = _interopRequireDefault(_collections);\n\nvar _search = __webpack_require__(/*! ./methods/search */ \"./node_modules/unsplash-js/lib/methods/search.js\");\n\nvar _search2 = _interopRequireDefault(_search);\n\nvar _stats = __webpack_require__(/*! ./methods/stats */ \"./node_modules/unsplash-js/lib/methods/stats.js\");\n\nvar _stats2 = _interopRequireDefault(_stats);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Unsplash = function () {\n  function Unsplash(options) {\n    _classCallCheck(this, Unsplash);\n\n    this._apiUrl = options.apiUrl || _constants.API_URL;\n    this._apiVersion = options.apiVersion || _constants.API_VERSION;\n    this._accessKey = options.accessKey;\n    this._secret = options.secret;\n    this._callbackUrl = options.callbackUrl;\n    this._bearerToken = options.bearerToken;\n    this._headers = options.headers || {};\n    this._timeout = options.timeout || 0; // 0 defaults to the OS timeout behaviour.\n\n    this.auth = _auth2.default.bind(this)();\n    this.currentUser = _currentUser2.default.bind(this)();\n    this.users = _users2.default.bind(this)();\n    this.photos = _photos2.default.bind(this)();\n    this.collections = _collections2.default.bind(this)();\n    this.search = _search2.default.bind(this)();\n    this.stats = _stats2.default.bind(this)();\n  }\n\n  _createClass(Unsplash, [{\n    key: \"request\",\n    value: function request(requestOptions) {\n      var _buildFetchOptions$bi = _utils.buildFetchOptions.bind(this)(requestOptions),\n          url = _buildFetchOptions$bi.url,\n          options = _buildFetchOptions$bi.options;\n\n      return fetch(url, options);\n    }\n  }]);\n\n  return Unsplash;\n}();\n\nexports.default = Unsplash;\nfunction toJson(res) {\n  return typeof res.json === \"function\" ? res.json() : res;\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/unsplash.js?");
-
-/***/ }),
-
-/***/ "./node_modules/unsplash-js/lib/utils/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/unsplash-js/lib/utils/index.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };\n\nexports.formUrlEncode = formUrlEncode;\nexports.getUrlComponents = getUrlComponents;\nexports.buildFetchOptions = buildFetchOptions;\n\nvar _querystring = __webpack_require__(/*! querystring */ \"./node_modules/querystring-es3/index.js\");\n\nvar _formUrlencoded = __webpack_require__(/*! form-urlencoded */ \"./node_modules/form-urlencoded/form-urlencoded.js\");\n\nvar _formUrlencoded2 = _interopRequireDefault(_formUrlencoded);\n\nvar _urlParse = __webpack_require__(/*! url-parse */ \"./node_modules/url-parse/index.js\");\n\nvar _urlParse2 = _interopRequireDefault(_urlParse);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction formUrlEncode(body) {\n  return (0, _formUrlencoded2.default)(body);\n}\n\nfunction getUrlComponents(uri) {\n  return (0, _urlParse2.default)(uri, {}, true);\n}\n\nfunction buildFetchOptions(options) {\n  var method = options.method,\n      query = options.query,\n      oauth = options.oauth,\n      body = options.body;\n\n  var url = oauth === true ? options.url : \"\" + this._apiUrl + options.url;\n  var headers = _extends({}, this._headers, options.headers, {\n    \"Accept-Version\": this._apiVersion,\n    \"Authorization\": this._bearerToken ? \"Bearer \" + this._bearerToken : \"Client-ID \" + this._accessKey\n  });\n  var timeout = this._timeout;\n\n  if (body) {\n    headers[\"Content-Type\"] = \"application/x-www-form-urlencoded\";\n  }\n\n  if (query) {\n    url = decodeURIComponent(url + \"?\" + (0, _querystring.stringify)(query));\n  }\n\n  return {\n    url: url,\n    options: {\n      method: method,\n      headers: headers,\n      timeout: timeout,\n      body: method !== \"GET\" && body ? formUrlEncode(body) : undefined\n    }\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/unsplash-js/lib/utils/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/url-parse/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/url-parse/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("/* WEBPACK VAR INJECTION */(function(global) {\n\nvar required = __webpack_require__(/*! requires-port */ \"./node_modules/requires-port/index.js\")\n  , qs = __webpack_require__(/*! querystringify */ \"./node_modules/querystringify/index.js\")\n  , protocolre = /^([a-z][a-z0-9.+-]*:)?(\\/\\/)?([\\S\\s]*)/i\n  , slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\\/\\//;\n\n/**\n * These are the parse rules for the URL parser, it informs the parser\n * about:\n *\n * 0. The char it Needs to parse, if it's a string it should be done using\n *    indexOf, RegExp using exec and NaN means set as current value.\n * 1. The property we should set when parsing this value.\n * 2. Indication if it's backwards or forward parsing, when set as number it's\n *    the value of extra chars that should be split off.\n * 3. Inherit from location if non existing in the parser.\n * 4. `toLowerCase` the resulting value.\n */\nvar rules = [\n  ['#', 'hash'],                        // Extract from the back.\n  ['?', 'query'],                       // Extract from the back.\n  function sanitize(address) {          // Sanitize what is left of the address\n    return address.replace('\\\\', '/');\n  },\n  ['/', 'pathname'],                    // Extract from the back.\n  ['@', 'auth', 1],                     // Extract from the front.\n  [NaN, 'host', undefined, 1, 1],       // Set left over value.\n  [/:(\\d+)$/, 'port', undefined, 1],    // RegExp the back.\n  [NaN, 'hostname', undefined, 1, 1]    // Set left over.\n];\n\n/**\n * These properties should not be copied or inherited from. This is only needed\n * for all non blob URL's as a blob URL does not include a hash, only the\n * origin.\n *\n * @type {Object}\n * @private\n */\nvar ignore = { hash: 1, query: 1 };\n\n/**\n * The location object differs when your code is loaded through a normal page,\n * Worker or through a worker using a blob. And with the blobble begins the\n * trouble as the location object will contain the URL of the blob, not the\n * location of the page where our code is loaded in. The actual origin is\n * encoded in the `pathname` so we can thankfully generate a good \"default\"\n * location from it so we can generate proper relative URL's again.\n *\n * @param {Object|String} loc Optional default location object.\n * @returns {Object} lolcation object.\n * @public\n */\nfunction lolcation(loc) {\n  var globalVar;\n\n  if (typeof window !== 'undefined') globalVar = window;\n  else if (typeof global !== 'undefined') globalVar = global;\n  else if (typeof self !== 'undefined') globalVar = self;\n  else globalVar = {};\n\n  var location = globalVar.location || {};\n  loc = loc || location;\n\n  var finaldestination = {}\n    , type = typeof loc\n    , key;\n\n  if ('blob:' === loc.protocol) {\n    finaldestination = new Url(unescape(loc.pathname), {});\n  } else if ('string' === type) {\n    finaldestination = new Url(loc, {});\n    for (key in ignore) delete finaldestination[key];\n  } else if ('object' === type) {\n    for (key in loc) {\n      if (key in ignore) continue;\n      finaldestination[key] = loc[key];\n    }\n\n    if (finaldestination.slashes === undefined) {\n      finaldestination.slashes = slashes.test(loc.href);\n    }\n  }\n\n  return finaldestination;\n}\n\n/**\n * @typedef ProtocolExtract\n * @type Object\n * @property {String} protocol Protocol matched in the URL, in lowercase.\n * @property {Boolean} slashes `true` if protocol is followed by \"//\", else `false`.\n * @property {String} rest Rest of the URL that is not part of the protocol.\n */\n\n/**\n * Extract protocol information from a URL with/without double slash (\"//\").\n *\n * @param {String} address URL we want to extract from.\n * @return {ProtocolExtract} Extracted information.\n * @private\n */\nfunction extractProtocol(address) {\n  var match = protocolre.exec(address);\n\n  return {\n    protocol: match[1] ? match[1].toLowerCase() : '',\n    slashes: !!match[2],\n    rest: match[3]\n  };\n}\n\n/**\n * Resolve a relative URL pathname against a base URL pathname.\n *\n * @param {String} relative Pathname of the relative URL.\n * @param {String} base Pathname of the base URL.\n * @return {String} Resolved pathname.\n * @private\n */\nfunction resolve(relative, base) {\n  var path = (base || '/').split('/').slice(0, -1).concat(relative.split('/'))\n    , i = path.length\n    , last = path[i - 1]\n    , unshift = false\n    , up = 0;\n\n  while (i--) {\n    if (path[i] === '.') {\n      path.splice(i, 1);\n    } else if (path[i] === '..') {\n      path.splice(i, 1);\n      up++;\n    } else if (up) {\n      if (i === 0) unshift = true;\n      path.splice(i, 1);\n      up--;\n    }\n  }\n\n  if (unshift) path.unshift('');\n  if (last === '.' || last === '..') path.push('');\n\n  return path.join('/');\n}\n\n/**\n * The actual URL instance. Instead of returning an object we've opted-in to\n * create an actual constructor as it's much more memory efficient and\n * faster and it pleases my OCD.\n *\n * It is worth noting that we should not use `URL` as class name to prevent\n * clashes with the global URL instance that got introduced in browsers.\n *\n * @constructor\n * @param {String} address URL we want to parse.\n * @param {Object|String} [location] Location defaults for relative paths.\n * @param {Boolean|Function} [parser] Parser for the query string.\n * @private\n */\nfunction Url(address, location, parser) {\n  if (!(this instanceof Url)) {\n    return new Url(address, location, parser);\n  }\n\n  var relative, extracted, parse, instruction, index, key\n    , instructions = rules.slice()\n    , type = typeof location\n    , url = this\n    , i = 0;\n\n  //\n  // The following if statements allows this module two have compatibility with\n  // 2 different API:\n  //\n  // 1. Node.js's `url.parse` api which accepts a URL, boolean as arguments\n  //    where the boolean indicates that the query string should also be parsed.\n  //\n  // 2. The `URL` interface of the browser which accepts a URL, object as\n  //    arguments. The supplied object will be used as default values / fall-back\n  //    for relative paths.\n  //\n  if ('object' !== type && 'string' !== type) {\n    parser = location;\n    location = null;\n  }\n\n  if (parser && 'function' !== typeof parser) parser = qs.parse;\n\n  location = lolcation(location);\n\n  //\n  // Extract protocol information before running the instructions.\n  //\n  extracted = extractProtocol(address || '');\n  relative = !extracted.protocol && !extracted.slashes;\n  url.slashes = extracted.slashes || relative && location.slashes;\n  url.protocol = extracted.protocol || location.protocol || '';\n  address = extracted.rest;\n\n  //\n  // When the authority component is absent the URL starts with a path\n  // component.\n  //\n  if (!extracted.slashes) instructions[3] = [/(.*)/, 'pathname'];\n\n  for (; i < instructions.length; i++) {\n    instruction = instructions[i];\n\n    if (typeof instruction === 'function') {\n      address = instruction(address);\n      continue;\n    }\n\n    parse = instruction[0];\n    key = instruction[1];\n\n    if (parse !== parse) {\n      url[key] = address;\n    } else if ('string' === typeof parse) {\n      if (~(index = address.indexOf(parse))) {\n        if ('number' === typeof instruction[2]) {\n          url[key] = address.slice(0, index);\n          address = address.slice(index + instruction[2]);\n        } else {\n          url[key] = address.slice(index);\n          address = address.slice(0, index);\n        }\n      }\n    } else if ((index = parse.exec(address))) {\n      url[key] = index[1];\n      address = address.slice(0, index.index);\n    }\n\n    url[key] = url[key] || (\n      relative && instruction[3] ? location[key] || '' : ''\n    );\n\n    //\n    // Hostname, host and protocol should be lowercased so they can be used to\n    // create a proper `origin`.\n    //\n    if (instruction[4]) url[key] = url[key].toLowerCase();\n  }\n\n  //\n  // Also parse the supplied query string in to an object. If we're supplied\n  // with a custom parser as function use that instead of the default build-in\n  // parser.\n  //\n  if (parser) url.query = parser(url.query);\n\n  //\n  // If the URL is relative, resolve the pathname against the base URL.\n  //\n  if (\n      relative\n    && location.slashes\n    && url.pathname.charAt(0) !== '/'\n    && (url.pathname !== '' || location.pathname !== '')\n  ) {\n    url.pathname = resolve(url.pathname, location.pathname);\n  }\n\n  //\n  // We should not add port numbers if they are already the default port number\n  // for a given protocol. As the host also contains the port number we're going\n  // override it with the hostname which contains no port number.\n  //\n  if (!required(url.port, url.protocol)) {\n    url.host = url.hostname;\n    url.port = '';\n  }\n\n  //\n  // Parse down the `auth` for the username and password.\n  //\n  url.username = url.password = '';\n  if (url.auth) {\n    instruction = url.auth.split(':');\n    url.username = instruction[0] || '';\n    url.password = instruction[1] || '';\n  }\n\n  url.origin = url.protocol && url.host && url.protocol !== 'file:'\n    ? url.protocol +'//'+ url.host\n    : 'null';\n\n  //\n  // The href is just the compiled result.\n  //\n  url.href = url.toString();\n}\n\n/**\n * This is convenience method for changing properties in the URL instance to\n * insure that they all propagate correctly.\n *\n * @param {String} part          Property we need to adjust.\n * @param {Mixed} value          The newly assigned value.\n * @param {Boolean|Function} fn  When setting the query, it will be the function\n *                               used to parse the query.\n *                               When setting the protocol, double slash will be\n *                               removed from the final url if it is true.\n * @returns {URL} URL instance for chaining.\n * @public\n */\nfunction set(part, value, fn) {\n  var url = this;\n\n  switch (part) {\n    case 'query':\n      if ('string' === typeof value && value.length) {\n        value = (fn || qs.parse)(value);\n      }\n\n      url[part] = value;\n      break;\n\n    case 'port':\n      url[part] = value;\n\n      if (!required(value, url.protocol)) {\n        url.host = url.hostname;\n        url[part] = '';\n      } else if (value) {\n        url.host = url.hostname +':'+ value;\n      }\n\n      break;\n\n    case 'hostname':\n      url[part] = value;\n\n      if (url.port) value += ':'+ url.port;\n      url.host = value;\n      break;\n\n    case 'host':\n      url[part] = value;\n\n      if (/:\\d+$/.test(value)) {\n        value = value.split(':');\n        url.port = value.pop();\n        url.hostname = value.join(':');\n      } else {\n        url.hostname = value;\n        url.port = '';\n      }\n\n      break;\n\n    case 'protocol':\n      url.protocol = value.toLowerCase();\n      url.slashes = !fn;\n      break;\n\n    case 'pathname':\n    case 'hash':\n      if (value) {\n        var char = part === 'pathname' ? '/' : '#';\n        url[part] = value.charAt(0) !== char ? char + value : value;\n      } else {\n        url[part] = value;\n      }\n      break;\n\n    default:\n      url[part] = value;\n  }\n\n  for (var i = 0; i < rules.length; i++) {\n    var ins = rules[i];\n\n    if (ins[4]) url[ins[1]] = url[ins[1]].toLowerCase();\n  }\n\n  url.origin = url.protocol && url.host && url.protocol !== 'file:'\n    ? url.protocol +'//'+ url.host\n    : 'null';\n\n  url.href = url.toString();\n\n  return url;\n}\n\n/**\n * Transform the properties back in to a valid and full URL string.\n *\n * @param {Function} stringify Optional query stringify function.\n * @returns {String} Compiled version of the URL.\n * @public\n */\nfunction toString(stringify) {\n  if (!stringify || 'function' !== typeof stringify) stringify = qs.stringify;\n\n  var query\n    , url = this\n    , protocol = url.protocol;\n\n  if (protocol && protocol.charAt(protocol.length - 1) !== ':') protocol += ':';\n\n  var result = protocol + (url.slashes ? '//' : '');\n\n  if (url.username) {\n    result += url.username;\n    if (url.password) result += ':'+ url.password;\n    result += '@';\n  }\n\n  result += url.host + url.pathname;\n\n  query = 'object' === typeof url.query ? stringify(url.query) : url.query;\n  if (query) result += '?' !== query.charAt(0) ? '?'+ query : query;\n\n  if (url.hash) result += url.hash;\n\n  return result;\n}\n\nUrl.prototype = { set: set, toString: toString };\n\n//\n// Expose the URL parser and some additional properties that might be useful for\n// others or testing.\n//\nUrl.extractProtocol = extractProtocol;\nUrl.location = lolcation;\nUrl.qs = qs;\n\nmodule.exports = Url;\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./node_modules/url-parse/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
+/* 27 */
 /***/ (function(module, exports) {
 
-eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || new Function(\"return this\")();\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///(webpack)/buildin/global.js?");
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
 
 /***/ }),
-
-/***/ "./src/blocks/announcement-bar/announcement-bar.js":
-/*!*********************************************************!*\
-  !*** ./src/blocks/announcement-bar/announcement-bar.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return AnnouncementBar; });\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"./node_modules/@babel/runtime/helpers/createClass.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! js-cookie */ \"./node_modules/js-cookie/src/js.cookie.js\");\n/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\nvar AnnouncementBar = /*#__PURE__*/function () {\n  function AnnouncementBar(element, args) {\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, AnnouncementBar);\n\n    this.element = element;\n    this.pieces = this.getPieces();\n    this.id = jQuery(element).data('id');\n    this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';\n    var disabled = js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.get(this.cookieName);\n    var loggedIn = jQuery('body').hasClass('logged-in');\n\n    if (disabled && !loggedIn) {\n      return;\n    }\n\n    this.pieces.element.removeClass('is-hidden');\n    this.bindEvents();\n  }\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(AnnouncementBar, [{\n    key: \"getPieces\",\n    value: function getPieces() {\n      var $element = jQuery(this.element);\n      return {\n        element: $element,\n        close: $element.find('.novablocks-announcement-bar__close')\n      };\n    }\n  }, {\n    key: \"bindEvents\",\n    value: function bindEvents() {\n      this.pieces.close.on('click', this.onClose.bind(this));\n    }\n  }, {\n    key: \"onClose\",\n    value: function onClose() {\n      var cookieName = this.cookieName;\n      this.pieces.element.addClass('is-hidden');\n      js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.set(cookieName, true, {\n        expires: 365\n      });\n    }\n  }]);\n\n  return AnnouncementBar;\n}();\n\n\n\n//# sourceURL=webpack:///./src/blocks/announcement-bar/announcement-bar.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/announcement-bar/frontend.js":
-/*!*************************************************!*\
-  !*** ./src/blocks/announcement-bar/frontend.js ***!
-  \*************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _announcement_bar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./announcement-bar */ \"./src/blocks/announcement-bar/announcement-bar.js\");\n\n\n(function ($, window, undefined) {\n  $(function () {\n    var announcementElements = document.getElementsByClassName('novablocks-announcement-bar');\n    var announcementElementsArray = Array.from(announcementElements);\n    var AnnouncementCollection = announcementElementsArray.map(function (element) {\n      return new _announcement_bar__WEBPACK_IMPORTED_MODULE_0__[\"default\"](element);\n    });\n  });\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/blocks/announcement-bar/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/google-map/default-map-center.js":
-/*!*****************************************************!*\
-  !*** ./src/blocks/google-map/default-map-center.js ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nvar defaultMapCenter = {\n  lat: 47.1665264,\n  lng: 27.58285479999995\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (defaultMapCenter);\n\n//# sourceURL=webpack:///./src/blocks/google-map/default-map-center.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/google-map/frontend.js":
-/*!*******************************************!*\
-  !*** ./src/blocks/google-map/frontend.js ***!
-  \*******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _pin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pin */ \"./src/blocks/google-map/pin.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/blocks/google-map/utils.js\");\n/* harmony import */ var _components_with_parallax_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/with-parallax/util */ \"./src/components/with-parallax/util.js\");\n\n\n\n\n(function ($, window, undefined) {\n  var $blocks = $('.novablocks-map');\n  Object(_components_with_parallax_util__WEBPACK_IMPORTED_MODULE_2__[\"parallaxInit\"])($blocks);\n  mapInit();\n\n  function mapInit() {\n    if (typeof google === \"undefined\" || typeof google.maps === \"undefined\") {\n      return;\n    }\n\n    $('.js-novablocks-google-map').each(function (i, obj) {\n      var $obj = $(obj),\n          markers = $obj.data('markers'),\n          showLabels = $obj.data('show-labels'),\n          showIcons = $obj.data('show-icons'),\n          styles = $obj.data('styles'),\n          zoom = $obj.data('zoom'),\n          hideControls = !$obj.data('controls'),\n          pinColor = $obj.data('pin-color'),\n          mapOptions = {\n        mapTypeId: 'roadmap',\n        center: Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"getCenterFromMarkers\"])(markers),\n        zoom: zoom,\n        styles: Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"addVisibilityToStyles\"])(styles, showLabels, showIcons),\n        disableDefaultUI: hideControls,\n        clickableIcons: false,\n        keyboardShortcuts: false\n      },\n          map = new google.maps.Map(obj, mapOptions);\n      var pinMarkup = _pin__WEBPACK_IMPORTED_MODULE_0__[\"default\"].replace(/%ACCENT_COLOR%/g, pinColor);\n      markers.forEach(function (markerString) {\n        var marker = JSON.parse(markerString);\n        new google.maps.Marker({\n          map: map,\n          icon: {\n            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)\n          },\n          title: marker.title,\n          position: marker.geometry.location\n        });\n      });\n    });\n  }\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/blocks/google-map/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/google-map/pin.js":
-/*!**************************************!*\
-  !*** ./src/blocks/google-map/pin.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"<svg width=\\\"62\\\" height=\\\"75\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\" xmlns:xlink=\\\"http://www.w3.org/1999/xlink\\\" viewBox=\\\"0 0 62 75\\\">\\n\\t<defs>\\n\\t\\t<path id=\\\"b\\\" d=\\\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\\\"></path>\\n\\t\\t<filter id=\\\"a\\\" width=\\\"200%\\\" height=\\\"200%\\\" x=\\\"-50%\\\" y=\\\"-50%\\\" filterUnits=\\\"objectBoundingBox\\\">\\n\\t\\t\\t<feOffset dy=\\\"2\\\" in=\\\"SourceAlpha\\\" result=\\\"shadowOffsetOuter1\\\"></feOffset>\\n\\t\\t\\t<feGaussianBlur in=\\\"shadowOffsetOuter1\\\" result=\\\"shadowBlurOuter1\\\" stdDeviation=\\\"2\\\"></feGaussianBlur>\\n\\t\\t\\t<feColorMatrix in=\\\"shadowBlurOuter1\\\" values=\\\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\\\"></feColorMatrix>\\n\\t\\t</filter>\\n\\t</defs>\\n\\t<g fill=\\\"none\\\" fillRule=\\\"evenodd\\\">\\n\\t\\t<use fill=\\\"#000\\\" filter=\\\"url(#a)\\\" xlink:href=\\\"#b\\\" style=\\\"display:none\\\"></use>\\n\\t\\t<use fill=\\\"%ACCENT_COLOR%\\\" xlink:href=\\\"#b\\\"></use>\\n\\t</g>\\n</svg>\");\n\n//# sourceURL=webpack:///./src/blocks/google-map/pin.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/google-map/styles/customized.js":
-/*!****************************************************!*\
-  !*** ./src/blocks/google-map/styles/customized.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ([{\n  \"elementType\": \"geometry\",\n  \"stylers\": [{\n    \"color\": \"#f5f5f5\"\n  }]\n}, {\n  \"elementType\": \"labels.icon\",\n  \"stylers\": [{\n    \"saturation\": -100\n  }, {\n    \"lightness\": 60\n  }]\n}, {\n  \"elementType\": \"labels.text.stroke\",\n  \"stylers\": [{\n    \"color\": \"#f5f5f5\"\n  }]\n}, {\n  \"featureType\": \"poi\",\n  \"elementType\": \"geometry\",\n  \"stylers\": [{\n    \"color\": \"#eeeeee\"\n  }]\n}, {\n  \"featureType\": \"poi\",\n  \"elementType\": \"labels.text.fill\",\n  \"stylers\": [{\n    \"color\": \"#757575\"\n  }]\n}, {\n  \"featureType\": \"road.arterial\",\n  \"elementType\": \"geometry.fill\",\n  \"stylers\": [{\n    \"color\": \"%ACCENT_COLOR%\"\n  }, {\n    \"lightness\": 90\n  }]\n}, {\n  \"featureType\": \"road.arterial\",\n  \"elementType\": \"labels.text.fill\",\n  \"stylers\": [{\n    \"color\": \"#757575\"\n  }]\n}, {\n  \"featureType\": \"road.highway\",\n  \"elementType\": \"geometry\",\n  \"stylers\": [{\n    \"color\": \"#dadada\"\n  }]\n}, {\n  \"featureType\": \"road.highway\",\n  \"elementType\": \"labels.text.fill\",\n  \"stylers\": [{\n    \"color\": \"#616161\"\n  }]\n}, {\n  \"featureType\": \"road.local\",\n  \"elementType\": \"geometry.fill\",\n  \"stylers\": [{\n    \"color\": \"%ACCENT_COLOR%\"\n  }, {\n    \"saturation\": -25\n  }, {\n    \"lightness\": 70\n  }]\n}, {\n  \"featureType\": \"road.local\",\n  \"elementType\": \"labels.text.fill\",\n  \"stylers\": [{\n    \"lightness\": 30\n  }]\n}, {\n  \"featureType\": \"transit.line\",\n  \"elementType\": \"geometry\",\n  \"stylers\": [{\n    \"color\": \"#e5e5e5\"\n  }]\n}, {\n  \"featureType\": \"water\",\n  \"elementType\": \"geometry\",\n  \"stylers\": [{\n    \"color\": \"#c9c9c9\"\n  }]\n}, {\n  \"featureType\": \"water\",\n  \"elementType\": \"geometry.fill\",\n  \"stylers\": [{\n    \"color\": \"%ACCENT_COLOR%\"\n  }, {\n    \"lightness\": 60\n  }]\n}, {\n  \"featureType\": \"water\",\n  \"elementType\": \"labels.text.fill\",\n  \"stylers\": [{\n    \"saturation\": -100\n  }]\n}]);\n\n//# sourceURL=webpack:///./src/blocks/google-map/styles/customized.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/google-map/styles/index.js":
-/*!***********************************************!*\
-  !*** ./src/blocks/google-map/styles/index.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _customized__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./customized */ \"./src/blocks/google-map/styles/customized.js\");\n\nvar styles = [{\n  slug: 'customized',\n  label: 'Customized',\n  styles: _customized__WEBPACK_IMPORTED_MODULE_0__[\"default\"]\n}, {\n  slug: 'original',\n  label: 'Original',\n  styles: []\n}];\n/* harmony default export */ __webpack_exports__[\"default\"] = (styles);\n\n//# sourceURL=webpack:///./src/blocks/google-map/styles/index.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/google-map/utils.js":
-/*!****************************************!*\
-  !*** ./src/blocks/google-map/utils.js ***!
-  \****************************************/
-/*! exports provided: addVisibilityToStyles, compileStyles, getMapStyles, getMapAccentColor, getCenterFromMarkers, getMarkersCenter */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addVisibilityToStyles\", function() { return addVisibilityToStyles; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compileStyles\", function() { return compileStyles; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMapStyles\", function() { return getMapStyles; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMapAccentColor\", function() { return getMapAccentColor; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCenterFromMarkers\", function() { return getCenterFromMarkers; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMarkersCenter\", function() { return getMarkersCenter; });\n/* harmony import */ var _default_map_center__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./default-map-center */ \"./src/blocks/google-map/default-map-center.js\");\n/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ \"./src/blocks/google-map/styles/index.js\");\n\n\nvar addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, showIcons) {\n  if (!showLabels) {\n    styles.unshift({\n      \"elementType\": \"labels.text\",\n      \"stylers\": [{\n        \"visibility\": \"off\"\n      }]\n    });\n  }\n\n  if (!showIcons) {\n    styles.unshift({\n      \"elementType\": \"labels.icon\",\n      \"stylers\": [{\n        \"visibility\": \"off\"\n      }]\n    });\n  }\n\n  return styles;\n};\nvar compileStyles = function compileStyles(styleData) {\n  var _this$props$attribute = this.props.attributes,\n      showLabels = _this$props$attribute.showLabels,\n      showIcons = _this$props$attribute.showIcons,\n      styleSlug = _this$props$attribute.styleSlug;\n  var accentColor = getMapAccentColor.call(this);\n  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);\n  return JSON.parse(styleDataString);\n};\nvar getMapStyles = function getMapStyles() {\n  var attributes = this.props.attributes;\n  var styleData = attributes.styleData,\n      styleSlug = attributes.styleSlug;\n  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;\n  var selectedStyles = _styles__WEBPACK_IMPORTED_MODULE_1__[\"default\"].find(function (style) {\n    return style.slug === styleSlug;\n  });\n  var styleDataBySlug = selectedStyles ? selectedStyles.styles : {};\n  var mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;\n  return compileStyles.call(this, mapStyles);\n};\nvar getMapAccentColor = function getMapAccentColor() {\n  var settings = this.props.settings;\n  var colors = settings.colors;\n  var fallbackColor = '#222222';\n\n  if (colors && colors.length) {\n    var primary = colors.find(function (color) {\n      return color.slug === 'sm-color-primary';\n    });\n    var secondary = colors.find(function (color) {\n      return color.slug === 'sm-color-secondary';\n    });\n    var tertiary = colors.find(function (color) {\n      return color.slug === 'sm-color-tertiary';\n    });\n\n    if (primary) {\n      return primary.color;\n    }\n\n    if (secondary) {\n      return secondary.color;\n    }\n\n    if (tertiary) {\n      return tertiary.color;\n    }\n\n    return colors[0].color;\n  }\n\n  return fallbackColor;\n};\nvar getCenterFromMarkers = function getCenterFromMarkers(markers) {\n  if (typeof google === \"undefined\" || typeof google.maps === \"undefined\") {\n    return _default_map_center__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n  }\n\n  var bounds = new google.maps.LatLngBounds(); // when there is only one marker bounds aren't accurate at great zoom levels\n\n  if (markers.length === 1) {\n    var center = JSON.parse(markers[0]);\n    return new google.maps.LatLng(center.geometry.location);\n  }\n\n  markers.forEach(function (markerString) {\n    var marker = JSON.parse(markerString);\n\n    if (!marker.geometry) {\n      return;\n    }\n\n    if (marker.geometry.viewport) {\n      bounds.union(marker.geometry.viewport);\n    } else {\n      bounds.extend(marker.geometry.location);\n    }\n  });\n  return bounds.getCenter();\n};\nvar getMarkersCenter = function getMarkersCenter() {\n  return getCenterFromMarkers(this.props.attributes.markers);\n};\n\n//# sourceURL=webpack:///./src/blocks/google-map/utils.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/hero/frontend.js":
-/*!*************************************!*\
-  !*** ./src/blocks/hero/frontend.js ***!
-  \*************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_with_parallax_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/with-parallax/util */ \"./src/components/with-parallax/util.js\");\n\n\n(function ($, window, undefined) {\n  var $heroes = $('.novablocks-hero');\n  var windowScrollY;\n  var scrollButtonHidden = false;\n  var $scrollButton = $('.novablocks-hero__indicator');\n  Object(_components_with_parallax_util__WEBPACK_IMPORTED_MODULE_0__[\"parallaxInit\"])($heroes);\n  bulletsInit();\n  scrollButtonInit();\n  updateScroll();\n  $(window).on('scroll', updateScroll);\n\n  function updateScroll() {\n    windowScrollY = window.scrollY;\n\n    if (windowScrollY > 200) {\n      hideScrollButton();\n    }\n  }\n\n  function bulletsInit() {\n    var $body = $('body');\n    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;\n\n    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {\n      $('.novablocks-hero').bully();\n    }\n  }\n\n  function hideScrollButton() {\n    if (scrollButtonHidden) {\n      return;\n    }\n\n    $scrollButton.filter('.novablocks-hero__indicator--middle').addClass('novablocks-hero__indicator--hidden');\n    scrollButtonHidden = true;\n  }\n\n  function scrollButtonInit() {\n    var $hero = $scrollButton.closest('.novablocks-hero');\n\n    if ($hero.length) {\n      $scrollButton.on('click', function () {\n        var heroBox = $hero.get(0).getBoundingClientRect();\n        var heroBoxTop = heroBox.y || heroBox.top;\n        window.scrollTo({\n          top: heroBoxTop + heroBox.height + windowScrollY,\n          behavior: 'smooth'\n        });\n      });\n    }\n  }\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/blocks/hero/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/media/frontend.js":
-/*!**************************************!*\
-  !*** ./src/blocks/media/frontend.js ***!
-  \**************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_advanced_gallery_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/advanced-gallery/util */ \"./src/components/advanced-gallery/util.js\");\n/* harmony import */ var _components_advanced_gallery_grid_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/advanced-gallery/grid-item */ \"./src/components/advanced-gallery/grid-item.js\");\n\n\n\n(function ($, window, undefined) {\n  $('.novablocks-advanced-gallery').each(function (i, gallery) {\n    var $gallery = $(gallery),\n        $grid = $gallery.find('.novablocks-advanced-gallery__grid'),\n        images = $gallery.find('.novablocks-advanced-gallery__image').toArray();\n    var attributes = {\n      imageResizing: $gallery.data('imageresizing'),\n      containerHeight: $gallery.data('containerheight'),\n      positionShift: $gallery.data('positionshift'),\n      sizeContrast: $gallery.data('sizecontrast'),\n      imageRotation: $gallery.data('imagerotation'),\n      placementVariation: $gallery.data('placementvariation'),\n      elementsDistance: $gallery.data('elementsdistance'),\n      verticalSpacing: $gallery.data('verticalspacing'),\n      objectPosition: $gallery.data('objectposition')\n    };\n    var gridItemsCollection = new _components_advanced_gallery_grid_item__WEBPACK_IMPORTED_MODULE_1__[\"GridItemCollection\"](images, attributes);\n    gridItemsCollection.gridItems.map(function (gridItem, index) {\n      var $image = $(gridItem.image),\n          $item = $image.closest('.novablocks-advanced-gallery__grid-item');\n      $item.css(gridItem.getStyle());\n      $image.css(gridItem.getImageStyle());\n    });\n    var galleryStyle = Object(_components_advanced_gallery_util__WEBPACK_IMPORTED_MODULE_0__[\"getGalleryStyle\"])(attributes);\n\n    for (var propertyName in galleryStyle) {\n      $gallery.css(galleryStyle);\n\n      if (propertyName.indexOf('--') === 0) {\n        gallery.style.setProperty(propertyName, galleryStyle[propertyName]);\n      }\n    }\n\n    if ($grid.length) {\n      var gridStyle = Object(_components_advanced_gallery_util__WEBPACK_IMPORTED_MODULE_0__[\"getGridStyle\"])(attributes);\n      $grid.css(gridStyle);\n\n      for (var _propertyName in gridStyle) {\n        if (_propertyName.indexOf('--') === 0) {\n          $grid.get(0).style.setProperty(_propertyName, gridStyle[_propertyName]);\n        }\n      }\n    }\n  });\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/blocks/media/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/openhours/hoursparser.js":
-/*!*********************************************!*\
-  !*** ./src/blocks/openhours/hoursparser.js ***!
-  \*********************************************/
-/*! exports provided: parseContent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"parseContent\", function() { return parseContent; });\n// Copyright 2014 Foursquare Labs Inc. All Rights Reserved.\nvar fourSq = fourSq || {};\nfourSq.util = fourSq.util || {};\nfourSq.util.Hours = {\n  /**\n   * Pads times to be HHMM\n   * @param {string} text\n   * @return {string}\n   */\n  padTimes: function padTimes(text) {\n    // Add leading/trailing zeros to times so it's always 4 digits, like 0800\n    // Have to run each twice because they're pivoting around the separator\n    // i.e. x10-12x first matches \"x10-\" and doesn't match the rest\n    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');\n    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');\n    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');\n    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');\n    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');\n    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');\n    return text;\n  },\n\n  /**\n   * @param {Array.<number>} days\n   * @param {number} startMinutes\n   * @param {number} endMinutes\n   */\n  toTimeframe: function toTimeframe(days, startMinutes, endMinutes) {\n    // If we've day wrapped and end before 4am, push the ending value up 24 hours.\n    if (startMinutes >= endMinutes && endMinutes <= 240) {\n      endMinutes += 1440;\n    }\n\n    var startFormatted = fourSq.util.Hours.formatMinutes(startMinutes);\n    var endFormatted = fourSq.util.Hours.formatMinutes(endMinutes);\n    return (\n      /** @type {fourSq.api.models.hours.MachineTimeframe} */\n      {\n        days: days,\n        open: [\n        /** @type {fourSq.api.models.hours.MachineSegment} */\n        {\n          start: startFormatted,\n          end: endFormatted\n        }]\n      }\n    );\n  },\n\n  /**\n   * @param {number} minutes after minute\n   * @return {string} the hhmm format that API takes for the input hours\n   */\n  formatMinutes: function formatMinutes(minutes) {\n    var hh = Math.floor(minutes / 60);\n    var mm = minutes % 60;\n    var intoNextDay = hh % 24 !== hh;\n    hh = hh % 24;\n\n    if (hh % 10 === hh) {\n      hh = '0' + hh;\n    }\n\n    if (intoNextDay) {\n      hh = '+' + hh;\n    }\n\n    if (mm % 10 === mm) {\n      mm = '0' + mm;\n    }\n\n    return hh + '' + mm;\n  },\n\n  /**\n   * @param {string} hoursText\n   * @param {(string|undefined)} minutesText\n   * @param {(string|undefined)} meridiem\n   * @return {number}\n   */\n  minutesAfterMidnight: function minutesAfterMidnight(hoursText, minutesText, meridiem) {\n    var hours = parseInt(hoursText, 10);\n    var minutes = minutesText !== undefined ? parseInt(minutesText, 10) : 0;\n\n    if (hours === 12 && meridiem) {\n      hours -= 12;\n    }\n\n    if (meridiem && meridiem[0] === 'p') {\n      hours += 12;\n    }\n\n    return hours * 60 + minutes;\n  }\n};\nfourSq.util.HoursParser = {\n  /**\n   * @return {fourSq.api.models.hours.MachineHours}\n   */\n  parse: function parse(text) {\n    text = text.toLowerCase(); // Normalize new lines to ';'\n\n    text = text.replace(/\\n/g, ' ; '); // Massage times\n    // TODO(ss): translate and do weekend/weekday subs\n\n    text = text.replace(/(12|12:00)?midnight/g, '1200a');\n    text = text.replace(/(12|12:00)?noon/g, '1200p');\n    text = text.replace(/(open)?\\s*24\\s*hours?/g, '1200a-1200a'); // Standardize conjunctions to '&'\n\n    text = text.replace(/\\s*(and|,|\\+|&)\\s*/g, '&'); // Standardize range tokens to '-'\n\n    text = text.replace(/\\s*(-|to|thru|through|till?|'till?|until)\\s*/g, '-'); // Standardize am/pm\n\n    text = text.replace(/\\s*a\\.?m?\\.?/g, 'a');\n    text = text.replace(/\\s*p\\.?m?\\.?/g, 'p'); // Not sure this happens, but add trailing zeros to things like 5:3pm\n\n    text = text.replace(/([0-9])(h|:|\\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...\n    // if they both have separators\n    //    text = text.replace(/([0-9]+)\\s*[^0-9]\\s*([0-9]{2})([^0-9]+?)([0-9]+)\\s*[^0-9]\\s*([0-9]{2})/g, '$1$2$3$4$5');\n    // if only the start time has a separator\n\n    text = text.replace(/([0-9]+)\\s*(h|:|\\.)\\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator\n    //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\\s*(h|:|\\.)\\s*([0-9]{2})/g, '$1$2$3$5');\n\n    text = fourSq.util.Hours.padTimes(text); // Massage days\n\n    var dayCanonicals = _.map(_.range(1, 8), function (dayI) {\n      var allNames = fourSq.util.HoursParser.dayAliases(dayI);\n\n      var canonical = _.head(allNames); // Shortest is at the front\n\n\n      var aliases = _.tail(allNames);\n\n      aliases.reverse(); // Need to have the largest alias first for replacing\n\n      if (canonical && aliases) {\n        _.each(aliases, function (alias) {\n          text = text.replace(new RegExp(alias, 'g'), canonical);\n        });\n      }\n\n      return canonical;\n    });\n\n    var dayPattern = '(' + dayCanonicals.join('|') + ')';\n    var timePattern = '([0-9][0-9])([0-9][0-9])\\\\s*([ap])?';\n    var globTimePattern = '[0-9]{4}\\\\s*[ap]?';\n    var globTimeRangePattern = '(' + globTimePattern + '[^0-9]+' + globTimePattern + ')'; // Need to establish whether days come before times (forward) or not (backward)\n\n    var forwardTimeframePattern = dayPattern + '.*?' + globTimeRangePattern;\n    var backwardTimeframePattern = globTimeRangePattern + '.*?' + dayPattern;\n    var forwardPosition = text.search(new RegExp(forwardTimeframePattern));\n    var backwardPosition = text.search(new RegExp(backwardTimeframePattern)); // If a forward pattern is found first, consider it a forward facing text\n\n    var isForward = forwardPosition !== -1 && forwardPosition <= backwardPosition || backwardPosition === -1; // TODO(ss): may be better to normalize the string to be forward facing at this point\n    //           so the rest of the method would be easier to grok\n    // Separate out something like Mon-Thu, Sat, Sun\n\n    if (isForward) {\n      var ungroupedPattern = dayPattern + '&' + dayPattern + '[^&]*?' + globTimeRangePattern;\n      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');\n\n      for (var i = 0; i < dayCanonicals.length; ++i) {\n        text = text.replace(ungroupedRegex, '$1 $3; $2 $3; ');\n      }\n    } else {\n      var ungroupedPattern = globTimeRangePattern + '([^0-9]*?)' + dayPattern + '&' + dayPattern;\n      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');\n\n      for (var i = 0; i < dayCanonicals.length; ++i) {\n        text = text.replace(ungroupedRegex, '$1 $2 $3; $1 $4; ');\n      }\n    }\n\n    var dayRangePattern = dayPattern + '[^a-z0-9]*' + dayPattern + '?';\n    var timeRangePattern = timePattern + '[^0-9]*' + timePattern;\n    var timeframePattern = isForward ? dayRangePattern + '.*?' + timeRangePattern : timeRangePattern + '.*?' + dayRangePattern;\n    var dayTimeMatcher = new RegExp(timeframePattern, 'g');\n    var matches = [];\n\n    do {\n      var dayTimeMatch = dayTimeMatcher.exec(text);\n\n      if (dayTimeMatch) {\n        matches.push(dayTimeMatch);\n      }\n    } while (dayTimeMatch);\n\n    if (matches.length <= 0) {\n      // Try to find just a time range, and then we'll assume it's all days later on.\n      // First two groups are strings that won't match, to get undefined values\n      // in those slots in the regex match array.\n      var timeRangeMatcher = new RegExp('(@!ZfW#)?(@!ZfW#)?' + timeRangePattern);\n      var timeRangeMatch = timeRangeMatcher.exec(text);\n\n      if (timeRangeMatch) {\n        matches.push(timeRangeMatch);\n      }\n    }\n\n    var timeframes = _.map(matches, function (match) {\n      // day slots in the regex match array\n      var day1 = isForward ? match[1] : match[7];\n      var day2 = isForward ? match[2] : match[8];\n      var startDay = day1 !== undefined ? dayCanonicals.indexOf(day1) : 0;\n      var endDay = null;\n\n      if (day2 !== undefined) {\n        if (day1 === undefined) {\n          startDay = dayCanonicals.indexOf(day2);\n        } else {\n          endDay = dayCanonicals.indexOf(day2);\n        }\n      } else if (day1 === undefined) {\n        // If start and end days were undefined, assume 7 days a week\n        endDay = 7;\n      }\n\n      if (endDay === null) {\n        endDay = startDay;\n      }\n\n      if (endDay < startDay) {\n        // For case where: Sun-Tue (we start on Monday)\n        endDay += 7;\n      }\n\n      var days = _.map(_.range(startDay, endDay + 1), function (day) {\n        // Days start at 1 for Monday\n        return day % 7 + 1;\n      }); // time slots in the regex match array\n\n\n      var startHour = isForward ? match[3] : match[1];\n      var startMinute = isForward ? match[4] : match[2];\n      var startMeridiem = isForward ? match[5] : match[3];\n      var endHour = isForward ? match[6] : match[4];\n      var endMinute = isForward ? match[7] : match[5];\n      var endMeridiem = isForward ? match[8] : match[6]; // TODO(ss): hint the meridiem based on endHour < startHour and > 4\n\n      var startTime = fourSq.util.Hours.minutesAfterMidnight(startHour, startMinute, startMeridiem);\n      var endTime = fourSq.util.Hours.minutesAfterMidnight(endHour, endMinute, endMeridiem);\n      return fourSq.util.Hours.toTimeframe(days, startTime, endTime);\n    });\n\n    if (timeframes.length) {\n      return (\n        /** @type {fourSq.api.models.hours.MachineHours} */\n        {\n          timeframes: timeframes\n        }\n      );\n    } else {\n      return null;\n    }\n  },\n\n  /**\n   * @param {number} day starting at 1 for monday\n   * @return {Array.<string>} all aliases of the day, sorted by length\n   */\n  dayAliases: function dayAliases(day) {\n    var text = '';\n    var aliases = '';\n\n    switch (day) {\n      case 1:\n        aliases = ['mondays', 'monday', 'monda', 'mond', 'mon', 'mo', 'm'];\n        break;\n\n      case 2:\n        aliases = ['tuesdays', 'tuesday', 'tuesd', 'tues', 'tue', 'tu'];\n        break;\n\n      case 3:\n        aliases = ['wednesdays', 'wednesday', 'wednes', 'wedne', 'wedn', 'wed', 'we', 'w'];\n        break;\n\n      case 4:\n        aliases = ['thursdays', 'thursday', 'thurs', 'thur', 'thu', 'th'];\n        break;\n\n      case 5:\n        aliases = ['fridays', 'friday', 'frida', 'frid', 'fri', 'fr', 'f'];\n        break;\n\n      case 6:\n        aliases = ['saturdays', 'saturday', 'satur', 'satu', 'sat', 'sa'];\n        break;\n\n      case 7:\n        aliases = ['sundays', 'sunday', 'sunda', 'sund', 'sun', 'su'];\n        break;\n\n      default:\n        return [];\n    }\n\n    return _.sortBy(aliases, function (alias) {\n      return alias.length;\n    });\n  }\n}; // Remove the days in which the business is closed. The parser doesn't need those days anyways.\n\nfunction removeClosedDays(schedule) {\n  var hoursString = '';\n  var lines = schedule.split('\\n');\n\n  for (var i = 0; i < lines.length; i++) {\n    if (lines[i].includes('closed') || lines[i].includes('Closed') || !lines[i].match(/\\d+/g)) {// don't add it to the list\n    } else {\n      hoursString += lines[i] + '\\n';\n    }\n  }\n\n  return hoursString;\n}\n\nvar parseContent = function parseContent(currentValue) {\n  currentValue = removeClosedDays(currentValue);\n  var hours = fourSq.util.HoursParser.parse(currentValue);\n  return JSON.stringify(hours);\n};\n\n//# sourceURL=webpack:///./src/blocks/openhours/hoursparser.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/posts-collection/frontend.js":
-/*!*************************************************!*\
-  !*** ./src/blocks/posts-collection/frontend.js ***!
-  \*************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ \"./node_modules/classnames/index.js\");\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils */ \"./src/utils/index.js\");\n/* harmony import */ var _components_grid_generator_layoutEngine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/grid-generator/layoutEngine */ \"./src/components/grid-generator/layoutEngine.js\");\n/* harmony import */ var _components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/grid-generator/utils */ \"./src/components/grid-generator/utils.js\");\n\n\n\n\n\n\n(function ($, window, undefined) {\n  var defaultBlockWidth = 1162; // magic\n\n  $('.novablocks-grid').each(function (i, block) {\n    var $grid = $(block);\n    var $block = $grid.closest('.novablocks-block');\n    var $cards = $grid.closest('.novablocks-collection__cards');\n    var $posts = $grid.children('.novablocks-card');\n    var attributes = $grid.data();\n    var cardsCount = $posts.length;\n    var addedCards;\n    block.style.setProperty('--card-media-padding', attributes.imagepadding);\n    block.style.setProperty('--card-media-padding-top', Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"getCardMediaPaddingTop\"])(attributes.thumbnailaspectratio));\n    block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');\n\n    if (attributes.layoutstyle !== 'parametric') {\n      $grid.removeClass('novablocks-grid');\n      $grid.addClass('novablocks-collection__layout');\n      $grid.addClass(\"novablocks-grid__area--\".concat(attributes.islandscape ? 'landscape' : 'portrait'));\n      $grid.addClass(Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getAreaClassnameByWidthRatio\"])(1 / attributes.columns));\n      return;\n    }\n\n    var $title = $block.find('.novablocks-collection__title').detach();\n    var $subtitle = $block.find('.novablocks-collection__subtitle').detach();\n\n    function createLayout() {\n      var blockWidth = $grid.outerWidth();\n      $posts.detach();\n      $grid.empty();\n      $block.find('.js-collection-element-clone').remove();\n      addedCards = 0;\n      var areaColumns = Object(_components_grid_generator_layoutEngine__WEBPACK_IMPORTED_MODULE_2__[\"applyLayoutEngine\"])(attributes);\n      var columnsCount = areaColumns.length;\n      var firstSet = Math.floor((columnsCount - 1) / 2);\n      var secondSet = columnsCount - 1 - firstSet;\n\n      if (Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"below\"])('desktop')) {\n        for (var _i = 0; _i < firstSet; _i++) {\n          removeSmallestColumn(areaColumns);\n        }\n\n        if (Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"below\"])('lap')) {\n          for (var _i2 = 0; _i2 < secondSet; _i2++) {\n            removeSmallestColumn(areaColumns);\n          }\n        }\n      }\n\n      Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"redistributeCardsInAreas\"])(areaColumns, cardsCount, attributes);\n      var gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;\n      var gridrows = attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows;\n      var maxcolumns = areaColumns.reduce(function (acc, column) {\n        return Math.max(acc, column.col + column.width - 1);\n      }, 0);\n      var maxrows = areaColumns.reduce(function (acc, column) {\n        return Math.max(acc, column.row + column.height - 1);\n      }, 0);\n      gridcolumns = Math.min(gridcolumns, maxcolumns);\n      gridrows = Math.min(gridrows, maxrows);\n      var compiledAttributes = Object.assign({}, attributes, {\n        gridcolumns: attributes.flipcolsrows ? gridrows : gridcolumns,\n        gridrows: attributes.flipcolsrows ? gridcolumns : gridrows\n      });\n      $grid.css(Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getGridStyle\"])(compiledAttributes));\n\n      if (Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"below\"])('desktop') || attributes.headerposition === 0) {\n        $title.clone().addClass('js-collection-element-clone').insertBefore($cards);\n        $subtitle.clone().addClass('js-collection-element-clone').insertBefore($cards);\n      }\n\n      for (var _i3 = 0; _i3 < areaColumns.length; _i3++) {\n        var areaColumn = areaColumns[_i3];\n        var areas = areaColumn.areas,\n            row = areaColumn.row,\n            col = areaColumn.col,\n            width = areaColumn.width,\n            height = areaColumn.height;\n        var $column = $('<div class=\"novablocks-grid__column\">');\n        $column.css('grid-area', \"\".concat(row, \" / \").concat(col, \" / span \").concat(height, \" / span \").concat(width));\n        $column.attr('data-area', \"\".concat(row, \" / \").concat(col, \" / span \").concat(height, \" / span \").concat(width));\n\n        var _loop = function _loop(j) {\n          var area = areas[j];\n          var blockWidthRatio = Math.min(1, blockWidth / defaultBlockWidth);\n          var areaClassName = getAreaClassname(area, attributes, blockWidthRatio);\n          addedCards += area.postsCount;\n          var $area = $(\"<div class=\\\"\".concat(areaClassName, \"\\\">\"));\n          Array.from(Array(area.postsCount).keys()).map(function (i) {\n            var $gridItem = $('<div class=\"novablocks-grid__item\">');\n            var $card = $posts.eq(addedCards - area.postsCount + i);\n            var landscape = Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"isLandscape\"])(area, attributes);\n            $card.toggleClass('novablocks-card--landscape', !!landscape);\n            $card.toggleClass('novablocks-card--portrait', !landscape);\n            $card.appendTo($gridItem);\n\n            if (!Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"below\"])('desktop') && attributes.headerposition === addedCards - area.postsCount + i + 1) {\n              var $header = $('<div class=\"novablocks-grid__item js-collection-element-clone\">');\n              $title.clone().appendTo($header);\n              $subtitle.clone().appendTo($header);\n              $header.appendTo($area);\n            }\n\n            $gridItem.appendTo($area);\n          });\n          $area.appendTo($column);\n        };\n\n        for (var j = 0; j < areas.length; j++) {\n          _loop(j);\n        }\n\n        $column.appendTo($grid);\n      }\n    }\n\n    createLayout();\n\n    function recreateLayout() {\n      $grid.contents().replaceWith($posts);\n      $grid.css({\n        display: '',\n        gridTemplateColumns: '',\n        gridTemplateRowss: ''\n      });\n      $posts.removeClass('novablocks-card--portrait');\n      $posts.removeClass('novablocks-card--landscape');\n      createLayout();\n    }\n\n    var onResize = Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"debounce\"])(recreateLayout, 100);\n    $(window).on('resize', onResize);\n  });\n\n  function getAreaClassname(area, attributes) {\n    var widthRatioMultiplier = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;\n    var width = area.width,\n        height = area.height;\n\n    var _getGridColumnsAndRow = Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getGridColumnsAndRows\"])(attributes),\n        gridcolumns = _getGridColumnsAndRow.gridcolumns,\n        gridrows = _getGridColumnsAndRow.gridrows;\n\n    return classnames__WEBPACK_IMPORTED_MODULE_0___default()([Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getAreaBaseClassname\"])(area), Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getAreaClassnameByWidthRatio\"])(widthRatioMultiplier * width / gridcolumns), Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getAreaClassnameByHeightRatio\"])(height / gridrows), Object(_components_grid_generator_utils__WEBPACK_IMPORTED_MODULE_3__[\"getAreaClassnameByAspectRatio\"])(area, attributes)]);\n  }\n\n  function removeSmallestColumn(areaColumns) {\n    var data = areaColumns.map(function (area, index) {\n      return {\n        area: area,\n        index: index\n      };\n    });\n    data.sort(function (obj1, obj2) {\n      return obj1.area.width - obj2.area.width;\n    });\n    var indexToRemove = data[0].index;\n\n    if (data[0].area.nth === 1) {\n      indexToRemove = data[data.length].index;\n    }\n\n    areaColumns.splice(indexToRemove, 1);\n    normalizeColumns(areaColumns);\n  }\n\n  function normalizeColumns(areaColumns) {\n    moveColumnsToLeft(areaColumns);\n    moveColumnsToTop(areaColumns);\n  }\n\n  function moveColumnsToLeft(areaColumns) {\n    areaColumns.forEach(function (areaColumn) {\n      var spaceLeft = 0;\n      var movingLeft = true;\n\n      while (movingLeft) {\n        var overlapLeft = areaColumns.filter(function (compareColumn) {\n          return compareColumn !== areaColumn;\n        }).some(function (compareColumn) {\n          return !(areaColumn.col + areaColumn.width - 1 < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row > compareColumn.row + compareColumn.height - 1 || areaColumn.col - (spaceLeft + 1) > compareColumn.col + compareColumn.width - 1);\n        });\n\n        if (overlapLeft || areaColumn.col - spaceLeft <= 1) {\n          movingLeft = false;\n        } else {\n          spaceLeft++;\n        }\n      }\n\n      areaColumn.col = areaColumn.col - spaceLeft;\n    });\n  }\n\n  function moveColumnsToTop(areaColumns) {\n    areaColumns.forEach(function (areaColumn) {\n      var spaceTop = 0;\n      var movingTop = true;\n\n      while (movingTop) {\n        var overlapTop = areaColumns.filter(function (compareColumn) {\n          return compareColumn !== areaColumn;\n        }).some(function (compareColumn) {\n          return !(areaColumn.col + areaColumn.width - 1 < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row - (spaceTop + 1) > compareColumn.row + compareColumn.height - 1 || areaColumn.col > compareColumn.col + compareColumn.width - 1);\n        });\n\n        if (overlapTop || areaColumn.row - spaceTop <= 1) {\n          movingTop = false;\n        } else {\n          spaceTop++;\n        }\n      }\n\n      areaColumn.row = areaColumn.row - spaceTop;\n    });\n  }\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/blocks/posts-collection/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/blocks/slideshow/frontend.js":
-/*!******************************************!*\
-  !*** ./src/blocks/slideshow/frontend.js ***!
-  \******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_with_parallax_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/with-parallax/util */ \"./src/components/with-parallax/util.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils */ \"./src/utils/index.js\");\n\n\nvar BLOCK_SELECTOR = '.novablocks-slideshow';\nvar SLIDER_SELECTOR = '.novablocks-slideshow__slider';\nvar SLIDE_SELECTOR = '.novablocks-slideshow__slide';\nvar FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';\nvar TRANSITION_DURATION = 1000;\nvar TRANSITION_EASING = \"easeInOutCirc\";\n\n(function ($, window, undefined) {\n  var $window = $(window);\n  var $blocks = $(BLOCK_SELECTOR);\n  var useOrientation = Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"hasTouchScreen\"])() && 'orientation' in window;\n  var onDebouncedResize = Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"debounce\"])(onResize, 300);\n  $blocks.each(function (index, block) {\n    var $block = $(block),\n        $slider = $block.find(SLIDER_SELECTOR),\n        $arrowContainer;\n    resetBlockMinHeight($block);\n\n    if ($slider.children().length > 1) {\n      $arrowContainer = $('<div class=\"novablocks-slideshow__controls\">').appendTo($block);\n      $slider.on('beforeChange', onBeforeSlideChange);\n      $slider.slick({\n        rows: 0,\n        // for simpler reveal transitions between slides\n        fade: true,\n        prevArrow: '<div class=\"novablocks-slideshow__arrow novablocks-slideshow__arrow--prev\"></div>',\n        nextArrow: '<div class=\"novablocks-slideshow__arrow novablocks-slideshow__arrow--next\"></div>',\n        appendArrows: $arrowContainer,\n        speed: 0\n      });\n    }\n\n    $block.addClass('is-ready');\n  });\n  Object(_components_with_parallax_util__WEBPACK_IMPORTED_MODULE_0__[\"parallaxInit\"])($blocks);\n\n  if (useOrientation) {\n    $window.on('orientationchange', function () {\n      $window.one('resize', onResize);\n    });\n  } else {\n    $window.on('resize', onDebouncedResize);\n  }\n\n  function resetBlockMinHeight($block) {\n    $block.css('minHeight', '');\n    $block.css('minHeight', getBlockMinHeight($block));\n    $(window).trigger('scroll');\n  }\n\n  function getBlockMinHeight($block) {\n    var windowWidth = window.innerWidth;\n    var $slider = $block.find(SLIDER_SELECTOR);\n    var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();\n    var windowHeight = window.innerHeight;\n    var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;\n    var mediaMinHeight = 0;\n    var slideMaxHeight = 0;\n    var maxAspectRatio = 0;\n    $block.find(SLIDE_SELECTOR).each(function (i, obj) {\n      var $slide = $(obj),\n          $media = $slide.find('.novablocks-slideshow__media'),\n          width = $media.data('width'),\n          height = $media.data('height'),\n          aspectRatio = width / height,\n          slideHeight = $slide.outerHeight();\n      maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;\n      mediaMinHeight = sliderWidth / maxAspectRatio;\n      slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;\n    });\n    return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);\n  }\n\n  function onResize() {\n    $blocks.each(function (index, block) {\n      var $block = $(block);\n      var $slider = $block.find(SLIDER_SELECTOR);\n      resetBlockMinHeight($block);\n\n      if ($slider.is('.slick-initialized')) {\n        $slider.slick('setPosition');\n      }\n    });\n  }\n\n  function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {\n    var $currentSlide = $(slick.$slides[currentSlide]);\n    var $nextSlide = $(slick.$slides[nextSlide]);\n    var $slides = $(slick.$slides);\n    transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));\n  }\n\n  function hasFixedBackground($slide) {\n    var fixed = false;\n\n    if ($slide.find('.novablocks-parallax').css('position') === 'fixed') {\n      return true;\n    }\n\n    return fixed;\n  }\n\n  function transition($current, $next) {\n    var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;\n    var slideWidth = $current.outerWidth();\n    var move = 300;\n    var isFixed = hasFixedBackground($current);\n    $current.velocity({\n      tween: [0, 1]\n    }, {\n      duration: TRANSITION_DURATION,\n      easing: TRANSITION_EASING,\n      begin: function begin() {\n        $current.addClass('novablocks-slideshow__slide--current');\n        $next.addClass('novablocks-slideshow__slide--next');\n      },\n      progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {\n        var next = $next.find('.novablocks-slideshow__slide-wrap').get(0);\n        var nextBg = $next.find('.novablocks-slideshow__media').get(0);\n        var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);\n        var current = $current.get(0);\n        var currentBg = $current.find('.novablocks-slideshow__media').get(0);\n        var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);\n\n        if (isFixed) {\n          next.style.left = slideWidth * tweenValue + 'px';\n          nextBg.style.left = move * tweenValue + 'px';\n          nextFg.style.left = slideWidth * -tweenValue + 'px';\n          currentBg.style.left = move * (tweenValue - 1) + 'px';\n        } else {\n          next.style.left = slideWidth * tweenValue + 'px';\n          nextBg.style.left = (move - slideWidth) * tweenValue + 'px';\n          nextFg.style.left = (move - slideWidth) * tweenValue + 'px';\n          currentBg.style.left = move * (tweenValue - 1) + 'px';\n        }\n      },\n      complete: function complete() {\n        $current.removeClass('novablocks-slideshow__slide--current');\n        $next.removeClass('novablocks-slideshow__slide--next');\n      }\n    });\n  }\n\n  function getDirection(slick, currentSlide, nextSlide) {\n    var direction = 1;\n\n    if (slick.slideCount > 2) {\n      if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {\n        direction = -1;\n      }\n\n      if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {\n        direction = -1;\n      }\n    }\n\n    return direction;\n  }\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/blocks/slideshow/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/components/advanced-gallery/frontend.js":
-/*!*****************************************************!*\
-  !*** ./src/components/advanced-gallery/frontend.js ***!
-  \*****************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ \"./src/components/advanced-gallery/util.js\");\n\n\n(function ($, window, undefined) {\n  $('.novablocks-advanced-gallery__grid').each(function (i, obj) {\n    Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"safariHeightFix\"])(obj);\n  });\n})(jQuery, window);\n\n//# sourceURL=webpack:///./src/components/advanced-gallery/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/components/advanced-gallery/grid-item.js":
-/*!******************************************************!*\
-  !*** ./src/components/advanced-gallery/grid-item.js ***!
-  \******************************************************/
-/*! exports provided: GridItemCollection, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"GridItemCollection\", function() { return GridItemCollection; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return GridItem; });\n/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ \"./node_modules/@babel/runtime/helpers/toConsumableArray.js\");\n/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"./node_modules/@babel/runtime/helpers/createClass.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nvar ITEM_SIZE = 20;\nvar GridItemCollection = /*#__PURE__*/function () {\n  function GridItemCollection(images, attributes) {\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, GridItemCollection);\n\n    var placementVariation = attributes.placementVariation / 25 - 1;\n    this.gridItems = images.map(function (image, index) {\n      var groupStart = Math.floor(index / 4) * 4;\n      var groupEnd = Math.min(groupStart + 4, images.length);\n      var isGroupOfThree = groupEnd - groupStart === 3;\n      return new GridItem(image, index, attributes, isGroupOfThree);\n    });\n    this.removeExtra();\n\n    if (placementVariation === 1 || placementVariation === 2) {\n      this.flipX();\n    }\n\n    if (placementVariation === 2 || placementVariation === 3) {\n      this.flipY();\n    }\n  }\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(GridItemCollection, [{\n    key: \"removeExtra\",\n    value: function removeExtra() {\n      var extraLeft = this.getExtraLeft();\n      var extraTop = this.getExtraTop();\n      var extraBetween = this.getExtraBetween();\n      this.gridItems = this.gridItems.map(function (gridItem, index) {\n        var groupIndex = Math.floor(index / 4);\n        gridItem.x = gridItem.x - extraLeft;\n        gridItem.y = gridItem.y - extraTop - groupIndex * extraBetween;\n        return gridItem;\n      });\n    }\n  }, {\n    key: \"flipX\",\n    value: function flipX() {\n      var maxX = Math.max.apply(Math, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(this.gridItems.map(function (gridItem) {\n        return gridItem.x + gridItem.width;\n      })));\n      this.gridItems = this.gridItems.map(function (gridItem, index) {\n        gridItem.x = maxX - gridItem.x - gridItem.width + 1;\n        return gridItem;\n      });\n    }\n  }, {\n    key: \"flipY\",\n    value: function flipY() {\n      var maxY = Math.max.apply(Math, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(this.gridItems.map(function (gridItem) {\n        return gridItem.y + gridItem.height;\n      })));\n      this.gridItems = this.gridItems.map(function (gridItem, index) {\n        gridItem.y = maxY - gridItem.y - gridItem.height + 1;\n        return gridItem;\n      });\n    }\n  }, {\n    key: \"getExtraLeft\",\n    value: function getExtraLeft() {\n      return Math.min.apply(Math, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(this.gridItems.map(function (gridItem) {\n        return gridItem.x;\n      }))) - 1;\n    }\n  }, {\n    key: \"getExtraTop\",\n    value: function getExtraTop() {\n      return Math.min.apply(Math, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(this.gridItems.map(function (gridItem) {\n        return gridItem.y;\n      }))) - 1;\n    }\n  }, {\n    key: \"getExtraBetween\",\n    value: function getExtraBetween() {\n      var firstGroup = this.gridItems.slice(0, 4);\n      var maxBottom = Math.max.apply(Math, _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(firstGroup.map(function (gridItem) {\n        return gridItem.y + gridItem.height;\n      })));\n      return ITEM_SIZE * 2 - maxBottom + 1;\n    }\n  }]);\n\n  return GridItemCollection;\n}();\n\nvar GridItem = /*#__PURE__*/function () {\n  function GridItem(image, index, attributes, isGroupOfThree) {\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, GridItem);\n\n    this.sizeContrast = attributes.sizeContrast / 20;\n    this.positionShift = attributes.positionShift / 5;\n    this.objectPosition = attributes.objectPosition;\n    this.imageResizing = attributes.imageResizing;\n    this.imageRotation = attributes.imageRotation;\n    this.image = image;\n    this.index = index;\n    this.idx = this.getIndex(index);\n    this.col = this.idx % 2;\n    this.row = Math.floor(index / 2);\n\n    if (!!isGroupOfThree) {\n      if (index === 0) {\n        this.positionShift = Math.min(this.positionShift, 10);\n      }\n\n      if (index === 2) {\n        this.positionShift = Math.max(this.positionShift, 10);\n      }\n    }\n\n    var _this$getOffsets = this.getOffsets(),\n        offsetX = _this$getOffsets.offsetX,\n        offsetY = _this$getOffsets.offsetY;\n\n    var size = ITEM_SIZE - this.sizeContrast * (index % 4);\n    this.x = ITEM_SIZE * this.col + 1 + offsetX;\n    this.y = ITEM_SIZE * this.row + 1 + offsetY;\n    this.width = size;\n    this.height = size;\n  }\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(GridItem, [{\n    key: \"getOffsets\",\n    value: function getOffsets() {\n      var row = this.row,\n          col = this.col,\n          index = this.index,\n          sizeContrast = this.sizeContrast,\n          positionShift = this.positionShift; // offset for positioning\n\n      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;\n      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset\n      // move 1st to right\n\n      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left\n\n      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down\n\n      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up\n\n      offsetY += col % 2 * (1 - row % 2) * positionShift;\n      return {\n        offsetX: offsetX,\n        offsetY: offsetY\n      };\n    } // reoder to display items clockwise\n\n  }, {\n    key: \"getIndex\",\n    value: function getIndex(index) {\n      if (index % 4 === 3) return index - 1;\n      if (index % 4 === 2) return index + 1;\n      return index;\n    }\n  }, {\n    key: \"getStyle\",\n    value: function getStyle() {\n      var index = this.index,\n          x = this.x,\n          y = this.y,\n          width = this.width,\n          height = this.height,\n          imageRotation = this.imageRotation;\n      var rotation = \"rotate(\".concat((index % 2 - 0.5) * imageRotation / 10, \"deg)\");\n      return {\n        gridColumnStart: x + '',\n        gridColumnEnd: \"span \".concat(width),\n        gridRowStart: y + '',\n        gridRowEnd: \"span \".concat(height),\n        transform: rotation\n      };\n    }\n  }, {\n    key: \"getImageStyle\",\n    value: function getImageStyle() {\n      var row = this.row,\n          col = this.col,\n          objectPosition = this.objectPosition,\n          imageResizing = this.imageResizing;\n      var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;\n      var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;\n      return {\n        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',\n        objectPosition: \"\".concat(positionX, \"% \").concat(positionY, \"%\")\n      };\n    }\n  }]);\n\n  return GridItem;\n}();\n\n\n\n//# sourceURL=webpack:///./src/components/advanced-gallery/grid-item.js?");
-
-/***/ }),
-
-/***/ "./src/components/advanced-gallery/util.js":
-/*!*************************************************!*\
-  !*** ./src/components/advanced-gallery/util.js ***!
-  \*************************************************/
-/*! exports provided: getRandomAttributes, getGalleryStyle, getGridStyle, safariHeightFix */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getRandomAttributes\", function() { return getRandomAttributes; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getGalleryStyle\", function() { return getGalleryStyle; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getGridStyle\", function() { return getGridStyle; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"safariHeightFix\", function() { return safariHeightFix; });\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils */ \"./src/utils/index.js\");\n\n\nvar getRandomAttributes = function getRandomAttributes() {\n  return {\n    sizeContrast: Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"getRandomBetween\"])(0, 5) * 20,\n    positionShift: Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"getRandomBetween\"])(0, 20) * 5,\n    elementsDistance: Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"getRandomBetween\"])(0, 5) * 20,\n    placementVariation: Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"getRandomBetween\"])(1, 4) * 25,\n    stylePreset: 'just-my-style'\n  };\n};\nvar getGalleryStyle = function getGalleryStyle(attributes) {\n  var containerHeight = attributes.containerHeight / 50 - 1;\n  var numerator = 1;\n  var denominator = 1;\n  containerHeight = Math.min(Math.max(-1, containerHeight), 1);\n\n  if (containerHeight > 0) {\n    numerator = 1 + containerHeight;\n  }\n\n  if (containerHeight < 0) {\n    denominator = 1 + Math.abs(containerHeight);\n  }\n\n  return {\n    paddingTop: \"\".concat(numerator * 100 / denominator, \"%\")\n  };\n};\nvar getGridStyle = function getGridStyle(attributes) {\n  var elementsDistance = attributes.elementsDistance;\n  return {\n    '--novablocks-advanced-gallery-grid-gap': \"\".concat(elementsDistance, \"px\")\n  };\n};\nvar safariHeightFix = function safariHeightFix(grid) {\n  if (!_utils__WEBPACK_IMPORTED_MODULE_1__[\"isSafari\"]) {\n    return;\n  }\n\n  var parent = grid.parentNode;\n  var $grid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(grid);\n  var $parent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(parent);\n\n  var resetHeight = function resetHeight() {\n    var newHeight = $parent.outerHeight();\n    $grid.css('height', newHeight);\n  };\n\n  var debouncedResetHeight = Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"debounce\"])(resetHeight, 30);\n  resetHeight();\n\n  if (typeof window.ResizeObserver !== \"undefined\") {\n    var observer = new ResizeObserver(function (entries) {\n      debouncedResetHeight();\n    });\n    observer.observe(parent);\n  } else {\n    jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).on('resize', function () {\n      debouncedResetHeight();\n    });\n  }\n};\n\n//# sourceURL=webpack:///./src/components/advanced-gallery/util.js?");
-
-/***/ }),
-
-/***/ "./src/components/grid-generator/layoutEngine.js":
-/*!*******************************************************!*\
-  !*** ./src/components/grid-generator/layoutEngine.js ***!
-  \*******************************************************/
-/*! exports provided: applyLayoutEngine */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"applyLayoutEngine\", function() { return applyLayoutEngine; });\n/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ \"./node_modules/@babel/runtime/helpers/defineProperty.js\");\n/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/components/grid-generator/utils.js\");\n\n\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }\n\n // This is the main workhorse containing the logic of our layout \"engine\".\n// Given a state, it will return a list of posts with details to handle their layout.\n\nvar applyLayoutEngine = function applyLayoutEngine(state) {\n  var debug = false; // Before we can get to generating the \"grid areas\" for each post (meaning start col and row plus end col and ro),\n  // we need to do a couple of preliminary calculations.\n  // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.\n  // This way we gain an easier understanding of what is going on at each step of the logic.\n  // In each matrix we will ignore index 0 since it is easier to start from 1,\n  // the same way CSS grid columns and rows behave.\n  // The order of these operation is important!\n\n  debug ? console.log(\"\\nGenerating a new layout...\\n\\n\") : false; // The \"null\" character:\n\n  var emptyChar = \"X\"; // These are the matrices we are going to calculate:\n  // The nth matrix: a bidimensional matrix the same size as the grid, holding in each cell what nth post should that cell belong to.\n  // From this matrix we can extrapolate many details since the same nth value will be used to fill all the cells belonging to a post.\n  // So we know the position and dimensions.\n\n  var nthMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The image weight matrix\n\n  var imageWeightMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The meta-details matrix\n\n  var metaDetailsMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // Helper matrices.\n  // The columns width matrix\n\n  var widthMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar); // The vertical fragment size matrix\n\n  var verticalFragmentSizeMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar);\n  var i, j; // Lets start PRELIMINARY CALCULATIONS!\n\n  /*\n  1. Calculate the columns width matrix.\n     We will take into account the feature position, feature size and fragmentation value.\n     The fragmentation value is interpreted in it's bit format, where 1 means a \"cut\".\n     The fragmentation value represents the fragmentation of the remaining gridcolumns after the feature size was deducted.\n   */\n\n  var widthIdx = 1; // First, mark the feature.\n\n  for (i = state.featureposition; i < state.featureposition + state.featuresize; i++) {\n    widthMatrix[i] = widthIdx;\n  } // Next, go from left to right in the columns width matrix, and fill each columns with the same unique number,\n  // Taking into account the fragmentation.\n  // And remember the positions we are int the virtual matrix without the feature.\n\n\n  var frgIdx = 0;\n  widthIdx++;\n\n  for (i = 1; i <= state.gridcolumns; i++) {\n    if (widthMatrix[i] === emptyChar) {\n      frgIdx++; // If the previous position has a different number than the current one, it is clear we should increment and write.\n\n      if (widthMatrix[i - 1] !== widthIdx) {\n        widthIdx++;\n      } else {\n        // If the previous position has the same value as the current one, we need to determine\n        // if the fragmentation bit pattern imposes a \"cut\".\n        var cutMarker = 1 << state.gridcolumns - state.featuresize - frgIdx; // If there is a 1 at this position, make a cut aka increase the number.\n\n        if ((cutMarker & state.fragmentation) === cutMarker) {\n          widthIdx++;\n        }\n      }\n\n      widthMatrix[i] = widthIdx;\n    }\n  }\n\n  debug ? console.log(\"The width matrix: \".padEnd(45, ' ') + widthMatrix) : false;\n  /*\n  2. Calculate the image weight matrix.\n     We will spread the image weight range left-to-right. Each column will consume the range according to its width.\n     Even it is a bidimensional matrix, for now we will only generate one row and copy it.\n    */\n\n  for (i = 1; i <= state.gridcolumns; i++) {\n    // Determine the other end of the current column.\n    var end = i;\n\n    while (widthMatrix[end + 1] === widthMatrix[i]) {\n      end++;\n    } // Now calculate.\n\n\n    if (i === 1) {\n      imageWeightMatrix[1][i] = state.imageweightleft;\n    } else if (end === state.gridcolumns) {\n      imageWeightMatrix[1][i] = state.imageweightright;\n    } else {\n      imageWeightMatrix[1][i] = Math.round(state.imageweightleft - (state.imageweightleft - state.imageweightright) * (i + end - 1) / (2 * state.gridcolumns));\n    } // Fill the entire column with the same meta-details value.\n\n\n    for (j = i; j <= end; j++) {\n      imageWeightMatrix[1][j] = imageWeightMatrix[1][i];\n    }\n\n    i = end;\n  } // Copy the first row to all of the rest.\n\n\n  for (i = 2; i <= state.gridrows; i++) {\n    imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.\n  }\n\n  debug ? console.log(\"The image weight matrix: \".padEnd(45, ' ') + imageWeightMatrix[1]) : false;\n  /*\n  3. Calculate the meta-details matrix.\n     We will spread the meta-details range left-to-right. Each column will consume the range according to its width.\n     Even it is a bidimensional matrix, for now we will only generate one row and copy it.\n   */\n\n  for (i = 1; i <= state.gridcolumns; i++) {\n    // Determine the other end of the current column.\n    var _end = i;\n\n    while (widthMatrix[_end + 1] === widthMatrix[i]) {\n      _end++;\n    } // Now calculate.\n\n\n    if (i === 1) {\n      metaDetailsMatrix[1][i] = state.metadetailsleft;\n    } else if (_end === state.gridcolumns) {\n      metaDetailsMatrix[1][i] = state.metadetailsright;\n    } else {\n      metaDetailsMatrix[1][i] = state.metadetailsleft - (state.metadetailsleft - state.metadetailsright) * (i + _end - 1) / (2 * state.gridcolumns); // If we are instructed to balance MD with IW, we will multiply the MD value with the \"distance\" of the IW value from the \"center\" of the IW range.\n\n      if (state.balancemdandiw && 0 !== state.imageweightleft - state.imageweightright) {\n        metaDetailsMatrix[1][i] = metaDetailsMatrix[1][i] * (Math.abs(state.imageweightleft - state.imageweightright) / 2 / imageWeightMatrix[1][i]);\n      }\n\n      metaDetailsMatrix[1][i] = Math.round(metaDetailsMatrix[1][i]);\n    } // Fill the entire column with the same meta-details value.\n\n\n    for (j = i; j <= _end; j++) {\n      metaDetailsMatrix[1][j] = metaDetailsMatrix[1][i];\n    }\n\n    i = _end;\n  } // Copy the first row to all of the rest.\n\n\n  for (i = 2; i <= state.gridrows; i++) {\n    metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.\n  }\n\n  debug ? console.log(\"The meta-details matrix: \".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;\n  /*\n  4. Handle the boost feature emphasis.\n     We will assign the maximum meta-details and image weight value to the feature, and assign its current value to the column holding the maximum values.\n  */\n\n  if (state.boostfeature && state.featuresize > 0) {\n    // Find column with maximum meta-details value, if the feature isn't already at the max.\n    var maxMetaDetailsPos = 1,\n        maxImageWeightPos = 1;\n\n    for (i = 1; i <= state.gridcolumns; i++) {\n      if (metaDetailsMatrix[1][i] > metaDetailsMatrix[1][maxMetaDetailsPos]) {\n        maxMetaDetailsPos = i;\n      }\n\n      if (imageWeightMatrix[1][i] > imageWeightMatrix[1][maxImageWeightPos]) {\n        maxImageWeightPos = i;\n      }\n    }\n\n    if (maxMetaDetailsPos !== state.featureposition) {\n      // We have something to switch.\n      var featureValue = metaDetailsMatrix[1][state.featureposition];\n      var maxValue = metaDetailsMatrix[1][maxMetaDetailsPos]; // Go and fill each column with the switched values.\n\n      i = maxMetaDetailsPos;\n\n      while (widthMatrix[i] === widthMatrix[maxMetaDetailsPos]) {\n        metaDetailsMatrix[1][i] = featureValue;\n        i++;\n      }\n\n      i = state.featureposition;\n\n      while (widthMatrix[i] === widthMatrix[state.featureposition]) {\n        metaDetailsMatrix[1][i] = maxValue;\n        i++;\n      } // Copy the first row to all of the rest.\n\n\n      for (i = 2; i <= state.gridrows; i++) {\n        metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.\n      }\n\n      debug ? console.log(\"The boosted feature meta-details matrix: \".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;\n    }\n\n    if (maxImageWeightPos !== state.featureposition) {\n      // We have something to switch.\n      var _featureValue = imageWeightMatrix[1][state.featureposition];\n      var _maxValue = imageWeightMatrix[1][maxImageWeightPos]; // Go and fill each column with the switched values.\n\n      i = maxImageWeightPos;\n\n      while (widthMatrix[i] === widthMatrix[maxImageWeightPos]) {\n        imageWeightMatrix[1][i] = _featureValue;\n        i++;\n      }\n\n      i = state.featureposition;\n\n      while (widthMatrix[i] === widthMatrix[state.featureposition]) {\n        imageWeightMatrix[1][i] = _maxValue;\n        i++;\n      } // Copy the first row to all of the rest.\n\n\n      for (i = 2; i <= state.gridrows; i++) {\n        imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.\n      }\n\n      debug ? console.log(\"The boosted feature image weight matrix: \".padEnd(45, ' ') + imageWeightMatrix[1]) : false;\n    }\n  }\n  /*\n  5. Determine the vertical fragment size matrix.\n     The fragment size will range in the number of grid rows and 1.\n  */\n  // First determine the max meta-details and image weight value.\n\n\n  var maxMetaDetailsValue = metaDetailsMatrix[1][1],\n      maxImageWeightValue = imageWeightMatrix[1][1];\n\n  for (i = 1; i <= state.gridcolumns; i++) {\n    if (metaDetailsMatrix[1][i] > maxMetaDetailsValue) {\n      maxMetaDetailsValue = metaDetailsMatrix[1][i];\n    }\n\n    if (imageWeightMatrix[1][i] > maxImageWeightValue) {\n      maxImageWeightValue = imageWeightMatrix[1][i];\n    }\n  } // For the purpose of these calculations, maxMetaDetailsValue and maxImageWeightValue can't be zero.\n\n\n  if (maxImageWeightValue < 1) {\n    maxImageWeightValue = 1;\n  }\n\n  if (maxMetaDetailsValue < 1) {\n    maxMetaDetailsValue = 1;\n  }\n\n  for (i = 1; i <= state.gridcolumns; i++) {\n    // Determine the other end of the current column.\n    var _end2 = i;\n\n    while (widthMatrix[_end2 + 1] === widthMatrix[i]) {\n      _end2++;\n    } // Now calculate.\n\n\n    verticalFragmentSizeMatrix[i] = Math.round((metaDetailsMatrix[1][i] / maxMetaDetailsValue + imageWeightMatrix[1][i] / maxImageWeightValue) / 2 * state.gridrows); // The vertical fragment size can't be more than 3 times the column width (a really tall post).\n\n    if (verticalFragmentSizeMatrix[i] > (_end2 - i + 1) * 3) {\n      verticalFragmentSizeMatrix[i] = (_end2 - i + 1) * 3;\n    } // Also the vertical fragment size can't be less than 1.\n\n\n    if (verticalFragmentSizeMatrix[i] < 1) {\n      verticalFragmentSizeMatrix[i] = 1;\n    } // If the sub feature option is active, and we have a single column for the feature, reduce the vertical fragmentation with 25%.\n\n\n    if (state.subfeature && i === state.featureposition && state.featuresize > 0 && verticalFragmentSizeMatrix[i] === state.gridrows) {\n      verticalFragmentSizeMatrix[i] = Math.floor(verticalFragmentSizeMatrix[i] * 0.75);\n    } // Safety measures.\n\n\n    if (verticalFragmentSizeMatrix[i] < 1) {\n      verticalFragmentSizeMatrix[i] = 1;\n    } else if (verticalFragmentSizeMatrix[i] > state.gridrows) {\n      verticalFragmentSizeMatrix[i] = state.gridrows;\n    } // Fill the entire column with the same fragment size.\n\n\n    for (j = i; j <= _end2; j++) {\n      verticalFragmentSizeMatrix[j] = verticalFragmentSizeMatrix[i];\n    }\n\n    i = _end2;\n  }\n\n  debug ? console.log(\"The vertical fragment size matrix: \".padEnd(45, ' ') + verticalFragmentSizeMatrix) : false;\n  /*\n  6. Determine the nth bidimensional matrix.\n     Each grid cell will be filled with the nth post that cell belongs to. From this matrix we can determine the post grid coordinates,\n     its aspect ratio, area, etc.\n  */\n  // We start with the first post in the list.\n\n  var currentNth = 1; // Start with the feature column.\n\n  if (state.featuresize > 0) {\n    i = 1;\n\n    while (i <= verticalFragmentSizeMatrix[state.featureposition]) {\n      j = state.featureposition;\n\n      do {\n        nthMatrix[i][j] = currentNth;\n        j++;\n      } while (widthMatrix[state.featureposition] === widthMatrix[j]);\n\n      i++;\n    }\n\n    currentNth++;\n\n    if (i <= state.gridrows) {\n      // We have room under the feature for a secondary feature post.\n      // We will reduce the meta-details and image weight by 33% that of the main feature post.\n      while (i <= state.gridrows) {\n        j = state.featureposition;\n\n        do {\n          nthMatrix[i][j] = currentNth; // Adjust the meta-details and image weight.\n\n          metaDetailsMatrix[i][j] = Math.round(metaDetailsMatrix[i][j] * 0.66);\n          imageWeightMatrix[i][j] = Math.round(imageWeightMatrix[i][j] * 0.66);\n          j++;\n        } while (widthMatrix[state.featureposition] === widthMatrix[j]);\n\n        i++;\n      }\n\n      currentNth++;\n    }\n  } // Now start from the left top corner and go through each column, left to right.\n\n\n  var currentColumnStartCol = 1;\n  var currentPostStartRow;\n\n  while (currentColumnStartCol <= state.gridcolumns) {\n    if (nthMatrix[1][currentColumnStartCol] !== emptyChar) {\n      currentColumnStartCol++;\n      continue;\n    } // Fill the current column with posts.\n\n\n    currentPostStartRow = 1;\n\n    while (currentPostStartRow <= state.gridrows) {\n      i = currentPostStartRow;\n\n      while (i <= currentPostStartRow + verticalFragmentSizeMatrix[currentColumnStartCol] - 1 && i <= state.gridrows) {\n        j = currentColumnStartCol;\n\n        do {\n          nthMatrix[i][j] = currentNth;\n          j++;\n        } while (widthMatrix[currentColumnStartCol] === widthMatrix[j]);\n\n        i++;\n      }\n\n      currentNth++;\n      currentPostStartRow = i;\n    }\n  }\n\n  if (debug) {\n    console.log(\"\\nThe nth matrix: \".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));\n\n    for (i = 1; i < nthMatrix.length; i++) {\n      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));\n    }\n  }\n  /*\n  7. Handle the hierarchy crossing.\n     We will not cross into the feature post. We will only cross left to right, only \"over\" a post with a lower nth count.\n     We will only cross if the left post matches in height a post or more on the right.\n     The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.\n     Also, crossing at the top of the layout is more expensive than crossing at a lower row.\n  */\n  // We start with the first post in the list.\n\n\n  var maxNth = currentNth;\n  var hierachyCrossingStrenth = state.hierarchycrossing;\n  currentNth = 1;\n\n  while (hierachyCrossingStrenth > 0 && currentNth <= maxNth) {\n    var currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);\n\n    if (false === currentPostDetails) {\n      currentNth++;\n      continue;\n    } // If the current post is all the way to the right edge, stop.\n\n\n    if (currentPostDetails.endGridColumn === state.gridcolumns) {\n      break;\n    } // Now identify its right-side neighbors.\n\n\n    var topNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.startGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix);\n    var bottomNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.endGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix); // If the neighbors don't match the height in rows of the current post, skip this post from crossing.\n\n    if (topNeighborPostDetails.startGridRow !== currentPostDetails.startGridRow || bottomNeighborPostDetails.endGridRow !== currentPostDetails.endGridRow) {\n      currentNth++;\n      continue;\n    } // Calculate the score of the to-be replaced post(s).\n    // Each post's score correlated to its nth value. The lower the nth value the bigger the score boost.\n\n\n    var replacedPostScore = maxNth / topNeighborPostDetails.nth * (topNeighborPostDetails.area + topNeighborPostDetails.imageWeight + topNeighborPostDetails.metaDetails);\n\n    if (bottomNeighborPostDetails.nth !== topNeighborPostDetails.nth) {\n      var counter = 1;\n\n      for (i = topNeighborPostDetails.nth + 1; i <= bottomNeighborPostDetails.nth; i++) {\n        var postDetails = getNthPostDetails(i, nthMatrix, metaDetailsMatrix, imageWeightMatrix);\n\n        if (false === postDetails) {\n          continue;\n        }\n\n        counter++; // It is increasingly \"harder\" to replace multiple posts.\n\n        replacedPostScore += maxNth / postDetails.nth * (postDetails.area + postDetails.imageWeight + postDetails.metaDetails * counter) * counter;\n      }\n    } // If the to-be replaced post(s) score is larger than the remaining hierarchy crossing strength, nothing to do.\n\n\n    if (hierachyCrossingStrenth < replacedPostScore) {\n      currentNth++;\n      continue;\n    }\n\n    var currentPostScore = maxNth / currentPostDetails.nth * (currentPostDetails.area + currentPostDetails.imageWeight + currentPostDetails.metaDetails) * Math.pow(2 * hierachyCrossingStrenth / 50, 3); // If the current post score is bigger than the to-be replaced post(s) score, it's a go.\n\n    if (currentPostScore > replacedPostScore) {\n      // Expand the current post over the replaced ones.\n      for (i = topNeighborPostDetails.startGridRow; i <= bottomNeighborPostDetails.endGridRow; i++) {\n        for (j = topNeighborPostDetails.startGridColumn; j <= topNeighborPostDetails.endGridColumn; j++) {\n          nthMatrix[i][j] = currentNth; // Also replace the image weight and meta-details.\n\n          imageWeightMatrix[i][j] = currentPostDetails.imageWeight;\n          metaDetailsMatrix[i][j] = currentPostDetails.metaDetails;\n        }\n      } // Decrease the crossing strength.\n\n\n      hierachyCrossingStrenth -= replacedPostScore; // We now have a gap in the post list. We need to renumber the posts after the replaced ones and adjust the maxnth.\n      // The image weight and meta-details remain unchanged.\n      // Work with the new maxNth.\n\n      maxNth = renumberNthMatrix(nthMatrix);\n    }\n\n    currentNth++;\n  } // Transpose all matrices if flipcolssrows attribute is set to true\n\n\n  var finalNthMatrix = !state.flipcolsrows ? nthMatrix : Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"transposeMatrix\"])(nthMatrix);\n  var finalMetaMatrix = !state.flipcolsrows ? metaDetailsMatrix : Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"transposeMatrix\"])(metaDetailsMatrix);\n  var finalImageMatrix = !state.flipcolsrows ? imageWeightMatrix : Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"transposeMatrix\"])(imageWeightMatrix);\n  /*\n  8. Finally, generate the posts list.\n  */\n\n  var areaColumns = getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);\n  ;\n  moveLargestColumnToStart(areaColumns);\n  return areaColumns;\n};\n\nvar moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {\n  var firstRowColumns = areaColumns.filter(function (column) {\n    return column.row === 1;\n  }).sort(function (col1, col2) {\n    return col2.width - col1.width;\n  });\n  var largestColumnIndex = areaColumns.findIndex(function (column) {\n    return column === firstRowColumns[0];\n  });\n  areaColumns.splice(0, 0, areaColumns.splice(largestColumnIndex, 1)[0]);\n  return areaColumns;\n};\n\nvar logMatrix = function logMatrix(matrix) {\n  for (var i = 0; i < matrix.length; i++) {\n    console.log(' '.padEnd(41, ' ') + i + ' - ' + matrix[i].join(' '));\n  }\n};\n\nfunction getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {\n  var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);\n  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state);\n  areasArray = normalizeAreas(nthMatrix, areasArray);\n  areasArray = areasArray.map(function (area) {\n    return _objectSpread({\n      initialPostsCount: area.postsCount\n    }, area);\n  });\n  var columns = areasArray.map(function (area) {\n    return {\n      row: area.row,\n      col: area.col,\n      width: area.width,\n      height: area.height,\n      areas: [area]\n    };\n  }); // loop through columns\n\n  columns.forEach(function (currentColumn) {\n    // loop through \"current\" column's areas\n    currentColumn.areas.forEach(function (currentArea, i) {\n      // loop again through columns except the current column\n      columns.filter(function (column) {\n        return column !== currentColumn;\n      }).forEach(function (compareColumn) {\n        // loop through the \"compare\" column's areas\n        compareColumn.areas.forEach(function (compareArea, j) {\n          // check if the areas have the same column and the same width\n          if (!compareArea.merged && currentArea.col === compareArea.col && currentArea.width === compareArea.width && ( // and if the two areas are continuous\n          currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height)) {\n            // if so, move the compared area to the current column's areas array and update the column height\n            compareArea.merged = true;\n            currentColumn.areas.push(compareArea);\n            currentColumn.height += compareArea.height;\n            compareColumn.areas.splice(j, 1);\n          }\n        });\n      });\n    });\n  });\n  return columns.filter(function (randomColumn) {\n    return randomColumn.areas.length > 0;\n  });\n}\n\nfunction getNthValues(nthMatrix) {\n  var values = [];\n  var value;\n\n  for (var i = 1; i < nthMatrix.length - 1; i++) {\n    for (var j = 1; j < nthMatrix[i].length - 1; j++) {\n      value = nthMatrix[i][j];\n\n      if (values.indexOf(value) === -1) {\n        values.push(value);\n      }\n    }\n  }\n\n  return values;\n}\n\nfunction normalizeAreas(nthMatrix, areasArray) {\n  var values = getNthValues(nthMatrix);\n  values.sort(function (a, b) {\n    return a - b;\n  });\n\n  for (var i = 0; i < values.length; i++) {\n    if (i + 1 !== values[i]) {\n      replaceNth(values[i], i + 1, nthMatrix);\n    }\n  }\n\n  return values.map(function (nth, index) {\n    var area = areasArray.find(function (area) {\n      return area.nth === nth;\n    });\n    area.nth = index + 1;\n    return area;\n  });\n}\n\nfunction replaceNth(nth1, nth2, nthMatrix) {\n  for (var i = 1; i < nthMatrix.length - 1; i++) {\n    for (var j = 1; j < nthMatrix[i].length - 1; j++) {\n      if (nthMatrix[i][j] === nth1) {\n        nthMatrix[i][j] = nth2;\n      }\n    }\n  }\n}\n\nvar mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state) {\n  var currentPostDetails;\n\n  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {\n    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);\n\n    if (currentPostDetails) {\n      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state);\n    }\n  }\n};\n\nvar mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state) {\n  var nth = nthMatrix[row][col];\n  var width = getAreaWidth(nth, nthMatrix);\n  var height = getAreaHeight(nth, nthMatrix);\n  var initialWidth = width;\n  var initialHeight = height;\n  var currentAreaIndex = -1;\n\n  if (Array.isArray(areasArray)) {\n    currentAreaIndex = areasArray.findIndex(function (area) {\n      return area.nth === nthMatrix[row][col];\n    });\n  } // Featured area should not be merged\n\n\n  if (nth === 1) {\n    return;\n  }\n\n  var nextRow,\n      nextCol,\n      nextWidth,\n      nextHeight,\n      nextNth,\n      nextNthStart,\n      searching = true,\n      mergeable = false;\n\n  while (searching) {\n    nextNth = nthMatrix[row + height][col];\n    nextNthStart = getFirstOccurence(nextNth, nthMatrix);\n    nextRow = nextNthStart.row;\n    nextCol = nextNthStart.col;\n    nextWidth = getAreaWidth(nextNth, nthMatrix);\n    nextHeight = getAreaHeight(nextNth, nthMatrix);\n\n    if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {\n      height = height + nextHeight;\n      mergeable = true;\n\n      if (currentAreaIndex > -1) {\n        areasArray[currentAreaIndex].postsCount += 1;\n        areasArray[currentAreaIndex].height = height;\n      }\n    } else {\n      searching = false;\n    }\n  }\n\n  searching = !mergeable;\n\n  while (searching && !state.flipcolsrows) {\n    nextNth = nthMatrix[row][col + width];\n    nextNthStart = getFirstOccurence(nextNth, nthMatrix);\n    nextRow = nextNthStart.row;\n    nextCol = nextNthStart.col;\n    nextWidth = getAreaWidth(nextNth, nthMatrix);\n    nextHeight = getAreaHeight(nextNth, nthMatrix);\n\n    if (height === nextHeight && row === nextRow && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {\n      width = width + nextWidth;\n      mergeable = true;\n\n      if (currentAreaIndex > -1) {\n        areasArray[currentAreaIndex].postsCount += 1;\n        areasArray[currentAreaIndex].width = width;\n      }\n    } else {\n      searching = false;\n    }\n  }\n\n  fillArea(nthMatrix, row, col, width, height);\n};\n\nvar fillArea = function fillArea(nthMatrix, row, col, width, height) {\n  for (var i = row; i < row + height; i++) {\n    for (var j = col; j < col + width; j++) {\n      nthMatrix[i][j] = nthMatrix[row][col];\n    }\n  }\n};\n\nvar getFirstOccurence = function getFirstOccurence(nth, nthMatrix) {\n  for (var i = 0; i < nthMatrix.length; i++) {\n    for (var j = 0; j < nthMatrix[i].length; j++) {\n      if (nthMatrix[i][j] === nth) {\n        return {\n          row: i,\n          col: j\n        };\n      }\n    }\n  }\n\n  return {};\n};\n\nvar getAreaWidth = function getAreaWidth(nth, nthMatrix) {\n  var _getFirstOccurence = getFirstOccurence(nth, nthMatrix),\n      row = _getFirstOccurence.row,\n      col = _getFirstOccurence.col;\n\n  var width = 1;\n\n  while (nth === nthMatrix[row][col + width]) {\n    width = width + 1;\n  }\n\n  return width;\n};\n\nvar getAreaHeight = function getAreaHeight(nth, nthMatrix) {\n  var _getFirstOccurence2 = getFirstOccurence(nth, nthMatrix),\n      row = _getFirstOccurence2.row,\n      col = _getFirstOccurence2.col;\n\n  var height = 1;\n\n  while (\"undefined\" !== typeof nthMatrix[row + height] && nth === nthMatrix[row + height][col]) {\n    height = height + 1;\n  }\n\n  return height;\n};\n\nvar renumberNthMatrix = function renumberNthMatrix(nthMatrix) {\n  var newNth = 1;\n  var postDetails;\n\n  for (var nth = 1; nth <= getMaxNth(nthMatrix); nth++) {\n    // If we can't find a nth post, it means it was removed and we need to adjust.\n    postDetails = getNthPostDetails(nth, nthMatrix);\n\n    if (false === postDetails) {\n      continue;\n    }\n\n    if (postDetails.nth > newNth) {\n      // Change the current post's nth.\n      for (var i = postDetails.startGridRow; i <= postDetails.endGridRow; i++) {\n        for (var j = postDetails.startGridColumn; j <= postDetails.endGridColumn; j++) {\n          nthMatrix[i][j] = newNth;\n        }\n      }\n    }\n\n    newNth++;\n  } // Return the maxNth.\n\n\n  return newNth - 1;\n};\n\nvar getMaxNth = function getMaxNth(nthMatrix) {\n  var maxNth = 0;\n\n  for (var i = 1; i < nthMatrix.length; i++) {\n    for (var j = 1; j < nthMatrix[i].length; j++) {\n      if (nthMatrix[i][j] > maxNth) {\n        maxNth = nthMatrix[i][j];\n      }\n    }\n  }\n\n  return maxNth;\n};\n\nvar getAreasArray = function getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {\n  var currentPostDetails;\n  var areasArray = [];\n\n  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {\n    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);\n\n    if (currentPostDetails) {\n      areasArray.push({\n        nth: currentPostDetails.nth,\n        col: currentPostDetails.startGridColumn,\n        row: currentPostDetails.startGridRow,\n        width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,\n        height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,\n        metaDetails: currentPostDetails.metaDetails,\n        imageWeight: currentPostDetails.imageWeight,\n        postsCount: 1\n      });\n    }\n  }\n\n  return areasArray;\n};\n\nvar getNthPostDetails = function getNthPostDetails(nth, nthMatrix) {\n  var metaDetailsMatrix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;\n  var imageWeightMatrix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;\n  var postDetails = false; // Go through the nthMatrix and search for the currentNth value.\n\n  for (var i = 1; i < nthMatrix.length; i++) {\n    for (var j = 1; j < nthMatrix[i].length; j++) {\n      if (nthMatrix[i][j] === nth) {\n        // Found the left top corner.\n        postDetails = {\n          'nth': nth,\n          'startGridColumn': j,\n          'startGridRow': i,\n          'endGridColumn': j,\n          'endGridRow': i,\n          'metaDetails': metaDetailsMatrix ? metaDetailsMatrix[i][j] : false,\n          'imageWeight': imageWeightMatrix ? imageWeightMatrix[i][j] : false,\n          'area': 1\n        }; // Find the right bottom corner.\n\n        while (j < nthMatrix[i].length && nthMatrix[i][j] === nthMatrix[i][j + 1]) {\n          j++;\n        }\n\n        postDetails.endGridColumn = j;\n\n        while (i < nthMatrix.length && nthMatrix[i][j] === nthMatrix[i + 1][j]) {\n          i++;\n        }\n\n        postDetails.endGridRow = i; // Calculate the area.\n\n        postDetails.area = (postDetails.endGridRow - postDetails.startGridRow + 1) * (postDetails.endGridColumn - postDetails.startGridColumn + 1);\n        return postDetails;\n      }\n    }\n  }\n\n  return postDetails;\n};\n\nvar initUnidimensionalMatrix = function initUnidimensionalMatrix(matrix, length) {\n  var character = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : \"X\";\n  // The 0 index will be filled with a different character for easier logic.\n  matrix.push(\"/\"); // Go to equal the length, since the 0 index will be ignored.\n  // Fill with \"null\" entries with the provided character.\n\n  for (var i = 1; i <= length; i++) {\n    matrix.push(character);\n  } // Put an extra entry for easier logic.\n\n\n  matrix.push(\"/\");\n  return matrix;\n};\n\nvar initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, height, nullChar) {\n  // Put in a guard row, at index 0.\n  matrix.push(initUnidimensionalMatrix([], width, \"/\")); // Go to equal the width, since the 0 index will be ignored.\n\n  for (var i = 0; i < height; i++) {\n    matrix.push(initUnidimensionalMatrix([], width, nullChar));\n  } // Put in an extra guard row.\n\n\n  matrix.push(initUnidimensionalMatrix([], width, \"/\"));\n  return matrix;\n};\n\n//# sourceURL=webpack:///./src/components/grid-generator/layoutEngine.js?");
-
-/***/ }),
-
-/***/ "./src/components/grid-generator/utils.js":
-/*!************************************************!*\
-  !*** ./src/components/grid-generator/utils.js ***!
-  \************************************************/
-/*! exports provided: getGridStyle, getPostsCount, redistributeCardsInAreas, getOptimalHeaderPosition, isLandscape, getParametricLayoutAreaClassName, getAreaBaseClassname, getAreaClassnameByAspectRatio, getAreaClassnameByWidthRatio, getAreaClassnameByHeightRatio, getGridColumnsAndRows, transposeMatrix */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getGridStyle\", function() { return getGridStyle; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getPostsCount\", function() { return getPostsCount; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"redistributeCardsInAreas\", function() { return redistributeCardsInAreas; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getOptimalHeaderPosition\", function() { return getOptimalHeaderPosition; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isLandscape\", function() { return isLandscape; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getParametricLayoutAreaClassName\", function() { return getParametricLayoutAreaClassName; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getAreaBaseClassname\", function() { return getAreaBaseClassname; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getAreaClassnameByAspectRatio\", function() { return getAreaClassnameByAspectRatio; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getAreaClassnameByWidthRatio\", function() { return getAreaClassnameByWidthRatio; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getAreaClassnameByHeightRatio\", function() { return getAreaClassnameByHeightRatio; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getGridColumnsAndRows\", function() { return getGridColumnsAndRows; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"transposeMatrix\", function() { return transposeMatrix; });\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ \"./node_modules/classnames/index.js\");\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);\n\nvar getGridStyle = function getGridStyle(attributes) {\n  var _getGridColumnsAndRow = getGridColumnsAndRows(attributes),\n      gridcolumns = _getGridColumnsAndRow.gridcolumns,\n      gridrows = _getGridColumnsAndRow.gridrows;\n\n  return {\n    display: 'grid',\n    gridTemplateColumns: \"repeat( \".concat(gridcolumns, \", 1fr )\"),\n    gridTemplateRows: \"repeat( \".concat(gridrows, \", auto )\")\n  };\n}; // Sums optimal posts count value from each area\n\nvar getPostsCount = function getPostsCount(areaColumns) {\n  return areaColumns.reduce(function (total, areaColumn) {\n    return total + areaColumn.areas.reduce(function (columnTotal, area) {\n      return columnTotal + area.postsCount;\n    }, 0);\n  }, 0);\n};\nvar redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount, attributes) {\n  var totalSpots = getPostsCount(areaColumns);\n  var totalPosts = cardsCount;\n  var remainingPosts = totalPosts;\n  var totalRatio = 0;\n\n  for (var i = 0; i < areaColumns.length; i++) {\n    var areaColumn = areaColumns[i];\n    var areaColumnSpotRatio = 0;\n\n    for (var j = 0; j < areaColumn.areas.length; j++) {\n      var area = areaColumn.areas[j]; // we shouldn't fill the area with the featured card\n\n      area.spotRatio = getCardRatio(area, attributes);\n      areaColumnSpotRatio += area.spotRatio;\n      totalRatio += area.spotRatio;\n    }\n\n    areaColumn.spotRatio = areaColumnSpotRatio;\n  }\n\n  var extraPosts = totalPosts - totalSpots;\n\n  if (totalSpots === totalPosts) {\n    return;\n  }\n\n  for (var _i = 0; _i < areaColumns.length; _i++) {\n    var _areaColumn = areaColumns[_i];\n    var areas = _areaColumn.areas;\n\n    for (var _j = 0; _j < areas.length; _j++) {\n      var _area = areas[_j];\n      var areaExtraPosts = Math.round(extraPosts * _area.spotRatio / totalRatio);\n      _area.postsCount = Math.max(0, _area.postsCount + areaExtraPosts);\n      totalRatio -= _area.spotRatio;\n      extraPosts -= areaExtraPosts;\n      if (remainingPosts <= 0) return;\n    }\n  }\n};\nvar getOptimalHeaderPosition = function getOptimalHeaderPosition(areaColumns) {\n  var index = 1;\n  var positions = [0];\n\n  for (var columnIndex = 0; columnIndex < areaColumns.length; columnIndex++) {\n    var areaColumn = areaColumns[columnIndex];\n    var areas = areaColumn.areas,\n        row = areaColumn.row;\n\n    for (var areaIndex = 0; areaIndex < areas.length; areaIndex++) {\n      var area = areas[areaIndex];\n\n      if (row === 1 && areaIndex === 0) {\n        positions.push(index);\n      }\n\n      index += area.postsCount;\n    }\n  }\n\n  return positions;\n};\n\nvar getCardRatio = function getCardRatio(area, attributes) {\n  var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),\n      gridcolumns = _getGridColumnsAndRow2.gridcolumns;\n\n  var width = area.width,\n      height = area.height,\n      postsCount = area.postsCount;\n  var ratio = postsCount / height; // when the card is landscape and very small\n  // we hide the content so the ratio should be bigger\n\n  if (isLandscape(area, attributes)) {\n    ratio *= 2;\n  }\n\n  ratio *= gridcolumns / width;\n  return ratio;\n};\n\nvar isLandscape = function isLandscape(area, attributes) {\n  var _getGridColumnsAndRow3 = getGridColumnsAndRows(attributes),\n      gridcolumns = _getGridColumnsAndRow3.gridcolumns,\n      gridrows = _getGridColumnsAndRow3.gridrows;\n\n  var nth = area.nth,\n      width = area.width,\n      height = area.height,\n      initialPostsCount = area.initialPostsCount;\n  var isLandscape = width * initialPostsCount / height > 1.33;\n\n  if (width / gridcolumns >= 0.5) {\n    return isLandscape || attributes.subfeature && nth === 2;\n  }\n\n  return isLandscape;\n};\nvar getParametricLayoutAreaClassName = function getParametricLayoutAreaClassName(area, attributes) {\n  var _getGridColumnsAndRow4 = getGridColumnsAndRows(attributes),\n      gridcolumns = _getGridColumnsAndRow4.gridcolumns,\n      gridrows = _getGridColumnsAndRow4.gridrows;\n\n  var width = area.width,\n      height = area.height;\n  return classnames__WEBPACK_IMPORTED_MODULE_0___default()([getAreaBaseClassname(area), getAreaClassnameByWidthRatio(width / gridcolumns), getAreaClassnameByHeightRatio(height / gridrows), getAreaClassnameByAspectRatio(area, attributes)]);\n};\nvar getAreaBaseClassname = function getAreaBaseClassname(area) {\n  var nth = area.nth;\n  return classnames__WEBPACK_IMPORTED_MODULE_0___default()(['novablocks-grid__area', \"novablocks-grid__area--nth-\".concat(nth)]);\n};\nvar getAreaClassnameByAspectRatio = function getAreaClassnameByAspectRatio(area, attributes) {\n  return classnames__WEBPACK_IMPORTED_MODULE_0___default()([{\n    'novablocks-grid__area--portrait': !isLandscape(area, attributes),\n    'novablocks-grid__area--landscape': isLandscape(area, attributes)\n  }]);\n};\nvar getAreaClassnameByWidthRatio = function getAreaClassnameByWidthRatio(widthRatio) {\n  return classnames__WEBPACK_IMPORTED_MODULE_0___default()([{\n    'novablocks-grid__area--width-xs': widthRatio < 0.3,\n    'novablocks-grid__area--width-s': 0.3 <= widthRatio && widthRatio < 0.5,\n    'novablocks-grid__area--width-m': 0.5 <= widthRatio && widthRatio < 0.66,\n    'novablocks-grid__area--width-l': 0.66 <= widthRatio && widthRatio < 0.80,\n    'novablocks-grid__area--width-xl': 0.80 <= widthRatio && widthRatio < 0.95,\n    'novablocks-grid__area--width-full': 0.95 <= widthRatio\n  }]);\n};\nvar getAreaClassnameByHeightRatio = function getAreaClassnameByHeightRatio(heightRatio) {\n  return classnames__WEBPACK_IMPORTED_MODULE_0___default()([{\n    'novablocks-grid__area--height-xs': heightRatio < 0.34,\n    'novablocks-grid__area--height-s': 0.34 <= heightRatio && heightRatio < 0.5,\n    'novablocks-grid__area--height-m': 0.5 <= heightRatio && heightRatio < 0.66,\n    'novablocks-grid__area--height-l': 0.66 <= heightRatio && heightRatio < 0.80,\n    'novablocks-grid__area--height-xl': 0.80 <= heightRatio\n  }]);\n};\nvar getGridColumnsAndRows = function getGridColumnsAndRows(attributes) {\n  return {\n    gridcolumns: !attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows,\n    gridrows: !attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns\n  };\n};\nvar transposeMatrix = function transposeMatrix(source) {\n  return Object.keys(source[0]).map(function (column) {\n    return source.map(function (row) {\n      return row[column];\n    });\n  });\n};\n\n//# sourceURL=webpack:///./src/components/grid-generator/utils.js?");
-
-/***/ }),
-
-/***/ "./src/components/viewportObserver.js":
-/*!********************************************!*\
-  !*** ./src/components/viewportObserver.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"./node_modules/@babel/runtime/helpers/createClass.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils */ \"./src/utils/index.js\");\n\n\n\n\n\nvar viewportObserver = /*#__PURE__*/function () {\n  function viewportObserver() {\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, viewportObserver);\n\n    this.useOrientation = Object(_utils__WEBPACK_IMPORTED_MODULE_3__[\"hasTouchScreen\"])() && 'orientation' in window;\n    this.bindEvents();\n  }\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(viewportObserver, [{\n    key: \"bindEvents\",\n    value: function bindEvents() {\n      var $window = jquery__WEBPACK_IMPORTED_MODULE_2___default()(window);\n      var updateViewportUnits = this.updateViewportUnits.bind(this);\n      updateViewportUnits();\n\n      if (this.useOrientation) {\n        $window.on('orientationchange', function () {\n          $window.one('resize', updateViewportUnits);\n        });\n      } else {\n        $window.on('resize', updateViewportUnits);\n      }\n    }\n  }, {\n    key: \"updateViewportUnits\",\n    value: function updateViewportUnits() {\n      var root = document.documentElement;\n      var windowWidth = this.useOrientation && window.screen && window.screen.availWidth || window.innerWidth;\n      var windowHeight = this.useOrientation && window.screen && window.screen.availHeight || window.innerHeight;\n      var vw = windowWidth / 100 + 'px';\n      var vh = windowHeight / 100 + 'px';\n      root.style.setProperty('--novablocks-1vw', vw);\n      root.style.setProperty('--novablocks-1vh', vh);\n    }\n  }]);\n\n  return viewportObserver;\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (new viewportObserver());\n\n//# sourceURL=webpack:///./src/components/viewportObserver.js?");
-
-/***/ }),
-
-/***/ "./src/components/with-parallax/util.js":
-/*!**********************************************!*\
-  !*** ./src/components/with-parallax/util.js ***!
-  \**********************************************/
-/*! exports provided: getIntermediateFocalPoint, getStyles, getStylesFromProps, getProps, getState, parallaxInit */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getIntermediateFocalPoint\", function() { return getIntermediateFocalPoint; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getStyles\", function() { return getStyles; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getStylesFromProps\", function() { return getStylesFromProps; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getProps\", function() { return getProps; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getState\", function() { return getState; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"parallaxInit\", function() { return parallaxInit; });\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils */ \"./src/utils/index.js\");\n\n\n\nfunction userPrefersReducedMotion() {\n  var mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');\n  return !!mediaQuery.matches;\n}\n\nvar getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {\n  if (!focalPoint1 && !focalPoint2) {\n    return {\n      x: 0.5,\n      y: 0.5\n    };\n  }\n\n  if (!focalPoint1) {\n    return focalPoint2;\n  }\n\n  if (!focalPoint2) {\n    return focalPoint1;\n  }\n\n  return {\n    x: parseFloat(focalPoint1.x) + (parseFloat(focalPoint2.x) - parseFloat(focalPoint1.x)) * progress,\n    y: parseFloat(focalPoint1.y) + (parseFloat(focalPoint2.y) - parseFloat(focalPoint1.y)) * progress\n  };\n};\nvar getStyles = function getStyles(config) {\n  var props = getProps(config);\n  var styles = getStylesFromProps(props);\n  return styles;\n};\nvar getStylesFromProps = function getStylesFromProps(props) {\n  var parallaxAmount = props.parallaxAmount,\n      width = props.width,\n      height = props.height,\n      moveX = props.moveX,\n      moveY = props.moveY,\n      offsetX = props.offsetX,\n      offsetY = props.offsetY,\n      scale = props.scale,\n      focalPoint = props.focalPoint;\n  return {\n    width: width || '',\n    height: height || '',\n    minHeight: 0,\n    maxWidth: 'none',\n    transform: \"translate(\".concat(moveX, \",\").concat(moveY * parallaxAmount, \"px) translateX(\").concat(offsetX, \") translateY(\").concat(offsetY, \"px) scale(\").concat(scale, \")\"),\n    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',\n    transformOrigin: focalPoint.x * 100 + '% 50%'\n  };\n};\n\nfunction getIntermediateValue(initialValue, finalValue, progress) {\n  return initialValue + (finalValue - initialValue) * progress;\n}\n\nfunction getScales(config) {\n  var scrollingEffect = config.scrollingEffect,\n      initialBackgroundScale = config.initialBackgroundScale,\n      finalBackgroundScale = config.finalBackgroundScale,\n      progress = config.progress;\n  initialBackgroundScale = initialBackgroundScale || 1;\n\n  if (scrollingEffect === 'parallax') {\n    finalBackgroundScale = initialBackgroundScale;\n  }\n\n  var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);\n  initialBackgroundScale = initialBackgroundScale / maxScale;\n  finalBackgroundScale = finalBackgroundScale / maxScale;\n\n  if (userPrefersReducedMotion()) {\n    return {\n      maxScale: 1,\n      newScale: 1\n    };\n  }\n\n  return {\n    maxScale: maxScale,\n    newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)\n  };\n}\n\nfunction getFocalPoint(config) {\n  var scrollingEffect = config.scrollingEffect,\n      focalPoint = config.focalPoint,\n      finalFocalPoint = config.finalFocalPoint,\n      progress = config.progress;\n\n  if (!focalPoint) {\n    focalPoint = {\n      x: 0.5,\n      y: 0.5\n    };\n  }\n\n  if (scrollingEffect !== 'doppler') {\n    return focalPoint;\n  }\n\n  return getIntermediateFocalPoint(focalPoint, finalFocalPoint, progress);\n}\n\nfunction getNewImageHeight(config, parallaxAmount) {\n  var scrollContainerHeight = config.scrollContainerHeight,\n      containerHeight = config.containerHeight;\n  return containerHeight + (scrollContainerHeight - containerHeight) * parallaxAmount;\n}\n\nvar getProps = function getProps(config, fixed) {\n  var distance = config.distance,\n      progress = config.progress,\n      smoothStart = config.smoothStart,\n      smoothEnd = config.smoothEnd,\n      scrollingEffect = config.scrollingEffect,\n      focalPoint = config.focalPoint,\n      finalFocalPoint = config.finalFocalPoint,\n      initialBackgroundScale = config.initialBackgroundScale,\n      finalBackgroundScale = config.finalBackgroundScale,\n      container = config.container,\n      containerBox = config.containerBox,\n      containerWidth = config.containerWidth,\n      containerHeight = config.containerHeight,\n      scrollContainer = config.scrollContainer,\n      scrollContainerBox = config.scrollContainerBox,\n      scrollContainerHeight = config.scrollContainerHeight;\n  var newFocalPoint = getFocalPoint(config);\n\n  if (scrollingEffect === 'static') {\n    return {\n      width: containerWidth,\n      height: containerHeight,\n      scale: initialBackgroundScale || 1,\n      moveX: 0,\n      moveY: 0,\n      offsetX: 0,\n      offsetY: 0,\n      parallaxAmount: 0,\n      focalPoint: newFocalPoint\n    };\n  }\n\n  var parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;\n\n  var _getScales = getScales(config),\n      maxScale = _getScales.maxScale,\n      newScale = _getScales.newScale;\n\n  var newImageHeight = getNewImageHeight(config, parallaxAmount); // keep in sync with scroll\n\n  var moveY = scrollContainerBox.top - containerBox.top;\n\n  if (!smoothStart) {\n    if (!!fixed && containerBox.top < 0) {\n      moveY = scrollContainerBox.top;\n    }\n\n    if (!fixed && 0 > scrollContainerBox.top - containerBox.top) {\n      moveY = 0;\n    }\n  }\n\n  if (!smoothEnd) {\n    if (scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight) {\n      if (!!fixed) {\n        moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;\n      } else {\n        moveY = containerHeight - scrollContainerHeight;\n      }\n    }\n  } // align top\n\n\n  var offsetY = newImageHeight * maxScale * (newScale - 1) * 0.5; // position according to focalPoint\n\n  offsetY += newImageHeight * (1 - maxScale * newScale) * newFocalPoint.y;\n  return {\n    distance: distance,\n    parallaxAmount: parallaxAmount,\n    progress: progress,\n    width: containerWidth * maxScale,\n    height: newImageHeight * maxScale,\n    moveX: \"\".concat(fixed ? containerBox.left - scrollContainerBox.left : 0, \"px\"),\n    moveY: moveY,\n    offsetX: (1 / maxScale - 1) * newFocalPoint.x * 100 + '%',\n    offsetY: offsetY,\n    scale: newScale,\n    focalPoint: newFocalPoint\n  };\n};\nvar getState = function getState(container, config) {\n  if (!container || !config) {\n    return {};\n  }\n\n  var followThroughStart = config.followThroughStart,\n      followThroughEnd = config.followThroughEnd,\n      scrollingEffect = config.scrollingEffect,\n      scrollContainerHeight = config.scrollContainerHeight,\n      scrollContainerBox = config.scrollContainerBox;\n  var containerWidth = container.offsetWidth;\n  var containerHeight = container.offsetHeight;\n  var containerBox = container.getBoundingClientRect();\n  var smoothStart = followThroughStart || scrollingEffect === 'parallax';\n  var smoothEnd = followThroughEnd || scrollingEffect === 'parallax';\n  var current = scrollContainerBox.top - containerBox.top;\n  var distance = containerHeight - scrollContainerHeight;\n\n  if (smoothStart) {\n    current += scrollContainerHeight;\n    distance += scrollContainerHeight;\n  }\n\n  if (smoothEnd) {\n    distance += scrollContainerHeight;\n  }\n\n  var progress = distance <= 0 ? 0.5 : current / distance;\n\n  if (!smoothStart) {\n    progress = Math.max(0, progress);\n  }\n\n  if (!smoothEnd) {\n    progress = Math.min(1, progress);\n  }\n\n  if (userPrefersReducedMotion()) {\n    progress = 0.5;\n  }\n\n  return {\n    progress: progress,\n    distance: distance,\n    smoothStart: smoothStart,\n    smoothEnd: smoothEnd,\n    containerBox: containerBox,\n    containerHeight: containerHeight,\n    containerWidth: containerWidth,\n    scrollContainerHeight: scrollContainerHeight,\n    scrollContainerBox: scrollContainerBox\n  };\n};\n\nfunction getScrollContainerHeight() {\n  var useOrientation = Object(_utils__WEBPACK_IMPORTED_MODULE_1__[\"hasTouchScreen\"])() && 'orientation' in window;\n  return useOrientation && window.screen && window.screen.availHeight || window.innerHeight;\n}\n\nvar parallaxInit = function parallaxInit($blocks) {\n  var frameRendered = false;\n  var scrollContainerHeight = getScrollContainerHeight();\n  $blocks.each(function (i, container) {\n    var $container = jquery__WEBPACK_IMPORTED_MODULE_0___default()(container);\n    var followThroughStart = !!$container.data('smooth-start');\n    var followThroughEnd = !!$container.data('smooth-end');\n    var scrollingEffect = $container.data('scrolling-effect');\n    var focalPoint = $container.data('focal-point');\n    var finalFocalPoint = $container.data('final-focal-point');\n    var initialBackgroundScale = $container.data('initial-background-scale');\n    var finalBackgroundScale = $container.data('final-background-scale');\n    var scrollContainerBox = {\n      top: 0,\n      left: 0\n    };\n    var config = {\n      followThroughStart: followThroughStart,\n      followThroughEnd: followThroughEnd,\n      scrollingEffect: scrollingEffect,\n      scrollContainerHeight: scrollContainerHeight,\n      scrollContainerBox: scrollContainerBox,\n      focalPoint: focalPoint,\n      finalFocalPoint: finalFocalPoint,\n      initialBackgroundScale: initialBackgroundScale,\n      finalBackgroundScale: finalBackgroundScale\n    };\n    $container.data({\n      state: getState(container, config),\n      config: config\n    });\n    var $parallax = $container.find('.novablocks-parallax');\n    $container.data('parallax', $parallax);\n\n    function parallaxUpdateState() {\n      var newConfig = Object.assign({}, config, {\n        scrollContainerHeight: getScrollContainerHeight()\n      });\n      var state = getState(container, newConfig);\n      $container.data('state', state);\n      $container.data('config', newConfig);\n      frameRendered = false;\n    }\n\n    jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).on('scroll', parallaxUpdateState);\n    jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).on('resize', parallaxUpdateState);\n  });\n\n  function parallaxUpdateLoop() {\n    if (!frameRendered) {\n      $blocks.each(function (i, obj) {\n        var $container = jquery__WEBPACK_IMPORTED_MODULE_0___default()(obj);\n        var $background = $container.data('parallax');\n        var $foreground = $background.find('.novablocks-foreground');\n        var state = $container.data('state');\n        var config = $container.data('config');\n        config = Object.assign({}, state, config);\n        var props = getProps(config, true);\n        $foreground.css('transform', \"translate3d(0,\".concat(-props.moveY * props.parallaxAmount, \"px,0)\")); // because of fixed positioning\n\n        props.moveY = -1 * props.moveY;\n\n        if (0 < props.progress && props.progress < 1) {\n          props.parallaxAmount = 1 - props.parallaxAmount;\n        }\n\n        var styles = getStylesFromProps(props);\n        $container.data('parallax').css(styles);\n      });\n      frameRendered = true;\n    }\n\n    requestAnimationFrame(parallaxUpdateLoop);\n  }\n\n  requestAnimationFrame(parallaxUpdateLoop);\n};\n\n//# sourceURL=webpack:///./src/components/with-parallax/util.js?");
-
-/***/ }),
-
-/***/ "./src/frontend.js":
-/*!*************************!*\
-  !*** ./src/frontend.js ***!
-  \*************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_viewportObserver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/viewportObserver */ \"./src/components/viewportObserver.js\");\n/* harmony import */ var _blocks_announcement_bar_frontend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks/announcement-bar/frontend */ \"./src/blocks/announcement-bar/frontend.js\");\n/* harmony import */ var _blocks_google_map_frontend__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/google-map/frontend */ \"./src/blocks/google-map/frontend.js\");\n/* harmony import */ var _blocks_hero_frontend__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/hero/frontend */ \"./src/blocks/hero/frontend.js\");\n/* harmony import */ var _blocks_slideshow_frontend__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/slideshow/frontend */ \"./src/blocks/slideshow/frontend.js\");\n/* harmony import */ var _blocks_media_frontend__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/media/frontend */ \"./src/blocks/media/frontend.js\");\n/* harmony import */ var _blocks_posts_collection_frontend__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/posts-collection/frontend */ \"./src/blocks/posts-collection/frontend.js\");\n/* harmony import */ var _blocks_openhours_hoursparser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/openhours/hoursparser */ \"./src/blocks/openhours/hoursparser.js\");\n/* harmony import */ var _components_advanced_gallery_frontend__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/advanced-gallery/frontend */ \"./src/components/advanced-gallery/frontend.js\");\n\n\n\n\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/frontend.js?");
-
-/***/ }),
-
-/***/ "./src/utils/index.js":
-/*!****************************!*\
-  !*** ./src/utils/index.js ***!
-  \****************************/
-/*! exports provided: getPlaceholderImages, getRandomBetween, getRandomArrayFromArray, getRandomBooleanValue, debounce, range, isSafari, hasTouchScreen, findParents, shuffleArray, defaultSnapValues, maybeSnapFocalPoint, getSnapClassname, getControlsClasses, getCardMediaPaddingTop, below, above */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getRandomBetween\", function() { return getRandomBetween; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getRandomArrayFromArray\", function() { return getRandomArrayFromArray; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getRandomBooleanValue\", function() { return getRandomBooleanValue; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"debounce\", function() { return debounce; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"range\", function() { return range; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isSafari\", function() { return isSafari; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"hasTouchScreen\", function() { return hasTouchScreen; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"findParents\", function() { return findParents; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"shuffleArray\", function() { return shuffleArray; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"defaultSnapValues\", function() { return defaultSnapValues; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"maybeSnapFocalPoint\", function() { return maybeSnapFocalPoint; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSnapClassname\", function() { return getSnapClassname; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getControlsClasses\", function() { return getControlsClasses; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCardMediaPaddingTop\", function() { return getCardMediaPaddingTop; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"below\", function() { return below; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"above\", function() { return above; });\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ \"./node_modules/classnames/index.js\");\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _unsplash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./unsplash */ \"./src/utils/unsplash.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getPlaceholderImages\", function() { return _unsplash__WEBPACK_IMPORTED_MODULE_1__[\"getPlaceholderImages\"]; });\n\n\n\nvar getRandomBetween = function getRandomBetween(min, max) {\n  var random = Math.max(0, Math.random() - Number.MIN_VALUE);\n  return Math.floor(random * (max - min + 1) + min);\n};\nvar getRandomArrayFromArray = function getRandomArrayFromArray(arr, n) {\n  var result = new Array(n),\n      len = arr.length,\n      taken = new Array(len);\n\n  if (!len) {\n    return [];\n  }\n\n  while (n--) {\n    var x = Math.floor(Math.random() * len);\n    result[n] = arr[x in taken ? taken[x] : x];\n    taken[x] = --len in taken ? taken[len] : len;\n  }\n\n  return result;\n};\nvar getRandomBooleanValue = function getRandomBooleanValue() {\n  return getRandomArrayFromArray([true, false], 1)[0];\n};\nvar debounce = function debounce(func, wait) {\n  var timeout = null;\n  return function () {\n    var context = this;\n    var args = arguments;\n\n    var later = function later() {\n      func.apply(context, args);\n    };\n\n    clearTimeout(timeout);\n    timeout = setTimeout(later, wait);\n  };\n};\nvar range = function range(min, max) {\n  var array = [];\n\n  for (var i = 0; i <= max - min; i++) {\n    array.push(i + min);\n  }\n\n  return array;\n};\nvar isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);\nvar hasTouchScreen = function hasTouchScreen() {\n  var hasTouchScreen = false;\n\n  if (\"maxTouchPoints\" in navigator) {\n    hasTouchScreen = navigator.maxTouchPoints > 0;\n  } else if (\"msMaxTouchPoints\" in navigator) {\n    hasTouchScreen = navigator.msMaxTouchPoints > 0;\n  } else {\n    var mQ = window.matchMedia && matchMedia(\"(pointer:coarse)\");\n\n    if (mQ && mQ.media === \"(pointer:coarse)\") {\n      hasTouchScreen = !!mQ.matches;\n    } else if ('orientation' in window) {\n      hasTouchScreen = true;\n    } else {\n      var UA = navigator.userAgent;\n      hasTouchScreen = /\\b(BlackBerry|webOS|iPhone|IEMobile)\\b/i.test(UA) || /\\b(Android|Windows Phone|iPad|iPod)\\b/i.test(UA);\n    }\n  }\n\n  return hasTouchScreen;\n};\nvar findParents = function findParents(target, query) {\n  var parents = [];\n\n  function traverse(item) {\n    var parent = item.parentNode;\n\n    if (parent instanceof HTMLElement) {\n      if (parent.matches(query)) {\n        parents.push(parent);\n      }\n\n      traverse(parent);\n    }\n  }\n\n  traverse(target);\n  return parents;\n}; // https://stackoverflow.com/a/2450976\n\nvar shuffleArray = function shuffleArray(array) {\n  var currentIndex = array.length,\n      temporaryValue,\n      randomIndex; // While there remain elements to shuffle...\n\n  while (0 !== currentIndex) {\n    // eslint-disable-next-line no-restricted-syntax\n    randomIndex = Math.floor(Math.random() * currentIndex);\n    currentIndex -= 1; // And swap it with the current element.\n\n    temporaryValue = array[currentIndex];\n    array[currentIndex] = array[randomIndex];\n    array[randomIndex] = temporaryValue;\n  }\n\n  return array;\n};\nvar defaultSnapValues = {\n  x: [0, 0.5, 1],\n  y: [0, 0.5, 1]\n};\nvar maybeSnapFocalPoint = function maybeSnapFocalPoint(focalPoint) {\n  var snapValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultSnapValues;\n  var x = parseFloat(focalPoint.x);\n  var y = parseFloat(focalPoint.y);\n  var thereshold = 0.05;\n  snapValues.x.forEach(function (snapValue) {\n    if (snapValue - thereshold < x && x < snapValue + thereshold) {\n      x = snapValue;\n    }\n  });\n  snapValues.y.forEach(function (snapValue) {\n    if (snapValue - thereshold < y && y < snapValue + thereshold) {\n      y = snapValue;\n    }\n  });\n  return {\n    x: x,\n    y: y\n  };\n};\nvar getSnapClassname = function getSnapClassname(focalPoint) {\n  var classNames = [];\n\n  if (defaultSnapValues.x.includes(parseFloat(focalPoint.x))) {\n    classNames.push('is-snapped-x');\n  }\n\n  if (defaultSnapValues.y.includes(parseFloat(focalPoint.y))) {\n    classNames.push('is-snapped-y');\n  }\n\n  return classNames.join(' ');\n};\nvar getControlsClasses = function getControlsClasses(attributes, compileAttributes) {\n  var classes = ['novablocks-controls-wrap'];\n  var compiledAttributes = compileAttributes(attributes);\n\n  if (Object.keys(compiledAttributes).some(function (key) {\n    return compiledAttributes[key] !== attributes[key];\n  })) {\n    classes.push('novablocks-controls-wrap--dirty');\n  }\n\n  return classnames__WEBPACK_IMPORTED_MODULE_0___default()(classes);\n};\nvar getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {\n  var compiledHeight = containerHeight / 50 - 1;\n\n  if (compiledHeight < 0) {\n    compiledHeight *= 2;\n  }\n\n  var numerator = 1;\n  var denominator = 1;\n  compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);\n\n  if (compiledHeight > 0) {\n    numerator = 1 + compiledHeight;\n  }\n\n  if (compiledHeight < 0) {\n    denominator = 1 + Math.abs(compiledHeight);\n  }\n\n  return \"\".concat(numerator * 100 / denominator, \"%\");\n};\nvar breakpoints = {\n  desktop: 1366,\n  lap: 1024,\n  tablet: 768\n};\nvar below = function below(breakpoint) {\n  var width = breakpoints[breakpoint];\n  return window.innerWidth < width;\n};\nvar above = function above(breakpoint) {\n  var width = breakpoints[breakpoint];\n  return window.innerWidth >= width;\n};\n\n//# sourceURL=webpack:///./src/utils/index.js?");
-
-/***/ }),
-
-/***/ "./src/utils/unsplash.js":
-/*!*******************************!*\
-  !*** ./src/utils/unsplash.js ***!
-  \*******************************/
-/*! exports provided: getPlaceholderImages */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getPlaceholderImages\", function() { return getPlaceholderImages; });\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ \"./node_modules/@babel/runtime/helpers/createClass.js\");\n/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var unsplash_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! unsplash-js */ \"./node_modules/unsplash-js/lib/unsplash.js\");\n/* harmony import */ var unsplash_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(unsplash_js__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nvar APP_NAME = 'Nova Blocks';\nvar COLLECTION_ID = 10606015;\nvar URL_PARAMS = encodeURI(\"utm_source=\".concat(APP_NAME, \"&utm_medium=referral\"));\n\nvar PlaceholderImagesCollection = /*#__PURE__*/function () {\n  function PlaceholderImagesCollection() {\n    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, PlaceholderImagesCollection);\n\n    this.fetchedImages = false;\n    this.images = [];\n  }\n\n  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(PlaceholderImagesCollection, [{\n    key: \"fetch\",\n    value: function fetch() {\n      var _window,\n          _window$pixcare,\n          _window$pixcare$theme,\n          _this = this;\n\n      var normalize = this.normalize.bind(this);\n      var apiKey = (_window = window) === null || _window === void 0 ? void 0 : (_window$pixcare = _window.pixcare) === null || _window$pixcare === void 0 ? void 0 : (_window$pixcare$theme = _window$pixcare.themeConfig) === null || _window$pixcare$theme === void 0 ? void 0 : _window$pixcare$theme.unsplashApiKey;\n\n      if (!apiKey) {\n        this.fetchedImages = true;\n        return [];\n      }\n\n      this.api = new unsplash_js__WEBPACK_IMPORTED_MODULE_2___default.a({\n        accessKey: apiKey\n      });\n      return this.api.collections.getCollectionPhotos(COLLECTION_ID).then(unsplash_js__WEBPACK_IMPORTED_MODULE_2__[\"toJson\"]).then(function (photos) {\n        _this.images = photos.map(normalize);\n        return _this.images;\n      }).finally(function () {\n        _this.fetchedImages = true;\n      });\n    }\n  }, {\n    key: \"get\",\n    value: function get() {\n      if (this.fetchedImages) {\n        return this.images;\n      }\n\n      return this.fetch();\n    }\n  }, {\n    key: \"normalize\",\n    value: function normalize(photo) {\n      var _this2 = this;\n\n      return {\n        id: photo.id,\n        url: photo.urls.full,\n        type: 'image',\n        width: photo.width,\n        height: photo.height,\n        sizes: {\n          full: {\n            url: photo.urls.full,\n            width: photo.width,\n            height: photo.height\n          },\n          large: {\n            url: photo.urls.regular\n          },\n          medium: {\n            url: photo.urls.small\n          },\n          thumbnail: {\n            url: photo.urls.thumb\n          },\n          novablocks_huge: {\n            url: photo.urls.full\n          },\n          novablocks_large: {\n            url: photo.urls.regular\n          },\n          novablocks_medium: {\n            url: photo.urls.small\n          },\n          novablocks_tiny: {\n            url: photo.urls.thumb\n          }\n        },\n        title: photo.description,\n        caption: \"<p class=\\\"credits\\\">Photo by <a target=\\\"_blank\\\" href=\\\"\".concat(photo.user.links.html, \"?\").concat(URL_PARAMS, \"\\\">\").concat(photo.user.name, \"</a> on <a target=\\\"_blank\\\" href=\\\"https://unsplash.com?\").concat(URL_PARAMS, \"\\\">Unsplash</a></p>\"),\n        download: function download() {\n          _this2.api.photos.downloadPhoto(photo);\n        }\n      };\n    }\n  }]);\n\n  return PlaceholderImagesCollection;\n}();\n\nvar instance = new PlaceholderImagesCollection();\nvar getPlaceholderImages = instance.get.bind(instance);\n\n\n//# sourceURL=webpack:///./src/utils/unsplash.js?");
-
-/***/ }),
-
-/***/ "jquery":
-/*!*************************!*\
-  !*** external "jQuery" ***!
-  \*************************/
-/*! no static exports found */
+/* 28 */
 /***/ (function(module, exports) {
 
-eval("module.exports = jQuery;\n\n//# sourceURL=webpack:///external_%22jQuery%22?");
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
+var classCallCheck = __webpack_require__(2);
+var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
+var createClass = __webpack_require__(3);
+var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
+
+// EXTERNAL MODULE: external "jQuery"
+var external_jQuery_ = __webpack_require__(0);
+var external_jQuery_default = /*#__PURE__*/__webpack_require__.n(external_jQuery_);
+
+// EXTERNAL MODULE: ./node_modules/classnames/index.js
+var classnames = __webpack_require__(1);
+var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
+
+// EXTERNAL MODULE: ./node_modules/unsplash-js/lib/unsplash.js
+var unsplash = __webpack_require__(5);
+var unsplash_default = /*#__PURE__*/__webpack_require__.n(unsplash);
+
+// CONCATENATED MODULE: ./src/utils/unsplash.js
+
+
+
+var APP_NAME = 'Nova Blocks';
+var COLLECTION_ID = 10606015;
+var URL_PARAMS = encodeURI("utm_source=".concat(APP_NAME, "&utm_medium=referral"));
+
+var unsplash_PlaceholderImagesCollection = /*#__PURE__*/function () {
+  function PlaceholderImagesCollection() {
+    classCallCheck_default()(this, PlaceholderImagesCollection);
+
+    this.fetchedImages = false;
+    this.images = [];
+  }
+
+  createClass_default()(PlaceholderImagesCollection, [{
+    key: "fetch",
+    value: function fetch() {
+      var _window,
+          _window$pixcare,
+          _window$pixcare$theme,
+          _this = this;
+
+      var normalize = this.normalize.bind(this);
+      var apiKey = (_window = window) === null || _window === void 0 ? void 0 : (_window$pixcare = _window.pixcare) === null || _window$pixcare === void 0 ? void 0 : (_window$pixcare$theme = _window$pixcare.themeConfig) === null || _window$pixcare$theme === void 0 ? void 0 : _window$pixcare$theme.unsplashApiKey;
+
+      if (!apiKey) {
+        this.fetchedImages = true;
+        return [];
+      }
+
+      this.api = new unsplash_default.a({
+        accessKey: apiKey
+      });
+      return this.api.collections.getCollectionPhotos(COLLECTION_ID).then(unsplash["toJson"]).then(function (photos) {
+        _this.images = photos.map(normalize);
+        return _this.images;
+      }).finally(function () {
+        _this.fetchedImages = true;
+      });
+    }
+  }, {
+    key: "get",
+    value: function get() {
+      if (this.fetchedImages) {
+        return this.images;
+      }
+
+      return this.fetch();
+    }
+  }, {
+    key: "normalize",
+    value: function normalize(photo) {
+      var _this2 = this;
+
+      return {
+        id: photo.id,
+        url: photo.urls.full,
+        type: 'image',
+        width: photo.width,
+        height: photo.height,
+        sizes: {
+          full: {
+            url: photo.urls.full,
+            width: photo.width,
+            height: photo.height
+          },
+          large: {
+            url: photo.urls.regular
+          },
+          medium: {
+            url: photo.urls.small
+          },
+          thumbnail: {
+            url: photo.urls.thumb
+          },
+          novablocks_huge: {
+            url: photo.urls.full
+          },
+          novablocks_large: {
+            url: photo.urls.regular
+          },
+          novablocks_medium: {
+            url: photo.urls.small
+          },
+          novablocks_tiny: {
+            url: photo.urls.thumb
+          }
+        },
+        title: photo.description,
+        caption: "<p class=\"credits\">Photo by <a target=\"_blank\" href=\"".concat(photo.user.links.html, "?").concat(URL_PARAMS, "\">").concat(photo.user.name, "</a> on <a target=\"_blank\" href=\"https://unsplash.com?").concat(URL_PARAMS, "\">Unsplash</a></p>"),
+        download: function download() {
+          _this2.api.photos.downloadPhoto(photo);
+        }
+      };
+    }
+  }]);
+
+  return PlaceholderImagesCollection;
+}();
+
+var instance = new unsplash_PlaceholderImagesCollection();
+var getPlaceholderImages = instance.get.bind(instance);
+
+// CONCATENATED MODULE: ./src/utils/index.js
+
+
+var getRandomBetween = function getRandomBetween(min, max) {
+  var random = Math.max(0, Math.random() - Number.MIN_VALUE);
+  return Math.floor(random * (max - min + 1) + min);
+};
+var getRandomArrayFromArray = function getRandomArrayFromArray(arr, n) {
+  var result = new Array(n),
+      len = arr.length,
+      taken = new Array(len);
+
+  if (!len) {
+    return [];
+  }
+
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+
+  return result;
+};
+var getRandomBooleanValue = function getRandomBooleanValue() {
+  return getRandomArrayFromArray([true, false], 1)[0];
+};
+var debounce = function debounce(func, wait) {
+  var timeout = null;
+  return function () {
+    var context = this;
+    var args = arguments;
+
+    var later = function later() {
+      func.apply(context, args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+var range = function range(min, max) {
+  var array = [];
+
+  for (var i = 0; i <= max - min; i++) {
+    array.push(i + min);
+  }
+
+  return array;
+};
+var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+var hasTouchScreen = function hasTouchScreen() {
+  var hasTouchScreen = false;
+
+  if ("maxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.maxTouchPoints > 0;
+  } else if ("msMaxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.msMaxTouchPoints > 0;
+  } else {
+    var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+
+    if (mQ && mQ.media === "(pointer:coarse)") {
+      hasTouchScreen = !!mQ.matches;
+    } else if ('orientation' in window) {
+      hasTouchScreen = true;
+    } else {
+      var UA = navigator.userAgent;
+      hasTouchScreen = /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+    }
+  }
+
+  return hasTouchScreen;
+};
+var findParents = function findParents(target, query) {
+  var parents = [];
+
+  function traverse(item) {
+    var parent = item.parentNode;
+
+    if (parent instanceof HTMLElement) {
+      if (parent.matches(query)) {
+        parents.push(parent);
+      }
+
+      traverse(parent);
+    }
+  }
+
+  traverse(target);
+  return parents;
+}; // https://stackoverflow.com/a/2450976
+
+var shuffleArray = function shuffleArray(array) {
+  var currentIndex = array.length,
+      temporaryValue,
+      randomIndex; // While there remain elements to shuffle...
+
+  while (0 !== currentIndex) {
+    // eslint-disable-next-line no-restricted-syntax
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1; // And swap it with the current element.
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+var defaultSnapValues = {
+  x: [0, 0.5, 1],
+  y: [0, 0.5, 1]
+};
+var maybeSnapFocalPoint = function maybeSnapFocalPoint(focalPoint) {
+  var snapValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultSnapValues;
+  var x = parseFloat(focalPoint.x);
+  var y = parseFloat(focalPoint.y);
+  var thereshold = 0.05;
+  snapValues.x.forEach(function (snapValue) {
+    if (snapValue - thereshold < x && x < snapValue + thereshold) {
+      x = snapValue;
+    }
+  });
+  snapValues.y.forEach(function (snapValue) {
+    if (snapValue - thereshold < y && y < snapValue + thereshold) {
+      y = snapValue;
+    }
+  });
+  return {
+    x: x,
+    y: y
+  };
+};
+var getSnapClassname = function getSnapClassname(focalPoint) {
+  var classNames = [];
+
+  if (defaultSnapValues.x.includes(parseFloat(focalPoint.x))) {
+    classNames.push('is-snapped-x');
+  }
+
+  if (defaultSnapValues.y.includes(parseFloat(focalPoint.y))) {
+    classNames.push('is-snapped-y');
+  }
+
+  return classNames.join(' ');
+};
+var utils_getControlsClasses = function getControlsClasses(attributes, compileAttributes) {
+  var classes = ['novablocks-controls-wrap'];
+  var compiledAttributes = compileAttributes(attributes);
+
+  if (Object.keys(compiledAttributes).some(function (key) {
+    return compiledAttributes[key] !== attributes[key];
+  })) {
+    classes.push('novablocks-controls-wrap--dirty');
+  }
+
+  return classnames_default()(classes);
+};
+var getCardMediaPaddingTop = function getCardMediaPaddingTop(containerHeight) {
+  var compiledHeight = containerHeight / 50 - 1;
+
+  if (compiledHeight < 0) {
+    compiledHeight *= 2;
+  }
+
+  var numerator = 1;
+  var denominator = 1;
+  compiledHeight = Math.min(Math.max(-3, compiledHeight), 1);
+
+  if (compiledHeight > 0) {
+    numerator = 1 + compiledHeight;
+  }
+
+  if (compiledHeight < 0) {
+    denominator = 1 + Math.abs(compiledHeight);
+  }
+
+  return "".concat(numerator * 100 / denominator, "%");
+};
+var breakpoints = {
+  desktop: 1366,
+  lap: 1024,
+  tablet: 768
+};
+var below = function below(breakpoint) {
+  var width = breakpoints[breakpoint];
+  return window.innerWidth < width;
+};
+var above = function above(breakpoint) {
+  var width = breakpoints[breakpoint];
+  return window.innerWidth >= width;
+};
+// CONCATENATED MODULE: ./src/components/viewportObserver.js
+
+
+
+
+
+var viewportObserver_viewportObserver = /*#__PURE__*/function () {
+  function viewportObserver() {
+    classCallCheck_default()(this, viewportObserver);
+
+    this.useOrientation = hasTouchScreen() && 'orientation' in window;
+    this.bindEvents();
+  }
+
+  createClass_default()(viewportObserver, [{
+    key: "bindEvents",
+    value: function bindEvents() {
+      var $window = external_jQuery_default()(window);
+      var updateViewportUnits = this.updateViewportUnits.bind(this);
+      updateViewportUnits();
+
+      if (this.useOrientation) {
+        $window.on('orientationchange', function () {
+          $window.one('resize', updateViewportUnits);
+        });
+      } else {
+        $window.on('resize', updateViewportUnits);
+      }
+    }
+  }, {
+    key: "updateViewportUnits",
+    value: function updateViewportUnits() {
+      var root = document.documentElement;
+      var windowWidth = this.useOrientation && window.screen && window.screen.availWidth || window.innerWidth;
+      var windowHeight = this.useOrientation && window.screen && window.screen.availHeight || window.innerHeight;
+      var vw = windowWidth / 100 + 'px';
+      var vh = windowHeight / 100 + 'px';
+      root.style.setProperty('--novablocks-1vw', vw);
+      root.style.setProperty('--novablocks-1vh', vh);
+    }
+  }]);
+
+  return viewportObserver;
+}();
+
+/* harmony default export */ var components_viewportObserver = (new viewportObserver_viewportObserver());
+// EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
+var js_cookie = __webpack_require__(6);
+var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
+
+// CONCATENATED MODULE: ./src/blocks/announcement-bar/announcement-bar.js
+
+
+
+
+var announcement_bar_AnnouncementBar = /*#__PURE__*/function () {
+  function AnnouncementBar(element, args) {
+    classCallCheck_default()(this, AnnouncementBar);
+
+    this.element = element;
+    this.pieces = this.getPieces();
+    this.id = jQuery(element).data('id');
+    this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';
+    var disabled = js_cookie_default.a.get(this.cookieName);
+    var loggedIn = jQuery('body').hasClass('logged-in');
+
+    if (disabled && !loggedIn) {
+      return;
+    }
+
+    this.pieces.element.removeClass('is-hidden');
+    this.bindEvents();
+  }
+
+  createClass_default()(AnnouncementBar, [{
+    key: "getPieces",
+    value: function getPieces() {
+      var $element = jQuery(this.element);
+      return {
+        element: $element,
+        close: $element.find('.novablocks-announcement-bar__close')
+      };
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      this.pieces.close.on('click', this.onClose.bind(this));
+    }
+  }, {
+    key: "onClose",
+    value: function onClose() {
+      var cookieName = this.cookieName;
+      this.pieces.element.addClass('is-hidden');
+      js_cookie_default.a.set(cookieName, true, {
+        expires: 365
+      });
+    }
+  }]);
+
+  return AnnouncementBar;
+}();
+
+
+// CONCATENATED MODULE: ./src/blocks/announcement-bar/frontend.js
+
+
+(function ($, window, undefined) {
+  $(function () {
+    var announcementElements = document.getElementsByClassName('novablocks-announcement-bar');
+    var announcementElementsArray = Array.from(announcementElements);
+    var AnnouncementCollection = announcementElementsArray.map(function (element) {
+      return new announcement_bar_AnnouncementBar(element);
+    });
+  });
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/google-map/pin.js
+/* harmony default export */ var pin = ("<svg width=\"62\" height=\"75\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 62 75\">\n\t<defs>\n\t\t<path id=\"b\" d=\"M31 69s27-18 27-40C58 14.088 46 2 31 2S4 14.088 4 29c0 22 27 40 27 40zm7.725-31.206c-4.26 4.275-11.264 4.275-15.53 0-4.26-4.277-4.26-11.305 0-15.587 4.26-4.276 11.265-4.276 15.53 0 4.367 4.282 4.367 11.304 0 15.587z\"></path>\n\t\t<filter id=\"a\" width=\"200%\" height=\"200%\" x=\"-50%\" y=\"-50%\" filterUnits=\"objectBoundingBox\">\n\t\t\t<feOffset dy=\"2\" in=\"SourceAlpha\" result=\"shadowOffsetOuter1\"></feOffset>\n\t\t\t<feGaussianBlur in=\"shadowOffsetOuter1\" result=\"shadowBlurOuter1\" stdDeviation=\"2\"></feGaussianBlur>\n\t\t\t<feColorMatrix in=\"shadowBlurOuter1\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0\"></feColorMatrix>\n\t\t</filter>\n\t</defs>\n\t<g fill=\"none\" fillRule=\"evenodd\">\n\t\t<use fill=\"#000\" filter=\"url(#a)\" xlink:href=\"#b\" style=\"display:none\"></use>\n\t\t<use fill=\"%ACCENT_COLOR%\" xlink:href=\"#b\"></use>\n\t</g>\n</svg>");
+// CONCATENATED MODULE: ./src/blocks/google-map/default-map-center.js
+var defaultMapCenter = {
+  lat: 47.1665264,
+  lng: 27.58285479999995
+};
+/* harmony default export */ var default_map_center = (defaultMapCenter);
+// CONCATENATED MODULE: ./src/blocks/google-map/styles/customized.js
+/* harmony default export */ var customized = ([{
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#f5f5f5"
+  }]
+}, {
+  "elementType": "labels.icon",
+  "stylers": [{
+    "saturation": -100
+  }, {
+    "lightness": 60
+  }]
+}, {
+  "elementType": "labels.text.stroke",
+  "stylers": [{
+    "color": "#f5f5f5"
+  }]
+}, {
+  "featureType": "poi",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#eeeeee"
+  }]
+}, {
+  "featureType": "poi",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
+  }]
+}, {
+  "featureType": "road.arterial",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "%ACCENT_COLOR%"
+  }, {
+    "lightness": 90
+  }]
+}, {
+  "featureType": "road.arterial",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
+  }]
+}, {
+  "featureType": "road.highway",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#dadada"
+  }]
+}, {
+  "featureType": "road.highway",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#616161"
+  }]
+}, {
+  "featureType": "road.local",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "%ACCENT_COLOR%"
+  }, {
+    "saturation": -25
+  }, {
+    "lightness": 70
+  }]
+}, {
+  "featureType": "road.local",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "lightness": 30
+  }]
+}, {
+  "featureType": "transit.line",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#e5e5e5"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#c9c9c9"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "%ACCENT_COLOR%"
+  }, {
+    "lightness": 60
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "saturation": -100
+  }]
+}]);
+// CONCATENATED MODULE: ./src/blocks/google-map/styles/index.js
+
+var styles_styles = [{
+  slug: 'customized',
+  label: 'Customized',
+  styles: customized
+}, {
+  slug: 'original',
+  label: 'Original',
+  styles: []
+}];
+/* harmony default export */ var google_map_styles = (styles_styles);
+// CONCATENATED MODULE: ./src/blocks/google-map/utils.js
+
+
+var addVisibilityToStyles = function addVisibilityToStyles(styles, showLabels, showIcons) {
+  if (!showLabels) {
+    styles.unshift({
+      "elementType": "labels.text",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    });
+  }
+
+  if (!showIcons) {
+    styles.unshift({
+      "elementType": "labels.icon",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    });
+  }
+
+  return styles;
+};
+var compileStyles = function compileStyles(styleData) {
+  var _this$props$attribute = this.props.attributes,
+      showLabels = _this$props$attribute.showLabels,
+      showIcons = _this$props$attribute.showIcons,
+      styleSlug = _this$props$attribute.styleSlug;
+  var accentColor = getMapAccentColor.call(this);
+  var styleDataString = JSON.stringify(styleData).replace(/%ACCENT_COLOR%/g, accentColor);
+  return JSON.parse(styleDataString);
+};
+var utils_getMapStyles = function getMapStyles() {
+  var attributes = this.props.attributes;
+  var styleData = attributes.styleData,
+      styleSlug = attributes.styleSlug;
+  var shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
+  var selectedStyles = google_map_styles.find(function (style) {
+    return style.slug === styleSlug;
+  });
+  var styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
+  var mapStyles = shouldHaveCustomStyles && styleDataBySlug || styleData;
+  return compileStyles.call(this, mapStyles);
+};
+var getMapAccentColor = function getMapAccentColor() {
+  var settings = this.props.settings;
+  var colors = settings.colors;
+  var fallbackColor = '#222222';
+
+  if (colors && colors.length) {
+    var primary = colors.find(function (color) {
+      return color.slug === 'sm-color-primary';
+    });
+    var secondary = colors.find(function (color) {
+      return color.slug === 'sm-color-secondary';
+    });
+    var tertiary = colors.find(function (color) {
+      return color.slug === 'sm-color-tertiary';
+    });
+
+    if (primary) {
+      return primary.color;
+    }
+
+    if (secondary) {
+      return secondary.color;
+    }
+
+    if (tertiary) {
+      return tertiary.color;
+    }
+
+    return colors[0].color;
+  }
+
+  return fallbackColor;
+};
+var utils_getCenterFromMarkers = function getCenterFromMarkers(markers) {
+  if (typeof google === "undefined" || typeof google.maps === "undefined") {
+    return default_map_center;
+  }
+
+  var bounds = new google.maps.LatLngBounds(); // when there is only one marker bounds aren't accurate at great zoom levels
+
+  if (markers.length === 1) {
+    var center = JSON.parse(markers[0]);
+    return new google.maps.LatLng(center.geometry.location);
+  }
+
+  markers.forEach(function (markerString) {
+    var marker = JSON.parse(markerString);
+
+    if (!marker.geometry) {
+      return;
+    }
+
+    if (marker.geometry.viewport) {
+      bounds.union(marker.geometry.viewport);
+    } else {
+      bounds.extend(marker.geometry.location);
+    }
+  });
+  return bounds.getCenter();
+};
+var getMarkersCenter = function getMarkersCenter() {
+  return utils_getCenterFromMarkers(this.props.attributes.markers);
+};
+// CONCATENATED MODULE: ./src/components/with-parallax/util.js
+
+
+
+function userPrefersReducedMotion() {
+  var mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  return !!mediaQuery.matches;
+}
+
+var getIntermediateFocalPoint = function getIntermediateFocalPoint(focalPoint1, focalPoint2, progress) {
+  if (!focalPoint1 && !focalPoint2) {
+    return {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (!focalPoint1) {
+    return focalPoint2;
+  }
+
+  if (!focalPoint2) {
+    return focalPoint1;
+  }
+
+  return {
+    x: parseFloat(focalPoint1.x) + (parseFloat(focalPoint2.x) - parseFloat(focalPoint1.x)) * progress,
+    y: parseFloat(focalPoint1.y) + (parseFloat(focalPoint2.y) - parseFloat(focalPoint1.y)) * progress
+  };
+};
+var getStyles = function getStyles(config) {
+  var props = getProps(config);
+  var styles = getStylesFromProps(props);
+  return styles;
+};
+var getStylesFromProps = function getStylesFromProps(props) {
+  var parallaxAmount = props.parallaxAmount,
+      width = props.width,
+      height = props.height,
+      moveX = props.moveX,
+      moveY = props.moveY,
+      offsetX = props.offsetX,
+      offsetY = props.offsetY,
+      scale = props.scale,
+      focalPoint = props.focalPoint;
+  return {
+    width: width || '',
+    height: height || '',
+    minHeight: 0,
+    maxWidth: 'none',
+    transform: "translate(".concat(moveX, ",").concat(moveY * parallaxAmount, "px) translateX(").concat(offsetX, ") translateY(").concat(offsetY, "px) scale(").concat(scale, ")"),
+    objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
+    transformOrigin: focalPoint.x * 100 + '% 50%'
+  };
+};
+
+function getIntermediateValue(initialValue, finalValue, progress) {
+  return initialValue + (finalValue - initialValue) * progress;
+}
+
+function getScales(config) {
+  var scrollingEffect = config.scrollingEffect,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      progress = config.progress;
+  initialBackgroundScale = initialBackgroundScale || 1;
+
+  if (scrollingEffect === 'parallax') {
+    finalBackgroundScale = initialBackgroundScale;
+  }
+
+  var maxScale = Math.max(initialBackgroundScale, finalBackgroundScale);
+  initialBackgroundScale = initialBackgroundScale / maxScale;
+  finalBackgroundScale = finalBackgroundScale / maxScale;
+
+  if (userPrefersReducedMotion()) {
+    return {
+      maxScale: 1,
+      newScale: 1
+    };
+  }
+
+  return {
+    maxScale: maxScale,
+    newScale: getIntermediateValue(initialBackgroundScale, finalBackgroundScale, progress)
+  };
+}
+
+function getFocalPoint(config) {
+  var scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      progress = config.progress;
+
+  if (!focalPoint) {
+    focalPoint = {
+      x: 0.5,
+      y: 0.5
+    };
+  }
+
+  if (scrollingEffect !== 'doppler') {
+    return focalPoint;
+  }
+
+  return getIntermediateFocalPoint(focalPoint, finalFocalPoint, progress);
+}
+
+function getNewImageHeight(config, parallaxAmount) {
+  var scrollContainerHeight = config.scrollContainerHeight,
+      containerHeight = config.containerHeight;
+  return containerHeight + (scrollContainerHeight - containerHeight) * parallaxAmount;
+}
+
+var getProps = function getProps(config, fixed) {
+  var distance = config.distance,
+      progress = config.progress,
+      smoothStart = config.smoothStart,
+      smoothEnd = config.smoothEnd,
+      scrollingEffect = config.scrollingEffect,
+      focalPoint = config.focalPoint,
+      finalFocalPoint = config.finalFocalPoint,
+      initialBackgroundScale = config.initialBackgroundScale,
+      finalBackgroundScale = config.finalBackgroundScale,
+      container = config.container,
+      containerBox = config.containerBox,
+      containerWidth = config.containerWidth,
+      containerHeight = config.containerHeight,
+      scrollContainer = config.scrollContainer,
+      scrollContainerBox = config.scrollContainerBox,
+      scrollContainerHeight = config.scrollContainerHeight;
+  var newFocalPoint = getFocalPoint(config);
+
+  if (scrollingEffect === 'static') {
+    return {
+      width: containerWidth,
+      height: containerHeight,
+      scale: initialBackgroundScale || 1,
+      moveX: 0,
+      moveY: 0,
+      offsetX: 0,
+      offsetY: 0,
+      parallaxAmount: 0,
+      focalPoint: newFocalPoint
+    };
+  }
+
+  var parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
+
+  var _getScales = getScales(config),
+      maxScale = _getScales.maxScale,
+      newScale = _getScales.newScale;
+
+  var newImageHeight = getNewImageHeight(config, parallaxAmount); // keep in sync with scroll
+
+  var moveY = scrollContainerBox.top - containerBox.top;
+
+  if (!smoothStart) {
+    if (!!fixed && containerBox.top < 0) {
+      moveY = scrollContainerBox.top;
+    }
+
+    if (!fixed && 0 > scrollContainerBox.top - containerBox.top) {
+      moveY = 0;
+    }
+  }
+
+  if (!smoothEnd) {
+    if (scrollContainerBox.top - containerBox.top > containerHeight - scrollContainerHeight) {
+      if (!!fixed) {
+        moveY = scrollContainerBox.top - containerBox.top - containerHeight + scrollContainerHeight;
+      } else {
+        moveY = containerHeight - scrollContainerHeight;
+      }
+    }
+  } // align top
+
+
+  var offsetY = newImageHeight * maxScale * (newScale - 1) * 0.5; // position according to focalPoint
+
+  offsetY += newImageHeight * (1 - maxScale * newScale) * newFocalPoint.y;
+  return {
+    distance: distance,
+    parallaxAmount: parallaxAmount,
+    progress: progress,
+    width: containerWidth * maxScale,
+    height: newImageHeight * maxScale,
+    moveX: "".concat(fixed ? containerBox.left - scrollContainerBox.left : 0, "px"),
+    moveY: moveY,
+    offsetX: (1 / maxScale - 1) * newFocalPoint.x * 100 + '%',
+    offsetY: offsetY,
+    scale: newScale,
+    focalPoint: newFocalPoint
+  };
+};
+var getState = function getState(container, config) {
+  if (!container || !config) {
+    return {};
+  }
+
+  var followThroughStart = config.followThroughStart,
+      followThroughEnd = config.followThroughEnd,
+      scrollingEffect = config.scrollingEffect,
+      scrollContainerHeight = config.scrollContainerHeight,
+      scrollContainerBox = config.scrollContainerBox;
+  var containerWidth = container.offsetWidth;
+  var containerHeight = container.offsetHeight;
+  var containerBox = container.getBoundingClientRect();
+  var smoothStart = followThroughStart || scrollingEffect === 'parallax';
+  var smoothEnd = followThroughEnd || scrollingEffect === 'parallax';
+  var current = scrollContainerBox.top - containerBox.top;
+  var distance = containerHeight - scrollContainerHeight;
+
+  if (smoothStart) {
+    current += scrollContainerHeight;
+    distance += scrollContainerHeight;
+  }
+
+  if (smoothEnd) {
+    distance += scrollContainerHeight;
+  }
+
+  var progress = distance <= 0 ? 0.5 : current / distance;
+
+  if (!smoothStart) {
+    progress = Math.max(0, progress);
+  }
+
+  if (!smoothEnd) {
+    progress = Math.min(1, progress);
+  }
+
+  if (userPrefersReducedMotion()) {
+    progress = 0.5;
+  }
+
+  return {
+    progress: progress,
+    distance: distance,
+    smoothStart: smoothStart,
+    smoothEnd: smoothEnd,
+    containerBox: containerBox,
+    containerHeight: containerHeight,
+    containerWidth: containerWidth,
+    scrollContainerHeight: scrollContainerHeight,
+    scrollContainerBox: scrollContainerBox
+  };
+};
+
+function getScrollContainerHeight() {
+  var useOrientation = hasTouchScreen() && 'orientation' in window;
+  return useOrientation && window.screen && window.screen.availHeight || window.innerHeight;
+}
+
+var util_parallaxInit = function parallaxInit($blocks) {
+  var frameRendered = false;
+  var scrollContainerHeight = getScrollContainerHeight();
+  $blocks.each(function (i, container) {
+    var $container = external_jQuery_default()(container);
+    var followThroughStart = !!$container.data('smooth-start');
+    var followThroughEnd = !!$container.data('smooth-end');
+    var scrollingEffect = $container.data('scrolling-effect');
+    var focalPoint = $container.data('focal-point');
+    var finalFocalPoint = $container.data('final-focal-point');
+    var initialBackgroundScale = $container.data('initial-background-scale');
+    var finalBackgroundScale = $container.data('final-background-scale');
+    var scrollContainerBox = {
+      top: 0,
+      left: 0
+    };
+    var config = {
+      followThroughStart: followThroughStart,
+      followThroughEnd: followThroughEnd,
+      scrollingEffect: scrollingEffect,
+      scrollContainerHeight: scrollContainerHeight,
+      scrollContainerBox: scrollContainerBox,
+      focalPoint: focalPoint,
+      finalFocalPoint: finalFocalPoint,
+      initialBackgroundScale: initialBackgroundScale,
+      finalBackgroundScale: finalBackgroundScale
+    };
+    $container.data({
+      state: getState(container, config),
+      config: config
+    });
+    var $parallax = $container.find('.novablocks-parallax');
+    $container.data('parallax', $parallax);
+
+    function parallaxUpdateState() {
+      var newConfig = Object.assign({}, config, {
+        scrollContainerHeight: getScrollContainerHeight()
+      });
+      var state = getState(container, newConfig);
+      $container.data('state', state);
+      $container.data('config', newConfig);
+      frameRendered = false;
+    }
+
+    external_jQuery_default()(window).on('scroll', parallaxUpdateState);
+    external_jQuery_default()(window).on('resize', parallaxUpdateState);
+  });
+
+  function parallaxUpdateLoop() {
+    if (!frameRendered) {
+      $blocks.each(function (i, obj) {
+        var $container = external_jQuery_default()(obj);
+        var $background = $container.data('parallax');
+        var $foreground = $background.find('.novablocks-foreground');
+        var state = $container.data('state');
+        var config = $container.data('config');
+        config = Object.assign({}, state, config);
+        var props = getProps(config, true);
+        $foreground.css('transform', "translate3d(0,".concat(-props.moveY * props.parallaxAmount, "px,0)")); // because of fixed positioning
+
+        props.moveY = -1 * props.moveY;
+
+        if (0 < props.progress && props.progress < 1) {
+          props.parallaxAmount = 1 - props.parallaxAmount;
+        }
+
+        var styles = getStylesFromProps(props);
+        $container.data('parallax').css(styles);
+      });
+      frameRendered = true;
+    }
+
+    requestAnimationFrame(parallaxUpdateLoop);
+  }
+
+  requestAnimationFrame(parallaxUpdateLoop);
+};
+// CONCATENATED MODULE: ./src/blocks/google-map/frontend.js
+
+
+
+
+(function ($, window, undefined) {
+  var $blocks = $('.novablocks-map');
+  util_parallaxInit($blocks);
+  mapInit();
+
+  function mapInit() {
+    if (typeof google === "undefined" || typeof google.maps === "undefined") {
+      return;
+    }
+
+    $('.js-novablocks-google-map').each(function (i, obj) {
+      var $obj = $(obj),
+          markers = $obj.data('markers'),
+          showLabels = $obj.data('show-labels'),
+          showIcons = $obj.data('show-icons'),
+          styles = $obj.data('styles'),
+          zoom = $obj.data('zoom'),
+          hideControls = !$obj.data('controls'),
+          pinColor = $obj.data('pin-color'),
+          mapOptions = {
+        mapTypeId: 'roadmap',
+        center: utils_getCenterFromMarkers(markers),
+        zoom: zoom,
+        styles: addVisibilityToStyles(styles, showLabels, showIcons),
+        disableDefaultUI: hideControls,
+        clickableIcons: false,
+        keyboardShortcuts: false
+      },
+          map = new google.maps.Map(obj, mapOptions);
+      var pinMarkup = pin.replace(/%ACCENT_COLOR%/g, pinColor);
+      markers.forEach(function (markerString) {
+        var marker = JSON.parse(markerString);
+        new google.maps.Marker({
+          map: map,
+          icon: {
+            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(pinMarkup)
+          },
+          title: marker.title,
+          position: marker.geometry.location
+        });
+      });
+    });
+  }
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/hero/frontend.js
+
+
+(function ($, window, undefined) {
+  var $heroes = $('.novablocks-hero');
+  var windowScrollY;
+  var scrollButtonHidden = false;
+  var $scrollButton = $('.novablocks-hero__indicator');
+  util_parallaxInit($heroes);
+  bulletsInit();
+  scrollButtonInit();
+  updateScroll();
+  $(window).on('scroll', updateScroll);
+
+  function updateScroll() {
+    windowScrollY = window.scrollY;
+
+    if (windowScrollY > 200) {
+      hideScrollButton();
+    }
+  }
+
+  function bulletsInit() {
+    var $body = $('body');
+    var shouldHaveBullets = $body.is('.novablocks-has-position-indicators') && $('.novablocks-hero').length > 1;
+
+    if (shouldHaveBullets && typeof $.fn.bully !== 'undefined') {
+      $('.novablocks-hero').bully();
+    }
+  }
+
+  function hideScrollButton() {
+    if (scrollButtonHidden) {
+      return;
+    }
+
+    $scrollButton.filter('.novablocks-hero__indicator--middle').addClass('novablocks-hero__indicator--hidden');
+    scrollButtonHidden = true;
+  }
+
+  function scrollButtonInit() {
+    var $hero = $scrollButton.closest('.novablocks-hero');
+
+    if ($hero.length) {
+      $scrollButton.on('click', function () {
+        var heroBox = $hero.get(0).getBoundingClientRect();
+        var heroBoxTop = heroBox.y || heroBox.top;
+        window.scrollTo({
+          top: heroBoxTop + heroBox.height + windowScrollY,
+          behavior: 'smooth'
+        });
+      });
+    }
+  }
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/slideshow/frontend.js
+
+
+var BLOCK_SELECTOR = '.novablocks-slideshow';
+var SLIDER_SELECTOR = '.novablocks-slideshow__slider';
+var SLIDE_SELECTOR = '.novablocks-slideshow__slide';
+var FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
+var TRANSITION_DURATION = 1000;
+var TRANSITION_EASING = "easeInOutCirc";
+
+(function ($, window, undefined) {
+  var $window = $(window);
+  var $blocks = $(BLOCK_SELECTOR);
+  var useOrientation = hasTouchScreen() && 'orientation' in window;
+  var onDebouncedResize = debounce(onResize, 300);
+  $blocks.each(function (index, block) {
+    var $block = $(block),
+        $slider = $block.find(SLIDER_SELECTOR),
+        $arrowContainer;
+    resetBlockMinHeight($block);
+
+    if ($slider.children().length > 1) {
+      $arrowContainer = $('<div class="novablocks-slideshow__controls">').appendTo($block);
+      $slider.on('beforeChange', onBeforeSlideChange);
+      $slider.slick({
+        rows: 0,
+        // for simpler reveal transitions between slides
+        fade: true,
+        prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
+        nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
+        appendArrows: $arrowContainer,
+        speed: 0
+      });
+    }
+
+    $block.addClass('is-ready');
+  });
+  util_parallaxInit($blocks);
+
+  if (useOrientation) {
+    $window.on('orientationchange', function () {
+      $window.one('resize', onResize);
+    });
+  } else {
+    $window.on('resize', onDebouncedResize);
+  }
+
+  function resetBlockMinHeight($block) {
+    $block.css('minHeight', '');
+    $block.css('minHeight', getBlockMinHeight($block));
+    $(window).trigger('scroll');
+  }
+
+  function getBlockMinHeight($block) {
+    var windowWidth = window.innerWidth;
+    var $slider = $block.find(SLIDER_SELECTOR);
+    var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();
+    var windowHeight = window.innerHeight;
+    var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;
+    var mediaMinHeight = 0;
+    var slideMaxHeight = 0;
+    var maxAspectRatio = 0;
+    $block.find(SLIDE_SELECTOR).each(function (i, obj) {
+      var $slide = $(obj),
+          $media = $slide.find('.novablocks-slideshow__media'),
+          width = $media.data('width'),
+          height = $media.data('height'),
+          aspectRatio = width / height,
+          slideHeight = $slide.outerHeight();
+      maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+      mediaMinHeight = sliderWidth / maxAspectRatio;
+      slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
+    });
+    return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);
+  }
+
+  function onResize() {
+    $blocks.each(function (index, block) {
+      var $block = $(block);
+      var $slider = $block.find(SLIDER_SELECTOR);
+      resetBlockMinHeight($block);
+
+      if ($slider.is('.slick-initialized')) {
+        $slider.slick('setPosition');
+      }
+    });
+  }
+
+  function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
+    var $currentSlide = $(slick.$slides[currentSlide]);
+    var $nextSlide = $(slick.$slides[nextSlide]);
+    var $slides = $(slick.$slides);
+    transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
+  }
+
+  function hasFixedBackground($slide) {
+    var fixed = false;
+
+    if ($slide.find('.novablocks-parallax').css('position') === 'fixed') {
+      return true;
+    }
+
+    return fixed;
+  }
+
+  function transition($current, $next) {
+    var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var slideWidth = $current.outerWidth();
+    var move = 300;
+    var isFixed = hasFixedBackground($current);
+    $current.velocity({
+      tween: [0, 1]
+    }, {
+      duration: TRANSITION_DURATION,
+      easing: TRANSITION_EASING,
+      begin: function begin() {
+        $current.addClass('novablocks-slideshow__slide--current');
+        $next.addClass('novablocks-slideshow__slide--next');
+      },
+      progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
+        var next = $next.find('.novablocks-slideshow__slide-wrap').get(0);
+        var nextBg = $next.find('.novablocks-slideshow__media').get(0);
+        var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
+        var current = $current.get(0);
+        var currentBg = $current.find('.novablocks-slideshow__media').get(0);
+        var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
+
+        if (isFixed) {
+          next.style.left = slideWidth * tweenValue + 'px';
+          nextBg.style.left = move * tweenValue + 'px';
+          nextFg.style.left = slideWidth * -tweenValue + 'px';
+          currentBg.style.left = move * (tweenValue - 1) + 'px';
+        } else {
+          next.style.left = slideWidth * tweenValue + 'px';
+          nextBg.style.left = (move - slideWidth) * tweenValue + 'px';
+          nextFg.style.left = (move - slideWidth) * tweenValue + 'px';
+          currentBg.style.left = move * (tweenValue - 1) + 'px';
+        }
+      },
+      complete: function complete() {
+        $current.removeClass('novablocks-slideshow__slide--current');
+        $next.removeClass('novablocks-slideshow__slide--next');
+      }
+    });
+  }
+
+  function getDirection(slick, currentSlide, nextSlide) {
+    var direction = 1;
+
+    if (slick.slideCount > 2) {
+      if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {
+        direction = -1;
+      }
+
+      if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {
+        direction = -1;
+      }
+    }
+
+    return direction;
+  }
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/components/advanced-gallery/util.js
+
+
+var util_getRandomAttributes = function getRandomAttributes() {
+  return {
+    sizeContrast: getRandomBetween(0, 5) * 20,
+    positionShift: getRandomBetween(0, 20) * 5,
+    elementsDistance: getRandomBetween(0, 5) * 20,
+    placementVariation: getRandomBetween(1, 4) * 25,
+    stylePreset: 'just-my-style'
+  };
+};
+var getGalleryStyle = function getGalleryStyle(attributes) {
+  var containerHeight = attributes.containerHeight / 50 - 1;
+  var numerator = 1;
+  var denominator = 1;
+  containerHeight = Math.min(Math.max(-1, containerHeight), 1);
+
+  if (containerHeight > 0) {
+    numerator = 1 + containerHeight;
+  }
+
+  if (containerHeight < 0) {
+    denominator = 1 + Math.abs(containerHeight);
+  }
+
+  return {
+    paddingTop: "".concat(numerator * 100 / denominator, "%")
+  };
+};
+var getGridStyle = function getGridStyle(attributes) {
+  var elementsDistance = attributes.elementsDistance;
+  return {
+    '--novablocks-advanced-gallery-grid-gap': "".concat(elementsDistance, "px")
+  };
+};
+var util_safariHeightFix = function safariHeightFix(grid) {
+  if (!isSafari) {
+    return;
+  }
+
+  var parent = grid.parentNode;
+  var $grid = external_jQuery_default()(grid);
+  var $parent = external_jQuery_default()(parent);
+
+  var resetHeight = function resetHeight() {
+    var newHeight = $parent.outerHeight();
+    $grid.css('height', newHeight);
+  };
+
+  var debouncedResetHeight = debounce(resetHeight, 30);
+  resetHeight();
+
+  if (typeof window.ResizeObserver !== "undefined") {
+    var observer = new ResizeObserver(function (entries) {
+      debouncedResetHeight();
+    });
+    observer.observe(parent);
+  } else {
+    external_jQuery_default()(window).on('resize', function () {
+      debouncedResetHeight();
+    });
+  }
+};
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(4);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
+
+
+
+var ITEM_SIZE = 20;
+var grid_item_GridItemCollection = /*#__PURE__*/function () {
+  function GridItemCollection(images, attributes) {
+    classCallCheck_default()(this, GridItemCollection);
+
+    var placementVariation = attributes.placementVariation / 25 - 1;
+    this.gridItems = images.map(function (image, index) {
+      var groupStart = Math.floor(index / 4) * 4;
+      var groupEnd = Math.min(groupStart + 4, images.length);
+      var isGroupOfThree = groupEnd - groupStart === 3;
+      return new grid_item_GridItem(image, index, attributes, isGroupOfThree);
+    });
+    this.removeExtra();
+
+    if (placementVariation === 1 || placementVariation === 2) {
+      this.flipX();
+    }
+
+    if (placementVariation === 2 || placementVariation === 3) {
+      this.flipY();
+    }
+  }
+
+  createClass_default()(GridItemCollection, [{
+    key: "removeExtra",
+    value: function removeExtra() {
+      var extraLeft = this.getExtraLeft();
+      var extraTop = this.getExtraTop();
+      var extraBetween = this.getExtraBetween();
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        var groupIndex = Math.floor(index / 4);
+        gridItem.x = gridItem.x - extraLeft;
+        gridItem.y = gridItem.y - extraTop - groupIndex * extraBetween;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipX",
+    value: function flipX() {
+      var maxX = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x + gridItem.width;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.x = maxX - gridItem.x - gridItem.width + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "flipY",
+    value: function flipY() {
+      var maxY = Math.max.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      this.gridItems = this.gridItems.map(function (gridItem, index) {
+        gridItem.y = maxY - gridItem.y - gridItem.height + 1;
+        return gridItem;
+      });
+    }
+  }, {
+    key: "getExtraLeft",
+    value: function getExtraLeft() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.x;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraTop",
+    value: function getExtraTop() {
+      return Math.min.apply(Math, toConsumableArray_default()(this.gridItems.map(function (gridItem) {
+        return gridItem.y;
+      }))) - 1;
+    }
+  }, {
+    key: "getExtraBetween",
+    value: function getExtraBetween() {
+      var firstGroup = this.gridItems.slice(0, 4);
+      var maxBottom = Math.max.apply(Math, toConsumableArray_default()(firstGroup.map(function (gridItem) {
+        return gridItem.y + gridItem.height;
+      })));
+      return ITEM_SIZE * 2 - maxBottom + 1;
+    }
+  }]);
+
+  return GridItemCollection;
+}();
+
+var grid_item_GridItem = /*#__PURE__*/function () {
+  function GridItem(image, index, attributes, isGroupOfThree) {
+    classCallCheck_default()(this, GridItem);
+
+    this.sizeContrast = attributes.sizeContrast / 20;
+    this.positionShift = attributes.positionShift / 5;
+    this.objectPosition = attributes.objectPosition;
+    this.imageResizing = attributes.imageResizing;
+    this.imageRotation = attributes.imageRotation;
+    this.image = image;
+    this.index = index;
+    this.idx = this.getIndex(index);
+    this.col = this.idx % 2;
+    this.row = Math.floor(index / 2);
+
+    if (!!isGroupOfThree) {
+      if (index === 0) {
+        this.positionShift = Math.min(this.positionShift, 10);
+      }
+
+      if (index === 2) {
+        this.positionShift = Math.max(this.positionShift, 10);
+      }
+    }
+
+    var _this$getOffsets = this.getOffsets(),
+        offsetX = _this$getOffsets.offsetX,
+        offsetY = _this$getOffsets.offsetY;
+
+    var size = ITEM_SIZE - this.sizeContrast * (index % 4);
+    this.x = ITEM_SIZE * this.col + 1 + offsetX;
+    this.y = ITEM_SIZE * this.row + 1 + offsetY;
+    this.width = size;
+    this.height = size;
+  }
+
+  createClass_default()(GridItem, [{
+    key: "getOffsets",
+    value: function getOffsets() {
+      var row = this.row,
+          col = this.col,
+          index = this.index,
+          sizeContrast = this.sizeContrast,
+          positionShift = this.positionShift; // offset for positioning
+
+      var offsetX = (1 - col % 2) * (index % 4) * sizeContrast;
+      var offsetY = (1 - row % 2) * (index % 4) * sizeContrast; // offset from offset
+      // move 1st to right
+
+      offsetX += (1 - col % 2) * (1 - row % 2) * positionShift; // move 3rd to left
+
+      offsetX -= col % 2 * (row % 2) * positionShift; // move 2nd down
+
+      offsetY -= (1 - col % 2) * (row % 2) * positionShift; // move 4th up
+
+      offsetY += col % 2 * (1 - row % 2) * positionShift;
+      return {
+        offsetX: offsetX,
+        offsetY: offsetY
+      };
+    } // reoder to display items clockwise
+
+  }, {
+    key: "getIndex",
+    value: function getIndex(index) {
+      if (index % 4 === 3) return index - 1;
+      if (index % 4 === 2) return index + 1;
+      return index;
+    }
+  }, {
+    key: "getStyle",
+    value: function getStyle() {
+      var index = this.index,
+          x = this.x,
+          y = this.y,
+          width = this.width,
+          height = this.height,
+          imageRotation = this.imageRotation;
+      var rotation = "rotate(".concat((index % 2 - 0.5) * imageRotation / 10, "deg)");
+      return {
+        gridColumnStart: x + '',
+        gridColumnEnd: "span ".concat(width),
+        gridRowStart: y + '',
+        gridRowEnd: "span ".concat(height),
+        transform: rotation
+      };
+    }
+  }, {
+    key: "getImageStyle",
+    value: function getImageStyle() {
+      var row = this.row,
+          col = this.col,
+          objectPosition = this.objectPosition,
+          imageResizing = this.imageResizing;
+      var positionY = row % 2 === 0 ? 100 - objectPosition : objectPosition;
+      var positionX = col % 2 === 0 ? 100 - objectPosition : objectPosition;
+      return {
+        objectFit: imageResizing === 'cropped' ? 'cover' : 'scale-down',
+        objectPosition: "".concat(positionX, "% ").concat(positionY, "%")
+      };
+    }
+  }]);
+
+  return GridItem;
+}();
+
+
+// CONCATENATED MODULE: ./src/blocks/media/frontend.js
+
+
+
+(function ($, window, undefined) {
+  $('.novablocks-advanced-gallery').each(function (i, gallery) {
+    var $gallery = $(gallery),
+        $grid = $gallery.find('.novablocks-advanced-gallery__grid'),
+        images = $gallery.find('.novablocks-advanced-gallery__image').toArray();
+    var attributes = {
+      imageResizing: $gallery.data('imageresizing'),
+      containerHeight: $gallery.data('containerheight'),
+      positionShift: $gallery.data('positionshift'),
+      sizeContrast: $gallery.data('sizecontrast'),
+      imageRotation: $gallery.data('imagerotation'),
+      placementVariation: $gallery.data('placementvariation'),
+      elementsDistance: $gallery.data('elementsdistance'),
+      verticalSpacing: $gallery.data('verticalspacing'),
+      objectPosition: $gallery.data('objectposition')
+    };
+    var gridItemsCollection = new grid_item_GridItemCollection(images, attributes);
+    gridItemsCollection.gridItems.map(function (gridItem, index) {
+      var $image = $(gridItem.image),
+          $item = $image.closest('.novablocks-advanced-gallery__grid-item');
+      $item.css(gridItem.getStyle());
+      $image.css(gridItem.getImageStyle());
+    });
+    var galleryStyle = getGalleryStyle(attributes);
+
+    for (var propertyName in galleryStyle) {
+      $gallery.css(galleryStyle);
+
+      if (propertyName.indexOf('--') === 0) {
+        gallery.style.setProperty(propertyName, galleryStyle[propertyName]);
+      }
+    }
+
+    if ($grid.length) {
+      var gridStyle = getGridStyle(attributes);
+      $grid.css(gridStyle);
+
+      for (var _propertyName in gridStyle) {
+        if (_propertyName.indexOf('--') === 0) {
+          $grid.get(0).style.setProperty(_propertyName, gridStyle[_propertyName]);
+        }
+      }
+    }
+  });
+})(jQuery, window);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(11);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// CONCATENATED MODULE: ./src/components/grid-generator/utils.js
+
+var utils_getGridStyle = function getGridStyle(attributes) {
+  var _getGridColumnsAndRow = getGridColumnsAndRows(attributes),
+      gridcolumns = _getGridColumnsAndRow.gridcolumns,
+      gridrows = _getGridColumnsAndRow.gridrows;
+
+  return {
+    display: 'grid',
+    gridTemplateColumns: "repeat( ".concat(gridcolumns, ", 1fr )"),
+    gridTemplateRows: "repeat( ".concat(gridrows, ", auto )")
+  };
+}; // Sums optimal posts count value from each area
+
+var getPostsCount = function getPostsCount(areaColumns) {
+  return areaColumns.reduce(function (total, areaColumn) {
+    return total + areaColumn.areas.reduce(function (columnTotal, area) {
+      return columnTotal + area.postsCount;
+    }, 0);
+  }, 0);
+};
+var redistributeCardsInAreas = function redistributeCardsInAreas(areaColumns, cardsCount, attributes) {
+  var totalSpots = getPostsCount(areaColumns);
+  var totalPosts = cardsCount;
+  var remainingPosts = totalPosts;
+  var totalRatio = 0;
+
+  for (var i = 0; i < areaColumns.length; i++) {
+    var areaColumn = areaColumns[i];
+    var areaColumnSpotRatio = 0;
+
+    for (var j = 0; j < areaColumn.areas.length; j++) {
+      var area = areaColumn.areas[j]; // we shouldn't fill the area with the featured card
+
+      area.spotRatio = getCardRatio(area, attributes);
+      areaColumnSpotRatio += area.spotRatio;
+      totalRatio += area.spotRatio;
+    }
+
+    areaColumn.spotRatio = areaColumnSpotRatio;
+  }
+
+  var extraPosts = totalPosts - totalSpots;
+
+  if (totalSpots === totalPosts) {
+    return;
+  }
+
+  for (var _i = 0; _i < areaColumns.length; _i++) {
+    var _areaColumn = areaColumns[_i];
+    var areas = _areaColumn.areas;
+
+    for (var _j = 0; _j < areas.length; _j++) {
+      var _area = areas[_j];
+      var areaExtraPosts = Math.round(extraPosts * _area.spotRatio / totalRatio);
+      _area.postsCount = Math.max(0, _area.postsCount + areaExtraPosts);
+      totalRatio -= _area.spotRatio;
+      extraPosts -= areaExtraPosts;
+      if (remainingPosts <= 0) return;
+    }
+  }
+};
+var getOptimalHeaderPosition = function getOptimalHeaderPosition(areaColumns) {
+  var index = 1;
+  var positions = [0];
+
+  for (var columnIndex = 0; columnIndex < areaColumns.length; columnIndex++) {
+    var areaColumn = areaColumns[columnIndex];
+    var areas = areaColumn.areas,
+        row = areaColumn.row;
+
+    for (var areaIndex = 0; areaIndex < areas.length; areaIndex++) {
+      var area = areas[areaIndex];
+
+      if (row === 1 && areaIndex === 0) {
+        positions.push(index);
+      }
+
+      index += area.postsCount;
+    }
+  }
+
+  return positions;
+};
+
+var getCardRatio = function getCardRatio(area, attributes) {
+  var _getGridColumnsAndRow2 = getGridColumnsAndRows(attributes),
+      gridcolumns = _getGridColumnsAndRow2.gridcolumns;
+
+  var width = area.width,
+      height = area.height,
+      postsCount = area.postsCount;
+  var ratio = postsCount / height; // when the card is landscape and very small
+  // we hide the content so the ratio should be bigger
+
+  if (isLandscape(area, attributes)) {
+    ratio *= 2;
+  }
+
+  ratio *= gridcolumns / width;
+  return ratio;
+};
+
+var isLandscape = function isLandscape(area, attributes) {
+  var _getGridColumnsAndRow3 = getGridColumnsAndRows(attributes),
+      gridcolumns = _getGridColumnsAndRow3.gridcolumns,
+      gridrows = _getGridColumnsAndRow3.gridrows;
+
+  var nth = area.nth,
+      width = area.width,
+      height = area.height,
+      initialPostsCount = area.initialPostsCount;
+  var isLandscape = width * initialPostsCount / height > 1.33;
+
+  if (width / gridcolumns >= 0.5) {
+    return isLandscape || attributes.subfeature && nth === 2;
+  }
+
+  return isLandscape;
+};
+var utils_getParametricLayoutAreaClassName = function getParametricLayoutAreaClassName(area, attributes) {
+  var _getGridColumnsAndRow4 = getGridColumnsAndRows(attributes),
+      gridcolumns = _getGridColumnsAndRow4.gridcolumns,
+      gridrows = _getGridColumnsAndRow4.gridrows;
+
+  var width = area.width,
+      height = area.height;
+  return classnames_default()([utils_getAreaBaseClassname(area), utils_getAreaClassnameByWidthRatio(width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), utils_getAreaClassnameByAspectRatio(area, attributes)]);
+};
+var utils_getAreaBaseClassname = function getAreaBaseClassname(area) {
+  var nth = area.nth;
+  return classnames_default()(['novablocks-grid__area', "novablocks-grid__area--nth-".concat(nth)]);
+};
+var utils_getAreaClassnameByAspectRatio = function getAreaClassnameByAspectRatio(area, attributes) {
+  return classnames_default()([{
+    'novablocks-grid__area--portrait': !isLandscape(area, attributes),
+    'novablocks-grid__area--landscape': isLandscape(area, attributes)
+  }]);
+};
+var utils_getAreaClassnameByWidthRatio = function getAreaClassnameByWidthRatio(widthRatio) {
+  return classnames_default()([{
+    'novablocks-grid__area--width-xs': widthRatio < 0.3,
+    'novablocks-grid__area--width-s': 0.3 <= widthRatio && widthRatio < 0.5,
+    'novablocks-grid__area--width-m': 0.5 <= widthRatio && widthRatio < 0.66,
+    'novablocks-grid__area--width-l': 0.66 <= widthRatio && widthRatio < 0.80,
+    'novablocks-grid__area--width-xl': 0.80 <= widthRatio && widthRatio < 0.95,
+    'novablocks-grid__area--width-full': 0.95 <= widthRatio
+  }]);
+};
+var utils_getAreaClassnameByHeightRatio = function getAreaClassnameByHeightRatio(heightRatio) {
+  return classnames_default()([{
+    'novablocks-grid__area--height-xs': heightRatio < 0.34,
+    'novablocks-grid__area--height-s': 0.34 <= heightRatio && heightRatio < 0.5,
+    'novablocks-grid__area--height-m': 0.5 <= heightRatio && heightRatio < 0.66,
+    'novablocks-grid__area--height-l': 0.66 <= heightRatio && heightRatio < 0.80,
+    'novablocks-grid__area--height-xl': 0.80 <= heightRatio
+  }]);
+};
+var getGridColumnsAndRows = function getGridColumnsAndRows(attributes) {
+  return {
+    gridcolumns: !attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows,
+    gridrows: !attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns
+  };
+};
+var transposeMatrix = function transposeMatrix(source) {
+  return Object.keys(source[0]).map(function (column) {
+    return source.map(function (row) {
+      return row[column];
+    });
+  });
+};
+// CONCATENATED MODULE: ./src/components/grid-generator/layoutEngine.js
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+ // This is the main workhorse containing the logic of our layout "engine".
+// Given a state, it will return a list of posts with details to handle their layout.
+
+var layoutEngine_applyLayoutEngine = function applyLayoutEngine(state) {
+  var debug = false; // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
+  // we need to do a couple of preliminary calculations.
+  // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
+  // This way we gain an easier understanding of what is going on at each step of the logic.
+  // In each matrix we will ignore index 0 since it is easier to start from 1,
+  // the same way CSS grid columns and rows behave.
+  // The order of these operation is important!
+
+  debug ? console.log("\nGenerating a new layout...\n\n") : false; // The "null" character:
+
+  var emptyChar = "X"; // These are the matrices we are going to calculate:
+  // The nth matrix: a bidimensional matrix the same size as the grid, holding in each cell what nth post should that cell belong to.
+  // From this matrix we can extrapolate many details since the same nth value will be used to fill all the cells belonging to a post.
+  // So we know the position and dimensions.
+
+  var nthMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The image weight matrix
+
+  var imageWeightMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // The meta-details matrix
+
+  var metaDetailsMatrix = initBidimensionalMatrix([], state.gridcolumns, state.gridrows, emptyChar); // Helper matrices.
+  // The columns width matrix
+
+  var widthMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar); // The vertical fragment size matrix
+
+  var verticalFragmentSizeMatrix = initUnidimensionalMatrix([], state.gridcolumns, emptyChar);
+  var i, j; // Lets start PRELIMINARY CALCULATIONS!
+
+  /*
+  1. Calculate the columns width matrix.
+     We will take into account the feature position, feature size and fragmentation value.
+     The fragmentation value is interpreted in it's bit format, where 1 means a "cut".
+     The fragmentation value represents the fragmentation of the remaining gridcolumns after the feature size was deducted.
+   */
+
+  var widthIdx = 1; // First, mark the feature.
+
+  for (i = state.featureposition; i < state.featureposition + state.featuresize; i++) {
+    widthMatrix[i] = widthIdx;
+  } // Next, go from left to right in the columns width matrix, and fill each columns with the same unique number,
+  // Taking into account the fragmentation.
+  // And remember the positions we are int the virtual matrix without the feature.
+
+
+  var frgIdx = 0;
+  widthIdx++;
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    if (widthMatrix[i] === emptyChar) {
+      frgIdx++; // If the previous position has a different number than the current one, it is clear we should increment and write.
+
+      if (widthMatrix[i - 1] !== widthIdx) {
+        widthIdx++;
+      } else {
+        // If the previous position has the same value as the current one, we need to determine
+        // if the fragmentation bit pattern imposes a "cut".
+        var cutMarker = 1 << state.gridcolumns - state.featuresize - frgIdx; // If there is a 1 at this position, make a cut aka increase the number.
+
+        if ((cutMarker & state.fragmentation) === cutMarker) {
+          widthIdx++;
+        }
+      }
+
+      widthMatrix[i] = widthIdx;
+    }
+  }
+
+  debug ? console.log("The width matrix: ".padEnd(45, ' ') + widthMatrix) : false;
+  /*
+  2. Calculate the image weight matrix.
+     We will spread the image weight range left-to-right. Each column will consume the range according to its width.
+     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
+    */
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var end = i;
+
+    while (widthMatrix[end + 1] === widthMatrix[i]) {
+      end++;
+    } // Now calculate.
+
+
+    if (i === 1) {
+      imageWeightMatrix[1][i] = state.imageweightleft;
+    } else if (end === state.gridcolumns) {
+      imageWeightMatrix[1][i] = state.imageweightright;
+    } else {
+      imageWeightMatrix[1][i] = Math.round(state.imageweightleft - (state.imageweightleft - state.imageweightright) * (i + end - 1) / (2 * state.gridcolumns));
+    } // Fill the entire column with the same meta-details value.
+
+
+    for (j = i; j <= end; j++) {
+      imageWeightMatrix[1][j] = imageWeightMatrix[1][i];
+    }
+
+    i = end;
+  } // Copy the first row to all of the rest.
+
+
+  for (i = 2; i <= state.gridrows; i++) {
+    imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+  }
+
+  debug ? console.log("The image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
+  /*
+  3. Calculate the meta-details matrix.
+     We will spread the meta-details range left-to-right. Each column will consume the range according to its width.
+     Even it is a bidimensional matrix, for now we will only generate one row and copy it.
+   */
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var _end = i;
+
+    while (widthMatrix[_end + 1] === widthMatrix[i]) {
+      _end++;
+    } // Now calculate.
+
+
+    if (i === 1) {
+      metaDetailsMatrix[1][i] = state.metadetailsleft;
+    } else if (_end === state.gridcolumns) {
+      metaDetailsMatrix[1][i] = state.metadetailsright;
+    } else {
+      metaDetailsMatrix[1][i] = state.metadetailsleft - (state.metadetailsleft - state.metadetailsright) * (i + _end - 1) / (2 * state.gridcolumns); // If we are instructed to balance MD with IW, we will multiply the MD value with the "distance" of the IW value from the "center" of the IW range.
+
+      if (state.balancemdandiw && 0 !== state.imageweightleft - state.imageweightright) {
+        metaDetailsMatrix[1][i] = metaDetailsMatrix[1][i] * (Math.abs(state.imageweightleft - state.imageweightright) / 2 / imageWeightMatrix[1][i]);
+      }
+
+      metaDetailsMatrix[1][i] = Math.round(metaDetailsMatrix[1][i]);
+    } // Fill the entire column with the same meta-details value.
+
+
+    for (j = i; j <= _end; j++) {
+      metaDetailsMatrix[1][j] = metaDetailsMatrix[1][i];
+    }
+
+    i = _end;
+  } // Copy the first row to all of the rest.
+
+
+  for (i = 2; i <= state.gridrows; i++) {
+    metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+  }
+
+  debug ? console.log("The meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
+  /*
+  4. Handle the boost feature emphasis.
+     We will assign the maximum meta-details and image weight value to the feature, and assign its current value to the column holding the maximum values.
+  */
+
+  if (state.boostfeature && state.featuresize > 0) {
+    // Find column with maximum meta-details value, if the feature isn't already at the max.
+    var maxMetaDetailsPos = 1,
+        maxImageWeightPos = 1;
+
+    for (i = 1; i <= state.gridcolumns; i++) {
+      if (metaDetailsMatrix[1][i] > metaDetailsMatrix[1][maxMetaDetailsPos]) {
+        maxMetaDetailsPos = i;
+      }
+
+      if (imageWeightMatrix[1][i] > imageWeightMatrix[1][maxImageWeightPos]) {
+        maxImageWeightPos = i;
+      }
+    }
+
+    if (maxMetaDetailsPos !== state.featureposition) {
+      // We have something to switch.
+      var featureValue = metaDetailsMatrix[1][state.featureposition];
+      var maxValue = metaDetailsMatrix[1][maxMetaDetailsPos]; // Go and fill each column with the switched values.
+
+      i = maxMetaDetailsPos;
+
+      while (widthMatrix[i] === widthMatrix[maxMetaDetailsPos]) {
+        metaDetailsMatrix[1][i] = featureValue;
+        i++;
+      }
+
+      i = state.featureposition;
+
+      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
+        metaDetailsMatrix[1][i] = maxValue;
+        i++;
+      } // Copy the first row to all of the rest.
+
+
+      for (i = 2; i <= state.gridrows; i++) {
+        metaDetailsMatrix[i] = metaDetailsMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+      }
+
+      debug ? console.log("The boosted feature meta-details matrix: ".padEnd(45, ' ') + metaDetailsMatrix[1]) : false;
+    }
+
+    if (maxImageWeightPos !== state.featureposition) {
+      // We have something to switch.
+      var _featureValue = imageWeightMatrix[1][state.featureposition];
+      var _maxValue = imageWeightMatrix[1][maxImageWeightPos]; // Go and fill each column with the switched values.
+
+      i = maxImageWeightPos;
+
+      while (widthMatrix[i] === widthMatrix[maxImageWeightPos]) {
+        imageWeightMatrix[1][i] = _featureValue;
+        i++;
+      }
+
+      i = state.featureposition;
+
+      while (widthMatrix[i] === widthMatrix[state.featureposition]) {
+        imageWeightMatrix[1][i] = _maxValue;
+        i++;
+      } // Copy the first row to all of the rest.
+
+
+      for (i = 2; i <= state.gridrows; i++) {
+        imageWeightMatrix[i] = imageWeightMatrix[1].slice(); // .slice() creates a copy of the array, not reference.
+      }
+
+      debug ? console.log("The boosted feature image weight matrix: ".padEnd(45, ' ') + imageWeightMatrix[1]) : false;
+    }
+  }
+  /*
+  5. Determine the vertical fragment size matrix.
+     The fragment size will range in the number of grid rows and 1.
+  */
+  // First determine the max meta-details and image weight value.
+
+
+  var maxMetaDetailsValue = metaDetailsMatrix[1][1],
+      maxImageWeightValue = imageWeightMatrix[1][1];
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    if (metaDetailsMatrix[1][i] > maxMetaDetailsValue) {
+      maxMetaDetailsValue = metaDetailsMatrix[1][i];
+    }
+
+    if (imageWeightMatrix[1][i] > maxImageWeightValue) {
+      maxImageWeightValue = imageWeightMatrix[1][i];
+    }
+  } // For the purpose of these calculations, maxMetaDetailsValue and maxImageWeightValue can't be zero.
+
+
+  if (maxImageWeightValue < 1) {
+    maxImageWeightValue = 1;
+  }
+
+  if (maxMetaDetailsValue < 1) {
+    maxMetaDetailsValue = 1;
+  }
+
+  for (i = 1; i <= state.gridcolumns; i++) {
+    // Determine the other end of the current column.
+    var _end2 = i;
+
+    while (widthMatrix[_end2 + 1] === widthMatrix[i]) {
+      _end2++;
+    } // Now calculate.
+
+
+    verticalFragmentSizeMatrix[i] = Math.round((metaDetailsMatrix[1][i] / maxMetaDetailsValue + imageWeightMatrix[1][i] / maxImageWeightValue) / 2 * state.gridrows); // The vertical fragment size can't be more than 3 times the column width (a really tall post).
+
+    if (verticalFragmentSizeMatrix[i] > (_end2 - i + 1) * 3) {
+      verticalFragmentSizeMatrix[i] = (_end2 - i + 1) * 3;
+    } // Also the vertical fragment size can't be less than 1.
+
+
+    if (verticalFragmentSizeMatrix[i] < 1) {
+      verticalFragmentSizeMatrix[i] = 1;
+    } // If the sub feature option is active, and we have a single column for the feature, reduce the vertical fragmentation with 25%.
+
+
+    if (state.subfeature && i === state.featureposition && state.featuresize > 0 && verticalFragmentSizeMatrix[i] === state.gridrows) {
+      verticalFragmentSizeMatrix[i] = Math.floor(verticalFragmentSizeMatrix[i] * 0.75);
+    } // Safety measures.
+
+
+    if (verticalFragmentSizeMatrix[i] < 1) {
+      verticalFragmentSizeMatrix[i] = 1;
+    } else if (verticalFragmentSizeMatrix[i] > state.gridrows) {
+      verticalFragmentSizeMatrix[i] = state.gridrows;
+    } // Fill the entire column with the same fragment size.
+
+
+    for (j = i; j <= _end2; j++) {
+      verticalFragmentSizeMatrix[j] = verticalFragmentSizeMatrix[i];
+    }
+
+    i = _end2;
+  }
+
+  debug ? console.log("The vertical fragment size matrix: ".padEnd(45, ' ') + verticalFragmentSizeMatrix) : false;
+  /*
+  6. Determine the nth bidimensional matrix.
+     Each grid cell will be filled with the nth post that cell belongs to. From this matrix we can determine the post grid coordinates,
+     its aspect ratio, area, etc.
+  */
+  // We start with the first post in the list.
+
+  var currentNth = 1; // Start with the feature column.
+
+  if (state.featuresize > 0) {
+    i = 1;
+
+    while (i <= verticalFragmentSizeMatrix[state.featureposition]) {
+      j = state.featureposition;
+
+      do {
+        nthMatrix[i][j] = currentNth;
+        j++;
+      } while (widthMatrix[state.featureposition] === widthMatrix[j]);
+
+      i++;
+    }
+
+    currentNth++;
+
+    if (i <= state.gridrows) {
+      // We have room under the feature for a secondary feature post.
+      // We will reduce the meta-details and image weight by 33% that of the main feature post.
+      while (i <= state.gridrows) {
+        j = state.featureposition;
+
+        do {
+          nthMatrix[i][j] = currentNth; // Adjust the meta-details and image weight.
+
+          metaDetailsMatrix[i][j] = Math.round(metaDetailsMatrix[i][j] * 0.66);
+          imageWeightMatrix[i][j] = Math.round(imageWeightMatrix[i][j] * 0.66);
+          j++;
+        } while (widthMatrix[state.featureposition] === widthMatrix[j]);
+
+        i++;
+      }
+
+      currentNth++;
+    }
+  } // Now start from the left top corner and go through each column, left to right.
+
+
+  var currentColumnStartCol = 1;
+  var currentPostStartRow;
+
+  while (currentColumnStartCol <= state.gridcolumns) {
+    if (nthMatrix[1][currentColumnStartCol] !== emptyChar) {
+      currentColumnStartCol++;
+      continue;
+    } // Fill the current column with posts.
+
+
+    currentPostStartRow = 1;
+
+    while (currentPostStartRow <= state.gridrows) {
+      i = currentPostStartRow;
+
+      while (i <= currentPostStartRow + verticalFragmentSizeMatrix[currentColumnStartCol] - 1 && i <= state.gridrows) {
+        j = currentColumnStartCol;
+
+        do {
+          nthMatrix[i][j] = currentNth;
+          j++;
+        } while (widthMatrix[currentColumnStartCol] === widthMatrix[j]);
+
+        i++;
+      }
+
+      currentNth++;
+      currentPostStartRow = i;
+    }
+  }
+
+  if (debug) {
+    console.log("\nThe nth matrix: ".padEnd(42, ' ') + '0 - ' + nthMatrix[0].join(' '));
+
+    for (i = 1; i < nthMatrix.length; i++) {
+      console.log(' '.padEnd(41, ' ') + i + ' - ' + nthMatrix[i].join(' '));
+    }
+  }
+  /*
+  7. Handle the hierarchy crossing.
+     We will not cross into the feature post. We will only cross left to right, only "over" a post with a lower nth count.
+     We will only cross if the left post matches in height a post or more on the right.
+     The rate of consumption is related to the nth, area, IW and MD of the post being expanded and the post(s) being replaced.
+     Also, crossing at the top of the layout is more expensive than crossing at a lower row.
+  */
+  // We start with the first post in the list.
+
+
+  var maxNth = currentNth;
+  var hierachyCrossingStrenth = state.hierarchycrossing;
+  currentNth = 1;
+
+  while (hierachyCrossingStrenth > 0 && currentNth <= maxNth) {
+    var currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (false === currentPostDetails) {
+      currentNth++;
+      continue;
+    } // If the current post is all the way to the right edge, stop.
+
+
+    if (currentPostDetails.endGridColumn === state.gridcolumns) {
+      break;
+    } // Now identify its right-side neighbors.
+
+
+    var topNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.startGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+    var bottomNeighborPostDetails = getNthPostDetails(nthMatrix[currentPostDetails.endGridRow][currentPostDetails.endGridColumn + 1], nthMatrix, metaDetailsMatrix, imageWeightMatrix); // If the neighbors don't match the height in rows of the current post, skip this post from crossing.
+
+    if (topNeighborPostDetails.startGridRow !== currentPostDetails.startGridRow || bottomNeighborPostDetails.endGridRow !== currentPostDetails.endGridRow) {
+      currentNth++;
+      continue;
+    } // Calculate the score of the to-be replaced post(s).
+    // Each post's score correlated to its nth value. The lower the nth value the bigger the score boost.
+
+
+    var replacedPostScore = maxNth / topNeighborPostDetails.nth * (topNeighborPostDetails.area + topNeighborPostDetails.imageWeight + topNeighborPostDetails.metaDetails);
+
+    if (bottomNeighborPostDetails.nth !== topNeighborPostDetails.nth) {
+      var counter = 1;
+
+      for (i = topNeighborPostDetails.nth + 1; i <= bottomNeighborPostDetails.nth; i++) {
+        var postDetails = getNthPostDetails(i, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+        if (false === postDetails) {
+          continue;
+        }
+
+        counter++; // It is increasingly "harder" to replace multiple posts.
+
+        replacedPostScore += maxNth / postDetails.nth * (postDetails.area + postDetails.imageWeight + postDetails.metaDetails * counter) * counter;
+      }
+    } // If the to-be replaced post(s) score is larger than the remaining hierarchy crossing strength, nothing to do.
+
+
+    if (hierachyCrossingStrenth < replacedPostScore) {
+      currentNth++;
+      continue;
+    }
+
+    var currentPostScore = maxNth / currentPostDetails.nth * (currentPostDetails.area + currentPostDetails.imageWeight + currentPostDetails.metaDetails) * Math.pow(2 * hierachyCrossingStrenth / 50, 3); // If the current post score is bigger than the to-be replaced post(s) score, it's a go.
+
+    if (currentPostScore > replacedPostScore) {
+      // Expand the current post over the replaced ones.
+      for (i = topNeighborPostDetails.startGridRow; i <= bottomNeighborPostDetails.endGridRow; i++) {
+        for (j = topNeighborPostDetails.startGridColumn; j <= topNeighborPostDetails.endGridColumn; j++) {
+          nthMatrix[i][j] = currentNth; // Also replace the image weight and meta-details.
+
+          imageWeightMatrix[i][j] = currentPostDetails.imageWeight;
+          metaDetailsMatrix[i][j] = currentPostDetails.metaDetails;
+        }
+      } // Decrease the crossing strength.
+
+
+      hierachyCrossingStrenth -= replacedPostScore; // We now have a gap in the post list. We need to renumber the posts after the replaced ones and adjust the maxnth.
+      // The image weight and meta-details remain unchanged.
+      // Work with the new maxNth.
+
+      maxNth = renumberNthMatrix(nthMatrix);
+    }
+
+    currentNth++;
+  } // Transpose all matrices if flipcolssrows attribute is set to true
+
+
+  var finalNthMatrix = !state.flipcolsrows ? nthMatrix : transposeMatrix(nthMatrix);
+  var finalMetaMatrix = !state.flipcolsrows ? metaDetailsMatrix : transposeMatrix(metaDetailsMatrix);
+  var finalImageMatrix = !state.flipcolsrows ? imageWeightMatrix : transposeMatrix(imageWeightMatrix);
+  /*
+  8. Finally, generate the posts list.
+  */
+
+  var areaColumns = getGroupedPostAreas(state, finalNthMatrix, finalMetaMatrix, finalImageMatrix);
+  ;
+  moveLargestColumnToStart(areaColumns);
+  return areaColumns;
+};
+
+var moveLargestColumnToStart = function moveLargestColumnToStart(areaColumns) {
+  var firstRowColumns = areaColumns.filter(function (column) {
+    return column.row === 1;
+  }).sort(function (col1, col2) {
+    return col2.width - col1.width;
+  });
+  var largestColumnIndex = areaColumns.findIndex(function (column) {
+    return column === firstRowColumns[0];
+  });
+  areaColumns.splice(0, 0, areaColumns.splice(largestColumnIndex, 1)[0]);
+  return areaColumns;
+};
+
+var logMatrix = function logMatrix(matrix) {
+  for (var i = 0; i < matrix.length; i++) {
+    console.log(' '.padEnd(41, ' ') + i + ' - ' + matrix[i].join(' '));
+  }
+};
+
+function getGroupedPostAreas(state, nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var areasArray = getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+  mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state);
+  areasArray = normalizeAreas(nthMatrix, areasArray);
+  areasArray = areasArray.map(function (area) {
+    return _objectSpread({
+      initialPostsCount: area.postsCount
+    }, area);
+  });
+  var columns = areasArray.map(function (area) {
+    return {
+      row: area.row,
+      col: area.col,
+      width: area.width,
+      height: area.height,
+      areas: [area]
+    };
+  }); // loop through columns
+
+  columns.forEach(function (currentColumn) {
+    // loop through "current" column's areas
+    currentColumn.areas.forEach(function (currentArea, i) {
+      // loop again through columns except the current column
+      columns.filter(function (column) {
+        return column !== currentColumn;
+      }).forEach(function (compareColumn) {
+        // loop through the "compare" column's areas
+        compareColumn.areas.forEach(function (compareArea, j) {
+          // check if the areas have the same column and the same width
+          if (!compareArea.merged && currentArea.col === compareArea.col && currentArea.width === compareArea.width && ( // and if the two areas are continuous
+          currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height)) {
+            // if so, move the compared area to the current column's areas array and update the column height
+            compareArea.merged = true;
+            currentColumn.areas.push(compareArea);
+            currentColumn.height += compareArea.height;
+            compareColumn.areas.splice(j, 1);
+          }
+        });
+      });
+    });
+  });
+  return columns.filter(function (randomColumn) {
+    return randomColumn.areas.length > 0;
+  });
+}
+
+function getNthValues(nthMatrix) {
+  var values = [];
+  var value;
+
+  for (var i = 1; i < nthMatrix.length - 1; i++) {
+    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
+      value = nthMatrix[i][j];
+
+      if (values.indexOf(value) === -1) {
+        values.push(value);
+      }
+    }
+  }
+
+  return values;
+}
+
+function normalizeAreas(nthMatrix, areasArray) {
+  var values = getNthValues(nthMatrix);
+  values.sort(function (a, b) {
+    return a - b;
+  });
+
+  for (var i = 0; i < values.length; i++) {
+    if (i + 1 !== values[i]) {
+      replaceNth(values[i], i + 1, nthMatrix);
+    }
+  }
+
+  return values.map(function (nth, index) {
+    var area = areasArray.find(function (area) {
+      return area.nth === nth;
+    });
+    area.nth = index + 1;
+    return area;
+  });
+}
+
+function replaceNth(nth1, nth2, nthMatrix) {
+  for (var i = 1; i < nthMatrix.length - 1; i++) {
+    for (var j = 1; j < nthMatrix[i].length - 1; j++) {
+      if (nthMatrix[i][j] === nth1) {
+        nthMatrix[i][j] = nth2;
+      }
+    }
+  }
+}
+
+var mergeSimilarAreas = function mergeSimilarAreas(nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state) {
+  var currentPostDetails;
+
+  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
+    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (currentPostDetails) {
+      mergeAreaNeighbours(currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state);
+    }
+  }
+};
+
+var mergeAreaNeighbours = function mergeAreaNeighbours(row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state) {
+  var nth = nthMatrix[row][col];
+  var width = getAreaWidth(nth, nthMatrix);
+  var height = getAreaHeight(nth, nthMatrix);
+  var initialWidth = width;
+  var initialHeight = height;
+  var currentAreaIndex = -1;
+
+  if (Array.isArray(areasArray)) {
+    currentAreaIndex = areasArray.findIndex(function (area) {
+      return area.nth === nthMatrix[row][col];
+    });
+  } // Featured area should not be merged
+
+
+  if (nth === 1) {
+    return;
+  }
+
+  var nextRow,
+      nextCol,
+      nextWidth,
+      nextHeight,
+      nextNth,
+      nextNthStart,
+      searching = true,
+      mergeable = false;
+
+  while (searching) {
+    nextNth = nthMatrix[row + height][col];
+    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
+    nextRow = nextNthStart.row;
+    nextCol = nextNthStart.col;
+    nextWidth = getAreaWidth(nextNth, nthMatrix);
+    nextHeight = getAreaHeight(nextNth, nthMatrix);
+
+    if (width === nextWidth && col === nextCol && Math.abs(initialHeight - nextHeight) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[nextRow][col]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[nextRow][col]) <= 1) {
+      height = height + nextHeight;
+      mergeable = true;
+
+      if (currentAreaIndex > -1) {
+        areasArray[currentAreaIndex].postsCount += 1;
+        areasArray[currentAreaIndex].height = height;
+      }
+    } else {
+      searching = false;
+    }
+  }
+
+  searching = !mergeable;
+
+  while (searching && !state.flipcolsrows) {
+    nextNth = nthMatrix[row][col + width];
+    nextNthStart = getFirstOccurence(nextNth, nthMatrix);
+    nextRow = nextNthStart.row;
+    nextCol = nextNthStart.col;
+    nextWidth = getAreaWidth(nextNth, nthMatrix);
+    nextHeight = getAreaHeight(nextNth, nthMatrix);
+
+    if (height === nextHeight && row === nextRow && Math.abs(initialWidth - nextWidth) <= 1 && Math.abs(metaDetailsMatrix[row][col] - metaDetailsMatrix[row][nextCol]) <= 1 && Math.abs(imageWeightMatrix[row][col] - imageWeightMatrix[row][nextCol]) <= 1) {
+      width = width + nextWidth;
+      mergeable = true;
+
+      if (currentAreaIndex > -1) {
+        areasArray[currentAreaIndex].postsCount += 1;
+        areasArray[currentAreaIndex].width = width;
+      }
+    } else {
+      searching = false;
+    }
+  }
+
+  fillArea(nthMatrix, row, col, width, height);
+};
+
+var fillArea = function fillArea(nthMatrix, row, col, width, height) {
+  for (var i = row; i < row + height; i++) {
+    for (var j = col; j < col + width; j++) {
+      nthMatrix[i][j] = nthMatrix[row][col];
+    }
+  }
+};
+
+var getFirstOccurence = function getFirstOccurence(nth, nthMatrix) {
+  for (var i = 0; i < nthMatrix.length; i++) {
+    for (var j = 0; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] === nth) {
+        return {
+          row: i,
+          col: j
+        };
+      }
+    }
+  }
+
+  return {};
+};
+
+var getAreaWidth = function getAreaWidth(nth, nthMatrix) {
+  var _getFirstOccurence = getFirstOccurence(nth, nthMatrix),
+      row = _getFirstOccurence.row,
+      col = _getFirstOccurence.col;
+
+  var width = 1;
+
+  while (nth === nthMatrix[row][col + width]) {
+    width = width + 1;
+  }
+
+  return width;
+};
+
+var getAreaHeight = function getAreaHeight(nth, nthMatrix) {
+  var _getFirstOccurence2 = getFirstOccurence(nth, nthMatrix),
+      row = _getFirstOccurence2.row,
+      col = _getFirstOccurence2.col;
+
+  var height = 1;
+
+  while ("undefined" !== typeof nthMatrix[row + height] && nth === nthMatrix[row + height][col]) {
+    height = height + 1;
+  }
+
+  return height;
+};
+
+var renumberNthMatrix = function renumberNthMatrix(nthMatrix) {
+  var newNth = 1;
+  var postDetails;
+
+  for (var nth = 1; nth <= getMaxNth(nthMatrix); nth++) {
+    // If we can't find a nth post, it means it was removed and we need to adjust.
+    postDetails = getNthPostDetails(nth, nthMatrix);
+
+    if (false === postDetails) {
+      continue;
+    }
+
+    if (postDetails.nth > newNth) {
+      // Change the current post's nth.
+      for (var i = postDetails.startGridRow; i <= postDetails.endGridRow; i++) {
+        for (var j = postDetails.startGridColumn; j <= postDetails.endGridColumn; j++) {
+          nthMatrix[i][j] = newNth;
+        }
+      }
+    }
+
+    newNth++;
+  } // Return the maxNth.
+
+
+  return newNth - 1;
+};
+
+var getMaxNth = function getMaxNth(nthMatrix) {
+  var maxNth = 0;
+
+  for (var i = 1; i < nthMatrix.length; i++) {
+    for (var j = 1; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] > maxNth) {
+        maxNth = nthMatrix[i][j];
+      }
+    }
+  }
+
+  return maxNth;
+};
+
+var getAreasArray = function getAreasArray(nthMatrix, metaDetailsMatrix, imageWeightMatrix) {
+  var currentPostDetails;
+  var areasArray = [];
+
+  for (var currentNth = 1; currentNth <= getMaxNth(nthMatrix); currentNth++) {
+    currentPostDetails = getNthPostDetails(currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix);
+
+    if (currentPostDetails) {
+      areasArray.push({
+        nth: currentPostDetails.nth,
+        col: currentPostDetails.startGridColumn,
+        row: currentPostDetails.startGridRow,
+        width: currentPostDetails.endGridColumn - currentPostDetails.startGridColumn + 1,
+        height: currentPostDetails.endGridRow - currentPostDetails.startGridRow + 1,
+        metaDetails: currentPostDetails.metaDetails,
+        imageWeight: currentPostDetails.imageWeight,
+        postsCount: 1
+      });
+    }
+  }
+
+  return areasArray;
+};
+
+var getNthPostDetails = function getNthPostDetails(nth, nthMatrix) {
+  var metaDetailsMatrix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var imageWeightMatrix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var postDetails = false; // Go through the nthMatrix and search for the currentNth value.
+
+  for (var i = 1; i < nthMatrix.length; i++) {
+    for (var j = 1; j < nthMatrix[i].length; j++) {
+      if (nthMatrix[i][j] === nth) {
+        // Found the left top corner.
+        postDetails = {
+          'nth': nth,
+          'startGridColumn': j,
+          'startGridRow': i,
+          'endGridColumn': j,
+          'endGridRow': i,
+          'metaDetails': metaDetailsMatrix ? metaDetailsMatrix[i][j] : false,
+          'imageWeight': imageWeightMatrix ? imageWeightMatrix[i][j] : false,
+          'area': 1
+        }; // Find the right bottom corner.
+
+        while (j < nthMatrix[i].length && nthMatrix[i][j] === nthMatrix[i][j + 1]) {
+          j++;
+        }
+
+        postDetails.endGridColumn = j;
+
+        while (i < nthMatrix.length && nthMatrix[i][j] === nthMatrix[i + 1][j]) {
+          i++;
+        }
+
+        postDetails.endGridRow = i; // Calculate the area.
+
+        postDetails.area = (postDetails.endGridRow - postDetails.startGridRow + 1) * (postDetails.endGridColumn - postDetails.startGridColumn + 1);
+        return postDetails;
+      }
+    }
+  }
+
+  return postDetails;
+};
+
+var initUnidimensionalMatrix = function initUnidimensionalMatrix(matrix, length) {
+  var character = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "X";
+  // The 0 index will be filled with a different character for easier logic.
+  matrix.push("/"); // Go to equal the length, since the 0 index will be ignored.
+  // Fill with "null" entries with the provided character.
+
+  for (var i = 1; i <= length; i++) {
+    matrix.push(character);
+  } // Put an extra entry for easier logic.
+
+
+  matrix.push("/");
+  return matrix;
+};
+
+var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, height, nullChar) {
+  // Put in a guard row, at index 0.
+  matrix.push(initUnidimensionalMatrix([], width, "/")); // Go to equal the width, since the 0 index will be ignored.
+
+  for (var i = 0; i < height; i++) {
+    matrix.push(initUnidimensionalMatrix([], width, nullChar));
+  } // Put in an extra guard row.
+
+
+  matrix.push(initUnidimensionalMatrix([], width, "/"));
+  return matrix;
+};
+// CONCATENATED MODULE: ./src/blocks/posts-collection/frontend.js
+
+
+
+
+
+
+(function ($, window, undefined) {
+  var defaultBlockWidth = 1162; // magic
+
+  $('.novablocks-grid').each(function (i, block) {
+    var $grid = $(block);
+    var $block = $grid.closest('.novablocks-block');
+    var $cards = $grid.closest('.novablocks-collection__cards');
+    var $posts = $grid.children('.novablocks-card');
+    var attributes = $grid.data();
+    var cardsCount = $posts.length;
+    var addedCards;
+    block.style.setProperty('--card-media-padding', attributes.imagepadding);
+    block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.thumbnailaspectratio));
+    block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
+
+    if (attributes.layoutstyle !== 'parametric') {
+      $grid.removeClass('novablocks-grid');
+      $grid.addClass('novablocks-collection__layout');
+      $grid.addClass("novablocks-grid__area--".concat(attributes.islandscape ? 'landscape' : 'portrait'));
+      $grid.addClass(utils_getAreaClassnameByWidthRatio(1 / attributes.columns));
+      return;
+    }
+
+    var $title = $block.find('.novablocks-collection__title').detach();
+    var $subtitle = $block.find('.novablocks-collection__subtitle').detach();
+
+    function createLayout() {
+      var blockWidth = $grid.outerWidth();
+      $posts.detach();
+      $grid.empty();
+      $block.find('.js-collection-element-clone').remove();
+      addedCards = 0;
+      var areaColumns = layoutEngine_applyLayoutEngine(attributes);
+      var columnsCount = areaColumns.length;
+      var firstSet = Math.floor((columnsCount - 1) / 2);
+      var secondSet = columnsCount - 1 - firstSet;
+
+      if (below('desktop')) {
+        for (var _i = 0; _i < firstSet; _i++) {
+          removeSmallestColumn(areaColumns);
+        }
+
+        if (below('lap')) {
+          for (var _i2 = 0; _i2 < secondSet; _i2++) {
+            removeSmallestColumn(areaColumns);
+          }
+        }
+      }
+
+      redistributeCardsInAreas(areaColumns, cardsCount, attributes);
+      var gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
+      var gridrows = attributes.flipcolsrows ? attributes.gridcolumns : attributes.gridrows;
+      var maxcolumns = areaColumns.reduce(function (acc, column) {
+        return Math.max(acc, column.col + column.width - 1);
+      }, 0);
+      var maxrows = areaColumns.reduce(function (acc, column) {
+        return Math.max(acc, column.row + column.height - 1);
+      }, 0);
+      gridcolumns = Math.min(gridcolumns, maxcolumns);
+      gridrows = Math.min(gridrows, maxrows);
+      var compiledAttributes = Object.assign({}, attributes, {
+        gridcolumns: attributes.flipcolsrows ? gridrows : gridcolumns,
+        gridrows: attributes.flipcolsrows ? gridcolumns : gridrows
+      });
+      $grid.css(utils_getGridStyle(compiledAttributes));
+
+      if (below('desktop') || attributes.headerposition === 0) {
+        $title.clone().addClass('js-collection-element-clone').insertBefore($cards);
+        $subtitle.clone().addClass('js-collection-element-clone').insertBefore($cards);
+      }
+
+      for (var _i3 = 0; _i3 < areaColumns.length; _i3++) {
+        var areaColumn = areaColumns[_i3];
+        var areas = areaColumn.areas,
+            row = areaColumn.row,
+            col = areaColumn.col,
+            width = areaColumn.width,
+            height = areaColumn.height;
+        var $column = $('<div class="novablocks-grid__column">');
+        $column.css('grid-area', "".concat(row, " / ").concat(col, " / span ").concat(height, " / span ").concat(width));
+        $column.attr('data-area', "".concat(row, " / ").concat(col, " / span ").concat(height, " / span ").concat(width));
+
+        var _loop = function _loop(j) {
+          var area = areas[j];
+          var blockWidthRatio = Math.min(1, blockWidth / defaultBlockWidth);
+          var areaClassName = getAreaClassname(area, attributes, blockWidthRatio);
+          addedCards += area.postsCount;
+          var $area = $("<div class=\"".concat(areaClassName, "\">"));
+          Array.from(Array(area.postsCount).keys()).map(function (i) {
+            var $gridItem = $('<div class="novablocks-grid__item">');
+            var $card = $posts.eq(addedCards - area.postsCount + i);
+            var landscape = isLandscape(area, attributes);
+            $card.toggleClass('novablocks-card--landscape', !!landscape);
+            $card.toggleClass('novablocks-card--portrait', !landscape);
+            $card.appendTo($gridItem);
+
+            if (!below('desktop') && attributes.headerposition === addedCards - area.postsCount + i + 1) {
+              var $header = $('<div class="novablocks-grid__item js-collection-element-clone">');
+              $title.clone().appendTo($header);
+              $subtitle.clone().appendTo($header);
+              $header.appendTo($area);
+            }
+
+            $gridItem.appendTo($area);
+          });
+          $area.appendTo($column);
+        };
+
+        for (var j = 0; j < areas.length; j++) {
+          _loop(j);
+        }
+
+        $column.appendTo($grid);
+      }
+    }
+
+    createLayout();
+
+    function recreateLayout() {
+      $grid.contents().replaceWith($posts);
+      $grid.css({
+        display: '',
+        gridTemplateColumns: '',
+        gridTemplateRowss: ''
+      });
+      $posts.removeClass('novablocks-card--portrait');
+      $posts.removeClass('novablocks-card--landscape');
+      createLayout();
+    }
+
+    var onResize = debounce(recreateLayout, 100);
+    $(window).on('resize', onResize);
+  });
+
+  function getAreaClassname(area, attributes) {
+    var widthRatioMultiplier = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var width = area.width,
+        height = area.height;
+
+    var _getGridColumnsAndRow = getGridColumnsAndRows(attributes),
+        gridcolumns = _getGridColumnsAndRow.gridcolumns,
+        gridrows = _getGridColumnsAndRow.gridrows;
+
+    return classnames_default()([utils_getAreaBaseClassname(area), utils_getAreaClassnameByWidthRatio(widthRatioMultiplier * width / gridcolumns), utils_getAreaClassnameByHeightRatio(height / gridrows), utils_getAreaClassnameByAspectRatio(area, attributes)]);
+  }
+
+  function removeSmallestColumn(areaColumns) {
+    var data = areaColumns.map(function (area, index) {
+      return {
+        area: area,
+        index: index
+      };
+    });
+    data.sort(function (obj1, obj2) {
+      return obj1.area.width - obj2.area.width;
+    });
+    var indexToRemove = data[0].index;
+
+    if (data[0].area.nth === 1) {
+      indexToRemove = data[data.length].index;
+    }
+
+    areaColumns.splice(indexToRemove, 1);
+    normalizeColumns(areaColumns);
+  }
+
+  function normalizeColumns(areaColumns) {
+    moveColumnsToLeft(areaColumns);
+    moveColumnsToTop(areaColumns);
+  }
+
+  function moveColumnsToLeft(areaColumns) {
+    areaColumns.forEach(function (areaColumn) {
+      var spaceLeft = 0;
+      var movingLeft = true;
+
+      while (movingLeft) {
+        var overlapLeft = areaColumns.filter(function (compareColumn) {
+          return compareColumn !== areaColumn;
+        }).some(function (compareColumn) {
+          return !(areaColumn.col + areaColumn.width - 1 < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row > compareColumn.row + compareColumn.height - 1 || areaColumn.col - (spaceLeft + 1) > compareColumn.col + compareColumn.width - 1);
+        });
+
+        if (overlapLeft || areaColumn.col - spaceLeft <= 1) {
+          movingLeft = false;
+        } else {
+          spaceLeft++;
+        }
+      }
+
+      areaColumn.col = areaColumn.col - spaceLeft;
+    });
+  }
+
+  function moveColumnsToTop(areaColumns) {
+    areaColumns.forEach(function (areaColumn) {
+      var spaceTop = 0;
+      var movingTop = true;
+
+      while (movingTop) {
+        var overlapTop = areaColumns.filter(function (compareColumn) {
+          return compareColumn !== areaColumn;
+        }).some(function (compareColumn) {
+          return !(areaColumn.col + areaColumn.width - 1 < compareColumn.col || areaColumn.row + areaColumn.height - 1 < compareColumn.row || areaColumn.row - (spaceTop + 1) > compareColumn.row + compareColumn.height - 1 || areaColumn.col > compareColumn.col + compareColumn.width - 1);
+        });
+
+        if (overlapTop || areaColumn.row - spaceTop <= 1) {
+          movingTop = false;
+        } else {
+          spaceTop++;
+        }
+      }
+
+      areaColumn.row = areaColumn.row - spaceTop;
+    });
+  }
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/blocks/openhours/hoursparser.js
+// Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
+var fourSq = fourSq || {};
+fourSq.util = fourSq.util || {};
+fourSq.util.Hours = {
+  /**
+   * Pads times to be HHMM
+   * @param {string} text
+   * @return {string}
+   */
+  padTimes: function padTimes(text) {
+    // Add leading/trailing zeros to times so it's always 4 digits, like 0800
+    // Have to run each twice because they're pivoting around the separator
+    // i.e. x10-12x first matches "x10-" and doesn't match the rest
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{3})([^0-9]|$)/g, '$10$2$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9]{2})([^0-9]|$)/g, '$1$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    text = text.replace(/([^0-9]|^)([0-9])([^0-9]|$)/g, '$10$200$3');
+    return text;
+  },
+
+  /**
+   * @param {Array.<number>} days
+   * @param {number} startMinutes
+   * @param {number} endMinutes
+   */
+  toTimeframe: function toTimeframe(days, startMinutes, endMinutes) {
+    // If we've day wrapped and end before 4am, push the ending value up 24 hours.
+    if (startMinutes >= endMinutes && endMinutes <= 240) {
+      endMinutes += 1440;
+    }
+
+    var startFormatted = fourSq.util.Hours.formatMinutes(startMinutes);
+    var endFormatted = fourSq.util.Hours.formatMinutes(endMinutes);
+    return (
+      /** @type {fourSq.api.models.hours.MachineTimeframe} */
+      {
+        days: days,
+        open: [
+        /** @type {fourSq.api.models.hours.MachineSegment} */
+        {
+          start: startFormatted,
+          end: endFormatted
+        }]
+      }
+    );
+  },
+
+  /**
+   * @param {number} minutes after minute
+   * @return {string} the hhmm format that API takes for the input hours
+   */
+  formatMinutes: function formatMinutes(minutes) {
+    var hh = Math.floor(minutes / 60);
+    var mm = minutes % 60;
+    var intoNextDay = hh % 24 !== hh;
+    hh = hh % 24;
+
+    if (hh % 10 === hh) {
+      hh = '0' + hh;
+    }
+
+    if (intoNextDay) {
+      hh = '+' + hh;
+    }
+
+    if (mm % 10 === mm) {
+      mm = '0' + mm;
+    }
+
+    return hh + '' + mm;
+  },
+
+  /**
+   * @param {string} hoursText
+   * @param {(string|undefined)} minutesText
+   * @param {(string|undefined)} meridiem
+   * @return {number}
+   */
+  minutesAfterMidnight: function minutesAfterMidnight(hoursText, minutesText, meridiem) {
+    var hours = parseInt(hoursText, 10);
+    var minutes = minutesText !== undefined ? parseInt(minutesText, 10) : 0;
+
+    if (hours === 12 && meridiem) {
+      hours -= 12;
+    }
+
+    if (meridiem && meridiem[0] === 'p') {
+      hours += 12;
+    }
+
+    return hours * 60 + minutes;
+  }
+};
+fourSq.util.HoursParser = {
+  /**
+   * @return {fourSq.api.models.hours.MachineHours}
+   */
+  parse: function parse(text) {
+    text = text.toLowerCase(); // Normalize new lines to ';'
+
+    text = text.replace(/\n/g, ' ; '); // Massage times
+    // TODO(ss): translate and do weekend/weekday subs
+
+    text = text.replace(/(12|12:00)?midnight/g, '1200a');
+    text = text.replace(/(12|12:00)?noon/g, '1200p');
+    text = text.replace(/(open)?\s*24\s*hours?/g, '1200a-1200a'); // Standardize conjunctions to '&'
+
+    text = text.replace(/\s*(and|,|\+|&)\s*/g, '&'); // Standardize range tokens to '-'
+
+    text = text.replace(/\s*(-|to|thru|through|till?|'till?|until)\s*/g, '-'); // Standardize am/pm
+
+    text = text.replace(/\s*a\.?m?\.?/g, 'a');
+    text = text.replace(/\s*p\.?m?\.?/g, 'p'); // Not sure this happens, but add trailing zeros to things like 5:3pm
+
+    text = text.replace(/([0-9])(h|:|\.)([0-9])([^0-9]|$)/g, '$1$2$30$4'); // Remove separators from times (e.g. ':')...
+    // if they both have separators
+    //    text = text.replace(/([0-9]+)\s*[^0-9]\s*([0-9]{2})([^0-9]+?)([0-9]+)\s*[^0-9]\s*([0-9]{2})/g, '$1$2$3$4$5');
+    // if only the start time has a separator
+
+    text = text.replace(/([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$3'); // if only the end time has a separator
+    //text = text.replace(/([0-9]+)([^0-9ap]+?)([0-9]+)\s*(h|:|\.)\s*([0-9]{2})/g, '$1$2$3$5');
+
+    text = fourSq.util.Hours.padTimes(text); // Massage days
+
+    var dayCanonicals = _.map(_.range(1, 8), function (dayI) {
+      var allNames = fourSq.util.HoursParser.dayAliases(dayI);
+
+      var canonical = _.head(allNames); // Shortest is at the front
+
+
+      var aliases = _.tail(allNames);
+
+      aliases.reverse(); // Need to have the largest alias first for replacing
+
+      if (canonical && aliases) {
+        _.each(aliases, function (alias) {
+          text = text.replace(new RegExp(alias, 'g'), canonical);
+        });
+      }
+
+      return canonical;
+    });
+
+    var dayPattern = '(' + dayCanonicals.join('|') + ')';
+    var timePattern = '([0-9][0-9])([0-9][0-9])\\s*([ap])?';
+    var globTimePattern = '[0-9]{4}\\s*[ap]?';
+    var globTimeRangePattern = '(' + globTimePattern + '[^0-9]+' + globTimePattern + ')'; // Need to establish whether days come before times (forward) or not (backward)
+
+    var forwardTimeframePattern = dayPattern + '.*?' + globTimeRangePattern;
+    var backwardTimeframePattern = globTimeRangePattern + '.*?' + dayPattern;
+    var forwardPosition = text.search(new RegExp(forwardTimeframePattern));
+    var backwardPosition = text.search(new RegExp(backwardTimeframePattern)); // If a forward pattern is found first, consider it a forward facing text
+
+    var isForward = forwardPosition !== -1 && forwardPosition <= backwardPosition || backwardPosition === -1; // TODO(ss): may be better to normalize the string to be forward facing at this point
+    //           so the rest of the method would be easier to grok
+    // Separate out something like Mon-Thu, Sat, Sun
+
+    if (isForward) {
+      var ungroupedPattern = dayPattern + '&' + dayPattern + '[^&]*?' + globTimeRangePattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $3; $2 $3; ');
+      }
+    } else {
+      var ungroupedPattern = globTimeRangePattern + '([^0-9]*?)' + dayPattern + '&' + dayPattern;
+      var ungroupedRegex = new RegExp(ungroupedPattern, 'g');
+
+      for (var i = 0; i < dayCanonicals.length; ++i) {
+        text = text.replace(ungroupedRegex, '$1 $2 $3; $1 $4; ');
+      }
+    }
+
+    var dayRangePattern = dayPattern + '[^a-z0-9]*' + dayPattern + '?';
+    var timeRangePattern = timePattern + '[^0-9]*' + timePattern;
+    var timeframePattern = isForward ? dayRangePattern + '.*?' + timeRangePattern : timeRangePattern + '.*?' + dayRangePattern;
+    var dayTimeMatcher = new RegExp(timeframePattern, 'g');
+    var matches = [];
+
+    do {
+      var dayTimeMatch = dayTimeMatcher.exec(text);
+
+      if (dayTimeMatch) {
+        matches.push(dayTimeMatch);
+      }
+    } while (dayTimeMatch);
+
+    if (matches.length <= 0) {
+      // Try to find just a time range, and then we'll assume it's all days later on.
+      // First two groups are strings that won't match, to get undefined values
+      // in those slots in the regex match array.
+      var timeRangeMatcher = new RegExp('(@!ZfW#)?(@!ZfW#)?' + timeRangePattern);
+      var timeRangeMatch = timeRangeMatcher.exec(text);
+
+      if (timeRangeMatch) {
+        matches.push(timeRangeMatch);
+      }
+    }
+
+    var timeframes = _.map(matches, function (match) {
+      // day slots in the regex match array
+      var day1 = isForward ? match[1] : match[7];
+      var day2 = isForward ? match[2] : match[8];
+      var startDay = day1 !== undefined ? dayCanonicals.indexOf(day1) : 0;
+      var endDay = null;
+
+      if (day2 !== undefined) {
+        if (day1 === undefined) {
+          startDay = dayCanonicals.indexOf(day2);
+        } else {
+          endDay = dayCanonicals.indexOf(day2);
+        }
+      } else if (day1 === undefined) {
+        // If start and end days were undefined, assume 7 days a week
+        endDay = 7;
+      }
+
+      if (endDay === null) {
+        endDay = startDay;
+      }
+
+      if (endDay < startDay) {
+        // For case where: Sun-Tue (we start on Monday)
+        endDay += 7;
+      }
+
+      var days = _.map(_.range(startDay, endDay + 1), function (day) {
+        // Days start at 1 for Monday
+        return day % 7 + 1;
+      }); // time slots in the regex match array
+
+
+      var startHour = isForward ? match[3] : match[1];
+      var startMinute = isForward ? match[4] : match[2];
+      var startMeridiem = isForward ? match[5] : match[3];
+      var endHour = isForward ? match[6] : match[4];
+      var endMinute = isForward ? match[7] : match[5];
+      var endMeridiem = isForward ? match[8] : match[6]; // TODO(ss): hint the meridiem based on endHour < startHour and > 4
+
+      var startTime = fourSq.util.Hours.minutesAfterMidnight(startHour, startMinute, startMeridiem);
+      var endTime = fourSq.util.Hours.minutesAfterMidnight(endHour, endMinute, endMeridiem);
+      return fourSq.util.Hours.toTimeframe(days, startTime, endTime);
+    });
+
+    if (timeframes.length) {
+      return (
+        /** @type {fourSq.api.models.hours.MachineHours} */
+        {
+          timeframes: timeframes
+        }
+      );
+    } else {
+      return null;
+    }
+  },
+
+  /**
+   * @param {number} day starting at 1 for monday
+   * @return {Array.<string>} all aliases of the day, sorted by length
+   */
+  dayAliases: function dayAliases(day) {
+    var text = '';
+    var aliases = '';
+
+    switch (day) {
+      case 1:
+        aliases = ['mondays', 'monday', 'monda', 'mond', 'mon', 'mo', 'm'];
+        break;
+
+      case 2:
+        aliases = ['tuesdays', 'tuesday', 'tuesd', 'tues', 'tue', 'tu'];
+        break;
+
+      case 3:
+        aliases = ['wednesdays', 'wednesday', 'wednes', 'wedne', 'wedn', 'wed', 'we', 'w'];
+        break;
+
+      case 4:
+        aliases = ['thursdays', 'thursday', 'thurs', 'thur', 'thu', 'th'];
+        break;
+
+      case 5:
+        aliases = ['fridays', 'friday', 'frida', 'frid', 'fri', 'fr', 'f'];
+        break;
+
+      case 6:
+        aliases = ['saturdays', 'saturday', 'satur', 'satu', 'sat', 'sa'];
+        break;
+
+      case 7:
+        aliases = ['sundays', 'sunday', 'sunda', 'sund', 'sun', 'su'];
+        break;
+
+      default:
+        return [];
+    }
+
+    return _.sortBy(aliases, function (alias) {
+      return alias.length;
+    });
+  }
+}; // Remove the days in which the business is closed. The parser doesn't need those days anyways.
+
+function removeClosedDays(schedule) {
+  var hoursString = '';
+  var lines = schedule.split('\n');
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].includes('closed') || lines[i].includes('Closed') || !lines[i].match(/\d+/g)) {// don't add it to the list
+    } else {
+      hoursString += lines[i] + '\n';
+    }
+  }
+
+  return hoursString;
+}
+
+var parseContent = function parseContent(currentValue) {
+  currentValue = removeClosedDays(currentValue);
+  var hours = fourSq.util.HoursParser.parse(currentValue);
+  return JSON.stringify(hours);
+};
+// CONCATENATED MODULE: ./src/components/advanced-gallery/frontend.js
+
+
+(function ($, window, undefined) {
+  $('.novablocks-advanced-gallery__grid').each(function (i, obj) {
+    util_safariHeightFix(obj);
+  });
+})(jQuery, window);
+// CONCATENATED MODULE: ./src/frontend.js
+
+
+
+
+
+
+
+
+
 
 /***/ })
-
-/******/ });
+/******/ ]);
 //# sourceMappingURL=frontend.js.map

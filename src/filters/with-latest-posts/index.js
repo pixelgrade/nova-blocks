@@ -1,3 +1,4 @@
+import postsQueryAttributes from './attributes';
 import QueryControls from '../../components/query-controls';
 
 import {
@@ -103,48 +104,7 @@ function withPostsQueryAttributes( block ) {
 		block.attributes = {};
 	}
 
-	block.attributes = Object.assign( block.attributes, {
-		postsToShow: {
-			type: "integer",
-			default: 3
-		},
-		loadingMode: {
-			type: "string",
-			default: "automated"
-		},
-		specificPosts: {
-			type: "array",
-			default: [],
-			items: {
-				type: "integer"
-			}
-		},
-		preventDuplicatePosts: {
-			type: "boolean",
-			default: true,
-		},
-		authors: {
-			type: "array",
-			default: [],
-			items: {
-				type: "integer"
-			}
-		},
-		categories: {
-			type: "array",
-			default: [],
-			items: {
-				type: "integer"
-			}
-		},
-		tags: {
-			type: "array",
-			default: [],
-			items: {
-				type: "integer"
-			}
-		},
-	});
+	block.attributes = Object.assign( block.attributes, postsQueryAttributes );
 
 	return block;
 }

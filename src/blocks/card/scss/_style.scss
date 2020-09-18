@@ -14,8 +14,8 @@
 .novablocks-card__layout-content {
 	overflow: hidden;
 
-	> .novablocks-grid__item-buttons[class][class] {
-		margin-top: calc( 2 * var(--element-spacing) );
+	> .novablocks-grid__item-buttons {
+		--novablocks-element-spacing-multiplier: 2;
 	}
 }
 

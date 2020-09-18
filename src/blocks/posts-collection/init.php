@@ -18,9 +18,10 @@ add_action( 'init', 'novablocks_posts_collection_block_init' );
 
 function novablocks_get_posts_collection_attributes_config() {
 	$grid_generator_attributes   = novablocks_get_attributes_from_json( 'src/filters/with-grid-generator/attributes.json' );
+	$posts_query_attributes   = novablocks_get_attributes_from_json( 'src/filters/with-latest-posts/attributes.json' );
 	$posts_collection_attributes = novablocks_get_posts_collection_attributes();
 
-	return array_merge( $posts_collection_attributes, $grid_generator_attributes );
+	return array_merge( $posts_collection_attributes, $grid_generator_attributes, $posts_query_attributes );
 }
 
 if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
