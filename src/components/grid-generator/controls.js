@@ -1,3 +1,4 @@
+import { isUndefined } from "lodash";
 import { ControlsSection, ControlsTab } from "../control-sections";
 import { getControlsClasses } from "../../utils";
 import {getOptimalHeaderPosition, getPostsCount} from "../../components/grid-generator/utils";
@@ -533,7 +534,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Columns`, '__plugin_txtd' ) }
 					value={ gridcolumns }
 					onChange={ gridcolumns => {
-						if ( !! gridcolumns ) {
+						if ( ! isUndefined( gridcolumns ) ) {
 							setAttributes( { gridcolumns } );
 						}
 					} }
@@ -544,7 +545,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Rows`, '__plugin_txtd' ) }
 					value={ gridrows }
 					onChange={ gridrows => {
-						if ( !! gridrows ) {
+						if ( ! isUndefined( gridrows ) ) {
 							setAttributes( { gridrows } );
 						}
 					} }
@@ -557,7 +558,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Featured Area Size`, '__plugin_txtd' ) }
 					value={ featuresize }
 					onChange={ featuresize => {
-						if ( !! featuresize ) {
+						if ( ! isUndefined( featuresize ) ) {
 							setAttributes( { featuresize } );
 						}
 					} }
@@ -568,7 +569,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Featured Area Position`, '__plugin_txtd' ) }
 					value={ featureposition }
 					onChange={ featureposition => {
-						if ( !! featureposition ) {
+						if ( ! isUndefined( featureposition ) ) {
 							setAttributes( { featureposition } );
 						}
 					} }
@@ -579,7 +580,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Grid Areas Fragmentation`, '__plugin_txtd' ) }
 					value={ fragmentation }
 					onChange={ fragmentation => {
-						if ( !! fragmentation ) {
+						if ( ! isUndefined( fragmentation ) ) {
 							setAttributes( { fragmentation } );
 						}
 					} }
@@ -590,7 +591,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Grid Areas Crossing`, '__plugin_txtd' ) }
 					value={ hierarchycrossing }
 					onChange={ hierarchycrossing => {
-						if ( !! hierarchycrossing ) {
+						if ( ! isUndefined( hierarchycrossing ) ) {
 							setAttributes( { hierarchycrossing } );
 						}
 					} }
@@ -623,7 +624,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Start of Image Variance`, '__plugin_txtd' ) }
 					value={ imageweightleft }
 					onChange={ imageweightleft => {
-						if ( !! imageweightleft ) {
+						if ( ! isUndefined( imageweightleft ) ) {
 							setAttributes( { imageweightleft } )
 						}
 					} }
@@ -634,7 +635,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `End of Image Variance`, '__plugin_txtd' ) }
 					value={ imageweightright }
 					onChange={ imageweightright => {
-						if ( !! imageweightright ) {
+						if ( ! isUndefined( imageweightright ) ) {
 							setAttributes( { imageweightright } )
 						}
 					} }
@@ -645,7 +646,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `Start of Meta Fidelity`, '__plugin_txtd' ) }
 					value={ metadetailsleft }
 					onChange={ metadetailsleft => {
-						if ( !! metadetailsleft ) {
+						if ( ! isUndefined( metadetailsleft ) ) {
 							setAttributes( { metadetailsleft } )
 						}
 					} }
@@ -656,7 +657,7 @@ const ParametricLayoutControls = ( props ) => {
 					label={ __( `End of Meta Fidelity`, '__plugin_txtd' ) }
 					value={ metadetailsright }
 					onChange={ metadetailsright => {
-						if ( !! metadetailsright ) {
+						if ( ! isUndefined( metadetailsright ) ) {
 							setAttributes( { metadetailsright } )
 						}
 					} }

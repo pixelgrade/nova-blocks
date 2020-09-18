@@ -31940,6 +31940,7 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 
 
 
+
 function controls_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function controls_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { controls_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { controls_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -32427,7 +32428,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Columns", '__plugin_txtd'),
     value: gridcolumns,
     onChange: function onChange(gridcolumns) {
-      if (!!gridcolumns) {
+      if (!isUndefined_default()(gridcolumns)) {
         setAttributes({
           gridcolumns: gridcolumns
         });
@@ -32439,7 +32440,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Rows", '__plugin_txtd'),
     value: gridrows,
     onChange: function onChange(gridrows) {
-      if (!!gridrows) {
+      if (!isUndefined_default()(gridrows)) {
         setAttributes({
           gridrows: gridrows
         });
@@ -32453,7 +32454,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Featured Area Size", '__plugin_txtd'),
     value: featuresize,
     onChange: function onChange(featuresize) {
-      if (!!featuresize) {
+      if (!isUndefined_default()(featuresize)) {
         setAttributes({
           featuresize: featuresize
         });
@@ -32465,7 +32466,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Featured Area Position", '__plugin_txtd'),
     value: featureposition,
     onChange: function onChange(featureposition) {
-      if (!!featureposition) {
+      if (!isUndefined_default()(featureposition)) {
         setAttributes({
           featureposition: featureposition
         });
@@ -32477,7 +32478,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Grid Areas Fragmentation", '__plugin_txtd'),
     value: fragmentation,
     onChange: function onChange(fragmentation) {
-      if (!!fragmentation) {
+      if (!isUndefined_default()(fragmentation)) {
         setAttributes({
           fragmentation: fragmentation
         });
@@ -32489,7 +32490,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Grid Areas Crossing", '__plugin_txtd'),
     value: hierarchycrossing,
     onChange: function onChange(hierarchycrossing) {
-      if (!!hierarchycrossing) {
+      if (!isUndefined_default()(hierarchycrossing)) {
         setAttributes({
           hierarchycrossing: hierarchycrossing
         });
@@ -32523,7 +32524,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Start of Image Variance", '__plugin_txtd'),
     value: imageweightleft,
     onChange: function onChange(imageweightleft) {
-      if (!!imageweightleft) {
+      if (!isUndefined_default()(imageweightleft)) {
         setAttributes({
           imageweightleft: imageweightleft
         });
@@ -32535,7 +32536,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("End of Image Variance", '__plugin_txtd'),
     value: imageweightright,
     onChange: function onChange(imageweightright) {
-      if (!!imageweightright) {
+      if (!isUndefined_default()(imageweightright)) {
         setAttributes({
           imageweightright: imageweightright
         });
@@ -32547,7 +32548,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("Start of Meta Fidelity", '__plugin_txtd'),
     value: metadetailsleft,
     onChange: function onChange(metadetailsleft) {
-      if (!!metadetailsleft) {
+      if (!isUndefined_default()(metadetailsleft)) {
         setAttributes({
           metadetailsleft: metadetailsleft
         });
@@ -32559,7 +32560,7 @@ var controls_ParametricLayoutControls = function ParametricLayoutControls(props)
     label: controls_("End of Meta Fidelity", '__plugin_txtd'),
     value: metadetailsright,
     onChange: function onChange(metadetailsright) {
-      if (!!metadetailsright) {
+      if (!isUndefined_default()(metadetailsright)) {
         setAttributes({
           metadetailsright: metadetailsright
         });
