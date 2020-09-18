@@ -128,15 +128,7 @@ const LayoutControls = ( props ) => {
 					key={ 'novablocks-collection-layout-preset' }
 					label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
 					options={ [ {
-						label: 'TR 03: Classic Triphasic',
-						value: 'tear0down3',
-						preset: {
-							layoutStyle: 'classic',
-							postsToShow: 6,
-							columns: 3,
-						}
-					},  {
-						label: 'TR 27: Figma 1',
+						label: 'L27: Brancusi',
 						value: 'tear2down7',
 						preset: {
 							layoutStyle: 'parametric',
@@ -157,34 +149,13 @@ const LayoutControls = ( props ) => {
 							flipcolsrows: false,
 								headerPosition: 0,
 						}
-					}, {
-						label: 'TR 15: Figma 2',
-						value: 'tear1down5',
-						preset: {
-							layoutStyle: 'parametric',
-							postsToShow: 6,
-							gridcolumns: 6,
-							gridrows: 6,
-							featuresize: 2,
-							featureposition: 4,
-							fragmentation: 0,
-							imageweightleft: 8,
-							imageweightright: 2,
-							metadetailsleft: 7,
-							metadetailsright: 2,
-							boostfeature: false,
-							subfeature: false,
-							balancemdandiw: false,
-							hierarchycrossing: 0,
-							flipcolsrows: false,
-								headerPosition: 0,
-						}
-					}, {
-						label: 'TR 47: Circular',
+					},
+					{
+						label: 'L47: Kafka',
 						value: 'tear4down7',
 						preset: {
 							layoutStyle: 'parametric',
-							postsToShow: 5,
+							postsToShow: 6,
 							gridcolumns: 12,
 							gridrows: 8,
 							featuresize: 7,
@@ -201,12 +172,36 @@ const LayoutControls = ( props ) => {
 							flipcolsrows: false,
 								headerPosition: 0,
 						}
-					}, {
-						label: 'TR 19: New Yorker',
+					},
+					{
+						label: 'L13: Aristotle',
+						value: 'tear1down3',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 6,
+							gridcolumns: 5,
+							gridrows: 4,
+							featuresize: 2,
+							featureposition: 2,
+							fragmentation: 0,
+							imageweightleft: 1,
+							imageweightright: 0,
+							metadetailsleft: 6,
+							metadetailsright: 3,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false,
+							headerPosition: 0,
+						}
+					},
+					{
+						label: 'L19: Nietzsche',
 						value: 'tear1down9',
 						preset: {
 							layoutStyle: 'parametric',
-							postsToShow: 9,
+							postsToShow: 11,
 							gridcolumns: 6,
 							gridrows: 5,
 							featuresize: 3,
@@ -223,12 +218,13 @@ const LayoutControls = ( props ) => {
 							flipcolsrows: false,
 								headerPosition: 0,
 						}
-					}, {
-						label: 'TR 19: New Yorker+',
+					},
+					{
+						label: 'L23: Popper',
 						value: 'tear1down9bis',
 						preset: {
 							layoutStyle: 'parametric',
-							postsToShow: 9,
+							postsToShow: 11,
 							gridcolumns: 7,
 							gridrows: 5,
 							featuresize: 3,
@@ -246,30 +242,9 @@ const LayoutControls = ( props ) => {
 							containerHeight: 45,
 							headerPosition: 0,
 						}
-					}, {
-						label: 'TR 45: By the book',
-						value: 'tear4down5',
-						preset: {
-							layoutStyle: 'parametric',
-							postsToShow: 6,
-							gridcolumns: 8,
-							gridrows: 6,
-							featuresize: 4,
-							featureposition: 1,
-							fragmentation: 2,
-							imageweightleft: 8,
-							imageweightright: 8,
-							metadetailsleft: 7,
-							metadetailsright: 2,
-							boostfeature: false,
-							subfeature: false,
-							balancemdandiw: false,
-							hierarchycrossing: 120,
-							flipcolsrows: false,
-							headerPosition: 0,
-						}
-					}, {
-						label: 'TR 10: Abundance',
+					},
+					{
+						label: 'L10: Tolstoy',
 						value: 'tear1down0',
 						preset: {
 							layoutStyle: 'parametric',
@@ -290,8 +265,55 @@ const LayoutControls = ( props ) => {
 							flipcolsrows: false,
 							headerPosition: 0,
 						}
-					}, {
-						label: 'TR 12: Half in Half',
+					},
+					{
+						label: 'L15: Asimov',
+						value: 'tear1down5',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 7,
+							gridcolumns: 6,
+							gridrows: 6,
+							featuresize: 2,
+							featureposition: 4,
+							fragmentation: 0,
+							imageweightleft: 8,
+							imageweightright: 2,
+							metadetailsleft: 7,
+							metadetailsright: 2,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 0,
+							flipcolsrows: false,
+								headerPosition: 0,
+						}
+					},
+					{
+						label: 'L45: Orwell',
+						value: 'tear4down5',
+						preset: {
+							layoutStyle: 'parametric',
+							postsToShow: 13,
+							gridcolumns: 8,
+							gridrows: 6,
+							featuresize: 4,
+							featureposition: 1,
+							fragmentation: 2,
+							imageweightleft: 8,
+							imageweightright: 8,
+							metadetailsleft: 7,
+							metadetailsright: 2,
+							boostfeature: false,
+							subfeature: false,
+							balancemdandiw: false,
+							hierarchycrossing: 120,
+							flipcolsrows: false,
+							headerPosition: 0,
+						}
+					},
+					{
+						label: 'L12: Dostoevsky',
 						value: 'tear1down2',
 						preset: {
 							layoutStyle: 'parametric',
@@ -300,7 +322,7 @@ const LayoutControls = ( props ) => {
 							gridrows: 4,
 							featuresize: 3,
 							featureposition: 1,
-							fragmentation: 3,
+							fragmentation: 2,
 							imageweightleft: 1,
 							imageweightright: 0,
 							metadetailsleft: 7,
@@ -308,34 +330,14 @@ const LayoutControls = ( props ) => {
 							boostfeature: false,
 							subfeature: false,
 							balancemdandiw: false,
-							hierarchycrossing: 0,
+							hierarchycrossing: 50,
 							flipcolsrows: false,
 							headerPosition: 0,
 						}
-					}, {
-						label: 'TR 30: Julia',
-						value: 'tear3down0',
-						preset: {
-							layoutStyle: 'parametric',
-							postsToShow: 5,
-							gridcolumns: 4,
-							gridrows: 8,
-							featuresize: 2,
-							featureposition: 2,
-							fragmentation: 0,
-							imageweightleft: 1,
-							imageweightright: 0,
-							metadetailsleft: 0,
-							metadetailsright: 3,
-							boostfeature: false,
-							subfeature: true,
-							balancemdandiw: false,
-							hierarchycrossing: 0,
-							flipcolsrows: false,
-							headerPosition: 0,
-						}
-					}, {
-						label: 'TR 32: Julia+',
+					},
+					{
+						label: 'L32: Eliade',
+						status: 'development',
 						value: 'tear3down2',
 						preset: {
 							layoutStyle: 'parametric',
@@ -356,27 +358,37 @@ const LayoutControls = ( props ) => {
 							flipcolsrows: false,
 							headerPosition: 0,
 						}
-					}, {
-						label: 'TR 13: Julia X',
-						value: 'tear1down3',
+					},
+					{
+						label: 'L30: Tolkien',
+						value: 'tear3down0',
 						preset: {
 							layoutStyle: 'parametric',
-							postsToShow: 6,
-							gridcolumns: 5,
-							gridrows: 4,
+							postsToShow: 5,
+							gridcolumns: 4,
+							gridrows: 8,
 							featuresize: 2,
 							featureposition: 2,
 							fragmentation: 0,
 							imageweightleft: 1,
 							imageweightright: 0,
-							metadetailsleft: 6,
+							metadetailsleft: 0,
 							metadetailsright: 3,
 							boostfeature: false,
-							subfeature: false,
+							subfeature: true,
 							balancemdandiw: false,
 							hierarchycrossing: 0,
 							flipcolsrows: false,
 							headerPosition: 0,
+						}
+					},
+					{
+						label: 'L03: Dumas',
+						value: 'tear0down3',
+						preset: {
+							layoutStyle: 'classic',
+							postsToShow: 6,
+							columns: 3,
 						}
 					} ] }
 					randomize={ getRandomAttributes }
