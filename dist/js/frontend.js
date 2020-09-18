@@ -5830,6 +5830,12 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
     moveColumnsToLeft(areaColumns);
     growColumnsToRight(areaColumns, attributes);
     moveColumnsToTop(areaColumns);
+    areaColumns.forEach(function (areaColumn) {
+      areaColumn.areas.forEach(function (area) {
+        area.col = areaColumn.col;
+        area.width = areaColumn.width;
+      });
+    });
   }
 
   function moveColumnsToLeft(areaColumns) {

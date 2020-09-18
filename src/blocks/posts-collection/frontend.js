@@ -209,6 +209,13 @@ import {
 		moveColumnsToLeft( areaColumns );
 		growColumnsToRight( areaColumns, attributes );
 		moveColumnsToTop( areaColumns );
+
+		areaColumns.forEach( areaColumn => {
+			areaColumn.areas.forEach( area => {
+				area.col = areaColumn.col;
+				area.width = areaColumn.width;
+			} )
+		} )
 	}
 
 	function moveColumnsToLeft( areaColumns ) {
