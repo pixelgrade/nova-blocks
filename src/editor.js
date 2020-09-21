@@ -16,6 +16,8 @@ import "./filters/with-inner-blocks";
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
 
+import "./formats/formats";
+
 import advancedGalleryInit from "./blocks/advanced-gallery";
 import announcementBarBlockInit from "./blocks/announcement-bar";
 import googleMapBlockInit from "./blocks/google-map";

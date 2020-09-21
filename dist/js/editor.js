@@ -31126,6 +31126,74 @@ var separator_addSeparatorFilters = function addSeparatorFilters(settings) {
   wp.hooks.addFilter('editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit);
   wp.hooks.addFilter('blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave);
 };
+// CONCATENATED MODULE: ./src/formats/highlighted/index.js
+
+
+/**
+ * WordPress dependencies
+ */
+var highlighted_ = wp.i18n.__;
+var highlighted_Fragment = wp.element.Fragment;
+var toggleFormat = wp.richText.toggleFormat;
+var highlighted_wp$blockEditor = wp.blockEditor,
+    RichTextToolbarButton = highlighted_wp$blockEditor.RichTextToolbarButton,
+    RichTextShortcut = highlighted_wp$blockEditor.RichTextShortcut;
+/**
+ * Block constants
+ */
+
+var highlighted_name = 'novablocks/highlighted';
+var highlighted = {
+  name: highlighted_name,
+  title: highlighted_('Highlighted', 'nova-blocks'),
+  tagName: 'span',
+  className: 'novablocks-highlighted',
+  attributes: {
+    style: 'style'
+  },
+  edit: function edit(_ref) {
+    var isActive = _ref.isActive,
+        value = _ref.value,
+        onChange = _ref.onChange;
+
+    var onToggle = function onToggle() {
+      onChange(toggleFormat(value, {
+        type: highlighted_name,
+        attributes: {
+          style: 'background-color: var(----novablocks-color-1, #000); color: var(--novablocks-dark-1, #FFF); padding: 3px 6px;'
+        }
+      }));
+    };
+
+    return Object(external_React_["createElement"])(highlighted_Fragment, null, Object(external_React_["createElement"])(RichTextToolbarButton, {
+      icon: "star-filled",
+      title: highlighted_('Highlighted', 'nova-blocks'),
+      onClick: onToggle,
+      isActive: isActive
+    }), " )");
+  }
+};
+// CONCATENATED MODULE: ./src/formats/formats.js
+
+
+/**
+ * WordPress dependencies
+ */
+
+var registerFormatType = wp.richText.registerFormatType;
+
+function registerNovaBlocksFormats() {
+  [highlighted].forEach(function (_ref) {
+    var name = _ref.name,
+        settings = objectWithoutProperties_default()(_ref, ["name"]);
+
+    if (name) {
+      registerFormatType(name, settings);
+    }
+  });
+}
+
+wp.domReady(registerNovaBlocksFormats);
 // CONCATENATED MODULE: ./src/components/advanced-gallery/grid-item.js
 
 
@@ -37492,6 +37560,7 @@ function posts_collection_init() {
 
 /* harmony default export */ var posts_collection = (posts_collection_init);
 // CONCATENATED MODULE: ./src/editor.js
+
 
 
 
