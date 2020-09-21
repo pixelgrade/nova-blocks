@@ -1269,13 +1269,32 @@ function novablocks_build_articles_query( $attributes ) {
 			$args['author__in'] = $authors;
 		}
 		if ( $categories && count( $categories ) ) {
-			$args['category__in'] = $categories;
+			$args['category__in'] = novablocks_expand_categories_to_include_subcategories( $categories );
 		}
 		if ( $tags && count( $tags ) ) {
 			$args['tag__in'] = $tags;
 		}
 	}
 	return $args;
+}
+
+function novablocks_expand_categories_to_include_subcategories( $category_ids ) {
+	$all_category_ids = $category_ids;
+
+	foreach ( $category_ids as $category_id ) {
+		$subcategories = get_terms( 'category', array(
+			'child_of' => $category_id
+		) );
+
+		$subcategories_ids = array_map( 'novablocks_array_map_terms_to_ids', $subcategories );
+		$all_category_ids = array_merge( $all_category_ids, $subcategories_ids );
+	}
+
+	return $all_category_ids;
+}
+
+function novablocks_array_map_terms_to_ids( $term ) {
+	return $term->term_id;
 }
 
 function novablocks_get_image_url( $image, $size ) {
@@ -1357,3 +1376,30 @@ function novablocks_rest_prepare_attachment( $response, $post, $request ) {
 	return $response;
 }
 add_filter( 'rest_prepare_attachment', 'novablocks_rest_prepare_attachment', 10, 3 );
+
+function novablocks_get_categories_with_children( $request ) {
+
+	$ids = array();
+
+	if ( isset( $request['ids'] ) ) {
+		$ids = $request['ids'];
+	}
+
+	if ( ! empty( $ids ) && ! is_array( $ids ) ) {
+		$ids = [ $ids ];
+	}
+
+	if ( is_array( $ids ) ) {
+		$ids = novablocks_expand_categories_to_include_subcategories( $ids );
+	}
+
+	return $ids;
+}
+
+function novablocks_register_api_endpoints() {
+	register_rest_route( 'novablocks/v1', '/categories', array(
+		'methods' => 'GET',
+		'callback' => 'novablocks_get_categories_with_children',
+	) );
+}
+add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );

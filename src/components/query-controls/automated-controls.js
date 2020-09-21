@@ -72,6 +72,14 @@ const fetchSavedCategories = ( categoryIDs ) => {
 	} );
 }
 
+const expandCategories = ( categoryIDs ) => {
+	return apiFetch( {
+		path: addQueryArgs( '/novablocks/v1/categories', {
+			ids: categoryIDs
+		} ),
+	} )
+}
+
 const fetchTagSuggestions = ( search ) => {
 	return apiFetch( {
 		path: addQueryArgs( '/wp/v2/tags', {
@@ -148,7 +156,11 @@ const AutomatedControls = ( props ) => {
 			<AutocompleteTokenField
 				key="categories"
 				tokens={ categories || [] }
-				onChange={ onCategoriesChange }
+				onChange={ ( newCategories ) => {
+					expandCategories( newCategories ).then( categories => {
+						onCategoriesChange( categories );
+					} );
+				} }
 				fetchSuggestions={ fetchCategorySuggestions }
 				fetchSavedInfo={ fetchSavedCategories }
 				label={ __( 'Categories' ) }
