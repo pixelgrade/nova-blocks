@@ -31,15 +31,15 @@ const gutenbergPackages = Object.keys( dependencies )
                                 .filter( ( packageName ) => packageName.startsWith( NOVABLOCKS_NAMESPACE ) )
                                 .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
 
-console.log( gutenbergPackages );
+const entryPoints = gutenbergPackages.reduce( ( memo, packageName ) => {
+	const name = camelCaseDash( packageName );
+	memo[ `${ name }` ] = `./packages/${ packageName }`;
+	return memo;
+}, {} );
 
 module.exports = {
 	mode,
-	entry: gutenbergPackages.reduce( ( memo, packageName ) => {
-		const name = camelCaseDash( packageName );
-		memo[ name ] = `./packages/${ packageName }`;
-		return memo;
-	}, {} ),
+	entry: entryPoints,
 	output: {
 		devtoolNamespace: 'novablocks',
 		filename: './build/[basename]/index.js',

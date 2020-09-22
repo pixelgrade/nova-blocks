@@ -8,6 +8,8 @@
 		"build:packages": "node ./bin/packages/build.js"
 	},
 	"dependencies": {
+		"@novablocks/block-library": "file:packages/block-library",
+
 		"@novablocks/gallery-of-the-stars": "file:packages/gallery-of-the-stars",
 		"@novablocks/components": "file:packages/components",
 		"@novablocks/easings": "file:packages/easings",
