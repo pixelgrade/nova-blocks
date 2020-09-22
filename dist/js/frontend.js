@@ -5663,28 +5663,33 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
 (function ($, window, undefined) {
   var defaultBlockWidth = 1152; // magic
 
-  $('.novablocks-grid').each(function (i, block) {
-    var $grid = $(block);
+  $('.novablocks-grid').each(function (i, grid) {
+    var $grid = $(grid);
     var $block = $grid.closest('.novablocks-block');
     var $cards = $grid.closest('.novablocks-collection__cards');
     var $posts = $grid.children('.novablocks-card');
     var attributes = $grid.data();
     var cardsCount = $posts.length;
     var addedCards;
-    block.style.setProperty('--card-media-padding', attributes.imagepadding);
-    block.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.thumbnailaspectratio));
-    block.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
+    grid.style.setProperty('--card-media-padding', attributes.imagepadding);
+    grid.style.setProperty('--card-media-padding-top', getCardMediaPaddingTop(attributes.thumbnailaspectratio));
+    grid.style.setProperty('--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down');
 
     if (attributes.layoutstyle !== 'parametric') {
       $grid.removeClass('novablocks-grid');
       $grid.addClass('novablocks-collection__layout');
       $grid.addClass("novablocks-grid__area--".concat(attributes.islandscape ? 'landscape' : 'portrait'));
       $grid.addClass(utils_getAreaClassnameByWidthRatio(1 / attributes.columns));
+      $block.addClass('novablocks-block--ready');
       return;
     }
 
     var $title = $block.find('.novablocks-collection__title').detach();
     var $subtitle = $block.find('.novablocks-collection__subtitle').detach();
+    var onResize = debounce(recreateLayout, 100);
+    createLayout();
+    $block.addClass('novablocks-block--ready');
+    $(window).on('resize', onResize);
 
     function createLayout() {
       var blockWidth = $grid.outerWidth();
@@ -5777,8 +5782,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       }
     }
 
-    createLayout();
-
     function recreateLayout() {
       $grid.contents().replaceWith($posts);
       $grid.css({
@@ -5790,9 +5793,6 @@ var initBidimensionalMatrix = function initBidimensionalMatrix(matrix, width, he
       $posts.removeClass('novablocks-card--landscape');
       createLayout();
     }
-
-    var onResize = debounce(recreateLayout, 100);
-    $(window).on('resize', onResize);
   });
 
   function getAreaClassname(area, attributes) {
