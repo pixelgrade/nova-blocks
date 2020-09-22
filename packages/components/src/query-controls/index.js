@@ -3,8 +3,8 @@
  */
 
 
-import { __ } from '@wordpress/i18n';
-import { RadioControl } from '@wordpress/components';
+const { __ } = wp.i18n;
+const { RadioControl } = wp.components;
 
 import ManualControls from "./manual-controls";
 import AutomatedControls from "./automated-controls";

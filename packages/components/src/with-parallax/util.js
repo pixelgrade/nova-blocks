@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { debounce } from '@novablocks/utils';
+import { hasTouchScreen } from '@novablocks/utils';
 
 function userPrefersReducedMotion() {
 	const mediaQuery = window.matchMedia( '(prefers-reduced-motion: reduce)' );
@@ -47,7 +47,6 @@ export const getStylesFromProps = function( props ) {
 		offsetY,
 		scale,
 		focalPoint,
-		containerBox,
 	} = props;
 
 	return {
@@ -282,11 +281,17 @@ export const getState = function( container, config ) {
 		scrollContainerHeight,
 		scrollContainerBox,
 	}
+};
+
+function getScrollContainerHeight() {
+	const useOrientation = hasTouchScreen() && 'orientation' in window;
+	return useOrientation && window.screen && window.screen.availHeight || window.innerHeight
 }
 
-export const parallaxInit = function( $blocks, foregroundSelector ) {
+export const parallaxInit = function( $blocks ) {
 
 	let frameRendered = false;
+	let scrollContainerHeight = getScrollContainerHeight();
 
 	$blocks.each( function( i, container ) {
 		var $container = $( container );
@@ -297,7 +302,6 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 		var finalFocalPoint = $container.data( 'final-focal-point' );
 		var initialBackgroundScale = $container.data( 'initial-background-scale' );
 		var finalBackgroundScale = $container.data( 'final-background-scale' );
-		var scrollContainerHeight = window.innerHeight;
 		var scrollContainerBox = {
 			top: 0,
 			left: 0,
@@ -326,7 +330,7 @@ export const parallaxInit = function( $blocks, foregroundSelector ) {
 
 		function parallaxUpdateState() {
 			var newConfig = Object.assign( {}, config, {
-				scrollContainerHeight: window.innerHeight
+				scrollContainerHeight: getScrollContainerHeight()
 			} );
 			var state = getState( container, newConfig );
 			$container.data( 'state', state );

@@ -39,6 +39,13 @@ const JS_ENVIRONMENTS = {
 const readFile = promisify( fs.readFile );
 
 /**
+ * Promisified fs.copyFile.
+ *
+ * @type {Function}
+ */
+const copyFile = promisify( fs.copyFile );
+
+/**
  * Promisified fs.writeFile.
  *
  * @type {Function}
@@ -83,6 +90,12 @@ function getBuildPath( file, buildFolder ) {
  * @type {Object<string,Function>}
  */
 const BUILD_TASK_BY_EXTENSION = {
+	async '.json'( file ) {
+		await Promise.all( [
+			copyFile( file, getBuildPath( file, 'build' ) ),
+			copyFile( file, getBuildPath( file, 'build-module' ) ),
+		] );
+	},
 	async '.scss'( file ) {
 		const outputFile = getBuildPath(
 			file.replace( '.scss', '.css' ),

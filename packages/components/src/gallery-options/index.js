@@ -18,36 +18,22 @@ const GalleryPlaceholder = function( props ) {
 		attributes: {
 			galleryImages,
 		},
+		onSelectImages
 	} = props;
 
 	const hasImages = !! galleryImages.length;
 
-	function onChangeGallery( newGalleryImages ) {
-		const promises = newGalleryImages.map( ( image, index ) => {
-			return wp.apiRequest( { path: '/wp/v2/media/' + image.id } ).then( ( newImage ) => {
-				newGalleryImages[ index ] = { ...newImage, ...image };
-			} );
-		} );
-
-		Promise.all( promises ).then( () => {
-			props.setAttributes( { galleryImages: newGalleryImages.filter( ( image ) => {
-				return !! image.id && !! image.sizes && !! image.sizes.large && !! image.sizes.large.url;
-			} ) } );
-		} );
-	}
-
 	return (
 		<MediaPlaceholder
+			accept="image/*"
 			addToGallery={ hasImages }
-			className=""
+			allowedTypes={ ALLOWED_MEDIA_TYPES }
 			labels={ {
 				title: '',
 				instructions: __( 'Drag images, upload new ones or select files from your library.', '__plugin_txtd' ),
 			} }
-			onSelect={ onChangeGallery }
-			accept="image/*"
-			allowedTypes={ ALLOWED_MEDIA_TYPES }
 			multiple
+			onSelect={ onSelectImages }
 			value={ hasImages ? galleryImages : undefined }
 		/>
 	);
@@ -74,30 +60,25 @@ class GalleryPreview extends Component {
 						classes.push( 'novablocks-slideshow__gallery-item--active' );
 					}
 
-					let thumb = false;
+					let thumbnail = false;
 
-					const {
-						sizes: {
-							thumbnail,
-							medium,
-							medium_large,
-							large,
-							full
-						}
-					} = img;
-
-					thumb = thumbnail || medium || medium_large || full || thumb;
-
-					if ( ! thumb || typeof thumb.url === "undefined" ) {
-						return null;
+					if ( 'video' === img.type ) {
+						thumbnail = img?.thumb?.src;
+						classes.push( 'novablocks-slideshow__gallery-item--video' );
+					} else {
+						thumbnail = img?.sizes?.novablocks_tiny?.url ||
+						            img?.sizes?.thumbnail?.url ||
+						            img?.sizes?.novablocks_large?.url ||
+						            img?.sizes?.large?.url ||
+						            img?.sizes?.novablocks_huge?.url ||
+						            img?.sizes?.full?.url ||
+						            img?.url;
 					}
 
 					return (
-						<li key={ img.id || img.url } onClick={ () => {
-							onSelectImage( index );
-						} }>
+						<li key={ index } onClick={ () => { onSelectImage( index ); } }>
 							<div className={ classes.join( ' ' ) }>
-								<img src={ thumb.url } alt="" />
+								<img src={ thumbnail } alt="" />
 							</div>
 						</li>
 					);

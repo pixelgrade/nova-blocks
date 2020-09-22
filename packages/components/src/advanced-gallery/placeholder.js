@@ -7,10 +7,10 @@ const AdvancedGalleryPlaceholder = ( props ) => {
 
 	const {
 		attributes,
-		setAttributes,
+		onSelectImages,
 	} = props;
 
-	const gallery = ( attributes.gallery && attributes.gallery.length ) ? attributes.gallery : attributes.images;
+	const gallery = attributes?.images;
 
 	if ( !! gallery && !! gallery.length ) {
 		return false;
@@ -19,9 +19,7 @@ const AdvancedGalleryPlaceholder = ( props ) => {
 	return (
 		<MediaPlaceholder
 			icon={ <BlockIcon icon='format-gallery' /> }
-			onSelect={ gallery => {
-				setAttributes( { gallery } );
-			} }
+			onSelect={ onSelectImages }
 			accept="image/*"
 			allowedTypes={ [ 'image' ] }
 			multiple

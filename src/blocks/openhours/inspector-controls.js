@@ -77,7 +77,8 @@ const OpenHoursInspectorControls = function( props ) {
 			<ControlsSection label={ __( 'Setup' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<TextareaControl
-						label="Write your opening hours in a simple human readable format"
+						key={ 'openhours-schedule-controls' }
+						label={ __( 'Write your opening hours in a simple human readable format' ) }
 						value={ text }
 						className = 'original-text'
 						onChange={( text ) => setAttributes( {
@@ -94,8 +95,8 @@ const OpenHoursInspectorControls = function( props ) {
 			</ControlsSection>
 			<ControlsSection label={ __( 'Display' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
-
 					<RadioControl
+						key={ 'openhours-display-controls' }
 						label={ __( 'Displaying the opening hours', '__plugin_txtd' ) }
 						value={ openHoursStyle }
 						selected={ openHoursStyle }

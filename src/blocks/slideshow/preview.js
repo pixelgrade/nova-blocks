@@ -28,7 +28,7 @@ const SlideshowPreview = class extends Component {
 	}
 
 	updateDimensions() {
-		if ( !this.container ) {
+		if ( ! this.container ) {
 			return;
 		}
 
@@ -74,7 +74,9 @@ const SlideshowPreview = class extends Component {
 		];
 
 		const styles = {
-			slideshow: { color: contentColor },
+			slideshow: {
+				'--novablocks-slideshow-text-color': contentColor,
+			},
 			content: {},
 			foreground: {},
 		};
@@ -91,13 +93,11 @@ const SlideshowPreview = class extends Component {
 		let maxAspectRatio = 0;
 		let mediaMinHeight = 0;
 
-		galleryImages.map( ( image ) => {
-			if ( !! image.sizes && !! image.sizes.large && !! image.sizes.large.width ) {
-				const aspectRatio = image.sizes.large.width / image.sizes.large.height;
-				maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
-				mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
-			}
-			return true;
+		galleryImages.forEach( image => {
+			const imageSize = image?.sizes?.full;
+			const aspectRatio = !! imageSize ? ( imageSize.width / imageSize.height ) : 0;
+			maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+			mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
 		} );
 
 		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
@@ -111,30 +111,26 @@ const SlideshowPreview = class extends Component {
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="novablocks-slideshow__content novablocks-u-content-padding" style={ styles.foreground }>
-									<div className="novablocks-u-content-align">
-										<div className="novablocks-u-content-width" style={ styles.content }>
-											{ !! previewImage.title && !! previewImage.title.rendered && <h2>{ previewImage.title.rendered }</h2> }
-											{ !! previewImage.caption && <p>{ previewImage.caption }</p> }
-										</div>
+								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
+									<div
+										className="novablocks-slideshow__inner-container novablocks-u-content-width"
+										style={ styles.content }
+										dangerouslySetInnerHTML={ {
+											__html:
+												( typeof previewImage.title === 'string' && `<h2>${ previewImage.title }</h2>` || '' ) +
+												( typeof previewImage.caption === 'string' && previewImage.caption || '' )
+										} }>
 									</div>
 								</div>
 							</Fragment> }
 						</div>
 					</div>
-					<div className="novablocks-slideshow__controls">
+					{ galleryImages.length > 1 && <div className="novablocks-slideshow__controls">
 						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled" onClick={ this.props.onPrevArrowClick }></div>
 						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled" onClick={ this.props.onNextArrowClick }></div>
-					</div>
+					</div> }
 				</div> }
-				{ ! galleryImages.length &&
-					<Fragment>
-						<GalleryPlaceholder { ...this.props } />
-						<div className="novablocks-slideshow__controls">
-							<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled"></div>
-							<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled"></div>
-						</div>
-					</Fragment> }
+				{ ! galleryImages.length && <GalleryPlaceholder { ...this.props } /> }
 			</Fragment>
 		);
 	}

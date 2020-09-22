@@ -2,48 +2,56 @@
 import { groupBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
-import { SectionsList, SectionsListItem } from './sections-list';
+import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill";
 
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";
 
-import { Drawer, Drawers, DrawerList, DrawerPanel } from "../drawer";
-import {kebabCase} from "lodash";
-
-import { __ } from '@wordpress/i18n';
-import { useBlockEditContext } from '@wordpress/block-editor';
-
 import {
+	Drawer,
+	Drawers,
+	DrawerList,
+	DrawerPanel,
+	DrawerListBefore,
+	DrawerListAfter
+} from "../index";
+
+const { __ } = wp.i18n;
+const { useBlockEditContext } = wp.blockEditor;
+
+const {
 	Children,
-	Component,
-	Fragment,
-	useState
- } from '@wordpress/element';
-
-const renderControlsSectionsList = ( sections, onSectionClick ) => {
-
-	return (
-		sections.map( ( section, index ) => {
-			const { label } = section.props;
-
-			return (
-				<Drawer
-					key={ index }
-					target={ 0 }
-					title={ label }
-					onOpen={ () => { onSectionClick( label ) } }
-				/>
-			);
-		} )
-	)
-}
+} = wp.element;
 
 const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
-	const notModules = sections.filter( section => ! section.props.module )
-	const modules = sections.filter( section => !! section.props.module );
+	const advancedButton = document.querySelector( '.block-editor-block-inspector__advanced' );
+	const advancedWrapper = !! advancedButton && advancedButton.parentNode;
+
+	if ( !! advancedWrapper ) {
+		advancedWrapper.style.setProperty( 'transition', 'height .3s ease-out' );
+		advancedWrapper.style.setProperty( 'overflow', 'hidden' );
+	}
+
+	const onOpen = () => {
+		if ( !! advancedWrapper?.style ) {
+			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px`, );
+			requestAnimationFrame( () => {
+				advancedWrapper.style.setProperty( 'height', 0 );
+			} );
+		}
+	};
+
+	const onClose = () => {
+		if ( !! advancedWrapper?.style ) {
+			advancedWrapper.addEventListener( 'transitionend', () => {
+				advancedWrapper.style.removeProperty( 'height' );
+			}, { once: true } );
+			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px` );
+		}
+	};
 
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
@@ -51,11 +59,13 @@ const ControlsSectionsComponent = ( props ) => {
 
 	return (
 		<div className="novablocks-sections">
-			<Drawers>
-				<div className="novablocks-sections__header">
-					<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
-					<Cube />
-				</div>
+			<Drawers onOpen={ onOpen } onClose={ onClose }>
+				<DrawerListBefore>
+					<div className="novablocks-sections__header">
+						<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+						<Cube />
+					</div>
+				</DrawerListBefore>
 				{
 					Object.keys( groups ).map( key => {
 						const sections = groups[ key ];
@@ -112,10 +122,13 @@ const ControlsSectionsComponent = ( props ) => {
 						} );
 					} )
 				}
+				<DrawerListAfter>
+					<DrawerContentSlot />
+				</DrawerListAfter>
 			</Drawers>
 		</div>
 	);
-}
+};
 
 const ControlsSections = ( props ) => {
 
@@ -132,13 +145,13 @@ const ControlsSections = ( props ) => {
 			} }
 		</ControlsSectionsSlot>
 	);
-}
+};
 
 const ControlsTab = ( props ) => {
 	return (
 		<div label={ props.label }>{ props.children }</div>
 	)
-}
+};
 
 const ControlsSection = ( props ) => {
 
@@ -149,10 +162,22 @@ const ControlsSection = ( props ) => {
 			{ isSelected && <div { ...props } /> }
 		</ControlsSectionsFill>
 	)
-}
+};
+
+const ControlsDrawerContent = ( props ) => {
+
+	const { isSelected } = useBlockEditContext();
+
+	return (
+		<DrawerContentFill>
+			{ isSelected && <div { ...props } /> }
+		</DrawerContentFill>
+	)
+};
 
 export {
 	ControlsTab,
 	ControlsSections,
 	ControlsSection,
+	ControlsDrawerContent,
 };

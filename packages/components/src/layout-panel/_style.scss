@@ -19,27 +19,25 @@
 		--novablocks-content-width: var(--novablocks-content-width-narrow);
 	}
 
-	@media only screen and (min-width: 1000px) {
+	@include above(lap) {
 		max-width: var(--novablocks-content-width);
 	}
 }
 
 .novablocks-u-content-padding {
+	padding: var(--novablocks-content-padding-small);
+
 	--novablocks-content-padding: var(--novablocks-content-padding-small);
 
-	padding: var(--novablocks-content-padding);
+	.novablocks-u-spacing-medium & {
+		--novablocks-content-padding: var(--novablocks-content-padding-medium);
+	}
 
-	@media only screen and (min-width: 1000px) {
-		.novablocks-u-spacing-medium & {
-			--novablocks-content-padding: var(
-				--novablocks-content-padding-medium
-			);
-		}
+	.novablocks-u-spacing-large & {
+		--novablocks-content-padding: var(--novablocks-content-padding-large);
+	}
 
-		.novablocks-u-spacing-large & {
-			--novablocks-content-padding: var(
-				--novablocks-content-padding-large
-			);
-		}
+	@include above(lap) {
+		padding: var(--novablocks-content-padding);
 	}
 }

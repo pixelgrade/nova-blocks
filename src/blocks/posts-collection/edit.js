@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { some, pickBy, isUndefined } from "lodash";
-import { CardsManagerPanel, Collection } from '../../components';
+import { Collection } from '../../components';
 import CardMedia from './media';
 import { ControlsSection, ControlsTab } from "../../components/control-sections";
 
@@ -102,14 +102,10 @@ const PostsEdit = ( props ) => {
 
 	return (
 		<Fragment>
-			<CardsManagerPanel
-				label={ __( 'Cards Manager', '__plugin_txtd' ) }
-				onChange={ ( attributes ) => { setAttributes( attributes ) } }
-				{ ...props }
-			/>
 			<ControlsSection label={ __( 'Display' ) } priority={ 10 }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<RangeControl
+						key={ 'posts-collection-display-controls' }
 						value={ columns }
 						onChange={ ( columns ) => setAttributes( { columns } ) }
 						label={ __( 'Columns' ) }
@@ -175,8 +171,10 @@ const PostsEdit = ( props ) => {
 											showButtons &&
 											<div className="wp-block">
 												<div className="novablocks-card__buttons">
-													<div className="wp-block-button">
-														<div className="wp-block-button__link">Read More</div>
+													<div class="wp-block-buttons alignleft">
+														<div className="wp-block-button is-style-text">
+															<div className="wp-block-button__link">Read More</div>
+														</div>
 													</div>
 												</div>
 											</div>

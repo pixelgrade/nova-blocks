@@ -1,9 +1,18 @@
-import { debounce, isSafari } from "@novablocks/utils";
 import $ from 'jquery';
+import { debounce, isSafari, getRandomBetween } from "@novablocks/utils";
+
+export const getRandomAttributes = () => {
+	return {
+		sizeContrast: getRandomBetween(0, 5) * 20,
+		positionShift: getRandomBetween(0, 20) * 5,
+		elementsDistance: getRandomBetween(0, 5) * 20,
+		placementVariation: getRandomBetween(1, 4) * 25,
+		stylePreset: 'just-my-style',
+	};
+};
 
 export const getGalleryStyle = ( attributes ) => {
 	let containerHeight = attributes.containerHeight / 50 - 1;
-	let { verticalSpacing } = attributes;
 	let numerator = 1;
 	let denominator = 1;
 
@@ -18,10 +27,9 @@ export const getGalleryStyle = ( attributes ) => {
 	}
 
 	return {
-		'--novablocks-advanced-gallery-vertical-spacing': `calc( ${ verticalSpacing * 5 } * var(--novablocks-spacing-unit, 10px) )`,
 		paddingTop: `${ numerator * 100 / denominator }%`,
 	}
-}
+};
 
 export const getGridStyle = ( attributes ) => {
 	const { elementsDistance } = attributes;
@@ -29,7 +37,7 @@ export const getGridStyle = ( attributes ) => {
 	return {
 		'--novablocks-advanced-gallery-grid-gap': `${ elementsDistance }px`
 	}
-}
+};
 
 export const safariHeightFix = ( grid ) => {
 
@@ -45,14 +53,14 @@ export const safariHeightFix = ( grid ) => {
 		const newHeight = $parent.outerHeight();
 
 		$grid.css( 'height', newHeight );
-	}
+	};
 
 	const debouncedResetHeight = debounce( resetHeight, 30 );
 
 	resetHeight();
 
 	if ( typeof window.ResizeObserver !== "undefined" ) {
-		const observer = new ResizeObserver( entries => {
+		const observer = new window.ResizeObserver( entries => {
 			debouncedResetHeight();
 		} );
 
@@ -62,4 +70,4 @@ export const safariHeightFix = ( grid ) => {
 			debouncedResetHeight();
 		} );
 	}
-}
+};

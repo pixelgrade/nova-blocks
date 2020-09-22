@@ -1,34 +1,27 @@
-import { Notice, Tab, Tabs } from '../';
-
 import {
+	ControlsGroup,
 	ControlsSection,
-	ControlsTab
- } from "../control-sections";
+	ControlsTab,
+	PresetControl,
+	Notice
+} from '../index';
 
-import ControlsGroup from "../controls-group";
+
+import { getRandomAttributes } from "./util";
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 
 import {
-	InspectorControls
- } from '@wordpress/block-editor';
-
-import {
-	Button,
-	PanelBody,
 	RadioControl,
-	RangeControl
- } from '@wordpress/components';
+	RangeControl,
+} from '@wordpress/components';
 
 const AdvancedGalleryInspectorControls = ( props ) => {
 
 	const {
 		setAttributes,
 		attributes: {
-			// gallery preset
-			stylePreset,
-
 			// composition settings
 			sizeContrast,
 			positionShift,
@@ -46,63 +39,28 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 		}
 	} = props;
 
-	const getRandomBetween = ( min, max ) => {
-		const random = Math.max(0, Math.random() - Number.MIN_VALUE );
-		return Math.floor( random * (max - min + 1) + min );
-	}
-
-	const randomize = () => {
-		setAttributes({
-			sizeContrast: getRandomBetween(0, 5) * 20,
-			positionShift: getRandomBetween(0, 20) * 5,
-			elementsDistance: getRandomBetween(0, 5) * 20,
-			placementVariation: getRandomBetween(1, 4) * 25,
-		});
-	}
-
 	return (
 		<Fragment>
 
-			<ControlsSection label={ __( 'Media' ) } group={ __( 'Modules' ) }>
+			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 
 				<ControlsTab label={ __( 'General' ) }>
 					<Notice
+						key={ 'advanced-gallery-quick-start' }
 						id={ 'novablocks-advanced-gallery-quick-start' }
 						content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
 						dismissLabel={ '✔ Ok, I got it!' }
 					/>
-					<RadioControl
-						selected={ stylePreset }
-						onChange={ ( stylePreset ) => {
-							let newAttributes = { stylePreset };
-							let newOption = advancedGalleryPresetOptions.find( option => stylePreset === option.value );
-
-							if ( newOption && newOption.preset ) {
-								newAttributes = Object.assign( newOption.preset, newAttributes );
-							}
-
-							setAttributes( newAttributes );
-
-							if ( newOption.value === 'just-my-style' ) {
-								randomize();
-								return;
-							}
-						} }
+					<PresetControl
+						key={ 'advanced-gallery-style-preset' }
 						options={ advancedGalleryPresetOptions }
+						randomize={ getRandomAttributes }
 					/>
-					{
-						stylePreset === 'just-my-style' &&
-						<div>
-							<Button
-								isLarge
-								isPrimary
-								onClick={ randomize }>{ __( '💡 Surprise me!' ) }</Button>
-						</div>
-					}
 				</ControlsTab>
 
 				<ControlsTab label={ __( 'Customize' ) }>
 					<RangeControl
+						key={ 'advanced-gallery-crop-style' }
 						label={ __( 'Images Crop Style', '__plugin_txtd' ) }
 						value={ imageResizing === 'cropped' ? 2 : 1 }
 						onChange={ cropStyle => {
@@ -117,6 +75,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 				<ControlsTab label={ __( 'Settings' ) }>
 					<ControlsGroup title={ __( 'Gallery' ) }>
 						<RangeControl
+							key={ 'advanced-gallery-size-contrast' }
 							label={ __( 'Size Contrast', '__plugin_txtd' ) }
 							value={ sizeContrast }
 							onChange={ sizeContrast => setAttributes( { sizeContrast } ) }
@@ -125,6 +84,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							step={ 20 }
 						/>
 						<RangeControl
+							key={ 'advanced-gallery-position-shift' }
 							label={ __( 'Position Shift', '__plugin_txtd' ) }
 							value={ positionShift }
 							onChange={ positionShift => setAttributes( { positionShift } ) }
@@ -133,6 +93,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							step={ 5 }
 						/>
 						<RangeControl
+							key={ 'advanced-gallery-elements-distance' }
 							label={ __( 'Elements Distance', '__plugin_txtd' ) }
 							value={ elementsDistance }
 							onChange={ elementsDistance => setAttributes( { elementsDistance } ) }
@@ -141,6 +102,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							step={ 20 }
 						/>
 						<RangeControl
+							key={ 'advanced-gallery-placement-variation' }
 							label={ __( 'Placement Variation', '__plugin_txtd' ) }
 							value={ placementVariation }
 							onChange={ placementVariation => setAttributes( { placementVariation } ) }
@@ -149,6 +111,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							step={ 25 }
 						/>
 						<RangeControl
+							key={ 'advanced-gallery-image-rotation' }
 							label={ __( 'Image Rotation', '__plugin_txtd' ) }
 							value={ imageRotation }
 							onChange={ imageRotation => setAttributes( { imageRotation } ) }
@@ -159,6 +122,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Display' ) }>
 						<RangeControl
+							key={ 'advanced-gallery-image-container-height' }
 							label={ __( 'Image Container Height', '__plugin_txtd' ) }
 							value={ containerHeight }
 							onChange={ containerHeight => setAttributes( { containerHeight } ) }
@@ -167,6 +131,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							step={ 5 }
 						/>
 						<RadioControl
+							key={ 'advanced-gallery-image-resizing' }
 							label={ 'Image Resizing' }
 							selected={ imageResizing }
 							onChange={ imageResizing => setAttributes( { imageResizing } ) }
@@ -176,6 +141,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							] }
 						/>
 						<RangeControl
+							key={ 'advanced-gallery-image-position' }
 							label={ __( 'Image Position', '__plugin_txtd' ) }
 							value={ objectPosition }
 							onChange={ objectPosition => setAttributes( { objectPosition } ) }

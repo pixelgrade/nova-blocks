@@ -22,10 +22,19 @@ const SlideshowBackground = function( props ) {
 		styles.opacity = 1 - ( overlayFilterStrength / 100 );
 	}
 
+	const imageURL = previewImage?.sizes?.novablocks_large?.url ||
+	                 previewImage?.sizes?.novablocks_huge?.url ||
+	                 previewImage?.sizes?.large?.url ||
+	                 previewImage?.sizes?.full?.url ||
+	                 previewImage?.url;
+
+	const videoURL = previewImage?.url;
+
 	return (
 		<div className="novablocks-mask">
 			<div className="novablocks-slideshow__background">
-				<img className="novablocks-slideshow__media" src={ previewImage.sizes.large.url } alt="" style={ styles } />
+				{ previewImage.type !== 'video' && <img className="novablocks-slideshow__media" src={ imageURL } alt="" style={ styles } /> }
+				{ previewImage.type === 'video' && <video className="novablocks-slideshow__media" src={ videoURL } muted autoPlay loop playsInline style={ styles } /> }
 			</div>
 		</div>
 	);

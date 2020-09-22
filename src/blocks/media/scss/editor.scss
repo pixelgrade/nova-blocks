@@ -20,13 +20,15 @@
 	padding-left: var(--novablocks-media-spacing);
 	padding-right: var(--novablocks-media-spacing);
 
-	> * {
-		margin-left: auto;
-		margin-right: auto;
-	}
-
 	> [data-align='full'] {
 		margin-left: calc(-1 * var(--novablocks-media-spacing));
 		margin-right: calc(-1 * var(--novablocks-media-spacing));
 	}
+}
+
+.novablocks-media__content:before,
+.novablocks-media__content:after,
+.novablocks-media__inner-container {
+	transition: var(--novablocks-transition);
+	transition-property: flex-grow;
 }

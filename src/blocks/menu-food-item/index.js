@@ -48,7 +48,15 @@ function init() {
 			enableSalePrice: {
 				type: 'boolean',
 				default: false
-			}
+			},
+			showPrices: {
+				type: 'boolean',
+				default: true
+			},
+			showDescription: {
+				type: 'boolean',
+				default: true
+			},
 		},
 		edit,
 		save

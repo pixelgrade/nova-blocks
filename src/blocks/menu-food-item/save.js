@@ -12,6 +12,8 @@ const FoodMenuItemSave = function( props ) {
 			enableHighlightFoodItem,
 			highlightLabel,
 			enableSalePrice,
+			showDescription,
+			showPrices,
 			salePrice,
 			price,
 			description,
@@ -49,7 +51,7 @@ const FoodMenuItemSave = function( props ) {
 				/>
 			</div>
 
-			<div className="nova-food-menu-item__prices" itemscope itemtype="http://schema.org/offers">
+			{ showPrices && <div className="nova-food-menu-item__prices" itemscope itemtype="http://schema.org/offers">
 				<RichText.Content
 					value={price}
 					tagName="span"
@@ -63,10 +65,9 @@ const FoodMenuItemSave = function( props ) {
 				 <span className="item-price--sale"> {salePrice} </span>
 				 </div>
 				 }
+			</div> }
 
-			</div>
-
-			<div className="nova-food-menu-item__description">
+			{ showDescription && <div className="nova-food-menu-item__description">
 				<RichText.Content
 					value={description}
 					tagName="p"
@@ -74,8 +75,7 @@ const FoodMenuItemSave = function( props ) {
 					onChange={description => setAttributes( {description} )}
 					itemprop="description"
 				/>
-			</div>
-
+			</div> }
 
 		</div>
 	);

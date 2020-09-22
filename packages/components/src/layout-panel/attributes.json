@@ -1,0 +1,18 @@
+{
+	"contentPadding": {
+		"type": "string",
+		"default": "medium"
+	},
+	"contentPaddingCustom": {
+		"type": "number",
+		"default": 20
+	},
+	"contentWidth": {
+		"type": "string",
+		"default": "large"
+	},
+	"contentWidthCustom": {
+		"type": "number",
+		"default": 100
+	}
+}

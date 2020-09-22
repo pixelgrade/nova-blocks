@@ -1,19 +1,16 @@
 <?php
 
-if ( ! function_exists( 'novablocks_separator_block_init' ) ) {
-
-	function novablocks_separator_block_init() {
-		register_block_type( 'core/separator', array(
-			'attributes' => array(),
-			'render_callback' => 'novablocks_render_separator_block'
-		) );
-	}
-}
-add_action( 'init', 'novablocks_separator_block_init' );
 
 if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
-	function novablocks_render_separator_block( $attributes, $content ) {
+	function novablocks_render_separator_block( $block_content, $block ) {
+
+		if ( 'core/separator' !== $block['blockName'] ) {
+			return $block_content;
+		}
+
+		$attributes = $block['attrs'];
+
 		ob_start(); ?>
 			<div class="wp-block-separator <?php echo ! empty( $attributes['className'] ) ? $attributes['className'] : ''; ?>">
                 <?php
@@ -25,5 +22,5 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 			</div>
 		<?php return ob_get_clean();
 	}
-
 }
+add_filter( 'render_block', 'novablocks_render_separator_block', 10, 2 );

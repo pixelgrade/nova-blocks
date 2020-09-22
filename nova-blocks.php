@@ -3,7 +3,7 @@
  * Plugin Name: Nova Blocks
  * Plugin URI: https://github.com/pixelgrade/nova-blocks/
  * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
- * Version: 1.4.2
+ * Version: 1.5.3
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
@@ -25,21 +25,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Gets this plugin's directory file path.
+ *
+ * @since  1.0.0
+ * @ignore
+ * @access private
+ *
+ * @return string
+ */
+function novablocks_get_plugin_path() {
+	static $novablocks_plugin_path;
+
+	if ( empty( $novablocks_plugin_path ) ) {
+		$novablocks_plugin_path = plugin_dir_path( __FILE__ );
+	}
+
+	return $novablocks_plugin_path;
+}
+
+/**
+ * Gets this plugin's URL.
+ *
+ * @since  1.0.0
+ * @ignore
+ * @access private
+ *
+ * @return string
+ */
+function novablocks_get_plugin_url() {
+	static $novablocks_plugin_url;
+
+	if ( empty( $novablocks_plugin_url ) ) {
+		$novablocks_plugin_url = plugins_url( null, __FILE__ );
+	}
+
+	return $novablocks_plugin_url;
+}
+
 require_once dirname( __FILE__ ) . '/lib/setup.php';
 
 // @todo - forget about settings, theme support an attributes for a couple of moments
  require_once dirname( __FILE__ ) . '/lib/extras.php';
-// require_once dirname( __FILE__ ) . '/lib/settings.php';
+ require_once dirname( __FILE__ ) . '/lib/settings.php';
 
 // @todo probably each block will take care of its assets and initialisation
-// require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
+ require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 // require_once dirname( __FILE__ ) . '/src/blocks/init.php';
 
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 
 // load block areas functionality
 require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
-
-require_once dirname( __FILE__ ) . '/packages/block-library/src/hero-of-the-galaxy/index.php';
-
 

@@ -1,20 +1,20 @@
 import withSettings from '../with-settings';
-import { ControlsTab, ControlsSection } from "../control-sections";
-import ControlsGroup from "../controls-group";
+
+import {
+	ControlsGroup,
+	ControlsTab,
+	ControlsSection
+} from "../index";
 
 import { __ } from '@wordpress/i18n';
 
 import { useBlockEditContext } from '@wordpress/block-editor';
 
 import {
-	Fragment
- } from '@wordpress/element';
-
-import {
 	RangeControl,
 	RadioControl,
-	createSlotFill
- } from '@wordpress/components';
+	createSlotFill,
+} from '@wordpress/components';
 
 const EmphasisContentAreaSlotFill = createSlotFill( 'EmphasisContentArea' );
 const EmphasisContentAreaSlot = EmphasisContentAreaSlotFill.Slot;
@@ -52,6 +52,7 @@ const EmphasisLevelControls = ( props ) => {
 
 			<ControlsTab label={ __( 'Customize' ) }>
 				<RangeControl
+					key={ 'emphasis-by-contrast-controls' }
 					value={ getEmphasisByContrastValue() }
 					onChange={ contrast => {
 						const blockIndex = Math.floor( contrast / 3 );
@@ -71,6 +72,7 @@ const EmphasisLevelControls = ( props ) => {
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ControlsGroup title={ __( 'Contrast' ) }>
 					<RadioControl
+						key={ 'block-emphasis-controls' }
 						label={ __( 'Block Emphasis', '__plugin_txtd' ) }
 						value={ blockStyle }
 						selected={ blockStyle }
@@ -80,6 +82,7 @@ const EmphasisLevelControls = ( props ) => {
 					<EmphasisBlockAreaSlot />
 
 					<RadioControl
+						key={ 'content-emphasis-controls' }
 						label={ __( 'Content Area Emphasis', '__plugin_txtd' ) }
 						value={ contentStyle }
 						selected={ contentStyle }

@@ -11,7 +11,8 @@ function novablocks_settings_init() {
 
     $js_script = '
     ( function() {
-        wp.novaBlocks.initialize( %s );
+        wp.novaBlocks.settings = %s;
+        wp.novaBlocks.initialize( wp.novaBlocks.settings );
     } )();
 ';
 

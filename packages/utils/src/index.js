@@ -1,4 +1,32 @@
-import { select } from '@wordpress/data';
+import classnames from "classnames";
+
+export { getPlaceholderImages } from './unsplash';
+export { normalizeImages } from './images';
+export { default as generateDefaults } from './generate-defaults';
+
+export const getRandomBetween = ( min, max ) => {
+	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
+	return Math.floor( random * (max - min + 1) + min );
+};
+
+export const getRandomArrayFromArray = ( arr, n ) => {
+
+	let result = new Array( n ),
+		len = arr.length,
+		taken = new Array( len );
+
+	if ( ! len ) {
+		return [];
+	}
+
+	while ( n -- ) {
+		const x = Math.floor( Math.random() * len );
+		result[n] = arr[x in taken ? taken[x] : x];
+		taken[x] = -- len in taken ? taken[len] : len;
+	}
+
+	return result;
+};
 
 export const debounce = (func, wait) => {
 	let timeout = null;
@@ -22,22 +50,6 @@ export const range = function( min, max ) {
 		array.push( i + min );
 	}
 	return array;
-}
-
-export const withFirstBlockConditions = function( Component ) {
-
-	return function( props ) {
-
-		const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
-		const blocks = getBlocks();
-		const selectedBlockClientId = getSelectedBlockClientId();
-		const index = blocks.findIndex( block => block.clientId === selectedBlockClientId );
-		const show = index === 0 && props.clientId === selectedBlockClientId;
-
-		return show && <Component { ...props } />;
-
-	}
-
 };
 
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -64,7 +76,7 @@ export const hasTouchScreen = function() {
 	}
 
 	return hasTouchScreen;
-}
+};
 
 export const findParents = ( target, query ) => {
 	let parents = [];
@@ -108,7 +120,7 @@ export const shuffleArray = function( array ) {
 export const defaultSnapValues = {
 	x: [0, 0.5, 1],
 	y: [0, 0.5, 1]
-}
+};
 
 export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSnapValues ) {
 	let x = parseFloat( focalPoint.x );
@@ -128,10 +140,10 @@ export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSna
 	} );
 
 	return { x, y }
-}
+};
 
-export const getSnapClassname = function( focalPoint ) {
-	const classNames = []
+export const getSnapClassname = focalPoint => {
+	const classNames = [];
 
 	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
 		classNames.push( 'is-snapped-x' );
@@ -142,4 +154,15 @@ export const getSnapClassname = function( focalPoint ) {
 	}
 
 	return classNames.join( ' ' );
-}
+};
+
+export const getControlsClasses = ( attributes, compileAttributes ) => {
+	const classes = [ 'novablocks-controls-wrap' ];
+	const compiledAttributes = compileAttributes( attributes );
+
+	if ( Object.keys( compiledAttributes ).some( key => compiledAttributes[ key ] !== attributes[ key ] ) ) {
+		classes.push( 'novablocks-controls-wrap--dirty' );
+	}
+
+	return classnames( classes );
+};

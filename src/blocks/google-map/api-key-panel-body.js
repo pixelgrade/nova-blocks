@@ -39,7 +39,7 @@ class ApiKeyPanelBody extends Component {
 					onChange={ onChangeApiKey }
 					help={ apiKeyInstructions }
 				/>
-				<Button isDefault onClick={ () => { onSaveApiKey( apiKey ) } }>
+				<Button isSecondary onClick={ () => { onSaveApiKey( apiKey ) } }>
 					{ __( 'Save', '__plugin_txtd' ) }
 				</Button>
 			</Fragment>

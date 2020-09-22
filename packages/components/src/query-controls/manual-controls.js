@@ -1,9 +1,9 @@
 import AutocompleteTokenField from "../autocomplete-tokenfield";
 
 const apiFetch = wp.apiFetch;
-import { addQueryArgs } from '@wordpress/url';
-import { decodeEntities } from '@wordpress/htmlEntities';
-import { __ } from '@wordpress/i18n';
+const { addQueryArgs } = wp.url;
+const { decodeEntities } = wp.htmlEntities;
+const { __ } = wp.i18n;
 
 const fetchPostSuggestions = ( search ) => {
 	return apiFetch( {

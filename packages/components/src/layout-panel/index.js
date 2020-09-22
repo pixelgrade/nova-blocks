@@ -4,7 +4,10 @@
 import PaddingControls from './padding';
 import WidthControls from './width';
 
-import { ControlsTab, ControlsSection } from "../control-sections";
+import {
+	ControlsTab,
+	ControlsSection
+} from "../index";
 
 /**
  * WordPress dependencies
@@ -15,8 +18,8 @@ const LayoutPanel = function( props ) {
 	return (
 		<ControlsSection label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
-				<PaddingControls { ...props } />
-				<WidthControls { ...props } />
+				<PaddingControls key={ 'padding-controls' } { ...props } />
+				<WidthControls key={ 'width-controls' } { ...props } />
 			</ControlsTab>
 		</ControlsSection>
 	);

@@ -14,7 +14,7 @@ import { Fragment } from '@wordpress/element';
 
 import {
 	Dropdown,
-	IconButton,
+	Button,
 	PanelRow,
 	Toolbar
  } from '@wordpress/components';
@@ -27,12 +27,11 @@ const AlignmentToolbar = function( props ) {
 				className="pixelgrade-hero-block-toolbar-dropdown"
 				contentClassName="components-nova--popover"
 				renderToggle={ ( { isOpen, onToggle } ) => (
-					<IconButton
+					<Button
 						onClick={ onToggle }
 						icon={ icons.alignment }
 						aria-expanded={ isOpen }
 						label={ __( 'Content Position', '__plugin_txtd' ) }
-						labelPosition="bottom"
 					/>
 				) }
 				focusOnMount={ false }

@@ -2,9 +2,9 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.4.0
+Tested up to: 5.4.2
 Requires PHP: 5.4.0
-Stable tag: 1.4.2
+Stable tag: 1.5.3
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,33 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.5.3 =
+* Add caption and description to Media Card and Gallery of the stars images
+* Add toggle to hide content of the Hero block
+* Improve Slideshow gallery creation UX
+* Fix Announcement Bar vertical alignment
+* Fix Focal Point picker guides in WordPress 5.5
+* Fix automatic Slideshow height in the block editor
+
+= 1.5.2 =
+* Fix Slideshow Me The Way block display in the block editor
+
+= 1.5.1 =
+* Fix Media Card Constellation block deprecation method
+
+= 1.5.0 =
+* New Block: Posts Collection for displaying posts
+* Added placeholder images for most blocks
+* Added an advanced vertical alignment system for the Media Card block
+* Added new controls for the Media Card block
+* Added new controls for the Food Menu blocks
+* Improved usability of blocks by reorganising sidebar controls in sections
+
+= 1.4.3 =
+* Add video support for Slideshow Block
+* Fix video background autoplay for Hero block on mobile devices
+* Fix alignment and display for Slideshow Block in editor
 
 = 1.4.2 =
 * Improved labels for Map block options in the editor

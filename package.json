@@ -1,13 +1,14 @@
 {
 	"name": "nova-blocks",
-	"version": "1.2.0",
+	"version": "1.5.3",
+	"main": "blocks/index.js",
 	"license": "GPL-3.0+",
 	"scripts": {
 		"build": "npm run build:packages && wp-scripts build",
 		"build:packages": "node ./bin/packages/build.js"
 	},
 	"dependencies": {
-		"@novablocks/block-library": "file:packages/block-library",
+		"@novablocks/gallery-of-the-stars": "file:packages/gallery-of-the-stars",
 		"@novablocks/components": "file:packages/components",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",
@@ -15,11 +16,14 @@
 		"js-cookie": "^2.2.1"
 	},
 	"devDependencies": {
-		"@wordpress/babel-preset-default": "^4.10.0",
+		"@babel/plugin-proposal-optional-chaining": "^7.10.4",
+
+		"@wordpress/babel-preset-default": "^4.12.1",
 		"@wordpress/custom-templated-path-webpack-plugin": "^1.6.0",
 		"@wordpress/dependency-extraction-webpack-plugin": "^2.2.0",
 		"@wordpress/library-export-default-webpack-plugin": "^1.6.0",
 		"@wordpress/scripts": "^3.4.0",
+
 		"autoprefixer": "^9.7.4",
 		"babel-plugin-inline-json-import": "^0.3.2",
 		"copy-webpack-plugin": "^5.1.1",

@@ -1,21 +1,20 @@
-import { EmphasisBlockAreaControls, EmphasisContentAreaControls } from "../emphasis-level-controls";
-import { HeadingToolbar } from "../";
-import {ControlsSection, ControlsTab} from "../control-sections";
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-
 import {
-	PanelBody,
+	HeadingToolbar,
+	ControlsSection,
+	ControlsTab
+} from "../index";
+
+const { __ } = wp.i18n;
+
+const {
 	PanelRow,
 	RadioControl,
-	RangeControl
- } from '@wordpress/components';
+	RangeControl,
+} = wp.components;
 
-import {
-	InspectorControls,
-	AlignmentToolbar
- } from '@wordpress/block-editor';
+const {
+	AlignmentToolbar,
+} = wp.blockEditor;
 
 const CollectionInspectorControls = ( props ) => {
 
@@ -25,63 +24,73 @@ const CollectionInspectorControls = ( props ) => {
 			containerHeight,
 			imageResizing,
 			level,
-			showMedia,
+			imagePadding,
 		},
 		setAttributes,
-		isSelected,
 	} = props;
 
 	const onChange = typeof props.onChange !== 'function' ? setAttributes : props.onChange;
 
 	return (
-		<Fragment>
-			<EmphasisBlockAreaControls>
-				  <PanelRow>
-					  <span>{ __( 'Title Level', '__plugin_txtd' ) }</span>
-					  <HeadingToolbar
-						  minLevel={ 2 }
-						  maxLevel={ 4 }
-						  selectedLevel={ level }
-						  onChange={ ( level ) => { onChange( { level } ) } }
-					  />
-				  </PanelRow>
-			</EmphasisBlockAreaControls>
-			<EmphasisContentAreaControls>
-				  <PanelRow>
-					  <span>{ __( 'Content Alignment', '__plugin_txtd' ) }</span>
-					  <AlignmentToolbar
-						  value={ contentAlign }
-						  isCollapsed={ false }
-						  onChange={ ( contentAlign ) => { onChange( { contentAlign } ) } }
-					  />
-				  </PanelRow>
-			</EmphasisContentAreaControls>
-			<ControlsSection label={ __( 'Display' ) }>
-				<ControlsTab label={ __( 'Settings' ) }>
-					<RadioControl
-						label={'Image resizing'}
-						selected={imageResizing}
-						onChange={imageResizing => {
-							setAttributes( {imageResizing} )
+		<ControlsSection label={ __( 'Display' ) }>
+			<ControlsTab label={ __( 'Settings' ) }>
+				<RadioControl
+					key={ 'collection-image-resizing' }
+					label={ __( 'Image resizing' ) }
+					selected={ imageResizing }
+					onChange={ imageResizing => {
+						setAttributes( { imageResizing } )
+					} }
+					options={ [
+						{ label: 'Stretch to fill the container', value: 'cropped' },
+						{ label: 'Shrink to fit (no crop)', value: 'original' },
+					] }
+				/>
+				<RangeControl
+					key={ 'collection-image-container-height' }
+					label={ __( 'Image container height', '__plugin_txtd' ) }
+					value={ containerHeight }
+					onChange={ containerHeight => {
+						setAttributes( { containerHeight } )
+					} }
+					min={ 0 }
+					max={ 100 }
+					step={ 5 }
+				/>
+				<RangeControl
+					key={ 'collection-image-padding' }
+					label={ __( 'Image padding', '__plugin_txtd' ) }
+					value={ imagePadding }
+					onChange={ imagePadding => {
+						setAttributes( { imagePadding } )
+					} }
+					min={ 0 }
+					max={ 100 }
+					step={ 50 }
+				/>
+				<PanelRow>
+					<span>{__( 'Title Level', '__plugin_txtd' )}</span>
+					<HeadingToolbar
+						minLevel={2}
+						maxLevel={4}
+						selectedLevel={level}
+						onChange={( level ) => {
+							onChange( {level} )
 						}}
-						options={[
-							{label: 'Stretch to fill the container', value: 'cropped'},
-							{label: 'Shrink to fit (no crop)', value: 'original'},
-						]}
 					/>
-					<RangeControl
-						label={__( 'Image container height', '__plugin_txtd' )}
-						value={containerHeight}
-						onChange={containerHeight => {
-							setAttributes( {containerHeight} )
+				</PanelRow>
+				<PanelRow>
+					<span>{__( 'Content Alignment', '__plugin_txtd' )}</span>
+					<AlignmentToolbar
+						value={contentAlign}
+						isCollapsed={false}
+						onChange={( contentAlign ) => {
+							onChange( {contentAlign} )
 						}}
-						min={0}
-						max={100}
-						step={5}
 					/>
-				</ControlsTab>
-			</ControlsSection>
-		</Fragment>
+				</PanelRow>
+			</ControlsTab>
+		</ControlsSection>
 	)
 }
 

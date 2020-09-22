@@ -2,15 +2,12 @@ import { parallaxInit } from "../../components/with-parallax/util";
 
 import {
 	debounce,
-	isSafari,
 	hasTouchScreen
 } from '@novablocks/utils';
 
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';
 const SLIDE_SELECTOR = '.novablocks-slideshow__slide';
-const CONTENT_SELECTOR = '.novablocks-slideshow__content';
-const BACKGROUND_SELECTOR = '.novablocks-slideshow__background';
 const FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
 const TRANSITION_DURATION = 1000;
 const TRANSITION_EASING = "easeInOutCirc";
@@ -27,11 +24,10 @@ const TRANSITION_EASING = "easeInOutCirc";
 			$slider = $block.find( SLIDER_SELECTOR ),
 			$arrowContainer;
 
+		resetBlockMinHeight( $block );
+
 		if ( $slider.children().length > 1 ) {
 			$arrowContainer = $( '<div class="novablocks-slideshow__controls">' ).appendTo( $block );
-
-			resetBlockMinHeight( $block );
-			$block.addClass( 'is-ready' );
 
 			$slider.on( 'beforeChange', onBeforeSlideChange );
 
@@ -45,6 +41,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 				speed: 0,
 			});
 		}
+
+		$block.addClass( 'is-ready' );
 	});
 
 	parallaxInit( $blocks );
@@ -60,6 +58,8 @@ const TRANSITION_EASING = "easeInOutCirc";
 	function resetBlockMinHeight( $block ) {
 		$block.css( 'minHeight', '' );
 		$block.css( 'minHeight', getBlockMinHeight( $block ) );
+
+		$( window ).trigger( 'scroll' );
 	}
 
 	function getBlockMinHeight( $block ) {

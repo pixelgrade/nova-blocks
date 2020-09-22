@@ -1,10 +1,8 @@
 import classnames from 'classnames';
-import { kebabCase } from 'lodash';
 import EditableText from "../editable-text";
 import InspectorControls from "./inspector-controls";
-import toggles from "../cards-manager-panel/toggles";
 
-import { Fragment } from '@wordpress/element';
+const { Fragment } = wp.element;
 
 const CollectionTitle = ( props ) => {
 
@@ -66,9 +64,6 @@ const Collection = ( props ) => {
 
 	const {
 		attributes,
-		setAttributes,
-		clientId,
-		innerBlocks,
 		hasAppender
 	} = props;
 
@@ -76,23 +71,10 @@ const Collection = ( props ) => {
 		blockStyle,
 		contentStyle,
 
-		title,
-		subtitle,
-
 		contentAlign,
-		level,
 		imageResizing,
 		containerHeight,
-
-		showCollectionTitle,
-		showCollectionSubtitle,
-
-		showMedia,
-		showTitle,
-		showSubtitle,
-		showDescription,
-		showButtons,
-		showMeta,
+		imagePadding,
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
@@ -121,19 +103,10 @@ const Collection = ( props ) => {
 	}
 
 	const style = {
+		'--card-media-padding': imagePadding,
 		'--card-media-padding-top': getCardMediaPaddingTop( containerHeight ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};
-
-	const cardsClassNames = toggles.map( toggle => {
-		let toggleClass = kebabCase( toggle.attribute );
-
-		if ( ! attributes[ toggle.attribute ] ) {
-			toggleClass = toggleClass.replace( 'show', 'hide' );
-		}
-
-		return toggleClass;
-	} );
 
 	const className = classnames(
 		props.className,
@@ -143,10 +116,8 @@ const Collection = ( props ) => {
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
-			'has-background': blockStyle !== 'basic',
 			'has-appender': hasAppender,
 		},
-		...cardsClassNames
 	);
 
 	return (

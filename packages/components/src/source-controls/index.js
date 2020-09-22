@@ -1,8 +1,8 @@
-import apiFetch from '@wordpress/apiFetch';
-import { __ } from '@wordpress/i18n';
-import { Component, Fragment } from '@wordpress/element';
-import { PanelBody, SelectControl } from '@wordpress/components';
-import { addQueryArgs } from '@wordpress/url';
+const { apiFetch } = wp;
+const { __ } = wp.i18n;
+const { Component, Fragment } = wp.element;
+const { PanelBody, SelectControl } = wp.components;
+const { addQueryArgs } = wp.url;
 
 class AuthorSelect extends Component {
 
@@ -187,8 +187,6 @@ class SourceControls extends Component {
 		if ( 'page' === this.state.selectedType ) {
 			url = 'wp/v2/pages';
 		}
-
-		console.log( url, args );
 	}
 
 	render() {

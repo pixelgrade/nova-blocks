@@ -9,6 +9,6 @@ const ControlsGroup = ( props ) => {
 			{ props.children }
 		</div>
 	)
-}
+};
 
 export default ControlsGroup;

@@ -3,7 +3,8 @@
 	flex-wrap: wrap;
 	align-items: stretch;
 	margin-top: calc(-1 * var(--novablocks-spacing));
-	margin-left: calc(-1 * var(--novablocks-spacing));
+	margin-left: calc(-0.5 * var(--novablocks-spacing));
+	pointer-events: none;
 
 	> * {
 		--columns-below-tablet: 1;
@@ -11,11 +12,12 @@
 		--columns: var(--columns-below-lap);
 
 		--surplus: 0px;
-		--width: calc( ( 100% - var(--surplus) ) / var(--columns) - var(--novablocks-spacing));
+		--width: calc( ( 100% - var(--surplus) ) / var(--columns) - 0.5 * var(--novablocks-spacing));
 
 		flex: 0 1 var(--width);
 		margin-top: var(--novablocks-spacing);
-		margin-left: var(--novablocks-spacing);
+		margin-left: calc(0.5 * var(--novablocks-spacing));
+		pointer-events: auto;
 
 		@include below(lap) {
 			--columns: var(--columns-below-lap) !important;

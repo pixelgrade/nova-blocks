@@ -126,7 +126,7 @@ if ( files.length ) {
 	bar.tick( 0 );
 
 	stream = glob.stream(
-		[ `${ PACKAGES_DIR }/*/src/**/*.js`, `${ PACKAGES_DIR }/*/src/*.scss` ],
+		[ `${ PACKAGES_DIR }/*/src/**/*.js`, `${ PACKAGES_DIR }/*/src/*.scss`, `${ PACKAGES_DIR }/*/src/**/*.json` ],
 		{
 			ignore: [
 				`**/benchmark/**`,
@@ -156,8 +156,8 @@ let ended = false,
 	complete = 0;
 
 stream
-.on( 'data', ( file ) =>
-	worker( file, ( error ) => {
+.on( 'data', ( file ) => {
+	return worker( file, ( error ) => {
 		onFileComplete();
 
 		if ( error ) {
@@ -177,7 +177,7 @@ stream
 			workerFarm.end( worker );
 		}
 	} )
-)
+} )
 .on( 'end', () => ( ended = true ) )
 .resume();
 

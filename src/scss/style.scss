@@ -1,7 +1,8 @@
 @import 'variables';
 @import 'mixins';
 
-@import './emphasis';
+@import 'components/emphasis/style';
+@import 'components/spacing/style';
 
 @import '../blocks/announcement-bar/scss/style';
 @import '../blocks/google-map/scss/style';
@@ -27,7 +28,7 @@
 @import 'vendor/slick';
 @import 'vendor/slick-theme';
 
-[class*="__inner-container"] > [class*="wp-block"] {
+[class*="__inner-container"] > * {
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -114,11 +115,6 @@
 	.scrolling-effect-static & {
 		position: static;
 	}
-}
-
-//@todo: remove this
-.novablocks-media__inner-container {
-	text-align: center;
 }
 
 .wp-block-novablocks-posts .wp-block {
