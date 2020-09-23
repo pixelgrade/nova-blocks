@@ -1,0 +1,28 @@
+:root {
+  --novablocks-content-padding-small: 5%;
+  --novablocks-content-padding-medium: 10%;
+  --novablocks-content-padding-large: 15%;
+  --novablocks-content-width-full: 100%;
+  --novablocks-content-width-large: 70%;
+  --novablocks-content-width-narrow: 30%; }
+
+.novablocks-u-content-width {
+  --novablocks-content-width: var(--novablocks-content-width-full); }
+  .novablocks-u-content-width-large .novablocks-u-content-width {
+    --novablocks-content-width: var(--novablocks-content-width-large); }
+  .novablocks-u-content-width-narrow .novablocks-u-content-width {
+    --novablocks-content-width: var(--novablocks-content-width-narrow); }
+  @media only screen and (min-width: 1024px) {
+    .novablocks-u-content-width {
+      max-width: var(--novablocks-content-width); } }
+
+.novablocks-u-content-padding {
+  padding: var(--novablocks-content-padding-small);
+  --novablocks-content-padding: var(--novablocks-content-padding-small); }
+  .novablocks-u-spacing-medium .novablocks-u-content-padding {
+    --novablocks-content-padding: var(--novablocks-content-padding-medium); }
+  .novablocks-u-spacing-large .novablocks-u-content-padding {
+    --novablocks-content-padding: var(--novablocks-content-padding-large); }
+  @media only screen and (min-width: 1024px) {
+    .novablocks-u-content-padding {
+      padding: var(--novablocks-content-padding); } }

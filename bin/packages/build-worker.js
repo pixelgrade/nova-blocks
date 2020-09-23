@@ -116,14 +116,11 @@ const BUILD_TASK_BY_EXTENSION = {
 			includePaths: [ path.join( PACKAGES_DIR, 'base-styles' ) ],
 			data:
 				[
-//					'colors',
-//					'breakpoints',
-//					'variables',
-//					'mixins',
-//					'animations',
-//					'z-index',
+					'mixins',
 				]
-					.map( ( imported ) => `@import "${ imported }";` )
+					.map( ( imported ) => {
+						return `@import "${ imported }";`
+					} )
 					.join( ' ' ) + contents,
 		} );
 
@@ -156,7 +153,7 @@ const BUILD_TASK_BY_EXTENSION = {
 			const destPath = getBuildPath( file, buildDir );
 			const babelOptions = getBabelConfig(
 				environment,
-				file.replace( PACKAGES_DIR, '@wordpress' )
+				file.replace( PACKAGES_DIR, '@novablocks' )
 			);
 
 			const [ , transformed ] = await Promise.all( [

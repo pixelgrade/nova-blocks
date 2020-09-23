@@ -1,5 +1,4 @@
 @import 'variables';
-@import 'mixins';
 
 @import 'components/emphasis/style';
 @import 'components/spacing/style';
@@ -17,13 +16,6 @@
 @import '../blocks/opentable/scss/style';
 @import '../blocks/openhours/scss/style';
 @import '../blocks/card/scss/style';
-
-@import '../components/advanced-gallery/scss/style';
-@import '../components/alignment-controls/style';
-@import '../components/collection/scss/style';
-@import '../components/color-controls/style';
-@import '../components/layout-panel/style';
-@import '../components/scrolling-effect-controls/style';
 
 @import 'vendor/slick';
 @import 'vendor/slick-theme';

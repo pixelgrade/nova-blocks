@@ -1,4 +1,4 @@
-import { parallaxInit } from "../../components/with-parallax/util";
+import { parallaxInit } from "@novablocks/components";
 
 (function($, window, undefined) {
 

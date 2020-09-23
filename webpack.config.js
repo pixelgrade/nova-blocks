@@ -33,8 +33,8 @@ const gutenbergPackages = Object.keys( dependencies )
                                 .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
 
 let entryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
-	const name = camelCaseDash( packageName );
-	memo[ `${ name }` ] = `./packages/${ packageName }`;
+	let key = `./build/${ packageName }/index`;
+	memo[ key ] = `./packages/${ packageName }`;
 	return memo;
 }, {} );
 
@@ -42,11 +42,9 @@ let blocksEntryPoints = glob.sync( './packages/block-library/build/blocks/*/@(ed
                   .reduce( ( acc, path ) => {
                   	let key = path;
 
-                  	key = path.replace( './packages/block-library/build/blocks/', '' );
+                  	key = key.replace( '/build', '' );
+                  	key = key.replace( './packages', './build' );
                   	key = key.replace( '.js', '' );
-                  	key = key.replace( '/', '-' );
-                  	key = key.replace( 'index', 'editor' );
-                  	key = camelCaseDash( key );
 
                   	return {
                   		...acc,
@@ -63,7 +61,6 @@ module.exports = {
 	entry: entryPoints,
 	output: {
 		devtoolNamespace: 'novablocks',
-		filename: './build/[basename]/index.js',
 		path: __dirname,
 		library: [ 'novablocks', '[name]' ],
 		libraryTarget: 'this',

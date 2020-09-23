@@ -20,6 +20,7 @@ export {
 	withParallaxProvider,
 	withParallaxContext,
 	withParallaxControls,
+	parallaxInit,
 } from './with-parallax';
 
 export {

@@ -2,9 +2,11 @@ import { createContext } from '@wordpress/element';
 
 import { findParents } from '@novablocks/utils';
 import { easeInOutCubic, easeOutQuart } from '@novablocks/easings';
-import { ScrollingEffectControls, withSettings } from "../index";
+import { ScrollingEffectControls } from "../index";
 
 import { getStyles, getState } from './util';
+
+export { parallaxInit } from './util';
 
 /**
  * WordPress dependencies

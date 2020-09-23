@@ -113,6 +113,8 @@ if ( files.length ) {
 	stream = new Readable( { encoding: 'utf8' } );
 	files.forEach( ( file ) => stream.push( file ) );
 	stream.push( null );
+	stream = stream
+	.pipe( createStyleEntryTransform() );
 } else {
 	const bar = new ProgressBar( 'Build Progress: [:bar] :percent', {
 		width: 30,
@@ -123,7 +125,12 @@ if ( files.length ) {
 	bar.tick( 0 );
 
 	stream = glob.stream(
-		[ `${ PACKAGES_DIR }/*/src/**/*.js`, `${ PACKAGES_DIR }/*/src/*.scss` ],
+		[
+			`${ PACKAGES_DIR }/*/src/**/*.js`,
+			`${ PACKAGES_DIR }/*/src/*.scss`,
+			`${ PACKAGES_DIR }/block-library/src/blocks/*.scss`,
+			`${ PACKAGES_DIR }/*/src/**/*.json`
+		],
 		{
 			ignore: [
 				`**/benchmark/**`,

@@ -1,20 +1,5 @@
-@import 'mixins';
-
 @import 'components/emphasis/editor';
 @import 'components/spacing/editor';
-
-@import '../components/alignment-controls/editor';
-@import '../components/autocomplete-tokenfield/editor';
-@import '../components/collection/scss/editor';
-@import '../components/color-controls/editor';
-@import '../components/control-sections/editor';
-@import '../components/controls-group/scss/editor';
-@import '../components/drawer/editor';
-@import '../components/layout-panel/editor';
-@import '../components/notice/editor';
-@import '../components/scrolling-effect-controls/editor';
-@import '../components/tabs/editor';
-@import '../components/toggle-group/editor';
 
 @import '../blocks/announcement-bar/scss/editor';
 @import '../blocks/card/scss/editor';
