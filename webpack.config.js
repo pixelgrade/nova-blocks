@@ -1,18 +1,17 @@
 /**
  * External dependencies
  */
-const { DefinePlugin } = require( 'webpack' );
+const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const postcss = require( 'postcss' );
-const { get, escapeRegExp, compact } = require( 'lodash' );
-const { basename, sep } = require( 'path' );
-const glob = require( "glob" )
+const { get, compact } = require( 'lodash' );
+const { basename } = require( 'path' );
+const glob = require( "glob" );
 
 /**
  * WordPress dependencies
  */
 const CustomTemplatedPathPlugin = require( '@wordpress/custom-templated-path-webpack-plugin' );
-const LibraryExportDefaultPlugin = require( '@wordpress/library-export-default-webpack-plugin' );
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 const { camelCaseDash } = require( '@wordpress/scripts/utils' );
 
@@ -33,8 +32,7 @@ const gutenbergPackages = Object.keys( dependencies )
                                 .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
 
 let entryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
-	let key = `./build/${ packageName }/index`;
-	memo[ key ] = `./packages/${ packageName }`;
+	memo[ packageName ] = `./packages/${ packageName }`;
 	return memo;
 }, {} );
 
@@ -105,12 +103,46 @@ const CopyBlocksCSSPlugin =
 		} )
 	);
 
+const CopyBlocksPhpPlugin =
+	new CopyWebpackPlugin(
+		glob.sync( './packages/block-library/build/blocks/*/' ).map( ( path ) => {
+			let blockName = path.replace( './packages/block-library/build/blocks/', '' );
+			blockName = blockName.replace( '/', '' );
 
-module.exports = {
+			return {
+				from: `./packages/block-library/build/blocks/${ blockName }/*.php`,
+				to: `./build/block-library/blocks/${ blockName }/`,
+				flatten: true,
+			}
+		} )
+	);
+
+const CopyBlocksJsonPlugin =
+	new CopyWebpackPlugin(
+		glob.sync( './packages/block-library/build/blocks/*/' ).map( ( path ) => {
+			let blockName = path.replace( './packages/block-library/build/blocks/', '' );
+			blockName = blockName.replace( '/', '' );
+
+			return {
+				from: `./packages/block-library/build/blocks/${ blockName }/*.json`,
+				to: `./build/block-library/blocks/${ blockName }/`,
+				flatten: true,
+			}
+		} )
+	);
+
+const PackagesConfig = {
 	mode,
 	entry: entryPoints,
 	output: {
 		devtoolNamespace: 'novablocks',
+		filename: ( pathData ) => {
+			let filename = `./build/${ pathData.chunk.name }/index.js`;
+			if ( pathData.chunk.name.search( 'block-library' ) !== -1 ) {
+				filename = `${ pathData.chunk.name }.js`;
+			}
+			return filename;
+		},
 		path: __dirname,
 		library: [ 'novablocks', '[name]' ],
 		libraryTarget: 'this',
@@ -149,6 +181,8 @@ module.exports = {
 		} ),
 		CopyPackageCSSPlugin,
 		CopyBlocksCSSPlugin,
+		CopyBlocksPhpPlugin,
+		CopyBlocksJsonPlugin,
 		new DependencyExtractionWebpackPlugin( {
 			injectPolyfill: true,
 			requestToExternal,
@@ -172,4 +206,56 @@ function requestToHandle( request ) {
 	}
 }
 
+const minimizeConfig = {
+	minimize: true,
+	minimizer: [
+		new TerserPlugin( {
+			include: /\.min\.js$/,
+			extractComments: {
+				condition: true,
+				filename: (fileData) => {
+					// The "fileData" argument contains object with "filename", "basename", "query" and "hash"
+					return `${fileData.filename}.LICENSE.txt${fileData.query}`;
+				},
+				banner: (commentsFile) => {
+					return `My custom banner about license information ${commentsFile}`;
+				},
+			},
+		} )
+	],
+};
 
+/**
+ * Config for compiling Vendors.
+ */
+const VendorScripts = [
+	'jquery.bully',
+	'jquery.slick',
+	'jquery.velocity'
+];
+
+const VendorEntries = {};
+
+VendorScripts.forEach( script => {
+	VendorEntries[ `./dist/vendor/${ script }` ] = `./src/vendor/${ script }`;
+	VendorEntries[ `./dist/vendor/${ script }.min` ] = `./src/vendor/${ script }`;
+} );
+
+const VendorConfig = {
+	mode,
+	externals: {
+		jquery: 'jQuery',
+	},
+	output: {
+		path: __dirname,
+	},
+	entry: VendorEntries,
+	optimization: {
+		...minimizeConfig,
+	},
+};
+
+module.exports = [
+	PackagesConfig,
+	VendorConfig,
+];

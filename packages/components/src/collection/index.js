@@ -1,20 +1,25 @@
 import classnames from 'classnames';
-import EditableText from "../editable-text";
+import { EditableText, GridGenerator } from "../index";
 import InspectorControls from "./inspector-controls";
 
-// @todo this is bad mojo
-import { getAreaClassnameByWidthRatio, getAreaClassnameByHeightRatio } from '../grid-generator/utils'
 import { getCardMediaPaddingTop } from '@novablocks/utils'
 
-const { __ } = wp.i18n;
-const { Fragment } = wp.element;
-const {
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+import { URLInput } from '@wordpress/block-editor';
+
+import {
 	BaseControl,
 	ToggleControl,
-} = wp.components;
-const { URLInput } = wp.blockEditor;
+} from '@wordpress/components';
 
-const CollectionTitle = ( props ) => {
+// @todo this is bad mojo
+const {
+	getAreaClassnameByWidthRatio,
+	getAreaClassnameByHeightRatio
+} = GridGenerator.utils;
+
+export const CollectionTitle = ( props ) => {
 
 	const {
 		attributes: {
@@ -71,7 +76,7 @@ const CollectionTitle = ( props ) => {
 	);
 }
 
-const CollectionSubtitle = ( props ) => {
+export const CollectionSubtitle = ( props ) => {
 
 	const {
 		attributes: {

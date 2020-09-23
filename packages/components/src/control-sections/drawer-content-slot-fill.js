@@ -1,4 +1,4 @@
-const { createSlotFill } = wp.components;
+import { createSlotFill } from '@wordpress/components';
 
 const DrawerContentSlotFill = createSlotFill( 'DrawerContent' );
 const DrawerContentSlot = DrawerContentSlotFill.Slot;

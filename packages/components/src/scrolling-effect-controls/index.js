@@ -20,7 +20,7 @@ import {
 	Fragment
 } from '@wordpress/element';
 
-import { defaultSnapValues, getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
+import { getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
 
 export { default as scrollingAttributes } from './attributes';
 

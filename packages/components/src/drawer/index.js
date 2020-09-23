@@ -1,15 +1,15 @@
 import { useSpring, animated } from 'react-spring';
 import { orderBy } from 'lodash';
 import classnames from 'classnames';
-import useResizeObserver from '@wordpress/compose';
+import { useResizeObserver } from '@novablocks/utils';
 
-const {
+import {
 	Children,
 	cloneElement,
 	useEffect,
 	useRef,
 	useState,
-} = wp.element;
+ } from '@wordpress/element';
 
 const Drawers = ( ownProps ) => {
 

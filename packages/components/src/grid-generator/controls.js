@@ -1,24 +1,30 @@
 import { isUndefined } from "lodash";
-import { ControlsSection, ControlsTab } from "../control-sections";
-import { getControlsClasses } from "../../utils";
-import {getOptimalHeaderPosition, getPostsCount} from "../../components/grid-generator/utils";
-import { applyLayoutEngine } from "../../components/grid-generator/layoutEngine";
-import ControlsGroup from "../controls-group";
-import { PresetControl, withSettings } from "../../components";
-import { getRandomBetween, getRandomBooleanValue } from "../../utils";
 
-const { __ } = wp.i18n;
+import {
+	ControlsGroup,
+	ControlsSection,
+	ControlsTab,
+	PresetControl,
+} from "../index";
 
-const {
-	Fragment
-} = wp.element;
+import {
+	getControlsClasses,
+	getRandomBetween,
+	getRandomBooleanValue,
+	withSettings,
+} from "@novablocks/utils";
 
-const {
+import { getOptimalHeaderPosition, getPostsCount } from "./utils";
+import { applyLayoutEngine } from "./layoutEngine";
+
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+
+import {
 	RadioControl,
 	RangeControl,
 	ToggleControl,
-} = wp.components;
-
+} from '@wordpress/components';
 
 const getMinFeatureSize = ( attributes ) => {
 	return 1;

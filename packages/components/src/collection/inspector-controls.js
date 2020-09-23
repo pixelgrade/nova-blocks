@@ -4,17 +4,17 @@ import {
 	ControlsTab
 } from "../index";
 
-const { __ } = wp.i18n;
+import { __  } from '@wordpress/i18n';
 
-const {
+import {
 	PanelRow,
 	RadioControl,
 	RangeControl,
-} = wp.components;
+ } from '@wordpress/components';
 
-const {
+import {
 	AlignmentToolbar,
-} = wp.blockEditor;
+ } from '@wordpress/block-editor';
 
 const CollectionInspectorControls = ( props ) => {
 

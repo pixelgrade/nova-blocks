@@ -1,4 +1,4 @@
-const { createSlotFill } = wp.components;
+import { createSlotFill } from '@wordpress/components';
 
 const ControlsSectionsSlotFill = createSlotFill( 'ControlsSections' );
 const ControlsSectionsSlot = ControlsSectionsSlotFill.Slot;

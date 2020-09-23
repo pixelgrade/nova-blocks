@@ -1,4 +1,4 @@
-const { useState } = wp.element;
+import { useState  } from '@wordpress/element';
 const memoryState = {};
 
 const useMemoryState = ( key, initialState ) => {

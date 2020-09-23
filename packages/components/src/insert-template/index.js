@@ -1,12 +1,12 @@
-const {
+import {
 	createBlock
-} = wp.blocks;
+ } from '@wordpress/blocks';
 
-const {
+import {
 	dispatch,
 	select,
 	subscribe,
-} = wp.data;
+ } from '@wordpress/data';
 
 // Copied over from the Columns block. It seems like it should become part of public API.
 const createBlocksFromInnerBlocksTemplate = ( innerBlocksTemplate = [] ) => {

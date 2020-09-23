@@ -89,13 +89,30 @@ function getBuildPath( file, buildFolder ) {
  *
  * @type {Object<string,Function>}
  */
+const copy = async ( file ) => {
+	const outputFileBuild = getBuildPath( file, 'build' );
+	const dirnameBuild = path.dirname( outputFileBuild );
+
+	const outputFileBuildModule = getBuildPath( file, 'build-module' );
+	const dirnameBuildModule = path.dirname( outputFileBuildModule );
+
+	await Promise.all( [
+		makeDir( dirnameBuild ).then( () => {
+			return copyFile( file, outputFileBuild );
+		} ),
+		makeDir( dirnameBuildModule ).then( () => {
+			return copyFile( file, outputFileBuildModule );
+		} )
+	] );
+
+};
+
 const BUILD_TASK_BY_EXTENSION = {
-	async '.json'( file ) {
-		await Promise.all( [
-			copyFile( file, getBuildPath( file, 'build' ) ),
-			copyFile( file, getBuildPath( file, 'build-module' ) ),
-		] );
-	},
+	'.php': copy,
+	'.json': copy,
+	'.png': copy,
+	'.jpg': copy,
+	'.gif': copy,
 	async '.scss'( file ) {
 		const outputFile = getBuildPath(
 			file.replace( '.scss', '.css' ),

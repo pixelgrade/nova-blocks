@@ -9,15 +9,15 @@ import { getSectionsFromFills } from "./utils";
 
 const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
+import {
 	useEffect,
 	useState,
 	Fragment,
 	Component,
 	createRef,
-} = wp.element;
+ } from '@wordpress/element';
 
 const getTabAccentColor = ( label ) => {
 

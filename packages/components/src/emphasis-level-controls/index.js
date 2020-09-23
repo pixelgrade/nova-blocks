@@ -1,4 +1,4 @@
-import withSettings from '../with-settings';
+import { withSettings } from '@novablocks/utils';
 
 import {
 	ControlsGroup,
@@ -30,7 +30,6 @@ const EmphasisLevelControls = ( props ) => {
 		attributes: {
 			contentStyle,
 			blockStyle,
-			emphasisByContrast,
 		},
 		setAttributes,
 		settings: {

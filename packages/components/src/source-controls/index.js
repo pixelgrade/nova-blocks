@@ -1,8 +1,8 @@
 const { apiFetch } = wp;
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { PanelBody, SelectControl } = wp.components;
-const { addQueryArgs } = wp.url;
+import { __  } from '@wordpress/i18n';
+import { Component, Fragment  } from '@wordpress/element';
+import { PanelBody, SelectControl  } from '@wordpress/components';
+import { addQueryArgs  } from '@wordpress/url';
 
 class AuthorSelect extends Component {
 

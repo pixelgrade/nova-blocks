@@ -1,0 +1,61 @@
+@import 'scss/menu-toggle';
+
+@media only screen and (min-width: 1000px) {
+	// Nova Blocks hacks
+	.site-header {
+		// styles from Nova Blocks should only affect blocks created by it
+		@import 'scss/menu';
+	}
+
+	.site-header__content {
+		display: grid;
+		align-items: center;
+		grid-gap: 1em;
+
+		> * {
+			justify-content: center;
+		}
+
+		> :first-child {
+			justify-content: flex-start;
+		}
+
+		> :last-child {
+			justify-content: flex-end;
+		}
+
+		> .wp-block-novablocks-navigation {
+			> .menu,
+			> .menu > ul {
+				justify-content: inherit;
+			}
+		}
+
+		.site-header--logo-left & {
+			grid-template-columns: auto 1fr;
+		}
+
+		.site-header--logo-center & {
+			grid-template-columns: 1fr auto 1fr;
+		}
+
+		.site-header--logo-right & {
+			grid-template-columns: 1fr auto;
+		}
+
+		&.alignfull[class] {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+
+	.c-menu-toggle__checkbox,
+	.c-menu-toggle {
+		display: none;
+	}
+}
+
+@media not screen and (min-width: 1000px) {
+	@import 'scss/mobile';
+	@import 'scss/mobile-transitions';
+}

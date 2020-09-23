@@ -16,12 +16,12 @@ import {
 	DrawerListAfter
 } from "../index";
 
-const { __ } = wp.i18n;
-const { useBlockEditContext } = wp.blockEditor;
+import { __ } from '@wordpress/i18n';
+import { useBlockEditContext } from '@wordpress/block-editor';
 
-const {
+import {
 	Children,
-} = wp.element;
+ } from '@wordpress/element';
 
 const ControlsSectionsComponent = ( props ) => {
 

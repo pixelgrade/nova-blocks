@@ -1,11 +1,10 @@
 import classnames from "classnames";
 import CardMedia from "../card-media";
-import Category from "../../blocks/posts-collection/components/category";
 
-const {
+import {
 	Fragment,
 	RawHTML
-} = wp.element;
+ } from '@wordpress/element';
 
 const Card = ( props ) => {
 	const isLandscape = !! props.isLandscape;

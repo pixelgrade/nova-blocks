@@ -1075,17 +1075,21 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
 				echo '</div>';
 
-				echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+				if ( ! empty( $image['caption'] ) || ! empty( $attachment->post_content ) ) {
 
-				if ( ! empty( $image['caption'] ) ) {
-					echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+					echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+
+					if ( ! empty( $image['caption'] ) ) {
+						echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+					}
+
+					if ( ! empty( $attachment->post_content ) ) {
+						echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
+					}
+
+					echo '</div>';
+
 				}
-
-				if ( ! empty( $attachment->post_content ) ) {
-					echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
-				}
-
-				echo '</div>';
 
 				echo '</div>';
 			}

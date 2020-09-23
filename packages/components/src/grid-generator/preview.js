@@ -1,6 +1,13 @@
 import AreaDebug from "./areaDebug";
-import { CollectionPreview, CollectionHeader } from "../../components/collection";
+
+import {
+	CollectionPreview,
+	CollectionHeader,
+	Post
+} from "../index";
+
 import { applyLayoutEngine } from "./layoutEngine";
+
 import {
 	getParametricLayoutAreaClassName,
 	getGridStyle,
@@ -8,8 +15,7 @@ import {
 	isLandscape,
 } from "./utils";
 
-import Post from "../../blocks/posts-collection/post";
-import { getCardMediaPaddingTop } from "../../utils";
+import { getCardMediaPaddingTop } from "@novablocks/utils";
 import classnames from "classnames";
 
 export const ClassicLayoutPreview = ( props ) => {

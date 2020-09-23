@@ -73,7 +73,7 @@ export class GridItemCollection {
 	}
 }
 
-export default class GridItem {
+export class GridItem {
 
 	constructor( image, index, attributes, isGroupOfThree ) {
 

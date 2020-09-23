@@ -21,4 +21,7 @@ const CardsManager = ( props ) => {
 	)
 };
 
-export default CardsManager;
+export default {
+	Component: CardsManager,
+	toggles
+};

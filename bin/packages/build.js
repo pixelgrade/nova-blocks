@@ -129,7 +129,11 @@ if ( files.length ) {
 			`${ PACKAGES_DIR }/*/src/**/*.js`,
 			`${ PACKAGES_DIR }/*/src/*.scss`,
 			`${ PACKAGES_DIR }/block-library/src/blocks/*/*.scss`,
-			`${ PACKAGES_DIR }/*/src/**/*.json`
+			`${ PACKAGES_DIR }/block-library/src/blocks/**/*.php`,
+			`${ PACKAGES_DIR }/*/src/**/*.json`,
+			`${ PACKAGES_DIR }/*/src/**/*.png`,
+			`${ PACKAGES_DIR }/*/src/**/*.jpg`,
+			`${ PACKAGES_DIR }/*/src/**/*.gif`,
 		],
 		{
 			ignore: [

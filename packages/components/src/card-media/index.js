@@ -1,8 +1,8 @@
-import * as icons from "../../icons";
+import * as icons from "@novablocks/icons";
 
-const {
+import {
 	withSelect,
-} = wp.data;
+ } from '@wordpress/data';
 
 const Media = ( { src } ) => {
 

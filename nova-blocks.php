@@ -67,11 +67,6 @@ require_once dirname( __FILE__ ) . '/lib/setup.php';
 
 // @todo - forget about settings, theme support an attributes for a couple of moments
  require_once dirname( __FILE__ ) . '/lib/extras.php';
- require_once dirname( __FILE__ ) . '/lib/settings.php';
-
-// @todo probably each block will take care of its assets and initialisation
- require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
-// require_once dirname( __FILE__ ) . '/src/blocks/init.php';
 
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 

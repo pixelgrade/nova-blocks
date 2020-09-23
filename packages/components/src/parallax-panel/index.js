@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import withSettings from '../with-settings';
+import { withSettings } from '@novablocks/utils';
 
 /**
  * WordPress dependencies

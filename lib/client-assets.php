@@ -15,18 +15,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
+
 	function novablocks_register_packages_scripts() {
 
 		foreach ( glob( novablocks_get_plugin_path() . 'build/*/index.js' ) as $path ) {
+
+			if ( strpos( basename( dirname( $path ) ), 'block-library' ) !== false ) {
+				continue;
+			}
+
+			$package = basename( dirname( $path ) );
+
 			// Prefix `wp-` to package directory to get script handle.
 			// For example, `…/build/a11y/index.js` becomes `wp-a11y`.
-			$handle = 'novablocks-' . basename( dirname( $path ) );
+			$handle = 'novablocks-' . $package;
 
 			// Replace `.js` extension with `.asset.php` to find the generated dependencies file.
-			$asset_file   = substr( $path, 0, - 3 ) . '.asset.php';
-			$asset        = file_exists( $asset_file )
-				? require( $asset_file )
-				: null;
+			$asset_file   = substr( $path, 0, -3 ) . '.asset.php';
+			$asset        = file_exists( $asset_file ) ? require( $asset_file ) : null;
 			$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
 			$version      = isset( $asset['version'] ) ? $asset['version'] : filemtime( $path );
 
@@ -35,14 +41,224 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			// Get the path from Gutenberg directory as expected by `novablocks_url`.
 			$novablocks_path = substr( $path, strlen( novablocks_get_plugin_path() ) );
 
-			wp_enqueue_script(
+			wp_register_script(
 				$handle,
-				novablocks_get_plugin_url( $novablocks_path ),
+				novablocks_get_plugin_url() . '/' . $novablocks_path,
 				$dependencies,
 				$version,
 				true
 			);
+
+			// register styles for each package
+			$style = substr( $path, 0, -8 ) . 'style.css';
+			$editor_styles = substr( $path, 0, -8 ) . 'editor-styles.css';
+			$dir = trailingslashit( novablocks_get_plugin_url() . '/build/' . $package );
+
+			if ( file_exists( $style ) ) {
+				wp_register_style(
+					$handle . '-style',
+					$dir . 'style.css',
+					array()
+				);
+			}
+
+			if ( file_exists( $editor_styles ) ) {
+				wp_register_style(
+					$handle . '-editor_style',
+					$dir . 'editor-styles.css',
+					array()
+				);
+			}
+		}
+
+		$nova_editor_settings = novablocks_get_block_editor_settings();
+
+		list( $color_palette, ) = (array) get_theme_support( 'editor-color-palette' );
+
+		if ( false !== $color_palette ) {
+			$nova_editor_settings['colors'] = $color_palette;
+		}
+
+		$js_script = '
+    ( function() {
+        wp.novaBlocks.settings = %s;
+        wp.novaBlocks.initialize( wp.novaBlocks.settings );
+    } )();
+';
+
+		wp_add_inline_script( 'novablocks-core', sprintf( $js_script, wp_json_encode( $nova_editor_settings ) ) );
+
+		foreach ( glob( novablocks_get_plugin_path() . 'build/*/index.js' ) as $path ) {
+			$handle = 'novablocks-' . basename( dirname( $path ) );
+
+			wp_enqueue_script( $handle );
+			wp_enqueue_style( $handle . '-style' );
 		}
 	}
 }
-add_action( 'enqueue_block_editor_assets', 'novablocks_register_packages_scripts' );
+add_action( 'enqueue_block_assets', 'novablocks_register_packages_scripts' );
+
+if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
+	function novablocks_register_vendor_scripts() {
+
+		wp_register_script(
+			'novablocks-bully',
+			novablocks_get_plugin_url() . '/dist/vendor/jquery.bully.js',
+			array( 'jquery' )
+		);
+
+		wp_register_script(
+			'novablocks-slick',
+			novablocks_get_plugin_url() . '/dist/vendor/jquery.slick.js',
+			array( 'jquery' )
+		);
+
+		wp_register_script(
+			'novablocks-velocity',
+			novablocks_get_plugin_url() . '/dist/vendor/jquery.velocity.js',
+			array( 'jquery' )
+		);
+	}
+}
+add_action( 'init', 'novablocks_register_vendor_scripts' );
+
+function novablocks_register_block_types() {
+
+	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
+
+		$block = basename( $blockpath );
+		$dir = trailingslashit( novablocks_get_plugin_url() . '/build/block-library/blocks/' . $block );
+
+		if ( ! function_exists( 'register_block_type' ) ) {
+			// Gutenberg is not active.
+			return;
+		}
+
+		$scripts = array(
+			'editor_script' => 'index.js',
+			'script' => 'frontend.js',
+		);
+
+		$args = array();
+
+		foreach ( $scripts as $key => $script ) {
+			$path = trailingslashit( $blockpath ) . $script;
+
+			if ( ! file_exists( $path ) ) {
+				continue;
+			}
+
+			$asset_file     = substr( $path, 0, - 3 ) . '.asset.php';
+			$asset          = file_exists( $asset_file ) ? require( $asset_file ) : null;
+			$dependencies   = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
+			$version        = isset( $asset['version'] ) ? $asset['version'] : filemtime( $path );
+
+			if ( $key === 'editor_script' ) {
+				$dependencies[] = 'novablocks-core';
+			}
+
+			$basename       = substr( $script, 0, -3 );
+			$handle         = 'novablocks/' . $block . '-' . $basename;
+
+
+			$velocity_dependent_scripts = array(
+				'novablocks/hero-frontend',
+				'novablocks/slideshow-frontend'
+			);
+
+			if ( in_array( $handle, $velocity_dependent_scripts ) ) {
+				$dependencies[] = 'novablocks-velocity';
+			}
+
+			$slick_dependent_scripts = array(
+				'novablocks/slideshow-frontend'
+			);
+
+			if ( in_array( $handle, $slick_dependent_scripts ) ) {
+				$dependencies[] = 'novablocks-slick';
+			}
+
+			$bully_dependent_scripts = array(
+				'novablocks/hero-frontend',
+				'novablocks/slideshow-frontend'
+			);
+
+			if ( in_array( $handle, $bully_dependent_scripts ) ) {
+				$dependencies[] = 'novablocks-bully';
+			}
+
+			wp_register_script(
+				$handle,
+				$dir . $script,
+				$dependencies,
+				$version,
+				true
+			);
+
+			$args[ $key ] = $handle;
+		}
+
+
+		$styles = array(
+			'editor_style' => 'editor-styles.css',
+			'style' => 'style.css',
+		);
+
+		foreach ( $styles as $key => $style ) {
+			$path = trailingslashit( $blockpath ) . $style;
+
+			if ( ! file_exists( $path ) ) {
+				continue;
+			}
+
+			if ( $key === 'style' ) {
+				$asset_file = substr( $path, 0, -1 * strlen( $style ) ) . 'frontend.asset.php';
+			} else {
+				$asset_file = substr( $path, 0, -1 * strlen( $style ) ) . 'index.asset.php';
+			}
+
+			$basename         = substr( $style, 0, - 4 );
+			$handle           = 'novablocks/' . $block . '-' . $basename;
+			$asset            = file_exists( $asset_file ) ? require( $asset_file ) : null;
+			$js_dependencies  = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
+			$css_dependencies = array();
+
+			foreach ( $js_dependencies as $js_dependency ) {
+				if ( false !== strpos( $js_dependency, 'novablocks-' ) ) {
+					$dependency_handle = $js_dependency . '-' . $key;
+					if ( wp_style_is( $dependency_handle, 'registered' ) ) {
+						$css_dependencies[] = $dependency_handle;
+					}
+				}
+			}
+
+			wp_register_style(
+				$handle,
+				$dir . $style,
+				$css_dependencies
+			);
+
+			$args[ $key ] = $handle;
+		}
+
+		$support = novablocks_get_theme_support();
+
+		if ( in_array( $block, $support ) ) {
+
+			$init = trailingslashit( $blockpath ) . 'init.php';
+
+			if ( file_exists( $init ) ) {
+				require_once $init;
+			}
+
+			$callback = 'novablocks_render_' . str_replace( '-','_', $block ) . '_block';
+
+			if ( function_exists( $callback ) ) {
+				$args['render_callback'] = $callback;
+			}
+
+			register_block_type( 'novablocks/' . $block, $args );
+		}
+	}
+}
+add_action( 'init', 'novablocks_register_block_types' );

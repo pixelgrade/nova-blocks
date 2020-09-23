@@ -1,26 +1,26 @@
-const { __ } = wp.i18n;
+import { __  } from '@wordpress/i18n';
 
-const {
+import {
 	Button,
 	RadioControl,
-} = wp.components;
+ } from '@wordpress/components';
 
-const {
+import {
 	Fragment,
-} = wp.element;
+ } from '@wordpress/element';
 
-const {
+import {
 	useBlockEditContext
-} = wp.blockEditor;
+ } from '@wordpress/block-editor';
 
-const {
+import {
 	withDispatch,
 	withSelect,
-} = wp.data;
+ } from '@wordpress/data';
 
-const {
+import {
 	compose
-} = wp.compose;
+ } from '@wordpress/compose';
 
 const PresetControl = ( props ) => {
 
