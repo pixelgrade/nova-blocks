@@ -4,7 +4,8 @@ import InspectorControls from './inspector-controls';
 
 import { withSettings, withParallax } from '../../components';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
+import { models, loadPromise } from '@wordpress/api';
 
 const API_KEY_SETTING_ID = 'novablocks_google_maps_api_key';
 
@@ -15,7 +16,6 @@ const {
 
 const {
 	Spinner,
-	TextControl,
 } = wp.components;
 
 const {
@@ -27,10 +27,6 @@ const {
 	compose,
 	createHigherOrderComponent,
 } = wp.compose;
-
-const {
-	Settings
-} = wp.api.models;
 
 // This is a GLOBAL function that, when present, gets called by the Google Maps script on authentication errors.
 window.gm_authFailure = function() {
@@ -70,8 +66,8 @@ class Edit extends Component {
 
 		window.addEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
 
-		wp.api.loadPromise.done( () => {
-			this.settings = new wp.api.models.Settings();
+		loadPromise.done( () => {
+			this.settings = new models.Settings();
 
 			this.settings.on( `change:${ API_KEY_SETTING_ID }`, model => {
 				const apiKey = model.get( API_KEY_SETTING_ID );
@@ -121,7 +117,7 @@ class Edit extends Component {
 	}
 
 	saveApiKey( apiKey ) {
-		const key = new wp.api.models.Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
+		const key = new models.Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
 
 		key.save().then(() => {
 			this.setState( { gmAuthFailure: false } );
@@ -130,7 +126,6 @@ class Edit extends Component {
 	}
 
 	renderPreview() {
-
 		const { fetchedApiKey, fetchedScript, savedApiKey, gmAuthFailure } = this.state;
 
 		if ( ! fetchedApiKey ) {

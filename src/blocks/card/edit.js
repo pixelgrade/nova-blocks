@@ -3,8 +3,7 @@
  */
 
 import EditableText from '../../components/editable-text';
-import * as icons from "../../icons";
-import Card from "../../components/card";
+import * as icons from "@novablocks/icons";
 
 const { __ } = wp.i18n;
 

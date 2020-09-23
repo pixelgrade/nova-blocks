@@ -1,14 +1,13 @@
 /**
  * Internal dependencies
  */
-import * as icons from '../../icons';
+import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
 
-import { STORE_NAME } from "../../store";
 import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "../../utils";
-import generateDefaults from "../../components/generate-defaults";
+import generateDefaults from "@novablocks/utils";
 
 import blockAttributes from "./attributes"
 import alignmentAttributes from "../../components/alignment-controls/attributes";

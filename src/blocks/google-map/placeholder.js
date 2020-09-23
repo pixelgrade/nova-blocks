@@ -1,4 +1,4 @@
-import * as icons from "../../icons";
+import * as icons from "@novablocks/icons";
 
 const { __ } = wp.i18n;
 

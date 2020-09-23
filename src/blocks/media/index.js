@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '../../icons';
+import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';
@@ -9,7 +9,7 @@ import deprecated from './deprecated';
 
 import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "../../utils";
 import { getRandomAttributes } from "../../components/advanced-gallery/util";
-import generateDefaults from "../../components/generate-defaults";
+import generateDefaults from "@novablocks/utils";
 
 import blockAttributes from './attributes';
 import galleryAttributes from "../../components/advanced-gallery/attributes";

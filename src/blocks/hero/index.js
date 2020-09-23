@@ -15,7 +15,7 @@ import layoutAttributes from "../../components/layout-panel/attributes";
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
-import generateDefaults from "../../components/generate-defaults";
+import generateDefaults from "@novablocks/utils";
 import insertTemplate from "../../components/insert-template";
 
 /**

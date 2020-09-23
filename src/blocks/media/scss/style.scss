@@ -161,6 +161,10 @@
 	.novablocks-u-valign-bottom & {
 		flex-grow: 0;
 	}
+
+	&.has-image-on-the-left {
+		--novablocks-media-background-direction: -90deg;
+	}
 }
 
 @import 'content';

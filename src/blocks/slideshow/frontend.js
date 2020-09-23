@@ -3,7 +3,7 @@ import { parallaxInit } from "../../components/with-parallax/util";
 import {
 	debounce,
 	hasTouchScreen
-} from '../../utils';
+} from '@novablocks/utils';
 
 const BLOCK_SELECTOR = '.novablocks-slideshow';
 const SLIDER_SELECTOR = '.novablocks-slideshow__slider';

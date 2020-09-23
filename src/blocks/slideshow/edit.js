@@ -1,14 +1,14 @@
 /**
  * Internal dependencies
  */
-import { shuffleArray } from '../../utils';
+import { shuffleArray } from '@novablocks/utils';
 
 import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
-import { withSettings, withParallax } from '../../components';
-import {normalizeImages} from "../../utils/images";
+import { withSettings, withParallax } from "@novablocks/components";
+import {normalizeImages} from "@novablocks/utils";
 
 /**
  * WordPress dependencies

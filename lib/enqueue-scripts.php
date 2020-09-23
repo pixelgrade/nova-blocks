@@ -35,7 +35,7 @@ function novablocks_admin_init() {
 	wp_register_script(
 		'nova-blocks-js',
 		novablocks_get_plugin_url() . $block_path,
-		$script_dependencies,
+		array(),
 		'1.5.3',
 		true
 	);
@@ -136,7 +136,7 @@ function novablocks_enqueue_frontend_assets() {
 	wp_enqueue_script(
 		'nova-blocks-frontend',
 		novablocks_get_plugin_url() . $block_path,
-		$script_dependencies,
+		array(),
 		'1.5.3',
 		true
 	);

@@ -3,14 +3,11 @@
  */
 import classnames from 'classnames';
 
-import AdvancedGallery from '../../components/advanced-gallery';
+import AdvancedGallery from '@novablocks/components';
 
-/**
- * WordPress dependencies
- */
-const {
+import {
 	InnerBlocks,
-} = wp.blockEditor;
+} from '@wordpress/block-editor';
 
 const MediaPreview = function( props ) {
 	const {
@@ -43,17 +40,21 @@ const MediaPreview = function( props ) {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
-	const cssVars = {
-		'--emphasis-area': emphasisArea,
-		'--novablocks-media-content-width': `${contentAreaWidth}%`,
-		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 5 / 100 )`,
-	};
-
 	const blockClassNames = classnames(
 		`novablocks-block`,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 	);
+
+	const cssVars = {
+		'--block-top-spacing': blockTopSpacing,
+		'--block-bottom-spacing': blockBottomSpacing,
+		'--emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+		'--emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+		'--emphasis-area': emphasisArea,
+		'--novablocks-media-content-width': `${contentAreaWidth}%`,
+		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 8 / 100 )`,
+	};
 
 	return (
 		<div className={ classNames } style={ cssVars }>

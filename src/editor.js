@@ -17,12 +17,10 @@ import "./filters/with-grid-generator";
 import "./blocks/openhours/hoursparser";
 import "./blocks/core/separator";
 
-import advancedGalleryInit from "./blocks/advanced-gallery";
 import announcementBarBlockInit from "./blocks/announcement-bar";
 import googleMapBlockInit from "./blocks/google-map";
 import headerBlockInit from "./blocks/header";
 import headlineInit from "./blocks/headline";
-import heroInit from "./blocks/hero";
 import logoInit from "./blocks/logo";
 import mediaInit from "./blocks/media";
 import slideshowInit from "./blocks/slideshow";
@@ -36,9 +34,9 @@ import cardInit from "./blocks/card";
 import cardsCollectionInit from "./blocks/cards-collection";
 import postsCollectionInit from "./blocks/posts-collection"
 
-import { STORE_NAME } from './store';
+const STORE_NAME = 'novablocks';
 
-import { nova } from './icons';
+import { nova } from '@novablocks/icons';
 
 import { addSeparatorFilters } from "./blocks/core/separator";
 
@@ -55,9 +53,7 @@ class novaBlocks {
 	initialize( settings ) {
 		addSeparatorFilters( settings );
 		dispatch( STORE_NAME ).updateSettings( settings );
-		updateCategory( 'nova-blocks', {
-			icon: nova
-		} );
+		updateCategory( 'nova-blocks', { icon: nova } );
 
 		const supports = ( typeof settings[ 'theme_support' ] === 'object' ) ? Object.values( settings[ 'theme_support' ] ) : settings[ 'theme_support' ];
 

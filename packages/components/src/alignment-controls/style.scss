@@ -1,0 +1,29 @@
+.novablocks-foreground {
+	position: relative;
+
+	display: flex;
+	width: 100%;
+
+	.novablocks-u-halign-left & {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.novablocks-u-halign-center & {
+		align-items: center;
+		text-align: center;
+	}
+
+	.novablocks-u-halign-right & {
+		align-items: flex-end;
+		text-align: right;
+	}
+
+	.novablocks-u-valign-top & {
+		justify-content: flex-start;
+	}
+
+	.novablocks-u-valign-bottom & {
+		justify-content: flex-end;
+	}
+}

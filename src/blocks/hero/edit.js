@@ -7,39 +7,39 @@ import {
 	withSettings,
 	ToggleGroup,
 	ControlsDrawerContent,
-} from '../../components';
+	ControlsTab,
+	ControlsSection
+ } from '@novablocks/components';
 
 import heroAttributes from './attributes';
-
-import { ControlsTab, ControlsSection } from "../../components/control-sections";
 
 import HeroPreview from './preview';
 import BlockControls from './block-controls';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const {
-	InspectorControls,
-} = wp.blockEditor;
+import {
+	InspectorControls
+ } from '@wordpress/block-editor';
 
-const {
+import {
 	RadioControl,
 	PanelBody
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	Component,
-	Fragment,
-} = wp.element;
+	Fragment
+ } from '@wordpress/element';
 
-const {
+import {
 	compose,
-	createHigherOrderComponent,
-} = wp.compose;
+	createHigherOrderComponent
+ } from '@wordpress/compose';
 
-const {
+import {
 	select
-} = wp.data;
+} from '@wordpress/data';
 
 const BlockHeightControls = function( props ) {
 

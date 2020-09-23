@@ -11,11 +11,11 @@
 }
 
 .novablocks-hero__slider {
-	@include cover;
+	//@include cover;
 }
 
 .novablocks-hero__media[class] {
-	@include image-cover;
+	//@include image-cover;
 }
 
 .novablocks-hero__inner-container[class] {
