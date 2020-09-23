@@ -3,6 +3,8 @@
  */
 import * as icons from '@novablocks/icons';
 
+export { default as alignmentAttributes } from './attributes';
+
 import BlockHorizontalAlignmentToolbar from '../block-horizontal-alignment-toolbar';
 import BlockVerticalAlignmentToolbar from '../block-vertical-alignment-toolbar';
 

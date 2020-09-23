@@ -3,9 +3,7 @@
  */
 export { default as AdvancedGallery } from './advanced-gallery';
 
-export { default as LayoutPanel } from './layout-panel';
 export { default as ParallaxPanel } from './parallax-panel';
-export { default as ScrollingEffectControls } from './scrolling-effect-controls';
 export { default as ToggleGroup } from './toggle-group';
 export { default as HeadingToolbar } from './heading-toolbar';
 export { default as Collection } from './collection';
@@ -15,6 +13,7 @@ export { default as withSettings } from './with-settings';
 export { default as CardsManager } from './cards-manager';
 export { default as BlockVerticalAlignmentToolbar } from './block-vertical-alignment-toolbar';
 export { default as viewportObserver } from './viewport-observer';
+export { default as insertTemplate } from './insert-template';
 
 export {
 	default as withParallax,
@@ -54,6 +53,13 @@ export {
 export { default as ControlsGroup } from './controls-group';
 
 export {
+	alignmentAttributes,
+	AlignmentControls,
+	AlignmentToolbar
+ } from './alignment-controls';
+
+export {
+	colorAttributes,
 	ColorControls,
 	ColorPanel,
 	ColorToolbar,
@@ -61,6 +67,11 @@ export {
  } from './color-controls';
 
 export {
-	AlignmentControls,
-	AlignmentToolbar
- } from './alignment-controls';
+	layoutAttributes,
+	LayoutControls
+} from './layout-controls';
+
+export {
+	scrollingAttributes,
+	ScrollingEffectControls
+} from './scrolling-effect-controls';

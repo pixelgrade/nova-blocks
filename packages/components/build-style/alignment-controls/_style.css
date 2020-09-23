@@ -1,0 +1,29 @@
+.novablocks-foreground {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%; }
+  .novablocks-u-halign-left .novablocks-foreground {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    text-align: left; }
+  .novablocks-u-halign-center .novablocks-foreground {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    text-align: center; }
+  .novablocks-u-halign-right .novablocks-foreground {
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    text-align: right; }
+  .novablocks-u-valign-top .novablocks-foreground {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start; }
+  .novablocks-u-valign-bottom .novablocks-foreground {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }

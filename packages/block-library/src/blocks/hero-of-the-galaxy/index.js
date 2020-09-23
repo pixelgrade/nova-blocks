@@ -1,22 +1,23 @@
 /**
  * Internal dependencies
  */
-import * as icons from '../../icons';
+import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { getPlaceholderImages, getRandomBetween } from "../../utils";
+import { generateDefaults, getPlaceholderImages, getRandomBetween } from "@novablocks/utils";
 
 import blockAttributes from "./attributes"
-import alignmentAttributes from "../../components/alignment-controls/attributes";
-import colorAttributes from "../../components/color-controls/attributes";
-import scrollingAttributes from "../../components/scrolling-effect-controls/attributes";
-import layoutAttributes from "../../components/layout-panel/attributes";
+
+import {
+	insertTemplate,
+	alignmentAttributes,
+	colorAttributes,
+	layoutAttributes,
+	scrollingAttributes,
+} from "@novablocks/components";
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
-
-import generateDefaults from "@novablocks/utils";
-import insertTemplate from "../../components/insert-template";
 
 /**
  * WordPress dependencies
@@ -25,7 +26,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { select } = wp.data;
 
-import { STORE_NAME } from "../../store";
+const STORE_NAME = 'novablocks';
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();

@@ -1,0 +1,11 @@
+.autocomplete-tokenfield {
+  position: relative;
+  /* Workaround for hard-coded help text in FormTokenField. */ }
+  .autocomplete-tokenfield .components-spinner {
+    position: absolute;
+    top: 2em;
+    left: 0; }
+  .autocomplete-tokenfield .components-form-token-field > .components-form-token-field__help {
+    display: none; }
+  .autocomplete-tokenfield .autocomplete-tokenfield__help {
+    font-style: italic; }

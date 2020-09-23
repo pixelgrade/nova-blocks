@@ -1,0 +1,33 @@
+.components-toggle-group__panel {
+  overflow: hidden; }
+
+.components-toggle-group__toggle-list {
+  margin-top: -6px; }
+
+.components-toggle-group__toggle-list-animated {
+  position: relative;
+  will-change: opacity, left, height; }
+  .components-toggle-group__toggle-list-animated > div {
+    padding-top: 6px; }
+
+.components-toggle-group__toggle-list-item {
+  padding: 9px 11px;
+  border-radius: 4px;
+  border: 1px solid transparent; }
+  .components-toggle-group__toggle-list-item .components-toggle-control[class],
+  .components-toggle-group__toggle-list-item .components-base-control__field[class] {
+    margin-bottom: 0; }
+  .components-toggle-group__toggle-list--enabled .components-toggle-group__toggle-list-item {
+    border-color: #F4F5F8;
+    background-color: #F4F5F8; }
+  .components-toggle-group__toggle-list--disabled .components-toggle-group__toggle-list-item {
+    border-color: #C4C7D5;
+    background-color: #FFFFFF; }
+
+.components-toggle-group__toggle-list-label {
+  display: block;
+  font-weight: 700; }
+  .components-toggle-group__toggle-list-label:not(:first-child) {
+    margin-top: 24px; }
+  .components-toggle-group__toggle-list-label + .components-toggle-group__toggle-list {
+    margin-top: 8px; }

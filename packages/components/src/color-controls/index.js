@@ -3,6 +3,8 @@
  */
 import * as icons from '@novablocks/icons';
 
+export { default as colorAttributes } from './attributes';
+
 /**
  * WordPress dependencies
  */

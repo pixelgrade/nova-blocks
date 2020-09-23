@@ -22,7 +22,9 @@ import {
 
 import { defaultSnapValues, getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
 
-const ScrollingEffectControls = function( props ) {
+export { default as scrollingAttributes } from './attributes';
+
+export const ScrollingEffectControls = function( props ) {
 
 	return (
 		<Fragment>
@@ -347,5 +349,3 @@ const EndFramePanel = ( props ) => {
 		</PanelBody>
 	)
 }
-
-export default ScrollingEffectControls;

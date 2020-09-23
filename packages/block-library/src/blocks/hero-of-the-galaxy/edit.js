@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import {
-	LayoutPanel,
+	LayoutControls,
 	withParallax,
 	withSettings,
 	ToggleGroup,
@@ -146,7 +146,7 @@ class HeroEdit extends Component {
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<InspectorControls>
-					<LayoutPanel { ...this.props } />
+					<LayoutControls { ...this.props } />
 					<BlockHeightControls { ...this.props } />
 					<ControlsDrawerContent>
 						<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>

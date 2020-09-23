@@ -6,6 +6,7 @@ const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const postcss = require( 'postcss' );
 const { get, escapeRegExp, compact } = require( 'lodash' );
 const { basename, sep } = require( 'path' );
+const glob = require( "glob" )
 
 /**
  * WordPress dependencies
@@ -31,11 +32,31 @@ const gutenbergPackages = Object.keys( dependencies )
                                 .filter( ( packageName ) => packageName.startsWith( NOVABLOCKS_NAMESPACE ) )
                                 .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
 
-const entryPoints = gutenbergPackages.reduce( ( memo, packageName ) => {
+let entryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
 	const name = camelCaseDash( packageName );
 	memo[ `${ name }` ] = `./packages/${ packageName }`;
 	return memo;
 }, {} );
+
+let blocksEntryPoints = glob.sync( './packages/block-library/build/blocks/*/@(editor|frontend|index).js' )
+                  .reduce( ( acc, path ) => {
+                  	let key = path;
+
+                  	key = path.replace( './packages/block-library/build/blocks/', '' );
+                  	key = key.replace( '.js', '' );
+                  	key = key.replace( '/', '-' );
+                  	key = key.replace( 'index', 'editor' );
+                  	key = camelCaseDash( key );
+
+                  	return {
+                  		...acc,
+	                    [ key ]: path
+                  	}
+                  }, {} );
+
+entryPoints = Object.assign( {}, entryPoints, blocksEntryPoints );
+
+console.log( entryPoints );
 
 module.exports = {
 	mode,

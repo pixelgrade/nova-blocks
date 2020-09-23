@@ -4,6 +4,8 @@
 import PaddingControls from './padding';
 import WidthControls from './width';
 
+export { default as layoutAttributes } from './attributes';
+
 import {
 	ControlsTab,
 	ControlsSection
@@ -14,7 +16,7 @@ import {
  */
 import { __ } from '@wordpress/i18n';
 
-const LayoutPanel = function( props ) {
+export const LayoutControls = function( props ) {
 	return (
 		<ControlsSection label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
@@ -24,5 +26,3 @@ const LayoutPanel = function( props ) {
 		</ControlsSection>
 	);
 };
-
-export default LayoutPanel;

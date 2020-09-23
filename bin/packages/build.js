@@ -113,9 +113,6 @@ if ( files.length ) {
 	stream = new Readable( { encoding: 'utf8' } );
 	files.forEach( ( file ) => stream.push( file ) );
 	stream.push( null );
-	stream = stream
-	.pipe( createStyleEntryTransform() )
-	.pipe( createBlockJsonEntryTransform() );
 } else {
 	const bar = new ProgressBar( 'Build Progress: [:bar] :percent', {
 		width: 30,
@@ -156,29 +153,29 @@ let ended = false,
 	complete = 0;
 
 stream
-.on( 'data', ( file ) => {
-	return worker( file, ( error ) => {
-		onFileComplete();
+	.on( 'data', ( file ) => {
+		return worker( file, ( error ) => {
+			onFileComplete();
 
-		if ( error ) {
-			// If an error occurs, the process can't be ended immediately since
-			// other workers are likely pending. Optimally, it would end at the
-			// earliest opportunity (after the current round of workers has had
-			// the chance to complete), but this is not made directly possible
-			// through `worker-farm`. Instead, ensure at least that when the
-			// process does exit, it exits with a non-zero code to reflect the
-			// fact that an error had occurred.
-			process.exitCode = 1;
+			if ( error ) {
+				// If an error occurs, the process can't be ended immediately since
+				// other workers are likely pending. Optimally, it would end at the
+				// earliest opportunity (after the current round of workers has had
+				// the chance to complete), but this is not made directly possible
+				// through `worker-farm`. Instead, ensure at least that when the
+				// process does exit, it exits with a non-zero code to reflect the
+				// fact that an error had occurred.
+				process.exitCode = 1;
 
-			console.error( error );
-		}
+				console.error( error );
+			}
 
-		if ( ended && ++complete === files.length ) {
-			workerFarm.end( worker );
-		}
+			if ( ended && ++complete === files.length ) {
+				workerFarm.end( worker );
+			}
+		} )
 	} )
-} )
-.on( 'end', () => ( ended = true ) )
-.resume();
+	.on( 'end', () => ( ended = true ) )
+	.resume();
 
 /* eslint-enable no-console */

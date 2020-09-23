@@ -1,0 +1,109 @@
+[class*='c-bully'],
+[class*='c-bully']:before,
+[class*='c-bully']:after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+.c-bully {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  font-size: 12px;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  z-index: 9000;
+  color: #000;
+  margin-right: 30px; }
+
+.c-bully--inversed {
+  color: #fff; }
+
+.c-bully__bullet {
+  padding: 0.5em;
+  opacity: 0;
+  cursor: pointer; }
+
+.c-bully__bullet:after {
+  content: '';
+  display: block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  will-change: transform; }
+
+.c-bully__bullet--active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transition: top 0.2s ease-out;
+  transition: top 0.2s ease-out; }
+
+.c-bully__bullet--active:before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 14px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: currentColor;
+  border-radius: 50%; }
+
+.c-bully__bullet--active:after {
+  border-color: transparent; }
+
+.c-bully__bullet--pop {
+  -webkit-animation: bully-pop 0.6s cubic-bezier(0.485, 1.63, 0.43, 2) forwards, fade-in 0.2s 0.2s ease-out forwards;
+          animation: bully-pop 0.6s cubic-bezier(0.485, 1.63, 0.43, 2) forwards, fade-in 0.2s 0.2s ease-out forwards; }
+
+.c-bully__bullet--squash {
+  opacity: 1;
+  -webkit-animation: bully-squash 0.2s ease-out forwards;
+          animation: bully-squash 0.2s ease-out forwards; }
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes bully-pop {
+  50% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes bully-pop {
+  50% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@-webkit-keyframes bully-squash {
+  50% {
+    -webkit-transform: scale(0.6, 1.8);
+            transform: scale(0.6, 1.8); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes bully-squash {
+  50% {
+    -webkit-transform: scale(0.6, 1.8);
+            transform: scale(0.6, 1.8); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
