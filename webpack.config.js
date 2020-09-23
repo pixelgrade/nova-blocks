@@ -54,7 +54,57 @@ let blocksEntryPoints = glob.sync( './packages/block-library/build/blocks/*/@(ed
 
 entryPoints = Object.assign( {}, entryPoints, blocksEntryPoints );
 
-console.log( entryPoints );
+const cssTransform = ( content ) => {
+	if ( mode === 'production' ) {
+		return postcss( [
+			require( 'cssnano' )( {
+				preset: [
+					'default',
+					{
+						discardComments: {
+							removeAll: true,
+						},
+					},
+				],
+			} ),
+		] )
+		.process( content, {
+			from: 'src/app.css',
+			to: 'dest/app.css',
+		} )
+		.then( ( result ) => result.css );
+	}
+	return content;
+};
+
+const CopyPackageCSSPlugin =
+	new CopyWebpackPlugin(
+		gutenbergPackages.map( ( packageName ) => (
+			{
+				from: `./packages/${packageName}/build-style/*.css`,
+				to: `./build/${packageName}/`,
+				flatten: true,
+				transform: cssTransform,
+			}
+		) )
+	);
+
+
+const CopyBlocksCSSPlugin =
+	new CopyWebpackPlugin(
+		glob.sync( './packages/block-library/build-style/blocks/*/' ).map( ( path ) => {
+			let blockName = path.replace( './packages/block-library/build-style/blocks/', '' );
+			blockName = blockName.replace( '/', '' );
+
+			return {
+				from: `./packages/block-library/build-style/blocks/${ blockName }/*.css`,
+				to: `./build/block-library/blocks/${ blockName }/`,
+				flatten: true,
+				transform: cssTransform,
+			}
+		} )
+	);
+
 
 module.exports = {
 	mode,
@@ -97,35 +147,8 @@ module.exports = {
 				return path;
 			},
 		} ),
-		new CopyWebpackPlugin(
-			gutenbergPackages.map( ( packageName ) => ( {
-				from: `./packages/${ packageName }/build-style/*.css`,
-				to: `./build/${ packageName }/`,
-				flatten: true,
-				transform: ( content ) => {
-					if ( mode === 'production' ) {
-						return postcss( [
-							require( 'cssnano' )( {
-								preset: [
-									'default',
-									{
-										discardComments: {
-											removeAll: true,
-										},
-									},
-								],
-							} ),
-						] )
-						.process( content, {
-							from: 'src/app.css',
-							to: 'dest/app.css',
-						} )
-						.then( ( result ) => result.css );
-					}
-					return content;
-				},
-			} ) )
-		),
+		CopyPackageCSSPlugin,
+		CopyBlocksCSSPlugin,
 		new DependencyExtractionWebpackPlugin( {
 			injectPolyfill: true,
 			requestToExternal,
