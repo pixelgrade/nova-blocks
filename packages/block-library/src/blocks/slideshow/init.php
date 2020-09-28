@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_slideshow_attributes_config() {
-	$block_attributes = novablocks_get_attributes_from_json( 'src/blocks/slideshow/attributes.json' );
+	$block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/slideshow/attributes.json' );
 
 	$alignment_attributes = novablocks_get_attributes_from_json( 'packages/components/src/alignment-controls/attributes.json' );
 	$color_attributes = novablocks_get_attributes_from_json( 'packages/components/src/color-controls/attributes.json' );

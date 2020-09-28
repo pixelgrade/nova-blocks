@@ -112,6 +112,13 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 			novablocks_get_plugin_url() . '/dist/vendor/jquery.velocity.js',
 			array( 'jquery' )
 		);
+
+		$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+
+		wp_register_script(
+			'google-maps',
+			'//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places'
+		);
 	}
 }
 add_action( 'init', 'novablocks_register_vendor_scripts' );
@@ -183,6 +190,16 @@ function novablocks_register_block_types() {
 
 			if ( in_array( $handle, $bully_dependent_scripts ) ) {
 				$dependencies[] = 'novablocks-bully';
+			}
+
+			$google_maps_api_dependent_scripts = array(
+				'novablocks/google-map-frontend'
+			);
+
+			$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+
+			if ( $google_maps_api_key !== '' && in_array( $handle, $google_maps_api_dependent_scripts ) ) {
+				$dependencies[] = 'google-maps';
 			}
 
 			// actually register the script
