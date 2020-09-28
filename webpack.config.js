@@ -217,9 +217,6 @@ const minimizeConfig = {
 					// The "fileData" argument contains object with "filename", "basename", "query" and "hash"
 					return `${fileData.filename}.LICENSE.txt${fileData.query}`;
 				},
-				banner: (commentsFile) => {
-					return `My custom banner about license information ${commentsFile}`;
-				},
 			},
 		} )
 	],
