@@ -1,6 +1,5 @@
 <?php
 
-
 if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
 	function novablocks_render_separator_block( $block_content, $block ) {

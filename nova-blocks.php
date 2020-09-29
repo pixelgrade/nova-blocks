@@ -66,6 +66,7 @@ function novablocks_get_plugin_url() {
 require_once dirname( __FILE__ ) . '/lib/setup.php';
 require_once dirname( __FILE__ ) . '/lib/extras.php';
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
+require_once dirname( __FILE__ ) . '/lib/enqueue-scripts.php';
 
 require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
 require_once dirname( __FILE__ ) . '/lib/blocks/init.php';

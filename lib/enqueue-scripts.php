@@ -41,8 +41,8 @@ function novablocks_admin_init() {
 	);
 
 	wp_localize_script( 'nova-blocks-js', 'novablocks_urls', array(
-		'frontend_blocks_stylesheet' => novablocks_get_plugin_url() . '/dist/css/frontend.css',
-		'editor_blocks_stylesheet' => novablocks_get_plugin_url() . $style_path
+		'opentable_frontend_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/style.css',
+		'opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css'
 	) );
 
 	wp_set_script_translations( 'nova-blocks-js', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );

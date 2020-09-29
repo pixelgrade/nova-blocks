@@ -5,11 +5,8 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
 /**
  * WordPress dependencies
  */
-
-import { __ } from '@wordpress/i18n';
 import { Component } from '@wordpress/element';
 import { SandBox } from '@wordpress/components';
-
 
 class OpenTablePreview extends Component {
 
@@ -32,7 +29,7 @@ class OpenTablePreview extends Component {
 		const classNames = classnames(
 			className,
 			`novablocks-opentable`,
-			`novablocks-opentable__${layoutForm}`,
+			`novablocks-opentable__${ layoutForm }`,
 
 			{
 				'has-opentable-logo': showOpenTableLogo === true
@@ -43,15 +40,15 @@ class OpenTablePreview extends Component {
 			return <SandBox {...props} />
 		};
 
-		const html = `<div class="novablocks-opentable ${classNames}">` +
-		             `<script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=${restaurantId}&type=standard&theme=${layoutForm}&iframe=false&overlay=false&domain=com&lang=${language}'></script>` +
-		             `<link rel="stylesheet" href="${novablocks_urls.frontend_blocks_stylesheet}" type="text/css"/>` +
-		             `<link rel="stylesheet" href="${novablocks_urls.editor_blocks_stylesheet}" type="text/css"/>` +
+		const html = `<div class="novablocks-opentable ${ classNames }">` +
+		             `<script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=${ restaurantId }&type=standard&theme=${ layoutForm }&iframe=false&overlay=false&domain=com&lang=${ language }'></script>` +
+		             `<link rel="stylesheet" href="${ novablocks_urls.opentable_frontend_stylesheet }" type="text/css"/>` +
+		             `<link rel="stylesheet" href="${ novablocks_urls.opentable_editor_stylesheet }" type="text/css"/>` +
 		             '</div>';
 
 		return (
 			<OpenTable
-				html={html}
+				html={ html }
 				title="Sandbox"
 				type="embed"
 			/>
