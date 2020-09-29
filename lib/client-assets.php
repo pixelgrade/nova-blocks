@@ -85,10 +85,24 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 			wp_enqueue_script( $handle );
 			wp_enqueue_style( $handle . '-style' );
+
+			if ( is_gutenberg() ) {
+				wp_enqueue_style( $handle . '-editor_style' );
+			}
 		}
 	}
 }
 add_action( 'enqueue_block_assets', 'novablocks_register_packages_scripts' );
+
+function is_gutenberg() {
+	$current_screen = get_current_screen();
+
+	if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+		return true;
+	}
+
+	return false;
+}
 
 if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 
