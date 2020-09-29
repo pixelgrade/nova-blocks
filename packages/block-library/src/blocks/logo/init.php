@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_get_logo_attributes() {
+	$attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/logo/attributes.json' );
+	return $attributes;
+}
+
 if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 
 	function novablocks_render_logo_block( $attributes, $content ) {

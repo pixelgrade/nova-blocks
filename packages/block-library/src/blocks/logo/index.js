@@ -2,12 +2,13 @@
  * Internal dependencies
  */
 import * as icons from '@novablocks/icons';
+import attributes from "./attributes";
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { registerBlockType, } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 
 registerBlockType( 'novablocks/logo', {
 	title: __( 'Logo', '__plugin_txtd' ),

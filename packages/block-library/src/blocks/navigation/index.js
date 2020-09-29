@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import * as icons from '@novablocks/icons';
-import edit from './edit';
+import attributes from "./attributes";
 
 /**
  * WordPress dependencies
@@ -18,6 +18,14 @@ registerBlockType( 'novablocks/navigation', {
 	// Additional search terms
 	keywords: [ __( 'menu', '__plugin_txtd' ), __( 'site menu', '__plugin_txtd' ), __( 'primary', '__plugin_txtd' ), __( 'secondary', '__plugin_txtd' ) ],
 	parent: ['novablocks/header'],
+	attributes,
+	edit: function( props ) {
+		return (
+			<wp.serverSideRender
+				block="novablocks/navigation"
+				attributes={ props.attributes }
+			/>
+		)
+	},
 	save: function() {},
-	edit,
 } );

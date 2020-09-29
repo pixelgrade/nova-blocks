@@ -12,7 +12,7 @@ if ( ! function_exists( 'novablocks_render_openhours_block' ) ) {
 	function novablocks_render_openhours_block( $attributes, $content ) {
 		$classes = array();
 
-		$attributes_config = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/openhours/attributes.json' );
+		$attributes_config = novablocks_get_openhours_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes[] = 'novablocks-openhours';
@@ -33,6 +33,10 @@ if ( ! function_exists( 'novablocks_render_openhours_block' ) ) {
 
 		<?php return ob_get_clean();
 	}
+}
+
+function novablocks_get_openhours_attributes() {
+	return novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/openhours/attributes.json' );
 }
 
 class NovaBlocks_OpenHours_Helper {

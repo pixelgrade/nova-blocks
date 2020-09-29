@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_get_navigation_attributes() {
+	$attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/navigation/attributes.json' );
+	return $attributes;
+}
+
 if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 	function novablocks_render_navigation_block( $attributes, $content ) {

@@ -302,6 +302,12 @@ function novablocks_register_block_types() {
 				$args['render_callback'] = $callback;
 			}
 
+			$get_attributes = 'novablocks_get_' . str_replace( '-','_', $block ) . '_attributes';
+
+			if ( function_exists( $get_attributes ) ) {
+				$args['attributes'] = call_user_func( $get_attributes );
+			}
+
 			register_block_type( 'novablocks/' . $block, $args );
 		}
 	}
