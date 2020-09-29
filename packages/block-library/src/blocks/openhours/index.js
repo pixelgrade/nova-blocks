@@ -3,6 +3,8 @@
  */
 import * as icons from '@novablocks/icons';
 import edit from './edit';
+import attributes from "./attributes"
+
 
 /**
  * WordPress dependencies
@@ -15,6 +17,7 @@ registerBlockType( 'novablocks/openhours', {
 	description: __( 'Display Opening Hours for any kind of venue.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: icons.openhours,
-	save: function() {},
+	attributes,
 	edit,
+	save: function() {},
 } );

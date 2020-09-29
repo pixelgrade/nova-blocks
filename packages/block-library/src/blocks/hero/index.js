@@ -7,7 +7,7 @@ import save from './save';
 import deprecated from './deprecated';
 import { generateDefaults, getPlaceholderImages, getRandomBetween } from "@novablocks/utils";
 
-import blockAttributes from "./attributes"
+import blockAttributes from "./attributes";
 
 import {
 	insertTemplate,

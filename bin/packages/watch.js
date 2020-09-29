@@ -32,7 +32,7 @@ const isSourceFile = ( filename ) => {
 			/\/(benchmark|__mocks__|__tests__|test|storybook|stories)\/.+.js$/,
 			/.\.(spec|test)\.js$/,
 		].some( ( regex ) => regex.test( filename ) ) &&
-		/.\.(js|json|scss)$/.test( filename )
+		/.\.(js|json|scss|php)$/.test( filename )
 	);
 };
 
@@ -46,7 +46,6 @@ getPackages().forEach( ( p ) => {
 			path.resolve( p, 'src' ),
 			{ recursive: true, delay: 500 },
 			( event, filename ) => {
-				console.log( filename );
 
 				if ( ! isSourceFile( filename ) ) {
 					return;
