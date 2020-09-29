@@ -5,7 +5,6 @@ import * as icons from '@novablocks/icons';
 import edit from './edit';
 import attributes from "./attributes"
 
-
 /**
  * WordPress dependencies
  */

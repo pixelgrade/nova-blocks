@@ -7,6 +7,7 @@ import InspectorControls from "./inspector-controls";
 import { Fragment } from '@wordpress/element';
 
 const OpenHours = function( props ) {
+
 	return (
 		<Fragment>
 			<InspectorControls { ...props }/>
