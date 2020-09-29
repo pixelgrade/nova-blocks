@@ -24,6 +24,7 @@
 		"@wordpress/element": "^2.17.1",
 		"@wordpress/i18n": "^3.15.0",
 		"@wordpress/url": "^2.18.0",
+		"gulp": "^4.0.2",
 		"js-cookie": "^2.2.1"
 	},
 	"devDependencies": {
@@ -39,8 +40,13 @@
 		"concurrently": "^5.3.0",
 		"copy-webpack-plugin": "^5.1.1",
 		"cssnano": "^4.1.10",
+		"del": "^6.0.0",
 		"fast-glob": "^3.1.1",
 		"fs": "0.0.1-security",
+		"gulp-exec": "^5.0.0",
+		"gulp-load-plugins": "^2.0.4",
+		"gulp-replace": "^1.0.0",
+		"gulp-rsync": "0.0.9",
 		"loadsh": "0.0.4",
 		"node-sass": "^4.13.1",
 		"node-watch": "^0.6.4",
