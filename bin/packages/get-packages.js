@@ -66,7 +66,6 @@ function getPackages() {
 		.readdirSync( PACKAGES_DIR )
 		.filter( filterPackages )
 		.map( ( file ) => {
-			console.log( file );
 			return path.resolve( PACKAGES_DIR, file )
 		} );
 }

@@ -22,7 +22,6 @@
 		"@novablocks/easings": "file:../easings",
 		"@novablocks/icons": "file:../icons",
 		"@novablocks/utils": "file:../utils",
-
 		"@wordpress/block-editor": "^3.7.1",
 		"@wordpress/components": "^9.2.1",
 		"@wordpress/compose": "^3.11.0",
