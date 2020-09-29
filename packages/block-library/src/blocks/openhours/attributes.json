@@ -17,11 +17,11 @@
 	},
 	"openNote": {
 		"type": "string",
-		"default": "It\"s {time} and we\"re Open until {today-closing-time}"
+		"default": "It's {time} and we're Open until {today-closing-time}"
 	},
 	"closedNote": {
 		"type": "string",
-		"default": "We\"re closed until {next-opening-day} at {next-opening-time}"
+		"default": "We're closed until {next-opening-day} at {next-opening-time}"
 	},
 	"closedLabel": {
 		"type": "string",
