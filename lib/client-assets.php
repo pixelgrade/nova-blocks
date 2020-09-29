@@ -95,10 +95,13 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 add_action( 'enqueue_block_assets', 'novablocks_register_packages_scripts' );
 
 function is_gutenberg() {
-	$current_screen = get_current_screen();
 
-	if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-		return true;
+	if ( is_admin() ) {
+		$current_screen = get_current_screen();
+
+		if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+			return true;
+		}
 	}
 
 	return false;
