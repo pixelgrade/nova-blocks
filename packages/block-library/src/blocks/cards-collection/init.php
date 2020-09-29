@@ -5,6 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_get_cards_collection_attributes() {
+	return novablocks_get_collection_attributes();
+}
+
 if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 	function novablocks_render_cards_collection_block( $attributes, $content ) {

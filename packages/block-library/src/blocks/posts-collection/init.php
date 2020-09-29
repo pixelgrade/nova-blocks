@@ -5,12 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_posts_collection_attributes_config() {
-	$grid_generator_attributes   = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-grid-generator/attributes.json' );
-	$posts_query_attributes   = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-latest-posts/attributes.json' );
-	$posts_collection_attributes = novablocks_get_posts_collection_attributes();
+function novablocks_get_posts_collection_attributes() {
+	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-grid-generator/attributes.json' );
+	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-latest-posts/attributes.json' );
+	$collection_attributes = novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
+	$posts_collection_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/posts-collection/attributes.json' );
 
-	return array_merge( $posts_collection_attributes, $grid_generator_attributes, $posts_query_attributes );
+	return array_merge( $posts_collection_attributes, $collection_attributes, $grid_generator_attributes, $posts_query_attributes );
 }
 
 if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
@@ -18,7 +19,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 	function novablocks_render_posts_collection_block( $attributes, $content ) {
 		global $novablocks_rendered_posts_ids;
 
-		$attributes_config = novablocks_get_posts_collection_attributes_config();
+		$attributes_config = novablocks_get_posts_collection_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$args  = novablocks_build_articles_query( $attributes );

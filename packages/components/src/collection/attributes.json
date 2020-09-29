@@ -1,0 +1,102 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"contentAlign": {
+		"type": "string",
+		"default": "left"
+	},
+	"level": {
+		"type": "number",
+		"default": 2
+	},
+	"collectionTitleLevel": {
+		"type": "number",
+		"default": 2
+	},
+	"cardTitleLevel": {
+		"type": "number",
+		"default": 3
+	},
+	"metadataPosition": {
+		"type": "string",
+		"default": "above-title"
+	},
+	"primaryMetadata": {
+		"type": "string",
+		"default": "category"
+	},
+	"secondaryMetadata": {
+		"type": "string",
+		"default": "date"
+	},
+	"imageResizing": {
+		"type": "string",
+		"default": "cropped"
+	},
+	"containerHeight": {
+		"type": "number",
+		"default": 50
+	},
+	"thumbnailAspectRatioString": {
+		"type": "string",
+		"default": "landscape"
+	},
+	"thumbnailAspectRatio": {
+		"type": "number",
+		"default": 50
+	},
+	"imagePadding": {
+		"type": "number",
+		"default": 0
+	},
+	"title": {
+		"type": "string",
+		"default": "Latest Posts"
+	},
+	"subtitle": {
+		"type": "string",
+		"default": "A collection of our latest articles displayed in a cohesive layout"
+	},
+	"showCollectionTitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"collectionTitleLinkOpensInNewTab": {
+		"type": "boolean",
+		"default": false
+	},
+	"collectionTitleLinkURL": {
+		"type": "string",
+		"default": ""
+	},
+	"showCollectionSubtitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMedia": {
+		"type": "boolean",
+		"default": true
+	},
+	"showTitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showSubtitle": {
+		"type": "boolean",
+		"default": false
+	},
+	"showDescription": {
+		"type": "boolean",
+		"default": true
+	},
+	"showButtons": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMeta": {
+		"type": "boolean",
+		"default": false
+	}
+}

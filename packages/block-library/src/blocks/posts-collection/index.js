@@ -11,6 +11,17 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 
+import blockAttributes from "./attributes";
+
+//import {
+//	alignmentAttributes,
+//	colorAttributes,
+//	layoutAttributes,
+//	scrollingAttributes,
+//} from "@novablocks/components";
+//
+//const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
+
 registerBlockType( 'novablocks/posts-collection', {
 	title: __( 'Posts Collection', '__plugin_txtd' ),
 	description: __( 'Show Latest Posts', '__plugin_txtd' ),

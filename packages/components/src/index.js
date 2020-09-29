@@ -31,6 +31,7 @@ export {
 } from './emphasis-level-controls';
 
 export {
+	collectionAttributes,
 	default as Collection,
 	CollectionPreview,
 	CollectionHeader,

@@ -190,4 +190,6 @@ export const CollectionHeader = ( props ) => {
 	)
 };
 
+export { default as collectionAttributes } from './attributes';
+
 export default Collection;
