@@ -6,7 +6,7 @@ import { ControlsSection, ControlsTab } from "@novablocks/components";
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-import { parseContent } from "./hoursparser";
+import { parseContent } from "./HoursParser";
 
 import {
 	RadioControl,
