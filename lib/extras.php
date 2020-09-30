@@ -229,200 +229,7 @@ function novablocks_get_posts_block_attributes() {
 }
 
 function novablocks_get_collection_attributes() {
-	return array(
-		'align'                            => array(
-			'type'    => 'string',
-			'default' => 'full'
-		),
-		'contentAlign'                     => array(
-			'type'    => 'string',
-			'default' => 'left'
-		),
-		'level'                            => array(
-			'type'    => 'number',
-			'default' => 2,
-		),
-		'collectionTitleLevel'             => array(
-			'type'    => 'number',
-			'default' => 2,
-		),
-		'cardTitleLevel'                   => array(
-			'type'    => 'number',
-			'default' => 3,
-		),
-		'metadataPosition'                 => array(
-			'type'    => 'string',
-			'default' => 'above-title'
-		),
-		'primaryMetadata'                  => array(
-			'type'    => 'string',
-			'default' => 'category'
-		),
-		'secondaryMetadata'                => array(
-			'type'    => 'string',
-			'default' => 'date'
-		),
-		'imageResizing'                    => array(
-			'type'    => 'string',
-			'default' => 'cropped'
-		),
-		'containerHeight'                  => array(
-			'type'    => 'number',
-			'default' => 50
-		),
-		'thumbnailAspectRatioString'       => array(
-			'type'    => 'string',
-			'default' => 'landscape'
-		),
-		'thumbnailAspectRatio'             => array(
-			'type'    => 'number',
-			'default' => 50
-		),
-		'imagePadding'                     => array(
-			'type'    => 'number',
-			'default' => 0
-		),
-		'title'                            => array(
-			'type'    => 'string',
-			'default' => 'Collection Title',
-		),
-		'subtitle'                         => array(
-			'type'    => 'string',
-			'default' => 'Collection Subtitle',
-		),
-		'showCollectionTitle'              => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'showCollectionSubtitle'           => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'showMedia'                        => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'showTitle'                        => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'showSubtitle'                     => array(
-			'type'    => 'boolean',
-			'default' => false,
-		),
-		'showDescription'                  => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'showButtons'                      => array(
-			'type'    => 'boolean',
-			'default' => true,
-		),
-		'showMeta'                         => array(
-			'type'    => 'boolean',
-			'default' => false,
-		),
-	);
-}
-
-function novablocks_get_source_attributes() {
-	return array(
-		'order' => array(
-			'type' => 'string',
-			'default' => 'desc',
-		),
-		'orderBy' => array(
-			'type' => 'string',
-			'default' => 'date',
-		),
-		'category' => array(
-			'type' => 'string',
-			'default' => 'all',
-		),
-		'numberOfPosts' => array(
-			'type' => 'number',
-			'default' => 3
-		),
-	);
-}
-
-function novablocks_get_posts_collection_attributes() {
-	return array_merge(
-		array(
-			'columns' => array(
-				'type'    => 'number',
-				'default' => 3,
-			),
-			'collectionTitle' => array(
-				'type' => 'string',
-				'default' => 'Title'
-			),
-			'collectionDescription' => array(
-				'type' => 'string',
-				'default' => 'Description',
-			),
-			'isLandscape' => array(
-				'type' => 'boolean',
-				'default' => false,
-			),
-		),
-		novablocks_get_source_attributes(),
-		novablocks_get_collection_attributes()
-	);
-}
-
-function novablocks_get_cards_collection_attributes() {
-	return array_merge(
-		novablocks_get_collection_attributes()
-	);
-}
-
-function novablocks_get_openhours_attributes() {
-	return array(
-		'text'  => array(
-			'type'  => 'string',
-			'default'   => 'Monday 10am - 3pm
-Tuesday to Friday 9 - 17
-Sat noon - 2am'
-		),
-		'parsedText'  => array(
-			'type'  => 'string',
-			'default'   => '{"timeframes":[{"days":[1],"open":[{"start":"1000","end":"2200"}]},{"days":[2,3,4,5],"open":[{"start":"0900","end":"1700"}]},{"days":[6],"open":[{"start":"1200","end":"+0200"}]}]}'
-		),
-		'timeFormat'    => array(
-			'type'  => 'string',
-			'default'   => 'g:ia'
-		),
-		'openHoursStyle'    => array(
-			'type' => 'string',
-			'default'   => 'overview'
-		),
-		'openNote'    => array(
-			'type'  => 'string',
-			'default'   => 'It\'s {time} and we\'re Open until {today-closing-time}'
-		),
-		'closedNote'    => array(
-			'type'  => 'string',
-			'default'   => 'We\'re closed until {next-opening-day} at {next-opening-time}'
-		),
-		'closedLabel'    => array(
-			'type'  => 'string',
-			'default'   => 'Closed'
-		),
-		'compressOpeningHours'    => array(
-			'type'  => 'boolean',
-			'default'   => false
-		),
-		'hideClosedDays'    => array(
-			'type'  => 'boolean',
-			'default'   => false
-		),
-		'useShortName'    => array(
-			'type'  => 'boolean',
-			'default'   => false
-		),
-
-	);
+	return novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
 }
 
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
@@ -494,6 +301,42 @@ function novablocks_add_hero_settings( $settings ) {
 }
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
+
+function novablocks_get_media_spacing_atttributes() {
+	return array(
+		// general
+		'layoutPreset' => array(
+			'type' => 'string',
+			'default' => 'stable',
+		),
+		// customize
+		'emphasisBySpace' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'enableOverlapping' => array(
+			'type' => 'boolean',
+			'default' => false,
+		),
+		// settings
+		'blockTopSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'blockBottomSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'emphasisTopSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'emphasisBottomSpacing' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+	);
+}
 
 function novablocks_add_media_settings( $settings ) {
 
@@ -1031,17 +874,21 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
 				echo '</div>';
 
-				echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+				if ( ! empty( $image['caption'] ) || ! empty( $attachment->post_content ) ) {
 
-				if ( ! empty( $image['caption'] ) ) {
-					echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+					echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+
+					if ( ! empty( $image['caption'] ) ) {
+						echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+					}
+
+					if ( ! empty( $attachment->post_content ) ) {
+						echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
+					}
+
+					echo '</div>';
+
 				}
-
-				if ( ! empty( $attachment->post_content ) ) {
-					echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
-				}
-
-				echo '</div>';
 
 				echo '</div>';
 			}
@@ -1225,18 +1072,24 @@ function novablocks_build_articles_query( $attributes ) {
 		$novablocks_rendered_posts_ids = array();
 	}
 
-	$authors        = isset( $attributes['authors'] ) ? $attributes['authors'] : array();
-	$categories     = isset( $attributes['categories'] ) ? $attributes['categories'] : array();
-	$tags           = isset( $attributes['tags'] ) ? $attributes['tags'] : array();
-	$specific_posts = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : array();
-	$posts_to_show  = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
-	$manual_mode    = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
+	$authors                 = isset( $attributes['authors'] ) ? $attributes['authors'] : array();
+	$categories              = isset( $attributes['categories'] ) ? $attributes['categories'] : array();
+	$tags                    = isset( $attributes['tags'] ) ? $attributes['tags'] : array();
+	$specific_posts          = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : array();
+	$posts_to_show           = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
+	$manual_mode             = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
+	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
+
 	$args           = array(
 		'post_status'         => 'publish',
 		'suppress_filters'    => false,
 		'ignore_sticky_posts' => true,
-		'post__not_in'        => $novablocks_rendered_posts_ids,
 	);
+
+	if ( $prevent_duplicate_posts ) {
+		$args[ 'post__not_in' ] = $novablocks_rendered_posts_ids;
+	}
+
 	if ( $manual_mode && $specific_posts ) {
 		$args['post__in'] = $specific_posts;
 		$args['orderby']  = 'post__in';
@@ -1246,13 +1099,32 @@ function novablocks_build_articles_query( $attributes ) {
 			$args['author__in'] = $authors;
 		}
 		if ( $categories && count( $categories ) ) {
-			$args['category__in'] = $categories;
+			$args['category__in'] = novablocks_expand_categories_to_include_subcategories( $categories );
 		}
 		if ( $tags && count( $tags ) ) {
 			$args['tag__in'] = $tags;
 		}
 	}
 	return $args;
+}
+
+function novablocks_expand_categories_to_include_subcategories( $category_ids ) {
+	$all_category_ids = $category_ids;
+
+	foreach ( $category_ids as $category_id ) {
+		$subcategories = get_terms( 'category', array(
+			'child_of' => $category_id
+		) );
+
+		$subcategories_ids = array_map( 'novablocks_array_map_terms_to_ids', $subcategories );
+		$all_category_ids = array_merge( $all_category_ids, $subcategories_ids );
+	}
+
+	return $all_category_ids;
+}
+
+function novablocks_array_map_terms_to_ids( $term ) {
+	return $term->term_id;
 }
 
 function novablocks_get_image_url( $image, $size ) {
@@ -1334,3 +1206,30 @@ function novablocks_rest_prepare_attachment( $response, $post, $request ) {
 	return $response;
 }
 add_filter( 'rest_prepare_attachment', 'novablocks_rest_prepare_attachment', 10, 3 );
+
+function novablocks_get_categories_with_children( $request ) {
+
+	$ids = array();
+
+	if ( isset( $request['ids'] ) ) {
+		$ids = $request['ids'];
+	}
+
+	if ( ! empty( $ids ) && ! is_array( $ids ) ) {
+		$ids = [ $ids ];
+	}
+
+	if ( is_array( $ids ) ) {
+		$ids = novablocks_expand_categories_to_include_subcategories( $ids );
+	}
+
+	return $ids;
+}
+
+function novablocks_register_api_endpoints() {
+	register_rest_route( 'novablocks/v1', '/categories', array(
+		'methods' => 'GET',
+		'callback' => 'novablocks_get_categories_with_children',
+	) );
+}
+add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );

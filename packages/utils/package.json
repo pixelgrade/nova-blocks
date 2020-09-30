@@ -1,0 +1,25 @@
+{
+	"name": "@novablocks/utils",
+	"version": "1.0.0",
+	"description": "",
+	"main": "build/index.js",
+	"module": "build-module/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pixelgrade/nova-blocks.git",
+		"directory": "packages/utils"
+	},
+	"bugs": {
+		"url": "https://github.com/pixelgrade/nova-blocks/issues"
+	},
+	"devDependencies": {
+		"@wordpress/api-fetch": "^3.19.1",
+		"@wordpress/data": "^4.23.1",
+		"unsplash-js": "^6.3.0"
+	}
+}
