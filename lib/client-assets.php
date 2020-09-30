@@ -50,7 +50,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				wp_register_style(
 					$handle . '-style',
 					$dir . 'style.css',
-					array()
+					array(),
+					$version
 				);
 			}
 
@@ -58,7 +59,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				wp_register_style(
 					$handle . '-editor_style',
 					$dir . 'editor-styles.css',
-					array()
+					array(),
+					$version
 				);
 			}
 		}
@@ -268,6 +270,7 @@ function novablocks_register_block_types() {
 
 			// the same dependencies array used for the respective script file
 			$js_dependencies  = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
+			$version          = isset( $asset['version'] ) ? $asset['version'] : filemtime( $path );
 			$css_dependencies = array();
 
 			foreach ( $js_dependencies as $js_dependency ) {
@@ -287,7 +290,8 @@ function novablocks_register_block_types() {
 			wp_register_style(
 				$handle,
 				$dir . $style,
-				$css_dependencies
+				$css_dependencies,
+				$version
 			);
 
 			$args[ $key ] = $handle;
