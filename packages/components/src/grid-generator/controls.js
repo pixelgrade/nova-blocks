@@ -637,7 +637,7 @@ const ParametricLayoutControls = ( props ) => {
 					} }
 				/>
 			</ControlsGroup>
-			<ControlsGroup title={ __( 'Items Regulariry' ) }>
+			<ControlsGroup title={ __( 'Items Regularity' ) }>
 				<RangeControl
 					label={ __( `Start of Image Variance`, '__plugin_txtd' ) }
 					value={ imageweightleft }
