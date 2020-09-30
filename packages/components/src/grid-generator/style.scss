@@ -99,8 +99,6 @@
 		--novablocks-card-title-font-size-modifier: 0.8;
 
 		@include above(tablet) {
-			--grid-item-media-display: none;
-
 			--novablocks-card-spacing-modifier: 0.25;
 			--novablocks-card-meta-font-size-modifier: 0.6;
 			--novablocks-card-title-font-size-modifier: 0.5;
@@ -212,10 +210,7 @@
 	padding: 10px;
 }
 
-.novablocks-grid__area--width-s {
-	--card-image-width: 40%;
-}
-
+.novablocks-grid__area--width-s,
 .novablocks-grid__area--width-xs {
-	--card-image-width: 50px;
+	--card-image-width: 40%;
 }
