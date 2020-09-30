@@ -63,14 +63,6 @@
 		"type": "boolean",
 		"default": true
 	},
-	"collectionTitleLinkOpensInNewTab": {
-		"type": "boolean",
-		"default": false
-	},
-	"collectionTitleLinkURL": {
-		"type": "string",
-		"default": ""
-	},
 	"showCollectionSubtitle": {
 		"type": "boolean",
 		"default": true

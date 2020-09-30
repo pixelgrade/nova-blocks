@@ -4,14 +4,10 @@ import InspectorControls from "./inspector-controls";
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'
 
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { URLInput } from '@wordpress/block-editor';
+const { RichText } = wp.blockEditor;
 
-import {
-	BaseControl,
-	ToggleControl,
-} from '@wordpress/components';
+const { __ } = wp.i18n;
+const { Fragment } = wp.element;
 
 // @todo this is bad mojo
 const {
@@ -24,14 +20,10 @@ export const CollectionTitle = ( props ) => {
 	const {
 		attributes: {
 			showCollectionTitle,
-			collectionTitleLinkOpensInNewTab,
-			collectionTitleLinkURL,
 			title,
-
 			collectionTitleLevel,
 		},
 		setAttributes,
-		isSelected,
 	} = props;
 
 	if ( ! showCollectionTitle ) {
@@ -40,41 +32,17 @@ export const CollectionTitle = ( props ) => {
 
 	return (
 		<div className="block-editor-block-list__block wp-block novablocks-collection__title">
-			<EditableText
+			<RichText
 				tagName={ `h${ collectionTitleLevel }` }
 				value={ title }
 				onChange={ title => {
 					setAttributes( { title } );
 				} }
+				allowedFormats = {[ 'core/link' ]}
 			/>
-			{
-				isSelected &&
-				<div className="novablocks-collection__title-url-field-wrapper">
-					<BaseControl
-						label={ __( 'Add a link to make the Collection Title clickable.', '__plugin_txtd' ) }
-						className="wp-block-button__inline-link">
-						<URLInput
-							className="wp-block-button__inline-link-input"
-							value={ collectionTitleLinkURL }
-							autoFocus={ false }
-							onChange={ ( value ) => setAttributes( { collectionTitleLinkURL: value } ) }
-							disableSuggestions={ ! isSelected }
-							isFullWidth
-							hasBorder
-						/>
-					</BaseControl>
-					<ToggleControl
-						checked={ collectionTitleLinkOpensInNewTab }
-						onChange={ ( collectionTitleLinkOpensInNewTab ) => {
-							setAttributes( { collectionTitleLinkOpensInNewTab } );
-						} }
-						label={ __( 'Open in new tab', '__plugin_txtd' ) }
-					/>
-				</div>
-			}
 		</div>
 	);
-}
+};
 
 export const CollectionSubtitle = ( props ) => {
 
@@ -102,7 +70,7 @@ export const CollectionSubtitle = ( props ) => {
 			/>
 		</div>
 	)
-}
+};
 
 export const CollectionPreview = ( props ) => {
 
