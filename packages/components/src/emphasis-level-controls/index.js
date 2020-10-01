@@ -11,6 +11,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlockEditContext } from '@wordpress/block-editor';
 
 import {
+	ColorPalette,
 	RangeControl,
 	RadioControl,
 	createSlotFill,
@@ -32,19 +33,60 @@ const EmphasisLevelControls = ( props ) => {
 			blockStyle,
 		},
 		setAttributes,
-		settings: {
-			media: {
-				contentAreaOptions,
-				blockAreaOptions,
-			},
-		},
+		settings,
 	} = props;
+
+	const {
+		media: {
+			contentAreaOptions,
+			blockAreaOptions,
+		},
+	} = settings;
 
 	const getEmphasisByContrastValue = () => {
 		const blockIndex = blockAreaOptions.findIndex( option => option.value === blockStyle );
 		const contentIndex = contentAreaOptions.findIndex( option => option.value === contentStyle );
 		return blockIndex * 3 + contentIndex;
-	}
+	};
+
+	const cardBgIsLight =
+		( contentStyle === 'highlighted' && blockStyle === 'highlighted' ) ||
+		( contentStyle !== 'highlighted' && blockStyle !== 'highlighted' );
+	const isSlugForColor = ( slug ) => [ 'sm_color_primary', 'sm_color_secondary', 'sm_color_tertiary' ].indexOf( slug ) > -1;
+	const isSlugForDark = ( slug ) => [ 'sm_dark_primary', 'sm_dark_secondary', 'sm_dark_tertiary' ].indexOf( slug ) > -1;
+	const isSlugForLight = ( slug ) => [ 'sm_light_primary', 'sm_light_secondary', 'sm_light_tertiary' ].indexOf( slug ) > -1;
+
+	const filterForegroundColors = ( color ) => {
+
+		if ( cardBgIsLight ) {
+			return isSlugForDark( color.slug );
+		}
+
+		return isSlugForLight( color.slug );
+
+	};
+
+	const filterForegroundAccentColors = ( color ) => {
+		return isSlugForColor( color.slug );
+	};
+
+	const filterCardBackgroundColors = ( color ) => {
+
+		if ( cardBgIsLight ) {
+			return isSlugForLight( color.slug );
+		}
+
+		return isSlugForDark( color.slug );
+	};
+
+	const filterBlockBackgroundColors = ( color ) => {
+
+		if ( blockStyle === 'highlighted' ) {
+			return isSlugForDark( color.slug );
+		}
+
+		return isSlugForLight( color.slug );
+	};
 
 	return (
 		<ControlsSection label={ __( 'Color Contrast' ) }>
@@ -87,6 +129,29 @@ const EmphasisLevelControls = ( props ) => {
 						options={ contentAreaOptions }
 						onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
 					/>
+
+					<label>Text Color</label>
+					<ColorPalette
+						disableCustomColors
+						colors={ settings.colors.filter( filterForegroundColors ) }
+					/>
+
+					<label>Text Accent Color</label>
+					<ColorPalette
+						disableCustomColors
+						colors={ settings.colors.filter( filterForegroundAccentColors ) }
+					/>
+					<label>Block Background Color</label>
+					<ColorPalette
+						disableCustomColors
+						colors={ settings.colors.filter( filterBlockBackgroundColors ) }
+					/>
+					<label>Card Background Color</label>
+					<ColorPalette
+						disableCustomColors
+						colors={ settings.colors.filter( filterCardBackgroundColors ) }
+					/>
+
 					<EmphasisContentAreaSlot />
 				</ControlsGroup>
 			</ControlsTab>
