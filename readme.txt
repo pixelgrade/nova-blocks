@@ -96,6 +96,7 @@ Yes! Nova Block's core features are free to use.
 
 = 1.6.0 =
 * Add parametric layout generation controls for the Posts Collection block
+* Add video support for the Media Card Constellation block
 * Improve performance by splitting and enqueueing only for blocks that are used on a page
 
 = 1.5.4 =
