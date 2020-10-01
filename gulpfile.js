@@ -53,7 +53,6 @@ function removeUnneededFiles() {
 		'package.json',
 		'package-lock.json',
 		'pxg.json',
-		'build',
 		'css',
 		'.idea',
 		'.editorconfig',

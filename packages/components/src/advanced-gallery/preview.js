@@ -37,19 +37,24 @@ const AdvancedGalleryPreview = ( props ) => {
 			</div>
 		</div>
 	);
-}
+};
 
-const AdvancedGalleryItem = ( { gridItem } ) => {
+const AdvancedGalleryItem = ( props ) => {
 
+	const { gridItem } = props;
 	const image = gridItem?.image;
 	const imageURL = image?.sizes?.novablocks_medium?.url || image?.url;
 	const imageCaption = image?.caption;
 	const imageDescription = image?.description;
+	const styles = gridItem.getImageStyle();
 
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
-				<img className={ `novablocks-advanced-gallery__image` } src={ imageURL } style={ gridItem.getImageStyle() }/>
+				{ !! image && image.type === 'image' &&
+				  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
+				{ !! image && image.type === 'video' &&
+				  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
 			</div>
 			<div className="novablocks-advanced-gallery__grid-item-info">
 				{ typeof imageCaption === 'string' && <div

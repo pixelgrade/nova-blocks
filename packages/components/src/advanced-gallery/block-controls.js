@@ -12,6 +12,8 @@ import {
 	Toolbar
 } from '@wordpress/components';
 
+const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
+
 const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 
 	const {
@@ -20,6 +22,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 	} = props;
 
 	const gallery = attributes?.images;
+	const galleryValue = gallery.map( ( image ) => image.id );
 
 	if ( ! gallery || ! gallery.length ) {
 		return false;
@@ -28,10 +31,9 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 	return (
 		<Toolbar>
 			<MediaUpload
-				type="image"
+				allowedTypes={ ALLOWED_MEDIA_TYPES }
 				multiple
-				gallery
-				value={ gallery.map( ( image ) => image.id ) }
+				value={ galleryValue }
 				onSelect={ onSelectImages }
 				render={ ( { open } ) => (
 					<Button
