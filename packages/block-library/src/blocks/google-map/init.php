@@ -41,6 +41,9 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 			$id = 'id="' . $attributes['anchor'] . '"';
 		}
 
+		$novablocks_settings = novablocks_get_block_editor_settings();
+		$map_accent_color = $novablocks_settings['map']['accentColor'];
+
 		?>
 
 
@@ -62,13 +65,13 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 					<div class="novablocks-parallax">
 						<div
 							class="novablocks-map__map js-novablocks-google-map"
+							data-accent-color="<?php echo $map_accent_color; ?>"
 							data-show-icons='<?php echo json_encode( $attributes['showIcons'] ); ?>'
 							data-show-labels='<?php echo json_encode( $attributes['showLabels'] ); ?>'
 							data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
 							data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
 							data-zoom="<?php echo $attributes['zoom']; ?>"
 							data-controls="<?php echo $attributes['showControls']; ?>"
-							data-pin-color="<?php echo $attributes['pinColor']; ?>"
 						>
 						</div>
 					</div>

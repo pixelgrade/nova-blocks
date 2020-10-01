@@ -19,6 +19,13 @@
 	}
 }
 
+.novablocks-collection--align-center {
+
+	.wp-block-buttons {
+		justify-content: center;
+	}
+}
+
 .novablocks-collection {
 	--block-top-spacing: var(--novablocks-block-top-spacing);
 	--block-bottom-spacing: var(--novablocks-block-bottom-spacing);

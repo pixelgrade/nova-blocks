@@ -21,14 +21,6 @@ export const addVisibilityToStyles = function( styles, showLabels, showIcons ) {
 };
 
 export const compileStyles = function( styleData ) {
-	const {
-		attributes: {
-			showLabels,
-			showIcons,
-			styleSlug,
-		}
-	} = this.props;
-
 	const accentColor = getMapAccentColor.call( this );
 	const styleDataString = JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, accentColor );
 	return JSON.parse( styleDataString );
@@ -45,32 +37,7 @@ export const getMapStyles = function() {
 };
 
 export const getMapAccentColor = function() {
-	const { settings } = this.props;
-	const { colors } = settings;
-	const fallbackColor = '#222222';
-
-	if ( colors && colors.length ) {
-
-		const primary = colors.find( color => color.slug === 'sm-color-primary' );
-		const secondary = colors.find( color => color.slug === 'sm-color-secondary' );
-		const tertiary = colors.find( color => color.slug === 'sm-color-tertiary' );
-
-		if ( primary ) {
-			return primary.color;
-		}
-
-		if ( secondary ) {
-			return secondary.color;
-		}
-
-		if ( tertiary ) {
-			return tertiary.color;
-		}
-
-		return colors[0].color;
-	}
-
-	return fallbackColor;
+	return this?.props?.settings?.map?.accentColor || '#222222';
 };
 
 export const getCenterFromMarkers = function( markers ) {
