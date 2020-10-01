@@ -1,0 +1,34 @@
+{
+	"columns": {
+		"type": "number",
+		"default": 3
+	},
+	"collectionTitle": {
+		"type": "string",
+		"default": "Title"
+	},
+	"collectionDescription": {
+		"type": "string",
+		"default": "Description"
+	},
+	"isLandscape": {
+		"type": "boolean",
+		"default": false
+	},
+	"order": {
+		"type": "string",
+		"default": "desc"
+	},
+	"orderBy": {
+		"type": "string",
+		"default": "date"
+	},
+	"category": {
+		"type": "string",
+		"default": "all"
+	},
+	"numberOfPosts": {
+		"type": "number",
+		"default": 3
+	}
+}

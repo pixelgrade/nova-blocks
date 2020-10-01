@@ -1,2 +1,5 @@
-/node_modules/
-/dist/css/*.js
+**/node_modules/
+**/build/
+**/build-module/
+**/build-style/
+/dist/

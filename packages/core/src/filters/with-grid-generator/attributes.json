@@ -1,0 +1,70 @@
+{
+	"gridcolumns": {
+		"type": "number",
+		"default": 6
+	},
+	"gridrows": {
+		"type": "number",
+		"default": 6
+	},
+	"featuresize": {
+		"type": "number",
+		"default": 2
+	},
+	"featureposition": {
+		"type": "number",
+		"default": 2
+	},
+	"fragmentation": {
+		"type": "number",
+		"default": 5
+	},
+	"imageweightleft":  {
+		"type": "number",
+		"default": 8
+	},
+	"imageweightright":  {
+		"type":  "number",
+		"default": 0
+	},
+	"metadetailsleft":  {
+		"type":  "number",
+		"default": 7
+	},
+	"metadetailsright":  {
+		"type":  "number",
+		"default": 0
+	},
+	"boostfeature": {
+		"type": "boolean",
+		"default": true
+	},
+	"subfeature": {
+		"type": "boolean",
+		"default": false
+	},
+	"balancemdandiw": {
+		"type": "boolean",
+		"default": false
+	},
+	"hierarchycrossing": {
+		"type": "number",
+		"default": 0
+	},
+	"flipcolsrows": {
+		"type": "boolean",
+		"default": false
+	},
+	"layoutStyle": {
+		"type": "string",
+		"default": "classic"
+	},
+	"headerPosition": {
+		"type": "number",
+		"default": 0
+	},
+	"headerColumn": {
+		"type": "number",
+		"default": 0
+	}
+}

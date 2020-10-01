@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.2.2
 Tested up to: 5.4.2
 Requires PHP: 5.4.0
-Stable tag: 1.5.3
+Stable tag: 1.6.0
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,17 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.6.0 =
+* Add parametric layout generation controls for the Posts Collection block
+* Improve performance by splitting and enqueueing only for blocks that are used on a page
+
+= 1.5.4 =
+* Fix Media Card Constellation block Image Resizing and Image Position options
+* Fix buttons alignment inside Cards Collection when using Content Alignment option
+* Reduce size of placeholder images fetched from Unsplash on Slideshow Me the Way
+* Load Posts Collection block only for themes which support this block
+* Allow the accent colour of the map to be updated after the a block was saved to a page
 
 = 1.5.3 =
 * Add caption and description to Media Card and Gallery of the stars images

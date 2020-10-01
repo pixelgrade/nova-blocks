@@ -1,0 +1,95 @@
+@import "scss/mixins";
+
+.novablocks-collection__layout {
+	@include novablocks-collection-layout;
+	@include novablocks-cards-columns-count;
+}
+
+@each $alignment in left, center, right {
+
+	.novablocks-collection--align-#{ $alignment } {
+		text-align: $alignment;
+	}
+}
+
+.novablocks-collection--align-right {
+
+	.wp-block-buttons {
+		flex-direction: row-reverse;
+	}
+}
+
+.novablocks-collection--align-center {
+
+	.wp-block-buttons {
+		justify-content: center;
+	}
+}
+
+.novablocks-collection {
+	--block-top-spacing: var(--novablocks-block-top-spacing);
+	--block-bottom-spacing: var(--novablocks-block-bottom-spacing);
+	--emphasis-top-spacing: var(--novablocks-emphasis-top-spacing);
+	--emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing);
+
+	margin-top: calc(var(--block-top-spacing, 1) * var(--novablocks-spacing));
+	margin-bottom: calc(var(--block-bottom-spacing, 1) * var(--novablocks-spacing));
+	padding-top: calc(var(--emphasis-top-spacing, 1) * var(--novablocks-spacing));
+	padding-bottom: calc(var(--emphasis-bottom-spacing, 1) * var(--novablocks-spacing));
+
+	.novablocks-block__content {
+		padding: 0;
+	}
+
+	// proper spacing inside collection header
+	// and between collection header and cards
+	.novablocks-collection__title + .novablocks-collection__subtitle {
+		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+	}
+
+	.novablocks-collection__cards {
+		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
+	}
+}
+
+.novablocks-collection__title {
+
+	a {
+		text-decoration: inherit;
+		color: inherit;
+	}
+}
+
+// avoid collection layout overlapping collection header
+// fix inspector view and pointer events for collection header elements
+.novablocks-collection__cards {
+	border-top: 1px solid transparent;
+
+	> .novablocks-collection__layout {
+		pointer-events: none;
+
+		> * {
+			pointer-events: auto;
+		}
+	}
+}
+
+.novablocks-collection:not(.content-is-basic) {
+
+	.novablocks-card__media-wrap {
+		margin: calc( -0.5 * var(--block-content-padding) );
+	}
+
+	.novablocks-block__content {
+		padding: calc( 0.5 * var(--block-content-padding) );
+	}
+
+	.novablocks-card--landscape .novablocks-card__media-wrap {
+		margin-right: 0;
+	}
+
+	.novablocks-card--portrait .novablocks-card__media-wrap {
+		margin-bottom: 0;
+	}
+}
+
