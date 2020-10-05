@@ -58,7 +58,8 @@
 [data-type="novablocks/google-map"] .components-placeholder {
 	align-items: center;
 
-	.components-placeholder__instructions {
+	.components-placeholder__instructions,
+	.components-placeholder__input {
 		flex-basis: 100%;
 		text-align: center;
 	}
