@@ -435,27 +435,31 @@ const ClassicLayoutControls = ( props ) => {
 
 	return (
 		<Fragment>
-			<PostsCountControl { ...props } />
-			<RangeControl
-				key={ 'posts-collection-display-controls' }
-				value={ columns }
-				onChange={ ( columns ) => setAttributes( { columns } ) }
-				label={ __( 'Columns' ) }
-				min={ 1 }
-				max={ 4 }
-			/>
-			<RadioControl
-				key={ 'novablocks-card-layout-controls' }
-				selected={ isLandscape ? 'landscape' : 'portrait' }
-				className={ 'novablocks-card-layout' }
-				onChange={ ( value ) => {
-					setAttributes( { isLandscape: value === 'landscape' } );
-				} }
-				options={ [
-					{ label: 'Portrait', value: 'portrait' },
-					{ label: 'Landscape', value: 'landscape' }
-				] }
-			/>
+			<ControlsGroup title={ __( 'Cards Count' ) }>
+				<PostsCountControl { ...props } />
+				<RangeControl
+					key={ 'posts-collection-display-controls' }
+					value={ columns }
+					onChange={ ( columns ) => setAttributes( { columns } ) }
+					label={ __( 'Columns' ) }
+					min={ 1 }
+					max={ 4 }
+				/>
+			</ControlsGroup>
+			<ControlsGroup title={ __( 'Card Layout' ) }>
+				<RadioControl
+					key={ 'novablocks-card-layout-controls' }
+					selected={ isLandscape ? 'landscape' : 'portrait' }
+					className={ 'novablocks-card-layout' }
+					onChange={ ( value ) => {
+						setAttributes( { isLandscape: value === 'landscape' } );
+					} }
+					options={ [
+						{ label: 'Vertical', value: 'portrait' },
+						{ label: 'Horizontal', value: 'landscape' }
+					] }
+				/>
+			</ControlsGroup>
 		</Fragment>
 	)
 };
