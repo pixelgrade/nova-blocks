@@ -37,20 +37,22 @@ function getLevelAttributes( attributes ) {
 }
 
 function getAspectRatioAttributes( attributes ) {
-	const { thumbnailAspectRatioString } = attributes;
-	let thumbnailAspectRatio = attributes.thumbnailAspectRatio;
+	let {
+		thumbnailAspectRatio,
+		thumbnailAspectRatioString
+	} = attributes;
 
-	if ( thumbnailAspectRatioString === 'landscape' ) {
-		thumbnailAspectRatio = 45;
+	if ( thumbnailAspectRatioString === 'auto' ) {
+		return {};
 	}
 
-	if ( thumbnailAspectRatioString === 'portrait' ) {
-		thumbnailAspectRatio = 65;
+	if ( thumbnailAspectRatio < 50 ) {
+		thumbnailAspectRatioString = 'landscape';
 	}
 
 	return {
-		thumbnailAspectRatioString,
 		thumbnailAspectRatio,
+		thumbnailAspectRatioString,
 	}
 }
 
@@ -88,8 +90,20 @@ const PostsEdit = ( props ) => {
 								key={ 'thumbnail-aspect-ratio' }
 								selected={ thumbnailAspectRatioString }
 								onChange={ thumbnailAspectRatioString => {
-									const newAttributes = getAspectRatioAttributes( { ...attributes, thumbnailAspectRatioString } );
-									setAttributes( newAttributes );
+									let thumbnailAspectRatio = attributes.thumbnailAspectRatio;
+
+									if ( thumbnailAspectRatioString === 'landscape' ) {
+										thumbnailAspectRatio = 45;
+									}
+
+									if ( thumbnailAspectRatioString === 'portrait' ) {
+										thumbnailAspectRatio = 65;
+									}
+
+									setAttributes( {
+										thumbnailAspectRatio,
+										thumbnailAspectRatioString
+									} );
 								} }
 								options={ [
 									{ label: 'Landscape', value: 'landscape' },
@@ -122,7 +136,7 @@ const PostsEdit = ( props ) => {
 							label={ __( 'Enable Image Container Editing' ) }
 							checked={ thumbnailAspectRatioString !== 'auto' }
 							onChange={ newValue => {
-								let currentOrientation = thumbnailAspectRatio <= 50 ? 'portrait' : 'landscape';
+								let currentOrientation = thumbnailAspectRatio < 50 ? 'landscape' : 'portrait';
 								let thumbnailAspectRatioString = ! newValue ? 'auto' : currentOrientation;
 								setAttributes( { thumbnailAspectRatioString } );
 							} }
@@ -135,7 +149,10 @@ const PostsEdit = ( props ) => {
 									label={ __( 'Image container height', '__plugin_txtd' ) }
 									value={ thumbnailAspectRatio }
 									onChange={ thumbnailAspectRatio => {
-										setAttributes( { thumbnailAspectRatio } )
+										setAttributes( {
+											thumbnailAspectRatio,
+											thumbnailAspectRatioString: thumbnailAspectRatio < 50 ? 'landscape' : 'portrait'
+										} )
 									} }
 									min={ 0 }
 									max={ 100 }
