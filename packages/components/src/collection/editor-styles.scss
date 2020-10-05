@@ -16,10 +16,16 @@
 
 .novablocks-collection__subtitle[class] {
 
+	z-index: 2;
+
 	> p {
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+}
+
+.novablocks-collection__cards {
+	z-index: 1;
 }
 
 .novablocks-collection__layout[class] {
