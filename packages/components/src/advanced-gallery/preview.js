@@ -48,12 +48,16 @@ const AdvancedGalleryItem = ( props ) => {
 	const imageDescription = image?.description;
 	const styles = gridItem.getImageStyle();
 
+	if ( ! image ) {
+		return;
+	}
+
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
-				{ !! image && image.type === 'image' &&
+				{ image.type !== 'video' &&
 				  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
-				{ !! image && image.type === 'video' &&
+				{ image.type === 'video' &&
 				  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
 			</div>
 			<div className="novablocks-advanced-gallery__grid-item-info">
