@@ -839,7 +839,7 @@ function novablocks_render_advanced_gallery( $attributes ) {
 				echo '<div class="novablocks-advanced-gallery__grid-item">';
 				echo '<div class="novablocks-advanced-gallery__grid-item-media">';
 
-				if ( $image['type'] === 'video' ) {
+				if ( isset( $image['type'] ) && $image['type'] === 'video' ) {
 					echo '<video muted autoplay loop playsinline class="novablocks-advanced-gallery__image" src="' . esc_url( $image['url'] ) . '"/>';
 				} else {
 					echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
