@@ -45,14 +45,9 @@ function removeUnneededFiles() {
 		'config.rb',
 		'gulp-tasks',
 		'gulpfile.js',
-		'gulpconfig.json',
-		'gulpconfig.example.json',
 		'webpack.common.js',
 		'webpack.dev.js',
 		'webpack.prod.js',
-		'package.json',
-		'package-lock.json',
-		'pxg.json',
 		'css',
 		'.idea',
 		'.editorconfig',
@@ -90,11 +85,17 @@ function removeUnneededFiles() {
 		'bundlesize.config.json',
 		'postcss.config.js',
 
-		'assets/scss',
-		'src/**/scss',
-		'src/**/*.scss',
-
 		'src/**/*.js',
+
+		'packages/*/build',
+		'packages/*/build-module',
+		'packages/*/build-style',
+
+		'packages/**/*.js',
+		'packages/**/*.scss',
+
+		'**/package.json',
+		'**/package-lock.json',
 
 		'bin',
 		'babel.config.js'
