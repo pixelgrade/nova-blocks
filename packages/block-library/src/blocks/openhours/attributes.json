@@ -1,0 +1,42 @@
+{
+	"text": {
+		"type": "string",
+		"default": "Monday 10am - 3pm\nTuesday to Friday 9 - 17\nSat noon - 2am"
+	},
+	"parsedText": {
+		"type": "string",
+		"default": "{\"timeframes\":[{\"days\":[1],\"open\":[{\"start\":\"1000\",\"end\":\"2200\"}]},{\"days\":[2,3,4,5],\"open\":[{\"start\":\"0900\",\"end\":\"1700\"}]},{\"days\":[6],\"open\":[{\"start\":\"1200\",\"end\":\"+0200\"}]}]}"
+	},
+	"timeFormat": {
+		"type": "string",
+		"default": "g:ia"
+	},
+	"openHoursStyle": {
+		"type": "string",
+		"default": "overview"
+	},
+	"openNote": {
+		"type": "string",
+		"default": "It's {time} and we're Open until {today-closing-time}"
+	},
+	"closedNote": {
+		"type": "string",
+		"default": "We're closed until {next-opening-day} at {next-opening-time}"
+	},
+	"closedLabel": {
+		"type": "string",
+		"default": "Closed"
+	},
+	"compressOpeningHours": {
+		"type": "boolean",
+		"default": false
+	},
+	"hideClosedDays": {
+		"type": "boolean",
+		"default": false
+	},
+	"useShortName": {
+		"type": "boolean",
+		"default": false
+	}
+}

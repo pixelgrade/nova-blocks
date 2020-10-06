@@ -1,0 +1,15 @@
+.wp-block[data-type='novablocks/header'] {
+
+	.wp-block[data-type='novablocks/navigation'] {
+		@import 'scss/menu';
+	}
+
+	.editor-block-list__layout {
+		display: flex;
+		align-items: center;
+	}
+}
+
+.wp-block-novablocks-navigation ul li[class][class] {
+	margin-top: 0;
+}

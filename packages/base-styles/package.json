@@ -1,0 +1,15 @@
+{
+	"name": "@novablocks/base-styles",
+	"version": "1.0.0",
+	"description": "",
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pixelgrade/nova-blocks.git",
+		"directory": "packages/base-styles"
+	},
+	"bugs": {
+		"url": "https://github.com/pixelgrade/nova-blocks/issues"
+	}
+}

@@ -1,7 +1,0 @@
-@mixin count($n) {
-	&:first-child:nth-last-child(#{$n}) {
-		&, & ~ * {
-			@content;
-		}
-	}
-}
