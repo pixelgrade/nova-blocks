@@ -4,6 +4,7 @@
 export { default as AdvancedGallery } from './advanced-gallery';
 
 export { default as BlockVerticalAlignmentToolbar } from './block-vertical-alignment-toolbar';
+export { default as Card } from './card';
 export { default as CardsManager } from './cards-manager';
 export { default as EditableText } from './editable-text';
 export { default as GridGenerator } from './grid-generator';

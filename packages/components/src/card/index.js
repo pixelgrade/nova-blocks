@@ -1,10 +1,7 @@
 import classnames from "classnames";
 import CardMedia from "../card-media";
-
-import {
-	Fragment,
-	RawHTML
- } from '@wordpress/element';
+import { getRandomBetween } from "@novablocks/utils";
+import { RawHTML } from '@wordpress/element';
 
 const Card = ( props ) => {
 	const isLandscape = !! props.isLandscape;
@@ -16,6 +13,11 @@ const Card = ( props ) => {
 		showTitle,
 		showContent,
 		showButtons,
+
+		metaAboveTitle,
+		metaBelowTitle,
+
+		placeholder,
 	} = props;
 
 	const className = classnames(
@@ -31,15 +33,19 @@ const Card = ( props ) => {
 		<div className={ className }>
 			<div className="novablocks-card__layout">
 				{
-					showMedia &&
+					( showMedia || placeholder ) &&
 					<div className="novablocks-card__layout-media novablocks-grid__item-media">
 						<CardMedia id={ props?.mediaId } />
 					</div>
 				}
 				{
-					( showMeta || showTitle || showContent || showButtons ) &&
+					( showMeta || showTitle || showContent || showButtons || placeholder ) &&
 					<div className="novablocks-card__layout-content novablocks-card__inner-container">
-						<CardContents { ...props } />
+						<CardMeta { ...props } meta={ metaAboveTitle } />
+						<CardTitle { ...props } />
+						<CardMeta { ...props } meta={ metaBelowTitle } />
+						<CardContent { ...props } />
+						<CardFooter { ...props } />
 					</div>
 				}
 			</div>
@@ -47,69 +53,107 @@ const Card = ( props ) => {
 	);
 };
 
-export const CardContents = ( props ) => {
+const TextPlaceholder = ( props ) => {
+	const rows = props.rows || 2;
+	const arr = Array.from( Array( rows ).keys() );
+
+	return (
+		<div className={ 'novablocks-text-placeholder' }>
+			{ arr.map( ( obj, index ) => {
+				const units = index === arr.length - 1 ? getRandomBetween(7, 10) : getRandomBetween(3, 6);
+				const width = `${ units * 10 }%`;
+				const style = { width };
+				return <div className={ 'novablocks-text-placeholder__row' } style={ style }></div>
+			} ) }
+		</div>
+	);
+};
+
+const CardTitle = ( props ) => {
 
 	const {
-		metaAboveTitle,
-		metaBelowTitle,
 		title,
-		content,
-		buttons,
-
-		showMeta,
 		showTitle,
-		showContent,
-		showButtons,
+		placeholder
 	} = props;
+
+	if ( ! showTitle && ! placeholder ) {
+		return null;
+	}
 
 	const TitleTagName = props.titleTagName || 'h3';
 
 	return (
-		<Fragment>
-			{
-				showMeta && metaAboveTitle &&
-				<div className="wp-block novablocks-grid__item-meta">
-					<div className="novablocks-card__meta is-style-meta">
-						<div className="novablocks-card__meta-size-modifier">
-							{ metaAboveTitle }
-						</div>
-					</div>
+		<TitleTagName className={ 'wp-block novablocks-grid__item-title novablocks-card__title' }>
+			<div className="novablocks-card__title-size-modifier">
+				{ ! placeholder ? title : <TextPlaceholder/> }
+			</div>
+		</TitleTagName>
+	);
+};
+
+const CardMeta = ( props ) => {
+
+	const {
+		meta,
+		showMeta,
+		placeholder
+	} = props;
+
+	if ( ! showMeta && ! placeholder  ) {
+		return null;
+	}
+
+	return (
+		<div className="wp-block novablocks-grid__item-meta">
+			<div className="novablocks-card__meta is-style-meta">
+				<div className="novablocks-card__meta-size-modifier">
+					{ ! placeholder && meta }
 				</div>
-			}
-			{
-				showTitle &&
-				<TitleTagName className="wp-block novablocks-grid__item-title novablocks-card__title">
-					<div className="novablocks-card__title-size-modifier">
-						{ title }
-					</div>
-				</TitleTagName>
-			}
-			{
-				showMeta && metaBelowTitle &&
-				<div className="wp-block novablocks-grid__item-meta">
-					<div className="novablocks-card__meta is-style-meta">
-						<div className="novablocks-card__meta-size-modifier">
-							{ metaBelowTitle }
-						</div>
-					</div>
-				</div>
-			}
-			{
-				showContent &&
-				<div className="wp-block novablocks-grid__item-content novablocks-card__description">
-					<RawHTML className="novablocks-card__content-size-modifier">
-						{ content }
-					</RawHTML>
-				</div>
-			}
-			{
-				showButtons &&
-				<div className="wp-block novablocks-grid__item-buttons novablocks-card__buttons">
-					{ buttons }
-				</div>
-			}
-		</Fragment>
+			</div>
+		</div>
 	)
+};
+
+const CardContent = ( props ) => {
+
+	const {
+		content,
+		showContent,
+		placeholder
+	} = props;
+
+	if ( ! showContent && ! placeholder  ) {
+		return null;
+	}
+
+	return (
+
+		<div className="wp-block novablocks-grid__item-content novablocks-card__description">
+			<RawHTML className="novablocks-card__content-size-modifier">
+				{ content }
+			</RawHTML>
+		</div>
+	)
+};
+
+const CardFooter = ( props ) => {
+
+	const {
+		buttons,
+		showButtons,
+		placeholder
+	} = props;
+
+	if ( ! showButtons && ! placeholder  ) {
+		return null;
+	}
+
+	return (
+		<div className="wp-block novablocks-grid__item-buttons novablocks-card__buttons">
+			{ buttons }
+		</div>
+	);
 };
 
 export default Card;

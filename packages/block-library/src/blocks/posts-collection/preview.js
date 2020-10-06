@@ -3,6 +3,7 @@ import classnames from "classnames";
 import {
 	CollectionHeader,
 	GridGenerator,
+	Card,
 	Post
 } from "@novablocks/components";
 
@@ -37,10 +38,6 @@ const Preview = ( props ) => {
 
 	markPostsAsDisplayed( clientId, posts );
 
-	if ( ! posts ) {
-		return null;
-	}
-
 	if ( Array.isArray( posts ) && ! posts.length ) {
 		return (
 			<div className={ 'wp-block__inner-container' }>
@@ -64,6 +61,12 @@ const Preview = ( props ) => {
 					post &&
 					<div className="novablocks-grid__item">
 						<Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+					</div>
+				}
+				{
+					! post &&
+					<div className="novablocks-grid__item">
+						<Card placeholder={ true } isLandscape={ isLandscape } />
 					</div>
 				}
 			</Fragment>
@@ -91,7 +94,7 @@ const Preview = ( props ) => {
 				<div className={ classname }>
 					<ParametricLayoutPreview
 						getContent={ getContent }
-						cardsCount={ posts.length }
+						cardsCount={ posts?.length || attributes?.postsToShow || 0 }
 						attributes={ attributes }
 						setAttributes={ setAttributes }
 						posts={ posts }

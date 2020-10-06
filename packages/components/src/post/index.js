@@ -11,7 +11,7 @@ import {
 
 import { __ } from '@wordpress/i18n';
 
-import Card from "../card";
+import { Card } from "../index";
 
 import Author from "../meta/author";
 import Category from "../meta/category";
