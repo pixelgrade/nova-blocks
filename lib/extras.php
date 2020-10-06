@@ -192,42 +192,6 @@ function novablocks_get_header_attributes() {
 	);
 }
 
-function novablocks_get_posts_block_attributes() {
-	return array(
-		'displayFeaturedImage' => array(
-			'type'    => 'boolean',
-			'default' => true
-		),
-		'displayDate'          => array(
-			'type'    => 'boolean',
-			'default' => true
-		),
-		'displayContent'       => array(
-			'type'    => 'boolean',
-			'default' => true
-		),
-		'columnsNumber'        => array(
-			'type'    => 'number',
-			'default' => 2
-		),
-		'displayReadMore'      => array(
-			'type'    => 'boolean',
-			'default' => true
-		),
-		'numberOfPosts'        => array(
-			'type'    => 'number',
-			'default' => 4
-		),
-		'categories'           => array(
-			'type' => 'string'
-		),
-		'postLink'             => array(
-			'type'    => 'string',
-			'default' => 'Read More'
-		)
-	);
-}
-
 function novablocks_get_collection_attributes() {
 	return novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
 }

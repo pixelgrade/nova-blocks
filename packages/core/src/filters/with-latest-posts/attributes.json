@@ -1,7 +1,7 @@
 {
 	"postsToShow": {
 		"type": "integer",
-		"default": 3
+		"default": 6
 	},
 	"loadingMode": {
 		"type": "string",

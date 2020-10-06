@@ -26,9 +26,5 @@
 	"category": {
 		"type": "string",
 		"default": "all"
-	},
-	"numberOfPosts": {
-		"type": "number",
-		"default": 3
 	}
 }

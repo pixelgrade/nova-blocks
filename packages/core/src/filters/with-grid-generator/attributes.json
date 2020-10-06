@@ -9,39 +9,39 @@
 	},
 	"featuresize": {
 		"type": "number",
-		"default": 2
+		"default": 4
 	},
 	"featureposition": {
 		"type": "number",
-		"default": 2
+		"default": 1
 	},
 	"fragmentation": {
 		"type": "number",
-		"default": 5
+		"default": 1
 	},
 	"imageweightleft":  {
 		"type": "number",
-		"default": 8
+		"default": 1
 	},
 	"imageweightright":  {
 		"type":  "number",
-		"default": 0
+		"default": 2
 	},
 	"metadetailsleft":  {
 		"type":  "number",
-		"default": 7
+		"default": 10
 	},
 	"metadetailsright":  {
 		"type":  "number",
-		"default": 0
+		"default": 6
 	},
 	"boostfeature": {
 		"type": "boolean",
-		"default": true
+		"default": false
 	},
 	"subfeature": {
 		"type": "boolean",
-		"default": false
+		"default": true
 	},
 	"balancemdandiw": {
 		"type": "boolean",
@@ -49,7 +49,7 @@
 	},
 	"hierarchycrossing": {
 		"type": "number",
-		"default": 0
+		"default": 30
 	},
 	"flipcolsrows": {
 		"type": "boolean",
@@ -57,7 +57,7 @@
 	},
 	"layoutStyle": {
 		"type": "string",
-		"default": "classic"
+		"default": "parametric"
 	},
 	"headerPosition": {
 		"type": "number",

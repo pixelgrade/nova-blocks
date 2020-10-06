@@ -154,7 +154,7 @@ const LayoutControls = ( props ) => {
 							balancemdandiw: false,
 							hierarchycrossing: 30,
 							flipcolsrows: false,
-								headerPosition: 0,
+							headerPosition: 0,
 						}
 					},
 					{
