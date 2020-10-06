@@ -230,6 +230,14 @@ function novablocks_register_block_types() {
 				$dependencies[] = 'google-maps';
 			}
 
+			$advanced_gallery_dependent_scripts = array(
+				'novablocks/media-frontend'
+			);
+
+			if ( in_array( $handle, $advanced_gallery_dependent_scripts ) ) {
+				$dependencies[] = 'novablocks/advanced-gallery-frontend';
+			}
+
 			// actually register the script
 			wp_register_script(
 				$handle,
