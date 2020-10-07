@@ -166,6 +166,10 @@
 	margin-top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
 }
 
+.novablocks-grid__item + .novablocks-grid__item {
+	--novablocks-grid-spacing-modifier: 0.5;
+}
+
 .novablocks-grid--mask {
 
 	.novablocks-grid__debug {

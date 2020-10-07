@@ -4,6 +4,7 @@
 export { default as AdvancedGallery } from './advanced-gallery';
 
 export { default as BlockVerticalAlignmentToolbar } from './block-vertical-alignment-toolbar';
+export { default as Card } from './card';
 export { default as CardsManager } from './cards-manager';
 export { default as EditableText } from './editable-text';
 export { default as GridGenerator } from './grid-generator';
@@ -13,6 +14,7 @@ export { default as ParallaxPanel } from './parallax-panel';
 export { default as PresetControl } from './preset-control';
 export { default as Post } from './post';
 export { default as QueryControls } from './query-controls';
+export { default as TextPlaceholder } from './text-placeholder';
 export { default as ToggleGroup } from './toggle-group';
 export { default as viewportObserver } from './viewport-observer';
 

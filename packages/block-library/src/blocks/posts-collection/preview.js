@@ -3,6 +3,7 @@ import classnames from "classnames";
 import {
 	CollectionHeader,
 	GridGenerator,
+	Card,
 	Post
 } from "@novablocks/components";
 
@@ -27,6 +28,12 @@ const Preview = ( props ) => {
 	} = props;
 
 	const {
+		showMedia,
+		showMeta,
+		showTitle,
+		showDescription,
+		showButtons,
+
 		layoutStyle,
 		contentAlign,
 		contentStyle,
@@ -36,10 +43,6 @@ const Preview = ( props ) => {
 	} = attributes;
 
 	markPostsAsDisplayed( clientId, posts );
-
-	if ( ! posts ) {
-		return null;
-	}
 
 	if ( Array.isArray( posts ) && ! posts.length ) {
 		return (
@@ -51,6 +54,16 @@ const Preview = ( props ) => {
 
 	const getContent = ( index, attributes, isLandscape ) => {
 		const post = posts?.[index];
+		const cardProps = {
+			placeholder: true,
+			hasFixedAspectRatio: true,
+			isLandscape,
+			showMedia,
+			showMeta,
+			showTitle,
+			showContent: showDescription,
+			showButtons,
+		};
 
 		return (
 			<Fragment>
@@ -64,6 +77,12 @@ const Preview = ( props ) => {
 					post &&
 					<div className="novablocks-grid__item">
 						<Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+					</div>
+				}
+				{
+					! post &&
+					<div className="novablocks-grid__item">
+						<Card { ...cardProps } />
 					</div>
 				}
 			</Fragment>
@@ -91,7 +110,7 @@ const Preview = ( props ) => {
 				<div className={ classname }>
 					<ParametricLayoutPreview
 						getContent={ getContent }
-						cardsCount={ posts.length }
+						cardsCount={ posts?.length || attributes?.postsToShow || 0 }
 						attributes={ attributes }
 						setAttributes={ setAttributes }
 						posts={ posts }

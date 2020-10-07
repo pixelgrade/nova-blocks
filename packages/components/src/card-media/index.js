@@ -10,7 +10,7 @@ const Media = ( { src } ) => {
 		return <img className={`novablocks-card__media-image`} src={ src }/>
 	}
 
-	return <div className={`novablocks-card__media-placeholder`}>{ icons.placeholder }</div>
+	return null;
 };
 
 const MediaWithSelect = withSelect( ( select, ownProps ) => {

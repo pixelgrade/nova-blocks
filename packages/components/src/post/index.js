@@ -11,7 +11,7 @@ import {
 
 import { __ } from '@wordpress/i18n';
 
-import Card from "../card";
+import { Card } from "../index";
 
 import Author from "../meta/author";
 import Category from "../meta/category";
@@ -103,7 +103,7 @@ const Post = ( props ) => {
 	}
 
 	const buttons = (
-		<div className="wp-block-buttons alignleft">
+		<div className="wp-block-buttons">
 			<div className="wp-block-button is-style-text">
 				<div className="wp-block-button__link">
 					<div className="novablocks-buttons-size-modifier">

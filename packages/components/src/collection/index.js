@@ -31,7 +31,7 @@ export const CollectionTitle = ( props ) => {
 	}
 
 	return (
-		<div className="block-editor-block-list__block wp-block novablocks-collection__title">
+		<div className="block-editor-block-list__block wp-block novablocks-collection__title" data-align="wide">
 			<RichText
 				tagName={ `h${ collectionTitleLevel }` }
 				value={ title }
@@ -59,7 +59,7 @@ export const CollectionSubtitle = ( props ) => {
 	}
 
 	return (
-		<div className="block-editor-block-list__block wp-block novablocks-collection__subtitle">
+		<div className="block-editor-block-list__block wp-block novablocks-collection__subtitle" data-align="wide">
 			<EditableText
 				tagName={ 'p' }
 				className={ 'is-style-lead' }
