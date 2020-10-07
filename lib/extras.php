@@ -822,13 +822,13 @@ function novablocks_render_advanced_gallery( $attributes ) {
 			if ( is_numeric( $image['id'] ) && intval( $image['id'] ) > 0 ) {
 				$attachment = get_post( $image['id'] );
 
-				if ( $attachment->post_type === 'attachment' ) {
+				if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
 					$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
 				}
 			}
 
 			$has_caption = ! empty( $image['caption'] );
-			$has_description = $attachment->post_type === 'attachment' && ! empty( $attachment->post_content );
+			$has_description = ! empty( $attachment ) && $attachment->post_type === 'attachment' && ! empty( $attachment->post_content );
 
 			$url = '';
 
