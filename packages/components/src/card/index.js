@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import CardMedia from "../card-media";
-import { getRandomBetween } from "@novablocks/utils";
 import { RawHTML } from '@wordpress/element';
+import { TextPlaceholder } from '../index';
 
 const Card = ( props ) => {
 	const isLandscape = !! props.isLandscape;
@@ -25,6 +25,7 @@ const Card = ( props ) => {
 		`novablocks-card--${ isLandscape ? 'landscape' : 'portrait' }`,
 		`novablocks-block__content`,
 		{
+			'novablocks-card--placeholder': placeholder,
 			'novablocks-card--fixed-media-aspect-ratio': hasFixedAspectRatio
 		}
 	);
@@ -49,22 +50,6 @@ const Card = ( props ) => {
 					</div>
 				}
 			</div>
-		</div>
-	);
-};
-
-const TextPlaceholder = ( props ) => {
-	const rows = props.rows || 2;
-	const arr = Array.from( Array( rows ).keys() );
-
-	return (
-		<div className={ 'novablocks-text-placeholder' }>
-			{ arr.map( ( obj, index ) => {
-				const units = index === arr.length - 1 ? getRandomBetween(7, 10) : getRandomBetween(3, 6);
-				const width = `${ units * 10 }%`;
-				const style = { width };
-				return <div className={ 'novablocks-text-placeholder__row' } style={ style }></div>
-			} ) }
 		</div>
 	);
 };
@@ -100,7 +85,7 @@ const CardMeta = ( props ) => {
 		placeholder
 	} = props;
 
-	if ( ! showMeta && ! placeholder  ) {
+	if ( ! showMeta ) {
 		return null;
 	}
 
@@ -108,7 +93,7 @@ const CardMeta = ( props ) => {
 		<div className="wp-block novablocks-grid__item-meta">
 			<div className="novablocks-card__meta is-style-meta">
 				<div className="novablocks-card__meta-size-modifier">
-					{ ! placeholder && meta }
+					{ ! placeholder ? meta : <TextPlaceholder rows={ 1 } /> }
 				</div>
 			</div>
 		</div>
@@ -127,14 +112,26 @@ const CardContent = ( props ) => {
 		return null;
 	}
 
-	return (
+	const wrapperClassName = 'wp-block novablocks-grid__item-content novablocks-card__description';
+	const fontSizeClassName = 'novablocks-card__content-size-modifier';
 
-		<div className="wp-block novablocks-grid__item-content novablocks-card__description">
-			<RawHTML className="novablocks-card__content-size-modifier">
+	if ( placeholder ) {
+		return (
+			<div className={ wrapperClassName }>
+				<div className={ fontSizeClassName }>
+					<TextPlaceholder rows={ 3 } />
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className={ wrapperClassName }>
+			<RawHTML className={ fontSizeClassName }>
 				{ content }
 			</RawHTML>
 		</div>
-	)
+	);
 };
 
 const CardFooter = ( props ) => {
@@ -145,13 +142,13 @@ const CardFooter = ( props ) => {
 		placeholder
 	} = props;
 
-	if ( ! showButtons && ! placeholder  ) {
+	if ( ! showButtons ) {
 		return null;
 	}
 
 	return (
 		<div className="wp-block novablocks-grid__item-buttons novablocks-card__buttons">
-			{ buttons }
+			{ ! placeholder ? buttons : <TextPlaceholder rows={ 1 } /> }
 		</div>
 	);
 };

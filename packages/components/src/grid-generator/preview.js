@@ -1,9 +1,10 @@
 import AreaDebug from "./areaDebug";
 
 import {
+	Card,
 	CollectionPreview,
 	CollectionHeader,
-	Post
+	Post,
 } from "../index";
 
 import { applyLayoutEngine } from "./layoutEngine";
@@ -28,10 +29,27 @@ export const ClassicLayoutPreview = ( props ) => {
 	const {
 		columns,
 		isLandscape,
+		showMedia,
+		showMeta,
+		showTitle,
+		showDescription,
+		showButtons,
+		postsToShow,
 	} = attributes;
 
 	const style = {
 		'--columns': columns
+	};
+
+	const cardProps = {
+		placeholder: true,
+		hasFixedAspectRatio: true,
+		isLandscape,
+		showMedia,
+		showMeta,
+		showTitle,
+		showContent: showDescription,
+		showButtons,
 	};
 
 	return (
@@ -43,6 +61,13 @@ export const ClassicLayoutPreview = ( props ) => {
 							return (
 								<Post key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
 							);
+						} )
+					}
+					{
+						! posts && Array.from( Array( postsToShow ).keys() ).map( ( obj, idx ) => {
+							return (
+								<Card key={ idx } { ...cardProps } />
+							)
 						} )
 					}
 				</div>

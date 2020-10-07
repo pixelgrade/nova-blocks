@@ -15,16 +15,21 @@
 	overflow: hidden;
 
 	> .novablocks-grid__item-buttons {
-		--novablocks-element-spacing-multiplier: 2;
+		--novablocks-element-spacing-multiplier: 1;
 	}
 }
 
 .novablocks-card__media-wrap {
 	max-width: none !important;
 	padding: calc( var(--novablocks-spacing) * var(--card-media-padding, 0) / 100 );
+	background: var(--novablocks-light-3);
 
 	transition: var(--novablocks-transition);
 	transition-property: margin, padding;
+
+	.novablocks-card--placeholder & {
+		animation: novablocks-card-media-placeholder-pulse 1s infinite;
+	}
 }
 
 .novablocks-card__media-image {
@@ -64,6 +69,12 @@
 		max-width: 50%;
 		max-height: 50%;
 	}
+}
+
+@keyframes novablocks-card-media-placeholder-pulse {
+	0% { opacity: 1 }
+	50% { opacity: 0.5 }
+	100% { opacity: 1 }
 }
 
 .novablocks-card__subtitle {

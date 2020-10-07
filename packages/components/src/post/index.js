@@ -103,7 +103,7 @@ const Post = ( props ) => {
 	}
 
 	const buttons = (
-		<div className="wp-block-buttons alignleft">
+		<div className="wp-block-buttons">
 			<div className="wp-block-button is-style-text">
 				<div className="wp-block-button__link">
 					<div className="novablocks-buttons-size-modifier">

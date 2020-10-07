@@ -28,6 +28,12 @@ const Preview = ( props ) => {
 	} = props;
 
 	const {
+		showMedia,
+		showMeta,
+		showTitle,
+		showDescription,
+		showButtons,
+
 		layoutStyle,
 		contentAlign,
 		contentStyle,
@@ -48,6 +54,16 @@ const Preview = ( props ) => {
 
 	const getContent = ( index, attributes, isLandscape ) => {
 		const post = posts?.[index];
+		const cardProps = {
+			placeholder: true,
+			hasFixedAspectRatio: true,
+			isLandscape,
+			showMedia,
+			showMeta,
+			showTitle,
+			showContent: showDescription,
+			showButtons,
+		};
 
 		return (
 			<Fragment>
@@ -66,7 +82,7 @@ const Preview = ( props ) => {
 				{
 					! post &&
 					<div className="novablocks-grid__item">
-						<Card placeholder={ true } isLandscape={ isLandscape } />
+						<Card { ...cardProps } />
 					</div>
 				}
 			</Fragment>

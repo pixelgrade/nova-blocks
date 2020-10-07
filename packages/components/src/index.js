@@ -14,6 +14,7 @@ export { default as ParallaxPanel } from './parallax-panel';
 export { default as PresetControl } from './preset-control';
 export { default as Post } from './post';
 export { default as QueryControls } from './query-controls';
+export { default as TextPlaceholder } from './text-placeholder';
 export { default as ToggleGroup } from './toggle-group';
 export { default as viewportObserver } from './viewport-observer';
 
