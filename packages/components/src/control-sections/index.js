@@ -1,5 +1,5 @@
 // internal dependencies
-import { groupBy } from 'lodash';
+import { groupBy, orderBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
 import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill";
@@ -94,7 +94,8 @@ const ControlsSectionsComponent = ( props ) => {
 						return sections.map( ( section, index ) => {
 							const { children, label } = section.props;
 							const tabs = Children.toArray( children ).filter( child => child.type === ControlsTab );
-							const groupedTabs = groupBy( tabs, tab => {
+							const orderedTabs = orderBy( tabs, tab => tab.props.priority || 0, ['desc'] );
+							const groupedTabs = groupBy( orderedTabs, tab => {
 								return tab.props.label;
 							} );
 
