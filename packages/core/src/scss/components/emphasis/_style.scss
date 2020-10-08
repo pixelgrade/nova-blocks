@@ -1,7 +1,7 @@
-:root {
+.novablocks-block {
 	--novablocks-block-text-color: var(--novablocks-current-dark-secondary);
+	--novablocks-block-accent-color: var(--novablocks-current-color-primary);
 	--novablocks-block-titles-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-subtitles-color: var(--novablocks-current-color-primary);
 	--novablocks-block-background-color: var(--novablocks-current-light-primary);
 
 	--novablocks-block-padding: var(--novablocks-spacing);
@@ -9,13 +9,12 @@
 
 	--novablocks-block-content-text-color: var(--novablocks-current-dark-secondary);
 	--novablocks-block-content-titles-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-content-subtitles-color: var(--novablocks-current-color-primary);
+	--novablocks-block-content-accent-color: var(--novablocks-current-color-primary);
 	--novablocks-block-content-background-color: transparent;
 	--novablocks-block-content-background-opacity: 1;
 
 	--novablocks-block-content-current-box-shadow: none;
 }
-
 
 .novablocks-media {
 	position: relative;
@@ -43,7 +42,7 @@
 		}
 
 		h4, h5, h6 {
-			color: var(--novablocks-block-subtitles-color);
+			color: var(--novablocks-block-accent-color);
 		}
 	}
 }
@@ -65,7 +64,7 @@
 		}
 
 		h4, h5, h6 {
-			color: var(--novablocks-block-content-subtitles-color);
+			color: var(--novablocks-block-content-accent-color);
 		}
 	}
 
@@ -111,11 +110,16 @@
 		--novablocks-block-background-color: var(--novablocks-current-dark-tertiary);
 		--novablocks-block-content-text-color: var(--novablocks-current-light-primary);
 		--novablocks-block-content-titles-color: var(--novablocks-current-light-primary);
-		--novablocks-block-content-subtitles-color: var(--novablocks-current-light-primary);
+		--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
 		--novablocks-block-text-color: var(--novablocks-block-content-text-color);
 		--novablocks-block-titles-color: var(--novablocks-block-content-titles-color);
-		--novablocks-block-subtitles-color: var(--novablocks-block-content-subtitles-color);
+		--novablocks-block-accent-color: var(--novablocks-block-content-accent-color);
 		--block-padding: var(--novablocks-block-padding);
+
+		.is-style-alternate & {
+			--novablocks-block-background-color: var(--novablocks-current-color-primary);
+			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
+		}
 	}
 }
 
@@ -130,8 +134,14 @@
 		--novablocks-block-background-color: var(--novablocks-current-dark-tertiary);
 		--novablocks-block-text-color: var(--novablocks-current-light-primary);
 		--novablocks-block-titles-color: var(--novablocks-current-light-primary);
-		--novablocks-block-subtitles-color: var(--novablocks-current-light-primary);
+		--novablocks-block-accent-color: var(--novablocks-current-light-primary);
 		--block-padding: var(--novablocks-block-padding);
+
+		.is-style-alternate & {
+			--novablocks-block-background-color: var(--novablocks-current-color-primary);
+			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
+			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
+		}
 	}
 
 	.content-is-moderate,
@@ -155,5 +165,10 @@
 
 	.content-is-highlighted:not(.block-is-highlighted) {
 		--novablocks-block-content-background-color: var(--novablocks-current-dark-tertiary);
+
+		.is-style-alternate & {
+			--novablocks-block-content-background-color: var(--novablocks-current-color-primary);
+			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
+		}
 	}
 }

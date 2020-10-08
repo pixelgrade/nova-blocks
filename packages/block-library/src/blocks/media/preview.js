@@ -20,8 +20,8 @@ const MediaPreview = function( props ) {
 
 			contentAreaWidth,
 			layoutGutter,
+			className,
 		},
-		className,
 		settings,
 	} = props;
 

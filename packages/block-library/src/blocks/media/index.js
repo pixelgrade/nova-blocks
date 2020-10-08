@@ -59,9 +59,6 @@ registerBlockType( 'novablocks/media', {
 	},
 	deprecated,
 	transforms,
-	example: {
-
-	}
 } );
 
 registerBlockStyle( 'novablocks/media', [ {
