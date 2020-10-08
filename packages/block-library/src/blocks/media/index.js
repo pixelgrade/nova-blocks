@@ -20,7 +20,7 @@ const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attribute
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, registerBlockStyle } from '@wordpress/blocks';
 
 async function getNewDefaults() {
 	const numberOfImages = getRandomBetween( 2, 4 );
@@ -58,5 +58,17 @@ registerBlockType( 'novablocks/media', {
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
 	deprecated,
-	transforms
+	transforms,
+	example: {
+
+	}
 } );
+
+registerBlockStyle( 'novablocks/media', [ {
+	name: 'default',
+	label: 'Default',
+	isDefault: true,
+}, {
+	name: 'alternate',
+	label: 'Alternate',
+} ] );

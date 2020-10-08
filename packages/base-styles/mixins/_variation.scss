@@ -1,0 +1,92 @@
+$destinations:
+	color-primary,
+	color-secondary,
+	color-tertiary,
+	dark-primary,
+	dark-secondary,
+	dark-tertiary,
+	light-primary,
+	light-secondary,
+	light-tertiary;
+
+$variations: (
+	default: (
+		// color
+		color-primary: color-primary,
+		color-secondary: color-secondary,
+		color-tertiary: color-tertiary,
+		// dark
+		dark-primary: dark-primary,
+		dark-secondary: dark-secondary,
+		dark-tertiary: dark-tertiary,
+		// light
+		light-primary: light-primary,
+		light-secondary: light-secondary,
+		light-tertiary: light-tertiary,
+	),
+	dark: (
+		// color
+		color-primary: color-primary,
+		color-secondary: color-secondary,
+		color-tertiary: color-tertiary,
+		// dark
+		dark-primary: light-secondary,
+		dark-secondary: light-primary,
+		dark-tertiary: light-tertiary,
+		// light
+		light-primary: dark-primary,
+		light-secondary: dark-secondary,
+		light-tertiary: dark-tertiary,
+	),
+	darker: (
+		// color
+		color-primary: color-primary,
+		color-secondary: color-secondary,
+		color-tertiary: color-tertiary,
+		// dark
+		dark-primary: light-secondary,
+		dark-secondary: light-primary,
+		dark-tertiary: light-tertiary,
+		// light
+		light-primary: dark-tertiary,
+		light-secondary: dark-secondary,
+		light-tertiary: dark-primary,
+	),
+	accent: (
+		// color
+		color-primary: dark-primary,
+		color-secondary: dark-secondary,
+		color-tertiary: dark-tertiary,
+		// dark
+		dark-primary: light-secondary,
+		dark-secondary: light-primary,
+		dark-tertiary: light-tertiary,
+		// light
+		light-primary: color-primary,
+		light-secondary: color-secondary,
+		light-tertiary: color-tertiary,
+	),
+	monochrome: (
+		// color
+		color-primary: dark-primary,
+		color-secondary: dark-secondary,
+		color-tertiary: dark-tertiary,
+		// dark
+		dark-primary: dark-primary,
+		dark-secondary: dark-secondary,
+		dark-tertiary: dark-tertiary,
+		// light
+		light-primary: light-primary,
+		light-secondary: light-secondary,
+		light-tertiary: light-tertiary,
+	),
+);
+
+@mixin variation( $variation-name, $destination: current, $source: sm ) {
+	$variation: map-get( $variations, $variation-name );
+
+	@each $destination-color in $destinations {
+		$source-color: map-deep-get($variations, $variation-name, $destination-color);
+		--#{$destination}-#{$destination-color}: var(--#{$source}-#{$source-color});
+	}
+}
