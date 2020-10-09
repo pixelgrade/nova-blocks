@@ -20,11 +20,22 @@ const Drawers = ( ownProps ) => {
 	const beforeChildren = children.filter( child => child.type === DrawerListBefore );
 	const afterChildren = children.filter( child => child.type === DrawerListAfter );
 
-	const [ active, setActive ] = useMemoryState( 'drawerActive',false );
-	const [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
+	let [ active, setActive ] = useState( false );
+	let [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
+	const [ lastActiveDrawerIndex, setLastActiveDrawerIndex ] = useMemoryState( 'drawerActiveIndex',false );
+	const [ lastActiveDrawerTitle, setLastActiveDrawerTitle ] = useMemoryState( 'drawerActiveTitle',false );
 	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
-	console.log( active );
+	const existingDrawer = drawerLists.some( drawerList => {
+		const drawers = getDrawersFromList( drawerList );
+		return drawers.some( drawer => drawer?.props?.title === lastActiveDrawerTitle );
+	} );
+
+	if ( existingDrawer ) {
+		active = lastActiveDrawerIndex;
+	} else {
+		open = false;
+	}
 
 	const ref = useRef( null );
 	const [ refMap ] = useState( () => new WeakMap() );
@@ -37,14 +48,14 @@ const Drawers = ( ownProps ) => {
 		return !! ref.current ? ref.current.clientHeight : 0;
 	};
 
-	const getActiveDrawerHeight = () => {
+	const getActiveDrawerTitleHeight = () => {
 		const activeRef = refMap.get( drawerPanels[active] );
 		return !! activeRef ? activeRef.clientHeight : 0;
 	};
 
 	const updateHeight = () => {
 		const drawerListHeight = getDrawerListHeight();
-		const drawerPanelHeight = getActiveDrawerHeight();
+		const drawerPanelHeight = getActiveDrawerTitleHeight();
 
 		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	};
@@ -95,13 +106,15 @@ const Drawers = ( ownProps ) => {
 								{
 									orderedDrawers.map( ( orderedDrawer, drawerIndex ) => {
 										const { props, target } = orderedDrawer;
+										const { title } = props;
 
 										return (
 											<Drawer { ...props }
 												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
 													setActive( target );
-													console.log( orderedDrawer );
+													setLastActiveDrawerIndex( target );
+													setLastActiveDrawerTitle( title );
 													setOpen( true );
 													onOpen();
 												} } />
