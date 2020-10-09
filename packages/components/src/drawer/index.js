@@ -22,7 +22,6 @@ const Drawers = ( ownProps ) => {
 
 	let [ active, setActive ] = useState( false );
 	let [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
-	const [ lastActiveDrawerIndex, setLastActiveDrawerIndex ] = useMemoryState( 'drawerActiveIndex',false );
 	const [ lastActiveDrawerTitle, setLastActiveDrawerTitle ] = useMemoryState( 'drawerActiveTitle',false );
 	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
@@ -32,7 +31,20 @@ const Drawers = ( ownProps ) => {
 	} );
 
 	if ( existingDrawer ) {
-		active = lastActiveDrawerIndex;
+		let index = 0;
+
+		drawerLists.forEach( drawerList => {
+			const drawers = getDrawersFromList( drawerList );
+			const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerTitle );
+
+			if ( drawerIndex > -1 ) {
+				index += drawerIndex;
+			} else {
+				index += drawers.length;
+			}
+		} );
+
+		active = index;
 	} else {
 		open = false;
 	}
@@ -113,7 +125,6 @@ const Drawers = ( ownProps ) => {
 												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
 													setActive( target );
-													setLastActiveDrawerIndex( target );
 													setLastActiveDrawerTitle( title );
 													setOpen( true );
 													onOpen();
