@@ -1,7 +1,7 @@
 import { useSpring, animated } from 'react-spring';
 import { orderBy } from 'lodash';
 import classnames from 'classnames';
-import { useResizeObserver } from '@novablocks/utils';
+import { useMemoryState, useResizeObserver } from '@novablocks/utils';
 
 import {
 	Children,
@@ -20,10 +20,11 @@ const Drawers = ( ownProps ) => {
 	const beforeChildren = children.filter( child => child.type === DrawerListBefore );
 	const afterChildren = children.filter( child => child.type === DrawerListAfter );
 
-	const [ active, setActive ] = useState( false );
-	const [ open, setOpen ] = useState( false );
+	const [ active, setActive ] = useMemoryState( 'drawerActive',false );
+	const [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
+	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
-	const [ wrapperHeight, setWrapperHeight ] = useState(0);
+	console.log( active );
 
 	const ref = useRef( null );
 	const [ refMap ] = useState( () => new WeakMap() );
@@ -92,13 +93,15 @@ const Drawers = ( ownProps ) => {
 							<div className={ `novablocks-drawers__list` } key={ `drawer-list-${ drawerListIndex }` }>
 								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
 								{
-									orderedDrawers.map( ( { props, target }, drawerIndex ) => {
+									orderedDrawers.map( ( orderedDrawer, drawerIndex ) => {
+										const { props, target } = orderedDrawer;
 
 										return (
 											<Drawer { ...props }
 												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
 													setActive( target );
+													console.log( orderedDrawer );
 													setOpen( true );
 													onOpen();
 												} } />
