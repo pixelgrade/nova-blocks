@@ -923,28 +923,28 @@ function novablocks_get_color_classes( $attributes ) {
 
 function novablocks_get_spacing_css( $attributes ) {
 
-	if ( ! empty( $attributes['blockTopSpacing'] ) ) {
-		$blockTopSpacing = $attributes['blockTopSpacing'];
-	} else {
+	if ( ! isset( $attributes['blockTopSpacing'] ) ) {
 		$blockTopSpacing = 0;
+	} else {
+		$blockTopSpacing = $attributes['blockTopSpacing'];
 	}
 
-	if ( ! empty( $attributes['blockBottomSpacing'] ) ) {
-		$blockBottomSpacing = $attributes['blockBottomSpacing'];
-	} else {
+	if ( ! isset( $attributes['blockBottomSpacing'] ) ) {
 		$blockBottomSpacing = 0;
+	} else {
+		$blockBottomSpacing = $attributes['blockBottomSpacing'];
 	}
 
-	if ( ! empty( $attributes['emphasisTopSpacing'] ) ) {
-		$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
-	} else {
+	if ( ! isset( $attributes['emphasisTopSpacing'] ) ) {
 		$emphasisTopSpacing = 1;
+	} else {
+		$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
 	}
 
-	if ( ! empty( $attributes['emphasisBottomSpacing'] ) ) {
-		$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
-	} else {
+	if ( ! isset( $attributes['emphasisBottomSpacing'] ) ) {
 		$emphasisBottomSpacing = 1;
+	} else {
+		$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
 	}
 
 	return array(
