@@ -49,7 +49,13 @@ const ActiveSectionTabs = ( props ) => {
 		return null;
 	}
 
-	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
+	let [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
+	const existingTab = tabs.some( tab => activeTabLabel === tab.props.label );
+
+	if ( ! existingTab ) {
+		activeTabLabel = tabs[0].props.label;
+	}
+
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
 	const activeTab = tabs[activeTabIndex];
 
