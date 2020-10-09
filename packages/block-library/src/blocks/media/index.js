@@ -60,12 +60,3 @@ registerBlockType( 'novablocks/media', {
 	deprecated,
 	transforms,
 } );
-
-registerBlockStyle( 'novablocks/media', [ {
-	name: 'default',
-	label: 'Default',
-	isDefault: true,
-}, {
-	name: 'alternate',
-	label: 'Alternate',
-} ] );

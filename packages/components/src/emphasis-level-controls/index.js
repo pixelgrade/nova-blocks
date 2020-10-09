@@ -30,6 +30,8 @@ const EmphasisLevelControls = ( props ) => {
 		attributes: {
 			contentStyle,
 			blockStyle,
+			style,
+			accentColor,
 		},
 		setAttributes,
 		settings: {
@@ -44,9 +46,9 @@ const EmphasisLevelControls = ( props ) => {
 		const blockIndex = blockAreaOptions.findIndex( option => option.value === blockStyle );
 		const contentIndex = contentAreaOptions.findIndex( option => option.value === contentStyle );
 		return blockIndex * 3 + contentIndex;
-	}
+	};
 
-	return (
+	return [
 		<ControlsSection label={ __( 'Color Contrast' ) }>
 			<ControlsTab label={ __( 'Customize' ) }>
 				<RangeControl
@@ -72,7 +74,6 @@ const EmphasisLevelControls = ( props ) => {
 					<RadioControl
 						key={ 'block-emphasis-controls' }
 						label={ __( 'Block Emphasis', '__plugin_txtd' ) }
-						value={ blockStyle }
 						selected={ blockStyle }
 						options={ blockAreaOptions }
 						onChange={ ( nextBlockStyle ) => setAttributes( { blockStyle: nextBlockStyle } ) }
@@ -82,18 +83,37 @@ const EmphasisLevelControls = ( props ) => {
 					<RadioControl
 						key={ 'content-emphasis-controls' }
 						label={ __( 'Content Area Emphasis', '__plugin_txtd' ) }
-						value={ contentStyle }
 						selected={ contentStyle }
 						options={ contentAreaOptions }
 						onChange={ ( nextContentStyle ) => setAttributes( { contentStyle: nextContentStyle } ) }
 					/>
 					<EmphasisContentAreaSlot />
 				</ControlsGroup>
+				<ControlsGroup title={ __( 'Styles' ) }>
+					<RadioControl
+						key={ 'emphasis-styles-controls' }
+						selected={ style }
+						options={ [
+							{ label: __( 'Default', '__plugin_txtd' ), value: 'default' },
+							{ label: __( 'Alternate', '__plugin_txtd' ), value: 'alternate' },
+						] }
+						onChange={ ( style ) => setAttributes( { style } ) }
+					/>
+					<RadioControl
+						key={ 'accent-color-style-controls' }
+						selected={ accentColor }
+						options={ [
+							{ label: __( 'Primary', '__plugin_txtd' ), value: 'primary' },
+							{ label: __( 'Secondary', '__plugin_txtd' ), value: 'secondary' },
+							{ label: __( 'Tertiary', '__plugin_txtd' ), value: 'tertiary' },
+						] }
+						onChange={ ( accentColor ) => setAttributes( { accentColor } ) }
+					/>
+				</ControlsGroup>
 			</ControlsTab>
-
 		</ControlsSection>
-	)
-}
+	]
+};
 
 const EmphasisContentAreaControls = ( props ) => {
 	const { isSelected } = useBlockEditContext();
@@ -103,7 +123,7 @@ const EmphasisContentAreaControls = ( props ) => {
 			{ isSelected && props.children }
 		</EmphasisContentAreaFill>
 	)
-}
+};
 
 const EmphasisBlockAreaControls = ( props ) => {
 	const { isSelected } = useBlockEditContext();
@@ -113,7 +133,7 @@ const EmphasisBlockAreaControls = ( props ) => {
 			{ isSelected && props.children }
 		</EmphasisBlockAreaFill>
 	)
-}
+};
 
 export { EmphasisContentAreaControls, EmphasisBlockAreaControls };
 

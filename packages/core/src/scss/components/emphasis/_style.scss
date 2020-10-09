@@ -1,6 +1,6 @@
 .novablocks-block {
 	--novablocks-block-text-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-accent-color: var(--novablocks-current-color-primary);
+	--novablocks-block-accent-color: var(--novablocks-block-current-accent-color);
 	--novablocks-block-titles-color: var(--novablocks-current-dark-secondary);
 	--novablocks-block-background-color: var(--novablocks-current-light-primary);
 
@@ -9,11 +9,20 @@
 
 	--novablocks-block-content-text-color: var(--novablocks-current-dark-secondary);
 	--novablocks-block-content-titles-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-content-accent-color: var(--novablocks-current-color-primary);
+	--novablocks-block-content-accent-color: var(--novablocks-block-current-accent-color);
 	--novablocks-block-content-background-color: transparent;
 	--novablocks-block-content-background-opacity: 1;
 
 	--novablocks-block-content-current-box-shadow: none;
+	--novablocks-block-current-accent-color: var(--novablocks-current-color-primary);
+
+	.has-secondary-accent-color & {
+		--novablocks-block-current-accent-color: var(--novablocks-current-color-secondary);
+	}
+
+	.has-tertiary-accent-color & {
+		--novablocks-block-current-accent-color: var(--novablocks-current-color-tertiary);
+	}
 }
 
 .novablocks-media {
@@ -117,7 +126,7 @@
 		--block-padding: var(--novablocks-block-padding);
 
 		.is-style-alternate & {
-			--novablocks-block-background-color: var(--novablocks-current-color-primary);
+			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
 			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
 		}
 	}
@@ -138,7 +147,7 @@
 		--block-padding: var(--novablocks-block-padding);
 
 		.is-style-alternate & {
-			--novablocks-block-background-color: var(--novablocks-current-color-primary);
+			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
 			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
 			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
 		}
@@ -167,7 +176,7 @@
 		--novablocks-block-content-background-color: var(--novablocks-current-dark-tertiary);
 
 		.is-style-alternate & {
-			--novablocks-block-content-background-color: var(--novablocks-current-color-primary);
+			--novablocks-block-content-background-color: var(--novablocks-block-current-accent-color);
 			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
 		}
 	}

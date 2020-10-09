@@ -12,8 +12,12 @@ const MediaPreview = function( props ) {
 		attributes: {
 			contentStyle,
 			blockStyle,
+			style,
+			accentColor,
+
 			mediaPosition,
 			images,
+
 			// alignment
 			verticalAlignment,
 			emphasisArea,
@@ -30,6 +34,8 @@ const MediaPreview = function( props ) {
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`novablocks-u-valign-${ verticalAlignment }`,
+		`is-style-${ style }`,
+		`has-${ accentColor }-accent-color`,
 	);
 
 	const passedProps = props;
