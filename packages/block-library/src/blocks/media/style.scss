@@ -95,7 +95,7 @@
 
 .novablocks-media {
 
-	.novablocks-block {
+	.novablocks-block[class] {
 		background: linear-gradient(
 				var(--novablocks-media-background-direction),
 				var(--novablocks-block-background-color) 0,
@@ -103,6 +103,7 @@
 				transparent calc(var(--emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;
+
 
 		@include below(tablet) {
 			--emphasis-area: 100;
