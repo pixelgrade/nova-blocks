@@ -18,6 +18,7 @@
 		"@novablocks/core": "file:packages/core",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",
+		"@novablocks/format-library": "file:packages/format-library",
 		"@novablocks/utils": "file:packages/utils",
 		"@wordpress/blocks": "^6.22.0",
 		"@wordpress/date": "^3.11.1",
@@ -25,7 +26,9 @@
 		"@wordpress/i18n": "^3.15.0",
 		"@wordpress/url": "^2.18.0",
 		"gulp": "^4.0.2",
-		"js-cookie": "^2.2.1"
+		"js-cookie": "^2.2.1",
+		"logger": "0.0.1",
+		"unsplash-js": "^6.3.0"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.10.4",
