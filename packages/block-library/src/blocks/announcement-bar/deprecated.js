@@ -1,0 +1,48 @@
+const { omit } = lodash;
+import { createBlock } from '@wordpress/blocks';
+
+const blockAttributes = {
+	align: {
+		type: 'string',
+		default: 'full'
+	},
+	url: {
+		type: 'string',
+		default: ''
+	},
+	opensInNewTab: {
+		type: 'boolean',
+		default: false
+	},
+};
+
+const deprecated = [
+	{
+		isEligible: ( attributes, innerBlocks ) => {
+			return typeof attributes.content !== 'undefined' && ! innerBlocks.length;
+		},
+		attributes: {
+			content: {
+				type: 'string',
+				default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
+			},
+			...blockAttributes
+		},
+
+		migrate( attributes, innerBlocks ) {
+			return [
+				omit( attributes, 'content' ),
+				[
+					createBlock( 'core/paragraph', {
+						content: attributes.content
+					} ),
+					...innerBlocks
+				]
+			]
+		},
+
+		save: function() {},
+	}
+];
+
+export default deprecated;
