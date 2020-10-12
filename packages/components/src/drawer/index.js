@@ -33,7 +33,7 @@ const Drawers = ( ownProps ) => {
 	if ( existingDrawer ) {
 		let index = 0;
 
-		drawerLists.forEach( drawerList => {
+		drawerLists.some( drawerList => {
 			const drawers = getDrawersFromList( drawerList );
 			const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerTitle );
 
@@ -42,6 +42,8 @@ const Drawers = ( ownProps ) => {
 			} else {
 				index += drawers.length;
 			}
+
+			return drawerIndex > -1;
 		} );
 
 		active = index;
