@@ -17,6 +17,7 @@ import Author from "../meta/author";
 import Category from "../meta/category";
 import Comments from "../meta/comments";
 import Tags from "../meta/tags";
+import ReadingTime from "../meta/reading-time";
 
 const getMeta = ( post, meta ) => {
 
@@ -44,6 +45,10 @@ const getMeta = ( post, meta ) => {
 
 	if ( meta === 'tags' ) {
 		return !! post?.tags?.length && <Tags tags={ post.tags } />
+	}
+
+	if ( meta === 'reading-time' ) {
+		return <ReadingTime post={ post } />
 	}
 
 	return null;

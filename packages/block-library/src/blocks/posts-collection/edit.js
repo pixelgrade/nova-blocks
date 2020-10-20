@@ -263,6 +263,7 @@ const MetaSource = ( props ) => {
 		{ label: 'Comments', value: 'comments' },
 		{ label: 'Date', value: 'date' },
 		{ label: 'Tags', value: 'tags' },
+		{ label: 'Reading time', value:'reading-time'}
 	];
 
 	return (

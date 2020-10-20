@@ -1212,3 +1212,24 @@ function novablocks_register_api_endpoints() {
 	) );
 }
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
+
+/**
+ * Calculate the reading time in minutes for the current post's content.
+ * @param $post
+ * @return float
+ */
+function novablocks_get_the_reading_time_in_minutes( $post ) {
+	$words_per_minute = 265;
+	$words_per_second = $words_per_minute / 60;
+	$content           = $post -> post_content;
+	$word_count        = str_word_count( strip_tags( $content ) );
+	$seconds           = floor( $word_count / $words_per_second );
+	$minutes           = floor( $word_count / $words_per_minute );
+	$seconds_remainder = $seconds % 60;
+
+	if ( $minutes < 1 || $seconds_remainder > 40 ) {
+		$minutes ++;
+	}
+
+	return $minutes;
+}
