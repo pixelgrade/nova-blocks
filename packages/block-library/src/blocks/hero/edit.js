@@ -5,9 +5,9 @@ import {
 	LayoutControls,
 	withParallax,
 	ToggleGroup,
-	ControlsDrawerContent,
 	ControlsTab,
-	ControlsSection
+	ControlsSection,
+	ControlsGroup
 } from '@novablocks/components';
 
 import { withSettings } from '@novablocks/utils';
@@ -149,20 +149,22 @@ class HeroEdit extends Component {
 				<InspectorControls>
 					<LayoutControls { ...this.props } />
 					<BlockHeightControls { ...this.props } />
+					<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
+						<ControlsTab label={ __( 'Settings' ) }>
+							<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+								<ToggleGroup
+									onChange={ updateAttributes }
+									toggles={ toggles.map( toggle => {
+										return {
+											...toggle,
+											value: attributes[ toggle.attribute ]
+										}
+									} ) }
+								/>
+							</ControlsGroup>
+						</ControlsTab>
+					</ControlsSection>
 				</InspectorControls>
-				<ControlsDrawerContent>
-					<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-						<ToggleGroup
-							onChange={ updateAttributes }
-							toggles={ toggles.map( toggle => {
-								return {
-									...toggle,
-									value: attributes[ toggle.attribute ]
-								}
-							} ) }
-						/>
-					</PanelBody>
-				</ControlsDrawerContent>
 			</Fragment>
 		);
 	}
