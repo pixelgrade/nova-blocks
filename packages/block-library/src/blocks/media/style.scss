@@ -165,6 +165,10 @@
 	&.has-image-on-the-left {
 		--novablocks-media-background-direction: -90deg;
 	}
+
+	> * {
+		width: 100%;
+	}
 }
 
 @import 'scss/content';
