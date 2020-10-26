@@ -45,5 +45,33 @@
 	"defaultsGenerated": {
 		"type": "boolean",
 		"default": false
+	},
+	"blobMixingStyle": {
+		"type": "string",
+		"default": "none"
+	},
+	"blobPreset": {
+		"type": "number",
+		"default": 16
+	},
+	"blobComplexity": {
+		"type": "number",
+		"default": 0
+	},
+	"blobSmoothness": {
+		"type": "number",
+		"default": 33
+	},
+	"blobMaskPreset": {
+		"type": "number",
+		"default": 16
+	},
+	"blobMaskComplexity": {
+		"type": "number",
+		"default": 0
+	},
+	"blobMaskSmoothness": {
+		"type": "number",
+		"default": 33
 	}
 }

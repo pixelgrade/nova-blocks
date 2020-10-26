@@ -632,6 +632,7 @@ function novablocks_get_block_editor_settings() {
 			),
 		),
 		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
@@ -639,6 +640,76 @@ function novablocks_get_block_editor_settings() {
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;
+}
+
+function novablocks_get_blob_presets() {
+	return array(
+		array(
+			'label'  => 'Rectangle',
+			'value'  => 'rectangle',
+			'preset' => array(
+				'blobMixingStyle'    => 'none',
+				'blobMaskPreset'     => 16,
+				'blobMaskComplexity' => 0,
+				'blobMaskSmoothness' => 33,
+				'blobPreset'         => 16,
+				'blobComplexity'     => 0,
+				'blobSmoothness'     => 33,
+			),
+		),
+		array(
+			'label'  => 'Ellipse',
+			'value'  => 'ellipse',
+			'preset' => array(
+				'blobMixingStyle'    => 'shape-mask',
+				'blobMaskPreset'     => 16,
+				'blobMaskComplexity' => 0,
+				'blobMaskSmoothness' => 33,
+				'blobPreset'         => 16,
+				'blobComplexity'     => 0,
+				'blobSmoothness'     => 33,
+			),
+		),
+		array(
+			'label'  => 'Diamond',
+			'value'  => 'diamond',
+			'preset' => array(
+				'blobMixingStyle'    => 'shape-mask',
+				'blobMaskPreset'     => 36,
+				'blobMaskComplexity' => 0,
+				'blobMaskSmoothness' => 0,
+				'blobPreset'         => 16,
+				'blobComplexity'     => 0,
+				'blobSmoothness'     => 33,
+			),
+		),
+		array(
+			'label'  => 'Blob 1',
+			'value'  => 'blob-1',
+			'preset' => array(
+				'blobMixingStyle'    => 'mixing-2',
+				'blobMaskPreset'     => 21,
+				'blobMaskComplexity' => 89,
+				'blobMaskSmoothness' => 50,
+				'blobPreset'         => 13,
+				'blobComplexity'     => 93,
+				'blobSmoothness'     => 50,
+			),
+		),
+		array(
+			'label'  => 'Blob 2',
+			'value'  => 'blob-2',
+			'preset' => array(
+				'blobMixingStyle'    => 'mixing-3',
+				'blobMaskPreset'     => 31,
+				'blobMaskComplexity' => 56,
+				'blobMaskSmoothness' => 50,
+				'blobPreset'         => 58,
+				'blobComplexity'     => 58,
+				'blobSmoothness'     => 20,
+			),
+		),
+	);
 }
 
 function novablocks_get_advanced_gallery_presets() {

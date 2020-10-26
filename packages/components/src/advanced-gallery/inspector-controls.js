@@ -1,4 +1,5 @@
 import {
+	Blob,
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
@@ -6,16 +7,29 @@ import {
 	Notice
 } from '../index';
 
-
+import { getRandomFromArray } from '@novablocks/utils';
 import { getRandomAttributes } from "./util";
 
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { 
+	Fragment,
+	RawHTML
+} from '@wordpress/element';
 
 import {
 	RadioControl,
 	RangeControl,
+	Text,
 } from '@wordpress/components';
+
+
+const blobMixingStylesOptions = [
+	{ label: 'None', value: 'none' },
+	{ label: 'Media Shape', value: 'shape-mask' },
+	{ label: 'Decorative Shape', value: 'mixing-1' },
+	{ label: 'Shape Mixing', value: 'mixing-2' },
+	{ label: 'Shape Mixing ALT', value: 'mixing-3' },
+];
 
 const AdvancedGalleryInspectorControls = ( props ) => {
 
@@ -33,15 +47,17 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			objectPosition,
 			containerHeight,
 			imageRotation,
+
+			blobMixingStyle
 		},
 		settings: {
-			advancedGalleryPresetOptions
+			advancedGalleryPresetOptions,
+			blobPresetOptions
 		}
 	} = props;
 
 	return (
 		<Fragment>
-
 			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 
 				<ControlsTab label={ __( 'General' ) }>
@@ -151,7 +167,46 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						/>
 					</ControlsGroup>
 				</ControlsTab>
+			</ControlsSection>
 
+			<ControlsSection label={ __( 'Shape Modeling' ) } group={ __( 'Modules' ) }>
+				<ControlsTab label={ __( 'General' ) }>
+			        <p>Use this tool to generate shapes and combine them with your images to create designs that are a unique and memorable part of your brand identity.</p>
+
+					<PresetControl
+						key={ 'blob-style-preset' }
+						label={ __( 'Choose a shape preset:', '__plugin_txtd' ) }
+						options={ blobPresetOptions }
+						randomize={ () => {
+							const stylesValues = blobMixingStylesOptions.map( opt => opt.value ).filter( value => {
+								return value !== 'none';
+							} );
+
+							return {
+								blobMixingStyle: getRandomFromArray( stylesValues ),
+								...Blob.Utils.getRandomBlobAttributes( 'blob' ),
+								...Blob.Utils.getRandomBlobAttributes( 'blobMask' ),
+							}
+						} }
+					/>
+				</ControlsTab>
+				<ControlsTab label={ __( 'Settings' ) }>
+					<ControlsGroup>
+						<RadioControl
+							key={ 'blobs-mixing-style' }
+							label={ 'Shape Usage Style' }
+							selected={ blobMixingStyle }
+							onChange={ blobMixingStyle => setAttributes( { blobMixingStyle } ) }
+							options={ blobMixingStylesOptions }
+						/>
+					</ControlsGroup>
+					<ControlsGroup title={ __( 'Media Shape' ) }>
+						<Blob.Controls { ...props } prefix={ 'blobMask' } />
+					</ControlsGroup>
+					<ControlsGroup title={ __( 'Decorative Shape' ) }>
+						<Blob.Controls { ...props } prefix={ 'blob' } />
+					</ControlsGroup>
+				</ControlsTab>
 			</ControlsSection>
 		</Fragment>
 	);

@@ -32,6 +32,11 @@ export const getRandomArrayFromArray = ( arr, n ) => {
 	return result;
 };
 
+export const getRandomFromArray = ( arr ) => {
+	const array = getRandomArrayFromArray( arr, 1 );
+	return array[0];
+};
+
 export const getRandomBooleanValue = () => {
 	return getRandomArrayFromArray( [ true, false ], 1 )[0];
 };
