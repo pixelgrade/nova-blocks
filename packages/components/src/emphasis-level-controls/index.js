@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { withSettings } from '@novablocks/utils';
 
 import {
@@ -30,8 +31,6 @@ const EmphasisLevelControls = ( props ) => {
 		attributes: {
 			contentStyle,
 			blockStyle,
-			style,
-			accentColor,
 		},
 		setAttributes,
 		settings: {
@@ -89,30 +88,135 @@ const EmphasisLevelControls = ( props ) => {
 					/>
 					<EmphasisContentAreaSlot />
 				</ControlsGroup>
-				<ControlsGroup title={ __( 'Styles' ) }>
-					<RadioControl
-						key={ 'emphasis-styles-controls' }
-						selected={ style }
-						options={ [
-							{ label: __( 'Default', '__plugin_txtd' ), value: 'default' },
-							{ label: __( 'Alternate', '__plugin_txtd' ), value: 'alternate' },
-						] }
-						onChange={ ( style ) => setAttributes( { style } ) }
-					/>
-					<RadioControl
-						key={ 'accent-color-style-controls' }
-						selected={ accentColor }
-						options={ [
-							{ label: __( 'Primary', '__plugin_txtd' ), value: 'primary' },
-							{ label: __( 'Secondary', '__plugin_txtd' ), value: 'secondary' },
-							{ label: __( 'Tertiary', '__plugin_txtd' ), value: 'tertiary' },
-						] }
-						onChange={ ( accentColor ) => setAttributes( { accentColor } ) }
-					/>
-				</ControlsGroup>
+				<ColorSetsControl { ...props } />
 			</ControlsTab>
 		</ControlsSection>
 	]
+};
+
+const ColorSetsControl = ( props ) => {
+
+	const {
+		attributes,
+		setAttributes,
+		settings: {
+			colors
+		}
+	} = props;
+
+	const {
+		style,
+		accentColor
+	} = attributes;
+
+	let accentColorValue = 'var(--novablocks-color-1)';
+
+	if ( accentColor === 'secondary' ) {
+		accentColorValue = 'var(--novablocks-color-2)';
+	}
+
+	if ( accentColor === 'tertiary' ) {
+		accentColorValue = 'var(--novablocks-color-3)';
+	}
+
+	let paletteStyleOptions = [ {
+		label: __( 'Primary', '__plugin_txtd' ),
+		value: 'primary',
+		colors: [ 'var(--novablocks-color-1)', 'var(--novablocks-light-1)' ]
+	}, {
+		label: __( 'Secondary', '__plugin_txtd' ),
+		value: 'secondary',
+		colors: [ 'var(--novablocks-color-2)', 'var(--novablocks-light-1)' ]
+	}, {
+		label: __( 'Tertiary', '__plugin_txtd' ),
+		value: 'tertiary',
+		colors: [ 'var(--novablocks-color-3)', 'var(--novablocks-light-1)' ] },
+	];
+
+	if ( style === 'default' ) {
+		paletteStyleOptions = paletteStyleOptions.map( palette => {
+			return {
+				...palette,
+				colors: [
+					'var(--novablocks-dark-1)',
+					...palette.colors,
+				]
+			}
+		} )
+	}
+
+	return (
+		<ControlsGroup title={ __( 'Colors' ) }>
+			<ColorPaletteControl
+				label={ __( 'Main color scheme', '__plugin_txtd' ) }
+				key={ 'emphasis-styles-controls' }
+				selected={ style }
+				options={ [ {
+					label: __( 'Default', '__plugin_txtd' ),
+					value: 'default',
+					colors: [ 'var(--novablocks-dark-1)', accentColorValue, 'var(--novablocks-light-1)' ]
+				}, {
+					label: __( 'Alternate', '__plugin_txtd' ),
+					value: 'alternate',
+					colors: [ accentColorValue, 'var(--novablocks-light-1)' ]
+				} ] }
+				onChange={ ( style ) => setAttributes( { style } ) }
+			/>
+			<ColorPaletteControl
+				label={ __( 'Variation', '__plugin_txtd' ) }
+				key={ 'accent-color-style-controls' }
+				selected={ accentColor }
+				options={ paletteStyleOptions }
+				onChange={ ( accentColor ) => setAttributes( { accentColor } ) }
+			/>
+		</ControlsGroup>
+	)
+};
+
+const ColorPaletteControl = ( props ) => {
+	const { label, options, selected, onChange } = props;
+
+	return (
+		<div className={ 'components-base-control components-palette-control' }>
+			<div className={ 'components-base-control__field' }>
+				{
+					label &&
+					<label className={ 'components-base-control__label' }>
+						{ label }
+					</label>
+				}
+				{
+					options.length &&
+					<div className={ 'components-palette-control__options' }>
+						{
+							options.map( option => {
+								const { label, colors, value } = option;
+								const className = classnames(
+									'novablocks-palette',
+									'components-palette-control__option',
+									{
+										'novablocks-palette--active': value === selected
+									}
+								);
+
+								return (
+										<div className={ className } onClick={ () => { onChange( value ) } }>
+											{ colors.map( color => {
+												const style = { color };
+
+												return (
+													<div className={ 'novablocks-palette__color' } style={ style }></div>
+												)
+											} ) }
+										</div>
+								);
+							} )
+						}
+					</div>
+				}
+			</div>
+		</div>
+	)
 };
 
 const EmphasisContentAreaControls = ( props ) => {
