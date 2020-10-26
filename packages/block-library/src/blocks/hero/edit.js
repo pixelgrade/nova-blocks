@@ -146,25 +146,23 @@ class HeroEdit extends Component {
 			<Fragment>
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
-				<InspectorControls>
-					<LayoutControls { ...this.props } />
-					<BlockHeightControls { ...this.props } />
-					<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
-						<ControlsTab label={ __( 'Settings' ) }>
-							<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-								<ToggleGroup
-									onChange={ updateAttributes }
-									toggles={ toggles.map( toggle => {
-										return {
-											...toggle,
-											value: attributes[ toggle.attribute ]
-										}
-									} ) }
-								/>
-							</ControlsGroup>
-						</ControlsTab>
-					</ControlsSection>
-				</InspectorControls>
+				<LayoutControls { ...this.props } />
+				<BlockHeightControls { ...this.props } />
+				<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
+					<ControlsTab label={ __( 'Settings' ) }>
+						<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+							<ToggleGroup
+								onChange={ updateAttributes }
+								toggles={ toggles.map( toggle => {
+									return {
+										...toggle,
+										value: attributes[ toggle.attribute ]
+									}
+								} ) }
+							/>
+						</ControlsGroup>
+					</ControlsTab>
+				</ControlsSection>
 			</Fragment>
 		);
 	}
