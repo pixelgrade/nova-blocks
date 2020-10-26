@@ -33,7 +33,7 @@ const AdvancedGalleryPreview = ( props ) => {
 		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) } ref={ ref }>
 			<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
 				{ gridItemsCollection.gridItems.map( ( item, index ) => (
-					<AdvancedGalleryItem gridItem={ item } key={ index } { ...props } />
+					<AdvancedGalleryItem gridItem={ item } key={ index } index={ index } { ...props } />
 				) ) }
 			</div>
 		</div>
@@ -45,6 +45,7 @@ const AdvancedGalleryItem = ( props ) => {
 	const {
 		attributes,
 		gridItem,
+		index,
 	} = props;
 
 	const image = gridItem?.image;
@@ -65,8 +66,8 @@ const AdvancedGalleryItem = ( props ) => {
 		blobSmoothness,
 	} = attributes;
 
-	const svgMaskPath = generatePath( blobMaskPreset, blobMaskComplexity, blobMaskSmoothness );
-	const svgPath = generatePath( blobPreset, blobComplexity, blobSmoothness );
+	const svgMaskPath = generatePath( blobMaskPreset + index, blobMaskComplexity, blobMaskSmoothness );
+	const svgPath = generatePath( blobPreset + index, blobComplexity, blobSmoothness );
 
 	if ( ! image ) {
 		return;

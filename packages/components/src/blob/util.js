@@ -27,18 +27,13 @@ export const getSidesFromPreset = preset => {
 export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 ) => {
 
 	const points = [];
-	let path = '';
 	let firstPoint = '';
 	let curves = '';
+	let path;
 
 	const sides = getSidesFromPreset( preset );
 
-	let xMax = 0;
-	let yMax = 0;
-	let xMin = BLOB_RADIUS;
-	let yMin = BLOB_RADIUS;
-	let curvePoints = [];
-
+	// generate the points that will define the shape
 	for (let i = 1; i <= sides; i++) {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
@@ -51,14 +46,52 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 		const ratio = defaultRatio + ( initialRatio - defaultRatio ) * complexity / 100;
 
 		points.push({
-			x: BLOB_RADIUS * ( Math.cos( angle ) * ratio ),
-			y: BLOB_RADIUS * ( Math.sin( angle ) * ratio )
+			x: BLOB_RADIUS * ( Math.cos( angle ) * ratio + 1 ),
+			y: BLOB_RADIUS * ( Math.sin( angle ) * ratio + 1 )
 		});
 	}
 
 	let missingPoints = BLOB_MAX_SIDES - sides;
 
-	for (let i = 0; i < points.length; i++) {
+	let curvePoints = getCurvePointsFromPoints( points, smoothness );
+	scaleCurvePoints( curvePoints );
+
+	for ( let i = 0; i < curvePoints.length; i ++ ) {
+		const c = curvePoints[i];
+
+		curves += ' C ' + c.x1 + ' ' + c.y1 + ' ' + c.x2 + ' ' + c.y2 + ' ' + c.m2x + ' ' + c.m2y;
+
+		const dummyPointsCount = Math.round( missingPoints / (
+			points.length - i
+		) );
+
+		for ( let j = 0; j < dummyPointsCount; j ++ ) {
+			curves += ' C ' + c.m2x + ' ' + c.m2y + ' ' + c.m2x + ' ' + c.m2y + ' ' + c.m2x + ' ' + c.m2y;
+		}
+
+		if ( i === 0 ) {
+			firstPoint = c.m1x + ' ' + c.m1y;
+		}
+
+		missingPoints -= dummyPointsCount;
+	}
+
+	// move to first point
+	path = 'M ' + firstPoint;
+
+	// add the curves to draw the actual path
+	path += curves;
+
+	// close the path
+	path += ' Z';
+
+	return path;
+};
+
+function getCurvePointsFromPoints( points, smoothness ) {
+	let curvePoints = [];
+
+	for ( let i = 0; i < points.length; i ++ ) {
 		const nextIdx = (i + 1) % points.length;
 		const prevIdx = (i + points.length - 1) % points.length;
 		const nextPt = points[nextIdx];
@@ -92,54 +125,41 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 			m2x: M2.x,
 			m2y: M2.y
 		});
-
-		xMax = Math.max( xMax, x1, x2 );
-		yMax = Math.max( yMax, y1, y2 );
-		xMin = Math.min( xMin, x1, x2 );
-		yMin = Math.min( yMin, y1, y2 );
 	}
 
-	const newXratio = 2 * BLOB_RADIUS / ( xMax - xMin );
-	const newYratio = 2 * BLOB_RADIUS / ( yMax - yMin );
+	return curvePoints;
+}
 
-	for ( let i = 0; i < curvePoints.length; i ++ ) {
-		const c = curvePoints[i];
+function scaleCurvePoints( points ) {
+	let xMax = 0;
+	let yMax = 0;
+	let xMin = BLOB_RADIUS;
+	let yMin = BLOB_RADIUS;
 
-		const newX1 = ( c.x1 - xMin ) * newXratio;
-		const newY1 = ( c.y1 - yMin ) * newYratio;
-		const newX2 = ( c.x2 - xMin ) * newXratio;
-		const newY2 = ( c.y2 - yMin ) * newYratio;
+	for ( let i = 0; i < points.length; i ++ ) {
+		const { x1, x2, y1, y2, m1x, m2x, m1y, m2y } = points[i];
 
-		const newM1x = ( c.m1x - xMin ) * newXratio;
-		const newM1y = ( c.m1y - yMin ) * newYratio;
-		const newM2x = ( c.m2x - xMin ) * newXratio;
-		const newM2y = ( c.m2y - yMin ) * newYratio;
-
-		curves += ' C ' + newX1 + ' ' + newY1 + ' ' + newX2 + ' ' + newY2 + ' ' + newM2x + ' ' + newM2y;
-
-		const dummyPointsCount = Math.round( missingPoints / (
-			points.length - i
-		) );
-
-		for ( let j = 0; j < dummyPointsCount; j ++ ) {
-			curves += ' C ' + newM2x + ' ' + newM2y + ' ' + newM2x + ' ' + newM2y + ' ' + newM2x + ' ' + newM2y;
-		}
-
-		if ( i === 0 ) {
-			firstPoint = newM1x + ' ' + newM1y;
-		}
-
-		missingPoints -= dummyPointsCount;
+		xMin = Math.min( xMin, x1, x2, m1x, m2x );
+		xMax = Math.max( xMax, x1, x2, m1x, m2x );
+		yMin = Math.min( yMin, y1, y2, m1y, m2y );
+		yMax = Math.max( yMax, y1, y2, m1y, m2y );
 	}
 
-	// move to first point
-	path = 'M ' + firstPoint;
+	const xRatio = 2 * BLOB_RADIUS / ( xMax - xMin );
+	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
 
-	// add the curves to draw the actual path
-	path += curves;
+	for ( let i = 0; i < points.length; i ++ ) {
+		const { x1, x2, y1, y2, m1x, m2x, m1y, m2y } = points[i];
 
-	// close the path
-	path += ' Z';
-
-	return path;
-};
+		points[i] = {
+			x1: ( x1 - xMin ) * xRatio,
+			x2: ( x2 - xMin ) * xRatio,
+			m2x: ( m2x - xMin ) * xRatio,
+			m1x: ( m1x - xMin ) * xRatio,
+			y1: ( y1 - yMin ) * yRatio,
+			y2: ( y2 - yMin ) * yRatio,
+			m1y: ( m1y - yMin ) * yRatio,
+			m2y: ( m2y - yMin ) * yRatio
+		}
+	}
+}
