@@ -1,4 +1,5 @@
 import {
+	Blob,
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
@@ -33,6 +34,8 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			objectPosition,
 			containerHeight,
 			imageRotation,
+
+			blobMixingStyle
 		},
 		settings: {
 			advancedGalleryPresetOptions
@@ -41,6 +44,32 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 
 	return (
 		<Fragment>
+
+			<ControlsSection label={ __( 'Blobs Settings' ) }>
+				<ControlsTab label={ __( 'Settings' ) }>
+					<ControlsGroup title={ __( 'Style' ) }>
+						<RadioControl
+							key={ 'blobs-mixing-style' }
+							label={ 'Mixing Style' }
+							selected={ blobMixingStyle }
+							onChange={ blobMixingStyle => setAttributes( { blobMixingStyle } ) }
+							options={ [
+								{ label: 'None', value: 'none' },
+								{ label: 'Shape Mask', value: 'shape-mask' },
+								{ label: 'Mixing #1', value: 'mixing-1' },
+								{ label: 'Mixing #2', value: 'mixing-2' },
+								{ label: 'Mixing #3', value: 'mixing-3' },
+							] }
+						/>
+					</ControlsGroup>
+					<ControlsGroup title={ __( 'Decoration' ) }>
+						<Blob.Controls { ...props } prefix={ 'blob' } />
+					</ControlsGroup>
+					<ControlsGroup title={ __( 'Image Mask' ) }>
+						<Blob.Controls { ...props } prefix={ 'blobMask' } />
+					</ControlsGroup>
+				</ControlsTab>
+			</ControlsSection>
 
 			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 

@@ -47,6 +47,85 @@
 	flex: 1 1 0;
 }
 
+.novablocks-advanced-gallery__grid-item-shape {
+	fill: var(--novablocks-color-1);
+}
+
+.blob-mix {
+	position: relative;
+}
+
+.blob-mix__media,
+.blob-mix__decoration {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.blob-mix__media {
+	z-index: 10;
+}
+
+.blob-mix--style-none,
+.blob-mix--style-shape-mask {
+
+	.blob-mix__decoration {
+		display: none;
+	}
+}
+
+.blob-mix--style-none,
+.blob-mix--style-mixing-1 {
+
+	.blob-mix__media {
+		mask-image: none !important;
+	}
+}
+
+.blob-mix--style-mixing-1 {
+
+	.blob-mix__decoration {
+		transform-origin: left bottom;
+	}
+
+	.blob-mix__media {
+		transform-origin: right top;
+	}
+
+	.blob-mix__media,
+	.blob-mix__decoration {
+		transform: scale(0.9);
+	}
+}
+
+.blob-mix--style-mixing-2 {
+
+	.blob-mix__decoration {
+		transform-origin: right center;
+		transform: scale(0.9);
+	}
+
+	.blob-mix__media {
+		transform-origin: left center;
+		transform: scale(0.7);
+	}
+}
+
+.blob-mix--style-mixing-3 {
+
+	.blob-mix__media {
+		transform-origin: right center;
+		transform: scale(0.9);
+	}
+
+	.blob-mix__decoration {
+		transform-origin: left center;
+		transform: scale(0.7);
+	}
+}
+
 .novablocks-advanced-gallery__grid-item-info {
 	flex: 0 1 auto;
 
