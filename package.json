@@ -14,6 +14,7 @@
 	},
 	"dependencies": {
 		"@novablocks/advanced-gallery": "file:packages/advanced-gallery",
+		"@novablocks/blob": "file:packages/blob",
 		"@novablocks/block-editor": "file:packages/block-editor",
 		"@novablocks/block-library": "file:packages/block-library",
 		"@novablocks/collection": "file:packages/collection",

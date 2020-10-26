@@ -1,0 +1,381 @@
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+import {
+	Button,
+	RadioControl,
+	RangeControl,
+	ToggleControl,
+} from '@wordpress/components';
+
+import { getControlsClasses, getRandomBetween, getRandomFromArray } from "@novablocks/utils";
+import { ControlsGroup, ControlsSection, ControlsTab, PresetControl } from "@novablocks/block-editor";
+
+import { getRandomBlobAttributes } from './utils';
+
+const blobsMixStyleOptions = [ {
+	label: 'None',
+	value: 'none',
+}, {
+	label: 'Media Shape',
+	value: 'shape-mask',
+}, {
+	label: 'Decorative Shape',
+	value: 'mixing-1',
+}, {
+	label: 'Shape Mixing',
+	value: 'mixing-2',
+	attributes: {
+		blobsEnableMask: true,
+		blobsEnableDecoration: true,
+		blobsHorizontalDisplacement: 30,
+		blobsVerticalDisplacement: 50,
+		blobsSizeBalance: 50,
+	}
+}, {
+	label: 'Shape Mixing ALT',
+	value: 'mixing-3',
+	attributes: {
+		blobsEnableMask: true,
+		blobsEnableDecoration: true,
+		blobsHorizontalDisplacement: 70,
+		blobsVerticalDisplacement: 50,
+		blobsSizeBalance: 50,
+	}
+} ];
+
+const getBlobStyleAttributes = ( attributes ) => {
+	const { blobsMixStyle } = attributes;
+	let newAttributes = attributes;
+
+	if ( 'none' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: false,
+			blobsEnableDecoration: false,
+		}
+	}
+
+	if ( 'shape-mask' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: false,
+		}
+	}
+
+	if ( 'mixing-1' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: true,
+			blobsHorizontalDisplacement: 70,
+			blobsVerticalDisplacement: 30,
+			blobsSizeBalance: 50,
+		}
+	}
+
+	if ( 'mixing-2' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: true,
+			blobsHorizontalDisplacement: 30,
+			blobsVerticalDisplacement: 50,
+			blobsSizeBalance: 50,
+		}
+	}
+
+	if ( 'mixing-3' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: true,
+			blobsHorizontalDisplacement: 70,
+			blobsVerticalDisplacement: 50,
+			blobsSizeBalance: 50,
+		}
+	}
+
+	return {
+		...attributes,
+		...newAttributes
+	};
+};
+
+const getMinSkewedCorners = ( attributes, prefix ) => {
+	return 0;
+};
+
+const getMaxSkewedCorners = ( attributes, prefix ) => {
+	return attributes[ `${ prefix }Sides` ];
+};
+
+const getMinPatternLength = ( attributes, prefix ) => {
+	return 1;
+};
+
+const getMaxPatternLength = ( attributes, prefix ) => {
+	const maxSkewedCorners = attributes[ `${ prefix }Sides` ];
+	const skewedCorners = attributes[ `${ prefix }SkewedCorners` ];
+	return Math.min( skewedCorners, maxSkewedCorners );
+};
+
+const normalizeAttributes = ( attributes, prefix ) => {
+	const newAttributes = {};
+
+	const minSkewedCorners = getMinSkewedCorners( attributes, prefix );
+	const maxSkewedCorners = getMaxSkewedCorners( attributes, prefix );
+	const minPatternLength = getMinPatternLength( attributes, prefix );
+	const maxPatternLength = getMaxPatternLength( attributes, prefix );
+
+	newAttributes[ `${ prefix }SkewedCorners` ] = Math.max( minSkewedCorners, Math.min( maxSkewedCorners, attributes[ `${ prefix }SkewedCorners` ] ) );
+	newAttributes[ `${ prefix }PatternLength` ] = Math.max( minPatternLength, Math.min( maxPatternLength, attributes[ `${ prefix }PatternLength` ] ) );
+
+	return Object.assign( {}, attributes, newAttributes );
+};
+
+const BlobControls = ( props ) => {
+
+	const {
+		attributes,
+		setAttributes,
+	} = props;
+
+	const prefix = props.prefix || 'blob';
+
+	return (
+		<Fragment>
+			<RangeControl
+				value={ attributes[ `${ prefix }Sides` ] }
+				onChange={ ( sides ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }Sides`] = sides;
+					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
+				} }
+				label={ __( 'Sides' ) }
+				min={ 3 }
+				max={ 20 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[ `${ prefix }SkewedCorners` ] }
+				onChange={ ( sides ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }SkewedCorners`] = sides;
+					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
+				} }
+				label={ __( 'Skewed Corners' ) }
+				min={ getMinSkewedCorners( attributes, prefix ) }
+				max={ getMaxSkewedCorners( attributes, prefix ) }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[ `${ prefix }PatternLength` ] }
+				onChange={ ( sides ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }PatternLength`] = sides;
+					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
+				} }
+				label={ __( 'Pattern Length' ) }
+				min={ getMinPatternLength( attributes, prefix ) }
+				max={ getMaxPatternLength( attributes, prefix ) }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[ `${ prefix }PatternSeed` ] }
+				onChange={ ( preset ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }PatternSeed`] = preset;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Pattern Seed' ) }
+				min={ 1 }
+				max={ 10 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[`${ prefix }Complexity`] }
+				onChange={ ( complexity ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }Complexity`] = complexity;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Variation' ) }
+				min={ 0 }
+				max={ 100 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[`${ prefix }Smoothness`] }
+				onChange={ ( smoothness ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }Smoothness`] = smoothness;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Smoothness' ) }
+				min={ 0 }
+				max={ 100 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[`${ prefix }Rotation`] }
+				onChange={ ( rotation ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }Rotation`] = rotation;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Rotation' ) }
+				min={ 0 }
+				max={ 360 }
+				step={ 10 }
+			/>
+		</Fragment>
+	);
+};
+
+const InspectorControls = ( props ) => {
+
+	const {
+		attributes,
+		setAttributes,
+		settings: {
+			blobPresetOptions,
+			debug,
+		}
+	} = props;
+
+	const {
+		blobsSizeBalance,
+		blobsHorizontalDisplacement,
+		blobsVerticalDisplacement,
+
+		blobsEnableMask,
+		blobsEnableDecoration,
+		blobsMixStyle,
+
+		enableShapeDebug,
+	} = attributes;
+
+	return (
+		<ControlsSection label={ __( 'Shape Modeling' ) } group={ __( 'Modules' ) }>
+			<ControlsTab label={ __( 'General' ) }>
+				<p>Use this tool to generate shapes and combine them with your images to create designs that are a unique and memorable part of your brand identity.</p>
+
+				<PresetControl
+					key={ 'blob-style-preset' }
+					label={ __( 'Choose a shape preset:', '__plugin_txtd' ) }
+					options={ blobPresetOptions }
+					randomize={ () => {
+
+						return {
+							blobsEnableMask: getRandomFromArray( [true, true, false ] ),
+							blobsEnableDecoration: getRandomFromArray( [true, true, false ] ),
+							...getRandomBlobAttributes( 'blob' ),
+							...getRandomBlobAttributes( 'blobMask' ),
+							blobsHorizontalDisplacement: getRandomBetween( 0, 100 ),
+							blobsVerticalDisplacement: getRandomBetween( 0, 100 ),
+							blobsSizeBalance: getRandomBetween( 0, 100 ),
+						}
+					} }
+				/>
+			</ControlsTab>
+			<ControlsTab label={ __( 'Customize' ) }>
+				<div className={ getControlsClasses( attributes, getBlobStyleAttributes ) }>
+					<RadioControl
+						key={ 'blobs-mixing-style' }
+						label={ 'Shape Usage Style' }
+						selected={ blobsMixStyle }
+						onChange={ blobsMixStyle => {
+							setAttributes( getBlobStyleAttributes( { ...attributes, blobsMixStyle } ) );
+						} }
+						options={ blobsMixStyleOptions }
+					/>
+				</div>
+				<SwapShapesButton { ...props } />
+			</ControlsTab>
+			<ControlsTab label={ __( 'Settings' ) }>
+				{
+					!! debug &&
+					<ControlsGroup title={ __( 'Debug' ) }>
+						<ToggleControl
+							label={ __( 'Enable Shape Debug', '__plugin_txtd' ) }
+							checked={ enableShapeDebug }
+							onChange={ () => setAttributes( {
+								enableShapeDebug: ! enableShapeDebug
+							} ) }
+						/>
+					</ControlsGroup>
+				}
+				<ControlsGroup title={ __( 'Media Shape' ) }>
+					<ToggleControl
+						label={ __( 'Enable Media Shape', '__plugin_txtd' ) }
+						checked={ blobsEnableMask }
+						onChange={ () => setAttributes( { blobsEnableMask: ! blobsEnableMask } ) }
+					/>
+					{
+						blobsEnableMask &&
+						<BlobControls { ...props } prefix={ 'blobMask' } />
+					}
+				</ControlsGroup>
+				<ControlsGroup title={ __( 'Decorative Shape' ) }>
+					<ToggleControl
+						label={ __( 'Enable Blob Decoration', '__plugin_txtd' ) }
+						checked={ blobsEnableDecoration }
+						onChange={ () => setAttributes( { blobsEnableDecoration: ! blobsEnableDecoration } ) }
+					/>
+					{
+						blobsEnableDecoration &&
+						<BlobControls { ...props } prefix={ 'blob' } />
+					}
+				</ControlsGroup>
+				{
+					blobsEnableDecoration &&
+					<ControlsGroup title={ __( 'Scaling' ) }>
+						<RangeControl
+							value={ blobsHorizontalDisplacement }
+							onChange={ ( blobsHorizontalDisplacement ) => { setAttributes( { blobsHorizontalDisplacement } ) } }
+							label={ __( 'Horizontal Displacement' ) }
+							min={ 0 }
+							max={ 100 }
+							step={ 1 }
+						/>
+						<RangeControl
+							value={ blobsVerticalDisplacement }
+							onChange={ ( blobsVerticalDisplacement ) => { setAttributes( { blobsVerticalDisplacement } ) } }
+							label={ __( 'Vertical Displacement' ) }
+							min={ 0 }
+							max={ 100 }
+							step={ 1 }
+						/>
+						<RangeControl
+							value={ blobsSizeBalance }
+							onChange={ ( blobsSizeBalance ) => { setAttributes( { blobsSizeBalance } ) } }
+							label={ __( 'Size Balance' ) }
+							min={ 0 }
+							max={ 100 }
+							step={ 1 }
+						/>
+					</ControlsGroup>
+				}
+			</ControlsTab>
+		</ControlsSection>
+	)
+};
+
+const SwapShapesButton = ( props ) => {
+	const { attributes, setAttributes } = props;
+	const newAttributes = {};
+	const atts = [ 'Sides', 'SkewedCorners', 'PatternLength', 'PatternSeed', 'Complexity', 'Smoothness' ];
+
+	atts.forEach( att => {
+		newAttributes[ `blob${ att }` ] = attributes[ `blobMask${ att }` ];
+		newAttributes[ `blobMask${ att }` ] = attributes[ `blob${ att }` ];
+	} );
+
+	return (
+		<Button
+			isPrimary
+			icon={ 'controls-repeat' }
+			onClick={ () => { setAttributes( newAttributes ) } }
+		>
+			{ __( 'Swap shapes', '__plugin_txtd' ) }
+		</Button>
+	)
+};
+
+export default InspectorControls;

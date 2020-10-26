@@ -617,6 +617,7 @@ function novablocks_get_block_editor_settings() {
 			),
 		),
 		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
@@ -624,6 +625,136 @@ function novablocks_get_block_editor_settings() {
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;
+}
+
+function novablocks_get_blob_presets() {
+	return array(
+		array(
+			'label'  => 'Rectangle',
+			'value'  => 'rectangle',
+			'preset' => array(
+				'blobsEnableMask'             => false,
+				'blobsEnableDecoration'       => false,
+				'blobMaskSides'               => 4,
+				'blobMaskSkewedCorners'       => 0,
+				'blobMaskPatternLength'       => 1,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 0,
+				'blobSides'                   => 4,
+				'blobSkewedCorners'           => 0,
+				'blobPatternLength'           => 1,
+				'blobPatternSeed'             => 1,
+				'blobComplexity'              => 0,
+				'blobSmoothness'              => 0,
+				'blobRotation'                => 0,
+				'blobsHorizontalDisplacement' => 50,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'Ellipse',
+			'value'  => 'ellipse',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobsEnableDecoration'       => false,
+				'blobMaskSides'               => 4,
+				'blobMaskSkewedCorners'       => 0,
+				'blobMaskPatternLength'       => 1,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 33,
+				'blobMaskRotation'            => 0,
+				'blobSides'                   => 4,
+				'blobSkewedCorners'           => 0,
+				'blobPatternLength'           => 1,
+				'blobPatternSeed'             => 1,
+				'blobComplexity'              => 0,
+				'blobSmoothness'              => 33,
+				'blobRotation'                => 0,
+				'blobsHorizontalDisplacement' => 50,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'Diamond',
+			'value'  => 'diamond',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobsEnableDecoration'       => false,
+				'blobMaskSides'               => 6,
+				'blobMaskSkewedCorners'       => 0,
+				'blobMaskPatternLength'       => 1,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 0,
+				'blobSides'                   => 6,
+				'blobSkewedCorners'           => 0,
+				'blobPatternLength'           => 1,
+				'blobPatternSeed'             => 1,
+				'blobComplexity'              => 0,
+				'blobSmoothness'              => 0,
+				'blobRotation'                => 0,
+				'blobsHorizontalDisplacement' => 50,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'Blob 1',
+			'value'  => 'blob-1',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobsEnableDecoration'       => true,
+				'blobMaskSides'               => 4,
+				'blobMaskSkewedCorners'       => 4,
+				'blobMaskPatternLength'       => 4,
+				'blobMaskPatternSeed'         => 8,
+				'blobMaskComplexity'          => 89,
+				'blobMaskSmoothness'          => 50,
+				'blobMaskRotation'            => 0,
+				'blobSides'                   => 4,
+				'blobSkewedCorners'           => 4,
+				'blobPatternLength'           => 4,
+				'blobPatternSeed'             => 9,
+				'blobComplexity'              => 93,
+				'blobSmoothness'              => 50,
+				'blobRotation'                => 0,
+				'blobsHorizontalDisplacement' => 30,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'Blob 2',
+			'value'  => 'blob-2',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobsEnableDecoration'       => true,
+				'blobMaskSides'               => 5,
+				'blobMaskSkewedCorners'       => 5,
+				'blobMaskPatternLength'       => 5,
+				'blobMaskPatternSeed'         => 7,
+				'blobMaskComplexity'          => 56,
+				'blobMaskSmoothness'          => 50,
+				'blobMaskRotation'            => 0,
+				'blobSides'                   => 8,
+				'blobSkewedCorners'           => 8,
+				'blobPatternLength'           => 8,
+				'blobPatternSeed'             => 5,
+				'blobComplexity'              => 58,
+				'blobSmoothness'              => 20,
+				'blobRotation'                => 0,
+				'blobsHorizontalDisplacement' => 70,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+	);
 }
 
 function novablocks_get_advanced_gallery_presets() {
@@ -758,6 +889,32 @@ function novablocks_get_attributes_from_json( $path ) {
 	return json_decode( file_get_contents( $filename ), true );
 }
 
+function novablocks_camel_case_to_kebab_case( $string ) {
+	return strtolower( preg_replace( '%([A-Z])([a-z])%', '-\1\2', $string ) );
+}
+
+function novablocks_kebab_case_to_camel_case( $string ) {
+	$str = str_replace( '-', '', ucwords( $string, '-' ) );
+	$str = lcfirst( $str );
+	return $str;
+}
+
+function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
+	$data_attributes = array();
+
+	foreach ( $data_attributes_array as $data_attribute ) {
+		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
+
+		if ( empty( $attributes[ $attribute ] ) ) {
+			$attributes[ $attribute ] = 0;
+		}
+
+		$data_attributes[] = 'data-' . $data_attribute . '="' . $attributes[ $attribute ] . '"';
+	}
+
+	return $data_attributes;
+}
+
 function novablocks_render_advanced_gallery( $attributes ) {
 
 	$images = array();
@@ -770,26 +927,15 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$advanced_gallery_attributes = array(
-		'sizeContrast',
-		'positionShift',
-		'elementsDistance',
-		'placementVariation',
-		'imageResizing',
-		'objectPosition',
-		'containerHeight',
-		'imageRotation',
-	);
+	$blob_attributes_config = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$blob_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $blob_attributes_config ) );
 
-	$data_attributes = array();
+	$advanced_gallery_attributes_config = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
+	$advanced_gallery_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $advanced_gallery_attributes_config ) );
 
-	foreach ( $advanced_gallery_attributes as $attribute ) {
-		if ( empty( $attributes[ $attribute ] ) ) {
-			$attributes[ $attribute ] = 0;
-		}
+	$data_attributes_array = array_merge( $blob_attributes_array, $advanced_gallery_attributes_array );
 
-		$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
-	}
+	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 

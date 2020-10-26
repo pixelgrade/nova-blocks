@@ -1,8 +1,7 @@
+import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 import { isSafari } from "@novablocks/utils";
-
-import { useState, useEffect, useRef } from '@wordpress/element';
-
-import { GridItemCollection } from "./index";
+import Blob from "@novablocks/blob";
+import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./utils";
 
 const AdvancedGalleryPreview = ( props ) => {
@@ -32,21 +31,36 @@ const AdvancedGalleryPreview = ( props ) => {
 		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) } ref={ ref }>
 			<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
 				{ gridItemsCollection.gridItems.map( ( item, index ) => (
-					<AdvancedGalleryItem gridItem={ item } key={ index } />
+					<AdvancedGalleryItem gridItem={ item } key={ index } index={ index } { ...props } />
 				) ) }
 			</div>
 		</div>
 	);
 };
 
-const AdvancedGalleryItem = ( props ) => {
-
+const AdvancedGalleryItemMedia = Blob.withBlobsDecoration(( props ) => {
 	const { gridItem } = props;
 	const image = gridItem?.image;
 	const imageURL = image?.sizes?.novablocks_medium?.url || image?.url;
+	const styles = gridItem.getImageStyle();
+
+	return (
+		<Fragment>
+			{ image.type !== 'video' &&
+			  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
+			{ image.type === 'video' &&
+			  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
+		</Fragment>
+	)
+});
+
+const AdvancedGalleryItem = ( props ) => {
+
+	const { gridItem } = props;
+
+	const image = gridItem?.image;
 	const imageCaption = image?.caption;
 	const imageDescription = image?.description;
-	const styles = gridItem.getImageStyle();
 
 	if ( ! image ) {
 		return;
@@ -55,10 +69,7 @@ const AdvancedGalleryItem = ( props ) => {
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
-				{ image.type !== 'video' &&
-				  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
-				{ image.type === 'video' &&
-				  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
+				<AdvancedGalleryItemMedia { ...props } />
 			</div>
 			<div className="novablocks-advanced-gallery__grid-item-info">
 				{ typeof imageCaption === 'string' && <div

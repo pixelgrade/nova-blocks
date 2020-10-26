@@ -9,6 +9,8 @@ import deprecated from './deprecated';
 
 import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
 import AdvancedGallery from "@novablocks/advanced-gallery";
+import Blob from '@novablocks/blob';
+
 import {
 	generateDefaults,
 	getPlaceholderImages
@@ -17,7 +19,8 @@ import {
 const { getRandomAttributes } = AdvancedGallery.utils;
 
 import blockAttributes from './attributes';
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
+
+const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes, Blob.attributes );
 
 /**
  * WordPress dependencies
