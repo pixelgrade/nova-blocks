@@ -1,3 +1,8 @@
+import {
+	getRandomBetween,
+	getRandomFromArray
+} from '@novablocks/utils';
+
 const BLOB_MAX_SIDES = 20;
 const BLOB_RADIUS = 10;
 
@@ -39,11 +44,10 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
 		const angle = 2 * Math.PI * i / sides + Math.PI / 2;
 
-		// default ratio is 0.7 because the random one varies between 0.4 and 1
-		const defaultRatio = 0.7;
+		const minimumRatio = 0.1;
 		const initialRatio = getRatio(preset + presetOffset, i);
 
-		const ratio = defaultRatio + ( initialRatio - defaultRatio ) * complexity / 100;
+		const ratio = minimumRatio + ( initialRatio - minimumRatio ) * complexity / 100;
 
 		points.push({
 			x: BLOB_RADIUS * ( Math.cos( angle ) * ratio + 1 ),
@@ -163,3 +167,12 @@ function scaleCurvePoints( points ) {
 		}
 	}
 }
+
+export const getRandomBlobAttributes = ( prefix ) => {
+
+	return {
+		[`${ prefix }Preset`]: getRandomBetween( 1, 100 ),
+		[`${ prefix }Complexity`]: getRandomBetween( 0, 100 ),
+		[`${ prefix }Smoothness`]: getRandomFromArray( [0, 33, 50, 100] ),
+	}
+};

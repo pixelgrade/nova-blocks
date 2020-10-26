@@ -7,7 +7,7 @@ import {
 	Notice
 } from '../index';
 
-
+import { getRandomFromArray } from '@novablocks/utils';
 import { getRandomAttributes } from "./util";
 
 import { __ } from '@wordpress/i18n';
@@ -17,6 +17,14 @@ import {
 	RadioControl,
 	RangeControl,
 } from '@wordpress/components';
+
+const blobMixingStylesOptions = [
+	{ label: 'None', value: 'none' },
+	{ label: 'Shape Mask', value: 'shape-mask' },
+	{ label: 'Mixing #1', value: 'mixing-1' },
+	{ label: 'Mixing #2', value: 'mixing-2' },
+	{ label: 'Mixing #3', value: 'mixing-3' },
+];
 
 const AdvancedGalleryInspectorControls = ( props ) => {
 
@@ -38,7 +46,8 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			blobMixingStyle
 		},
 		settings: {
-			advancedGalleryPresetOptions
+			advancedGalleryPresetOptions,
+			blobPresetOptions
 		}
 	} = props;
 
@@ -46,6 +55,23 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 		<Fragment>
 
 			<ControlsSection label={ __( 'Blobs Settings' ) }>
+				<ControlsTab label={ __( 'General' ) }>
+					<PresetControl
+						key={ 'blob-style-preset' }
+						options={ blobPresetOptions }
+						randomize={ () => {
+							const stylesValues = blobMixingStylesOptions.map( opt => opt.value ).filter( value => {
+								return value !== 'none';
+							} );
+
+							return {
+								blobMixingStyle: getRandomFromArray( stylesValues ),
+								...Blob.Utils.getRandomBlobAttributes( 'blob' ),
+								...Blob.Utils.getRandomBlobAttributes( 'blobMask' ),
+							}
+						} }
+					/>
+				</ControlsTab>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<ControlsGroup title={ __( 'Style' ) }>
 						<RadioControl
@@ -53,13 +79,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							label={ 'Mixing Style' }
 							selected={ blobMixingStyle }
 							onChange={ blobMixingStyle => setAttributes( { blobMixingStyle } ) }
-							options={ [
-								{ label: 'None', value: 'none' },
-								{ label: 'Shape Mask', value: 'shape-mask' },
-								{ label: 'Mixing #1', value: 'mixing-1' },
-								{ label: 'Mixing #2', value: 'mixing-2' },
-								{ label: 'Mixing #3', value: 'mixing-3' },
-							] }
+							options={ blobMixingStylesOptions }
 						/>
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Decoration' ) }>

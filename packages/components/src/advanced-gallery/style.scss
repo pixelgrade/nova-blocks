@@ -72,7 +72,8 @@
 .blob-mix--style-shape-mask {
 
 	.blob-mix__decoration {
-		display: none;
+		opacity: 0;
+		pointer-events: none;
 	}
 }
 
@@ -87,11 +88,11 @@
 .blob-mix--style-mixing-1 {
 
 	.blob-mix__decoration {
-		transform-origin: left bottom;
+		transform-origin: 0 100%;
 	}
 
 	.blob-mix__media {
-		transform-origin: right top;
+		transform-origin: 100% 0;
 	}
 
 	.blob-mix__media,
@@ -103,12 +104,12 @@
 .blob-mix--style-mixing-2 {
 
 	.blob-mix__decoration {
-		transform-origin: right center;
+		transform-origin: 100% 50%;
 		transform: scale(0.9);
 	}
 
 	.blob-mix__media {
-		transform-origin: left center;
+		transform-origin: 0 50%;
 		transform: scale(0.7);
 	}
 }
@@ -116,12 +117,12 @@
 .blob-mix--style-mixing-3 {
 
 	.blob-mix__media {
-		transform-origin: right center;
+		transform-origin: 100% 50%;
 		transform: scale(0.9);
 	}
 
 	.blob-mix__decoration {
-		transform-origin: left center;
+		transform-origin: 0 50%;
 		transform: scale(0.7);
 	}
 }

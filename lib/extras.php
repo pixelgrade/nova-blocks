@@ -632,6 +632,7 @@ function novablocks_get_block_editor_settings() {
 			),
 		),
 		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
@@ -639,6 +640,50 @@ function novablocks_get_block_editor_settings() {
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;
+}
+
+function novablocks_get_blob_presets() {
+	return array(
+		array(
+			'label'  => 'None',
+			'value'  => 'none',
+			'preset' => array(
+				'blobMixingStyle'    => 'none',
+				'blobPreset'         => 16,
+				'blobComplexity'     => 0,
+				'blobSmoothness'     => 33,
+				'blobMaskPreset'     => 16,
+				'blobMaskComplexity' => 0,
+				'blobMaskSmoothness' => 33,
+			),
+		),
+		array(
+			'label'  => 'Circle',
+			'value'  => 'Circle',
+			'preset' => array(
+				'blobMixingStyle'    => 'shape-mask',
+				'blobPreset'         => 16,
+				'blobComplexity'     => 0,
+				'blobSmoothness'     => 33,
+				'blobMaskPreset'     => 16,
+				'blobMaskComplexity' => 0,
+				'blobMaskSmoothness' => 33,
+			),
+		),
+		array(
+			'label'  => 'Hexagon',
+			'value'  => 'hexagon',
+			'preset' => array(
+				'blobMixingStyle'    => 'shape-mask',
+				'blobPreset'         => 16,
+				'blobComplexity'     => 0,
+				'blobSmoothness'     => 33,
+				'blobMaskPreset'     => 36,
+				'blobMaskComplexity' => 0,
+				'blobMaskSmoothness' => 0,
+			),
+		),
+	);
 }
 
 function novablocks_get_advanced_gallery_presets() {
