@@ -27,7 +27,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		if ( empty( $posts ) ) {
 			if ( is_user_logged_in() ) {
-				return '<p>' . __( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.' ) . '</p>';
+				return '<p>' . esc_html__( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.', '__plugin_txtd' ) . '</p>';
 			} else {
 				return '';
 			}
@@ -137,7 +137,7 @@ function novablocks_get_meta( $post, $meta ) {
 		$comments_number = absint( get_comments_number( $post->ID ) );
 
 		if ( $comments_number === 0 ) {
-			return __( 'No Comments', '__plugin_txtd' );
+			return esc_html__( 'No Comments', '__plugin_txtd' );
 		}
 
 		return esc_html(
@@ -225,7 +225,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 			<?php if ( ! empty( $attributes['showMedia'] ) ) { ?>
 				<div class="novablocks-card__layout-media novablocks-grid__item-media">
-					<?php echo novablocks_get_card_media_markup( $media, $attributes ); ?>
+					<?php echo novablocks_get_card_media_markup( $media ); ?>
 				</div>
 			<?php } ?>
 

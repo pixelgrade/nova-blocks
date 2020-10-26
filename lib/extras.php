@@ -1147,9 +1147,9 @@ function novablocks_the_media_title( $media, $before = '', $after = '', $echo = 
 
 	if ( $echo ) {
 		echo $title;
-	} else {
-		return $title;
 	}
+
+	return $title;
 }
 
 function novablocks_get_media_caption( $media ) {
@@ -1170,11 +1170,11 @@ add_filter( 'image_size_names_choose', 'novablocks_custom_image_sizes' );
 
 function novablocks_custom_image_sizes( $sizes ) {
 	return array_merge( $sizes, array(
-		'novablocks_huge' => __('Nova Blocks Huge'),
-		'novablocks_large' => __('Nova Blocks Large'),
-		'novablocks_medium' => __('Nova Blocks Medium'),
-		'novablocks_small' => __('Nova Blocks Small'),
-		'novablocks_tiny' => __('Nova Blocks Tiny'),
+			'novablocks_huge'   => esc_html__( 'Nova Blocks Huge', '__plugin_txtd' ),
+			'novablocks_large'  => esc_html__( 'Nova Blocks Large', '__plugin_txtd' ),
+			'novablocks_medium' => esc_html__( 'Nova Blocks Medium', '__plugin_txtd' ),
+			'novablocks_small'  => esc_html__( 'Nova Blocks Small', '__plugin_txtd' ),
+			'novablocks_tiny'   => esc_html__( 'Nova Blocks Tiny', '__plugin_txtd' ),
 	) );
 }
 
