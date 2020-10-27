@@ -6,6 +6,7 @@ export { default as generateDefaults } from './generate-defaults';
 export { default as useApiFetch } from './use-api-fetch';
 export { default as useResizeObserver } from './use-resize-observer';
 export { default as withSettings } from './with-settings';
+export { default as useMemoryState } from './use-memory-state';
 
 export const getRandomBetween = ( min, max ) => {
 	const random = Math.max(0, Math.random() - Number.MIN_VALUE );

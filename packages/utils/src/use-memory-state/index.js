@@ -17,6 +17,6 @@ const useMemoryState = ( key, initialState ) => {
 	}
 
 	return [state, onChange];
-}
+};
 
 export default useMemoryState;
