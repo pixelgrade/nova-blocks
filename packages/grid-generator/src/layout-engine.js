@@ -747,7 +747,7 @@ const renumberNthMatrix = (nthMatrix) => {
 
 	// Return the maxNth.
 	return newNth - 1;
-}
+};
 
 const getMaxNth = (nthMatrix) => {
 	let maxNth = 0;
@@ -760,7 +760,7 @@ const getMaxNth = (nthMatrix) => {
 	}
 
 	return maxNth;
-}
+};
 
 const getAreasArray = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix ) => {
 
@@ -826,7 +826,7 @@ const getNthPostDetails = (nth, nthMatrix, metaDetailsMatrix = false, imageWeigh
 	}
 
 	return postDetails;
-}
+};
 
 const initUnidimensionalMatrix = (matrix, length, character = "X") => {
 	// The 0 index will be filled with a different character for easier logic.
@@ -842,7 +842,7 @@ const initUnidimensionalMatrix = (matrix, length, character = "X") => {
 	matrix.push("/");
 
 	return matrix;
-}
+};
 
 const initBidimensionalMatrix = (matrix, width, height, nullChar) => {
 	// Put in a guard row, at index 0.
@@ -856,4 +856,4 @@ const initBidimensionalMatrix = (matrix, width, height, nullChar) => {
 	matrix.push(initUnidimensionalMatrix([], width, "/"));
 
 	return matrix;
-}
+};

@@ -3,9 +3,11 @@ import {
 	ControlsSection,
 	ControlsTab,
 	PresetControl,
+} from '@novablocks/grid-generator';
+
+import {
 	Notice
 } from '../index';
-
 
 import { getRandomAttributes } from "./util";
 

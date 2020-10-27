@@ -18,12 +18,14 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
+		"@novablocks/grid-generator": "file:../grid-generator",
 		"@wordpress/api-fetch": "^3.20.0",
 		"@wordpress/components": "^11.1.1",
 		"@wordpress/element": "^2.18.0",
 		"@wordpress/html-entities": "^2.9.0",
 		"@wordpress/i18n": "^3.16.0",
 		"@wordpress/url": "^2.19.0",
-		"lodash": "^4.17.20"
+		"lodash": "^4.17.20",
+		"unsplash-js": "^6.3.0"
 	}
 }

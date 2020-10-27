@@ -8,15 +8,12 @@ import {
 } from "@novablocks/utils";
 
 import {
-	BlockVerticalAlignmentToolbar
-} from '../../components';
-
-import {
+	BlockVerticalAlignmentToolbar,
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
 	PresetControl,
-} from "@novablocks/components";
+} from '../../components';
 
 import { __ } from '@wordpress/i18n';
 

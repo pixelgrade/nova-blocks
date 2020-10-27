@@ -2,7 +2,7 @@ import MapPlaceholder from './placeholder';
 import Map from './map';
 import InspectorControls from './inspector-controls';
 
-import { withSettings } from '@novablocks/utils';
+import { withSettings } from '@novablocks/block-editor';
 import { withParallax } from '@novablocks/components';
 
 import { __ } from '@wordpress/i18n';

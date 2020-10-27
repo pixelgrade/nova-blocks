@@ -1,5 +1,5 @@
 import attributes from "./attributes";
-import { GridGenerator } from "@novablocks/components";
+import { GridGeneratorControls } from "../../components/index";
 
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
@@ -20,7 +20,7 @@ const withGridGeneratorControls = createHigherOrderComponent(OriginalComponent =
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<GridGenerator.Controls { ...props } />
+				<GridGeneratorControls { ...props } />
 			</Fragment>
 		);
 	};

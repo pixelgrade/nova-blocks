@@ -7,7 +7,8 @@ import attributes from './attributes';
 import * as utils from './util';
 import { GridItem, GridItemCollection } from './grid-item';
 
-import { normalizeImages, withSettings } from "@novablocks/utils";
+import { normalizeImages } from "@novablocks/utils";
+import { withSettings } from "@novablocks/block-editor";
 
 import { Fragment } from '@wordpress/element';
 

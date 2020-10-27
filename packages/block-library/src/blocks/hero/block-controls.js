@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import * as icons from '@novablocks/icons';
-import { AlignmentToolbar, ColorToolbar } from '@novablocks/components';
+import { AlignmentToolbar, ColorToolbar } from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies
@@ -14,7 +14,7 @@ import {
 	MediaUpload
 } from '@wordpress/block-editor';
 
-import { 
+import {
 	Button,
 	Toolbar,
  } from '@wordpress/components';

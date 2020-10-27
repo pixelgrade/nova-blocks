@@ -13,3 +13,5 @@ import "./with-controls-sections";
 import "./with-space-and-sizing-controls";
 import "./with-inner-blocks";
 import "./with-grid-generator";
+
+export { default as withSettings } from './with-settings';

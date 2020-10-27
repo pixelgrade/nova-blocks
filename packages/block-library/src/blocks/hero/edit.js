@@ -2,15 +2,14 @@
  * Internal dependencies
  */
 import {
-	LayoutControls,
-	withParallax,
-	ToggleGroup,
-	ControlsTab,
+	ControlsDrawerContent,
 	ControlsSection,
-	ControlsGroup
-} from '@novablocks/components';
-
-import { withSettings } from '@novablocks/utils';
+	ControlsTab,
+	LayoutControls,
+	ToggleGroup,
+	withParallax,
+	withSettings
+} from '@novablocks/block-editor';
 
 import heroAttributes from './attributes';
 

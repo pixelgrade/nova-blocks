@@ -4,8 +4,9 @@ import {
 	Card,
 	CollectionPreview,
 	CollectionHeader,
-	Post,
-} from "../index";
+} from "@novablocks/components";
+
+import { PostCard } from "@novablocks/block-editor";
 
 import { applyLayoutEngine } from "./layout-engine";
 
@@ -59,7 +60,7 @@ export const ClassicLayoutPreview = ( props ) => {
 					{
 						!! posts && posts.map( ( post, idx ) => {
 							return (
-								<Post key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+								<PostCard key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
 							);
 						} )
 					}

@@ -21,11 +21,11 @@ const Notice = ( props ) => {
 	const onClick = () => {
 		Cookies.set( id, true, { expires: 365 } );
 		setHidden( true );
-	}
+	};
 
 	if ( hidden ) {
 		return null;
-	}
+	};
 
 	return (
 		<div className={ 'novablocks-notice' }>
@@ -33,6 +33,6 @@ const Notice = ( props ) => {
 			<Button isPrimary onClick={ onClick }>{ dismissLabel }</Button>
 		</div>
 	);
-}
+};
 
 export default Notice;

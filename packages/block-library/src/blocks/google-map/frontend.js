@@ -1,12 +1,12 @@
 import pin from "./pin";
 import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
-import { parallaxInit } from "@novablocks/components";
+import Doppler from "@novablocks/doppler";
 
 (function( $, window, undefined ) {
 
 	const $blocks = $( '.novablocks-map' );
 
-	parallaxInit( $blocks );
+	Doppler.init( $blocks );
 	mapInit();
 
 	function mapInit() {

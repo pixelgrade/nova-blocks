@@ -5,7 +5,7 @@ import * as icons from '@novablocks/icons';
 import {
 	AlignmentToolbar,
 	ColorToolbar
-} from '@novablocks/components';
+} from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies

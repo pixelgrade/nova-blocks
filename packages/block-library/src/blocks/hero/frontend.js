@@ -1,4 +1,4 @@
-import { parallaxInit } from "@novablocks/components";
+import Doppler from "@novablocks/doppler";
 
 (function($, window, undefined) {
 
@@ -8,7 +8,7 @@ import { parallaxInit } from "@novablocks/components";
 
 	const $scrollButton = $( '.novablocks-hero__indicator' );
 
-	parallaxInit( $heroes );
+	Doppler.init( $heroes );
 	bulletsInit();
 	scrollButtonInit();
 	updateScroll();

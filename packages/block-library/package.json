@@ -23,7 +23,6 @@
 		"@novablocks/easings": "file:../easings",
 		"@novablocks/icons": "file:../icons",
 		"@novablocks/utils": "file:../utils",
-
 		"@wordpress/block-editor": "^3.7.1",
 		"@wordpress/components": "^9.2.1",
 		"@wordpress/compose": "^3.11.0",
@@ -32,7 +31,6 @@
 		"@wordpress/i18n": "^3.9.0",
 		"@wordpress/viewport": "^2.13.0",
 		"@wordpress/server-side-render": "^1.17.1",
-
 		"js-cookie": "^2.2.1"
 	}
 }
