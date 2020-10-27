@@ -1,0 +1,79 @@
+.novablocks-card {
+  --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier); }
+  .novablocks-card:after {
+    content: " ";
+    display: table;
+    clear: both; }
+  .novablocks-card .wp-block-buttons[class] {
+    float: none; }
+  .novablocks-card > .block-editor-block-list__layout:after {
+    content: " ";
+    display: table;
+    clear: both; }
+
+.novablocks-card__layout-content {
+  overflow: hidden; }
+  .novablocks-card__layout-content > .novablocks-grid__item-buttons {
+    --novablocks-element-spacing-multiplier: 2; }
+
+.novablocks-card__media-wrap {
+  max-width: none !important;
+  padding: calc( var(--novablocks-spacing) * var(--card-media-padding, 0) / 100);
+  -webkit-transition: var(--novablocks-transition);
+  transition: var(--novablocks-transition);
+  -webkit-transition-property: margin, padding;
+  transition-property: margin, padding; }
+
+.novablocks-card__media-image {
+  display: block;
+  width: 100%; }
+
+.novablocks-card--fixed-media-aspect-ratio .novablocks-card__media {
+  position: relative;
+  padding-top: var(--card-media-padding-top, 100%);
+  overflow: hidden; }
+
+.novablocks-card--fixed-media-aspect-ratio .novablocks-card__media-placeholder,
+.novablocks-card--fixed-media-aspect-ratio .novablocks-card__media-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.novablocks-card--fixed-media-aspect-ratio .novablocks-card__media-image {
+  -o-object-fit: var(--card-media-object-fit, cover);
+     object-fit: var(--card-media-object-fit, cover); }
+
+.novablocks-card__media-placeholder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: var(--novablocks-light-3); }
+  .novablocks-card__media-placeholder svg {
+    max-width: 50%;
+    max-height: 50%; }
+
+.novablocks-card__subtitle a {
+  text-decoration: inherit;
+  color: inherit; }
+
+.novablocks-card a:not(.novablocks-card__link) {
+  position: relative;
+  z-index: 20; }
+
+.novablocks-card a.novablocks-card__link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: block;
+  margin: 0; }

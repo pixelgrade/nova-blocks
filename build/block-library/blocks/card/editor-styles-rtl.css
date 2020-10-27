@@ -1,0 +1,43 @@
+.novablocks-card__media-edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0;
+  pointer-events: none; }
+  .novablocks-card__media-edit span {
+    display: block;
+    padding: .4em .9em;
+    color: #FFFFFF;
+    background-color: #000000;
+    border-radius: 2px; }
+
+.novablocks-card__media-edit[class],
+.novablocks-card__media-image[class],
+.novablocks-card__media-placeholder[class] {
+  -webkit-transition: opacity .1s ease;
+  transition: opacity .1s ease; }
+
+.wp-block[data-type="novablocks/card"].is-selected .novablocks-card__media:hover {
+  cursor: pointer; }
+  .wp-block[data-type="novablocks/card"].is-selected .novablocks-card__media:hover .novablocks-card__media-edit {
+    opacity: 1; }
+  .wp-block[data-type="novablocks/card"].is-selected .novablocks-card__media:hover .novablocks-card__media-image,
+  .wp-block[data-type="novablocks/card"].is-selected .novablocks-card__media:hover .novablocks-card__media-placeholder {
+    opacity: 0.7; }
+
+.novablocks-card__buttons .block-list-appender {
+  display: none; }

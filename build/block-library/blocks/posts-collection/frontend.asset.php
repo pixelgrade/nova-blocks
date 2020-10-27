@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('novablocks-grid-generator', 'novablocks-utils', 'wp-polyfill'), 'version' => '31e5e0d03292f3ec4fb8c7aa0281ef8f');
