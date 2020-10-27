@@ -6,8 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_posts_collection_attributes() {
-	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-grid-generator/attributes.json' );
-	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-latest-posts/attributes.json' );
+	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/hooks/with-grid-generator/attributes.json' );
+	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/hooks/with-latest-posts/attributes.json' );
 	$collection_attributes = novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
 	$posts_collection_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/posts-collection/attributes.json' );
 

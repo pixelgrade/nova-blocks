@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { EditableText, GridGenerator } from "../index";
+import { EditableText } from "../index";
 import InspectorControls from "./inspector-controls";
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'
@@ -9,7 +9,8 @@ const { RichText } = wp.blockEditor;
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
 
-// @todo this is bad mojo
+import GridGenerator from '@novablocks/grid-generator';
+
 const {
 	getAreaClassnameByWidthRatio,
 	getAreaClassnameByHeightRatio

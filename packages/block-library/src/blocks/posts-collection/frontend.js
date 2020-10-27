@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { getCardMediaPaddingTop, debounce, below } from "@novablocks/utils";
-import { GridGenerator } from "@novablocks/components";
+import GridGenerator from "@novablocks/grid-generator";
 
 const {
 	getAreaBaseClassname,

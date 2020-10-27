@@ -8,7 +8,10 @@ import {
 } from "@novablocks/utils";
 
 import {
-	BlockVerticalAlignmentToolbar,
+	BlockVerticalAlignmentToolbar
+} from '../../components';
+
+import {
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,

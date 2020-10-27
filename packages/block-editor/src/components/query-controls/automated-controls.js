@@ -1,14 +1,14 @@
-const apiFetch = wp.apiFetch;
-import { addQueryArgs  } from '@wordpress/url';
-import { decodeEntities  } from '@wordpress/html-entities';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import { decodeEntities } from '@wordpress/html-entities';
 
 import {
 	QueryControls,
 	ToggleControl
  } from '@wordpress/components';
 
-import { __  } from '@wordpress/i18n';
-import AutocompleteTokenField from "../autocomplete-tokenfield";
+import { __ } from '@wordpress/i18n';
+import { AutocompleteTokenField } from "../index";
 
 const fetchAuthorSuggestions = ( search ) => {
 	return apiFetch( {

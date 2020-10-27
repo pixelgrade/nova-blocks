@@ -1,9 +1,9 @@
-import AutocompleteTokenField from "../autocomplete-tokenfield";
+import { AutocompleteTokenField } from "../index";
 
-const apiFetch = wp.apiFetch;
-import { addQueryArgs  } from '@wordpress/url';
-import { decodeEntities  } from '@wordpress/html-entities';
-import { __  } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import { decodeEntities } from '@wordpress/html-entities';
+import { __ } from '@wordpress/i18n';
 
 const fetchPostSuggestions = ( search ) => {
 	return apiFetch( {
@@ -14,13 +14,12 @@ const fetchPostSuggestions = ( search ) => {
 			type: 'post',
 		} ),
 	} ).then( function( posts ) {
-		const result = posts.map( post => ( {
+		return posts.map( post => ( {
 			value: post.id,
 			label: decodeEntities( post.title ) || __( '(no title)' ),
 		} ) );
-		return result;
 	} );
-}
+};
 
 const fetchSavedPosts = ( postIDs ) => {
 	return apiFetch( {

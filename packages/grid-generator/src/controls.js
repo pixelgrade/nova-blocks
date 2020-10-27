@@ -15,7 +15,7 @@ import {
 } from "@novablocks/utils";
 
 import { getOptimalHeaderPosition, getPostsCount } from "./utils";
-import { applyLayoutEngine } from "./layoutEngine";
+import { applyLayoutEngine } from "./layout-engine";
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';

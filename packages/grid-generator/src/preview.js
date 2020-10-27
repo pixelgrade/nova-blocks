@@ -1,4 +1,4 @@
-import AreaDebug from "./areaDebug";
+import AreaDebug from "./area-debug";
 
 import {
 	Card,
@@ -7,7 +7,7 @@ import {
 	Post,
 } from "../index";
 
-import { applyLayoutEngine } from "./layoutEngine";
+import { applyLayoutEngine } from "./layout-engine";
 
 import {
 	getParametricLayoutAreaClassName,

@@ -2,11 +2,13 @@
  * Internal dependencies
  */
 import * as icons from '@novablocks/icons';
-
+import { select, dispatch } from '@wordpress/data';
 export { default as alignmentAttributes } from './attributes';
 
-import BlockHorizontalAlignmentToolbar from '../block-horizontal-alignment-toolbar';
-import BlockVerticalAlignmentToolbar from '../block-vertical-alignment-toolbar';
+import {
+	BlockHorizontalAlignmentToolbar,
+	BlockVerticalAlignmentToolbar
+} from '../index';
 
 /**
  * WordPress dependencies
@@ -59,8 +61,8 @@ const AlignmentControls = function( props ) {
 				<BlockHorizontalAlignmentToolbar
 					value={ horizontalAlignment }
 					onChange={ ( nextHorizontalAlignment ) => {
-						wp.data.select( 'core/block-editor' ).getSelectedBlock().innerBlocks.map( ( block ) => {
-							wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { align: nextHorizontalAlignment } );
+						select( 'core/block-editor' ).getSelectedBlock().innerBlocks.map( ( block ) => {
+							dispatch( 'core/block-editor' ).updateBlockAttributes( block.clientId, { align: nextHorizontalAlignment } );
 							return true;
 						} );
 						setAttributes( { horizontalAlignment: nextHorizontalAlignment } );

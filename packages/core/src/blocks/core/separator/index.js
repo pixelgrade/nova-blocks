@@ -32,8 +32,8 @@ export const addSeparatorFilters = ( settings ) => {
 		}
 
 		return null;
-	}
+	};
 
 	wp.hooks.addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );
 	wp.hooks.addFilter( 'blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave );
-}
+};

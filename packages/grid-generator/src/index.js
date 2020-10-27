@@ -4,7 +4,7 @@ import {
 } from './preview'
 
 import * as utils from './utils';
-import { applyLayoutEngine } from './layoutEngine';
+import { applyLayoutEngine } from './layout-engine';
 import Controls from './controls';
 
 const GridGenerator = {
