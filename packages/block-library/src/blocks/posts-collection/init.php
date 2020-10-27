@@ -169,10 +169,10 @@ function novablocks_get_meta( $post, $meta ) {
 	}
 
 	if ( $meta == 'reading-time' ) {
-	    $minutes = novablocks_get_the_reading_time_in_minutes($post);
+		$minutes = novablocks_get_the_reading_time_in_minutes( $post );
 
-		return $minutes . ' min read';
-    }
+		return sprintf( __( '%s min read', '__plugin_txtd' ), $minutes );
+	}
 
 	return '';
 }

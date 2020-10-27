@@ -1,3 +1,5 @@
+import { __, sprintf } from '@wordpress/i18n';
+
 const ReadingTime = ( props ) => {
 
 	let   wordsPerMinute = 265,
@@ -16,7 +18,7 @@ const ReadingTime = ( props ) => {
 		minutes += 1;
 	}
 
-	return `${minutes} min read`;
+	return sprintf(__('%s min read', '__plugin_txtd'), minutes);
 
 };
 
