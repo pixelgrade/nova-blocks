@@ -1,15 +1,13 @@
 import classnames from 'classnames';
-import { EditableText } from "../index";
-import InspectorControls from "./inspector-controls";
+
+import { RichText } from '@wordpress/block-editor';
+import { Fragment } from '@wordpress/element';
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'
+import { EditableText } from "@novablocks/block-editor";
 
-const { RichText } = wp.blockEditor;
-
-const { __ } = wp.i18n;
-const { Fragment } = wp.element;
-
-import GridGenerator from '@novablocks/grid-generator';
+import InspectorControls from "./collection-controls";
+import GridGenerator from './grid-generator';
 
 const {
 	getAreaClassnameByWidthRatio,
@@ -158,7 +156,5 @@ export const CollectionHeader = ( props ) => {
 		</Fragment>
 	)
 };
-
-export { default as collectionAttributes } from './attributes';
 
 export default Collection;

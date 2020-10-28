@@ -193,7 +193,7 @@ function novablocks_get_header_attributes() {
 }
 
 function novablocks_get_collection_attributes() {
-	return novablocks_get_attributes_from_json( 'packages/block-editor/src/components/collection/attributes.json' );
+	return novablocks_get_attributes_from_json( 'packages/collection/src/collection-attributes.json' );
 }
 
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {

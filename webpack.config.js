@@ -35,7 +35,7 @@ let entryPoints = gutenbergPackages.filter( packageName => packageName !== 'bloc
 	const sources = glob.sync( `./packages/${ packageName }/build/@(frontend|index).js` );
 
 	sources.forEach( source => {
-		let key = `./build/${ packageName }/index`;
+		let key = packageName;
 
 		if ( source.indexOf( 'frontend' ) > -1 ) {
 			key = `./build/${ packageName }/frontend`;
@@ -147,6 +147,15 @@ const PackagesConfig = {
 	entry: entryPoints,
 	output: {
 		devtoolNamespace: 'novablocks',
+		filename: ( pathData ) => {
+			let filename = `./build/${ pathData.chunk.name }/index.js`;
+
+			if ( pathData.chunk.name.search( './build' ) !== -1 ) {
+				filename = `${ pathData.chunk.name }.js`;
+			}
+
+			return filename;
+		},
 		path: __dirname,
 		library: [ 'novablocks', '[name]' ],
 		libraryTarget: 'this',
@@ -183,8 +192,8 @@ const PackagesConfig = {
 				return path;
 			},
 		} ),
-//		CopyPackageCSSPlugin,
-//		CopyBlocksCSSPlugin,
+		CopyPackageCSSPlugin,
+		CopyBlocksCSSPlugin,
 		CopyBlocksPhpPlugin,
 		CopyBlocksJsonPlugin,
 		new DependencyExtractionWebpackPlugin( {

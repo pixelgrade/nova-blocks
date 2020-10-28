@@ -18,7 +18,7 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
-		"@novablocks/grid-generator": "file:../grid-generator",
+		"@novablocks/collection": "file:../collection",
 		"@novablocks/components": "file:../components",
 		"@novablocks/easings": "file:../easings",
 		"@novablocks/icons": "file:../icons",

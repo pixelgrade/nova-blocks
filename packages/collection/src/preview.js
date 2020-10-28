@@ -1,14 +1,16 @@
-import AreaDebug from "./area-debug";
+import classnames from "classnames";
 
-import {
-	Card,
-	CollectionPreview,
-	CollectionHeader,
-} from "@novablocks/components";
-
+import { getCardMediaPaddingTop } from "@novablocks/utils";
+import { Card } from "@novablocks/components";
 import { PostCard } from "@novablocks/block-editor";
 
+import AreaDebug from "./area-debug";
 import { applyLayoutEngine } from "./layout-engine";
+
+import {
+	CollectionPreview,
+	CollectionHeader,
+} from './collection'
 
 import {
 	getParametricLayoutAreaClassName,
@@ -16,9 +18,6 @@ import {
 	redistributeCardsInAreas,
 	isLandscape,
 } from "./utils";
-
-import { getCardMediaPaddingTop } from "@novablocks/utils";
-import classnames from "classnames";
 
 export const ClassicLayoutPreview = ( props ) => {
 

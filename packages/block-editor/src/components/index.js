@@ -27,13 +27,6 @@ export {
 } from './alignment-controls';
 
 export {
-	collectionAttributes,
-	default as Collection,
-	CollectionPreview,
-	CollectionHeader,
-} from './collection';
-
-export {
 	colorAttributes,
 	ColorControls,
 	ColorPanel,

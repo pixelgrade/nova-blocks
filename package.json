@@ -20,7 +20,7 @@
 		"@novablocks/core": "file:packages/core",
 		"@novablocks/doppler": "file:packages/doppler",
 		"@novablocks/easings": "file:packages/easings",
-		"@novablocks/grid-generator": "file:packages/grid-generator",
+		"@novablocks/collection": "file:packages/collection",
 		"@novablocks/icons": "file:packages/icons",
 		"@novablocks/utils": "file:packages/utils",
 		"@wordpress/blocks": "^6.22.0",
