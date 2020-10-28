@@ -1,7 +1,7 @@
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { withSelect } from '@wordpress/data';
 
-import { STORE_NAME } from '../../store';
+import { STORE_NAME } from '@novablocks/core';
 
 export default createHigherOrderComponent( ( Component ) => {
 	return withSelect( ( select, ownProps ) => {

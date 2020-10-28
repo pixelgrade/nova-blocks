@@ -1,9 +1,9 @@
-import { ControlsSections } from "@novablocks/components";
-
 import { InspectorControls } from '@wordpress/block-editor';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
+
+import { ControlsSections } from "../../components";
 
 const withControlsSections = createHigherOrderComponent(OriginalComponent => {
 

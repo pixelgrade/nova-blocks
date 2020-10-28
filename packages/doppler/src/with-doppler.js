@@ -3,10 +3,7 @@ import { createContext } from '@wordpress/element';
 import { findParents } from '@novablocks/utils';
 import { easeInOutCubic, easeOutQuart } from '@novablocks/easings';
 import { ScrollingEffectControls } from './controls';
-
-import Doppler from '@novablocks/doppler';
-
-const { getStyles, getState } = Doppler.utils;
+import { getStyles, getState } from './utils';
 
 /**
  * WordPress dependencies

@@ -5,11 +5,11 @@ import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
-import { withDoppler } from "@novablocks/components";
+import { withDoppler } from "@novablocks/doppler";
 import {
 	normalizeImages,
 	withSettings
-} from "@novablocks/utils";
+} from "@novablocks/block-editor";
 
 /**
  * WordPress dependencies

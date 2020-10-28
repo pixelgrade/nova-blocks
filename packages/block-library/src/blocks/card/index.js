@@ -5,8 +5,12 @@ import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { getPlaceholderImages, getRandomArrayFromArray } from "@novablocks/utils";
-import { generateDefaults } from "@novablocks/utils";
+import { getRandomArrayFromArray } from "@novablocks/utils";
+import {
+	generateDefaults,
+	getPlaceholderImages,
+} from "@novablocks/block-editor";
+
 import attributes from "./attributes";
 
 /**

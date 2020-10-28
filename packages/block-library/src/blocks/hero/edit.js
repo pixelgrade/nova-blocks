@@ -7,9 +7,13 @@ import {
 	ControlsTab,
 	LayoutControls,
 	ToggleGroup,
-	withDoppler,
 	withSettings
 } from '@novablocks/block-editor';
+
+import {
+	withDoppler,
+} from '@novablocks/doppler';
+
 
 import heroAttributes from './attributes';
 

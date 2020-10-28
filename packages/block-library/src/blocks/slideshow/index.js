@@ -5,23 +5,26 @@ import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
+import select from '@wordpress/data';
 
 import {
-	getPlaceholderImages,
 	getRandomArrayFromArray,
 	getRandomBetween
 } from "@novablocks/utils";
-
-import { generateDefaults } from "@novablocks/utils";
-
-import blockAttributes from "./attributes";
 
 import {
 	alignmentAttributes,
 	colorAttributes,
 	layoutAttributes,
+	getPlaceholderImages,
+	generateDefaults
+} from "@novablocks/block-editor";
+
+import {
 	scrollingAttributes,
-} from "@novablocks/components";
+} from '@novablocks/doppler';
+
+import blockAttributes from "./attributes";
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
@@ -61,7 +64,7 @@ registerBlockType( 'novablocks/slideshow', {
 	save,
 	deprecated,
 	getEditWrapperProps() {
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
+		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
 } );

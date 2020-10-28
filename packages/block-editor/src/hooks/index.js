@@ -9,4 +9,6 @@ import "./with-latest-posts";
 import "./with-overlay-color-attributes";
 import "./with-space-and-sizing-controls";
 
-export { default as withSettings } from './with-settings';
+import withSettings from './with-settings';
+
+export { withSettings };

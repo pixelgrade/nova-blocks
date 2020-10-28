@@ -4,7 +4,6 @@ import {
 	getControlsClasses,
 	getRandomBetween,
 	getRandomArrayFromArray,
-	withSettings,
 } from "@novablocks/utils";
 
 import {
@@ -114,7 +113,6 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 });
 
 const componentWithSettings = compose( [
-	withSettings,
 	withSpaceAndSizingControlsAdvanced
 ] );
 

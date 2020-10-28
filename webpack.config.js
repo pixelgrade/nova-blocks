@@ -90,8 +90,8 @@ const CopyPackageCSSPlugin =
 	new CopyWebpackPlugin(
 		gutenbergPackages.map( ( packageName ) => (
 			{
-				from: `./packages/${packageName}/build-style/*.css`,
-				to: `./build/${packageName}/`,
+				from: `./packages/${ packageName }/build-style/*.css`,
+				to: `./build/${ packageName }/`,
 				flatten: true,
 				transform: cssTransform,
 			}

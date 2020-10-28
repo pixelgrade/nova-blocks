@@ -17,7 +17,7 @@ import {
 	withSettings
 } from "@novablocks/block-editor"
 
-import GridGenerator from '@novablocks/collection';
+import GridGenerator from './grid-generator';
 
 const {
 	applyLayoutEngine,
