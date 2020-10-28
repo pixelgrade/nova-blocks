@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { AlignmentToolbar } from '@novablocks/components';
+import { AlignmentToolbar } from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies

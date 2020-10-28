@@ -1,4 +1,4 @@
-import AdvancedGallery from './index';
+import attributes from '../../attributes';
 
 import { addFilter } from '@wordpress/hooks';
 
@@ -14,7 +14,7 @@ function addAdvancedGalleryAttributes( block ) {
 	}
 
 	if ( typeof block.attributes !== 'undefined' ) {
-		Object.assign( block.attributes, AdvancedGallery.attributes );
+		Object.assign( block.attributes, attributes );
 	}
 
 	return block;

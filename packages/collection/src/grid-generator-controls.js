@@ -17,13 +17,11 @@ import {
 	withSettings
 } from "@novablocks/block-editor"
 
-import GridGenerator from './grid-generator';
-
-const {
-	applyLayoutEngine,
+import { applyLayoutEngine } from './layout-engine'
+import {
 	getOptimalHeaderPosition,
 	getPostsCount
-} = GridGenerator.utils;
+} from './utils';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';

@@ -3,7 +3,7 @@ import {
 	ControlsTab,
 	ControlsSection,
 	EmphasisBlockAreaControls,
-} from "@novablocks/components";
+} from "@novablocks/block-editor";
 
 import { getControlsClasses } from "@novablocks/utils";
 

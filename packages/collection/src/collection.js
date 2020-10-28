@@ -7,12 +7,11 @@ import { getCardMediaPaddingTop } from '@novablocks/utils'
 import { EditableText } from "@novablocks/block-editor";
 
 import InspectorControls from "./collection-controls";
-import GridGenerator from './grid-generator';
 
-const {
+import {
 	getAreaClassnameByWidthRatio,
 	getAreaClassnameByHeightRatio
-} = GridGenerator.utils;
+} from './utils';
 
 export const CollectionTitle = ( props ) => {
 

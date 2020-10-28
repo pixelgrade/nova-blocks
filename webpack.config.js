@@ -28,20 +28,21 @@ const {
 const NOVABLOCKS_NAMESPACE = '@novablocks/';
 
 const gutenbergPackages = Object.keys( dependencies )
-                                .filter( ( packageName ) => packageName.startsWith( NOVABLOCKS_NAMESPACE ) )
-                                .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
+                                .filter( packageName => packageName !== 'block-library' )
+                                .map( packageName => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
 
-let entryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
-	const sources = glob.sync( `./packages/${ packageName }/build/@(frontend|index).js` );
+let editorEntryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
+	const name = camelCaseDash( packageName );
+	memo[ name ] = `./packages/${ packageName }`;
+	return memo;
+}, {} );
+
+let frontendEntryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
+	const sources = glob.sync( `./packages/${ packageName }/build/frontend.js` );
 
 	sources.forEach( source => {
-		let key = packageName;
-
-		if ( source.indexOf( 'frontend' ) > -1 ) {
-			key = `./build/${ packageName }/frontend`;
-		}
-
-		memo[ key ] = source;
+		let name = `./build/${ packageName }/frontend`;
+		memo[ name ] = source;
 	} );
 
 	return memo;
@@ -60,8 +61,6 @@ let blocksEntryPoints = glob.sync( './packages/block-library/build/blocks/*/@(fr
 	                    [ key ]: path
                   	}
                   }, {} );
-
-entryPoints = Object.assign( {}, entryPoints, blocksEntryPoints );
 
 const cssTransform = ( content ) => {
 	if ( mode === 'production' ) {
@@ -142,24 +141,8 @@ const CopyBlocksJsonPlugin =
 		} )
 	);
 
-const PackagesConfig = {
+const DefaultConfig = {
 	mode,
-	entry: entryPoints,
-	output: {
-		devtoolNamespace: 'novablocks',
-		filename: ( pathData ) => {
-			let filename = `./build/${ pathData.chunk.name }/index.js`;
-
-			if ( pathData.chunk.name.search( './build' ) !== -1 ) {
-				filename = `${ pathData.chunk.name }.js`;
-			}
-
-			return filename;
-		},
-		path: __dirname,
-		library: [ 'novablocks', '[name]' ],
-		libraryTarget: 'this',
-	},
 	module: {
 		rules: compact( [
 			mode !== 'production' && {
@@ -204,6 +187,33 @@ const PackagesConfig = {
 	],
 	devtool,
 };
+
+const PackagesConfig = Object.assign( {}, DefaultConfig, {
+	entry: editorEntryPoints,
+	output: {
+		devtoolNamespace: 'novablocks',
+		filename: './build/[basename]/index.js',
+		path: __dirname,
+		library: [ 'novablocks', '[name]' ],
+		libraryTarget: 'this',
+	},
+} );
+
+const FrontendConfig = Object.assign( {}, DefaultConfig, {
+	entry: frontendEntryPoints,
+	output: {
+		devtoolNamespace: 'novablocks',
+		path: __dirname,
+	},
+} );
+
+const BlocksConfig = Object.assign( {}, DefaultConfig, {
+	entry: blocksEntryPoints,
+	output: {
+		devtoolNamespace: 'novablocks',
+		path: __dirname,
+	},
+} );
 
 function requestToExternal( request ) {
 	if ( request.startsWith( NOVABLOCKS_NAMESPACE ) ) {
@@ -267,5 +277,7 @@ const VendorConfig = {
 
 module.exports = [
 	PackagesConfig,
+	FrontendConfig,
+	BlocksConfig,
 	VendorConfig,
 ];

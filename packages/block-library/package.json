@@ -29,8 +29,8 @@
 		"@wordpress/data": "^4.14.0",
 		"@wordpress/element": "^2.11.0",
 		"@wordpress/i18n": "^3.9.0",
-		"@wordpress/viewport": "^2.13.0",
 		"@wordpress/server-side-render": "^1.17.1",
+		"@wordpress/viewport": "^2.13.0",
 		"js-cookie": "^2.2.1"
 	}
 }

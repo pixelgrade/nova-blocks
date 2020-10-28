@@ -1,4 +1,4 @@
-import { EmphasisLevelControls } from "@novablocks/components";
+import { EmphasisLevelControls } from "../../index";
 
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
