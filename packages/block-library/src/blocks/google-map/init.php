@@ -20,7 +20,7 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(
-			array( 'novablocks-map' ),
+			array( 'novablocks-map', 'novablocks-doppler' ),
 			novablocks_get_block_extra_classes( $attributes )
 		);
 

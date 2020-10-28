@@ -29,7 +29,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$novablocks_settings = novablocks_get_block_editor_settings();
 
 		$classes = array_merge(
-			array( 'novablocks-hero', 'alignfull' ),
+			array( 'novablocks-hero', 'novablocks-doppler', 'alignfull' ),
 			novablocks_get_block_extra_classes( $attributes )
 		);
 

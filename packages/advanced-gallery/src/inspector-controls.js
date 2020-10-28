@@ -2,14 +2,11 @@ import {
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
+	Notice,
 	PresetControl,
-} from '@novablocks/grid-generator';
+} from '@novablocks/block-editor';
 
-import {
-	Notice
-} from '../index';
-
-import { getRandomAttributes } from "./util";
+import { getRandomAttributes } from "./utils";
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';

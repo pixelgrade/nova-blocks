@@ -1,4 +1,4 @@
-import { withSettings } from '@novablocks/utils';
+import { withSettings } from '../../hooks';
 
 import {
 	ControlsGroup,

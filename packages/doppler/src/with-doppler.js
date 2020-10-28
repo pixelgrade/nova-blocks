@@ -2,7 +2,7 @@ import { createContext } from '@wordpress/element';
 
 import { findParents } from '@novablocks/utils';
 import { easeInOutCubic, easeOutQuart } from '@novablocks/easings';
-import { ScrollingEffectControls } from '@novablocks/block-editor';
+import { ScrollingEffectControls } from './controls';
 
 import Doppler from '@novablocks/doppler';
 
@@ -22,11 +22,11 @@ import {
 
 import {
 	compose
- } from '@wordpress/compose';
+} from '@wordpress/compose';
 
 const ParallaxContext = createContext();
 
-const withParallaxProvider = function( WrappedComponent ) {
+const withDopplerProvider = function( WrappedComponent ) {
 
 	return class extends Component {
 
@@ -159,7 +159,7 @@ const withParallaxProvider = function( WrappedComponent ) {
 	};
 };
 
-const withParallaxControls = function( WrappedComponent ) {
+const withDopplerControls = function( WrappedComponent ) {
 
 	return class extends Component {
 
@@ -271,7 +271,7 @@ const withParallaxControls = function( WrappedComponent ) {
 	}
 };
 
-const withParallaxContext = function( WrappedComponent ) {
+const withDopplerContext = function( WrappedComponent ) {
 
 	return class extends Component {
 
@@ -285,16 +285,16 @@ const withParallaxContext = function( WrappedComponent ) {
 	}
 };
 
-const withParallax = compose([
-	withParallaxProvider,
-	withParallaxContext,
-	withParallaxControls,
+const withDoppler = compose([
+	withDopplerProvider,
+	withDopplerContext,
+	withDopplerControls,
 ]);
 
 export {
-	withParallaxProvider,
-	withParallaxContext,
-	withParallaxControls,
+	withDopplerProvider,
+	withDopplerContext,
+	withDopplerControls,
 };
 
-export default withParallax;
+export default withDoppler;

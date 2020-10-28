@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { hasTouchScreen } from "@novablocks/utils";
 import { getProps, getState, getStylesFromProps } from "./utils";
 
@@ -6,12 +7,12 @@ const getScrollContainerHeight = () => {
 	return useOrientation && window.screen && window.screen.availHeight || window.innerHeight
 };
 
-const init = function( $blocks ) {
+$( function() {
 
 	let frameRendered = false;
 	let scrollContainerHeight = getScrollContainerHeight();
 
-	$blocks.each( function( i, container ) {
+	$( '.novablocks-doppler' ).each( function( i, container ) {
 		var $container = $( container );
 		var followThroughStart = !! $container.data( 'smooth-start' );
 		var followThroughEnd = !! $container.data( 'smooth-end' );
@@ -92,6 +93,5 @@ const init = function( $blocks ) {
 	}
 
 	requestAnimationFrame( parallaxUpdateLoop );
-};
 
-export default init;
+} );

@@ -35,7 +35,7 @@ export const ScrollingEffectControls = function( props ) {
 			</ScrollingEffectPanel>
 		</Fragment>
 	);
-}
+};
 
 const ScrollingEffectPanel = ( props ) => {
 

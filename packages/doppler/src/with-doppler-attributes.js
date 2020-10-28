@@ -1,4 +1,4 @@
-import scrollingAttributes from '@novablocks/components';
+import { scrollingAttributes } from '@novablocks/block-editor';
 
 import { addFilter } from '@wordpress/hooks';
 
@@ -21,4 +21,4 @@ function addDopplerAttributes( block ) {
 	return block;
 }
 
-addFilter( 'blocks.registerBlockType', 'novablocks/add-advanced-gallery-attributes', addDopplerAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/add-doppler-attributes', addDopplerAttributes );

@@ -2,13 +2,11 @@ import Doppler from "@novablocks/doppler";
 
 (function($, window, undefined) {
 
-	let $heroes = $( '.novablocks-hero' );
 	let windowScrollY;
 	let scrollButtonHidden = false;
 
 	const $scrollButton = $( '.novablocks-hero__indicator' );
 
-	Doppler.init( $heroes );
 	bulletsInit();
 	scrollButtonInit();
 	updateScroll();

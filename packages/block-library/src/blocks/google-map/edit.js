@@ -3,7 +3,7 @@ import Map from './map';
 import InspectorControls from './inspector-controls';
 
 import { withSettings } from '@novablocks/block-editor';
-import { withParallax } from '@novablocks/components';
+import { withDoppler } from '@novablocks/components';
 
 import { __ } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
@@ -204,5 +204,5 @@ class Edit extends Component {
 
 export default createHigherOrderComponent(compose([
 	withSettings,
-	withParallax,
+	withDoppler,
 ]))( Edit );

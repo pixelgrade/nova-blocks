@@ -2,7 +2,7 @@ import {
 	HeadingToolbar,
 	ControlsSection,
 	ControlsTab
-} from "@novablocks/block-editor";
+} from "../index";
 
 import { __ } from '@wordpress/i18n';
 

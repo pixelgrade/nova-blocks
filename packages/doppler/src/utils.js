@@ -1,6 +1,3 @@
-import $ from 'jquery';
-import { hasTouchScreen } from '@novablocks/utils';
-
 function userPrefersReducedMotion() {
 	const mediaQuery = window.matchMedia( '(prefers-reduced-motion: reduce)' );
 	return !! mediaQuery.matches;

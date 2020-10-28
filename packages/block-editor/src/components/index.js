@@ -4,9 +4,9 @@ export { default as ControlsGroup } from './controls-group';
 export { default as BlockHorizontalAlignmentToolbar } from "./block-horizontal-alignment-toolbar";
 export { default as BlockVerticalAlignmentToolbar } from "./block-vertical-alignment-toolbar";
 export { default as EditableText } from './editable-text';
-export { default as GridGeneratorControls } from './grid-generator-controls';
 export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
+export { default as Notice } from "./notice";
 export { default as PostCard } from './post-card';
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
@@ -72,15 +72,3 @@ export {
 	layoutAttributes,
 	LayoutControls
 } from './layout-controls';
-
-export {
-	scrollingAttributes,
-	ScrollingEffectControls
-} from './scrolling-effect-controls';
-
-export {
-	default as withParallax,
-	withParallaxProvider,
-	withParallaxContext,
-	withParallaxControls,
-} from './with-parallax';

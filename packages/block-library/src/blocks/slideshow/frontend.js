@@ -45,8 +45,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 		$block.addClass( 'is-ready' );
 	});
 
-	Doppler.init( $blocks );
-
 	if ( useOrientation ) {
 		$window.on( 'orientationchange', function() {
 			$window.one( 'resize', onResize );

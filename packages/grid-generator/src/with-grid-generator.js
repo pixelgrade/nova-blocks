@@ -1,5 +1,5 @@
 import attributes from "./attributes";
-import { GridGeneratorControls } from "../../components/index";
+import GridGeneratorControls from "./controls";
 
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';

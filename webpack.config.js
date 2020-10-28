@@ -32,11 +32,22 @@ const gutenbergPackages = Object.keys( dependencies )
                                 .map( ( packageName ) => packageName.replace( NOVABLOCKS_NAMESPACE, '' ) );
 
 let entryPoints = gutenbergPackages.filter( packageName => packageName !== 'block-library' ).reduce( ( memo, packageName ) => {
-	memo[ packageName ] = `./packages/${ packageName }`;
+	const sources = glob.sync( `./packages/${ packageName }/build/@(frontend|index).js` );
+
+	sources.forEach( source => {
+		let key = `./build/${ packageName }/index`;
+
+		if ( source.indexOf( 'frontend' ) > -1 ) {
+			key = `./build/${ packageName }/frontend`;
+		}
+
+		memo[ key ] = source;
+	} );
+
 	return memo;
 }, {} );
 
-let blocksEntryPoints = glob.sync( './packages/block-library/build/blocks/*/@(editor|frontend|index).js' )
+let blocksEntryPoints = glob.sync( './packages/block-library/build/blocks/*/@(frontend|index).js' )
                   .reduce( ( acc, path ) => {
                   	let key = path;
 
@@ -136,13 +147,6 @@ const PackagesConfig = {
 	entry: entryPoints,
 	output: {
 		devtoolNamespace: 'novablocks',
-		filename: ( pathData ) => {
-			let filename = `./build/${ pathData.chunk.name }/index.js`;
-			if ( pathData.chunk.name.search( 'block-library' ) !== -1 ) {
-				filename = `${ pathData.chunk.name }.js`;
-			}
-			return filename;
-		},
 		path: __dirname,
 		library: [ 'novablocks', '[name]' ],
 		libraryTarget: 'this',
@@ -179,8 +183,8 @@ const PackagesConfig = {
 				return path;
 			},
 		} ),
-		CopyPackageCSSPlugin,
-		CopyBlocksCSSPlugin,
+//		CopyPackageCSSPlugin,
+//		CopyBlocksCSSPlugin,
 		CopyBlocksPhpPlugin,
 		CopyBlocksJsonPlugin,
 		new DependencyExtractionWebpackPlugin( {

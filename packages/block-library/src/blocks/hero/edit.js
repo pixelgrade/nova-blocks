@@ -7,7 +7,7 @@ import {
 	ControlsTab,
 	LayoutControls,
 	ToggleGroup,
-	withParallax,
+	withDoppler,
 	withSettings
 } from '@novablocks/block-editor';
 
@@ -169,5 +169,5 @@ class HeroEdit extends Component {
 
 export default createHigherOrderComponent(compose([
 	withSettings,
-	withParallax,
+	withDoppler,
 ]))( HeroEdit );

@@ -1,12 +1,8 @@
 import pin from "./pin";
 import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
-import Doppler from "@novablocks/doppler";
 
 (function( $, window, undefined ) {
 
-	const $blocks = $( '.novablocks-map' );
-
-	Doppler.init( $blocks );
 	mapInit();
 
 	function mapInit() {

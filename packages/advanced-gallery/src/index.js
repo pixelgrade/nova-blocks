@@ -1,16 +1,24 @@
+import { Fragment } from '@wordpress/element';
+
+import {
+	normalizeImages,
+	withSettings
+} from "@novablocks/block-editor";
+
 import AdvancedGalleryPreview from './preview';
 import AdvancedGalleryPlaceholder from './placeholder';
 import AdvancedGalleryInspectorControls from './inspector-controls';
 import AdvancedGalleryBlockControls from './block-controls';
 
 import attributes from './attributes';
-import * as utils from './util';
-import { GridItem, GridItemCollection } from './grid-item';
+import * as utils from './utils';
 
-import { normalizeImages } from "@novablocks/utils";
-import { withSettings } from "@novablocks/block-editor";
+import './hooks/with-advanced-gallery-attribtues';
 
-import { Fragment } from '@wordpress/element';
+import {
+	GridItem,
+	GridItemCollection
+} from './grid-item';
 
 const AdvancedGallery = ( props ) => {
 

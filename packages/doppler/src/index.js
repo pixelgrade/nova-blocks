@@ -1,7 +1,6 @@
 import * as utils from './utils';
-import init from './init';
+import './with-doppler-attributes';
 
 export default {
-	init,
 	utils,
 };

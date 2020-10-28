@@ -2,7 +2,10 @@ import * as icons from '@novablocks/icons';
 
 import {
 	generateDefaults,
-	getPlaceholderImages,
+	getPlaceholderImages
+} from "@novablocks/block-editor";
+
+import {
 	getRandomArrayFromArray,
 	getRandomBetween,
 } from "@novablocks/utils";
@@ -12,7 +15,7 @@ import deprecated from './deprecated';
 import transforms from './transforms';
 
 import blockAttributes from './attributes';
-import { AdvancedGallery } from '@novablocks/components';
+import AdvancedGallery from '@novablocks/advanced-gallery';
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 

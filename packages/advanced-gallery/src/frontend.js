@@ -1,9 +1,9 @@
-import { AdvancedGallery } from "@novablocks/components";
+import $ from 'jquery';
 
-const { GridItemCollection } = AdvancedGallery;
-const { getGalleryStyle, getGridStyle, safariHeightFix } = AdvancedGallery.utils;
+import { GridItemCollection } from './grid-item';
+import { getGalleryStyle, getGridStyle, safariHeightFix } from './utils';
 
-(function($, window, undefined) {
+$( function() {
 
 	$( '.novablocks-advanced-gallery' ).each( ( i, gallery ) => {
 
@@ -62,4 +62,4 @@ const { getGalleryStyle, getGridStyle, safariHeightFix } = AdvancedGallery.utils
 		safariHeightFix( obj );
 	} );
 
-})(jQuery, window);
+} );

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { EditableText } from "@novablocks/block-editor";
+import { EditableText } from "../index";
 import InspectorControls from "./inspector-controls";
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'

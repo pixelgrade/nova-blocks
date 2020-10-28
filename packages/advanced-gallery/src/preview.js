@@ -1,9 +1,9 @@
 import { isSafari } from "@novablocks/utils";
 
-import { GridItemCollection } from "./grid-item";
-import { getGalleryStyle, getGridStyle } from "./util";
-
 import { useState, useEffect, useRef } from '@wordpress/element';
+
+import { GridItemCollection } from "./grid-item";
+import { getGalleryStyle, getGridStyle } from "./utils";
 
 const AdvancedGalleryPreview = ( props ) => {
 

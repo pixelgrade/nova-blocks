@@ -13,6 +13,7 @@
 		"postinstall": "node ./bin/packages/install.js"
 	},
 	"dependencies": {
+		"@novablocks/advanced-gallery": "file:packages/advanced-gallery",
 		"@novablocks/block-editor": "file:packages/block-editor",
 		"@novablocks/block-library": "file:packages/block-library",
 		"@novablocks/components": "file:packages/components",
@@ -22,7 +23,6 @@
 		"@novablocks/grid-generator": "file:packages/grid-generator",
 		"@novablocks/icons": "file:packages/icons",
 		"@novablocks/utils": "file:packages/utils",
-
 		"@wordpress/blocks": "^6.22.0",
 		"@wordpress/date": "^3.11.1",
 		"@wordpress/element": "^2.17.1",

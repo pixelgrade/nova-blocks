@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { withSettings } from '@novablocks/block-editor';
+import { withSettings } from '../../hooks';
 
 /**
  * WordPress dependencies

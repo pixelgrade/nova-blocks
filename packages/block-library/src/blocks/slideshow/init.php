@@ -31,7 +31,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		}
 
 		$classes = array_merge(
-			array( 'novablocks-slideshow', 'alignfull' ),
+			array( 'novablocks-slideshow', 'novablocks-doppler', 'alignfull' ),
 			novablocks_get_block_extra_classes( $attributes )
 		);
 

@@ -1,6 +1,6 @@
 import postsQueryAttributes from './attributes';
 
-import { QueryControls } from '@novablocks/block-editor';
+import { QueryControls } from '../../components';
 
 import {
 	isSpecificPostModeActive,

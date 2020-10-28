@@ -5,6 +5,7 @@ import {
 
 import * as utils from './utils';
 import { applyLayoutEngine } from './layout-engine';
+import './with-grid-generator';
 
 const GridGenerator = {
 	ClassicLayoutPreview,
