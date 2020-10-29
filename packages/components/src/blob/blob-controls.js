@@ -20,7 +20,7 @@ const BlobControls = ( props ) => {
 					newAttributes[`${ prefix }Preset`] = preset;
 					setAttributes( newAttributes );
 				} }
-				label={ __( 'Preset' ) }
+				label={ __( 'Outline' ) }
 				min={ 1 }
 				max={ 100 }
 				step={ 1 }
@@ -32,7 +32,7 @@ const BlobControls = ( props ) => {
 					newAttributes[`${ prefix }Complexity`] = complexity;
 					setAttributes( newAttributes );
 				} }
-				label={ __( 'Complexity' ) }
+				label={ __( 'Variation' ) }
 				min={ 0 }
 				max={ 100 }
 				step={ 1 }

@@ -645,8 +645,8 @@ function novablocks_get_block_editor_settings() {
 function novablocks_get_blob_presets() {
 	return array(
 		array(
-			'label'  => 'None',
-			'value'  => 'none',
+			'label'  => 'Rectangle',
+			'value'  => 'rectangle',
 			'preset' => array(
 				'blobMixingStyle'    => 'none',
 				'blobPreset'         => 16,

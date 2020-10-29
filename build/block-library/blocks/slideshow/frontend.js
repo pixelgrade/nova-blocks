@@ -1,1 +1,290 @@
-this.novablocks=this.novablocks||{},this.novablocks["./build/block-library/blocks/slideshow/frontend"]=function(e){var n={};function o(t){if(n[t])return n[t].exports;var i=n[t]={i:t,l:!1,exports:{}};return e[t].call(i.exports,i,i.exports,o),i.l=!0,i.exports}return o.m=e,o.c=n,o.d=function(e,n,t){o.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:t})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,n){if(1&n&&(e=o(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(o.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var i in e)o.d(t,i,function(n){return e[n]}.bind(null,i));return t},o.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(n,"a",n),n},o.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},o.p="",o(o.s=303)}({3:function(e,n){!function(){e.exports=this.novablocks.utils}()},303:function(e,n,o){"use strict";var t=o(5),i=o(3),s=".novablocks-slideshow__slider",r=".novablocks-slideshow__foreground";!function(e,n,o){var l=e(n),a=e(".novablocks-slideshow"),d=(0,i.hasTouchScreen)()&&"orientation"in n,c=(0,i.debounce)(f,300);function u(o){o.css("minHeight",""),o.css("minHeight",function(o){n.innerWidth,o.find(s);var t=o.find(s).outerWidth(),i=n.innerHeight,r=parseInt(o.data("min-height"))*i/100,l=0,a=0,d=0;return o.find(".novablocks-slideshow__slide").each((function(n,o){var i=e(o),s=i.find(".novablocks-slideshow__media"),r=s.data("width")/s.data("height"),c=i.outerHeight();l=t/(d=r>d?r:d),a=c>a?c:a})),Math.max(r,a,l)}(o)),e(n).trigger("scroll")}function f(){a.each((function(n,o){var t=e(o),i=t.find(s);u(t),i.is(".slick-initialized")&&i.slick("setPosition")}))}function v(n,o,t,i){var s=e(o.$slides[t]),l=e(o.$slides[i]);e(o.$slides);!function(e,n){var o=e.outerWidth(),t=300,i=h(e);e.velocity({tween:[0,1]},{duration:1e3,easing:"easeInOutCirc",begin:function(){e.addClass("novablocks-slideshow__slide--current"),n.addClass("novablocks-slideshow__slide--next")},progress:function(s,l,a,d,c){var u=n.find(".novablocks-slideshow__slide-wrap").get(0),f=n.find(".novablocks-slideshow__media").get(0),v=n.find(r).get(0),h=(e.get(0),e.find(".novablocks-slideshow__media").get(0));e.find(r).get(0);i?(u.style.left=o*d+"px",f.style.left=t*d+"px",v.style.left=o*-d+"px",h.style.left=t*(d-1)+"px"):(u.style.left=o*d+"px",f.style.left=(t-o)*d+"px",v.style.left=(t-o)*d+"px",h.style.left=t*(d-1)+"px")},complete:function(){e.removeClass("novablocks-slideshow__slide--current"),n.removeClass("novablocks-slideshow__slide--next")}})}(s,l,function(e,n,o){var t=1;e.slideCount>2&&(0===n&&o===e.slideCount-1&&(t=-1),o<n&&(0!==o||n!==e.slideCount-1)&&(t=-1));return t}(o,t,i))}function h(e){return"fixed"===e.find(".novablocks-parallax").css("position")}a.each((function(n,o){var t,i=e(o),r=i.find(s);u(i),r.children().length>1&&(t=e('<div class="novablocks-slideshow__controls">').appendTo(i),r.on("beforeChange",v),r.slick({rows:0,fade:!0,prevArrow:'<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',nextArrow:'<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',appendArrows:t,speed:0})),i.addClass("is-ready")})),(0,t.parallaxInit)(a),d?l.on("orientationchange",(function(){l.one("resize",f)})):l.on("resize",c)}(jQuery,window)},5:function(e,n){!function(){e.exports=this.novablocks.components}()}});
+this["novablocks"] = this["novablocks"] || {}; this["novablocks"]["./build/block-library/blocks/slideshow/frontend"] =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./packages/block-library/build/blocks/slideshow/frontend.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./packages/block-library/build/blocks/slideshow/frontend.js":
+/*!*******************************************************************!*\
+  !*** ./packages/block-library/build/blocks/slideshow/frontend.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _components = __webpack_require__(/*! @novablocks/components */ "@novablocks/components");
+
+var _utils = __webpack_require__(/*! @novablocks/utils */ "@novablocks/utils");
+
+var BLOCK_SELECTOR = '.novablocks-slideshow';
+var SLIDER_SELECTOR = '.novablocks-slideshow__slider';
+var SLIDE_SELECTOR = '.novablocks-slideshow__slide';
+var FOREGROUND_SELECTOR = '.novablocks-slideshow__foreground';
+var TRANSITION_DURATION = 1000;
+var TRANSITION_EASING = "easeInOutCirc";
+
+(function ($, window, undefined) {
+  var $window = $(window);
+  var $blocks = $(BLOCK_SELECTOR);
+  var useOrientation = (0, _utils.hasTouchScreen)() && 'orientation' in window;
+  var onDebouncedResize = (0, _utils.debounce)(onResize, 300);
+  $blocks.each(function (index, block) {
+    var $block = $(block),
+        $slider = $block.find(SLIDER_SELECTOR),
+        $arrowContainer;
+    resetBlockMinHeight($block);
+
+    if ($slider.children().length > 1) {
+      $arrowContainer = $('<div class="novablocks-slideshow__controls">').appendTo($block);
+      $slider.on('beforeChange', onBeforeSlideChange);
+      $slider.slick({
+        rows: 0,
+        // for simpler reveal transitions between slides
+        fade: true,
+        prevArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev"></div>',
+        nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
+        appendArrows: $arrowContainer,
+        speed: 0
+      });
+    }
+
+    $block.addClass('is-ready');
+  });
+  (0, _components.parallaxInit)($blocks);
+
+  if (useOrientation) {
+    $window.on('orientationchange', function () {
+      $window.one('resize', onResize);
+    });
+  } else {
+    $window.on('resize', onDebouncedResize);
+  }
+
+  function resetBlockMinHeight($block) {
+    $block.css('minHeight', '');
+    $block.css('minHeight', getBlockMinHeight($block));
+    $(window).trigger('scroll');
+  }
+
+  function getBlockMinHeight($block) {
+    var windowWidth = window.innerWidth;
+    var $slider = $block.find(SLIDER_SELECTOR);
+    var sliderWidth = $block.find(SLIDER_SELECTOR).outerWidth();
+    var windowHeight = window.innerHeight;
+    var sliderMinHeight = parseInt($block.data('min-height')) * windowHeight / 100;
+    var mediaMinHeight = 0;
+    var slideMaxHeight = 0;
+    var maxAspectRatio = 0;
+    $block.find(SLIDE_SELECTOR).each(function (i, obj) {
+      var $slide = $(obj),
+          $media = $slide.find('.novablocks-slideshow__media'),
+          width = $media.data('width'),
+          height = $media.data('height'),
+          aspectRatio = width / height,
+          slideHeight = $slide.outerHeight();
+      maxAspectRatio = aspectRatio > maxAspectRatio ? aspectRatio : maxAspectRatio;
+      mediaMinHeight = sliderWidth / maxAspectRatio;
+      slideMaxHeight = slideHeight > slideMaxHeight ? slideHeight : slideMaxHeight;
+    });
+    return Math.max(sliderMinHeight, slideMaxHeight, mediaMinHeight);
+  }
+
+  function onResize() {
+    $blocks.each(function (index, block) {
+      var $block = $(block);
+      var $slider = $block.find(SLIDER_SELECTOR);
+      resetBlockMinHeight($block);
+
+      if ($slider.is('.slick-initialized')) {
+        $slider.slick('setPosition');
+      }
+    });
+  }
+
+  function onBeforeSlideChange(event, slick, currentSlide, nextSlide) {
+    var $currentSlide = $(slick.$slides[currentSlide]);
+    var $nextSlide = $(slick.$slides[nextSlide]);
+    var $slides = $(slick.$slides);
+    transition($currentSlide, $nextSlide, getDirection(slick, currentSlide, nextSlide));
+  }
+
+  function hasFixedBackground($slide) {
+    var fixed = false;
+
+    if ($slide.find('.novablocks-parallax').css('position') === 'fixed') {
+      return true;
+    }
+
+    return fixed;
+  }
+
+  function transition($current, $next) {
+    var sign = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var slideWidth = $current.outerWidth();
+    var move = 300;
+    var isFixed = hasFixedBackground($current);
+    $current.velocity({
+      tween: [0, 1]
+    }, {
+      duration: TRANSITION_DURATION,
+      easing: TRANSITION_EASING,
+      begin: function begin() {
+        $current.addClass('novablocks-slideshow__slide--current');
+        $next.addClass('novablocks-slideshow__slide--next');
+      },
+      progress: function progress(elements, percentComplete, remaining, tweenValue, activeCall) {
+        var next = $next.find('.novablocks-slideshow__slide-wrap').get(0);
+        var nextBg = $next.find('.novablocks-slideshow__media').get(0);
+        var nextFg = $next.find(FOREGROUND_SELECTOR).get(0);
+        var current = $current.get(0);
+        var currentBg = $current.find('.novablocks-slideshow__media').get(0);
+        var currentFg = $current.find(FOREGROUND_SELECTOR).get(0);
+
+        if (isFixed) {
+          next.style.left = slideWidth * tweenValue + 'px';
+          nextBg.style.left = move * tweenValue + 'px';
+          nextFg.style.left = slideWidth * -tweenValue + 'px';
+          currentBg.style.left = move * (tweenValue - 1) + 'px';
+        } else {
+          next.style.left = slideWidth * tweenValue + 'px';
+          nextBg.style.left = (move - slideWidth) * tweenValue + 'px';
+          nextFg.style.left = (move - slideWidth) * tweenValue + 'px';
+          currentBg.style.left = move * (tweenValue - 1) + 'px';
+        }
+      },
+      complete: function complete() {
+        $current.removeClass('novablocks-slideshow__slide--current');
+        $next.removeClass('novablocks-slideshow__slide--next');
+      }
+    });
+  }
+
+  function getDirection(slick, currentSlide, nextSlide) {
+    var direction = 1;
+
+    if (slick.slideCount > 2) {
+      if (currentSlide === 0 && nextSlide === slick.slideCount - 1) {
+        direction = -1;
+      }
+
+      if (nextSlide < currentSlide && (nextSlide !== 0 || currentSlide !== slick.slideCount - 1)) {
+        direction = -1;
+      }
+    }
+
+    return direction;
+  }
+})(jQuery, window);
+
+
+/***/ }),
+
+/***/ "@novablocks/components":
+/*!*****************************************************!*\
+  !*** external {"this":["novablocks","components"]} ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["novablocks"]["components"]; }());
+
+/***/ }),
+
+/***/ "@novablocks/utils":
+/*!************************************************!*\
+  !*** external {"this":["novablocks","utils"]} ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["novablocks"]["utils"]; }());
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=frontend.js.map

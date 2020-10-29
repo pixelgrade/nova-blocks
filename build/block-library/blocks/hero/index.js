@@ -1,1 +1,1186 @@
-this.novablocks=this.novablocks||{},this.novablocks["./build/block-library/blocks/hero/index"]=function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=254)}({0:function(t,e){!function(){t.exports=this.wp.element}()},1:function(t,e){!function(){t.exports=this.wp.i18n}()},10:function(t,e){!function(){t.exports=this.wp.data}()},103:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r=n(0),o=n(6);e.default=function(){return(0,r.createElement)(o.InnerBlocks.Content,null)}},11:function(t,e){!function(){t.exports=this.wp.blocks}()},12:function(t,e,n){var r=n(13);function o(){if("function"!=typeof WeakMap)return null;var t=new WeakMap;return o=function(){return t},t}t.exports=function(t){if(t&&t.__esModule)return t;if(null===t||"object"!==r(t)&&"function"!=typeof t)return{default:t};var e=o();if(e&&e.has(t))return e.get(t);var n={},i=Object.defineProperty&&Object.getOwnPropertyDescriptor;for(var c in t)if(Object.prototype.hasOwnProperty.call(t,c)){var a=i?Object.getOwnPropertyDescriptor(t,c):null;a&&(a.get||a.set)?Object.defineProperty(n,c,a):n[c]=t[c]}return n.default=t,e&&e.set(t,n),n}},13:function(t,e){function n(e){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=n=function(t){return typeof t}:t.exports=n=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},n(e)}t.exports=n},17:function(t,e){t.exports=function(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}},19:function(t,e){!function(){t.exports=this.regeneratorRuntime}()},2:function(t,e){!function(){t.exports=this.wp.components}()},20:function(t,e){t.exports=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}},21:function(t,e){function n(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,e,r){return e&&n(t.prototype,e),r&&n(t,r),t}},23:function(t,e,n){var r=n(32);t.exports=function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&r(t,e)}},24:function(t,e,n){var r=n(13),o=n(27);t.exports=function(t,e){return!e||"object"!==r(e)&&"function"!=typeof e?o(t):e}},25:function(t,e){function n(e){return t.exports=n=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)},n(e)}t.exports=n},254:function(t,e,n){"use strict";var r=n(12),o=n(4),i=o(n(19)),c=o(n(17)),a=o(n(31)),l=r(n(8)),u=o(n(255)),s=o(n(103)),f=o(n(259)),p=n(3),d=o(n(69)),b=n(5),v=n(1),y=n(11),g=n(10);function m(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function h(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?m(Object(n),!0).forEach((function(e){(0,c.default)(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):m(Object(n)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(n,e))}))}return t}var O=Object.assign({},d.default,b.alignmentAttributes,b.colorAttributes,b.layoutAttributes,b.scrollingAttributes);function _(){return(_=(0,a.default)(i.default.mark((function t(){var e,n,r;return i.default.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return t.next=2,(0,p.getPlaceholderImages)();case 2:return e=t.sent,n=(0,p.getRandomBetween)(0,e.length-1),"function"==typeof(null==(r=e[n])?void 0:r.download)&&r.download(),t.abrupt("return",{media:h(h({},r),{},{type:"image"})});case 7:case"end":return t.stop()}}),t)})))).apply(this,arguments)}var k=(0,g.select)("novablocks").getSettings();(0,p.generateDefaults)("novablocks/hero",(function(){return _.apply(this,arguments)})),(0,b.insertTemplate)("novablocks/hero",k.hero.template),(0,y.registerBlockType)("novablocks/hero",{title:(0,v.__)("Hero of the Galaxy","__plugin_txtd"),description:(0,v.__)("A great way to get your visitors acquainted with your content.","__plugin_txtd"),category:"nova-blocks",icon:l.hero,keywords:[(0,v.__)("cover","__plugin_txtd"),(0,v.__)("full width","__plugin_txtd"),(0,v.__)("hero image","__plugin_txtd"),(0,v.__)("cover section","__plugin_txtd")],supports:{anchor:!0},deprecated:f.default,attributes:O,edit:u.default,save:s.default,getEditWrapperProps:function(){return(0,g.select)("core/block-editor").getSettings().alignWide?{"data-align":"full"}:{}}})},255:function(t,e,n){"use strict";var r=n(4);Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var o=n(0),i=r(n(17)),c=r(n(20)),a=r(n(21)),l=r(n(23)),u=r(n(24)),s=r(n(25)),f=n(5),p=n(3),d=r(n(69)),b=r(n(256)),v=r(n(258)),y=n(1),g=n(6),m=n(2),h=n(9),O=n(10);function _(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function k(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?_(Object(n),!0).forEach((function(e){(0,i.default)(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):_(Object(n)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(n,e))}))}return t}function j(t){var e=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var n,r=(0,s.default)(t);if(e){var o=(0,s.default)(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return(0,u.default)(this,n)}}var P=function(t){var e=t.attributes,n=t.setAttributes,r=t.settings,i=e.minHeightFallback;return(0,o.createElement)(f.ControlsSection,{label:(0,y.__)("Layout")},(0,o.createElement)(f.ControlsTab,{label:(0,y.__)("Settings")},(0,o.createElement)(m.RadioControl,{key:"hero-minimum-height-controls",label:(0,y.__)("Minimum Height","__plugin_txtd"),selected:i,onChange:function(t){n({minHeightFallback:parseFloat(t)})},options:r.minimumHeightOptions})))},w=function(t){(0,l.default)(n,t);var e=j(n);function n(){return(0,c.default)(this,n),e.apply(this,arguments)}return(0,a.default)(n,[{key:"getDefaults",value:function(t){var e=this.props.settings,n=t.scrollIndicator,r={};return e.usePostMetaAttributes&&(n||(r.scrollIndicator=d.default.scrollIndicator.default)),r}},{key:"getNewAttributes",value:function(t){var e=this,n=t.scrollIndicator;return{scrollIndicator:n,scrollIndicatorBlock:0===(0,O.select)("core/block-editor").getBlocks().filter((function(t){return"novablocks/hero"===t.name})).findIndex((function(t){return t.clientId===e.props.clientId}))&&n}}},{key:"updateAttributes",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=this.props,n=e.attributes,r=e.setAttributes,o=this.getDefaults(n),i=this.getNewAttributes(k(k(k({},n),o),t));r(Object.assign({},t,i))}},{key:"componentDidMount",value:function(){this.updateAttributes()}},{key:"render",value:function(){var t=this.props.attributes,e=this.updateAttributes.bind(this),n=(0,O.select)("core/block-editor"),r=n.getBlocks,i=n.getSelectedBlockClientId,c=r().filter((function(t){return"novablocks/hero"===t.name})).findIndex((function(t){return t.clientId===i()})),a=[{label:(0,y.__)("Inner Content"),attribute:"displayInnerContent"}];return 0===c&&a.push({label:(0,y.__)("Position Indicators"),attribute:"positionIndicators"},{label:(0,y.__)("Scroll Indicator"),attribute:"scrollIndicator"}),(0,o.createElement)(o.Fragment,null,(0,o.createElement)(b.default,this.props),(0,o.createElement)(v.default,this.props),(0,o.createElement)(g.InspectorControls,null,(0,o.createElement)(f.LayoutControls,this.props),(0,o.createElement)(P,this.props)),(0,o.createElement)(f.ControlsDrawerContent,null,(0,o.createElement)(m.PanelBody,{title:(0,y.__)("Set up elements for this block","__plugin_txtd")},(0,o.createElement)(f.ToggleGroup,{onChange:e,toggles:a.map((function(e){return k(k({},e),{},{value:t[e.attribute]})}))}))))}}]),n}(o.Component),x=(0,h.createHigherOrderComponent)((0,h.compose)([p.withSettings,f.withParallax]))(w);e.default=x},256:function(t,e,n){"use strict";var r=n(4);Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var o=n(0),i=r(n(257)),c=n(6),a=n(10),l=function(t){var e=t.attributes,n=t.className,r=t.clientId,l=t.settings,u=e.contentPadding,s=e.contentPaddingCustom,f=e.contentWidth,p=e.contentWidthCustom,d=e.verticalAlignment,b=e.horizontalAlignment,v=e.minHeightFallback,y=e.scrollIndicatorBlock,g=e.contentColor,m=e.overlayFilterStyle,h=e.scrollingEffect,O=e.displayInnerContent,_=[n,"novablocks-hero","novablocks-u-valign-".concat(d),"novablocks-u-halign-".concat(b),"novablocks-u-spacing-".concat(u),"novablocks-u-content-width-".concat(f),"novablocks-u-background","novablocks-u-background-".concat(m)],k={hero:{"--novablocks-hero-text-color":g},foreground:{},content:{}};"#FFF"!==g&&(k.hero["--theme-dark-primary"]="#FFF");var j=(0,a.select)("core/block-editor").getBlocks().filter((function(t){return"novablocks/hero"===t.name})),P=v,w=P;"doppler"===h&&(P=2*v,w=100,k.hero.alignItems="flex-start"),k.hero.minHeight=P+"vh",k.foreground.minHeight=w+"vh","custom"===u&&(k.foreground.paddingTop="".concat(s,"%"),k.foreground.paddingBottom="".concat(s,"%")),"custom"===f&&(k.content.maxWidth="".concat(p,"%"));var x=0===j.findIndex((function(t){return t.clientId===r}))&&P>=100,E=l.usePostMetaAttributes?y:x;return(0,o.createElement)("div",{className:_.join(" "),style:k.hero},(0,o.createElement)(i.default,t),(0,o.createElement)("div",{className:"novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align",style:k.foreground},(0,o.createElement)("div",{className:"novablocks-hero__inner-container novablocks-u-content-width",style:k.content},O&&(0,o.createElement)(c.InnerBlocks,null)),E&&(0,o.createElement)("div",{className:"novablocks-hero__indicator"})))};e.default=l},257:function(t,e,n){"use strict";var r=n(4);Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var o=n(0),i=r(n(17));function c(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function a(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?c(Object(n),!0).forEach((function(e){(0,i.default)(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):c(Object(n)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(n,e))}))}return t}var l=function(t){var e=t.attributes,n=e.overlayFilterStyle,r=e.overlayFilterStrength,i=e.media,c=(e.contentColor,a(a({},t.parallax.style),{},{opacity:1}));return"none"!==n&&(c.opacity=1-r/100),(0,o.createElement)("div",{className:"novablocks-mask"},(0,o.createElement)("div",{className:"novablocks-hero__background"},!!i&&"image"===i.type&&void 0!==i.sizes&&(0,o.createElement)("img",{className:"novablocks-hero__media",src:i.sizes.full.url,alt:i.alt,style:c}),!!i&&"video"===i.type&&(0,o.createElement)("video",{muted:!0,autoPlay:!0,loop:!0,playsInline:!0,className:"novablocks-hero__media",style:c,src:i.url})))};e.default=l},258:function(t,e,n){"use strict";var r=n(12);Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var o=n(0),i=r(n(8)),c=n(5),a=n(1),l=n(6),u=n(2),s=["image","video"],f=function(t){var e=t.setAttributes;return(0,o.createElement)(l.BlockControls,null,(0,o.createElement)(c.AlignmentToolbar,t),(0,o.createElement)(c.ColorToolbar,t),(0,o.createElement)(u.Toolbar,null,(0,o.createElement)(l.MediaUpload,{allowedTypes:s,onSelect:function(t){return e({media:t})},render:function(t){var e=t.open;return(0,o.createElement)(u.Button,{className:"components-icon-button components-toolbar__control",label:(0,a.__)("Change Media","__plugin_txtd"),icon:i.swap,onClick:e})}})))};e.default=f},259:function(t,e,n){"use strict";var r=n(4);Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var o=r(n(17)),i=r(n(103)),c=r(n(69)),a=n(5);function l(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function u(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?l(Object(n),!0).forEach((function(e){(0,o.default)(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):l(Object(n)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(n,e))}))}return t}var s=Object.assign({},c.default,a.alignmentAttributes,a.colorAttributes,a.layoutAttributes,a.scrollingAttributes),f=[];f.push({attributes:s,isEligible:function(t,e){return void 0===t.defaultsGenerated},migrate:function(t,e){return u(u({},t),{},{defaultsGenerated:!0})},save:i.default});var p=f;e.default=p},27:function(t,e){t.exports=function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}},3:function(t,e){!function(){t.exports=this.novablocks.utils}()},31:function(t,e){function n(t,e,n,r,o,i,c){try{var a=t[i](c),l=a.value}catch(t){return void n(t)}a.done?e(l):Promise.resolve(l).then(r,o)}t.exports=function(t){return function(){var e=this,r=arguments;return new Promise((function(o,i){var c=t.apply(e,r);function a(t){n(c,o,i,a,l,"next",t)}function l(t){n(c,o,i,a,l,"throw",t)}a(void 0)}))}}},32:function(t,e){function n(e,r){return t.exports=n=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t},n(e,r)}t.exports=n},4:function(t,e){t.exports=function(t){return t&&t.__esModule?t:{default:t}}},5:function(t,e){!function(){t.exports=this.novablocks.components}()},6:function(t,e){!function(){t.exports=this.wp.blockEditor}()},69:function(t){t.exports=JSON.parse('{"align":{"type":"string","default":"full"},"anchor":{"type":"string","default":null},"media":{"type":"object","default":null},"minHeightFallback":{"type":"number","default":100},"scrollIndicator":{"type":"boolean","source":"meta","meta":"novablocks_hero_scroll_indicator","default":false},"positionIndicators":{"type":"boolean","source":"meta","meta":"novablocks_hero_position_indicators","default":true},"defaultsGenerated":{"boolean":true,"default":false},"templateInserted":{"boolean":true,"default":false},"displayInnerContent":{"type":"boolean","default":true}}')},8:function(t,e){!function(){t.exports=this.novablocks.icons}()},9:function(t,e){!function(){t.exports=this.wp.compose}()}});
+this["novablocks"] = this["novablocks"] || {}; this["novablocks"]["./build/block-library/blocks/hero/index"] =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./packages/block-library/build/blocks/hero/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+module.exports = _asyncToGenerator;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/inherits.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/inherits.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js");
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireWildcard.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _getRequireWildcardCache() {
+  if (typeof WeakMap !== "function") return null;
+  var cache = new WeakMap();
+
+  _getRequireWildcardCache = function _getRequireWildcardCache() {
+    return cache;
+  };
+
+  return cache;
+}
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  }
+
+  var cache = _getRequireWildcardCache();
+
+  if (cache && cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  var newObj = {};
+
+  if (obj != null) {
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+
+        if (desc && (desc.get || desc.set)) {
+          Object.defineProperty(newObj, key, desc);
+        } else {
+          newObj[key] = obj[key];
+        }
+      }
+    }
+  }
+
+  newObj["default"] = obj;
+
+  if (cache) {
+    cache.set(obj, newObj);
+  }
+
+  return newObj;
+}
+
+module.exports = _interopRequireWildcard;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(/*! ../helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+
+var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/setPrototypeOf.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/attributes.json":
+/*!******************************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/attributes.json ***!
+  \******************************************************************/
+/*! exports provided: align, anchor, media, minHeightFallback, scrollIndicator, positionIndicators, defaultsGenerated, templateInserted, displayInnerContent, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"align\":{\"type\":\"string\",\"default\":\"full\"},\"anchor\":{\"type\":\"string\",\"default\":null},\"media\":{\"type\":\"object\",\"default\":null},\"minHeightFallback\":{\"type\":\"number\",\"default\":100},\"scrollIndicator\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_scroll_indicator\",\"default\":false},\"positionIndicators\":{\"type\":\"boolean\",\"source\":\"meta\",\"meta\":\"novablocks_hero_position_indicators\",\"default\":true},\"defaultsGenerated\":{\"boolean\":true,\"default\":false},\"templateInserted\":{\"boolean\":true,\"default\":false},\"displayInnerContent\":{\"type\":\"boolean\",\"default\":true}}");
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/background.js":
+/*!****************************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/background.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+var HeroBackground = function HeroBackground(props) {
+  var _props$attributes = props.attributes,
+      overlayFilterStyle = _props$attributes.overlayFilterStyle,
+      overlayFilterStrength = _props$attributes.overlayFilterStrength,
+      media = _props$attributes.media,
+      contentColor = _props$attributes.contentColor;
+
+  var styles = _objectSpread(_objectSpread({}, props.parallax.style), {}, {
+    opacity: 1
+  });
+
+  if (overlayFilterStyle !== 'none') {
+    styles.opacity = 1 - overlayFilterStrength / 100;
+  }
+
+  return (0, _element.createElement)("div", {
+    className: "novablocks-mask"
+  }, (0, _element.createElement)("div", {
+    className: "novablocks-hero__background"
+  }, !!media && media.type === 'image' && typeof media.sizes !== 'undefined' && (0, _element.createElement)("img", {
+    className: "novablocks-hero__media",
+    src: media.sizes.full.url,
+    alt: media.alt,
+    style: styles
+  }), !!media && media.type === 'video' && (0, _element.createElement)("video", {
+    muted: true,
+    autoPlay: true,
+    loop: true,
+    playsInline: true,
+    className: "novablocks-hero__media",
+    style: styles,
+    src: media.url
+  })));
+};
+
+var _default = HeroBackground;
+exports.default = _default;
+
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/block-controls.js":
+/*!********************************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/block-controls.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
+var icons = _interopRequireWildcard(__webpack_require__(/*! @novablocks/icons */ "@novablocks/icons"));
+
+var _components = __webpack_require__(/*! @novablocks/components */ "@novablocks/components");
+
+var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+
+var _blockEditor = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+
+var _components2 = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+var ALLOWED_MEDIA_TYPES = ['image', 'video'];
+
+var HeroBlockControls = function HeroBlockControls(props) {
+  var setAttributes = props.setAttributes;
+  return (0, _element.createElement)(_blockEditor.BlockControls, null, (0, _element.createElement)(_components.AlignmentToolbar, props), (0, _element.createElement)(_components.ColorToolbar, props), (0, _element.createElement)(_components2.Toolbar, null, (0, _element.createElement)(_blockEditor.MediaUpload, {
+    allowedTypes: ALLOWED_MEDIA_TYPES,
+    onSelect: function onSelect(media) {
+      return setAttributes({
+        media: media
+      });
+    },
+    render: function render(_ref) {
+      var open = _ref.open;
+      return (0, _element.createElement)(_components2.Button, {
+        className: "components-icon-button components-toolbar__control",
+        label: (0, _i18n.__)('Change Media', '__plugin_txtd'),
+        icon: icons.swap,
+        onClick: open
+      });
+    }
+  })));
+};
+
+var _default = HeroBlockControls;
+exports.default = _default;
+
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/deprecated.js":
+/*!****************************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/deprecated.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
+
+var _save = _interopRequireDefault(__webpack_require__(/*! ./save */ "./packages/block-library/build/blocks/hero/save.js"));
+
+var _attributes = _interopRequireDefault(__webpack_require__(/*! ./attributes */ "./packages/block-library/build/blocks/hero/attributes.json"));
+
+var _components = __webpack_require__(/*! @novablocks/components */ "@novablocks/components");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var attributes = Object.assign({}, _attributes.default, _components.alignmentAttributes, _components.colorAttributes, _components.layoutAttributes, _components.scrollingAttributes);
+var deprecated = [];
+deprecated.push({
+  attributes: attributes,
+  isEligible: function isEligible(attributes, innerBlocks) {
+    return "undefined" === typeof attributes.defaultsGenerated;
+  },
+  migrate: function migrate(attributes, innerBlocks) {
+    return _objectSpread(_objectSpread({}, attributes), {}, {
+      defaultsGenerated: true
+    });
+  },
+  save: _save.default
+});
+var _default = deprecated;
+exports.default = _default;
+
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/edit.js":
+/*!**********************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/edit.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js"));
+
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js"));
+
+var _components = __webpack_require__(/*! @novablocks/components */ "@novablocks/components");
+
+var _utils = __webpack_require__(/*! @novablocks/utils */ "@novablocks/utils");
+
+var _attributes = _interopRequireDefault(__webpack_require__(/*! ./attributes */ "./packages/block-library/build/blocks/hero/attributes.json"));
+
+var _preview = _interopRequireDefault(__webpack_require__(/*! ./preview */ "./packages/block-library/build/blocks/hero/preview.js"));
+
+var _blockControls = _interopRequireDefault(__webpack_require__(/*! ./block-controls */ "./packages/block-library/build/blocks/hero/block-controls.js"));
+
+var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+
+var _blockEditor = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+
+var _components2 = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+
+var _compose = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+
+var _data = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+var BlockHeightControls = function BlockHeightControls(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes,
+      settings = props.settings;
+  var minHeightFallback = attributes.minHeightFallback;
+  return (0, _element.createElement)(_components.ControlsSection, {
+    label: (0, _i18n.__)('Layout')
+  }, (0, _element.createElement)(_components.ControlsTab, {
+    label: (0, _i18n.__)('Settings')
+  }, (0, _element.createElement)(_components2.RadioControl, {
+    key: 'hero-minimum-height-controls',
+    label: (0, _i18n.__)('Minimum Height', '__plugin_txtd'),
+    selected: minHeightFallback,
+    onChange: function onChange(minHeightFallback) {
+      setAttributes({
+        minHeightFallback: parseFloat(minHeightFallback)
+      });
+    },
+    options: settings.minimumHeightOptions
+  })));
+};
+
+var HeroEdit = /*#__PURE__*/function (_Component) {
+  (0, _inherits2.default)(HeroEdit, _Component);
+
+  var _super = _createSuper(HeroEdit);
+
+  function HeroEdit() {
+    (0, _classCallCheck2.default)(this, HeroEdit);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2.default)(HeroEdit, [{
+    key: "getDefaults",
+    value: function getDefaults(attributes) {
+      var settings = this.props.settings;
+      var scrollIndicator = attributes.scrollIndicator;
+      var defaults = {};
+
+      if (settings.usePostMetaAttributes) {
+        if (!scrollIndicator) {
+          defaults.scrollIndicator = _attributes.default.scrollIndicator.default;
+        }
+      }
+
+      return defaults;
+    }
+  }, {
+    key: "getNewAttributes",
+    value: function getNewAttributes(attributes) {
+      var _this = this;
+
+      var scrollIndicator = attributes.scrollIndicator;
+      var index = (0, _data.select)('core/block-editor').getBlocks().filter(function (block) {
+        return block.name === 'novablocks/hero';
+      }).findIndex(function (block) {
+        return block.clientId === _this.props.clientId;
+      });
+      var newScrollIndicatorBlock = index === 0 && scrollIndicator;
+      return {
+        scrollIndicator: scrollIndicator,
+        scrollIndicatorBlock: newScrollIndicatorBlock
+      };
+    }
+  }, {
+    key: "updateAttributes",
+    value: function updateAttributes() {
+      var newAttributes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var _this$props = this.props,
+          attributes = _this$props.attributes,
+          setAttributes = _this$props.setAttributes;
+      var defaults = this.getDefaults(attributes);
+      var computedAttributes = this.getNewAttributes(_objectSpread(_objectSpread(_objectSpread({}, attributes), defaults), newAttributes));
+      setAttributes(Object.assign({}, newAttributes, computedAttributes));
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateAttributes();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var attributes = this.props.attributes;
+      var updateAttributes = this.updateAttributes.bind(this);
+
+      var _select = (0, _data.select)('core/block-editor'),
+          getBlocks = _select.getBlocks,
+          getSelectedBlockClientId = _select.getSelectedBlockClientId;
+
+      var heroBlocks = getBlocks().filter(function (block) {
+        return block.name === 'novablocks/hero';
+      });
+      var index = heroBlocks.findIndex(function (block) {
+        return block.clientId === getSelectedBlockClientId();
+      });
+      var toggles = [{
+        label: (0, _i18n.__)('Inner Content'),
+        attribute: 'displayInnerContent'
+      }];
+
+      if (index === 0) {
+        toggles.push({
+          label: (0, _i18n.__)('Position Indicators'),
+          attribute: 'positionIndicators'
+        }, {
+          label: (0, _i18n.__)('Scroll Indicator'),
+          attribute: 'scrollIndicator'
+        });
+      }
+
+      return (0, _element.createElement)(_element.Fragment, null, (0, _element.createElement)(_preview.default, this.props), (0, _element.createElement)(_blockControls.default, this.props), (0, _element.createElement)(_blockEditor.InspectorControls, null, (0, _element.createElement)(_components.LayoutControls, this.props), (0, _element.createElement)(BlockHeightControls, this.props)), (0, _element.createElement)(_components.ControlsDrawerContent, null, (0, _element.createElement)(_components2.PanelBody, {
+        title: (0, _i18n.__)('Set up elements for this block', '__plugin_txtd')
+      }, (0, _element.createElement)(_components.ToggleGroup, {
+        onChange: updateAttributes,
+        toggles: toggles.map(function (toggle) {
+          return _objectSpread(_objectSpread({}, toggle), {}, {
+            value: attributes[toggle.attribute]
+          });
+        })
+      }))));
+    }
+  }]);
+  return HeroEdit;
+}(_element.Component);
+
+;
+
+var _default = (0, _compose.createHigherOrderComponent)((0, _compose.compose)([_utils.withSettings, _components.withParallax]))(HeroEdit);
+
+exports.default = _default;
+
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/index.js":
+/*!***********************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/index.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator"));
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
+
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
+
+var icons = _interopRequireWildcard(__webpack_require__(/*! @novablocks/icons */ "@novablocks/icons"));
+
+var _edit = _interopRequireDefault(__webpack_require__(/*! ./edit */ "./packages/block-library/build/blocks/hero/edit.js"));
+
+var _save = _interopRequireDefault(__webpack_require__(/*! ./save */ "./packages/block-library/build/blocks/hero/save.js"));
+
+var _deprecated = _interopRequireDefault(__webpack_require__(/*! ./deprecated */ "./packages/block-library/build/blocks/hero/deprecated.js"));
+
+var _utils = __webpack_require__(/*! @novablocks/utils */ "@novablocks/utils");
+
+var _attributes = _interopRequireDefault(__webpack_require__(/*! ./attributes */ "./packages/block-library/build/blocks/hero/attributes.json"));
+
+var _components = __webpack_require__(/*! @novablocks/components */ "@novablocks/components");
+
+var _i18n = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+
+var _blocks = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+
+var _data = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+var attributes = Object.assign({}, _attributes.default, _components.alignmentAttributes, _components.colorAttributes, _components.layoutAttributes, _components.scrollingAttributes);
+/**
+ * WordPress dependencies
+ */
+
+var STORE_NAME = 'novablocks';
+
+function getNewDefaults() {
+  return _getNewDefaults.apply(this, arguments);
+}
+
+function _getNewDefaults() {
+  _getNewDefaults = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+    var placeholderImages, index, image;
+    return _regenerator.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return (0, _utils.getPlaceholderImages)();
+
+          case 2:
+            placeholderImages = _context.sent;
+            index = (0, _utils.getRandomBetween)(0, placeholderImages.length - 1);
+            image = placeholderImages[index];
+
+            if (typeof (image === null || image === void 0 ? void 0 : image.download) === "function") {
+              image.download();
+            }
+
+            return _context.abrupt("return", {
+              media: _objectSpread(_objectSpread({}, image), {}, {
+                type: 'image'
+              })
+            });
+
+          case 7:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _getNewDefaults.apply(this, arguments);
+}
+
+var settings = (0, _data.select)(STORE_NAME).getSettings();
+(0, _utils.generateDefaults)('novablocks/hero', getNewDefaults);
+(0, _components.insertTemplate)('novablocks/hero', settings.hero.template);
+(0, _blocks.registerBlockType)('novablocks/hero', {
+  title: (0, _i18n.__)('Hero of the Galaxy', '__plugin_txtd'),
+  description: (0, _i18n.__)('A great way to get your visitors acquainted with your content.', '__plugin_txtd'),
+  category: 'nova-blocks',
+  icon: icons.hero,
+  // Additional search terms
+  keywords: [(0, _i18n.__)('cover', '__plugin_txtd'), (0, _i18n.__)('full width', '__plugin_txtd'), (0, _i18n.__)('hero image', '__plugin_txtd'), (0, _i18n.__)('cover section', '__plugin_txtd')],
+  supports: {
+    anchor: true
+  },
+  deprecated: _deprecated.default,
+  attributes: attributes,
+  edit: _edit.default,
+  save: _save.default,
+  getEditWrapperProps: function getEditWrapperProps() {
+    var settings = (0, _data.select)('core/block-editor').getSettings();
+    return settings.alignWide ? {
+      'data-align': 'full'
+    } : {};
+  }
+});
+
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/preview.js":
+/*!*************************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/preview.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
+var _background = _interopRequireDefault(__webpack_require__(/*! ./background */ "./packages/block-library/build/blocks/hero/background.js"));
+
+var _blockEditor = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+
+var _data = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+var HeroPreview = function HeroPreview(props) {
+  var attributes = props.attributes,
+      className = props.className,
+      clientId = props.clientId,
+      settings = props.settings;
+  var contentPadding = attributes.contentPadding,
+      contentPaddingCustom = attributes.contentPaddingCustom,
+      contentWidth = attributes.contentWidth,
+      contentWidthCustom = attributes.contentWidthCustom,
+      verticalAlignment = attributes.verticalAlignment,
+      horizontalAlignment = attributes.horizontalAlignment,
+      minHeightFallback = attributes.minHeightFallback,
+      scrollIndicatorBlock = attributes.scrollIndicatorBlock,
+      contentColor = attributes.contentColor,
+      overlayFilterStyle = attributes.overlayFilterStyle,
+      scrollingEffect = attributes.scrollingEffect,
+      displayInnerContent = attributes.displayInnerContent;
+  var classes = [className, 'novablocks-hero', "novablocks-u-valign-".concat(verticalAlignment), "novablocks-u-halign-".concat(horizontalAlignment), "novablocks-u-spacing-".concat(contentPadding), "novablocks-u-content-width-".concat(contentWidth), "novablocks-u-background", "novablocks-u-background-".concat(overlayFilterStyle)];
+  var styles = {
+    hero: {
+      '--novablocks-hero-text-color': contentColor
+    },
+    foreground: {},
+    content: {}
+  };
+
+  if (contentColor !== '#FFF') {
+    styles.hero['--theme-dark-primary'] = '#FFF';
+  }
+
+  var heroBlocks = (0, _data.select)('core/block-editor').getBlocks().filter(function (block) {
+    return block.name === 'novablocks/hero';
+  });
+  var heroHeight = minHeightFallback;
+  var contentHeight = heroHeight;
+
+  if (scrollingEffect === 'doppler') {
+    heroHeight = minHeightFallback * 2;
+    contentHeight = 100;
+    styles.hero.alignItems = 'flex-start';
+  }
+
+  styles.hero.minHeight = heroHeight + 'vh';
+  styles.foreground.minHeight = contentHeight + 'vh';
+
+  if (contentPadding === 'custom') {
+    styles.foreground.paddingTop = "".concat(contentPaddingCustom, "%");
+    styles.foreground.paddingBottom = "".concat(contentPaddingCustom, "%");
+  }
+
+  if (contentWidth === 'custom') {
+    styles.content.maxWidth = "".concat(contentWidthCustom, "%");
+  }
+
+  var index = heroBlocks.findIndex(function (block) {
+    return block.clientId === clientId;
+  });
+  var scrollIndicatorFallback = index === 0 && heroHeight >= 100;
+  var scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
+  return (0, _element.createElement)("div", {
+    className: classes.join(' '),
+    style: styles.hero
+  }, (0, _element.createElement)(_background.default, props), (0, _element.createElement)("div", {
+    className: "novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align",
+    style: styles.foreground
+  }, (0, _element.createElement)("div", {
+    className: "novablocks-hero__inner-container novablocks-u-content-width",
+    style: styles.content
+  }, displayInnerContent && (0, _element.createElement)(_blockEditor.InnerBlocks, null)), scrollIndicator && (0, _element.createElement)("div", {
+    className: "novablocks-hero__indicator"
+  })));
+};
+
+var _default = HeroPreview;
+exports.default = _default;
+
+
+/***/ }),
+
+/***/ "./packages/block-library/build/blocks/hero/save.js":
+/*!**********************************************************!*\
+  !*** ./packages/block-library/build/blocks/hero/save.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
+var _blockEditor = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+
+var _default = function _default() {
+  return (0, _element.createElement)(_blockEditor.InnerBlocks.Content, null);
+};
+
+exports.default = _default;
+
+
+/***/ }),
+
+/***/ "@babel/runtime/regenerator":
+/*!**********************************************!*\
+  !*** external {"this":"regeneratorRuntime"} ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["regeneratorRuntime"]; }());
+
+/***/ }),
+
+/***/ "@novablocks/components":
+/*!*****************************************************!*\
+  !*** external {"this":["novablocks","components"]} ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["novablocks"]["components"]; }());
+
+/***/ }),
+
+/***/ "@novablocks/icons":
+/*!************************************************!*\
+  !*** external {"this":["novablocks","icons"]} ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["novablocks"]["icons"]; }());
+
+/***/ }),
+
+/***/ "@novablocks/utils":
+/*!************************************************!*\
+  !*** external {"this":["novablocks","utils"]} ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["novablocks"]["utils"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!**********************************************!*\
+  !*** external {"this":["wp","blockEditor"]} ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["blockEditor"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/blocks":
+/*!*****************************************!*\
+  !*** external {"this":["wp","blocks"]} ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["blocks"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!*********************************************!*\
+  !*** external {"this":["wp","components"]} ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["components"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/compose":
+/*!******************************************!*\
+  !*** external {"this":["wp","compose"]} ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["compose"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!***************************************!*\
+  !*** external {"this":["wp","data"]} ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["data"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!******************************************!*\
+  !*** external {"this":["wp","element"]} ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["element"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!***************************************!*\
+  !*** external {"this":["wp","i18n"]} ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["i18n"]; }());
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=index.js.map

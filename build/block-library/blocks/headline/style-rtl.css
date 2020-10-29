@@ -1,1 +1,3 @@
-.c-headline__primary,.c-headline__secondary{display:block}
+.c-headline__primary,
+.c-headline__secondary {
+  display: block; }
