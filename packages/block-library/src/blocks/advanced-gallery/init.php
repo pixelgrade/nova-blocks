@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_gallery_of_the_stars_attributes_config() {
-	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/components/src/advanced-gallery/attributes.json' );
+	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/advanced-gallery/attributes.json' );
 
 	return array_merge( $media_attributes, $gallery_attributes );

@@ -1,4 +1,5 @@
 import * as icons from '@novablocks/icons';
+import AdvancedGallery from '@novablocks/advanced-gallery';
 
 import {
 	generateDefaults,
@@ -15,7 +16,6 @@ import deprecated from './deprecated';
 import transforms from './transforms';
 
 import blockAttributes from './attributes';
-import AdvancedGallery from '@novablocks/advanced-gallery';
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 

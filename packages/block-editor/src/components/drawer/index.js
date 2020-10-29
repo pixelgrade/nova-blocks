@@ -1,7 +1,7 @@
 import { useSpring, animated } from 'react-spring';
 import { orderBy } from 'lodash';
 import classnames from 'classnames';
-import { useMemoryState, useResizeObserver } from '@novablocks/utils';
+import { useResizeObserver, useMemoryState } from '../index';
 
 import {
 	Children,

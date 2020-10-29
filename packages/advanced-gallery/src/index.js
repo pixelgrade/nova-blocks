@@ -15,7 +15,7 @@ import * as utils from './utils';
 
 import './hooks/with-advanced-gallery-attribtues';
 
-import {
+export {
 	GridItem,
 	GridItemCollection
 } from './grid-item';
@@ -46,8 +46,6 @@ const AdvancedGallery = ( props ) => {
 
 export default {
 	Component: withSettings( AdvancedGallery ),
-	GridItem,
-	GridItemCollection,
 	attributes,
 	utils,
 };

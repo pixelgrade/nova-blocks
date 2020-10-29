@@ -1,4 +1,4 @@
-import AdvancedGallery from './index';
+import AdvancedGallery from '@novablocks/advanced-gallery';
 
 const Edit = ( props ) => {
 
