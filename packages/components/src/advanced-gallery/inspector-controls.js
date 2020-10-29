@@ -26,9 +26,9 @@ import {
 const blobMixingStylesOptions = [
 	{ label: 'None', value: 'none' },
 	{ label: 'Media Shape', value: 'shape-mask' },
-	{ label: 'Mixing #1', value: 'mixing-1' },
-	{ label: 'Mixing #2', value: 'mixing-2' },
-	{ label: 'Mixing #3', value: 'mixing-3' },
+	{ label: 'Decorative Shape', value: 'mixing-1' },
+	{ label: 'Shape Mixing', value: 'mixing-2' },
+	{ label: 'Shape Mixing ALT', value: 'mixing-3' },
 ];
 
 const AdvancedGalleryInspectorControls = ( props ) => {
@@ -194,7 +194,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 					<ControlsGroup>
 						<RadioControl
 							key={ 'blobs-mixing-style' }
-							label={ 'Shape Mixing Style' }
+							label={ 'Shape Usage Style' }
 							selected={ blobMixingStyle }
 							onChange={ blobMixingStyle => setAttributes( { blobMixingStyle } ) }
 							options={ blobMixingStylesOptions }
