@@ -1,14 +1,17 @@
 import postsQueryAttributes from './attributes';
 
-import { QueryControls } from '../../components';
-
 import {
 	isSpecificPostModeActive,
 	queryCriteriaFromAttributes
 } from "./utils";
 
 import { STORE_NAME, registerQueryStore } from "./store";
-import { ControlsSection, ControlsTab } from "@novablocks/components";
+
+import {
+	ControlsSection,
+	ControlsTab,
+	QueryControls,
+} from "../../components";
 
 registerQueryStore( `novablocks/${ STORE_NAME }` );
 

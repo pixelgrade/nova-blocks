@@ -1,5 +1,3 @@
-import Doppler from "@novablocks/doppler";
-
 (function($, window, undefined) {
 
 	let windowScrollY;

@@ -1,7 +1,7 @@
 import {
 	CardsManager,
 	ControlsDrawerContent,
-} from '@novablocks/components';
+} from '../../components';
 
 import { __ } from '@wordpress/i18n';
 

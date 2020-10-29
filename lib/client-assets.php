@@ -180,7 +180,6 @@ function novablocks_register_block_types() {
 	}
 
 	$velocity_dependent_scripts = array(
-		'novablocks/hero-frontend',
 		'novablocks/slideshow-frontend'
 	);
 
@@ -202,9 +201,20 @@ function novablocks_register_block_types() {
 		'novablocks/media-frontend',
 	);
 
+	$doppler_frontend_dependent_scripts = array(
+		'novablocks/google-map-frontend',
+		'novablocks/hero-frontend',
+		'novablocks/slideshow-frontend',
+	);
+
 	$advanced_gallery_dependent_blocks = array(
 		'advanced-gallery',
 		'media',
+	);
+
+	$collection_dependent_blocks = array(
+		'cards-collection',
+		'posts-collection'
 	);
 
 	// Loop through all folders inside block-library/blocks.
@@ -244,7 +254,6 @@ function novablocks_register_block_types() {
 			$handle         = 'novablocks/' . $block . '-' . $basename;
 
 			// Add the 3rd party scripts for each block to the dependencies array.
-
 			if ( in_array( $handle, $velocity_dependent_scripts ) ) {
 				$dependencies[] = 'novablocks-velocity';
 			}
@@ -266,6 +275,10 @@ function novablocks_register_block_types() {
 				$args[ $key ] = 'novablocks-advanced-gallery-frontend';
 
 				continue;
+			}
+
+			if ( 'script' === $key && in_array( $handle, $doppler_frontend_dependent_scripts ) ) {
+				$dependencies[] = 'novablocks-doppler-frontend';
 			}
 
 			// Actually register the script.
@@ -326,7 +339,11 @@ function novablocks_register_block_types() {
 			}
 
 			if ( in_array( $block, $advanced_gallery_dependent_blocks ) ) {
-				$css_dependencies[] = 'novablocks-advanced-gallery-' . $basename;
+				$css_dependencies[] = 'novablocks-advanced-gallery-' . $key;
+			}
+
+			if ( in_array( $block, $collection_dependent_blocks ) ) {
+				$css_dependencies[] = 'novablocks-collection-' . $key;
 			}
 
 			// Finally, register the stylesheet.

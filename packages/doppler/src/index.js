@@ -1,3 +1,4 @@
+import '@novablocks/core';
 import * as utils from './utils';
 import './with-doppler-attributes';
 

@@ -44,7 +44,7 @@ const EmphasisLevelControls = ( props ) => {
 		const blockIndex = blockAreaOptions.findIndex( option => option.value === blockStyle );
 		const contentIndex = contentAreaOptions.findIndex( option => option.value === contentStyle );
 		return blockIndex * 3 + contentIndex;
-	}
+	};
 
 	return (
 		<ControlsSection label={ __( 'Color Contrast' ) }>

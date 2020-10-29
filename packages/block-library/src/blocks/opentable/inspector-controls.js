@@ -1,7 +1,7 @@
 import {
 	ControlsSection,
 	ControlsTab
-} from "@novablocks/components";
+} from "@novablocks/block-editor";
 
 /**
  * WordPress dependencies

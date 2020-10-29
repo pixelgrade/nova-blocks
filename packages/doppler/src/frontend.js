@@ -11,8 +11,9 @@ $( function() {
 
 	let frameRendered = false;
 	let scrollContainerHeight = getScrollContainerHeight();
+	let $blocks = $( '.novablocks-doppler' );
 
-	$( '.novablocks-doppler' ).each( function( i, container ) {
+	$blocks.each( function( i, container ) {
 		var $container = $( container );
 		var followThroughStart = !! $container.data( 'smooth-start' );
 		var followThroughEnd = !! $container.data( 'smooth-end' );
