@@ -276,12 +276,16 @@ function novablocks_register_block_types() {
 				$dependencies[] = 'google-maps';
 			}
 
+			// both the advanced-gallery and media blocks' frontend scripts are empty and
+			// they depend on the advanced-gallery component frontend script
 			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_advanced_gallery ) ) {
 				$args[ $key ] = 'novablocks-advanced-gallery-frontend';
 
 				continue;
 			}
 
+			// the hero, google-map and slideshow block have their own frontend scripts but also
+			// depend on the doppler frontend script for the scrolling effect
 			if ( 'script' === $key && in_array( $handle, $doppler_frontend_dependent_scripts ) ) {
 				$dependencies[] = 'novablocks-doppler-frontend';
 			}
