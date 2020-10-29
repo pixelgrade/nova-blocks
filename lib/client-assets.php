@@ -207,13 +207,18 @@ function novablocks_register_block_types() {
 		'novablocks/slideshow-frontend',
 	);
 
-	$advanced_gallery_dependent_blocks = array(
+	$advanced_gallery_style_dependent_blocks = array(
 		'advanced-gallery',
 		'media',
 	);
 
-	$collection_dependent_blocks = array(
+	$collection_style_dependent_blocks = array(
 		'cards-collection',
+		'posts-collection'
+	);
+
+	$components_style_dependent_blocks = array(
+		'card',
 		'posts-collection'
 	);
 
@@ -338,12 +343,16 @@ function novablocks_register_block_types() {
 				}
 			}
 
-			if ( in_array( $block, $advanced_gallery_dependent_blocks ) ) {
+			if ( in_array( $block, $advanced_gallery_style_dependent_blocks ) ) {
 				$css_dependencies[] = 'novablocks-advanced-gallery-' . $key;
 			}
 
-			if ( in_array( $block, $collection_dependent_blocks ) ) {
+			if ( in_array( $block, $collection_style_dependent_blocks ) ) {
 				$css_dependencies[] = 'novablocks-collection-' . $key;
+			}
+
+			if ( in_array( $block, $components_style_dependent_blocks ) ) {
+				$css_dependencies[] = 'novablocks-components-' . $key;
 			}
 
 			// Finally, register the stylesheet.
