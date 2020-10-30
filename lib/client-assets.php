@@ -201,6 +201,10 @@ function novablocks_register_block_types() {
 		'novablocks/media-frontend',
 	);
 
+	$frontend_scripts_to_be_replaced_with_collection = array(
+		'novablocks/posts-collection-frontend',
+	);
+
 	$doppler_frontend_dependent_scripts = array(
 		'novablocks/google-map-frontend',
 		'novablocks/hero-frontend',
@@ -278,8 +282,16 @@ function novablocks_register_block_types() {
 
 			// both the advanced-gallery and media blocks' frontend scripts are empty and
 			// they depend on the advanced-gallery component frontend script
+			// but the block frontend scripts files need to exist for this to work
 			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_advanced_gallery ) ) {
 				$args[ $key ] = 'novablocks-advanced-gallery-frontend';
+
+				continue;
+			}
+
+			// same for the posts-collection block depending on the collection frontend scripts
+			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_collection ) ) {
+				$args[ $key ] = 'novablocks-collection-frontend';
 
 				continue;
 			}

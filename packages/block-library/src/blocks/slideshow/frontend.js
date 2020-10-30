@@ -1,5 +1,3 @@
-import Doppler from "@novablocks/doppler";
-
 import {
 	debounce,
 	hasTouchScreen
