@@ -1212,3 +1212,19 @@ function novablocks_register_api_endpoints() {
 	) );
 }
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
+
+function novablocks_block_area_has_blocks( $slug ) {
+	$posts = get_posts( array(
+		'name'        => $slug,
+		'post_type'   => 'block_area',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+		'fields' => 'ids',
+	) );
+
+	if ( ! empty( $posts ) && has_blocks( reset( $posts ) ) ) {
+		return true;
+	}
+
+	return false;
+}
