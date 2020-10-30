@@ -573,7 +573,7 @@ function novablocks_openhours_overview_content( $attributes ) {
         </table>
 		<?php
 	} else {
-		?><p><?php echo __( 'You haven\'t setup a schedule yet.', 'open_hours' ) ?></p><?php
+		?><p><?php echo esc_html__( 'You haven\'t setup a schedule yet.', '__plugin_txtd' ) ?></p><?php
 	}
 }
 

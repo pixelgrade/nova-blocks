@@ -102,19 +102,19 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$id = '';
 		if ( ! empty( $attributes['anchor'] ) ) {
-			$id = 'id="' . $attributes['anchor'] . '"';
+			$id = 'id="' . esc_attr( $attributes['anchor'] ) . '" ';
 		} ?>
 
 		<div <?php
 
 			echo $id;
-			echo "data-scrolling-effect='" . $attributes['scrollingEffect'] . "' ";
+			echo "data-scrolling-effect='" . esc_attr( $attributes['scrollingEffect'] ) . "' ";
 			echo "data-focal-point='" . json_encode( $attributes['focalPoint'] ) . "' ";
 			echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
-			echo 'data-initial-background-scale="' . $attributes['initialBackgroundScale'] . '"';
-			echo 'data-final-background-scale="' . $attributes['finalBackgroundScale'] . '" ';
-			echo 'data-smooth-start="' . $attributes['followThroughStart'] . '" ';
-			echo 'data-smooth-end="' . $attributes['followThroughEnd'] . '" ';
+			echo 'data-initial-background-scale="' . esc_attr( $attributes['initialBackgroundScale'] ) . '"';
+			echo 'data-final-background-scale="' . esc_attr( $attributes['finalBackgroundScale'] ) . '" ';
+			echo 'data-smooth-start="' . esc_attr( $attributes['followThroughStart'] ) . '" ';
+			echo 'data-smooth-end="' . esc_attr( $attributes['followThroughEnd'] ) . '" ';
 
 			?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
@@ -153,7 +153,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 					} ?>
                 </div>
 				<?php if ( $scrollIndicator ) { ?>
-                    <div class="<?php echo $scrollIndicatorClass; ?>">
+                    <div class="<?php echo esc_attr( $scrollIndicatorClass ); ?>">
                         <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
                     </div>
 				<?php } ?>

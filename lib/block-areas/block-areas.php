@@ -94,7 +94,7 @@ if ( ! function_exists( 'block_areas_display_php_version_notice' ) ) {
 				<?php
 				sprintf(
 				/* translators: 1: required version, 2: currently used version */
-					__( 'Block Areas requires at least PHP version %1$s. Your site is currently running on PHP %2$s.', 'block-areas' ),
+					esc_html__( 'Block Areas requires at least PHP version %1$s. Your site is currently running on PHP %2$s.', '__plugin_txtd' ),
 					'5.6',
 					phpversion()
 				);
@@ -119,7 +119,7 @@ if ( ! function_exists( 'block_areas_display_wp_version_notice' ) ) {
 				<?php
 				sprintf(
 				/* translators: 1: required version, 2: currently used version */
-					__( 'Block Areas requires at least WordPress version %1$s. Your site is currently running on WordPress %2$s.', 'block-areas' ),
+					esc_html__( 'Block Areas requires at least WordPress version %1$s. Your site is currently running on WordPress %2$s.', '__plugin_txtd' ),
 					'5.0',
 					get_bloginfo( 'version' )
 				);

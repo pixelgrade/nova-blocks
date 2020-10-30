@@ -1,11 +1,8 @@
 import classnames from "classnames";
-
-import { kebabCase } from "lodash";
 import { useSpring, animated } from 'react-spring';
 
+import { useMemoryState } from '@novablocks/utils';
 import Cube from "./cube";
-
-import { getSectionsFromFills } from "./utils";
 
 const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
 
@@ -13,8 +10,6 @@ import { __ } from '@wordpress/i18n';
 
 import {
 	useEffect,
-	useState,
-	Fragment,
 	Component,
 	createRef,
  } from '@wordpress/element';
@@ -30,7 +25,7 @@ const getTabAccentColor = ( label ) => {
 	}
 
 	return ACCENT_COLORS[2];
-}
+};
 
 const getTabClassName = ( label, activeTabLabel ) => {
 	return classnames(
@@ -39,7 +34,7 @@ const getTabClassName = ( label, activeTabLabel ) => {
 			'novablocks-sections__tab--active': activeTabLabel === label
 		}
 	)
-}
+};
 
 const ActiveSectionTabs = ( props ) => {
 
@@ -54,7 +49,13 @@ const ActiveSectionTabs = ( props ) => {
 		return null;
 	}
 
-	const [ activeTabLabel, setActiveTabLabel ] = useState( tabs[0].props.label );
+	let [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
+	const existingTab = tabs.some( tab => activeTabLabel === tab.props.label );
+
+	if ( ! existingTab ) {
+		activeTabLabel = tabs[0].props.label;
+	}
+
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
 	const activeTab = tabs[activeTabIndex];
 
@@ -92,7 +93,7 @@ const ActiveSectionTabs = ( props ) => {
 			<TabContent activeTab={ activeTab } { ...props } />
 		</animated.div>
 	)
-}
+};
 
 class TabContent extends Component {
 
@@ -127,6 +128,6 @@ class TabContent extends Component {
 			</div>
 		)
 	}
-}
+};
 
 export { ActiveSectionTabs };

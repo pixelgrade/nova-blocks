@@ -648,65 +648,76 @@ function novablocks_get_blob_presets() {
 			'label'  => 'Rectangle',
 			'value'  => 'rectangle',
 			'preset' => array(
-				'blobMixingStyle'    => 'none',
-				'blobMaskPreset'     => 16,
-				'blobMaskComplexity' => 0,
-				'blobMaskSmoothness' => 33,
-				'blobPreset'         => 16,
-				'blobComplexity'     => 0,
-				'blobSmoothness'     => 33,
+				'blobsEnableMask'       => false,
+				'blobsEnableDecoration' => false,
+				'blobMaskPreset'        => 16,
+				'blobMaskComplexity'    => 0,
+				'blobMaskSmoothness'    => 0,
+				'blobPreset'            => 21,
+				'blobComplexity'        => 89,
+				'blobSmoothness'        => 33,
 			),
 		),
 		array(
 			'label'  => 'Ellipse',
 			'value'  => 'ellipse',
 			'preset' => array(
-				'blobMixingStyle'    => 'shape-mask',
-				'blobMaskPreset'     => 16,
-				'blobMaskComplexity' => 0,
-				'blobMaskSmoothness' => 33,
-				'blobPreset'         => 16,
-				'blobComplexity'     => 0,
-				'blobSmoothness'     => 33,
+				'blobsEnableMask'       => true,
+				'blobsEnableDecoration' => false,
+				'blobMaskPreset'        => 16,
+				'blobMaskComplexity'    => 0,
+				'blobMaskSmoothness'    => 33,
+				'blobPreset'            => 16,
+				'blobComplexity'        => 0,
+				'blobSmoothness'        => 33,
 			),
 		),
 		array(
 			'label'  => 'Diamond',
 			'value'  => 'diamond',
 			'preset' => array(
-				'blobMixingStyle'    => 'shape-mask',
-				'blobMaskPreset'     => 36,
-				'blobMaskComplexity' => 0,
-				'blobMaskSmoothness' => 0,
-				'blobPreset'         => 16,
-				'blobComplexity'     => 0,
-				'blobSmoothness'     => 33,
+				'blobsEnableMask'       => true,
+				'blobsEnableDecoration' => false,
+				'blobMaskPreset'        => 36,
+				'blobMaskComplexity'    => 0,
+				'blobMaskSmoothness'    => 0,
+				'blobPreset'            => 16,
+				'blobComplexity'        => 0,
+				'blobSmoothness'        => 33,
 			),
 		),
 		array(
 			'label'  => 'Blob 1',
 			'value'  => 'blob-1',
 			'preset' => array(
-				'blobMixingStyle'    => 'mixing-2',
-				'blobMaskPreset'     => 21,
-				'blobMaskComplexity' => 89,
-				'blobMaskSmoothness' => 50,
-				'blobPreset'         => 13,
-				'blobComplexity'     => 93,
-				'blobSmoothness'     => 50,
+				'blobsEnableMask'             => true,
+				'blobsEnableDecoration'       => true,
+				'blobMaskPreset'              => 21,
+				'blobMaskComplexity'          => 89,
+				'blobMaskSmoothness'          => 50,
+				'blobPreset'                  => 13,
+				'blobComplexity'              => 93,
+				'blobSmoothness'              => 50,
+				'blobsHorizontalDisplacement' => 30,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
 			),
 		),
 		array(
 			'label'  => 'Blob 2',
 			'value'  => 'blob-2',
 			'preset' => array(
-				'blobMixingStyle'    => 'mixing-3',
-				'blobMaskPreset'     => 31,
-				'blobMaskComplexity' => 56,
-				'blobMaskSmoothness' => 50,
-				'blobPreset'         => 58,
-				'blobComplexity'     => 58,
-				'blobSmoothness'     => 20,
+				'blobsEnableMask'             => true,
+				'blobsEnableDecoration'       => true,
+				'blobMaskPreset'              => 31,
+				'blobMaskComplexity'          => 56,
+				'blobMaskSmoothness'          => 50,
+				'blobPreset'                  => 58,
+				'blobComplexity'              => 58,
+				'blobSmoothness'              => 20,
+				'blobsHorizontalDisplacement' => 70,
+				'blobsVerticalDisplacement'   => 50,
+				'blobsSizeBalance'            => 50,
 			),
 		),
 	);
@@ -1218,9 +1229,9 @@ function novablocks_the_media_title( $media, $before = '', $after = '', $echo = 
 
 	if ( $echo ) {
 		echo $title;
-	} else {
-		return $title;
 	}
+
+	return $title;
 }
 
 function novablocks_get_media_caption( $media ) {
@@ -1241,11 +1252,11 @@ add_filter( 'image_size_names_choose', 'novablocks_custom_image_sizes' );
 
 function novablocks_custom_image_sizes( $sizes ) {
 	return array_merge( $sizes, array(
-		'novablocks_huge' => __('Nova Blocks Huge'),
-		'novablocks_large' => __('Nova Blocks Large'),
-		'novablocks_medium' => __('Nova Blocks Medium'),
-		'novablocks_small' => __('Nova Blocks Small'),
-		'novablocks_tiny' => __('Nova Blocks Tiny'),
+			'novablocks_huge'   => esc_html__( 'Nova Blocks Huge', '__plugin_txtd' ),
+			'novablocks_large'  => esc_html__( 'Nova Blocks Large', '__plugin_txtd' ),
+			'novablocks_medium' => esc_html__( 'Nova Blocks Medium', '__plugin_txtd' ),
+			'novablocks_small'  => esc_html__( 'Nova Blocks Small', '__plugin_txtd' ),
+			'novablocks_tiny'   => esc_html__( 'Nova Blocks Tiny', '__plugin_txtd' ),
 	) );
 }
 

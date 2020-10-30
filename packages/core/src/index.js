@@ -28,7 +28,7 @@ import {
 	updateCategory
 } from '@wordpress/blocks';
 
-class novaBlocks {
+export class novaBlocks {
 
 	initialize( settings ) {
 		addSeparatorFilters( settings );

@@ -4,7 +4,7 @@ import { Spring, animated } from 'react-spring/renderprops';
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./util";
 
-import { useState, useEffect, useRef } from '@wordpress/element';
+import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
 const AdvancedGalleryPreview = ( props ) => {
 
@@ -64,10 +64,40 @@ const AdvancedGalleryItem = ( props ) => {
 		blobPreset,
 		blobComplexity,
 		blobSmoothness,
+
+		blobsSizeBalance,
+		blobsHorizontalDisplacement,
+		blobsVerticalDisplacement,
+
+		blobsEnableMask,
+		blobsEnableDecoration
 	} = attributes;
 
 	const svgMaskPath = generatePath( blobMaskPreset + index, blobMaskComplexity, blobMaskSmoothness );
 	const svgPath = generatePath( blobPreset + index, blobComplexity, blobSmoothness );
+
+
+	const xOffset = blobsEnableDecoration ? blobsHorizontalDisplacement : 50;
+	const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
+	const scaleRatio = blobsEnableDecoration ? blobsSizeBalance : 50;
+
+	const scaleDiff = 0.4 * ( 50 - scaleRatio ) / 50;
+
+	const xScale = 1 - Math.abs( 50 - xOffset ) / 100;
+	const yScale = 1 - Math.abs( 50 - yOffset ) / 100;
+	const scale = Math.min( xScale, yScale );
+
+	const mediaScale = scale - scaleDiff;
+	const decorationScale = scale + scaleDiff;
+
+	function getBlobTransform( scale, horizontalDisplacement, verticalDisplacement ) {
+		return `translate( ${ ( 1 - scale ) * horizontalDisplacement }%, ${ ( 1 - scale ) * verticalDisplacement }% ) scale( ${ scale } )`
+	}
+
+	const blobsStyles = {
+		'--blob-mix-media-transform': getBlobTransform( mediaScale, xOffset, yOffset ),
+		'--blob-mix-decoration-transform': getBlobTransform( decorationScale, 100 - xOffset, 100 - yOffset ),
+	};
 
 	if ( ! image ) {
 		return;
@@ -75,7 +105,7 @@ const AdvancedGalleryItem = ( props ) => {
 
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
-			<div className={ `novablocks-advanced-gallery__grid-item-media  blob-mix  blob-mix--style-${ blobMixingStyle }` }>
+			<div className={ `novablocks-advanced-gallery__grid-item-media  blob-mix  blob-mix--style-${ blobMixingStyle }` } style={ blobsStyles }>
 				<Spring to={ { path: svgMaskPath } }>
 					{ props => {
 
@@ -90,7 +120,7 @@ const AdvancedGalleryItem = ( props ) => {
 						};
 
 						return (
-							<animated.div className={ `novablocks-advanced-gallery__grid-item-mask  blob-mix__media` } style={ gridItemStyle }>
+							<animated.div className={ `novablocks-advanced-gallery__grid-item-mask  blob-mix__media` } style={ blobsEnableMask ? gridItemStyle : {} }>
 								{ image.type !== 'video' &&
 								  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
 								{ image.type === 'video' &&
@@ -99,16 +129,19 @@ const AdvancedGalleryItem = ( props ) => {
 						);
 					} }
 				</Spring>
-				<Spring to={ { path: svgPath } }>
-					{ props => {
+				{
+					blobsEnableDecoration &&
+					<Spring to={ { path: svgPath } }>
+						{ props => {
 
-						return (
-							<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox='0 0 20 20' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
-								<animated.path d={ props.path }></animated.path>
-							</svg>
-						);
-					} }
-				</Spring>
+							return (
+								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox='0 0 20 20' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+									<animated.path d={ props.path }></animated.path>
+								</svg>
+							);
+						} }
+					</Spring>
+				}
 			</div>
 			<div className="novablocks-advanced-gallery__grid-item-info">
 				{ typeof imageCaption === 'string' && <div

@@ -49,8 +49,6 @@ const ScrollingEffectPanel = ( props ) => {
 		name,
 	} = props;
 
-	console.log( settings );
-
 	const {
 		motionPresetOptions,
 		theme_support: {
