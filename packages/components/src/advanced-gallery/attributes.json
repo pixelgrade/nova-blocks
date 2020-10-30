@@ -73,5 +73,29 @@
 	"blobMaskSmoothness": {
 		"type": "number",
 		"default": 33
+	},
+	"blobsHorizontalDisplacement": {
+		"type": "number",
+		"default": 50
+	},
+	"blobsVerticalDisplacement": {
+		"type": "number",
+		"default": 50
+	},
+	"blobsSizeBalance": {
+		"type": "number",
+		"default": 50
+	},
+	"blobsEnableMask": {
+		"type": "boolean",
+		"default": false
+	},
+	"blobsEnableDecoration": {
+		"type": "boolean",
+		"default": false
+	},
+	"blobsMixStyle": {
+		"type": "string",
+		"default": "none"
 	}
 }

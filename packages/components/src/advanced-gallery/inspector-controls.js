@@ -1,3 +1,21 @@
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+
+import {
+	Button,
+	RadioControl,
+	RangeControl,
+	ToggleControl,
+} from '@wordpress/components';
+
+import * as icons from "@novablocks/icons";
+
+import {
+	getRandomFromArray,
+	getRandomBetween,
+	getControlsClasses
+} from '@novablocks/utils';
+
 import {
 	Blob,
 	ControlsGroup,
@@ -7,54 +25,133 @@ import {
 	Notice
 } from '../index';
 
-import { getRandomFromArray } from '@novablocks/utils';
 import { getRandomAttributes } from "./util";
 
-import { __ } from '@wordpress/i18n';
-import { 
-	Fragment,
-	RawHTML
-} from '@wordpress/element';
+const blobsMixStyleOptions = [ {
+	label: 'None',
+	value: 'none',
+}, {
+	label: 'Media Shape',
+	value: 'shape-mask',
+}, {
+	label: 'Decorative Shape',
+	value: 'mixing-1',
+}, {
+	label: 'Shape Mixing',
+	value: 'mixing-2',
+	attributes: {
+		blobsEnableMask: true,
+		blobsEnableDecoration: true,
+		blobsHorizontalDisplacement: 30,
+		blobsVerticalDisplacement: 50,
+		blobsSizeBalance: 50,
+	}
+}, {
+	label: 'Shape Mixing ALT',
+	value: 'mixing-3',
+	attributes: {
+		blobsEnableMask: true,
+		blobsEnableDecoration: true,
+		blobsHorizontalDisplacement: 70,
+		blobsVerticalDisplacement: 50,
+		blobsSizeBalance: 50,
+	}
+} ];
 
-import {
-	RadioControl,
-	RangeControl,
-	Text,
-} from '@wordpress/components';
+const getBlobStyleAttributes = ( attributes ) => {
+	const { blobsMixStyle } = attributes;
+	let newAttributes = attributes;
 
+	if ( 'none' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: false,
+			blobsEnableDecoration: false,
+		}
+	}
 
-const blobMixingStylesOptions = [
-	{ label: 'None', value: 'none' },
-	{ label: 'Media Shape', value: 'shape-mask' },
-	{ label: 'Decorative Shape', value: 'mixing-1' },
-	{ label: 'Shape Mixing', value: 'mixing-2' },
-	{ label: 'Shape Mixing ALT', value: 'mixing-3' },
-];
+	if ( 'media-shape' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: false,
+		}
+	}
+
+	if ( 'mixing-1' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: true,
+			blobsHorizontalDisplacement: 70,
+			blobsVerticalDisplacement: 30,
+			blobsSizeBalance: 50,
+		}
+	}
+
+	if ( 'mixing-2' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: true,
+			blobsHorizontalDisplacement: 30,
+			blobsVerticalDisplacement: 50,
+			blobsSizeBalance: 50,
+		}
+	}
+
+	if ( 'mixing-3' === blobsMixStyle ) {
+		newAttributes = {
+			blobsEnableMask: true,
+			blobsEnableDecoration: true,
+			blobsHorizontalDisplacement: 70,
+			blobsVerticalDisplacement: 50,
+			blobsSizeBalance: 50,
+		}
+	}
+
+	return {
+		...attributes,
+		...newAttributes
+	};
+};
 
 const AdvancedGalleryInspectorControls = ( props ) => {
 
 	const {
 		setAttributes,
-		attributes: {
-			// composition settings
-			sizeContrast,
-			positionShift,
-			elementsDistance,
-			placementVariation,
-
-			// elements settings
-			imageResizing,
-			objectPosition,
-			containerHeight,
-			imageRotation,
-
-			blobMixingStyle
-		},
+		attributes,
 		settings: {
 			advancedGalleryPresetOptions,
 			blobPresetOptions
 		}
 	} = props;
+
+	const {
+		// composition settings
+		sizeContrast,
+		positionShift,
+		elementsDistance,
+		placementVariation,
+
+		// elements settings
+		imageResizing,
+		objectPosition,
+		containerHeight,
+		imageRotation,
+
+		blobsSizeBalance,
+		blobsHorizontalDisplacement,
+		blobsVerticalDisplacement,
+
+		blobsEnableMask,
+		blobsEnableDecoration,
+		blobsMixStyle,
+
+		blobPreset,
+		blobComplexity,
+		blobSmoothness,
+
+		blobMaskPreset,
+		blobMaskComplexity,
+		blobMaskSmoothness,
+	} = attributes;
 
 	return (
 		<Fragment>
@@ -178,34 +275,98 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						label={ __( 'Choose a shape preset:', '__plugin_txtd' ) }
 						options={ blobPresetOptions }
 						randomize={ () => {
-							const stylesValues = blobMixingStylesOptions.map( opt => opt.value ).filter( value => {
-								return value !== 'none';
-							} );
 
 							return {
-								blobMixingStyle: getRandomFromArray( stylesValues ),
+								blobsEnableMask: getRandomFromArray( [true, true, false ] ),
+								blobsEnableDecoration: getRandomFromArray( [true, true, false ] ),
 								...Blob.Utils.getRandomBlobAttributes( 'blob' ),
 								...Blob.Utils.getRandomBlobAttributes( 'blobMask' ),
+								blobsHorizontalDisplacement: getRandomBetween( 0, 100 ),
+								blobsVerticalDisplacement: getRandomBetween( 0, 100 ),
+								blobsSizeBalance: getRandomBetween( 0, 100 ),
 							}
 						} }
 					/>
 				</ControlsTab>
-				<ControlsTab label={ __( 'Settings' ) }>
-					<ControlsGroup>
+				<ControlsTab label={ __( 'Customize' ) }>
+					<div className={ getControlsClasses( attributes, getBlobStyleAttributes ) }>
 						<RadioControl
 							key={ 'blobs-mixing-style' }
 							label={ 'Shape Usage Style' }
-							selected={ blobMixingStyle }
-							onChange={ blobMixingStyle => setAttributes( { blobMixingStyle } ) }
-							options={ blobMixingStylesOptions }
+							selected={ blobsMixStyle }
+							onChange={ blobsMixStyle => {
+								setAttributes( getBlobStyleAttributes( { ...attributes, blobsMixStyle } ) );
+							} }
+							options={ blobsMixStyleOptions }
 						/>
-					</ControlsGroup>
+					</div>
+					<Button
+						isPrimary
+						icon={ 'controls-repeat' }
+						onClick={ () => {
+							setAttributes( {
+								blobPreset: blobMaskPreset,
+								blobComplexity: blobMaskComplexity,
+								blobSmoothness: blobMaskSmoothness,
+								blobMaskPreset: blobPreset,
+								blobMaskComplexity: blobComplexity,
+								blobMaskSmoothness: blobSmoothness,
+							} )
+						} }
+					>{ __( 'Swap shapes', '__plugin_txtd' ) }</Button>
+				</ControlsTab>
+				<ControlsTab label={ __( 'Settings' ) }>
 					<ControlsGroup title={ __( 'Media Shape' ) }>
-						<Blob.Controls { ...props } prefix={ 'blobMask' } />
+						<ToggleControl
+							label={ __( 'Enable Media Shape', '__plugin_txtd' ) }
+							checked={ blobsEnableMask }
+							onChange={ () => setAttributes( { blobsEnableMask: ! blobsEnableMask } ) }
+						/>
+						{
+							blobsEnableMask &&
+							<Blob.Controls { ...props } prefix={ 'blobMask' } />
+						}
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Decorative Shape' ) }>
-						<Blob.Controls { ...props } prefix={ 'blob' } />
+						<ToggleControl
+							label={ __( 'Enable Blob Decoration', '__plugin_txtd' ) }
+							checked={ blobsEnableDecoration }
+							onChange={ () => setAttributes( { blobsEnableDecoration: ! blobsEnableDecoration } ) }
+						/>
+						{
+							blobsEnableDecoration &&
+							<Blob.Controls {...props} prefix={'blob'}/>
+						}
 					</ControlsGroup>
+					{
+						blobsEnableDecoration &&
+						<ControlsGroup title={ __( 'Scaling' ) }>
+							<RangeControl
+								value={ blobsHorizontalDisplacement }
+								onChange={ ( blobsHorizontalDisplacement ) => { setAttributes( { blobsHorizontalDisplacement } ) } }
+								label={ __( 'Horizontal Displacement' ) }
+								min={ 0 }
+								max={ 100 }
+								step={ 1 }
+							/>
+							<RangeControl
+								value={ blobsVerticalDisplacement }
+								onChange={ ( blobsVerticalDisplacement ) => { setAttributes( { blobsVerticalDisplacement } ) } }
+								label={ __( 'Vertical Displacement' ) }
+								min={ 0 }
+								max={ 100 }
+								step={ 1 }
+							/>
+							<RangeControl
+								value={ blobsSizeBalance }
+								onChange={ ( blobsSizeBalance ) => { setAttributes( { blobsSizeBalance } ) } }
+								label={ __( 'Size Balance' ) }
+								min={ 0 }
+								max={ 100 }
+								step={ 1 }
+							/>
+						</ControlsGroup>
+					}
 				</ControlsTab>
 			</ControlsSection>
 		</Fragment>
