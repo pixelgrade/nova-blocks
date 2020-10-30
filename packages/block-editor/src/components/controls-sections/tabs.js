@@ -2,7 +2,7 @@ import classnames from "classnames";
 
 import { useSpring, animated } from 'react-spring';
 
-import { useMemoryState } from '@novablocks/utils';
+import { useMemoryState } from '../../components';
 import Cube from "./cube";
 
 const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];

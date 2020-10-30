@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import {
-	ControlsDrawerContent,
+	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
 	LayoutControls,
@@ -23,12 +23,7 @@ import BlockControls from './block-controls';
 import { __ } from '@wordpress/i18n';
 
 import {
-	InspectorControls
-} from '@wordpress/block-editor';
-
-import {
 	RadioControl,
-	PanelBody
 } from '@wordpress/components';
 
 import {
@@ -169,7 +164,7 @@ class HeroEdit extends Component {
 			</Fragment>
 		);
 	}
-};
+}
 
 export default createHigherOrderComponent(compose([
 	withSettings,

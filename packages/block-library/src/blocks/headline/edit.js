@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { HeadingToolbar } from '@novablocks/components';
+import { HeadingToolbar } from '@novablocks/block-editor';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
