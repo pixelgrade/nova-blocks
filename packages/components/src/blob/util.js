@@ -4,7 +4,7 @@ import {
 } from '@novablocks/utils';
 
 const BLOB_MAX_SIDES = 20;
-const BLOB_RADIUS = 10;
+export const BLOB_RADIUS = 10;
 
 export const getRatio = ( preset, i ) => {
 	const pow = Math.pow( preset, i );
@@ -29,14 +29,9 @@ export const getSidesFromPreset = preset => {
 	return Math.min( Math.max( 3, Math.floor( Math.sqrt( preset ) ) ), BLOB_MAX_SIDES );
 };
 
-export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 ) => {
-
-	const points = [];
-	let firstPoint = '';
-	let curves = '';
-	let path;
-
+export const getPointsArrayFromPreset = ( preset, complexity, scale = true ) => {
 	const sides = getSidesFromPreset( preset );
+	const points = [];
 
 	// generate the points that will define the shape
 	for (let i = 1; i <= sides; i++) {
@@ -45,7 +40,7 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 		const angle = 2 * Math.PI * i / sides + Math.PI / 2;
 
 		const minimumRatio = 0.1;
-		const initialRatio = getRatio(preset + presetOffset, i);
+		const initialRatio = getRatio(preset, i);
 
 		const ratio = minimumRatio + ( initialRatio - minimumRatio ) * complexity / 100;
 
@@ -55,10 +50,30 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 		});
 	}
 
-	let missingPoints = BLOB_MAX_SIDES - sides;
+	console.log( Array.from( Array( sides ).keys() ).map( key => Math.round( ( 2 * Math.PI * key / sides + Math.PI / 2 ) * 180 / Math.PI ) ) );
+	console.log( Array.from( Array( sides ).keys() ).map( key => getRatio( preset, key ) ) );
 
-	let curvePoints = getCurvePointsFromPoints( points, smoothness );
-	scaleCurvePoints( curvePoints );
+	return points;
+};
+
+export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 ) => {
+	const sides = getSidesFromPreset( preset );
+	const curvePoints = getCurvePoints( preset, complexity, smoothness, presetOffset );
+	const missingPoints = BLOB_MAX_SIDES - sides;
+
+	return getPathFromCurvePoints( curvePoints, missingPoints );
+};
+
+export const getCurvePoints = ( preset, complexity, smoothness, presetOffset = 0 ) => {
+	const points = getPointsArrayFromPreset( preset + presetOffset, complexity );
+	scalePoints( points, getBoundsFromPoints( points ) );
+	return getCurvePointsFromPoints( points, smoothness, true );
+};
+
+export const getPathFromCurvePoints = ( curvePoints, missingPoints = 0 ) => {
+	let path;
+	let curves = '';
+	let firstPoint = '';
 
 	for ( let i = 0; i < curvePoints.length; i ++ ) {
 		const c = curvePoints[i];
@@ -66,7 +81,7 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 		curves += ' C ' + c.x1 + ' ' + c.y1 + ' ' + c.x2 + ' ' + c.y2 + ' ' + c.m2x + ' ' + c.m2y;
 
 		const dummyPointsCount = Math.round( missingPoints / (
-			points.length - i
+			curvePoints.length - i
 		) );
 
 		for ( let j = 0; j < dummyPointsCount; j ++ ) {
@@ -92,7 +107,7 @@ export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 )
 	return path;
 };
 
-function getCurvePointsFromPoints( points, smoothness ) {
+function getCurvePointsFromPoints( points, smoothness, scale = true ) {
 	let curvePoints = [];
 
 	for ( let i = 0; i < points.length; i ++ ) {
@@ -131,10 +146,35 @@ function getCurvePointsFromPoints( points, smoothness ) {
 		});
 	}
 
+	if ( !! scale ) {
+//		scaleCurvePoints( curvePoints, getBoundsFromPoints( points ) );
+	}
+
 	return curvePoints;
 }
 
-function scaleCurvePoints( points ) {
+export const getBoundsFromPoints = points => {
+	let xMax = 0;
+	let yMax = 0;
+	let xMin = BLOB_RADIUS;
+	let yMin = BLOB_RADIUS;
+
+	for ( let i = 0; i < points.length; i ++ ) {
+		const { x, y } = points[i];
+
+		xMin = Math.min( xMin, x );
+		xMax = Math.max( xMax, x );
+		yMin = Math.min( yMin, y );
+		yMax = Math.max( yMax, y );
+	}
+
+	const xRatio = 2 * BLOB_RADIUS / ( xMax - xMin );
+	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
+
+	return { xMin, xMax, yMin, yMax, xRatio, yRatio }
+}
+
+function getBoundsFromCurvePoints( points ) {
 	let xMax = 0;
 	let yMax = 0;
 	let xMin = BLOB_RADIUS;
@@ -152,6 +192,12 @@ function scaleCurvePoints( points ) {
 	const xRatio = 2 * BLOB_RADIUS / ( xMax - xMin );
 	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
 
+	return { xMin, xMax, yMin, yMax, xRatio, yRatio }
+}
+
+function scaleCurvePoints( points, bounds ) {
+	const { xMin, xMax, yMin, yMax, xRatio, yRatio } = bounds;
+
 	for ( let i = 0; i < points.length; i ++ ) {
 		const { x1, x2, y1, y2, m1x, m2x, m1y, m2y } = points[i];
 
@@ -164,6 +210,19 @@ function scaleCurvePoints( points ) {
 			y2: ( y2 - yMin ) * yRatio,
 			m1y: ( m1y - yMin ) * yRatio,
 			m2y: ( m2y - yMin ) * yRatio
+		}
+	}
+}
+
+export const scalePoints = ( points, bounds ) => {
+	const { xMin, xMax, yMin, yMax, xRatio, yRatio } = bounds;
+
+	for ( let i = 0; i < points.length; i ++ ) {
+		const { x, y } = points[i];
+
+		points[i] = {
+			x: ( x - xMin ) * xRatio,
+			y: ( y - yMin ) * yRatio,
 		}
 	}
 }

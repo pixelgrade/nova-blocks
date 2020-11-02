@@ -54,7 +54,7 @@ const AdvancedGalleryItem = ( props ) => {
 	const imageDescription = image?.description;
 	const styles = gridItem.getImageStyle();
 
-	const { generatePath } = Blob.Utils;
+	const { generatePath, getCurvePoints, getPointsArrayFromPreset, getBoundsFromPoints, scalePoints, BLOB_RADIUS } = Blob.Utils;
 
 	const {
 		blobMixingStyle,
@@ -73,9 +73,21 @@ const AdvancedGalleryItem = ( props ) => {
 		blobsEnableDecoration
 	} = attributes;
 
+
 	const svgMaskPath = generatePath( blobMaskPreset + index, blobMaskComplexity, blobMaskSmoothness );
 	const svgPath = generatePath( blobPreset + index, blobComplexity, blobSmoothness );
 
+	const points = getPointsArrayFromPreset( blobPreset + index, blobComplexity );
+	const curvePoints = getCurvePoints( blobPreset + index, blobComplexity, blobSmoothness );
+	const bounds = getBoundsFromPoints( points );
+	const { xMin, xRatio, yMin, yRatio } = bounds;
+
+	const xCenter = ( BLOB_RADIUS - xMin ) * xRatio;
+	const yCenter = ( BLOB_RADIUS - yMin ) * yRatio;
+
+	scalePoints( points, bounds );
+
+	console.log( xMin, xRatio, yMin, yRatio, xCenter, yCenter );
 
 	const xOffset = blobsEnableDecoration ? blobsHorizontalDisplacement : 50;
 	const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
@@ -135,8 +147,42 @@ const AdvancedGalleryItem = ( props ) => {
 						{ props => {
 
 							return (
-								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox='0 0 20 20' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox='-2 -2 24 24' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
 									<animated.path d={ props.path }></animated.path>
+									{ points.map( ( point, index ) => {
+										const nextPoint = points[ ( index + 1 ) % points.length ];
+										return (
+											<Fragment>
+												<line x1={ point.x } y1={ point.y } x2={ nextPoint.x } y2={ nextPoint.y } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" />
+												<line x1={ point.x } y1={ point.y } x2={ xCenter } y2={ yCenter } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" />
+											</Fragment>
+										)
+									} ) }
+									{ curvePoints.map( ( { x1, y1, x2, y2, m1x, m1y, m2x, m2y } ) => {
+										return (
+											<Fragment>
+												<line x1={ m1x } y1={ m1y } x2={ x1 } y2={ y1 } strokeWidth="0.1" stroke="black" />
+												<line x1={ m2x } y1={ m2y } x2={ x2 } y2={ y2 } strokeWidth="0.1" stroke="black" />
+											</Fragment>
+										)
+									} ) }
+									{ curvePoints.map( ( { x1, y1, x2, y2, m1x, m1y, m2x, m2y } ) => {
+										return (
+											<Fragment>
+												<circle cx={ x1 } cy={ y1 } r="0.2" stroke="black" strokeWidth="0.1" fill="white" />
+												<circle cx={ x2 } cy={ y2 } r="0.2" stroke="black" strokeWidth="0.1" fill="white" />
+												<rect x={ m1x - 0.2 } y={ m1y - 0.2 } width="0.4" height="0.4" stroke="black" strokeWidth="0.1"  fill="yellow" />
+											</Fragment>
+										)
+									} ) }
+									{ points.map( ( { x, y } ) => {
+										return false;
+
+										return (
+											<circle cx={ x } cy={ y } r="0.1" stroke="black" strokeWidth="0.05"  fill="white" />
+										)
+									} ) }
+
 								</svg>
 							);
 						} }
