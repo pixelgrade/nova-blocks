@@ -341,7 +341,12 @@ function novablocks_dequeue_unused_block_assets() {
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 		$block = basename( $blockpath );
 
-		if ( ! is_admin() && ! has_block( 'novablocks/' . $block ) && ! novablocks_block_area_has_blocks('header') ) {
+		if ( ! is_admin() && ! has_block( 'novablocks/' . $block ) ) {
+
+			if ( novablocks_block_area_has_blocks( 'header' ) && $block === 'header' ) {
+				return;
+			}
+
 			wp_dequeue_script( 'novablocks/' . $block . '-frontend' );
 			wp_dequeue_style( 'novablocks/' . $block . '-style' );
 		}
