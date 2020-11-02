@@ -6,31 +6,20 @@ import {
 const BLOB_MAX_SIDES = 20;
 export const BLOB_RADIUS = 10;
 
-export const getRatio = ( preset, i ) => {
-	const pow = Math.pow( preset, i );
-	return ( 1 + getMagicDigit( pow ) ) / 10;
-};
+export const getRatio = ( nthSide, attributes ) => {
+	const { skewedCorners, patternLength, patternSeed } = attributes;
 
-export const getMagicDigit = n => {
-	let sum = 0;
-
-	while ( n > 0 || sum > 9 ) {
-		if ( n === 0 ) {
-			n = sum;
-			sum = 0;
-		}
-		sum += n % 10;
-		n = Math.floor(n / 10 );
+	if ( nthSide > skewedCorners ) {
+		return 1;
 	}
-	return sum;
+
+	const magicDigit = ( Math.pow( patternSeed, nthSide % patternLength ) % 11 ) % 10;
+
+	return magicDigit / 10;
 };
 
-export const getSidesFromPreset = preset => {
-	return Math.min( Math.max( 3, Math.floor( Math.sqrt( preset ) ) ), BLOB_MAX_SIDES );
-};
-
-export const getPointsArrayFromPreset = ( preset, complexity, scale = true ) => {
-	const sides = getSidesFromPreset( preset );
+export const getPointsArrayFromPreset = ( attributes ) => {
+	const { sides, complexity } = attributes;
 	const points = [];
 
 	// generate the points that will define the shape
@@ -38,11 +27,7 @@ export const getPointsArrayFromPreset = ( preset, complexity, scale = true ) => 
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
 		const angle = 2 * Math.PI * i / sides + Math.PI / 2;
-
-		const minimumRatio = 0.1;
-		const initialRatio = getRatio(preset, i);
-
-		const ratio = minimumRatio + ( initialRatio - minimumRatio ) * complexity / 100;
+		const ratio = 1 - getRatio( i, attributes ) * complexity / 100;
 
 		points.push({
 			x: BLOB_RADIUS * ( Math.cos( angle ) * ratio + 1 ),
@@ -50,22 +35,22 @@ export const getPointsArrayFromPreset = ( preset, complexity, scale = true ) => 
 		});
 	}
 
-	console.log( Array.from( Array( sides ).keys() ).map( key => Math.round( ( 2 * Math.PI * key / sides + Math.PI / 2 ) * 180 / Math.PI ) ) );
-	console.log( Array.from( Array( sides ).keys() ).map( key => getRatio( preset, key ) ) );
-
 	return points;
 };
 
-export const generatePath = ( preset, complexity, smoothness, presetOffset = 0 ) => {
-	const sides = getSidesFromPreset( preset );
-	const curvePoints = getCurvePoints( preset, complexity, smoothness, presetOffset );
+export const generatePath = ( attributes ) => {
+	const { sides } = attributes;
+	const curvePoints = getCurvePoints( attributes );
+
+	console.log( sides, curvePoints );
 	const missingPoints = BLOB_MAX_SIDES - sides;
 
 	return getPathFromCurvePoints( curvePoints, missingPoints );
 };
 
-export const getCurvePoints = ( preset, complexity, smoothness, presetOffset = 0 ) => {
-	const points = getPointsArrayFromPreset( preset + presetOffset, complexity );
+export const getCurvePoints = ( attributes ) => {
+	const { smoothness } = attributes;
+	const points = getPointsArrayFromPreset( attributes );
 	scalePoints( points, getBoundsFromPoints( points ) );
 	return getCurvePointsFromPoints( points, smoothness, true );
 };
@@ -225,7 +210,7 @@ export const scalePoints = ( points, bounds ) => {
 			y: ( y - yMin ) * yRatio,
 		}
 	}
-}
+};
 
 export const getRandomBlobAttributes = ( prefix ) => {
 

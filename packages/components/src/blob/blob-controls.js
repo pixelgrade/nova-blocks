@@ -14,15 +14,51 @@ const BlobControls = ( props ) => {
 	return (
 		<Fragment>
 			<RangeControl
-				value={ attributes[ `${ prefix }Preset` ] }
-				onChange={ ( preset ) => {
+				value={ attributes[ `${ prefix }Sides` ] }
+				onChange={ ( sides ) => {
 					const newAttributes = {};
-					newAttributes[`${ prefix }Preset`] = preset;
+					newAttributes[`${ prefix }Sides`] = sides;
 					setAttributes( newAttributes );
 				} }
-				label={ __( 'Outline' ) }
+				label={ __( 'Sides' ) }
 				min={ 1 }
-				max={ 100 }
+				max={ 20 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[ `${ prefix }SkewedCorners` ] }
+				onChange={ ( sides ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }SkewedCorners`] = sides;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Skewed Corners' ) }
+				min={ 0 }
+				max={ 20 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[ `${ prefix }PatternLength` ] }
+				onChange={ ( sides ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }PatternLength`] = sides;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Pattern Length' ) }
+				min={ 1 }
+				max={ 20 }
+				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[ `${ prefix }PatternSeed` ] }
+				onChange={ ( preset ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }PatternSeed`] = preset;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Pattern Seed' ) }
+				min={ 1 }
+				max={ 10 }
 				step={ 1 }
 			/>
 			<RangeControl
