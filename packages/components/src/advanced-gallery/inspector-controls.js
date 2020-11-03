@@ -69,7 +69,7 @@ const getBlobStyleAttributes = ( attributes ) => {
 		}
 	}
 
-	if ( 'media-shape' === blobsMixStyle ) {
+	if ( 'shape-mask' === blobsMixStyle ) {
 		newAttributes = {
 			blobsEnableMask: true,
 			blobsEnableDecoration: false,
@@ -119,7 +119,8 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 		attributes,
 		settings: {
 			advancedGalleryPresetOptions,
-			blobPresetOptions
+			blobPresetOptions,
+			debug,
 		}
 	} = props;
 
@@ -151,6 +152,8 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 		blobMaskPreset,
 		blobMaskComplexity,
 		blobMaskSmoothness,
+
+		enableShapeDebug,
 	} = attributes;
 
 	return (
@@ -300,22 +303,21 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 							options={ blobsMixStyleOptions }
 						/>
 					</div>
-					<Button
-						isPrimary
-						icon={ 'controls-repeat' }
-						onClick={ () => {
-							setAttributes( {
-								blobPreset: blobMaskPreset,
-								blobComplexity: blobMaskComplexity,
-								blobSmoothness: blobMaskSmoothness,
-								blobMaskPreset: blobPreset,
-								blobMaskComplexity: blobComplexity,
-								blobMaskSmoothness: blobSmoothness,
-							} )
-						} }
-					>{ __( 'Swap shapes', '__plugin_txtd' ) }</Button>
+					<SwapShapesButton { ...props } />
 				</ControlsTab>
 				<ControlsTab label={ __( 'Settings' ) }>
+					{
+						!! debug &&
+						<ControlsGroup title={ __( 'Debug' ) }>
+							<ToggleControl
+								label={ __( 'Enable Shape Debug', '__plugin_txtd' ) }
+								checked={ enableShapeDebug }
+								onChange={ () => setAttributes( {
+									enableShapeDebug: ! enableShapeDebug
+								} ) }
+							/>
+						</ControlsGroup>
+					}
 					<ControlsGroup title={ __( 'Media Shape' ) }>
 						<ToggleControl
 							label={ __( 'Enable Media Shape', '__plugin_txtd' ) }
@@ -324,7 +326,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						/>
 						{
 							blobsEnableMask &&
-							<Blob.Controls { ...props } prefix={ 'blobMask' } />
+							<Blob.InspectorControls { ...props } prefix={ 'blobMask' } />
 						}
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Decorative Shape' ) }>
@@ -335,7 +337,7 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						/>
 						{
 							blobsEnableDecoration &&
-							<Blob.Controls {...props} prefix={'blob'}/>
+							<Blob.InspectorControls { ...props } prefix={ 'blob' } />
 						}
 					</ControlsGroup>
 					{
@@ -371,6 +373,27 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 			</ControlsSection>
 		</Fragment>
 	);
-}
+};
+
+const SwapShapesButton = ( props ) => {
+	const { attributes, setAttributes } = props;
+	const newAttributes = {};
+	const atts = [ 'Sides', 'SkewedCorners', 'PatternLength', 'PatternSeed', 'Complexity', 'Smoothness' ];
+
+	atts.forEach( att => {
+		newAttributes[ `blob${ att }` ] = attributes[ `blobMask${ att }` ];
+		newAttributes[ `blobMask${ att }` ] = attributes[ `blob${ att }` ];
+	} );
+
+	return (
+		<Button
+			isPrimary
+			icon={ 'controls-repeat' }
+			onClick={ () => { setAttributes( newAttributes ) } }
+		>
+			{ __( 'Swap shapes', '__plugin_txtd' ) }
+		</Button>
+	)
+};
 
 export default AdvancedGalleryInspectorControls;

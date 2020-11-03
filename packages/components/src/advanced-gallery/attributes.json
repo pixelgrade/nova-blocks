@@ -50,9 +50,21 @@
 		"type": "string",
 		"default": "none"
 	},
-	"blobPreset": {
+	"blobSides": {
 		"type": "number",
-		"default": 16
+		"default": 3
+	},
+	"blobSkewedCorners": {
+		"type": "number",
+		"default": 3
+	},
+	"blobPatternLength": {
+		"type": "number",
+		"default": 3
+	},
+	"blobPatternSeed": {
+		"type": "number",
+		"default": 3
 	},
 	"blobComplexity": {
 		"type": "number",
@@ -62,9 +74,25 @@
 		"type": "number",
 		"default": 33
 	},
-	"blobMaskPreset": {
+	"blobRotation": {
 		"type": "number",
-		"default": 16
+		"default": 0
+	},
+	"blobMaskSides": {
+		"type": "number",
+		"default": 3
+	},
+	"blobMaskSkewedCorners": {
+		"type": "number",
+		"default": 3
+	},
+	"blobMaskPatternLength": {
+		"type": "number",
+		"default": 3
+	},
+	"blobMaskPatternSeed": {
+		"type": "number",
+		"default": 3
 	},
 	"blobMaskComplexity": {
 		"type": "number",
@@ -73,6 +101,10 @@
 	"blobMaskSmoothness": {
 		"type": "number",
 		"default": 33
+	},
+	"blobMaskRotation": {
+		"type": "number",
+		"default": 0
 	},
 	"blobsHorizontalDisplacement": {
 		"type": "number",

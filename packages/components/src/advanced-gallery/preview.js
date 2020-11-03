@@ -40,12 +40,13 @@ const AdvancedGalleryPreview = ( props ) => {
 	);
 };
 
+
 const AdvancedGalleryItem = ( props ) => {
 
 	const {
 		attributes,
 		gridItem,
-		index,
+		settings,
 	} = props;
 
 	const image = gridItem?.image;
@@ -55,27 +56,57 @@ const AdvancedGalleryItem = ( props ) => {
 	const styles = gridItem.getImageStyle();
 
 	const { generatePath } = Blob.Utils;
+	const svgViewBox = ! enableShapeDebug ? '0 0 20 20' : '-2 -2 24 24';
 
 	const {
-		blobMixingStyle,
-		blobMaskPreset,
+		blobMaskSides,
+		blobMaskSkewedCorners,
+		blobMaskPatternLength,
+		blobMaskPatternSeed,
 		blobMaskComplexity,
 		blobMaskSmoothness,
-		blobPreset,
+		blobMaskRotation,
+
+		blobSides,
+		blobSkewedCorners,
+		blobPatternLength,
+		blobPatternSeed,
 		blobComplexity,
 		blobSmoothness,
+		blobRotation,
 
 		blobsSizeBalance,
 		blobsHorizontalDisplacement,
 		blobsVerticalDisplacement,
 
 		blobsEnableMask,
-		blobsEnableDecoration
+		blobsEnableDecoration,
+
+		enableShapeDebug
 	} = attributes;
 
-	const svgMaskPath = generatePath( blobMaskPreset + index, blobMaskComplexity, blobMaskSmoothness );
-	const svgPath = generatePath( blobPreset + index, blobComplexity, blobSmoothness );
+	const blobAtts = {
+		sides: blobSides,
+		skewedCorners: blobSkewedCorners,
+		patternLength: blobPatternLength,
+		patternSeed: blobPatternSeed,
+		complexity: blobComplexity,
+		smoothness: blobSmoothness,
+		rotation: blobRotation,
+	};
 
+	const blobMaskAtts = {
+		sides: blobMaskSides,
+		skewedCorners: blobMaskSkewedCorners,
+		patternLength: blobMaskPatternLength,
+		patternSeed: blobMaskPatternSeed,
+		complexity: blobMaskComplexity,
+		smoothness: blobMaskSmoothness,
+		rotation: blobMaskRotation,
+	};
+
+	const svgMaskPath = generatePath( blobMaskAtts );
+	const svgPath = generatePath( blobAtts );
 
 	const xOffset = blobsEnableDecoration ? blobsHorizontalDisplacement : 50;
 	const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
@@ -105,12 +136,12 @@ const AdvancedGalleryItem = ( props ) => {
 
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
-			<div className={ `novablocks-advanced-gallery__grid-item-media  blob-mix  blob-mix--style-${ blobMixingStyle }` } style={ blobsStyles }>
+			<div className={ `novablocks-advanced-gallery__grid-item-media  blob-mix` } style={ blobsStyles }>
 				<Spring to={ { path: svgMaskPath } }>
 					{ props => {
 
-						const svgString = `<svg viewBox='0 0 20 20' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'><path d='${ props.path }'></path></svg>`;
-						const svgDataURI = `url("data:image/svg+xml;utf8,${svgString}")`;
+						const svgString = `<svg viewBox='${ svgViewBox }' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'><path d='${ props.path }'></path></svg>`;
+						const svgDataURI = `url("data:image/svg+xml;utf8,${ svgString }")`;
 
 						const gridItemStyle = {
 							maskImage: svgDataURI,
@@ -120,12 +151,22 @@ const AdvancedGalleryItem = ( props ) => {
 						};
 
 						return (
-							<animated.div className={ `novablocks-advanced-gallery__grid-item-mask  blob-mix__media` } style={ blobsEnableMask ? gridItemStyle : {} }>
-								{ image.type !== 'video' &&
-								  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
-								{ image.type === 'video' &&
-								  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
-							</animated.div>
+							<Fragment>
+								<div className={ `novablocks-advanced-gallery__grid-item-mask blob-mix__media` }>
+									<animated.div className="blob-mix__mask" style={ blobsEnableMask ? gridItemStyle : {} }>
+										{ image.type !== 'video' &&
+										  <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
+										{ image.type === 'video' &&
+										  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
+									</animated.div>
+									<svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+										{
+											blobsEnableMask && enableShapeDebug &&
+											<Blob.Debug { ...blobMaskAtts } />
+										}
+									</svg>
+								</div>
+							</Fragment>
 						);
 					} }
 				</Spring>
@@ -135,8 +176,12 @@ const AdvancedGalleryItem = ( props ) => {
 						{ props => {
 
 							return (
-								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox='0 0 20 20' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
 									<animated.path d={ props.path }></animated.path>
+									{
+										enableShapeDebug &&
+										<Blob.Debug {...blobAtts} />
+									}
 								</svg>
 							);
 						} }
