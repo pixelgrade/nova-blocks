@@ -2,7 +2,20 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { RangeControl } from '@wordpress/components';
 
-const BlobControls = ( props ) => {
+const getMinSkewedCorners = ( attributes, prefix ) => {
+	return 0;
+};
+
+const getMaxSkewedCorners = ( attributes, prefix ) => {
+	return 20;
+	return attributes[ `${ prefix }Sides` ];
+};
+
+const normalizeAttributes = ( attributes, prefix ) => {
+	attributes[ `${ prefix }SkewedCorners` ] = Math.max( getMinSkewedCorners( attributes, prefix ), Math.min( getMaxSkewedCorners( attributes, prefix ) ) );
+};
+
+const InspectorControls = ( props ) => {
 
 	const {
 		attributes,
@@ -21,7 +34,7 @@ const BlobControls = ( props ) => {
 					setAttributes( newAttributes );
 				} }
 				label={ __( 'Sides' ) }
-				min={ 1 }
+				min={ 3 }
 				max={ 20 }
 				step={ 1 }
 			/>
@@ -33,8 +46,8 @@ const BlobControls = ( props ) => {
 					setAttributes( newAttributes );
 				} }
 				label={ __( 'Skewed Corners' ) }
-				min={ 0 }
-				max={ 20 }
+				min={ getMinSkewedCorners( attributes, prefix ) }
+				max={ getMaxSkewedCorners( attributes, prefix ) }
 				step={ 1 }
 			/>
 			<RangeControl
@@ -89,4 +102,4 @@ const BlobControls = ( props ) => {
 	);
 };
 
-export default BlobControls;
+export default InspectorControls;

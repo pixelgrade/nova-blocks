@@ -1,7 +1,9 @@
-import BlobControls from './blob-controls';
-import * as utils from './util';
+import InspectorControls from './inspector-controls';
+import Debug from './debug';
+import * as utils from './utils';
 
 export default {
-	Controls: BlobControls,
+	InspectorControls,
+	Debug,
 	Utils: utils
 };

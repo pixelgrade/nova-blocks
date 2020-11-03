@@ -27,11 +27,12 @@ export const getPointsArrayFromPreset = ( attributes ) => {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
 		const angle = 2 * Math.PI * i / sides + Math.PI / 2;
-		const ratio = 1 - getRatio( i, attributes ) * complexity / 100;
+		const ratio = getRatio( i, attributes );
+		const distance = ratio + ( 1 - ratio ) * ( 100 - complexity ) / 100;
 
 		points.push({
-			x: BLOB_RADIUS * ( Math.cos( angle ) * ratio + 1 ),
-			y: BLOB_RADIUS * ( Math.sin( angle ) * ratio + 1 )
+			x: BLOB_RADIUS * ( Math.cos( angle ) * distance + 1 ),
+			y: BLOB_RADIUS * ( Math.sin( angle ) * distance + 1 )
 		});
 	}
 
@@ -41,8 +42,6 @@ export const getPointsArrayFromPreset = ( attributes ) => {
 export const generatePath = ( attributes ) => {
 	const { sides } = attributes;
 	const curvePoints = getCurvePoints( attributes );
-
-	console.log( sides, curvePoints );
 	const missingPoints = BLOB_MAX_SIDES - sides;
 
 	return getPathFromCurvePoints( curvePoints, missingPoints );
@@ -51,8 +50,12 @@ export const generatePath = ( attributes ) => {
 export const getCurvePoints = ( attributes ) => {
 	const { smoothness } = attributes;
 	const points = getPointsArrayFromPreset( attributes );
-	scalePoints( points, getBoundsFromPoints( points ) );
-	return getCurvePointsFromPoints( points, smoothness, true );
+	const curvePoints = getCurvePointsFromPoints( points, smoothness);
+	const bounds = getBoundsFromCurvePoints( curvePoints );
+
+	scaleCurvePoints( curvePoints, bounds );
+
+	return curvePoints;
 };
 
 export const getPathFromCurvePoints = ( curvePoints, missingPoints = 0 ) => {
@@ -92,7 +95,7 @@ export const getPathFromCurvePoints = ( curvePoints, missingPoints = 0 ) => {
 	return path;
 };
 
-function getCurvePointsFromPoints( points, smoothness, scale = true ) {
+export const getCurvePointsFromPoints = ( points, smoothness ) => {
 	let curvePoints = [];
 
 	for ( let i = 0; i < points.length; i ++ ) {
@@ -131,12 +134,8 @@ function getCurvePointsFromPoints( points, smoothness, scale = true ) {
 		});
 	}
 
-	if ( !! scale ) {
-//		scaleCurvePoints( curvePoints, getBoundsFromPoints( points ) );
-	}
-
 	return curvePoints;
-}
+};
 
 export const getBoundsFromPoints = points => {
 	let xMax = 0;
@@ -157,9 +156,9 @@ export const getBoundsFromPoints = points => {
 	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
 
 	return { xMin, xMax, yMin, yMax, xRatio, yRatio }
-}
+};
 
-function getBoundsFromCurvePoints( points ) {
+export const getBoundsFromCurvePoints = ( points ) => {
 	let xMax = 0;
 	let yMax = 0;
 	let xMin = BLOB_RADIUS;
@@ -178,9 +177,9 @@ function getBoundsFromCurvePoints( points ) {
 	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
 
 	return { xMin, xMax, yMin, yMax, xRatio, yRatio }
-}
+};
 
-function scaleCurvePoints( points, bounds ) {
+export const scaleCurvePoints = ( points, bounds ) => {
 	const { xMin, xMax, yMin, yMax, xRatio, yRatio } = bounds;
 
 	for ( let i = 0; i < points.length; i ++ ) {
@@ -197,7 +196,7 @@ function scaleCurvePoints( points, bounds ) {
 			m2y: ( m2y - yMin ) * yRatio
 		}
 	}
-}
+};
 
 export const scalePoints = ( points, bounds ) => {
 	const { xMin, xMax, yMin, yMax, xRatio, yRatio } = bounds;

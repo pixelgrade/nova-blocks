@@ -46,6 +46,7 @@ const AdvancedGalleryItem = ( props ) => {
 	const {
 		attributes,
 		gridItem,
+		settings,
 	} = props;
 
 	const image = gridItem?.image;
@@ -55,6 +56,7 @@ const AdvancedGalleryItem = ( props ) => {
 	const styles = gridItem.getImageStyle();
 
 	const { generatePath } = Blob.Utils;
+	const svgViewBox = ! enableShapeDebug ? '0 0 20 20' : '-2 -2 24 24';
 
 	const {
 		blobMaskSides,
@@ -76,7 +78,9 @@ const AdvancedGalleryItem = ( props ) => {
 		blobsVerticalDisplacement,
 
 		blobsEnableMask,
-		blobsEnableDecoration
+		blobsEnableDecoration,
+
+		enableShapeDebug
 	} = attributes;
 
 	const blobAtts = {
@@ -132,8 +136,8 @@ const AdvancedGalleryItem = ( props ) => {
 				<Spring to={ { path: svgMaskPath } }>
 					{ props => {
 
-						const svgString = `<svg viewBox='-2 -2 24 24' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'><path d='${ props.path }'></path></svg>`;
-						const svgDataURI = `url("data:image/svg+xml;utf8,${svgString}")`;
+						const svgString = `<svg viewBox='${ svgViewBox }' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'><path d='${ props.path }'></path></svg>`;
+						const svgDataURI = `url("data:image/svg+xml;utf8,${ svgString }")`;
 
 						const gridItemStyle = {
 							maskImage: svgDataURI,
@@ -151,8 +155,11 @@ const AdvancedGalleryItem = ( props ) => {
 										{ image.type === 'video' &&
 										  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
 									</animated.div>
-									<svg className="blob-mix__mask-debug" viewBox='-2 -2 24 24' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
-										<BlobDebug { ...blobMaskAtts } />
+									<svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+										{
+											blobsEnableMask && enableShapeDebug &&
+											<Blob.Debug { ...blobMaskAtts } />
+										}
 									</svg>
 								</div>
 							</Fragment>
@@ -165,9 +172,12 @@ const AdvancedGalleryItem = ( props ) => {
 						{ props => {
 
 							return (
-								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox='-2 -2 24 24' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+								<svg className={ `novablocks-advanced-gallery__grid-item-shape  blob-mix__decoration` } viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
 									<animated.path d={ props.path }></animated.path>
-									<BlobDebug { ...blobAtts } />
+									{
+										enableShapeDebug &&
+										<Blob.Debug {...blobAtts} />
+									}
 								</svg>
 							);
 						} }
@@ -186,64 +196,6 @@ const AdvancedGalleryItem = ( props ) => {
 			</div>
 		</div>
 	);
-};
-
-const BlobDebug = ( props ) => {
-	const { getBoundsFromPoints, getCurvePoints, getPointsArrayFromPreset, scalePoints, BLOB_RADIUS } = Blob.Utils;
-
-	const points = getPointsArrayFromPreset( props );
-	const curvePoints = getCurvePoints( props );
-	const bounds = getBoundsFromPoints( points );
-	const { xMin, xRatio, yMin, yRatio } = bounds;
-
-	const xCenter = ( BLOB_RADIUS - xMin ) * xRatio;
-	const yCenter = ( BLOB_RADIUS - yMin ) * yRatio;
-
-	scalePoints( points, bounds );
-
-	return (
-		<Fragment>
-			{ points.map( ( point, index ) => {
-				const nextPoint = points[ ( index + 1 ) % points.length ];
-				return (
-					<Fragment>
-						<line x1={ point.x } y1={ point.y } x2={ nextPoint.x } y2={ nextPoint.y } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" style={ { strokeOpacity: .3 } } />
-						<line x1={ point.x } y1={ point.y } x2={ xCenter } y2={ yCenter } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" style={ { strokeOpacity: .3 } } />
-					</Fragment>
-				)
-			} ) }
-			{ curvePoints.map( ( { x1, y1, x2, y2, m1x, m1y, m2x, m2y } ) => {
-				return (
-					<Fragment>
-						<line x1={ m1x } y1={ m1y } x2={ x1 } y2={ y1 } strokeWidth="0.05" stroke="black" />
-						<line x1={ m2x } y1={ m2y } x2={ x2 } y2={ y2 } strokeWidth="0.05" stroke="black" />
-					</Fragment>
-				)
-			} ) }
-			{ curvePoints.map( ( { x1, y1, x2, y2, m1x, m1y, m2x, m2y } ) => {
-				return (
-					<Fragment>
-						<circle cx={ x1 } cy={ y1 } r="0.1" stroke="black" strokeWidth="0.05" fill="white" />
-						<circle cx={ x2 } cy={ y2 } r="0.1" stroke="black" strokeWidth="0.05" fill="white" />
-					</Fragment>
-				)
-			} ) }
-			{ curvePoints.map( ( { x1, y1, x2, y2, m1x, m1y, m2x, m2y } ) => {
-				return (
-					<Fragment>
-						<rect x={ m1x - 0.1 } y={ m1y - 0.1 } width="0.2" height="0.2" stroke="black" strokeWidth="0.05"  fill="yellow" />
-					</Fragment>
-				)
-			} ) }
-			{ points.map( ( { x, y } ) => {
-				return false;
-
-				return (
-					<circle cx={ x } cy={ y } r="0.1" stroke="black" strokeWidth="0.05"  fill="white" />
-				)
-			} ) }
-		</Fragment>
-	)
 };
 
 export default AdvancedGalleryPreview;
