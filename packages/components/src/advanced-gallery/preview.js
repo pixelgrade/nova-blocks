@@ -65,6 +65,7 @@ const AdvancedGalleryItem = ( props ) => {
 		blobMaskPatternSeed,
 		blobMaskComplexity,
 		blobMaskSmoothness,
+		blobMaskRotation,
 
 		blobSides,
 		blobSkewedCorners,
@@ -72,6 +73,7 @@ const AdvancedGalleryItem = ( props ) => {
 		blobPatternSeed,
 		blobComplexity,
 		blobSmoothness,
+		blobRotation,
 
 		blobsSizeBalance,
 		blobsHorizontalDisplacement,
@@ -90,6 +92,7 @@ const AdvancedGalleryItem = ( props ) => {
 		patternSeed: blobPatternSeed,
 		complexity: blobComplexity,
 		smoothness: blobSmoothness,
+		rotation: blobRotation,
 	};
 
 	const blobMaskAtts = {
@@ -99,6 +102,7 @@ const AdvancedGalleryItem = ( props ) => {
 		patternSeed: blobMaskPatternSeed,
 		complexity: blobMaskComplexity,
 		smoothness: blobMaskSmoothness,
+		rotation: blobMaskRotation,
 	};
 
 	const svgMaskPath = generatePath( blobMaskAtts );

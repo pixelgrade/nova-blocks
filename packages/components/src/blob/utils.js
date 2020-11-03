@@ -19,14 +19,14 @@ export const getRatio = ( nthSide, attributes ) => {
 };
 
 export const getPointsArrayFromPreset = ( attributes ) => {
-	const { sides, complexity } = attributes;
+	const { sides, rotation, complexity } = attributes;
 	const points = [];
 
 	// generate the points that will define the shape
 	for (let i = 1; i <= sides; i++) {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
-		const angle = 2 * Math.PI * i / sides + Math.PI / 2;
+		const angle = 2 * Math.PI * i / sides + Math.PI / 2 + Math.PI * rotation / 180;
 		const ratio = getRatio( i, attributes );
 		const distance = ratio + ( 1 - ratio ) * ( 100 - complexity ) / 100;
 
@@ -213,9 +213,21 @@ export const scalePoints = ( points, bounds ) => {
 
 export const getRandomBlobAttributes = ( prefix ) => {
 
+	const sides = getRandomBetween( 1, 20 );
+	const skewedCorners = getRandomBetween( 0, sides );
+	const patternLength = getRandomBetween( 1, sides );
+	const patternSeed = getRandomBetween( 1, 10 );
+	const complexity = getRandomBetween( 0, 100 );
+	const smoothness = getRandomFromArray( [33, 50, 100] );
+	const rotation = getRandomBetween( 0, 360 );
+
 	return {
-		[`${ prefix }Preset`]: getRandomBetween( 1, 100 ),
-		[`${ prefix }Complexity`]: getRandomBetween( 0, 100 ),
-		[`${ prefix }Smoothness`]: getRandomFromArray( [0, 33, 50, 100] ),
+		[`${ prefix }Sides`]: sides,
+		[`${ prefix }SkewedCorners`]: skewedCorners,
+		[`${ prefix }PatternLength`]: patternLength,
+		[`${ prefix }PatternSeed`]: patternSeed,
+		[`${ prefix }Complexity`]: complexity,
+		[`${ prefix }Smoothness`]: smoothness,
+		[`${ prefix }Rotation`]: rotation,
 	}
 };

@@ -74,6 +74,10 @@
 		"type": "number",
 		"default": 33
 	},
+	"blobRotation": {
+		"type": "number",
+		"default": 0
+	},
 	"blobMaskSides": {
 		"type": "number",
 		"default": 3
@@ -97,6 +101,10 @@
 	"blobMaskSmoothness": {
 		"type": "number",
 		"default": 33
+	},
+	"blobMaskRotation": {
+		"type": "number",
+		"default": 0
 	},
 	"blobsHorizontalDisplacement": {
 		"type": "number",

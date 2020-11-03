@@ -7,12 +7,31 @@ const getMinSkewedCorners = ( attributes, prefix ) => {
 };
 
 const getMaxSkewedCorners = ( attributes, prefix ) => {
-	return 20;
 	return attributes[ `${ prefix }Sides` ];
 };
 
+const getMinPatternLength = ( attributes, prefix ) => {
+	return 1;
+};
+
+const getMaxPatternLength = ( attributes, prefix ) => {
+	const maxSkewedCorners = attributes[ `${ prefix }Sides` ];
+	const skewedCorners = attributes[ `${ prefix }SkewedCorners` ];
+	return Math.min( skewedCorners, maxSkewedCorners );
+};
+
 const normalizeAttributes = ( attributes, prefix ) => {
-	attributes[ `${ prefix }SkewedCorners` ] = Math.max( getMinSkewedCorners( attributes, prefix ), Math.min( getMaxSkewedCorners( attributes, prefix ) ) );
+	const newAttributes = {};
+
+	const minSkewedCorners = getMinSkewedCorners( attributes, prefix );
+	const maxSkewedCorners = getMaxSkewedCorners( attributes, prefix );
+	const minPatternLength = getMinPatternLength( attributes, prefix );
+	const maxPatternLength = getMaxPatternLength( attributes, prefix );
+
+	newAttributes[ `${ prefix }SkewedCorners` ] = Math.max( minSkewedCorners, Math.min( maxSkewedCorners, attributes[ `${ prefix }SkewedCorners` ] ) );
+	newAttributes[ `${ prefix }PatternLength` ] = Math.max( minPatternLength, Math.min( maxPatternLength, attributes[ `${ prefix }PatternLength` ] ) );
+
+	return Object.assign( {}, attributes, newAttributes );
 };
 
 const InspectorControls = ( props ) => {
@@ -31,7 +50,7 @@ const InspectorControls = ( props ) => {
 				onChange={ ( sides ) => {
 					const newAttributes = {};
 					newAttributes[`${ prefix }Sides`] = sides;
-					setAttributes( newAttributes );
+					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
 				} }
 				label={ __( 'Sides' ) }
 				min={ 3 }
@@ -43,7 +62,7 @@ const InspectorControls = ( props ) => {
 				onChange={ ( sides ) => {
 					const newAttributes = {};
 					newAttributes[`${ prefix }SkewedCorners`] = sides;
-					setAttributes( newAttributes );
+					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
 				} }
 				label={ __( 'Skewed Corners' ) }
 				min={ getMinSkewedCorners( attributes, prefix ) }
@@ -55,11 +74,11 @@ const InspectorControls = ( props ) => {
 				onChange={ ( sides ) => {
 					const newAttributes = {};
 					newAttributes[`${ prefix }PatternLength`] = sides;
-					setAttributes( newAttributes );
+					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
 				} }
 				label={ __( 'Pattern Length' ) }
-				min={ 1 }
-				max={ 20 }
+				min={ getMinPatternLength( attributes, prefix ) }
+				max={ getMaxPatternLength( attributes, prefix ) }
 				step={ 1 }
 			/>
 			<RangeControl
@@ -97,6 +116,18 @@ const InspectorControls = ( props ) => {
 				min={ 0 }
 				max={ 100 }
 				step={ 1 }
+			/>
+			<RangeControl
+				value={ attributes[`${ prefix }Rotation`] }
+				onChange={ ( rotation ) => {
+					const newAttributes = {};
+					newAttributes[`${ prefix }Rotation`] = rotation;
+					setAttributes( newAttributes );
+				} }
+				label={ __( 'Rotation' ) }
+				min={ 0 }
+				max={ 360 }
+				step={ 10 }
 			/>
 		</Fragment>
 	);
