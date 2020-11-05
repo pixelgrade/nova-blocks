@@ -1,1 +1,1 @@
-// silence
+import '@novablocks/collection/frontend';

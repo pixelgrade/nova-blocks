@@ -113,7 +113,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				$version      = isset( $asset_config['version'] ) ? $asset_config['version'] : filemtime( $path );
 
 				wp_register_script(
-					'novablocks-' . $package . '-frontend',
+					'novablocks-' . $package . '/frontend',
 					$package_dir_url . 'frontend.js',
 					$dependencies,
 					$version,
@@ -180,35 +180,29 @@ function novablocks_register_block_types() {
 	}
 
 	$velocity_dependent_scripts = array(
-		'novablocks/slideshow-frontend'
+		'novablocks/slideshow/frontend'
 	);
 
 	$slick_dependent_scripts = array(
-		'novablocks/slideshow-frontend'
+		'novablocks/slideshow/frontend'
 	);
 
 	$bully_dependent_scripts = array(
-		'novablocks/hero-frontend',
-		'novablocks/slideshow-frontend'
+		'novablocks/hero/frontend',
+		'novablocks/slideshow/frontend'
 	);
 
 	$google_maps_api_dependent_scripts = array(
-		'novablocks/google-map-frontend'
+		'novablocks/google-map/frontend'
 	);
 
 	$frontend_scripts_to_be_replaced_with_advanced_gallery = array(
-		'novablocks/advanced-gallery-frontend',
-		'novablocks/media-frontend',
+		'novablocks/advanced-gallery/frontend',
+		'novablocks/media/frontend',
 	);
 
 	$frontend_scripts_to_be_replaced_with_collection = array(
-		'novablocks/posts-collection-frontend',
-	);
-
-	$doppler_frontend_dependent_scripts = array(
-		'novablocks/google-map-frontend',
-		'novablocks/hero-frontend',
-		'novablocks/slideshow-frontend',
+		'novablocks/posts-collection/frontend',
 	);
 
 	$advanced_gallery_style_dependent_blocks = array(
@@ -259,8 +253,12 @@ function novablocks_register_block_types() {
 				$dependencies[] = 'novablocks-core';
 			}
 
-			$basename       = substr( $script, 0, -3 );
-			$handle         = 'novablocks/' . $block . '-' . $basename;
+			$basename = substr( $script, 0, - 3 );
+			$handle = 'novablocks/' . $block;
+
+			if ( 'frontend' === $basename ) {
+				$handle = 'novablocks/' . $block . '/frontend';
+			}
 
 			// Add the 3rd party scripts for each block to the dependencies array.
 			if ( in_array( $handle, $velocity_dependent_scripts ) ) {
@@ -276,30 +274,9 @@ function novablocks_register_block_types() {
 			}
 
 			$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+
 			if ( $google_maps_api_key !== '' && in_array( $handle, $google_maps_api_dependent_scripts ) ) {
 				$dependencies[] = 'google-maps';
-			}
-
-			// both the advanced-gallery and media blocks' frontend scripts are empty and
-			// they depend on the advanced-gallery component frontend script
-			// but the block frontend scripts files need to exist for this to work
-			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_advanced_gallery ) ) {
-				$args[ $key ] = 'novablocks-advanced-gallery-frontend';
-
-				continue;
-			}
-
-			// same for the posts-collection block depending on the collection frontend scripts
-			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_collection ) ) {
-				$args[ $key ] = 'novablocks-collection-frontend';
-
-				continue;
-			}
-
-			// the hero, google-map and slideshow block have their own frontend scripts but also
-			// depend on the doppler frontend script for the scrolling effect
-			if ( 'script' === $key && in_array( $handle, $doppler_frontend_dependent_scripts ) ) {
-				$dependencies[] = 'novablocks-doppler-frontend';
 			}
 
 			// Actually register the script.
@@ -438,7 +415,7 @@ function novablocks_dequeue_unused_block_assets() {
 
 		// has_block() will only work for singular "views", since it will not look in inner blocks or work for loops of posts.
 		if ( ! is_admin() && is_singular() && ! has_block( 'novablocks/' . $block ) ) {
-			wp_dequeue_script( 'novablocks/' . $block . '-frontend' );
+			wp_dequeue_script( 'novablocks/' . $block . '/frontend' );
 			wp_dequeue_style( 'novablocks/' . $block . '-style' );
 		}
 	}
