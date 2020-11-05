@@ -1,4 +1,5 @@
 import { withSettings } from '../../hooks';
+import classnames from "classnames";
 
 import {
 	ControlsGroup,
