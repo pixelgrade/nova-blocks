@@ -2,8 +2,8 @@ import MapPlaceholder from './placeholder';
 import Map from './map';
 import InspectorControls from './inspector-controls';
 
-import { withSettings } from '@novablocks/utils';
-import { withParallax } from '@novablocks/components';
+import { withSettings } from '@novablocks/block-editor';
+import { withDoppler } from '@novablocks/doppler';
 
 import { __ } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
@@ -33,7 +33,7 @@ import {
 window.gm_authFailure = function() {
 	window.googlemaps_authfailure = true;
 	window.dispatchEvent( new Event('novablock.googlemaps_authfailure') );
-}
+};
 
 class Edit extends Component {
 
@@ -204,5 +204,5 @@ class Edit extends Component {
 
 export default createHigherOrderComponent(compose([
 	withSettings,
-	withParallax,
+	withDoppler,
 ]))( Edit );

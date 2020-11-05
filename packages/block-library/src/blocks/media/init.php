@@ -8,10 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_media_attributes_config() {
-	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/components/src/advanced-gallery/attributes.json' );
+function novablocks_get_media_attributes() {
+	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
-	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-space-and-sizing-controls/attributes.json' );
+	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
 
 	if ( ! is_array( $gallery_attributes ) ) $gallery_attributes = array();
 	if ( ! is_array( $media_attributes ) ) $media_attributes = array();
@@ -44,7 +44,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$blockClasses[] = 'content-is-' . $contentStyle;
 
-		$attributes_config = novablocks_get_media_attributes_config();
+		$attributes_config = novablocks_get_media_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		if ( ! empty( $attributes['className'] ) ) {

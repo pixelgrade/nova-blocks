@@ -1,14 +1,12 @@
-import { parallaxInit } from "@novablocks/components";
+import '@novablocks/doppler/frontend';
 
 (function($, window, undefined) {
 
-	let $heroes = $( '.novablocks-hero' );
 	let windowScrollY;
 	let scrollButtonHidden = false;
 
 	const $scrollButton = $( '.novablocks-hero__indicator' );
 
-	parallaxInit( $heroes );
 	bulletsInit();
 	scrollButtonInit();
 	updateScroll();

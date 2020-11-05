@@ -5,17 +5,22 @@ import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { generateDefaults, getPlaceholderImages, getRandomBetween } from "@novablocks/utils";
+import { getRandomBetween } from "@novablocks/utils";
 
 import blockAttributes from "./attributes";
 
 import {
+	generateDefaults,
+	getPlaceholderImages,
 	insertTemplate,
 	alignmentAttributes,
 	colorAttributes,
 	layoutAttributes,
+} from "@novablocks/block-editor";
+
+import {
 	scrollingAttributes,
-} from "@novablocks/components";
+} from "@novablocks/doppler";
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 

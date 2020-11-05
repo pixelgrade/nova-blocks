@@ -2,15 +2,18 @@
  * Internal dependencies
  */
 import {
-	LayoutControls,
-	withParallax,
-	ToggleGroup,
-	ControlsTab,
+	ControlsGroup,
 	ControlsSection,
-	ControlsGroup
-} from '@novablocks/components';
+	ControlsTab,
+	LayoutControls,
+	ToggleGroup,
+	withSettings
+} from '@novablocks/block-editor';
 
-import { withSettings } from '@novablocks/utils';
+import {
+	withDoppler,
+} from '@novablocks/doppler';
+
 
 import heroAttributes from './attributes';
 
@@ -20,12 +23,7 @@ import BlockControls from './block-controls';
 import { __ } from '@wordpress/i18n';
 
 import {
-	InspectorControls
-} from '@wordpress/block-editor';
-
-import {
 	RadioControl,
-	PanelBody
 } from '@wordpress/components';
 
 import {
@@ -166,9 +164,9 @@ class HeroEdit extends Component {
 			</Fragment>
 		);
 	}
-};
+}
 
 export default createHigherOrderComponent(compose([
 	withSettings,
-	withParallax,
+	withDoppler,
 ]))( HeroEdit );

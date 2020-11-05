@@ -1,4 +1,7 @@
-import { ControlsSection, ControlsTab } from "@novablocks/components";
+import {
+	ControlsSection,
+	ControlsTab
+} from "@novablocks/block-editor";
 
 /**
  * WordPress dependencies

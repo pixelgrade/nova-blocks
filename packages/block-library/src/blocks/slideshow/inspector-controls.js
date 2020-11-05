@@ -2,19 +2,16 @@
  * Internal dependencies
  */
 import {
-	LayoutControls,
-	GalleryPreview,
-} from '@novablocks/components';
-
-import {
 	getSnapClassname,
 	maybeSnapFocalPoint
 } from "@novablocks/utils";
 
 import {
+	LayoutControls,
+	GalleryPreview,
 	ControlsSection,
 	ControlsTab
-} from "@novablocks/components";
+} from "@novablocks/block-editor";
 
 /**
  * WordPress dependencies

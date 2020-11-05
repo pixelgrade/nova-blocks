@@ -193,7 +193,7 @@ function novablocks_get_header_attributes() {
 }
 
 function novablocks_get_collection_attributes() {
-	return novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
+	return novablocks_get_attributes_from_json( 'packages/collection/src/collection-attributes.json' );
 }
 
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
@@ -751,9 +751,11 @@ function novablocks_get_theme_support() {
 function novablocks_get_attributes_from_json( $path ) {
 	$plugin_path = novablocks_get_plugin_path();
 	$filename = trailingslashit( $plugin_path ) . $path;
-	$body = file_get_contents( $filename );
+	if ( ! file_exists( $filename ) ) {
+		return array();
+	}
 
-	return json_decode( $body, true );
+	return json_decode( file_get_contents( $filename ), true );
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
@@ -1199,25 +1201,49 @@ function novablocks_register_api_endpoints() {
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
 
 /**
- * Calculate the reading time in minutes for the current post's content.
- * @param $post
+ * Return the reading time in minutes for a post's content.
+ * @param WP_Post|int $post
+ * @param int $wpm The words per minute reading rate to take into account.
  * @return int
  */
-function novablocks_get_the_reading_time_in_minutes( $post ) {
-	$words_per_minute = 250;
-	$images_time      = 0;
-	$videos_time = 0;
-	$content          = $post->post_content;
-	$word_count       = str_word_count( wp_strip_all_tags( $content ) );
-	$words_time       = ceil( $word_count / ( $words_per_minute / 60 ) );
+function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
+	$post = get_post( $post );
 
+	if ( ! ( $post instanceof WP_Post ) ) {
+		return 0;
+	}
+
+	// We don't need the whole content filters. Just the bare minimum.
+	$content = do_blocks( $post->post_content );
+	$content = wptexturize( $content );
+	$content = wpautop( $content );
+	$content = shortcode_unautop( $content );
+	$content = do_shortcode( $content );
+
+	$content = str_replace( ']]>', ']]&gt;', $content );
+
+	// Allow others to have a say; like removing certain non-essential elements (avatars for example).
+	$content = apply_filters( 'novablocks_post_content_before_reading_time_calc', $content, $post );
+
+	return novablocks_get_reading_time_in_minutes( $content, $wpm );
+}
+
+/**
+ * Calculate the reading time in minutes for a piece of content.
+ * @param string $content HTML post content.
+ * @param int $wpm The words per minute reading rate to take into account.
+ * @return int
+ */
+function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
+	// Calculate the time in seconds for the images in the content.
+	$images_time = 0;
 	if ( preg_match_all( '/<img\s[^>]+>/', $content, $matches ) ) {
 		$num_images = count( $matches[0] );
 
 		// The starting image weight (expressed in seconds of reading time).
-		// This weight is decreasing one second with each image encountered, with a minimum of 3 seconds.
+		// This weight is decreasing one second with each image encountered, with a minium of 3 seconds.
 		$img_weight = 12;
-		for ( $i = 0; $i < $num_images; $i ++ ) {
+		for ( $i = 0; $i < $num_images; $i++ ) {
 			$images_time += $img_weight;
 
 			if ( $img_weight > 3 ) {
@@ -1227,16 +1253,77 @@ function novablocks_get_the_reading_time_in_minutes( $post ) {
 	}
 
 	// Calculate the time in seconds for the videos in the content.
+	$videos_time = 0;
 	if ( preg_match_all( '/<iframe\s[^>]+>/', $content, $matches ) ) {
 		// We will give one minute for every video (even if the video might be longer).
 		$videos_time = count( $matches[0] ) * 60;
 	}
 
-	$minutes = (int) ceil( ( $words_time + $images_time + $videos_time ) / 60 );
+	// Calculate the words reading time in seconds.
+	$word_count = str_word_count( wp_strip_all_tags( $content ) );
+	$words_time = ceil( $word_count / ( $wpm / 60 ) );
 
+	// Convert the reading time to minutes.
+	$minutes = (int) ceil( ( $words_time + $images_time + $videos_time ) / 60 );
 	if ( $minutes < 1 ) {
 		$minutes = 1;
 	}
 
 	return $minutes;
+}
+
+function novablocks_optimize_frontend_scripts_output() {
+	// These are actually empty(ish) scripts without any effect.
+	// We let them be so we can have a consistent dependency generation logic.
+	// But we don't want them in the frontend since it would be wasteful.
+	$scripts_to_remove = array(
+			'novablocks/media/frontend',
+			'novablocks/advanced-gallery/frontend',
+			'novablocks/posts-collection/frontend',
+	);
+
+	foreach ( $scripts_to_remove as $handle ) {
+		// If the current handle isn't enqueued, skip it.
+		if ( ! wp_script_is( $handle, 'enqueued' ) ) {
+			continue;
+		}
+
+		// Search for the current handle's dependencies.
+		$wp_script = wp_scripts()->registered[ $handle ];
+		$deps      = $wp_script->deps;
+
+		// If it's dependencies aren't already enqueued, queue them up.
+		foreach ( $deps as $dependency ) {
+			if ( ! wp_script_is( $dependency, 'enqueued' ) ) {
+				wp_enqueue_script( $dependency );
+			}
+		}
+
+		// Remove the handle from the queue.
+		wp_dequeue_script( $handle );
+	}
+}
+// We need to cover both the head and the footer scripts
+// since the block editor logic will enqueue the scripts again upon block render.
+add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
+add_action( 'login_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
+add_action( 'embed_head', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_head_scripts() is hooked at 20.
+add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'login_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'embed_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+
+function novablocks_block_area_has_blocks( $slug ) {
+	$posts = get_posts( array(
+		'name'        => $slug,
+		'post_type'   => 'block_area',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+		'fields' => 'ids',
+	) );
+
+	if ( ! empty( $posts ) && has_blocks( reset( $posts ) ) ) {
+		return true;
+	}
+
+	return false;
 }

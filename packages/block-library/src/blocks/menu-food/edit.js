@@ -10,6 +10,10 @@ import {
  } from '@wordpress/compose';
 
 import {
+	addFilter
+} from '@wordpress/hooks';
+
+import {
 	select,
 	dispatch,
  } from '@wordpress/data';
@@ -57,6 +61,6 @@ const withMenuVisibilityAttributes = createHigherOrderComponent( ( BlockListBloc
 	};
 }, 'withCollectionVisibilityAttributes' );
 
-wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-menu-visibility-attributes', withMenuVisibilityAttributes );
+addFilter( 'editor.BlockListBlock', 'novablocks/with-menu-visibility-attributes', withMenuVisibilityAttributes );
 
 export default FoodMenuEdit;

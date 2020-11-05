@@ -1,4 +1,4 @@
-import { parallaxInit } from "@novablocks/components";
+import '@novablocks/doppler/frontend';
 
 import {
 	debounce,
@@ -44,8 +44,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 		$block.addClass( 'is-ready' );
 	});
-
-	parallaxInit( $blocks );
 
 	if ( useOrientation ) {
 		$window.on( 'orientationchange', function() {
