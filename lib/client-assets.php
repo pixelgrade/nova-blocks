@@ -5,60 +5,138 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Determine if the current screen is a block editor screen.
+ *
+ * @return bool
+ */
+function novablocks_is_gutenberg() {
+
+	if ( is_admin() ) {
+		$current_screen = get_current_screen();
+
+		if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
+
+	/**
+	 * Register 3rd party scripts that will be used as dependencies.
+	 */
+	function novablocks_register_vendor_scripts() {
+
+		wp_register_script(
+			'novablocks-bully',
+			novablocks_get_plugin_url() . '/dist/vendor/jquery.bully.js',
+			array( 'jquery' )
+		);
+
+		wp_register_script(
+			'novablocks-slick',
+			novablocks_get_plugin_url() . '/dist/vendor/jquery.slick.js',
+			array( 'jquery' )
+		);
+
+		wp_register_script(
+			'novablocks-velocity',
+			novablocks_get_plugin_url() . '/dist/vendor/jquery.velocity.js',
+			array( 'jquery' )
+		);
+
+		$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+		wp_register_script(
+			'google-maps',
+			'//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places'
+		);
+	}
+}
+add_action( 'init', 'novablocks_register_vendor_scripts', 10 );
+
+/**
  * Registers all the Nova Blocks packages scripts that are in the standardized
  * `build/` location.
  */
-
 if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 	function novablocks_register_packages_scripts() {
 
-		foreach ( glob( novablocks_get_plugin_path() . 'build/*/index.js' ) as $path ) {
+		foreach ( glob( trailingslashit( novablocks_get_plugin_path() ) . 'build/*/index.js' ) as $path ) {
 
+			// We want to skip the block-library directory.
 			if ( strpos( basename( dirname( $path ) ), 'block-library' ) !== false ) {
 				continue;
 			}
 
+			// Determine the current package name (its directory).
 			$package = basename( dirname( $path ) );
 
-			// Prefix `novablocks-` to package directory to get script handle.
+			// Prefix `novablocks-` to package name to get script handle.
 			// For example, `…/build/components/index.js` becomes `novablocks-components`.
 			$handle = 'novablocks-' . $package;
 
-			// Replace `.js` extension with `.asset.php` to find the generated dependencies file.
-			$asset_file   = substr( $path, 0, -3 ) . '.asset.php';
-			$asset        = file_exists( $asset_file ) ? require( $asset_file ) : null;
-			$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
-			$version      = isset( $asset['version'] ) ? $asset['version'] : filemtime( $path );
+			// Replace `.js` extension with `.asset.php` to find the generated asset config file.
+			$asset_config_file_path   = substr( $path, 0, - 3 ) . '.asset.php';
+			$asset_config = file_exists( $asset_config_file_path ) ? require( $asset_config_file_path ) : null;
+			$dependencies = isset( $asset_config['dependencies'] ) ? $asset_config['dependencies'] : array();
+			$version      = isset( $asset_config['version'] ) ? $asset_config['version'] : filemtime( $path );
 
-			$package_path = substr( $path, strlen( novablocks_get_plugin_path() ) );
+			// Determine the package directory absolute path.
+			$package_dir_absolute_path = trailingslashit( dirname( $path ) );
+
+			// Determine the package directory relative path from the absolute path.
+			// To be used in constructing URLs.
+			$package_dir_relative_path = trailingslashit( substr( $package_dir_absolute_path, strlen( trailingslashit( novablocks_get_plugin_path() ) ) ) );
+
+			// Determine the package directory URL.
+			$package_dir_url = trailingslashit( novablocks_get_plugin_url() ) . $package_dir_relative_path;
 
 			wp_register_script(
 				$handle,
-				novablocks_get_plugin_url() . '/' . $package_path,
+				$package_dir_url . 'index.js',
 				$dependencies,
 				$version,
 				true
 			);
 
-			// register styles for each package
-			$style = substr( $path, 0, -8 ) . 'style.css';
-			$editor_styles = substr( $path, 0, -8 ) . 'editor-styles.css';
-			$dir = trailingslashit( novablocks_get_plugin_url() . '/build/' . $package );
+			$frontend_script_path = $package_dir_absolute_path . 'frontend.js';
 
-			if ( file_exists( $style ) ) {
+			if ( file_exists( $frontend_script_path ) ) {
+
+				// Replace `.js` extension with `.asset.php` to find the generated asset config file.
+				$asset_config_file_path   = substr( $path, 0, - 8 ) . 'frontend.asset.php';
+				$asset_config = file_exists( $asset_config_file_path ) ? require( $asset_config_file_path ) : null;
+				$dependencies = isset( $asset_config['dependencies'] ) ? $asset_config['dependencies'] : array();
+				$version      = isset( $asset_config['version'] ) ? $asset_config['version'] : filemtime( $path );
+
+				wp_register_script(
+					'novablocks-' . $package . '-frontend',
+					$package_dir_url . 'frontend.js',
+					$dependencies,
+					$version,
+					true
+				);
+			}
+
+			// Register styles for the current package, if the files exist.
+			$style_path = $package_dir_absolute_path . 'style.css';
+			if ( file_exists( $style_path ) ) {
 				wp_register_style(
 					$handle . '-style',
-					$dir . 'style.css',
+					$package_dir_url . 'style.css',
 					array(),
 					$version
 				);
 			}
 
-			if ( file_exists( $editor_styles ) ) {
+			$editor_styles_path = $package_dir_absolute_path . 'editor-styles.css';
+			if ( file_exists( $editor_styles_path ) ) {
 				wp_register_style(
 					$handle . '-editor_style',
-					$dir . 'editor-styles.css',
+					$package_dir_url . 'editor-styles.css',
 					array(),
 					$version
 				);
@@ -90,79 +168,69 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 		) );
 
 		wp_set_script_translations( 'novablocks-core', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );
-
-		foreach ( glob( novablocks_get_plugin_path() . 'build/*/index.js' ) as $path ) {
-			$handle = 'novablocks-' . basename( dirname( $path ) );
-
-			wp_enqueue_script( $handle );
-			wp_enqueue_style( $handle . '-style' );
-
-			if ( is_gutenberg() ) {
-				wp_enqueue_style( $handle . '-editor_style' );
-			}
-		}
 	}
 }
-add_action( 'enqueue_block_assets', 'novablocks_register_packages_scripts' );
-
-function is_gutenberg() {
-
-	if ( is_admin() ) {
-		$current_screen = get_current_screen();
-
-		if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
-
-	// register 3rd party scripts that will be used as dependencies
-	function novablocks_register_vendor_scripts() {
-
-		wp_register_script(
-			'novablocks-bully',
-			novablocks_get_plugin_url() . '/dist/vendor/jquery.bully.js',
-			array( 'jquery' )
-		);
-
-		wp_register_script(
-			'novablocks-slick',
-			novablocks_get_plugin_url() . '/dist/vendor/jquery.slick.js',
-			array( 'jquery' )
-		);
-
-		wp_register_script(
-			'novablocks-velocity',
-			novablocks_get_plugin_url() . '/dist/vendor/jquery.velocity.js',
-			array( 'jquery' )
-		);
-
-		$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
-
-		wp_register_script(
-			'google-maps',
-			'//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places'
-		);
-	}
-}
-add_action( 'init', 'novablocks_register_vendor_scripts' );
+add_action( 'init', 'novablocks_register_packages_scripts', 11 );
 
 function novablocks_register_block_types() {
 
-	// loop through all folders inside block-library/blocks
+	if ( ! function_exists( 'register_block_type' ) ) {
+		// Gutenberg is not active.
+		return;
+	}
+
+	$velocity_dependent_scripts = array(
+		'novablocks/slideshow-frontend'
+	);
+
+	$slick_dependent_scripts = array(
+		'novablocks/slideshow-frontend'
+	);
+
+	$bully_dependent_scripts = array(
+		'novablocks/hero-frontend',
+		'novablocks/slideshow-frontend'
+	);
+
+	$google_maps_api_dependent_scripts = array(
+		'novablocks/google-map-frontend'
+	);
+
+	$frontend_scripts_to_be_replaced_with_advanced_gallery = array(
+		'novablocks/advanced-gallery-frontend',
+		'novablocks/media-frontend',
+	);
+
+	$frontend_scripts_to_be_replaced_with_collection = array(
+		'novablocks/posts-collection-frontend',
+	);
+
+	$doppler_frontend_dependent_scripts = array(
+		'novablocks/google-map-frontend',
+		'novablocks/hero-frontend',
+		'novablocks/slideshow-frontend',
+	);
+
+	$advanced_gallery_style_dependent_blocks = array(
+		'advanced-gallery',
+		'media',
+	);
+
+	$collection_style_dependent_blocks = array(
+		'cards-collection',
+		'posts-collection'
+	);
+
+	$components_style_dependent_blocks = array(
+		'card',
+		'posts-collection'
+	);
+
+	// Loop through all folders inside block-library/blocks.
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 
 		$block = basename( $blockpath );
-		$dir = trailingslashit( novablocks_get_plugin_url() . '/build/block-library/blocks/' . $block );
-
-		if ( ! function_exists( 'register_block_type' ) ) {
-			// Gutenberg is not active.
-			return;
-		}
+		$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/' . $block );
 
 		// possible script files to be registered for each block
 		$scripts = array(
@@ -180,12 +248,13 @@ function novablocks_register_block_types() {
 				continue;
 			}
 
-			// read dependencies file generated by the build task
-			$asset_file     = substr( $path, 0, - 3 ) . '.asset.php';
-			$asset          = file_exists( $asset_file ) ? require( $asset_file ) : null;
-			$dependencies   = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
-			$version        = isset( $asset['version'] ) ? $asset['version'] : filemtime( $path );
+			// Read dependencies file generated by the build task.
+			$asset_config_file_path = substr( $path, 0, - 3 ) . '.asset.php';
+			$asset_config           = file_exists( $asset_config_file_path ) ? require( $asset_config_file_path ) : null;
+			$dependencies           = isset( $asset_config['dependencies'] ) ? $asset_config['dependencies'] : array();
+			$version                = isset( $asset_config['version'] ) ? $asset_config['version'] : filemtime( $path );
 
+			// All editor scripts need the core script present.
 			if ( $key === 'editor_script' ) {
 				$dependencies[] = 'novablocks-core';
 			}
@@ -193,64 +262,60 @@ function novablocks_register_block_types() {
 			$basename       = substr( $script, 0, -3 );
 			$handle         = 'novablocks/' . $block . '-' . $basename;
 
-			// add the 3rd party scripts for each block to the dependencies array
-			$velocity_dependent_scripts = array(
-				'novablocks/hero-frontend',
-				'novablocks/slideshow-frontend'
-			);
-
+			// Add the 3rd party scripts for each block to the dependencies array.
 			if ( in_array( $handle, $velocity_dependent_scripts ) ) {
 				$dependencies[] = 'novablocks-velocity';
 			}
-
-			$slick_dependent_scripts = array(
-				'novablocks/slideshow-frontend'
-			);
 
 			if ( in_array( $handle, $slick_dependent_scripts ) ) {
 				$dependencies[] = 'novablocks-slick';
 			}
 
-			$bully_dependent_scripts = array(
-				'novablocks/hero-frontend',
-				'novablocks/slideshow-frontend'
-			);
-
 			if ( in_array( $handle, $bully_dependent_scripts ) ) {
 				$dependencies[] = 'novablocks-bully';
 			}
 
-			$google_maps_api_dependent_scripts = array(
-				'novablocks/google-map-frontend'
-			);
-
 			$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
-
 			if ( $google_maps_api_key !== '' && in_array( $handle, $google_maps_api_dependent_scripts ) ) {
 				$dependencies[] = 'google-maps';
 			}
 
-			$advanced_gallery_dependent_scripts = array(
-				'novablocks/media-frontend'
-			);
+			// both the advanced-gallery and media blocks' frontend scripts are empty and
+			// they depend on the advanced-gallery component frontend script
+			// but the block frontend scripts files need to exist for this to work
+			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_advanced_gallery ) ) {
+				$args[ $key ] = 'novablocks-advanced-gallery-frontend';
 
-			if ( in_array( $handle, $advanced_gallery_dependent_scripts ) ) {
-				$dependencies[] = 'novablocks/advanced-gallery-frontend';
+				continue;
 			}
 
-			// actually register the script
+			// same for the posts-collection block depending on the collection frontend scripts
+			if ( 'script' === $key && in_array( $handle, $frontend_scripts_to_be_replaced_with_collection ) ) {
+				$args[ $key ] = 'novablocks-collection-frontend';
+
+				continue;
+			}
+
+			// the hero, google-map and slideshow block have their own frontend scripts but also
+			// depend on the doppler frontend script for the scrolling effect
+			if ( 'script' === $key && in_array( $handle, $doppler_frontend_dependent_scripts ) ) {
+				$dependencies[] = 'novablocks-doppler-frontend';
+			}
+
+			// Actually register the script.
 			wp_register_script(
 				$handle,
-				$dir . $script,
+				$block_dir_url . $script,
 				$dependencies,
 				$version,
 				true
 			);
 
 			$args[ $key ] = $handle;
+
 		}
 
-		// possible stylesheets to be registered for each block
+		// Possible stylesheets to be registered for each block.
 		$styles = array(
 			'editor_style' => 'editor-styles.css',
 			'style' => 'style.css',
@@ -263,41 +328,53 @@ function novablocks_register_block_types() {
 				continue;
 			}
 
-			// read the asset file generated by build for the correspondent script file
+			// Read the asset file generated by build for the correspondent script file.
 			if ( $key === 'style' ) {
 				// frontend.asset.php -> frontend.js -> style.css
-				$asset_file = substr( $path, 0, -1 * strlen( $style ) ) . 'frontend.asset.php';
+				$asset_config_file = substr( $path, 0, -1 * strlen( $style ) ) . 'frontend.asset.php';
 			} else {
 				// index.asset.php -> index.js -> editor-styles.css
-				$asset_file = substr( $path, 0, -1 * strlen( $style ) ) . 'index.asset.php';
+				$asset_config_file = substr( $path, 0, -1 * strlen( $style ) ) . 'index.asset.php';
 			}
 
-			$basename         = substr( $style, 0, - 4 );
-			$handle           = 'novablocks/' . $block . '-' . $basename;
-			$asset            = file_exists( $asset_file ) ? require( $asset_file ) : null;
+			$basename     = substr( $style, 0, - 4 );
+			$handle       = 'novablocks/' . $block . '-' . $basename;
+			$asset_config = file_exists( $asset_config_file ) ? require( $asset_config_file ) : null;
 
-			// the same dependencies array used for the respective script file
-			$js_dependencies  = isset( $asset['dependencies'] ) ? $asset['dependencies'] : array();
-			$version          = isset( $asset['version'] ) ? $asset['version'] : filemtime( $path );
+			// The same dependencies array used for the respective script file.
+			$js_dependencies  = isset( $asset_config['dependencies'] ) ? $asset_config['dependencies'] : array();
+			$version          = isset( $asset_config['version'] ) ? $asset_config['version'] : filemtime( $path );
 			$css_dependencies = array();
 
 			foreach ( $js_dependencies as $js_dependency ) {
-				// create a correspondent style dependency entry
-				// only if the script dependency is a Nova Blocks package
+				// Create a correspondent style dependency entry.
+				// Only if the script dependency is a Nova Blocks package.
 				if ( false !== strpos( $js_dependency, 'novablocks-' ) ) {
 					$dependency_handle = $js_dependency . '-' . $key;
-					// if there is a stylesheet registered with this handle add it as a dependency
-					// because not every package outputs a stylesheet for every script it generates
+					// If there is a stylesheet registered with this handle add it as a dependency,
+					// because not every package outputs a stylesheet for every script it generates.
 					if ( wp_style_is( $dependency_handle, 'registered' ) ) {
 						$css_dependencies[] = $dependency_handle;
 					}
 				}
 			}
 
-			// finally register the stylesheet
+			if ( in_array( $block, $advanced_gallery_style_dependent_blocks ) ) {
+				$css_dependencies[] = 'novablocks-advanced-gallery-' . $key;
+			}
+
+			if ( in_array( $block, $collection_style_dependent_blocks ) ) {
+				$css_dependencies[] = 'novablocks-collection-' . $key;
+			}
+
+			if ( in_array( $block, $components_style_dependent_blocks ) ) {
+				$css_dependencies[] = 'novablocks-components-' . $key;
+			}
+
+			// Finally, register the stylesheet.
 			wp_register_style(
 				$handle,
-				$dir . $style,
+				$block_dir_url . $style,
 				$css_dependencies,
 				$version
 			);
@@ -307,7 +384,7 @@ function novablocks_register_block_types() {
 
 		$support = novablocks_get_theme_support();
 
-		// if the current block is supported by the theme register it
+		// If the current block is supported by the theme, register it.
 		if ( in_array( $block, $support ) ) {
 
 			$init = trailingslashit( $blockpath ) . 'init.php';
@@ -316,7 +393,7 @@ function novablocks_register_block_types() {
 				require_once $init;
 			}
 
-			// call the render callback for this block which should be present in the init.php file
+			// Call the render callback for this block which should be present in the init.php file.
 			$callback = 'novablocks_render_' . str_replace( '-','_', $block ) . '_block';
 
 			if ( function_exists( $callback ) ) {
@@ -333,10 +410,28 @@ function novablocks_register_block_types() {
 		}
 	}
 }
-add_action( 'init', 'novablocks_register_block_types' );
+add_action( 'init', 'novablocks_register_block_types', 20 );
 
-// Dequeue frontend scripts and styles if they are not used
+if ( ! function_exists( 'novablocks_enqueue_packages_scripts' ) ) {
+
+	function novablocks_enqueue_packages_scripts() {
+
+		// For now, we will always enqueue the core scripts and styles.
+		wp_enqueue_style( 'novablocks-core-style' );
+
+		if ( novablocks_is_gutenberg() ) {
+			wp_enqueue_script( 'novablocks-core' );
+			wp_enqueue_style( 'novablocks-core-editor_style' );
+		}
+	}
+}
+add_action( 'enqueue_block_assets', 'novablocks_enqueue_packages_scripts' );
+
+/**
+ * Dequeue frontend scripts and styles if they are not used.
+ */
 function novablocks_dequeue_unused_block_assets() {
+
 
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 		$block = basename( $blockpath );
@@ -345,11 +440,17 @@ function novablocks_dequeue_unused_block_assets() {
 			continue;
 		}
 
-		if ( ! is_admin() && ! has_block( 'novablocks/' . $block ) ) {
-
+		// has_block() will only work for singular "views", since it will not look in inner blocks or work for loops of posts.
+		if ( ! is_admin() && is_singular() && ! has_block( 'novablocks/' . $block ) ) {
 			wp_dequeue_script( 'novablocks/' . $block . '-frontend' );
 			wp_dequeue_style( 'novablocks/' . $block . '-style' );
 		}
 	}
+
+	// Also dequeue the novablocks-core.
+	if ( ! is_admin() && is_singular() && ! has_blocks() ) {
+		wp_dequeue_script( 'novablocks-core' );
+		wp_dequeue_style( 'novablocks-core-style' );
+	}
 }
-add_action( 'enqueue_block_assets', 'novablocks_dequeue_unused_block_assets' );
+add_action( 'enqueue_block_assets', 'novablocks_dequeue_unused_block_assets', 99 );

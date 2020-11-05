@@ -1,5 +1,3 @@
-import { parallaxInit } from "@novablocks/components";
-
 import {
 	debounce,
 	hasTouchScreen
@@ -44,8 +42,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 
 		$block.addClass( 'is-ready' );
 	});
-
-	parallaxInit( $blocks );
 
 	if ( useOrientation ) {
 		$window.on( 'orientationchange', function() {

@@ -1,3 +1,1 @@
-(function($, window, undefined) {
-
-})(jQuery, window);
+// silence

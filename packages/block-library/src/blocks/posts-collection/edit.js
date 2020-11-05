@@ -1,14 +1,13 @@
 import Preview from "./preview";
 
 import {
+	CardsManager,
 	ControlsSection,
 	ControlsTab,
 	ControlsGroup,
 	HeadingToolbar,
 	ToggleGroup,
-} from "@novablocks/components";
-
-import { CardsManager } from "@novablocks/components";
+} from "@novablocks/block-editor";
 
 const { toggles } = CardsManager;
 

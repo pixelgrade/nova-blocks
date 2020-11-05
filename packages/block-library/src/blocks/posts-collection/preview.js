@@ -1,11 +1,12 @@
 import classnames from "classnames";
 
+import { Card } from "@novablocks/components";
+import { PostCard } from "@novablocks/block-editor";
+
 import {
 	CollectionHeader,
 	GridGenerator,
-	Card,
-	Post
-} from "@novablocks/components";
+} from "@novablocks/collection";
 
 const {
 	ClassicLayoutPreview,
@@ -76,7 +77,7 @@ const Preview = ( props ) => {
 				{
 					post &&
 					<div className="novablocks-grid__item">
-						<Post post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+						<PostCard post={ post } isLandscape={ isLandscape } attributes={ attributes } />
 					</div>
 				}
 				{

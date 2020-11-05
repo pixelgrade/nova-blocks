@@ -1,5 +1,3 @@
-import { SVG, Path } from '@wordpress/components';
-
 export const nova = (
 	<svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path fillRule="evenodd" clipRule="evenodd" d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z" fill="#6565F2"/>
@@ -68,25 +66,25 @@ export const opentable = (
 );
 
 export const alignBottom = (
-	<SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-		<Path fill="none" d="M0 0h24v24H0V0z" />
-		<Path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" />
-	</SVG>
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+		<path fill="none" d="M0 0h24v24H0V0z" />
+		<path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" />
+	</svg>
 );
 
 export const alignCenter = (
-	<SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-		<Path fill="none" d="M0 0h24v24H0V0z" />
-		<Path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+		<path fill="none" d="M0 0h24v24H0V0z" />
+		<path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
 		/>
-	</SVG>
+	</svg>
 );
 
 export const alignTop = (
-	<SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-		<Path fill="none" d="M0 0h24v24H0V0z" />
-		<Path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" />
-	</SVG>
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+		<path fill="none" d="M0 0h24v24H0V0z" />
+		<path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" />
+	</svg>
 );
 
 export const alignment = (
@@ -164,15 +162,15 @@ export const navigation = (
 
 export const openhours = (
 	<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<g clipPath="url(#clip0)">
+		<g clippath="url(#clip0)">
 			<path fillRule="evenodd" clipRule="evenodd"
 			      d="M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z"
 			      fill="#6565F2"/>
 		</g>
 		<defs>
-			<clipPath id="clip0">
+			<clippath id="clip0">
 				<path fill="#fff" d="M0 0h24v24H0z"/>
-			</clipPath>
+			</clippath>
 		</defs>
 	</svg>
 );
@@ -199,13 +197,13 @@ export const gallery = (
 
 export const cardsCollection = (
 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<g clipPath="url(#clip0)">
+		<g clippath="url(#clip0)">
 			<path fillRule="evenodd" clipRule="evenodd" d="M24 12C24 5.37258 18.6274 -2.34843e-07 12 -5.24537e-07C5.3726 -8.14229e-07 -2.34843e-07 5.37258 -5.24537e-07 12C-8.14229e-07 18.6274 5.3726 24 12 24C18.6274 24 24 18.6274 24 12ZM16 8.66667C16 7.74619 16.7462 7 17.6667 7C19.5076 7 21 8.49238 21 10.3333L21 13.6667C21 15.5076 19.5076 17 17.6667 17C16.7462 17 16 16.2538 16 15.3333L16 8.66667ZM11 6C9.89543 6 9 6.89543 9 8L9 16C9 17.1046 9.89543 18 11 18L13 18C14.1046 18 15 17.1046 15 16L15 8C15 6.89543 14.1046 6 13 6L11 6ZM3 10.3333C3 8.49238 4.49238 7 6.33333 7C7.25381 7 8 7.74619 8 8.66667L8 15.3333C8 16.2538 7.25381 17 6.33333 17C4.49238 17 3 15.5076 3 13.6667L3 10.3333Z" fill="#6565F2"/>
 		</g>
 		<defs>
-			<clipPath id="clip0">
+			<clippath id="clip0">
 				<rect width="24" height="24" fill="white" transform="translate(24) rotate(90)"/>
-			</clipPath>
+			</clippath>
 		</defs>
 	</svg>
 );

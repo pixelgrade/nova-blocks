@@ -74,13 +74,13 @@ class Block_Areas_Post_Type {
 							$theme_support
 						);
 						/* translators: %s: comma-separated list of slugs */
-						$message = sprintf( __( 'Your theme supports block areas with the following slugs: %s', 'block-areas' ), implode( ', ', $theme_support ) );
+						$message = sprintf( __( 'Your theme supports block areas with the following slugs: %s', '__plugin_txtd' ), implode( ', ', $theme_support ) );
 					} else {
-						$message = __( 'Your theme supports block areas.', 'block-areas' );
+						$message = __( 'Your theme supports block areas.', '__plugin_txtd' );
 					}
 				} else {
 					/* translators: %s: command */
-					$message = sprintf( __( 'You can render these block areas in your theme using %s.', 'block-areas' ), '<code>block_areas()->render( $slug )</code>' );
+					$message = sprintf( __( 'You can render these block areas in your theme using %s.', '__plugin_txtd' ), '<code>block_areas()->render( $slug )</code>' );
 				}
 				echo wp_kses(
 					$message,
@@ -99,30 +99,30 @@ class Block_Areas_Post_Type {
 	 */
 	private function register_post_type() {
 		$labels = array(
-			'name'                  => __( 'Block Areas', 'block-areas' ),
-			'singular_name'         => __( 'Block Area', 'block-areas' ),
-			'menu_name'             => _x( 'Block Areas', 'Admin Menu text', 'block-areas' ),
-			'add_new'               => _x( 'Add New', 'Block Area', 'block-areas' ),
-			'add_new_item'          => __( 'Add New Block Area', 'block-areas' ),
-			'new_item'              => __( 'New Block Area', 'block-areas' ),
-			'edit_item'             => __( 'Edit Block Area', 'block-areas' ),
-			'view_item'             => __( 'View Block Area', 'block-areas' ),
-			'all_items'             => __( 'All Block Areas', 'block-areas' ),
-			'search_items'          => __( 'Search Block Areas', 'block-areas' ),
-			'parent_item_colon'     => __( 'Parent Block Area:', 'block-areas' ),
-			'not_found'             => __( 'No block areas found.', 'block-areas' ),
-			'not_found_in_trash'    => __( 'No block areas found in Trash.', 'block-areas' ),
-			'archives'              => __( 'Block area archives', 'block-areas' ),
-			'insert_into_item'      => __( 'Insert into block area', 'block-areas' ),
-			'uploaded_to_this_item' => __( 'Uploaded to this block area', 'block-areas' ),
-			'filter_items_list'     => __( 'Filter block areas list', 'block-areas' ),
-			'items_list_navigation' => __( 'Block areas list navigation', 'block-areas' ),
-			'items_list'            => __( 'Block areas list', 'block-areas' ),
+			'name'                  => __( 'Block Areas', '__plugin_txtd' ),
+			'singular_name'         => __( 'Block Area', '__plugin_txtd' ),
+			'menu_name'             => _x( 'Block Areas', 'Admin Menu text', '__plugin_txtd' ),
+			'add_new'               => _x( 'Add New', 'Block Area', '__plugin_txtd' ),
+			'add_new_item'          => __( 'Add New Block Area', '__plugin_txtd' ),
+			'new_item'              => __( 'New Block Area', '__plugin_txtd' ),
+			'edit_item'             => __( 'Edit Block Area', '__plugin_txtd' ),
+			'view_item'             => __( 'View Block Area', '__plugin_txtd' ),
+			'all_items'             => __( 'All Block Areas', '__plugin_txtd' ),
+			'search_items'          => __( 'Search Block Areas', '__plugin_txtd' ),
+			'parent_item_colon'     => __( 'Parent Block Area:', '__plugin_txtd' ),
+			'not_found'             => __( 'No block areas found.', '__plugin_txtd' ),
+			'not_found_in_trash'    => __( 'No block areas found in Trash.', '__plugin_txtd' ),
+			'archives'              => __( 'Block area archives', '__plugin_txtd' ),
+			'insert_into_item'      => __( 'Insert into block area', '__plugin_txtd' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this block area', '__plugin_txtd' ),
+			'filter_items_list'     => __( 'Filter block areas list', '__plugin_txtd' ),
+			'items_list_navigation' => __( 'Block areas list navigation', '__plugin_txtd' ),
+			'items_list'            => __( 'Block areas list', '__plugin_txtd' ),
 		);
 
 		$args = array(
 			'labels'             => $labels,
-			'description'        => __( 'Block areas to include in your theme.', 'block-areas' ),
+			'description'        => __( 'Block areas to include in your theme.', '__plugin_txtd' ),
 			'public'             => false,
 			'publicly_queryable' => true,
 			'has_archive'        => false,
@@ -201,7 +201,7 @@ class Block_Areas_Post_Type {
 	 * @return array Filtered $columns.
 	 */
 	private function filter_post_type_columns( $columns ) {
-		$columns['slug'] = __( 'Slug', 'block-areas' );
+		$columns['slug'] = __( 'Slug', '__plugin_txtd' );
 		if ( isset( $columns['date'] ) ) {
 			unset( $columns['date'] );
 		}

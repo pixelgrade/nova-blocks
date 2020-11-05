@@ -6,9 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_posts_collection_attributes() {
-	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-grid-generator/attributes.json' );
-	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-latest-posts/attributes.json' );
-	$collection_attributes = novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
+	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/collection/src/grid-generator-attributes.json' );
+	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-latest-posts/attributes.json' );
+	$collection_attributes = novablocks_get_collection_attributes();
 	$posts_collection_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/posts-collection/attributes.json' );
 
 	return array_merge( $posts_collection_attributes, $collection_attributes, $grid_generator_attributes, $posts_query_attributes );
@@ -27,7 +27,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		if ( empty( $posts ) ) {
 			if ( is_user_logged_in() ) {
-				return '<p>' . __( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.' ) . '</p>';
+				return '<p>' . esc_html__( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.', '__plugin_txtd' ) . '</p>';
 			} else {
 				return '';
 			}
@@ -137,7 +137,7 @@ function novablocks_get_meta( $post, $meta ) {
 		$comments_number = absint( get_comments_number( $post->ID ) );
 
 		if ( $comments_number === 0 ) {
-			return __( 'No Comments', '__plugin_txtd' );
+			return esc_html__( 'No Comments', '__plugin_txtd' );
 		}
 
 		return esc_html(
@@ -225,7 +225,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 			<?php if ( ! empty( $attributes['showMedia'] ) ) { ?>
 				<div class="novablocks-card__layout-media novablocks-grid__item-media">
-					<?php echo novablocks_get_card_media_markup( $media, $attributes ); ?>
+					<?php echo novablocks_get_card_media_markup( $media ); ?>
 				</div>
 			<?php } ?>
 

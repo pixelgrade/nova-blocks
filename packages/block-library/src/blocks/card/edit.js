@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 
-import { EditableText } from '@novablocks/components';
+import { EditableText } from '@novablocks/block-editor';
 import * as icons from "@novablocks/icons";
 
 import { __ } from '@wordpress/i18n';
