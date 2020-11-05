@@ -1213,6 +1213,40 @@ function novablocks_register_api_endpoints() {
 }
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
 
+function novablocks_customize_scripts_output(){
+	global $wp_scripts;
+
+	$scripts_to_remove = array(
+		'novablocks/media/frontend',
+		'novablocks/advanced-gallery/frontend',
+		'novablocks/posts-collection/frontend',
+	);
+
+	foreach ( $scripts_to_remove as $handle ) {
+
+		// if the current handle isn't queued skip it
+		if ( ! array_search( $handle, $wp_scripts->queue ) ) {
+			continue;
+		}
+
+		// search for the current handle's dependencies
+		$wp_script = $wp_scripts->registered[ $handle ];
+		$deps = $wp_script->deps;
+
+		// if it's dependencies aren't already queued, queue them
+		foreach ( $deps as $dependency ) {
+			if ( ! array_search( $dependency, $wp_scripts->queue ) ) {
+				$wp_scripts->queue[] = $dependency;
+			}
+		}
+
+		// remove the handle from the queue
+		$key = array_search( $handle, $wp_scripts->queue );
+		unset( $wp_scripts->queue[ $key ] );
+	}
+}
+add_action( 'wp_print_scripts', 'novablocks_customize_scripts_output', 101 );
+
 function novablocks_block_area_has_blocks( $slug ) {
 	$posts = get_posts( array(
 		'name'        => $slug,

@@ -1,1 +1,1 @@
-// silence
+import '@novablocks/advanced-gallery/frontend';
