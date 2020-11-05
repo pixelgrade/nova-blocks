@@ -1199,25 +1199,49 @@ function novablocks_register_api_endpoints() {
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
 
 /**
- * Calculate the reading time in minutes for the current post's content.
- * @param $post
+ * Return the reading time in minutes for a post's content.
+ * @param WP_Post|int $post
+ * @param int $wpm The words per minute reading rate to take into account.
  * @return int
  */
-function novablocks_get_the_reading_time_in_minutes( $post ) {
-	$words_per_minute = 250;
-	$images_time      = 0;
-	$videos_time = 0;
-	$content          = $post->post_content;
-	$word_count       = str_word_count( wp_strip_all_tags( $content ) );
-	$words_time       = ceil( $word_count / ( $words_per_minute / 60 ) );
+function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
+	$post = get_post( $post );
 
+	if ( ! ( $post instanceof WP_Post ) ) {
+		return 0;
+	}
+
+	// We don't need the whole content filters. Just the bare minimum.
+	$content = do_blocks( $post->post_content );
+	$content = wptexturize( $content );
+	$content = wpautop( $content );
+	$content = shortcode_unautop( $content );
+	$content = do_shortcode( $content );
+
+	$content = str_replace( ']]>', ']]&gt;', $content );
+
+	// Allow others to have a say; like removing certain non-essential elements (avatars for example).
+	$content = apply_filters( 'novablocks_post_content_before_reading_time_calc', $content, $post );
+
+	return novablocks_get_reading_time_in_minutes( $content, $wpm );
+}
+
+/**
+ * Calculate the reading time in minutes for a piece of content.
+ * @param string $content HTML post content.
+ * @param int $wpm The words per minute reading rate to take into account.
+ * @return int
+ */
+function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
+	// Calculate the time in seconds for the images in the content.
+	$images_time = 0;
 	if ( preg_match_all( '/<img\s[^>]+>/', $content, $matches ) ) {
 		$num_images = count( $matches[0] );
 
 		// The starting image weight (expressed in seconds of reading time).
-		// This weight is decreasing one second with each image encountered, with a minimum of 3 seconds.
+		// This weight is decreasing one second with each image encountered, with a minium of 3 seconds.
 		$img_weight = 12;
-		for ( $i = 0; $i < $num_images; $i ++ ) {
+		for ( $i = 0; $i < $num_images; $i++ ) {
 			$images_time += $img_weight;
 
 			if ( $img_weight > 3 ) {
@@ -1227,13 +1251,18 @@ function novablocks_get_the_reading_time_in_minutes( $post ) {
 	}
 
 	// Calculate the time in seconds for the videos in the content.
+	$videos_time = 0;
 	if ( preg_match_all( '/<iframe\s[^>]+>/', $content, $matches ) ) {
 		// We will give one minute for every video (even if the video might be longer).
 		$videos_time = count( $matches[0] ) * 60;
 	}
 
-	$minutes = (int) ceil( ( $words_time + $images_time + $videos_time ) / 60 );
+	// Calculate the words reading time in seconds.
+	$word_count = str_word_count( wp_strip_all_tags( $content ) );
+	$words_time = ceil( $word_count / ( $wpm / 60 ) );
 
+	// Convert the reading time to minutes.
+	$minutes = (int) ceil( ( $words_time + $images_time + $videos_time ) / 60 );
 	if ( $minutes < 1 ) {
 		$minutes = 1;
 	}
