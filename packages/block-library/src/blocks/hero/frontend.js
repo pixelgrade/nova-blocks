@@ -1,3 +1,5 @@
+import '@novablocks/doppler/frontend';
+
 (function($, window, undefined) {
 
 	let windowScrollY;

@@ -1,3 +1,5 @@
+import '@novablocks/doppler/frontend';
+
 import {
 	debounce,
 	hasTouchScreen

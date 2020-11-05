@@ -1,3 +1,5 @@
+import '@novablocks/doppler/frontend';
+
 import pin from "./pin";
 import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
 
