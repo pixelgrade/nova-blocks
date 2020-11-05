@@ -266,41 +266,20 @@ function novablocks_add_hero_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
 
-function novablocks_get_media_spacing_atttributes() {
-	return array(
-		// general
-		'layoutPreset' => array(
-			'type' => 'string',
-			'default' => 'stable',
-		),
-		// customize
-		'emphasisBySpace' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'enableOverlapping' => array(
-			'type' => 'boolean',
-			'default' => false,
-		),
-		// settings
-		'blockTopSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'blockBottomSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'emphasisTopSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'emphasisBottomSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
+function novablocks_add_space_and_sizing_settings( $settings ) {
+
+	if ( empty( $settings['modules'] ) ) {
+		$settings['modules'] = array();
+	}
+
+	$settings['modules']['spaceAndSizing'] = array(
+		'presetOptions' => novablocks_get_space_and_sizing_presets(),
+		'advancedPresetOptions' => novablocks_get_space_and_sizing_advanced_presets()
 	);
+
+	return $settings;
 }
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_space_and_sizing_settings', 0 );
 
 function novablocks_add_media_settings( $settings ) {
 
@@ -369,94 +348,6 @@ function novablocks_add_media_settings( $settings ) {
 				'value' => 'highlighted',
 			),
 		),
-		'spaceAndSizing' => array(
-			'presetOptions' => array(
-				array(
-					'label'  => 'Default Block Spacing',
-					'value'  => 'default',
-					'preset' => array(
-						'blockTopSpacing' => 0,
-						'blockBottomSpacing' => 0,
-						'emphasisTopSpacing' => 1,
-						'emphasisBottomSpacing' => 1,
-						'enableOverlapping' => false,
-						'verticalAlignment' => 'center',
-					),
-				),
-				array(
-					'label'  => 'Overlap 1 / Top Anchoring',
-					'value'  => 'overlap1',
-					'preset' => array(
-						'blockTopSpacing' => 0,
-						'blockBottomSpacing' => 2,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'top',
-					),
-				),
-				array(
-					'label'  => 'Overlap 2 / Centered',
-					'value'  => 'overlap2',
-					'preset' => array(
-						'blockTopSpacing' => 1,
-						'blockBottomSpacing' => 1,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'center',
-					),
-				),
-				array(
-					'label'  => 'Overlap 3 / Bottom Anchoring',
-					'value'  => 'overlap3',
-					'preset' => array(
-						'blockTopSpacing' => 2,
-						'blockBottomSpacing' => 0,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'bottom',
-					),
-				),
-				array(
-					'label'  => 'Overlap Nearby Blocks / Centered',
-					'value'  => 'overlap-nearby-1',
-					'preset' => array(
-						'blockTopSpacing' => -2,
-						'blockBottomSpacing' => -2,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'center',
-					),
-				),
-				array(
-					'label'  => 'Overlap Nearby Blocks / Bottom',
-					'value'  => 'overlap-nearby-2',
-					'preset' => array(
-						'blockTopSpacing' => 0,
-						'blockBottomSpacing' => -2,
-						'emphasisTopSpacing' => 2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'top',
-					),
-				),
-				array(
-					'label'  => 'Overlap Nearby Blocks / Top',
-					'value'  => 'overlap-nearby-3',
-					'preset' => array(
-						'blockTopSpacing' => -2,
-						'blockBottomSpacing' => 0,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => 2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'bottom',
-					),
-				),
-			)
-		),
 	);
 
 	$settings['media'] = $media_settings;
@@ -465,6 +356,100 @@ function novablocks_add_media_settings( $settings ) {
 }
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
+
+function novablocks_get_space_and_sizing_presets() {
+	return array(
+		array(
+			'label'  => 'Default Block Spacing',
+			'value'  => 'default',
+			'preset' => array(
+				'blockTopSpacing' => 0,
+				'blockBottomSpacing' => 0,
+				'emphasisTopSpacing' => 1,
+				'emphasisBottomSpacing' => 1,
+				'enableOverlapping' => false,
+				'verticalAlignment' => 'center',
+			),
+		),
+		array(
+			'label'  => 'Overlap Nearby Blocks / Bottom',
+			'value'  => 'overlap-nearby-2',
+			'preset' => array(
+				'blockTopSpacing' => 0,
+				'blockBottomSpacing' => -2,
+				'emphasisTopSpacing' => 2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'top',
+			),
+		),
+		array(
+			'label'  => 'Overlap Nearby Blocks / Centered',
+			'value'  => 'overlap-nearby-1',
+			'preset' => array(
+				'blockTopSpacing' => -2,
+				'blockBottomSpacing' => -2,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'center',
+			),
+		),
+		array(
+			'label'  => 'Overlap Nearby Blocks / Top',
+			'value'  => 'overlap-nearby-3',
+			'preset' => array(
+				'blockTopSpacing' => -2,
+				'blockBottomSpacing' => 0,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => 2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'bottom',
+			),
+		),
+	);
+}
+
+function novablocks_get_space_and_sizing_advanced_presets() {
+	return array(
+		array(
+			'label'  => 'Overlap 1 / Top Anchoring',
+			'value'  => 'overlap1',
+			'preset' => array(
+				'blockTopSpacing' => 0,
+				'blockBottomSpacing' => 2,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'top',
+			),
+		),
+		array(
+			'label'  => 'Overlap 2 / Centered',
+			'value'  => 'overlap2',
+			'preset' => array(
+				'blockTopSpacing' => 1,
+				'blockBottomSpacing' => 1,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'center',
+			),
+		),
+		array(
+			'label'  => 'Overlap 3 / Bottom Anchoring',
+			'value'  => 'overlap3',
+			'preset' => array(
+				'blockTopSpacing' => 2,
+				'blockBottomSpacing' => 0,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'bottom',
+			),
+		),
+	);
+}
 
 function novablocks_add_slideshow_settings( $settings ) {
 
@@ -1212,6 +1197,49 @@ function novablocks_register_api_endpoints() {
 	) );
 }
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
+
+/**
+ * Calculate the reading time in minutes for the current post's content.
+ * @param $post
+ * @return int
+ */
+function novablocks_get_the_reading_time_in_minutes( $post ) {
+	$words_per_minute = 250;
+	$images_time      = 0;
+	$videos_time = 0;
+	$content          = $post->post_content;
+	$word_count       = str_word_count( wp_strip_all_tags( $content ) );
+	$words_time       = ceil( $word_count / ( $words_per_minute / 60 ) );
+
+	if ( preg_match_all( '/<img\s[^>]+>/', $content, $matches ) ) {
+		$num_images = count( $matches[0] );
+
+		// The starting image weight (expressed in seconds of reading time).
+		// This weight is decreasing one second with each image encountered, with a minimum of 3 seconds.
+		$img_weight = 12;
+		for ( $i = 0; $i < $num_images; $i ++ ) {
+			$images_time += $img_weight;
+
+			if ( $img_weight > 3 ) {
+				$img_weight --;
+			}
+		}
+	}
+
+	// Calculate the time in seconds for the videos in the content.
+	if ( preg_match_all( '/<iframe\s[^>]+>/', $content, $matches ) ) {
+		// We will give one minute for every video (even if the video might be longer).
+		$videos_time = count( $matches[0] ) * 60;
+	}
+
+	$minutes = (int) ceil( ( $words_time + $images_time + $videos_time ) / 60 );
+
+	if ( $minutes < 1 ) {
+		$minutes = 1;
+	}
+
+	return $minutes;
+}
 
 function novablocks_customize_scripts_output(){
 	global $wp_scripts;

@@ -85,11 +85,22 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
 	return ( props ) => {
 
-		if ( ! ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ) {
+		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
 			return <OriginalComponent { ...props } />
 		}
 
-		const presetOptions = props?.settings?.media?.spaceAndSizing?.presetOptions;
+		const presetOptions = props?.settings?.modules?.spaceAndSizing?.presetOptions;
+		const advancedPresetOptions = props?.settings?.modules?.spaceAndSizing?.advancedPresetOptions;
+
+		const presets = [];
+
+		if ( Array.isArray( presetOptions ) ) {
+			presets.push( ...presetOptions );
+
+			if ( Array.isArray( advancedPresetOptions ) && ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ) {
+				presets.push( ...advancedPresetOptions );
+			}
+		}
 
 		return (
 			<Fragment>
@@ -101,7 +112,7 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 							<PresetControl
 								key={ 'media-card-layout-preset' }
 								label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
-								options={ presetOptions }
+								options={ presets }
 								randomize={ getRandomAttributes }
 							/>
 						</ControlsTab>
@@ -142,8 +153,11 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 
 		const verticalAlignment = attributes.verticalAlignment || 'center';
 
-		const SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
-		const SPACING_MAX_VALUE = 3;
+		const BLOCK_SPACING_MIN_VALUE = -3;
+		const BLOCK_SPACING_MAX_VALUE = 3;
+
+		const CONTENT_SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
+		const CONTENT_SPACING_MAX_VALUE = 3;
 
 		const cssVars = {
 			'--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
@@ -208,16 +222,16 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 									value={ blockTopSpacing }
 									onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
 									label={ __( 'Top' ) }
-									min={ SPACING_MIN_VALUE }
-									max={ SPACING_MAX_VALUE }
+									min={ BLOCK_SPACING_MIN_VALUE }
+									max={ BLOCK_SPACING_MAX_VALUE }
 								/>
 								<RangeControl
 									key={ 'media-card-block-bottom-spacing' }
 									value={ blockBottomSpacing }
 									onChange={ ( blockBottomSpacing ) => setAttributes( { blockBottomSpacing } ) }
 									label={ __( 'Bottom' ) }
-									min={ SPACING_MIN_VALUE }
-									max={ SPACING_MAX_VALUE }
+									min={ BLOCK_SPACING_MIN_VALUE }
+									max={ BLOCK_SPACING_MAX_VALUE }
 								/>
 							</ControlsGroup>
 							<ControlsGroup title={ __( 'Content Area Spacing' ) }>
@@ -227,16 +241,16 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 										value={ emphasisTopSpacing }
 										onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
 										label={ __( 'Top' ) }
-										min={ SPACING_MIN_VALUE }
-										max={ SPACING_MAX_VALUE }
+										min={ CONTENT_SPACING_MIN_VALUE }
+										max={ CONTENT_SPACING_MAX_VALUE }
 									/>
 									<RangeControl
 										key={ 'media-card-content-bottom-spacing' }
 										value={ emphasisBottomSpacing }
 										onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
 										label={ __( 'Bottom' ) }
-										min={ SPACING_MIN_VALUE }
-										max={ SPACING_MAX_VALUE }
+										min={ CONTENT_SPACING_MIN_VALUE }
+										max={ CONTENT_SPACING_MAX_VALUE }
 									/>
 								</div>
 							</ControlsGroup>
@@ -247,7 +261,6 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		);
 	};
 });
-
 addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing', withSpaceAndSizingControls );
 
 function addSpaceAndSizingAttributes( block ) {
