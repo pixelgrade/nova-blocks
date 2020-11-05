@@ -196,15 +196,6 @@ function novablocks_register_block_types() {
 		'novablocks/google-map/frontend'
 	);
 
-	$frontend_scripts_to_be_replaced_with_advanced_gallery = array(
-		'novablocks/advanced-gallery/frontend',
-		'novablocks/media/frontend',
-	);
-
-	$frontend_scripts_to_be_replaced_with_collection = array(
-		'novablocks/posts-collection/frontend',
-	);
-
 	$advanced_gallery_style_dependent_blocks = array(
 		'advanced-gallery',
 		'media',
