@@ -68,8 +68,6 @@ import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
 					const showIcons = $obj.data( 'show-icons' );
 					const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, new_value );
 
-					console.log( 'after', addVisibilityToStyles( styles, showLabels, showIcons ) );
-
 					map.setOptions( {
 						styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
 					} );

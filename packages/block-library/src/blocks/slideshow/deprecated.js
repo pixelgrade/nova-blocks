@@ -1,13 +1,16 @@
 import save from "./save";
 
-import blockAttributes from "./attributes"
-
 import {
 	alignmentAttributes,
 	colorAttributes,
 	layoutAttributes,
+} from "@novablocks/block-editor";
+
+import {
 	scrollingAttributes,
-} from "@novablocks/components";
+} from '@novablocks/doppler';
+
+import blockAttributes from "./attributes";
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
