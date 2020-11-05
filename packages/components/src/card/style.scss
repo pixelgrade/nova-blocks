@@ -22,7 +22,7 @@
 .novablocks-card__media-wrap {
 	max-width: none !important;
 	padding: calc( var(--novablocks-spacing) * var(--card-media-padding, 0) / 100 );
-	background: var(--novablocks-light-3);
+	background: var(--novablocks-current-light-tertiary);
 
 	transition: var(--novablocks-transition);
 	transition-property: margin, padding;
@@ -63,7 +63,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: var(--novablocks-light-3);
+	background: var(--novablocks-current-light-tertiary);
 
 	svg {
 		max-width: 50%;

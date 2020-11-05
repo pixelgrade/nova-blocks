@@ -1,6 +1,6 @@
 :root {
 	--novablocks-text-placeholder-line-height: 1.5;
-	--novablocks-text-placeholder-shine-color: var(--novablocks-light-1);
+	--novablocks-text-placeholder-shine-color: var(--novablocks-current-light-primary);
 	--novablocks-text-placeholder-shine-width: 5em;
 }
 
@@ -8,7 +8,7 @@
 	--novablocks-text-placeholder-margin: calc((var(--novablocks-text-placeholder-line-height) - 1) * 0.5em);
 	position: relative;
 	height: 0.8em;
-	background: var(--novablocks-light-3);
+	background: var(--novablocks-current-light-tertiary);
 
 	border: 0 solid transparent;
 	border-top-width: var(--novablocks-text-placeholder-margin);
