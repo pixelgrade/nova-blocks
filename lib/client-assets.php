@@ -404,6 +404,10 @@ function novablocks_dequeue_unused_block_assets() {
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 		$block = basename( $blockpath );
 
+		if ( novablocks_block_area_has_blocks( 'header' ) && ($block === 'header' || $block === 'navigation') ) {
+			continue;
+		}
+
 		// has_block() will only work for singular "views", since it will not look in inner blocks or work for loops of posts.
 		if ( ! is_admin() && is_singular() && ! has_block( 'novablocks/' . $block ) ) {
 			wp_dequeue_script( 'novablocks/' . $block . '/frontend' );
