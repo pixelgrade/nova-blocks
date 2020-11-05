@@ -751,9 +751,11 @@ function novablocks_get_theme_support() {
 function novablocks_get_attributes_from_json( $path ) {
 	$plugin_path = novablocks_get_plugin_path();
 	$filename = trailingslashit( $plugin_path ) . $path;
-	$body = file_get_contents( $filename );
+	if ( ! file_exists( $filename ) ) {
+		return array();
+	}
 
-	return json_decode( $body, true );
+	return json_decode( file_get_contents( $filename ), true );
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
@@ -1270,39 +1272,45 @@ function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
 	return $minutes;
 }
 
-function novablocks_customize_scripts_output(){
-	global $wp_scripts;
-
+function novablocks_optimize_frontend_scripts_output() {
+	// These are actually empty(ish) scripts without any effect.
+	// We let them be so we can have a consistent dependency generation logic.
+	// But we don't want them in the frontend since it would be wasteful.
 	$scripts_to_remove = array(
-		'novablocks/media/frontend',
-		'novablocks/advanced-gallery/frontend',
-		'novablocks/posts-collection/frontend',
+			'novablocks/media/frontend',
+			'novablocks/advanced-gallery/frontend',
+			'novablocks/posts-collection/frontend',
 	);
 
 	foreach ( $scripts_to_remove as $handle ) {
-
-		// if the current handle isn't queued skip it
-		if ( ! array_search( $handle, $wp_scripts->queue ) ) {
+		// If the current handle isn't enqueued, skip it.
+		if ( ! wp_script_is( $handle, 'enqueued' ) ) {
 			continue;
 		}
 
-		// search for the current handle's dependencies
-		$wp_script = $wp_scripts->registered[ $handle ];
-		$deps = $wp_script->deps;
+		// Search for the current handle's dependencies.
+		$wp_script = wp_scripts()->registered[ $handle ];
+		$deps      = $wp_script->deps;
 
-		// if it's dependencies aren't already queued, queue them
+		// If it's dependencies aren't already enqueued, queue them up.
 		foreach ( $deps as $dependency ) {
-			if ( ! array_search( $dependency, $wp_scripts->queue ) ) {
-				$wp_scripts->queue[] = $dependency;
+			if ( ! wp_script_is( $dependency, 'enqueued' ) ) {
+				wp_enqueue_script( $dependency );
 			}
 		}
 
-		// remove the handle from the queue
-		$key = array_search( $handle, $wp_scripts->queue );
-		unset( $wp_scripts->queue[ $key ] );
+		// Remove the handle from the queue.
+		wp_dequeue_script( $handle );
 	}
 }
-add_action( 'wp_print_scripts', 'novablocks_customize_scripts_output', 101 );
+// We need to cover both the head and the footer scripts
+// since the block editor logic will enqueue the scripts again upon block render.
+add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
+add_action( 'login_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
+add_action( 'embed_head', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_head_scripts() is hooked at 20.
+add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'login_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'embed_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
 
 function novablocks_block_area_has_blocks( $slug ) {
 	$posts = get_posts( array(
