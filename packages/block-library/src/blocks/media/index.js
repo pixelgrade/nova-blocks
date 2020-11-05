@@ -7,9 +7,12 @@ import save from './save';
 import transforms from './transforms';
 import deprecated from './deprecated';
 
-import { getPlaceholderImages, getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
-import { AdvancedGallery } from "@novablocks/components";
-import { generateDefaults } from "@novablocks/utils";
+import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
+import AdvancedGallery from "@novablocks/advanced-gallery";
+import {
+	generateDefaults,
+	getPlaceholderImages
+} from "@novablocks/block-editor";
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 

@@ -2,12 +2,12 @@
  * Internal dependencies
  */
 import SlideshowBackground from './background';
-import { GalleryPlaceholder } from '@novablocks/components';
+import { GalleryPlaceholder } from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies
  */
-import { 
+import {
 	Component,
 	Fragment,
  } from '@wordpress/element';

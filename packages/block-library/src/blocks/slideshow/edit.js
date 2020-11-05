@@ -5,11 +5,11 @@ import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
-import { withParallax } from "@novablocks/components";
+import { withDoppler } from "@novablocks/doppler";
 import {
 	normalizeImages,
 	withSettings
-} from "@novablocks/utils";
+} from "@novablocks/block-editor";
 
 /**
  * WordPress dependencies
@@ -102,5 +102,5 @@ class Edit extends Component {
 
 export default createHigherOrderComponent(compose([
 	withSettings,
-	withParallax,
+	withDoppler,
 ]))( Edit );

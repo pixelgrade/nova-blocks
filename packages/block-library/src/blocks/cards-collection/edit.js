@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Collection } from "@novablocks/components";
+import { Collection } from "@novablocks/collection";
 
 /**
  * WordPress dependencies

@@ -2,7 +2,7 @@ import save from "./save";
 import { omit } from 'lodash';
 
 import blockAttributes from "./attributes"
-import { AdvancedGallery } from "@novablocks/components";
+import AdvancedGallery from "@novablocks/advanced-gallery";
 
 const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
 

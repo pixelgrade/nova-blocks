@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames';
 
-import { AdvancedGallery } from '@novablocks/components';
+import AdvancedGallery from '@novablocks/advanced-gallery';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 

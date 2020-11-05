@@ -72,7 +72,7 @@ class Default_Block_Areas {
 				'post_type'             => Block_Areas_Post_Type::SLUG,
 				'post_status'           => 'publish',
 				'post_name'             => 'promo-bar',
-				'post_title'            => __( 'Promo Bar', 'block-areas' ),
+				'post_title'            => __( 'Promo Bar', '__plugin_txtd' ),
 				'post_content'          => $content,
 				'post_content_filtered' => '',
 			);
@@ -85,7 +85,7 @@ class Default_Block_Areas {
 				'post_type'             => Block_Areas_Post_Type::SLUG,
 				'post_status'           => 'publish',
 				'post_name'             => 'header',
-				'post_title'            => __( 'Header', 'block-areas' ),
+				'post_title'            => __( 'Header', '__plugin_txtd' ),
 				'post_content'          => $content,
 				'post_content_filtered' => '',
 			);
@@ -98,7 +98,7 @@ class Default_Block_Areas {
 				'post_type'             => Block_Areas_Post_Type::SLUG,
 				'post_status'           => 'publish',
 				'post_name'             => 'footer',
-				'post_title'            => __( 'Footer', 'block-areas' ),
+				'post_title'            => __( 'Footer', '__plugin_txtd' ),
 				'post_content'          => $content,
 				'post_content_filtered' => '',
 			);
