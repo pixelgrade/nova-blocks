@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_slideshow_attributes_config() {
+function novablocks_get_slideshow_attributes() {
 	$block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/slideshow/attributes.json' );
 
 	$alignment_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/alignment-controls/attributes.json' );
@@ -23,7 +23,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 	function novablocks_render_slideshow_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_slideshow_attributes_config();
+		$attributes_config = novablocks_get_slideshow_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		if ( empty( $attributes['galleryImages'] ) ) {
