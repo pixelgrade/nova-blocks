@@ -1209,6 +1209,7 @@ function novablocks_register_api_endpoints() {
 	register_rest_route( 'novablocks/v1', '/categories', array(
 		'methods' => 'GET',
 		'callback' => 'novablocks_get_categories_with_children',
+		'permission_callback' => '__return_true',
 	) );
 }
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
