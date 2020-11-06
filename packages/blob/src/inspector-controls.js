@@ -125,7 +125,6 @@ const BlobControls = ( props ) => {
 				onChange={ ( preset ) => {
 					const newAttributes = {};
 					newAttributes[`${ prefix }PatternSeed`] = preset;
-					console.log( newAttributes );
 					setAttributes( newAttributes );
 				} }
 				label={ __( 'Pattern Seed' ) }
