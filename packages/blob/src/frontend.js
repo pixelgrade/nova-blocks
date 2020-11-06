@@ -19,8 +19,13 @@ $( function() {
 			const $mediaWrap = $gridItem.find( '.novablocks-advanced-gallery__grid-item-media' );
 			const $media = $mediaWrap.children();
 
-			const blobAtts = getBlobAttsFromAttributes( attributes, 'blob' );
-			const blobMaskAtts = getBlobAttsFromAttributes( attributes, 'blobMask' );
+			const newAttributes = Object.assign( {}, attributes, {
+				blobPatternSeed: attributes.blobPatternSeed + j,
+				blobMaskPatternSeed: attributes.blobMaskPatternSeed + j
+			} );
+
+			const blobAtts = getBlobAttsFromAttributes( newAttributes, 'blob' );
+			const blobMaskAtts = getBlobAttsFromAttributes( newAttributes, 'blobMask' );
 
 			const svgMaskPath = generatePath( blobMaskAtts );
 			const svgPath = generatePath( blobAtts );
