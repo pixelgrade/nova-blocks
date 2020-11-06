@@ -49,9 +49,17 @@ function addEmphasisLevelAttribute( block ) {
 			default: block.name === 'novablocks/media' ? 'moderate' : 'basic',
 		},
 		emphasisByContrast: {
-			number: 'number',
+			type: 'number',
 			default: 1
-		}
+		},
+		accentColor: {
+			type: 'string',
+			default: 'primary'
+		},
+		style: {
+			type: 'string',
+			default: 'default'
+		},
 	});
 
 	return block;

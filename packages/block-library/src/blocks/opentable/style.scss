@@ -25,7 +25,7 @@
 	.picker__day--selected:hover,
 	.picker__day--infocus:hover,
 	.picker__day--outfocus:hover {
-		border-color: var(--novablocks-dark-1);
+		border-color: var(--novablocks-current-dark-primary);
 	}
 
 	.picker__day {
@@ -42,10 +42,10 @@
 	}
 
 	.picker__close {
-		color: var(--novablocks-dark-1);
+		color: var(--novablocks-current-dark-primary);
 
 		&:hover {
-			color: var(--novablocks-dark-2);
+			color: var(--novablocks-current-dark-secondary);
 		}
 	}
 
@@ -54,7 +54,7 @@
 		transition: border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
 
 		&:hover {
-			border-color: var(--novablocks-dark-1);
+			border-color: var(--novablocks-current-dark-primary);
 		}
 	}
 
@@ -140,7 +140,7 @@
 		width: 100%;
 
 		.ot-dtp-picker-selector[class][class] {
-			border: 1px solid var(--novablocks-light-2);
+			border: 1px solid var(--novablocks-current-light-secondary);
 		}
 
 		.ot-title {
@@ -173,13 +173,13 @@
 		}
 
 		.ot-button {
-			background-color: var(--novablocks-color-3);
-			color: var(--novablocks-light-1);
+			background-color: var(--novablocks-current-color-tertiary);
+			color: var(--novablocks-current-light-primary);
 			border-radius: 0;
-			border-color: var(--novablocks-color-3);
+			border-color: var(--novablocks-current-color-tertiary);
 
 			&:hover {
-				background-color: var(--novablocks-color-1);
+				background-color: var(--novablocks-current-color-primary);
 			}
 		}
 
@@ -195,21 +195,21 @@
 	}
 
 	&.novablocks-opentable__standard[class] {
-		background-color: var(--novablocks-dark-1);
-		color: var(--novablocks-light-1);
+		background-color: var(--novablocks-current-dark-primary);
+		color: var(--novablocks-current-light-primary);
 
 		padding: 3rem;
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link {
 			padding-left: 1.5rem;
 
-			color: var(--novablocks-light-1);
+			color: var(--novablocks-current-light-primary);
 			border-bottom: 2px solid currentColor;
 		}
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link:before {
 			left: 0;
-			color: var(--novablocks-light-1);
+			color: var(--novablocks-current-light-primary);
 		}
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link:after {
@@ -226,13 +226,13 @@
 		}
 
 		.ot-button {
-			background-color: var(--novablocks-light-1);
-			color: var(--novablocks-dark-1);
+			background-color: var(--novablocks-current-light-primary);
+			color: var(--novablocks-current-dark-primary);
 
 			padding: 20px 0;
 
 			&:hover {
-				background-color: var(--novablocks-light-3);
+				background-color: var(--novablocks-current-light-tertiary);
 			}
 		}
 

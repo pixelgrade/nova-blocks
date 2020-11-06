@@ -1418,15 +1418,15 @@ function novablocks_optimize_frontend_scripts_output() {
 		$wp_script = wp_scripts()->registered[ $handle ];
 		$deps      = $wp_script->deps;
 
+		// Remove the handle from the queue.
+		wp_dequeue_script( $handle );
+
 		// If it's dependencies aren't already enqueued, queue them up.
 		foreach ( $deps as $dependency ) {
 			if ( ! wp_script_is( $dependency, 'enqueued' ) ) {
 				wp_enqueue_script( $dependency );
 			}
 		}
-
-		// Remove the handle from the queue.
-		wp_dequeue_script( $handle );
 	}
 }
 // We need to cover both the head and the footer scripts

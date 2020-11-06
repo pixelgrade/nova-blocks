@@ -1,8 +1,8 @@
 .novablocks-announcement-bar {
 	--novablocks-announcement-bar-padding: #{11/16 * 1em};
 	--novablocks-announcement-bar-close-width: #{15/16 * 1em};
-	--novablocks-announcement-color: var(--novablocks-light-1);
-	--novablocks-announcement-background-color: var(--novablocks-color-1);
+	--novablocks-announcement-color: var(--novablocks-current-light-primary);
+	--novablocks-announcement-background-color: var(--novablocks-current-color-primary);
 
 	position: relative;
 	overflow: hidden;
@@ -72,7 +72,7 @@
 }
 
 .is-style-alternative {
-	--novablocks-announcement-background-color: var(--novablocks-color-2);
+	--novablocks-announcement-background-color: var(--novablocks-current-color-secondary);
 }
 
 .is-style-alert {

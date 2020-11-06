@@ -1,21 +1,29 @@
-:root {
-	--novablocks-block-text-color: var(--novablocks-dark-2);
-	--novablocks-block-titles-color: var(--novablocks-dark-2);
-	--novablocks-block-subtitles-color: var(--novablocks-color-1);
-	--novablocks-block-background-color: var(--novablocks-light-1);
+.novablocks-block {
+	--novablocks-block-text-color: var(--novablocks-current-dark-secondary);
+	--novablocks-block-accent-color: var(--novablocks-block-current-accent-color);
+	--novablocks-block-titles-color: var(--novablocks-current-dark-secondary);
+	--novablocks-block-background-color: var(--novablocks-current-light-primary);
 
 	--novablocks-block-padding: var(--novablocks-spacing);
 	--novablocks-block-content-padding: var(--novablocks-spacing);
 
-	--novablocks-block-content-text-color: var(--novablocks-dark-2);
-	--novablocks-block-content-titles-color: var(--novablocks-dark-2);
-	--novablocks-block-content-subtitles-color: var(--novablocks-color-1);
+	--novablocks-block-content-text-color: var(--novablocks-current-dark-secondary);
+	--novablocks-block-content-titles-color: var(--novablocks-current-dark-secondary);
+	--novablocks-block-content-accent-color: var(--novablocks-block-current-accent-color);
 	--novablocks-block-content-background-color: transparent;
 	--novablocks-block-content-background-opacity: 1;
 
 	--novablocks-block-content-current-box-shadow: none;
-}
+	--novablocks-block-current-accent-color: var(--novablocks-current-color-primary);
 
+	.has-secondary-accent-color & {
+		--novablocks-block-current-accent-color: var(--novablocks-current-color-secondary);
+	}
+
+	.has-tertiary-accent-color & {
+		--novablocks-block-current-accent-color: var(--novablocks-current-color-tertiary);
+	}
+}
 
 .novablocks-media {
 	position: relative;
@@ -43,7 +51,7 @@
 		}
 
 		h4, h5, h6 {
-			color: var(--novablocks-block-subtitles-color);
+			color: var(--novablocks-block-accent-color);
 		}
 	}
 }
@@ -65,7 +73,7 @@
 		}
 
 		h4, h5, h6 {
-			color: var(--novablocks-block-content-subtitles-color);
+			color: var(--novablocks-block-content-accent-color);
 		}
 	}
 
@@ -100,7 +108,7 @@
 @include below(tablet) {
 
 	.block-is-moderate.content-is-basic {
-		--novablocks-block-background-color: var(--novablocks-light-3);
+		--novablocks-block-background-color: var(--novablocks-current-light-tertiary);
 		--block-padding: var(--novablocks-block-padding);
 	}
 
@@ -108,30 +116,41 @@
 	.block-is-highlighted.content-is-moderate,
 	.block-is-basic.content-is-highlighted,
 	.block-is-moderate.content-is-highlighted {
-		--novablocks-block-background-color: var(--novablocks-dark-3);
-		--novablocks-block-content-text-color: var(--novablocks-light-1);
-		--novablocks-block-content-titles-color: var(--novablocks-light-1);
-		--novablocks-block-content-subtitles-color: var(--novablocks-light-1);
+		--novablocks-block-background-color: var(--novablocks-current-dark-tertiary);
+		--novablocks-block-content-text-color: var(--novablocks-current-light-primary);
+		--novablocks-block-content-titles-color: var(--novablocks-current-light-primary);
+		--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
 		--novablocks-block-text-color: var(--novablocks-block-content-text-color);
 		--novablocks-block-titles-color: var(--novablocks-block-content-titles-color);
-		--novablocks-block-subtitles-color: var(--novablocks-block-content-subtitles-color);
+		--novablocks-block-accent-color: var(--novablocks-block-content-accent-color);
 		--block-padding: var(--novablocks-block-padding);
+
+		.is-style-alternate & {
+			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
+			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
+		}
 	}
 }
 
 @include above(tablet) {
 
 	.block-is-moderate {
-		--novablocks-block-background-color: var(--novablocks-light-3);
+		--novablocks-block-background-color: var(--novablocks-current-light-tertiary);
 		--block-padding: var(--novablocks-block-padding);
 	}
 
 	.block-is-highlighted {
-		--novablocks-block-background-color: var(--novablocks-dark-3);
-		--novablocks-block-text-color: var(--novablocks-light-1);
-		--novablocks-block-titles-color: var(--novablocks-light-1);
-		--novablocks-block-subtitles-color: var(--novablocks-light-1);
+		--novablocks-block-background-color: var(--novablocks-current-dark-tertiary);
+		--novablocks-block-text-color: var(--novablocks-current-light-primary);
+		--novablocks-block-titles-color: var(--novablocks-current-light-primary);
+		--novablocks-block-accent-color: var(--novablocks-current-light-primary);
 		--block-padding: var(--novablocks-block-padding);
+
+		.is-style-alternate & {
+			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
+			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
+			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
+		}
 	}
 
 	.content-is-moderate,
@@ -140,20 +159,25 @@
 	}
 
 	.content-is-moderate.block-is-moderate {
-		--novablocks-block-content-background-color: var(--novablocks-light-1);
+		--novablocks-block-content-background-color: var(--novablocks-current-light-primary);
 	}
 
 	.content-is-highlighted.block-is-highlighted {
-		--novablocks-block-content-background-color: var(--novablocks-light-1);
+		--novablocks-block-content-background-color: var(--novablocks-current-light-primary);
 	}
 
 	.block-is-highlighted:not(.content-is-highlighted),
 	.content-is-highlighted:not(.block-is-highlighted) {
-		--novablocks-block-content-text-color: var(--novablocks-light-1);
+		--novablocks-block-content-text-color: var(--novablocks-current-light-primary);
 		--novablocks-block-content-titles-color: var(--novablocks-block-content-text-color);
 	}
 
 	.content-is-highlighted:not(.block-is-highlighted) {
-		--novablocks-block-content-background-color: var(--novablocks-dark-3);
+		--novablocks-block-content-background-color: var(--novablocks-current-dark-tertiary);
+
+		.is-style-alternate & {
+			--novablocks-block-content-background-color: var(--novablocks-block-current-accent-color);
+			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
+		}
 	}
 }
