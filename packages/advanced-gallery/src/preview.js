@@ -69,7 +69,7 @@ const AdvancedGalleryItem = ( props ) => {
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
-				<AdvancedGalleryItemMedia { ...props } />
+				<AdvancedGalleryItemMedia { ...props } seedOffset={ props?.index } />
 			</div>
 			<div className="novablocks-advanced-gallery__grid-item-info">
 				{ typeof imageCaption === 'string' && <div

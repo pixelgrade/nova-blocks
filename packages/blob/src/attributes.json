@@ -7,14 +7,6 @@
 		"type": "number",
 		"default": 3
 	},
-	"blobSkewedCorners": {
-		"type": "number",
-		"default": 3
-	},
-	"blobPatternLength": {
-		"type": "number",
-		"default": 3
-	},
 	"blobPatternSeed": {
 		"type": "number",
 		"default": 3
@@ -36,14 +28,6 @@
 		"default": false
 	},
 	"blobMaskSides": {
-		"type": "number",
-		"default": 3
-	},
-	"blobMaskSkewedCorners": {
-		"type": "number",
-		"default": 3
-	},
-	"blobMaskPatternLength": {
 		"type": "number",
 		"default": 3
 	},

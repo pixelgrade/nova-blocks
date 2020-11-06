@@ -1,3 +1,5 @@
+import Chance from 'chance';
+
 import {
 	getRandomBetween,
 	getRandomFromArray
@@ -6,29 +8,27 @@ import {
 const BLOB_MAX_SIDES = 20;
 export const BLOB_RADIUS = 10;
 
-export const getRatio = ( nthSide, attributes ) => {
-	const { skewedCorners, patternLength, patternSeed } = attributes;
+export const getRatioArray = ( arrayLength, seed ) => {
+	const chance = new Chance( seed );
 
-	if ( nthSide > skewedCorners ) {
-		return 1;
-	}
+	return Array.from( Array( arrayLength ).keys() ).map( () => {
+		return chance.integer( { min: 1, max: 10 } ) / 10;
+	} );
+}
 
-	const magicDigit = ( Math.pow( patternSeed, nthSide % patternLength ) % 11 ) % 10;
-
-	return magicDigit / 10;
-};
-
-export const getPointsArrayFromPreset = ( attributes ) => {
-	const { sides, rotation, complexity } = attributes;
+export const getPointsArray = ( attributes ) => {
+	const { sides, rotation, complexity, patternSeed } = attributes;
+	const ratioArray = getRatioArray( sides, patternSeed );
+	const complexityLimiter = 0.9;
 	const points = [];
 
 	// generate the points that will define the shape
-	for (let i = 1; i <= sides; i++) {
+	for ( let i = 0; i < sides; i++ ) {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
 		const angle = 2 * Math.PI * i / sides + Math.PI / 2 + Math.PI * rotation / 180;
-		const ratio = getRatio( i, attributes );
-		const distance = ratio + ( 1 - ratio ) * ( 100 - complexity ) / 100;
+		const ratio = ratioArray[i];
+		const distance = ratio + ( 1 - ratio ) * ( 100 - complexity * complexityLimiter ) / 100;
 
 		points.push({
 			x: BLOB_RADIUS * ( Math.cos( angle ) * distance + 1 ),
@@ -49,7 +49,7 @@ export const generatePath = ( attributes ) => {
 
 export const getCurvePoints = ( attributes ) => {
 	const { smoothness } = attributes;
-	const points = getPointsArrayFromPreset( attributes );
+	const points = getPointsArray( attributes );
 	const curvePoints = getCurvePointsFromPoints( points, smoothness);
 	const bounds = getBoundsFromCurvePoints( curvePoints );
 
@@ -214,17 +214,13 @@ export const scalePoints = ( points, bounds ) => {
 export const getRandomBlobAttributes = ( prefix ) => {
 
 	const sides = getRandomBetween( 1, 20 );
-	const skewedCorners = getRandomBetween( 0, sides );
-	const patternLength = getRandomBetween( 1, sides );
-	const patternSeed = getRandomBetween( 1, 10 );
+	const patternSeed = getRandomBetween( 1, 100 );
 	const complexity = getRandomBetween( 0, 100 );
 	const smoothness = getRandomFromArray( [33, 50, 100] );
 	const rotation = getRandomBetween( 0, 360 );
 
 	return {
 		[`${ prefix }Sides`]: sides,
-		[`${ prefix }SkewedCorners`]: skewedCorners,
-		[`${ prefix }PatternLength`]: patternLength,
 		[`${ prefix }PatternSeed`]: patternSeed,
 		[`${ prefix }Complexity`]: complexity,
 		[`${ prefix }Smoothness`]: smoothness,
@@ -235,8 +231,6 @@ export const getRandomBlobAttributes = ( prefix ) => {
 export const getBlobAttsFromAttributes = ( attributes, prefix ) => {
 	return {
 		sides: attributes[ `${ prefix }Sides` ],
-		skewedCorners: attributes[ `${ prefix }SkewedCorners` ],
-		patternLength: attributes[ `${ prefix }PatternLength` ],
 		patternSeed: attributes[ `${ prefix }PatternSeed` ],
 		complexity: attributes[ `${ prefix }Complexity` ],
 		smoothness: attributes[ `${ prefix }Smoothness` ],

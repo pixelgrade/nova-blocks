@@ -23,6 +23,7 @@
 		"@wordpress/element": "^2.18.0",
 		"@wordpress/hooks": "^2.10.0",
 		"@wordpress/i18n": "^3.16.0",
+		"chance": "^1.1.7",
 		"react-spring": "^8.0.27"
 	}
 }

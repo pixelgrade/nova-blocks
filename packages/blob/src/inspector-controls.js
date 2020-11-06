@@ -97,38 +97,6 @@ const getBlobStyleAttributes = ( attributes ) => {
 	};
 };
 
-const getMinSkewedCorners = ( attributes, prefix ) => {
-	return 0;
-};
-
-const getMaxSkewedCorners = ( attributes, prefix ) => {
-	return attributes[ `${ prefix }Sides` ];
-};
-
-const getMinPatternLength = ( attributes, prefix ) => {
-	return 1;
-};
-
-const getMaxPatternLength = ( attributes, prefix ) => {
-	const maxSkewedCorners = attributes[ `${ prefix }Sides` ];
-	const skewedCorners = attributes[ `${ prefix }SkewedCorners` ];
-	return Math.min( skewedCorners, maxSkewedCorners );
-};
-
-const normalizeAttributes = ( attributes, prefix ) => {
-	const newAttributes = {};
-
-	const minSkewedCorners = getMinSkewedCorners( attributes, prefix );
-	const maxSkewedCorners = getMaxSkewedCorners( attributes, prefix );
-	const minPatternLength = getMinPatternLength( attributes, prefix );
-	const maxPatternLength = getMaxPatternLength( attributes, prefix );
-
-	newAttributes[ `${ prefix }SkewedCorners` ] = Math.max( minSkewedCorners, Math.min( maxSkewedCorners, attributes[ `${ prefix }SkewedCorners` ] ) );
-	newAttributes[ `${ prefix }PatternLength` ] = Math.max( minPatternLength, Math.min( maxPatternLength, attributes[ `${ prefix }PatternLength` ] ) );
-
-	return Object.assign( {}, attributes, newAttributes );
-};
-
 const BlobControls = ( props ) => {
 
 	const {
@@ -145,7 +113,7 @@ const BlobControls = ( props ) => {
 				onChange={ ( sides ) => {
 					const newAttributes = {};
 					newAttributes[`${ prefix }Sides`] = sides;
-					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
+					setAttributes( newAttributes );
 				} }
 				label={ __( 'Sides' ) }
 				min={ 3 }
@@ -153,39 +121,16 @@ const BlobControls = ( props ) => {
 				step={ 1 }
 			/>
 			<RangeControl
-				value={ attributes[ `${ prefix }SkewedCorners` ] }
-				onChange={ ( sides ) => {
-					const newAttributes = {};
-					newAttributes[`${ prefix }SkewedCorners`] = sides;
-					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
-				} }
-				label={ __( 'Skewed Corners' ) }
-				min={ getMinSkewedCorners( attributes, prefix ) }
-				max={ getMaxSkewedCorners( attributes, prefix ) }
-				step={ 1 }
-			/>
-			<RangeControl
-				value={ attributes[ `${ prefix }PatternLength` ] }
-				onChange={ ( sides ) => {
-					const newAttributes = {};
-					newAttributes[`${ prefix }PatternLength`] = sides;
-					setAttributes( normalizeAttributes( Object.assign( {}, attributes, newAttributes ), prefix ) );
-				} }
-				label={ __( 'Pattern Length' ) }
-				min={ getMinPatternLength( attributes, prefix ) }
-				max={ getMaxPatternLength( attributes, prefix ) }
-				step={ 1 }
-			/>
-			<RangeControl
 				value={ attributes[ `${ prefix }PatternSeed` ] }
 				onChange={ ( preset ) => {
 					const newAttributes = {};
 					newAttributes[`${ prefix }PatternSeed`] = preset;
+					console.log( newAttributes );
 					setAttributes( newAttributes );
 				} }
 				label={ __( 'Pattern Seed' ) }
 				min={ 1 }
-				max={ 10 }
+				max={ 100 }
 				step={ 1 }
 			/>
 			<RangeControl
@@ -360,7 +305,7 @@ const InspectorControls = ( props ) => {
 const SwapShapesButton = ( props ) => {
 	const { attributes, setAttributes } = props;
 	const newAttributes = {};
-	const atts = [ 'Sides', 'SkewedCorners', 'PatternLength', 'PatternSeed', 'Complexity', 'Smoothness' ];
+	const atts = [ 'Sides', 'PatternSeed', 'Complexity', 'Smoothness' ];
 
 	atts.forEach( att => {
 		newAttributes[ `blob${ att }` ] = attributes[ `blobMask${ att }` ];

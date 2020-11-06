@@ -3,7 +3,7 @@ import { Fragment } from "@wordpress/element";
 import {
 	getBoundsFromCurvePoints,
 	getCurvePointsFromPoints,
-	getPointsArrayFromPreset,
+	getPointsArray,
 	scalePoints,
 	scaleCurvePoints,
 	BLOB_RADIUS
@@ -11,7 +11,7 @@ import {
 
 const BlobDebug = ( attributes ) => {
 	const { smoothness } = attributes;
-	const points = getPointsArrayFromPreset( attributes );
+	const points = getPointsArray( attributes );
 	const curvePoints = getCurvePointsFromPoints( points, smoothness );
 	const bounds = getBoundsFromCurvePoints( curvePoints );
 	const { xMin, xRatio, yMin, yRatio } = bounds;

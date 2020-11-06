@@ -1,6 +1,7 @@
 import { Spring, animated } from 'react-spring/renderprops';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { Fragment } from "@wordpress/element";
+import BlobDebug from './debug';
 
 import {
 	generatePath,
@@ -13,7 +14,9 @@ import {
 const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => {
 
 	return ( props ) => {
-		const { attributes } = props;
+		const {
+			attributes
+		} = props;
 
 		const {
 			blobsEnableMask,
@@ -21,11 +24,17 @@ const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => 
 			enableShapeDebug
 		} = attributes;
 
-		const svgViewBox = getBlobViewBox( attributes );
-		const blobsStyles = getBlobStyles( attributes );
+		const seedOffset = Number.isInteger( props.seedOffset ) ? props.seedOffset : 0;
+		const newAttributes = Object.assign( {}, attributes, {
+			blobPatternSeed: attributes.blobPatternSeed + seedOffset,
+			blobMaskPatternSeed: attributes.blobMaskPatternSeed + seedOffset
+		} );
 
-		const blobAtts = getBlobAttsFromAttributes( attributes, 'blob' );
-		const blobMaskAtts = getBlobAttsFromAttributes( attributes, 'blobMask' );
+		const svgViewBox = getBlobViewBox( newAttributes );
+		const blobsStyles = getBlobStyles( newAttributes );
+
+		const blobAtts = getBlobAttsFromAttributes( newAttributes, 'blob' );
+		const blobMaskAtts = getBlobAttsFromAttributes( newAttributes, 'blobMask' );
 
 		const svgMaskPath = generatePath( blobMaskAtts );
 		const svgPath = generatePath( blobAtts );
@@ -43,7 +52,7 @@ const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => 
 									<svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
 										{
 											blobsEnableMask && enableShapeDebug &&
-											<Blob.Debug { ...blobMaskAtts } />
+											<BlobDebug { ...blobMaskAtts } />
 										}
 									</svg>
 								</div>
@@ -61,7 +70,7 @@ const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => 
 									<animated.path d={ props.path }></animated.path>
 									{
 										enableShapeDebug &&
-										<Blob.Debug { ...blobAtts } />
+										<BlobDebug { ...blobAtts } />
 									}
 								</svg>
 							);
