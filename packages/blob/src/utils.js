@@ -213,7 +213,7 @@ export const scalePoints = ( points, bounds ) => {
 
 export const getRandomBlobAttributes = ( prefix ) => {
 
-	const sides = getRandomBetween( 1, 20 );
+	const sides = getRandomBetween( 1, 12 );
 	const patternSeed = getRandomBetween( 1, 100 );
 	const complexity = getRandomBetween( 0, 100 );
 	const smoothness = getRandomFromArray( [33, 50, 100] );

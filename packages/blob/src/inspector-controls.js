@@ -117,7 +117,7 @@ const BlobControls = ( props ) => {
 				} }
 				label={ __( 'Sides' ) }
 				min={ 3 }
-				max={ 20 }
+				max={ 12 }
 				step={ 1 }
 			/>
 			<RangeControl
