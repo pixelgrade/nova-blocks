@@ -88,7 +88,7 @@ const ControlsSectionsComponent = ( props ) => {
 					} )
 				}
 				{
-					Object.keys( groups ).map( key => {
+					Object.keys( groups ).sort().map( key => {
 						const sections = groups[ key ];
 
 						return sections.map( ( section, index ) => {
