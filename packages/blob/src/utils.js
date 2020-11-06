@@ -5,7 +5,7 @@ import {
 	getRandomFromArray
 } from '@novablocks/utils';
 
-const BLOB_MAX_SIDES = 20;
+const BLOB_MAX_SIDES = 12;
 export const BLOB_RADIUS = 10;
 
 export const getRatioArray = ( arrayLength, seed ) => {
@@ -213,10 +213,10 @@ export const scalePoints = ( points, bounds ) => {
 
 export const getRandomBlobAttributes = ( prefix ) => {
 
-	const sides = getRandomBetween( 1, 12 );
+	const sides = getRandomBetween( 3, BLOB_MAX_SIDES );
 	const patternSeed = getRandomBetween( 1, 100 );
 	const complexity = getRandomBetween( 0, 100 );
-	const smoothness = getRandomFromArray( [33, 50, 100] );
+	const smoothness = getRandomFromArray( 0, 100 );
 	const rotation = getRandomBetween( 0, 360 );
 
 	return {
