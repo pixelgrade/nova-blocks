@@ -19,7 +19,7 @@ export const getRatioArray = ( arrayLength, seed ) => {
 export const getPointsArray = ( attributes ) => {
 	const { sides, rotation, complexity, patternSeed } = attributes;
 	const ratioArray = getRatioArray( sides, patternSeed );
-	const complexityLimiter = 0.9;
+	const complexityLimiter = 0.7;
 	const points = [];
 
 	// generate the points that will define the shape
