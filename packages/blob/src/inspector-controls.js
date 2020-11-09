@@ -207,8 +207,8 @@ const InspectorControls = ( props ) => {
 					randomize={ () => {
 
 						return {
-							blobsEnableMask: getRandomFromArray( [true, true, false ] ),
-							blobsEnableDecoration: getRandomFromArray( [true, true, false ] ),
+							blobsEnableMask: getRandomFromArray( [ true, true, false ] ),
+							blobsEnableDecoration: getRandomFromArray( [ true, true, false ] ),
 							...getRandomBlobAttributes( 'blob' ),
 							...getRandomBlobAttributes( 'blobMask' ),
 							blobsHorizontalDisplacement: getRandomBetween( 0, 100 ),

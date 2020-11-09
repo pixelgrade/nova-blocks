@@ -216,7 +216,7 @@ export const getRandomBlobAttributes = ( prefix ) => {
 	const sides = getRandomBetween( 3, BLOB_MAX_SIDES );
 	const patternSeed = getRandomBetween( 1, 100 );
 	const complexity = getRandomBetween( 0, 100 );
-	const smoothness = getRandomFromArray( 0, 100 );
+	const smoothness = getRandomFromArray( [ 33, 50, 100 ] );
 	const rotation = getRandomBetween( 0, 360 );
 
 	return {
