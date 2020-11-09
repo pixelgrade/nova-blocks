@@ -1,7 +1,7 @@
 import { Fragment } from "@wordpress/element";
 
 import {
-	getBoundsFromCurvePoints,
+	getDefaultBounds,
 	getCurvePointsFromPoints,
 	getPointsArray,
 	scalePoints,
@@ -10,14 +10,9 @@ import {
 } from "./utils";
 
 const BlobDebug = ( attributes ) => {
-	const { smoothness } = attributes;
 	const points = getPointsArray( attributes );
-	const curvePoints = getCurvePointsFromPoints( points, smoothness );
-	const bounds = getBoundsFromCurvePoints( curvePoints );
-	const { xMin, xRatio, yMin, yRatio } = bounds;
-
-	const xCenter = ( BLOB_RADIUS - xMin ) * xRatio;
-	const yCenter = ( BLOB_RADIUS - yMin ) * yRatio;
+	const curvePoints = getCurvePointsFromPoints( attributes );
+	const bounds = getDefaultBounds();
 
 	scalePoints( points, bounds );
 	scaleCurvePoints( curvePoints, bounds );
@@ -29,7 +24,7 @@ const BlobDebug = ( attributes ) => {
 				return (
 					<Fragment>
 						<line x1={ point.x } y1={ point.y } x2={ nextPoint.x } y2={ nextPoint.y } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" style={ { strokeOpacity: .5 } } />
-						<line x1={ point.x } y1={ point.y } x2={ xCenter } y2={ yCenter } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" style={ { strokeOpacity: .5 } } />
+						<line x1={ point.x } y1={ point.y } x2={ BLOB_RADIUS } y2={ BLOB_RADIUS } strokeWidth="0.05" stroke="black" strokeDasharray="0.2" style={ { strokeOpacity: .5 } } />
 					</Fragment>
 				)
 			} ) }

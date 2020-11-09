@@ -66,21 +66,31 @@ const AdvancedGalleryItem = ( props ) => {
 		return;
 	}
 
+	const hasCaption = typeof imageCaption === 'string' && !! imageCaption;
+	const hasDescription = typeof imageDescription === 'string' && !! imageDescription;
+
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
 				<AdvancedGalleryItemMedia { ...props } seedOffset={ props?.index } />
 			</div>
-			<div className="novablocks-advanced-gallery__grid-item-info">
-				{ typeof imageCaption === 'string' && <div
-					className={ `novablocks-advanced-gallery__grid-item-caption` }
-					dangerouslySetInnerHTML={ { __html: imageCaption } }>
-				</div> }
-				{ typeof imageDescription === 'string' && <div
-					className={ `novablocks-advanced-gallery__grid-item-description` }
-					dangerouslySetInnerHTML={ { __html: imageDescription } }>
-				</div> }
-			</div>
+			{
+				( hasCaption || hasDescription ) &&
+				<div className="novablocks-advanced-gallery__grid-item-info">
+					{
+						hasCaption &&
+						<div className={ `novablocks-advanced-gallery__grid-item-caption` }
+						     dangerouslySetInnerHTML={ { __html: imageCaption } }>
+						</div>
+					}
+					{
+						typeof hasDescription &&
+						<div className={ `novablocks-advanced-gallery__grid-item-description` }
+						     dangerouslySetInnerHTML={ { __html: imageDescription } }>
+						</div>
+					}
+				</div>
+			}
 		</div>
 	);
 };

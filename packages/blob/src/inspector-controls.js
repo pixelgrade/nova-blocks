@@ -117,7 +117,7 @@ const BlobControls = ( props ) => {
 				} }
 				label={ __( 'Sides' ) }
 				min={ 3 }
-				max={ 12 }
+				max={ 8 }
 				step={ 1 }
 			/>
 			<RangeControl
@@ -165,8 +165,8 @@ const BlobControls = ( props ) => {
 				} }
 				label={ __( 'Rotation' ) }
 				min={ 0 }
-				max={ 360 }
-				step={ 10 }
+				max={ 100 }
+				step={ 1 }
 			/>
 		</Fragment>
 	);

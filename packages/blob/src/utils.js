@@ -8,10 +8,10 @@ import {
 const BLOB_MAX_SIDES = 12;
 export const BLOB_RADIUS = 10;
 
-export const getRatioArray = ( arrayLength, seed ) => {
-	const chance = new Chance( seed );
+export const getRatioArray = ( sides, patternSeed ) => {
+	const chance = new Chance( patternSeed );
 
-	return Array.from( Array( arrayLength ).keys() ).map( () => {
+	return Array.from( Array( sides ).keys() ).map( () => {
 		return chance.integer( { min: 1, max: 10 } ) / 10;
 	} );
 }
@@ -26,7 +26,7 @@ export const getPointsArray = ( attributes ) => {
 	for ( let i = 0; i < sides; i++ ) {
 		// generate a regular polygon
 		// we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
-		const angle = 2 * Math.PI * i / sides + Math.PI / 2 + Math.PI * rotation / 180;
+		const angle = 2 * Math.PI * i / sides + Math.PI / 2 + Math.PI * rotation * ( 90 / 100 ) / 180;
 		const ratio = ratioArray[i];
 		const distance = ratio + ( 1 - ratio ) * ( 100 - complexity * complexityLimiter ) / 100;
 
@@ -48,10 +48,8 @@ export const generatePath = ( attributes ) => {
 };
 
 export const getCurvePoints = ( attributes ) => {
-	const { smoothness } = attributes;
-	const points = getPointsArray( attributes );
-	const curvePoints = getCurvePointsFromPoints( points, smoothness);
-	const bounds = getBoundsFromCurvePoints( curvePoints );
+	const curvePoints = getCurvePointsFromPoints( attributes );
+	const bounds = getDefaultBounds();
 
 	scaleCurvePoints( curvePoints, bounds );
 
@@ -95,7 +93,9 @@ export const getPathFromCurvePoints = ( curvePoints, missingPoints = 0 ) => {
 	return path;
 };
 
-export const getCurvePointsFromPoints = ( points, smoothness ) => {
+export const getCurvePointsFromPoints = ( attributes ) => {
+	const { sides, smoothness } = attributes;
+	const points = getPointsArray( attributes );
 	let curvePoints = [];
 
 	for ( let i = 0; i < points.length; i ++ ) {
@@ -104,7 +104,6 @@ export const getCurvePointsFromPoints = ( points, smoothness ) => {
 		const nextPt = points[nextIdx];
 		const thisPt = points[i];
 		const prevPt = points[prevIdx];
-		const sqrt = Math.sqrt( smoothness / 100 );
 
 		const M1 = {
 			x: (prevPt.x + thisPt.x) / 2,
@@ -116,11 +115,19 @@ export const getCurvePointsFromPoints = ( points, smoothness ) => {
 			y: (thisPt.y + nextPt.y) / 2,
 		};
 
-		const x1 = M1.x * (1 - sqrt) + thisPt.x * sqrt;
-		const y1 = M1.y * (1 - sqrt) + thisPt.y * sqrt;
+		// radius of the hexagon created by the middle points
+		const radius = BLOB_RADIUS * Math.cos( Math.PI / sides );
+		// distance to original point;
+		const dm = BLOB_RADIUS * Math.sin( Math.PI / sides );
+		const perfectRatio = Math.tan( Math.PI / ( 2 * sides ) ) * ( 4 / 3 );
 
-		const x2 = M2.x * (1 - sqrt) + thisPt.x * sqrt;
-		const y2 = M2.y * (1 - sqrt) + thisPt.y * sqrt;
+		const ratio = ( radius * perfectRatio / dm ) * smoothness / 100;
+
+		const x1 = M1.x * (1 - ratio) + thisPt.x * ratio;
+		const y1 = M1.y * (1 - ratio) + thisPt.y * ratio;
+
+		const x2 = M2.x * (1 - ratio) + thisPt.x * ratio;
+		const y2 = M2.y * (1 - ratio) + thisPt.y * ratio;
 
 		curvePoints.push({
 			x1: x1,
@@ -137,11 +144,28 @@ export const getCurvePointsFromPoints = ( points, smoothness ) => {
 	return curvePoints;
 };
 
+export const getDefaultBounds = () => {
+	return {
+		xMax: BLOB_RADIUS,
+		yMax: BLOB_RADIUS,
+		xMin: 0,
+		yMin: 0,
+		xRatio: 1,
+		yRatio: 1,
+	}
+}
+
+export const initializeBounds = () => {
+	return {
+		xMax: 0,
+		yMax: 0,
+		xMin: BLOB_RADIUS,
+		yMin: BLOB_RADIUS,
+	}
+}
+
 export const getBoundsFromPoints = points => {
-	let xMax = 0;
-	let yMax = 0;
-	let xMin = BLOB_RADIUS;
-	let yMin = BLOB_RADIUS;
+	let { xMax, yMax, xMin, yMin } = initializeBounds();
 
 	for ( let i = 0; i < points.length; i ++ ) {
 		const { x, y } = points[i];
@@ -159,10 +183,7 @@ export const getBoundsFromPoints = points => {
 };
 
 export const getBoundsFromCurvePoints = ( points ) => {
-	let xMax = 0;
-	let yMax = 0;
-	let xMin = BLOB_RADIUS;
-	let yMin = BLOB_RADIUS;
+	let { xMax, yMax, xMin, yMin } = initializeBounds();
 
 	for ( let i = 0; i < points.length; i ++ ) {
 		const { x1, x2, y1, y2, m1x, m2x, m1y, m2y } = points[i];
@@ -217,7 +238,7 @@ export const getRandomBlobAttributes = ( prefix ) => {
 	const patternSeed = getRandomBetween( 1, 100 );
 	const complexity = getRandomBetween( 0, 100 );
 	const smoothness = getRandomFromArray( [ 33, 50, 100 ] );
-	const rotation = getRandomBetween( 0, 360 );
+	const rotation = getRandomBetween( 0, 100 );
 
 	return {
 		[`${ prefix }Sides`]: sides,
@@ -283,5 +304,10 @@ export const getBlobMaskStyles = ( path, viewBox = '0 0 20 20' ) => {
 };
 
 export const getBlobViewBox = ( attributes ) => {
-	return ! attributes?.enableShapeDebug ? '0 0 20 20' : '-2 -2 24 24';
+	const offset = ! attributes?.enableShapeDebug ? 0 : 2;
+	const x = 0 - offset;
+	const width = 2 * ( BLOB_RADIUS + offset );
+
+	return '0 0 20 20';
+	return `${ x } ${ x } ${ width } ${ width }`;
 };
