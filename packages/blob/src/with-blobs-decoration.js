@@ -41,7 +41,7 @@ const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => 
 
 		return (
 			<div className={ 'blob-mix' } style={ blobsStyles }>
-				<Spring config={ { delay: 150 } } to={ { path: svgMaskPath } }>
+				<Spring config={ { delay: 0 } } to={ { path: svgMaskPath } }>
 					{ springProps => {
 						return (
 							<Fragment>
@@ -62,7 +62,7 @@ const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => 
 				</Spring>
 				{
 					blobsEnableDecoration &&
-					<Spring config={ { delay: 150 } } to={ { path: svgPath } }>
+					<Spring config={ { delay: 0 } } to={ { path: svgPath } }>
 						{ props => {
 
 							return (

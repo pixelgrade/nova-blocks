@@ -135,9 +135,9 @@ const BlobControls = ( props ) => {
 						setAttributes( newAttributes );
 					} }
 					label={ __( 'Pattern Seed' ) }
-					min={ 1 }
+					min={ 0 }
 					max={ 100 }
-					step={ 1 }
+					step={ 10 }
 				/>
 			</div>
 			<RangeControl
@@ -221,9 +221,9 @@ const InspectorControls = ( props ) => {
 							blobsEnableDecoration: getRandomFromArray( [ true, true, false ] ),
 							...getRandomBlobAttributes( 'blob' ),
 							...getRandomBlobAttributes( 'blobMask' ),
-							blobsHorizontalDisplacement: getRandomBetween( 0, 100 ),
-							blobsVerticalDisplacement: getRandomBetween( 0, 100 ),
-							blobsSizeBalance: getRandomBetween( 0, 100 ),
+							blobsHorizontalDisplacement: getRandomBetween( 3, 8 ) * 10,
+							blobsVerticalDisplacement: getRandomBetween( 3, 8 ) * 10,
+							blobsSizeBalance: getRandomBetween( 3, 8 ) * 10,
 						}
 					} }
 				/>
