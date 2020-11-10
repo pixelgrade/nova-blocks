@@ -17,5 +17,9 @@
 
 .blob-mix__decoration {
 	transform: var(--blob-mix-decoration-transform);
-	fill: var(--novablocks-color-2);
+	fill: var(--novablocks-current-color-primary);
+
+	.novablocks-block & {
+		fill: var(--novablocks-block-accent-color);
+	}
 }
