@@ -1,5 +1,7 @@
 import $ from 'jquery';
 
+import '@novablocks/blob/frontend';
+
 import { GridItemCollection } from './grid-item';
 import { getGalleryStyle, getGridStyle, safariHeightFix } from './utils';
 
@@ -7,22 +9,10 @@ $( function() {
 
 	$( '.novablocks-advanced-gallery' ).each( ( i, gallery ) => {
 
-		let $gallery = $( gallery ),
-			$grid = $gallery.find( '.novablocks-advanced-gallery__grid' ),
-			images = $gallery.find( '.novablocks-advanced-gallery__image' ).toArray();
-
-		const attributes = {
-			imageResizing: $gallery.data( 'imageresizing' ),
-			containerHeight: $gallery.data( 'containerheight' ),
-			positionShift: $gallery.data( 'positionshift' ),
-			sizeContrast: $gallery.data( 'sizecontrast' ),
-			imageRotation: $gallery.data( 'imagerotation' ),
-			placementVariation: $gallery.data( 'placementvariation' ),
-			elementsDistance: $gallery.data( 'elementsdistance' ),
-			verticalSpacing: $gallery.data( 'verticalspacing' ),
-			objectPosition: $gallery.data( 'objectposition' ),
-		};
-
+		const $gallery = $( gallery );
+		const $grid = $gallery.find( '.novablocks-advanced-gallery__grid' );
+		const images = $gallery.find( '.novablocks-advanced-gallery__image' ).toArray();
+		const attributes = $gallery.data();
 		const gridItemsCollection = new GridItemCollection( images, attributes );
 
 		gridItemsCollection.gridItems.map( ( gridItem, index ) => {

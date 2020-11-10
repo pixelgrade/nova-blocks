@@ -1,3 +1,11 @@
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+
+import {
+	RadioControl,
+	RangeControl,
+} from '@wordpress/components';
+
 import {
 	ControlsGroup,
 	ControlsSection,
@@ -8,39 +16,33 @@ import {
 
 import { getRandomAttributes } from "./utils";
 
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-
-import {
-	RadioControl,
-	RangeControl,
-} from '@wordpress/components';
-
 const AdvancedGalleryInspectorControls = ( props ) => {
 
 	const {
 		setAttributes,
-		attributes: {
-			// composition settings
-			sizeContrast,
-			positionShift,
-			elementsDistance,
-			placementVariation,
-
-			// elements settings
-			imageResizing,
-			objectPosition,
-			containerHeight,
-			imageRotation,
-		},
+		attributes,
 		settings: {
-			advancedGalleryPresetOptions
+			advancedGalleryPresetOptions,
 		}
 	} = props;
 
+	const {
+		// composition settings
+		sizeContrast,
+		positionShift,
+		elementsDistance,
+		placementVariation,
+
+		// elements settings
+		imageResizing,
+		objectPosition,
+		containerHeight,
+		imageRotation,
+
+	} = attributes;
+
 	return (
 		<Fragment>
-
 			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 
 				<ControlsTab label={ __( 'General' ) }>
@@ -150,10 +152,10 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 						/>
 					</ControlsGroup>
 				</ControlsTab>
-
 			</ControlsSection>
+
 		</Fragment>
 	);
-}
+};
 
 export default AdvancedGalleryInspectorControls;

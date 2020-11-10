@@ -617,6 +617,7 @@ function novablocks_get_block_editor_settings() {
 			),
 		),
 		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
@@ -624,6 +625,213 @@ function novablocks_get_block_editor_settings() {
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;
+}
+
+function novablocks_get_blob_presets() {
+	return array(
+		array(
+			'label'  => 'Rectangle',
+			'value'  => 'rectangle',
+			'preset' => array(
+				'blobsEnableMask'             => false,
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Ellipse',
+			'value'  => 'ellipse',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 4,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Diamond',
+			'value'  => 'diamond',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 6,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Seed',
+			'value'  => 'seed',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 5,
+				'blobMaskPatternSeed'         => 70,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Blob',
+			'value'  => 'blob',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 7,
+				'blobMaskPatternSeed'         => 50,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'MX37: Stones',
+			'value'  => 'stones-37',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 3,
+				'blobMaskPatternSeed'         => 30,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 60,
+				'blobMaskRotation'            => 70,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 4,
+				'blobPatternSeed'             => 30,
+				'blobComplexity'              => 90,
+				'blobSmoothness'              => 100,
+				'blobRotation'                => 70,
+
+				'blobsHorizontalDisplacement' => 80,
+				'blobsVerticalDisplacement'   => 60,
+				'blobsSizeBalance'            => 60,
+			),
+		),
+		array(
+			'label'  => 'MX19: Seeds',
+			'value'  => 'seeds-19',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 5,
+				'blobMaskPatternSeed'         => 90,
+				'blobMaskComplexity'          => 80,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 50,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 5,
+				'blobPatternSeed'             => 40,
+				'blobComplexity'              => 80,
+				'blobSmoothness'              => 100,
+				'blobRotation'                => 100,
+
+				'blobsHorizontalDisplacement' => 30,
+				'blobsVerticalDisplacement'   => 60,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'MX81: Ovoid',
+			'value'  => 'ovoid-81',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 6,
+				'blobMaskPatternSeed'         => 10,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 100,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 3,
+				'blobPatternSeed'             => 50,
+				'blobComplexity'              => 100,
+				'blobSmoothness'              => 50,
+				'blobRotation'                => 40,
+
+				'blobsHorizontalDisplacement' => 40,
+				'blobsVerticalDisplacement'   => 30,
+				'blobsSizeBalance'            => 45,
+			),
+		),
+		array(
+			'label'  => 'MX76: Leaf',
+			'value'  => 'leaf-76',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 3,
+				'blobMaskPatternSeed'         => 100,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 60,
+				'blobMaskRotation'            => 80,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 6,
+				'blobPatternSeed'             => 70,
+				'blobComplexity'              => 100,
+				'blobSmoothness'              => 100,
+				'blobRotation'                => 10,
+
+				'blobsHorizontalDisplacement' => 40,
+				'blobsVerticalDisplacement'   => 40,
+				'blobsSizeBalance'            => 45,
+			),
+		),
+		array(
+			'label'  => 'MX19: Ruby',
+			'value'  => 'ruby-19',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 5,
+				'blobMaskPatternSeed'         => 0,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 10,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 5,
+				'blobPatternSeed'             => 0,
+				'blobComplexity'              => 0,
+				'blobSmoothness'              => 0,
+				'blobRotation'                => 40,
+
+				'blobsHorizontalDisplacement' => 40,
+				'blobsVerticalDisplacement'   => 30,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'MX41: Diagonal',
+			'value'  => 'diagonal-41',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 8,
+				'blobMaskPatternSeed'         => 0,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 4,
+				'blobPatternSeed'             => 60,
+				'blobComplexity'              => 100,
+				'blobSmoothness'              => 0,
+				'blobRotation'                => 50,
+
+				'blobsHorizontalDisplacement' => 55,
+				'blobsVerticalDisplacement'   => 45,
+				'blobsSizeBalance'            => 35,
+			),
+		),
+	);
 }
 
 function novablocks_get_advanced_gallery_presets() {
@@ -758,6 +966,32 @@ function novablocks_get_attributes_from_json( $path ) {
 	return json_decode( file_get_contents( $filename ), true );
 }
 
+function novablocks_camel_case_to_kebab_case( $string ) {
+	return strtolower( preg_replace( '%([A-Z])([a-z])%', '-\1\2', $string ) );
+}
+
+function novablocks_kebab_case_to_camel_case( $string ) {
+	$str = str_replace( '-', '', ucwords( $string, '-' ) );
+	$str = lcfirst( $str );
+	return $str;
+}
+
+function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
+	$data_attributes = array();
+
+	foreach ( $data_attributes_array as $data_attribute ) {
+		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
+
+		if ( empty( $attributes[ $attribute ] ) ) {
+			$attributes[ $attribute ] = 0;
+		}
+
+		$data_attributes[] = 'data-' . $data_attribute . '="' . $attributes[ $attribute ] . '"';
+	}
+
+	return $data_attributes;
+}
+
 function novablocks_render_advanced_gallery( $attributes ) {
 
 	$images = array();
@@ -770,26 +1004,15 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$advanced_gallery_attributes = array(
-		'sizeContrast',
-		'positionShift',
-		'elementsDistance',
-		'placementVariation',
-		'imageResizing',
-		'objectPosition',
-		'containerHeight',
-		'imageRotation',
-	);
+	$blob_attributes_config = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$blob_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $blob_attributes_config ) );
 
-	$data_attributes = array();
+	$advanced_gallery_attributes_config = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
+	$advanced_gallery_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $advanced_gallery_attributes_config ) );
 
-	foreach ( $advanced_gallery_attributes as $attribute ) {
-		if ( empty( $attributes[ $attribute ] ) ) {
-			$attributes[ $attribute ] = 0;
-		}
+	$data_attributes_array = array_merge( $blob_attributes_array, $advanced_gallery_attributes_array );
 
-		$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
-	}
+	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 

@@ -9,10 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_advanced_gallery_attributes() {
+	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
 	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/advanced-gallery/attributes.json' );
 
-	return array_merge( $media_attributes, $gallery_attributes );
+	return array_merge( $media_attributes, $gallery_attributes, $blob_attributes );
 }
 
 if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {

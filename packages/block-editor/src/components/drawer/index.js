@@ -100,6 +100,7 @@ const Drawers = ( ownProps ) => {
 					{ drawerLists.map( ( drawerList, drawerListIndex ) => {
 						const drawers = getDrawersFromList( drawerList );
 						const title = drawerList?.props?.title;
+
 						totalDrawers = totalDrawers + drawers.length;
 
 						const drawersWithTarget = drawers.map( ( drawer, index ) => {

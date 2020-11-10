@@ -149,7 +149,10 @@
 		.is-style-alternate & {
 			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
 			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
-			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
+
+			&:not(.content-is-highlighted) {
+				--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
+			}
 		}
 	}
 

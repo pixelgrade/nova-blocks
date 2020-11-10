@@ -64,6 +64,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 	function novablocks_register_packages_scripts() {
 
+		$blob_style_dependent_handles = array(
+			'novablocks-advanced-gallery',
+		);
+
 		foreach ( glob( trailingslashit( novablocks_get_plugin_path() ) . 'build/*/index.js' ) as $path ) {
 
 			// We want to skip the block-library directory.
@@ -121,13 +125,19 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				);
 			}
 
+			$style_dependencies = array();
+
+			if ( in_array( $handle, $blob_style_dependent_handles ) ) {
+				$style_dependencies[] = 'novablocks-blob-style';
+			}
+
 			// Register styles for the current package, if the files exist.
 			$style_path = $package_dir_absolute_path . 'style.css';
 			if ( file_exists( $style_path ) ) {
 				wp_register_style(
 					$handle . '-style',
 					$package_dir_url . 'style.css',
-					array(),
+					$style_dependencies,
 					$version
 				);
 			}
@@ -137,7 +147,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				wp_register_style(
 					$handle . '-editor_style',
 					$package_dir_url . 'editor-styles.css',
-					array(),
+					$style_dependencies,
 					$version
 				);
 			}

@@ -162,15 +162,15 @@ export const navigation = (
 
 export const openhours = (
 	<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<g clippath="url(#clip0)">
+		<g clipPath="url(#clip0)">
 			<path fillRule="evenodd" clipRule="evenodd"
 			      d="M12 0C5.37258 0 0 5.37258 0 12c0 6.6274 5.37258 12 12 12 6.6274 0 12-5.3726 12-12 0-6.62742-5.3726-12-12-12zM6.63604 7.63604l5.16786 5.16786 4.6597-2.6903c.4782-.2761 1.0898-.1122 1.366.3661.2761.4783.1122 1.0898-.366 1.366l-5.2973 3.0584c-.3897.2249-.8678.1578-1.181-.1334-.0738-.0457-.1436-.1006-.2076-.1646L5.22183 9.05025c-.39053-.39052-.39053-1.02369 0-1.41421.39052-.39053 1.02368-.39053 1.41421 0z"
 			      fill="#6565F2"/>
 		</g>
 		<defs>
-			<clippath id="clip0">
+			<clipPath id="clip0">
 				<path fill="#fff" d="M0 0h24v24H0z"/>
-			</clippath>
+			</clipPath>
 		</defs>
 	</svg>
 );
@@ -197,13 +197,13 @@ export const gallery = (
 
 export const cardsCollection = (
 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<g clippath="url(#clip0)">
+		<g clipPath="url(#clip0)">
 			<path fillRule="evenodd" clipRule="evenodd" d="M24 12C24 5.37258 18.6274 -2.34843e-07 12 -5.24537e-07C5.3726 -8.14229e-07 -2.34843e-07 5.37258 -5.24537e-07 12C-8.14229e-07 18.6274 5.3726 24 12 24C18.6274 24 24 18.6274 24 12ZM16 8.66667C16 7.74619 16.7462 7 17.6667 7C19.5076 7 21 8.49238 21 10.3333L21 13.6667C21 15.5076 19.5076 17 17.6667 17C16.7462 17 16 16.2538 16 15.3333L16 8.66667ZM11 6C9.89543 6 9 6.89543 9 8L9 16C9 17.1046 9.89543 18 11 18L13 18C14.1046 18 15 17.1046 15 16L15 8C15 6.89543 14.1046 6 13 6L11 6ZM3 10.3333C3 8.49238 4.49238 7 6.33333 7C7.25381 7 8 7.74619 8 8.66667L8 15.3333C8 16.2538 7.25381 17 6.33333 17C4.49238 17 3 15.5076 3 13.6667L3 10.3333Z" fill="#6565F2"/>
 		</g>
 		<defs>
-			<clippath id="clip0">
+			<clipPath id="clip0">
 				<rect width="24" height="24" fill="white" transform="translate(24) rotate(90)"/>
-			</clippath>
+			</clipPath>
 		</defs>
 	</svg>
 );

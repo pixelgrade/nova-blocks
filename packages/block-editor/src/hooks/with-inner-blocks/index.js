@@ -1,6 +1,5 @@
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
-import { Fragment } from '@wordpress/element';
 
 import { withSelect } from '@wordpress/data';
 
