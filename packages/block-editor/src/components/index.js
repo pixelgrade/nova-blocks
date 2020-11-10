@@ -3,7 +3,6 @@ export { default as CardsManager } from './cards-manager';
 export { default as ControlsGroup } from './controls-group';
 export { default as BlockHorizontalAlignmentToolbar } from "./block-horizontal-alignment-toolbar";
 export { default as BlockVerticalAlignmentToolbar } from "./block-vertical-alignment-toolbar";
-export { default as EditableText } from './editable-text';
 export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
 export { default as Notice } from "./notice";

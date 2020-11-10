@@ -2,9 +2,9 @@
  * WordPress dependencies
  */
 
-import { EditableText } from '@novablocks/block-editor';
 import * as icons from "@novablocks/icons";
 
+import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 import {
@@ -87,45 +87,51 @@ const CardEdit = ( props ) => {
 					<div className="novablocks-card__layout-content novablocks-card__inner-container">
 						{
 							showMeta &&
-							<EditableText
+							<RichText
 								className={ `${ blockClassName }__meta block-editor-block-list__block is-style-meta` }
 								tagName={ 'p' }
 								value={meta}
 								onChange={meta => {
 									setAttributes( {meta} )
 								}}
+								allowedFormats={ [] }
 							/>
 						}
 						{
 							showTitle &&
-							<EditableText
+							<RichText
 								className={`${blockClassName}__title block-editor-block-list__block`}
 								tagName={`h${level + 1}`}
 								value={title}
 								onChange={title => {
 									setAttributes( {title} )
-								}} />
+								}}
+								allowedFormats={ [] }
+							/>
+
 						}
 						{
 							showSubtitle &&
-							<EditableText
+							<RichText
 								className={ `${ blockClassName }__subtitle block-editor-block-list__block` }
 								tagName={ `h${level + 2}` }
 								value={subtitle}
 								onChange={subtitle => {
 									setAttributes( {subtitle} )
 								}}
+								allowedFormats={ [] }
 							/>
 						}
 						{
 							showDescription &&
-							<EditableText
+							<RichText
 								className={ `${ blockClassName }__description block-editor-block-list__block` }
 								tagName={ 'p' }
 								value={description}
 								onChange={description => {
 									setAttributes( {description} )
 								}}
+								allowedFormats={ [] }
 							/>
 						}
 						{
