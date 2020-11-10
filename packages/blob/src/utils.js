@@ -216,10 +216,10 @@ export const scalePoints = ( points, bounds ) => {
 
 export const getRandomBlobAttributes = ( prefix ) => {
 
-	const sides = getRandomBetween( 3, BLOB_MAX_SIDES );
+	const sides = getRandomBetween( 3, 6 );
 	const patternSeed = getRandomBetween( 1, 100 );
-	const complexity = getRandomBetween( 0, 100 );
-	const smoothness = getRandomFromArray( [ 33, 50, 100 ] );
+	const complexity = getRandomFromArray( [ 0, 50, 75, 100, 100, 100 ] );
+	const smoothness = getRandomFromArray( [ 0, 50, 100, 100, 100 ] );
 	const rotation = getRandomBetween( 0, 100 );
 
 	return {
