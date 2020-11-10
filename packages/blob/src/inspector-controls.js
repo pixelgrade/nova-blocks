@@ -142,7 +142,7 @@ const BlobControls = ( props ) => {
 				label={ __( 'Variation' ) }
 				min={ 0 }
 				max={ 100 }
-				step={ 1 }
+				step={ 10 }
 			/>
 			<RangeControl
 				value={ attributes[`${ prefix }Smoothness`] }
@@ -154,7 +154,7 @@ const BlobControls = ( props ) => {
 				label={ __( 'Smoothness' ) }
 				min={ 0 }
 				max={ 100 }
-				step={ 1 }
+				step={ 10 }
 			/>
 			<RangeControl
 				value={ attributes[`${ prefix }Rotation`] }
@@ -166,7 +166,7 @@ const BlobControls = ( props ) => {
 				label={ __( 'Rotation' ) }
 				min={ 0 }
 				max={ 100 }
-				step={ 1 }
+				step={ 10 }
 			/>
 		</Fragment>
 	);
@@ -279,7 +279,7 @@ const InspectorControls = ( props ) => {
 							label={ __( 'Horizontal Displacement' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 1 }
+							step={ 10 }
 						/>
 						<RangeControl
 							value={ blobsVerticalDisplacement }
@@ -287,7 +287,7 @@ const InspectorControls = ( props ) => {
 							label={ __( 'Vertical Displacement' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 1 }
+							step={ 10 }
 						/>
 						<RangeControl
 							value={ blobsSizeBalance }
@@ -295,7 +295,7 @@ const InspectorControls = ( props ) => {
 							label={ __( 'Size Balance' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 1 }
+							step={ 10 }
 						/>
 					</ControlsGroup>
 				}

@@ -218,9 +218,9 @@ export const getRandomBlobAttributes = ( prefix ) => {
 
 	const sides = getRandomBetween( 3, 6 );
 	const patternSeed = getRandomBetween( 1, 100 );
-	const complexity = getRandomFromArray( [ 0, 50, 75, 100, 100, 100 ] );
+	const complexity = getRandomFromArray( [ 0, 50, 100, 100, 100 ] );
 	const smoothness = getRandomFromArray( [ 0, 50, 100, 100, 100 ] );
-	const rotation = getRandomBetween( 0, 100 );
+	const rotation = getRandomBetween( 0, 10 ) * 10;
 
 	return {
 		[`${ prefix }Sides`]: sides,
@@ -286,10 +286,5 @@ export const getBlobMaskStyles = ( path, viewBox = '0 0 20 20' ) => {
 };
 
 export const getBlobViewBox = ( attributes ) => {
-	const offset = ! attributes?.enableShapeDebug ? 0 : 2;
-	const x = 0 - offset;
-	const width = 2 * ( BLOB_RADIUS + offset );
-
 	return '0 0 20 20';
-	return `${ x } ${ x } ${ width } ${ width }`;
 };
