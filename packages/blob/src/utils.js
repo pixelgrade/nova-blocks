@@ -258,14 +258,17 @@ export const getBlobStyles = ( attributes ) => {
 	const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
 	const scaleRatio = blobsEnableDecoration ? blobsSizeBalance : 50;
 
-	const scaleDiff = 0.4 * ( 50 - scaleRatio ) / 50;
-
 	const xScale = 1 - Math.abs( 50 - xOffset ) / 100;
 	const yScale = 1 - Math.abs( 50 - yOffset ) / 100;
 	const scale = Math.min( xScale, yScale );
 
-	const mediaScale = scale - scaleDiff;
-	const decorationScale = scale + scaleDiff;
+	const scaleDiff = 0.4 * ( 50 - scaleRatio ) / 50;
+	let mediaScale = scale - scaleDiff;
+	let decorationScale = scale + scaleDiff;
+	const maxScale = Math.max( mediaScale, decorationScale, 1 );
+	mediaScale /= maxScale;
+	decorationScale /= maxScale;
+
 
 	return {
 		'--blob-mix-media-transform': getBlobTransform( mediaScale, xOffset, yOffset ),
