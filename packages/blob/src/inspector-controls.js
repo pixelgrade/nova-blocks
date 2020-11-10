@@ -217,13 +217,15 @@ const InspectorControls = ( props ) => {
 					randomize={ () => {
 
 						return {
-							blobsEnableMask: getRandomFromArray( [ true, true, false ] ),
+							blobsEnableMask: getRandomFromArray( [ true, true, true ] ),
 							blobsEnableDecoration: getRandomFromArray( [ true, true, false ] ),
+
 							...getRandomBlobAttributes( 'blob' ),
 							...getRandomBlobAttributes( 'blobMask' ),
-							blobsHorizontalDisplacement: getRandomBetween( 3, 8 ) * 10,
-							blobsVerticalDisplacement: getRandomBetween( 3, 8 ) * 10,
-							blobsSizeBalance: getRandomBetween( 3, 8 ) * 10,
+
+							blobsHorizontalDisplacement: getRandomBetween( 3, 7 ) * 10,
+							blobsVerticalDisplacement: getRandomBetween( 3, 7 ) * 10,
+							blobsSizeBalance: getRandomBetween( 4, 6 ) * 10,
 						}
 					} }
 				/>
@@ -289,7 +291,7 @@ const InspectorControls = ( props ) => {
 							label={ __( 'Horizontal Displacement' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 10 }
+							step={ 5 }
 						/>
 						<RangeControl
 							value={ blobsVerticalDisplacement }
@@ -297,15 +299,15 @@ const InspectorControls = ( props ) => {
 							label={ __( 'Vertical Displacement' ) }
 							min={ 0 }
 							max={ 100 }
-							step={ 10 }
+							step={ 5 }
 						/>
 						<RangeControl
 							value={ blobsSizeBalance }
 							onChange={ ( blobsSizeBalance ) => { setAttributes( { blobsSizeBalance } ) } }
 							label={ __( 'Size Balance' ) }
-							min={ 0 }
-							max={ 100 }
-							step={ 10 }
+							min={ 20 }
+							max={ 80 }
+							step={ 5 }
 						/>
 					</ControlsGroup>
 				}
