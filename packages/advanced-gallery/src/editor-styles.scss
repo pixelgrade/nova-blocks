@@ -1,0 +1,26 @@
+.novablocks-advanced-gallery {
+
+	.novablocks-change-media-overlay {
+		opacity: 0;
+		transition: var(--novablocks-transition);
+	}
+
+	.novablocks-advanced-gallery__grid,
+	.novablocks-change-media-overlay {
+		transition-property: opacity;
+		pointer-events: none;
+	}
+
+	&--is-selected:hover {
+		cursor: pointer;
+
+		.novablocks-change-media-overlay {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.novablocks-advanced-gallery__grid {
+			opacity: 0.7;
+		}
+	}
+}

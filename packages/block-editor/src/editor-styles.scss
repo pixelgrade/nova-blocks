@@ -5,3 +5,26 @@
 @import 'components/drawer/editor-styles';
 @import 'components/notice/editor-styles';
 @import 'components/toggle-group/editor-styles';
+
+.novablocks-change-media-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+
+	span {
+		display: block;
+		padding: .4em .9em;
+
+		color: #FFFFFF;
+		background-color: #000000;
+		border-radius: 2px;
+	}
+}

@@ -67,7 +67,7 @@ const CardEdit = ( props ) => {
 					<div className="novablocks-card__layout-media novablocks-grid__item-media">
 						<div className={ `${ blockClassName }__media-wrap` }>
 							<div className={ `${ blockClassName }__media` }>
-								<div className={ `${ blockClassName }__media-edit` }>
+								<div className={ `${ blockClassName }__media-edit novablocks-change-media-overlay` }>
 									<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 								</div>
 								<MediaUpload

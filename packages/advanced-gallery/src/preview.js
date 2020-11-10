@@ -1,14 +1,24 @@
+import classnames from 'classnames';
+
+import { __ } from '@wordpress/i18n';
+import { MediaUpload } from '@wordpress/block-editor';
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
+
 import { isSafari } from "@novablocks/utils";
 import Blob from "@novablocks/blob";
+
 import { GridItemCollection } from "./grid-item";
 import { getGalleryStyle, getGridStyle } from "./utils";
 
 const AdvancedGalleryPreview = ( props ) => {
 
-	const { attributes } = props;
-	const gallery = attributes?.images;
+	const {
+		attributes,
+		isSelected,
+		onSelectImages,
+	} = props;
 
+	const gallery = attributes?.images;
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
 
@@ -27,14 +37,31 @@ const AdvancedGalleryPreview = ( props ) => {
 		Object.assign( gridStyle, { height } );
 	}
 
+	const className = classnames(
+		'novablocks-advanced-gallery',
+		{
+			'novablocks-advanced-gallery--is-selected': isSelected
+		}
+	)
+
 	return (
-		<div className={ `novablocks-advanced-gallery` } style={ getGalleryStyle( attributes ) } ref={ ref }>
-			<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
-				{ gridItemsCollection.gridItems.map( ( item, index ) => (
-					<AdvancedGalleryItem gridItem={ item } key={ index } index={ index } { ...props } />
-				) ) }
-			</div>
-		</div>
+		<MediaUpload
+			allowedTypes={ [ 'image', 'video' ] }
+			multiple
+			onSelect={ onSelectImages }
+			render={ ( { open } ) => (
+				<div onClick={ open } className={ className } style={ getGalleryStyle( attributes ) } ref={ ref }>
+					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` }>
+						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
+					</div>
+					<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
+						{ gridItemsCollection.gridItems.map( ( item, index ) => (
+							<AdvancedGalleryItem gridItem={ item } key={ index } index={ index } { ...props } />
+						) ) }
+					</div>
+				</div>
+			) }
+		/>
 	);
 };
 

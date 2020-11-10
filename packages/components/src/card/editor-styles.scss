@@ -1,27 +1,6 @@
 .novablocks-card__media-edit {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 10;
-
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-
 	opacity: 0;
 	pointer-events: none;
-
-	span {
-		display: block;
-		padding: .4em .9em;
-
-		color: #FFFFFF;
-		background-color: #000000;
-		border-radius: 2px;
-	}
 }
 
 .novablocks-card__media-edit,
