@@ -206,8 +206,13 @@ function novablocks_register_block_types() {
 		'posts-collection'
 	);
 
+
+	/*
+	 * @todo: This should be removed in the same way we did for scripts.
+	 */
 	$components_style_dependent_blocks = array(
 		'card',
+		'cards-collection',
 		'posts-collection'
 	);
 
