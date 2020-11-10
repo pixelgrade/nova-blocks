@@ -1,9 +1,12 @@
 import Chance from 'chance';
+import getBoundsOfCurve from "./get-bounds-of-curve";
 
 import {
 	getRandomBetween,
 	getRandomFromArray
 } from '@novablocks/utils';
+
+export { getBoundsOfCurve };
 
 const BLOB_MAX_SIDES = 12;
 export const BLOB_RADIUS = 10;
@@ -49,7 +52,7 @@ export const generatePath = ( attributes ) => {
 
 export const getCurvePoints = ( attributes ) => {
 	const curvePoints = getCurvePointsFromPoints( attributes );
-	const bounds = getDefaultBounds();
+	const bounds = getBoundsFromCurves( curvePoints );
 
 	scaleCurvePoints( curvePoints, bounds );
 
@@ -164,40 +167,19 @@ export const initializeBounds = () => {
 	}
 }
 
-export const getBoundsFromPoints = points => {
-	let { xMax, yMax, xMin, yMin } = initializeBounds();
+export const getBoundsFromCurves = ( points ) => {
 
-	for ( let i = 0; i < points.length; i ++ ) {
-		const { x, y } = points[i];
+	return points.reduce( ( acc, { x1, y1, x2, y2, m1x, m1y, m2x, m2y } ) => {
+		const { top, right, bottom, left } = getBoundsOfCurve( m1x, m1y, x1, y1, x2, y2, m2x, m2y );
+		const xMin = Math.min( left, acc.xMin );
+		const xMax = Math.max( right, acc.xMax );
+		const yMin = Math.min( top, acc.yMin );
+		const yMax = Math.max( bottom, acc.yMax );
+		const xRatio = 2 * BLOB_RADIUS / ( xMax - xMin );
+		const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
 
-		xMin = Math.min( xMin, x );
-		xMax = Math.max( xMax, x );
-		yMin = Math.min( yMin, y );
-		yMax = Math.max( yMax, y );
-	}
-
-	const xRatio = 2 * BLOB_RADIUS / ( xMax - xMin );
-	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
-
-	return { xMin, xMax, yMin, yMax, xRatio, yRatio }
-};
-
-export const getBoundsFromCurvePoints = ( points ) => {
-	let { xMax, yMax, xMin, yMin } = initializeBounds();
-
-	for ( let i = 0; i < points.length; i ++ ) {
-		const { x1, x2, y1, y2, m1x, m2x, m1y, m2y } = points[i];
-
-		xMin = Math.min( xMin, x1, x2, m1x, m2x );
-		xMax = Math.max( xMax, x1, x2, m1x, m2x );
-		yMin = Math.min( yMin, y1, y2, m1y, m2y );
-		yMax = Math.max( yMax, y1, y2, m1y, m2y );
-	}
-
-	const xRatio = 2 * BLOB_RADIUS / ( xMax - xMin );
-	const yRatio = 2 * BLOB_RADIUS / ( yMax - yMin );
-
-	return { xMin, xMax, yMin, yMax, xRatio, yRatio }
+		return { xMin,  xMax,  yMin,  yMax,  xRatio,  yRatio }
+	}, { yMin: BLOB_RADIUS, xMax: BLOB_RADIUS, yMax: BLOB_RADIUS, xMin: BLOB_RADIUS } )
 };
 
 export const scaleCurvePoints = ( points, bounds ) => {
