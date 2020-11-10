@@ -162,10 +162,25 @@ export const getSnapClassname = focalPoint => {
 };
 
 export const getControlsClasses = ( attributes, compileAttributes ) => {
-	const classes = [ 'novablocks-controls-wrap' ];
+	const isDirty = areAttributesDirty( attributes, compileAttributes );
+	return getControlsDirtyClasses( isDirty );
+};
+
+export const areAttributesDirty = ( attributes, compileAttributes ) => {
+	let dirty = false;
 	const compiledAttributes = compileAttributes( attributes );
 
 	if ( Object.keys( compiledAttributes ).some( key => compiledAttributes[ key ] !== attributes[ key ] ) ) {
+		dirty = true;
+	}
+
+	return dirty;
+}
+
+export const getControlsDirtyClasses = ( isDirty ) => {
+	const classes = [ 'novablocks-controls-wrap' ];
+
+	if ( !! isDirty ) {
 		classes.push( 'novablocks-controls-wrap--dirty' );
 	}
 
@@ -211,4 +226,3 @@ export const above = ( breakpoint ) => {
 	const width = breakpoints[breakpoint];
 	return window.innerWidth >= width;
 };
-

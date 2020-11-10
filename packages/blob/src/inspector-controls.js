@@ -7,7 +7,7 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 
-import { getControlsClasses, getRandomBetween, getRandomFromArray } from "@novablocks/utils";
+import { getControlsDirtyClasses, getControlsClasses, getRandomBetween, getRandomFromArray } from "@novablocks/utils";
 import { ControlsGroup, ControlsSection, ControlsTab, PresetControl } from "@novablocks/block-editor";
 
 import { getRandomBlobAttributes } from './utils';
@@ -106,32 +106,40 @@ const BlobControls = ( props ) => {
 
 	const prefix = props.prefix || 'blob';
 
+	const isPatternSeedDisabled = attributes[ `${ prefix }Complexity` ] === 0;
+	const isSidesDisabled = attributes[ `${ prefix }Complexity` ] === 0 && attributes[ `${ prefix }Smoothness` ] === 100;
+	const isRotationDisabled = attributes[ `${ prefix }Complexity` ] === 0 && attributes[ `${ prefix }Smoothness` ] === 100;
+
 	return (
 		<Fragment>
-			<RangeControl
-				value={ attributes[ `${ prefix }Sides` ] }
-				onChange={ ( sides ) => {
-					const newAttributes = {};
-					newAttributes[`${ prefix }Sides`] = sides;
-					setAttributes( newAttributes );
-				} }
-				label={ __( 'Sides' ) }
-				min={ 3 }
-				max={ 8 }
-				step={ 1 }
-			/>
-			<RangeControl
-				value={ attributes[ `${ prefix }PatternSeed` ] }
-				onChange={ ( preset ) => {
-					const newAttributes = {};
-					newAttributes[`${ prefix }PatternSeed`] = preset;
-					setAttributes( newAttributes );
-				} }
-				label={ __( 'Pattern Seed' ) }
-				min={ 1 }
-				max={ 100 }
-				step={ 1 }
-			/>
+			<div className={ getControlsDirtyClasses( isSidesDisabled ) }>
+				<RangeControl
+					value={ attributes[ `${ prefix }Sides` ] }
+					onChange={ ( sides ) => {
+						const newAttributes = {};
+						newAttributes[`${ prefix }Sides`] = sides;
+						setAttributes( newAttributes );
+					} }
+					label={ __( 'Sides' ) }
+					min={ 3 }
+					max={ 8 }
+					step={ 1 }
+				/>
+			</div>
+			<div className={ getControlsDirtyClasses( isPatternSeedDisabled ) }>
+				<RangeControl
+					value={ attributes[ `${ prefix }PatternSeed` ] }
+					onChange={ ( preset ) => {
+						const newAttributes = {};
+						newAttributes[`${ prefix }PatternSeed`] = preset;
+						setAttributes( newAttributes );
+					} }
+					label={ __( 'Pattern Seed' ) }
+					min={ 1 }
+					max={ 100 }
+					step={ 1 }
+				/>
+			</div>
 			<RangeControl
 				value={ attributes[`${ prefix }Complexity`] }
 				onChange={ ( complexity ) => {
@@ -156,18 +164,20 @@ const BlobControls = ( props ) => {
 				max={ 100 }
 				step={ 10 }
 			/>
-			<RangeControl
-				value={ attributes[`${ prefix }Rotation`] }
-				onChange={ ( rotation ) => {
-					const newAttributes = {};
-					newAttributes[`${ prefix }Rotation`] = rotation;
-					setAttributes( newAttributes );
-				} }
-				label={ __( 'Rotation' ) }
-				min={ 0 }
-				max={ 100 }
-				step={ 10 }
-			/>
+			<div className={ getControlsDirtyClasses( isRotationDisabled ) }>
+				<RangeControl
+					value={ attributes[`${ prefix }Rotation`] }
+					onChange={ ( rotation ) => {
+						const newAttributes = {};
+						newAttributes[`${ prefix }Rotation`] = rotation;
+						setAttributes( newAttributes );
+					} }
+					label={ __( 'Rotation' ) }
+					min={ 0 }
+					max={ 100 }
+					step={ 10 }
+				/>
+			</div>
 		</Fragment>
 	);
 };

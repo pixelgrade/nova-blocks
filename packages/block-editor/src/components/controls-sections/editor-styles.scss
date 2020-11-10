@@ -237,14 +237,16 @@
 }
 
 .novablocks-controls-wrap {
+	transition: var(--novablocks-transition);
+	transition-property: filter, opacity;
+
 	&:not(:last-child) {
 		margin-bottom: 24px;
 	}
 }
 
 .novablocks-controls-wrap--dirty {
-	--novablocks-section-controls-accent: #919191;
-
+	filter: grayscale(1);
 	opacity: 0.5;
 }
 
