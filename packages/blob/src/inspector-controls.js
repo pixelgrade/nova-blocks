@@ -218,20 +218,23 @@ const InspectorControls = ( props ) => {
 					} }
 				/>
 			</ControlsTab>
-			<ControlsTab label={ __( 'Customize' ) }>
-				<div className={ getControlsClasses( attributes, getBlobStyleAttributes ) }>
-					<RadioControl
-						key={ 'blobs-mixing-style' }
-						label={ 'Shape Usage Style' }
-						selected={ blobsMixStyle }
-						onChange={ blobsMixStyle => {
-							setAttributes( getBlobStyleAttributes( { ...attributes, blobsMixStyle } ) );
-						} }
-						options={ blobsMixStyleOptions }
-					/>
-				</div>
-				<SwapShapesButton { ...props } />
-			</ControlsTab>
+			{
+				false &&
+				<ControlsTab label={ __( 'Customize' ) }>
+					<div className={ getControlsClasses( attributes, getBlobStyleAttributes ) }>
+						<RadioControl
+							key={ 'blobs-mixing-style' }
+							label={ 'Shape Usage Style' }
+							selected={ blobsMixStyle }
+							onChange={ blobsMixStyle => {
+								setAttributes( getBlobStyleAttributes( { ...attributes, blobsMixStyle } ) );
+							} }
+							options={ blobsMixStyleOptions }
+						/>
+					</div>
+					<SwapShapesButton { ...props } />
+				</ControlsTab>
+			}
 			<ControlsTab label={ __( 'Settings' ) }>
 				{
 					!! debug &&
