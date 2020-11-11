@@ -98,6 +98,7 @@ Yes! Nova Block's core features are free to use.
 * Add color variations for the Media Card, Posts Collection and Cards Collection blocks
 * Improve frontend performance by better handling scripts and styles loading
 * Improve user experience by making the active controls tab persistent when navigating between blocks
+* Improve the experience of editing galleries in the Media Card Constellation and Gallery of the Stars blocks
 * Improve the organization of controls for various blocks
 
 = 1.6.2 =
