@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-
 import { __ } from '@wordpress/i18n';
 import { MediaUpload } from '@wordpress/block-editor';
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
@@ -14,7 +12,6 @@ const AdvancedGalleryPreview = ( props ) => {
 
 	const {
 		attributes,
-		isSelected,
 		onSelectImages,
 	} = props;
 
@@ -37,20 +34,13 @@ const AdvancedGalleryPreview = ( props ) => {
 		Object.assign( gridStyle, { height } );
 	}
 
-	const className = classnames(
-		'novablocks-advanced-gallery',
-		{
-			'novablocks-advanced-gallery--is-selected': isSelected
-		}
-	)
-
 	return (
 		<MediaUpload
 			allowedTypes={ [ 'image', 'video' ] }
 			multiple
 			onSelect={ onSelectImages }
 			render={ ( { open } ) => (
-				<div onClick={ open } className={ className } style={ getGalleryStyle( attributes ) } ref={ ref }>
+				<div onClick={ open } className={ 'novablocks-advanced-gallery' } style={ getGalleryStyle( attributes ) } ref={ ref }>
 					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` }>
 						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 					</div>

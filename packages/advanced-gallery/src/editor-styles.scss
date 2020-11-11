@@ -2,21 +2,20 @@
 
 	.novablocks-change-media-overlay {
 		opacity: 0;
-		transition: var(--novablocks-transition);
 	}
 
 	.novablocks-advanced-gallery__grid,
 	.novablocks-change-media-overlay {
+		transition: var(--novablocks-transition);
 		transition-property: opacity;
-		pointer-events: none;
+		--novablocks-transition-duration: .15s;
 	}
 
-	&--is-selected:hover {
+	&:hover {
 		cursor: pointer;
 
 		.novablocks-change-media-overlay {
 			opacity: 1;
-			pointer-events: auto;
 		}
 
 		.novablocks-advanced-gallery__grid {

@@ -33,7 +33,6 @@ const CardEdit = ( props ) => {
 			showButtons,
 			showMeta,
 		},
-		className,
 		setAttributes,
 	} = props;
 
@@ -43,17 +42,16 @@ const CardEdit = ( props ) => {
 			attributes: {
 				media
 			},
-			open,
 		} = props;
 
 		const mediaURL = media?.sizes?.novablocks_medium?.url || media?.sizes?.novablocks_large?.url || media?.url;
 
 		if ( !! mediaURL ) {
-			return <img className={ `${ blockClassName }__media-image` } src={ mediaURL } onClick={ open } />
+			return <img className={ `${ blockClassName }__media-image` } src={ mediaURL } />
 		}
 
 		return (
-			<div className={ `${ blockClassName }__media-placeholder` } onClick={ open }>
+			<div className={ `${ blockClassName }__media-placeholder` }>
 				{ icons.placeholder }
 			</div>
 		);
@@ -65,21 +63,21 @@ const CardEdit = ( props ) => {
 				{
 					showMedia &&
 					<div className="novablocks-card__layout-media novablocks-grid__item-media">
-						<div className={ `${ blockClassName }__media-wrap` }>
-							<div className={ `${ blockClassName }__media` }>
-								<div className={ `${ blockClassName }__media-edit novablocks-change-media-overlay` }>
-									<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
+						<MediaUpload
+							type="image"
+							value={ !! media && media.id }
+							onSelect={ ( media ) => setAttributes( { media } ) }
+							render={ ( { open } ) => (
+								<div className={ `${ blockClassName }__media-wrap` } onClick={ open }>
+									<div className={ `${ blockClassName }__media` }>
+										<div className={ `${ blockClassName }__media-edit novablocks-change-media-overlay` }>
+											<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
+										</div>
+										<CardMedia { ...props } />
+									</div>
 								</div>
-								<MediaUpload
-									type="image"
-									value={ !! media && media.id }
-									onSelect={ ( media ) => setAttributes( { media } ) }
-									render={ ( { open } ) => (
-										<CardMedia { ...props } open={ open } />
-									) }
-								/>
-							</div>
-						</div>
+							) }
+						/>
 					</div>
 				}
 				{

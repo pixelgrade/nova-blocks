@@ -1,6 +1,5 @@
 .novablocks-card__media-edit {
 	opacity: 0;
-	pointer-events: none;
 }
 
 .novablocks-card__media-edit,
@@ -8,13 +7,15 @@
 .novablocks-card__media-placeholder {
 
 	&[class] {
-		transition: opacity .1s ease;
+		transition: var(--novablocks-transition);
+		transition-property: opacity;
+		--novablocks-transition-duration: .15s;
 	}
 }
 
 .novablocks-card__media {
 
-	.wp-block[data-type="novablocks/card"].is-selected &:hover {
+	&:hover {
 		cursor: pointer;
 
 		.novablocks-card__media-edit {
