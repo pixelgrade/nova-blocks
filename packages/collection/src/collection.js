@@ -4,7 +4,6 @@ import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'
-import { EditableText } from "@novablocks/block-editor";
 
 import InspectorControls from "./collection-controls";
 
@@ -58,13 +57,14 @@ export const CollectionSubtitle = ( props ) => {
 
 	return (
 		<div className="block-editor-block-list__block wp-block novablocks-collection__subtitle" data-align="wide">
-			<EditableText
+			<RichText
 				tagName={ 'p' }
 				className={ 'is-style-lead' }
 				value={ subtitle }
 				onChange={ subtitle => {
 					setAttributes( { subtitle } );
 				} }
+				allowedFormats={ [] }
 			/>
 		</div>
 	)
