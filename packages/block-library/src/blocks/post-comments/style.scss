@@ -1,0 +1,348 @@
+:root {
+	--avatar-column-size: 50px;
+	--comments-grid-gap: 1em;
+	--component-accent-color: var(--novablocks-color-1);
+	--novablocks-conversations-width: 50em;
+	--field-description-color: #67616B;
+	--conversations-bg-color: #E4E3E4;
+	--comment-author-color: var(--novablocks-color-1);
+	--comment-links-color: var(--novablocks-color-1);
+	--comment-highlighted-color: #FFF2CE;
+	--label-bg-color: #9195AB;
+	--label-highlighted-bg-color: #1479D2;
+	--label-border-radius: 100px;
+}
+
+.novablocks-conversations {
+	width: 100vw;
+
+	max-width: initial !important;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw !important;
+	margin-right: -50vw !important;
+
+	background-color: var(--conversations-bg-color);
+
+	overflow: hidden;
+
+	&__container {
+		max-width: var(--novablocks-conversations-width);
+
+		margin-left: auto;
+		margin-right: auto;
+
+		padding: 4em 0;
+	}
+
+	&__form-columns {
+		display: grid;
+		grid-column-gap: var(--comments-grid-gap);
+		grid-template-columns: var(--avatar-column-size) 1fr;
+	}
+
+	.comment-form {
+		position: relative;
+
+		&.form--is-open {
+
+			.comment-form-details {
+				opacity: 1;
+			}
+		}
+
+		label {
+			font-size: .8em;
+			font-weight: bold;
+		}
+
+		.field-description {
+			display: block;
+
+			font-size: .7em;
+			color: var(--field-description-color);
+
+			margin-bottom: .5em
+		}
+	}
+
+	.comment-list {
+		padding-top: 3em;
+	}
+
+	.comment-text {
+		--font-size: 18;
+
+		a {
+			color: var(--comment-links-color);
+		}
+	}
+
+	.comment-author {
+		font-weight: bold;
+		color: var(--comment-author-color);
+	}
+
+	// We want them hidden
+	// until user will focus textarea.
+	.comment-form-details {
+		display: none;
+		opacity: 0;
+		transition: opacity .2s ease;
+	}
+
+	.comment-posted-time,
+	.reply {
+		opacity: .5;
+	}
+
+	a {
+		color: currentColor;
+		text-decoration: underline;
+	}
+
+	.comment-edit-link,
+	.comment-reply-link {
+		margin-left: 1em;
+	}
+
+	.comment-content > *:not(:last-child) {
+		margin-bottom: 1em;
+	}
+
+	.comment-list {
+		.comment {
+			margin-bottom: 2em;
+
+			> .comment-body {
+				margin-bottom: 2em;
+			}
+
+			&[class*="depth-2"] {
+				@include above(tablet) {
+					margin-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
+				}
+			}
+		}
+
+		.comment-respond {
+			padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
+			margin-bottom: 2em;
+		}
+
+		.comment-form-author,
+		.comment-form-email,
+		.form-submit,
+		.comment-form-experience {
+			opacity: 1;
+		}
+	}
+
+	.avatar {
+		max-width: 100%;
+		width: var(--avatar-column-size);
+		border-radius: 20px;
+	}
+
+	.form-grid {
+		display: grid;
+		grid-template-columns: auto;
+		grid-column-gap: var(--comments-grid-gap);
+		grid-auto-columns: 1fr;
+
+		justify-content: stretch;
+	}
+
+	.form-grid > .avatar ~ * {
+		grid-column: 2 / 3;
+	}
+
+	.comment-grid .comment-content {
+		display: grid;
+		grid-column-gap: var(--comments-grid-gap);
+		grid-template-columns: var(--avatar-column-size) 1fr;
+		grid-template-areas: "avatar info"
+													"content content";
+
+		@include above(tablet) {
+			grid-template-areas: "avatar content";
+		}
+
+		.comment-form-details {
+			>  p:not(:last-child) {
+				margin-bottom: 1.5em;
+			}
+		}
+	}
+
+	.comment-header {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.comment-footer {
+		display: flex;
+		align-items: center;
+
+		.reply {
+			display: flex;
+			align-items: center;
+
+			a {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.comment-experience {
+		display: flex;
+		align-items: center;
+
+		margin-top: 5px;
+	}
+
+	.experience-label {
+		display: inline-block;
+		background-color: var(--label-bg-color);
+		color: var(--novablocks-light-1);
+
+		padding: 0 6px;
+		font-size: 13px;
+
+		border-radius: var(--label-border-radius);
+
+		@include above(tablet) {
+			padding: 4px 20px;
+			font-size: 14px;
+		}
+
+		// Update background color
+		// when comment is highlighted
+		// or is by post author
+		.comment--is-highlighted &,
+		.bypostauthor & {
+			--label-bg-color: var(--label-highlighted-bg-color);
+		}
+
+		// Update only border radius
+		.bypostauthor & {
+			--label-border-radius: 0;
+		}
+	}
+
+	.comment--is-highlighted {
+
+		> .comment-body {
+			padding: 0;
+
+			 > .comment-content {
+				padding: 1em;
+				background-color: var(--comment-highlighted-color);
+
+				@include above(tablet) {
+					border-radius: 0 25px;
+				}
+			}
+		}
+	}
+
+	.comment-respond {
+		display: flex;
+		flex-direction: column;
+
+		small {
+			order: 2;
+			text-align: center;
+			margin-top: 1em;
+			padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
+		}
+	}
+
+	[id='cancel-comment-reply-link'] {
+		opacity: .5;
+		text-align: center;
+	}
+
+	.novablocks-conversations__title {
+		border-bottom: 4px solid;
+		padding-bottom: .5em;
+		margin-bottom: .5em;
+		font-weight: bold;
+	}
+
+	textarea,
+	input {
+		width: 100%;
+		display: block;
+		min-height: auto;
+	}
+
+	.comment-respond {
+		small {
+			padding-left: 0;
+		}
+	}
+
+	.form-submit {
+		button {
+			width: 100%;
+		}
+	}
+}
+
+@include below(tablet) {
+
+	.depth-2 {
+		margin-left: -1em;
+		margin-right: -1em;
+		padding: 3em 1em;
+		z-index: 5;
+		position: relative;
+		overflow: visible;
+		margin-top: -3em !important;
+
+		background-color: rgba(0, 0, 0, 0.1);
+
+		.comment-body {
+			padding: 1em;
+		}
+	}
+
+	.comment .comment-body {
+		padding: 1em;
+	}
+
+	.parent > .comment-body {
+		position: relative;
+		z-index: 10;
+		overflow: visible;
+
+		background-color: var(--conversations-bg-color);
+
+		border-radius: 0 0 24px 24px;
+
+		padding: 1em;
+	}
+}
+
+.comment-author-avatar {
+	grid-area: avatar;
+}
+
+.comment-author-info {
+	grid-area: info;
+	grid-row: span 1;
+
+	align-self: center;
+
+	@include above(tablet) {
+		grid-area: content;
+	}
+}
+
+.comment-text,
+.comment-footer {
+	grid-area: content;
+	grid-row: span 1;
+}

@@ -389,7 +389,9 @@ function novablocks_register_block_types() {
 				$args['attributes'] = call_user_func( $get_attributes );
 			}
 
-			register_block_type( 'novablocks/' . $block, $args );
+			register_block_type( 'novablocks/' . $block, array_merge($args, array(
+				'uses_context' => array( 'postId', 'postType' )
+			) ) );
 		}
 	}
 }

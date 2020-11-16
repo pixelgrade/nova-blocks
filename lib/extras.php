@@ -944,7 +944,7 @@ function novablocks_get_theme_support() {
 	$default = array(
 		'hero',
 		'media',
-		'slideshow',
+		'slideshow'
 	);
 
 	if ( is_array( $theme_support ) ) {
