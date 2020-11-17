@@ -2,24 +2,7 @@
 
 	.novablocks-change-media-overlay {
 		opacity: 0;
-	}
-
-	.novablocks-advanced-gallery__grid,
-	.novablocks-change-media-overlay {
-		transition: var(--novablocks-transition);
-		transition-property: opacity;
-		--novablocks-transition-duration: .15s;
-	}
-
-	&:hover {
+		pointer-events: none;
 		cursor: pointer;
-
-		.novablocks-change-media-overlay {
-			opacity: 1;
-		}
-
-		.novablocks-advanced-gallery__grid {
-			opacity: 0.7;
-		}
 	}
 }
