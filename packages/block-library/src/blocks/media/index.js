@@ -7,13 +7,15 @@ import save from './save';
 import transforms from './transforms';
 import deprecated from './deprecated';
 
+import { STORE_NAME } from '@novablocks/core';
 import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 import Blob from '@novablocks/blob';
 
 import {
 	generateDefaults,
-	getPlaceholderImages
+	getPlaceholderImages,
+	insertTemplate,
 } from "@novablocks/block-editor";
 
 const { getRandomAttributes } = AdvancedGallery.utils;
@@ -26,7 +28,8 @@ const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attribute
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { registerBlockType, registerBlockStyle } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
+import { select } from "@wordpress/data";
 
 async function getNewDefaults() {
 	const numberOfImages = getRandomBetween( 2, 4 );
@@ -47,7 +50,10 @@ async function getNewDefaults() {
 	};
 }
 
+const settings = select( STORE_NAME ).getSettings();
+
 generateDefaults( 'novablocks/media', getNewDefaults );
+insertTemplate( 'novablocks/media', settings.media.template );
 
 registerBlockType( 'novablocks/media', {
 	title: __( 'Media Card Constellation', '__plugin_txtd' ),
