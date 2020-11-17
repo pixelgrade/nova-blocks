@@ -33,9 +33,9 @@ const Card = ( props ) => {
 		<div className={ className }>
 			<div className="novablocks-card__layout">
 				{
-					( showMedia || placeholder ) && props.media &&
+					( ( showMedia && props.media ) || placeholder ) &&
 					<div className="novablocks-card__layout-media novablocks-grid__item-media">
-						<CardMedia>{ props.media }</CardMedia>
+						<CardMedia { ...props }>{ props.media }</CardMedia>
 					</div>
 				}
 				{
@@ -152,11 +152,18 @@ const CardFooter = ( props ) => {
 	);
 };
 
-const CardMedia = ( { children } ) => {
+const CardMedia = ( { children, placeholder } ) => {
+
+	const mediaClasses = classnames(
+		'novablocks-card__media',
+		{
+			'novablocks-card__media--placeholder': !! placeholder
+		}
+	);
 
 	return (
 		<div className="novablocks-card__media-wrap">
-			<div className="novablocks-card__media">
+			<div className={ mediaClasses }>
 				{ children }
 			</div>
 		</div>
