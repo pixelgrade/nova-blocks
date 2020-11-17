@@ -95,11 +95,14 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 1.7.0 =
-* Add color variations for the Media Card, Posts Collection and Cards Collection blocks
+* Add colour variations for the Media Card, Posts Collection and Cards Collection blocks
+* Add "Reading time" option to article meta source for the Posts Collection block
 * Improve frontend performance by better handling scripts and styles loading
 * Improve user experience by making the active controls tab persistent when navigating between blocks
 * Improve the experience of editing galleries in the Media Card Constellation and Gallery of the Stars blocks
 * Improve the organization of controls for various blocks
+* Improve display of Media Card blocks that have no inner blocks
+* Fix display of the Cards Collection block
 
 = 1.6.2 =
 * Add card placeholders when loading posts for the Posts Collection block in the editor
