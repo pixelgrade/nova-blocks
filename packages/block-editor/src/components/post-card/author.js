@@ -1,4 +1,4 @@
-import { useApiFetch } from "@novablocks/utils";
+import useApiFetch from "../use-api-fetch";
 
 const Author = ( props ) => {
 

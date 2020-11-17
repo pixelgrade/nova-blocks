@@ -1,4 +1,4 @@
-import { useApiFetch } from "@novablocks/utils";
+import useApiFetch from "../use-api-fetch";
 
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
