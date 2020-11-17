@@ -131,9 +131,7 @@ const Post = ( props ) => {
 		metaBelowTitle = secondaryMeta;
 	}
 
-	const media = (
-		<Media id={ post.featured_media } />
-	);
+	const media = !! post.featured_media ? <Media id={ post.featured_media } /> : null;
 
 	const buttons = (
 		<div className="wp-block-buttons">
