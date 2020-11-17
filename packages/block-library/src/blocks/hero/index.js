@@ -5,6 +5,7 @@ import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
+import { STORE_NAME } from '@novablocks/core';
 import { getRandomBetween } from "@novablocks/utils";
 
 import blockAttributes from "./attributes";
@@ -30,8 +31,6 @@ const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colo
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { select } from '@wordpress/data';
-
-const STORE_NAME = 'novablocks';
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();

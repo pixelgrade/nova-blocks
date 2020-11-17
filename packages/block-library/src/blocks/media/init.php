@@ -108,11 +108,13 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 	            <div class="wp-block-group__inner-container">
 		            <div class="wp-block alignwide">
 		                <div class="novablocks-media__layout">
-		                    <div class="novablocks-media__content">
-			                    <div class="novablocks-media__inner-container novablocks-block__content">
-									<?php echo $content; ?>
-			                    </div>
-		                    </div>
+							<?php if ( ! empty ( $content ) ) { ?>
+								<div class="novablocks-media__content">
+									<div class="novablocks-media__inner-container novablocks-block__content">
+										<?php echo $content; ?>
+									</div>
+								</div>
+							<?php } ?>
 		                    <div class="novablocks-media__aside">
 			                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
 		                    </div>
