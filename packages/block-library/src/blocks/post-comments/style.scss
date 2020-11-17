@@ -25,25 +25,10 @@
 }
 
 .novablocks-conversations {
-	width: 100vw;
-
-	max-width: initial !important;
-	position: relative;
-	left: 50%;
-	right: 50%;
-	margin-left: -50vw !important;
-	margin-right: -50vw !important;
-
-	background-color: var(--conversations-bg-color);
 
 	overflow: hidden;
 
 	&__container {
-		max-width: var(--novablocks-conversations-width);
-
-		margin-left: auto;
-		margin-right: auto;
-
 		padding: 2em var(--novablocks-conversations-sides) 0;
 
 		@include above(tablet) {
