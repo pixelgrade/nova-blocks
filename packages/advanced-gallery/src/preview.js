@@ -16,16 +16,18 @@ const AdvancedGalleryPreview = ( props ) => {
 	} = props;
 
 	const gallery = attributes?.images;
+	const galleryValue = gallery.map( ( image ) => image.id );
+
+	if ( ! gallery || ! gallery.length ) {
+		return null;
+	}
+
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
 
 	useEffect(() => {
 		setHeight( !! ref.current ? ref.current.clientHeight : 0 );
 	});
-
-	if ( ! gallery || ! gallery.length ) {
-		return null;
-	}
 
 	const gridItemsCollection = new GridItemCollection( gallery, attributes );
 	const gridStyle = getGridStyle( attributes );
@@ -36,12 +38,14 @@ const AdvancedGalleryPreview = ( props ) => {
 
 	return (
 		<MediaUpload
+			gallery
 			allowedTypes={ [ 'image', 'video' ] }
 			multiple
 			onSelect={ onSelectImages }
+			value={ galleryValue }
 			render={ ( { open } ) => (
-				<div onClick={ open } className={ 'novablocks-advanced-gallery' } style={ getGalleryStyle( attributes ) } ref={ ref }>
-					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` }>
+				<div className={ 'novablocks-advanced-gallery' } style={ getGalleryStyle( attributes ) } ref={ ref }>
+					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` } onClick={ open }>
 						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 					</div>
 					<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
