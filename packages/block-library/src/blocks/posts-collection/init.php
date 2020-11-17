@@ -6,9 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_posts_collection_attributes() {
-	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-grid-generator/attributes.json' );
-	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-latest-posts/attributes.json' );
-	$collection_attributes = novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
+	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/collection/src/grid-generator-attributes.json' );
+	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-latest-posts/attributes.json' );
+	$collection_attributes = novablocks_get_collection_attributes();
 	$posts_collection_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/posts-collection/attributes.json' );
 
 	return array_merge( $posts_collection_attributes, $collection_attributes, $grid_generator_attributes, $posts_query_attributes );
@@ -166,6 +166,10 @@ function novablocks_get_meta( $post, $meta ) {
 
 			return join( ', ', $tag_names );
 		}
+	}
+
+	if ( $meta == 'reading-time' ) {
+		return sprintf( __( '%s min read', '__plugin_txtd' ), novablocks_get_post_reading_time_in_minutes( $post ) );
 	}
 
 	return '';

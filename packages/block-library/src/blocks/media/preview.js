@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames';
 
-import { AdvancedGallery } from '@novablocks/components';
+import AdvancedGallery from '@novablocks/advanced-gallery';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -12,16 +12,20 @@ const MediaPreview = function( props ) {
 		attributes: {
 			contentStyle,
 			blockStyle,
+			style,
+			accentColor,
+
 			mediaPosition,
 			images,
+
 			// alignment
 			verticalAlignment,
 			emphasisArea,
 
 			contentAreaWidth,
 			layoutGutter,
+			className,
 		},
-		className,
 		settings,
 	} = props;
 
@@ -30,6 +34,8 @@ const MediaPreview = function( props ) {
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`novablocks-u-valign-${ verticalAlignment }`,
+		`is-style-${ style }`,
+		`has-${ accentColor }-accent-color`,
 	);
 
 	const passedProps = props;
@@ -58,10 +64,7 @@ const MediaPreview = function( props ) {
 						<div className="novablocks-media__layout">
 							<div className="novablocks-media__content">
 								<div className="novablocks-media__inner-container novablocks-block__content">
-									<InnerBlocks
-										allowedBlocks={ settings.media.allowedBlocks }
-										template={ settings.media.template }
-									/>
+									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
 								</div>
 							</div>
 							<div className="novablocks-media__aside">

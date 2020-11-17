@@ -2,15 +2,18 @@
  * Internal dependencies
  */
 import {
-	LayoutControls,
-	withParallax,
-	ToggleGroup,
-	ControlsDrawerContent,
+	ControlsGroup,
+	ControlsSection,
 	ControlsTab,
-	ControlsSection
-} from '@novablocks/components';
+	LayoutControls,
+	ToggleGroup,
+	withSettings
+} from '@novablocks/block-editor';
 
-import { withSettings } from '@novablocks/utils';
+import {
+	withDoppler,
+} from '@novablocks/doppler';
+
 
 import heroAttributes from './attributes';
 
@@ -20,12 +23,7 @@ import BlockControls from './block-controls';
 import { __ } from '@wordpress/i18n';
 
 import {
-	InspectorControls
-} from '@wordpress/block-editor';
-
-import {
 	RadioControl,
-	PanelBody
 } from '@wordpress/components';
 
 import {
@@ -146,29 +144,29 @@ class HeroEdit extends Component {
 			<Fragment>
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
-				<InspectorControls>
-					<LayoutControls { ...this.props } />
-					<BlockHeightControls { ...this.props } />
-				</InspectorControls>
-				<ControlsDrawerContent>
-					<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-						<ToggleGroup
-							onChange={ updateAttributes }
-							toggles={ toggles.map( toggle => {
-								return {
-									...toggle,
-									value: attributes[ toggle.attribute ]
-								}
-							} ) }
-						/>
-					</PanelBody>
-				</ControlsDrawerContent>
+				<LayoutControls { ...this.props } />
+				<BlockHeightControls { ...this.props } />
+				<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
+					<ControlsTab label={ __( 'Settings' ) }>
+						<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+							<ToggleGroup
+								onChange={ updateAttributes }
+								toggles={ toggles.map( toggle => {
+									return {
+										...toggle,
+										value: attributes[ toggle.attribute ]
+									}
+								} ) }
+							/>
+						</ControlsGroup>
+					</ControlsTab>
+				</ControlsSection>
 			</Fragment>
 		);
 	}
-};
+}
 
 export default createHigherOrderComponent(compose([
 	withSettings,
-	withParallax,
+	withDoppler,
 ]))( HeroEdit );

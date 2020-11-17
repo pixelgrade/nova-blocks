@@ -1,0 +1,62 @@
+{
+	"blobsEnableMask": {
+		"type": "boolean",
+		"default": false
+	},
+	"blobSides": {
+		"type": "number",
+		"default": 3
+	},
+	"blobPatternSeed": {
+		"type": "number",
+		"default": 3
+	},
+	"blobComplexity": {
+		"type": "number",
+		"default": 0
+	},
+	"blobSmoothness": {
+		"type": "number",
+		"default": 33
+	},
+	"blobRotation": {
+		"type": "number",
+		"default": 0
+	},
+	"blobsEnableDecoration": {
+		"type": "boolean",
+		"default": false
+	},
+	"blobMaskSides": {
+		"type": "number",
+		"default": 3
+	},
+	"blobMaskPatternSeed": {
+		"type": "number",
+		"default": 3
+	},
+	"blobMaskComplexity": {
+		"type": "number",
+		"default": 0
+	},
+	"blobMaskSmoothness": {
+		"type": "number",
+		"default": 33
+	},
+	"blobMaskRotation": {
+		"type": "number",
+		"default": 0
+	},
+	"blobsSizeBalance": {
+		"type": "number",
+		"default": 50
+	},
+	"blobsHorizontalDisplacement": {
+		"type": "number",
+		"default": 50
+	},
+	"blobsVerticalDisplacement": {
+		"type": "number",
+		"default": 50
+	}
+}

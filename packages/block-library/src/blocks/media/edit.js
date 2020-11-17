@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { withSettings } from '@novablocks/utils';
+import { withSettings } from '@novablocks/block-editor';
 import BlockControls from './block-controls';
 import MediaPreview from './preview';
 import InspectorControls from './inspector-controls';

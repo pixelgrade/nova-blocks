@@ -1,12 +1,10 @@
+import '@novablocks/doppler/frontend';
+
 import pin from "./pin";
 import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
-import { parallaxInit } from "@novablocks/components";
 
 (function( $, window, undefined ) {
 
-	const $blocks = $( '.novablocks-map' );
-
-	parallaxInit( $blocks );
 	mapInit();
 
 	function mapInit() {
@@ -69,8 +67,6 @@ import { parallaxInit } from "@novablocks/components";
 					const showLabels = $obj.data( 'show-labels' );
 					const showIcons = $obj.data( 'show-icons' );
 					const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, new_value );
-
-					console.log( 'after', addVisibilityToStyles( styles, showLabels, showIcons ) );
 
 					map.setOptions( {
 						styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),

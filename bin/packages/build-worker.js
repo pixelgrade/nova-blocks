@@ -133,6 +133,7 @@ const BUILD_TASK_BY_EXTENSION = {
 			includePaths: [ path.join( PACKAGES_DIR, 'base-styles' ) ],
 			data:
 				[
+					'functions',
 					'mixins',
 				]
 					.map( ( imported ) => {

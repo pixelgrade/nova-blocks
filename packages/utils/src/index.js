@@ -1,12 +1,5 @@
 import classnames from "classnames";
 
-export { getPlaceholderImages } from './unsplash';
-export { normalizeImages } from './images';
-export { default as generateDefaults } from './generate-defaults';
-export { default as useApiFetch } from './use-api-fetch';
-export { default as useResizeObserver } from './use-resize-observer';
-export { default as withSettings } from './with-settings';
-
 export const getRandomBetween = ( min, max ) => {
 	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
 	return Math.floor( random * (max - min + 1) + min );
@@ -29,6 +22,11 @@ export const getRandomArrayFromArray = ( arr, n ) => {
 	}
 
 	return result;
+};
+
+export const getRandomFromArray = ( arr ) => {
+	const array = getRandomArrayFromArray( arr, 1 );
+	return array[0];
 };
 
 export const getRandomBooleanValue = () => {
@@ -164,10 +162,25 @@ export const getSnapClassname = focalPoint => {
 };
 
 export const getControlsClasses = ( attributes, compileAttributes ) => {
-	const classes = [ 'novablocks-controls-wrap' ];
+	const isDirty = areAttributesDirty( attributes, compileAttributes );
+	return getControlsDirtyClasses( isDirty );
+};
+
+export const areAttributesDirty = ( attributes, compileAttributes ) => {
+	let dirty = false;
 	const compiledAttributes = compileAttributes( attributes );
 
 	if ( Object.keys( compiledAttributes ).some( key => compiledAttributes[ key ] !== attributes[ key ] ) ) {
+		dirty = true;
+	}
+
+	return dirty;
+}
+
+export const getControlsDirtyClasses = ( isDirty ) => {
+	const classes = [ 'novablocks-controls-wrap' ];
+
+	if ( !! isDirty ) {
 		classes.push( 'novablocks-controls-wrap--dirty' );
 	}
 
@@ -213,4 +226,3 @@ export const above = ( breakpoint ) => {
 	const width = breakpoints[breakpoint];
 	return window.innerWidth >= width;
 };
-

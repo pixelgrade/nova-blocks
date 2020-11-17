@@ -8,16 +8,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_media_attributes_config() {
-	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/components/src/advanced-gallery/attributes.json' );
+function novablocks_get_media_attributes() {
+	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
-	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/core/src/filters/with-space-and-sizing-controls/attributes.json' );
+	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
 
+	if ( ! is_array( $blob_attributes ) ) $blob_attributes = array();
 	if ( ! is_array( $gallery_attributes ) ) $gallery_attributes = array();
 	if ( ! is_array( $media_attributes ) ) $media_attributes = array();
 	if ( ! is_array( $space_and_sizing_attributes ) ) $space_and_sizing_attributes = array();
 
-	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes );
+	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $blob_attributes );
 }
 
 if ( ! function_exists( 'novablocks_render_media_block' ) ) {
@@ -44,7 +46,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$blockClasses[] = 'content-is-' . $contentStyle;
 
-		$attributes_config = novablocks_get_media_attributes_config();
+		$attributes_config = novablocks_get_media_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		if ( ! empty( $attributes['className'] ) ) {
@@ -55,6 +57,14 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		if ( ! empty( $attributes['mediaPosition'] ) ) {
 			$classes[] = 'has-image-on-the-' . $attributes['mediaPosition'];
+		}
+
+		if ( ! empty( $attributes['style'] ) ) {
+			$classes[] = 'is-style-' . $attributes['style'];
+		}
+
+		if ( ! empty( $attributes['accentColor'] ) ) {
+			$classes[] = 'has-' . $attributes['accentColor'] . '-accent-color';
 		}
 
 		$classes[] = 'wp-block-group';
@@ -98,11 +108,13 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 	            <div class="wp-block-group__inner-container">
 		            <div class="wp-block alignwide">
 		                <div class="novablocks-media__layout">
-		                    <div class="novablocks-media__content">
-			                    <div class="novablocks-media__inner-container novablocks-block__content">
-									<?php echo $content; ?>
-			                    </div>
-		                    </div>
+							<?php if ( ! empty ( $content ) ) { ?>
+								<div class="novablocks-media__content">
+									<div class="novablocks-media__inner-container novablocks-block__content">
+										<?php echo $content; ?>
+									</div>
+								</div>
+							<?php } ?>
 		                    <div class="novablocks-media__aside">
 			                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
 		                    </div>

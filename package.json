@@ -1,6 +1,6 @@
 {
 	"name": "nova-blocks",
-	"version": "1.6.2",
+	"version": "1.7.0",
 	"main": "blocks/index.js",
 	"license": "GPL-3.0+",
 	"scripts": {
@@ -13,19 +13,17 @@
 		"postinstall": "node ./bin/packages/install.js"
 	},
 	"dependencies": {
+		"@novablocks/advanced-gallery": "file:packages/advanced-gallery",
+		"@novablocks/blob": "file:packages/blob",
+		"@novablocks/block-editor": "file:packages/block-editor",
 		"@novablocks/block-library": "file:packages/block-library",
+		"@novablocks/collection": "file:packages/collection",
 		"@novablocks/components": "file:packages/components",
 		"@novablocks/core": "file:packages/core",
+		"@novablocks/doppler": "file:packages/doppler",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",
-		"@novablocks/utils": "file:packages/utils",
-		"@wordpress/blocks": "^6.22.0",
-		"@wordpress/date": "^3.11.1",
-		"@wordpress/element": "^2.17.1",
-		"@wordpress/i18n": "^3.15.0",
-		"@wordpress/url": "^2.18.0",
-		"gulp": "^4.0.2",
-		"js-cookie": "^2.2.1"
+		"@novablocks/utils": "file:packages/utils"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.10.4",
@@ -43,6 +41,7 @@
 		"del": "^6.0.0",
 		"fast-glob": "^3.1.1",
 		"fs": "0.0.1-security",
+		"gulp": "^4.0.2",
 		"gulp-exec": "^5.0.0",
 		"gulp-load-plugins": "^2.0.4",
 		"gulp-replace": "^1.0.0",

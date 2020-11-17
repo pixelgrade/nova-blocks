@@ -1,5 +1,3 @@
-import { SVG, Path } from '@wordpress/components';
-
 export const nova = (
 	<svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path fillRule="evenodd" clipRule="evenodd" d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z" fill="#6565F2"/>
@@ -68,25 +66,25 @@ export const opentable = (
 );
 
 export const alignBottom = (
-	<SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-		<Path fill="none" d="M0 0h24v24H0V0z" />
-		<Path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" />
-	</SVG>
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+		<path fill="none" d="M0 0h24v24H0V0z" />
+		<path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" />
+	</svg>
 );
 
 export const alignCenter = (
-	<SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-		<Path fill="none" d="M0 0h24v24H0V0z" />
-		<Path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+		<path fill="none" d="M0 0h24v24H0V0z" />
+		<path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"
 		/>
-	</SVG>
+	</svg>
 );
 
 export const alignTop = (
-	<SVG xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-		<Path fill="none" d="M0 0h24v24H0V0z" />
-		<Path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" />
-	</SVG>
+	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+		<path fill="none" d="M0 0h24v24H0V0z" />
+		<path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" />
+	</svg>
 );
 
 export const alignment = (

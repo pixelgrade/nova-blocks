@@ -1,8 +1,14 @@
 import * as icons from '@novablocks/icons';
+import AdvancedGallery from '@novablocks/advanced-gallery';
+
+import Blob from '@novablocks/blob';
 
 import {
 	generateDefaults,
-	getPlaceholderImages,
+	getPlaceholderImages
+} from "@novablocks/block-editor";
+
+import {
 	getRandomArrayFromArray,
 	getRandomBetween,
 } from "@novablocks/utils";
@@ -12,11 +18,10 @@ import deprecated from './deprecated';
 import transforms from './transforms';
 
 import blockAttributes from './attributes';
-import { AdvancedGallery } from '@novablocks/components';
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
+const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes, Blob.attributes );
 
 /**
  * WordPress dependencies

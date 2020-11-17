@@ -193,7 +193,7 @@ function novablocks_get_header_attributes() {
 }
 
 function novablocks_get_collection_attributes() {
-	return novablocks_get_attributes_from_json( 'packages/components/src/collection/attributes.json' );
+	return novablocks_get_attributes_from_json( 'packages/collection/src/collection-attributes.json' );
 }
 
 function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
@@ -266,41 +266,20 @@ function novablocks_add_hero_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
 
-function novablocks_get_media_spacing_atttributes() {
-	return array(
-		// general
-		'layoutPreset' => array(
-			'type' => 'string',
-			'default' => 'stable',
-		),
-		// customize
-		'emphasisBySpace' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'enableOverlapping' => array(
-			'type' => 'boolean',
-			'default' => false,
-		),
-		// settings
-		'blockTopSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'blockBottomSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'emphasisTopSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
-		'emphasisBottomSpacing' => array(
-			'type' => 'number',
-			'default' => 1,
-		),
+function novablocks_add_space_and_sizing_settings( $settings ) {
+
+	if ( empty( $settings['modules'] ) ) {
+		$settings['modules'] = array();
+	}
+
+	$settings['modules']['spaceAndSizing'] = array(
+		'presetOptions' => novablocks_get_space_and_sizing_presets(),
+		'advancedPresetOptions' => novablocks_get_space_and_sizing_advanced_presets()
 	);
+
+	return $settings;
 }
+add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_space_and_sizing_settings', 0 );
 
 function novablocks_add_media_settings( $settings ) {
 
@@ -369,94 +348,6 @@ function novablocks_add_media_settings( $settings ) {
 				'value' => 'highlighted',
 			),
 		),
-		'spaceAndSizing' => array(
-			'presetOptions' => array(
-				array(
-					'label'  => 'Default Block Spacing',
-					'value'  => 'default',
-					'preset' => array(
-						'blockTopSpacing' => 0,
-						'blockBottomSpacing' => 0,
-						'emphasisTopSpacing' => 1,
-						'emphasisBottomSpacing' => 1,
-						'enableOverlapping' => false,
-						'verticalAlignment' => 'center',
-					),
-				),
-				array(
-					'label'  => 'Overlap 1 / Top Anchoring',
-					'value'  => 'overlap1',
-					'preset' => array(
-						'blockTopSpacing' => 0,
-						'blockBottomSpacing' => 2,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'top',
-					),
-				),
-				array(
-					'label'  => 'Overlap 2 / Centered',
-					'value'  => 'overlap2',
-					'preset' => array(
-						'blockTopSpacing' => 1,
-						'blockBottomSpacing' => 1,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'center',
-					),
-				),
-				array(
-					'label'  => 'Overlap 3 / Bottom Anchoring',
-					'value'  => 'overlap3',
-					'preset' => array(
-						'blockTopSpacing' => 2,
-						'blockBottomSpacing' => 0,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'bottom',
-					),
-				),
-				array(
-					'label'  => 'Overlap Nearby Blocks / Centered',
-					'value'  => 'overlap-nearby-1',
-					'preset' => array(
-						'blockTopSpacing' => -2,
-						'blockBottomSpacing' => -2,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'center',
-					),
-				),
-				array(
-					'label'  => 'Overlap Nearby Blocks / Bottom',
-					'value'  => 'overlap-nearby-2',
-					'preset' => array(
-						'blockTopSpacing' => 0,
-						'blockBottomSpacing' => -2,
-						'emphasisTopSpacing' => 2,
-						'emphasisBottomSpacing' => -2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'top',
-					),
-				),
-				array(
-					'label'  => 'Overlap Nearby Blocks / Top',
-					'value'  => 'overlap-nearby-3',
-					'preset' => array(
-						'blockTopSpacing' => -2,
-						'blockBottomSpacing' => 0,
-						'emphasisTopSpacing' => -2,
-						'emphasisBottomSpacing' => 2,
-						'enableOverlapping' => true,
-						'verticalAlignment' => 'bottom',
-					),
-				),
-			)
-		),
 	);
 
 	$settings['media'] = $media_settings;
@@ -465,6 +356,100 @@ function novablocks_add_media_settings( $settings ) {
 }
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
+
+function novablocks_get_space_and_sizing_presets() {
+	return array(
+		array(
+			'label'  => 'Default Block Spacing',
+			'value'  => 'default',
+			'preset' => array(
+				'blockTopSpacing' => 0,
+				'blockBottomSpacing' => 0,
+				'emphasisTopSpacing' => 1,
+				'emphasisBottomSpacing' => 1,
+				'enableOverlapping' => false,
+				'verticalAlignment' => 'center',
+			),
+		),
+		array(
+			'label'  => 'Overlap Nearby Blocks / Bottom',
+			'value'  => 'overlap-nearby-2',
+			'preset' => array(
+				'blockTopSpacing' => 0,
+				'blockBottomSpacing' => -2,
+				'emphasisTopSpacing' => 2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'top',
+			),
+		),
+		array(
+			'label'  => 'Overlap Nearby Blocks / Centered',
+			'value'  => 'overlap-nearby-1',
+			'preset' => array(
+				'blockTopSpacing' => -2,
+				'blockBottomSpacing' => -2,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'center',
+			),
+		),
+		array(
+			'label'  => 'Overlap Nearby Blocks / Top',
+			'value'  => 'overlap-nearby-3',
+			'preset' => array(
+				'blockTopSpacing' => -2,
+				'blockBottomSpacing' => 0,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => 2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'bottom',
+			),
+		),
+	);
+}
+
+function novablocks_get_space_and_sizing_advanced_presets() {
+	return array(
+		array(
+			'label'  => 'Overlap 1 / Top Anchoring',
+			'value'  => 'overlap1',
+			'preset' => array(
+				'blockTopSpacing' => 0,
+				'blockBottomSpacing' => 2,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'top',
+			),
+		),
+		array(
+			'label'  => 'Overlap 2 / Centered',
+			'value'  => 'overlap2',
+			'preset' => array(
+				'blockTopSpacing' => 1,
+				'blockBottomSpacing' => 1,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'center',
+			),
+		),
+		array(
+			'label'  => 'Overlap 3 / Bottom Anchoring',
+			'value'  => 'overlap3',
+			'preset' => array(
+				'blockTopSpacing' => 2,
+				'blockBottomSpacing' => 0,
+				'emphasisTopSpacing' => -2,
+				'emphasisBottomSpacing' => -2,
+				'enableOverlapping' => true,
+				'verticalAlignment' => 'bottom',
+			),
+		),
+	);
+}
 
 function novablocks_add_slideshow_settings( $settings ) {
 
@@ -632,6 +617,7 @@ function novablocks_get_block_editor_settings() {
 			),
 		),
 		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
 
@@ -639,6 +625,213 @@ function novablocks_get_block_editor_settings() {
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;
+}
+
+function novablocks_get_blob_presets() {
+	return array(
+		array(
+			'label'  => 'Rectangle',
+			'value'  => 'rectangle',
+			'preset' => array(
+				'blobsEnableMask'             => false,
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Ellipse',
+			'value'  => 'ellipse',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 4,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Diamond',
+			'value'  => 'diamond',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 6,
+				'blobMaskPatternSeed'         => 1,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Seed',
+			'value'  => 'seed',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 5,
+				'blobMaskPatternSeed'         => 70,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'Blob',
+			'value'  => 'blob',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 7,
+				'blobMaskPatternSeed'         => 50,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => false,
+			),
+		),
+		array(
+			'label'  => 'MX37: Stones',
+			'value'  => 'stones-37',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 3,
+				'blobMaskPatternSeed'         => 30,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 60,
+				'blobMaskRotation'            => 70,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 4,
+				'blobPatternSeed'             => 30,
+				'blobComplexity'              => 90,
+				'blobSmoothness'              => 100,
+				'blobRotation'                => 70,
+
+				'blobsHorizontalDisplacement' => 80,
+				'blobsVerticalDisplacement'   => 60,
+				'blobsSizeBalance'            => 60,
+			),
+		),
+		array(
+			'label'  => 'MX19: Seeds',
+			'value'  => 'seeds-19',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 5,
+				'blobMaskPatternSeed'         => 90,
+				'blobMaskComplexity'          => 80,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 50,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 5,
+				'blobPatternSeed'             => 40,
+				'blobComplexity'              => 80,
+				'blobSmoothness'              => 100,
+				'blobRotation'                => 100,
+
+				'blobsHorizontalDisplacement' => 30,
+				'blobsVerticalDisplacement'   => 60,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'MX81: Ovoid',
+			'value'  => 'ovoid-81',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 6,
+				'blobMaskPatternSeed'         => 10,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 100,
+				'blobMaskRotation'            => 100,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 3,
+				'blobPatternSeed'             => 50,
+				'blobComplexity'              => 100,
+				'blobSmoothness'              => 50,
+				'blobRotation'                => 40,
+
+				'blobsHorizontalDisplacement' => 40,
+				'blobsVerticalDisplacement'   => 30,
+				'blobsSizeBalance'            => 45,
+			),
+		),
+		array(
+			'label'  => 'MX76: Leaf',
+			'value'  => 'leaf-76',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 3,
+				'blobMaskPatternSeed'         => 100,
+				'blobMaskComplexity'          => 100,
+				'blobMaskSmoothness'          => 60,
+				'blobMaskRotation'            => 80,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 6,
+				'blobPatternSeed'             => 70,
+				'blobComplexity'              => 100,
+				'blobSmoothness'              => 100,
+				'blobRotation'                => 10,
+
+				'blobsHorizontalDisplacement' => 40,
+				'blobsVerticalDisplacement'   => 40,
+				'blobsSizeBalance'            => 45,
+			),
+		),
+		array(
+			'label'  => 'MX19: Ruby',
+			'value'  => 'ruby-19',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 5,
+				'blobMaskPatternSeed'         => 0,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 10,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 5,
+				'blobPatternSeed'             => 0,
+				'blobComplexity'              => 0,
+				'blobSmoothness'              => 0,
+				'blobRotation'                => 40,
+
+				'blobsHorizontalDisplacement' => 40,
+				'blobsVerticalDisplacement'   => 30,
+				'blobsSizeBalance'            => 50,
+			),
+		),
+		array(
+			'label'  => 'MX41: Diagonal',
+			'value'  => 'diagonal-41',
+			'preset' => array(
+				'blobsEnableMask'             => true,
+				'blobMaskSides'               => 8,
+				'blobMaskPatternSeed'         => 0,
+				'blobMaskComplexity'          => 0,
+				'blobMaskSmoothness'          => 0,
+				'blobMaskRotation'            => 0,
+
+				'blobsEnableDecoration'       => true,
+				'blobSides'                   => 4,
+				'blobPatternSeed'             => 60,
+				'blobComplexity'              => 100,
+				'blobSmoothness'              => 0,
+				'blobRotation'                => 50,
+
+				'blobsHorizontalDisplacement' => 55,
+				'blobsVerticalDisplacement'   => 45,
+				'blobsSizeBalance'            => 35,
+			),
+		),
+	);
 }
 
 function novablocks_get_advanced_gallery_presets() {
@@ -766,9 +959,37 @@ function novablocks_get_theme_support() {
 function novablocks_get_attributes_from_json( $path ) {
 	$plugin_path = novablocks_get_plugin_path();
 	$filename = trailingslashit( $plugin_path ) . $path;
-	$body = file_get_contents( $filename );
+	if ( ! file_exists( $filename ) ) {
+		return array();
+	}
 
-	return json_decode( $body, true );
+	return json_decode( file_get_contents( $filename ), true );
+}
+
+function novablocks_camel_case_to_kebab_case( $string ) {
+	return strtolower( preg_replace( '%([A-Z])([a-z])%', '-\1\2', $string ) );
+}
+
+function novablocks_kebab_case_to_camel_case( $string ) {
+	$str = str_replace( '-', '', ucwords( $string, '-' ) );
+	$str = lcfirst( $str );
+	return $str;
+}
+
+function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
+	$data_attributes = array();
+
+	foreach ( $data_attributes_array as $data_attribute ) {
+		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
+
+		if ( empty( $attributes[ $attribute ] ) ) {
+			$attributes[ $attribute ] = 0;
+		}
+
+		$data_attributes[] = 'data-' . $data_attribute . '="' . $attributes[ $attribute ] . '"';
+	}
+
+	return $data_attributes;
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
@@ -783,26 +1004,15 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$advanced_gallery_attributes = array(
-		'sizeContrast',
-		'positionShift',
-		'elementsDistance',
-		'placementVariation',
-		'imageResizing',
-		'objectPosition',
-		'containerHeight',
-		'imageRotation',
-	);
+	$blob_attributes_config = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$blob_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $blob_attributes_config ) );
 
-	$data_attributes = array();
+	$advanced_gallery_attributes_config = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
+	$advanced_gallery_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $advanced_gallery_attributes_config ) );
 
-	foreach ( $advanced_gallery_attributes as $attribute ) {
-		if ( empty( $attributes[ $attribute ] ) ) {
-			$attributes[ $attribute ] = 0;
-		}
+	$data_attributes_array = array_merge( $blob_attributes_array, $advanced_gallery_attributes_array );
 
-		$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
-	}
+	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
@@ -1213,3 +1423,131 @@ function novablocks_register_api_endpoints() {
 	) );
 }
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
+
+/**
+ * Return the reading time in minutes for a post's content.
+ * @param WP_Post|int $post
+ * @param int $wpm The words per minute reading rate to take into account.
+ * @return int
+ */
+function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
+	$post = get_post( $post );
+
+	if ( ! ( $post instanceof WP_Post ) ) {
+		return 0;
+	}
+
+	// We don't need the whole content filters. Just the bare minimum.
+	$content = do_blocks( $post->post_content );
+	$content = wptexturize( $content );
+	$content = wpautop( $content );
+	$content = shortcode_unautop( $content );
+	$content = do_shortcode( $content );
+
+	$content = str_replace( ']]>', ']]&gt;', $content );
+
+	// Allow others to have a say; like removing certain non-essential elements (avatars for example).
+	$content = apply_filters( 'novablocks_post_content_before_reading_time_calc', $content, $post );
+
+	return novablocks_get_reading_time_in_minutes( $content, $wpm );
+}
+
+/**
+ * Calculate the reading time in minutes for a piece of content.
+ * @param string $content HTML post content.
+ * @param int $wpm The words per minute reading rate to take into account.
+ * @return int
+ */
+function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
+	// Calculate the time in seconds for the images in the content.
+	$images_time = 0;
+	if ( preg_match_all( '/<img\s[^>]+>/', $content, $matches ) ) {
+		$num_images = count( $matches[0] );
+
+		// The starting image weight (expressed in seconds of reading time).
+		// This weight is decreasing one second with each image encountered, with a minium of 3 seconds.
+		$img_weight = 12;
+		for ( $i = 0; $i < $num_images; $i++ ) {
+			$images_time += $img_weight;
+
+			if ( $img_weight > 3 ) {
+				$img_weight --;
+			}
+		}
+	}
+
+	// Calculate the time in seconds for the videos in the content.
+	$videos_time = 0;
+	if ( preg_match_all( '/<iframe\s[^>]+>/', $content, $matches ) ) {
+		// We will give one minute for every video (even if the video might be longer).
+		$videos_time = count( $matches[0] ) * 60;
+	}
+
+	// Calculate the words reading time in seconds.
+	$word_count = str_word_count( wp_strip_all_tags( $content ) );
+	$words_time = ceil( $word_count / ( $wpm / 60 ) );
+
+	// Convert the reading time to minutes.
+	$minutes = (int) ceil( ( $words_time + $images_time + $videos_time ) / 60 );
+	if ( $minutes < 1 ) {
+		$minutes = 1;
+	}
+
+	return $minutes;
+}
+
+function novablocks_optimize_frontend_scripts_output() {
+	// These are actually empty(ish) scripts without any effect.
+	// We let them be so we can have a consistent dependency generation logic.
+	// But we don't want them in the frontend since it would be wasteful.
+	$scripts_to_remove = array(
+			'novablocks/media/frontend',
+			'novablocks/advanced-gallery/frontend',
+			'novablocks/posts-collection/frontend',
+	);
+
+	foreach ( $scripts_to_remove as $handle ) {
+		// If the current handle isn't enqueued, skip it.
+		if ( ! wp_script_is( $handle, 'enqueued' ) ) {
+			continue;
+		}
+
+		// Search for the current handle's dependencies.
+		$wp_script = wp_scripts()->registered[ $handle ];
+		$deps      = $wp_script->deps;
+
+		// Remove the handle from the queue.
+		wp_dequeue_script( $handle );
+
+		// If it's dependencies aren't already enqueued, queue them up.
+		foreach ( $deps as $dependency ) {
+			if ( ! wp_script_is( $dependency, 'enqueued' ) ) {
+				wp_enqueue_script( $dependency );
+			}
+		}
+	}
+}
+// We need to cover both the head and the footer scripts
+// since the block editor logic will enqueue the scripts again upon block render.
+add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
+add_action( 'login_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
+add_action( 'embed_head', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_head_scripts() is hooked at 20.
+add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'login_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'embed_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+
+function novablocks_block_area_has_blocks( $slug ) {
+	$posts = get_posts( array(
+		'name'        => $slug,
+		'post_type'   => 'block_area',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+		'fields' => 'ids',
+	) );
+
+	if ( ! empty( $posts ) && has_blocks( reset( $posts ) ) ) {
+		return true;
+	}
+
+	return false;
+}

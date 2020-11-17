@@ -1,13 +1,36 @@
-@import './alignment-controls/editor-styles';
-@import './autocomplete-tokenfield/editor-styles';
 @import './card/editor-styles';
-@import './collection/editor-styles';
-@import './color-controls/editor-styles';
-@import './control-sections/editor-styles';
-@import './controls-group/editor-styles';
-@import './drawer/editor-styles';
-@import './layout-controls/editor-styles';
-@import './notice/editor-styles';
-@import './scrolling-effect-controls/editor-styles';
-@import './tabs/editor-styles';
-@import './toggle-group/editor-styles';
+
+.components-palette-control__options {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -10px;
+
+	> * {
+		margin-left: 10px;
+	}
+}
+
+.components-palette-control__option {
+	cursor: pointer;
+}
+
+.novablocks-palette {
+	display: flex;
+}
+
+.novablocks-palette__color {
+	width: 30px;
+	height: 30px;
+	background: currentColor;
+	border-radius: 50%;
+	box-shadow: black 0 2px 8px -6px inset;
+
+	.novablocks-palette--active & {
+		box-shadow: black 0 2px 8px -6px inset, black 0 0 0 2px;
+	}
+
+	& + & {
+		margin-left: -10px;
+	}
+}
+

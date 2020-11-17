@@ -19,7 +19,6 @@
 	},
 	"devDependencies": {
 		"@wordpress/api-fetch": "^3.19.1",
-		"@wordpress/data": "^4.23.1",
-		"unsplash-js": "^6.3.0"
+		"@wordpress/data": "^4.23.1"
 	}
 }

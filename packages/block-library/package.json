@@ -1,5 +1,5 @@
 {
-	"name": "@novablocks/block-library",
+	"name": "@novablocks/block-editor",
 	"version": "1.0.0",
 	"description": "",
 	"main": "build/index.js",
@@ -12,12 +12,13 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/pixelgrade/nova-blocks.git",
-		"directory": "packages/block-library"
+		"directory": "packages/block-editor"
 	},
 	"bugs": {
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
+		"@novablocks/collection": "file:../collection",
 		"@novablocks/components": "file:../components",
 		"@novablocks/easings": "file:../easings",
 		"@novablocks/icons": "file:../icons",
@@ -28,7 +29,8 @@
 		"@wordpress/data": "^4.14.0",
 		"@wordpress/element": "^2.11.0",
 		"@wordpress/i18n": "^3.9.0",
+		"@wordpress/server-side-render": "^1.17.1",
 		"@wordpress/viewport": "^2.13.0",
-		"@wordpress/server-side-render": "^1.17.1"
+		"js-cookie": "^2.2.1"
 	}
 }

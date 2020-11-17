@@ -1,5 +1,8 @@
 import classnames from 'classnames';
 
+import { createHigherOrderComponent } from '@wordpress/compose';
+import { addFilter } from '@wordpress/hooks';
+
 export const addSeparatorFilters = ( settings ) => {
 
 	const Separator = ( props ) => {
@@ -16,7 +19,7 @@ export const addSeparatorFilters = ( settings ) => {
 		);
 	};
 
-	const replaceSeparatorEdit = wp.compose.createHigherOrderComponent( ( BlockEdit ) => {
+	const replaceSeparatorEdit = createHigherOrderComponent( ( BlockEdit ) => {
 		return ( props ) => {
 			if ( 'core/separator' === props.name ) {
 				return <Separator className={ props.attributes.className } />;
@@ -32,8 +35,8 @@ export const addSeparatorFilters = ( settings ) => {
 		}
 
 		return null;
-	}
+	};
 
-	wp.hooks.addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );
-	wp.hooks.addFilter( 'blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave );
-}
+	addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );
+	addFilter( 'blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave );
+};

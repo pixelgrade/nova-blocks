@@ -5,17 +5,23 @@ import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { generateDefaults, getPlaceholderImages, getRandomBetween } from "@novablocks/utils";
+import { STORE_NAME } from '@novablocks/core';
+import { getRandomBetween } from "@novablocks/utils";
 
 import blockAttributes from "./attributes";
 
 import {
+	generateDefaults,
+	getPlaceholderImages,
 	insertTemplate,
 	alignmentAttributes,
 	colorAttributes,
 	layoutAttributes,
+} from "@novablocks/block-editor";
+
+import {
 	scrollingAttributes,
-} from "@novablocks/components";
+} from "@novablocks/doppler";
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
@@ -25,8 +31,6 @@ const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colo
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { select } from '@wordpress/data';
-
-const STORE_NAME = 'novablocks';
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();

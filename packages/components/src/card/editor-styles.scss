@@ -1,27 +1,5 @@
 .novablocks-card__media-edit {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 10;
-
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-
 	opacity: 0;
-	pointer-events: none;
-
-	span {
-		display: block;
-		padding: .4em .9em;
-
-		color: #FFFFFF;
-		background-color: #000000;
-		border-radius: 2px;
-	}
 }
 
 .novablocks-card__media-edit,
@@ -29,22 +7,27 @@
 .novablocks-card__media-placeholder {
 
 	&[class] {
-		transition: opacity .1s ease;
+		transition: var(--novablocks-transition);
+		transition-property: opacity;
+		--novablocks-transition-duration: .15s;
 	}
 }
 
-.novablocks-card__media {
+[data-type="novablocks/cards-collection"] {
 
-	.wp-block[data-type="novablocks/card"].is-selected &:hover {
-		cursor: pointer;
+	.novablocks-card__media {
 
-		.novablocks-card__media-edit {
-			opacity: 1;
-		}
+		&:hover {
+			cursor: pointer;
 
-		.novablocks-card__media-image,
-		.novablocks-card__media-placeholder {
-			opacity: 0.7;
+			.novablocks-card__media-edit {
+				opacity: 1;
+			}
+
+			.novablocks-card__media-image,
+			.novablocks-card__media-placeholder {
+				opacity: 0.7;
+			}
 		}
 	}
 }
