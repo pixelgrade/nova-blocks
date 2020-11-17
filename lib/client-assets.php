@@ -320,9 +320,9 @@ function novablocks_register_block_types() {
 				$asset_config_file = substr( $path, 0, -1 * strlen( $style ) ) . 'index.asset.php';
 			}
 
-			$basename     = substr( $style, 0, - 4 );
-			$handle       = 'novablocks/' . $block . '-' . $basename;
-			$asset_config = file_exists( $asset_config_file ) ? require( $asset_config_file ) : null;
+			$basename         = substr( $style, 0, - 4 );
+			$handle           = 'novablocks/' . $block . '-' . $basename;
+			$asset_config            = file_exists( $asset_config_file ) ? require( $asset_config_file ) : array();
 
 			// The same dependencies array used for the respective script file.
 			$js_dependencies  = isset( $asset_config['dependencies'] ) ? $asset_config['dependencies'] : array();
