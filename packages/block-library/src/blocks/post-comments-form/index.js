@@ -17,7 +17,7 @@ registerBlockType('novablocks/post-comments-form', {
 	description: __( 'Show Comments Form', '__plugin_txtd' ),
 	icon: icons.postsCollection,
 	category: 'nova-blocks',
-//	parent: ['novablocks/post-comments'],
+	parent: ['novablocks/post-comments'],
 	usesContext: ['postId', 'postType'],
 	edit,
 	save() {
