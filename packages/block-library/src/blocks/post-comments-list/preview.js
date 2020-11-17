@@ -26,13 +26,11 @@ function PostCommentsDisplay( { postId } ) {
 				? comments.map( ( comment ) => (
 					<div className="comment" key={ comment.id }>
 						<div className="comment-body comment-grid">
-							<div className="comment-meta">
-								<div className="comment-author">
+							<div className="comment-content">
+								<div className="comment-author-avatar vcard">
 									<img className="avatar" src={comment.author_avatar_urls[48]} alt=""/>
 								</div>
-							</div>
-							<div className="comment-content">
-								<div className="comment-header">
+								<div className="comment-author-info">
 									<span className="comment-author">
 										{ comment.author_name }
 									</span>

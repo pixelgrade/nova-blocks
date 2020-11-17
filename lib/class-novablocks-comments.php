@@ -26,7 +26,6 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			add_filter( 'preprocess_comment', array( $this, 'verify_comment_meta_data' ) );
 			add_action( 'add_meta_boxes_comment', array( $this, 'extend_comment_add_meta_box' ) );
 			add_action( 'edit_comment', array( $this, 'extend_comment_edit_metafields' ) );
-
 		}
 
 		/**
@@ -35,11 +34,10 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		public function save_comment_meta_data( $comment_id ) {
 
 			if ( ( isset( $_POST['experience'] ) ) && ( $_POST['experience'] != '' ) ) {
-				$title = wp_filter_nohtml_kses( $_POST['experience'] );
+				$experience = wp_filter_nohtml_kses( $_POST['experience'] );
 			}
-			add_comment_meta( $comment_id, 'experience', $title );
+			add_comment_meta( $comment_id, 'experience', $experience );
 		}
-
 
 		/**
 		 * Add the filter to check if the comment meta data has been filled or not.
@@ -56,16 +54,16 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * Add an edit option in comment edit screen.
 		 */
 		public function extend_comment_add_meta_box() {
-			add_meta_box( 'experience', __( 'Commenter Experience' ), 'extend_comment_meta_box', 'comment', 'normal', 'high' );
+			add_meta_box( 'experience', __( 'Commenter Experience' ), array( $this, 'extend_comment_meta_box'), 'comment', 'normal', 'high' );
 		}
 
 		public function extend_comment_meta_box( $comment ) {
-			$title = get_comment_meta( $comment->comment_ID, 'experience', true );
+			$experience = get_comment_meta( $comment->comment_ID, 'experience', true );
 			wp_nonce_field( 'extend_comment_update', 'extend_comment_update', false );
 			?>
 			<p>
-				<label for="title"><?php _e( 'Experience' ); ?></label>
-				<input type="text" name="title" value="<?php echo esc_attr( $title ); ?>" class="widefat"/>
+				<label for="experience"><?php _e( 'Experience' ); ?></label>
+				<input type="text" name="experience" value="<?php echo esc_attr( $experience ); ?>"/>
 			</p>
 
 			<?php
@@ -80,8 +78,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			}
 
 			if ( ( isset( $_POST['experience'] ) ) && ( $_POST['experience'] != '' ) ):
-				$title = wp_filter_nohtml_kses( $_POST['experience'] );
-				update_comment_meta( $comment_id, 'experience', $title );
+				$experience = wp_filter_nohtml_kses( $_POST['experience'] );
+				update_comment_meta( $comment_id, 'experience', $experience );
 			else :
 				delete_comment_meta( $comment_id, 'experience' );
 			endif;
@@ -163,18 +161,20 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			$req      = get_option( 'require_name_email' );
 			$html_req = ( $req ? " required='required'" : '' );
 
+			$current_user = wp_get_current_user();
+
 			return array(
-				'comment_field' => sprintf(
-					'<p class="comment-form-comment">%s %s</p>',
-					sprintf(
-						'<span class="comment-label__container"><label for="comment">%s</label><span class="field-description">Let’s start a personal and a meaningful conversation. </span></span>',
-						__( 'What’s your comment or question?', 'storefront' )
-					),
-					'<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="Join the conversation, share your knowledge or ask a question..."></textarea><div class="comment-form-details"><p class="comment-form-experience">'.
-					'<label for="experience">' . __( 'What is your expertise or qualification in this topic?' ) . '</label>'.
-					'<span class="field-description">Example: Practical philosopher, therapist and writer.</span>'.
-					'<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." /></p>'
-				),
+					'comment_field' => get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
+									   sprintf(
+											   '<span class="comment-label__container comment-label__container--first"><label for="comment">%s</label><span class="field-description">Let’s start a personal and a meaningful conversation. </span></span>',
+											   __( 'What’s your comment or question?', 'storefront' )
+									   ) . sprintf(
+											   '<p class="comment-form-comment">%s</p>',
+											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="Share your knowledge or ask a question..."></textarea><div class="comment-form-details"><p class="comment-form-experience">' .
+											   '<label for="experience">' . __( 'What is your expertise or qualification in this topic?' ) . '</label>' .
+											   '<span class="field-description">Example: Practical philosopher, therapist and writer.</span>' .
+											   '<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." /></p>'
+									   ),
 				'fields' => array(
 					'author' => sprintf(
 						'<p class="comment-form-author">%s %s</p>',
@@ -219,3 +219,5 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 	}
 }
+
+return new NovaBlocks_Comments();

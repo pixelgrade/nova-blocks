@@ -1,16 +1,27 @@
 :root {
-	--avatar-column-size: 50px;
-	--comments-grid-gap: 1em;
+	--avatar-column-size: 45px;
+	--comments-grid-gap: 10px;
 	--component-accent-color: var(--novablocks-color-1);
-	--novablocks-conversations-width: 50em;
+	--novablocks-conversations-width: 48em;
+	--novablocks-conversations-sides: 1em;
 	--field-description-color: #67616B;
 	--conversations-bg-color: #E4E3E4;
 	--comment-author-color: var(--novablocks-color-1);
 	--comment-links-color: var(--novablocks-color-1);
 	--comment-highlighted-color: #FFF2CE;
+	--comments-vertical-spacing: 45px;
+	--label-font-size: 15px;
 	--label-bg-color: #9195AB;
 	--label-highlighted-bg-color: #1479D2;
 	--label-border-radius: 100px;
+	--field-description-font-size: 13px;
+
+	@include above(tablet) {
+		--field-description-font-size: 16px;
+		--label-font-size: 18px;
+		--avatar-column-size: 50px;
+		--comments-grid-gap: 20px;
+	}
 }
 
 .novablocks-conversations {
@@ -33,7 +44,11 @@
 		margin-left: auto;
 		margin-right: auto;
 
-		padding: 4em 0;
+		padding: 2em var(--novablocks-conversations-sides) 0;
+
+		@include above(tablet) {
+			padding: 4em var(--novablocks-conversations-sides);
+		}
 	}
 
 	&__form-columns {
@@ -52,15 +67,21 @@
 			}
 		}
 
+		&[class][class] {
+			label {
+				margin-bottom: 0;
+			}
+		}
+
 		label {
-			font-size: .8em;
+			font-size: var(--label-font-size);
 			font-weight: bold;
 		}
 
 		.field-description {
 			display: block;
 
-			font-size: .7em;
+			font-size: var(--field-description-font-size);
 			color: var(--field-description-color);
 
 			margin-bottom: .5em
@@ -68,7 +89,11 @@
 	}
 
 	.comment-list {
-		padding-top: 3em;
+
+		@include below(tablet) {
+			margin-left: calc( -1 * var(--novablocks-conversations-sides) );
+			margin-right: calc( -1 * var(--novablocks-conversations-sides) );
+		}
 	}
 
 	.comment-text {
@@ -113,10 +138,20 @@
 
 	.comment-list {
 		.comment {
-			margin-bottom: 2em;
 
-			> .comment-body {
-				margin-bottom: 2em;
+			@include above(tablet) {
+				> .comment-body {
+					margin-bottom: var(--comments-vertical-spacing);
+				}
+			}
+
+			@include below(tablet) {
+				&:not(.depth-1),
+				&.depth-1.parent {
+					> .comment-body {
+							margin-bottom: var(--comments-vertical-spacing);
+					}
+				}
 			}
 
 			&[class*="depth-2"] {
@@ -127,8 +162,13 @@
 		}
 
 		.comment-respond {
-			padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
-			margin-bottom: 2em;
+			padding-left: var(--novablocks-conversations-sides);
+			padding-right: var(--novablocks-conversations-sides);
+			margin-bottom: var(--comments-vertical-spacing);
+
+			@include above(tablet) {
+				padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
+			}
 		}
 
 		.comment-form-author,
@@ -142,7 +182,7 @@
 	.avatar {
 		max-width: 100%;
 		width: var(--avatar-column-size);
-		border-radius: 20px;
+		border-radius: 50%;
 	}
 
 	.form-grid {
@@ -185,6 +225,8 @@
 		display: flex;
 		align-items: center;
 
+		font-size: 17.25px;
+
 		.reply {
 			display: flex;
 			align-items: center;
@@ -213,25 +255,17 @@
 		border-radius: var(--label-border-radius);
 
 		@include above(tablet) {
-			padding: 4px 20px;
+			padding: 4px 10px;
 			font-size: 14px;
-		}
-
-		// Update background color
-		// when comment is highlighted
-		// or is by post author
-		.comment--is-highlighted &,
-		.bypostauthor & {
-			--label-bg-color: var(--label-highlighted-bg-color);
-		}
-
-		// Update only border radius
-		.bypostauthor & {
-			--label-border-radius: 0;
 		}
 	}
 
 	.comment--is-highlighted {
+
+		@include below(tablet) {
+			margin-left: calc(-1 * var(--novablocks-conversations-sides));
+			margin-right: calc(-1 * var(--novablocks-conversations-sides));
+		}
 
 		> .comment-body {
 			padding: 0;
@@ -243,6 +277,19 @@
 				@include above(tablet) {
 					border-radius: 0 25px;
 				}
+			}
+		}
+
+		.experience-label {
+			--label-bg-color: var(--label-highlighted-bg-color);
+		}
+	}
+
+	.comment {
+		&.bypostauthor {
+			.experience-label {
+				--label-bg-color: var(--label-highlighted-bg-color);
+				--label-border-radius: 0;
 			}
 		}
 	}
@@ -269,6 +316,10 @@
 		padding-bottom: .5em;
 		margin-bottom: .5em;
 		font-weight: bold;
+
+		sup {
+			font-weight: bold;
+		}
 	}
 
 	textarea,
@@ -289,40 +340,48 @@
 			width: 100%;
 		}
 	}
-}
 
-@include below(tablet) {
+	@include below(tablet) {
 
-	.depth-2 {
-		margin-left: -1em;
-		margin-right: -1em;
-		padding: 3em 1em;
-		z-index: 5;
-		position: relative;
-		overflow: visible;
-		margin-top: -3em !important;
+		.depth-2 {
+			margin-left: -1em;
+			margin-right: -1em;
+			padding: 1em;
+			z-index: 5;
+			position: relative;
+			overflow: visible;
 
-		background-color: rgba(0, 0, 0, 0.1);
+			background-color: rgba(0, 0, 0, 0.1);
 
-		.comment-body {
+			.comment-body[class][class] {
+				padding-top: 0;
+				padding-bottom: 0;
+				margin-bottom: 0;
+			}
+		}
+
+		.parent {
+			> .comment-body + .depth-2 {
+				padding-top: 3em;
+				margin-top: -4em !important;
+			}
+		}
+
+		.comment .comment-body {
 			padding: 1em;
 		}
-	}
 
-	.comment .comment-body {
-		padding: 1em;
-	}
+		.parent > .comment-body {
+			position: relative;
+			z-index: 10;
+			overflow: visible;
 
-	.parent > .comment-body {
-		position: relative;
-		z-index: 10;
-		overflow: visible;
+			background-color: var(--conversations-bg-color);
 
-		background-color: var(--conversations-bg-color);
+			border-radius: 0 0 24px 24px;
 
-		border-radius: 0 0 24px 24px;
-
-		padding: 1em;
+			padding: 1em;
+		}
 	}
 }
 
@@ -345,4 +404,83 @@
 .comment-footer {
 	grid-area: content;
 	grid-row: span 1;
+}
+
+.comment-author-info {
+	display: grid;
+	grid-template-areas:
+        "info button";
+}
+
+.comment-author,
+.comment-experience {
+	grid-area: info;
+	grid-row: span 1;
+}
+
+.comment-text > :not(:first-child) {
+	margin-top: 1em;
+}
+
+.comment-form-comment {
+	textarea {
+		transform: translateY(calc(-1px * var(--comments-label-height)));
+		transition: transform .25s ease;
+	}
+}
+
+.comment-label__container--first {
+	display: block;
+
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity .45s ease;
+}
+
+.comment-form-details {
+	transform: translateY(calc(-1px * var(--comments-label-height)));
+	transition: transform .25s ease;
+}
+
+.form--is-open {
+
+	.comment-label__container--first {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+	}
+
+	textarea {
+		transform: translateY(0);
+	}
+
+	.comment-form-details {
+		transform: translateY(0);
+	}
+}
+
+.comment-form[class] p:not(:last-child) {
+	margin-bottom: 1em;
+}
+
+@include below(tablet) {
+	.comment-form-details {
+		grid-column: span 2 !important;
+	}
+
+	.comment-form-comment,
+	.comment-form-details {
+		grid-row: span 1;
+	}
+
+	.form--is-open {
+		.comment-form-comment {
+			grid-column: span 2 !important;
+		}
+	}
+
+	.form-grid {
+		grid-row-gap: var(--comments-grid-gap);
+	}
 }

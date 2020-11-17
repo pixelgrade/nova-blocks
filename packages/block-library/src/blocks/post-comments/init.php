@@ -9,10 +9,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
-	function novablocks_render_post_comments_block($attributes, $content, $block) { ?>
+	function novablocks_render_post_comments_block($attributes, $content, $block) {
+		global $post;
+		?>
 		<div class="novablocks-conversations">
 			<div class="novablocks-conversations__container">
-				<div class="novablocks-conversations__title"><?php _e('Conversations', '__plugin_txtd') ?></div>
+				<div class="novablocks-conversations__title">
+					<?php _e('Conversations', '__plugin_txtd') ?>
+					<sup><?php echo get_comments_number(($post->ID)); ?></sup>
+				</div>
 				<?php return $content; ?>
 			</div>
 		</div>
