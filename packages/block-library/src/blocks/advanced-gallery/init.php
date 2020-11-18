@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle the Google Map block server logic.
+ * Handle the Advanced Gallery block server logic.
  */
 
 // If this file is called directly, abort.
