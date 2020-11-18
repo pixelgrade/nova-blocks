@@ -2,7 +2,7 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.4.2
+Tested up to: 5.5.3
 Requires PHP: 5.4.0
 Stable tag: 1.7.0
 License: GPL v2.0 (or later)
