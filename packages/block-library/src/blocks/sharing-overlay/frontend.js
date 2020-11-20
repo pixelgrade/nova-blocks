@@ -10,37 +10,33 @@ const $titleTemplate = $( '<h4 class="novablocks-sharing__group-title" />' );
 const $descriptionTemplate = $( '<div class="novablocks-sharing__group-description" />' );
 const $contentTemplate = $( '<div class="novablocks-sharing__group-content" />' );
 
-const createMarkupFromShariff = () => {
+const createMarkupFromShariff = ( data ) => {
 
 	const $dummy = $( '<div>' );
+	const { title, url } = data;
 
 	new Shariff( $dummy, {
 		orientation: 'vertical',
-		title: 'Titlu',
-		url: '#',
+		title: title,
+		url: url,
 		services: [ 'twitter', 'facebook', 'linkedin' ],
 		lang: 'en'
 	} );
 
-	const $wrapper = $dummy.children();
-	const $content = createPublicGroup( $wrapper );
-
-	$wrapper.remove();
-
-	return $content;
+	return createPublicGroup( $dummy );
 }
 
 const createPublicGroup = ( $sharing ) => {
 	const BTN_CLASS = 'shariff-button';
+	const $publicList = $sharing.find( 'ul' ).removeAttr( 'class' ).addClass( 'novablocks-sharing__list' );
 	const $buttons = $sharing.find( `.${ BTN_CLASS }` ).toArray();
-	const $publicList = $listTemplate.clone();
 
 	$buttons.reduce( ( accumulator, obj ) => {
 		const $button = $( obj );
 		const classes = $button.attr( 'class' ).split( /\s+/ );
 		const key = classes.find( classname => classname !== BTN_CLASS );
 		const $link = $button.find( 'a' ).addClass( 'novablocks-sharing__link' );
-		const $listItem = createListItem( $link );
+		const $listItem = $button.addClass( 'novablocks-sharing__list-item' );
 
 		$link.text( titleCase( key ) );
 		$listItem.appendTo( $publicList );
@@ -48,6 +44,8 @@ const createPublicGroup = ( $sharing ) => {
 		accumulator[ key ] = $link;
 		return accumulator;
 	}, {} );
+
+	console.log( $publicList );
 
 	return createGroup( 'public', 'Share publicly on social networks', '', $publicList );
 }
@@ -58,7 +56,7 @@ const createPrivateGroup = () => {
 		url: '#'
 	}, {
 		label: 'Email',
-		url: '#'
+		url: 'mailto:'
 	} ] );
 
 	return createGroup( 'private', 'Share privately with friends', '', $content );
@@ -67,10 +65,13 @@ const createPrivateGroup = () => {
 const createInPersonGroup = () => {
 	const $content = createContentFromLinks([ {
 		label: 'Print',
-		url: '#'
+		url: '#',
+		callback: () => {
+			window.print();
+		}
 	}, {
 		label: 'PDF',
-		url: '#'
+		url: '#',
 	} ] );
 
 	return createGroup( 'in-person', 'Or maybe you want in person?', '', $content );
@@ -79,8 +80,16 @@ const createInPersonGroup = () => {
 const createContentFromLinks = ( items ) => {
 	const $list = $listTemplate.clone();
 
-	items.forEach( ( { label, url } ) => {
+	items.forEach( ( { label, url, callback } ) => {
 		const $link = createLink( label, url );
+
+		if ( typeof callback === 'function' ) {
+			$link.on( 'click', function(e) {
+				e.stopPropagation();
+				e.preventDefault();
+				callback();
+			} );
+		}
 		createListItem( $link ).appendTo( $list );
 	} );
 
@@ -95,9 +104,9 @@ const createListItem = ( link ) => {
 	return $listItemTemplate.clone().append( link );
 }
 
-const createCopyLinkGroup = () => {
-	const title = 'Use a link for everything';
-	const description = 'Copy link and paste it anywhere you want it';
+const createCopyLinkGroup = ( ) => {
+	const groupTitle = 'Use a link for everything';
+	const groupDescription = 'Copy link and paste it anywhere you want it';
 
 	const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }"/>` );
 	const $button = $( '<button class="novablocks-sharing__copy-button">Copy link to clipboard</button>')
@@ -128,7 +137,7 @@ const createCopyLinkGroup = () => {
 		}
 	} );
 
-	return createGroup( 'copy-link', title, description, $content );
+	return createGroup( 'copy-link', groupTitle, groupDescription, $content );
 }
 
 const createGroup = ( id, title, description, content ) => {
@@ -148,14 +157,17 @@ const createGroup = ( id, title, description, content ) => {
 	const $container = $( '<div class="novablocks-sharing__container">');
 	const $content = $( '<div class="novablocks-sharing__content">');
 
+	const data = $overlay.data();
+	const { title, url } = data;
+
 	$content.appendTo( $container );
 	$container.appendTo( $wrap );
 	$wrap.appendTo( $overlay );
 
-	$content.append( createCopyLinkGroup() );
-	$content.append( createPrivateGroup() );
-	$content.append( createMarkupFromShariff() );
-	$content.append( createInPersonGroup() );
+	$content.append( createCopyLinkGroup( data ) );
+	$content.append( createPrivateGroup( data ) );
+	$content.append( createMarkupFromShariff( data ) );
+	$content.append( createInPersonGroup( data ) );
 
 	const $closeButton = $( '<div class="novablocks-sharing__close"></div>' );
 	const $title = $( '<h3 class="novablocks-sharing__title">Sharing Options</h3>' );

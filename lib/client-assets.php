@@ -138,7 +138,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 					$handle . '-style',
 					$package_dir_url . 'style.css',
 					$style_dependencies,
-					$version
+					$version,
+					'screen'
 				);
 			}
 
@@ -359,7 +360,8 @@ function novablocks_register_block_types() {
 				$handle,
 				$block_dir_url . $style,
 				$css_dependencies,
-				$version
+				$version,
+				'screen'
 			);
 
 			$args[ $key ] = $handle;

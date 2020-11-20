@@ -22,7 +22,7 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 			</div>
 		</div>
 
-		<div class="js-sharing novablocks-sharing"></div>
+		<div class="js-sharing novablocks-sharing" data-title="<?php the_title(); ?>" data-url="<?php the_permalink(); ?>"></div>
 
 		<?php return ob_get_clean();
 

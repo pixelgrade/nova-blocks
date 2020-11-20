@@ -172,8 +172,10 @@
 }
 
 .novablocks-sharing__list {
-	border-radius: 0.5em;
+	padding: 0;
 	overflow: hidden;
+	border-radius: 0.5em;
+	list-style: none;
 }
 
 .novablocks-sharing__list-item {
