@@ -94,12 +94,11 @@
 		color: var(--comment-author-color);
 	}
 
-	// We want them hidden
-	// until user will focus textarea.
 	.comment-form-details {
-		display: none;
-		opacity: 0;
-		transition: opacity .2s ease;
+
+		> * {
+			@include block-spacing;
+		}
 	}
 
 	.comment-posted-time,
@@ -117,11 +116,8 @@
 		margin-left: 1em;
 	}
 
-	.comment-content > *:not(:last-child) {
-		margin-bottom: 1em;
-	}
-
 	.comment-list {
+
 		.comment {
 
 			@include above(tablet) {
@@ -168,6 +164,9 @@
 		max-width: 100%;
 		width: var(--avatar-column-size);
 		border-radius: 50%;
+
+		//
+		grid-row: 1 / span 2;
 	}
 
 	.form-grid {
@@ -183,7 +182,7 @@
 		grid-column: 2 / 3;
 	}
 
-	.comment-grid .comment-content {
+	.comment-content {
 		display: grid;
 		grid-column-gap: var(--comments-grid-gap);
 		grid-template-columns: var(--avatar-column-size) 1fr;
@@ -191,17 +190,18 @@
 			"avatar info"
 			"content content";
 
+		> * {
+			@include block-spacing;
+			--novablocks-element-spacing-multiplier: 0.25;
+		}
+
 		@include above(tablet) {
 			grid-template-areas: "avatar content";
 		}
+	}
 
-		@include block-spacing;
-
-		.comment-form-details {
-			>  p:not(:last-child) {
-				margin-bottom: 1.5em;
-			}
-		}
+	.comment-author-info {
+		margin-top: 0;
 	}
 
 	.comment-header {
@@ -396,8 +396,7 @@
 
 .comment-author-info {
 	display: grid;
-	grid-template-areas:
-        "info button";
+	grid-template-areas: "info button";
 }
 
 .comment-author,
@@ -406,46 +405,8 @@
 	grid-row: span 1;
 }
 
-.comment-text > :not(:first-child) {
-	margin-top: 1em;
-}
-
-.comment-form-comment {
-	textarea {
-		transform: translateY(calc(-1px * var(--comments-label-height)));
-		transition: transform .25s ease;
-	}
-}
-
-.comment-label__container--first {
-	display: block;
-
-	opacity: 0;
-	visibility: hidden;
-	pointer-events: none;
-	transition: opacity .45s ease;
-}
-
-.comment-form-details {
-	transform: translateY(calc(-1px * var(--comments-label-height)));
-	transition: transform .25s ease;
-}
-
-.form--is-open {
-
-	.comment-label__container--first {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: auto;
-	}
-
-	textarea {
-		transform: translateY(0);
-	}
-
-	.comment-form-details {
-		transform: translateY(0);
-	}
+.comment-form-mask {
+	overflow: hidden;
 }
 
 .comment-form[class] p:not(:last-child) {

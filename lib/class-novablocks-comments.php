@@ -157,23 +157,31 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 */
 		public function novablocks_comment_form_args() {
 
-			$commenter     = wp_get_current_commenter();
-			$req      = get_option( 'require_name_email' );
-			$html_req = ( $req ? " required='required'" : '' );
-
+			$commenter    = wp_get_current_commenter();
+			$req          = get_option( 'require_name_email' );
+			$html_req     = ( $req ? " required='required'" : '' );
 			$current_user = wp_get_current_user();
 
 			return array(
 					'comment_field' => get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
 									   sprintf(
-											   '<span class="comment-label__container comment-label__container--first"><label for="comment">%s</label><span class="field-description">Let’s start a personal and a meaningful conversation. </span></span>',
+											   '<div class="comment-form-mask">' .
+											   '<div class="comment-label__container comment-label__container--first">' .
+											   '<label for="comment">%s</label>' .
+											   '<span class="field-description">Let’s start a personal and a meaningful conversation. </span>' .
+											   '</div>' .
+											   '</div>',
 											   __( 'What’s your comment or question?', 'storefront' )
-									   ) . sprintf(
+									   ) .
+									   sprintf(
 											   '<p class="comment-form-comment">%s</p>',
-											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="Share your knowledge or ask a question..."></textarea><div class="comment-form-details"><p class="comment-form-experience">' .
+											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="Share your knowledge or ask a question..."></textarea>' .
+											   '<div class="comment-form-mask">' .
+											   '<div class="comment-form-details"><p class="comment-form-experience">' .
 											   '<label for="experience">' . __( 'What is your expertise or qualification in this topic?' ) . '</label>' .
 											   '<span class="field-description">Example: Practical philosopher, therapist and writer.</span>' .
-											   '<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." /></p>'
+											   '<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." /></p>' .
+											   '</div>'
 									   ),
 				'fields' => array(
 					'author' => sprintf(

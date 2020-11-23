@@ -190,7 +190,8 @@ function novablocks_register_block_types() {
 	}
 
 	$velocity_dependent_scripts = array(
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/post-comments/frontend'
 	);
 
 	$slick_dependent_scripts = array(
