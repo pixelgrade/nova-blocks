@@ -30,7 +30,7 @@ $( function() {
 			const svgMaskPath = generatePath( blobMaskAtts );
 			const svgPath = generatePath( blobAtts );
 
-			const { blobsEnableMask } = attributes;
+			const { blobsEnableMask, blobsEnableDecoration } = attributes;
 
 			$media.wrap( '<div class="blob-mix">' );
 			$media.wrap( '<div class="novablocks-advanced-gallery__grid-item-mask blob-mix__media"> ');
@@ -45,7 +45,10 @@ $( function() {
 			path.setAttribute( 'd', svgPath );
 			$svg[0].appendChild( path );
 
-			$svg.insertBefore( $blobMixMedia );
+			if ( !! blobsEnableDecoration ) {
+				$svg.insertBefore( $blobMixMedia );
+			}
+
 			$blobMixMask.css( blobsEnableMask ? getBlobMaskStyles( svgMaskPath, getBlobViewBox( attributes ) ) : {} );
 
 			const blobMixStyles = getBlobStyles( attributes );

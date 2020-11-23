@@ -13,18 +13,21 @@
 	}
 }
 
-.novablocks-card__media {
+[data-type="novablocks/cards-collection"] {
 
-	&:hover {
-		cursor: pointer;
+	.novablocks-card__media {
 
-		.novablocks-card__media-edit {
-			opacity: 1;
-		}
+		&:hover {
+			cursor: pointer;
 
-		.novablocks-card__media-image,
-		.novablocks-card__media-placeholder {
-			opacity: 0.7;
+			.novablocks-card__media-edit {
+				opacity: 1;
+			}
+
+			.novablocks-card__media-image,
+			.novablocks-card__media-placeholder {
+				opacity: 0.7;
+			}
 		}
 	}
 }

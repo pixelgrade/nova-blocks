@@ -4,7 +4,7 @@
 	--novablocks-text-placeholder-shine-width: 5em;
 }
 
-.novablocks-text-placeholder__row {
+.novablocks-text-placeholder__row[class] {
 	--novablocks-text-placeholder-margin: calc((var(--novablocks-text-placeholder-line-height) - 1) * 0.5em);
 	position: relative;
 	height: 0.8em;

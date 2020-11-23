@@ -64,10 +64,7 @@ const MediaPreview = function( props ) {
 						<div className="novablocks-media__layout">
 							<div className="novablocks-media__content">
 								<div className="novablocks-media__inner-container novablocks-block__content">
-									<InnerBlocks
-										allowedBlocks={ settings.media.allowedBlocks }
-										template={ settings.media.template }
-									/>
+									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
 								</div>
 							</div>
 							<div className="novablocks-media__aside">

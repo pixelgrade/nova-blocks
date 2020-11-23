@@ -36,6 +36,10 @@
 	width: 100%;
 }
 
+.novablocks-card__media--placeholder {
+	background: var(--novablocks-current-light-secondary);
+}
+
 .novablocks-card--fixed-media-aspect-ratio {
 
 	.novablocks-card__media {

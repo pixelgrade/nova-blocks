@@ -4,13 +4,12 @@ import { Fragment } from '@wordpress/element';
 
 import InspectorControls from './inspector-controls';
 
-const enableBlobControls = [
-	'novablocks/media',
-	'novablocks/advanced-gallery',
-];
-
 const withBlobControls = createHigherOrderComponent(OriginalComponent => {
+
 	return ( props ) => {
+
+		let themeSupport = props?.settings?.theme_support?.blobs;
+		let enableBlobControls =  Array.isArray( themeSupport ) ? themeSupport : [];
 
 		if ( ! enableBlobControls.includes( props.name ) ) {
 			return <OriginalComponent { ...props } />
@@ -23,6 +22,5 @@ const withBlobControls = createHigherOrderComponent(OriginalComponent => {
 			</Fragment>
 		);
 	};
-
 });
 addFilter( 'editor.BlockEdit', 'novablocks/with-blob-controls', withBlobControls );

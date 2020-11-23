@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle the Slideshow block server logic.
+ * Handle the Navigation block server logic.
  */
 
 // If this file is called directly, abort.

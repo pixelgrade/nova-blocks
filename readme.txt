@@ -2,9 +2,9 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.4.2
+Tested up to: 5.5.3
 Requires PHP: 5.4.0
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,12 +94,18 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 1.7.1 =
+* Fix spacing inside block areas on pages that aren't built with the block editor
+
 = 1.7.0 =
-* Add color variations for the Media Card, Posts Collection and Cards Collection blocks
+* Add colour variations for the Media Card, Posts Collection and Cards Collection blocks
+* Add "Reading time" option to article meta source for the Posts Collection block
 * Improve frontend performance by better handling scripts and styles loading
 * Improve user experience by making the active controls tab persistent when navigating between blocks
 * Improve the experience of editing galleries in the Media Card Constellation and Gallery of the Stars blocks
 * Improve the organization of controls for various blocks
+* Improve display of Media Card blocks that have no inner blocks
+* Fix display of the Cards Collection block
 
 = 1.6.2 =
 * Add card placeholders when loading posts for the Posts Collection block in the editor

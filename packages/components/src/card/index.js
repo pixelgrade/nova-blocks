@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import * as icons from '@novablocks/icons';
 import { RawHTML } from '@wordpress/element';
 import { TextPlaceholder } from '../index';
 
@@ -33,9 +34,9 @@ const Card = ( props ) => {
 		<div className={ className }>
 			<div className="novablocks-card__layout">
 				{
-					( showMedia || placeholder ) && props.media &&
+					( showMedia || placeholder ) &&
 					<div className="novablocks-card__layout-media novablocks-grid__item-media">
-						<CardMedia>{ props.media }</CardMedia>
+						<CardMedia { ...props }>{ props.media }</CardMedia>
 					</div>
 				}
 				{
@@ -152,12 +153,29 @@ const CardFooter = ( props ) => {
 	);
 };
 
-const CardMedia = ( { children } ) => {
+const CardMedia = ( { children, placeholder } ) => {
+
+	const mediaClasses = classnames(
+		'novablocks-card__media',
+		{
+			'novablocks-card__media--placeholder': !! placeholder
+		}
+	);
+
+	let content = children;
+
+	if ( ! children && ! placeholder ) {
+		content = (
+			<div className={ 'novablocks-card__media-placeholder' }>
+				{ icons.placeholder }
+			</div>
+		);
+	}
 
 	return (
 		<div className="novablocks-card__media-wrap">
-			<div className="novablocks-card__media">
-				{ children }
+			<div className={ mediaClasses }>
+				{ content }
 			</div>
 		</div>
 	)
