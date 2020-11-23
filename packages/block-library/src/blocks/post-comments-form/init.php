@@ -17,16 +17,14 @@ if ( ! function_exists( 'novablocks_render_post_comments_form_block' ) ) {
 
 		if ( ! isset( $block->context['postId'] ) ) {
 			return '';
-		} ?>
+		}
 
-<?php
-
-		$args =  NovaBlocks_Comments::novablocks_comment_form_args();
+		$args = NovaBlocks_Comments::novablocks_comment_form_args();
 
 		ob_start();
-		comment_form( $args, $block->context['postId'] );
-		$form               = ob_get_clean();
 
-		return sprintf( '<div>%1$s</div>', $form );
+		comment_form( $args, $block->context['postId'] );
+
+		return ob_get_clean();
 	}
 }

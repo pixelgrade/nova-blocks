@@ -177,10 +177,13 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 											   '<p class="comment-form-comment">%s</p>',
 											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="Share your knowledge or ask a question..."></textarea>' .
 											   '<div class="comment-form-mask">' .
-											   '<div class="comment-form-details"><p class="comment-form-experience">' .
+											   '<div class="comment-form-details">' .
+											   '<p class="comment-form-experience">' .
 											   '<label for="experience">' . __( 'What is your expertise or qualification in this topic?' ) . '</label>' .
 											   '<span class="field-description">Example: Practical philosopher, therapist and writer.</span>' .
-											   '<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." /></p>' .
+											   '<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." />' .
+											   '</p>' .
+											   '</div>' .
 											   '</div>'
 									   ),
 				'fields' => array(
