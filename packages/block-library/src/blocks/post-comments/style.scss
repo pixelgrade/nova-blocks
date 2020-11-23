@@ -187,12 +187,15 @@
 		display: grid;
 		grid-column-gap: var(--comments-grid-gap);
 		grid-template-columns: var(--avatar-column-size) 1fr;
-		grid-template-areas: "avatar info"
-													"content content";
+		grid-template-areas:
+			"avatar info"
+			"content content";
 
 		@include above(tablet) {
 			grid-template-areas: "avatar content";
 		}
+
+		@include block-spacing;
 
 		.comment-form-details {
 			>  p:not(:last-child) {
