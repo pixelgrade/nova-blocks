@@ -46,6 +46,22 @@
 		}
 	}
 
+	.comment-fields-wrapper,
+	.comment-fields-wrapper > * {
+		@include block-spacing;
+
+		--novablocks-element-spacing-multiplier: 0.5;
+	}
+
+	.comment-fields-wrapper > .field-description {
+		--novablocks-element-spacing-multiplier: 0; // ??? possible
+	}
+
+	.comment-fields-wrapper > .field-description + *,
+	.comment-fields-wrapper > label + :not(.field-description) {
+		--novablocks-element-spacing-multiplier: 0.25;
+	}
+
 	.comment-text {
 		--font-size: 18;
 
@@ -57,13 +73,6 @@
 	.comment-author {
 		font-weight: bold;
 		color: var(--comment-author-color);
-	}
-
-	.comment-form-details {
-
-		> * {
-			@include block-spacing;
-		}
 	}
 
 	.comment-posted-time,
@@ -361,10 +370,6 @@
 .comment-experience {
 	grid-area: info;
 	grid-row: span 1;
-}
-
-.comment-form-mask {
-	overflow: hidden;
 }
 
 @include below(tablet) {

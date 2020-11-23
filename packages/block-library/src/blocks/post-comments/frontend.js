@@ -1,7 +1,7 @@
 import { above } from "@novablocks/utils";
 
 const FORM_SELECTOR = '.comment-form';
-const MASK_SELECTOR = '.comment-form-mask';
+const MASK_SELECTOR = '.comment-fields-mask';
 const COMMENT_TEXTAREA_SELECTOR = '.comment-form-comment textarea';
 
 const TRANSITION_DURATION = 1000;
@@ -44,11 +44,9 @@ const TRANSITION_EASING = "easeOutCirc";
 			$others = $comment.nextAll(),
 			$commentLabel = $comment.find( 'label' ),
 			$commentDescription = $comment.find( '.field-description' ),
-			$commentMask = $( '<div class="comment-form-mask">' );
+			$commentMask = $( '<div class="comment-fields-wrapper comment-fields-mask">' );
 
-		$comment.wrap( '<div class="comment-fields-wrapper">' );
-		$others.wrapAll( '<div class="comment-fields-wrapper">' );
-		$others.wrapAll( '<div class="comment-form-mask">' );
+		$others.wrapAll( '<div class="comment-fields-wrapper comment-fields-mask">' );
 
 		$commentLabel.appendTo( $commentMask );
 		$commentDescription.appendTo( $commentMask );
@@ -64,7 +62,10 @@ const TRANSITION_EASING = "easeOutCirc";
 			const height = $mask.outerHeight();
 
 			$mask.data( 'height', height );
-			$mask.css( 'height', 0 );
+			$mask.css( {
+				height: 0,
+				overflow: 'hidden'
+			} );
 		} );
 
 	}
@@ -73,7 +74,10 @@ const TRANSITION_EASING = "easeOutCirc";
 		const $masks = $form.find( MASK_SELECTOR );
 
 		$masks.each( function( i, obj ) {
-			$( obj ).css( 'height', '' );
+			$( obj ).css( {
+				height: '',
+				overflow: ''
+			} );
 		} );
 
 	}

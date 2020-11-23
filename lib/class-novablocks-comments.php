@@ -165,7 +165,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			return array(
 					'comment_field' => get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
 									   sprintf(
-											   '<p class="comment-form-comment">' .
+											   '<p class="comment-form-comment comment-fields-wrapper">' .
 											   '<label for="comment">%s</label>' .
 											   '<span class="field-description">%s</span>' .
 											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
@@ -175,7 +175,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 											   __( 'Share your knowledge or ask a question...', '__plugin_txtd' )
 									   ) .
 									   sprintf(
-											   '<p class="comment-form-experience">' .
+											   '<p class="comment-form-experience comment-fields-wrapper">' .
 											   '<label for="experience">%s</label>' .
 											   '<span class="field-description">%s</span>' .
 											   '<input id="experience" name="experience" type="text" size="30" tabindex="5" placeholder="%s" />' .
@@ -186,7 +186,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 									   ),
 				'fields' => array(
 					'author' => sprintf(
-						'<p class="comment-form-author">%s %s</p>',
+						'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
 						sprintf(
 							'<label for="author">%s%s</label>',
 							__( 'What is your name?' ),
@@ -199,7 +199,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 						)
 					),
 					'email' => sprintf(
-						'<p class="comment-form-email">%s %s</p>',
+						'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
 						sprintf(
 							'<label for="email">%s%s</label><span class="field-description">Your email address will not be published.</span>',
 							__( 'What is your email address?' ),
