@@ -3,7 +3,6 @@
 	--comments-grid-gap: 10px;
 	--component-accent-color: var(--novablocks-color-1);
 	--novablocks-conversations-width: 48em;
-	--novablocks-conversations-sides: 1em;
 	--field-description-color: #67616B;
 	--conversations-bg-color: #E4E3E4;
 	--comment-author-color: var(--novablocks-color-1);
@@ -25,37 +24,13 @@
 }
 
 .novablocks-conversations {
-
 	overflow: hidden;
-
-	&__container {
-		padding: 2em var(--novablocks-conversations-sides) 0;
-
-		@include above(tablet) {
-			padding: 4em var(--novablocks-conversations-sides);
-		}
-	}
-
-	&__form-columns {
-		display: grid;
-		grid-column-gap: var(--comments-grid-gap);
-		grid-template-columns: var(--avatar-column-size) 1fr;
-	}
 
 	.comment-form {
 		position: relative;
 
-		&.form--is-open {
-
-			.comment-form-details {
-				opacity: 1;
-			}
-		}
-
-		&[class][class] {
-			label {
-				margin-bottom: 0;
-			}
+		p:empty {
+			display: none;
 		}
 
 		label {
@@ -68,16 +43,6 @@
 
 			font-size: var(--field-description-font-size);
 			color: var(--field-description-color);
-
-			margin-bottom: .5em
-		}
-	}
-
-	.comment-list {
-
-		@include below(tablet) {
-			margin-left: calc( -1 * var(--novablocks-conversations-sides) );
-			margin-right: calc( -1 * var(--novablocks-conversations-sides) );
 		}
 	}
 
@@ -143,8 +108,6 @@
 		}
 
 		.comment-respond {
-			padding-left: var(--novablocks-conversations-sides);
-			padding-right: var(--novablocks-conversations-sides);
 			margin-bottom: var(--comments-vertical-spacing);
 
 			@include above(tablet) {
@@ -249,11 +212,6 @@
 	}
 
 	.comment--is-highlighted {
-
-		@include below(tablet) {
-			margin-left: calc(-1 * var(--novablocks-conversations-sides));
-			margin-right: calc(-1 * var(--novablocks-conversations-sides));
-		}
 
 		> .comment-body {
 			padding: 0;
@@ -409,11 +367,8 @@
 	overflow: hidden;
 }
 
-.comment-form[class] p:not(:last-child) {
-	margin-bottom: 1em;
-}
-
 @include below(tablet) {
+
 	.comment-form-details {
 		grid-column: span 2 !important;
 	}
@@ -421,12 +376,6 @@
 	.comment-form-comment,
 	.comment-form-details {
 		grid-row: span 1;
-	}
-
-	.form--is-open {
-		.comment-form-comment {
-			grid-column: span 2 !important;
-		}
 	}
 
 	.form-grid {

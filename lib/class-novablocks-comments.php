@@ -165,26 +165,24 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			return array(
 					'comment_field' => get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
 									   sprintf(
-											   '<div class="comment-form-mask">' .
-											   '<div class="comment-label__container comment-label__container--first">' .
+											   '<p class="comment-form-comment">' .
 											   '<label for="comment">%s</label>' .
-											   '<span class="field-description">Let’s start a personal and a meaningful conversation. </span>' .
-											   '</div>' .
-											   '</div>',
-											   __( 'What’s your comment or question?', 'storefront' )
+											   '<span class="field-description">%s</span>' .
+											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
+											   '</p>',
+											   __( 'What’s your comment or question?', '__plugin_txtd' ),
+											   __( 'Let’s start a personal and a meaningful conversation.', '__plugin_txtd' ),
+											   __( 'Share your knowledge or ask a question...', '__plugin_txtd' )
 									   ) .
 									   sprintf(
-											   '<p class="comment-form-comment">%s</p>',
-											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="Share your knowledge or ask a question..."></textarea>' .
-											   '<div class="comment-form-mask">' .
-											   '<div class="comment-form-details">' .
 											   '<p class="comment-form-experience">' .
-											   '<label for="experience">' . __( 'What is your expertise or qualification in this topic?' ) . '</label>' .
-											   '<span class="field-description">Example: Practical philosopher, therapist and writer.</span>' .
-											   '<input id="experience" name="experience" type="text" size="30"  tabindex="5" placeholder="Your relevant experience or expertise..." />' .
-											   '</p>' .
-											   '</div>' .
-											   '</div>'
+											   '<label for="experience">%s</label>' .
+											   '<span class="field-description">%s</span>' .
+											   '<input id="experience" name="experience" type="text" size="30" tabindex="5" placeholder="%s" />' .
+											   '</p>',
+											   __( 'What is your expertise or qualification in this topic?', '__plugin_txtd' ),
+											   __( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+											   __( 'Your relevant experience or expertise...', '__plugin_txtd' )
 									   ),
 				'fields' => array(
 					'author' => sprintf(

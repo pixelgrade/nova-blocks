@@ -1,63 +1,101 @@
 import { above } from "@novablocks/utils";
 
+const FORM_SELECTOR = '.comment-form';
+const MASK_SELECTOR = '.comment-form-mask';
+const COMMENT_TEXTAREA_SELECTOR = '.comment-form-comment textarea';
+
 const TRANSITION_DURATION = 1000;
 const TRANSITION_EASING = "easeOutCirc";
 
 (function( $, window, undefined ) {
 
-	let $pxgConversationForm = $( '.comment-form' ),
-		$pxgConversationFormTextarea = $pxgConversationForm.find( 'textarea' ),
-		$commentsLabel = $( '.comment-label__container' ),
-		$masks = $( '.comment-form-mask' ),
-		commentLabelHeight;
+	$( FORM_SELECTOR ).each( function( i, element ) {
+		const $form = $( element );
 
-	onResize();
+		handleMarkup( $form );
+		bindEvents( $form );
+		onResize( $form );
+	} );
 
-	function onResize() {
-		getCommentsLabelHeight();
-		updatePlaceholder();
-		updateMasksHeights( $masks );
+	function bindEvents( $form ) {
+		$( window ).on( 'resize', function() {
+			onResize( $form );
+		} );
+
+		$form.find( COMMENT_TEXTAREA_SELECTOR ).one( 'focusin', onFocus );
 	}
 
-	function updateMasksHeights( elements ) {
 
-		$( elements ).each( function( i, obj ) {
+	function onResize( $form ) {
+		updatePlaceholder( $form );
+		updateMasksHeights( $form );
+	}
+
+	function updatePlaceholder( $form ) {
+		const $textarea = $form.find( COMMENT_TEXTAREA_SELECTOR );
+		const desktopPlaceholder = 'Join the conversation, share your knowledge or ask a question...';
+		const placeholder = above( 'lap' ) ? desktopPlaceholder : '';
+
+		$textarea.attr( "placeholder", placeholder );
+	}
+
+	function handleMarkup( $form ) {
+		let $comment = $form.find( '.comment-form-comment' ),
+			$others = $comment.nextAll(),
+			$commentLabel = $comment.find( 'label' ),
+			$commentDescription = $comment.find( '.field-description' ),
+			$commentMask = $( '<div class="comment-form-mask">' );
+
+		$comment.wrap( '<div class="comment-fields-wrapper">' );
+		$others.wrapAll( '<div class="comment-fields-wrapper">' );
+		$others.wrapAll( '<div class="comment-form-mask">' );
+
+		$commentLabel.appendTo( $commentMask );
+		$commentDescription.appendTo( $commentMask );
+
+		$commentMask.prependTo( $comment );
+	}
+
+	function updateMasksHeights( $form ) {
+		const $masks = $form.find( MASK_SELECTOR );
+
+		$masks.each( function( i, obj ) {
 			const $mask = $( obj );
 			const height = $mask.outerHeight();
 
 			$mask.data( 'height', height );
 			$mask.css( 'height', 0 );
 		} );
+
 	}
 
-	function resetMasksHeights( elements ) {
+	function resetMasksHeights( $form ) {
+		const $masks = $form.find( MASK_SELECTOR );
 
-		$( elements ).each( function( i, obj ) {
+		$masks.each( function( i, obj ) {
 			$( obj ).css( 'height', '' );
 		} );
+
 	}
 
-	function updatePlaceholder() {
-		const desktopPlaceholder = 'Join the conversation, share your knowledge or ask a question...';
-		const placeholder = above( 'lap' ) ? desktopPlaceholder : '';
+	function onFocus( e ) {
+		const $textarea = $( this );
+		const $form = $textarea.closest( FORM_SELECTOR );
+		const $masks = $form.find( MASK_SELECTOR );
 
-		$pxgConversationFormTextarea.attr( "placeholder", placeholder );
-	}
-
-	$pxgConversationFormTextarea.one( 'focusin', function() {
-		let textareaHeight = $pxgConversationFormTextarea.outerHeight();
-		let targetHeight = 200;
+		const textareaHeight = $textarea.outerHeight();
+		const targetHeight = 200;
 
 		$masks.velocity( {
 			tween: [1, 0]
 		}, {
 			duration: TRANSITION_DURATION,
 			easing: TRANSITION_EASING,
-			begin: function( elements ) {
-				resetMasksHeights( elements );
-				updateMasksHeights( elements );
+			begin: function() {
+				resetMasksHeights( $form );
+				updateMasksHeights( $form );
 
-				$pxgConversationFormTextarea.css( 'transition', 'none' );
+				$textarea.css( 'transition', 'none' );
 			},
 			progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
 
@@ -68,19 +106,14 @@ const TRANSITION_EASING = "easeOutCirc";
 				} );
 
 				const newHeight = textareaHeight + ( targetHeight - textareaHeight ) * tweenValue;
-				$pxgConversationFormTextarea.css( 'height', newHeight );
+				$textarea.css( 'height', newHeight );
 			},
-			complete: function( elements ) {
-				resetMasksHeights( elements );
+			complete: function() {
+				resetMasksHeights( $form );
 
-				$pxgConversationFormTextarea.css( 'transition', '' );
+				$textarea.css( 'transition', '' );
 			}
 		} )
-
-	} );
-
-	function getCommentsLabelHeight() {
-		commentLabelHeight = $commentsLabel.outerHeight();
 	}
 
 } )( jQuery, window );
