@@ -162,7 +162,10 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			$html_req     = ( $req ? " required='required'" : '' );
 			$current_user = wp_get_current_user();
 
-			$comment_field = get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
+			$avatar_size = 100;
+			$avatar = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', array( 'class' => 'avatar', ) );
+
+			$comment_field = '<div class="comment-avatar">' . $avatar . '</div>' .
 							 sprintf(
 									 '<p class="comment-form-comment">' .
 									 '<label for="comment">%s</label>' .

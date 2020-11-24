@@ -76,11 +76,6 @@ const TRANSITION_EASING = "easeOutCirc";
 
 	function resetMasksHeights( $form ) {
 		const $masks = $form.find( MASK_SELECTOR );
-		const { animated } = $form.data();
-
-		if ( !! animated ) {
-			return;
-		}
 
 		$masks.each( function( i, obj ) {
 			$( obj ).css( {
@@ -88,7 +83,6 @@ const TRANSITION_EASING = "easeOutCirc";
 				overflow: ''
 			} );
 		} );
-
 	}
 
 	function onFocus( e ) {
