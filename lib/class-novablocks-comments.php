@@ -162,68 +162,74 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			$html_req     = ( $req ? " required='required'" : '' );
 			$current_user = wp_get_current_user();
 
-			return array(
-					'comment_field' => get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
-									   sprintf(
-											   '<p class="comment-form-comment comment-fields-wrapper">' .
-											   '<label for="comment">%s</label>' .
-											   '<span class="field-description">%s</span>' .
-											   '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
-											   '</p>',
-											   __( 'What’s your comment or question?', '__plugin_txtd' ),
-											   __( 'Let’s start a personal and a meaningful conversation.', '__plugin_txtd' ),
-											   __( 'Share your knowledge or ask a question...', '__plugin_txtd' )
-									   ) .
-									   sprintf(
-											   '<p class="comment-form-experience comment-fields-wrapper">' .
-											   '<label for="experience">%s</label>' .
-											   '<span class="field-description">%s</span>' .
-											   '<input id="experience" name="experience" type="text" size="30" tabindex="5" placeholder="%s" />' .
-											   '</p>',
-											   __( 'What is your expertise or qualification in this topic?', '__plugin_txtd' ),
-											   __( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
-											   __( 'Your relevant experience or expertise...', '__plugin_txtd' )
-									   ),
-				'fields' => array(
-					'author' => sprintf(
-						'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
-						sprintf(
-							'<label for="author">%s%s</label>',
-							__( 'What is your name?' ),
-							( $req ? ' <span class="required">*</span>' : '' )
-						),
-						sprintf(
-							'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245"%s placeholder="eg. John Doe" />',
-							esc_attr( $commenter['comment_author'] ),
-							$html_req
-						)
+			$comment_field = get_avatar( $current_user->ID, 100, '', '', array( 'class' => 'avatar', ) ) .
+							 sprintf(
+									 '<p class="comment-form-comment">' .
+									 '<label for="comment">%s</label>' .
+									 '<span class="field-description">%s</span>' .
+									 '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
+									 '</p>',
+									 __( 'What’s your comment or question?', '__plugin_txtd' ),
+									 __( 'Let’s start a personal and a meaningful conversation.', '__plugin_txtd' ),
+									 __( 'Share your knowledge or ask a question...', '__plugin_txtd' )
+							 ) .
+							 sprintf(
+									 '<p class="comment-form-experience comment-fields-wrapper">' .
+									 '<label for="experience">%s</label>' .
+									 '<span class="field-description">%s</span>' .
+									 '<input id="experience" name="experience" type="text" size="30" tabindex="5" placeholder="%s" />' .
+									 '</p>',
+									 __( 'What is your expertise or qualification in this topic?', '__plugin_txtd' ),
+									 __( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+									 __( 'Your relevant experience or expertise...', '__plugin_txtd' )
+							 );
+
+			$fields = array(
+					'author'  => sprintf(
+							'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
+							sprintf(
+									'<label for="author">%s%s</label>',
+									__( 'What is your name?' ),
+									( $req ? ' <span class="required">*</span>' : '' )
+							),
+							sprintf(
+									'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245"%s placeholder="eg. John Doe" />',
+									esc_attr( $commenter['comment_author'] ),
+									$html_req
+							)
 					),
-					'email' => sprintf(
-						'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
-						sprintf(
-							'<label for="email">%s%s</label><span class="field-description">Your email address will not be published.</span>',
-							__( 'What is your email address?' ),
-							( $req ? ' <span class="required">*</span>' : '' )
-						),
-						sprintf(
-							'<input id="email" name="email" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes"%s placeholder="your@email.com" />',
-							'type="email"',
-							esc_attr( $commenter['comment_author_email'] ),
-							$html_req
-						)
+					'email'   => sprintf(
+							'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
+							sprintf(
+									'<label for="email">%s%s</label><span class="field-description">Your email address will not be published.</span>',
+									__( 'What is your email address?' ),
+									( $req ? ' <span class="required">*</span>' : '' )
+							),
+							sprintf(
+									'<input id="email" name="email" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes"%s placeholder="your@email.com" />',
+									'type="email"',
+									esc_attr( $commenter['comment_author_email'] ),
+									$html_req
+							)
 					),
-					'url' => '',
+					'url'     => '',
 					'cookies' => '',
-				),
-				'class_container'	=> 'novablocks-conversations__form comment-respond',
-				'comment_notes_before' => '',
-				'class_form'           => 'comment-form form-grid',
-				'logged_in_as'=> '',
-				'title_reply' => '',
-				'title_reply_before' => '',
-				'title_reply_after' => '',
-				'label_submit' => 'Add this comment',
-				'submit_button' => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
+			);
+
+			return array(
+					'comment_field'        => $comment_field,
+					'fields'               => $fields,
+					'cancel_reply_before'  => '',
+					'cancel_reply_after'   => '',
+					'class_container'      => 'novablocks-conversations__form comment-respond',
+					'comment_notes_before' => '',
+					'class_form'           => 'comment-form form-grid',
+					'logged_in_as'         => '',
+					'title_reply'          => '',
+					'title_reply_before'   => '',
+					'title_reply_after'    => '',
+					'label_submit'         => 'Add this comment',
+					'submit_button'        => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
 			);
 		}
 	}

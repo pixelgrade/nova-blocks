@@ -8,7 +8,6 @@
 	--comment-author-color: var(--novablocks-color-1);
 	--comment-links-color: var(--novablocks-color-1);
 	--comment-highlighted-color: #FFF2CE;
-	--comments-vertical-spacing: 45px;
 	--label-font-size: 15px;
 	--label-bg-color: #9195AB;
 	--label-highlighted-bg-color: #1479D2;
@@ -24,7 +23,6 @@
 }
 
 .novablocks-conversations {
-	overflow: hidden;
 
 	.comment-form {
 		position: relative;
@@ -46,10 +44,29 @@
 		}
 	}
 
+	.comment-form-comment {
+		margin-bottom: 0;
+
+		.comment-fields-wrapper {
+			padding-bottom: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+		}
+	}
+
+	.comment-fields-wrapper--others {
+		padding-top: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+	}
+
+	.novablocks-conversations__container > *,
+	.parent > *,
+	.comment-list > *,
 	.comment-fields-wrapper,
 	.comment-fields-wrapper > * {
 		@include block-spacing;
+	}
 
+	.parent > *,
+	.comment-fields-wrapper,
+	.comment-fields-wrapper > * {
 		--novablocks-element-spacing-multiplier: 0.5;
 	}
 
@@ -94,21 +111,6 @@
 
 		.comment {
 
-			@include above(tablet) {
-				> .comment-body {
-					margin-bottom: var(--comments-vertical-spacing);
-				}
-			}
-
-			@include below(tablet) {
-				&:not(.depth-1),
-				&.depth-1.parent {
-					> .comment-body {
-							margin-bottom: var(--comments-vertical-spacing);
-					}
-				}
-			}
-
 			&[class*="depth-2"] {
 				@include above(tablet) {
 					margin-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
@@ -117,7 +119,6 @@
 		}
 
 		.comment-respond {
-			margin-bottom: var(--comments-vertical-spacing);
 
 			@include above(tablet) {
 				padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
@@ -252,24 +253,20 @@
 	.comment-respond {
 		display: flex;
 		flex-direction: column;
-
-		small {
-			order: 2;
-			text-align: center;
-			margin-top: 1em;
-			padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
-		}
 	}
 
-	[id='cancel-comment-reply-link'] {
-		opacity: .5;
+	[id="cancel-comment-reply-link"] {
+		padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
+
 		text-align: center;
+
+		order: 2;
+		opacity: .5;
 	}
 
 	.novablocks-conversations__title {
 		border-bottom: 4px solid;
 		padding-bottom: .5em;
-		margin-bottom: .5em;
 		font-weight: bold;
 
 		sup {
@@ -296,46 +293,17 @@
 		}
 	}
 
-	@include below(tablet) {
+	.parent {
 
-		.depth-2 {
-			margin-left: -1em;
-			margin-right: -1em;
-			padding: 1em;
-			z-index: 5;
-			position: relative;
-			overflow: visible;
+		@include below(tablet) {
+			background-color: var(--novablocks-current-light-secondary);
+			padding-bottom: calc( var(--novablocks-spacing) * 0.5 );
 
-			background-color: rgba(0, 0, 0, 0.1);
-
-			.comment-body[class][class] {
-				padding-top: 0;
-				padding-bottom: 0;
-				margin-bottom: 0;
+			> .comment-body {
+				padding-bottom: calc( var(--novablocks-spacing) * 0.5 );
+				background-color: var(--novablocks-current-light-primary);
+				border-radius: 0 0 var(--novablocks-spacing) var(--novablocks-spacing);
 			}
-		}
-
-		.parent {
-			> .comment-body + .depth-2 {
-				padding-top: 3em;
-				margin-top: -4em !important;
-			}
-		}
-
-		.comment .comment-body {
-			padding: 1em;
-		}
-
-		.parent > .comment-body {
-			position: relative;
-			z-index: 10;
-			overflow: visible;
-
-			background-color: var(--conversations-bg-color);
-
-			border-radius: 0 0 24px 24px;
-
-			padding: 1em;
 		}
 	}
 }

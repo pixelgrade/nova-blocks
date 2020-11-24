@@ -43,19 +43,23 @@ const TRANSITION_EASING = "easeOutCirc";
 		let $comment = $form.find( '.comment-form-comment' ),
 			$others = $comment.nextAll(),
 			$commentLabel = $comment.find( 'label' ),
-			$commentDescription = $comment.find( '.field-description' ),
-			$commentMask = $( '<div class="comment-fields-wrapper comment-fields-mask">' );
+			$commentDescription = $comment.find( '.field-description' );
 
-		$others.wrapAll( '<div class="comment-fields-wrapper comment-fields-mask">' );
+		$commentLabel.add( $commentDescription )
+		             .wrapAll( '<div class="comment-fields-mask">' )
+		             .wrapAll( '<div class="comment-fields-wrapper  comment-fields-wrapper--comment">' );
 
-		$commentLabel.appendTo( $commentMask );
-		$commentDescription.appendTo( $commentMask );
-
-		$commentMask.prependTo( $comment );
+		$others.wrapAll( '<div class="comment-fields-mask">' )
+		       .wrapAll( '<div class="comment-fields-wrapper  comment-fields-wrapper--others">' );
 	}
 
 	function updateMasksHeights( $form ) {
 		const $masks = $form.find( MASK_SELECTOR );
+		const { animated } = $form.data();
+
+		if ( !! animated ) {
+			return;
+		}
 
 		$masks.each( function( i, obj ) {
 			const $mask = $( obj );
@@ -72,6 +76,11 @@ const TRANSITION_EASING = "easeOutCirc";
 
 	function resetMasksHeights( $form ) {
 		const $masks = $form.find( MASK_SELECTOR );
+		const { animated } = $form.data();
+
+		if ( !! animated ) {
+			return;
+		}
 
 		$masks.each( function( i, obj ) {
 			$( obj ).css( {
@@ -99,6 +108,7 @@ const TRANSITION_EASING = "easeOutCirc";
 				resetMasksHeights( $form );
 				updateMasksHeights( $form );
 
+				$form.data( 'animated', true );
 				$textarea.css( 'transition', 'none' );
 			},
 			progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
