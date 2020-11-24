@@ -158,7 +158,6 @@ const createGroup = ( id, title, description, content ) => {
 	const $content = $( '<div class="novablocks-sharing__content">');
 
 	const data = $overlay.data();
-	const { title, url } = data;
 
 	$content.appendTo( $container );
 	$container.appendTo( $wrap );
@@ -177,6 +176,9 @@ const createGroup = ( id, title, description, content ) => {
 	$closeButton.appendTo( $wrap );
 
 	$openButton.on( 'click', function() {
+		const buttonTop = $openButton.offset().top;
+		$overlay.css( 'top', buttonTop );
+
 		$overlay.show();
 	} );
 
