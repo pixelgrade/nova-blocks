@@ -115,8 +115,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * @since 1.7.0
 		 */
 		public function novablocks_comments_list( $comment, $args, $depth ) { ?>
-			<div <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?>
-				id="comment-<?php comment_ID() ?>">
+			<div <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?> id="comment-<?php comment_ID() ?>">
 				<div class="comment-body comment-grid">
 					<div id="div-comment-<?php comment_ID() ?>" class="comment-content">
 						<div class="comment-author-avatar vcard">
@@ -126,12 +125,11 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 						<div class="comment-author-info">
 							<span class="comment-author"> <?php comment_author( $comment ) ?></span>
 							<?php
-
 							$user_experience = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
-
 							if ( ! empty( $user_experience ) ) { ?>
-								<div class="comment-experience"><span
-											class="experience-label"><?php echo $user_experience ?></span></div>
+								<div class="comment-experience">
+									<span class="experience-label"><?php echo $user_experience ?></span>
+								</div>
 							<?php } ?>
 						</div>
 
