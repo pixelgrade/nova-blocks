@@ -184,14 +184,25 @@
 }
 
 .novablocks-sharing__link {
-	display: block;
+	display: flex;
 	padding: calc( var(--novablocks-spacing) * 0.125 ) calc( var(--novablocks-spacing) * 0.25 );
 	background: rgba(255,255,255,0.1);
 	transition: var(--novablocks-transition);
 	transition-property: background-color;
 	transition-duration: .15s;
+
+	margin-left: calc( var(--novablocks-spacing) * -0.25 );
+
+	> * {
+		margin-left: calc( var(--novablocks-spacing) * 0.25 );
+	}
+
+	&:hover {
+		background: rgba(0,0,0,0.1);
+	}
 }
 
-.novablocks-sharing__link:hover {
-	background: rgba(0,0,0,0.1);
+.novablocks-sharing__link-icon {
+	display: block;
+	flex-basis: 1em;
 }
