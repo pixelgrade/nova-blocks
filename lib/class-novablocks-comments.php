@@ -33,17 +33,17 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 */
 		public function save_comment_meta_data( $comment_id ) {
 
-			if ( ( isset( $_POST['experience'] ) ) && ( $_POST['experience'] != '' ) ) {
-				$experience = wp_filter_nohtml_kses( $_POST['experience'] );
+			if ( ( isset( $_POST['nb_commenter_background'] ) ) && ( $_POST['nb_commenter_background'] != '' ) ) {
+				$experience = wp_filter_nohtml_kses( $_POST['nb_commenter_background'] );
 			}
-			add_comment_meta( $comment_id, 'experience', $experience );
+			add_comment_meta( $comment_id, 'nb_commenter_background', $experience );
 		}
 
 		/**
 		 * Add the filter to check if the comment meta data has been filled or not.
 		 */
 		public function verify_comment_meta_data( $commentdata ) {
-			if ( ! isset( $_POST['experience'] ) ) {
+			if ( ! isset( $_POST['nb_commenter_background'] ) ) {
 				wp_die( __( 'Error: You did not add your experience.' ) );
 			}
 
@@ -54,16 +54,16 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * Add an edit option in comment edit screen.
 		 */
 		public function extend_comment_add_meta_box() {
-			add_meta_box( 'experience', __( 'Commenter Experience' ), array( $this, 'extend_comment_meta_box'), 'comment', 'normal', 'high' );
+			add_meta_box( 'nb_commenter_background', __( 'Commenter Experience' ), array( $this, 'extend_comment_meta_box'), 'comment', 'normal', 'high' );
 		}
 
 		public function extend_comment_meta_box( $comment ) {
-			$experience = get_comment_meta( $comment->comment_ID, 'experience', true );
+			$experience = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
 			wp_nonce_field( 'extend_comment_update', 'extend_comment_update', false );
 			?>
 			<p>
-				<label for="experience"><?php _e( 'Experience' ); ?></label>
-				<input type="text" name="experience" value="<?php echo esc_attr( $experience ); ?>"/>
+				<label for="nb_commenter_background"><?php _e( 'Experience' ); ?></label>
+				<input type="text" name="nb_commenter_background" value="<?php echo esc_attr( $experience ); ?>"/>
 			</p>
 
 			<?php
@@ -77,11 +77,11 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				return;
 			}
 
-			if ( ( isset( $_POST['experience'] ) ) && ( $_POST['experience'] != '' ) ):
-				$experience = wp_filter_nohtml_kses( $_POST['experience'] );
-				update_comment_meta( $comment_id, 'experience', $experience );
+			if ( ( isset( $_POST['nb_commenter_background'] ) ) && ( $_POST['nb_commenter_background'] != '' ) ):
+				$experience = wp_filter_nohtml_kses( $_POST['nb_commenter_background'] );
+				update_comment_meta( $comment_id, 'nb_commenter_background', $experience );
 			else :
-				delete_comment_meta( $comment_id, 'experience' );
+				delete_comment_meta( $comment_id, 'nb_commenter_background' );
 			endif;
 		}
 
@@ -127,7 +127,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 							<span class="comment-author"> <?php comment_author( $comment ) ?></span>
 							<?php
 
-							$user_experience = get_comment_meta( $comment->comment_ID, 'experience', true );
+							$user_experience = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
 
 							if ( ! empty( $user_experience ) ) { ?>
 								<div class="comment-experience"><span
@@ -178,9 +178,9 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 							 ) .
 							 sprintf(
 									 '<p class="comment-form-experience comment-fields-wrapper">' .
-									 '<label for="experience">%s</label>' .
+									 '<label for="nb_commenter_background">%s</label>' .
 									 '<span class="field-description">%s</span>' .
-									 '<input id="experience" name="experience" type="text" size="30" tabindex="5" placeholder="%s" />' .
+									 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" />' .
 									 '</p>',
 									 __( 'What is your expertise or qualification in this topic?', '__plugin_txtd' ),
 									 __( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
