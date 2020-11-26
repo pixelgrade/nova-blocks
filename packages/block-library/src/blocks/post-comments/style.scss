@@ -82,8 +82,8 @@
 
 	.comment-reply-link,
 	.comment-edit-link,
-	.comment-link {
-		text-decoration: none;
+	.comment-link,
+	[id="cancel-comment-reply-link"] {
 		transition: opacity .15s ease-out;
 
 		&:not(:hover) {
@@ -98,7 +98,6 @@
 
 	a {
 		color: currentColor;
-		text-decoration: underline;
 	}
 
 	.comment-list {
@@ -315,12 +314,10 @@
 	}
 
 	[id="cancel-comment-reply-link"] {
+		margin-top: calc(var(--novablocks-spacing) * 0.25);
 		padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
-
 		text-align: center;
-
 		order: 2;
-		opacity: .5;
 	}
 
 	textarea,
