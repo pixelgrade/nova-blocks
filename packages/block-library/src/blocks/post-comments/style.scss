@@ -346,6 +346,11 @@
 	align-self: center;
 }
 
+.comment-awaiting-moderation {
+	font-style: italic;
+	opacity: 0.5;
+}
+
 @include below(tablet) {
 
 	.comment-form-details {
