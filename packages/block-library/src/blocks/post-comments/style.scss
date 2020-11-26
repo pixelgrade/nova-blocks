@@ -56,14 +56,9 @@
 		padding-top: calc( var(--novablocks-spacing) * 0.5 );
 	}
 
-	.novablocks-conversations__container > *,
 	.comment-fields-wrapper,
 	.comment-fields-wrapper > * {
 		@include block-spacing;
-	}
-
-	.comment-fields-wrapper,
-	.comment-fields-wrapper > * {
 		--novablocks-element-spacing-multiplier: 0.5;
 	}
 
@@ -81,19 +76,29 @@
 		//color: var(--comment-author-color);
 	}
 
-	.comment-posted-time,
-	.reply {
+	.comment-posted-time {
 		opacity: .5;
 	}
 
-	a {
-		color: currentColor;
-		text-decoration: underline;
+	.comment-reply-link,
+	.comment-edit-link,
+	.comment-link {
+		text-decoration: none;
+		transition: opacity .15s ease-out;
+
+		&:not(:hover) {
+			opacity: 0.5;
+		}
 	}
 
 	.comment-edit-link,
 	.comment-reply-link {
 		margin-left: 1em;
+	}
+
+	a {
+		color: currentColor;
+		text-decoration: underline;
 	}
 
 	.comment-list {
@@ -167,10 +172,46 @@
 		border-radius: 0 0 var(--element-spacing) var(--element-spacing);
 	}
 
+	.comment--is-highlighted {
+
+		.commenter-background-label {
+			--label-bg-color: var(--label-highlighted-bg-color);
+		}
+
+		@include below(tablet) {
+			background-color: var(--comment-highlighted-color);
+		}
+
+		@include above(tablet) {
+
+			> .comment-wrapper {
+				padding: var(--element-spacing);
+				background-color: var(--comment-highlighted-color);
+				border-radius: 0 1.5em;
+			}
+		}
+	}
+
+	@include below(tablet) {
+
+		.parent > .comment-wrapper ~ :not(.comment--is-highlighted) + :not(.comment--is-highlighted) > .comment-wrapper {
+			padding-top: 0;
+		}
+	}
+
+	.novablocks-conversations__container > .novablocks-conversations__form:last-child {
+		padding-bottom: 0;
+	}
+
 	.comment-body,
 	.comment-meta {
 		display: grid;
 		grid-column-gap: var(--comments-grid-gap);
+	}
+
+	.comment-author-name {
+		font-weight: bolder;
+		color: var(--novablocks-current-color-primary);
 	}
 
 	.comment-body {
@@ -252,27 +293,7 @@
 
 		@include below(tablet) {
 			padding: 0.1em 0.45em 0.15em 0.5em;
-			--label-border-radius: 0.5em;
-		}
-	}
-
-	.comment--is-highlighted {
-
-		> .comment-wrapper {
-			padding: 0;
-
-			 > .comment-body {
-				padding: 1em;
-				//background-color: var(--comment-highlighted-color);
-
-				@include above(tablet) {
-					border-radius: 0 25px;
-				}
-			}
-		}
-
-		.commenter-background-label {
-			--label-bg-color: var(--label-highlighted-bg-color);
+			--label-border-radius: 0.3em;
 		}
 	}
 
@@ -287,6 +308,10 @@
 	.comment-respond {
 		display: flex;
 		flex-direction: column;
+
+		small {
+			padding-left: 0;
+		}
 	}
 
 	[id="cancel-comment-reply-link"] {
@@ -303,12 +328,6 @@
 		width: 100%;
 		display: block;
 		min-height: auto;
-	}
-
-	.comment-respond {
-		small {
-			padding-left: 0;
-		}
 	}
 
 	.form-submit {
@@ -341,7 +360,4 @@
 		grid-row: span 1;
 	}
 
-	.form-grid {
-		grid-row-gap: var(--comments-grid-gap);
-	}
 }
