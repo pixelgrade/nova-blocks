@@ -110,6 +110,51 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 		/**
 		 * Comment Form args.
+		 *
+		 * @param array $comment the comment array.
+		 * @param array $args the comment args.
+		 * @param int $depth the comment depth.
+		 *
+		 * @since 1.7.0
+		 */
+		public function novablocks_comments_list( $comment, $args, $depth ) { ?>
+			<div <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?> id="comment-<?php comment_ID() ?>">
+				<div class="comment-body comment-grid">
+					<div id="div-comment-<?php comment_ID() ?>" class="comment-content">
+						<div class="comment-author-avatar vcard">
+							<?php echo get_avatar( $comment, 128 ); ?>
+						</div>
+
+						<div class="comment-author-info">
+							<span class="comment-author"> <?php comment_author( $comment ) ?></span>
+							<?php
+							$user_experience = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+							if ( ! empty( $user_experience ) ) { ?>
+								<div class="comment-experience">
+									<span class="experience-label"><?php echo $user_experience ?></span>
+								</div>
+							<?php } ?>
+						</div>
+
+						<div class="comment-text">
+							<?php comment_text(); ?>
+						</div>
+						<div class="comment-footer">
+							<span class="comment-posted-time"><?php NovaBlocks_Comments::novablocks_comment_time_human_friendly( $comment ) ?></span>
+							<span class="reply">
+								<?php comment_reply_link( array_merge( $args, array(
+									'depth'     => $depth,
+									'max_depth' => $args['max_depth']
+								) ) ); ?>
+								<?php edit_comment_link( __( 'Edit', 'storefront' ), '  ', '' ); ?>
+							</span>
+						</div>
+					</div>
+			</div>
+		<?php }
+
+		/**
+		 * Nova Blocks Comment Form args.
 		 */
 		static public function get_comment_form_args() {
 
@@ -134,9 +179,9 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 							 ) .
 							 sprintf(
 									 '<p class="comment-form-experience comment-fields-wrapper">' .
-									 '<label for="experience">%s</label>' .
+									 '<label for="nb_commenter_background">%s</label>' .
 									 '<span class="field-description">%s</span>' .
-									 '<input id="experience" name="experience" type="text" size="30" tabindex="5" placeholder="%s" />' .
+									 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" />' .
 									 '</p>',
 									 __( 'What is your expertise or qualification in this topic?', '__plugin_txtd' ),
 									 __( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
