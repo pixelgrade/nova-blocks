@@ -28,13 +28,6 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 
 			$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
 
-			$commenter          = wp_get_current_commenter();
-			if ( $commenter['comment_author_email'] ) {
-				$moderation_note = __( 'Your comment is awaiting moderation.', '__plugin_txtd' );
-			} else {
-				$moderation_note = __( 'Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved.', '__plugin_txtd' );
-			}
-
 			$comment_author_url = get_comment_author_url( $comment );
 			$comment_author     = get_comment_author( $comment );
 			$avatar             = get_avatar( $comment, $args['avatar_size'] );
@@ -48,7 +41,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 				array_merge(
 					$args,
 					array(
-						'add_below' => 'wrapper-comment', // This is the partial element ID after which the reply form should be moved (e.g. wrapper-comment-12312).
+						'add_below' => 'wrapper-comment', // This is the partial element ID after which the reply form should be moved on reply (e.g. wrapper-comment-12312).
 						'depth'     => $depth,
 						'max_depth' => $args['max_depth'],
 						'before'    => '',
@@ -56,6 +49,8 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 					)
 				)
 			);
+
+			$comment_moderation_message = ! empty( $args['moderation_message'] ) ? $args['moderation_message'] : esc_html__( 'This comment is only visible to you since it is awaiting moderation.', '__plugin_txtd' );
 			?>
 
 			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
@@ -105,7 +100,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						comment_text();
 
 						if ( '0' === $comment->comment_approved ) { ?>
-							<p class="comment-awaiting-moderation"><?php echo $moderation_note; ?></p>
+							<p class="comment-awaiting-moderation"><?php echo $comment_moderation_message; ?></p>
 						<?php } ?>
 
 					</div><!-- .comment-content -->
@@ -116,7 +111,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						/* translators: 1: Comment date, 2: Comment time. */
 						$comment_timestamp = sprintf( esc_html__( '%1$s at %2$s', '__plugin_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
 						?>
-						<time class="comment-posted-time" datetime="<?php comment_time( 'c' ); ?>" title="<?php echo esc_attr( $comment_timestamp ); ?>"><?php echo $this->comment_time_human_friendly( $comment ) ?></time>
+						<time class="comment-posted-time" datetime="<?php comment_time( 'c' ); ?>" title="<?php echo esc_attr( $comment_timestamp ); ?>"><?php echo $this->comment_time_human_friendly() ?></time>
 
 						<?php
 						if ( $comment_reply_link ) {
@@ -156,21 +151,18 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 			return false;
 		}
 
-		protected function comment_time_human_friendly( $comment ) {
-
-			$comment_date = get_comment_date( 'U', $comment );
-
-			if ( current_time( 'timestamp' ) - $comment_date < MINUTE_IN_SECONDS ) {
+		protected function comment_time_human_friendly() {
+			if ( current_time( 'U' ) - get_comment_time( 'U' ) < 10 * MINUTE_IN_SECONDS ) {
 				$time_text = esc_html__( 'Just now', '__plugin_txtd' );
-			} else if ( time() < strtotime( get_comment_time( 'U', true ) ) + 14 * DAY_IN_SECONDS ) {
-				$time_text = get_comment_date( 'M j Y' );
-			} else {
+			} elseif ( current_time( 'U' ) - get_comment_time( 'U' ) < 14 * DAY_IN_SECONDS ) {
 				$time_text = sprintf(
 						_x( '%s ago', '%s = human-readable time difference', '__plugin_txtd' ),
 						human_time_diff(
 								get_comment_time( 'U' ),
 								current_time( 'timestamp' ) )
 				);
+			} else {
+				$time_text = sprintf( esc_html__( 'On %s', '__plugin_txtd' ), get_comment_date() );
 			}
 
 			return $time_text;
@@ -281,7 +273,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						?>
 					</div><!-- .comment-content -->
 					<div class="comment-footer-meta">
-						<span class="comment-posted-time"><?php $this->comment_time_human_friendly( $comment ) ?></span>
+						<span class="comment-posted-time"><?php $this->comment_time_human_friendly() ?></span>
 						<span class="reply">
 						<?php
 						comment_reply_link(
