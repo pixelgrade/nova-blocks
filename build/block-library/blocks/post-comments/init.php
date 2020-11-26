@@ -34,5 +34,8 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 				<?php echo $content; ?>
 			</div>
 		</div>
-		<?php return ob_get_clean();}
+		<?php
+
+		return ob_get_clean();
+	}
 }
