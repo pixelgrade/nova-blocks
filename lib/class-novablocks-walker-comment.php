@@ -99,12 +99,12 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
 					</footer><!-- .comment-meta -->
 
-					<div class="comment-content entry-content">
+					<div class="comment-content">
 
 						<?php
 						comment_text();
 
-						if ( '0' === $comment->comment_approved ) { ?>
+						if ( '0' !== $comment->comment_approved ) { ?>
 							<p class="comment-awaiting-moderation"><?php echo $moderation_note; ?></p>
 						<?php } ?>
 
