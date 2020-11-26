@@ -186,7 +186,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 					'title_reply'          => '',
 					'title_reply_before'   => '',
 					'title_reply_after'    => '',
-					'label_submit'         => 'Add this comment',
+					'label_submit'         => esc_html__( 'Add this comment', '__plugin_txtd' ),
 					'submit_button'        => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
 			);
 		}
