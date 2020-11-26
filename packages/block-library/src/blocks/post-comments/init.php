@@ -18,10 +18,13 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 			<div class="novablocks-conversations__container">
 				<div class="novablocks-conversations__title">
 					<?php _e('Conversations', '__plugin_txtd') ?>
-					<sup><?php echo get_comments_number(($post->ID)); ?></sup>
+					<sup><?php echo get_comments_number($post->ID); ?></sup>
 				</div>
 				<?php echo $content; ?>
 			</div>
 		</div>
-		<?php return ob_get_clean();}
+		<?php
+
+		return ob_get_clean();
+	}
 }
