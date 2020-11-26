@@ -1,4 +1,4 @@
-import { createBlock  } from '@wordpress/blocks';
+import { createBlock } from '@wordpress/blocks';
 
 export default {
 	from: [
@@ -10,6 +10,14 @@ export default {
 					images: attributes.images
 				} )
 			},
+		},
+		{
+			type: 'block',
+			isMultiBlock: true,
+			blocks: [ 'core/image' ],
+			transform: ( images ) => {
+				return createBlock( 'novablocks/advanced-gallery', { images } )
+			}
 		}
 	],
 	to: [
