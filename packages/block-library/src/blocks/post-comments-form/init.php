@@ -15,15 +15,15 @@
 if ( ! function_exists( 'novablocks_render_post_comments_form_block' ) ) {
 	function novablocks_render_post_comments_form_block( $attributes, $content, $block ) {
 
-		if ( ! isset( $block->context['postId'] ) ) {
+		if ( empty( $block->context['postId'] ) ) {
 			return '';
 		}
 
-		$args = NovaBlocks_Comments::novablocks_comment_form_args();
+		$args = NovaBlocks_Comments::get_comment_form_args();
 
 		ob_start();
 
-		comment_form( $args, $block->context['postId'] );
+		comment_form( $args, absint( $block->context['postId'] ) );
 
 		return ob_get_clean();
 	}
