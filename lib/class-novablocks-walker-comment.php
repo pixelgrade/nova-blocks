@@ -28,125 +28,152 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 
 			$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
 
-			?>
-			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
-				<article id="div-comment-<?php comment_ID(); ?>" class="comment-body comment-grid">
-					<footer class="comment-meta">
-						<div class="comment-author vcard">
-							<?php
-							$comment_author_url = get_comment_author_url( $comment );
-							$comment_author     = get_comment_author( $comment );
-							$avatar             = get_avatar( $comment, $args['avatar_size'] );
-							$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+			$commenter          = wp_get_current_commenter();
+			if ( $commenter['comment_author_email'] ) {
+				$moderation_note = __( 'Your comment is awaiting moderation.', '__plugin_txtd' );
+			} else {
+				$moderation_note = __( 'Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved.', '__plugin_txtd' );
+			}
 
-							if ( 0 !== $args['avatar_size'] ) {
-								if ( empty( $comment_author_url ) ) {
-									echo wp_kses_post( $avatar );
-								} else {
-									printf( '<a href="%s" rel="external nofollow" class="url">', $comment_author_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped --Escaped in https://developer.wordpress.org/reference/functions/get_comment_author_url/
-									echo wp_kses_post( $avatar );
-								}
+			$comment_author_url = get_comment_author_url( $comment );
+			$comment_author     = get_comment_author( $comment );
+			$avatar             = get_avatar( $comment, $args['avatar_size'] );
+			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+			// For post authors without a background, we will use a default one.
+			if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
+				$commenter_background = esc_html__( 'Author', '__plugin_txtd' );
+			}
+
+			$comment_reply_link = get_comment_reply_link(
+				array_merge(
+					$args,
+					array(
+						'add_below' => 'wrapper-comment', // This is the partial element ID after which the reply form should be moved (e.g. wrapper-comment-12312).
+						'depth'     => $depth,
+						'max_depth' => $args['max_depth'],
+						'before'    => '',
+						'after'     => '',
+					)
+				)
+			);
+			?>
+
+			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
+			<div class="comment-wrapper" id="wrapper-comment-<?php comment_ID(); ?>">
+				<article class="comment-body">
+					<footer class="comment-meta">
+						<?php
+						if ( 0 !== $args['avatar_size'] ) { ?>
+						<div class="comment-author-avatar vcard">
+							<?php echo wp_kses_post( $avatar ); ?>
+						</div>
+						<?php } else { ?>
+							<div class="comment-author-avatar vcard empty-avatar">&nbsp;</div>
+						<?php } ?>
+
+						<div class="comment-author-info">
+							<?php
+							if ( ! empty( $comment_author_url ) ) {
+								printf( '<a href="%s" rel="external nofollow" class="author-url">', $comment_author_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped --Escaped in https://developer.wordpress.org/reference/functions/get_comment_author_url/
 							}
 
-							echo '<div class="comment-author-info">';
 							printf(
 									'<span class="fn comment-author-name">%1$s</span><span class="screen-reader-text says">%2$s</span>',
 									esc_html( $comment_author ),
-									__( 'says:', '__plugin_txtd' )
+									esc_html__( 'says:', '__plugin_txtd' )
 							);
-
-							if ( ! empty( $commenter_background ) ) {
-								printf(
-										'<div class="comment-experience"><span class="screen-reader-text experience">%2$s</span><span class="experience-label">%1$s</span></div>',
-										esc_html( $commenter_background ),
-										__( 'Relevant commenter background or experience:', '__plugin_txtd' )
-								); ?>
-								<div class="comment-experience"><span class="experience-label"><?php echo esc_html( $commenter_background ) ?></span></div>
-							<?php }
-
-							echo '</div><!-- .comment-author-info -->';
 
 							if ( ! empty( $comment_author_url ) ) {
 								echo '</a>';
 							}
-							?>
-						</div><!-- .comment-author -->
 
-						<div class="comment-metadata">
-							<a href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>">
-								<?php
-								/* translators: 1: Comment date, 2: Comment time. */
-								$comment_timestamp = sprintf( __( '%1$s at %2$s', '__plugin_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
-								?>
-								<time datetime="<?php comment_time( 'c' ); ?>" title="<?php echo esc_attr( $comment_timestamp ); ?>">
-									<?php echo esc_html( $comment_timestamp ); ?>
-								</time>
-							</a>
-							<?php
-							if ( get_edit_comment_link() ) {
-								echo ' <span aria-hidden="true">&bull;</span> <a class="comment-edit-link" href="' . esc_url( get_edit_comment_link() ) . '">' . __( 'Edit', '__plugin_txtd' ) . '</a>';
-							}
-							?>
-						</div><!-- .comment-metadata -->
+							if ( ! empty( $commenter_background ) ) {
+								printf(
+									'<div class="commenter-background"><span class="screen-reader-text experience">%2$s</span><span class="commenter-background-label">%1$s</span></div>',
+									esc_html( $commenter_background ),
+									esc_html__( 'Relevant commenter background or experience:', '__plugin_txtd' )
+								); ?>
+							<?php } ?>
+						</div><!-- .comment-author-info -->
 
+						<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
 					</footer><!-- .comment-meta -->
 
 					<div class="comment-content entry-content">
 
 						<?php
-
 						comment_text();
 
-						if ( '0' === $comment->comment_approved ) {
-							?>
-							<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', '__plugin_txtd' ); ?></p>
-							<?php
-						}
-
-						?>
+						if ( '0' === $comment->comment_approved ) { ?>
+							<p class="comment-awaiting-moderation"><?php echo $moderation_note; ?></p>
+						<?php } ?>
 
 					</div><!-- .comment-content -->
 
-					<?php
-
-					$comment_reply_link = get_comment_reply_link(
-						array_merge(
-							$args,
-							array(
-								'add_below' => 'div-comment',
-								'depth'     => $depth,
-								'max_depth' => $args['max_depth'],
-								'before'    => '<span class="comment-reply">',
-								'after'     => '</span>',
-							)
-						)
-					);
-
-					$by_post_author = twentytwenty_is_comment_by_post_author( $comment );
-
-					if ( $comment_reply_link || $by_post_author ) {
-						?>
-
-						<footer class="comment-footer-meta">
-
-							<?php
-							if ( $comment_reply_link ) {
-								echo $comment_reply_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Link is escaped in https://developer.wordpress.org/reference/functions/get_comment_reply_link/
-							}
-							if ( $by_post_author ) {
-								echo '<span class="by-post-author">' . __( 'By Post Author', '__plugin_txtd' ) . '</span>';
-							}
-							?>
-
-						</footer>
+					<footer class="comment-footer-meta">
 
 						<?php
-					}
-					?>
+						/* translators: 1: Comment date, 2: Comment time. */
+						$comment_timestamp = sprintf( esc_html__( '%1$s at %2$s', '__plugin_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
+						?>
+						<time class="comment-posted-time" datetime="<?php comment_time( 'c' ); ?>" title="<?php echo esc_attr( $comment_timestamp ); ?>"><?php echo $this->comment_time_human_friendly( $comment ) ?></time>
+
+						<?php
+						if ( $comment_reply_link ) {
+							echo $comment_reply_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Link is escaped in https://developer.wordpress.org/reference/functions/get_comment_reply_link/
+						}
+
+						if ( get_edit_comment_link() ) {
+							echo '<a class="comment-edit-link" href="' . esc_url( get_edit_comment_link() ) . '">' . esc_html__( 'Edit', '__plugin_txtd' ) . '</a>';
+						} ?>
+
+					</footer><!-- .comment-footer-meta -->
 
 				</article><!-- .comment-body -->
-
+			</div><!-- .comment-wrapper -->
 			<?php
+		}
+
+		/**
+		 * Checks if the specified comment is written by the author of the post commented on.
+		 *
+		 * @param object $comment Comment data.
+		 * @return bool
+		 */
+		protected function is_comment_by_post_author( $comment = null ) {
+
+			if ( is_object( $comment ) && $comment->user_id > 0 ) {
+
+				$user = get_userdata( $comment->user_id );
+				$post = get_post( $comment->comment_post_ID );
+
+				if ( ! empty( $user ) && ! empty( $post ) ) {
+
+					return $comment->user_id === $post->post_author;
+
+				}
+			}
+			return false;
+		}
+
+		protected function comment_time_human_friendly( $comment ) {
+
+			$comment_date = get_comment_date( 'U', $comment );
+
+			if ( current_time( 'timestamp' ) - $comment_date < MINUTE_IN_SECONDS ) {
+				$time_text = esc_html__( 'Just now', '__plugin_txtd' );
+			} else if ( time() < strtotime( get_comment_time( 'U', true ) ) + 14 * DAY_IN_SECONDS ) {
+				$time_text = get_comment_date( 'M j Y' );
+			} else {
+				$time_text = sprintf(
+						_x( '%s ago', '%s = human-readable time difference', '__plugin_txtd' ),
+						human_time_diff(
+								get_comment_time( 'U' ),
+								current_time( 'timestamp' ) )
+				);
+			}
+
+			return $time_text;
 		}
 
 		/**
@@ -170,51 +197,70 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 			} else {
 				$moderation_note = __( 'Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved.', '__plugin_txtd' );
 			}
+
+			$comment_author_url = get_comment_author_url( $comment );
+			$comment_author     = get_comment_author( $comment );
+			$avatar             = get_avatar( $comment, $args['avatar_size'] );
+			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+			// For post authors without a background, we will use a default one.
+			if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
+				$commenter_background = esc_html__( 'Author', '__plugin_txtd' );
+			}
+
+			$comment_reply_link = get_comment_reply_link(
+				array_merge(
+					$args,
+					array(
+						'add_below' => 'div-comment',
+						'depth'     => $depth,
+						'max_depth' => $args['max_depth'],
+						'before'    => '<span class="comment-reply">',
+						'after'     => '</span>',
+					)
+				)
+			);
 			?>
 			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?> id="comment-<?php comment_ID(); ?>">
-			<div class="comment-body comment-grid">
-				<div id="div-comment-<?php comment_ID() ?>" class="comment-content">
-					<div class="comment-author vcard">
+			<div class="comment-wrapper">
+				<div id="div-comment-<?php comment_ID() ?>" class="comment-body">
+					<div class="comment-meta">
 
 						<?php
-						$comment_author_url   = get_comment_author_url( $comment );
-						$comment_author       = get_comment_author( $comment );
-						$avatar               = get_avatar( $comment, $args['avatar_size'] );
-						$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+						if ( 0 !== $args['avatar_size'] ) { ?>
+							<div class="comment-author-avatar vcard">
+								<?php echo wp_kses_post( $avatar ); ?>
+							</div>
+						<?php } else { ?>
+							<div class="comment-author-avatar vcard empty-avatar">&nbsp;</div>
+						<?php } ?>
 
-						if ( 0 !== $args['avatar_size'] ) {
-							if ( empty( $comment_author_url ) || ( '0' == $comment->comment_approved && ! $show_pending_links ) ) {
-								echo '<div class="comment-author-avatar">' . wp_kses_post( $avatar ) . '</div>';
-							} else {
-								printf( '<a href="%s" rel="external nofollow" class="url">', $comment_author_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped --Escaped in https://developer.wordpress.org/reference/functions/get_comment_author_url/
-								echo '<div class="comment-author-avatar">' . wp_kses_post( $avatar ) . '</div>';
+						<div class="comment-author-info">
+							<?php
+							if ( ! empty( $comment_author_url ) ) {
+								printf( '<a href="%s" rel="external nofollow" class="author-url">', $comment_author_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped --Escaped in https://developer.wordpress.org/reference/functions/get_comment_author_url/
 							}
-						}
 
-						echo '<div class="comment-author-info">';
-						printf(
-								'<span class="fn comment-author-name">%1$s</span><span class="screen-reader-text says">%2$s</span>',
-								esc_html( $comment_author ),
-								__( 'says:', '__plugin_txtd' )
-						);
-
-						if ( ! empty( $commenter_background ) ) {
 							printf(
-									'<div class="comment-experience"><span class="screen-reader-text experience">%2$s</span><span class="experience-label">%1$s</span></div>',
-									esc_html( $commenter_background ),
-									__( 'Relevant commenter background or experience:', '__plugin_txtd' )
-							); ?>
-							<div class="comment-experience"><span class="experience-label"><?php echo esc_html( $commenter_background ) ?></span></div>
-						<?php }
+									'<span class="fn comment-author-name">%1$s</span><span class="screen-reader-text says">%2$s</span>',
+									esc_html( $comment_author ),
+									esc_html__( 'says:', '__plugin_txtd' )
+							);
 
-						echo '</div><!-- .comment-author-info -->';
+							if ( ! empty( $comment_author_url ) ) {
+								echo '</a>';
+							}
 
-						if ( ! empty( $comment_author_url ) && ! ( '0' == $comment->comment_approved && ! $show_pending_links ) ) {
-							echo '</a>';
-						} ?>
-					</div><!-- .comment-author -->
+							if ( ! empty( $commenter_background ) ) {
+								printf(
+										'<div class="commenter-background"><span class="screen-reader-text experience">%2$s</span><span class="commenter-background-label">%1$s</span></div>',
+										esc_html( $commenter_background ),
+										esc_html__( 'Relevant commenter background or experience:', '__plugin_txtd' )
+								); ?>
+							<?php } ?>
+						</div><!-- .comment-author-info -->
+					</div><!-- .comment-meta -->
 
-					<div class="comment-text">
+					<div class="comment-content">
 						<?php
 						if ( '0' == $comment->comment_approved ) { ?>
 						<em class="comment-awaiting-moderation"><?php echo $moderation_note; ?></em>
@@ -233,9 +279,9 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 							)
 						);
 						?>
-					</div><!-- .comment-text -->
-					<div class="comment-footer">
-						<span class="comment-posted-time"><?php NovaBlocks_Comments::comment_time_human_friendly( $comment ) ?></span>
+					</div><!-- .comment-content -->
+					<div class="comment-footer-meta">
+						<span class="comment-posted-time"><?php $this->comment_time_human_friendly( $comment ) ?></span>
 						<span class="reply">
 						<?php
 						comment_reply_link(
@@ -251,11 +297,11 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 							)
 						);
 						?>
-						<?php edit_comment_link( __( 'Edit', '__plugin_txtd' ), '  ', '' ); ?>
+						<?php edit_comment_link( esc_html__( 'Edit', '__plugin_txtd' ), '  ', '' ); ?>
 						</span>
-					</div><!-- .comment-footer -->
-				</div><!-- .comment-content -->
-			</div><!-- .comment-body -->
+					</div><!-- .comment-footer-meta -->
+				</div><!-- .comment-body -->
+			</div><!-- .comment-wrapper -->
 		<?php }
 	}
 }

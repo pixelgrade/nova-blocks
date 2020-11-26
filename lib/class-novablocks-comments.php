@@ -55,7 +55,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * Add an edit option in comment edit screen.
 		 */
 		public function extend_comment_add_meta_box() {
-			add_meta_box( 'nb_commenter_background', __( 'Relevant Commenter Background', '__plugin_txtd' ), array( $this, 'extend_comment_meta_box'), 'comment', 'normal', 'high' );
+			add_meta_box( 'nb_commenter_extra_details', __( 'Commenter Extra Details', '__plugin_txtd' ), array( $this, 'extend_comment_meta_box'), 'comment', 'normal', 'high' );
 		}
 
 		public function extend_comment_meta_box( $comment ) {
@@ -63,8 +63,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			wp_nonce_field( 'extend_comment_update', 'extend_comment_update', false );
 			?>
 			<p>
-				<label for="nb_commenter_background"><?php _e( 'Relevant Commenter Background', '__plugin_txtd' ); ?></label>
-				<input type="text" name="nb_commenter_background" value="<?php echo esc_attr( $commenter_background ); ?>" />
+				<label for="nb_commenter_background"><?php _e( 'Relevant Background', '__plugin_txtd' ); ?></label>
+				<input type="text" name="nb_commenter_background" value="<?php echo esc_attr( $commenter_background ); ?>" class="regular-text"/>
 			</p>
 
 			<?php
@@ -107,51 +107,6 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 			echo $time_text;
 		}
-
-		/**
-		 * Comment Form args.
-		 *
-		 * @param array $comment the comment array.
-		 * @param array $args the comment args.
-		 * @param int $depth the comment depth.
-		 *
-		 * @since 1.7.0
-		 */
-		public function novablocks_comments_list( $comment, $args, $depth ) { ?>
-			<div <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ) ?> id="comment-<?php comment_ID() ?>">
-				<div class="comment-body comment-grid">
-					<div id="div-comment-<?php comment_ID() ?>" class="comment-content">
-						<div class="comment-author-avatar vcard">
-							<?php echo get_avatar( $comment, 128 ); ?>
-						</div>
-
-						<div class="comment-author-info">
-							<span class="comment-author"> <?php comment_author( $comment ) ?></span>
-							<?php
-							$user_experience = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
-							if ( ! empty( $user_experience ) ) { ?>
-								<div class="comment-experience">
-									<span class="experience-label"><?php echo $user_experience ?></span>
-								</div>
-							<?php } ?>
-						</div>
-
-						<div class="comment-text">
-							<?php comment_text(); ?>
-						</div>
-						<div class="comment-footer">
-							<span class="comment-posted-time"><?php NovaBlocks_Comments::novablocks_comment_time_human_friendly( $comment ) ?></span>
-							<span class="reply">
-								<?php comment_reply_link( array_merge( $args, array(
-									'depth'     => $depth,
-									'max_depth' => $args['max_depth']
-								) ) ); ?>
-								<?php edit_comment_link( __( 'Edit', 'storefront' ), '  ', '' ); ?>
-							</span>
-						</div>
-					</div>
-			</div>
-		<?php }
 
 		/**
 		 * Nova Blocks Comment Form args.

@@ -151,52 +151,58 @@
 			background-color: var(--novablocks-current-light-secondary);
 			padding-bottom: var(--element-spacing);
 
-			> .comment-body {
+			> .comment-wrapper {
 				padding-bottom: var(--element-spacing);
 				background-color: var(--novablocks-current-light-primary);
 				border-radius: 0 0 var(--element-spacing) var(--element-spacing);
 			}
 
 			> .comment,
-			> .comment-body {
+			> .comment-wrapper {
 				padding-left: var(--site-container-spacings);
 				padding-right: var(--site-container-spacings);
 			}
 		}
 	}
 
-	.comment-content {
+	.comment-body {
 		display: grid;
 		grid-column-gap: var(--comments-grid-gap);
 		grid-template-columns: var(--avatar-column-size) 1fr;
 
 		// layout
-		> * {
+		.comment-author-avatar,
+		.comment-author-info,
+		.comment-content,
+		.comment-footer-meta {
 			grid-column: 2 / span 1;
 		}
 
-		> .comment-author-avatar {
+		.comment-author-avatar {
 			grid-row-start: 1;
 			grid-column: 1 / span 1;
 		}
 
-		> .comment-author-info {
+		.comment-author-info {
 			grid-row-start: 1;
 			grid-column: 2 / span 1;
 		}
 
 		// spacing
-		> * {
+		.comment-author-avatar,
+		.comment-author-info,
+		.comment-content,
+		.comment-footer-meta {
 			@include block-spacing;
 			--novablocks-element-spacing-multiplier: 0.25;
 		}
 
-		> .comment-author-info {
+		.comment-author-info {
 			margin-top: 0;
 		}
 	}
 
-	.depth-1 > .comment-body .comment-content {
+	.depth-1 > .comment-wrapper .comment-body {
 
 		@include below(tablet) {
 
@@ -206,7 +212,7 @@
 		}
 	}
 
-	.comment-footer {
+	.comment-footer-meta {
 		display: flex;
 		align-items: center;
 
@@ -220,12 +226,12 @@
 		}
 	}
 
-	.comment-experience {
+	.commenter-background {
 		display: flex;
 		margin-top: 0.125em;
 	}
 
-	.experience-label {
+	.commenter-background-label {
 		display: inline-block;
 		padding: 0.15em 0.7em 0.2em 0.75em;
 
@@ -241,10 +247,10 @@
 
 	.comment--is-highlighted {
 
-		> .comment-body {
+		> .comment-wrapper {
 			padding: 0;
 
-			 > .comment-content {
+			 > .comment-body {
 				padding: 1em;
 				//background-color: var(--comment-highlighted-color);
 
@@ -254,14 +260,14 @@
 			}
 		}
 
-		.experience-label {
+		.commenter-background-label {
 			--label-bg-color: var(--label-highlighted-bg-color);
 		}
 	}
 
 	.comment.bypostauthor {
 
-		.experience-label {
+		.commenter-background-label {
 			--label-bg-color: var(--label-highlighted-bg-color);
 			--label-border-radius: 0;
 		}

@@ -19,9 +19,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		ob_start(); ?>
 		<div class="comment-list">
 			<?php wp_list_comments( array(
+				'walker'      => new NovaBlocks_Walker_Comment(),
+				'avatar_size' => 120,
 				'style'      	=> 'div',
 				'short_ping' 	=> true,
-				'callback'		=> 'NovaBlocks_Comments::comment',
 			), $comments ); ?>
 		</div>
 
