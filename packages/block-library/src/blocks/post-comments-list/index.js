@@ -13,7 +13,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 registerBlockType('novablocks/post-comments-list', {
 	title: __( 'Comments List Nova', '__plugin_txtd' ),
-	description: __( 'Show Latest Comments', '__plugin_txtd' ),
+	description: __( 'Display the comments list for a post.', '__plugin_txtd' ),
 	icon: icons.postsCollection,
 	category: 'nova-blocks',
 	uses_context: ['postId', 'postType'],

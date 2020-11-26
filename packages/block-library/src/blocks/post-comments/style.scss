@@ -56,17 +56,9 @@
 		padding-top: calc( var(--novablocks-spacing) * 0.5 );
 	}
 
-	.novablocks-conversations__container > *,
-	.parent > *,
-	.comment-list > *,
 	.comment-fields-wrapper,
 	.comment-fields-wrapper > * {
 		@include block-spacing;
-	}
-
-	.parent > *,
-	.comment-fields-wrapper,
-	.comment-fields-wrapper > * {
 		--novablocks-element-spacing-multiplier: 0.5;
 	}
 
@@ -84,19 +76,29 @@
 		//color: var(--comment-author-color);
 	}
 
-	.comment-posted-time,
-	.reply {
+	.comment-posted-time {
 		opacity: .5;
 	}
 
-	a {
-		color: currentColor;
-		text-decoration: underline;
+	.comment-reply-link,
+	.comment-edit-link,
+	.comment-link {
+		text-decoration: none;
+		transition: opacity .15s ease-out;
+
+		&:not(:hover) {
+			opacity: 0.5;
+		}
 	}
 
 	.comment-edit-link,
 	.comment-reply-link {
 		margin-left: 1em;
+	}
+
+	a {
+		color: currentColor;
+		text-decoration: underline;
 	}
 
 	.comment-list {
@@ -143,60 +145,116 @@
 		}
 
 		@include below(tablet) {
-			--element-spacing: calc( var(--novablocks-spacing) * 0.5 );
-
 			margin-left: calc( -1 * var(--site-container-spacings) );
 			margin-right: calc( -1 * var(--site-container-spacings) );
 
-			background-color: var(--novablocks-current-light-secondary);
-			padding-bottom: var(--element-spacing);
+			background-color: rgba(0,0,0,0.1);
 
-			> .comment-body {
-				padding-bottom: var(--element-spacing);
-				background-color: var(--novablocks-current-light-primary);
-				border-radius: 0 0 var(--element-spacing) var(--element-spacing);
+			> .comment-wrapper {
+				background-color: var(--conversations-bg-color);
 			}
 
 			> .comment,
-			> .comment-body {
+			> .comment-wrapper,
+			> .comment-respond {
 				padding-left: var(--site-container-spacings);
 				padding-right: var(--site-container-spacings);
 			}
 		}
 	}
 
-	.comment-content {
-		display: grid;
-		grid-column-gap: var(--comments-grid-gap);
-		grid-template-columns: var(--avatar-column-size) 1fr;
+	.comment-respond,
+	.comment-wrapper {
+		--element-spacing: calc( var(--novablocks-spacing) * 0.5 );
 
-		// layout
-		> * {
-			grid-column: 2 / span 1;
+		padding-top: var(--element-spacing);
+		padding-bottom: var(--element-spacing);
+		border-radius: 0 0 var(--element-spacing) var(--element-spacing);
+	}
+
+	.comment--is-highlighted {
+
+		.commenter-background-label {
+			--label-bg-color: var(--label-highlighted-bg-color);
 		}
 
-		> .comment-author-avatar {
-			grid-row-start: 1;
-			grid-column: 1 / span 1;
+		@include below(tablet) {
+			background-color: var(--comment-highlighted-color);
 		}
 
-		> .comment-author-info {
-			grid-row-start: 1;
-			grid-column: 2 / span 1;
-		}
+		@include above(tablet) {
 
-		// spacing
-		> * {
-			@include block-spacing;
-			--novablocks-element-spacing-multiplier: 0.25;
-		}
-
-		> .comment-author-info {
-			margin-top: 0;
+			> .comment-wrapper {
+				padding: var(--element-spacing);
+				background-color: var(--comment-highlighted-color);
+				border-radius: 0 1.5em;
+			}
 		}
 	}
 
-	.depth-1 > .comment-body .comment-content {
+	@include below(tablet) {
+
+		.parent > .comment-wrapper ~ :not(.comment--is-highlighted) + :not(.comment--is-highlighted) > .comment-wrapper {
+			padding-top: 0;
+		}
+	}
+
+	.novablocks-conversations__container > .novablocks-conversations__form:last-child {
+		padding-bottom: 0;
+	}
+
+	.comment-body,
+	.comment-meta {
+		display: grid;
+		grid-column-gap: var(--comments-grid-gap);
+	}
+
+	.comment-author-name {
+		font-weight: bolder;
+		color: var(--novablocks-current-color-primary);
+	}
+
+	.comment-body {
+		grid-template-columns: var(--avatar-column-size) 1fr;
+	}
+
+	.comment-meta {
+		grid-column: 1 / span 2;
+		grid-template-columns: var(--avatar-column-size) 1fr auto;
+	}
+
+	// layout
+	.comment-author-avatar,
+	.comment-author-info,
+	.comment-content,
+	.comment-footer-meta {
+		grid-column: 2 / span 1;
+	}
+
+	.comment-author-avatar {
+		grid-row-start: 1;
+		grid-column: 1 / span 1;
+	}
+
+	.comment-author-info {
+		grid-row-start: 1;
+		grid-column: 2 / span 1;
+	}
+
+	// spacing
+	.comment-author-avatar,
+	.comment-author-info,
+	.comment-content,
+	.comment-footer-meta {
+		@include block-spacing;
+		--novablocks-element-spacing-multiplier: 0.25;
+	}
+
+	.comment-author-info {
+		margin-top: 0;
+	}
+
+	.depth-1 > .comment-wrapper .comment-body {
 
 		@include below(tablet) {
 
@@ -206,7 +264,7 @@
 		}
 	}
 
-	.comment-footer {
+	.comment-footer-meta {
 		display: flex;
 		align-items: center;
 
@@ -220,12 +278,12 @@
 		}
 	}
 
-	.comment-experience {
+	.commenter-background {
 		display: flex;
 		margin-top: 0.125em;
 	}
 
-	.experience-label {
+	.commenter-background-label {
 		display: inline-block;
 		padding: 0.15em 0.7em 0.2em 0.75em;
 
@@ -235,33 +293,13 @@
 
 		@include below(tablet) {
 			padding: 0.1em 0.45em 0.15em 0.5em;
-			--label-border-radius: 0.5em;
-		}
-	}
-
-	.comment--is-highlighted {
-
-		> .comment-body {
-			padding: 0;
-
-			 > .comment-content {
-				padding: 1em;
-				//background-color: var(--comment-highlighted-color);
-
-				@include above(tablet) {
-					border-radius: 0 25px;
-				}
-			}
-		}
-
-		.experience-label {
-			--label-bg-color: var(--label-highlighted-bg-color);
+			--label-border-radius: 0.3em;
 		}
 	}
 
 	.comment.bypostauthor {
 
-		.experience-label {
+		.commenter-background-label {
 			--label-bg-color: var(--label-highlighted-bg-color);
 			--label-border-radius: 0;
 		}
@@ -270,6 +308,10 @@
 	.comment-respond {
 		display: flex;
 		flex-direction: column;
+
+		small {
+			padding-left: 0;
+		}
 	}
 
 	[id="cancel-comment-reply-link"] {
@@ -286,12 +328,6 @@
 		width: 100%;
 		display: block;
 		min-height: auto;
-	}
-
-	.comment-respond {
-		small {
-			padding-left: 0;
-		}
 	}
 
 	.form-submit {
@@ -324,7 +360,4 @@
 		grid-row: span 1;
 	}
 
-	.form-grid {
-		grid-row-gap: var(--comments-grid-gap);
-	}
 }

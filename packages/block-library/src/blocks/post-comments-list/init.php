@@ -8,15 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 	function novablocks_render_post_comments_list_block( $attributes, $content, $block ) {
 
-		if ( ! isset( $block->context[ 'postId' ] ) ) {
+		if ( empty( $block->context[ 'postId' ] ) ) {
 			return '';
 		}
 
-		$postId = $block->context[ 'postId' ];
-		$args = NovaBlocks_Comments::novablocks_comment_form_args();
-
 		$comments = get_comments( array(
-			'post_id' => $postId,
+			'post_id' => absint( $block->context[ 'postId' ] ),
 		) );
 
 		if ( empty( $comments ) ) {
@@ -26,14 +23,15 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		ob_start(); ?>
 		<div class="comment-list">
 			<?php wp_list_comments( array(
+				'walker'      => new NovaBlocks_Walker_Comment(),
+				'avatar_size' => 120,
 				'style'      	=> 'div',
 				'short_ping' 	=> true,
-				'callback'		=> 'NovaBlocks_Comments::novablocks_comments_list',
 			), $comments ); ?>
 		</div>
 
 		<?php if ( comments_open() && get_comments_number() >= 5 ) {
-			comment_form( $args );
+			comment_form( NovaBlocks_Comments::get_comment_form_args() );
 		}
 
 		return ob_get_clean();
