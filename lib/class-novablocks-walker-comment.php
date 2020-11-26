@@ -104,7 +104,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						<?php
 						comment_text();
 
-						if ( '0' !== $comment->comment_approved ) { ?>
+						if ( '0' === $comment->comment_approved ) { ?>
 							<p class="comment-awaiting-moderation"><?php echo $moderation_note; ?></p>
 						<?php } ?>
 
