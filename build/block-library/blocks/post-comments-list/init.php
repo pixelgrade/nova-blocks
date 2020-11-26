@@ -19,6 +19,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			'post_id' => $postId,
 		) );
 
+		if ( empty( $comments ) ) {
+			return '';
+		}
+
 		ob_start(); ?>
 		<div class="comment-list">
 			<?php wp_list_comments( array(
