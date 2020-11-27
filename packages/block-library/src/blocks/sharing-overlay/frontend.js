@@ -1,6 +1,6 @@
 import Shariff from 'shariff';
 import $ from 'jquery';
-import { titleCase } from '@novablocks/utils';
+import { debounce, isMobileDevice, titleCase } from '@novablocks/utils';
 import { getSvg } from '@novablocks/icons';
 
 const $groupTemplate = $( '<div class="novablocks-sharing__group" />' )
@@ -13,6 +13,19 @@ const $titleTemplate = $( '<h4 class="novablocks-sharing__group-title" />' );
 const $descriptionTemplate = $( '<div class="novablocks-sharing__group-description" />' );
 const $contentTemplate = $( '<div class="novablocks-sharing__group-content" />' );
 
+import services from './services';
+
+const getActiveServices = ( attributes ) => {
+
+	return services.filter( service => {
+		const label = service.charAt( 0 ).toUpperCase() + service.slice( 1 );
+		const attribute = `show${ label }`;
+
+		return !! attributes[ attribute ];
+	} );
+}
+
+
 const createMarkupFromShariff = ( data ) => {
 
 	const $dummy = $( '<div>' );
@@ -22,7 +35,7 @@ const createMarkupFromShariff = ( data ) => {
 		orientation: 'vertical',
 		title: title,
 		url: url,
-		services: [ 'twitter', 'facebook', 'linkedin' ],
+		services: getActiveServices( data ),
 		lang: 'en'
 	} );
 
@@ -57,32 +70,47 @@ const createPublicGroup = ( $sharing ) => {
 }
 
 const createPrivateGroup = () => {
-	const $content = createContentFromLinks([ {
-		label: 'Messenger',
-		url: '#',
-		icon: 'messenger',
-	}, {
+	const links = [];
+
+	if ( isMobileDevice() ) {
+		links.push( {
+			label: 'Messenger',
+			url: '#',
+			icon: 'messenger',
+		} );
+	}
+
+	links.push( {
 		label: 'Email',
 		url: 'mailto:',
 		icon: 'email',
-	} ] );
+	} );
+
+	const $content = createContentFromLinks( links );
 
 	return createGroup( 'private', 'Share privately with friends', '', $content );
 }
 
 const createInPersonGroup = () => {
-	const $content = createContentFromLinks([ {
+	const implementedPDF = false;
+	const links = [ {
 		label: 'Print',
 		url: '#',
 		icon: 'printer',
 		callback: () => {
 			window.print();
 		}
-	}, {
-		label: 'PDF',
-		url: '#',
-		icon: 'pdf'
-	} ] );
+	} ];
+
+	if ( implementedPDF ) {
+		links.push( {
+			label: 'PDF',
+			url: '#',
+			icon: 'pdf'
+		} );
+	}
+
+	const $content = createContentFromLinks( links );
 
 	return createGroup( 'in-person', 'Or maybe you want in person?', '', $content );
 }
@@ -122,7 +150,7 @@ const createListItem = ( link ) => {
 	return $listItemTemplate.clone().append( link );
 }
 
-const createCopyLinkGroup = ( ) => {
+const createCopyLinkGroup = () => {
 	const groupTitle = 'Use a link for everything';
 	const groupDescription = 'Copy link and paste it anywhere you want it';
 
@@ -169,41 +197,67 @@ const createGroup = ( id, title, description, content ) => {
 
 (function() {
 
-	const $openButton = $( '.js-sharing-overlay-trigger' );
-	const $overlay = $( '.js-sharing' ).hide();
-	const $wrap = $( '<div class="novablocks-sharing__wrap">' );
-	const $container = $( '<div class="novablocks-sharing__container">');
-	const $content = $( '<div class="novablocks-sharing__content">');
+	$( '.novablocks-sharing' ).each( function( i, obj ) {
+		const $block = $( obj );
+		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
+		const $overlay = $block.find( '.js-sharing-overlay' ).hide();
+		const data = $block.data();
 
-	const data = $overlay.data();
+		const $wrap = $( '<div class="novablocks-sharing__wrap">' );
+		const $container = $( '<div class="novablocks-sharing__container">');
+		const $content = $( '<div class="novablocks-sharing__content">');
 
-	$content.appendTo( $container );
-	$container.appendTo( $wrap );
-	$wrap.appendTo( $overlay );
+		$content.appendTo( $container );
+		$container.appendTo( $wrap );
+		$wrap.appendTo( $overlay );
+		$wrap.wrap( '<div class="novablocks-sharing__inner-container">' );
 
-	$content.append( createCopyLinkGroup( data ) );
-	$content.append( createPrivateGroup( data ) );
-	$content.append( createMarkupFromShariff( data ) );
-	$content.append( createInPersonGroup( data ) );
+		if ( !! data.showCopy ) {
+			$content.append( createCopyLinkGroup( data ) );
+		}
 
-	const closeIcon = getSvg( 'cancel' );
-	const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
-	const $title = $( '<h3 class="novablocks-sharing__title">Sharing Options</h3>' );
+		if ( !! data.showSharePrivately ) {
+			$content.append( createPrivateGroup( data ) );
+		}
 
-	$title.prependTo( $content );
-	$( '<div class="novablocks-sharing__footer">Thanks for spreading the word!</div>').appendTo( $content );
-	$closeButton.appendTo( $wrap );
+		if ( !! data.showSocialIcons ) {
+			$content.append( createMarkupFromShariff( data ) );
+		}
 
-	$openButton.on( 'click', function() {
-		const buttonTop = $openButton.offset().top;
-		$overlay.css( 'top', buttonTop );
+		if ( !! data.showShareInPerson ) {
+			$content.append( createInPersonGroup( data ) );
+		}
 
-		$overlay.show();
-	} );
+		console.log( data.showShareInPerson, !! data.showShareInPerson );
 
-	$closeButton.on( 'click', function() {
-		$content.find( '.novablocks-sharing__notification--visible' ).removeClass( 'novablocks-sharing__notification--visible' );
-		$overlay.hide();
-	} );
+		const closeIcon = getSvg( 'cancel' );
+		const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
+		const $title = $( '<h3 class="novablocks-sharing__title">Sharing Options</h3>' );
+
+		$title.prependTo( $content );
+		$( '<div class="novablocks-sharing__footer">Thanks for spreading the word!</div>').appendTo( $content );
+		$closeButton.appendTo( $wrap );
+
+		function positionPopup() {
+			const buttonTop = $openButton.offset().top;
+			const sharingPopupHeight = $wrap.outerHeight();
+
+			$overlay.css( 'top', buttonTop - sharingPopupHeight / 2 );
+		}
+
+		$( window ).on( 'resize', debounce( positionPopup, 100 ) );
+
+		$openButton.on( 'click', function() {
+			$overlay.show();
+
+			positionPopup();
+		} );
+
+		$closeButton.on( 'click', function() {
+			$content.find( '.novablocks-sharing__notification--visible' ).removeClass( 'novablocks-sharing__notification--visible' );
+			$overlay.hide();
+		} );
+
+	} )
 
 })();

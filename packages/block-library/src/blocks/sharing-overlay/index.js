@@ -2,6 +2,8 @@
  * Internal dependencies
  */
 import * as icons from '@novablocks/icons';
+import attributes from './attributes';
+import edit from './edit';
 
 /**
  * WordPress dependencies
@@ -16,10 +18,8 @@ registerBlockType( 'novablocks/sharing-overlay', {
 	icon: icons.opentable,
 	// Additional search terms
 	keywords: [ __( 'sharing', '__plugin_txtd' ) ],
-	attributes: {},
-	edit: function( props ) {
-		return 'Button'
-	},
+	attributes,
+	edit,
 	save: function() {
 		return null;
 	},
