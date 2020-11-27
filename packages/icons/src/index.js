@@ -1,3 +1,14 @@
+import * as library from './icons';
+
+export const getSvg = ( iconName ) => {
+	const icon = library[ iconName ];
+
+	return icon ? `
+		<svg viewBox="${ icon.viewBox }">
+		<use xlink:href="#${ icon.id }" />
+		</svg>` : '';
+}
+
 export const nova = (
 	<svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path fillRule="evenodd" clipRule="evenodd" d="M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18ZM12.0398 14C12.4069 10.626 15.2652 8 18.7368 8H20.4211C24.6068 8 28 11.3932 28 15.5789V16.381C28 20.3809 24.9177 23.6609 20.9987 23.9753C20.9996 23.9324 21 23.8893 21 23.8462V21.2727C21 17.2561 17.7439 14 13.7273 14H12.0398Z" fill="#6565F2"/>

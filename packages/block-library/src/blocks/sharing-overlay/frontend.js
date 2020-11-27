@@ -1,11 +1,14 @@
 import Shariff from 'shariff';
 import $ from 'jquery';
 import { titleCase } from '@novablocks/utils';
+import { getSvg } from '@novablocks/icons';
 
 const $groupTemplate = $( '<div class="novablocks-sharing__group" />' )
 const $listTemplate = $( '<div class="novablocks-sharing__list" />' )
 const $listItemTemplate = $( '<div class="novablocks-sharing__list-item" />' );
 const $linkTemplate = $( '<a class="novablocks-sharing__link" />' );
+const $linkIconTemplate = $( '<div class="novablocks-sharing__link-icon" />' );
+const $linkLabelTemplate = $( '<div class="novablocks-sharing__link-label" />' );
 const $titleTemplate = $( '<h4 class="novablocks-sharing__group-title" />' );
 const $descriptionTemplate = $( '<div class="novablocks-sharing__group-description" />' );
 const $contentTemplate = $( '<div class="novablocks-sharing__group-content" />' );
@@ -36,16 +39,19 @@ const createPublicGroup = ( $sharing ) => {
 		const classes = $button.attr( 'class' ).split( /\s+/ );
 		const key = classes.find( classname => classname !== BTN_CLASS );
 		const $link = $button.find( 'a' ).addClass( 'novablocks-sharing__link' );
+		const $linkLabel = $linkLabelTemplate.clone().text( titleCase( key ) );
+		const $linkIcon = $linkIconTemplate.clone();
 		const $listItem = $button.addClass( 'novablocks-sharing__list-item' );
+		const icon = getSvg( key ) || getSvg( 'share' );
 
-		$link.text( titleCase( key ) );
+		$linkIcon.html( icon );
+		$link.empty().append( $linkIcon ).append( $linkLabel );
+
 		$listItem.appendTo( $publicList );
 
 		accumulator[ key ] = $link;
 		return accumulator;
 	}, {} );
-
-	console.log( $publicList );
 
 	return createGroup( 'public', 'Share publicly on social networks', '', $publicList );
 }
@@ -53,10 +59,12 @@ const createPublicGroup = ( $sharing ) => {
 const createPrivateGroup = () => {
 	const $content = createContentFromLinks([ {
 		label: 'Messenger',
-		url: '#'
+		url: '#',
+		icon: 'messenger',
 	}, {
 		label: 'Email',
-		url: 'mailto:'
+		url: 'mailto:',
+		icon: 'email',
 	} ] );
 
 	return createGroup( 'private', 'Share privately with friends', '', $content );
@@ -66,12 +74,14 @@ const createInPersonGroup = () => {
 	const $content = createContentFromLinks([ {
 		label: 'Print',
 		url: '#',
+		icon: 'printer',
 		callback: () => {
 			window.print();
 		}
 	}, {
 		label: 'PDF',
 		url: '#',
+		icon: 'pdf'
 	} ] );
 
 	return createGroup( 'in-person', 'Or maybe you want in person?', '', $content );
@@ -80,8 +90,8 @@ const createInPersonGroup = () => {
 const createContentFromLinks = ( items ) => {
 	const $list = $listTemplate.clone();
 
-	items.forEach( ( { label, url, callback } ) => {
-		const $link = createLink( label, url );
+	items.forEach( ( { label, url, callback, icon } ) => {
+		const $link = createLink( label, url, icon );
 
 		if ( typeof callback === 'function' ) {
 			$link.on( 'click', function(e) {
@@ -96,8 +106,16 @@ const createContentFromLinks = ( items ) => {
 	return $list;
 }
 
-const createLink = ( label, url ) => {
-	return $linkTemplate.clone().attr( 'href', url ).text( label );
+const createLink = ( label, url, iconName = 'share' ) => {
+	const $link = $linkTemplate.clone().attr( 'href', url );
+	const $label = $linkLabelTemplate.clone().text( label );
+	const $icon = $linkIconTemplate.clone();
+
+	$icon.html( getSvg( iconName ) );
+
+	$link.append( $icon ).append( $label );
+
+	return $link;
 }
 
 const createListItem = ( link ) => {
@@ -168,7 +186,8 @@ const createGroup = ( id, title, description, content ) => {
 	$content.append( createMarkupFromShariff( data ) );
 	$content.append( createInPersonGroup( data ) );
 
-	const $closeButton = $( '<div class="novablocks-sharing__close"></div>' );
+	const closeIcon = getSvg( 'cancel' );
+	const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
 	const $title = $( '<h3 class="novablocks-sharing__title">Sharing Options</h3>' );
 
 	$title.prependTo( $content );
