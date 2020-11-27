@@ -186,7 +186,8 @@ const createGroup = ( id, title, description, content ) => {
 	$content.append( createMarkupFromShariff( data ) );
 	$content.append( createInPersonGroup( data ) );
 
-	const $closeButton = $( '<div class="novablocks-sharing__close"></div>' );
+	const closeIcon = getSvg( 'cancel' );
+	const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
 	const $title = $( '<h3 class="novablocks-sharing__title">Sharing Options</h3>' );
 
 	$title.prependTo( $content );

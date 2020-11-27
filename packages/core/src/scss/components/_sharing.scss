@@ -15,6 +15,17 @@
 	}
 }
 
+@mixin novablocks-sharing-link-hover {
+	background: rgba(255,255,255,0.1);
+	transition: var(--novablocks-transition);
+	transition-property: background-color;
+	transition-duration: .15s;
+
+	&:hover {
+		background: rgba(0,0,0,0.1);
+	}
+}
+
 .novablocks-sharing__wrap {
 	position: relative;
 
@@ -55,39 +66,23 @@
 	top: calc( var(--novablocks-spacing) * 0.5 );
 	right: calc( var(--novablocks-spacing) * 0.5 );
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	width: 1.5em;
 	height: 1.5em;
 	margin-top: 0;
 
-	background: rgba(255,255,255,0.1);
 	border-radius: 50%;
-	transform: rotate(45deg);
 
 	cursor: pointer;
 
-	&:before,
-	&:after {
-		content: "";
-		display: block;
+	@include novablocks-sharing-link-hover;
 
-		position: absolute;
-
-		background: #FFF;
-		border-radius: 1em;
-	}
-
-	&:before {
-		width: 0.8em;
-		height: 0.1em;
-		top: calc( 50% - 0.05em );
-		left: calc( 50% - 0.4em );
-	}
-
-	&:after {
-		width: 0.1em;
-		height: 0.8em;
-		top: calc( 50% - 0.4em );
-		left: calc( 50% - 0.05em );
+	svg {
+		width: 0.6em;
+		height: 0.6em;
 	}
 }
 
@@ -185,24 +180,26 @@
 
 .novablocks-sharing__link {
 	display: flex;
+	align-items: center;
 	padding: calc( var(--novablocks-spacing) * 0.125 ) calc( var(--novablocks-spacing) * 0.25 );
-	background: rgba(255,255,255,0.1);
-	transition: var(--novablocks-transition);
-	transition-property: background-color;
-	transition-duration: .15s;
+
+	@include novablocks-sharing-link-hover;
 
 	margin-left: calc( var(--novablocks-spacing) * -0.25 );
 
 	> * {
 		margin-left: calc( var(--novablocks-spacing) * 0.25 );
 	}
-
-	&:hover {
-		background: rgba(0,0,0,0.1);
-	}
 }
 
 .novablocks-sharing__link-icon {
-	display: block;
-	flex-basis: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 0 0 1.2em;
+
+	svg {
+		width: 1em;
+		height: 1em;
+	}
 }
