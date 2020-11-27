@@ -22,10 +22,42 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * @since 1.7.0
 		 */
 		public function __construct() {
+
+			/**
+			 * Frontend logic.
+			 */
+			add_filter( 'comment_class', array( $this, 'comment_class' ), 10, 3 );
+
+			/**
+			 * Backend logic.
+			 */
+			// Handle comment extra fields.
 			add_action( 'comment_post', array( $this, 'save_comment_meta_data' ) );
 			add_filter( 'preprocess_comment', array( $this, 'verify_comment_meta_data' ) );
-			add_action( 'add_meta_boxes_comment', array( $this, 'extend_comment_add_meta_box' ) );
-			add_action( 'edit_comment', array( $this, 'extend_comment_edit_metafields' ) );
+			add_action( 'add_meta_boxes_comment', array( $this, 'add_comment_meta_box' ) );
+			add_action( 'edit_comment', array( $this, 'save_metabox_fields' ) );
+			// Handle per-post extra fields.
+			add_action( 'add_meta_boxes_post', array( $this, 'add_posts_discussion_metabox' ), 10, 1 );
+			add_action( 'save_post_post', array( $this, 'save_posts_metabox_fields' ), 10, 1 );
+		}
+
+		/**
+		 * Change the returned CSS classes for the current comment.
+		 *
+		 * @param string[]    $classes    An array of comment classes.
+		 * @param string      $class      A comma-separated list of additional classes added to the list.
+		 * @param int         $comment_id The comment ID.
+		 *
+		 * @return string[]
+		 */
+		public function comment_class( $classes, $class, $comment_id ) {
+			// Add a class if the comment is featured.
+			$comment_featured = get_comment_meta( $comment_id, 'nb_comment_featured', true );
+			if ( ! empty( $comment_featured ) ) {
+				$classes[] = 'comment-featured';
+			}
+
+			return $classes;
 		}
 
 		/**
@@ -59,9 +91,9 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 
 		/**
-		 * Add an edit option in comment edit screen.
+		 * Add an metabox in comment edit screen.
 		 */
-		public function extend_comment_add_meta_box() {
+		public function add_comment_meta_box() {
 			$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 			if ( $screen instanceof \WP_Screen && isset( $_GET['c'] ) && 'comment' === $screen->id ) {
@@ -72,16 +104,23 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				if ( $comment && in_array( $comment->comment_type, [ 'comment' ], false ) ) {
 					add_meta_box( 'nb_comment_extra_details', esc_html__( 'Extra Details', '__plugin_txtd' ), array(
 							$this,
-							'extend_comment_meta_box'
+							'comment_meta_box_fields'
 					), 'comment', 'normal', 'high' );
 				}
 			}
 		}
 
-		public function extend_comment_meta_box( $comment ) {
+		/**
+		 * Output the comment edit metabox fields markup.
+		 *
+		 * @param WP_Comment $comment
+		 */
+		public function comment_meta_box_fields( $comment ) {
 			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
 			$comment_featured = get_comment_meta( $comment->comment_ID, 'nb_comment_featured', true );
-			wp_nonce_field( 'extend_comment_update', 'extend_comment_update', false );
+
+			// Safety first.
+			wp_nonce_field( 'nb_save_metabox_fields', 'nb_comment_extra_details', false );
 			?>
 
 			<fieldset>
@@ -96,7 +135,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 							<td class="first"><label for="nb_comment_featured"><?php esc_html_e( 'Feature this comment', '__plugin_txtd' ); ?></label></td>
 							<td>
 								<input type="checkbox" name="nb_comment_featured" <?php checked( $comment_featured ); ?> value="1" autocomplete="off"/>
-								<span class="description"><?php esc_html_e( 'Feature this comment at the top of the comments list, if the comments list displays featured comments.', '__plugin_txtd' ); ?></span>
+								<span class="description"><?php esc_html_e( 'Feature this comment if the comments list displays featured comments in a special way.', '__plugin_txtd' ); ?></span>
 							</td>
 						</tr>
 					</tbody>
@@ -109,8 +148,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		/**
 		 * Update comment meta data from comment edit screen.
 		 */
-		public function extend_comment_edit_metafields( $comment_id ) {
-			if ( ! isset( $_POST['extend_comment_update'] ) || ! wp_verify_nonce( $_POST['extend_comment_update'], 'extend_comment_update' ) ) {
+		public function save_metabox_fields( $comment_id ) {
+			if ( ! isset( $_POST['nb_comment_extra_details'] ) || ! wp_verify_nonce( $_POST['nb_comment_extra_details'], 'nb_save_metabox_fields' ) ) {
 				return;
 			}
 
@@ -128,6 +167,72 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			} else {
 				update_comment_meta( $comment_id, 'nb_comment_featured', '0' );
 			}
+		}
+
+		public function add_posts_discussion_metabox( $post ) {
+			add_meta_box( 'nb_post_discussion_extra_details', esc_html__( 'Discussion Extra Details', '__plugin_txtd' ), array(
+					$this,
+					'posts_discussion_metabox_fields'
+			), 'post', 'normal', 'high' );
+		}
+
+		/**
+		 * Output the comment edit metabox fields markup.
+		 *
+		 * @param WP_Post $post
+		 */
+		public function posts_discussion_metabox_fields( $post ) {
+			$conversation_starter_content = get_post_meta( $post->ID, 'nb_conversation_starter_content', true );
+			$conversation_starter_subtitle = get_post_meta( $post->ID, 'nb_conversation_starter_subtitle', true );
+			$conversation_starter_user_ID = get_post_meta( $post->ID, 'nb_conversation_starter_user_id', true );
+
+			// Safety first.
+			wp_nonce_field( 'nb_save_post_discussion_extras', 'nb_post_discussion_extra_details', false );
+			?>
+
+			<fieldset>
+				<legend class="screen-reader-text">Post discussion extra details</legend>
+				<table class="form-table editpost" role="presentation">
+					<tbody>
+					<tr>
+						<td class="first"><label for="nb_conversation_starter_content"><?php esc_html_e( 'Conversation Starter Message', '__plugin_txtd' ); ?></label></td>
+						<td>
+							<textarea name="nb_conversation_starter_content" cols="60" rows="3" class="large-text"><?php echo wp_kses_post( $conversation_starter_content ); ?></textarea>
+							<span class="description"><?php esc_html_e( 'Write the content that will kick-start a meaningful conversation with and among your readers.', '__plugin_txtd' ); ?></span><br />
+							<span class="description"><?php esc_html_e( 'You can use HTML elements like `<b>`, `<i>`, `<a>` to put some structure or emphasis on your message. Don\'t over do it.', '__plugin_txtd' ); ?></span>
+						</td>
+					</tr>
+					<tr>
+						<td class=""><label for="nb_conversation_starter_subtitle"><?php esc_html_e( 'Conversation Starter Subtitle', '__plugin_txtd' ); ?></label></td>
+						<td>
+							<input type="text" name="nb_conversation_starter_subtitle" value="<?php echo esc_attr( $conversation_starter_subtitle ); ?>" class="large-text"/>
+							<span class="description"><?php esc_html_e( 'You can use a dynamic %author% tag like in this example: "A question by %author%, author of this article:"', '__plugin_txtd' ); ?></span>
+						</td>
+					</tr>
+					<tr>
+						<td class=""><label for="nb_conversation_starter_user"><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></label></td>
+						<td>
+							<?php wp_dropdown_users(
+									array(
+										'who'              => 'authors',
+										'name'             => 'nb_conversation_starter_user',
+										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
+										'include_selected' => true,
+										'show'             => 'display_name_with_login',
+									)
+							); ?>
+							<span class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default it\'s the post author.', '__plugin_txtd' ); ?></span>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</fieldset>
+
+			<?php
+		}
+
+		public function save_posts_metabox_fields( $post_ID ) {
+
 		}
 
 		/**
