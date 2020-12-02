@@ -50,6 +50,7 @@
 	max-height: 100%;
 
 	padding: calc( var(--novablocks-spacing) * 0.5 );
+	padding-bottom: var(--novablocks-spacing);
 	overflow: auto;
 }
 
@@ -70,8 +71,8 @@
 	justify-content: center;
 	align-items: center;
 
-	width: 1.5em;
-	height: 1.5em;
+	width: 1.8em;
+	height: 1.8em;
 	margin-top: 0;
 
 	border-radius: 50%;
@@ -124,18 +125,11 @@
 }
 
 .novablocks-sharing__notification-text {
-	padding: calc( var(--novablocks-spacing) * 0.125 ) calc( var(--novablocks-spacing) * 0.25 );
+	padding: calc( var(--novablocks-spacing) * 0.25 ) calc( var(--novablocks-spacing) * 0.5 );
 
 	background: rgba(0,0,0,0.9);
 	color: #FFFFFF;
 	border-radius: 999em;
-}
-
-.novablocks-sharing__copy-input[class],
-.novablocks-sharing__copy-button {
-	line-height: 1.15;
-	padding: calc( var(--novablocks-spacing) * 0.25 );
-	border-radius: .5em;
 }
 
 .novablocks-sharing__copy-input[class] {
@@ -165,6 +159,7 @@
 }
 
 .novablocks-sharing__list {
+	margin: 0;
 	padding: 0;
 	overflow: hidden;
 	border-radius: 0.5em;
@@ -181,7 +176,7 @@
 .novablocks-sharing__link {
 	display: flex;
 	align-items: center;
-	padding: calc( var(--novablocks-spacing) * 0.125 ) calc( var(--novablocks-spacing) * 0.25 );
+	padding: calc( var(--novablocks-spacing) * 0.25 ) calc( var(--novablocks-spacing) * 0.5 );
 
 	@include novablocks-sharing-link-hover;
 

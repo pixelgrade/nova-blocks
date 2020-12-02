@@ -1,6 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { Fragment } from "@wordpress/element";
-import { ControlsGroup, ControlsSection, ControlsTab, ToggleGroup } from "@novablocks/block-editor";
+import {ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar, ToggleGroup} from "@novablocks/block-editor";
 import services from './services';
 
 const toggles = services.map( service => {
@@ -31,7 +31,7 @@ const SharingEdit = ( props ) => {
 
 	const {
 		attributes,
-		setAttributes
+		setAttributes,
 	} = props;
 
 	return (
@@ -43,6 +43,7 @@ const SharingEdit = ( props ) => {
 			</div>
 			<ControlsSection label={ __( 'Display' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
+					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 					<ControlsGroup title={ __( 'Set up sections for this block', '__plugin_txtd' ) }>
 						<ToggleGroup
 							onChange={ setAttributes }

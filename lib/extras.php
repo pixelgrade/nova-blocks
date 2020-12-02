@@ -999,6 +999,13 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 	return $data_attributes;
 }
 
+function novablocks_get_advanced_gallery_component_attributes() {
+	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
+
+	return array_merge( $gallery_attributes, $blob_attributes );
+}
+
 function novablocks_render_advanced_gallery( $attributes ) {
 
 	$images = array();
