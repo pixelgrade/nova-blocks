@@ -228,8 +228,6 @@ const createGroup = ( id, title, description, content ) => {
 			$content.append( createInPersonGroup( data ) );
 		}
 
-		console.log( data.showShareInPerson, !! data.showShareInPerson );
-
 		const closeIcon = getSvg( 'cancel' );
 		const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
 		const $title = $( '<h3 class="novablocks-sharing__title">Sharing Options</h3>' );

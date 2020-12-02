@@ -20,10 +20,9 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		$attributes_config = novablocks_get_sharing_overlay_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes_array[ 'title' ] = get_the_title();
+		$data_attributes_array[ 'url' ] = get_permalink();
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
-
-		$data_attributes[ 'title' ] = get_the_title();
-		$data_attributes[ 'url' ] = get_permalink();
 
 		ob_start();
 		?>
