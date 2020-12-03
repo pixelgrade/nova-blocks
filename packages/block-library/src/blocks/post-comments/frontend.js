@@ -9,6 +9,8 @@ const TRANSITION_EASING = "easeOutCirc";
 
 (function( $, window, undefined ) {
 
+	featureCommentOnClick();
+
 	$( FORM_SELECTOR ).each( function( i, element ) {
 		const $form = $( element );
 
@@ -122,6 +124,40 @@ const TRANSITION_EASING = "easeOutCirc";
 				$textarea.css( 'transition', '' );
 			}
 		} )
+	}
+
+	function featureCommentOnClick() {
+
+		$('.feature-comments').unbind('click');
+
+		$('body').on('click', '.feature-comments', function () {
+			let $this = $(this);
+
+			$.ajax({
+				url: featured_comments_ajax_object.ajaxurl,
+				type: 'POST',
+				data: {
+					'action': 'handle_featured_comments',
+					'do': $this.data('do'),
+					'comment_id': $this.data('comment_id'),
+					'nonce': $this.data('nonce')
+				},
+				success: function (response) {
+					let action = $this.attr('data-do'),
+						comment_id = $this.attr('data-comment_id'),
+						$comment = $("#comment-" + comment_id),
+						$this_and_comment = $this.siblings('.feature-comments').add($comment).add($this);
+					if (action === 'feature')
+						$this_and_comment.addClass('comment-featured');
+					if (action === 'unfeature')
+						$this_and_comment.removeClass('comment-featured');
+
+					$this.data('nonce', response);
+				}
+			})
+
+			return false;
+		});
 	}
 
 } )( jQuery, window );

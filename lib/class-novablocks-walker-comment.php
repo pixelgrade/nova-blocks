@@ -91,7 +91,14 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 							<?php } ?>
 						</div><!-- .comment-author-info -->
 
-						<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
+						<div class="comment-dropdown">
+							<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
+							<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php esc_html_e( 'More', '__plugin_txtd' ); ?></label>
+							<div class="comment-dropdown-menu">
+								<?php echo NovaBlocks_Comments::output_extras_options();?>
+								<a class="comment-dropdown-item" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( 'Link to comment', '__plugin_txtd' ); ?></a>
+							</div>
+						</div>
 					</footer><!-- .comment-meta -->
 
 					<div class="comment-content">

@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
+
 	/**
 	 * The NovaBlocks Comments class
 	 */
@@ -21,12 +22,22 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 *
 		 * @since 1.7.0
 		 */
+
+		private static $actions;
+
 		public function __construct() {
+
+			self::$actions = array(
+					'feature'   => __( 'Feature',   '__plugin_txtd' ),
+					'unfeature' => __( 'Unfeature', '__plugin_txtd' ),
+			);
+
+			add_action( 'wp_ajax_handle_featured_comments', array( $this, 'handle_featured_comments' ) );
 
 			/**
 			 * Frontend logic.
 			 */
-			add_filter( 'comment_class', array( $this, 'comment_class' ), 10, 3 );
+			add_filter( 'comment_class', array( $this, 'featured_comment_class' ), 10, 3 );
 
 			/**
 			 * Backend logic.
@@ -45,14 +56,17 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * Change the returned CSS classes for the current comment.
 		 *
 		 * @param string[]    $classes    An array of comment classes.
-		 * @param string      $class      A comma-separated list of additional classes added to the list.
-		 * @param int         $comment_id The comment ID.
 		 *
 		 * @return string[]
 		 */
-		public function comment_class( $classes, $class, $comment_id ) {
-			// Add a class if the comment is featured.
+
+		public function featured_comment_class( $classes = array() ) {
+			global $comment;
+
+			$comment_id = $comment->comment_ID;
+
 			$comment_featured = get_comment_meta( $comment_id, 'nb_comment_featured', true );
+
 			if ( ! empty( $comment_featured ) ) {
 				$classes[] = 'comment-featured';
 			}
@@ -317,7 +331,74 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				'submit_button'        => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
 			);
 		}
+
+		public function handle_featured_comments() {
+
+			if ( ! isset( $_POST['do'] ) ) die;
+
+			$action = $_POST['do'];
+
+			$actions = array_keys( self::$actions );
+
+			if ( in_array( $action, $actions ) ) {
+
+				$comment_id = absint( $_POST['comment_id'] );
+				$comment    = get_comment( $comment_id );
+
+				if ( ! $comment ) {
+					die;
+				}
+
+				if( ! current_user_can( 'edit_comment', $comment_id ) ) {
+					die;
+				}
+
+				if( ! wp_verify_nonce( $_POST['nonce'], 'featured_comments' ) ) {
+					die;
+				}
+
+				switch ( $action ) {
+
+					case 'feature':
+						update_comment_meta( $comment_id, 'nb_comment_featured',
+								'1' );
+						break;
+
+					case 'unfeature':
+						update_comment_meta( $comment_id, 'nb_comment_featured', '0' );
+						break;
+
+						die( wp_create_nonce( 'featured_comments' ) );
+
+				}
+			}
+
+			die;
+		}
+
+		static public function output_extras_options(  ) {
+
+			$comment_text = '';
+
+			if( is_admin() || ! current_user_can( 'moderate_comments' ) ) {
+				return $comment_text;
+			}
+
+			global $comment;
+
+			$comment_id = $comment->comment_ID;
+			$data_id    = ' data-comment_id=' . $comment_id;
+
+			$current_status = implode( ' ', self::featured_comment_class() );
+
+			$output = '';
+			foreach( self::$actions as $action => $label ) {
+				$output .= "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "featured_comments" ) . "' title='{$label}'>{$label}</a> "; }
+
+			return $comment_text . $output;
+		}
 	}
+
 }
 
 return new NovaBlocks_Comments();
