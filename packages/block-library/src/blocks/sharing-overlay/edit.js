@@ -34,6 +34,10 @@ const SharingEdit = ( props ) => {
 		setAttributes,
 	} = props;
 
+	const {
+		headingLevel
+	} = attributes;
+
 	return (
 		<Fragment>
 			<div className="wp-block-buttons">
@@ -43,7 +47,7 @@ const SharingEdit = ( props ) => {
 			</div>
 			<ControlsSection label={ __( 'Display' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
-					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
+					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ headingLevel } onChange={ ( newLevel ) => setAttributes( { headingLevel: newLevel } ) } />
 					<ControlsGroup title={ __( 'Set up sections for this block', '__plugin_txtd' ) }>
 						<ToggleGroup
 							onChange={ setAttributes }
