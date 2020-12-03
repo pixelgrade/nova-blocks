@@ -17,19 +17,22 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		<div class="novablocks-conversations">
 			<div class="novablocks-conversations__container">
 				<h3 class="novablocks-conversations__header">
-					<span class="novablocks-conversations__title">
-						<?php esc_html_e('Conversations', '__plugin_txtd') ?>
-					</span>
-					<span class="novablocks-conversations__comments-count">
-						<?php
+					<?php
 						$comments_count = number_format_i18n( get_comments_number( $post->ID ) );
-						if ( $comments_count > 0 ) {
-							printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', '__plugin_txtd' ), $comments_count );
-						} else {
-							esc_html_e( 'No Comments' );
+						$conversation_title = 'Start a conversation';
+
+						if( $comments_count > 0 ) {
+							$conversation_title = 'Conversations';
 						}
-						?>
+					?>
+					<span class="novablocks-conversations__title">
+						<?php esc_html_e( $conversation_title, '__plugin_txtd') ?>
 					</span>
+					<?php if( $comments_count > 0 ) {  ?>
+						<span class="novablocks-conversations__comments-count">
+							<?php  printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', '__plugin_txtd' ), $comments_count ); ?>
+						</span>
+					<?php } ?>
 				</h3>
 				<?php echo $content; ?>
 			</div>

@@ -28,9 +28,9 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 
 			$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
 
-			$comment_author_url = get_comment_author_url( $comment );
-			$comment_author     = get_comment_author( $comment );
-			$avatar             = get_avatar( $comment, $args['avatar_size'] );
+			$comment_author_url   = get_comment_author_url( $comment );
+			$comment_author       = get_comment_author( $comment );
+			$avatar               = get_avatar( $comment, $args['avatar_size'] );
 			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
 			// For post authors without a background, we will use a default one.
 			if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
@@ -91,7 +91,14 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 							<?php } ?>
 						</div><!-- .comment-author-info -->
 
-						<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
+						<div class="comment-dropdown">
+							<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
+							<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php esc_html_e( 'More', '__plugin_txtd' ); ?></label>
+							<div class="comment-dropdown-menu">
+								<?php echo NovaBlocks_Comments::output_extras_options();?>
+								<a class="comment-dropdown-item" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( 'Link to comment', '__plugin_txtd' ); ?></a>
+							</div>
+						</div>
 					</footer><!-- .comment-meta -->
 
 					<div class="comment-content">
@@ -109,7 +116,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 
 						<?php
 						/* translators: 1: Comment date, 2: Comment time. */
-						$comment_timestamp = sprintf( esc_html__( '%1$s at %2$s', '__plugin_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
+						$comment_timestamp = sprintf( esc_html__( '%1$s at %2$s', '__plugin_txtd' ), get_comment_date(), get_comment_time() );
 						?>
 						<time class="comment-posted-time" datetime="<?php comment_time( 'c' ); ?>" title="<?php echo esc_attr( $comment_timestamp ); ?>"><?php echo $this->comment_time_human_friendly() ?></time>
 
