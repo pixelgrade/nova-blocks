@@ -376,7 +376,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			die;
 		}
 
-		static public function output_extras_options(  ) {
+		static public function output_extras_options( ) {
 
 			$comment_text = '';
 
@@ -396,6 +396,34 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				$output .= "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "featured_comments" ) . "' title='{$label}'>{$label}</a> "; }
 
 			return $comment_text . $output;
+		}
+
+		static public function conversation_starter_block() {
+			global $post;
+
+			$conversation_starter_subtitle = 'A question by Christopher O\'Neill, author of this article:';
+			$conversation_starter_content = 'How would you describe your experience with discounts? Have you ever thought on skipping the annual sale campaigns?';
+
+			$conversation_starter_avatar = get_avatar( get_the_author_meta( 'ID' ), 100, '', '', array( 'class' => 'avatar', ) );
+
+			if( empty($conversation_starter_content) && empty($conversation_starter_subtitle)) {
+				return;
+			}
+
+			$output = '<div class="novablocks-conversation__starter">';
+			$output .= '<div class="novablocks-conversation__starter-avatar">';
+			$output .= $conversation_starter_avatar;
+			$output .= '</div>';
+			$output .= '<span class="novablocks-conversation__starter-subtitle text--small">';
+			$output .= $conversation_starter_subtitle;
+			$output .= '</span>';
+			$output .= '<div class="novablocks-conversation__starter-message">';
+			$output .= $conversation_starter_content;
+			$output .= '</div>';
+			$output .= '</div>';
+
+			return $output;
+
 		}
 	}
 

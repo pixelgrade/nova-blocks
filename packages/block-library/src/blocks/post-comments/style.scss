@@ -28,6 +28,12 @@
 
 .novablocks-conversations {
 
+	&__header {
+		@include below(tablet) {
+		  	margin-bottom: 0;
+		}
+	}
+
 	.comment-form {
 		position: relative;
 
@@ -78,11 +84,11 @@
 
 	.comment-list {
 	  	@include block-spacing;
-	  	--novablocks-element-spacing-multiplier: 1;
+	  	--novablocks-element-spacing-multiplier: .75;
 
-	  @include above(tablet) {
-		--novablocks-element-spacing-multiplier: 2;
-	  }
+		@include above(tablet) {
+		  --novablocks-element-spacing-multiplier: 2;
+		}
 	}
 
 	.comment-fields-wrapper,
@@ -98,11 +104,6 @@
 	.comment-fields-wrapper > .field-description + *,
 	.comment-fields-wrapper > label + :not(.field-description) {
 		--novablocks-element-spacing-multiplier: 0.175;
-	}
-
-	.comment-author {
-		font-weight: bold;
-		color: var(--comment-author-color);
 	}
 
 	.comment-posted-time {
@@ -179,9 +180,6 @@
 		}
 
 		@include below(tablet) {
-			margin-left: calc( -1 * var(--site-container-spacings) );
-			margin-right: calc( -1 * var(--site-container-spacings) );
-
 			background-color: rgba(0,0,0,0.1);
 
 		  	> .comment-wrapper {
@@ -209,13 +207,6 @@
 
 			> .comment-wrapper {
 				background-color: var(--conversations-bg-color);
-			}
-
-			> .comment,
-			> .comment-wrapper,
-			> .comment-respond {
-				padding-left: var(--site-container-spacings);
-				padding-right: var(--site-container-spacings);
 			}
 		}
 	}
@@ -258,13 +249,8 @@
 
 		@include below(tablet) {
 			&:not(.parent) {
-			  margin-left: calc( -1 * var(--site-container-spacings));
-			  margin-right: calc( -1 * var(--site-container-spacings));
 
 				> .comment-wrapper {
-					padding-left: var(--site-container-spacings);
-					padding-right: var(--site-container-spacings);
-
 				  	background-color: var(--comment-highlighted-color);
 
 				  	border-radius: 0;
@@ -338,7 +324,7 @@
 
 	.comment-author-name {
 		font-weight: bolder;
-		color: var(--novablocks-current-color-primary);
+		color: var(--comment-author-color);
 	}
 
 	.comment-body {
@@ -518,7 +504,6 @@
 		width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
 	  }
 	}
-
 }
 
 
@@ -529,6 +514,8 @@
 .comment-dropdown {
   	position: relative;
   	z-index: 10;
+
+  	align-self: center;
 
 	a {
 		text-decoration: none;
@@ -545,7 +532,7 @@
 
   background: var(--novablocks-light-1);
   min-width: 200px;
-  padding: .75em;
+  padding: .5em .75em;
 
   box-shadow: 0 0.25em 2em rgba(0, 0, 0, 0.1),
   			  0 0.125em 0.25em rgba(0, 0, 0, 0.1);
@@ -558,6 +545,33 @@
   pointer-events: none;
 
   transition: all .4s cubic-bezier(.25,.1,.26,.99);
+
+  @include below(tablet) {
+	top: 10px;
+	right: -10px;
+	padding-top: 0;
+	padding-bottom: 0;
+  }
+
+  &:after {
+	content: "";
+	position: absolute;
+	top: -15px;
+	right: 1em;
+
+	transform: translate3d(0,0,0);
+	margin-top: 10px;
+
+	border-width: 0 8px 8px;
+	border-style: solid;
+	border-color: transparent transparent #fff;
+
+	z-index: 100;
+
+	@include below(tablet) {
+	  right: 5px;
+	}
+  }
 }
 
 .comment-dropdown-toggle {
@@ -632,7 +646,7 @@
 }
 
 .comment-dropdown-item {
-	font-size: 16px;
+  	font-size: 13px;
   	padding: 5px 0;
 
   	cursor: pointer;
@@ -640,10 +654,73 @@
 	&:hover {
 	  opacity: .5;
 	}
+
+  	@include above(tablet) {
+	  	font-size: 16px;
+	}
 }
 
 .comment-dropdown-open:checked ~ .comment-dropdown-menu {
   transform: translateZ(0);
   opacity: 1;
   pointer-events: auto;
+}
+
+.novablocks-conversation__starter {
+
+  --conversation-starter-avatar-size: 50px;
+  --conversation-starter-column-gap: 20px;
+
+  display: grid;
+  grid-template-columns: var(--conversation-starter-avatar-size) 1fr;
+  grid-template-areas:
+        "avatar subtitle"
+        "content content";
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+
+  padding: 22px 25px;
+  margin-bottom: 2em;
+
+  background-color: var(--comment-highlighted-color);
+
+  @include above(tablet) {
+	--conversation-starter-avatar-size: 80px;
+	grid-row-gap: 0;
+
+	grid-template-areas:
+        "avatar subtitle"
+        "avatar content";
+
+	border-radius: 0 50px;
+
+	padding: 45px 60px;
+  }
+}
+
+.novablocks-conversation__starter-subtitle {
+  grid-area: subtitle;
+  color: var(--component-accent-color);
+  font-weight: bold;
+}
+
+.novablocks-conversation__starter-message {
+  grid-area: content;
+  font-size: 19px;
+
+  @include above(tablet) {
+	font-size: 23px;
+  }
+}
+
+.novablocks-conversation__starter-avatar {
+  grid-area: avatar;
+
+  .avatar {
+	border-radius: 0 15px;
+
+	@include above(tablet) {
+	  border-radius: 0 20px;
+	}
+  }
 }
