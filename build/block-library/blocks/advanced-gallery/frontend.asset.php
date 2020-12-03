@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('novablocks-advanced-gallery/frontend', 'wp-polyfill'), 'version' => '0271e7f3dddfddfa730c6d85bc78be56');
+<?php return array('dependencies' => array('novablocks-advanced-gallery/frontend', 'wp-polyfill'), 'version' => 'e1911d02d0ef0a2a1732a10f4b2bb1f0');
