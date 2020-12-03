@@ -226,7 +226,7 @@ import services from './services';
 		const groupDescription = 'Copy link and paste it anywhere you want it';
 
 		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }"/>` );
-		const $button = $( '<button class="novablocks-sharing__copy-button">Copy link to clipboard</button>')
+		const $button = $( '<div class="wp-block-button"><button class="wp-block-button__link  novablocks-sharing__copy-button">Copy link to clipboard</button></div>' );
 		const $notification = $( '<div class="novablocks-sharing__notification"><span class="novablocks-sharing__notification-text">Link copied to your clipboard</span></div>' );
 		const $content = $input.add( $button ).add( $notification );
 

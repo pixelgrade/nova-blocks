@@ -24,6 +24,20 @@ $variations: (
 		light-secondary: light-secondary,
 		light-tertiary: light-tertiary,
 	),
+	dark: (
+		// color
+		color-primary: color-primary,
+		color-secondary: color-secondary,
+		color-tertiary: color-tertiary,
+		// dark
+		dark-primary: light-primary,
+		dark-secondary: light-secondary,
+		dark-tertiary: light-tertiary,
+		// light
+		light-primary: dark-primary,
+		light-secondary: dark-secondary,
+		light-tertiary: dark-tertiary,
+	),
 );
 
 @mixin variation( $variation-name, $destination: current, $source: sm ) {

@@ -1,3 +1,28 @@
+@mixin novablocks-sharing-link-hover {
+	transform: translateZ(0);
+
+	&:before {
+		content: "";
+
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+
+		background: var(--novablocks-current-dark-primary);
+		transition: var(--novablocks-transition);
+		transition-property: background-color;
+		transition-duration: .15s;
+		opacity: 0.1;
+	}
+
+	&:hover:before {
+		background: var(--novablocks-current-light-primary);
+	}
+}
+
 .novablocks-sharing__overlay {
 	position: absolute;
 	top: 0;
@@ -9,24 +34,16 @@
 	justify-content: center;
 	align-items: center;
 
-	&[class] {
-		margin-top: calc( var(--novablocks-spacing) * 0.5 );
-		margin-bottom: calc( var(--novablocks-spacing) * 0.5 );
-	}
-}
+	pointer-events: none;
 
-@mixin novablocks-sharing-link-hover {
-	background: rgba(255,255,255,0.1);
-	transition: var(--novablocks-transition);
-	transition-property: background-color;
-	transition-duration: .15s;
-
-	&:hover {
-		background: rgba(0,0,0,0.1);
-	}
+	// equal to --theme-spacing ??
+	--block-spacing: calc( var(--novablocks-spacing) / 3 );
 }
 
 .novablocks-sharing__wrap {
+	background-color: var(--novablocks-current-light-secondary);
+	color: var(--novablocks-current-dark-secondary);
+
 	position: relative;
 
 	display: flex;
@@ -35,9 +52,9 @@
 	width: 25em;
 	max-width: 100%;
 
-	background: var(--novablocks-current-dark-primary);
-	color: var(--novablocks-current-light-primary);
 	border-radius: 1em;
+
+	pointer-events: auto;
 
 	a {
 		color: inherit;
@@ -49,8 +66,7 @@
 	position: relative;
 	max-height: 100%;
 
-	padding: calc( var(--novablocks-spacing) * 0.5 );
-	padding-bottom: var(--novablocks-spacing);
+	padding: var(--block-spacing);
 	overflow: auto;
 }
 
@@ -64,8 +80,8 @@
 
 .novablocks-sharing__close {
 	position: absolute;
-	top: calc( var(--novablocks-spacing) * 0.5 );
-	right: calc( var(--novablocks-spacing) * 0.5 );
+	top: var(--block-spacing);
+	right: var(--block-spacing);
 
 	display: flex;
 	justify-content: center;
@@ -76,6 +92,7 @@
 	margin-top: 0;
 
 	border-radius: 50%;
+	overflow: hidden;
 
 	cursor: pointer;
 
@@ -125,7 +142,7 @@
 }
 
 .novablocks-sharing__notification-text {
-	padding: calc( var(--novablocks-spacing) * 0.25 ) calc( var(--novablocks-spacing) * 0.5 );
+	padding: calc( var(--block-spacing) * 0.5 ) var(--block-spacing);
 
 	background: rgba(0,0,0,0.9);
 	color: #FFFFFF;
@@ -176,14 +193,14 @@
 .novablocks-sharing__link {
 	display: flex;
 	align-items: center;
-	padding: calc( var(--novablocks-spacing) * 0.25 ) calc( var(--novablocks-spacing) * 0.5 );
+	padding: calc( var(--block-spacing) * 0.5 ) var(--block-spacing);
 
 	@include novablocks-sharing-link-hover;
 
-	margin-left: calc( var(--novablocks-spacing) * -0.25 );
+	margin-left: calc( var(--block-spacing) * -0.5 );
 
 	> * {
-		margin-left: calc( var(--novablocks-spacing) * 0.25 );
+		margin-left: calc( var(--block-spacing) * 0.5 );
 	}
 }
 
