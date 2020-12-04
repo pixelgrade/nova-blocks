@@ -226,7 +226,14 @@ import services from './services';
 		const groupDescription = 'Copy link and paste it anywhere you want it';
 
 		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }"/>` );
-		const $notification = $( '<div class="novablocks-sharing__notification"><span class="novablocks-sharing__notification-text">Link copied to your clipboard</span></div>' );
+		const $notification = $( '<div class="novablocks-sharing__notification-wrap">' );
+		const $notificationContent = $( '<div class="novablocks-sharing__notification">' );
+		const $notificationText = $( '<span class="novablocks-sharing__notification-text">Link copied to your clipboard</span>' );
+		const $notificationIcon = $( '<span class="novablocks-sharing__notification-icon">' ).append( getSvg( 'tick' ) );
+
+		$notificationContent.append( $notificationIcon ).append( $notificationText );
+		$notificationContent.appendTo( $notification );
+
 		const $button = createContentFromLinks( [ {
 			label: 'Copy link to clipboard',
 			url: '#',
