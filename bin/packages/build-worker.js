@@ -113,6 +113,7 @@ const BUILD_TASK_BY_EXTENSION = {
 	'.png': copy,
 	'.jpg': copy,
 	'.gif': copy,
+	'.svg': copy,
 	async '.scss'( file ) {
 		const outputFile = getBuildPath(
 			file.replace( '.scss', '.css' ),

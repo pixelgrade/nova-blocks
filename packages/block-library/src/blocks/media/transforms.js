@@ -10,6 +10,14 @@ export default {
 					images: attributes.images
 				} )
 			},
+		},
+		{
+			type: 'block',
+			isMultiBlock: true,
+			blocks: [ 'core/image' ],
+			transform: ( images ) => {
+				return createBlock( 'novablocks/media', { images } )
+			}
 		}
 	],
 	to: [

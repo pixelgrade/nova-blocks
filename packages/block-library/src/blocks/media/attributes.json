@@ -48,15 +48,15 @@
 		"default": false
 	},
     "style": {
-	  "type": "string",
-	  "default": "default"
+	  	"type": "string",
+	  	"default": "default"
 	},
 	"accentColor": {
-	  "type": "string",
-	  "default": "primary"
+	  	"type": "string",
+	  	"default": "primary"
 	},
   	"templateInserted": {
-	  	"boolean": true,
+	  	"type": "boolean",
 	  	"default": false
   	}
 }
