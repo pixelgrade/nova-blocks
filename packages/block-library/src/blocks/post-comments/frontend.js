@@ -36,7 +36,8 @@ const TRANSITION_EASING = "easeOutCirc";
 	function updatePlaceholder( $form ) {
 		const $textarea = $form.find( COMMENT_TEXTAREA_SELECTOR );
 		const desktopPlaceholder = 'Join the conversation, share your knowledge or ask a question...';
-		const placeholder = above( 'lap' ) ? desktopPlaceholder : '';
+		const mobilePlaceholder = 'Share your knowledge or ask a question...';
+		const placeholder = above( 'lap' ) ? desktopPlaceholder : mobilePlaceholder;
 
 		$textarea.attr( "placeholder", placeholder );
 	}

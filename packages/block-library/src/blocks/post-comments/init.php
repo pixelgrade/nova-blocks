@@ -16,6 +16,7 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		?>
 		<div class="novablocks-conversations">
 			<div class="novablocks-conversations__container">
+				<?php echo NovaBlocks_Comments::conversation_starter_block();?>
 				<h3 class="novablocks-conversations__header">
 					<?php
 						$comments_count = number_format_i18n( get_comments_number( $post->ID ) );
