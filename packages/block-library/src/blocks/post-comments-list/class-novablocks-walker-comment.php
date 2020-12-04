@@ -3,7 +3,7 @@
  * Custom comment walker.
  */
 
-if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
+if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 	/**
 	 * CUSTOM COMMENT WALKER
 	 * A custom walker for comments, based on the walker in Twenty Twenty.
@@ -31,10 +31,13 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 			$comment_author_url   = get_comment_author_url( $comment );
 			$comment_author       = get_comment_author( $comment );
 			$avatar               = get_avatar( $comment, $args['avatar_size'] );
-			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
-			// For post authors without a background, we will use a default one.
-			if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
-				$commenter_background = esc_html__( 'Author', '__plugin_txtd' );
+			$commenter_background = '';
+			if ( ! empty( $args['display_commenter_background'] ) ) {
+				$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+				// For post authors without a background, we will use a default one.
+				if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
+					$commenter_background = esc_html__( 'Author', '__plugin_txtd' );
+				}
 			}
 
 			$comment_reply_link = get_comment_reply_link(

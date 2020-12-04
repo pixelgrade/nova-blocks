@@ -31,13 +31,17 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			 * Frontend logic.
 			 */
 
+			// Adjust the comment form fields.
+			add_filter( 'comment_form_default_fields', array( $this, 'adjust_comment_form_default_fields' ), 9, 1 );
+			add_filter( 'comment_form_defaults', array( $this, 'adjust_comment_form_defaults' ), 9, 1 );
+
 			add_filter( 'comment_class', array( $this, 'featured_comment_class' ), 10, 3 );
 
 			/**
 			 * Backend logic.
 			 */
 
-			// Handle comment extra fields.
+			// Handle comment extra meta fields.
 			add_action( 'comment_post', array( $this, 'save_comment_meta_data' ) );
 			add_filter( 'preprocess_comment', array( $this, 'verify_comment_meta_data' ) );
 			add_action( 'add_meta_boxes_comment', array( $this, 'add_comment_meta_box' ) );
@@ -251,10 +255,55 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 		}
 
-		/**
-		 * Nova Blocks Comment Form args.
-		 */
-		static public function get_comment_form_args() {
+		public function adjust_comment_form_default_fields( $fields ) {
+			// We only want to do this for the 'post' post type.
+			if ( ! isset( $GLOBALS['nb_current_comment_form_post_id'] ) || 'post' !== get_post_type( $GLOBALS['nb_current_comment_form_post_id'] ) ) {
+				return $fields;
+			}
+
+			$commenter    = wp_get_current_commenter();
+			$req          = get_option( 'require_name_email' );
+			$html_req     = ( $req ? " required='required'" : '' );
+
+			$fields = array_merge( $fields, array(
+					'author'  => sprintf(
+							'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
+							sprintf(
+									'<label for="author">%s%s</label>',
+									esc_html__( 'What is your name?', '__plugin_txtd' ),
+									( $req ? ' <span class="required">*</span>' : '' )
+							),
+							sprintf(
+									'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" placeholder="Ernest Hemingway" %s />',
+									esc_attr( $commenter['comment_author'] ),
+									$html_req
+							)
+					),
+					'email'   => sprintf(
+							'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
+							sprintf(
+									'<label for="email">%s%s</label><span class="field-description">%s</span>',
+									esc_html__( 'What is your email address?', '__plugin_txtd' ),
+									( $req ? ' <span class="required">*</span>' : '' ),
+									esc_html__( 'It will not be published or shared with others.', '__plugin_txtd' )
+							),
+							sprintf(
+									'<input id="email" name="email" type="email" value="%s" size="30" maxlength="100" aria-describedby="email-notes" placeholder="your@email.com" %s />',
+									esc_attr( $commenter['comment_author_email'] ),
+									$html_req
+							)
+					),
+					'url'     => '', // We don't want the commenter URL for now.
+			) );
+
+			return $fields;
+		}
+
+		public function adjust_comment_form_defaults( $defaults ) {
+			// We only want to do this for the 'post' post type.
+			if ( ! isset( $GLOBALS['nb_current_comment_form_post_id'] ) || 'post' !== get_post_type( $GLOBALS['nb_current_comment_form_post_id'] ) ) {
+				return $defaults;
+			}
 
 			$commenter    = wp_get_current_commenter();
 			$req          = get_option( 'require_name_email' );
@@ -264,74 +313,52 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			$avatar_size = 100;
 			$avatar = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', array( 'class' => 'avatar', ) );
 
-			$comment_field = '<div class="comment-avatar">' . $avatar . '</div>' .
+			// Change the comment field (the textarea).
+			$defaults['comment_field'] = '<div class="comment-avatar">' . $avatar . '</div>' .
 			                 sprintf(
-				                 '<p class="comment-form-comment">' .
-				                 '<label for="comment">%s</label>' .
-				                 '<span class="field-description">%s</span>' .
-				                 '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
-				                 '</p>',
-				                 __( 'What\'s your comment or question?', '__plugin_txtd' ),
-				                 __( 'Let\'s start a personal and a meaningful conversation.', '__plugin_txtd' ),
-				                 __( 'Share your knowledge or ask a question...', '__plugin_txtd' )
+					                 '<p class="comment-form-comment">' .
+					                 '<label for="comment">%s</label>' .
+					                 '<span class="field-description">%s</span>' .
+					                 '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
+					                 '</p>',
+					                 esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),
+					                 esc_html__( 'Let\'s start a personal and a meaningful conversation.', '__plugin_txtd' ),
+					                 esc_html__( 'Share your knowledge or ask a question...', '__plugin_txtd' )
 			                 ) .
+			                 // We need to add the commenter background field to the comment textarea because we want it for logged in users too.
 			                 sprintf(
-				                 '<p class="comment-form-experience comment-fields-wrapper">' .
-				                 '<label for="nb_commenter_background">%s</label>' .
-				                 '<span class="field-description">%s</span>' .
-				                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" />' .
-				                 '</p>',
-				                 __( 'What is your expertise or qualification in this topic?', '__plugin_txtd' ),
-				                 __( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
-				                 __( 'Your relevant experience or expertise...', '__plugin_txtd' )
+					                 '<p class="comment-form-experience comment-fields-wrapper">' .
+					                 '<label for="nb_commenter_background">%s</label>' .
+					                 '<span class="field-description">%s</span>' .
+					                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" />' .
+					                 '</p>',
+					                 esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
+					                 esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+					                 esc_html__( 'Relevant experience or background', '__plugin_txtd' )
 			                 );
 
-			$fields = array(
-				'author'  => sprintf(
-					'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
-					sprintf(
-						'<label for="author">%s%s</label>',
-						__( 'What is your name?' ),
-						( $req ? ' <span class="required">*</span>' : '' )
-					),
-					sprintf(
-						'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" placeholder="eg. John Doe" %s />',
-						esc_attr( $commenter['comment_author'] ),
-						$html_req
-					)
-				),
-				'email'   => sprintf(
-					'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
-					sprintf(
-						'<label for="email">%s%s</label><span class="field-description">Your email address will not be published.</span>',
-						__( 'What is your email address?' ),
-						( $req ? ' <span class="required">*</span>' : '' )
-					),
-					sprintf(
-						'<input id="email" name="email" type="email" value="%s" size="30" maxlength="100" aria-describedby="email-notes" placeholder="your@email.com" %s />',
-						esc_attr( $commenter['comment_author_email'] ),
-						$html_req
-					)
-				),
-				'url'     => '',
-				'cookies' => '',
-			);
+			// No title or section related to the logged in user.
+			$defaults['logged_in_as'] = '';
 
-			return array(
-				'comment_field'        => $comment_field,
-				'fields'               => $fields,
-				'cancel_reply_before'  => '',
-				'cancel_reply_after'   => '',
-				'class_container'      => 'novablocks-conversations__form comment-respond',
-				'comment_notes_before' => '',
-				'class_form'           => 'comment-form form-grid',
-				'logged_in_as'         => '',
-				'title_reply'          => '',
-				'title_reply_before'   => '',
-				'title_reply_after'    => '',
-				'label_submit'         => esc_html__( 'Add this comment', '__plugin_txtd' ),
-				'submit_button'        => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
-			);
+			// No notes before the comment (like the fact that your email won't be published.
+			$defaults['comment_notes_before'] = '';
+
+			// We want a some classes to be present.
+			$defaults['class_container'] .= ' novablocks-conversations__form';
+			$defaults['class_form'] .= ' form-grid';
+
+			// Change details about the reply logic and behavior.
+			$defaults['title_reply']         = '';
+			$defaults['title_reply_before']  = '';
+			$defaults['title_reply_after']   = '';
+			$defaults['cancel_reply_before'] = '';
+			$defaults['cancel_reply_after']  = '';
+
+			// Change the submit button
+			$defaults['label_submit'] = esc_html__( 'Add this comment', '__plugin_txtd' );
+			$defaults['submit_button'] = '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>';
+
+			return $defaults;
 		}
 
 		public function handle_featured_comments() {
@@ -401,30 +428,36 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 
 		static public function conversation_starter_block() {
-			global $post;
-
+			// @todo These are just placeholders. We need to use the actual data.
 			$conversation_starter_subtitle = 'A question by Christopher O\'Neill, author of this article:';
 			$conversation_starter_content = 'How would you describe your experience with discounts? Have you ever thought on skipping the annual sale campaigns?';
 
 			$conversation_starter_avatar = get_avatar( get_the_author_meta( 'ID' ), 100, '', '', array( 'class' => 'avatar', ) );
 
-			if( empty($conversation_starter_content) && empty($conversation_starter_subtitle)) {
-				return;
+			// We need at the minimum the content.
+			if ( empty( $conversation_starter_content ) ) {
+				return '';
 			}
 
-			$output = '<div class="novablocks-conversation__starter">';
-			$output .= '<div class="novablocks-conversation__starter-avatar">';
-			$output .= $conversation_starter_avatar;
-			$output .= '</div>';
-			$output .= '<span class="novablocks-conversation__starter-subtitle text--small">';
-			$output .= $conversation_starter_subtitle;
-			$output .= '</span>';
-			$output .= '<div class="novablocks-conversation__starter-message">';
-			$output .= $conversation_starter_content;
-			$output .= '</div>';
-			$output .= '</div>';
+			ob_start(); ?>
 
-			return $output;
+			<div class="novablocks-conversation__starter">
+
+			    <?php if ( ! empty( $conversation_starter_subtitle ) ) { ?>
+				<div class="novablocks-conversation__starter-avatar">
+					<?php echo $conversation_starter_avatar; ?>
+				</div>
+				<span class="novablocks-conversation__starter-subtitle text--small">
+					<?php echo $conversation_starter_subtitle; ?>
+				</span>
+				<?php } ?>
+
+				<div class="novablocks-conversation__starter-message">
+					<?php echo $conversation_starter_content; ?>
+				</div>
+			</div>
+
+			<?php return ob_get_clean();
 
 		}
 	}
