@@ -1,0 +1,18 @@
+@import "style";
+
+.novablocks-conversations {
+
+	.comment-form .second-column {
+		display: block;
+		opacity: 1;
+	}
+
+	.wp-block-button__link {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+.comment-form[class] p:not(:last-child) {
+	margin-bottom: 1em;
+}

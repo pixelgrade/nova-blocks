@@ -1,0 +1,6 @@
+{
+	"align": {
+		"type": "string",
+		"default": "wide"
+	}
+}

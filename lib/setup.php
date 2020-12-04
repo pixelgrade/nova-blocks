@@ -65,3 +65,5 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) ) {
 	add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 }
 
+require_once 'class-novablocks-comments.php';
+require_once 'class-novablocks-walker-comment.php';

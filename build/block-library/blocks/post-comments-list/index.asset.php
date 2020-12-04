@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('moment', 'novablocks-icons', 'wp-block-editor', 'wp-blocks', 'wp-data', 'wp-element', 'wp-i18n', 'wp-polyfill'), 'version' => 'a8ab6b7e9f6ca68155f758890c4162b3');
