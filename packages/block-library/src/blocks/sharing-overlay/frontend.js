@@ -226,39 +226,41 @@ import services from './services';
 		const groupDescription = 'Copy link and paste it anywhere you want it';
 
 		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }"/>` );
-		const $button = $( '<div class="wp-block-button"><button class="wp-block-button__link  novablocks-sharing__copy-button">Copy link to clipboard</button></div>' );
 		const $notification = $( '<div class="novablocks-sharing__notification"><span class="novablocks-sharing__notification-text">Link copied to your clipboard</span></div>' );
-		const $content = $input.add( $button ).add( $notification );
+		const $button = createContentFromLinks( [ {
+			label: 'Copy link to clipboard',
+			url: '#',
+			icon: 'link',
+			callback: () => {
+				const visibleClassName = 'novablocks-sharing__notification--visible';
+				const input = $input.get(0);
 
-		$button.on( 'click', function() {
-			const visibleClassName = 'novablocks-sharing__notification--visible';
-			const input = $input.get(0);
+				$notification.removeClass( visibleClassName );
 
-			$notification.removeClass( visibleClassName );
+				input.focus();
+				input.setSelectionRange( 0, input.value.length );
 
-			input.focus();
-			input.setSelectionRange( 0, input.value.length );
+				let succeeded;
 
-			let succeeded;
+				try {
+					succeeded = document.execCommand( 'copy' );
+				} catch (err) {
+					succeeded = false;
+				}
 
-			try {
-				succeeded = document.execCommand( 'copy' );
-			} catch (err) {
-				succeeded = false;
+				if ( succeeded ) {
+					setTimeout( function() {
+						$notification.addClass( visibleClassName );
+					}, 0 );
+				}
 			}
-
-			if ( succeeded ) {
-				setTimeout( function() {
-					$notification.addClass( visibleClassName );
-				}, 0 );
-			}
-		} );
+		} ] );
 
 		return createGroup( {
 			id: 'copy-link',
 			title: groupTitle,
 			description: groupDescription,
-			content: $content
+			content: $input.add( $button ).add( $notification )
 		}, attributes );
 	}
 
