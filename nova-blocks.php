@@ -69,4 +69,5 @@ require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 
 require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
 require_once dirname( __FILE__ ) . '/lib/blocks/init.php';
+require_once dirname( __FILE__ ) . '/lib/shariff-backend/init.php';
 

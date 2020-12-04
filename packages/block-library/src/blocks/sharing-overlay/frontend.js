@@ -22,6 +22,18 @@ import services from './services';
 		const shareIcon = getSvg( 'share' );
 		$openButton.prepend( shareIcon );
 
+		$.ajax( {
+			url: featured_comments_ajax_object.ajaxurl,
+			type: 'POST',
+			data: {
+				'action': 'handle_shariff_request',
+				'url': data.url
+			},
+			success: function( response ) {
+				console.log( response );
+			}
+		} );
+
 		$content.appendTo( $container );
 		$container.appendTo( $wrap );
 		$wrap.appendTo( $overlay );
