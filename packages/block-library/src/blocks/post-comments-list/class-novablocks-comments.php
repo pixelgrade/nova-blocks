@@ -27,21 +27,16 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 		public function __construct() {
 
-			self::$actions = array(
-					'feature'   => __( 'Feature',   '__plugin_txtd' ),
-					'unfeature' => __( 'Unfeature', '__plugin_txtd' ),
-			);
-
-			add_action( 'wp_ajax_handle_featured_comments', array( $this, 'handle_featured_comments' ) );
-
 			/**
 			 * Frontend logic.
 			 */
+
 			add_filter( 'comment_class', array( $this, 'featured_comment_class' ), 10, 3 );
 
 			/**
 			 * Backend logic.
 			 */
+
 			// Handle comment extra fields.
 			add_action( 'comment_post', array( $this, 'save_comment_meta_data' ) );
 			add_filter( 'preprocess_comment', array( $this, 'verify_comment_meta_data' ) );
@@ -50,6 +45,13 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			// Handle per-post extra fields.
 			add_action( 'add_meta_boxes_post', array( $this, 'add_posts_discussion_metabox' ), 10, 1 );
 			add_action( 'save_post_post', array( $this, 'save_posts_metabox_fields' ), 10, 1 );
+
+			self::$actions = array(
+					'feature'   => __( 'Feature',   '__plugin_txtd' ),
+					'unfeature' => __( 'Unfeature', '__plugin_txtd' ),
+			);
+
+			add_action( 'wp_ajax_handle_featured_comments', array( $this, 'handle_featured_comments' ) );
 		}
 
 		/**
@@ -60,7 +62,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * @return string[]
 		 */
 
-		public function featured_comment_class( $classes = array() ) {
+		static public function featured_comment_class( $classes = array() ) {
 			global $comment;
 
 			$comment_id = $comment->comment_ID;
