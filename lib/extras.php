@@ -982,11 +982,12 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 	foreach ( $data_attributes_array as $data_attribute ) {
 		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
 
-		if ( empty( $attributes[ $attribute ] ) ) {
-			$attributes[ $attribute ] = 0;
+		if ( ! isset( $attributes[ $attribute ] ) ) {
+			continue;
 		}
 
-		$data_attributes[] = 'data-' . $data_attribute . '="' . $attributes[ $attribute ] . '"';
+		// The value may be an array, so we JSON encode everything since json_encode() won't do anything for singular values.
+		$data_attributes[] = 'data-' . $data_attribute . '="' . json_encode( $attributes[ $attribute ] ) . '"';
 	}
 
 	return $data_attributes;

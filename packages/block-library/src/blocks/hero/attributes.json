@@ -28,16 +28,12 @@
 		"default": true
 	},
 	"defaultsGenerated": {
-		"boolean": true,
-		"default": false
+	  	"type": "boolean",
+	  	"default": false
 	},
 	"templateInserted": {
-		"boolean": true,
+	  	"type": "boolean",
 		"default": false
-	},
-	"minHeightFallback": {
-		"type": "number",
-		"default": 100
 	},
 	"displayInnerContent": {
 		"type": "boolean",
