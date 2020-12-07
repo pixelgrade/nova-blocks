@@ -25,8 +25,8 @@ const TRANSITION_EASING = "easeOutCirc";
 		} );
 
 		$form.find( COMMENT_TEXTAREA_SELECTOR ).one( 'focusin', onFocus );
+		$( document ).on( 'click', uncheckCheckboxes );
 	}
-
 
 	function onResize( $form ) {
 		updatePlaceholder( $form );
@@ -159,6 +159,16 @@ const TRANSITION_EASING = "easeOutCirc";
 
 			return false;
 		});
+	}
+
+	function uncheckCheckboxes( event ) {
+
+		let $commentList = $('.comment-list'),
+			$commentCheckboxes = $commentList.find('.comment-dropdown-open');
+
+		if ( ! $( event.target ).is( $commentCheckboxes ) ) {
+			$commentCheckboxes.prop("checked", false);
+		}
 	}
 
 } )( jQuery, window );

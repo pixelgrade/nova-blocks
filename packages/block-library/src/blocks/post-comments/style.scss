@@ -3,7 +3,7 @@
 	--comments-grid-gap: 10px;
 	--component-accent-color: var(--novablocks-color-1);
 	--novablocks-conversations-width: 48em;
-	--field-description-color: var(--novablocks-dark-1);
+	--field-description-color: #000;
   	--field-description-font-size: 13px;
 	--conversations-bg-color: #E4E3E4;
 	--comment-author-color: var(--novablocks-color-1);
@@ -545,8 +545,7 @@
   transition: all .4s cubic-bezier(.25,.1,.26,.99);
 
   @include below(tablet) {
-	top: 10px;
-	right: -10px;
+	right: -5px;
 	padding-top: 0;
 	padding-bottom: 0;
   }
@@ -574,6 +573,23 @@
 
 .comment-dropdown-toggle {
 
+  .arrow-down {
+	display: none;
+  }
+
+  .dropdown-icon {
+	display: flex;
+	align-items: center;
+
+	margin-left: 6px;
+
+	svg {
+	  width: 1em;
+
+	  transition: transform .2s ease;
+	}
+  }
+
   @include above(tablet) {
 	position: relative;
 	font-size: 15px;
@@ -585,61 +601,18 @@
 
 	opacity: .5;
 
-	&:after {
-	  //@todo: to be replaced with an icon
+	.arrow-down {
+	  display: block;
+	}
 
-	  content: "";
-	  position: static;
-	  display: inline-block;
-	  width: 0.5em;
-	  height: 0.5em;
-	  border-right: 0.1em solid currentColor;
-	  border-bottom: 0.1em solid currentColor;
-	  transform: translateY(-10%) rotate(45deg);
-	  margin-left: 0.75em;
-	  opacity: .5;
+	.dots {
+	  display: none;
 	}
   }
 
   @include below(tablet) {
-
-	//@todo: to be replaced with an icon
-
-	position: relative;
-	width: 4px;
-	height: 4px;
-	border-radius: 50%;
-	background-color: currentColor;
-	color: currentColor;
-
 	opacity: .5;
 	text-indent: -99999px;
-
-	&:before,
-	&:after {
-	  content: '';
-	  display: inline-block;
-	  position: absolute;
-	  top: 0;
-	}
-
-	&:before {
-	  left: -7px;
-	  width: 4px;
-	  height: 4px;
-	  border-radius: 50%;
-	  background-color: currentColor;
-	  color: currentColor;
-	}
-
-	&:after {
-	  left: 7px;
-	  width: 4px;
-	  height: 4px;
-	  border-radius: 50%;
-	  background-color: currentColor;
-	  color: currentColor;
-	}
   }
 }
 
@@ -662,6 +635,10 @@
   transform: translateZ(0);
   opacity: 1;
   pointer-events: auto;
+}
+
+.comment-dropdown-open:checked ~ .comment-dropdown-toggle .arrow-down {
+  transform: rotate(180deg);
 }
 
 .novablocks-conversation__starter {
