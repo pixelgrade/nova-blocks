@@ -198,7 +198,13 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 			<div class="comment-dropdown">
 				<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
-				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php esc_html_e( 'More', '__plugin_txtd' ); ?></label>
+				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle">
+					<?php esc_html_e( 'More', '__plugin_txtd' ); ?>
+					<span class="dropdown-icon">
+						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#arrow-down"></use></svg>
+						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#dots"></use></svg>
+					</span>
+				</label>
 				<div class="comment-dropdown-menu">
 					<?php
 					$data_id = ' data-comment_id=' . $comment->comment_ID;
