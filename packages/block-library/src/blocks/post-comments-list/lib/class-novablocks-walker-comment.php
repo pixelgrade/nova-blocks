@@ -192,29 +192,35 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 				<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
 
-				<?php return;
-			}
+				<?php
+				return;
+			} ?>
 
-//			global $comment;
-//
-//			$comment_id = $comment->comment_ID;
-//			$data_id    = ' data-comment_id=' . $comment_id;
-//
-//			$current_status = implode( ' ', $this->featured_comment_class() );
-//
-//			$output = '';
-//			foreach( self::$actions as $action => $label ) {
-//				$output .= "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "featured_comments" ) . "' title='{$label}'>{$label}</a> "; }
-//
-//			return $comment_text . $output;
-
-			?>
 			<div class="comment-dropdown">
 				<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
 				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php esc_html_e( 'More', '__plugin_txtd' ); ?></label>
 				<div class="comment-dropdown-menu">
-					<?php echo NovaBlocks_Comments::instance()->output_extras_options();?>
-					<a class="comment-dropdown-item" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( 'Link to comment', '__plugin_txtd' ); ?></a>
+					<?php
+					$data_id = ' data-comment_id=' . $comment->comment_ID;
+					$comment_featured = get_comment_meta( $comment->comment_ID, 'nb_comment_featured', true );
+
+					$current_status = '';
+					if ( ! empty( $comment_featured ) ) {
+						$current_status = 'comment-featured';
+					}
+
+					$menu_items = [];
+					foreach( NovaBlocks_Comments::instance()->actions as $action => $label ) {
+						$menu_items[] = "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "featured_comments" ) . "' title='{$label}'>{$label}</a> ";
+					}
+
+					$menu_items[] = '<a class="comment-dropdown-item" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd') . '">' . esc_html__( 'Link to comment', '__plugin_txtd' ) . '</a>';
+
+					// Allow others to have a say.
+					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
+
+					echo implode( "\n", $menu_items );
+					?>
 				</div>
 			</div>
 				<?php

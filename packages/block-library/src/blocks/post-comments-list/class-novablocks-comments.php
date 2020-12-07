@@ -19,7 +19,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 	class NovaBlocks_Comments {
 
 //		static protected
-		static private $actions;
+		public $actions = [];
 
 		/**
 		 * Instance of this class (the singleton pattern).
@@ -64,7 +64,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			add_action( 'add_meta_boxes_post', array( $this, 'add_posts_discussion_metabox' ), 10, 1 );
 			add_action( 'save_post_post', array( $this, 'save_posts_metabox_fields' ), 10, 1 );
 
-			self::$actions = array(
+			$this->actions = array(
 					'feature'   => __( 'Feature',   '__plugin_txtd' ),
 					'unfeature' => __( 'Unfeature', '__plugin_txtd' ),
 			);
@@ -76,16 +76,13 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * Change the returned CSS classes for the current comment.
 		 *
 		 * @param string[]    $classes    An array of comment classes.
+		 * @param string      $class      A comma-separated list of additional classes added to the list.
+		 * @param int         $comment_id The comment ID.
 		 *
 		 * @return string[]
 		 */
-		public function featured_comment_class( $classes = array() ) {
-			global $comment;
-
-			$comment_id = $comment->comment_ID;
-
+		public function featured_comment_class( $classes, $class, $comment_id ) {
 			$comment_featured = get_comment_meta( $comment_id, 'nb_comment_featured', true );
-
 			if ( ! empty( $comment_featured ) ) {
 				$classes[] = 'comment-featured';
 			}
