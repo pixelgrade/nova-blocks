@@ -1,1 +1,0 @@
-<?php return array('dependencies' => array('novablocks-collection/frontend', 'wp-polyfill'), 'version' => '196880828cb0d3d986c61ab6f8e1bf11');

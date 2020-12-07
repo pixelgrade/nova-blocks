@@ -150,6 +150,13 @@ const DefaultConfig = {
 				use: require.resolve( 'source-map-loader' ),
 				enforce: 'pre',
 			},
+			{
+				test: /\.svg$/,
+				use: [
+					'svg-sprite-loader',
+					'svgo-loader'
+				]
+			}
 		] ),
 	},
 	plugins: [

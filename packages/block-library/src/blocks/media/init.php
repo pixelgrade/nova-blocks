@@ -14,11 +14,6 @@ function novablocks_get_media_attributes() {
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
 	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
 
-	if ( ! is_array( $blob_attributes ) ) $blob_attributes = array();
-	if ( ! is_array( $gallery_attributes ) ) $gallery_attributes = array();
-	if ( ! is_array( $media_attributes ) ) $media_attributes = array();
-	if ( ! is_array( $space_and_sizing_attributes ) ) $space_and_sizing_attributes = array();
-
 	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $blob_attributes );
 }
 

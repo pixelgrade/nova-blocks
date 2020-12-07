@@ -305,9 +305,6 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				return $defaults;
 			}
 
-			$commenter    = wp_get_current_commenter();
-			$req          = get_option( 'require_name_email' );
-			$html_req     = ( $req ? " required='required'" : '' );
 			$current_user = wp_get_current_user();
 
 			$avatar_size = 100;
@@ -330,7 +327,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 					                 '<p class="comment-form-experience comment-fields-wrapper">' .
 					                 '<label for="nb_commenter_background">%s</label>' .
 					                 '<span class="field-description">%s</span>' .
-					                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" />' .
+					                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" required="required" />' .
 					                 '</p>',
 					                 esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 					                 esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
@@ -348,6 +345,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			$defaults['class_form'] .= ' form-grid';
 
 			// Change details about the reply logic and behavior.
+			// Basically, we don't want the reply title and the wrappers.
 			$defaults['title_reply']         = '';
 			$defaults['title_reply_before']  = '';
 			$defaults['title_reply_after']   = '';
@@ -428,14 +426,14 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 
 		static public function conversation_starter_block() {
-			// @todo These are just placeholders. We need to use the actual data.
-			$conversation_starter_subtitle = 'A question by Christopher O\'Neill, author of this article:';
-			$conversation_starter_content = 'How would you describe your experience with discounts? Have you ever thought on skipping the annual sale campaigns?';
+			global $post;
+
+			$conversation_starter_content = get_post_meta( $post->ID, 'nb_conversation_starter_content', true );
+			$conversation_starter_subtitle = get_post_meta( $post->ID, 'nb_conversation_starter_subtitle', true );
 
 			$conversation_starter_avatar = get_avatar( get_the_author_meta( 'ID' ), 100, '', '', array( 'class' => 'avatar', ) );
 
-			// We need at the minimum the content.
-			if ( empty( $conversation_starter_content ) ) {
+			if ( empty( $conversation_starter_content ) && empty( $conversation_starter_subtitle ) ) {
 				return '';
 			}
 

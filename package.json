@@ -54,6 +54,8 @@
 		"postcss": "^7.0.27",
 		"rimraf": "^3.0.2",
 		"rtlcss": "^2.5.0",
+		"svg-sprite-loader": "^5.0.0",
+		"svgo-loader": "^2.2.1",
 		"terser-webpack-plugin": "^4.2.2",
 		"webpack": "4.41.0",
 		"webpack-cli": "^3.3.12"
