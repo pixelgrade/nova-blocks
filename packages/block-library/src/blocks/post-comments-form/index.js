@@ -14,7 +14,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 registerBlockType('novablocks/post-comments-form', {
 	title: __( 'Comments Form Nova', '__plugin_txtd' ),
-	description: __( 'Show Comments Form', '__plugin_txtd' ),
+	description: __( 'Display a more thoughtful comments form.', '__plugin_txtd' ),
 	icon: icons.postsCollection,
 	category: 'nova-blocks',
 	parent: ['novablocks/post-comments'],

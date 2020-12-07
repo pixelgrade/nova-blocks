@@ -17,15 +17,29 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 	 * The NovaBlocks Comments class
 	 */
 	class NovaBlocks_Comments {
-		/**
-		 * Setup class.
-		 *
-		 * @since 1.7.0
-		 */
 
-		private static $actions;
+//		static protected
+		static private $actions;
+
+		/**
+		 * Instance of this class (the singleton pattern).
+		 * @since    1.8.0
+		 * @var      NovaBlocks_Comments
+		 */
+		protected static $_instance = null;
+
 
 		public function __construct() {
+			// Maybe do some checks before initializing the logic.
+			$this->init();
+		}
+
+		/**
+		 * Initialize the logic.
+		 */
+		private function init() {
+
+			require_once dirname( __FILE__ ) . '/lib/class-novablocks-walker-comment.php';
 
 			/**
 			 * Frontend logic.
@@ -65,8 +79,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 *
 		 * @return string[]
 		 */
-
-		static public function featured_comment_class( $classes = array() ) {
+		public function featured_comment_class( $classes = array() ) {
 			global $comment;
 
 			$comment_id = $comment->comment_ID;
@@ -167,6 +180,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 		/**
 		 * Update comment meta data from comment edit screen.
+		 *
+		 * @param int $comment_id
 		 */
 		public function save_metabox_fields( $comment_id ) {
 			if ( ! isset( $_POST['nb_comment_extra_details'] ) || ! wp_verify_nonce( $_POST['nb_comment_extra_details'], 'nb_save_metabox_fields' ) ) {
@@ -210,38 +225,42 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			wp_nonce_field( 'nb_save_post_discussion_extras', 'nb_post_discussion_extra_details', false );
 			?>
 
-			<fieldset>
-				<legend class="screen-reader-text">Post discussion extra details</legend>
-				<table class="form-table editpost" role="presentation">
+			<fieldset class="widefat">
+				<legend class="screen-reader-text"><?php esc_html_e( 'Post discussion extra details', '__plugin_txtd' ); ?></legend>
+				<table role="presentation">
 					<tbody>
 					<tr>
-						<td class="first"><label for="nb_conversation_starter_content"><?php esc_html_e( 'Conversation Starter Message', '__plugin_txtd' ); ?></label></td>
+						<td class="first"><label for="nb_conversation_starter_content"><strong><?php esc_html_e( 'Conversation Starter Message', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<textarea name="nb_conversation_starter_content" cols="60" rows="3" class="large-text"><?php echo wp_kses_post( $conversation_starter_content ); ?></textarea>
-							<span class="description"><?php esc_html_e( 'Write the content that will kick-start a meaningful conversation with and among your readers.', '__plugin_txtd' ); ?></span><br />
-							<span class="description"><?php esc_html_e( 'You can use HTML elements like `<b>`, `<i>`, `<a>` to put some structure or emphasis on your message. Don\'t over do it.', '__plugin_txtd' ); ?></span>
+							<p class="description"><?php echo wp_kses_post( __( 'Write the content that will kick-start a meaningful conversation with and among your readers.', '__plugin_txtd' ) ); ?><br />
+							<?php echo wp_kses_post( __( 'You can use HTML elements like <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;a&gt;</code> to put some structure or emphasis on your message. Best that you don\'t over do it.', '__plugin_txtd' ) ); ?><br />
+							<?php echo wp_kses_post( __( 'You can include the following dynamic tags: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value.', '__plugin_txtd' ) ); ?><br />
+							<?php echo wp_kses_post( __( '<b>Leave empty to hide/skip</b> the entire conversation starter section for this post.', '__plugin_txtd' ) ); ?></p>
 						</td>
 					</tr>
 					<tr>
-						<td class=""><label for="nb_conversation_starter_subtitle"><?php esc_html_e( 'Conversation Starter Subtitle', '__plugin_txtd' ); ?></label></td>
+						<td class=""><label for="nb_conversation_starter_subtitle"><strong><?php esc_html_e( 'Conversation Starter Subtitle (Optional)', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<input type="text" name="nb_conversation_starter_subtitle" value="<?php echo esc_attr( $conversation_starter_subtitle ); ?>" class="large-text"/>
-							<span class="description"><?php esc_html_e( 'You can use a dynamic %author% tag like in this example: "A question by %author%, author of this article:"', '__plugin_txtd' ); ?></span>
+							<p class="description"><?php echo wp_kses_post( __( 'You can use the <code>%author%</code> dynamic tag like in this example: "A question by %author%, author of this article:"', '__plugin_txtd' ) ); ?><br />
+							<?php echo wp_kses_post( __( 'Here are all the dynamic tags you can use: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value.', '__plugin_txtd' ) ); ?><br />
+							<?php echo wp_kses_post( __( '<b>Leave empty</b> to not show a subtitle for your conversation starter content.', '__plugin_txtd' ) ); ?></p>
 						</td>
 					</tr>
 					<tr>
-						<td class=""><label for="nb_conversation_starter_user"><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></label></td>
+						<td class=""><label for="nb_conversation_starter_user_id"><strong><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<?php wp_dropdown_users(
 									array(
 										'who'              => 'authors',
-										'name'             => 'nb_conversation_starter_user',
+										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
 										'include_selected' => true,
 										'show'             => 'display_name_with_login',
 									)
 							); ?>
-							<span class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default it\'s the post author.', '__plugin_txtd' ); ?></span>
+							<p class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default, it\'s the post author.', '__plugin_txtd' ); ?></p>
 						</td>
 					</tr>
 					</tbody>
@@ -252,11 +271,39 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 
 		public function save_posts_metabox_fields( $post_ID ) {
+			if ( ! isset( $_POST['nb_post_discussion_extra_details'] ) || ! wp_verify_nonce( $_POST['nb_post_discussion_extra_details'], 'nb_save_post_discussion_extras' ) ) {
+				return;
+			}
 
+			if ( ! empty( $_POST['nb_conversation_starter_content'] ) ) {
+				$value = wp_kses_post( $_POST['nb_conversation_starter_content'] );
+				if ( ! empty( $value ) ) {
+					update_post_meta( $post_ID, 'nb_conversation_starter_content', $value );
+				} else {
+					delete_post_meta( $post_ID, 'nb_conversation_starter_content' );
+				}
+			} else {
+				delete_post_meta( $post_ID, 'nb_conversation_starter_content' );
+			}
+
+			if ( ! empty( $_POST['nb_conversation_starter_subtitle'] ) ) {
+				$value = wp_kses_post( $_POST['nb_conversation_starter_subtitle'] );
+				if ( ! empty( $value ) ) {
+					update_post_meta( $post_ID, 'nb_conversation_starter_subtitle', $value );
+				} else {
+					delete_post_meta( $post_ID, 'nb_conversation_starter_subtitle' );
+				}
+			} else {
+				delete_post_meta( $post_ID, 'nb_conversation_starter_subtitle' );
+			}
+
+			if ( ! empty( $_POST['nb_conversation_starter_user_id'] ) ) {
+				update_post_meta( $post_ID, 'nb_conversation_starter_user_id', absint( $_POST['nb_conversation_starter_user_id'] ) );
+			}
 		}
 
 		public function adjust_comment_form_default_fields( $fields ) {
-			// We only want to do this for the 'post' post type.
+			// We only want to do this for the 'post' post type, and only when `we` are outputting a comment form.
 			if ( ! isset( $GLOBALS['nb_current_comment_form_post_id'] ) || 'post' !== get_post_type( $GLOBALS['nb_current_comment_form_post_id'] ) ) {
 				return $fields;
 			}
@@ -306,21 +353,42 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			}
 
 			$current_user = wp_get_current_user();
+			$commenter    = wp_get_current_commenter();
 
 			$avatar_size = 100;
 			$avatar = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', array( 'class' => 'avatar', ) );
 
+			// Generate a comment textarea title (label actually) according to whether we have a user or not.
+			// This way we compensate for the lack of a title for logged in users.
+			$comment_field_label = esc_html__( 'What\'s your comment or question?', '__plugin_txtd' );
+			// If we have a commenter (via cookies) or a user, we will ask the question more personally.
+			$commenter_name = false;
+			if ( ! empty( $current_user->display_name ) ) {
+				$commenter_name = $current_user->display_name;
+			} else if ( ! empty( $commenter['comment_author'] ) ) {
+				$commenter_name = $commenter['comment_author'];
+			}
+			if ( ! empty( $commenter_name ) ) {
+				/* translators: %s: The current commenter display name. */
+				$comment_field_label = sprintf( esc_html__( 'What\'s your comment or question, %s?', '__plugin_txtd' ), $commenter_name );
+			}
+
 			// Change the comment field (the textarea).
-			$defaults['comment_field'] = '<div class="comment-avatar">' . $avatar . '</div>' .
+			if ( ! empty( $avatar ) ) {
+				$defaults['comment_field'] = '<div class="comment-avatar">' . $avatar . '</div>';
+				// Add a class to help with styling.
+				$defaults['class_form'] .= ' no-avatar';
+			}
+			$defaults['comment_field'] .=
 			                 sprintf(
 					                 '<p class="comment-form-comment">' .
 					                 '<label for="comment">%s</label>' .
 					                 '<span class="field-description">%s</span>' .
 					                 '<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>' .
 					                 '</p>',
-					                 esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),
+					                 $comment_field_label,
 					                 esc_html__( 'Let\'s start a personal and a meaningful conversation.', '__plugin_txtd' ),
-					                 esc_html__( 'Share your knowledge or ask a question...', '__plugin_txtd' )
+					                 esc_html__( 'Share your knowledge or ask a question..', '__plugin_txtd' )
 			                 ) .
 			                 // We need to add the commenter background field to the comment textarea because we want it for logged in users too.
 			                 sprintf(
@@ -331,7 +399,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 					                 '</p>',
 					                 esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 					                 esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
-					                 esc_html__( 'Relevant experience or background', '__plugin_txtd' )
+					                 esc_html__( 'Put some background behind your thoughts..', '__plugin_txtd' )
 			                 );
 
 			// No title or section related to the logged in user.
@@ -403,63 +471,105 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			die;
 		}
 
-		static public function output_extras_options( ) {
+		/**
+		 * Replace any content tags present in the content.
+		 *
+		 * @param string $content
+		 * @param int $post_id
+		 * @param int $user_id
+		 *
+		 * @return string
+		 */
+		static public function replace_content_tags( $content, $post_id = null, $user_id = null ) {
+			$original_content = $content;
 
-			$comment_text = '';
+			// Allow others to alter the content before we do our work
+			$content = apply_filters( 'novablocks_before_parse_content_tags', $content, $post_id, $user_id );
 
-			if( is_admin() || ! current_user_can( 'moderate_comments' ) ) {
-				return $comment_text;
+			// Now we will replace all the supported tags with their value
+			// %year%
+			$content = str_replace( '%year%', date( 'Y' ), $content );
+
+			if ( empty( $post_id ) ) {
+				// We need to get the current ID in a more global manner.
+				$current_object_id = get_queried_object_id();
+				$current_post      = get_post( $current_object_id );
+				if ( ! empty( $current_post ) ) {
+					$post_id = $current_post->ID;
+				}
 			}
 
-			global $comment;
+			// %post_title%
+			$content = str_replace( '%post_title%', get_the_title( $post_id ), $content );
 
-			$comment_id = $comment->comment_ID;
-			$data_id    = ' data-comment_id=' . $comment_id;
+			if ( false !== strpos( $content, '%author%' ) ||
+					false !== strpos( $content, '%author_first_name%' ) ||
+			        false !== strpos( $content, '%author_last_name%' ) ||
+			        false !== strpos( $content, '%author_display_name%' ) ) {
 
-			$current_status = implode( ' ', self::featured_comment_class() );
+				if ( empty( $user_id ) ) {
+					if ( ! empty( $current_post->post_author ) ) {
+						$user_id = $current_post->post_author;
+					} else {
+						global $authordata;
+						$user_id = isset( $authordata->ID ) ? $authordata->ID : false;
+					}
+				}
 
-			$output = '';
-			foreach( self::$actions as $action => $label ) {
-				$output .= "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "featured_comments" ) . "' title='{$label}'>{$label}</a> "; }
+				if ( ! empty( $user_id ) ) {
+					// %author_first_name%
+					$content = str_replace( '%author_first_name%', get_the_author_meta( 'first_name', $user_id ), $content );
+					// %author_last_name%
+					$content = str_replace( '%author_last_name%', get_the_author_meta( 'last_name', $user_id ), $content );
+					// %author% or %author_display_name%
+					$content = str_replace( ['%author%', '%author_display_name%'], get_the_author_meta( 'display_name', $user_id ), $content );
+				}
+			}
 
-			return $comment_text . $output;
+			// Allow others to alter the content after we did our work
+			return apply_filters( 'novablocks_after_parse_content_tags', $content, $original_content, $post_id, $user_id );
 		}
 
-		static public function conversation_starter_block() {
-			global $post;
-
-			$conversation_starter_content = get_post_meta( $post->ID, 'nb_conversation_starter_content', true );
-			$conversation_starter_subtitle = get_post_meta( $post->ID, 'nb_conversation_starter_subtitle', true );
-
-			$conversation_starter_avatar = get_avatar( get_the_author_meta( 'ID' ), 100, '', '', array( 'class' => 'avatar', ) );
-
-			if ( empty( $conversation_starter_content ) && empty( $conversation_starter_subtitle ) ) {
-				return '';
+		/**
+		 * Main NovaBlocks_Comments Instance
+		 *
+		 * Ensures only one instance of NovaBlocks_Comments is loaded or can be loaded.
+		 *
+		 * @since  1.8.0
+		 * @static
+		 *
+		 * @see    NovaBlocks_Comments()
+		 * @return NovaBlocks_Comments Main NovaBlocks_Comments instance
+		 */
+		public static function instance( ) {
+			// If the single instance hasn't been set, set it now.
+			if ( is_null( self::$_instance ) ) {
+				self::$_instance = new self();
 			}
 
-			ob_start(); ?>
+			return self::$_instance;
+		}
 
-			<div class="novablocks-conversation__starter">
+		/**
+		 * Cloning is forbidden.
+		 *
+		 * @since 1.8.0
+		 */
+		public function __clone() {
 
-			    <?php if ( ! empty( $conversation_starter_subtitle ) ) { ?>
-				<div class="novablocks-conversation__starter-avatar">
-					<?php echo $conversation_starter_avatar; ?>
-				</div>
-				<span class="novablocks-conversation__starter-subtitle text--small">
-					<?php echo $conversation_starter_subtitle; ?>
-				</span>
-				<?php } ?>
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'You should not do that!', '__plugin_txtd' ), null );
+		}
 
-				<div class="novablocks-conversation__starter-message">
-					<?php echo $conversation_starter_content; ?>
-				</div>
-			</div>
+		/**
+		 * Unserializing instances of this class is forbidden.
+		 *
+		 * @since 1.8.0
+		 */
+		public function __wakeup() {
 
-			<?php return ob_get_clean();
-
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'You should not do that!', '__plugin_txtd' ), null );
 		}
 	}
-
 }
 
-return new NovaBlocks_Comments();
+return NovaBlocks_Comments::instance();

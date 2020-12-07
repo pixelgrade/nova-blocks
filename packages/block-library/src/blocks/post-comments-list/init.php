@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Load the custom comments logic.
 require_once 'class-novablocks-comments.php';
-require_once 'class-novablocks-walker-comment.php';
 
 if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 	/**
@@ -42,7 +42,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			'defaultCommentsPage' => get_option( 'default_comments_page' ), // 'oldest', 'newest'
 
 			'displayCommenterBackground' => true,
-			'displayAvatarSize' => 120,
+			'displayAvatarSize' => 100, // Double the actual size for high dpi displays.
 
 			// The message to use in the comments list when a comment is not approved.
 			'moderationMessage' => '', // Fallback to core's default.
@@ -78,6 +78,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 				unset( $comment_args['include_unapproved'] );
 
 				// Also change the moderation message.
+				/* translators: Moderation message shown only to moderators.  */
 				$attributes['moderationMessage'] = esc_html__( '⚠️ This comment is waiting for your moderation. ⚠️', '__plugin_txtd' );
 			}
 		} else {
