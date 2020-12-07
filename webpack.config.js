@@ -100,14 +100,15 @@ const CopyPackageCSSPlugin =
 
 const CopyBlocksCSSPlugin =
 	new CopyWebpackPlugin(
-		glob.sync( './packages/block-library/build-style/blocks/*/' ).map( ( path ) => {
-			let blockName = path.replace( './packages/block-library/build-style/blocks/', '' );
-			blockName = blockName.replace( '/', '' );
+		glob.sync( './packages/block-library/build-style/blocks/*' ).map( ( blockDirPath ) => {
+			let blockName = blockDirPath.replace('./packages/block-library/build-style/blocks/', '');
+			blockName = blockName.replace('/', '');
 
 			return {
-				from: `./packages/block-library/build-style/blocks/${ blockName }/*.css`,
-				to: `./build/block-library/blocks/${ blockName }/`,
-				flatten: true,
+				from: `**/*.css`,
+				to: `build/block-library/blocks/${blockName}/`,
+				flatten: false,
+				context: `packages/block-library/build-style/blocks/${ blockName }/`,
 				transform: cssTransform,
 			}
 		} )
@@ -115,28 +116,30 @@ const CopyBlocksCSSPlugin =
 
 const CopyBlocksPhpPlugin =
 	new CopyWebpackPlugin(
-		glob.sync( './packages/block-library/build/blocks/*/' ).map( ( path ) => {
-			let blockName = path.replace( './packages/block-library/build/blocks/', '' );
-			blockName = blockName.replace( '/', '' );
+			glob.sync('./packages/block-library/build/blocks/*').map((blockDirPath) => {
+				let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
+				blockName = blockName.replace('/', '');
 
-			return {
-				from: `./packages/block-library/build/blocks/${ blockName }/*.php`,
-				to: `./build/block-library/blocks/${ blockName }/`,
-				flatten: true,
-			}
-		} )
+				return {
+					from: `**/*.php`,
+					to: `build/block-library/blocks/${blockName}/`,
+					flatten: false,
+					context: `packages/block-library/build/blocks/${ blockName }/`,
+				}
+			})
 	);
 
 const CopyBlocksJsonPlugin =
 	new CopyWebpackPlugin(
-		glob.sync( './packages/block-library/build/blocks/*/' ).map( ( path ) => {
-			let blockName = path.replace( './packages/block-library/build/blocks/', '' );
-			blockName = blockName.replace( '/', '' );
+		glob.sync( './packages/block-library/build/blocks/*' ).map( ( blockDirPath ) => {
+			let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
+			blockName = blockName.replace('/', '');
 
 			return {
-				from: `./packages/block-library/build/blocks/${ blockName }/*.json`,
-				to: `./build/block-library/blocks/${ blockName }/`,
-				flatten: true,
+				from: `**/*.json`,
+				to: `build/block-library/blocks/${ blockName }/`,
+				flatten: false,
+				context: `packages/block-library/build/blocks/${ blockName }/`,
 			}
 		} )
 	);
