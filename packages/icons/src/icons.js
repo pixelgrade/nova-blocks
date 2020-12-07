@@ -14,3 +14,4 @@ export { default as sms } from './svgs/sms.svg';
 export { default as tick } from './svgs/tick.svg';
 export { default as twitter } from './svgs/twitter.svg';
 export { default as whatsapp } from './svgs/whatsapp.svg';
+export { default as arrowDown } from './svgs/arrow-down.svg';
