@@ -43,7 +43,10 @@
 
 		label {
 			font-size: var(--label-font-size);
-			font-weight: bold;
+
+			&:not([for="wp-comment-cookies-consent"]) {
+			  	font-weight: bold;
+			}
 		}
 
 		.field-description {
@@ -207,7 +210,7 @@
 			  	z-index: 10;
 			}
 
-			.comment-featured {
+			.comment-featured:not(.comment-dropdown-item) {
 				--element-spacing: var(--novablocks-spacing);
 
 				padding-top: var(--element-spacing);
@@ -479,6 +482,19 @@
 		button {
 			width: 100%;
 		}
+	}
+
+  	.comment-form-cookies-consent {
+	  display: flex;
+
+	  label {
+		margin-left: 10px;
+	  }
+	}
+
+	.comments-closed {
+	  opacity: .5;
+	  text-align: center;
 	}
 }
 
