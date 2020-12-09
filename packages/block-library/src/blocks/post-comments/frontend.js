@@ -1,4 +1,5 @@
-import { above } from "@novablocks/utils";
+import { above, insertBefore, insertAfter, isAnyPartOfElementInViewport } from "@novablocks/utils";
+import "@novablocks/icons";
 
 const FORM_SELECTOR = '.comment-form';
 const MASK_SELECTOR = '.comment-fields-mask';
@@ -9,7 +10,8 @@ const TRANSITION_EASING = "easeOutCirc";
 
 (function( $, window, undefined ) {
 
-	featureCommentOnClick();
+	let formIsMoved = false,
+		scrollPos = 0;
 
 	$( FORM_SELECTOR ).each( function( i, element ) {
 		const $form = $( element );
@@ -18,6 +20,12 @@ const TRANSITION_EASING = "easeOutCirc";
 		bindEvents( $form );
 		onResize( $form );
 	} );
+
+	featureCommentOnClick();
+
+	addTemporaryForm();
+
+	$(window).on('scroll', changeCommentFormPosition );
 
 	function bindEvents( $form ) {
 		$( window ).on( 'resize', function() {
@@ -121,6 +129,7 @@ const TRANSITION_EASING = "easeOutCirc";
 			},
 			complete: function() {
 				resetMasksHeights( $form );
+				updateTemporaryFormHeight();
 
 				$textarea.css( 'transition', '' );
 			}
@@ -169,6 +178,90 @@ const TRANSITION_EASING = "easeOutCirc";
 		if ( ! $( event.target ).is( $commentCheckboxes ) ) {
 			$commentCheckboxes.prop("checked", false);
 		}
+	}
+
+	function scrollDirectionIsUp() {
+		let direction = false;
+
+		if ((document.body.getBoundingClientRect()).top > scrollPos) {
+			direction = true;
+		}
+
+		scrollPos = (document.body.getBoundingClientRect()).top;
+
+		return direction;
+	}
+
+	function changeCommentFormPosition() {
+		let $commentForm = $('.novablocks-conversations__content > .novablocks-conversations__form'),
+			$conversationsBlock = $('.novablocks-conversations'),
+			$commentPlaceholder = $('#second-comment-form-marker'),
+			$temporaryForm = $('.temporary-form');
+
+		// If we cannot find our comment form, do nothing.
+		if ( ! $commentForm.length ) {
+			return;
+		}
+
+		// If the block is not in viewport, do nothing.
+		if ( ! isAnyPartOfElementInViewport($conversationsBlock[0]) ) {
+			return;
+		}
+
+		// If the placeholder does not exist, do nothing.
+		if ( ! $commentPlaceholder.length ) {
+			return;
+		}
+
+		let $commentList = $('.comment-list'),
+			scrollIsUp = scrollDirectionIsUp(),
+			$thirdComment = $commentList.find('.comment').eq(3),
+			thirdCommentIsInViewport = isAnyPartOfElementInViewport($thirdComment[0]);
+
+		// The third comment is in viewport,we are scrolling down,
+		// so we should move the comment form after comment list.
+		if ( thirdCommentIsInViewport && !formIsMoved && !scrollIsUp ) {
+			insertAfter($commentForm[0], $commentList[0]);
+			insertBefore($temporaryForm[0], $commentList[0]);
+			formIsMoved = true;
+		}
+
+		// The third comment is in viewport,we are scrolling up,
+		// so we should move the comment form before comment list.
+		if ( formIsMoved && thirdCommentIsInViewport && scrollIsUp ) {
+			insertBefore($commentForm[0], $commentList[0]);
+			insertAfter($temporaryForm[0], $commentList[0]);
+			formIsMoved = false;
+		}
+	}
+
+	function addTemporaryForm() {
+		let $commentForm = $('.comment-form');
+
+		// If we cannot find our comment form, do nothing.
+		if( ! $commentForm.length ) {
+			return;
+		}
+
+		let	temporaryFieldMarkup = $("<div class='temporary-form'></div>"),
+			$commentPlaceholder = $('#second-comment-form-marker');
+
+		insertBefore(temporaryFieldMarkup[0], $commentPlaceholder[0]);
+		updateTemporaryFormHeight();
+	}
+
+	function updateTemporaryFormHeight() {
+		let $tempFormMarkup = $('.temporary-form');
+
+		// If we cannot find temporary form markup, do nothing.
+		if ( ! $tempFormMarkup.length) {
+			return;
+		}
+
+		let $commentForm = $('.comment-form'),
+				$commentFormHeight = $commentForm.outerHeight();
+
+		$tempFormMarkup.css('height', $commentFormHeight);
 	}
 
 } )( jQuery, window );
