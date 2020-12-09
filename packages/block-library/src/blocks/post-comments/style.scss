@@ -43,7 +43,10 @@
 
 		label {
 			font-size: var(--label-font-size);
-			font-weight: bold;
+
+			&:not([for="wp-comment-cookies-consent"]) {
+			  	font-weight: bold;
+			}
 		}
 
 		.field-description {
@@ -70,7 +73,10 @@
 
 	.comment:first-child {
 		> .comment-wrapper {
-			padding-top: 0;
+
+			@include above(tablet) {
+			  	padding-top: 0;
+			}
 		}
 	}
 
@@ -84,6 +90,27 @@
 
 		@include above(tablet) {
 		  --novablocks-element-spacing-multiplier: 2;
+		}
+
+	  	.no-avatar {
+
+			.comment-meta {
+			  	grid-template-columns: 0 1fr auto;
+			}
+
+		  	.comment-meta,
+			.comment-body {
+			  	grid-column-gap: 0;
+			}
+
+		  	.comment-body {
+			  	grid-template-columns: 0 1fr;
+
+			  	&:before {
+				  --avatar-column-size: 0px;
+				  --comments-grid-gap: 0px;
+				}
+			}
 		}
 	}
 
@@ -183,7 +210,7 @@
 			  	z-index: 10;
 			}
 
-			.comment-featured {
+			.comment-featured:not(.comment-dropdown-item) {
 				--element-spacing: var(--novablocks-spacing);
 
 				padding-top: var(--element-spacing);
@@ -456,6 +483,19 @@
 			width: 100%;
 		}
 	}
+
+  	.comment-form-cookies-consent {
+	  display: flex;
+
+	  label {
+		margin-left: 10px;
+	  }
+	}
+
+	.comments-closed {
+	  opacity: .5;
+	  text-align: center;
+	}
 }
 
 .comment-author-avatar {
@@ -644,7 +684,7 @@
 .novablocks-conversation__starter {
 
   --conversation-starter-avatar-size: 50px;
-  --conversation-starter-column-gap: 20px;
+  --conversation-starter-column-gap: 10px;
 
   display: grid;
   grid-template-columns: var(--conversation-starter-avatar-size) 1fr;
@@ -652,7 +692,7 @@
         "avatar subtitle"
         "content content";
 
-  grid-column-gap: 10px;
+  grid-column-gap: var(--conversation-starter-column-gap);
   grid-row-gap: 10px;
 
   padding: 22px 25px;
@@ -660,14 +700,20 @@
 
   background-color: var(--comment-highlighted-color);
 
+  &.no-avatar {
+	--conversation-starter-avatar-size: 0;
+	--conversation-starter-column-gap: 0;
+  }
+
   @include above(tablet) {
 	--conversation-starter-avatar-size: 80px;
+	--conversation-starter-column-gap: 20px;
 
 	grid-template-areas:
         "avatar subtitle"
         "avatar content";
 
-	grid-column-gap: 20px;
+	grid-column-gap: var(--conversation-starter-column-gap);
 	grid-row-gap: 0;
 
 	border-radius: 0 50px;
