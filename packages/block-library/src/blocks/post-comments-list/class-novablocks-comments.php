@@ -109,12 +109,30 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 
 		/**
-		 * Add the filter to check if the comment meta data has been filled or not.
+		 * Check if the comment meta data has been filled or not.
+		 *
+		 * @param array $commentdata
+		 *
+		 * @return array
 		 */
 		public function verify_comment_meta_data( $commentdata ) {
 			// We only enforce the commenter background for comments, not other types like reviews.
 			if ( ! empty( $commentdata['comment_type'] ) && 'comment' === $commentdata['comment_type'] && empty( $_POST['nb_commenter_background'] ) ) {
-				wp_die( __( 'Error: You did not add your relevant background or experience.' ) );
+				// Die in a standard way, like wp-comments-post.php does it, so AJAX plugins can behave themselves.
+				$comment = new WP_Error( 'require_nb_commenter_background', __( '<strong>Error</strong>: You did not add your relevant background or experience.', '__plugin_txtd' ), 200 );
+				$data = intval( $comment->get_error_data() );
+				if ( ! empty( $data ) ) {
+					wp_die(
+							'<p>' . $comment->get_error_message() . '</p>',
+							__( 'Comment Submission Failure' ),
+							array(
+									'response'  => $data,
+									'back_link' => true,
+							)
+					);
+				} else {
+					exit;
+				}
 			}
 
 			return $commentdata;
@@ -165,7 +183,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 							<td class="first"><label for="nb_comment_featured"><?php esc_html_e( 'Feature this comment', '__plugin_txtd' ); ?></label></td>
 							<td>
 								<input type="checkbox" name="nb_comment_featured" <?php checked( $comment_featured ); ?> value="1" autocomplete="off"/>
-								<span class="description"><?php esc_html_e( 'Feature this comment if the comments list displays featured comments in a special way.', '__plugin_txtd' ); ?></span>
+								<span class="description"><?php esc_html_e( 'Feature this comment, if the comments list displays featured comments in a special way.', '__plugin_txtd' ); ?></span>
 							</td>
 						</tr>
 					</tbody>
@@ -369,6 +387,11 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				/* translators: %s: The current commenter display name. */
 				$comment_field_label = sprintf( esc_html__( 'What\'s your comment or question, %s?', '__plugin_txtd' ), $commenter_name );
 			}
+			// The comment field is always required.
+			$comment_field_label .= ' <span class="required">*</span>';
+
+			// For now, the commenter background is also required.
+			$req_commenter_background = true;
 
 			// Change the comment field (the textarea).
 			if ( ! empty( $avatar ) ) {
@@ -390,11 +413,12 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			                 // We need to add the commenter background field to the comment textarea because we want it for logged in users too.
 			                 sprintf(
 					                 '<p class="comment-form-experience comment-fields-wrapper">' .
-					                 '<label for="nb_commenter_background">%s</label>' .
+					                 '<label for="nb_commenter_background">%s%s</label>' .
 					                 '<span class="field-description">%s</span>' .
 					                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" required="required" />' .
 					                 '</p>',
 					                 esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
+					                 ( $req_commenter_background ? ' <span class="required">*</span>' : '' ),
 					                 esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
 					                 esc_html__( 'Put some background behind your thoughts..', '__plugin_txtd' )
 			                 );
@@ -452,8 +476,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				switch ( $action ) {
 
 					case 'feature':
-						update_comment_meta( $comment_id, 'nb_comment_featured',
-								'1' );
+						update_comment_meta( $comment_id, 'nb_comment_featured', '1' );
 						break;
 
 					case 'unfeature':
@@ -525,6 +548,19 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 			// Allow others to alter the content after we did our work
 			return apply_filters( 'novablocks_after_parse_content_tags', $content, $original_content, $post_id, $user_id );
+		}
+
+		public static function get_toplevel_comments_number( $post_id ) {
+			$top_level_query = new WP_Comment_Query();
+			$top_level_args  = array(
+					'count'   => true,
+					'orderby' => false,
+					'post_id' => $post_id,
+					'status'  => 'approve',
+					'parent' => 0,
+			);
+
+			return $top_level_query->query( $top_level_args );
 		}
 
 		/**

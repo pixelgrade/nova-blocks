@@ -118,6 +118,8 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			}
 		}
 
+		$per_page = 0;
+		$page = (int) get_query_var( 'cpage' );
 		if ( $attributes['pageComments'] ) {
 			$per_page = (int) get_query_var( 'comments_per_page' );
 			if ( 0 === $per_page ) {
@@ -125,7 +127,6 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			}
 
 			$comment_args['number'] = $per_page;
-			$page                   = (int) get_query_var( 'cpage' );
 
 			if ( $page ) {
 				$comment_args['offset'] = ( $page - 1 ) * $per_page;
@@ -153,6 +154,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 
 				$comment_args['offset'] = ( ceil( $top_level_count / $per_page ) - 1 ) * $per_page;
 			}
+		}
+
+		if ( empty( $page ) ) {
+			$page = 1;
 		}
 
 		/**
@@ -217,7 +222,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		$max_num_comment_pages = $comment_query->max_num_pages;
 
 		if ( '' == get_query_var( 'cpage' ) && $max_num_comment_pages > 1 ) {
-			set_query_var( 'cpage', 'newest' === $attributes['defaultCommentsPage'] ? get_comment_pages_count() : 1 );
+			set_query_var( 'cpage', 'newest' === $attributes['defaultCommentsPage'] ? $max_num_comment_pages : 1 );
 		}
 
 		if ( empty( $comments ) ) {
@@ -225,22 +230,54 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		}
 
 		ob_start(); ?>
-		<div class="comment-list">
+		<div id="comments" class="comment-list">
 			<?php wp_list_comments( array(
-					'walker'             => new NovaBlocks_Walker_Comment(),
-					'max_depth'          => $attributes['maxThreadDepth'],
-					'reverse_top_level'  => $attributes['reverseTopLevelCommentsOrder'],
-					'avatar_size'        => $attributes['displayAvatarSize'],
-					'moderation_message' => $attributes['moderationMessage'],
-					'style'              => 'div',
-					'short_ping'         => true,
+					'walker'                       => new NovaBlocks_Walker_Comment(),
+					'max_depth'                    => $attributes['maxThreadDepth'],
+					'reverse_top_level'            => $attributes['reverseTopLevelCommentsOrder'],
+					'avatar_size'                  => $attributes['displayAvatarSize'],
+					'moderation_message'           => $attributes['moderationMessage'],
+					'style'                        => 'div',
+					'short_ping'                   => true,
+					// Since we do the proper query above, we don't want the walker to do it once again.
+					// We just want all the passed comments displayed.
+					'page'                         => 0,
+					'per_page'                     => 0,
 
 					// Extra args of our own. These will also be passed along to the walker.
 					'display_commenter_background' => $attributes['displayCommenterBackground'],
 			), $comments ); ?>
-		</div><!-- .comment-list -->
+		</div><!-- #comments.comment-list -->
 
 		<?php
+		$comment_pagination = paginate_comments_links(
+				array(
+						'echo'      => false,
+						'total'     => $max_num_comment_pages,
+						'current'   => $page,
+						'end_size'  => 0,
+						'mid_size'  => 0,
+						'next_text' => __( 'Newer Comments', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
+						'prev_text' => '<span aria-hidden="true">&larr;</span> ' . __( 'Older Comments', '__plugin_txtd' ),
+				)
+		);
+
+		if ( $comment_pagination ) {
+			$pagination_classes = '';
+
+			// If we're only showing the "Next" link, add a class indicating so.
+			if ( false === strpos( $comment_pagination, 'prev page-numbers' ) ) {
+				$pagination_classes = ' only-next';
+			}
+			?>
+
+			<nav class="comments-pagination pagination<?php echo $pagination_classes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>" aria-label="<?php esc_attr_e( 'Comments', '__plugin_txtd' ); ?>">
+				<?php echo wp_kses_post( $comment_pagination ); ?>
+			</nav>
+
+			<?php
+		}
+
 		// Add another form at the bottom when we have a certain number of comments.
 		if ( comments_open( $post_id )
 		     && ! empty( $attributes['scrollRelocateCommentFormAfterNumComments'] )

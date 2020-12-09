@@ -34,6 +34,14 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		$attributes = wp_parse_args( $attributes, [
 				'commentsTitle' => esc_html__( 'Conversations', '__plugin_txtd' ),
 				'noCommentsTitle' => esc_html__( 'Get the conversation going', '__plugin_txtd' ),
+				'zeroCommentsSubtitle' => false,
+				'oneCommentSubtitle' => esc_html__( 'One so far', '__plugin_txtd' ),
+				'multipleCommentsSubtitle' => esc_html__( '%d', '__plugin_txtd' ),
+				// Text to use when we want to differentiate between top-level comments (conversations) and replies.
+				// Leave empty to not differentiate and use 'multipleCommentsSubtitle'.
+				// The differentiation will take place only when there is an actual difference (e.g. not when all comments are top-level).
+				/* translators: 1: The number of top-level comments, 2: The number of replies  */
+				'multipleCommentsSubtitleWithDifferentiation' => __( '<span class="conversations-number">%1$d</span> with <span class="replies-number">%2$d</span> replies', '__plugin_txtd' ),
 		] );
 
 		ob_start();
@@ -53,11 +61,51 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 				} ?>
 
 				<h3 class="novablocks-conversations__header">
-					<span class="novablocks-conversations__title"><?php echo wp_kses( $conversation_title, '__plugin_txtd', wp_kses_allowed_html() ) ?></span>
+					<span class="novablocks-conversations__title"><?php echo wp_kses( $conversation_title, wp_kses_allowed_html() ); ?></span>
 					<?php if ( $comments_count > 0 ) { ?>
-					<span class="novablocks-conversations__comments-count">
-						<?php printf( _nx( 'One Comment', '%1$s Comments', $comments_count, 'conversations title count', '__plugin_txtd' ), number_format_i18n( $comments_count ) ); ?>
-					</span>
+					<span class="novablocks-conversations__comments-count"><?php
+						// Check if we need to differentiate and have reasons to do so.
+						if ( $comments_count > 1 // We need at least 2 comments.
+						     && ! empty( $attributes['multipleCommentsSubtitleWithDifferentiation'] )
+						     && false !== strpos( $attributes['multipleCommentsSubtitleWithDifferentiation'], '%1$d' )
+						     && false !== strpos( $attributes['multipleCommentsSubtitleWithDifferentiation'], '%2$d' )
+							 && ( $toplevelCommentsCount = (int) NovaBlocks_Comments::get_toplevel_comments_number( $post_id ) ) < $comments_count ) {
+
+							// Sanitize.
+							$attributes['multipleCommentsSubtitleWithDifferentiation'] = wp_kses( $attributes['multipleCommentsSubtitleWithDifferentiation'],
+									array_map( '_wp_add_global_attributes',	[
+											'span'       => array(
+													'dir'      => true,
+													'align'    => true,
+													'lang'     => true,
+													'xml:lang' => true,
+											),
+											'b'          => array(),
+											'code'       => array(),
+											'em'         => array(),
+											'i'          => array(),
+											's'          => array(),
+											'strike'     => array(),
+											'strong'     => array(),
+									] ) );
+
+							$comments_number_text = sprintf( $attributes['multipleCommentsSubtitleWithDifferentiation'],
+									$toplevelCommentsCount,
+									$comments_count - $toplevelCommentsCount
+								);
+							/**
+							 * Apply the same filter as the core
+							 *
+							 * @see get_comments_number_text()
+							 *
+							 * @param string $comments_number_text
+							 * @param int $comments_count
+							 */
+							echo apply_filters( 'comments_number', $comments_number_text, $comments_count );
+						} else {
+							// Just use the regular, core way of showing the comments number.
+							comments_number( $attributes['zeroCommentsSubtitle'], $attributes['oneCommentSubtitle'], $attributes['multipleCommentsSubtitle'], $post_id );
+						}?></span>
 					<?php } ?>
 				</h3><!-- .novablocks-conversations__header -->
 
