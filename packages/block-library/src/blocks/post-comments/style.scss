@@ -496,6 +496,71 @@
 	  opacity: .5;
 	  text-align: center;
 	}
+
+  	.comments-pagination {
+	padding-top: var(--novablocks-spacing);
+
+	.page-numbers {
+	  display: flex;
+	  flex-wrap: wrap;
+	  list-style: none;
+
+	  margin-left: 0;
+
+	  @include below(tablet) {
+		justify-content: space-between;
+	  }
+
+	  > li {
+		padding-top: 10px;
+		padding-left: 10px;
+
+		&:first-child {
+		  margin-left: -10px;
+		}
+	  }
+
+	  a {
+		text-decoration: none;
+	  }
+
+	  .page-numbers {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+		min-width: 48px;
+		min-height: 48px;
+		padding: 12px;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
+		color: inherit;
+
+		&:not(.next):not(.prev) {
+		  @include below(tablet) {
+			display: none;
+		  }
+		}
+	  }
+
+	  .next,
+	  .prev {
+		padding-left: 25px;
+		padding-right: 25px;
+	  }
+
+	  .current {
+		background-color: #F6F5F7;
+	  }
+
+	  a:hover {
+		background-color: var(--component-accent-color);
+		border-color: var(--component-accent-color);
+		color: #FFFFFF;
+	  }
+	}
+  }
 }
 
 .comment-author-avatar {

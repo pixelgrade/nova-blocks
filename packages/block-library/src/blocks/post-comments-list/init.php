@@ -259,6 +259,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 						'mid_size'  => 0,
 						'next_text' => __( 'Newer Comments', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
 						'prev_text' => '<span aria-hidden="true">&larr;</span> ' . __( 'Older Comments', '__plugin_txtd' ),
+						'type'      => 'list',
 				)
 		);
 
