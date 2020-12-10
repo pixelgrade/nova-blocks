@@ -15,7 +15,9 @@ const TRANSITION_EASING = "easeOutCirc";
 		$conversationsBlock = $( '.novablocks-conversations' ),
 		$commentPlaceholder = $( '#second-comment-form-marker' ),
 		$commentList = $('.comment-list'),
-		$commentListHeight = $commentList.outerHeight();
+		$commentListHeight = $commentList.outerHeight(),
+		$commentCheckboxes = $commentList.find('.comment-dropdown-open'),
+		$commentDropdown = $commentList.find('.comment-dropdown').children();
 
 	// Hackish way to avoid replying comment form being moved.
 	$commentForm.wrap( '<div>' );
@@ -79,7 +81,9 @@ const TRANSITION_EASING = "easeOutCirc";
 		} );
 
 		$form.find( COMMENT_TEXTAREA_SELECTOR ).one( 'focusin', onFocus );
-		$( document ).on( 'click', uncheckCheckboxes );
+		$( document ).on( 'click', function() {
+			uncheckCheckboxes(event);
+		} );
 	}
 
 	function onResize( $form ) {
@@ -218,10 +222,15 @@ const TRANSITION_EASING = "easeOutCirc";
 
 	function uncheckCheckboxes( event ) {
 
-		let $commentCheckboxes = $commentList.find('.comment-dropdown-open');
+		// If checkbox is not available, do nothing.
+		// Currently the dropdown is visibile for authors.
 
-		if ( ! $( event.target ).is( $commentCheckboxes ) ) {
-			$commentCheckboxes.prop("checked", false);
+		if ( ! $commentCheckboxes.length) {
+			return;
+		}
+
+		if ( ! $( event.target ).is( $commentDropdown) ) {
+			$commentCheckboxes.prop('checked', false);
 		}
 	}
 
