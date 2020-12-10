@@ -51,6 +51,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 			add_filter( 'comment_class', array( $this, 'featured_comment_class' ), 10, 3 );
 
+			add_filter('nb_commenter_background_value', array( $this, 'get_user_completed_background' ) );
+
 			/**
 			 * Backend logic.
 			 */
@@ -415,11 +417,12 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 					                 '<p class="comment-form-experience comment-fields-wrapper">' .
 					                 '<label for="nb_commenter_background">%s%s</label>' .
 					                 '<span class="field-description">%s</span>' .
-					                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" required="required" />' .
+					                 '<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" value="%s" placeholder="%s" required="required" />' .
 					                 '</p>',
 					                 esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 					                 ( $req_commenter_background ? ' <span class="required">*</span>' : '' ),
 					                 esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+					                 apply_filters('nb_commenter_background_value', ''),
 					                 esc_html__( 'Put some background behind your thoughts..', '__plugin_txtd' )
 			                 );
 
@@ -561,6 +564,36 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			);
 
 			return $top_level_query->query( $top_level_args );
+		}
+
+		public function get_user_completed_background() {
+			// We only want to do this for logged-in users.
+
+			if ( is_user_logged_in() ) {
+
+				global $current_user;
+
+				// Args used to filter comments.
+				// We need one approved comment from current_user.
+				$args = array(
+						'user_id' => $current_user->ID,
+						'number'  => '1',
+						'status' => 'approve'
+				);
+
+				// Get comments for logged-in user.
+				$comments = get_comments( $args );
+
+				if ( $comments ) {
+
+					// Get comment meta for the current user and use it to update the input default value.
+					$commenter_background_value = get_comment_meta( $comments[0]->comment_ID, 'nb_commenter_background', true );
+
+					return $commenter_background_value;
+				}
+			}
+
+			return '';
 		}
 
 		/**
