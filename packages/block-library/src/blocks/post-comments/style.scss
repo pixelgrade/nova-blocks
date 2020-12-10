@@ -499,6 +499,7 @@
 
   	.comments-pagination {
 	padding-top: var(--novablocks-spacing);
+	padding-bottom: var(--novablocks-spacing);
 
 	.page-numbers {
 	  display: flex;
@@ -811,4 +812,8 @@
 	  border-radius: 0 20px;
 	}
   }
+}
+
+.user-is-replying .temporary-form {
+  height: 0 !important;
 }

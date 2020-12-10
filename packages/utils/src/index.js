@@ -249,14 +249,6 @@ export const titleCase = ( str ) => {
 	return splitStr.join( ' ' );
 }
 
-export const insertBefore = (element, referenceNode) => {
-	referenceNode.parentNode.insertBefore(element, referenceNode);
-}
-
-export const insertAfter = (element, referenceNode) => {
-	referenceNode.parentNode.insertBefore(element, referenceNode.nextSibling);
-}
-
 export const isAnyPartOfElementInViewport = (element) => {
 	const rect = element.getBoundingClientRect();
 

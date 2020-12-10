@@ -53,6 +53,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 			add_filter( 'comment_class', array( $this, 'featured_comment_class' ), 10, 3 );
 
+			add_filter('nb_commenter_background_value', array( $this, 'get_user_completed_background' ) );
+
 			/**
 			 * Backend logic.
 			 */
@@ -663,6 +665,36 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			);
 
 			return $top_level_query->query( $top_level_args );
+		}
+
+		public function get_user_completed_background() {
+			// We only want to do this for logged-in users.
+
+			if ( is_user_logged_in() ) {
+
+				global $current_user;
+
+				// Args used to filter comments.
+				// We need one approved comment from current_user.
+				$args = array(
+						'user_id' => $current_user->ID,
+						'number'  => '1',
+						'status' => 'approve'
+				);
+
+				// Get comments for logged-in user.
+				$comments = get_comments( $args );
+
+				if ( $comments ) {
+
+					// Get comment meta for the current user and use it to update the input default value.
+					$commenter_background_value = get_comment_meta( $comments[0]->comment_ID, 'nb_commenter_background', true );
+
+					return $commenter_background_value;
+				}
+			}
+
+			return '';
 		}
 
 		/**
