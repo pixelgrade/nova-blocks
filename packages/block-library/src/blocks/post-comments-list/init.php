@@ -46,11 +46,14 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 
 			// The message to use in the comments list when a comment is not approved.
 			'moderationMessage' => '', // Fallback to core's default.
-			'commentsClosedMessage' => esc_html__( 'Comments are closed.', '__plugin_txtd' ),
+			'commentsClosedMessage' => esc_html__( 'No further conversations or replies allowed, at this time.', '__plugin_txtd' ),
 
-			'scrollRelocateCommentFormAfterNumComments' => 7, // If this is 0 or false, no relocation will take place.
+			// If this is 0 or false, no relocation will take place.
+			'scrollRelocateCommentFormAfterNumComments' => 7,
 
-			'commentPreviewTime' => 5, // In minutes. How long should the commenter see his unapproved comment. 0 for no preview.
+			// In minutes. How long should the commenter see his unapproved comment. 0 for no preview.
+			// This is also the time the commenter is allowed to amend its comment.
+			'commentPreviewTime' => 5,
 
 		] );
 
@@ -229,8 +232,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			return '';
 		}
 
-		ob_start(); ?>
+		ob_start();
+		?>
 		<div id="comments" class="comment-list">
+
 			<?php wp_list_comments( array(
 					'walker'                       => new NovaBlocks_Walker_Comment(),
 					'max_depth'                    => $attributes['maxThreadDepth'],
@@ -247,19 +252,20 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 					// Extra args of our own. These will also be passed along to the walker.
 					'display_commenter_background' => $attributes['displayCommenterBackground'],
 			), $comments ); ?>
+
 		</div><!-- #comments.comment-list -->
 
 		<?php
 		$comment_pagination = paginate_comments_links(
 				array(
-						'echo'      => false,
-						'total'     => $max_num_comment_pages,
-						'current'   => $page,
-						'end_size'  => 0,
-						'mid_size'  => 0,
-						'next_text' => __( 'Newer Comments', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
-						'prev_text' => '<span aria-hidden="true">&larr;</span> ' . __( 'Older Comments', '__plugin_txtd' ),
-						'type'      => 'list',
+					'echo'      => false,
+					'total'     => $max_num_comment_pages,
+					'current'   => $page,
+					'end_size'  => 0,
+					'mid_size'  => 0,
+					'next_text' => esc_html__( 'Newer Conversations', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
+					'prev_text' => '<span aria-hidden="true">&larr;</span> ' . esc_html__( 'Older Conversations', '__plugin_txtd' ),
+					'type'      => 'list',
 				)
 		);
 
@@ -269,8 +275,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			// If we're only showing the "Next" link, add a class indicating so.
 			if ( false === strpos( $comment_pagination, 'prev page-numbers' ) ) {
 				$pagination_classes = ' only-next';
-			}
-			?>
+			} ?>
 
 			<nav class="comments-pagination pagination<?php echo $pagination_classes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>" aria-label="<?php esc_attr_e( 'Comments', '__plugin_txtd' ); ?>">
 				<?php echo wp_kses_post( $comment_pagination ); ?>
@@ -282,10 +287,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		// Add another form at the bottom when we have a certain number of comments.
 		if ( comments_open( $post_id )
 		     && ! empty( $attributes['scrollRelocateCommentFormAfterNumComments'] )
-		     && get_comments_number( $post_id ) >= absint( $attributes['scrollRelocateCommentFormAfterNumComments'] ) ) {
+		     && $comment_count >= absint( $attributes['scrollRelocateCommentFormAfterNumComments'] ) ) {
 
 			// This is just a marker to use to move the only form on the page!
-			// We will move the comment form on scroll.
+			// We will move the comment form on scroll, after this div.
 			echo '<div id="second-comment-form-marker"></div>';
 		}
 

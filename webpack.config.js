@@ -271,6 +271,21 @@ VendorScripts.forEach( script => {
 	VendorEntries[ `./dist/vendor/${ script }.min` ] = `./src/vendor/${ script }`;
 } );
 
+// Just copy the files in each directory.
+const CopyVendorDirsPlugin =
+	new CopyWebpackPlugin(
+		glob.sync('./src/vendor/trix').map((dirPath) => {
+			let vendor = dirPath.replace('./src/vendor/', '');
+
+			return {
+				from: '*',
+				to: `dist/vendor/${vendor}/`,
+				flatten: false,
+				context: `src/vendor/${vendor}/`,
+			}
+		})
+	);
+
 const VendorConfig = {
 	mode,
 	externals: {
@@ -283,6 +298,9 @@ const VendorConfig = {
 	optimization: {
 		...minimizeConfig,
 	},
+	plugins: [
+		CopyVendorDirsPlugin,
+	],
 };
 
 module.exports = [

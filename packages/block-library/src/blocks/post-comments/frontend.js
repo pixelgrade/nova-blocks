@@ -1,11 +1,11 @@
-import { above, insertBefore, insertAfter, isAnyPartOfElementInViewport } from "@novablocks/utils";
+import { insertBefore, insertAfter, isAnyPartOfElementInViewport } from "@novablocks/utils";
 import "@novablocks/icons";
 
 const FORM_SELECTOR = '.comment-form';
 const MASK_SELECTOR = '.comment-fields-mask';
-const COMMENT_TEXTAREA_SELECTOR = '.comment-form-comment textarea';
 
-const TRANSITION_DURATION = 1000;
+// Keep it a snappy transition.
+const TRANSITION_DURATION = 800;
 const TRANSITION_EASING = "easeOutCirc";
 
 (function( $, window, undefined ) {
@@ -32,22 +32,12 @@ const TRANSITION_EASING = "easeOutCirc";
 			onResize( $form );
 		} );
 
-		$form.find( COMMENT_TEXTAREA_SELECTOR ).one( 'focusin', onFocus );
+		$form.one('focusin', 'input, textarea, trix-editor', onFocus);
 		$( document ).on( 'click', uncheckCheckboxes );
 	}
 
 	function onResize( $form ) {
-		updatePlaceholder( $form );
 		updateMasksHeights( $form );
-	}
-
-	function updatePlaceholder( $form ) {
-		const $textarea = $form.find( COMMENT_TEXTAREA_SELECTOR );
-		const desktopPlaceholder = 'Join the conversation, share your knowledge or ask a question...';
-		const mobilePlaceholder = 'Share your knowledge or ask a question...';
-		const placeholder = above( 'lap' ) ? desktopPlaceholder : mobilePlaceholder;
-
-		$textarea.attr( "placeholder", placeholder );
 	}
 
 	function handleMarkup( $form ) {
@@ -226,7 +216,7 @@ const TRANSITION_EASING = "easeOutCirc";
 			formIsMoved = true;
 		}
 
-		// The third comment is in viewport,we are scrolling up,
+		// If the third comment is in viewport we are scrolling up,
 		// so we should move the comment form before comment list.
 		if ( formIsMoved && thirdCommentIsInViewport && scrollIsUp ) {
 			insertBefore($commentForm[0], $commentList[0]);
