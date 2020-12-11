@@ -43,7 +43,7 @@ if ( ! function_exists( 'novablocks_render_post_comments_form_block' ) ) {
 			'commentPlaceholder' => esc_html__( 'Share your knowledge or ask a question..', '__plugin_txtd' ),
 			// Control whether to provide a rich text editor experience.
 			// In our case we will provide the simple, but powerful Trix rich text editor (https://github.com/basecamp/trix).
-			'commentRichTextEditor' => false,
+			'commentRichTextEditor' => true,
 
 			// Display the commenter background field.
 			'commenterBackground' => true,
