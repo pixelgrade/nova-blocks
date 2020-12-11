@@ -41,7 +41,7 @@ const TRANSITION_EASING = "easeOutCirc";
 		onResize( $form );
 	} );
 
-	featureCommentOnClick();
+	highlightCommentOnClick();
 
 	let $temporaryForm = addTemporaryForm();
 	updateTemporaryFormHeight();
@@ -174,7 +174,7 @@ const TRANSITION_EASING = "easeOutCirc";
 		} )
 	}
 
-	function featureCommentOnClick() {
+	function highlightCommentOnClick() {
 
 		$('.feature-comments').unbind('click');
 
@@ -182,10 +182,10 @@ const TRANSITION_EASING = "easeOutCirc";
 			let $this = $(this);
 
 			$.ajax({
-				url: featured_comments_ajax_object.ajaxurl,
+				url: highlight_comments_ajax_object.ajaxurl,
 				type: 'POST',
 				data: {
-					'action': 'handle_featured_comments',
+					'action': 'handle_highlight_comment',
 					'do': $this.data('do'),
 					'comment_id': $this.data('comment_id'),
 					'nonce': $this.data('nonce')
@@ -195,10 +195,10 @@ const TRANSITION_EASING = "easeOutCirc";
 						comment_id = $this.attr('data-comment_id'),
 						$comment = $("#comment-" + comment_id),
 						$this_and_comment = $this.siblings('.feature-comments').add($comment).add($this);
-					if (action === 'feature')
-						$this_and_comment.addClass('comment-featured');
-					if (action === 'unfeature')
-						$this_and_comment.removeClass('comment-featured');
+					if (action === 'highlight')
+						$this_and_comment.addClass('comment-highlighted');
+					if (action === 'unhighlight')
+						$this_and_comment.removeClass('comment-highlighted');
 
 					$this.data('nonce', response);
 				}

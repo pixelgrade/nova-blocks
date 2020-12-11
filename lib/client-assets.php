@@ -183,7 +183,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			'novablocks_opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css'
 		) );
 
-		wp_localize_script( 'novablocks-utils', 'featured_comments_ajax_object', array(
+		// @todo Dirty!!!!!
+		wp_localize_script( 'novablocks-utils', 'highlight_comments_ajax_object', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
 

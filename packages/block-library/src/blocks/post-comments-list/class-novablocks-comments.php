@@ -51,9 +51,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			add_filter( 'comment_form_default_fields', array( $this, 'adjust_comment_form_default_fields' ), 9, 1 );
 			add_filter( 'comment_form_defaults', array( $this, 'adjust_comment_form_defaults' ), 9, 1 );
 
-			add_filter( 'comment_class', array( $this, 'featured_comment_class' ), 10, 3 );
-
-			add_filter('nb_commenter_background_value', array( $this, 'get_user_completed_background' ) );
+			add_filter( 'comment_class', array( $this, 'adjust_comment_class' ), 10, 3 );
 
 			/**
 			 * Backend logic.
@@ -69,11 +67,10 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			add_action( 'save_post_post', array( $this, 'save_posts_metabox_fields' ), 10, 1 );
 
 			$this->actions = array(
-					'feature'   => __( 'Feature',   '__plugin_txtd' ),
-					'unfeature' => __( 'Unfeature', '__plugin_txtd' ),
+					'highlight'   => __( 'Highlight',   '__plugin_txtd' ),
+					'unhighlight' => __( 'Unhighlight', '__plugin_txtd' ),
 			);
-
-			add_action( 'wp_ajax_handle_featured_comments', array( $this, 'handle_featured_comments' ) );
+			add_action( 'wp_ajax_handle_highlight_comment', array( $this, 'handle_highlight_comment' ) );
 		}
 
 		public function register_frontend_assets() {
@@ -89,10 +86,9 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 *
 		 * @return string[]
 		 */
-		public function featured_comment_class( $classes, $class, $comment_id ) {
-			$comment_featured = get_comment_meta( $comment_id, 'nb_comment_featured', true );
-			if ( ! empty( $comment_featured ) ) {
-				$classes[] = 'comment-featured';
+		public function adjust_comment_class( $classes, $class, $comment_id ) {
+			if ( $this->is_comment_highlighted( $comment_id ) ) {
+				$classes[] = 'comment-highlighted';
 			}
 
 			return $classes;
@@ -103,16 +99,22 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 */
 		public function save_comment_meta_data( $comment_id ) {
 			if ( ! empty( $_POST['nb_commenter_background'] ) ) {
-				$commenter_background = wp_filter_nohtml_kses( $_POST['nb_commenter_background'] );
+				$commenter_background = trim( strip_tags( $_POST['nb_commenter_background'] ) );
 				if ( ! empty( $commenter_background ) ) {
 					update_comment_meta( $comment_id, 'nb_commenter_background', $commenter_background );
 				}
 			}
 
-			if ( ! empty( $_POST['nb_comment_featured'] ) ) {
-				update_comment_meta( $comment_id, 'nb_comment_featured', '1' );
+			if ( ! empty( $_POST['nb_comment_highlighted_by'] ) ) {
+				if ( ! is_array( $_POST['nb_comment_highlighted_by'] ) ) {
+					$_POST['nb_comment_highlighted_by'] = [ $_POST['nb_comment_highlighted_by'] ];
+				}
+
+				// Make sure we are dealing with ints.
+				$_POST['nb_comment_highlighted_by'] = array_map( 'absint', $_POST['nb_comment_highlighted_by'] );
+				update_comment_meta( $comment_id, 'nb_comment_highlighted_by', $_POST['nb_comment_highlighted_by'] );
 			} else {
-				update_comment_meta( $comment_id, 'nb_comment_featured', '0' );
+				delete_comment_meta( $comment_id, 'nb_comment_highlighted_by' );
 			}
 		}
 
@@ -125,25 +127,37 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 */
 		public function verify_comment_meta_data( $commentdata ) {
 			// We only enforce the commenter background for comments, not other types like reviews.
-			if ( ! empty( $commentdata['comment_type'] ) && 'comment' === $commentdata['comment_type'] && empty( $_POST['nb_commenter_background'] ) ) {
-				// Die in a standard way, like wp-comments-post.php does it, so AJAX plugins can behave themselves.
+			if ( empty( $commentdata['comment_type'] ) || 'comment' !== $commentdata['comment_type'] ) {
+				return $commentdata;
+			}
+
+			if ( empty( $_POST['nb_commenter_background'] ) ) {
 				$comment = new WP_Error( 'require_nb_commenter_background', __( '<strong>Error</strong>: You did not add your relevant background or experience.', '__plugin_txtd' ), 200 );
-				$data = intval( $comment->get_error_data() );
-				if ( ! empty( $data ) ) {
-					wp_die(
-							'<p>' . $comment->get_error_message() . '</p>',
-							__( 'Comment Submission Failure' ),
-							array(
-									'response'  => $data,
-									'back_link' => true,
-							)
-					);
-				} else {
-					exit;
+			} else {
+				$stripped_background = trim( strip_tags( $_POST['nb_commenter_background'] ) );
+				if ( mb_strlen( $stripped_background, '8bit' ) > 245 ) {
+					$comment = new WP_Error( 'nb_commenter_background_length', __( '<strong>Error</strong>: Your background or experience is too long.' ), 200 );
 				}
 			}
 
-			return $commentdata;
+			if ( empty( $comment ) ) {
+				return $commentdata;
+			}
+
+			// Die in a standard way, like wp-comments-post.php does it, so AJAX plugins can behave themselves.
+			$data = intval( $comment->get_error_data() );
+			if ( ! empty( $data ) ) {
+				wp_die(
+						'<p>' . $comment->get_error_message() . '</p>',
+						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+						array(
+							'response'  => $data,
+							'back_link' => true,
+						)
+				);
+			}
+
+			exit;
 		}
 
 		/**
@@ -173,25 +187,58 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 */
 		public function comment_meta_box_fields( $comment ) {
 			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
-			$comment_featured = get_comment_meta( $comment->comment_ID, 'nb_comment_featured', true );
+			$comment_highlighted_by = get_comment_meta( $comment->comment_ID, 'nb_comment_highlighted_by', true );
+
+			if ( empty( $comment_highlighted_by ) ) {
+				$comment_highlighted_by = [];
+			} else if ( ! is_array( $comment_highlighted_by ) ) {
+				$comment_highlighted_by = [ (int) $comment_highlighted_by ];
+			}
 
 			// Safety first.
 			wp_nonce_field( 'nb_save_metabox_fields', 'nb_comment_extra_details', false );
 			?>
 
-			<fieldset>
-				<legend class="screen-reader-text">Comment extra details</legend>
-				<table class="form-table editcomment" role="presentation">
+			<fieldset class="widefat">
+				<legend class="screen-reader-text"><?php esc_html_e( 'Comment extra details', '__plugin_txtd' ); ?></legend>
+				<table class="" role="presentation">
 					<tbody>
 						<tr>
-							<td class="first"><label for="nb_commenter_background"><?php esc_html_e( 'Commenter Relevant Background', '__plugin_txtd' ); ?></label></td>
+							<td class="first"><label for="nb_commenter_background"><strong><?php esc_html_e( 'Commenter Relevant Background', '__plugin_txtd' ); ?></strong></label></td>
 							<td><input type="text" name="nb_commenter_background" value="<?php echo esc_attr( $commenter_background ); ?>" size="30" class="regular-text"/></td>
 						</tr>
 						<tr>
-							<td class="first"><label for="nb_comment_featured"><?php esc_html_e( 'Feature this comment', '__plugin_txtd' ); ?></label></td>
+							<td class="first"><label for="nb_comment_highlighted_by"><strong><?php esc_html_e( 'Highlighters of this comment', '__plugin_txtd' ); ?></strong></label></td>
 							<td>
-								<input type="checkbox" name="nb_comment_featured" <?php checked( $comment_featured ); ?> value="1" autocomplete="off"/>
-								<span class="description"><?php esc_html_e( 'Feature this comment, if the comments list displays featured comments in a special way.', '__plugin_txtd' ); ?></span>
+								<fieldset>
+									<p>
+										<label>
+											<input type="checkbox" name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( get_current_user_id(), $comment_highlighted_by ) ); ?> value="<?php echo esc_attr( get_current_user_id() ); ?>" autocomplete="off"/>
+											<span><?php printf( esc_html__( 'Me (%s)', '__plugin_txtd' ),  wp_get_current_user()->display_name ); ?></span>
+										</label>
+									</p>
+
+									<?php
+									foreach ( $comment_highlighted_by as $user_id ) {
+										if ( (int) $user_id === get_current_user_id() ) {
+											continue;
+										}
+
+										$user_data = get_userdata( $user_id );
+										if ( empty( $user_data ) ) {
+											continue;
+										} ?>
+										<p>
+											<label>
+												<input type="checkbox" name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( $user_id, $comment_highlighted_by ) ); ?> value="<?php echo esc_attr( $user_id ); ?>" autocomplete="off"/>
+												<span><?php echo $user_data->display_name; ?></span>
+											</label>
+										</p>
+										<?php
+									} ?>
+								</fieldset>
+
+								<span class="description"><?php echo wp_kses_post( __( 'All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments.', '__plugin_txtd' ) ); ?></span>
 							</td>
 						</tr>
 					</tbody>
@@ -220,10 +267,16 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				delete_comment_meta( $comment_id, 'nb_commenter_background' );
 			}
 
-			if ( ! empty( $_POST['nb_comment_featured'] ) ) {
-				update_comment_meta( $comment_id, 'nb_comment_featured', '1' );
+			if ( ! empty( $_POST['nb_comment_highlighted_by'] ) ) {
+				if ( ! is_array( $_POST['nb_comment_highlighted_by'] ) ) {
+					$_POST['nb_comment_highlighted_by'] = [ $_POST['nb_comment_highlighted_by'] ];
+				}
+
+				// Make sure we are dealing with ints.
+				$_POST['nb_comment_highlighted_by'] = array_map( 'absint', $_POST['nb_comment_highlighted_by'] );
+				update_comment_meta( $comment_id, 'nb_comment_highlighted_by', $_POST['nb_comment_highlighted_by'] );
 			} else {
-				update_comment_meta( $comment_id, 'nb_comment_featured', '0' );
+				delete_comment_meta( $comment_id, 'nb_comment_highlighted_by' );
 			}
 		}
 
@@ -456,7 +509,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			// We need to decide if we have a regular textarea or a rich text editor via Trix.
 			$comment_textarea = sprintf(
 					'<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>',
-					$attributes['commentPlaceholder']
+					esc_attr( $attributes['commentPlaceholder'] )
 			);
 			if ( $attributes['commentRichTextEditor'] ) {
 				// We need to use a different kind of markup.
@@ -498,11 +551,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			}
 
 			$defaults['comment_field'] .=
-			                 sprintf(
-					                 '<p class="comment-form-comment">' .
-					                 '<label for="comment">%s</label><span class="field-description">%s</span>' .
-					                 '%s' .
-					                 '</p>',
+			                 sprintf( '<p class="comment-form-comment"><label for="comment">%s</label><span class="field-description">%s</span>%s</p>',
 					                 $comment_field_label,
 					                 $attributes['commentDescription'],
 					                 $comment_textarea
@@ -510,18 +559,45 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 
 			// Third, the commenter background field.
 			if ( $attributes['commenterBackground'] ) {
+				// We will try to prefill the commenter background for people who have previously commented to this post.
+				$previous_commenter_background = '';
+
+				$previous_commenter_background_query_args = [];
+				if ( ! empty( $current_user->ID ) ) {
+					$previous_commenter_background_query_args['user_id'] = $current_user->ID;
+				} else if ( ! empty( $commenter['comment_author_email'] ) ) {
+					$previous_commenter_background_query_args['author_email'] = sanitize_email( $commenter['comment_author_email'] );
+				}
+
+				if ( ! empty( $previous_commenter_background_query_args ) ) {
+					$previous_commenter_background_query_args = array_merge( $previous_commenter_background_query_args, [
+							'fields' => 'ids',
+							'number' => 1,
+							'count' => false,
+							'orderby' => 'comment_date_gmt',
+							'order' => 'DESC',
+							'post_id' => $GLOBALS['nb_current_comment_form_post_id'],
+					] );
+
+					$last_comment = get_comments( $previous_commenter_background_query_args );
+					if ( ! empty( $last_comment ) ) {
+						$previous_commenter_background = get_comment_meta( $last_comment[0], 'nb_commenter_background', true );
+					}
+				}
+
 				// We need to add the commenter background field to the comment textarea because we want it for logged in users too.
 				$defaults['comment_field'] .=
-						sprintf(
-								'<p class="comment-form-background comment-fields-wrapper">' .
-								'<label for="nb_commenter_background">%s%s</label>' .
-								'<span class="field-description">%s</span>' .
-								'<input id="nb_commenter_background" name="nb_commenter_background" type="text" size="30" tabindex="5" placeholder="%s" required="required" />' .
-								'</p>',
+						sprintf( '
+<p class="comment-form-background comment-fields-wrapper">
+	<label for="nb_commenter_background">%s%s</label>
+	<span class="field-description">%s</span>
+	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" tabindex="5" placeholder="%s" required="required" />
+</p>',
 								$attributes['commenterBackgroundLabel'],
 								( $attributes['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
 								$attributes['commenterBackgroundDescription'],
-								$attributes['commenterBackgroundPlaceholder']
+								esc_attr( $previous_commenter_background ),
+								esc_attr( $attributes['commenterBackgroundPlaceholder'] )
 						);
 			}
 
@@ -552,9 +628,11 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			return $defaults;
 		}
 
-		public function handle_featured_comments() {
+		public function handle_highlight_comment() {
 
-			if ( ! isset( $_POST['do'] ) ) die;
+			if ( ! isset( $_POST['do'] ) ) {
+				die;
+			}
 
 			$action = $_POST['do'];
 
@@ -565,34 +643,101 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				$comment_id = absint( $_POST['comment_id'] );
 				$comment    = get_comment( $comment_id );
 
-				if ( ! $comment ) {
+				if ( ! $comment
+					|| ! current_user_can( 'edit_comment', $comment->comment_ID )
+					|| ! wp_verify_nonce( $_POST['nonce'], 'highlight_comment' ) ) {
+
 					die;
 				}
 
-				if( ! current_user_can( 'edit_comment', $comment_id ) ) {
-					die;
-				}
-
-				if( ! wp_verify_nonce( $_POST['nonce'], 'featured_comments' ) ) {
-					die;
+				// By default we will highlight or unhighlight for the current logged in user.
+				// But if we receive a user ID, we will respect that.
+				$user_id = get_current_user_id();
+				if ( ! empty( $_POST['user_id'] ) ) {
+					$user_id = absint( $_POST['user_id'] );
 				}
 
 				switch ( $action ) {
+					case 'highlight':
+						// We will not allow self-highlighting.
+						if ( $user_id == $comment->user_id ) {
+							wp_die(
+									'<p>' . wp_kses_post( __( '<strong>Error</strong>: You can\'t highlight your own comments.', '__plugin_txtd' ) ) . '</p>',
+									esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+									array(
+											'response'  => 422,
+											'back_link' => true,
+									)
+							);
+						}
 
-					case 'feature':
-						update_comment_meta( $comment_id, 'nb_comment_featured', '1' );
+						$this->highlight_comment_by_user( $comment->comment_ID, $user_id );
 						break;
-
-					case 'unfeature':
-						update_comment_meta( $comment_id, 'nb_comment_featured', '0' );
+					case 'unhighlight':
+						$this->unhighlight_comment_by_user( $comment->comment_ID, $user_id );
 						break;
-
-						die( wp_create_nonce( 'featured_comments' ) );
-
+					default:
+						break;
 				}
 			}
 
-			die;
+			exit;
+		}
+
+		public function is_comment_highlighted( $comment_id = false ) {
+			if ( empty( $comment_id ) ) {
+				$comment_id = get_comment_ID();
+			}
+
+			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
+
+			return ! empty( $meta );
+		}
+
+		public function is_comment_highlighted_by( $comment_id, $user_id ) {
+			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
+			if ( empty( $meta ) ) {
+				return false;
+			}
+
+			return false !== array_search( $user_id, $meta );
+		}
+
+		public function get_users_who_highlighted_comment( $comment_id = false ) {
+			if ( empty( $comment_id ) ) {
+				$comment_id = get_comment_ID();
+			}
+
+			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
+			if ( empty( $meta ) ) {
+				$meta = [];
+			}
+
+			return $meta;
+		}
+
+		public function highlight_comment_by_user( $comment_id, $user_id ) {
+			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
+			if ( empty( $meta ) ) {
+				$meta = [];
+			}
+
+			$meta[] = $user_id;
+
+			return update_comment_meta( $comment_id, 'nb_comment_highlighted_by', array_unique( $meta ) );
+		}
+
+		public function unhighlight_comment_by_user( $comment_id, $user_id ) {
+			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
+			if ( empty( $meta ) ) {
+				$meta = [];
+			}
+
+			if ( false !== ( $key = array_search( $user_id, $meta ) ) ) {
+				unset( $meta[ $key ] );
+			}
+
+			return update_comment_meta( $comment_id, 'nb_comment_highlighted_by', array_unique( $meta ) );
 		}
 
 		/**
@@ -665,36 +810,6 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			);
 
 			return $top_level_query->query( $top_level_args );
-		}
-
-		public function get_user_completed_background() {
-			// We only want to do this for logged-in users.
-
-			if ( is_user_logged_in() ) {
-
-				global $current_user;
-
-				// Args used to filter comments.
-				// We need one approved comment from current_user.
-				$args = array(
-						'user_id' => $current_user->ID,
-						'number'  => '1',
-						'status' => 'approve'
-				);
-
-				// Get comments for logged-in user.
-				$comments = get_comments( $args );
-
-				if ( $comments ) {
-
-					// Get comment meta for the current user and use it to update the input default value.
-					$commenter_background_value = get_comment_meta( $comments[0]->comment_ID, 'nb_commenter_background', true );
-
-					return $commenter_background_value;
-				}
-			}
-
-			return '';
 		}
 
 		/**

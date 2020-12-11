@@ -135,6 +135,37 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 					</footer><!-- .comment-footer-meta -->
 
+					<?php
+					$highlighters = NovaBlocks_Comments::instance()->get_users_who_highlighted_comment();
+					if ( ! empty( $highlighters ) ) { ?>
+					<footer class="comment-footer-highlights">
+						<div class="comment-highlightedby-label"><?php esc_html_e( 'Highlighted by', '__plugin_txtd' ); ?></div>
+						<ul class="comment-highlightedby-humans">
+						<?php
+						$conversation_starter_user_id = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_user_id', true );
+						$conversation_starter_content  = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_content', true );
+						$post = get_post( $comment->comment_post_ID );
+
+						foreach ( $highlighters as $highlighter_id ) {
+							$highlighter = get_userdata( $highlighter_id );
+							if ( empty( $highlighter ) ) {
+								continue;
+							}
+
+							// On expertise, we have right now only "Article author", "Conversation starter", and "Conversation editor" for the rest.
+							$expertise = esc_html__( 'Conversation editor', '__plugin_txtd' );
+							if ( ! empty( $conversation_starter_content ) && (int) $highlighter_id === (int) $conversation_starter_user_id ) {
+								$expertise = esc_html__( 'Conversation starter', '__plugin_txtd' );
+							} else if ( ! empty( $post ) && (int) $highlighter_id === $post->post_author ) {
+								$expertise = esc_html__( 'Article author', '__plugin_txtd' );
+							}
+							?>
+							<li class="comment-highlightedby-human"><div class="comment-highlightedby-human-name"><?php echo $highlighter->display_name; ?></div><div class="comment-highlightedby-human-expertise"><?php echo $expertise ?></div></li>
+						<?php } ?>
+						</ul>
+					</footer><!-- .comment-footer-highlights -->
+					<?php } ?>
+
 				</article><!-- .comment-body -->
 			</div><!-- .comment-wrapper -->
 			<?php
@@ -207,20 +238,20 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 				</label>
 				<div class="comment-dropdown-menu">
 					<?php
-					$data_id = ' data-comment_id=' . $comment->comment_ID;
-					$comment_featured = get_comment_meta( $comment->comment_ID, 'nb_comment_featured', true );
+					$data_id          = ' data-comment_id=' . $comment->comment_ID;
+					$comment_highlighted = NovaBlocks_Comments::instance()->is_comment_highlighted( $comment->comment_ID );
 
 					$current_status = '';
-					if ( ! empty( $comment_featured ) ) {
-						$current_status = 'comment-featured';
+					if ( ! empty( $comment_highlighted ) ) {
+						$current_status = 'comment-highlighted';
 					}
 
 					$menu_items = [];
-					foreach( NovaBlocks_Comments::instance()->actions as $action => $label ) {
-						$menu_items[] = "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "featured_comments" ) . "' title='{$label}'>{$label}</a> ";
+					foreach ( NovaBlocks_Comments::instance()->actions as $action => $label ) {
+						$menu_items[] = "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "highlight_comment" ) . "' title='{$label}'>{$label}</a> ";
 					}
 
-					$menu_items[] = '<a class="comment-dropdown-item" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd') . '">' . esc_html__( 'Link to comment', '__plugin_txtd' ) . '</a>';
+					$menu_items[] = '<a class="comment-dropdown-item" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd' ) . '">' . esc_html__( 'Copy link', '__plugin_txtd' ) . '</a>';
 
 					// Allow others to have a say.
 					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
