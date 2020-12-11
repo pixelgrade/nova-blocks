@@ -153,6 +153,7 @@ const TRANSITION_EASING = "easeOutCirc";
 
 				$form.data( 'animated', true );
 				$textarea.css( 'transition', 'none' );
+				$commentForm.addClass('comment-form--is-expanded');
 			},
 			progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
 
@@ -232,7 +233,8 @@ const TRANSITION_EASING = "easeOutCirc";
 		let scrollIsUp = scrollDir === 'up',
 			$thirdComment = $commentList.find('.comment').eq(3),
 			thirdCommentIsInViewport = isAnyPartOfElementInViewport($thirdComment[0]),
-			placeholderIsInViewport = isAnyPartOfElementInViewport($commentPlaceholder[0]);
+			placeholderIsInViewport = isAnyPartOfElementInViewport($commentPlaceholder[0]),
+			formIsInViewport = isAnyPartOfElementInViewport($commentForm[0]);
 
 		// This is for the use-case when user has scrolled to bottom
 		// and is refreshing the page. Whenever the placeholder is in viewport
@@ -240,7 +242,8 @@ const TRANSITION_EASING = "easeOutCirc";
 
 		// The third comment is in viewport, we are scrolling down,
 		// so we should move the comment form after comment list.
-		if ( ! formIsMoved && ( placeholderIsInViewport || ( thirdCommentIsInViewport && !scrollIsUp ) ) ) {
+
+		if ( ! formIsMoved && ( placeholderIsInViewport || ( thirdCommentIsInViewport && !scrollIsUp ) ) && ! formIsInViewport ) {
 			$commentForm.insertAfter($commentPlaceholder);
 			$temporaryForm.insertBefore($commentList);
 			formIsMoved = true;
@@ -248,7 +251,7 @@ const TRANSITION_EASING = "easeOutCirc";
 
 		// If the third comment is in viewport we are scrolling up,
 		// so we should move the comment form before comment list.
-		if ( thirdCommentIsInViewport && formIsMoved && scrollIsUp ) {
+		if ( thirdCommentIsInViewport && formIsMoved && scrollIsUp && ! formIsInViewport ) {
 			$commentForm.insertBefore($commentList);
 			$temporaryForm.insertAfter($commentPlaceholder);
 			formIsMoved = false;
@@ -272,7 +275,7 @@ const TRANSITION_EASING = "easeOutCirc";
 
 	function updateTemporaryFormHeight() {
 		// If we cannot find temporary form markup, do nothing.
-		if ( ! $temporaryForm.length) {
+		if ( typeof $temporaryForm === 'undefined' ) {
 			return;
 		}
 
@@ -285,7 +288,7 @@ const TRANSITION_EASING = "easeOutCirc";
 
 		// If temporary form does not exist,
 		// We do not need this class.
-		if (! $temporaryForm.length) {
+		if (typeof $temporaryForm === 'undefined' ) {
 			return;
 		}
 

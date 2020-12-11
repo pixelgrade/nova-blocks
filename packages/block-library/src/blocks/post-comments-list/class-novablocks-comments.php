@@ -495,6 +495,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				// These should be already registered by this point.
 				wp_enqueue_script( 'trix' );
 				wp_enqueue_style( 'trix' );
+				wp_enqueue_style( 'trix-custom' );
 			}
 
 			$defaults['comment_field'] .=
