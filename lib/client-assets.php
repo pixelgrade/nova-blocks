@@ -57,6 +57,7 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 		// We use the core of the Trix rich text editor since we are not after old browsers. @see https://github.com/basecamp/trix#getting-started
 		wp_register_script( 'trix', trailingslashit( novablocks_get_plugin_url() )  . 'dist/vendor/trix/trix-core-1-3-1.js', [], '', true );
 		wp_register_style( 'trix', trailingslashit( novablocks_get_plugin_url() ) . 'dist/vendor/trix/trix-1-3-1.css', [], '', true );
+		wp_register_style( 'trix-custom', trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments/trix.css', [], '', true );
 	}
 }
 add_action( 'init', 'novablocks_register_vendor_scripts', 10 );

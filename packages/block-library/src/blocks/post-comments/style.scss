@@ -82,6 +82,12 @@
 
   	.comment-content {
 	  	font-size: var(--comment-font-size);
+
+	  blockquote {
+		padding-left: 1em;
+		border-left: 2px solid currentColor;
+		font-style: italic;
+	  }
 	}
 
 	.comment-list {
@@ -600,13 +606,15 @@
 	  #comment {
 		transition: all .3s ease;
 	  }
+	}
 
-	  #comment[style] {
-		transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
-		width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
+	.comment-form--is-expanded {
+		textarea#comment {
+			transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
+			width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
 
-		margin-top: 10px;
-	  }
+			margin-top: 10px;
+		}
 	}
 }
 
