@@ -160,11 +160,11 @@ const TRANSITION_EASING = "easeOutCirc";
 				$( elements ).each( function( i, element ) {
 					const $element = $( element );
 					const height = parseInt( $element.data( 'height' ), 10 );
-					$element.css( 'height', height * tweenValue );
+					$element.css( 'min-height', height * tweenValue );
 				} );
 
 				const newHeight = textareaHeight + ( targetHeight - textareaHeight ) * tweenValue;
-				$textarea.css( 'height', newHeight );
+				$textarea.css( 'min-height', newHeight );
 			},
 			complete: function() {
 				resetMasksHeights( $form );
