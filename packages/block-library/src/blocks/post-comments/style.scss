@@ -664,6 +664,28 @@
 	}
 }
 
+.novablocks-conversations__notification-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: var(--novablocks-dark-1);
+  color: var(--novablocks-light-1);
+  padding: 10px;
+  border-radius: 0 10px;
+  opacity: 0;
+}
+
+.notification--is-visible {
+  animation: notify 2s forwards;
+}
+
+@keyframes notify {
+  0% { opacity: 1 }
+  70% { opacity: 1 }
+  100% { opacity: 0 }
+}
 
 /*
  * Comment Dropdown Menu
@@ -732,6 +754,8 @@
 }
 
 .comment-dropdown-toggle {
+
+  display: flex;
 
   .arrow-down {
 	display: none;
