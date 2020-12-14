@@ -718,11 +718,17 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		}
 
 		public function highlight_comment_by_user( $comment_id, $user_id ) {
+			// Bail if user already highlighted this comment.
+			if ( $this->is_comment_highlighted_by( $comment_id, $user_id ) ) {
+				return false;
+			}
+
 			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
 			if ( empty( $meta ) ) {
 				$meta = [];
 			}
 
+			// Add the user to the list of highlighters.
 			$meta[] = $user_id;
 
 			return update_comment_meta( $comment_id, 'nb_comment_highlighted_by', array_unique( $meta ) );
@@ -734,9 +740,13 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				$meta = [];
 			}
 
-			if ( false !== ( $key = array_search( $user_id, $meta ) ) ) {
-				unset( $meta[ $key ] );
+			$key = array_search( $user_id, $meta );
+			if ( false === $key ) {
+				// The user was not found among the current comment highlighters.
+				return false;
 			}
+
+			unset( $meta[ $key ] );
 
 			return update_comment_meta( $comment_id, 'nb_comment_highlighted_by', array_unique( $meta ) );
 		}

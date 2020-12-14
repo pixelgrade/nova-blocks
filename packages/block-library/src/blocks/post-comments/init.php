@@ -33,15 +33,17 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		// Handle the block attributes by merging them with the defaults.
 		$attributes = wp_parse_args( $attributes, [
 				'commentsTitle' => esc_html__( 'Conversations', '__plugin_txtd' ),
-				'noCommentsTitle' => esc_html__( 'Get the conversation going', '__plugin_txtd' ),
-				'zeroCommentsSubtitle' => false,
+				'noCommentsTitle' => esc_html__( 'Start the conversation', '__plugin_txtd' ),
+				// Do not show anything when there are no comments since we will use a different comments title.
+				'zeroCommentsSubtitle' => '',
 				'oneCommentSubtitle' => esc_html__( 'One so far', '__plugin_txtd' ),
-				'multipleCommentsSubtitle' => esc_html__( '%d', '__plugin_txtd' ),
+				'multipleCommentsSubtitle' => esc_html__( '%d comments', '__plugin_txtd' ),
 				// Text to use when we want to differentiate between top-level comments (conversations) and replies.
 				// Leave empty to not differentiate and use 'multipleCommentsSubtitle'.
 				// The differentiation will take place only when there is an actual difference (e.g. not when all comments are top-level).
 				/* translators: 1: The number of top-level comments, 2: The number of replies  */
-				'multipleCommentsSubtitleWithDifferentiation' => __( '<span class="conversations-number">%1$d</span> with <span class="replies-number">%2$d</span> replies', '__plugin_txtd' ),
+				'multipleCommentsSubtitleWithDifferentiation' =>
+						__( '<span class="conversations-number">%1$d</span> with <span class="replies-number">%2$d</span> replies', '__plugin_txtd' ),
 		] );
 
 		ob_start();
@@ -62,7 +64,6 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 
 				<h3 class="novablocks-conversations__header">
 					<span class="novablocks-conversations__title"><?php echo wp_kses( $conversation_title, wp_kses_allowed_html() ); ?></span>
-					<?php if ( $comments_count > 0 ) { ?>
 					<span class="novablocks-conversations__comments-count"><?php
 						// Check if we need to differentiate and have reasons to do so.
 						if ( $comments_count > 1 // We need at least 2 comments.
@@ -105,8 +106,7 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 						} else {
 							// Just use the regular, core way of showing the comments number.
 							comments_number( $attributes['zeroCommentsSubtitle'], $attributes['oneCommentSubtitle'], $attributes['multipleCommentsSubtitle'], $post_id );
-						}?></span>
-					<?php } ?>
+						} ?></span>
 				</h3><!-- .novablocks-conversations__header -->
 
 				<?php if ( ! empty( $content ) ) { ?>
