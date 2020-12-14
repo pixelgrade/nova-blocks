@@ -323,6 +323,8 @@ const TRANSITION_EASING = "easeOutCirc";
 		let copyText = $(this).attr('href'),
 			succeeded;
 
+		$notification.removeClass( NOTIFICATION_VISIBLE_CLASS );
+
 		document.addEventListener('copy', function(e) {
 			e.clipboardData.setData('text/plain', copyText);
 			e.preventDefault();
@@ -336,7 +338,7 @@ const TRANSITION_EASING = "easeOutCirc";
 
 		if ( succeeded ) {
 			setTimeout(function () {
-				$notification.addClass(NOTIFICATION_VISIBLE_CLASS);
+				$notification.addClass( NOTIFICATION_VISIBLE_CLASS );
 			}, 0);
 		}
 	}
