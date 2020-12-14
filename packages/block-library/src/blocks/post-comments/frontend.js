@@ -4,6 +4,8 @@ import "@novablocks/icons";
 const FORM_SELECTOR = '.comment-form';
 const MASK_SELECTOR = '.comment-fields-mask';
 const USER_REPLYING_CLASS = 'user-is-replying';
+const COPY_LINK_SELECTOR = '.copy-comment-link';
+const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
 
 // Keep it a snappy transition.
 const TRANSITION_DURATION = 800;
@@ -25,6 +27,8 @@ const TRANSITION_EASING = "easeOutCirc";
 	$commentForm = $commentForm.parent();
 	$commentForm.addClass( 'novablocks-conversations__form' );
 
+	const $notification = $('.novablocks-conversations__notification-text');
+
 	let formIsMoved = false,
 		scrollPos = 0,
 		prevScroll = 0,
@@ -40,6 +44,11 @@ const TRANSITION_EASING = "easeOutCirc";
 		bindEvents( $form );
 		onResize( $form );
 	} );
+
+	$( COPY_LINK_SELECTOR ).each(function(i, element){
+		const $button = $(element);
+		$button.on('click', copyLinkToClipboard );
+	});
 
 	highlightCommentOnClick();
 
@@ -95,11 +104,11 @@ const TRANSITION_EASING = "easeOutCirc";
 			$commentDescription = $comment.find( '.field-description' );
 
 		$commentLabel.add( $commentDescription )
-		             .wrapAll( '<div class="comment-fields-mask">' )
-		             .wrapAll( '<div class="comment-fields-wrapper  comment-fields-wrapper--comment">' );
+			.wrapAll( '<div class="comment-fields-mask">' )
+			.wrapAll( '<div class="comment-fields-wrapper  comment-fields-wrapper--comment">' );
 
 		$others.wrapAll( '<div class="comment-fields-mask">' )
-		       .wrapAll( '<div class="comment-fields-wrapper  comment-fields-wrapper--others">' );
+			.wrapAll( '<div class="comment-fields-wrapper  comment-fields-wrapper--others">' );
 	}
 
 	function updateMasksHeights( $form ) {
@@ -304,6 +313,33 @@ const TRANSITION_EASING = "easeOutCirc";
 			});
 
 			observer.observe(document.body, { childList: true,  subtree: true });
+		}
+	}
+
+	function copyLinkToClipboard (event) {
+
+		event.preventDefault();
+
+		let copyText = $(this).attr('href'),
+			succeeded;
+
+		$notification.removeClass( NOTIFICATION_VISIBLE_CLASS );
+
+		document.addEventListener('copy', function(e) {
+			e.clipboardData.setData('text/plain', copyText);
+			e.preventDefault();
+		}, true);
+
+		try {
+			succeeded = document.execCommand( 'copy' );
+		} catch (err) {
+			succeeded = false;
+		}
+
+		if ( succeeded ) {
+			setTimeout(function () {
+				$notification.addClass( NOTIFICATION_VISIBLE_CLASS );
+			}, 0);
 		}
 	}
 
