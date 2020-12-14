@@ -675,6 +675,8 @@
   padding: 10px;
   border-radius: 0 10px;
   opacity: 0;
+
+  z-index: 100;
 }
 
 .notification--is-visible {
