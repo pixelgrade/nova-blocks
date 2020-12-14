@@ -251,7 +251,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 						$menu_items[] = "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "highlight_comment" ) . "' title='{$label}'>{$label}</a> ";
 					}
 
-					$menu_items[] = '<a class="comment-dropdown-item" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd' ) . '">' . esc_html__( 'Copy link', '__plugin_txtd' ) . '</a>';
+					$menu_items[] = '<a class="comment-dropdown-item" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd' ) . '">' . esc_html__( 'Copy link to comment', '__plugin_txtd' ) . '</a>';
 
 					// Allow others to have a say.
 					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
