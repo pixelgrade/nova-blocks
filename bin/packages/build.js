@@ -51,15 +51,19 @@ function createStyleEntryTransform() {
 
 			// Only operate once per package, assuming entries are common.
 			const packageName = getPackageName( file );
+
 			if ( packages.has( packageName ) ) {
 				callback();
 				return;
 			}
 
 			packages.add( packageName );
-			const entries = await glob(
-				path.resolve( PACKAGES_DIR, packageName, 'src/*.scss' )
-			);
+
+			const entries = await glob( [
+				path.resolve( PACKAGES_DIR, packageName, 'src/*.scss' ),
+				path.resolve( PACKAGES_DIR, packageName, 'src/blocks/*/*.scss' ),
+			] );
+
 			entries.forEach( ( entry ) => this.push( entry ) );
 			callback();
 		},
@@ -92,6 +96,7 @@ if ( files.length ) {
 			`${ PACKAGES_DIR }/block-library/src/blocks/*/*.scss`,
 			`${ PACKAGES_DIR }/block-library/src/blocks/**/*.php`,
 			`${ PACKAGES_DIR }/*/src/**/*.json`,
+			`${ PACKAGES_DIR }/*/src/**/*.svg`,
 			`${ PACKAGES_DIR }/*/src/**/*.png`,
 			`${ PACKAGES_DIR }/*/src/**/*.jpg`,
 			`${ PACKAGES_DIR }/*/src/**/*.gif`,

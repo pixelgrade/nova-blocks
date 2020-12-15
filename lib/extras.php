@@ -944,7 +944,7 @@ function novablocks_get_theme_support() {
 	$default = array(
 		'hero',
 		'media',
-		'slideshow',
+		'slideshow'
 	);
 
 	if ( is_array( $theme_support ) ) {
@@ -986,11 +986,24 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 			continue;
 		}
 
+		$value = $attributes[ $attribute ];
+
 		// The value may be an array, so we JSON encode everything since json_encode() won't do anything for singular values.
-		$data_attributes[] = 'data-' . $data_attribute . '="' . json_encode( $attributes[ $attribute ] ) . '"';
+		if ( is_array( $value ) ) {
+			$value = json_encode( $value );
+		}
+
+		$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
 	}
 
 	return $data_attributes;
+}
+
+function novablocks_get_advanced_gallery_component_attributes() {
+	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
+
+	return array_merge( $gallery_attributes, $blob_attributes );
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
@@ -1005,14 +1018,9 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$blob_attributes_config = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
-	$blob_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $blob_attributes_config ) );
-
-	$advanced_gallery_attributes_config = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
-	$advanced_gallery_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $advanced_gallery_attributes_config ) );
-
-	$data_attributes_array = array_merge( $blob_attributes_array, $advanced_gallery_attributes_array );
-
+	$attributes_config = novablocks_get_advanced_gallery_component_attributes();
+	$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {

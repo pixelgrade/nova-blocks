@@ -138,7 +138,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 					$handle . '-style',
 					$package_dir_url . 'style.css',
 					$style_dependencies,
-					$version
+					$version,
+					'screen'
 				);
 			}
 
@@ -177,6 +178,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			'novablocks_opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css'
 		) );
 
+		wp_localize_script( 'novablocks-utils', 'featured_comments_ajax_object', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+
 		wp_set_script_translations( 'novablocks-core', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );
 	}
 }
@@ -190,7 +195,8 @@ function novablocks_register_block_types() {
 	}
 
 	$velocity_dependent_scripts = array(
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/post-comments/frontend'
 	);
 
 	$slick_dependent_scripts = array(
@@ -359,7 +365,8 @@ function novablocks_register_block_types() {
 				$handle,
 				$block_dir_url . $style,
 				$css_dependencies,
-				$version
+				$version,
+				'screen'
 			);
 
 			$args[ $key ] = $handle;
@@ -389,7 +396,9 @@ function novablocks_register_block_types() {
 				$args['attributes'] = call_user_func( $get_attributes );
 			}
 
-			register_block_type( 'novablocks/' . $block, $args );
+			register_block_type( 'novablocks/' . $block, array_merge($args, array(
+				'uses_context' => array( 'postId', 'postType' )
+			) ) );
 		}
 	}
 }
