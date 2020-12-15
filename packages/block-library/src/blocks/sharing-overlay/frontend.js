@@ -273,6 +273,7 @@ import services from './services';
 
 				input.focus();
 				input.setSelectionRange( 0, input.value.length );
+				input.blur();
 
 				let succeeded;
 
