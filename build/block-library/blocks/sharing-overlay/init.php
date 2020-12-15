@@ -32,7 +32,7 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 			<div class="wp-block-buttons">
 				<div class="wp-block-button">
 					<button class="wp-block-button__link js-sharing-overlay-trigger">
-						<?php _e( 'View sharing options', '__plugin_txtd' ); ?>
+						<span class="novablocks-sharing__button-label"><?php _e( 'View sharing options', '__plugin_txtd' ); ?></span>
 					</button>
 				</div>
 			</div>
