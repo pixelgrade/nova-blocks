@@ -5,17 +5,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Load the custom comments logic.
+require_once 'class-novablocks-comments.php';
+
 if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
+	/**
+	 * @param array $attributes
+	 * @param string $content
+	 * @param WP_Block $block
+	 *
+	 * @return false|string
+	 */
 	function novablocks_render_post_comments_list_block( $attributes, $content, $block ) {
 		// Bail if we don't have a post ID.
 		if ( empty( $block->context[ 'postId' ] ) ) {
 			return '';
 		}
 
-		$post_id = absint( $block->context[ 'postId' ] );
+		$post = get_post( absint( $block->context[ 'postId' ] ) );
+		// Bail if we couldn't find the post.
+		if ( empty( $post ) ) {
+			return '';
+		}
 
-		// The message to use in the comments list when a comment is not approved.
-		$moderation_message = ''; // Fallback to default.
+		$post_id = $post->ID;
+
+		// Handle the block attributes by merging them with the defaults.
+		$attributes = wp_parse_args( $attributes, [
+			'threadComments' => get_option( 'thread_comments' ) ? 'threaded' : false,
+			'maxThreadDepth' => get_option( 'thread_comments' ) ? get_option( 'thread_comments_depth' ) : -1,
+
+			'reverseTopLevelCommentsOrder' => ( 'desc' === get_option( 'comment_order' ) ), // True to display the newest comments first.
+
+			'pageComments' => get_option( 'page_comments' ),
+			'commentsPerPage' => (int) get_option( 'comments_per_page' ),
+			'defaultCommentsPage' => get_option( 'default_comments_page' ), // 'oldest', 'newest'
+
+			'displayCommenterBackground' => true,
+			'displayAvatarSize' => 100, // Double the actual size for high dpi displays.
+
+			// The message to use in the comments list when a comment is not approved.
+			'moderationMessage' => '', // Fallback to core's default.
+			'commentsClosedMessage' => esc_html__( 'No further conversations or replies allowed, at this time.', '__plugin_txtd' ),
+
+			// If this is 0 or false, no relocation will take place.
+			'scrollRelocateCommentFormAfterNumComments' => 7,
+
+			// In minutes. How long should the commenter see his unapproved comment. 0 for no preview.
+			// This is also the time the commenter is allowed to amend its comment.
+			'commentPreviewTime' => 5,
+
+		] );
 
 		/**
 		 * Code taken from @see comments_template() to allow for uniform behavior.
@@ -25,15 +65,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			'order'                     => 'ASC',
 			'status'                    => 'approve',
 			'post_id'                   => $post_id,
+			'hierarchical'              => $attributes['threadComments'],
 			'no_found_rows'             => false,
 			'update_comment_meta_cache' => false, // We lazy-load comment meta for performance.
 		);
-
-		if ( get_option( 'thread_comments' ) ) {
-			$comment_args['hierarchical'] = 'threaded';
-		} else {
-			$comment_args['hierarchical'] = false;
-		}
 
 		if ( is_user_logged_in() ) {
 			$comment_args['include_unapproved'] = array( get_current_user_id() );
@@ -46,7 +81,8 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 				unset( $comment_args['include_unapproved'] );
 
 				// Also change the moderation message.
-				$moderation_message = esc_html__( '⚠️ This comment is waiting for your moderation. ⚠️', '__plugin_txtd' );
+				/* translators: Moderation message shown only to moderators.  */
+				$attributes['moderationMessage'] = esc_html__( '⚠️ This comment is waiting for your moderation. ⚠️', '__plugin_txtd' );
 			}
 		} else {
 			/**
@@ -63,10 +99,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 					/**
 					 * Filters the period of time the comment will be viewable to the comment author.
 					 *
-					 * @param int The time the comment should be visible to the author.
+					 * @param int The time in minutes the comment should be visible to the author.
 					 * @param WP_Comment $comment
 					 */
-					$comment_preview_time = apply_filters( 'novablocks_comments_list_preview_time', 5, $comment );
+					$comment_preview_time = apply_filters( 'novablocks_comments_list_preview_time', $attributes['commentPreviewTime'], $comment );
 					$comment_preview_expires = strtotime( $comment->comment_date_gmt . '+' . absint( $comment_preview_time ) . ' minute' );
 
 					if ( time() < $comment_preview_expires ) {
@@ -86,18 +122,18 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		}
 
 		$per_page = 0;
-		if ( get_option( 'page_comments' ) ) {
+		$page = (int) get_query_var( 'cpage' );
+		if ( $attributes['pageComments'] ) {
 			$per_page = (int) get_query_var( 'comments_per_page' );
 			if ( 0 === $per_page ) {
-				$per_page = (int) get_option( 'comments_per_page' );
+				$per_page = $attributes['commentsPerPage'];
 			}
 
 			$comment_args['number'] = $per_page;
-			$page                   = (int) get_query_var( 'cpage' );
 
 			if ( $page ) {
 				$comment_args['offset'] = ( $page - 1 ) * $per_page;
-			} elseif ( 'oldest' === get_option( 'default_comments_page' ) ) {
+			} elseif ( 'oldest' === $attributes['defaultCommentsPage'] ) {
 				$comment_args['offset'] = 0;
 			} else {
 				// If fetching the first page of 'newest', we need a top-level comment count.
@@ -121,6 +157,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 
 				$comment_args['offset'] = ( ceil( $top_level_count / $per_page ) - 1 ) * $per_page;
 			}
+		}
+
+		if ( empty( $page ) ) {
+			$page = 1;
 		}
 
 		/**
@@ -185,30 +225,77 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		$max_num_comment_pages = $comment_query->max_num_pages;
 
 		if ( '' == get_query_var( 'cpage' ) && $max_num_comment_pages > 1 ) {
-			set_query_var( 'cpage', 'newest' === get_option( 'default_comments_page' ) ? get_comment_pages_count() : 1 );
+			set_query_var( 'cpage', 'newest' === $attributes['defaultCommentsPage'] ? $max_num_comment_pages : 1 );
 		}
 
 		if ( empty( $comments ) ) {
 			return '';
 		}
 
-		ob_start(); ?>
-		<div class="comment-list">
+		ob_start();
+		?>
+		<div id="comments" class="comment-list">
+
 			<?php wp_list_comments( array(
-					'walker'             => new NovaBlocks_Walker_Comment(),
-					'avatar_size'        => 120,
-					'style'              => 'div',
-					'short_ping'         => true,
-					'moderation_message' => $moderation_message,
+					'walker'                       => new NovaBlocks_Walker_Comment(),
+					'max_depth'                    => $attributes['maxThreadDepth'],
+					'reverse_top_level'            => $attributes['reverseTopLevelCommentsOrder'],
+					'avatar_size'                  => $attributes['displayAvatarSize'],
+					'moderation_message'           => $attributes['moderationMessage'],
+					'style'                        => 'div',
+					'short_ping'                   => true,
+					// Since we do the proper query above, we don't want the walker to do it once again.
+					// We just want all the passed comments displayed.
+					'page'                         => 0,
+					'per_page'                     => 0,
+
+					// Extra args of our own. These will also be passed along to the walker.
+					'display_commenter_background' => $attributes['displayCommenterBackground'],
 			), $comments ); ?>
-		</div>
+
+		</div><!-- #comments.comment-list -->
 
 		<?php
+		$comment_pagination = paginate_comments_links(
+				array(
+					'echo'      => false,
+					'total'     => $max_num_comment_pages,
+					'current'   => $page,
+					'end_size'  => 0,
+					'mid_size'  => 0,
+					'next_text' => esc_html__( 'Newer Conversations', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
+					'prev_text' => '<span aria-hidden="true">&larr;</span> ' . esc_html__( 'Older Conversations', '__plugin_txtd' ),
+					'type'      => 'list',
+				)
+		);
+
+		if ( $comment_pagination ) {
+			$pagination_classes = '';
+
+			// If we're only showing the "Next" link, add a class indicating so.
+			if ( false === strpos( $comment_pagination, 'prev page-numbers' ) ) {
+				$pagination_classes = ' only-next';
+			} ?>
+
+			<nav class="comments-pagination pagination<?php echo $pagination_classes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>" aria-label="<?php esc_attr_e( 'Comments', '__plugin_txtd' ); ?>">
+				<?php echo wp_kses_post( $comment_pagination ); ?>
+			</nav>
+
+			<?php
+		}
+
 		// Add another form at the bottom when we have a certain number of comments.
-		if ( comments_open( $post_id ) && get_comments_number( $post_id ) >= 7 ) {
-			comment_form( NovaBlocks_Comments::get_comment_form_args() );
-		} else if ( ! comments_open( $post_id ) ) { ?>
-			<p class="comments-closed"><?php esc_html_e( 'Comments are closed.', '__plugin_txtd' ); ?></p>
+		if ( comments_open( $post_id )
+		     && ! empty( $attributes['scrollRelocateCommentFormAfterNumComments'] )
+		     && $comment_count >= absint( $attributes['scrollRelocateCommentFormAfterNumComments'] ) ) {
+
+			// This is just a marker to use to move the only form on the page!
+			// We will move the comment form on scroll, after this div.
+			echo '<div id="second-comment-form-marker"></div>';
+		}
+
+		if ( ! comments_open( $post_id ) ) { ?>
+			<p class="comments-closed"><?php echo $attributes['commentsClosedMessage']; ?></p>
 		<?php }
 
 		return ob_get_clean();

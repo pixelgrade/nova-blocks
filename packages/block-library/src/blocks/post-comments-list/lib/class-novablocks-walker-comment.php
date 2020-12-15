@@ -3,7 +3,7 @@
  * Custom comment walker.
  */
 
-if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
+if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 	/**
 	 * CUSTOM COMMENT WALKER
 	 * A custom walker for comments, based on the walker in Twenty Twenty.
@@ -31,10 +31,14 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 			$comment_author_url   = get_comment_author_url( $comment );
 			$comment_author       = get_comment_author( $comment );
 			$avatar               = get_avatar( $comment, $args['avatar_size'] );
-			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
-			// For post authors without a background, we will use a default one.
-			if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
-				$commenter_background = esc_html__( 'Author', '__plugin_txtd' );
+			$commenter_background = '';
+			if ( ! empty( $args['display_commenter_background'] ) ) {
+				$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
+				// For post authors without a background, we will use a default one.
+				if ( empty( $commenter_background ) && $this->is_comment_by_post_author( $comment ) ) {
+					/* translators: %s: Denotes the fact that the commenter is the author of the current post. */
+					$commenter_background = esc_html__( 'Author', '__plugin_txtd' );
+				}
 			}
 
 			$comment_reply_link = get_comment_reply_link(
@@ -51,19 +55,26 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 			);
 
 			$comment_moderation_message = ! empty( $args['moderation_message'] ) ? $args['moderation_message'] : esc_html__( 'This comment is only visible to you since it is awaiting moderation.', '__plugin_txtd' );
-			?>
 
-			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
+			$comment_classes = [];
+			if ( $this->has_children ) {
+				$comment_classes[] = 'parent';
+			}
+			if ( 0 === $args['avatar_size'] || empty( $avatar ) ) {
+				$comment_classes[] = 'no-avatar';
+			} ?>
+
+			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $comment_classes, $comment ); ?>>
 			<div class="comment-wrapper" id="wrapper-comment-<?php comment_ID(); ?>">
 				<article class="comment-body">
 					<footer class="comment-meta">
 						<?php
-						if ( 0 !== $args['avatar_size'] ) { ?>
+						if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 						<div class="comment-author-avatar vcard">
 							<?php echo wp_kses_post( $avatar ); ?>
 						</div>
 						<?php } else { ?>
-							<div class="comment-author-avatar vcard empty-avatar">&nbsp;</div>
+						<div class="comment-author-avatar vcard empty-avatar">&nbsp;</div>
 						<?php } ?>
 
 						<div class="comment-author-info">
@@ -91,14 +102,7 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 							<?php } ?>
 						</div><!-- .comment-author-info -->
 
-						<div class="comment-dropdown">
-							<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
-							<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php esc_html_e( 'More', '__plugin_txtd' ); ?></label>
-							<div class="comment-dropdown-menu">
-								<?php echo NovaBlocks_Comments::output_extras_options();?>
-								<a class="comment-dropdown-item" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( 'Link to comment', '__plugin_txtd' ); ?></a>
-							</div>
-						</div>
+						<?php $this->the_comment_extra_meta_actions( $comment, $depth, $args ); ?>
 					</footer><!-- .comment-meta -->
 
 					<div class="comment-content">
@@ -130,6 +134,37 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						} ?>
 
 					</footer><!-- .comment-footer-meta -->
+
+					<?php
+					$highlighters = NovaBlocks_Comments::instance()->get_users_who_highlighted_comment();
+					if ( ! empty( $highlighters ) ) { ?>
+					<footer class="comment-footer-highlights">
+						<div class="comment-highlightedby-label"><?php esc_html_e( 'Highlighted by', '__plugin_txtd' ); ?></div>
+						<ul class="comment-highlightedby-humans">
+						<?php
+						$conversation_starter_user_id = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_user_id', true );
+						$conversation_starter_content  = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_content', true );
+						$post = get_post( $comment->comment_post_ID );
+
+						foreach ( $highlighters as $highlighter_id ) {
+							$highlighter = get_userdata( $highlighter_id );
+							if ( empty( $highlighter ) ) {
+								continue;
+							}
+
+							// On expertise, we have right now only "Article author", "Conversation starter", and "Conversation editor" for the rest.
+							$expertise = esc_html__( 'Conversation editor', '__plugin_txtd' );
+							if ( ! empty( $conversation_starter_content ) && (int) $highlighter_id === (int) $conversation_starter_user_id ) {
+								$expertise = esc_html__( 'Conversation starter', '__plugin_txtd' );
+							} else if ( ! empty( $post ) && (int) $highlighter_id === $post->post_author ) {
+								$expertise = esc_html__( 'Article author', '__plugin_txtd' );
+							}
+							?>
+							<li class="comment-highlightedby-human"><div class="comment-highlightedby-human-name"><?php echo $highlighter->display_name; ?></div><div class="comment-highlightedby-human-expertise"><?php echo $expertise ?></div></li>
+						<?php } ?>
+						</ul>
+					</footer><!-- .comment-footer-highlights -->
+					<?php } ?>
 
 				</article><!-- .comment-body -->
 			</div><!-- .comment-wrapper -->
@@ -176,6 +211,59 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 		}
 
 		/**
+		 * @param WP_Comment $comment
+		 * @param int $depth
+		 * @param array $args
+		 */
+		public function the_comment_extra_meta_actions( $comment, $depth, $args ) {
+
+			if( is_admin() || ! current_user_can( 'moderate_comments' ) ) {
+				// For regular users and non-logged in visitors, we will just display a link to the comment.
+				?>
+
+				<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
+
+				<?php
+				return;
+			} ?>
+
+			<div class="comment-dropdown">
+				<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
+				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle">
+					<?php esc_html_e( 'More', '__plugin_txtd' ); ?>
+					<span class="dropdown-icon">
+						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#arrow-down"></use></svg>
+						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#dots"></use></svg>
+					</span>
+				</label>
+				<div class="comment-dropdown-menu">
+					<?php
+					$data_id          = ' data-comment_id=' . $comment->comment_ID;
+					$comment_highlighted = NovaBlocks_Comments::instance()->is_comment_highlighted( $comment->comment_ID );
+
+					$current_status = '';
+					if ( ! empty( $comment_highlighted ) ) {
+						$current_status = 'comment-highlighted';
+					}
+
+					$menu_items = [];
+					foreach ( NovaBlocks_Comments::instance()->actions as $action => $label ) {
+						$menu_items[] = "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "highlight_comment" ) . "' title='{$label}'>{$label}</a> ";
+					}
+
+					$menu_items[] = '<a class="comment-dropdown-item copy-comment-link" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd' ) . '">' . esc_html__( 'Copy link to comment', '__plugin_txtd' ) . '</a>';
+
+					// Allow others to have a say.
+					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
+
+					echo implode( "\n", $menu_items );
+					?>
+				</div>
+			</div>
+				<?php
+		}
+
+		/**
 		 * Outputs a single comment.
 		 *
 		 * @see wp_list_comments()
@@ -218,14 +306,22 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 					)
 				)
 			);
+
+			$comment_classes = [];
+			if ( $this->has_children ) {
+				$comment_classes[] = 'parent';
+			}
+			if ( 0 === $args['avatar_size'] || empty( $avatar ) ) {
+				$comment_classes[] = 'no-avatar';
+			}
 			?>
-			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?> id="comment-<?php comment_ID(); ?>">
+			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $comment_classes, $comment ); ?>>
 			<div class="comment-wrapper">
 				<div id="div-comment-<?php comment_ID() ?>" class="comment-body">
 					<div class="comment-meta">
 
 						<?php
-						if ( 0 !== $args['avatar_size'] ) { ?>
+						if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 							<div class="comment-author-avatar vcard">
 								<?php echo wp_kses_post( $avatar ); ?>
 							</div>
@@ -283,20 +379,13 @@ if ( ! class_exists( 'TwentyTwenty_Walker_Comment' ) ) {
 						<span class="comment-posted-time"><?php $this->comment_time_human_friendly() ?></span>
 						<span class="reply">
 						<?php
-						comment_reply_link(
-							array_merge(
-								$args,
-								array(
-									'add_below' => $add_below,
-									'depth'     => $depth,
-									'max_depth' => $args['max_depth'],
-									'before'    => '<div class="reply">',
-									'after'     => '</div>',
-								)
-							)
-						);
-						?>
-						<?php edit_comment_link( esc_html__( 'Edit', '__plugin_txtd' ), '  ', '' ); ?>
+						if ( $comment_reply_link ) {
+							echo $comment_reply_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Link is escaped in https://developer.wordpress.org/reference/functions/get_comment_reply_link/
+						}
+
+						if ( get_edit_comment_link() ) {
+							echo '<a class="comment-edit-link" href="' . esc_url( get_edit_comment_link() ) . '">' . esc_html__( 'Edit', '__plugin_txtd' ) . '</a>';
+						} ?>
 						</span>
 					</div><!-- .comment-footer-meta -->
 				</div><!-- .comment-body -->

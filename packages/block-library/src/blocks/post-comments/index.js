@@ -14,7 +14,7 @@ import { InnerBlocks } from "@wordpress/block-editor";
 
 registerBlockType( 'novablocks/post-comments', {
 	title: __( 'Comments Nova', '__plugin_txtd' ),
-	description: __( 'Show Latest Comments', '__plugin_txtd' ),
+	description: __( 'Display your post comments start section.', '__plugin_txtd' ),
 	icon: icons.postsCollection,
 	category: 'nova-blocks',
 	edit,
