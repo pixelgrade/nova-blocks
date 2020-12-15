@@ -147,11 +147,12 @@
 }
 
 .novablocks-sharing__notification--visible {
-	animation: notify 2s forwards;
+	animation: show-copied-notification 2s forwards;
 }
 
-@keyframes notify {
-	0% { opacity: 1 }
+@keyframes show-copied-notification {
+	0% { opacity: 0 }
+	10% { opacity: 1 }
 	70% { opacity: 1 }
 	100% { opacity: 0 }
 }
