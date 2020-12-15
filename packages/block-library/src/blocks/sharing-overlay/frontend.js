@@ -11,12 +11,16 @@ import services from './services';
 	$( '.novablocks-sharing' ).each( function( i, obj ) {
 		const $block = $( obj );
 		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
-		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' ).hide();
+		const $openButtonWrap = $openButton.closest( '.wp-block-button' );
+		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
 		const data = $block.data();
 
 		const $wrap = $( '<div class="novablocks-sharing__wrap">' );
 		const $container = $( '<div class="novablocks-sharing__container">');
 		const $content = $( '<div class="novablocks-sharing__content">');
+
+		const shareIcon = getSvg( 'share' );
+		$openButton.prepend( shareIcon );
 
 		$content.appendTo( $container );
 		$container.appendTo( $wrap );
@@ -48,13 +52,14 @@ import services from './services';
 		$closeButton.appendTo( $wrap );
 
 		function positionPopup() {
+			const $button = $openButtonWrap.length ? $openButtonWrap : $openButton;
 
 			$overlay.css( {
 				top: '',
 				left: ''
 			} );
 
-			const buttonOffset = $openButton.offset();
+			const buttonOffset = $button.offset();
 			const wrapOffset = $wrap.offset();
 
 			$overlay.css( {
@@ -66,14 +71,14 @@ import services from './services';
 		$( window ).on( 'resize', debounce( positionPopup, 100 ) );
 
 		$openButton.on( 'click', function() {
-			$overlay.show();
+			$overlay.addClass( 'is-visible' );
 
 			positionPopup();
 		} );
 
 		function hidePopup() {
 			$content.find( '.novablocks-sharing__notification--visible' ).removeClass( 'novablocks-sharing__notification--visible' );
-			$overlay.hide();
+			$overlay.removeClass( 'is-visible' );
 		}
 
 		$closeButton.on( 'click', function( e ) {
