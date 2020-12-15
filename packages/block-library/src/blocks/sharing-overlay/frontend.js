@@ -48,10 +48,19 @@ import services from './services';
 		$closeButton.appendTo( $wrap );
 
 		function positionPopup() {
-			const buttonTop = $openButton.offset().top;
-			const sharingPopupHeight = $wrap.outerHeight();
 
-			$overlay.css( 'top', buttonTop - sharingPopupHeight / 2 );
+			$overlay.css( {
+				top: '',
+				left: ''
+			} );
+
+			const buttonOffset = $openButton.offset();
+			const wrapOffset = $wrap.offset();
+
+			$overlay.css( {
+				top: buttonOffset.top,
+				left: buttonOffset.left - wrapOffset.left,
+			} );
 		}
 
 		$( window ).on( 'resize', debounce( positionPopup, 100 ) );
@@ -62,9 +71,21 @@ import services from './services';
 			positionPopup();
 		} );
 
-		$closeButton.on( 'click', function() {
+		function hidePopup() {
 			$content.find( '.novablocks-sharing__notification--visible' ).removeClass( 'novablocks-sharing__notification--visible' );
 			$overlay.hide();
+		}
+
+		$closeButton.on( 'click', function( e ) {
+			hidePopup();
+		} );
+
+		$openButton.add( $wrap ).on( 'click', function( e ) {
+			e.stopPropagation();
+		} );
+
+		$( 'body' ).on( 'click', function( e ) {
+			hidePopup();
 		} );
 
 	} );
