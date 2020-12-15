@@ -155,6 +155,7 @@ import services from './services';
 	}
 
 	function createPrivateGroup( attributes ) {
+		const { title, url } = attributes;
 		const links = [];
 
 		if ( isMobileDevice() ) {
@@ -167,7 +168,7 @@ import services from './services';
 
 		links.push( {
 			label: 'Email',
-			url: 'mailto:',
+			url: `mailto:?subject=${ title }&body=${ url }`,
 			icon: 'email',
 		} );
 
