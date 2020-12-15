@@ -23,6 +23,26 @@
 	}
 }
 
+.novablocks-sharing {
+
+	.wp-block-button__link {
+		display: flex;
+		align-items: center;
+
+		> * {
+			flex: 0 0 auto;
+		}
+
+		> svg {
+			width: 20px;
+		}
+
+		> * + * {
+			margin-left: calc( var(--novablocks-spacing) / 3 );
+		}
+	}
+}
+
 .novablocks-sharing__overlay {
 	position: absolute;
 	top: 0;
@@ -33,6 +53,10 @@
 
 	// equal to --theme-spacing ??
 	--block-spacing: calc( var(--novablocks-spacing) / 3 );
+
+	&:not(.is-visible) {
+		display: none;
+	}
 }
 
 .novablocks-sharing__wrap {
