@@ -222,16 +222,14 @@
 				padding-top: var(--element-spacing);
 				margin-top: calc( -1 * var(--element-spacing));
 
-				> .comment-wrapper {
+				&.comment-wrapper {
 					padding-top: calc(var(--element-spacing) * 2);
 					margin-top: calc( -1 * var(--element-spacing) );
 				}
 			}
 
-		  	&.comment-highlighted {
-				> .comment-wrapper {
-				  	background-color: var(--comment-highlighted-color);
-				}
+		  	.comment-highlighted.comment-wrapper {
+			  	background-color: var(--comment-highlighted-color);
 			}
 
 			> .comment-wrapper {
@@ -251,7 +249,7 @@
 
 	.comment-highlighted {
 
-		> .comment-wrapper {
+		&.comment-wrapper {
 
 			> .comment-body {
 			  position: relative;
@@ -279,7 +277,7 @@
 		@include below(tablet) {
 			&:not(.parent) {
 
-				> .comment-wrapper {
+				&.comment-wrapper {
 				  	background-color: var(--comment-highlighted-color);
 
 				  	border-radius: 0;
@@ -288,7 +286,7 @@
 		}
 
 		@include above(tablet) {
-			> .comment-wrapper > .comment-body {
+			&.comment-wrapper > .comment-body {
 				&:before {
 					content: '';
 					position: absolute;
@@ -301,8 +299,8 @@
 				}
 			}
 
-		  // Hackish way for Featured Comment background
-		  > .comment-wrapper {
+		  // Hackish way for Highlighted Comment background
+		  &.comment-wrapper {
 
 			// Padding top
 			.comment-author-info,

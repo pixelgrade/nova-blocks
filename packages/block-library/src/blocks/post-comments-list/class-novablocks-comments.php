@@ -18,8 +18,15 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 	 */
 	class NovaBlocks_Comments {
 
-//		static protected
+
 		public $actions = [];
+
+		/**
+		 * The NovaBlocks_Comments_Highlight instance.
+		 * @since   1.8.0
+		 * @var     NovaBlocks_Comments_Highlight|null
+		 */
+		public $highlight = null;
 
 		/**
 		 * Instance of this class (the singleton pattern).
@@ -39,13 +46,34 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 */
 		private function init() {
 
+			/*
+			 * Initialize sub-components.
+			 */
+
+			// Make sure the custom comment walker is loaded.
 			require_once dirname( __FILE__ ) . '/lib/class-novablocks-walker-comment.php';
 
+			// Get the instance that will handle highlighting comments.
+			require_once dirname( __FILE__ ) . '/lib/class-novablocks-comments-highlight.php';
+			if ( is_null( $this->highlight ) ) {
+				$this->highlight = NovaBlocks_Comments_Highlight::instance();
+			}
+
+			/*
+			 * Register any scripts or styles we might need with regards to comments.
+			 */
+			$this->register_frontend_assets();
+
+			/*
+			 * Register all needed hooks.
+			 */
+			$this->register_hooks();
+		}
+
+		private function register_hooks() {
 			/**
 			 * Frontend logic.
 			 */
-			// Register any scripts or styles we might need with regards to comments.
-			$this->register_frontend_assets();
 
 			// Adjust the comment form fields.
 			add_filter( 'comment_form_default_fields', array( $this, 'adjust_comment_form_default_fields' ), 9, 1 );
@@ -65,16 +93,10 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			// Handle per-post extra fields.
 			add_action( 'add_meta_boxes_post', array( $this, 'add_posts_discussion_metabox' ), 10, 1 );
 			add_action( 'save_post_post', array( $this, 'save_posts_metabox_fields' ), 10, 1 );
-
-			$this->actions = array(
-					'highlight'   => __( 'Highlight',   '__plugin_txtd' ),
-					'unhighlight' => __( 'Unhighlight', '__plugin_txtd' ),
-			);
-			add_action( 'wp_ajax_handle_highlight_comment', array( $this, 'handle_highlight_comment' ) );
 		}
 
 		public function register_frontend_assets() {
-
+			// No frontend assets right now.
 		}
 
 		/**
@@ -87,9 +109,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * @return string[]
 		 */
 		public function adjust_comment_class( $classes, $class, $comment_id ) {
-			if ( $this->is_comment_highlighted( $comment_id ) ) {
-				$classes[] = 'comment-highlighted';
-			}
+			//  No adjustments right now.
 
 			return $classes;
 		}
@@ -105,17 +125,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				}
 			}
 
-			if ( ! empty( $_POST['nb_comment_highlighted_by'] ) ) {
-				if ( ! is_array( $_POST['nb_comment_highlighted_by'] ) ) {
-					$_POST['nb_comment_highlighted_by'] = [ $_POST['nb_comment_highlighted_by'] ];
-				}
-
-				// Make sure we are dealing with ints.
-				$_POST['nb_comment_highlighted_by'] = array_map( 'absint', $_POST['nb_comment_highlighted_by'] );
-				update_comment_meta( $comment_id, 'nb_comment_highlighted_by', $_POST['nb_comment_highlighted_by'] );
-			} else {
-				delete_comment_meta( $comment_id, 'nb_comment_highlighted_by' );
-			}
+			// Allow others to save whatever they may have added.
+			do_action( 'novablocks_comment_extra_details_save_metadata', $comment_id );
 		}
 
 		/**
@@ -186,15 +197,6 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 		 * @param WP_Comment $comment
 		 */
 		public function comment_meta_box_fields( $comment ) {
-			$commenter_background = get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true );
-			$comment_highlighted_by = get_comment_meta( $comment->comment_ID, 'nb_comment_highlighted_by', true );
-
-			if ( empty( $comment_highlighted_by ) ) {
-				$comment_highlighted_by = [];
-			} else if ( ! is_array( $comment_highlighted_by ) ) {
-				$comment_highlighted_by = [ (int) $comment_highlighted_by ];
-			}
-
 			// Safety first.
 			wp_nonce_field( 'nb_save_metabox_fields', 'nb_comment_extra_details', false );
 			?>
@@ -205,42 +207,14 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 					<tbody>
 						<tr>
 							<td class="first"><label for="nb_commenter_background"><strong><?php esc_html_e( 'Commenter Relevant Background', '__plugin_txtd' ); ?></strong></label></td>
-							<td><input type="text" name="nb_commenter_background" value="<?php echo esc_attr( $commenter_background ); ?>" size="30" class="regular-text"/></td>
+							<td><input type="text" name="nb_commenter_background" value="<?php echo esc_attr( get_comment_meta( $comment->comment_ID, 'nb_commenter_background', true ) ); ?>" size="30" class="regular-text"/></td>
 						</tr>
-						<tr>
-							<td class="first"><label for="nb_comment_highlighted_by"><strong><?php esc_html_e( 'Highlighters of this comment', '__plugin_txtd' ); ?></strong></label></td>
-							<td>
-								<fieldset>
-									<p>
-										<label>
-											<input type="checkbox" name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( get_current_user_id(), $comment_highlighted_by ) ); ?> value="<?php echo esc_attr( get_current_user_id() ); ?>" autocomplete="off"/>
-											<span><?php printf( esc_html__( 'Me (%s)', '__plugin_txtd' ),  wp_get_current_user()->display_name ); ?></span>
-										</label>
-									</p>
 
-									<?php
-									foreach ( $comment_highlighted_by as $user_id ) {
-										if ( (int) $user_id === get_current_user_id() ) {
-											continue;
-										}
+						<?php
+						// Allow others to add fields here.
+						do_action( 'novablocks_comment_extra_details_fields', $comment );
+						?>
 
-										$user_data = get_userdata( $user_id );
-										if ( empty( $user_data ) ) {
-											continue;
-										} ?>
-										<p>
-											<label>
-												<input type="checkbox" name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( $user_id, $comment_highlighted_by ) ); ?> value="<?php echo esc_attr( $user_id ); ?>" autocomplete="off"/>
-												<span><?php echo $user_data->display_name; ?></span>
-											</label>
-										</p>
-										<?php
-									} ?>
-								</fieldset>
-
-								<span class="description"><?php echo wp_kses_post( __( 'All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments.', '__plugin_txtd' ) ); ?></span>
-							</td>
-						</tr>
 					</tbody>
 				</table>
 			</fieldset>
@@ -267,17 +241,8 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 				delete_comment_meta( $comment_id, 'nb_commenter_background' );
 			}
 
-			if ( ! empty( $_POST['nb_comment_highlighted_by'] ) ) {
-				if ( ! is_array( $_POST['nb_comment_highlighted_by'] ) ) {
-					$_POST['nb_comment_highlighted_by'] = [ $_POST['nb_comment_highlighted_by'] ];
-				}
-
-				// Make sure we are dealing with ints.
-				$_POST['nb_comment_highlighted_by'] = array_map( 'absint', $_POST['nb_comment_highlighted_by'] );
-				update_comment_meta( $comment_id, 'nb_comment_highlighted_by', $_POST['nb_comment_highlighted_by'] );
-			} else {
-				delete_comment_meta( $comment_id, 'nb_comment_highlighted_by' );
-			}
+			// Allow others to save whatever they may have added.
+			do_action( 'novablocks_comment_extra_details_save_fields', $comment_id );
 		}
 
 		public function add_posts_discussion_metabox( $post ) {
@@ -339,6 +304,12 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 							<p class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default, it\'s the post author.', '__plugin_txtd' ); ?></p>
 						</td>
 					</tr>
+
+					<?php
+					// Allow others to add fields here.
+					do_action( 'novablocks_post_discussion_extra_details_fields', $post );
+					?>
+
 					</tbody>
 				</table>
 			</fieldset>
@@ -629,128 +600,6 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			return $defaults;
 		}
 
-		public function handle_highlight_comment() {
-
-			if ( ! isset( $_POST['do'] ) ) {
-				die;
-			}
-
-			$action = $_POST['do'];
-
-			$actions = array_keys( $this->actions );
-
-			if ( in_array( $action, $actions ) ) {
-
-				$comment_id = absint( $_POST['comment_id'] );
-				$comment    = get_comment( $comment_id );
-
-				if ( ! $comment
-					|| ! current_user_can( 'edit_comment', $comment->comment_ID )
-					|| ! wp_verify_nonce( $_POST['nonce'], 'highlight_comment' ) ) {
-
-					die;
-				}
-
-				// By default we will highlight or unhighlight for the current logged in user.
-				// But if we receive a user ID, we will respect that.
-				$user_id = get_current_user_id();
-				if ( ! empty( $_POST['user_id'] ) ) {
-					$user_id = absint( $_POST['user_id'] );
-				}
-
-				switch ( $action ) {
-					case 'highlight':
-						// We will not allow self-highlighting.
-						if ( $user_id == $comment->user_id ) {
-							wp_die(
-									'<p>' . wp_kses_post( __( '<strong>Error</strong>: You can\'t highlight your own comments.', '__plugin_txtd' ) ) . '</p>',
-									esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-									array(
-											'response'  => 422,
-											'back_link' => true,
-									)
-							);
-						}
-
-						$this->highlight_comment_by_user( $comment->comment_ID, $user_id );
-						break;
-					case 'unhighlight':
-						$this->unhighlight_comment_by_user( $comment->comment_ID, $user_id );
-						break;
-					default:
-						break;
-				}
-			}
-
-			exit;
-		}
-
-		public function is_comment_highlighted( $comment_id = false ) {
-			if ( empty( $comment_id ) ) {
-				$comment_id = get_comment_ID();
-			}
-
-			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
-
-			return ! empty( $meta );
-		}
-
-		public function is_comment_highlighted_by( $comment_id, $user_id ) {
-			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
-			if ( empty( $meta ) ) {
-				return false;
-			}
-
-			return false !== array_search( $user_id, $meta );
-		}
-
-		public function get_users_who_highlighted_comment( $comment_id = false ) {
-			if ( empty( $comment_id ) ) {
-				$comment_id = get_comment_ID();
-			}
-
-			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
-			if ( empty( $meta ) ) {
-				$meta = [];
-			}
-
-			return $meta;
-		}
-
-		public function highlight_comment_by_user( $comment_id, $user_id ) {
-			// Bail if user already highlighted this comment.
-			if ( $this->is_comment_highlighted_by( $comment_id, $user_id ) ) {
-				return false;
-			}
-
-			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
-			if ( empty( $meta ) ) {
-				$meta = [];
-			}
-
-			// Add the user to the list of highlighters.
-			$meta[] = $user_id;
-
-			return update_comment_meta( $comment_id, 'nb_comment_highlighted_by', array_unique( $meta ) );
-		}
-
-		public function unhighlight_comment_by_user( $comment_id, $user_id ) {
-			$meta = get_comment_meta( $comment_id, 'nb_comment_highlighted_by', true );
-			if ( empty( $meta ) ) {
-				$meta = [];
-			}
-
-			$key = array_search( $user_id, $meta );
-			if ( false === $key ) {
-				// The user was not found among the current comment highlighters.
-				return false;
-			}
-
-			unset( $meta[ $key ] );
-
-			return update_comment_meta( $comment_id, 'nb_comment_highlighted_by', array_unique( $meta ) );
-		}
-
 		/**
 		 * Replace any content tags present in the content.
 		 *
@@ -821,6 +670,40 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			);
 
 			return $top_level_query->query( $top_level_args );
+		}
+
+		/**
+		 * Get the markup of a comment as rendered in the comments list.
+		 *
+		 * @param WP_Comment|string|int|null $comment Optional. The comment to get the markup of. Defaults to the current comment.
+		 * @param array                      $args    Optional. Arguments to pass to wp_list_comments(). The same arguments are passed to NovaBlocks_Walker_Comment.
+		 *
+		 * @return string
+		 */
+		public static function get_comment_list_markup( $comment = null, $args = [] ) {
+			$comment = get_comment( $comment );
+			if ( empty( $comment ) ) {
+				return '';
+			}
+
+			ob_start();
+
+			$args = wp_parse_args( $args, [
+					'walker'      => new NovaBlocks_Walker_Comment(),
+					'avatar_size' => 100,
+					'style'       => 'div',
+					'short_ping'  => true,
+					// Since we do the proper query above, we don't want the walker to do it once again.
+					// We just want all the passed comments displayed.
+					'page'        => 0,
+					'per_page'    => 0,
+					'max_depth'   => - 1, // Any depth will do.
+					'type'        => 'all', // We want all types since we trust the comment sent to be displayed.
+			] );
+
+			wp_list_comments( $args, [ $comment ] );
+
+			return ob_get_clean();
 		}
 
 		/**

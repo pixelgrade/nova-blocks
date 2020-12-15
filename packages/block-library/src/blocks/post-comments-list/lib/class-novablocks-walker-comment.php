@@ -62,10 +62,14 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 			}
 			if ( 0 === $args['avatar_size'] || empty( $avatar ) ) {
 				$comment_classes[] = 'no-avatar';
-			} ?>
+			}
+
+			$comment_wrapper_classes = apply_filters( 'novablocks_comment_wrapper_classes', [ 'comment-wrapper' ], $comment, $depth, $args );
+			$comment_wrapper_classes = implode( ' ', $comment_wrapper_classes );
+			?>
 
 			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $comment_classes, $comment ); ?>>
-			<div class="comment-wrapper" id="wrapper-comment-<?php comment_ID(); ?>">
+			<div class="<?php echo esc_attr( $comment_wrapper_classes ); ?>" id="wrapper-comment-<?php comment_ID(); ?>">
 				<article class="comment-body">
 					<footer class="comment-meta">
 						<?php
@@ -135,36 +139,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 					</footer><!-- .comment-footer-meta -->
 
-					<?php
-					$highlighters = NovaBlocks_Comments::instance()->get_users_who_highlighted_comment();
-					if ( ! empty( $highlighters ) ) { ?>
-					<footer class="comment-footer-highlights">
-						<div class="comment-highlightedby-label"><?php esc_html_e( 'Highlighted by', '__plugin_txtd' ); ?></div>
-						<ul class="comment-highlightedby-humans">
-						<?php
-						$conversation_starter_user_id = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_user_id', true );
-						$conversation_starter_content  = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_content', true );
-						$post = get_post( $comment->comment_post_ID );
-
-						foreach ( $highlighters as $highlighter_id ) {
-							$highlighter = get_userdata( $highlighter_id );
-							if ( empty( $highlighter ) ) {
-								continue;
-							}
-
-							// On expertise, we have right now only "Article author", "Conversation starter", and "Conversation editor" for the rest.
-							$expertise = esc_html__( 'Conversation editor', '__plugin_txtd' );
-							if ( ! empty( $conversation_starter_content ) && (int) $highlighter_id === (int) $conversation_starter_user_id ) {
-								$expertise = esc_html__( 'Conversation starter', '__plugin_txtd' );
-							} else if ( ! empty( $post ) && (int) $highlighter_id === $post->post_author ) {
-								$expertise = esc_html__( 'Article author', '__plugin_txtd' );
-							}
-							?>
-							<li class="comment-highlightedby-human"><div class="comment-highlightedby-human-name"><?php echo $highlighter->display_name; ?></div><div class="comment-highlightedby-human-expertise"><?php echo $expertise ?></div></li>
-						<?php } ?>
-						</ul>
-					</footer><!-- .comment-footer-highlights -->
-					<?php } ?>
+					<?php do_action( 'novablocks_comments_list_comment_end', $comment, $depth, $args ); ?>
 
 				</article><!-- .comment-body -->
 			</div><!-- .comment-wrapper -->
@@ -211,56 +186,42 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 		}
 
 		/**
-		 * @param WP_Comment $comment
-		 * @param int $depth
-		 * @param array $args
+		 * @param WP_Comment $comment Comment to display.
+		 * @param int        $depth   Depth of the current comment.
+		 * @param array      $args    An array of arguments.
 		 */
-		public function the_comment_extra_meta_actions( $comment, $depth, $args ) {
-
-			if( is_admin() || ! current_user_can( 'moderate_comments' ) ) {
-				// For regular users and non-logged in visitors, we will just display a link to the comment.
-				?>
-
-				<a class="comment-link" href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>" title="<?php esc_attr_e( 'Link to this comment', '__plugin_txtd'); ?>"><?php esc_html_e( '#', '__plugin_txtd' ); ?></a>
-
-				<?php
-				return;
-			} ?>
+		public function the_comment_extra_meta_actions( $comment, $depth, $args ) { ?>
 
 			<div class="comment-dropdown">
 				<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
-				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle">
-					<?php esc_html_e( 'More', '__plugin_txtd' ); ?>
-					<span class="dropdown-icon">
+				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php
+					/* translators: %s: The label of the individual comment control for more comment actions. */
+					esc_html_e( 'More', '__plugin_txtd' );
+					?><span class="dropdown-icon">
 						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#arrow-down"></use></svg>
 						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#dots"></use></svg>
 					</span>
 				</label>
 				<div class="comment-dropdown-menu">
 					<?php
-					$data_id          = ' data-comment_id=' . $comment->comment_ID;
-					$comment_highlighted = NovaBlocks_Comments::instance()->is_comment_highlighted( $comment->comment_ID );
+					// We will always provide a link to the comment.
+					$menu_items['comment_link'] = '<a class="comment-dropdown-item copy-comment-link" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Click to copy in clipboard the URL to this comment', '__plugin_txtd' ) . '">' . esc_html__( 'Copy link to comment', '__plugin_txtd' ) . '</a>';
 
-					$current_status = '';
-					if ( ! empty( $comment_highlighted ) ) {
-						$current_status = 'comment-highlighted';
-					}
-
-					$menu_items = [];
-					foreach ( NovaBlocks_Comments::instance()->actions as $action => $label ) {
-						$menu_items[] = "<a class='comment-dropdown-item feature-comments {$current_status} {$action}' data-do='{$action}' {$data_id} data-nonce='" . wp_create_nonce( "highlight_comment" ) . "' title='{$label}'>{$label}</a> ";
-					}
-
-					$menu_items[] = '<a class="comment-dropdown-item copy-comment-link" href="' . esc_url( get_comment_link( $comment, $args ) ) . '" title="' . esc_attr__( 'Link to this comment', '__plugin_txtd' ) . '">' . esc_html__( 'Copy link to comment', '__plugin_txtd' ) . '</a>';
-
-					// Allow others to have a say.
+					/**
+					 * Allow others to modify the extra actions menu items list.
+					 *
+					 * @param array $menu_items   The extra action menu items.
+					 * @param WP_Comment $comment Comment to display.
+					 * @param int        $depth   Depth of the current comment.
+					 * @param array      $args    An array of arguments.
+					 */
 					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
 
 					echo implode( "\n", $menu_items );
 					?>
 				</div>
 			</div>
-				<?php
+			<?php
 		}
 
 		/**

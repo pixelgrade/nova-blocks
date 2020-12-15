@@ -116,8 +116,9 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 				<?php } ?>
 
 			</div><!-- .novablocks-conversations__container -->
+
 			<div class="novablocks-conversations__notification-text">
-				<?php _e('Link copied to your clipboard', '__plugin_txtd'); ?>
+				<?php esc_html_e('Link copied to your clipboard', '__plugin_txtd'); ?>
 			</div>
 		</div><!-- .novablocks-conversations -->
 		<?php

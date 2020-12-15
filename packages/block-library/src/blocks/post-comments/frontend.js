@@ -18,8 +18,8 @@ const TRANSITION_EASING = "easeOutCirc";
 		$commentPlaceholder = $( '#second-comment-form-marker' ),
 		$commentList = $('.comment-list'),
 		$commentListHeight = $commentList.outerHeight(),
-		$commentCheckboxes = $commentList.find('.comment-dropdown-open'),
-		$commentDropdown = $commentList.find('.comment-dropdown').children();
+		$commentDropdown = $commentList.find('.comment-dropdown').children(),
+		$commentCheckboxes = $commentList.find(' .comment-dropdown-open');
 
 	// Hackish way to avoid replying comment form being moved.
 	$commentForm.wrap( '<div>' );
@@ -34,8 +34,7 @@ const TRANSITION_EASING = "easeOutCirc";
 		prevScroll = 0,
 		currScroll = 0,
 		scrollDir = 'down',
-		frameRendered = true,
-		$block = $('.novablocks-conversations');
+		frameRendered = true;
 
 	$( FORM_SELECTOR ).each( function( i, element ) {
 		const $form = $( element );
@@ -45,10 +44,7 @@ const TRANSITION_EASING = "easeOutCirc";
 		onResize( $form );
 	} );
 
-	$( COPY_LINK_SELECTOR ).each(function(i, element){
-		const $button = $(element);
-		$button.on('click', copyLinkToClipboard );
-	});
+	$commentList.on('click', COPY_LINK_SELECTOR, copyLinkToClipboard);
 
 	highlightCommentOnClick();
 
@@ -186,31 +182,41 @@ const TRANSITION_EASING = "easeOutCirc";
 
 	function highlightCommentOnClick() {
 
-		$('.feature-comments').unbind('click');
+		$commentList.on('click', '.toggle-comment-highlight', function () {
+			let $this = $(this),
+				commentId = $this.data('comment_id'),
+				wrapperSelector = "#wrapper-comment-" + commentId,
+				$commentWrapper = $( wrapperSelector );
 
-		$('body').on('click', '.feature-comments', function () {
-			let $this = $(this);
+			// Put the whole comment in a working/loading state.
+			$commentWrapper.addClass('working');
 
 			$.ajax({
-				url: highlight_comments_ajax_object.ajaxurl,
+				url: nb_comments.ajaxUrl,
 				type: 'POST',
 				data: {
-					'action': 'handle_highlight_comment',
-					'do': $this.data('do'),
-					'comment_id': $this.data('comment_id'),
+					'action': nb_comments.actions.toggleHighlight,
+					'comment_id': commentId,
+					'commentsListArgs': typeof nb_comments.commentsListArgs !== 'undefined' ? nb_comments.commentsListArgs : [],
 					'nonce': $this.data('nonce')
 				},
 				success: function (response) {
-					let action = $this.attr('data-do'),
-						comment_id = $this.attr('data-comment_id'),
-						$comment = $("#comment-" + comment_id),
-						$this_and_comment = $this.siblings('.feature-comments').add($comment).add($this);
-					if (action === 'highlight')
-						$this_and_comment.addClass('comment-highlighted');
-					if (action === 'unhighlight')
-						$this_and_comment.removeClass('comment-highlighted');
+					// Replace the current comment markup with the received one.
+					// But only replace the comment wrapper while leaving child comments intact.
+					let $newComment = $($.parseHTML(response));
+					$commentWrapper.replaceWith($newComment.find(wrapperSelector));
 
-					$this.data('nonce', response);
+					// Reinitialize stuff
+					$commentDropdown = $commentList.find('.comment-dropdown').children();
+					$commentCheckboxes = $commentList.find(' .comment-dropdown-open');
+				},
+				error: function (response) {
+					// In the response we should get back some error markup. We should display this.
+
+				},
+				complete: function() {
+					// There should be no working state.
+					$commentWrapper.removeClass('working');
 				}
 			})
 
@@ -218,11 +224,11 @@ const TRANSITION_EASING = "easeOutCirc";
 		});
 	}
 
+	// @todo This is badly named!
 	function uncheckCheckboxes( event ) {
 
 		// If checkbox is not available, do nothing.
 		// Currently the dropdown is visibile for authors.
-
 		if ( ! $commentCheckboxes.length) {
 			return;
 		}
@@ -306,9 +312,9 @@ const TRANSITION_EASING = "easeOutCirc";
 			// We use an observer to better handle user replying.
 			var observer = new MutationObserver(function(mutations) {
 				if (document.contains($('#wp-temp-form-div')[0]) ) {
-					$block.addClass(USER_REPLYING_CLASS);
+					$conversationsBlock.addClass(USER_REPLYING_CLASS);
 				} else {
-					$block.removeClass(USER_REPLYING_CLASS);
+					$conversationsBlock.removeClass(USER_REPLYING_CLASS);
 				}
 			});
 
