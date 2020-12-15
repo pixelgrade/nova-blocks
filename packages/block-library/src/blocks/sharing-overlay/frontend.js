@@ -252,7 +252,7 @@ import services from './services';
 		const groupTitle = 'Use a link for everything';
 		const groupDescription = 'Copy link and paste it anywhere you want it';
 
-		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }"/>` );
+		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }" readonly />` );
 		const $notification = $( '<div class="novablocks-sharing__notification-wrap">' );
 		const $notificationContent = $( '<div class="novablocks-sharing__notification">' );
 		const $notificationText = $( '<span class="novablocks-sharing__notification-text">Link copied to your clipboard</span>' );
