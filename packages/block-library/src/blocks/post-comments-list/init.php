@@ -276,7 +276,11 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			return '';
 		}
 
-		ob_start(); ?>
+		ob_start();
+
+		echo NovaBlocks_Comments::generate_fake_form_markup();
+
+		?>
 
 		<div id="comments" class="comment-list">
 
@@ -316,9 +320,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		     && ! empty( $attributes['scrollRelocateCommentFormAfterNumComments'] )
 		     && $comment_count >= absint( $attributes['scrollRelocateCommentFormAfterNumComments'] ) ) {
 
-			// This is just a marker to use to move the only form on the page!
-			// We will move the comment form on scroll, after this div.
-			echo '<div id="second-comment-form-marker"></div>';
+			echo NovaBlocks_Comments::generate_fake_form_markup();
 		}
 
 		if ( ! comments_open( $post_id ) ) { ?>

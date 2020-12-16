@@ -895,3 +895,26 @@
 .user-is-replying .temporary-form {
   height: 0 !important;
 }
+
+.fake-input-button {
+  background-color: transparent;
+  color: currentColor;
+  border-color: currentColor;
+  text-align: left;
+}
+
+// Form that has not been expanded yet should be hidden
+// Expanded form should hide fake input
+
+.novablocks-conversations__form:not(.expanded),
+.novablocks-conversations__form.expanded + .fake-form-placeholder {
+  display: none;
+}
+
+.user-is-replying {
+  .comment {
+	.comment-respond {
+	  display: flex;
+	}
+  }
+}
