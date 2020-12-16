@@ -61,14 +61,6 @@
 
 	.comment-form-comment {
 		margin-bottom: 0;
-
-		.comment-fields-wrapper {
-			padding-bottom: calc( var(--novablocks-spacing) * 0.175 );
-		}
-	}
-
-	.comment-fields-wrapper--others {
-		padding-top: calc( var(--novablocks-spacing) * 0.75 );
 	}
 
 	.comment:first-child {
@@ -118,21 +110,41 @@
 				}
 			}
 		}
+
+	  	@include below(tablet) {
+
+		  .comment:first-child {
+
+			.comment-highlighted[class] {
+
+			  margin-top: 0;
+			  padding-top: var(--element-spacing);
+			}
+		  }
+		}
 	}
 
-	.comment-fields-wrapper,
-	.comment-fields-wrapper > * {
-		@include block-spacing;
-		--novablocks-element-spacing-multiplier: 0.75;
-	}
+	.comment-form {
+		> *,
+		> * > * {
+			@include block-spacing;
+			--novablocks-element-spacing-multiplier: 0.75;
+		}
 
-	.comment-fields-wrapper > .field-description {
-		--novablocks-element-spacing-multiplier: 0; // ??? possible
-	}
+	  	.comment-form-comment,
+		.field-description,
+		input[type="checkbox"] + label {
+		  --novablocks-element-spacing-multiplier: 0;
+		}
 
-	.comment-fields-wrapper > .field-description + *,
-	.comment-fields-wrapper > label + :not(.field-description) {
-		--novablocks-element-spacing-multiplier: 0.175;
+		.field-description {
+
+		  	+ *,
+			label + :not(.field-description) {
+			  --novablocks-element-spacing-multiplier: 0.175;
+
+			}
+		}
 	}
 
 	.comment-posted-time {
@@ -239,7 +251,8 @@
 	}
 
 	.comment-respond,
-	.comment-wrapper {
+	.comment-wrapper,
+	.fake-form-placeholder{
 		--element-spacing: calc( var(--novablocks-spacing) * 0.5 );
 
 		padding-top: var(--element-spacing);
@@ -652,13 +665,25 @@
 	  }
 	}
 
-	.comment-form--is-expanded {
+  	.novablocks-conversations__form {
+	  &.expanded {
 		textarea#comment {
 			transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
 			width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
 
 			margin-top: 10px;
 		}
+
+		.comment-form {
+
+		  	> * {
+
+			  &:not(.comment-form-comment):not(.comment-avatar) {
+			  	grid-column: 1/3;
+			  }
+			}
+		}
+	  }
 	}
 }
 
@@ -903,8 +928,8 @@
   text-align: left;
 }
 
-// Form that has not been expanded yet should be hidden
-// Expanded form should hide fake input
+// 1. Form that has not been expanded yet should be hidden
+// 2. Expanded form should hide fake input
 
 .novablocks-conversations__form:not(.expanded),
 .novablocks-conversations__form.expanded + .fake-form-placeholder {

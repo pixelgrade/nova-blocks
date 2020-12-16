@@ -8,6 +8,12 @@
 
 trix-toolbar {
 
+  &[id]{
+	@include block-spacing;
+	--novablocks-element-spacing-multiplier: .175;
+	--block-top-spacing: 1;
+  }
+
   background-color: var(--trix-input-bg-color);
   border: 1px solid var(--trix-input-border-color);
 
@@ -94,7 +100,8 @@ trix-editor {
 }
 
 @include below(tablet) {
-  .comment-form--is-expanded {
+  .novablocks-conversations__form.expanded {
+
 	trix-editor,
 	trix-toolbar {
 	  transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
@@ -102,7 +109,7 @@ trix-editor {
 	}
 
 	trix-toolbar {
-	  margin-top: 10px;
+	  margin-top: 20px;
 	}
   }
 }
