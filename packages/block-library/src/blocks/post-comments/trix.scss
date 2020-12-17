@@ -112,4 +112,18 @@ trix-editor {
 	  margin-top: 20px;
 	}
   }
+
+  .comment {
+	.novablocks-conversations__form {
+	  trix-editor,
+	  trix-toolbar {
+		transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
+		width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
+	  }
+
+	  trix-toolbar {
+		margin-top: 20px;
+	  }
+	}
+  }
 }

@@ -229,14 +229,20 @@
 			}
 
 			.comment-highlighted:not(.comment-dropdown-item) {
-				--element-spacing: var(--novablocks-spacing);
-
 				padding-top: var(--element-spacing);
 				margin-top: calc( -1 * var(--element-spacing));
 
 				&.comment-wrapper {
 					padding-top: calc(var(--element-spacing) * 2);
 					margin-top: calc( -1 * var(--element-spacing) );
+				}
+			}
+
+		  	// Remove negative margin on highlighted comment,
+		  	// When comment is preceded by reply form.
+		  	.novablocks-conversations__form + .comment {
+				.comment-highlighted:not(.comment-dropdown-item) {
+					  margin-top: var(--element-spacing);
 				}
 			}
 
@@ -348,11 +354,13 @@
 		}
 	}
 
-	@include below(tablet) {
+	&:not(.user-is-replying) {
+	  @include below(tablet) {
 
 		.parent > .comment-wrapper ~ :not(.comment-highlighted) + :not(.comment-highlighted) > .comment-wrapper {
-			padding-top: 0;
+		  padding-top: 0;
 		}
+	  }
 	}
 
 	.novablocks-conversations__container > .novablocks-conversations__form:last-child {
@@ -487,6 +495,8 @@
 	[id="cancel-comment-reply-link"] {
 		margin-top: calc(var(--novablocks-spacing) * 0.25);
 		padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
+
+	  	font-size: var(--comment-footer-font-size);
 		text-align: center;
 		order: 2;
 	}
@@ -583,52 +593,52 @@
 	}
   }
 
-  .comment-footer-highlights {
+  	.comment-footer-highlights {
 	color: var(--accent-color);
 	font-weight: bold;
 
 	font-size: 14px;
   }
 
-  .comment-footer-highlights {
+  	.comment-footer-highlights {
 	flex-direction: column;
 
 	padding-top: var(--element-spacing);
   }
 
-  .comment-footer-highlights,
-  .comment-highlightedby-human {
+  	.comment-footer-highlights,
+  	.comment-highlightedby-human {
 	display: flex;
   }
 
-  .comment-highlightedby-humans {
+  	.comment-highlightedby-humans {
 	margin-bottom: 0;
   }
 
-  .comment-highlightedby-human-name:after {
+  	.comment-highlightedby-human-name:after {
 	content: ',';
   }
 
-  .comment-highlightedby-humans {
-	margin-left: 0;
-  }
-
-  @include above(tablet) {
-	.comment-highlightedby-human,
-	.comment-highlightedby-human-expertise {
-	  margin-left: .1em;
+	.comment-highlightedby-humans {
+	  margin-left: 0;
 	}
 
-	.comment-footer-highlights {
-	  flex-direction: row;
+	@include above(tablet) {
+	  .comment-highlightedby-human,
+	  .comment-highlightedby-human-expertise {
+		margin-left: .1em;
+	  }
 
-	  padding-top: 0;
+	  .comment-footer-highlights {
+		flex-direction: row;
+
+		padding-top: 0;
+	  }
 	}
-  }
 
-  .fake-form-placeholder {
-	padding-bottom: 0;
-  }
+	.fake-form-placeholder {
+	  padding-bottom: 0;
+	}
 }
 
 .comment-author-avatar {
@@ -670,6 +680,7 @@
 	}
 
   	.novablocks-conversations__form {
+	  .comment &,
 	  &.expanded {
 		textarea#comment {
 			transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
@@ -687,6 +698,10 @@
 			  }
 			}
 		}
+	  }
+
+	  [id="cancel-comment-reply-link"] {
+		padding-left: 0;
 	  }
 	}
 }
