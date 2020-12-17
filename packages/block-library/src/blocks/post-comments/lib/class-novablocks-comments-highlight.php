@@ -296,7 +296,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 					/**
 					 * We pass the comments list args to make sure we get the same result as in @see novablocks_render_post_comments_list_block()
 					 */
-					NovaBlocks_Comments::get_comment_list_markup( $comment, $commentsListArgs ),
+					NovaBlocks_Comments_Render::get_comment_list_markup( $comment, $commentsListArgs ),
 					esc_html__( 'Comment Submission Success', '__plugin_txtd' ),
 					array(
 							'response'  => 200,
