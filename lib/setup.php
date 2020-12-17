@@ -21,6 +21,10 @@ function novablocks_plugin_setup() {
 			define( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES', true );
 		}
 	}
+
+	if ( ! defined('NOVABLOCKS_DEVELOPMENT_MODE' ) ) {
+		define( 'NOVABLOCKS_DEVELOPMENT_MODE', false );
+	}
 }
 // We will do this just after themes so we give them a chance to intervene.
 add_action( 'after_setup_theme', 'novablocks_plugin_setup', 20 );
