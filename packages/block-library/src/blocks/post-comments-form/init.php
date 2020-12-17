@@ -50,9 +50,9 @@ if ( ! function_exists( 'novablocks_render_post_comments_form_block' ) ) {
 			'commenterBackgroundRequired' => true,
 			'commenterBackgroundLabel' => esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 			// Leave empty for no description.
-			'commenterBackgroundDescription' => esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+			'commenterBackgroundDescription' => '',
 			// Leave empty for no placeholder.
-			'commenterBackgroundPlaceholder' => esc_html__( 'Put some background behind your thoughts..', '__plugin_txtd' ),
+			'commenterBackgroundPlaceholder' => esc_html__( 'Practical philosopher, therapist and writer.', '__plugin_txtd' ),
 
 			'commenterNameLabel' => esc_html__( 'What is your name?', '__plugin_txtd' ),
 			// Leave empty for no description.
