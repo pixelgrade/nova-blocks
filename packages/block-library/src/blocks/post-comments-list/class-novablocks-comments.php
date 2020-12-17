@@ -479,7 +479,7 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			// Second, the actual comment field.
 			// We need to decide if we have a regular textarea or a rich text editor via Trix.
 			$comment_textarea = sprintf(
-					'<textarea id="comment" name="comment" cols="45" rows="1" maxlength="65525" required="required" placeholder="%s"></textarea>',
+					'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required" placeholder="%s"></textarea>',
 					esc_attr( $attributes['commentPlaceholder'] )
 			);
 			if ( $attributes['commentRichTextEditor'] ) {
@@ -704,6 +704,32 @@ if ( ! class_exists( 'NovaBlocks_Comments' ) ) {
 			wp_list_comments( $args, [ $comment ] );
 
 			return ob_get_clean();
+		}
+
+		/**
+		 * Generate markup for a button that will be stylezed as a text input.
+		 *
+		 */
+
+		public static function generate_fake_form_markup() {
+
+			$current_user = wp_get_current_user();
+			$commenter    = wp_get_current_commenter();
+
+			$avatar_size = 100;
+			$avatar = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', array( 'class' => 'avatar', ) );
+
+
+			$output = '<div class="form-grid js-generate-form fake-form-placeholder">';
+			$output .= '<div class="comment-avatar">';
+			$output .= $avatar;
+			$output .= '</div>';
+			$output .= '<button class="fake-input-button">';
+			$output .= __( 'Share your knowledge or ask a question..', '__plugin_txtd' );
+			$output .= '</button>';
+			$output .= '</div>';
+
+			return $output;
 		}
 
 		/**
