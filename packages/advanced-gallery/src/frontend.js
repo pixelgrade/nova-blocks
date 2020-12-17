@@ -15,8 +15,6 @@ $( function() {
 		const attributes = $gallery.data();
 		const gridItemsCollection = new GridItemCollection( images, attributes );
 
-		console.log( attributes );
-
 		gridItemsCollection.gridItems.map( ( gridItem, index ) => {
 			let $image = $( gridItem.image ),
 				$item = $image.closest( '.novablocks-advanced-gallery__grid-item' );

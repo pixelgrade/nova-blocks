@@ -64,4 +64,3 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) ) {
 
 	add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 }
-

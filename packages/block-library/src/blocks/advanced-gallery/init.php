@@ -8,13 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_advanced_gallery_component_attributes() {
-	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
-	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
-
-	return array_merge( $gallery_attributes, $blob_attributes );
-}
-
 function novablocks_get_advanced_gallery_attributes() {
 	$advanced_gallery_components_attributes = novablocks_get_advanced_gallery_component_attributes();
 	$advanced_gallery_block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/advanced-gallery/attributes.json' );

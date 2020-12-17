@@ -25,7 +25,7 @@ function novablocks_is_gutenberg() {
 if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 
 	/**
-	 * Register 3rd party scripts that will be used as dependencies.
+	 * Register 3rd party scripts that might be used as dependencies.
 	 */
 	function novablocks_register_vendor_scripts() {
 
@@ -52,6 +52,12 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 			'google-maps',
 			'//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places'
 		);
+
+		// Comments related.
+		// We use the core of the Trix rich text editor since we are not after old browsers. @see https://github.com/basecamp/trix#getting-started
+		wp_register_script( 'trix', trailingslashit( novablocks_get_plugin_url() )  . 'dist/vendor/trix/trix-core-1-3-1.js', [], '', true );
+		wp_register_style( 'trix', trailingslashit( novablocks_get_plugin_url() ) . 'dist/vendor/trix/trix-1-3-1.css', [], '', true );
+		wp_register_style( 'trix-custom', trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments/trix.css', [], '', true );
 	}
 }
 add_action( 'init', 'novablocks_register_vendor_scripts', 10 );
@@ -138,7 +144,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 					$handle . '-style',
 					$package_dir_url . 'style.css',
 					$style_dependencies,
-					$version
+					$version,
+					'screen'
 				);
 			}
 
@@ -177,6 +184,11 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			'novablocks_opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css'
 		) );
 
+		// @todo Dirty!!!!!
+		wp_localize_script( 'novablocks-utils', 'highlight_comments_ajax_object', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+
 		wp_set_script_translations( 'novablocks-core', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );
 	}
 }
@@ -190,7 +202,8 @@ function novablocks_register_block_types() {
 	}
 
 	$velocity_dependent_scripts = array(
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/post-comments/frontend'
 	);
 
 	$slick_dependent_scripts = array(
@@ -359,7 +372,8 @@ function novablocks_register_block_types() {
 				$handle,
 				$block_dir_url . $style,
 				$css_dependencies,
-				$version
+				$version,
+				'screen'
 			);
 
 			$args[ $key ] = $handle;
@@ -389,7 +403,9 @@ function novablocks_register_block_types() {
 				$args['attributes'] = call_user_func( $get_attributes );
 			}
 
-			register_block_type( 'novablocks/' . $block, $args );
+			register_block_type( 'novablocks/' . $block, array_merge($args, array(
+				'uses_context' => array( 'postId', 'postType' )
+			) ) );
 		}
 	}
 }
