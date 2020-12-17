@@ -26,15 +26,10 @@
 .novablocks-sharing__overlay {
 	position: absolute;
 	top: 0;
-	right: 0;
 	left: 0;
 	z-index: 100;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	pointer-events: none;
+	max-width: 100%;
 
 	// equal to --theme-spacing ??
 	--block-spacing: calc( var(--novablocks-spacing) / 3 );
@@ -46,15 +41,10 @@
 
 	position: relative;
 
-	display: flex;
-	flex-direction: column;
-
 	width: 25em;
 	max-width: 100%;
 
 	border-radius: 1em;
-
-	pointer-events: auto;
 
 	a {
 		color: inherit;
