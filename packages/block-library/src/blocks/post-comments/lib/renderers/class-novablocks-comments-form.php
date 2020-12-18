@@ -18,55 +18,107 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 	 */
 	class NovaBlocks_Comments_Form {
 
-
 		/**
-		 * Instance of this class (the singleton pattern).
-		 * @since    1.8.0
-		 * @var      NovaBlocks_Comments_Form
-		 */
-		protected static $_instance = null;
-
-
-		public function __construct() {
-			// Maybe do some checks before initializing the logic.
-			$this->init();
-		}
-
-		/**
-		 * Initialize the logic.
-		 */
-		private function init() {
-
-			/*
-			 * Register all needed hooks.
-			 */
-			$this->register_hooks();
-		}
-
-		private function register_hooks() {
-			// Adjust the comment form fields.
-			add_filter( 'comment_form_default_fields', array( $this, 'adjust_comment_form_default_fields' ), 9, 1 );
-			add_filter( 'comment_form_defaults', array( $this, 'adjust_comment_form_defaults' ), 9, 1 );
-		}
-
-		/**
-		 * Entry point to render the comments form with the block-given attributes, content, and context.
+		 * The post to render comments form for.
 		 *
-		 * @param WP_Post|int|null $post
-		 * @param array $attributes
-		 * @param string $content
-		 * @param WP_Block $block
+		 * @var WP_Post
+		 */
+		protected $post = null;
+
+		/**
+		 * The arguments to consider when rendering.
+		 *
+		 * These configure and adapt the behavior.
+		 *
+		 * @var array
+		 */
+		protected $args = [];
+
+		/**
+		 * Instantiate a comments form renderer.
+		 *
+		 * @param WP_Post|int|null $post Optional. The post who's comments to render. Defaults to the current post.
+		 * @param array            $args Optional. The arguments to consider when rendering.
+		 */
+		public function __construct( $post = null, $args = [] ) {
+			$post = get_post( $post, OBJECT );
+			// Fail without a proper post.
+			if ( empty( $post ) ) {
+				if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
+					_doing_it_wrong( __METHOD__, esc_html__( 'Post not found for comments form rendering.', '__plugin_txtd' ), '' );
+				}
+
+				return;
+			}
+
+			$this->post = $post;
+
+			$this->args = wp_parse_args( $args, [
+				// Output HTML5 markup
+				'html5' => current_theme_supports( 'html5', 'comment-form' ),
+
+				'commentLabel'                   => esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),
+				// A special label that will include the commenter name.
+				// Leave empty to use only the 'commentLabel'.
+				/* translators %s: The current commenter name. */
+				'commentLabelKnownUser'          => esc_html__( 'What\'s your comment or question, %s?', '__plugin_txtd' ),
+				// Leave empty for no description.
+				'commentDescription'             => esc_html__( 'Let\'s start a personal, meaningful conversation.', '__plugin_txtd' ),
+				// Leave empty for no placeholder.
+				'commentPlaceholder'             => esc_html__( 'Share your knowledge or ask a question..', '__plugin_txtd' ),
+				// Control whether to provide a rich text editor experience.
+				// In our case we will provide the simple, but powerful Trix rich text editor (https://github.com/basecamp/trix).
+				'commentRichTextEditor'          => true,
+
+				// Display the commenter background field.
+				'commenterBackground'            => true,
+				'commenterBackgroundRequired'    => true,
+				'commenterBackgroundLabel'       => esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
+				// Leave empty for no description.
+				'commenterBackgroundDescription' => '',
+				// Leave empty for no placeholder.
+				'commenterBackgroundPlaceholder' => esc_html__( 'Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+
+				'commenterNameLabel'       => esc_html__( 'What is your name?', '__plugin_txtd' ),
+				// Leave empty for no description.
+				'commenterNameDescription' => '',
+				// Leave empty for no placeholder.
+				'commenterNamePlaceholder' => esc_html__( 'Ernest Hemingway', '__plugin_txtd' ),
+
+				'commenterEmailLabel'       => esc_html__( 'What is your email address?', '__plugin_txtd' ),
+				// Leave empty for no description.
+				'commenterEmailDescription' => esc_html__( 'It will not be published or shared with others.', '__plugin_txtd' ),
+				// Leave empty for no placeholder.
+				'commenterEmailPlaceholder' => esc_html__( 'your@email.com', '__plugin_txtd' ),
+
+				// Hide the commenter URL field by default.
+				'commenterUrl'              => false,
+				'commenterUrlLabel'         => esc_html__( 'What is your website URL?', '__plugin_txtd' ),
+				// Leave empty for no description.
+				'commenterUrlDescription'   => '',
+				// Leave empty for no placeholder.
+				'commenterUrlPlaceholder'   => esc_html__( 'https://yourwonderfulsite.com', '__plugin_txtd' ),
+
+				'cookieConsentLabel' => esc_html__( 'Save my details in this browser for the next time I comment.', '__plugin_txtd' ),
+
+				'submitLabel'      => esc_html__( 'Add this comment', '__plugin_txtd' ),
+				'cancelReplyLabel' => esc_html__( 'Cancel reply', '__plugin_txtd' ),
+			] );
+		}
+
+		/**
+		 * Entry point to render the comments form.
+		 *
+		 * @param array $args Optional. Right now, you can only pass args for the form button logic, not the whole comment form.
+		 *                    Use the constructor arguments for that.
 		 *
 		 * @return string
 		 */
-		public function render( $post = null, $attributes = [], $content = '', $block = null ) {
-			$post = get_post( $post );
+		public function render( $args = [] ) {
 			// Render nothing without a proper post.
-			if ( empty( $post ) ) {
+			if ( empty( $this->post ) ) {
 				return '';
 			}
-
-			$form_attributes = $this->parse_block_attributes( $attributes );
 
 			/* ===============================
 			 * RENDER THE COMMENTS FORM MARKUP
@@ -74,75 +126,70 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			ob_start();
 
-			// To be able to accurately determine the post this comment form applies to (eg. in filters), we will use this global.
-			$GLOBALS['nb_current_comment_form_post_id'] = $post->ID;
-			// We will also make available the block attributes.
-			$GLOBALS['nb_current_comment_form_block_attributes'] = $form_attributes;
+			// Output a form button that will show the full form on click.
+			// @todo Maybe we should be able to configure if we want a form button.
+			$this->the_form_button( $args );
 
-			comment_form( [], $post->ID );
+			// Register our hooks just before rendering.
+			$this->register_hooks();
 
-			// Cleanup to make sure these values are one-time use.
-			unset( $GLOBALS['nb_current_comment_form_post_id'] );
-			unset( $GLOBALS['nb_current_comment_form_block_attributes'] );
+			comment_form( [], $this->post->ID );
+
+			// Unregister our hooks to make sure this instance's logic only applies to this render.
+			$this->unregister_hooks();
 
 			return ob_get_clean();
 		}
 
-		protected function parse_block_attributes( $attributes ) {
-			// Handle the block attributes by merging them with the defaults.
-			$attributes = wp_parse_args( $attributes, [
-				// Output HTML5 markup
-				'html5' => current_theme_supports( 'html5', 'comment-form' ),
+		/**
+		 * Output markup for a button that will show the full comment form on click.
+		 *
+		 * @param array   $args The origin block attributes.
+		 */
+		public function the_form_button( $args = [] ) {
 
-				'commentLabel' => esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),
-				// A special label that will include the commenter name.
-				// Leave empty to use only the 'commentLabel'.
-				/* translators %s: The current commenter name. */
-				'commentLabelKnownUser' => esc_html__( 'What\'s your comment or question, %s?', '__plugin_txtd' ),
-				// Leave empty for no description.
-				'commentDescription' => esc_html__( 'Let\'s start a personal and a meaningful conversation.', '__plugin_txtd' ),
-				// Leave empty for no placeholder.
-				'commentPlaceholder' => esc_html__( 'Share your knowledge or ask a question..', '__plugin_txtd' ),
-				// Control whether to provide a rich text editor experience.
-				// In our case we will provide the simple, but powerful Trix rich text editor (https://github.com/basecamp/trix).
-				'commentRichTextEditor' => true,
+			$form_attributes = $this->parse_args( $args );
 
-				// Display the commenter background field.
-				'commenterBackground' => true,
-				'commenterBackgroundRequired' => true,
-				'commenterBackgroundLabel' => esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
-				// Leave empty for no description.
-				'commenterBackgroundDescription' => '',
-				// Leave empty for no placeholder.
-				'commenterBackgroundPlaceholder' => esc_html__( 'Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+			$current_user = wp_get_current_user();
 
-				'commenterNameLabel' => esc_html__( 'What is your name?', '__plugin_txtd' ),
-				// Leave empty for no description.
-				'commenterNameDescription' => '',
-				// Leave empty for no placeholder.
-				'commenterNamePlaceholder' => esc_html__( 'Ernest Hemingway', '__plugin_txtd' ),
+			// @todo This should be configurable.
+			$avatar_size = 100;
+			?>
 
-				'commenterEmailLabel' => esc_html__( 'What is your email address?', '__plugin_txtd' ),
-				// Leave empty for no description.
-				'commenterEmailDescription' => esc_html__( 'It will not be published or shared with others.', '__plugin_txtd' ),
-				// Leave empty for no placeholder.
-				'commenterEmailPlaceholder' => esc_html__( 'your@email.com', '__plugin_txtd' ),
+			<div class="form-grid js-generate-form fake-form-placeholder">
+				<div class="comment-avatar">
+					<?php echo get_avatar( $current_user->ID, $avatar_size, 'identicon', '', [ 'class' => 'avatar', ] ); ?>
+				</div>
+				<button class="fake-input-button">
+					<?php echo $form_attributes['commentPlaceholder']; ?>
+				</button>
+			</div>
 
-				// Hide the commenter URL field by default.
-				'commenterUrl' => false,
-				'commenterUrlLabel' => esc_html__( 'What is your website URL?', '__plugin_txtd' ),
-				// Leave empty for no description.
-				'commenterUrlDescription' => '',
-				// Leave empty for no placeholder.
-				'commenterUrlPlaceholder' => esc_html__( 'https://yourwonderfulsite.com', '__plugin_txtd' ),
+			<?php
+		}
 
-				'cookieConsentLabel' => esc_html__( 'Save my details in this browser for the next time I comment.', '__plugin_txtd' ),
+		protected function register_hooks() {
+			// Modify the comment form fields.
+			add_filter( 'comment_form_default_fields', [ $this, 'adjust_comment_form_default_fields' ], 9, 1 );
+			add_filter( 'comment_form_defaults', [ $this, 'adjust_comment_form_defaults' ], 9, 1 );
+		}
 
-				'submitLabel' => esc_html__( 'Add this comment', '__plugin_txtd' ),
-				'cancelReplyLabel' => esc_html__( 'Cancel reply', '__plugin_txtd' ),
-			] );
+		protected function unregister_hooks() {
+			remove_filter( 'comment_form_default_fields', [ $this, 'adjust_comment_form_default_fields' ], 9 );
+			remove_filter( 'comment_form_defaults', [ $this, 'adjust_comment_form_defaults' ], 9 );
+		}
 
-			return $attributes;
+		/**
+		 * Prepare the given rendering arguments by merging them with the existing ones in the instance.
+		 *
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		protected function parse_args( $args ) {
+			$args = wp_parse_args( $args, $this->args );
+
+			return $args;
 		}
 
 		public function adjust_comment_form_default_fields( $fields ) {
@@ -153,69 +200,69 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			$attributes = $GLOBALS['nb_current_comment_form_block_attributes'];
 
-			$commenter    = wp_get_current_commenter();
-			$req          = get_option( 'require_name_email' );
-			$html_req     = ( $req ? " required='required'" : '' );
+			$commenter = wp_get_current_commenter();
+			$req       = get_option( 'require_name_email' );
+			$html_req  = ( $req ? " required='required'" : '' );
 
-			$new_fields = array(
-					'author'  => sprintf(
-							'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
-							sprintf(
-									'<label for="author">%s%s</label><span class="field-description">%s</span>',
-									$attributes['commenterNameLabel'],
-									( $req ? ' <span class="required">*</span>' : '' ),
-									$attributes['commenterNameDescription']
-							),
-							sprintf(
-									'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" placeholder="%s" %s />',
-									esc_attr( $commenter['comment_author'] ),
-									$attributes['commenterNamePlaceholder'],
-									$html_req
-							)
+			$new_fields = [
+				'author' => sprintf(
+					'<p class="comment-form-author comment-fields-wrapper">%s %s</p>',
+					sprintf(
+						'<label for="author">%s%s</label><span class="field-description">%s</span>',
+						$attributes['commenterNameLabel'],
+						( $req ? ' <span class="required">*</span>' : '' ),
+						$attributes['commenterNameDescription']
 					),
-					'email'   => sprintf(
-							'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
-							sprintf(
-									'<label for="email">%s%s</label><span class="field-description">%s</span>',
-									$attributes['commenterEmailLabel'],
-									( $req ? ' <span class="required">*</span>' : '' ),
-									$attributes['commenterEmailDescription']
-							),
-							sprintf(
-									'<input id="email" name="email" type="email" value="%s" size="30" maxlength="100" aria-describedby="email-notes" placeholder="%s" %s />',
-									esc_attr( $commenter['comment_author_email'] ),
-									esc_attr( $attributes['commenterEmailPlaceholder'] ),
-									$html_req
-							)
+					sprintf(
+						'<input id="author" name="author" type="text" value="%s" size="30" maxlength="245" placeholder="%s" %s />',
+						esc_attr( $commenter['comment_author'] ),
+						$attributes['commenterNamePlaceholder'],
+						$html_req
+					)
+				),
+				'email'  => sprintf(
+					'<p class="comment-form-email comment-fields-wrapper">%s %s</p>',
+					sprintf(
+						'<label for="email">%s%s</label><span class="field-description">%s</span>',
+						$attributes['commenterEmailLabel'],
+						( $req ? ' <span class="required">*</span>' : '' ),
+						$attributes['commenterEmailDescription']
 					),
-					'url'   => sprintf(
-							'<p class="comment-form-url comment-fields-wrapper">%s %s</p>',
-							sprintf(
-									'<label for="url">%s</label><span class="field-description">%s</span>',
-									$attributes['commenterUrlLabel'],
-									$attributes['commenterUrlDescription']
-							),
-							sprintf(
-									'<input id="url" name="url" %s value="%s" size="30" maxlength="200" placeholder="%s" />',
-									( $attributes['html5'] ? 'type="url"' : 'type="text"' ),
-									esc_attr( $commenter['comment_author_url'] ),
-									esc_attr( $attributes['commenterUrlPlaceholder'] )
-							)
+					sprintf(
+						'<input id="email" name="email" type="email" value="%s" size="30" maxlength="100" aria-describedby="email-notes" placeholder="%s" %s />',
+						esc_attr( $commenter['comment_author_email'] ),
+						esc_attr( $attributes['commenterEmailPlaceholder'] ),
+						$html_req
+					)
+				),
+				'url'    => sprintf(
+					'<p class="comment-form-url comment-fields-wrapper">%s %s</p>',
+					sprintf(
+						'<label for="url">%s</label><span class="field-description">%s</span>',
+						$attributes['commenterUrlLabel'],
+						$attributes['commenterUrlDescription']
 					),
-			);
+					sprintf(
+						'<input id="url" name="url" %s value="%s" size="30" maxlength="200" placeholder="%s" />',
+						( $attributes['html5'] ? 'type="url"' : 'type="text"' ),
+						esc_attr( $commenter['comment_author_url'] ),
+						esc_attr( $attributes['commenterUrlPlaceholder'] )
+					)
+				),
+			];
 
 			if ( has_action( 'set_comment_cookies', 'wp_set_comment_cookies' ) && get_option( 'show_comments_cookies_opt_in' ) ) {
-				$consent           = empty( $commenter['comment_author_email'] ) ? '' : ' checked="checked"';
+				$consent               = empty( $commenter['comment_author_email'] ) ? '' : ' checked="checked"';
 				$new_fields['cookies'] = sprintf(
-						'<p class="comment-form-cookies-consent">%s %s</p>',
-						sprintf(
-								'<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%s />',
-								$consent
-						),
-						sprintf(
-								'<label for="wp-comment-cookies-consent">%s</label>',
-								$attributes['cookieConsentLabel']
-						)
+					'<p class="comment-form-cookies-consent">%s %s</p>',
+					sprintf(
+						'<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"%s />',
+						$consent
+					),
+					sprintf(
+						'<label for="wp-comment-cookies-consent">%s</label>',
+						$attributes['cookieConsentLabel']
+					)
 				);
 			}
 
@@ -239,7 +286,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$commenter    = wp_get_current_commenter();
 
 			$avatar_size = 100;
-			$avatar = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', array( 'class' => 'avatar', ) );
+			$avatar      = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', [ 'class' => 'avatar', ] );
 
 			// Generate a comment textarea title (label actually) according to whether we have a user or not.
 			// This way we compensate for the lack of a title for logged in users.
@@ -275,15 +322,15 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// Second, the actual comment field.
 			// We need to decide if we have a regular textarea or a rich text editor via Trix.
 			$comment_textarea = sprintf(
-					'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required" placeholder="%s"></textarea>',
-					esc_attr( $attributes['commentPlaceholder'] )
+				'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required" placeholder="%s"></textarea>',
+				esc_attr( $attributes['commentPlaceholder'] )
 			);
 			if ( $attributes['commentRichTextEditor'] ) {
 				// We need to use a different kind of markup.
 				// @see https://github.com/basecamp/trix#integrating-with-forms
 				// For the available keyboard shortcuts, @see https://github.com/basecamp/trix/wiki/Keyboard-Shortcuts
 
-				$comment_textarea = sprintf('
+				$comment_textarea = sprintf( '
 <span class="trix-contained-input">
 	<span class="trix-inner-wrapper">
 		<span class="sticky-trix-toolbar">
@@ -308,7 +355,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		})
 	</script>
 </span>',
-						$attributes['commentPlaceholder']
+					$attributes['commentPlaceholder']
 				);
 
 				// We will also enqueue the scripts and styles needed.
@@ -319,11 +366,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			}
 
 			$defaults['comment_field'] .=
-			                 sprintf( '<p class="comment-form-comment"><label for="comment">%s</label><span class="field-description">%s</span>%s</p>',
-					                 $comment_field_label,
-					                 $attributes['commentDescription'],
-					                 $comment_textarea
-			                 );
+				sprintf( '<p class="comment-form-comment"><label for="comment">%s</label><span class="field-description">%s</span>%s</p>',
+					$comment_field_label,
+					$attributes['commentDescription'],
+					$comment_textarea
+				);
 
 			// Third, the commenter background field.
 			if ( $attributes['commenterBackground'] ) {
@@ -339,12 +386,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 				if ( ! empty( $previous_commenter_background_query_args ) ) {
 					$previous_commenter_background_query_args = array_merge( $previous_commenter_background_query_args, [
-							'fields' => 'ids',
-							'number' => 1,
-							'count' => false,
-							'orderby' => 'comment_date_gmt',
-							'order' => 'DESC',
-							'post_id' => $GLOBALS['nb_current_comment_form_post_id'],
+						'fields'  => 'ids',
+						'number'  => 1,
+						'count'   => false,
+						'orderby' => 'comment_date_gmt',
+						'order'   => 'DESC',
+						'post_id' => $GLOBALS['nb_current_comment_form_post_id'],
 					] );
 
 					$last_comment = get_comments( $previous_commenter_background_query_args );
@@ -355,18 +402,18 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 				// We need to add the commenter background field to the comment textarea because we want it for logged in users too.
 				$defaults['comment_field'] .=
-						sprintf( '
+					sprintf( '
 <p class="comment-form-background comment-fields-wrapper">
 	<label for="nb_commenter_background">%s%s</label>
 	<span class="field-description">%s</span>
 	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" tabindex="5" placeholder="%s" required="required" />
 </p>',
-								$attributes['commenterBackgroundLabel'],
-								( $attributes['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
-								$attributes['commenterBackgroundDescription'],
-								esc_attr( $previous_commenter_background ),
-								esc_attr( $attributes['commenterBackgroundPlaceholder'] )
-						);
+						$attributes['commenterBackgroundLabel'],
+						( $attributes['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
+						$attributes['commenterBackgroundDescription'],
+						esc_attr( $previous_commenter_background ),
+						esc_attr( $attributes['commenterBackgroundPlaceholder'] )
+					);
 			}
 
 			// No title or section related to the logged in user.
@@ -377,7 +424,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			// We want a some classes to be present.
 			$defaults['class_container'] .= ' novablocks-conversations__form';
-			$defaults['class_form'] .= ' form-grid';
+			$defaults['class_form']      .= ' form-grid';
 
 			// Change details about the reply logic and behavior.
 			// Basically, we don't want the reply title and the wrappers.
@@ -390,50 +437,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$defaults['cancel_reply_link'] = $attributes['cancelReplyLabel'] ? $attributes['cancelReplyLabel'] : esc_html__( 'Cancel reply', '__plugin_txtd' );
 
 			// Change the submit button
-			$defaults['label_submit'] = $attributes['submitLabel'] ? $attributes['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+			$defaults['label_submit']  = $attributes['submitLabel'] ? $attributes['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
 			$defaults['submit_button'] = '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>';
 
 			return $defaults;
-		}
-
-		/**
-		 * Main NovaBlocks_Comments_Form Instance
-		 *
-		 * Ensures only one instance of NovaBlocks_Comments_Form is loaded or can be loaded.
-		 *
-		 * @since  1.8.0
-		 * @static
-		 *
-		 * @see    NovaBlocks_Comments_Form()
-		 * @return NovaBlocks_Comments_Form Main NovaBlocks_Comments_Form instance
-		 */
-		public static function instance( ) {
-			// If the single instance hasn't been set, set it now.
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
-			}
-
-			return self::$_instance;
-		}
-
-		/**
-		 * Cloning is forbidden.
-		 *
-		 * @since 1.8.0
-		 */
-		public function __clone() {
-
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'You should not do that!', '__plugin_txtd' ), null );
-		}
-
-		/**
-		 * Unserializing instances of this class is forbidden.
-		 *
-		 * @since 1.8.0
-		 */
-		public function __wakeup() {
-
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'You should not do that!', '__plugin_txtd' ), null );
 		}
 	}
 }

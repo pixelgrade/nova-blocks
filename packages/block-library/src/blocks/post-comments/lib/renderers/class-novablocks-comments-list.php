@@ -19,15 +19,79 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 	class NovaBlocks_Comments_List {
 
 		/**
-		 * Instance of this class (the singleton pattern).
-		 * @since    1.8.0
-		 * @var      NovaBlocks_Comments_List
+		 * The post to render comments list for.
+		 *
+		 * @var WP_Post
 		 */
-		protected static $_instance = null;
+		protected $post = null;
 
+		/**
+		 * The arguments to consider when rendering.
+		 *
+		 * These configure and adapt the behavior.
+		 *
+		 * @var array
+		 */
+		protected $args = [];
 
-		public function __construct() {
-			// Maybe do some checks before initializing the logic.
+		protected $query = null;
+		protected $query_args = null;
+
+		protected $comments = null;
+
+		/**
+		 * Instantiate a comments list renderer.
+		 *
+		 * @param WP_Post|int|null $post Optional. The post who's comments to render. Defaults to the current post.
+		 * @param array $args Optional. The arguments to consider when rendering.
+		 */
+		public function __construct( $post = null, $args = [] ) {
+			$post = get_post( $post, OBJECT );
+			// Fail without a proper post.
+			if ( empty( $post ) ) {
+				if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
+					_doing_it_wrong( __METHOD__, esc_html__( 'Post not found for comments list rendering.', '__plugin_txtd' ), '' );
+				}
+
+				return;
+			}
+
+			$this->post = $post;
+
+			$this->args = wp_parse_args( $args, [
+					'threadComments' => get_option( 'thread_comments' ) ? 'threaded' : false,
+					'maxThreadDepth' => get_option( 'thread_comments' ) ? get_option( 'thread_comments_depth' ) : -1,
+
+					'reverseTopLevelCommentsOrder' => ( 'desc' === get_option( 'comment_order' ) ), // True to display the newest comments first.
+
+					'pageComments' => get_option( 'page_comments' ),
+					'commentsPerPage' => (int) get_option( 'comments_per_page' ),
+					'defaultCommentsPage' => get_option( 'default_comments_page' ), // 'oldest', 'newest'
+
+					'displayCommenterBackground' => true,
+					'displayAvatarSize' => 100, // Double the actual size for high dpi displays.
+
+				// The message to use in the comments list when a comment is not approved.
+					'moderationMessage' => '', // Fallback to core's default.
+					'commentsClosedMessage' => esc_html__( 'No further conversations or replies allowed, at this time.', '__plugin_txtd' ),
+
+				// If this is 0 or false, no second form at the end of the comments list.
+					'listEndCommentFormAfterNumComments' => 7,
+
+				// In minutes. How long should the commenter see his unapproved comment. 0 for no preview.
+				// This is also the time the commenter is allowed to amend its comment.
+					'commentPreviewTime' => 5,
+
+			] );
+
+			if ( is_user_logged_in() ) {
+				// If the current user is capable of moderating comments, we will change the moderation message.
+				if ( current_user_can( 'moderate_comments' ) && current_user_can( 'edit_posts' ) ) {
+					/* translators: Moderation message shown only to moderators.  */
+					$this->args['moderationMessage'] = esc_html__( '⚠️ This comment is waiting for your moderation. ⚠️', '__plugin_txtd' );
+				}
+			}
+
 			$this->init();
 		}
 
@@ -36,60 +100,45 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 */
 		private function init() {
 
-			/*
-			 * Register all needed hooks.
-			 */
-			$this->register_hooks();
-		}
-
-		private function register_hooks() {
-
+			// Load our custom comment walker.
+			require_once 'class-novablocks-walker-comment.php';
 		}
 
 		/**
-		 * Entry point to render the comments list with the block-given attributes, content, and context.
+		 * Entry point to render the comments list.
 		 *
-		 * @param WP_Post|int|null $post
-		 * @param array $attributes
-		 * @param string $content
-		 * @param WP_Block $block
+		 * @param array            $args Optional.
 		 *
 		 * @return string
 		 */
-		public function render( $post = null, $attributes = [], $content = '', $block = null ) {
-			$post = get_post( $post );
+		public function render( $args = [] ) {
 			// Render nothing without a proper post.
-			if ( empty( $post ) ) {
+			if ( empty( $this->post ) ) {
 				return '';
 			}
 
-			$list_attributes = $this->parse_block_attributes( $attributes );
+			$list_args = $this->parse_args( $args );
 
-			$comments_query_args = $this->comments_query_args( $post, $list_attributes );
+			$comments = $this->comments( $list_args );
 
-			$comment_query = new WP_Comment_Query( $comments_query_args );
+			$max_num_comment_pages = $this->query->max_num_pages;
 
 			$page = (int) get_query_var( 'cpage' );
 			if ( empty( $page ) ) {
 				$page = 1;
 			}
 
-			$comments = $this->prepare_comments_from_query( $comment_query, $comments_query_args );
-
-			$comment_count         = count( $comments );
-			$max_num_comment_pages = $comment_query->max_num_pages;
-
 			if ( '' == get_query_var( 'cpage' ) && $max_num_comment_pages > 1 ) {
-				set_query_var( 'cpage', 'newest' === $list_attributes['defaultCommentsPage'] ? $max_num_comment_pages : 1 );
+				set_query_var( 'cpage', 'newest' === $list_args['defaultCommentsPage'] ? $max_num_comment_pages : 1 );
 			}
 
 			// Allow others to change this.
-			$comments_list_args = apply_filters( 'novablocks_comments_list_args', [
+			$wp_list_comments_args = apply_filters( 'novablocks_wp_list_comments_args', [
 				'walker'                       => new NovaBlocks_Walker_Comment(),
-				'max_depth'                    => $list_attributes['maxThreadDepth'],
-				'reverse_top_level'            => $list_attributes['reverseTopLevelCommentsOrder'],
-				'avatar_size'                  => $list_attributes['displayAvatarSize'],
-				'moderation_message'           => $list_attributes['moderationMessage'],
+				'max_depth'                    => $list_args['maxThreadDepth'],
+				'reverse_top_level'            => $list_args['reverseTopLevelCommentsOrder'],
+				'avatar_size'                  => $list_args['displayAvatarSize'],
+				'moderation_message'           => $list_args['moderationMessage'],
 				'style'                        => 'div',
 				'short_ping'                   => true,
 				// Since we do the proper query above, we don't want the walker to do it once again.
@@ -100,10 +149,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				'cpage'                        => $page,
 
 				// Extra args of our own. These will also be passed along to the walker.
-				'display_commenter_background' => $list_attributes['displayCommenterBackground'],
-			], $post->ID, $list_attributes, $comments );
+				'display_commenter_background' => $list_args['displayCommenterBackground'],
+			], $this->post->ID, $list_args, $comments );
 
-			$this->localize_comments_list_args( $comments_list_args );
+			$this->localize_wp_list_comments_args( $wp_list_comments_args );
 
 			// We will not output anything if there are no comments.
 			if ( empty( $comments ) ) {
@@ -114,14 +163,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			 * RENDER THE COMMENTS LIST MARKUP
 			 */
 
-			ob_start();
-
-			echo NovaBlocks_Comments_Render::generate_fake_form_markup();
-			?>
+			ob_start(); ?>
 
 			<div id="comments" class="comment-list">
 
-				<?php wp_list_comments( $comments_list_args, $comments ); ?>
+				<?php wp_list_comments( $wp_list_comments_args, $comments ); ?>
 
 			</div><!-- #comments.comment-list -->
 
@@ -152,67 +198,92 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				<?php
 			}
 
-			// Add another form at the bottom when we have a certain number of comments.
-			if ( comments_open( $post->ID )
-			     && ! empty( $list_attributes['scrollRelocateCommentFormAfterNumComments'] )
-			     && $comment_count >= absint( $list_attributes['scrollRelocateCommentFormAfterNumComments'] ) ) {
-
-				echo NovaBlocks_Comments_Render::generate_fake_form_markup();
-			}
-
-			if ( ! comments_open( $post->ID ) ) { ?>
-				<p class="comments-closed"><?php echo $list_attributes['commentsClosedMessage']; ?></p>
-			<?php }
-
 			return ob_get_clean();
 		}
 
-		protected function parse_block_attributes( $attributes ) {
-			// Handle the block attributes by merging them with the defaults.
-			$attributes = wp_parse_args( $attributes, [
-				'threadComments' => get_option( 'thread_comments' ) ? 'threaded' : false,
-				'maxThreadDepth' => get_option( 'thread_comments' ) ? get_option( 'thread_comments_depth' ) : -1,
-
-				'reverseTopLevelCommentsOrder' => ( 'desc' === get_option( 'comment_order' ) ), // True to display the newest comments first.
-
-				'pageComments' => get_option( 'page_comments' ),
-				'commentsPerPage' => (int) get_option( 'comments_per_page' ),
-				'defaultCommentsPage' => get_option( 'default_comments_page' ), // 'oldest', 'newest'
-
-				'displayCommenterBackground' => true,
-				'displayAvatarSize' => 100, // Double the actual size for high dpi displays.
-
-				// The message to use in the comments list when a comment is not approved.
-				'moderationMessage' => '', // Fallback to core's default.
-				'commentsClosedMessage' => esc_html__( 'No further conversations or replies allowed, at this time.', '__plugin_txtd' ),
-
-				// If this is 0 or false, no relocation will take place.
-				'scrollRelocateCommentFormAfterNumComments' => 7,
-
-				// In minutes. How long should the commenter see his unapproved comment. 0 for no preview.
-				// This is also the time the commenter is allowed to amend its comment.
-				'commentPreviewTime' => 5,
-
-			] );
-
-			if ( is_user_logged_in() ) {
-				// If the current user is capable of moderating comments, we will change the moderation message.
-				if ( current_user_can( 'moderate_comments' ) && current_user_can( 'edit_posts' ) ) {
-					/* translators: Moderation message shown only to moderators.  */
-					$attributes['moderationMessage'] = esc_html__( '⚠️ This comment is waiting for your moderation. ⚠️', '__plugin_txtd' );
-				}
+		/**
+		 * @param array            $args Optional.
+		 *
+		 * @return string
+		 */
+		public function query( $args = [] ) {
+			if ( ! is_null( $this->query ) ) {
+				return $this->query;
 			}
 
-			return $attributes;
+			$list_args = $this->parse_args( $args );
+
+			$this->query_args = $this->comments_query_args( $list_args );
+
+			$this->query = $this->get_query( $this->query_args );
+
+			return $this->query;
 		}
 
 		/**
-		 * @param WP_Post $post
+		 * @param array            $args Optional.
+		 *
+		 * @return string
+		 */
+		public function get_query( $args = [] ) {
+			if ( ! is_null( $this->query ) ) {
+				return $this->query;
+			}
+
+			return new WP_Comment_Query( $args );
+		}
+
+		/**
+		 * @param array            $args Optional.
+		 *
+		 * @return string
+		 */
+		public function comments( $args = [] ) {
+			if ( ! is_null( $this->comments ) ) {
+				return $this->comments;
+			}
+
+			$this->comments = $this->get_comments( $args );
+
+			return $this->comments;
+		}
+
+		/**
+		 * @param array            $args Optional.
+		 *
+		 * @return string
+		 */
+		public function get_comments( $args = [] ) {
+			if ( ! is_null( $this->comments ) ) {
+				return $this->comments;
+			}
+
+			// @todo Maybe this should have no side-effects?
+			$this->query( $args );
+
+			return $this->prepare_comments_from_query();
+		}
+
+		/**
+		 * Prepare the given rendering arguments by merging them with the existing ones in the instance.
+		 *
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		protected function parse_args( $args ) {
+			// Handle the block attributes by merging them with the defaults.
+			$args = wp_parse_args( $args, $this->args );
+
+			return $args;
+		}
+
+		/**
 		 * @param array $list_attributes
 		 *
 		 * @return array
 		 */
-		protected function comments_query_args( $post, $list_attributes ) {
+		protected function comments_query_args( $list_attributes ) {
 			/**
 			 * Code taken from @see comments_template() to allow for uniform behavior.
 			 */
@@ -220,7 +291,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				'orderby'                   => 'comment_date_gmt',
 				'order'                     => 'ASC',
 				'status'                    => 'approve',
-				'post_id'                   => $post->ID,
+				'post_id'                   => $this->post->ID,
 				'hierarchical'              => $list_attributes['threadComments'],
 				'no_found_rows'             => false,
 				'update_comment_meta_cache' => false, // We lazy-load comment meta for performance.
@@ -292,7 +363,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 					$top_level_args  = [
 						'count'   => true,
 						'orderby' => false,
-						'post_id' => $post->ID,
+						'post_id' => $this->post->ID,
 						'status'  => 'approve',
 					];
 
@@ -338,24 +409,25 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		}
 
 		/**
-		 * @param WP_Comment_Query $comment_query
-		 * @param array $comments_query_args
-		 *
 		 * @return []
 		 */
-		protected function prepare_comments_from_query( $comment_query, $comments_query_args ) {
-			$_comments     = $comment_query->comments;
+		protected function prepare_comments_from_query() {
+			if ( empty( $this->comments ) ) {
+				return [];
+			}
+
+			$_comments     = $this->comments;
 
 			// Trees must be flattened before they're passed to the walker.
-			if ( $comments_query_args['hierarchical'] ) {
+			if ( $this->query_args['hierarchical'] ) {
 				$comments_flat = [];
 				foreach ( $_comments as $_comment ) {
 					$comments_flat[]  = $_comment;
 					$comment_children = $_comment->get_children(
 						[
 							'format'  => 'flat',
-							'status'  => $comments_query_args['status'],
-							'orderby' => $comments_query_args['orderby'],
+							'status'  => $this->query_args['status'],
+							'orderby' => $this->query_args['orderby'],
 						]
 					);
 
@@ -373,7 +445,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			 * @param WP_Comment[] $comments Array of comments to be rendered.
 			 * @param int          $post_ID  Post ID.
 			 */
-			return apply_filters( 'comments_array', $comments_flat, $comments_query_args['post_id'] );
+			return apply_filters( 'comments_array', $comments_flat, $this->query_args['post_id'] );
 		}
 
 		/**
@@ -385,7 +457,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return bool
 		 */
-		protected function localize_comments_list_args( $args ) {
+		protected function localize_wp_list_comments_args( $args ) {
 
 			// We don't want the walker instance in the localized data.
 			if ( isset( $args['walker'] ) ) {
@@ -409,43 +481,38 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		}
 
 		/**
-		 * Main NovaBlocks_Comments_List Instance
+		 * Get the markup of a comment as rendered in the comments list.
 		 *
-		 * Ensures only one instance of NovaBlocks_Comments_List is loaded or can be loaded.
+		 * @param WP_Comment|string|int|null $comment Optional. The comment to get the markup of. Defaults to the current comment.
+		 * @param array $args Optional. Arguments to pass to wp_list_comments().
+		 *                    Use the same arguments passed to NovaBlocks_Walker_Comment to get the same markup as in the list.
 		 *
-		 * @since  1.8.0
-		 * @static
-		 *
-		 * @see    NovaBlocks_Comments_List()
-		 * @return NovaBlocks_Comments_List Main NovaBlocks_Comments_List instance
+		 * @return string
 		 */
-		public static function instance( ) {
-			// If the single instance hasn't been set, set it now.
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
+		public function get_single_comment_markup( $comment = null, $args = [] ) {
+			$comment = get_comment( $comment );
+			if ( empty( $comment ) ) {
+				return '';
 			}
 
-			return self::$_instance;
-		}
+			ob_start();
 
-		/**
-		 * Cloning is forbidden.
-		 *
-		 * @since 1.8.0
-		 */
-		public function __clone() {
+			$args = wp_parse_args( $args, [
+					'walker'      => new NovaBlocks_Walker_Comment(),
+					'avatar_size' => 100,
+					'style'       => 'div',
+					'short_ping'  => true,
+					// Since we do the proper query above, we don't want the walker to do it once again.
+					// We just want all the passed comments displayed.
+					'page'        => 0,
+					'per_page'    => 0,
+					'max_depth'   => - 1, // Any depth will do.
+					'type'        => 'all', // We want all types since we trust the comment sent to be displayed.
+			] );
 
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'You should not do that!', '__plugin_txtd' ), null );
-		}
+			wp_list_comments( $args, [ $comment ] );
 
-		/**
-		 * Unserializing instances of this class is forbidden.
-		 *
-		 * @since 1.8.0
-		 */
-		public function __wakeup() {
-
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'You should not do that!', '__plugin_txtd' ), null );
+			return ob_get_clean();
 		}
 	}
 }

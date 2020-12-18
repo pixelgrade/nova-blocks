@@ -38,21 +38,21 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			/**
 			 * Frontend logic.
 			 */
-			add_filter( 'novablocks_comment_wrapper_classes', array( $this, 'adjust_comment_wrapper_classes' ), 10, 2 );
-			add_action( 'novablocks_comments_list_comment_end', array( $this, 'output_highlighters_list' ), 10, 1 );
-			add_filter( 'novablock_comments_list_comment_extra_meta_menu_items', array( $this, 'add_extra_meta_actions' ), 10, 2 );
+			add_filter( 'novablocks_comment_wrapper_classes', [ $this, 'adjust_comment_wrapper_classes' ], 10, 2 );
+			add_action( 'novablocks_comments_list_comment_end', [ $this, 'output_highlighters_list' ], 10, 1 );
+			add_filter( 'novablock_comments_list_comment_extra_meta_menu_items', [ $this, 'add_extra_meta_actions' ], 10, 2 );
 
 			/**
 			 * Backend logic.
 			 */
 
 			// Handle comment extra meta fields.
-			add_action( 'novablocks_comment_extra_details_fields', array( $this, 'comment_meta_box_fields' ) );
-			add_action( 'novablocks_comment_extra_details_save_metadata', array( $this, 'save_comment_meta_data' ) );
-			add_action( 'novablocks_comment_extra_details_save_fields', array( $this, 'save_comment_meta_data' ) );
+			add_action( 'novablocks_comment_extra_details_fields', [ $this, 'comment_meta_box_fields' ] );
+			add_action( 'novablocks_comment_extra_details_save_metadata', [ $this, 'save_comment_meta_data' ] );
+			add_action( 'novablocks_comment_extra_details_save_fields', [ $this, 'save_comment_meta_data' ] );
 
 			// Handle AJAX actions.
-			add_action( 'wp_ajax_toggle_highlight_comment', array( $this, 'handle_toggle_highlight_comment' ) );
+			add_action( 'wp_ajax_toggle_highlight_comment', [ $this, 'handle_toggle_highlight_comment' ] );
 		}
 
 		/**
@@ -215,10 +215,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 				wp_die(
 						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Wrong data sent.', '__plugin_txtd' ) ) . '</p>',
 						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						array(
+						[
 								'response'  => 403, // A forbidden request was made.
 								'back_link' => true, // Just in case we end up on the ugly submission page.
-						)
+						]
 				);
 			}
 
@@ -232,10 +232,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 				wp_die(
 						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> You don\'t have the needed credentials to highlight comments.', '__plugin_txtd' ) ) . '</p>',
 						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						array(
+						[
 								'response'  => 403, // A forbidden request was made.
 								'back_link' => true, // Just in case we end up on the ugly submission page.
-						)
+						]
 				);
 			}
 
@@ -251,10 +251,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 				wp_die(
 						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> You can\'t highlight your own comments.', '__plugin_txtd' ) ) . '</p>',
 						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						array(
+						[
 								'response'  => 422, // Unable to process the request.
 								'back_link' => true, // Just in case we end up on the ugly submission page.
-						)
+						]
 				);
 			}
 
@@ -265,10 +265,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 					wp_die(
 							'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Couldn\'t unhighlight this comment.', '__plugin_txtd' ) ) . '</p>',
 							esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-							array(
+							[
 									'response'  => 422, // Unable to process the request.
 									'back_link' => true, // Just in case we end up on the ugly submission page.
-							)
+							]
 					);
 				}
 			} else {
@@ -277,10 +277,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 					wp_die(
 							'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Couldn\'t highlight this comment.', '__plugin_txtd' ) ) . '</p>',
 							esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-							array(
+							[
 									'response'  => 422, // Unable to process the request.
 									'back_link' => true, // Just in case we end up on the ugly submission page.
-							)
+							]
 					);
 				}
 			}
@@ -294,14 +294,14 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			// We will respond with the new comment markup (a general pattern for easy client-side logic).
 			wp_die(
 					/**
-					 * We pass the comments list args to make sure we get the same result as in @see novablocks_render_post_comments_list_block()
+					 * We pass the comments list args to make sure we get the same result as in the comments list.
 					 */
-					NovaBlocks_Comments_Render::get_comment_list_markup( $comment, $commentsListArgs ),
+					NovaBlocks_Comments_Renderer()->list->get_single_comment_markup( $comment, $commentsListArgs ),
 					esc_html__( 'Comment Submission Success', '__plugin_txtd' ),
-					array(
+					[
 							'response'  => 200,
 							'back_link' => true, // Just in case we end up on the ugly submission page.
-					)
+					]
 			);
 		}
 

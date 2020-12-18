@@ -65,13 +65,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 		private function register_hooks() {
 
 			// Handle comment extra meta fields.
-			add_action( 'comment_post', array( $this, 'save_comment_meta_data' ) );
-			add_filter( 'preprocess_comment', array( $this, 'verify_comment_meta_data' ) );
-			add_action( 'add_meta_boxes_comment', array( $this, 'add_comment_meta_box' ) );
-			add_action( 'edit_comment', array( $this, 'save_metabox_fields' ) );
+			add_action( 'comment_post', [ $this, 'save_comment_meta_data' ] );
+			add_filter( 'preprocess_comment', [ $this, 'verify_comment_meta_data' ] );
+			add_action( 'add_meta_boxes_comment', [ $this, 'add_comment_meta_box' ] );
+			add_action( 'edit_comment', [ $this, 'save_metabox_fields' ] );
 			// Handle per-post extra fields.
-			add_action( 'add_meta_boxes_post', array( $this, 'add_posts_discussion_metabox' ), 10, 1 );
-			add_action( 'save_post_post', array( $this, 'save_posts_metabox_fields' ), 10, 1 );
+			add_action( 'add_meta_boxes_post', [ $this, 'add_posts_discussion_metabox' ], 10, 1 );
+			add_action( 'save_post_post', [ $this, 'save_posts_metabox_fields' ], 10, 1 );
 		}
 
 		/**
@@ -121,10 +121,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 				wp_die(
 						'<p>' . $comment->get_error_message() . '</p>',
 						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						array(
+						[
 							'response'  => $data,
 							'back_link' => true,
-						)
+						]
 				);
 			}
 
@@ -143,10 +143,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 				$comment    = get_comment( $comment_id );
 
 				if ( $comment && in_array( $comment->comment_type, [ 'comment' ], false ) ) {
-					add_meta_box( 'nb_comment_extra_details', esc_html__( 'Extra Details', '__plugin_txtd' ), array(
+					add_meta_box( 'nb_comment_extra_details', esc_html__( 'Extra Details', '__plugin_txtd' ), [
 							$this,
 							'comment_meta_box_fields'
-					), 'comment', 'normal', 'high' );
+					], 'comment', 'normal', 'high' );
 				}
 			}
 		}
@@ -206,10 +206,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 		}
 
 		public function add_posts_discussion_metabox( $post ) {
-			add_meta_box( 'nb_post_discussion_extra_details', esc_html__( 'Discussion Extra Details', '__plugin_txtd' ), array(
+			add_meta_box( 'nb_post_discussion_extra_details', esc_html__( 'Discussion Extra Details', '__plugin_txtd' ), [
 					$this,
 					'posts_discussion_metabox_fields'
-			), 'post', 'normal', 'high' );
+			], 'post', 'normal', 'high' );
 		}
 
 		/**
@@ -253,13 +253,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 						<td class=""><label for="nb_conversation_starter_user_id"><strong><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<?php wp_dropdown_users(
-									array(
+									[
 										'who'              => 'authors',
 										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
 										'include_selected' => true,
 										'show'             => 'display_name_with_login',
-									)
+									]
 							); ?>
 							<p class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default, it\'s the post author.', '__plugin_txtd' ); ?></p>
 						</td>

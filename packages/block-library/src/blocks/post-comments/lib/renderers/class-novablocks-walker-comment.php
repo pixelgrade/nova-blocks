@@ -44,13 +44,13 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 			$comment_reply_link = get_comment_reply_link(
 				array_merge(
 					$args,
-					array(
+					[
 						'add_below' => 'wrapper-comment', // This is the partial element ID after which the reply form should be moved on reply (e.g. wrapper-comment-12312).
 						'depth'     => $depth,
 						'max_depth' => $args['max_depth'],
 						'before'    => '',
 						'after'     => '',
-					)
+					]
 				)
 			);
 
@@ -258,13 +258,13 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 			$comment_reply_link = get_comment_reply_link(
 				array_merge(
 					$args,
-					array(
+					[
 						'add_below' => 'div-comment',
 						'depth'     => $depth,
 						'max_depth' => $args['max_depth'],
 						'before'    => '<span class="comment-reply">',
 						'after'     => '</span>',
-					)
+					]
 				)
 			);
 
@@ -327,11 +327,11 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 							$comment,
 							array_merge(
 								$args,
-								array(
+								[
 									'add_below' => $add_below,
 									'depth'     => $depth,
 									'max_depth' => $args['max_depth'],
-								)
+								]
 							)
 						);
 						?>
