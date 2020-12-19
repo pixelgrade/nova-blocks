@@ -51,7 +51,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			 */
 
 			// Get the instance that will handle highlighting comments.
-			require_once dirname( __FILE__ ) . '/lib/class-novablocks-comments-highlight.php';
+			require_once 'actions/class-novablocks-comments-highlight.php';
 			if ( is_null( $this->highlight ) ) {
 				$this->highlight = NovaBlocks_Comments_Highlight::instance();
 			}

@@ -77,18 +77,21 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 		 * @param string           $content Optional. The content to use when rendering.
 		 */
 		public function __construct( $post = null, $args = [], $content = '' ) {
-			$post = get_post( $post, OBJECT );
-			// Fail without a proper post.
-			if ( empty( $post ) ) {
-				_doing_it_wrong( __METHOD__, esc_html__( 'Post not found for comments rendering.', '__plugin_txtd' ), '' );
+			$this->post = get_post( $post, OBJECT );
 
-				return;
-			}
+			// Make sure defaults are in place.
+			$this->args    = wp_parse_args( $args, [
+				// Fallback to core's default.
+				'commentsClosedMessage'              => esc_html__( 'No further conversations or replies allowed, at this time.', '__plugin_txtd' ),
 
-			$this->post = $post;
+				// If this is 0 or false, no second form at the end of the comments list.
+				'listEndCommentFormAfterNumComments' => 7,
 
-			// Save the received data for later use.
-			$this->args    = $args;
+				// In minutes. How long should the commenter see his unapproved comment. 0 for no preview.
+				// This is also the time the commenter is allowed to amend its comment.
+				'commentPreviewTime'                 => 5,
+
+			] );
 			$this->content = $content;
 
 			// Maybe do some checks before initializing the logic.
@@ -151,6 +154,33 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 			}
 
 			return $component_output;
+		}
+
+		/**
+		 * Prepare the given rendering arguments by merging them with the existing ones in the instance.
+		 *
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		protected function parse_args( $args ) {
+			// Handle the arguments by merging them with the existing ones.
+			return wp_parse_args( $args, $this->args );
+		}
+
+		/**
+		 * Get the value of an argument.
+		 *
+		 * @param string $arg
+		 *
+		 * @return mixed|null The argument value if present, null otherwise.
+		 */
+		public function get_arg( $arg ) {
+			if ( isset( $this->args[ $arg ] ) ) {
+				return $this->args[ $arg ];
+			}
+
+			return null;
 		}
 	}
 }

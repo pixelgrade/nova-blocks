@@ -41,18 +41,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		 * @param array            $args    Optional. The arguments to consider when rendering.
 		 */
 		public function __construct( $post = null, $args = [] ) {
-			$post = get_post( $post, OBJECT );
-			// Fail without a proper post.
-			if ( empty( $post ) ) {
-				if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
-					_doing_it_wrong( __METHOD__, esc_html__( 'Post not found for comments starter rendering.', '__plugin_txtd' ), '' );
-				}
+			$this->post = get_post( $post, OBJECT );
 
-				return;
-			}
-
-			$this->post = $post;
-
+			// Make sure defaults are in place.
 			$this->args = wp_parse_args( $args, [
 				// No defaults right now.
 			] );

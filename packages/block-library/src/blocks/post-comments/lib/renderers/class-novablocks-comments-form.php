@@ -41,18 +41,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 * @param array            $args Optional. The arguments to consider when rendering.
 		 */
 		public function __construct( $post = null, $args = [] ) {
-			$post = get_post( $post, OBJECT );
-			// Fail without a proper post.
-			if ( empty( $post ) ) {
-				if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
-					_doing_it_wrong( __METHOD__, esc_html__( 'Post not found for comments form rendering.', '__plugin_txtd' ), '' );
-				}
+			$this->post = get_post( $post, OBJECT );
 
-				return;
-			}
-
-			$this->post = $post;
-
+			// Make sure defaults are in place.
 			$this->args = wp_parse_args( $args, [
 				// Output HTML5 markup
 				'html5' => current_theme_supports( 'html5', 'comment-form' ),
@@ -187,18 +178,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 * @return array
 		 */
 		protected function parse_args( $args ) {
-			$args = wp_parse_args( $args, $this->args );
-
-			return $args;
+			return wp_parse_args( $args, $this->args );
 		}
 
 		public function adjust_comment_form_default_fields( $fields ) {
-			// We only want to do this for the 'post' post type, and only when `we` are outputting a comment form.
-			if ( ! isset( $GLOBALS['nb_current_comment_form_post_id'] ) || 'post' !== get_post_type( $GLOBALS['nb_current_comment_form_post_id'] ) ) {
-				return $fields;
-			}
-
-			$attributes = $GLOBALS['nb_current_comment_form_block_attributes'];
+			$attributes = $this->args;
 
 			$commenter = wp_get_current_commenter();
 			$req       = get_option( 'require_name_email' );
@@ -275,12 +259,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		}
 
 		public function adjust_comment_form_defaults( $defaults ) {
-			// We only want to do this for the 'post' post type.
-			if ( ! isset( $GLOBALS['nb_current_comment_form_post_id'] ) || 'post' !== get_post_type( $GLOBALS['nb_current_comment_form_post_id'] ) ) {
-				return $defaults;
-			}
-
-			$attributes = $GLOBALS['nb_current_comment_form_block_attributes'];
+			$attributes = $this->args;
 
 			$current_user = wp_get_current_user();
 			$commenter    = wp_get_current_commenter();
@@ -391,7 +370,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 						'count'   => false,
 						'orderby' => 'comment_date_gmt',
 						'order'   => 'DESC',
-						'post_id' => $GLOBALS['nb_current_comment_form_post_id'],
+						'post_id' => $this->post->ID,
 					] );
 
 					$last_comment = get_comments( $previous_commenter_background_query_args );

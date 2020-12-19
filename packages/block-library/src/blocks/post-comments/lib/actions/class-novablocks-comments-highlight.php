@@ -292,16 +292,19 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 
 			// If we've reached thus far, the toggling was successful.
 			// We will respond with the new comment markup (a general pattern for easy client-side logic).
+
+			/**
+			 * We pass the comments list args to make sure we get the same result as in the comments list.
+			 */
+			$comments_renderer = new NovaBlocks_Comments_Renderer();
+			$comment_markup = $comments_renderer->list->get_single_comment_markup( $comment, $commentsListArgs );
 			wp_die(
-					/**
-					 * We pass the comments list args to make sure we get the same result as in the comments list.
-					 */
-					NovaBlocks_Comments_Renderer()->list->get_single_comment_markup( $comment, $commentsListArgs ),
-					esc_html__( 'Comment Submission Success', '__plugin_txtd' ),
-					[
-							'response'  => 200,
-							'back_link' => true, // Just in case we end up on the ugly submission page.
-					]
+				$comment_markup,
+				esc_html__( 'Comment Submission Success', '__plugin_txtd' ),
+				[
+					'response'  => 200,
+					'back_link' => true, // Just in case we end up on the ugly submission page.
+				]
 			);
 		}
 

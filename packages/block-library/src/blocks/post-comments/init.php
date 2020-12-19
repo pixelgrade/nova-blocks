@@ -41,6 +41,9 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 	<div class="novablocks-conversations__notification-text">' . esc_html__('Link copied to your clipboard', '__plugin_txtd'). '</div>
 </div><!-- .novablocks-conversations -->';
 
+		/* ============================
+		 * RENDER THE COMMENTS SECTIONS
+		 */
 		$output = $post_comments_renderer->render( 'starter' );
 		$output .= $post_comments_renderer->render( 'header' );
 		$output .= $post_comments_renderer->render( 'form' );
@@ -51,26 +54,27 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		if ( ! empty( $post ) ) {
 
 			ob_start();
-
+			$listEndCommentFormAfterNumComments = $post_comments_renderer->get_arg( 'listEndCommentFormAfterNumComments' );
 			if ( comments_open( $post->ID )
-			     && ! empty( $attributes['listEndCommentFormAfterNumComments'] )
-			     && count( $post_comments_renderer->list->comments( $attributes ) ) >= absint( $attributes['listEndCommentFormAfterNumComments'] ) ) {
+			     && ! is_null( $listEndCommentFormAfterNumComments )
+			     && $post_comments_renderer->list->get_comments_count() >= absint( $listEndCommentFormAfterNumComments ) ) {
 
-				$post_comments_renderer->form->the_form_button( $attributes );
+				$post_comments_renderer->form->the_form_button();
 			}
 
-			if ( ! comments_open( $post->ID ) ) { ?>
-				<p class="comments-closed"><?php echo $attributes['commentsClosedMessage']; ?></p>
+			if ( ! comments_open( $post->ID ) && ! is_null( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) ) { ?>
+				<p class="comments-closed"><?php echo $post_comments_renderer->get_arg( 'commentsClosedMessage' ); ?></p>
 			<?php }
 
 			$output .= ob_get_clean();
 		}
 
+		// If we had output, wrap it in the $before and $after.
 		if ( ! empty( trim( $output ) ) ) {
 			$output = $before . $output . $after;
 		}
 
-		return $output;
+		return trim( $output );
 	}
 }
 
