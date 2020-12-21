@@ -314,7 +314,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			<trix-toolbar id="comment_trix_toolbar"></trix-toolbar>
 		</span>
 		<trix-editor id="commentTrixEditor" input="comment" placeholder="%s" toolbar="comment_trix_toolbar"></trix-editor>
-		<input id="comment" value="" type="hidden" name="comment">
+		<input id="comment" value="" type="text" name="comment" class="trix-hidden-input" required="required">
 	</span>
 </span>
 <script>

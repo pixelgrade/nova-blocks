@@ -16,6 +16,10 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
 
   const $notification = $('.novablocks-conversations__notification-text')
 
+  // Remove the novalidate attribute on the form so HTML5 client validation works as intended.
+  // At some point in history it might be removed, but.. @link https://core.trac.wordpress.org/ticket/47595
+  $commentForm.find('form.comment-form').removeAttr('novalidate');
+
   bindEvents()
 
   highlightCommentOnClick()
@@ -23,9 +27,11 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
   updateCommentReplyingClass()
 
   function bindEvents () {
-    // Close dropdown when click 'outside'.
+    // Close comment "More" dropdown when clicking anywhere outside of it.
     $(document).on('click', handleCommentDropdownState)
+    // Handle comment direct link copying to the clipboard.
     $commentList.on('click', COPY_LINK_SELECTOR, copyLinkToClipboard)
+    // Handle moving the comment form on click on various fake form buttons or links.
     $conversationsBlock.on('click', GENERATE_FORM_SELECTOR, updateFormPosition)
   }
 
