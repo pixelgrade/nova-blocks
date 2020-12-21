@@ -47,7 +47,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 100;
+	z-index: 10000;
 
 	max-width: 100%;
 
@@ -85,7 +85,7 @@
     bottom: 0;
     left: 0;
 
-    border: 1px solid var(--novablocks-light-secondary);
+    border: 1px solid var(--novablocks-dark-primary);
     opacity: 0.1;
     pointer-events: none;
     border-radius: inherit;

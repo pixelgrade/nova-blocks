@@ -8,6 +8,8 @@ import services from './services';
 
 (function() {
 
+  const $adminBar = $( '#wpadminbar' );
+
 	$( '.novablocks-sharing' ).each( function( i, obj ) {
 		const $block = $( obj );
 		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
@@ -59,11 +61,14 @@ import services from './services';
 				left: ''
 			} );
 
+			const overlayHeight = $overlay.outerHeight() || 0;
 			const buttonOffset = $button.offset();
 			const wrapOffset = $wrap.offset();
+			const adminBarHeight = $adminBar.outerHeight() || 0;
+			const newTop = Math.max( adminBarHeight, Math.min( document.documentElement.scrollHeight - overlayHeight, buttonOffset.top ) );
 
 			$overlay.css( {
-				top: buttonOffset.top,
+				top: newTop,
 				left: buttonOffset.left - wrapOffset.left,
 			} );
 		}
