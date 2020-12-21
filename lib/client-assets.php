@@ -127,7 +127,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 					$package_dir_url . 'frontend.js',
 					$dependencies,
 					$version,
-					true
+					true // It is quite important to be enqueued in the page footer.
 				);
 			}
 
@@ -182,11 +182,6 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			'novablocks_components_frontend_stylesheet' => novablocks_get_plugin_url() . '/build/components/style.css',
 			'novablocks_opentable_frontend_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/style.css',
 			'novablocks_opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css'
-		) );
-
-		// @todo Dirty!!!!!
-		wp_localize_script( 'novablocks-utils', 'highlight_comments_ajax_object', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
 
 		wp_set_script_translations( 'novablocks-core', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );
@@ -383,8 +378,12 @@ function novablocks_register_block_types() {
 
 		// If the current block is supported by the theme, register it.
 		if ( in_array( $block, $support ) ) {
-
-			$init = trailingslashit( $blockpath ) . 'init.php';
+			// In development mode load the PHP files from src to make for easier debugging.
+			if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
+				$init = trailingslashit( str_replace( 'build/block-library/blocks', 'packages/block-library/src/blocks', $blockpath ) ) . 'init.php';
+			} else {
+				$init = trailingslashit( $blockpath ) . 'init.php';
+			}
 
 			if ( file_exists( $init ) ) {
 				require_once $init;
