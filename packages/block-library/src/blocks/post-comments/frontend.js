@@ -16,10 +16,6 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
 
   const $notification = $('.novablocks-conversations__notification-text')
 
-  // Remove the novalidate attribute on the form so HTML5 client validation works as intended.
-  // At some point in history it might be removed, but.. @link https://core.trac.wordpress.org/ticket/47595
-  $commentForm.find('form.comment-form').removeAttr('novalidate');
-
   bindEvents()
 
   highlightCommentOnClick()
