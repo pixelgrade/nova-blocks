@@ -151,9 +151,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				<div class="comment-avatar">
 					<?php echo get_avatar( $current_user->ID, $avatar_size, 'identicon', '', [ 'class' => 'avatar', ] ); ?>
 				</div>
-				<button class="fake-input-button">
-					<?php echo $form_attributes['commentPlaceholder']; ?>
-				</button>
+				<button class="fake-input-button"><?php echo $form_attributes['commentPlaceholder']; ?></button>
 			</div>
 
 			<?php
@@ -315,25 +313,56 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		<span class="sticky-trix-toolbar">
 			<trix-toolbar id="comment_trix_toolbar"></trix-toolbar>
 		</span>
-		<trix-editor input="comment" placeholder="%s" toolbar="comment_trix_toolbar"></trix-editor>
+		<trix-editor id="commentTrixEditor" input="comment" placeholder="%s" toolbar="comment_trix_toolbar"></trix-editor>
 		<input id="comment" value="" type="hidden" name="comment">
 	</span>
-	<script>
-		// Adjust the Trix editor.
-		addEventListener("trix-initialize", function(event) {
-		  // Remove the file tools.
-		  var nbTrixFileTools = event.target.toolbarElement.querySelector(\'[data-trix-button-group="file-tools"]\');
-		  if ( nbTrixFileTools ) {
-		    nbTrixFileTools.parentNode.removeChild(nbTrixFileTools);
-		  }
-		})
-		addEventListener("trix-file-accept", function(event) {
-		  // Do not allow file drop or paste.
-		  event.preventDefault();
-		  alert("File attachments are not supported for comments. Use words to picture your message.")
-		})
-	</script>
-</span>',
+</span>
+<script>
+	var nbCommentForm = document.getElementById("commentform");
+	nbCommentForm.addEventListener( "submit", function() {
+	    var nbTrixEditor = document.getElementById("commentTrixEditor");
+	    // Save editor state to local storage to use when coming back from the error page. 
+		localStorage["nbTrixEditorState"] = JSON.stringify(nbTrixEditor.editor);
+		localStorage["nbTrixEditorStateUrl"] = window.location.href;
+	})
+
+	// Adjust the Trix editor.
+	window.addEventListener("trix-initialize", function(event) {
+		// Remove the file tools.
+		var nbTrixFileTools = event.target.toolbarElement.querySelector(\'[data-trix-button-group="file-tools"]\');
+		if ( nbTrixFileTools ) {
+		nbTrixFileTools.parentNode.removeChild(nbTrixFileTools);
+		}
+		
+		// Maybe restore editor state from local storage
+		var nbTrixEditor = document.getElementById("commentTrixEditor");
+		if (localStorage["nbTrixEditorState"] && localStorage["nbTrixEditorState"].length) {
+		    // We need to make sure that we are not loading the localStorage after a successful comment submission.
+		    if (localStorage["nbTrixEditorStateUrl"] === window.location.href) {
+			    // Load the stored JSON into the editor.
+				nbTrixEditor.editor.loadJSON(JSON.parse(localStorage["nbTrixEditorState"]));
+				
+				// Make sure the comment form is expanded.
+				var nbCommentFormWrapper = document.getElementsByClassName("novablocks-conversations__form");
+				if (nbCommentFormWrapper.length) {
+				  // Add the expanded class.
+				  nbCommentFormWrapper[0].classList.add("expanded");
+				  // And move the form before the fake form button.
+				  nbCommentFormWrapper[0].parentNode.insertBefore(nbCommentFormWrapper[0], nbCommentFormWrapper[0].previousElementSibling);
+				}
+			}
+		    
+		    // Empty the localStorage entry since this the stored value is one-time use only.
+			localStorage["nbTrixEditorState"] = "";
+			localStorage["nbTrixEditorStateUrl"] = "";
+		}
+	})
+	window.addEventListener("trix-file-accept", function(event) {
+	  // Do not allow file drop or paste.
+	  event.preventDefault();
+	  alert("File attachments are not supported for comments. Use words to picture your message.")
+	})
+</script>',
 					$attributes['commentPlaceholder']
 				);
 
