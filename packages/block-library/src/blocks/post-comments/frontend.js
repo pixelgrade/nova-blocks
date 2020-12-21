@@ -134,14 +134,15 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
 
   function updateFormPosition () {
 
+    // Make sure any reply is cancelled.
     const replyLinkElement = document.getElementById('cancel-comment-reply-link')
-
     if (replyLinkElement !== null) {
       replyLinkElement.dispatchEvent(new Event('click'))
     }
 
-    $commentForm.addClass('expanded')
+    // Move the form before the clicked button and expand it.
     $commentForm.insertBefore(this)
+    $commentForm.addClass('expanded')
   }
 
 })(jQuery, window)
