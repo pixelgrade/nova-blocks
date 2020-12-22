@@ -129,7 +129,16 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// Unregister our hooks to make sure this instance's logic only applies to this render.
 			$this->unregister_hooks();
 
-			return ob_get_clean();
+			$output = ob_get_clean();
+			if ( empty( $output ) ) {
+				$output = '';
+			}
+
+			// Remove the novalidate attribute on the form so HTML5 client validation works as intended.
+			// At some point in history it might be removed, but.. @link https://core.trac.wordpress.org/ticket/47595
+			$output = preg_replace( '/novalidate/im', '', $output,1 );
+
+			return $output;
 		}
 
 		/**
@@ -314,7 +323,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			<trix-toolbar id="comment_trix_toolbar"></trix-toolbar>
 		</span>
 		<trix-editor id="commentTrixEditor" input="comment" placeholder="%s" toolbar="comment_trix_toolbar"></trix-editor>
-		<input id="comment" value="" type="hidden" name="comment">
+		<input id="comment" value="" type="text" name="comment" class="trix-hidden-input" required="required" tabindex="-1" disabled>
 	</span>
 </span>
 <script>

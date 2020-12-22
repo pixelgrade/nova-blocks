@@ -23,9 +23,11 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
   updateCommentReplyingClass()
 
   function bindEvents () {
-    // Close dropdown when click 'outside'.
+    // Close comment "More" dropdown when clicking anywhere outside of it.
     $(document).on('click', handleCommentDropdownState)
+    // Handle comment direct link copying to the clipboard.
     $commentList.on('click', COPY_LINK_SELECTOR, copyLinkToClipboard)
+    // Handle moving the comment form on click on various fake form buttons or links.
     $conversationsBlock.on('click', GENERATE_FORM_SELECTOR, updateFormPosition)
   }
 
@@ -76,7 +78,7 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
   function handleCommentDropdownState (event) {
 
     // If checkbox is not available, do nothing.
-    // Currently the dropdown is visibile for authors.
+    // Currently the dropdown is visible for authors.
     if (!$commentCheckboxes.length) {
       return
     }
@@ -132,14 +134,15 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
 
   function updateFormPosition () {
 
+    // Make sure any reply is cancelled.
     const replyLinkElement = document.getElementById('cancel-comment-reply-link')
-
     if (replyLinkElement !== null) {
       replyLinkElement.dispatchEvent(new Event('click'))
     }
 
-    $commentForm.addClass('expanded')
+    // Move the form before the clicked button and expand it.
     $commentForm.insertBefore(this)
+    $commentForm.addClass('expanded')
   }
 
 })(jQuery, window)
