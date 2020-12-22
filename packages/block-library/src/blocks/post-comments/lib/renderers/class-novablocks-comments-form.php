@@ -323,7 +323,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			<trix-toolbar id="comment_trix_toolbar"></trix-toolbar>
 		</span>
 		<trix-editor id="commentTrixEditor" input="comment" placeholder="%s" toolbar="comment_trix_toolbar"></trix-editor>
-		<input id="comment" value="" type="text" name="comment" class="trix-hidden-input" required="required">
+		<input id="comment" value="" type="text" name="comment" class="trix-hidden-input" required="required" tabindex="-1" disabled>
 	</span>
 </span>
 <script>
@@ -423,7 +423,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 <p class="comment-form-background comment-fields-wrapper">
 	<label for="nb_commenter_background">%s%s</label>
 	<span class="field-description">%s</span>
-	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" tabindex="5" placeholder="%s" required="required" />
+	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" placeholder="%s" required="required" />
 </p>',
 						$attributes['commenterBackgroundLabel'],
 						( $attributes['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),

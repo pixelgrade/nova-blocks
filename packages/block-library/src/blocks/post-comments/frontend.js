@@ -78,7 +78,7 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
   function handleCommentDropdownState (event) {
 
     // If checkbox is not available, do nothing.
-    // Currently the dropdown is visibile for authors.
+    // Currently the dropdown is visible for authors.
     if (!$commentCheckboxes.length) {
       return
     }
