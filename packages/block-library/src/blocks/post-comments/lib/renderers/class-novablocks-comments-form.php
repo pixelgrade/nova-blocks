@@ -159,7 +159,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 				// Localize the comment-reply script with our context.
 				$localizedConfig = [];
-				if ( $args['commentRichTextEditor'] ) {
+				if ( $this->args['commentRichTextEditor'] ) {
 					$localizedConfig['focusOnFieldId'] = 'commentTrixEditor';
 				}
 				$this->localize_form_args_for_reply( $localizedConfig );
