@@ -156,9 +156,36 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// we need to make sure the comment-reply.js is enqueued (this should not be the theme's job).
 			if ( false !== strpos( $output, 'cancel-comment-reply-link' ) && comments_open( $this->post->ID ) && get_option( 'thread_comments' ) ) {
 				wp_enqueue_script('comment-reply' );
+
+				// Localize the comment-reply script with our context.
+				$localizedConfig = [];
+				if ( $args['commentRichTextEditor'] ) {
+					$localizedConfig['focusOnFieldId'] = 'commentTrixEditor';
+				}
+				$this->localize_form_args_for_reply( $localizedConfig );
 			}
 
 			return $output;
+		}
+
+		/**
+		 * Add the comments list args to the localized comments JS global variable so the client-side logic can make use of them.
+		 *
+		 * We rely on the fact that the comments frontend script will be enqueued in the page footer, not the header.
+		 *
+		 * @param array $args
+		 *
+		 * @return bool
+		 */
+		protected function localize_form_args_for_reply( $args ) {
+
+			return wp_add_inline_script( 'comment-reply',
+				novablocks_get_localize_to_window_script( 'addComment',
+					[
+						'config' => $args,
+					]
+				), 'before'
+			);
 		}
 
 		/**
@@ -225,8 +252,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			$avatar = get_avatar( $current_user->ID, $args['avatarSize'], 'identicon', '', [ 'class' => $args['avatarClass'], ] );
 
-			$button_classes = [ 'form-grid', 'js-open-comment-form', 'fake-form-placeholder', ];
-			if ( 0 === $args['avatar_size'] || empty( $avatar ) ) {
+			$button_classes = [ 'form-grid', 'fake-form-placeholder', ];
+			if ( 0 === $args['avatarSize'] || empty( $avatar ) ) {
 				$button_classes[] = 'no-avatar';
 			}
 
@@ -235,12 +262,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			<div class="fake-form-move-anchor" id="<?php echo esc_attr( $moveAnchorId ); ?>"></div>
 			<div class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>">
-				<?php if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
+				<?php if ( 0 !== $args['avatarSize'] && ! empty( $avatar ) ) { ?>
 				<div class="comment-avatar">
 					<?php echo $avatar; ?>
 				</div>
 				<?php } ?>
-				<button class="fake-input-button" <?php echo $data_attributes_string; ?>><?php echo $args['commentPlaceholder']; ?></button>
+				<button class="fake-input-button js-open-comment-form" <?php echo $data_attributes_string; ?>><?php echo $args['commentPlaceholder']; ?></button>
 			</div>
 
 			<?php

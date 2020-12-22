@@ -25,7 +25,13 @@ window.addComment = (function (window) {
     commentsWrapperId: 'novablocks-comments',
     openFormButtonClass: 'js-open-comment-form',
     commentFormSubmitId: 'comment-form-submit',
-    replingFlagClass: 'user-is-replying',
+    replyingFlagClass: 'user-is-replying',
+    focusOnFieldId: 'comment',
+  }
+
+  // If we have global settings, merge them with the defaults.
+  if (window.addComment.config) {
+    Object.assign(config,window.addComment.config);
   }
 
   // Cross browser MutationObserver.
@@ -249,7 +255,7 @@ window.addComment = (function (window) {
       replyTo = getDataAttribute(replyLink, 'replyto') || defaultReplyHeading,
       follow
 
-    if (!commId || !parentId || !respondId || !postId) {
+    if (!commId || !respondId || !postId) {
       /*
        * Theme or plugin defines own link via custom `wp_list_comments()` callback
        * and calls `moveForm()` either directly or via a custom event hook.
@@ -291,7 +297,7 @@ window.addComment = (function (window) {
     temporaryElement.parentNode.replaceChild(respondElement, temporaryElement)
     cancelLink.style.display = 'none'
     // Remove the "flag" (class) on the comments wrapper.
-    commentsWrapperElement.classList.remove(config.replingFlagClass)
+    commentsWrapperElement.classList.remove(config.replyingFlagClass)
 
     let replyHeadingElement = getElementById(config.commentReplyTitleId)
     let replyHeadingTextNode = replyHeadingElement && replyHeadingElement.firstChild
@@ -303,6 +309,12 @@ window.addComment = (function (window) {
       }
 
       replyHeadingTextNode.textContent = headingText
+    } else {
+      // We will use the replyTo for the submit button text.
+      let submitButton = getElementById(config.commentFormSubmitId)
+      if (submitButton) {
+        submitButton.textContent = headingText
+      }
     }
 
     event.preventDefault()
@@ -362,7 +374,7 @@ window.addComment = (function (window) {
     // Get the hidden fields.
     let parentIdField = getElementById(config.parentIdFieldId)
     let postIdField = getElementById(config.postIdFieldId)
-    let element, cssHidden, style
+    let element
 
     let replyHeading = getElementById(config.commentReplyTitleId)
     let replyHeadingTextNode = replyHeading && replyHeading.firstChild
@@ -392,6 +404,7 @@ window.addComment = (function (window) {
     }
     // Insert the form in the new location.
     addBelowElement.parentNode.insertBefore(respondElement, addBelowElement.nextSibling)
+    respondElement.classList.add('expanded');
 
     // Handle reply related textual changes like heading or button text.
     if (replyHeadingTextNode && replyHeadingTextNode.nodeType === Node.TEXT_NODE) {
@@ -416,33 +429,28 @@ window.addComment = (function (window) {
       return false
     }
 
+    // Try to focus on the configured field.
+    let focusElement = getElementById(config.focusOnFieldId);
+    if (focusElement) {
+      focusElement.focus();
+      /*
+      * false is returned for backward compatibility with third party commenting systems
+      * hooking into this function.
+      */
+      return false
+    }
     // Focus on the first field in the comment form.
     try {
       for (let i = 0; i < commentFormElement.elements.length; i++) {
         element = commentFormElement.elements[i]
-        cssHidden = false
-
-        // Get elements computed style.
-        if ('getComputedStyle' in window) {
-          // Modern browsers.
-          style = window.getComputedStyle(element)
-        } else if (document.documentElement.currentStyle) {
-          // IE 8.
-          style = element.currentStyle
+        if ('button' === element.type) {
+          // We don't want to focus on buttons.
+          continue;
         }
 
-        /*
-         * For display none, do the same thing jQuery does. For visibility,
-         * check the element computed style since browsers are already doing
-         * the job for us. In fact, the visibility computed style is the actual
-         * computed value and already takes into account the element ancestors.
-         */
-        if ((element.offsetWidth <= 0 && element.offsetHeight <= 0) || style.visibility === 'hidden') {
-          cssHidden = true
-        }
 
         // Skip form elements that are hidden or disabled.
-        if ('hidden' === element.type || element.disabled || cssHidden) {
+        if ('hidden' === element.type || element.disabled || isCssHidden(element)) {
           continue
         }
 
@@ -461,6 +469,32 @@ window.addComment = (function (window) {
     return false
   }
 
+  function isCssHidden(element) {
+    let cssHidden = false,
+      style;
+
+    // Get elements computed style.
+    if ('getComputedStyle' in window) {
+      // Modern browsers.
+      style = window.getComputedStyle(element)
+    } else if (document.documentElement.currentStyle) {
+      // IE 8.
+      style = element.currentStyle
+    }
+
+    /*
+     * For display none, do the same thing jQuery does. For visibility,
+     * check the element computed style since browsers are already doing
+     * the job for us. In fact, the visibility computed style is the actual
+     * computed value and already takes into account the element ancestors.
+     */
+    if ((element.offsetWidth <= 0 && element.offsetHeight <= 0) || style.visibility === 'hidden') {
+      cssHidden = true
+    }
+
+    return cssHidden;
+  }
+
   /**
    * Add placeholder element.
    *
@@ -476,9 +510,17 @@ window.addComment = (function (window) {
     let temporaryElement = getElementById(temporaryFormId)
     let replyElement = getElementById(config.commentReplyTitleId)
     let initialHeadingText = replyElement ? replyElement.firstChild.textContent : ''
+    if (!replyElement) {
+      // We need to search for the submit button since that appears to be our means of contextul text, not the reply heading.
+      let submitButton = getElementById(config.commentFormSubmitId)
+      if (submitButton) {
+        initialHeadingText = submitButton.textContent
+      }
+    }
 
     if (temporaryElement) {
-      // The element already exists, no need to recreate.
+      // The element already exists - we want to move it.
+      respondElement.parentNode.insertBefore(temporaryElement, respondElement)
       return
     }
 
@@ -489,7 +531,7 @@ window.addComment = (function (window) {
     respondElement.parentNode.insertBefore(temporaryElement, respondElement)
 
     // Add the "flag" (class) on the comments wrapper.
-    commentsWrapperElement.classList.add(config.replingFlagClass)
+    commentsWrapperElement.classList.add(config.replyingFlagClass)
   }
 
   return {
