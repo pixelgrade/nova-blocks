@@ -1,8 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
-
+import iconSvg from './post-comments-block.svg';
 import edit from './edit';
 
 /**
@@ -11,11 +10,12 @@ import edit from './edit';
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from "@wordpress/block-editor";
+import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/post-comments', {
 	title: __( 'Comments Nova', '__plugin_txtd' ),
 	description: __( 'Display your post comments section.', '__plugin_txtd' ),
-	icon: icons.postsCollection,
+  icon: getSvg( iconSvg ),
 	category: 'nova-blocks',
 	edit,
 	save() {

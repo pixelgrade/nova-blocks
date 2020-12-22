@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import iconSvg from './posts-collection-block.svg';
 import edit from './edit';
 
 /**
@@ -11,22 +11,18 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-import blockAttributes from "./attributes";
+import { getSvg } from "@novablocks/block-editor";
 
-//import {
-//	alignmentAttributes,
-//	colorAttributes,
-//	layoutAttributes,
-//	scrollingAttributes,
-//} from "@novablocks/components";
-//
-//const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
+import blockAttributes from "./attributes";
+import { Collection } from "@novablocks/collection";
+const attributes = Object.assign( {}, blockAttributes, Collection.attributes );
 
 registerBlockType( 'novablocks/posts-collection', {
 	title: __( 'Posts Collection', '__plugin_txtd' ),
 	description: __( 'Show Latest Posts', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.postsCollection,
+  icon: getSvg( iconSvg ),
+  attributes,
 	edit,
 	save() {
 		return <InnerBlocks.Content />;

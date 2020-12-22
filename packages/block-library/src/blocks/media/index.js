@@ -1,14 +1,18 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import iconSvg from './media-block.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';
 import deprecated from './deprecated';
 
-import { STORE_NAME } from '@novablocks/core';
-import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
+import {
+  getRandomArrayFromArray,
+  getRandomBetween,
+} from "@novablocks/utils";
+
+import { getSvg } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 import Blob from '@novablocks/blob';
 
@@ -50,7 +54,7 @@ async function getNewDefaults() {
 	};
 }
 
-const settings = select( STORE_NAME ).getSettings();
+const settings = select( 'novablocks' ).getSettings();
 
 generateDefaults( 'novablocks/media', getNewDefaults );
 insertTemplate( 'novablocks/media', settings.media.template );
@@ -59,7 +63,9 @@ registerBlockType( 'novablocks/media', {
 	title: __( 'Media Card Constellation', '__plugin_txtd' ),
 	description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.media,
+	icon: {
+	  src: getSvg( iconSvg )
+  },
 	// Additional search terms
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 	attributes,

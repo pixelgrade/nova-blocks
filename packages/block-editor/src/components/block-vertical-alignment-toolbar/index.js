@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import { getIcon } from '@novablocks/icons';
 
 /**
  * WordPress dependencies
@@ -12,6 +12,7 @@ import { withViewportMatch } from '@wordpress/viewport';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
 import { createContext } from '@wordpress/element';
+
 const { Consumer } = createContext( {
 	name: '',
 	isSelected: false,
@@ -22,15 +23,15 @@ const { Consumer } = createContext( {
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
 	top: {
-		icon: icons.alignTop,
+		icon: getIcon( 'alignTop' ),
 		title: _x( 'Vertically Align Top', 'Block vertical alignment setting' ),
 	},
 	center: {
-		icon: icons.alignCenter,
+		icon: getIcon( 'alignCenter' ),
 		title: _x( 'Vertically Align Middle', 'Block vertical alignment setting' ),
 	},
 	bottom: {
-		icon: icons.alignBottom,
+		icon: getIcon( 'alignBottom' ),
 		title: _x( 'Vertically Align Bottom', 'Block vertical alignment setting' ),
 	},
 };

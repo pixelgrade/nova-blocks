@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import { getIcon } from '@novablocks/icons';
 import { select, dispatch } from '@wordpress/data';
 export { default as alignmentAttributes } from './attributes';
 
@@ -33,7 +33,7 @@ const AlignmentToolbar = function( props ) {
 				renderToggle={ ( { isOpen, onToggle } ) => (
 					<Button
 						onClick={ onToggle }
-						icon={ icons.alignment }
+						icon={ getIcon( 'alignment' ) }
 						aria-expanded={ isOpen }
 						label={ __( 'Content Position', '__plugin_txtd' ) }
 					/>

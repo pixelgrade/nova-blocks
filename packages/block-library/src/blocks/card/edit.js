@@ -1,9 +1,6 @@
 /**
  * WordPress dependencies
  */
-
-import * as icons from "@novablocks/icons";
-
 import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
@@ -11,6 +8,8 @@ import {
 	InnerBlocks,
 	MediaUpload,
  } from '@wordpress/block-editor';
+
+import placeholderSvg from './card-media-placeholder.svg';
 
 const CardEdit = ( props ) => {
 
@@ -52,7 +51,7 @@ const CardEdit = ( props ) => {
 
 		return (
 			<div className={ `${ blockClassName }__media-placeholder` }>
-				{ icons.placeholder }
+				{ placeholderSvg }
 			</div>
 		);
 	};

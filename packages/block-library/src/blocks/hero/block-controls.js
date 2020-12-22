@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import { getIcon } from '@novablocks/icons';
 import { AlignmentToolbar, ColorToolbar } from '@novablocks/block-editor';
 
 /**
@@ -38,7 +38,7 @@ const HeroBlockControls = function( props ) {
 						return <Button
 							className="components-icon-button components-toolbar__control"
 							label={ __( 'Change Media', '__plugin_txtd' ) }
-							icon={ icons.swap }
+							icon={ getIcon( 'swap' ) }
 							onClick={ open }
 						/>;
 					} }
