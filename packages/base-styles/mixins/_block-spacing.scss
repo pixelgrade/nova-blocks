@@ -17,10 +17,30 @@
 	--block-top-spacing: var(--novablocks-block-top-spacing, 0);
 	--block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
 
+	&:first-child {
+		--block-top-spacing: 0;
+		--block-bottom-spacing: 0;
+	}
+
 	&:not(:first-child) {
 		--block-top-spacing: 1;
+		--block-bottom-spacing: 0;
+	}
+
+	@include below(tablet) {
+
+		&:first-child {
+			--block-top-spacing: 0;
+			--block-bottom-spacing: 0;
+		}
+
+		&:not(:first-child) {
+			--block-top-spacing: 1;
+			--block-bottom-spacing: 0;
+		}
 	}
 
 	margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
 	margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
 }
+

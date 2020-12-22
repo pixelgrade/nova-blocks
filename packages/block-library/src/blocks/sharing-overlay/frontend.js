@@ -8,15 +8,21 @@ import services from './services';
 
 (function() {
 
+  const $adminBar = $( '#wpadminbar' );
+
 	$( '.novablocks-sharing' ).each( function( i, obj ) {
 		const $block = $( obj );
 		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
-		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' ).hide();
+		const $openButtonWrap = $openButton.closest( '.wp-block-button' );
+		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
 		const data = $block.data();
 
 		const $wrap = $( '<div class="novablocks-sharing__wrap">' );
 		const $container = $( '<div class="novablocks-sharing__container">');
 		const $content = $( '<div class="novablocks-sharing__content">');
+
+		const shareIcon = getSvg( 'share' );
+		$openButton.prepend( shareIcon );
 
 		$content.appendTo( $container );
 		$container.appendTo( $wrap );
@@ -48,23 +54,48 @@ import services from './services';
 		$closeButton.appendTo( $wrap );
 
 		function positionPopup() {
-			const buttonTop = $openButton.offset().top;
-			const sharingPopupHeight = $wrap.outerHeight();
+			const $button = $openButtonWrap.length ? $openButtonWrap : $openButton;
 
-			$overlay.css( 'top', buttonTop - sharingPopupHeight / 2 );
+			$overlay.css( {
+				top: '',
+				left: ''
+			} );
+
+			const overlayHeight = $overlay.outerHeight() || 0;
+			const buttonOffset = $button.offset();
+			const wrapOffset = $wrap.offset();
+			const adminBarHeight = $adminBar.outerHeight() || 0;
+			const newTop = Math.max( adminBarHeight, Math.min( document.documentElement.scrollHeight - overlayHeight, buttonOffset.top ) );
+
+			$overlay.css( {
+				top: newTop,
+				left: buttonOffset.left - wrapOffset.left,
+			} );
 		}
 
 		$( window ).on( 'resize', debounce( positionPopup, 100 ) );
 
 		$openButton.on( 'click', function() {
-			$overlay.show();
+			$overlay.addClass( 'is-visible' );
 
 			positionPopup();
 		} );
 
-		$closeButton.on( 'click', function() {
+		function hidePopup() {
 			$content.find( '.novablocks-sharing__notification--visible' ).removeClass( 'novablocks-sharing__notification--visible' );
-			$overlay.hide();
+			$overlay.removeClass( 'is-visible' );
+		}
+
+		$closeButton.on( 'click', function( e ) {
+			hidePopup();
+		} );
+
+		$openButton.add( $wrap ).on( 'click', function( e ) {
+			e.stopPropagation();
+		} );
+
+		$( 'body' ).on( 'click', function( e ) {
+			hidePopup();
 		} );
 
 	} );
@@ -134,6 +165,7 @@ import services from './services';
 	}
 
 	function createPrivateGroup( attributes ) {
+		const { title, url } = attributes;
 		const links = [];
 
 		if ( isMobileDevice() ) {
@@ -146,7 +178,7 @@ import services from './services';
 
 		links.push( {
 			label: 'Email',
-			url: 'mailto:',
+			url: `mailto:?subject=${ title }&body=${ url }`,
 			icon: 'email',
 		} );
 
@@ -225,40 +257,50 @@ import services from './services';
 		const groupTitle = 'Use a link for everything';
 		const groupDescription = 'Copy link and paste it anywhere you want it';
 
-		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }"/>` );
-		const $button = $( '<div class="wp-block-button"><button class="wp-block-button__link  novablocks-sharing__copy-button">Copy link to clipboard</button></div>' );
-		const $notification = $( '<div class="novablocks-sharing__notification"><span class="novablocks-sharing__notification-text">Link copied to your clipboard</span></div>' );
-		const $content = $input.add( $button ).add( $notification );
+		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }" readonly />` );
+		const $notification = $( '<div class="novablocks-sharing__notification-wrap">' );
+		const $notificationContent = $( '<div class="novablocks-sharing__notification">' );
+		const $notificationText = $( '<span class="novablocks-sharing__notification-text">Link copied to your clipboard</span>' );
+		const $notificationIcon = $( '<span class="novablocks-sharing__notification-icon">' ).append( getSvg( 'tick' ) );
 
-		$button.on( 'click', function() {
-			const visibleClassName = 'novablocks-sharing__notification--visible';
-			const input = $input.get(0);
+		$notificationContent.append( $notificationIcon ).append( $notificationText );
+		$notificationContent.appendTo( $notification );
 
-			$notification.removeClass( visibleClassName );
+		const $button = createContentFromLinks( [ {
+			label: 'Copy link to clipboard',
+			url: '#',
+			icon: 'link',
+			callback: () => {
+				const visibleClassName = 'novablocks-sharing__notification--visible';
+				const input = $input.get(0);
 
-			input.focus();
-			input.setSelectionRange( 0, input.value.length );
+				$notification.removeClass( visibleClassName );
 
-			let succeeded;
+				input.focus();
+				input.setSelectionRange( 0, input.value.length );
+				input.blur();
 
-			try {
-				succeeded = document.execCommand( 'copy' );
-			} catch (err) {
-				succeeded = false;
+				let succeeded;
+
+				try {
+					succeeded = document.execCommand( 'copy' );
+				} catch (err) {
+					succeeded = false;
+				}
+
+				if ( succeeded ) {
+					setTimeout( function() {
+						$notification.addClass( visibleClassName );
+					}, 0 );
+				}
 			}
-
-			if ( succeeded ) {
-				setTimeout( function() {
-					$notification.addClass( visibleClassName );
-				}, 0 );
-			}
-		} );
+		} ] );
 
 		return createGroup( {
 			id: 'copy-link',
 			title: groupTitle,
 			description: groupDescription,
-			content: $content
+			content: $input.add( $button ).add( $notification )
 		}, attributes );
 	}
 

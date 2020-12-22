@@ -47,7 +47,7 @@ const SharingEdit = ( props ) => {
 			</div>
 			<ControlsSection label={ __( 'Display' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
-					<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ headingLevel } onChange={ ( newLevel ) => setAttributes( { headingLevel: newLevel } ) } />
+					<HeadingToolbar minLevel={ 2 } maxLevel={ 5 } selectedLevel={ headingLevel } onChange={ ( newLevel ) => setAttributes( { headingLevel: newLevel } ) } />
 					<ControlsGroup title={ __( 'Set up sections for this block', '__plugin_txtd' ) }>
 						<ToggleGroup
 							onChange={ setAttributes }
