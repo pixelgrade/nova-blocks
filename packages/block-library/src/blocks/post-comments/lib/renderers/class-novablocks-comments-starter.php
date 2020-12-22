@@ -99,7 +99,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 
 				if ( ! empty( $conversation_starter_subtitle ) ) { ?>
 					<span
-						class="novablocks-conversation__starter-subtitle text--small"><?php echo wp_kses( $conversation_starter_subtitle, wp_kses_allowed_html() ); ?></span>
+						class="novablocks-conversation__starter-subtitle"><?php echo wp_kses( $conversation_starter_subtitle, wp_kses_allowed_html() ); ?></span>
 				<?php } ?>
 
 				<div class="novablocks-conversation__starter-message">
