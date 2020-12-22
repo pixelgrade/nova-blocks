@@ -79,6 +79,28 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			if ( is_null( $this->highlight ) ) {
 				$this->highlight = NovaBlocks_Comments_Highlight::instance();
 			}
+
+			/*
+			 * Register all needed hooks.
+			 */
+			$this->register_hooks();
+		}
+
+		private function register_hooks() {
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 99 );
+		}
+
+		public function enqueue_scripts() {
+			// In development mode use the src directory to make for easier debugging.
+			if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
+				$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'packages/block-library/src/blocks/post-comments' );
+			} else {
+				$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments' );
+			}
+
+			// We want to replace the core `comment-reply.js` with our own.
+			wp_deregister_script( 'comment-reply' );
+			wp_register_script( 'comment-reply', $block_dir_url . 'lib/js/comment-reply.js', [], false, true );
 		}
 
 		/**

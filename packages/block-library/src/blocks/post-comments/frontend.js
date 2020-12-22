@@ -1,15 +1,11 @@
 import '@novablocks/icons'
 
-const FORM_SELECTOR = '.comment-form'
-const USER_REPLYING_CLASS = 'user-is-replying'
-const COPY_LINK_SELECTOR = '.copy-comment-link'
-const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible'
-const GENERATE_FORM_SELECTOR = '.js-generate-form';
+const COPY_LINK_SELECTOR = '.copy-comment-link';
+const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
 
 (function ($, window, undefined) {
 
-  let $commentForm = $('.novablocks-conversations__form'),
-    $conversationsBlock = $('.novablocks-conversations'),
+  let $conversationsBlock = $('.novablocks-conversations'),
     $commentList = $('.comment-list'),
     $commentDropdown = $commentList.find('.comment-dropdown').children(),
     $commentCheckboxes = $commentList.find(' .comment-dropdown-open')
@@ -20,15 +16,11 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
 
   highlightCommentOnClick()
 
-  updateCommentReplyingClass()
-
   function bindEvents () {
     // Close comment "More" dropdown when clicking anywhere outside of it.
     $(document).on('click', handleCommentDropdownState)
     // Handle comment direct link copying to the clipboard.
     $commentList.on('click', COPY_LINK_SELECTOR, copyLinkToClipboard)
-    // Handle moving the comment form on click on various fake form buttons or links.
-    $conversationsBlock.on('click', GENERATE_FORM_SELECTOR, updateFormPosition)
   }
 
   function highlightCommentOnClick () {
@@ -78,30 +70,12 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
   function handleCommentDropdownState (event) {
 
     // If checkbox is not available, do nothing.
-    // Currently the dropdown is visible for authors.
     if (!$commentCheckboxes.length) {
       return
     }
 
     if (!$(event.target).is($commentDropdown)) {
       $commentCheckboxes.prop('checked', false)
-    }
-  }
-
-  function updateCommentReplyingClass () {
-
-    if ('MutationObserver' in window) {
-
-      // We use an observer to better handle user replying.
-      var observer = new MutationObserver(function (mutations) {
-        if (document.contains($('#wp-temp-form-div')[0])) {
-          $conversationsBlock.addClass(USER_REPLYING_CLASS)
-        } else {
-          $conversationsBlock.removeClass(USER_REPLYING_CLASS)
-        }
-      })
-
-      observer.observe(document.body, {childList: true, subtree: true})
     }
   }
 
@@ -130,19 +104,6 @@ const GENERATE_FORM_SELECTOR = '.js-generate-form';
         $notification.addClass(NOTIFICATION_VISIBLE_CLASS)
       }, 0)
     }
-  }
-
-  function updateFormPosition () {
-
-    // Make sure any reply is cancelled.
-    const replyLinkElement = document.getElementById('cancel-comment-reply-link')
-    if (replyLinkElement !== null) {
-      replyLinkElement.dispatchEvent(new Event('click'))
-    }
-
-    // Move the form before the clicked button and expand it.
-    $commentForm.insertBefore(this)
-    $commentForm.addClass('expanded')
   }
 
 })(jQuery, window)

@@ -35,6 +35,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		protected $args = [];
 
 		/**
+		 * Remember the number of fake form buttons generated so we can generate unique IDs for each.
+		 *
+		 * @var int
+		 */
+		protected static $fakeFormButtonInstances = 0;
+
+		/**
 		 * Instantiate a comments form renderer.
 		 *
 		 * @param WP_Post|int|null $post Optional. The post who's comments to render. Defaults to the current post.
@@ -47,6 +54,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$this->args = wp_parse_args( $args, [
 				// Output HTML5 markup
 				'html5' => current_theme_supports( 'html5', 'comment-form' ),
+
+				// Double the actual size for high dpi displays. Set to zero (0) for no avatars.
+				'avatarSize' => 100,
+				'avatarClass' => 'avatar',
 
 				'commentLabel'                   => esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),
 				// A special label that will include the commenter name.
@@ -92,8 +103,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 				'cookieConsentLabel' => esc_html__( 'Save my details in this browser for the next time I comment.', '__plugin_txtd' ),
 
-				'submitLabel'      => esc_html__( 'Add this comment', '__plugin_txtd' ),
-				'cancelReplyLabel' => esc_html__( 'Cancel reply', '__plugin_txtd' ),
+				// This is the default comment form submit button label.
+				'submitLabel'        => esc_html__( 'Add this comment', '__plugin_txtd' ),
+				'cancelReplyLabel'   => esc_html__( 'Cancel reply', '__plugin_txtd' ),
+				// This is the label used on the submit button for the comment/reply form.
+				'replyToText'        => esc_html__( 'Reply to %s', '__plugin_txtd' ),
 			] );
 		}
 
@@ -138,29 +152,95 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// At some point in history it might be removed, but.. @link https://core.trac.wordpress.org/ticket/47595
 			$output = preg_replace( '/novalidate/im', '', $output,1 );
 
+			// If we have output and we have the `cancel-comment-reply-link` CSS somewhere,
+			// we need to make sure the comment-reply.js is enqueued (this should not be the theme's job).
+			if ( false !== strpos( $output, 'cancel-comment-reply-link' ) && comments_open( $this->post->ID ) && get_option( 'thread_comments' ) ) {
+				wp_enqueue_script('comment-reply' );
+			}
+
 			return $output;
 		}
 
 		/**
 		 * Output markup for a button that will show the full comment form on click.
 		 *
-		 * @param array   $args The origin block attributes.
+		 * @param array $args Optional. Custom arguments to use for generating the fake form button markup.
+		 *                    You can customize the data attributes of the button, placeholder text, etc.
+		 *                    By default, the comment form instance args will be used.
 		 */
 		public function the_form_button( $args = [] ) {
+			// Render nothing without a proper post.
+			if ( empty( $this->post ) ) {
+				return;
+			}
 
-			$form_attributes = $this->parse_args( $args );
+			// Merge the received args with the global ones so we have everything in place.
+			$args = $this->parse_args( $args );
 
 			$current_user = wp_get_current_user();
 
-			// @todo This should be configurable.
-			$avatar_size = 100;
+			// Increase the instance count
+			self::$fakeFormButtonInstances++;
+			// Generate the anchor ID.
+			$moveAnchorId = 'fake-form-move-anchor_' . self::$fakeFormButtonInstances;
+
+			/** Replicate the same data attributes used for comment reply links - @see get_comment_reply_link() */
+			$data_attributes = array(
+				'commentid'      => isset( $args['commentid'] ) ? $args['commentid'] : '0',
+				'postid'         => $this->post->ID,
+				// By default, we will move the form after the fake form move anchor.
+				'belowelement'   => isset( $args['belowelement'] ) ? $args['belowelement'] : $moveAnchorId,
+				// By default we will use the #respond ID.
+				'respondelement' => isset( $args['respondelement'] ) ? $args['respondelement'] : 'respond',
+
+				'replyto'        => $args['replyToText'],
+			);
+
+			// Handle the replyto text conversions.
+			if ( false !== strpos( $data_attributes['replyto'], '%s' ) ) {
+				// We will try to replace the conversion with the comment author, if we have a comment.
+				if ( ! empty( $data_attributes['commentid'] ) ) {
+					$comment = get_comment( $data_attributes['commentid'] );
+					if ( empty( $comment ) ) {
+						$data_attributes['commentid'] = '0';
+						// Fallback to some safe text.
+						$data_attributes['replyto'] = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+					} else {
+						$data_attributes['replyto'] = sprintf( $data_attributes['replyto'], $comment->comment_author );
+					}
+				} else {
+					// Fallback to some safe text.
+					$data_attributes['replyto'] = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+				}
+			}
+
+			$data_attributes = apply_filters( 'novablocks_comments_the_form_button_data_attributes', $data_attributes, self::$fakeFormButtonInstances, $args );
+			$data_attributes = array_map( 'esc_attr', $data_attributes );
+
+			$data_attributes_string = '';
+			foreach ( $data_attributes as $name => $value ) {
+				$data_attributes_string .= " data-${name}=\"" . $value . '"';
+			}
+			$data_attributes_string = trim( $data_attributes_string );
+
+			$avatar = get_avatar( $current_user->ID, $args['avatarSize'], 'identicon', '', [ 'class' => $args['avatarClass'], ] );
+
+			$button_classes = [ 'form-grid', 'js-open-comment-form', 'fake-form-placeholder', ];
+			if ( 0 === $args['avatar_size'] || empty( $avatar ) ) {
+				$button_classes[] = 'no-avatar';
+			}
+
+			$button_classes = apply_filters( 'novablocks_comments_the_form_button_classes', $button_classes, self::$fakeFormButtonInstances, $args );
 			?>
 
-			<div class="form-grid js-generate-form fake-form-placeholder">
+			<div class="fake-form-move-anchor" id="<?php echo esc_attr( $moveAnchorId ); ?>"></div>
+			<div class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>">
+				<?php if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 				<div class="comment-avatar">
-					<?php echo get_avatar( $current_user->ID, $avatar_size, 'identicon', '', [ 'class' => 'avatar', ] ); ?>
+					<?php echo $avatar; ?>
 				</div>
-				<button class="fake-input-button"><?php echo $form_attributes['commentPlaceholder']; ?></button>
+				<?php } ?>
+				<button class="fake-input-button" <?php echo $data_attributes_string; ?>><?php echo $args['commentPlaceholder']; ?></button>
 			</div>
 
 			<?php
@@ -266,18 +346,18 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		}
 
 		public function adjust_comment_form_defaults( $defaults ) {
-			$attributes = $this->args;
+			$args = $this->args;
 
 			$current_user = wp_get_current_user();
 			$commenter    = wp_get_current_commenter();
 
-			$avatar_size = 100;
-			$avatar      = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', [ 'class' => 'avatar', ] );
+			$avatar_size = $args['avatarSize'];
+			$avatar      = get_avatar( $current_user->ID, $avatar_size, 'identicon', '', [ 'class' => $args['avatarClass'], ] );
 
 			// Generate a comment textarea title (label actually) according to whether we have a user or not.
 			// This way we compensate for the lack of a title for logged in users.
-			$comment_field_label = $attributes['commentLabel'];
-			if ( ! empty( $attributes['commentLabelKnownUser'] ) && false !== strpos( $attributes['commentLabelKnownUser'], '%s' ) ) {
+			$comment_field_label = $args['commentLabel'];
+			if ( ! empty( $args['commentLabelKnownUser'] ) && false !== strpos( $args['commentLabelKnownUser'], '%s' ) ) {
 				// If we have a commenter (via cookies) or a user, we will ask the question more personally.
 				$commenter_name = false;
 				if ( ! empty( $current_user->display_name ) ) {
@@ -287,7 +367,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				}
 				if ( ! empty( $commenter_name ) ) {
 					/* translators: %s: The current commenter display name. */
-					$comment_field_label = sprintf( $attributes['commentLabelKnownUser'], $commenter_name );
+					$comment_field_label = sprintf( $args['commentLabelKnownUser'], $commenter_name );
 				}
 			}
 
@@ -309,9 +389,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// We need to decide if we have a regular textarea or a rich text editor via Trix.
 			$comment_textarea = sprintf(
 				'<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required" placeholder="%s"></textarea>',
-				esc_attr( $attributes['commentPlaceholder'] )
+				esc_attr( $args['commentPlaceholder'] )
 			);
-			if ( $attributes['commentRichTextEditor'] ) {
+			if ( $args['commentRichTextEditor'] ) {
 				// We need to use a different kind of markup.
 				// @see https://github.com/basecamp/trix#integrating-with-forms
 				// For the available keyboard shortcuts, @see https://github.com/basecamp/trix/wiki/Keyboard-Shortcuts
@@ -372,7 +452,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 	  alert("File attachments are not supported for comments. Use words to picture your message.")
 	})
 </script>',
-					$attributes['commentPlaceholder']
+					$args['commentPlaceholder']
 				);
 
 				// We will also enqueue the scripts and styles needed.
@@ -385,12 +465,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$defaults['comment_field'] .=
 				sprintf( '<p class="comment-form-comment"><label for="comment">%s</label><span class="field-description">%s</span>%s</p>',
 					$comment_field_label,
-					$attributes['commentDescription'],
+					$args['commentDescription'],
 					$comment_textarea
 				);
 
 			// Third, the commenter background field.
-			if ( $attributes['commenterBackground'] ) {
+			if ( $args['commenterBackground'] ) {
 				// We will try to prefill the commenter background for people who have previously commented to this post.
 				$previous_commenter_background = '';
 
@@ -425,11 +505,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 	<span class="field-description">%s</span>
 	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" placeholder="%s" required="required" />
 </p>',
-						$attributes['commenterBackgroundLabel'],
-						( $attributes['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
-						$attributes['commenterBackgroundDescription'],
+						$args['commenterBackgroundLabel'],
+						( $args['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
+						$args['commenterBackgroundDescription'],
 						esc_attr( $previous_commenter_background ),
-						esc_attr( $attributes['commenterBackgroundPlaceholder'] )
+						esc_attr( $args['commenterBackgroundPlaceholder'] )
 					);
 			}
 
@@ -451,10 +531,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$defaults['cancel_reply_before'] = '';
 			$defaults['cancel_reply_after']  = '';
 
-			$defaults['cancel_reply_link'] = $attributes['cancelReplyLabel'] ? $attributes['cancelReplyLabel'] : esc_html__( 'Cancel reply', '__plugin_txtd' );
+			$defaults['cancel_reply_link'] = $args['cancelReplyLabel'] ? $args['cancelReplyLabel'] : esc_html__( 'Cancel reply', '__plugin_txtd' );
 
 			// Change the submit button
-			$defaults['label_submit']  = $attributes['submitLabel'] ? $attributes['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+			$defaults['label_submit']  = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+			$defaults['id_submit'] = 'comment-form-submit';
 			$defaults['submit_button'] = '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>';
 
 			return $defaults;
