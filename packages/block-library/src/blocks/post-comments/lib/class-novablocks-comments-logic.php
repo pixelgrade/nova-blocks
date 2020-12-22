@@ -91,12 +91,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 		}
 
 		public function enqueue_scripts() {
-			// In development mode use the src directory to make for easier debugging.
-			if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
-				$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'packages/block-library/src/blocks/post-comments' );
-			} else {
-				$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments' );
-			}
+
+			$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments' );
 
 			// We want to replace the core `comment-reply.js` with our own.
 			wp_deregister_script( 'comment-reply' );
