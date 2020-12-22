@@ -28,11 +28,6 @@
 
 .novablocks-conversations {
 
-  a:focus {
-    outline-style: dotted;
-    outline-width: thin;
-  }
-
   &__header {
     @include below(tablet) {
       margin-bottom: 0;
@@ -599,7 +594,7 @@
   }
 
   .comment-footer-highlights {
-    color: var(--accent-color);
+    color: var(--component-accent-color);
     font-weight: bold;
 
     font-size: 14px;
@@ -755,6 +750,15 @@
   a {
     text-decoration: none;
     color: currentColor;
+  }
+
+  &:focus-within {
+    .comment-dropdown-menu {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 }
 
