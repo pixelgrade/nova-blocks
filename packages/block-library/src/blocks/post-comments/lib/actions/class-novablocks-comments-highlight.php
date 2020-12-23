@@ -127,8 +127,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 
 			$data_comment_id = ' data-comment_id=' . esc_attr( $comment->comment_ID );
 
+			// Put the menu item at the top of the list.
 			$menu_items = [
-					'toggle_highlight' => "<a class='comment-dropdown-item toggle-comment-highlight' " . $data_comment_id .
+					'toggle_highlight' => "<a class='comment-dropdown-item toggle-comment-highlight' href='#' " . $data_comment_id .
 					                      " data-nonce='" . wp_create_nonce( "toggle_highlight_comment" ) .
 					                      "' title='" . esc_html__( 'Toggle your highlight of this comment', '__plugin_txtd' ) . "'>" .
 					                      esc_html__( 'Toggle your highlight', '__plugin_txtd' ) . "</a>"

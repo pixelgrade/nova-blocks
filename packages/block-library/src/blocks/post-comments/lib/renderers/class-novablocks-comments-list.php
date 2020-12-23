@@ -59,8 +59,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 			// Make sure defaults are in place.
 			$this->args = wp_parse_args( $args, [
-				'threadComments' => get_option( 'thread_comments' ) ? 'threaded' : false,
-				'maxThreadDepth' => get_option( 'thread_comments' ) ? get_option( 'thread_comments_depth' ) : - 1,
+				'threadComments'               => get_option( 'thread_comments' ) ? 'threaded' : false,
+				'maxThreadDepth'               => get_option( 'thread_comments' ) ? get_option( 'thread_comments_depth' ) : - 1,
 
 				// True to display the newest comments first.
 				'reverseTopLevelCommentsOrder' => ( 'desc' === get_option( 'comment_order' ) ),
@@ -70,12 +70,18 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				// 'oldest', 'newest'
 				'defaultCommentsPage' => get_option( 'default_comments_page' ),
 
-				'displayCommenterBackground'         => true,
-				// Double the actual size for high dpi displays.
-				'displayAvatarSize'                  => 100,
+				'displayCommenterBackground' => true,
+				// Double the actual size for high dpi displays. Set to zero (0) for no avatars.
+				'avatarSize'          => 100,
 
 				// The message to use in the comments list when a comment is not approved.
-				'moderationMessage'                  => '',
+				'moderationMessage'          => '',
+
+				// The text to use for reply links for each comment.
+				'replyText'                  => esc_html__( 'Reply', '__plugin_txtd' ),
+				// The text to use for explaining who is one replying to (via reply headings or submit buttons).
+				/* translators: Comment reply button text. %s: Comment author name. */
+				'replyToText'                => esc_html__( 'Reply to %s', '__plugin_txtd' ),
 			] );
 
 			if ( is_user_logged_in() ) {
@@ -135,7 +141,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				'walker'                       => new NovaBlocks_Walker_Comment(),
 				'max_depth'                    => $list_args['maxThreadDepth'],
 				'reverse_top_level'            => $list_args['reverseTopLevelCommentsOrder'],
-				'avatar_size'                  => $list_args['displayAvatarSize'],
+				'avatar_size'                  => $list_args['avatarSize'],
 				'moderation_message'           => $list_args['moderationMessage'],
 				'style'                        => 'div',
 				'short_ping'                   => true,
@@ -148,6 +154,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 				// Extra args of our own. These will also be passed along to the walker.
 				'display_commenter_background' => $list_args['displayCommenterBackground'],
+				'reply_text'                   => $list_args['replyText'],
+				'reply_to_text'                => $list_args['replyToText'],
 			], $this->post->ID, $list_args, $comments );
 
 			$this->localize_wp_list_comments_args( $wp_list_comments_args );
