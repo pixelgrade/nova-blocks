@@ -6,6 +6,7 @@
   --field-description-color: #000;
   --field-description-font-size: 13px;
   --conversations-bg-color: #E4E3E4;
+  --conversations-reply-bg-color: #CDCCCD;
   --comment-author-color: var(--novablocks-color-1);
   --comment-font-size: 15px;
   --comment-links-color: var(--novablocks-color-1);
@@ -221,7 +222,7 @@
     }
 
     @include below(tablet) {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: var(--conversations-reply-bg-color);
 
       > .comment-wrapper {
         position: relative;
@@ -252,6 +253,10 @@
 
       > .comment-wrapper {
         background-color: var(--conversations-bg-color);
+      }
+      
+      > .parent > .comment-wrapper {
+        background-color: var(--conversations-reply-bg-color);
       }
     }
   }
