@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getIcon } from '@novablocks/icons';
+import { getIconSvg } from '../get-svg';
 
 /**
  * WordPress dependencies
@@ -23,15 +23,15 @@ const { Consumer } = createContext( {
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
 	top: {
-		icon: getIcon( 'alignTop' ),
+		icon: getIconSvg( 'alignTop' ),
 		title: _x( 'Vertically Align Top', 'Block vertical alignment setting' ),
 	},
 	center: {
-		icon: getIcon( 'alignCenter' ),
+		icon: getIconSvg( 'alignCenter' ),
 		title: _x( 'Vertically Align Middle', 'Block vertical alignment setting' ),
 	},
 	bottom: {
-		icon: getIcon( 'alignBottom' ),
+		icon: getIconSvg( 'alignBottom' ),
 		title: _x( 'Vertically Align Bottom', 'Block vertical alignment setting' ),
 	},
 };

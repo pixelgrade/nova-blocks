@@ -1,8 +1,11 @@
 /**
  * Internal dependencies
  */
-import { getIcon } from '@novablocks/icons';
-import { AlignmentToolbar, ColorToolbar } from '@novablocks/block-editor';
+import {
+  AlignmentToolbar,
+  ColorToolbar,
+  getIconSvg
+} from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies
@@ -38,7 +41,7 @@ const HeroBlockControls = function( props ) {
 						return <Button
 							className="components-icon-button components-toolbar__control"
 							label={ __( 'Change Media', '__plugin_txtd' ) }
-							icon={ getIcon( 'swap' ) }
+							icon={ getIconSvg( 'swap' ) }
 							onClick={ open }
 						/>;
 					} }

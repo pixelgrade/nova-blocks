@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getIcon } from '@novablocks/icons';
+import { getIconSvg } from '../get-svg';
 
 export { default as colorAttributes } from './attributes';
 
@@ -122,7 +122,7 @@ const ColorToolbar = function( props ) {
 				renderToggle={ ( { isOpen, onToggle } ) => (
 					<Button
 						onClick={ onToggle }
-						icon={ getIcon( 'invert' ) }
+						icon={ getIconSvg( 'invert' ) }
 						aria-expanded={ isOpen }
 						label={ __( 'Colors', '__plugin_txtd' ) }
 					/>
