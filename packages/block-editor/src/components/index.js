@@ -20,6 +20,11 @@ export { default as useResizeObserver } from './use-resize-observer';
 export { default as useMemoryState } from './use-memory-state';
 
 export {
+  getSvg,
+  getIconSvg
+} from './get-svg';
+
+export {
 	alignmentAttributes,
 	AlignmentControls,
 	AlignmentToolbar

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import { debounce, isMobileDevice, titleCase } from '@novablocks/utils';
-import { getSvg } from '@novablocks/icons';
+import { getIcon } from "@novablocks/icons";
 
 import Shariff from 'shariff';
 import services from './services';
@@ -21,7 +21,7 @@ import services from './services';
 		const $container = $( '<div class="novablocks-sharing__container">');
 		const $content = $( '<div class="novablocks-sharing__content">');
 
-		const shareIcon = getSvg( 'share' );
+		const shareIcon = getIcon( 'share' );
 		$openButton.prepend( shareIcon );
 
 		$content.appendTo( $container );
@@ -45,7 +45,7 @@ import services from './services';
 			$content.append( createInPersonGroup( data ) );
 		}
 
-		const closeIcon = getSvg( 'cancel' );
+		const closeIcon = getIcon( 'cancel' );
 		const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
 		const $title = $( `<h${ data.headingLevel } class="novablocks-sharing__title">Sharing Options</h${ data.headingLevel }>` );
 
@@ -145,7 +145,7 @@ import services from './services';
 			const $linkLabel = $( '<div class="novablocks-sharing__link-label">' ).text( titleCase( key ) );
 			const $linkIcon = $( '<div class="novablocks-sharing__link-icon">' ).clone();
 			const $listItem = $button.addClass( 'novablocks-sharing__list-item' );
-			const icon = getSvg( key ) || getSvg( 'share' );
+			const icon = getIcon( key ) || getIcon( 'share' );
 
 			$linkIcon.html( icon );
 			$link.empty().append( $linkIcon ).append( $linkLabel );
@@ -242,7 +242,7 @@ import services from './services';
 		const $label = $( '<div class="novablocks-sharing__link-label" />' ).text( label );
 		const $icon = $( '<div class="novablocks-sharing__link-icon" />' );
 
-		$icon.html( getSvg( iconName ) );
+		$icon.html( getIcon( iconName ) );
 
 		$link.append( $icon ).append( $label );
 
@@ -261,7 +261,7 @@ import services from './services';
 		const $notification = $( '<div class="novablocks-sharing__notification-wrap">' );
 		const $notificationContent = $( '<div class="novablocks-sharing__notification">' );
 		const $notificationText = $( '<span class="novablocks-sharing__notification-text">Link copied to your clipboard</span>' );
-		const $notificationIcon = $( '<span class="novablocks-sharing__notification-icon">' ).append( getSvg( 'tick' ) );
+		const $notificationIcon = $( '<span class="novablocks-sharing__notification-icon">' ).append( getIcon( 'tick' ) );
 
 		$notificationContent.append( $notificationIcon ).append( $notificationText );
 		$notificationContent.appendTo( $notification );

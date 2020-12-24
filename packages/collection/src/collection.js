@@ -5,6 +5,7 @@ import { Fragment } from '@wordpress/element';
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'
 
+import attributes from './collection-attributes.json';
 import InspectorControls from "./collection-controls";
 
 import {
@@ -156,4 +157,7 @@ export const CollectionHeader = ( props ) => {
 	)
 };
 
-export default Collection;
+export default {
+  Component: Collection,
+  attributes
+};

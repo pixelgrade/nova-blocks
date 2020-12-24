@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import iconSvg from '../menu-food-block.svg';
 import edit from './edit';
 import save from './save';
 
@@ -10,12 +10,13 @@ import save from './save';
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/menu-food-item', {
 	title: __( 'Menu Item', '__plugin_txtd' ),
 	description: __( 'A food or drink item contained in a menu or menu section.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.foodmenu,
+  icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [ __( 'menu item', '__plugin_txtd' ), __( 'food item', '__plugin_txtd' ), __( 'dish', '__plugin_txtd' ), __( 'list item', '__plugin_txtd' ) ],
 	parent: ['novablocks/menu-food-section'],
