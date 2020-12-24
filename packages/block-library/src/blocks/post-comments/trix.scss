@@ -4,6 +4,17 @@
   --trix-input-bg-color: #FFF;
   --trix-input-border-color: rgba(0,0,0, 0.25);
   --trix-input-border-radius: 0;
+
+  // Since we want client HTML5 validation, we need to use the input holding the actual value for this.
+  // We barely hide it so the browser will show the validation notifications. Not perfect, but close enough.
+  input.trix-hidden-input {
+    height: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: transparent !important;
+  }
 }
 
 trix-toolbar {
@@ -77,6 +88,7 @@ trix-toolbar {
 	.trix-button-row {
 	  display: block;
 	  height: 2em;
+    overflow-y: hidden;
 	}
 
 	.trix-button-group {

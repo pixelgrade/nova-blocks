@@ -33,7 +33,7 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		$post_comments_renderer = new NovaBlocks_Comments_Renderer( $block->context[ 'postId' ], $attributes, $content );
 
 		$before = '
-<div class="novablocks-conversations">
+<div class="novablocks-conversations" id="novablocks-comments">
 	<div class="novablocks-conversations__container">';
 		$after = '
 	</div><!-- .novablocks-conversations__container -->
@@ -59,7 +59,9 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 			     && ! is_null( $listEndCommentFormAfterNumComments )
 			     && $post_comments_renderer->list->get_comments_count() >= absint( $listEndCommentFormAfterNumComments ) ) {
 
-				$post_comments_renderer->form->the_form_button();
+				$post_comments_renderer->form->the_form_button( [
+					''
+				] );
 			}
 
 			if ( ! comments_open( $post->ID ) && ! is_null( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) ) { ?>
