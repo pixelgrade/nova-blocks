@@ -1,10 +1,10 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
 import {
 	AlignmentToolbar,
-	ColorToolbar
+	ColorToolbar,
+  getIconSvg
 } from '@novablocks/block-editor';
 
 /**
@@ -51,7 +51,7 @@ const SlideshowBlockControls = function( props ) {
 						<Button
 							className="components-icon-button components-toolbar__control"
 							label={ __( 'Change Media', '__plugin_txtd' ) }
-							icon={ icons.swap }
+							icon={ getIconSvg( 'swap' ) }
 							onClick={ open }
 						/>
 					) }

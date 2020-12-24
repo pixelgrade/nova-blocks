@@ -1,7 +1,9 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import { getSvg } from "@novablocks/block-editor";
+
+import iconSvg from './logo-block.svg';
 import attributes from "./attributes";
 
 /**
@@ -14,7 +16,8 @@ registerBlockType( 'novablocks/logo', {
 	title: __( 'Logo', '__plugin_txtd' ),
 	description: __( 'Outputs custom logo markup.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.logo,
+	icon: getSvg( iconSvg ),
+  attributes,
 	// Additional search terms
 	keywords: [ __( 'branding', '__plugin_txtd' ) ],
 	parent: ['novablocks/header'],

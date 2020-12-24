@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import * as icons from '@novablocks/icons';
 import { RawHTML } from '@wordpress/element';
 import { TextPlaceholder } from '../index';
 
@@ -166,9 +165,7 @@ const CardMedia = ( { children, placeholder } ) => {
 
 	if ( ! children && ! placeholder ) {
 		content = (
-			<div className={ 'novablocks-card__media-placeholder' }>
-				{ icons.placeholder }
-			</div>
+			<div className={ 'novablocks-card__media-placeholder' } />
 		);
 	}
 

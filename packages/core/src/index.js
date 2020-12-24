@@ -1,18 +1,20 @@
 import { dispatch } from '@wordpress/data';
 import { updateCategory } from '@wordpress/blocks';
 
-import { nova } from '@novablocks/icons';
+import { getSvg } from '@novablocks/block-editor';
 
-export { default as store, STORE_NAME } from './store';
+import iconSvg from './icon.svg';
+export { default as store } from './store';
 import { addSeparatorFilters } from "./blocks/core/separator";
-
 
 export class novaBlocks {
 
 	initialize( settings ) {
 		addSeparatorFilters( settings );
 		dispatch( 'novablocks' ).updateSettings( settings );
-		updateCategory( 'nova-blocks', { icon: nova } );
+		updateCategory( 'nova-blocks', {
+		  icon: getSvg( iconSvg )
+		} );
 	}
 
 }
