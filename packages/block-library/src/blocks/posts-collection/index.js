@@ -23,6 +23,9 @@ registerBlockType( 'novablocks/posts-collection', {
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes,
+  supports: {
+    html: false
+  },
 	edit,
 	save() {
 		return <InnerBlocks.Content />;

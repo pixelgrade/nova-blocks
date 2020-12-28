@@ -69,6 +69,7 @@ registerBlockType( 'novablocks/hero', {
 	],
 	supports: {
 		anchor: true,
+    html: false,
 	},
 	deprecated,
 	attributes,

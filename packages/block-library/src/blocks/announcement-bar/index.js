@@ -66,6 +66,9 @@ registerBlockType( 'novablocks/announcement-bar', {
 			default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
 		}
 	},
+  supports: {
+	  html: false
+  },
 	save() {
 		return <InnerBlocks.Content />;
 	},

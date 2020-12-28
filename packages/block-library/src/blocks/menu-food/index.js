@@ -49,6 +49,9 @@ registerBlockType( 'novablocks/menu-food', {
 			default: true
 		}
 	},
+  supports: {
+    html: false
+  },
 	example: {
 		attributes: {
 			enableTwoColumns: false

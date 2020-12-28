@@ -37,6 +37,9 @@ registerBlockType( 'novablocks/opentable', {
 			default: 'wide'
 		}
 	},
+  supports: {
+    html: false
+  },
 	edit,
 	save
 } );
