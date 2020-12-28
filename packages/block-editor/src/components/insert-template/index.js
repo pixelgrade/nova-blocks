@@ -1,5 +1,5 @@
 import {
-	createBlock
+	createBlocksFromInnerBlocksTemplate
  } from '@wordpress/blocks';
 
 import {
@@ -8,21 +8,9 @@ import {
 	subscribe,
  } from '@wordpress/data';
 
-// Copied over from the Columns block. It seems like it should become part of public API.
-const createBlocksFromInnerBlocksTemplate = ( innerBlocksTemplate = [] ) => {
-	return innerBlocksTemplate.map(
-		( [ name, attributes, innerBlocks = [] ] ) =>
-			createBlock(
-				name,
-				attributes,
-				createBlocksFromInnerBlocksTemplate( innerBlocks )
-			)
-	);
-};
-
 export default ( blockType, template ) => {
 	const { getBlocksByClientId, getClientIdsWithDescendants } = select( 'core/block-editor' );
-	const { insertBlocks, updateBlockAttributes } = dispatch( 'core/block-editor' );
+	const { replaceInnerBlocks, updateBlockAttributes } = dispatch( 'core/block-editor' );
 
 	let blocks = getClientIdsWithDescendants();
 	let loadedSavedBlocks = false;
@@ -45,11 +33,9 @@ export default ( blockType, template ) => {
 		blocks = newBlocks;
 
 		getBlocksByClientId( addedBlocks ).map( block => {
+
 			if ( block.name === blockType && ! block.attributes.templateInserted && ! block.innerBlocks?.length ) {
-				const blocks = createBlocksFromInnerBlocksTemplate( template );
-
-				insertBlocks( blocks, 0, block.clientId );
-
+				replaceInnerBlocks( block.clientId, createBlocksFromInnerBlocksTemplate( template ) );
 				updateBlockAttributes( block.clientId, {
 					templateInserted: true
 				} );

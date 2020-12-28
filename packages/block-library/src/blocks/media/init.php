@@ -67,7 +67,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$classes[] = 'has-' . $attributes['accentColor'] . '-accent-color';
 		}
 
-		$classes[] = 'wp-block-group';
 		$classes[] = 'alignfull';
 
 		if ( empty( $attributes['gallery'] ) && ! empty( $attributes['images'] ) ) {
