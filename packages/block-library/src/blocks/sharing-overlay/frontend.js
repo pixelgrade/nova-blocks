@@ -55,21 +55,35 @@ import services from './services';
 
 		function positionPopup() {
 			const $button = $openButtonWrap.length ? $openButtonWrap : $openButton;
+			const $container = $button.closest( '.entry-content, body' );
 
 			$overlay.css( {
 				top: '',
 				left: ''
 			} );
 
+			const containerOffset = $container.offset();
+			const containerWidth = $container.outerWidth() || 0;
+			const containerLeft = containerOffset.left;
+
+			const overlayOffset = $overlay.offset();
 			const overlayHeight = $overlay.outerHeight() || 0;
+			const overlayWidth = $overlay.outerWidth() || 0;
+
 			const buttonOffset = $button.offset();
 			const wrapOffset = $wrap.offset();
+
+			const leftDiff = wrapOffset.left - overlayOffset.left;
+			const maxLeft = containerLeft + containerWidth - overlayWidth + leftDiff;
+			const minLeft = containerLeft - leftDiff;
+
 			const adminBarHeight = $adminBar.outerHeight() || 0;
 			const newTop = Math.max( adminBarHeight, Math.min( document.documentElement.scrollHeight - overlayHeight, buttonOffset.top ) );
+			const newLeft = Math.max( minLeft, Math.min( buttonOffset.left - wrapOffset.left, maxLeft ) );
 
 			$overlay.css( {
 				top: newTop,
-				left: buttonOffset.left - wrapOffset.left,
+				left: newLeft,
 			} );
 		}
 
