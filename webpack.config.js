@@ -129,14 +129,30 @@ const CopyBlocksPhpPlugin =
 			})
 	);
 
-const CopyBlocksJsonPlugin =
+// Copy the whole `lib` directory.
+const CopyBlocksLibPlugin =
+  new CopyWebpackPlugin(
+    glob.sync('./packages/block-library/build/blocks/*').map((blockDirPath) => {
+      let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
+      blockName = blockName.replace('/', '');
+
+      return {
+        from: `**/*.*`,
+        to: `build/block-library/blocks/${blockName}/lib/`,
+        flatten: false,
+        context: `packages/block-library/build/blocks/${ blockName }/lib/`,
+      }
+    })
+  );
+
+const CopyBlocksAssetsPlugin =
 	new CopyWebpackPlugin(
 		glob.sync( './packages/block-library/build/blocks/*' ).map( ( blockDirPath ) => {
 			let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
 			blockName = blockName.replace('/', '');
 
 			return {
-				from: `**/*.json`,
+				from: `**/*.(json|svg)`,
 				to: `build/block-library/blocks/${ blockName }/`,
 				flatten: false,
 				context: `packages/block-library/build/blocks/${ blockName }/`,
@@ -188,7 +204,8 @@ const DefaultConfig = {
 		CopyPackageCSSPlugin,
 		CopyBlocksCSSPlugin,
 		CopyBlocksPhpPlugin,
-		CopyBlocksJsonPlugin,
+    CopyBlocksLibPlugin,
+		CopyBlocksAssetsPlugin,
 		new DependencyExtractionWebpackPlugin( {
 			injectPolyfill: true,
 			requestToExternal,

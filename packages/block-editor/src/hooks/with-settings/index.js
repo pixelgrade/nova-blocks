@@ -2,11 +2,9 @@ import { createHigherOrderComponent } from '@wordpress/compose';
 import { withSelect } from '@wordpress/data';
 import { addFilter } from '@wordpress/hooks';
 
-import { STORE_NAME } from '@novablocks/core';
-
 const withSettings = createHigherOrderComponent( ( Component ) => {
 	return withSelect( ( select, ownProps ) => {
-		const { getSettings } = select( STORE_NAME );
+		const { getSettings } = select( 'novablocks' );
 
 		return {
 			...ownProps,

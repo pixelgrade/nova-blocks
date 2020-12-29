@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('novablocks-icons', 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-polyfill'), 'version' => '9c0b80d94f763e524d5177c702a97d76');
+<?php return array('dependencies' => array('novablocks-block-editor', 'wp-blocks', 'wp-element', 'wp-i18n', 'wp-polyfill'), 'version' => 'ebfec571e43ca79976f303bc03f5ea6c');

@@ -1,15 +1,15 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import iconSvg from './slideshow-block.svg';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
 import { select } from '@wordpress/data';
 
 import {
-	getRandomArrayFromArray,
-	getRandomBetween
+  getRandomArrayFromArray,
+  getRandomBetween,
 } from "@novablocks/utils";
 
 import {
@@ -17,7 +17,8 @@ import {
 	colorAttributes,
 	layoutAttributes,
 	getPlaceholderImages,
-	generateDefaults
+	generateDefaults,
+  getSvg
 } from "@novablocks/block-editor";
 
 import {
@@ -56,7 +57,7 @@ registerBlockType( 'novablocks/slideshow', {
 	title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
 	description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.slideshow,
+  icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
 	attributes,

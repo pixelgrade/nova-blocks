@@ -60,7 +60,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		/**
 		 * Code taken from @see comments_template() to allow for uniform behavior.
 		 */
-		$comment_args = array(
+		$comment_args = [
 			'orderby'                   => 'comment_date_gmt',
 			'order'                     => 'ASC',
 			'status'                    => 'approve',
@@ -68,10 +68,10 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			'hierarchical'              => $attributes['threadComments'],
 			'no_found_rows'             => false,
 			'update_comment_meta_cache' => false, // We lazy-load comment meta for performance.
-		);
+		];
 
 		if ( is_user_logged_in() ) {
-			$comment_args['include_unapproved'] = array( get_current_user_id() );
+			$comment_args['include_unapproved'] = [ get_current_user_id() ];
 
 			// If the current user is capable of moderating comments, we will show all comments.
 			if ( current_user_can( 'moderate_comments' ) && current_user_can( 'edit_posts' ) ) {
@@ -117,7 +117,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			}
 
 			if ( $unapproved_email ) {
-				$comment_args['include_unapproved'] = array( $unapproved_email );
+				$comment_args['include_unapproved'] = [ $unapproved_email ];
 			}
 		}
 
@@ -138,12 +138,12 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			} else {
 				// If fetching the first page of 'newest', we need a top-level comment count.
 				$top_level_query = new WP_Comment_Query();
-				$top_level_args  = array(
+				$top_level_args  = [
 						'count'   => true,
 						'orderby' => false,
 						'post_id' => $post_id,
 						'status'  => 'approve',
-				);
+				];
 
 				if ( $comment_args['hierarchical'] ) {
 					$top_level_args['parent'] = 0;
@@ -194,15 +194,15 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 
 		// Trees must be flattened before they're passed to the walker.
 		if ( $comment_args['hierarchical'] ) {
-			$comments_flat = array();
+			$comments_flat = [];
 			foreach ( $_comments as $_comment ) {
 				$comments_flat[]  = $_comment;
 				$comment_children = $_comment->get_children(
-					array(
+					[
 						'format'  => 'flat',
 						'status'  => $comment_args['status'],
 						'orderby' => $comment_args['orderby'],
-					)
+					]
 				);
 
 				foreach ( $comment_children as $comment_child ) {
@@ -216,8 +216,8 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		/**
 		 * Filters the comments array.
 		 *
-		 * @param array $comments Array of comments supplied to the comments template.
-		 * @param int   $post_ID  Post ID.
+		 * @param WP_Comment[] $comments Array of comments supplied to the comments template.
+		 * @param int          $post_ID  Post ID.
 		 */
 		$comments = apply_filters( 'comments_array', $comments_flat, $post_id );
 
@@ -228,46 +228,77 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 			set_query_var( 'cpage', 'newest' === $attributes['defaultCommentsPage'] ? $max_num_comment_pages : 1 );
 		}
 
+		// Allow others to change this.
+		$comments_list_args = apply_filters( 'novablocks_comments_list_args', [
+				'walker'                       => new NovaBlocks_Walker_Comment(),
+				'max_depth'                    => $attributes['maxThreadDepth'],
+				'reverse_top_level'            => $attributes['reverseTopLevelCommentsOrder'],
+				'avatar_size'                  => $attributes['displayAvatarSize'],
+				'moderation_message'           => $attributes['moderationMessage'],
+				'style'                        => 'div',
+				'short_ping'                   => true,
+				// Since we do the proper query above, we don't want the walker to do it once again.
+				// We just want all the passed comments displayed.
+				'page'                         => 0,
+				'per_page'                     => 0,
+				// We will pass cpage so that functions like get_comment_link() will function properly without relying on get_query_var().
+				'cpage'                        => $page,
+
+				// Extra args of our own. These will also be passed along to the walker.
+				'display_commenter_background' => $attributes['displayCommenterBackground'],
+		], $post_id, $attributes, $comments );
+
+		// Add the comments list args to the localized comments JS global variable so the client-side logic can make use of them.
+		// We rely on the fact that the comments frontend script will be enqueued in the page footer, not the header.
+		$localized_args = $comments_list_args;
+		// We don't want the walker instance in the localized data.
+		if ( isset( $localized_args['walker'] ) ) {
+			unset( $localized_args['walker'] );
+		}
+
+		/**
+		 * The frontend script is registered in @see novablocks_register_packages_scripts()
+		 */
+		wp_add_inline_script( 'novablocks/post-comments/frontend',
+				novablocks_get_localize_to_window_script( 'nb_comments',
+						[
+								'ajaxUrl' => admin_url( 'admin-ajax.php' ), // @todo This should be set in a more general place.
+								'actions' => [
+										'toggleHighlight' => 'toggle_highlight_comment',
+								],
+								'commentsListArgs' => $localized_args,
+						]
+				), 'before'
+		);
+
+		// We will not output anything if there are no comments.
 		if ( empty( $comments ) ) {
 			return '';
 		}
 
 		ob_start();
+
+		echo NovaBlocks_Comments::generate_fake_form_markup();
+
 		?>
+
 		<div id="comments" class="comment-list">
 
-			<?php wp_list_comments( array(
-					'walker'                       => new NovaBlocks_Walker_Comment(),
-					'max_depth'                    => $attributes['maxThreadDepth'],
-					'reverse_top_level'            => $attributes['reverseTopLevelCommentsOrder'],
-					'avatar_size'                  => $attributes['displayAvatarSize'],
-					'moderation_message'           => $attributes['moderationMessage'],
-					'style'                        => 'div',
-					'short_ping'                   => true,
-					// Since we do the proper query above, we don't want the walker to do it once again.
-					// We just want all the passed comments displayed.
-					'page'                         => 0,
-					'per_page'                     => 0,
-
-					// Extra args of our own. These will also be passed along to the walker.
-					'display_commenter_background' => $attributes['displayCommenterBackground'],
-			), $comments ); ?>
+			<?php wp_list_comments( $comments_list_args, $comments ); ?>
 
 		</div><!-- #comments.comment-list -->
 
 		<?php
-		$comment_pagination = paginate_comments_links(
-				array(
-					'echo'      => false,
-					'total'     => $max_num_comment_pages,
-					'current'   => $page,
-					'end_size'  => 0,
-					'mid_size'  => 0,
-					'next_text' => esc_html__( 'Newer Conversations', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
-					'prev_text' => '<span aria-hidden="true">&larr;</span> ' . esc_html__( 'Older Conversations', '__plugin_txtd' ),
-					'type'      => 'list',
-				)
-		);
+		$comment_pagination = paginate_comments_links( [
+			'echo'      => false,
+			'total'     => $max_num_comment_pages,
+			'current'   => $page,
+			'end_size'  => 0,
+			'mid_size'  => 0,
+			'next_text' => esc_html__( 'Newer Conversations', '__plugin_txtd' ) . ' <span aria-hidden="true">&rarr;</span>',
+			'prev_text' => '<span aria-hidden="true">&larr;</span> ' . esc_html__( 'Older Conversations', '__plugin_txtd' ),
+			'type'      => 'list',
+		] );
 
 		if ( $comment_pagination ) {
 			$pagination_classes = '';
@@ -289,9 +320,7 @@ if ( ! function_exists('novablocks_render_post_comments_list_block' ) ) {
 		     && ! empty( $attributes['scrollRelocateCommentFormAfterNumComments'] )
 		     && $comment_count >= absint( $attributes['scrollRelocateCommentFormAfterNumComments'] ) ) {
 
-			// This is just a marker to use to move the only form on the page!
-			// We will move the comment form on scroll, after this div.
-			echo '<div id="second-comment-form-marker"></div>';
+			echo NovaBlocks_Comments::generate_fake_form_markup();
 		}
 
 		if ( ! comments_open( $post_id ) ) { ?>
