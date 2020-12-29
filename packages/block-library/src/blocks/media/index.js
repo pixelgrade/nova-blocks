@@ -12,11 +12,11 @@ import {
   getRandomBetween,
 } from "@novablocks/utils";
 
-import { getSvg } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 import Blob from '@novablocks/blob';
 
 import {
+  getSvg,
 	generateDefaults,
 	getPlaceholderImages,
 	insertTemplate,
@@ -69,6 +69,9 @@ registerBlockType( 'novablocks/media', {
 	// Additional search terms
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 	attributes,
+  supports: {
+    html: false
+  },
 	edit,
 	save,
 	getEditWrapperProps() {

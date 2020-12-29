@@ -21,7 +21,11 @@ registerBlockType( 'novablocks/header', {
 	icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [ __( 'logo', '__plugin_txtd' ), __( 'menu', '__plugin_txtd' ) ],
-	supports: { align: ["wide", "full"], default: "full" },
+	supports: {
+    align: [ "wide", "full" ],
+    default: "full",
+    html: false
+  },
 	variations,
 	edit,
 	save: function() {

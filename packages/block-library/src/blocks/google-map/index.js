@@ -34,6 +34,11 @@ registerBlockType( 'novablocks/google-map', {
 		}
 	},
 	attributes,
+  supports: {
+    html: false
+  },
 	edit,
-	save: function() {}
+	save: function() {
+	  return false
+  }
 } );

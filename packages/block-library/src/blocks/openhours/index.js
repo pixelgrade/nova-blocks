@@ -18,6 +18,11 @@ registerBlockType( 'novablocks/openhours', {
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
 	attributes,
+  supports: {
+    html: false
+  },
 	edit,
-	save: function() {},
+	save: function() {
+	  return false
+  },
 } );

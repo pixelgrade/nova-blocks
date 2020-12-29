@@ -116,7 +116,7 @@
 	.block-is-highlighted.content-is-moderate,
 	.block-is-basic.content-is-highlighted,
 	.block-is-moderate.content-is-highlighted {
-		--novablocks-block-background-color: var(--novablocks-current-dark-tertiary);
+		--novablocks-block-background-color: var(--novablocks-current-dark-primary);
 		--novablocks-block-content-text-color: var(--novablocks-current-light-primary);
 		--novablocks-block-content-titles-color: var(--novablocks-current-light-primary);
 		--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
@@ -140,7 +140,7 @@
 	}
 
 	.block-is-highlighted {
-		--novablocks-block-background-color: var(--novablocks-current-dark-tertiary);
+		--novablocks-block-background-color: var(--novablocks-current-dark-primary);
 		--novablocks-block-text-color: var(--novablocks-current-light-primary);
 		--novablocks-block-titles-color: var(--novablocks-current-light-primary);
 		--novablocks-block-accent-color: var(--novablocks-current-light-primary);
@@ -176,7 +176,7 @@
 	}
 
 	.content-is-highlighted:not(.block-is-highlighted) {
-		--novablocks-block-content-background-color: var(--novablocks-current-dark-tertiary);
+		--novablocks-block-content-background-color: var(--novablocks-current-dark-primary);
 
 		.is-style-alternate & {
 			--novablocks-block-content-background-color: var(--novablocks-block-current-accent-color);

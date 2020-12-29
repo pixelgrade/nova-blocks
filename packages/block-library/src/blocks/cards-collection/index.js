@@ -18,6 +18,9 @@ registerBlockType( 'novablocks/cards-collection', {
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
 	keywords: [ __( 'grid', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'collection', '__plugin_txtd' ), __( 'group', '__plugin_txtd' ) ],
+  supports: {
+    html: false
+  },
 	edit,
 	save() {
 		return <InnerBlocks.Content />;

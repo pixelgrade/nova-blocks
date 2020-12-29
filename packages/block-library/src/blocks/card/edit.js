@@ -9,6 +9,10 @@ import {
 	MediaUpload,
  } from '@wordpress/block-editor';
 
+import {
+  getSvg
+} from '@novablocks/block-editor';
+
 import placeholderSvg from './card-media-placeholder.svg';
 
 const CardEdit = ( props ) => {
@@ -51,7 +55,7 @@ const CardEdit = ( props ) => {
 
 		return (
 			<div className={ `${ blockClassName }__media-placeholder` }>
-				{ placeholderSvg }
+				{ getSvg( placeholderSvg ) }
 			</div>
 		);
 	};

@@ -17,6 +17,9 @@ registerBlockType( 'novablocks/post-comments', {
 	description: __( 'Display your post comments section.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
 	category: 'nova-blocks',
+  supports: {
+    html: false
+  },
 	edit,
 	save() {
 		return <InnerBlocks.Content />;

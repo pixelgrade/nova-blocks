@@ -12,8 +12,6 @@ import {
 	createHigherOrderComponent
  } from '@wordpress/compose';
 
-import { __ } from '@wordpress/i18n';
-
 import {
 	InnerBlocks,
  } from '@wordpress/block-editor';
@@ -46,13 +44,13 @@ const CardsCollectionEdit = ( props ) => {
 
 	return (
 		<Fragment>
-			<Collection hasAppender={ hasAppender } { ...passedProps }>
+			<Collection.Component hasAppender={ hasAppender } { ...passedProps }>
 				<InnerBlocks
 					allowedBlocks={ ALLOWED_BLOCKS }
 					template={ CARDS_COLLECTION_TEMPLATE }
 					renderAppender={ hasAppender ? window.undefined : false }
 				/>
-			</Collection>
+			</Collection.Component>
 		</Fragment>
 	);
 };

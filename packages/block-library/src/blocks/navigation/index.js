@@ -20,6 +20,9 @@ registerBlockType( 'novablocks/navigation', {
 	keywords: [ __( 'menu', '__plugin_txtd' ), __( 'site menu', '__plugin_txtd' ), __( 'primary', '__plugin_txtd' ), __( 'secondary', '__plugin_txtd' ) ],
 	parent: ['novablocks/header'],
 	attributes,
+  supports: {
+    html: false
+  },
 	edit: function( props ) {
 		return (
 			<wp.serverSideRender
@@ -28,5 +31,7 @@ registerBlockType( 'novablocks/navigation', {
 			/>
 		)
 	},
-	save: function() {},
+	save: function() {
+	  return false
+  },
 } );

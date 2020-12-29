@@ -20,6 +20,9 @@ registerBlockType( 'novablocks/sharing-overlay', {
 	// Additional search terms
 	keywords: [ __( 'sharing', '__plugin_txtd' ) ],
 	attributes,
+  supports: {
+    html: false
+  },
 	edit,
 	save: function() {
 		return null;

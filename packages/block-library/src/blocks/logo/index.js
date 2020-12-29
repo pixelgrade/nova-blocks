@@ -18,10 +18,15 @@ registerBlockType( 'novablocks/logo', {
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
   attributes,
+  supports: {
+    html: false
+  },
 	// Additional search terms
 	keywords: [ __( 'branding', '__plugin_txtd' ) ],
 	parent: ['novablocks/header'],
-	save: function() {},
+	save: function() {
+	  return false
+  },
 	edit: function( props ) {
 		return (
 			<wp.serverSideRender

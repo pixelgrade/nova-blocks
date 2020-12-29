@@ -47,6 +47,9 @@ registerBlockType( 'novablocks/card', {
 	icon: getSvg( iconSvg ),
 	keywords: [ __( 'image with text', '__plugin_txtd' ) ],
 	attributes,
+  supports: {
+    html: false
+  },
 	deprecated,
 	edit,
 	save,

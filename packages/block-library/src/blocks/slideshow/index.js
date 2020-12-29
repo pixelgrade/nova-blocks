@@ -61,6 +61,9 @@ registerBlockType( 'novablocks/slideshow', {
 	// Additional search terms
 	keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
 	attributes,
+  supports: {
+    html: false
+  },
 	edit,
 	save,
 	deprecated,
