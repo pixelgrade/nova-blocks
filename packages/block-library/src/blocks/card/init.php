@@ -41,11 +41,8 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 			<div class="novablocks-card__layout">
 				<div class="novablocks-card__layout-media">
 			        <?php if ( false != $attributes['showMedia'] ) {
-			            $url = novablocks_get_image_url( $attributes['media'], 'novablocks_medium' );
-
-						echo novablocks_get_card_media_markup( $url );
+						echo novablocks_get_card_media_markup( $attributes['media'] );
 			        } ?>
-
 				</div>
 				<div class="novablocks-card__layout-content">
 			        <?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
