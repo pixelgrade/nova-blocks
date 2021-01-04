@@ -227,15 +227,17 @@
       > .comment-wrapper {
         position: relative;
         z-index: 10;
-      }
-
-      .comment-highlighted:not(.comment-dropdown-item) {
-        padding-top: var(--element-spacing);
-        margin-top: calc(-1 * var(--element-spacing));
-
-        &.comment-wrapper {
-          padding-top: calc(var(--element-spacing) * 2);
-          margin-top: calc(-1 * var(--element-spacing));
+        
+        + .comment {
+          .comment-highlighted:not(.comment-dropdown-item) {
+            padding-top: var(--element-spacing);
+            margin-top: calc(-1 * var(--element-spacing));
+    
+            &.comment-wrapper {
+              padding-top: calc(var(--element-spacing) * 2);
+              margin-top: calc(-1 * var(--element-spacing));
+            }
+          }
         }
       }
 
@@ -354,15 +356,6 @@
         .comment-footer-highlights {
           padding-left: var(--element-spacing);
         }
-      }
-    }
-  }
-
-  &:not(.user-is-replying) {
-    @include below(tablet) {
-
-      .parent > .comment-wrapper ~ :not(.comment-highlighted) + :not(.comment-highlighted) > .comment-wrapper {
-        padding-top: 0;
       }
     }
   }
