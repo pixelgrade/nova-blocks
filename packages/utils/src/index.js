@@ -261,20 +261,3 @@ export const isAnyPartOfElementInViewport = (element) => {
 
 	return (vertInView && horInView);
 }
-
-export const getColors = ( paletteVariation ) => {
-  const index = parseInt( paletteVariation, 10 );
-  const textIsWhite = index > 5;
-
-  const textLightColor = `var(--current-color-0)`;
-  const textDarkerColor = `var(--current-text-color-2)`;
-  const textDarkColor = index < 4 ? `var(--current-text-color-1)` : textDarkerColor;
-  const accentIndex = Math.max( 5, index + 4 );
-
-  return {
-    accent: textIsWhite ? textLightColor : `var(--current-color-${ accentIndex })`,
-    text: textIsWhite ? textLightColor : textDarkColor,
-    titles: textIsWhite ? textLightColor : textDarkerColor,
-    background: `var(--current-color-${ paletteVariation })`,
-  };
-}

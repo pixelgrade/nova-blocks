@@ -10,7 +10,9 @@
 
   $accentIndex: 5;
 
-  @if $variation > 1 {
+  @if $textIsWhite {
+    $accentIndex: $variation - 4;
+  } @else {
     $accentIndex: $variation + 4;
   }
 
@@ -19,7 +21,6 @@
   $accent: var(--novablocks-current-color-#{ $accentIndex });
 
   @if ( $textIsWhite ) {
-    $accent: $textLightColor;
     $text: $textLightColor;
     $titles: $textLightColor;
   }
