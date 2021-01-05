@@ -77,9 +77,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				'commenterBackgroundRequired'    => true,
 				'commenterBackgroundLabel'       => esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 				// Leave empty for no description.
-				'commenterBackgroundDescription' => '',
+				'commenterBackgroundDescription' => esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
 				// Leave empty for no placeholder.
-				'commenterBackgroundPlaceholder' => esc_html__( 'Practical philosopher, therapist and writer.', '__plugin_txtd' ),
+				'commenterBackgroundPlaceholder' => esc_html__( 'Your relevant background...', '__plugin_txtd' ),
 
 				'commenterNameLabel'       => esc_html__( 'What is your name?', '__plugin_txtd' ),
 				// Leave empty for no description.
