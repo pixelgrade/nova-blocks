@@ -75,6 +75,7 @@ const MediaPreview = function( props ) {
 		`novablocks-block`,
 		`content-is-${ contentStyle }`,
     `novablocks-u-color-variation-${ blockColorsIndex }`,
+    `novablocks-u-color-palette-${ palette }`,
 	);
 
 	return (

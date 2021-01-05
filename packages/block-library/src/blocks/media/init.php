@@ -13,7 +13,7 @@ function novablocks_get_media_attributes() {
 	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
 	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
-	$variation_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-emphasis-level/attributes.json' );
+	$variation_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/emphasis-level-controls/attributes.json' );
 
 	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $variation_attributes, $blob_attributes );
 }
@@ -93,6 +93,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$blockColorsIndex = intval( $attributes['paletteVariation'] );
 		$contentColorsIndex = $blockColorsIndex;
+		$blockClasses[] = 'novablocks-u-color-palette-' . $attributes['palette'];
 		$blockClasses[] = 'novablocks-u-color-variation-' . $blockColorsIndex;
 
 		if ( $contentStyle === 'moderate' ) {

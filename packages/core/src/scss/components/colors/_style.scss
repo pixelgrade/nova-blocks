@@ -60,4 +60,11 @@
   }
 }
 
+@each $palette in primary, secondary, tertiary {
+
+  .novablocks-u-color-palette-#{ $palette } {
+    @include apply-palette( $palette );
+  }
+}
+
 
