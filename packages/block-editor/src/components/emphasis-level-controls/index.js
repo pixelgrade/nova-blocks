@@ -120,11 +120,16 @@ const ColorSetsControl = ( props ) => {
         } ) }
         options={ [
           { label: '0 Transparent White', value: '0' },
-          { label: 'Lighter', value: '1' },
-          { label: 'Light', value: '2' },
+          { label: '1 Lighter', value: '1' },
+          { label: '2 Light', value: '2' },
+          { label: '3 Temp', value: '3' },
+          { label: '4 Temp', value: '4' },
+          { label: '5 Temp', value: '5' },
           { label: '50 Color', value: '6' },
           { label: 'Dark', value: '7' },
+          { label: '8 Temp', value: '8' },
           { label: 'Darker', value: '9' },
+          { label: '10 Temp', value: '10' },
           { label: '100 Piano Black', value: '11' },
         ] }
       />
