@@ -1,7 +1,7 @@
 {
 	"palette": {
 		"type": "string",
-		"default": "palette1"
+		"default": "primary"
 	},
 	"paletteVariation": {
 		"type": "string",

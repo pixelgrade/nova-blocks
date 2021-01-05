@@ -96,8 +96,6 @@ const ColorSetsControl = ( props ) => {
 		paletteVariation
 	} = attributes;
 
-	console.log( attributes );
-
 	return (
 		<ControlsGroup title={ __( 'Colors' ) }>
       <RadioControl
@@ -107,9 +105,9 @@ const ColorSetsControl = ( props ) => {
           setAttributes( { palette: newPalette } )
         } }
         options={[
-          { label: 'Color A - Primary', value: 'palette1' },
-          { label: 'Color B', value: 'palette2' },
-          { label: 'Color C', value: 'palette3' },
+          { label: 'Color A', value: 'primary' },
+          { label: 'Color B', value: 'secondary' },
+          { label: 'Color C', value: 'tertiary' },
         ]}
       />
       <RadioControl
