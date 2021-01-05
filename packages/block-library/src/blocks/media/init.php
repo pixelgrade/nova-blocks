@@ -13,8 +13,9 @@ function novablocks_get_media_attributes() {
 	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
 	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
 	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
+	$variation_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-emphasis-level/attributes.json' );
 
-	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $blob_attributes );
+	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $variation_attributes, $blob_attributes );
 }
 
 if ( ! function_exists( 'novablocks_render_media_block' ) ) {
@@ -80,12 +81,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$blockClasses[] = 'novablocks-block';
 
-		if ( ! empty( $attributes['blockStyle'] ) ) {
-			$blockClasses[] = 'block-is-' . $attributes['blockStyle'];
-		} else {
-			$blockClasses[] = 'block-is-basic';
-		}
-
 		$style =
 			'--novablocks-block-top-spacing:' . $blockTopSpacing . ';' .
 			'--novablocks-block-bottom-spacing:' . $blockBottomSpacing . ';' .
@@ -94,6 +89,30 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--emphasis-area:' . $emphasisArea . ';' .
 			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
 			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 5 / 100 )';
+
+
+		$blockColorsIndex = intval( $attributes['paletteVariation'] );
+		$contentColorsIndex = $blockColorsIndex;
+		$blockClasses[] = 'novablocks-u-color-variation-' . $blockColorsIndex;
+
+		if ( $contentStyle === 'moderate' ) {
+			if ( $blockColorsIndex < 6 ) {
+				$contentColorsIndex = max(0, $blockColorsIndex - 2 );
+			} else {
+				$contentColorsIndex = min(11, $blockColorsIndex + 2 );
+			}
+		}
+
+		if ( $contentStyle === 'highlighted' ) {
+			if ( $blockColorsIndex < 6 ) {
+				$contentColorsIndex = min( 11, $blockColorsIndex + 8 );
+			} else {
+				$contentColorsIndex = 0;
+			}
+		}
+
+		$blockContentClasses = array( 'novablocks-media__inner-container novablocks-block__content' );
+		$blockContentClasses[] = 'novablocks-u-color-variation-' . $contentColorsIndex;
 
 		ob_start(); ?>
 
@@ -104,7 +123,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		                <div class="novablocks-media__layout">
 							<?php if ( ! empty ( $content ) ) { ?>
 								<div class="novablocks-media__content">
-									<div class="novablocks-media__inner-container novablocks-block__content">
+									<div class="<?php echo esc_attr( join( ' ', $blockContentClasses ) ); ?>">
 										<?php echo $content; ?>
 									</div>
 								</div>

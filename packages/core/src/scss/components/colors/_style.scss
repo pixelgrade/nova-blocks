@@ -13,3 +13,51 @@
 .novablocks-u-background-none {
 	--element-background: none;
 }
+
+:root {
+  --novablocks-blue-color-0: #ffffff;
+  --novablocks-blue-color-1: #f7f7fd;
+  --novablocks-blue-color-2: #e4e4f9;
+  --novablocks-blue-color-3: #bdbdf0;
+  --novablocks-blue-color-4: #9898e8;
+  --novablocks-blue-color-5: #7373df;
+  --novablocks-blue-color-6: #5c5cd9;
+  --novablocks-blue-color-7: #4444d4;
+  --novablocks-blue-color-8: #2b2bba;
+  --novablocks-blue-color-9: #292983;
+  --novablocks-blue-color-10: #1c1c4a;
+  --novablocks-blue-color-11: #000000;
+
+  --novablocks-blue-text-color-1: #34344b;
+  --novablocks-blue-text-color-2: #21212f;
+
+  --novablocks-yellow-color-0: #ffffff;
+  --novablocks-yellow-color-1: #fef9d2;
+  --novablocks-yellow-color-2: #f9e547;
+  --novablocks-yellow-color-3: #d7c220;
+  --novablocks-yellow-color-4: #b4a006;
+  --novablocks-yellow-color-5: #908005;
+  --novablocks-yellow-color-6: #7a6c04;
+  --novablocks-yellow-color-7: #655a03;
+  --novablocks-yellow-color-8: #514902;
+  --novablocks-yellow-color-9: #3e3602;
+  --novablocks-yellow-color-10: #262305;
+  --novablocks-yellow-color-11: #000000;
+
+  --novablocks-yellow-text-color-1: #383630;
+  --novablocks-yellow-text-color-2: #23221e;
+
+  @include apply-palette( novablocks-blue );
+}
+
+@for $i from 0 through 11 {
+
+  .novablocks-u-color-variation-#{ $i } {
+    --novablocks-current-accent-color: #{ get-color( 'accent', $i ) };
+    --novablocks-current-text-color: #{ get-color( 'text', $i ) };
+    --novablocks-current-titles-color: #{ get-color( 'titles', $i ) };
+    --novablocks-current-background-color: #{ get-color( 'background', $i ) };
+  }
+}
+
+

@@ -1,0 +1,10 @@
+{
+	"palette": {
+		"type": "string",
+		"default": "palette1"
+	},
+	"paletteVariation": {
+		"type": "string",
+		"default": "0"
+	}
+}

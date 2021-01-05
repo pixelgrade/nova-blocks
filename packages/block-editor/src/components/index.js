@@ -56,7 +56,7 @@ export {
 
 export {
 	default as EmphasisLevelControls,
-	EmphasisBlockAreaControls,
+  emphasisAttributes,
 	EmphasisContentAreaControls,
 } from './emphasis-level-controls';
 

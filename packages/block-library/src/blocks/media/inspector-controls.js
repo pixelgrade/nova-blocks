@@ -2,7 +2,7 @@ import {
 	ControlsGroup,
 	ControlsTab,
 	ControlsSection,
-	EmphasisBlockAreaControls,
+	EmphasisContentAreaControls,
 } from "@novablocks/block-editor";
 
 import { getControlsClasses } from "@novablocks/utils";
@@ -34,7 +34,6 @@ const MediaInspectorControls = ( props ) => {
 
 		contentAreaWidth,
 		layoutGutter,
-		blockStyle,
 
 		// customize tab attributes
 		balanceEmphasis,
@@ -56,19 +55,16 @@ const MediaInspectorControls = ( props ) => {
 	return (
 		<Fragment>
 
-			<EmphasisBlockAreaControls>
-				{
-					blockStyle !== 'basic' &&
-					<RangeControl
-						value={ emphasisArea }
-						onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
-						label={ __( 'Emphasis Area' ) }
-						min={ 10 }
-						max={ 100 }
-						step={ 5 }
-					/>
-				}
-			</EmphasisBlockAreaControls>
+			<EmphasisContentAreaControls>
+        <RangeControl
+          value={ emphasisArea }
+          onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
+          label={ __( 'Emphasis Area' ) }
+          min={ 10 }
+          max={ 100 }
+          step={ 5 }
+        />
+			</EmphasisContentAreaControls>
 
 			<ControlsSection label={ __( 'Visual Balance' ) }>
 				<ControlsTab label={ __( 'Customize' ) }>

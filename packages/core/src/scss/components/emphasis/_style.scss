@@ -1,33 +1,13 @@
 .novablocks-block {
-	--novablocks-block-text-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-accent-color: var(--novablocks-block-current-accent-color);
-	--novablocks-block-titles-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-background-color: var(--novablocks-current-light-primary);
+	--novablocks-block-content-current-box-shadow: none;
 
 	--novablocks-block-padding: var(--novablocks-spacing);
 	--novablocks-block-content-padding: var(--novablocks-spacing);
-
-	--novablocks-block-content-text-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-content-titles-color: var(--novablocks-current-dark-secondary);
-	--novablocks-block-content-accent-color: var(--novablocks-block-current-accent-color);
-	--novablocks-block-content-background-color: transparent;
-	--novablocks-block-content-background-opacity: 1;
-
-	--novablocks-block-content-current-box-shadow: none;
-	--novablocks-block-current-accent-color: var(--novablocks-current-color-primary);
-
-	.has-secondary-accent-color & {
-		--novablocks-block-current-accent-color: var(--novablocks-current-color-secondary);
-	}
-
-	.has-tertiary-accent-color & {
-		--novablocks-block-current-accent-color: var(--novablocks-current-color-tertiary);
-	}
 }
 
 .novablocks-media {
 	position: relative;
-	z-index: var(--novablocks-block-zindex);
+	z-index: var(--novablocks-current-zindex);
 }
 
 .novablocks-block {
@@ -35,8 +15,8 @@
 	--block-content-padding: 0;
 
 	&[class] {
-		color: var(--novablocks-block-text-color);
-		background-color: var(--novablocks-block-background-color);
+		color: var(--novablocks-current-text-color);
+		background-color: var(--novablocks-current-background-color);
 
 		transition: var(--novablocks-transition);
 		transition-property: background-color, padding, margin;
@@ -47,11 +27,11 @@
 		}
 
 		h1, h2, h3 {
-			color: var(--novablocks-block-titles-color);
+			color: var(--novablocks-current-titles-color);
 		}
 
 		h4, h5, h6 {
-			color: var(--novablocks-block-accent-color);
+			color: var(--novablocks-current-accent-color);
 		}
 	}
 }
@@ -59,22 +39,15 @@
 .novablocks-block__content {
 
 	&[class] {
+    color: var(--novablocks-current-text-color);
+
 		position: relative;
 		padding: var(--block-content-padding);
 
-		color: var(--novablocks-block-content-text-color);
 		transform: translateZ(0);
 
 		transition: var(--novablocks-transition);
 		transition-property: padding, box-shadow;
-
-		h1, h2, h3 {
-			color: var(--novablocks-block-content-titles-color);
-		}
-
-		h4, h5, h6 {
-			color: var(--novablocks-block-content-accent-color);
-		}
 	}
 
 
@@ -95,8 +68,7 @@
 			z-index: -1;
 
 			display: block;
-			background-color: var(--novablocks-block-content-background-color);
-			opacity: var(--novablocks-block-content-background-opacity);
+			background-color: var(--novablocks-current-background-color, transparent);
 			pointer-events: none;
 
 			transition: var(--novablocks-transition);
@@ -107,80 +79,15 @@
 
 @include below(tablet) {
 
-	.block-is-moderate.content-is-basic {
-		--novablocks-block-background-color: var(--novablocks-current-light-tertiary);
+	.novablocks-block {
 		--block-padding: var(--novablocks-block-padding);
-	}
-
-	.block-is-highlighted.content-is-basic,
-	.block-is-highlighted.content-is-moderate,
-	.block-is-basic.content-is-highlighted,
-	.block-is-moderate.content-is-highlighted {
-		--novablocks-block-background-color: var(--novablocks-current-dark-primary);
-		--novablocks-block-content-text-color: var(--novablocks-current-light-primary);
-		--novablocks-block-content-titles-color: var(--novablocks-current-light-primary);
-		--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
-		--novablocks-block-text-color: var(--novablocks-block-content-text-color);
-		--novablocks-block-titles-color: var(--novablocks-block-content-titles-color);
-		--novablocks-block-accent-color: var(--novablocks-block-content-accent-color);
-		--block-padding: var(--novablocks-block-padding);
-
-		.is-style-alternate & {
-			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
-			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
-		}
 	}
 }
 
 @include above(tablet) {
 
-	.block-is-moderate {
-		--novablocks-block-background-color: var(--novablocks-current-light-tertiary);
-		--block-padding: var(--novablocks-block-padding);
-	}
-
-	.block-is-highlighted {
-		--novablocks-block-background-color: var(--novablocks-current-dark-primary);
-		--novablocks-block-text-color: var(--novablocks-current-light-primary);
-		--novablocks-block-titles-color: var(--novablocks-current-light-primary);
-		--novablocks-block-accent-color: var(--novablocks-current-light-primary);
-		--block-padding: var(--novablocks-block-padding);
-
-		.is-style-alternate & {
-			--novablocks-block-background-color: var(--novablocks-block-current-accent-color);
-			--novablocks-block-accent-color: var(--novablocks-current-light-primary);
-
-			&:not(.content-is-highlighted) {
-				--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
-			}
-		}
-	}
-
 	.content-is-moderate,
 	.content-is-highlighted {
 		--block-content-padding: calc( var(--novablocks-block-content-padding) * var(--novablocks-block-content-padding-multiplier, 1) );
-	}
-
-	.content-is-moderate.block-is-moderate {
-		--novablocks-block-content-background-color: var(--novablocks-current-light-primary);
-	}
-
-	.content-is-highlighted.block-is-highlighted {
-		--novablocks-block-content-background-color: var(--novablocks-current-light-primary);
-	}
-
-	.block-is-highlighted:not(.content-is-highlighted),
-	.content-is-highlighted:not(.block-is-highlighted) {
-		--novablocks-block-content-text-color: var(--novablocks-current-light-primary);
-		--novablocks-block-content-titles-color: var(--novablocks-block-content-text-color);
-	}
-
-	.content-is-highlighted:not(.block-is-highlighted) {
-		--novablocks-block-content-background-color: var(--novablocks-current-dark-primary);
-
-		.is-style-alternate & {
-			--novablocks-block-content-background-color: var(--novablocks-block-current-accent-color);
-			--novablocks-block-content-accent-color: var(--novablocks-current-light-primary);
-		}
 	}
 }

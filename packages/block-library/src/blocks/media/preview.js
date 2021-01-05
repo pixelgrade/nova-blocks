@@ -11,7 +11,6 @@ const MediaPreview = function( props ) {
 	const {
 		attributes: {
 			contentStyle,
-			blockStyle,
 			style,
 			accentColor,
 
@@ -25,9 +24,31 @@ const MediaPreview = function( props ) {
 			contentAreaWidth,
 			layoutGutter,
 			className,
+
+      palette,
+      paletteVariation
 		},
 		settings,
 	} = props;
+
+  let blockColorsIndex = parseInt( paletteVariation, 10 );
+  let contentColorsIndex = parseInt( paletteVariation, 10 );
+
+  if ( contentStyle === 'moderate' ) {
+    if ( blockColorsIndex < 6 ) {
+      contentColorsIndex = Math.max(0, blockColorsIndex - 2 );
+    } else {
+      contentColorsIndex = Math.min(11, blockColorsIndex + 2 );
+    }
+  }
+
+  if ( contentStyle === 'highlighted' ) {
+    if ( blockColorsIndex < 6 ) {
+      contentColorsIndex = Math.min( 11, blockColorsIndex + 8 );
+    } else {
+      contentColorsIndex = 0;
+    }
+  }
 
 	const classNames = classnames(
 		className,
@@ -52,8 +73,8 @@ const MediaPreview = function( props ) {
 
 	const blockClassNames = classnames(
 		`novablocks-block`,
-		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
+    `novablocks-u-color-variation-${ blockColorsIndex }`,
 	);
 
 	return (
@@ -63,7 +84,7 @@ const MediaPreview = function( props ) {
 					<div className="wp-block" data-align="wide">
 						<div className="novablocks-media__layout">
 							<div className="novablocks-media__content">
-								<div className="novablocks-media__inner-container novablocks-block__content">
+								<div className={ `novablocks-media__inner-container novablocks-block__content novablocks-u-color-variation-${ contentColorsIndex }` }>
 									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
 								</div>
 							</div>

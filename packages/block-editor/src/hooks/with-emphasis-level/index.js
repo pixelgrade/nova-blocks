@@ -1,4 +1,4 @@
-import { EmphasisLevelControls } from "../../index";
+import { emphasisAttributes, EmphasisLevelControls } from "../../index";
 
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
@@ -20,12 +20,11 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 
 		return (
 			<Fragment>
-				<OriginalComponent { ...props } />
+        <OriginalComponent { ...props } />
 				<EmphasisLevelControls { ...props } />
 			</Fragment>
 		);
 	};
-
 });
 addFilter( 'editor.BlockEdit', 'novablocks/with-ehpasis-level-controls', withEmphasisLevelControls );
 
@@ -40,10 +39,6 @@ function addEmphasisLevelAttribute( block ) {
 	}
 
 	block.attributes = Object.assign( block.attributes, {
-		blockStyle: {
-			type: 'string',
-			default: 'basic',
-		},
 		contentStyle: {
 			type: 'string',
 			default: block.name === 'novablocks/media' ? 'moderate' : 'basic',
@@ -51,16 +46,8 @@ function addEmphasisLevelAttribute( block ) {
 		emphasisByContrast: {
 			type: 'number',
 			default: 1
-		},
-		accentColor: {
-			type: 'string',
-			default: 'primary'
-		},
-		style: {
-			type: 'string',
-			default: 'default'
-		},
-	});
+		}
+	}, emphasisAttributes );
 
 	return block;
 }

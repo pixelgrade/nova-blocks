@@ -20,6 +20,6 @@
 	fill: var(--novablocks-current-color-primary);
 
 	.novablocks-block & {
-		fill: var(--novablocks-block-accent-color);
+		fill: var(--novablocks-current-accent-color);
 	}
 }
