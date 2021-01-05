@@ -60,7 +60,7 @@
   }
 }
 
-@each $palette in primary, secondary, tertiary {
+@each $palette in primary, secondary, tertiary, novablocks-yellow {
 
   .novablocks-u-color-palette-#{ $palette } {
     @include apply-palette( $palette );

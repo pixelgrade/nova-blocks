@@ -61,8 +61,8 @@ function novablocks_spanac() {
 				$value = $options_details[ $control_id ][ 'default' ];
 			}
 
-			echo '--' . $label . '-color-0: #FFFFFF;' . PHP_EOL;
-			echo '--' . $label . '-color-1: ' . $lighter . ';' . PHP_EOL;
+			echo '--' . $label . '-color-0: ' . $lighter . ';' . PHP_EOL;
+			echo '--' . $label . '-color-1: ' . $light . ';' . PHP_EOL;
 			echo '--' . $label . '-color-2: ' . $light . ';' . PHP_EOL;
 			echo '--' . $label . '-color-3: ' . $light . ';' . PHP_EOL;
 
@@ -70,11 +70,10 @@ function novablocks_spanac() {
 			echo '--' . $label . '-color-5: ' . $value . ';' . PHP_EOL;
 			echo '--' . $label . '-color-6: ' . $value . ';' . PHP_EOL;
 			echo '--' . $label . '-color-7: ' . $value . ';' . PHP_EOL;
-			echo '--' . $label . '-color-8: ' . $value . ';' . PHP_EOL;
 
+			echo '--' . $label . '-color-8: ' . $dark . ';' . PHP_EOL;
 			echo '--' . $label . '-color-9: ' . $dark . ';' . PHP_EOL;
 			echo '--' . $label . '-color-10: ' . $dark . ';' . PHP_EOL;
-
 			echo '--' . $label . '-color-11: #000000;' . PHP_EOL;
 
 			echo '--' . $label . '-text-color-1: '. $text_color . ';' . PHP_EOL;

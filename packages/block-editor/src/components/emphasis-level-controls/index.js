@@ -105,6 +105,8 @@ const ColorSetsControl = ( props ) => {
           setAttributes( { palette: newPalette } )
         } }
         options={[
+          { label: 'Nova Blue', value: 'novablocks-blue' },
+          { label: 'Nova Yellow', value: 'novablocks-yellow' },
           { label: 'Color A', value: 'primary' },
           { label: 'Color B', value: 'secondary' },
           { label: 'Color C', value: 'tertiary' },
