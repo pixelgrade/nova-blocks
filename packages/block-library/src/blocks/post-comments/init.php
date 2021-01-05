@@ -38,7 +38,7 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		$after = '
 	</div><!-- .novablocks-conversations__container -->
 
-	<div class="novablocks-conversations__notification-text">' . esc_html__('Link copied to your clipboard', '__plugin_txtd'). '</div>
+	<div class="novablocks-conversations__notification-text"><span>' . esc_html__('Link copied to your clipboard', '__plugin_txtd'). '</span></div>
 </div><!-- .novablocks-conversations -->';
 
 		/* ============================

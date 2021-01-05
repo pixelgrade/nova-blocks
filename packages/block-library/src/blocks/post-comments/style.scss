@@ -706,16 +706,27 @@
 .novablocks-conversations__notification-text {
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 0;
+  
+  display: flex;
+  justify-content: center;
+  
+  width: 100%;
+  
+  transform: translateY(-50%);
   pointer-events: none;
-  background: var(--novablocks-dark-1);
-  color: var(--novablocks-light-1);
-  padding: 10px;
-  border-radius: 0 10px;
   opacity: 0;
 
   z-index: 100;
+  
+  span {
+    background: var(--novablocks-dark-1);
+    color: var(--novablocks-light-1);
+    padding: 10px;
+    border-radius: 0 10px;
+    
+    text-align: center;
+  }
 }
 
 .notification--is-visible {
