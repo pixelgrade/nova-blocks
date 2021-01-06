@@ -1,14 +1,12 @@
 /**
- * Internal dependencies
+ * External dependencies
  */
-import * as icons from '@novablocks/icons';
 import classnames from "classnames";
-import deprecated from './deprecated';
 
 /**
  * WordPress dependencies
  */
-import { __  } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { Fragment } from '@wordpress/element';
 
@@ -18,9 +16,17 @@ import {
  } from '@wordpress/components';
 
 import {
-	URLInput,
-	InnerBlocks
- } from '@wordpress/block-editor';
+  URLInput,
+  InnerBlocks
+} from '@wordpress/block-editor';
+
+import { getSvg } from "@novablocks/block-editor";
+
+/**
+ * Internal dependencies
+ */
+import deprecated from './deprecated';
+import iconSvg from './announcement-bar-block.svg';
 
 const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
 const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
@@ -29,7 +35,7 @@ registerBlockType( 'novablocks/announcement-bar', {
 	title: __( 'Announcement Bar', '__plugin_txtd' ),
 	description: __( 'Display a featured message through a banner across the top of your site.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.announcement,
+	icon: getSvg( iconSvg ),
 	keywords: [ __( 'Promo Bar', '__plugin_txtd' ), __( 'Welcome Header Bar', '__plugin_txtd' ), __( 'Top Bar', '__plugin_txtd' ) ],
 	styles: [ {
 		name: 'accent',
@@ -60,6 +66,9 @@ registerBlockType( 'novablocks/announcement-bar', {
 			default: '<b>Find me on Instagram!</b> New photos and interesting facts every day.',
 		}
 	},
+  supports: {
+	  html: false
+  },
 	save() {
 		return <InnerBlocks.Content />;
 	},
@@ -70,7 +79,6 @@ registerBlockType( 'novablocks/announcement-bar', {
 			attributes: {
 				url,
 				opensInNewTab,
-				content
 			},
 			setAttributes,
 			isSelected,
@@ -87,7 +95,7 @@ registerBlockType( 'novablocks/announcement-bar', {
 				<div className={ classNames }>
 					<InnerBlocks
 						allowedBlocks={ ALLOWED_BLOCKS }
-						template ={ANNOUNCEMENT_BAR_TEMPLATE}
+						template={ ANNOUNCEMENT_BAR_TEMPLATE }
 					/>
 				</div>
 				{ isSelected &&

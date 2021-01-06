@@ -1,11 +1,12 @@
-import * as icons from '@novablocks/icons';
 import AdvancedGallery from '@novablocks/advanced-gallery';
-
 import Blob from '@novablocks/blob';
+
+import iconSvg from './advanced-gallery-block.svg';
 
 import {
 	generateDefaults,
-	getPlaceholderImages
+	getPlaceholderImages,
+  getSvg,
 } from "@novablocks/block-editor";
 
 import {
@@ -53,9 +54,10 @@ registerBlockType( 'novablocks/advanced-gallery', {
 	title: __( 'Gallery of the Stars', '__plugin_txtd' ),
 	description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.gallery,
+	icon: getSvg( iconSvg ),
 	supports: {
 		align: [ 'wide', 'full' ],
+    html: false
 	},
 	// Additional search terms
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],

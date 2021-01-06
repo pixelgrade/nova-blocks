@@ -12,8 +12,6 @@ import {
 	createHigherOrderComponent
  } from '@wordpress/compose';
 
-import { __ } from '@wordpress/i18n';
-
 import {
 	InnerBlocks,
  } from '@wordpress/block-editor';
@@ -33,10 +31,11 @@ const CARDS_COLLECTION_TEMPLATE = [
 const CardsCollectionEdit = ( props ) => {
 
 	const {
-		innerBlocks
+		innerBlocks,
+    isSelected,
 	} = props;
 
-	const hasAppender = !! innerBlocks && innerBlocks.length < 4;
+	const hasAppender = !! innerBlocks && innerBlocks.length < 4 && isSelected;
 	const passedProps = Object.assign( {}, props, {
 		className: classnames(
 			props.className,
@@ -46,13 +45,12 @@ const CardsCollectionEdit = ( props ) => {
 
 	return (
 		<Fragment>
-			<Collection hasAppender={ hasAppender } { ...passedProps }>
+			<Collection.Component hasAppender={ hasAppender } { ...passedProps }>
 				<InnerBlocks
 					allowedBlocks={ ALLOWED_BLOCKS }
 					template={ CARDS_COLLECTION_TEMPLATE }
-					renderAppender={ hasAppender ? window.undefined : false }
 				/>
-			</Collection>
+			</Collection.Component>
 		</Fragment>
 	);
 };

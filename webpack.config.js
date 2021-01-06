@@ -100,14 +100,15 @@ const CopyPackageCSSPlugin =
 
 const CopyBlocksCSSPlugin =
 	new CopyWebpackPlugin(
-		glob.sync( './packages/block-library/build-style/blocks/*/' ).map( ( path ) => {
-			let blockName = path.replace( './packages/block-library/build-style/blocks/', '' );
-			blockName = blockName.replace( '/', '' );
+		glob.sync( './packages/block-library/build-style/blocks/*' ).map( ( blockDirPath ) => {
+			let blockName = blockDirPath.replace('./packages/block-library/build-style/blocks/', '');
+			blockName = blockName.replace('/', '');
 
 			return {
-				from: `./packages/block-library/build-style/blocks/${ blockName }/*.css`,
-				to: `./build/block-library/blocks/${ blockName }/`,
-				flatten: true,
+				from: `**/*.css`,
+				to: `build/block-library/blocks/${blockName}/`,
+				flatten: false,
+				context: `packages/block-library/build-style/blocks/${ blockName }/`,
 				transform: cssTransform,
 			}
 		} )
@@ -115,28 +116,46 @@ const CopyBlocksCSSPlugin =
 
 const CopyBlocksPhpPlugin =
 	new CopyWebpackPlugin(
-		glob.sync( './packages/block-library/build/blocks/*/' ).map( ( path ) => {
-			let blockName = path.replace( './packages/block-library/build/blocks/', '' );
-			blockName = blockName.replace( '/', '' );
+			glob.sync('./packages/block-library/build/blocks/*').map((blockDirPath) => {
+				let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
+				blockName = blockName.replace('/', '');
 
-			return {
-				from: `./packages/block-library/build/blocks/${ blockName }/*.php`,
-				to: `./build/block-library/blocks/${ blockName }/`,
-				flatten: true,
-			}
-		} )
+				return {
+					from: `**/*.php`,
+					to: `build/block-library/blocks/${blockName}/`,
+					flatten: false,
+					context: `packages/block-library/build/blocks/${ blockName }/`,
+				}
+			})
 	);
 
-const CopyBlocksJsonPlugin =
+// Copy the whole `lib` directory.
+const CopyBlocksLibPlugin =
+  new CopyWebpackPlugin(
+    glob.sync('./packages/block-library/build/blocks/*').map((blockDirPath) => {
+      let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
+      blockName = blockName.replace('/', '');
+
+      return {
+        from: `**/*.*`,
+        to: `build/block-library/blocks/${blockName}/lib/`,
+        flatten: false,
+        context: `packages/block-library/build/blocks/${ blockName }/lib/`,
+      }
+    })
+  );
+
+const CopyBlocksAssetsPlugin =
 	new CopyWebpackPlugin(
-		glob.sync( './packages/block-library/build/blocks/*/' ).map( ( path ) => {
-			let blockName = path.replace( './packages/block-library/build/blocks/', '' );
-			blockName = blockName.replace( '/', '' );
+		glob.sync( './packages/block-library/build/blocks/*' ).map( ( blockDirPath ) => {
+			let blockName = blockDirPath.replace('./packages/block-library/build/blocks/', '');
+			blockName = blockName.replace('/', '');
 
 			return {
-				from: `./packages/block-library/build/blocks/${ blockName }/*.json`,
-				to: `./build/block-library/blocks/${ blockName }/`,
-				flatten: true,
+				from: `**/*.(json|svg)`,
+				to: `build/block-library/blocks/${ blockName }/`,
+				flatten: false,
+				context: `packages/block-library/build/blocks/${ blockName }/`,
 			}
 		} )
 	);
@@ -150,6 +169,13 @@ const DefaultConfig = {
 				use: require.resolve( 'source-map-loader' ),
 				enforce: 'pre',
 			},
+			{
+				test: /\.svg$/,
+				use: [
+					'svg-sprite-loader',
+					'svgo-loader'
+				]
+			}
 		] ),
 	},
 	plugins: [
@@ -178,7 +204,8 @@ const DefaultConfig = {
 		CopyPackageCSSPlugin,
 		CopyBlocksCSSPlugin,
 		CopyBlocksPhpPlugin,
-		CopyBlocksJsonPlugin,
+    CopyBlocksLibPlugin,
+		CopyBlocksAssetsPlugin,
 		new DependencyExtractionWebpackPlugin( {
 			injectPolyfill: true,
 			requestToExternal,
@@ -261,6 +288,21 @@ VendorScripts.forEach( script => {
 	VendorEntries[ `./dist/vendor/${ script }.min` ] = `./src/vendor/${ script }`;
 } );
 
+// Just copy the files in each directory.
+const CopyVendorDirsPlugin =
+	new CopyWebpackPlugin(
+		glob.sync('./src/vendor/trix').map((dirPath) => {
+			let vendor = dirPath.replace('./src/vendor/', '');
+
+			return {
+				from: '*',
+				to: `dist/vendor/${vendor}/`,
+				flatten: false,
+				context: `src/vendor/${vendor}/`,
+			}
+		})
+	);
+
 const VendorConfig = {
 	mode,
 	externals: {
@@ -273,6 +315,9 @@ const VendorConfig = {
 	optimization: {
 		...minimizeConfig,
 	},
+	plugins: [
+		CopyVendorDirsPlugin,
+	],
 };
 
 module.exports = [

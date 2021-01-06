@@ -1,12 +1,13 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import iconSvg from './hero-block.svg';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import { STORE_NAME } from '@novablocks/core';
+
 import { getRandomBetween } from "@novablocks/utils";
+import { getSvg } from "@novablocks/block-editor";
 
 import blockAttributes from "./attributes";
 
@@ -49,7 +50,7 @@ async function getNewDefaults() {
 	};
 }
 
-const settings = select( STORE_NAME ).getSettings();
+const settings = select( 'novablocks' ).getSettings();
 
 generateDefaults( 'novablocks/hero', getNewDefaults );
 insertTemplate( 'novablocks/hero', settings.hero.template );
@@ -58,7 +59,7 @@ registerBlockType( 'novablocks/hero', {
 	title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
 	description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.hero,
+	icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [
 		__( 'cover', '__plugin_txtd' ),
@@ -68,6 +69,7 @@ registerBlockType( 'novablocks/hero', {
 	],
 	supports: {
 		anchor: true,
+    html: false,
 	},
 	deprecated,
 	attributes,

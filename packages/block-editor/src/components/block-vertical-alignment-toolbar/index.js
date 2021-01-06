@@ -1,17 +1,18 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
+import { getIconSvg } from '../get-svg';
 
 /**
  * WordPress dependencies
  */
-import { _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { Toolbar } from '@wordpress/components';
 import { withViewportMatch } from '@wordpress/viewport';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
 import { createContext } from '@wordpress/element';
+
 const { Consumer } = createContext( {
 	name: '',
 	isSelected: false,
@@ -22,16 +23,16 @@ const { Consumer } = createContext( {
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
 	top: {
-		icon: icons.alignTop,
-		title: _x( 'Vertically Align Top', 'Block vertical alignment setting' ),
+    icon: getIconSvg( 'alignTop' ),
+    title: __( 'Align Top', '__plugin_txtd' ),
 	},
 	center: {
-		icon: icons.alignCenter,
-		title: _x( 'Vertically Align Middle', 'Block vertical alignment setting' ),
+		icon: getIconSvg( 'alignCenter' ),
+    title: __( 'Align Center', '__plugin_txtd' ),
 	},
 	bottom: {
-		icon: icons.alignBottom,
-		title: _x( 'Vertically Align Bottom', 'Block vertical alignment setting' ),
+		icon: getIconSvg( 'alignBottom' ),
+    title: __( 'Align Bottom', '__plugin_txtd' ),
 	},
 };
 
@@ -50,7 +51,6 @@ export function BlockVerticalAlignmentToolbar( { isCollapsed, value, onChange, c
 		<Toolbar
 			isCollapsed={ isCollapsed }
 			icon={ activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon }
-			label={ _x( 'Change Alignment', 'Block vertical alignment setting label' ) }
 			controls={
 				controls.map( ( control ) => {
 					return {

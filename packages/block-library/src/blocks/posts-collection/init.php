@@ -181,9 +181,10 @@ function novablocks_get_tag_name( $tag ) {
 
 function novablocks_get_post_card_markup( $post, $attributes ) {
 
-	$media        = get_the_post_thumbnail_url( $post );
-	$title        = get_the_title( $post );
-	$excerpt      = get_the_excerpt( $post );
+
+	$media_url = get_the_post_thumbnail_url( $post );
+	$title     = get_the_title( $post );
+	$excerpt   = get_the_excerpt( $post );
 
 	$titleTag    = 'h' . $attributes['cardTitleLevel'];
 
@@ -229,7 +230,10 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 			<?php if ( ! empty( $attributes['showMedia'] ) ) { ?>
 				<div class="novablocks-card__layout-media novablocks-grid__item-media">
-					<?php echo novablocks_get_card_media_markup( $media ); ?>
+					<?php echo novablocks_get_card_media_markup( array(
+						'type' => 'image',
+						'url'  => $media_url,
+					) ); ?>
 				</div>
 			<?php } ?>
 

@@ -944,7 +944,7 @@ function novablocks_get_theme_support() {
 	$default = array(
 		'hero',
 		'media',
-		'slideshow',
+		'slideshow'
 	);
 
 	if ( is_array( $theme_support ) ) {
@@ -986,11 +986,24 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 			continue;
 		}
 
+		$value = $attributes[ $attribute ];
+
 		// The value may be an array, so we JSON encode everything since json_encode() won't do anything for singular values.
-		$data_attributes[] = 'data-' . $data_attribute . '="' . json_encode( $attributes[ $attribute ] ) . '"';
+		if ( is_array( $value ) ) {
+			$value = json_encode( $value );
+		}
+
+		$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
 	}
 
 	return $data_attributes;
+}
+
+function novablocks_get_advanced_gallery_component_attributes() {
+	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
+	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
+
+	return array_merge( $gallery_attributes, $blob_attributes );
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
@@ -1005,14 +1018,9 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$blob_attributes_config = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
-	$blob_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $blob_attributes_config ) );
-
-	$advanced_gallery_attributes_config = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
-	$advanced_gallery_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $advanced_gallery_attributes_config ) );
-
-	$data_attributes_array = array_merge( $blob_attributes_array, $advanced_gallery_attributes_array );
-
+	$attributes_config = novablocks_get_advanced_gallery_component_attributes();
+	$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
@@ -1233,15 +1241,22 @@ function novablocks_get_collection_header_output( $attributes ) {
 	return $output;
 }
 
-function novablocks_get_card_media_markup( $url ) {
+function novablocks_get_card_media_markup( $media ) {
+
+	$url = $media['url'];
 
 	ob_start(); ?>
 
 	<div class="novablocks-card__media-wrap">
 		<div class="novablocks-card__media">
-			<?php if ( ! empty( $url ) ) { ?>
-				<img class="novablocks-card__media-image" src="<?php echo $url ?>" />
-			<?php } else { ?>
+			<?php if ( ! empty( $url ) ) {
+				if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
+					echo '<video muted autoplay loop playsinline class="novablocks-card__media-image" src="' . esc_url( $url ) . '"/>';
+				} else {
+					$url = novablocks_get_image_url( $media, 'novablocks_medium' );
+					echo '<img class="novablocks-card__media-image" src="' . $url . '" />';
+				}
+			} else { ?>
 				<div class="novablocks-card__media-placeholder">
 					<svg width="100" height="67" viewBox="0 0 100 67" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z" fill="currentColor"/>
@@ -1551,4 +1566,33 @@ function novablocks_block_area_has_blocks( $slug ) {
 	}
 
 	return false;
+}
+
+/**
+ * Return a script for flexibly localizing data to a window property.
+ *
+ * Unlike wp_localize_script() that simply creates a variable and assigns it the value,
+ * thus overwriting anything that may have been in that variable, we will output a script that
+ * will test if the variable exists and only overwrite the first level nodes, not everything.
+ *
+ * @since 1.8.0
+ *
+ * @param string $object_name Name of the variable that will contain the data.
+ * @param array  $l10n        Array of data to localize.
+ *
+ * @return bool True on success, false on failure.
+ */
+
+function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
+	$script = "window.$object_name = window.$object_name || parent.$object_name || {};\n";
+
+	foreach ( (array) $l10n as $key => $value ) {
+		if ( is_scalar( $value ) ) {
+			$value = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+		}
+
+		$script .= "$object_name.$key = " . wp_json_encode( $value ) . ";\n";
+	}
+
+	return $script;
 }

@@ -1,14 +1,19 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
 import edit from './edit';
 import save from './save';
+import iconSvg from './card-block.svg';
 import deprecated from './deprecated';
-import { getRandomArrayFromArray } from "@novablocks/utils";
+
+import {
+  getRandomArrayFromArray,
+} from "@novablocks/utils";
+
 import {
 	generateDefaults,
 	getPlaceholderImages,
+  getSvg,
 } from "@novablocks/block-editor";
 
 import attributes from "./attributes";
@@ -39,9 +44,12 @@ registerBlockType( 'novablocks/card', {
 	description: __( 'Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	parent: [ 'novablocks/cards-collection' ],
-	icon: icons.card,
+	icon: getSvg( iconSvg ),
 	keywords: [ __( 'image with text', '__plugin_txtd' ) ],
 	attributes,
+  supports: {
+    html: false
+  },
 	deprecated,
 	edit,
 	save,

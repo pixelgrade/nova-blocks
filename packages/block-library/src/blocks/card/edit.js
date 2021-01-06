@@ -1,16 +1,20 @@
 /**
  * WordPress dependencies
  */
-
-import * as icons from "@novablocks/icons";
-
 import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
 
 import {
 	InnerBlocks,
 	MediaUpload,
  } from '@wordpress/block-editor';
+
+import {
+  getSvg
+} from '@novablocks/block-editor';
+
+import placeholderSvg from './card-media-placeholder.svg';
 
 const CardEdit = ( props ) => {
 
@@ -44,15 +48,22 @@ const CardEdit = ( props ) => {
 			},
 		} = props;
 
-		const mediaURL = media?.sizes?.novablocks_medium?.url || media?.sizes?.novablocks_large?.url || media?.url;
+    const mediaURL = media?.sizes?.novablocks_medium?.url || media?.url;
 
-		if ( !! mediaURL ) {
-			return <img className={ `${ blockClassName }__media-image` } src={ mediaURL } />
-		}
+    if ( !! mediaURL ) {
+      return (
+        <Fragment>
+          { media.type !== 'video' &&
+            <img className={ `${ blockClassName }__media-image` } src={ mediaURL } alt={ media?.alt } /> }
+          { media.type === 'video' &&
+            <video muted autoPlay loop playsInline className={ `${ blockClassName }__media-image` } src={ media?.url } /> }
+        </Fragment>
+      )
+    }
 
 		return (
 			<div className={ `${ blockClassName }__media-placeholder` }>
-				{ icons.placeholder }
+				{ getSvg( placeholderSvg ) }
 			</div>
 		);
 	};

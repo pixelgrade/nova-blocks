@@ -1,8 +1,7 @@
 /**
  * Internal dependencies
  */
-import * as icons from '@novablocks/icons';
-
+import iconSvg from './menu-food-block.svg';
 import edit from './edit';
 import save from './save';
 
@@ -17,11 +16,13 @@ import { registerBlockType } from '@wordpress/blocks';
 
 import { select } from '@wordpress/data';
 
+import { getSvg } from "@novablocks/block-editor";
+
 registerBlockType( 'novablocks/menu-food', {
 	title: __( 'Food Menu', '__plugin_txtd' ),
 	description: __( 'Display a list of food or drink items available at your venue.', '__plugin_txtd' ),
 	category: 'nova-blocks',
-	icon: icons.foodmenu,
+	icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [
 		__( 'food menu', '__plugin_txtd' ),
@@ -48,6 +49,9 @@ registerBlockType( 'novablocks/menu-food', {
 			default: true
 		}
 	},
+  supports: {
+    html: false
+  },
 	example: {
 		attributes: {
 			enableTwoColumns: false

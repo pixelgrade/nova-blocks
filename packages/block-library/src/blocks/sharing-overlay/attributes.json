@@ -1,0 +1,46 @@
+{
+	"showCopy": {
+		"type": "boolean",
+		"default": true
+	},
+	"showSharePrivately": {
+		"type": "boolean",
+		"default": true
+	},
+	"showSocialIcons": {
+		"type": "boolean",
+		"default": true
+	},
+	"showShareInPerson": {
+		"type": "boolean",
+		"default": true
+	},
+	"showTwitter": {
+		"type": "boolean",
+		"default": true
+	},
+	"showFacebook": {
+		"type": "boolean",
+		"default": true
+	},
+	"showLinkedin": {
+		"type": "boolean",
+		"default": true
+	},
+	"showPinterest": {
+		"type": "boolean",
+		"default": false
+	},
+	"showWhatsapp": {
+		"type": "boolean",
+		"default": false
+	},
+	"headingLevel": {
+		"type": "number",
+		"default": 4
+	},
+	"buttonLabel": {
+		"type": "string",
+		"default": "View sharing options"
+	}
+}
