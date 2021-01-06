@@ -198,7 +198,7 @@
     display: grid;
     grid-template-columns: auto;
     grid-column-gap: var(--comments-grid-gap);
-    grid-auto-columns: 1fr;
+    grid-auto-columns: minmax(0, 1fr);
 
     justify-content: stretch;
   }
