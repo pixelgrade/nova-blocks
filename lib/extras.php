@@ -1021,6 +1021,12 @@ function novablocks_render_advanced_gallery( $attributes ) {
 	$attributes_config = novablocks_get_advanced_gallery_component_attributes();
 	$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+
+	// the images attribute outputs a lot of code which is not used in the frontend
+	if ( ( $key = array_search( 'images', $data_attributes_array ) ) !== false ) {
+		unset( $data_attributes_array[ $key ] );
+	}
+
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
