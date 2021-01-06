@@ -13,7 +13,7 @@ import { InnerBlocks } from "@wordpress/block-editor";
 import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/post-comments', {
-	title: __( 'Comments Nova', '__plugin_txtd' ),
+	title: __( 'Conversation System', '__plugin_txtd' ),
 	description: __( 'Display your post comments section.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
 	category: 'nova-blocks',

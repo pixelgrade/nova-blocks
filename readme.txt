@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.2.2
 Tested up to: 5.5.3
 Requires PHP: 5.4.0
-Stable tag: 1.7.1
+Stable tag: 1.8.0
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.8.0 =
+* New Block: Conversation System to display an improved comments list and comment form
+* New Block: Sharing System to display a popup with multiple ways of sharing the page it is used on
+* Added proper video support for the Cards Collection block
+* Fixed templates for Hero and Media Card block which weren't working with WordPress 5.6
 
 = 1.7.1 =
 * Fix spacing inside block areas on pages that aren't built with the block editor

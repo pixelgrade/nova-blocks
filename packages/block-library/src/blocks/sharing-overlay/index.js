@@ -13,7 +13,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/sharing-overlay', {
-	title: __( 'Sharing Overlay', '__plugin_txtd' ),
+	title: __( 'Sharing System', '__plugin_txtd' ),
 	description: __( 'Add a button that toggles sharing overlay.', '__plugin_txtd' ),
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
