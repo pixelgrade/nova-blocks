@@ -58,13 +58,15 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 				// Do not show anything when there are no comments since we will use a different comments title.
 				'zeroCommentsSubtitle'                        => '',
 				'oneCommentSubtitle'                          => esc_html__( 'One so far', '__plugin_txtd' ),
-				'multipleCommentsSubtitle'                    => esc_html__( '%d comments', '__plugin_txtd' ),
+				'multipleCommentsSubtitle'                    => esc_html__( '% comments', '__plugin_txtd' ),
 				// Text to use when we want to differentiate between top-level comments (conversations) and replies.
 				// Leave empty to not differentiate and use 'multipleCommentsSubtitle'.
 				// The differentiation will take place only when there is an actual difference (e.g. not when all comments are top-level).
 				/* translators: 1: The number of top-level comments, 2: The number of replies  */
-				'multipleCommentsSubtitleWithDifferentiation' =>
-					__( '<span class="conversations-number">%1$d</span> with <span class="replies-number">%2$d</span> replies', '__plugin_txtd' ),
+				// Example:
+				// 'multipleCommentsSubtitleWithDifferentiation' =>
+				// __( '<span class="conversations-number">%1$d</span> with <span class="replies-number">%2$d</span> replies', '__plugin_txtd' ),
+				'multipleCommentsSubtitleWithDifferentiation',
 			] );
 
 

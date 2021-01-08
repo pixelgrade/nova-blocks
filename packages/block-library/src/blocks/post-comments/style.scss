@@ -198,7 +198,7 @@
     display: grid;
     grid-template-columns: auto;
     grid-column-gap: var(--comments-grid-gap);
-    grid-auto-columns: 1fr;
+    grid-auto-columns: minmax(0, 1fr);
 
     justify-content: stretch;
   }
@@ -227,15 +227,17 @@
       > .comment-wrapper {
         position: relative;
         z-index: 10;
-      }
-
-      .comment-highlighted:not(.comment-dropdown-item) {
-        padding-top: var(--element-spacing);
-        margin-top: calc(-1 * var(--element-spacing));
-
-        &.comment-wrapper {
-          padding-top: calc(var(--element-spacing) * 2);
-          margin-top: calc(-1 * var(--element-spacing));
+        
+        + .comment {
+          .comment-highlighted:not(.comment-dropdown-item) {
+            padding-top: var(--element-spacing);
+            margin-top: calc(-1 * var(--element-spacing));
+    
+            &.comment-wrapper {
+              padding-top: calc(var(--element-spacing) * 2);
+              margin-top: calc(-1 * var(--element-spacing));
+            }
+          }
         }
       }
 
@@ -354,15 +356,6 @@
         .comment-footer-highlights {
           padding-left: var(--element-spacing);
         }
-      }
-    }
-  }
-
-  &:not(.user-is-replying) {
-    @include below(tablet) {
-
-      .parent > .comment-wrapper ~ :not(.comment-highlighted) + :not(.comment-highlighted) > .comment-wrapper {
-        padding-top: 0;
       }
     }
   }
@@ -713,16 +706,27 @@
 .novablocks-conversations__notification-text {
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 0;
+  
+  display: flex;
+  justify-content: center;
+  
+  width: 100%;
+  
+  transform: translateY(-50%);
   pointer-events: none;
-  background: var(--novablocks-dark-1);
-  color: var(--novablocks-light-1);
-  padding: 10px;
-  border-radius: 0 10px;
   opacity: 0;
 
   z-index: 100;
+  
+  span {
+    background: var(--novablocks-dark-1);
+    color: var(--novablocks-light-1);
+    padding: 10px;
+    border-radius: 0 10px;
+    
+    text-align: center;
+  }
 }
 
 .notification--is-visible {
