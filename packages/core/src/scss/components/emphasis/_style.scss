@@ -13,27 +13,6 @@
 .novablocks-block {
 	--block-padding: 0;
 	--block-content-padding: 0;
-
-	&[class] {
-		color: var(--novablocks-current-text-color);
-		background-color: var(--novablocks-current-background-color);
-
-		transition: var(--novablocks-transition);
-		transition-property: background-color, padding, margin;
-
-		h1, h2, h3, h4, h5, h6 {
-			transition: var(--novablocks-transition);
-			transition-property: color;
-		}
-
-		h1, h2, h3 {
-			color: var(--novablocks-current-titles-color);
-		}
-
-		h4, h5, h6 {
-			color: var(--novablocks-current-accent-color);
-		}
-	}
 }
 
 .novablocks-block__content {

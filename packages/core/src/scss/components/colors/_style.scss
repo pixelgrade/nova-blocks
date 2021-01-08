@@ -50,13 +50,21 @@
   @include apply-palette( novablocks-blue );
 }
 
-@for $i from 0 through 11 {
-
-  .novablocks-u-color-variation-#{ $i } {
+@mixin apply-variation( $i ) {
     --novablocks-current-accent-color: #{ get-color( 'accent', $i ) };
     --novablocks-current-text-color: #{ get-color( 'text', $i ) };
     --novablocks-current-titles-color: #{ get-color( 'titles', $i ) };
     --novablocks-current-background-color: #{ get-color( 'background', $i ) };
+}
+
+:root {
+  @include apply-variation(0);
+}
+
+@for $i from 0 through 11 {
+
+  .novablocks-u-color-variation-#{ $i } {
+    @include apply-variation($i);
   }
 }
 
