@@ -30,8 +30,8 @@ window.addComment = (function (window) {
   }
 
   // If we have global settings, merge them with the defaults.
-  if (window.addComment.config) {
-    Object.assign(config,window.addComment.config);
+  if (typeof window.addComment !== 'undefined' && typeof window.addComment.config !== 'undefined') {
+    Object.assign(config, window.addComment.config);
   }
 
   // Cross browser MutationObserver.
