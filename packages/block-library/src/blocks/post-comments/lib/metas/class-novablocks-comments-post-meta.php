@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 
 	/**
-	 * The NovaBlocks Comments Meta logic class
+	 * The NovaBlocks Comments Post Meta logic class
 	 */
 	class NovaBlocks_Comments_Post_Meta {
 
@@ -43,19 +43,25 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		}
 
 		private function register_hooks() {
-			add_action( 'add_meta_boxes_post', [ $this, 'add_post_discussion_metabox' ], 10, 1 );
-			add_action( 'save_post_post', [ $this, 'save_post_metabox_fields' ], 10, 1 );
+			// Use the general, not post-type-specific hooks so we can add the metabox to any post-type that supports comments.
+			add_action( 'add_meta_boxes', [ $this, 'add_discussion_metabox' ], 10, 1 );
+			// It's safe to hook into any post-type save since we will only save if our specific nonce is present.
+			add_action( 'save_post', [ $this, 'save_metabox_fields' ], 10, 1 );
 		}
 
-		public function add_post_discussion_metabox( $post ) {
+		public function add_discussion_metabox( $post_type ) {
+			if ( ! post_type_supports( $post_type, 'comments' ) ) {
+				return;
+			}
+
 			add_meta_box( 'nb_post_discussion_extra_details', esc_html__( 'Discussion Extra Details', '__plugin_txtd' ), [
 					$this,
 					'posts_discussion_metabox_fields'
-			], 'post', 'normal', 'high' );
+			], $post_type, 'normal', 'high' );
 		}
 
 		/**
-		 * Output the comment edit metabox fields markup.
+		 * Output the post metabox fields markup.
 		 *
 		 * @param WP_Post $post
 		 */
@@ -119,7 +125,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 			<?php
 		}
 
-		public function save_post_metabox_fields( $post_ID ) {
+		public function save_metabox_fields( $post_ID ) {
 			if ( ! isset( $_POST['nb_post_discussion_extra_details'] ) || ! wp_verify_nonce( $_POST['nb_post_discussion_extra_details'], 'nb_save_post_discussion_extras' ) ) {
 				return;
 			}
