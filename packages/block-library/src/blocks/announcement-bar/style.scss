@@ -1,8 +1,8 @@
 .novablocks-announcement-bar {
 	--novablocks-announcement-bar-padding: #{11/16 * 1em};
 	--novablocks-announcement-bar-close-width: #{15/16 * 1em};
-	--novablocks-announcement-color: var(--novablocks-current-light-primary);
-	--novablocks-announcement-background-color: var(--novablocks-current-color-primary);
+	--novablocks-announcement-color: var(--novablocks-current-dark-color);
+	--novablocks-announcement-background-color: var(--novablocks-current-background-color);
 
 	position: relative;
 	overflow: hidden;
@@ -69,12 +69,4 @@
 
 .novablocks-announcement-bar__link {
 	@include cover;
-}
-
-.is-style-alternative {
-	--novablocks-announcement-background-color: var(--novablocks-current-color-secondary);
-}
-
-.is-style-alert {
-	--novablocks-announcement-background-color: #de1651;
 }
