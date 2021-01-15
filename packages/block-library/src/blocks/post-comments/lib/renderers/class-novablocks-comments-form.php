@@ -131,12 +131,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			ob_start();
 
+			// Register our hooks just before rendering.
+			$this->register_hooks();
+
 			// Output a form button that will show the full form on click.
 			// @todo Maybe we should be able to configure if we want a form button.
 			$this->the_form_button( $args );
-
-			// Register our hooks just before rendering.
-			$this->register_hooks();
 
 			comment_form( [], $this->post->ID );
 
@@ -277,11 +277,15 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// Modify the comment form fields.
 			add_filter( 'comment_form_default_fields', [ $this, 'adjust_comment_form_default_fields' ], 9, 1 );
 			add_filter( 'comment_form_defaults', [ $this, 'adjust_comment_form_defaults' ], 9, 1 );
+
+			add_filter( 'get_avatar', 'novablocks_maybe_inline_svg_avatar', 99, 6 );
 		}
 
 		protected function unregister_hooks() {
 			remove_filter( 'comment_form_default_fields', [ $this, 'adjust_comment_form_default_fields' ], 9 );
 			remove_filter( 'comment_form_defaults', [ $this, 'adjust_comment_form_defaults' ], 9 );
+
+			remove_filter( 'get_avatar', 'novablocks_maybe_inline_svg_avatar', 99 );
 		}
 
 		/**

@@ -95,6 +95,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 
 			ob_start();
 
+			// Register our hooks just before rendering.
+			$this->register_hooks();
+
 			$conversation_title = $header_args['noCommentsTitle'];
 
 			$comments_count = get_comments_number( $this->post->ID );
@@ -157,7 +160,18 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 				</div>
 			<?php }
 
+			// Unregister our hooks to make sure this instance's logic only applies to this render.
+			$this->unregister_hooks();
+
 			return ob_get_clean();
+		}
+
+		protected function register_hooks() {
+
+		}
+
+		protected function unregister_hooks() {
+
 		}
 
 		public function get_post_toplevel_comments_number( $post_id ) {
