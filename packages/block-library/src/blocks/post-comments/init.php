@@ -162,7 +162,10 @@ if ( ! function_exists ('novablocks_maybe_inline_svg_avatar' ) ) {
 			return $avatar;
 		}
 
-		$mime_type = wp_check_filetype( $args['url'] );
+		$mime_type = wp_check_filetype( $args['url'], [
+			'svg'  => 'image/svg+xml',
+			'svgz' => 'image/svg+xml',
+		] );
 		if ( empty( $mime_type['type'] ) || 'image/svg+xml' !== $mime_type['type'] ) {
 			// Bail if this is not a proper SVG.
 			return $avatar;
@@ -188,7 +191,7 @@ if ( ! function_exists ('novablocks_maybe_inline_svg_avatar' ) ) {
 				return $avatar;
 			}
 
-			// Now we will transfer the classes from the received avatar markup to the <svg> element.
+			// Now we will transfer the class,width, and height attribute from the received avatar markup to the <svg> element.
 			$avatardoc = new DOMDocument();
 			$avatardoc->loadHTML( $avatar );
 			$img = $avatardoc->getElementsByTagName( 'img' );
@@ -196,6 +199,14 @@ if ( ! function_exists ('novablocks_maybe_inline_svg_avatar' ) ) {
 				$classes = $img[0]->getAttribute( 'class' );
 				$classes .= ' inlined-svg';
 				$svg[0]->setAttribute( 'class', $classes );
+
+				$width = $img[0]->getAttribute( 'width' );
+				$svg[0]->setAttribute( 'width', $width );
+				$height = $img[0]->getAttribute( 'height' );
+				$svg[0]->setAttribute( 'height', $height );
+
+				// Set a role to the svg.
+				$svg[0]->setAttribute( 'role', 'img' );
 			}
 
 			return $svgdoc->saveHTML( $svg[0] );
