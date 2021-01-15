@@ -207,6 +207,9 @@ if ( ! function_exists ('novablocks_maybe_inline_svg_avatar' ) ) {
 
 				// Set a role to the svg.
 				$svg[0]->setAttribute( 'role', 'img' );
+
+				// Set a ARIA label to the svg.
+				$svg[0]->setAttribute( 'aria-label', 'avatar' );
 			}
 
 			return $svgdoc->saveHTML( $svg[0] );
