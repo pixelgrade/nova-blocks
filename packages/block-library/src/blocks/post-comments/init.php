@@ -152,6 +152,11 @@ if ( ! function_exists ('novablocks_maybe_inline_svg_avatar' ) ) {
 			return $avatar;
 		}
 
+		if ( false !== strpos( $avatar, '<svg' ) ) {
+			// Bail if there is already an inline svg in the avatar.
+			return $avatar;
+		}
+
 		if ( ! class_exists( 'DOMDocument' ) ) {
 			// Bail if we don't have the PHP DOM extension.
 			return $avatar;
