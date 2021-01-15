@@ -43,14 +43,6 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
 		}
 
-		$contentStyle = '';
-		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
-		}
-		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
-			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
-		}
-
 		$mediaStyle = '';
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
@@ -78,7 +70,6 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
             ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			style="<?php echo esc_attr( '--novablocks-slideshow-text-color: ' . $attributes['contentColor'] ); ?>"
 			data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
@@ -88,11 +79,19 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
                     $thisMediaStyle = $mediaStyle;
 
+                    $slideClasses = array(
+                    	'novablocks-slideshow__slide'
+					);
+
+					if ( ! empty( $attributes['paletteVariation'] ) ) {
+						$slideClasses[] = 'sm-variation-' . $attributes['paletteVariation'];
+					}
+
                     if ( ! empty( $media['focalPoint'] ) ) {
                         $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
                     } ?>
 
-                    <div class="novablocks-slideshow__slide">
+                    <div class="<?php echo esc_attr( join( ' ', $slideClasses ) ); ?>">
                         <div class="novablocks-slideshow__slide-wrap">
 	                        <div class="novablocks-slideshow__background novablocks-u-background">
 								<div class="novablocks-mask">

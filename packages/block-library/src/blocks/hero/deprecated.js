@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import save from "./save";
 
 import blockAttributes from "./attributes";
@@ -14,20 +15,46 @@ import {
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
-const deprecated = [];
+const oldAttributes = {
+  contentColor: {
+    type: "string"
+  },
+  overlayFilterStyle: {
+    type: "string"
+  }
+};
 
-deprecated.push({
-	attributes,
-	isEligible( attributes, innerBlocks ) {
-		return "undefined" === typeof attributes.defaultsGenerated;
-	},
-	migrate( attributes, innerBlocks ) {
-		return {
-			...attributes,
-			defaultsGenerated: true
-		};
-	},
-	save,
-});
+const deprecated = [{
+  attributes: _.omit( attributes, Object.keys( oldAttributes ) ),
+  isEligible( attributes ) {
+    return "undefined" !== typeof attributes.contentColor;
+  },
+  migrate( attributes ) {
+    let paletteVariation = '0';
+
+    if ( attributes.contentColor.search( 'FFF' ) > -1 ) {
+      paletteVariation = '10';
+    }
+
+    return {
+      ...attributes,
+      defaultsGenerated: true,
+      paletteVariation: paletteVariation
+    };
+  },
+  save,
+}, {
+  attributes,
+  isEligible( attributes ) {
+    return "undefined" === typeof attributes.defaultsGenerated;
+  },
+  migrate( attributes ) {
+    return {
+      ...attributes,
+      defaultsGenerated: true
+    };
+  },
+  save,
+}];
 
 export default deprecated;

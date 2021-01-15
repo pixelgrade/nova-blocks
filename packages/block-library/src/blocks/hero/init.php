@@ -41,6 +41,10 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
 		}
 
+		if ( ! empty( $attributes['paletteVariation'] ) ) {
+			$classes[] = 'sm-variation-' . $attributes['paletteVariation'];
+		}
+
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
 			$media = [];
 		} else {

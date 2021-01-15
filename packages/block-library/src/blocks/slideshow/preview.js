@@ -52,9 +52,9 @@ const SlideshowPreview = class extends Component {
 				// alignment
 				verticalAlignment,
 				horizontalAlignment,
-				// colors
-				contentColor,
-				overlayFilterStyle,
+        // colors
+        paletteVariation,
+
 				// media
 				galleryImages,
 			},
@@ -69,14 +69,11 @@ const SlideshowPreview = class extends Component {
 			`novablocks-u-halign-${ horizontalAlignment }`,
 			`novablocks-u-spacing-${ contentPadding }`,
 			`novablocks-u-content-width-${ contentWidth }`,
-			`novablocks-u-background`,
-			`novablocks-u-background-${ overlayFilterStyle }`,
-		];
+      `sm-variation-${ paletteVariation }`,
+    ];
 
 		const styles = {
-			slideshow: {
-				'--novablocks-slideshow-text-color': contentColor,
-			},
+			slideshow: {},
 			content: {},
 			foreground: {},
 		};

@@ -7,6 +7,7 @@ import {
 	ControlsTab,
 	LayoutControls,
 	ToggleGroup,
+  PaletteVariationControls,
 	withSettings
 } from '@novablocks/block-editor';
 
@@ -146,6 +147,11 @@ class HeroEdit extends Component {
 				<BlockControls { ...this.props } />
 				<LayoutControls { ...this.props } />
 				<BlockHeightControls { ...this.props } />
+				<ControlsSection label={ __( 'Colors' ) }>
+          <ControlsTab label={ __( 'Settings' ) }>
+            <PaletteVariationControls { ...this.props } />
+          </ControlsTab>
+        </ControlsSection>
 				<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>

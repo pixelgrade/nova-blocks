@@ -38,5 +38,9 @@
 	"displayInnerContent": {
 		"type": "boolean",
 		"default": true
+	},
+	"paletteVariation": {
+		"type": "string",
+		"default": "10"
 	}
 }

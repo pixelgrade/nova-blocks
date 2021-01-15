@@ -32,8 +32,6 @@ export {
 
 export {
 	colorAttributes,
-	ColorControls,
-	ColorPanel,
 	ColorToolbar,
 	OverlayControls
 } from './color-controls';
@@ -58,6 +56,7 @@ export {
 	default as EmphasisLevelControls,
   emphasisAttributes,
 	EmphasisContentAreaControls,
+  PaletteVariationControls,
 } from './emphasis-level-controls';
 
 export {
