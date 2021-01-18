@@ -25,6 +25,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		 */
 		protected static $_instance = null;
 
+		protected $excluded_post_types = [
+			'product', // the Product reviews is a separate problem to be solved.
+			'shop_order', // Comments are used internally, as notes.
+			'shop_subscription', // Comments are used internally, as notes.
+		];
+
 
 		public function __construct() {
 			// Maybe do some checks before initializing the logic.
@@ -51,6 +57,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 
 		public function add_discussion_metabox( $post_type ) {
 			if ( ! post_type_supports( $post_type, 'comments' ) ) {
+				return;
+			}
+
+			if ( true !== apply_filters( 'novablocks_comments_add_post_type_metabox', ! in_array( $post_type, $this->excluded_post_types ), $post_type ) ) {
 				return;
 			}
 
