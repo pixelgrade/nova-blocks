@@ -56,6 +56,8 @@ export {
 	default as EmphasisLevelControls,
   emphasisAttributes,
 	EmphasisContentAreaControls,
+  ColorSetControls,
+  PaletteControls,
   PaletteVariationControls,
 } from './emphasis-level-controls';
 

@@ -10,7 +10,7 @@ import {
   LayoutControls,
   GalleryPreview,
   ControlsSection,
-  ControlsTab, PaletteVariationControls
+  ControlsTab,
 } from "@novablocks/block-editor";
 
 /**
@@ -72,11 +72,6 @@ const SlideshowInspectorControls = function( props ) {
 
 	return (
 		<Fragment>
-      <ControlsSection label={ __( 'Colors' ) }>
-        <ControlsTab label={ __( 'Settings' ) }>
-          <PaletteVariationControls { ...props } />
-        </ControlsTab>
-      </ControlsSection>
 			{
 				!! galleryImages.length &&
 				<ControlsSection label={ __( 'Slides' ) }>

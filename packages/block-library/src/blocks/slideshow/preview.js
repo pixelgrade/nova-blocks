@@ -49,10 +49,13 @@ const SlideshowPreview = class extends Component {
 				contentWidth,
 				contentWidthCustom,
 				minHeight,
+
 				// alignment
 				verticalAlignment,
 				horizontalAlignment,
+
         // colors
+        palette,
         paletteVariation,
 
 				// media
@@ -69,6 +72,7 @@ const SlideshowPreview = class extends Component {
 			`novablocks-u-halign-${ horizontalAlignment }`,
 			`novablocks-u-spacing-${ contentPadding }`,
 			`novablocks-u-content-width-${ contentWidth }`,
+      `sm-palette-${ palette }`,
       `sm-variation-${ paletteVariation }`,
     ];
 

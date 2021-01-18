@@ -261,3 +261,26 @@ export const isAnyPartOfElementInViewport = (element) => {
 
 	return (vertInView && horInView);
 }
+
+export const getContentVariation = ( attributes ) => {
+  const paletteVariation = parseInt( attributes?.paletteVariation, 10 );
+  const contentStyle = attributes.contentStyle;
+
+  if ( contentStyle === 'moderate' ) {
+    if ( paletteVariation < 6 ) {
+      return Math.max(0, paletteVariation - 2 );
+    } else {
+      return Math.min(11, paletteVariation + 2 );
+    }
+  }
+
+  if ( contentStyle === 'highlighted' ) {
+    if ( paletteVariation < 6 ) {
+      return Math.min( 11, paletteVariation + 8 );
+    } else {
+      return 0;
+    }
+  }
+
+  return paletteVariation;
+}

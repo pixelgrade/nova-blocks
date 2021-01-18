@@ -30,17 +30,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
 		}
 
-		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$contentStyle = $attributes['contentStyle'];
-		} else {
-			$contentStyle = 'moderate';
-		}
-
-		if ( ! isset( $attributes['upgradedToModerate'] ) && $contentStyle === 'basic' ) {
-			$contentStyle = 'moderate';
-		}
-
-		$blockClasses[] = 'content-is-' . $contentStyle;
+		$blockClasses[] = novablocks_get_content_style_class( $attributes );
 
 		$attributes_config = novablocks_get_media_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -90,30 +80,16 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
 			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 5 / 100 )';
 
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$blockClasses = array_merge( $blockClasses, $blockPaletteClasses );
 
-		$blockColorsIndex = intval( $attributes['paletteVariation'] );
-		$contentColorsIndex = $blockColorsIndex;
-		$blockClasses[] = 'novablocks-u-color-palette-' . $attributes['palette'];
-		$blockClasses[] = 'novablocks-u-color-variation-' . $blockColorsIndex;
+		$contentClasses = array(
+			'novablocks-media__inner-container',
+			'novablocks-block__content'
+		);
 
-		if ( $contentStyle === 'moderate' ) {
-			if ( $blockColorsIndex < 6 ) {
-				$contentColorsIndex = max(0, $blockColorsIndex - 2 );
-			} else {
-				$contentColorsIndex = min(11, $blockColorsIndex + 2 );
-			}
-		}
-
-		if ( $contentStyle === 'highlighted' ) {
-			if ( $blockColorsIndex < 6 ) {
-				$contentColorsIndex = min( 11, $blockColorsIndex + 8 );
-			} else {
-				$contentColorsIndex = 0;
-			}
-		}
-
-		$blockContentClasses = array( 'novablocks-media__inner-container novablocks-block__content' );
-		$blockContentClasses[] = 'novablocks-u-color-variation-' . $contentColorsIndex;
+		$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
+		$contentClasses = array_merge( $contentClasses, $contentPaletteClasses );
 
 		ob_start(); ?>
 
@@ -124,7 +100,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		                <div class="novablocks-media__layout">
 							<?php if ( ! empty ( $content ) ) { ?>
 								<div class="novablocks-media__content">
-									<div class="<?php echo esc_attr( join( ' ', $blockContentClasses ) ); ?>">
+									<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
 										<?php echo $content; ?>
 									</div>
 								</div>

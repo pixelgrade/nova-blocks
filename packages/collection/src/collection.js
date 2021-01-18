@@ -90,6 +90,9 @@ export const CollectionPreview = ( props ) => {
 		columns,
 		postsToShow,
 		isLandscape,
+
+    palette,
+    paletteVariation
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
@@ -109,7 +112,6 @@ export const CollectionPreview = ( props ) => {
 		blockClassName,
 		'novablocks-block',
 		`${ blockClassName }--align-${ contentAlign }`,
-		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
 			'has-appender': hasAppender,
@@ -122,6 +124,9 @@ export const CollectionPreview = ( props ) => {
 		},
 		getAreaClassnameByWidthRatio( widthRatio ),
 		getAreaClassnameByHeightRatio( heightRatio ),
+		`block-is-${ blockStyle }`,
+    `sm-palette-${ palette }`,
+    `sm-variation-${ paletteVariation }`,
 	);
 
 	return (

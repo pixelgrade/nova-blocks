@@ -75,45 +75,49 @@ const EmphasisLevelControls = ( props ) => {
 					/>
 					<EmphasisContentAreaSlot />
 				</ControlsGroup>
-				<ColorSetsControl { ...props } />
 			</ControlsTab>
 		</ControlsSection>
 	]
 };
 
-const ColorSetsControl = ( props ) => {
+const ColorSetControls = ( props ) => {
+
+  return (
+    <ControlsGroup title={ __( 'Colors' ) }>
+      <PaletteControls { ...props } />
+      <PaletteVariationControls { ...props } />
+    </ControlsGroup>
+   )
+}
+
+const PaletteControls = ( props ) => {
 
 	const {
 		attributes,
 		setAttributes,
 		settings: {
-			colors
+      palettes,
 		}
 	} = props;
 
 	const {
 		palette,
-		paletteVariation
 	} = attributes;
 
 	return (
-		<ControlsGroup title={ __( 'Colors' ) }>
-      <RadioControl
-        label={ __( 'Base Color Scheme' ) }
-        selected={ palette }
-        onChange={ ( newPalette ) => {
-          setAttributes( { palette: newPalette } )
-        } }
-        options={[
-          { label: 'Nova Blue', value: 'novablocks-blue' },
-          { label: 'Nova Yellow', value: 'novablocks-yellow' },
-          { label: 'Color A', value: 'primary' },
-          { label: 'Color B', value: 'secondary' },
-          { label: 'Color C', value: 'tertiary' },
-        ]}
-      />
-      <PaletteVariationControls { ...props } />
-		</ControlsGroup>
+    <RadioControl
+      label={ __( 'Base Color Scheme' ) }
+      selected={ palette }
+      onChange={ ( newPalette ) => {
+        setAttributes( { palette: newPalette } )
+      } }
+      options={ palettes.map( ( palette, index ) => {
+        return {
+          label: palette.label,
+          value: `${ index }`
+        }
+      } ) }
+    />
 	)
 };
 
@@ -166,7 +170,10 @@ const EmphasisContentAreaControls = ( props ) => {
 export {
   emphasisAttributes,
   EmphasisContentAreaControls,
-  PaletteVariationControls,
+
+  ColorSetControls,
+  PaletteControls,
+  PaletteVariationControls
 };
 
 export default withSettings( EmphasisLevelControls );

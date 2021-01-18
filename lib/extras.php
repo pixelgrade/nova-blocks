@@ -1210,6 +1210,8 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		$style = join( '; ', $cssProps );
 
 		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
+
+		$classes = array_merge( $classes, novablocks_get_palette_classes( $attributes ) );
 		$className = join( ' ', $classes );
 
 		ob_start(); ?>
@@ -1605,4 +1607,55 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 	}
 
 	return $script;
+}
+
+function novablocks_get_palette_classes( $attributes ) {
+	return array(
+		'sm-palette-' . $attributes['palette'],
+		'sm-variation-' . $attributes['paletteVariation'],
+	);
+}
+
+function novablocks_get_content_palette_classes( $attributes ) {
+	$contentVariation = novablocks_get_content_variation( $attributes['palette'], $attributes['contentStyle'] );
+
+	return array(
+		'sm-variation-' . $contentVariation
+	);
+}
+
+function novablocks_get_content_variation( $parentVariation, $contentStyle ) {
+	$parentVariation = intval( $parentVariation );
+
+	if ( $contentStyle === 'moderate' ) {
+		if ( $parentVariation < 6 ) {
+			return max(0, $parentVariation - 2 );
+		} else {
+			return min(11, $parentVariation + 2 );
+		}
+	}
+
+	if ( $contentStyle === 'highlighted' ) {
+		if ( $parentVariation < 6 ) {
+			return min( 11, $parentVariation + 8 );
+		} else {
+			return 0;
+		}
+	}
+
+	return $parentVariation;
+}
+
+function novablocks_get_content_style_class( $attributes ) {
+	$contentStyle = 'moderate';
+
+	if ( ! empty( $attributes['contentStyle'] ) ) {
+		$contentStyle = $attributes['contentStyle'];
+	}
+
+	if ( ! isset( $attributes['upgradedToModerate'] ) && $contentStyle === 'basic' ) {
+		$contentStyle = 'moderate';
+	}
+
+	return 'content-is-' . $contentStyle;
 }

@@ -163,10 +163,15 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 		$nova_editor_settings = novablocks_get_block_editor_settings();
 
-		list( $color_palette, ) = (array) get_theme_support( 'editor-color-palette' );
+		$sm_palettes_value = get_option( 'sm_advanced_palette_source' );
+		$palettes = json_decode( $sm_palettes_value );
 
-		if ( false !== $color_palette ) {
-			$nova_editor_settings['colors'] = $color_palette;
+		if ( empty( $palettes ) ) {
+			$palettes = get_fallback_palettes();
+		}
+
+		if ( ! empty( $palettes ) ) {
+			$nova_editor_settings['palettes'] = $palettes;
 		}
 
 		$js_script = '

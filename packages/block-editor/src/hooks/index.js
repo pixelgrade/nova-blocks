@@ -1,6 +1,7 @@
 import "./with-block-id";
 import "./with-block-index";
 import "./with-cards-manager";
+import "./with-color-variations";
 import "./with-controls-sections";
 import "./with-emphasis-level";
 import "./with-font-size-picker";

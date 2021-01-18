@@ -38,6 +38,7 @@ const HeroPreview = function( props ) {
 		contentColor,
 		overlayFilterStyle,
 
+    palette,
     paletteVariation,
 
 		scrollingEffect,
@@ -53,6 +54,7 @@ const HeroPreview = function( props ) {
 		`novablocks-u-content-width-${ contentWidth }`,
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
+		`sm-palette-${ palette }`,
 		`sm-variation-${ paletteVariation }`,
 	];
 

@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { Collection } from "@novablocks/collection";
+import { getContentVariation } from '@novablocks/utils';
 
 /**
  * WordPress dependencies
@@ -65,9 +66,13 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 			const cards = collection.innerBlocks;
 
 			const newAttributes = (
-				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => (
-					{ level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta }
-				)
+				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => {
+					const atts = { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
+
+					return Object.assign( {}, atts, {
+					  paletteVariation: getContentVariation( attributes )
+          } );
+				}
 			)( attributes );
 
 			cards.forEach( block => {

@@ -45,6 +45,10 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$classes[] = 'sm-variation-' . $attributes['paletteVariation'];
 		}
 
+		if ( ! empty( $attributes['palette'] ) ) {
+			$classes[] = 'sm-palette-' . $attributes['palette'];
+		}
+
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {
 			$media = [];
 		} else {
