@@ -46,6 +46,9 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'alignfull',
 		);
 
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$classes = array_merge( $classes, $blockPaletteClasses );
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
@@ -180,8 +183,6 @@ function novablocks_get_tag_name( $tag ) {
 }
 
 function novablocks_get_post_card_markup( $post, $attributes ) {
-
-
 	$media_url = get_the_post_thumbnail_url( $post );
 	$title     = get_the_title( $post );
 	$excerpt   = get_the_excerpt( $post );
@@ -193,6 +194,9 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 		'novablocks-card--' . ( $attributes['isLandscape'] ? 'landscape' : 'portrait' ),
 		'novablocks-block__content'
 	);
+
+	$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
+	$classes = array_merge( $classes, $contentPaletteClasses );
 
 	if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
 		$classes[] = 'novablocks-card--fixed-media-aspect-ratio';

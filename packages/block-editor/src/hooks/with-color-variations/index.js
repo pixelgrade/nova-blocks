@@ -15,6 +15,7 @@ const enableColorSetControls = [
   'novablocks/slideshow',
   'novablocks/media',
   'novablocks/cards-collection',
+  'novablocks/posts-collection',
 ];
 
 const {

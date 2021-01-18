@@ -2,6 +2,7 @@ import classnames from "classnames";
 
 import { Card } from "@novablocks/components";
 import { PostCard } from "@novablocks/block-editor";
+import { getContentVariation } from "@novablocks/utils";
 
 import {
 	CollectionHeader,
@@ -41,6 +42,9 @@ const Preview = ( props ) => {
 		blockStyle,
 
 		headerPosition,
+
+    palette,
+    paletteVariation,
 	} = attributes;
 
 	markPostsAsDisplayed( clientId, posts );
@@ -54,7 +58,8 @@ const Preview = ( props ) => {
 	}
 
 	const getContent = ( index, attributes, isLandscape ) => {
-		const post = posts?.[index];
+		const post = posts?.[ index ];
+
 		const cardProps = {
 			placeholder: true,
 			hasFixedAspectRatio: true,
@@ -64,6 +69,7 @@ const Preview = ( props ) => {
 			showTitle,
 			showContent: showDescription,
 			showButtons,
+      className: `sm-variation-${ getContentVariation( attributes ) }`
 		};
 
 		return (
@@ -97,6 +103,9 @@ const Preview = ( props ) => {
 		`novablocks-collection--align-${ contentAlign }`,
 		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
+
+    `sm-palette-${ palette }`,
+    `sm-variation-${ paletteVariation }`,
 		className
 	);
 

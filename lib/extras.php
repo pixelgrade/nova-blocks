@@ -1617,7 +1617,7 @@ function novablocks_get_palette_classes( $attributes ) {
 }
 
 function novablocks_get_content_palette_classes( $attributes ) {
-	$contentVariation = novablocks_get_content_variation( $attributes['palette'], $attributes['contentStyle'] );
+	$contentVariation = novablocks_get_content_variation( $attributes['paletteVariation'], $attributes['contentStyle'] );
 
 	return array(
 		'sm-variation-' . $contentVariation

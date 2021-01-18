@@ -26,7 +26,8 @@ const Card = ( props ) => {
 		{
 			'novablocks-card--placeholder': placeholder,
 			'novablocks-card--fixed-media-aspect-ratio': hasFixedAspectRatio
-		}
+		},
+    props.className
 	);
 
 	return (

@@ -13,6 +13,7 @@ import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 
 import { Card } from "@novablocks/components";
+import { getContentVariation } from "@novablocks/utils";
 
 import Author from "./author";
 import Category from "./category";
@@ -82,22 +83,24 @@ const Media = withSelect( ( select, ownProps ) => {
 const Post = ( props ) => {
 
 	const {
-		attributes: {
-			cardTitleLevel,
-			thumbnailAspectRatioString,
-
-			showMedia,
-			showMeta,
-			showTitle,
-			showDescription,
-			showButtons,
-
-			metadataPosition,
-			primaryMetadata,
-			secondaryMetadata,
-		},
+		attributes,
 		post,
 	} = props;
+
+  const {
+    cardTitleLevel,
+    thumbnailAspectRatioString,
+
+    showMedia,
+    showMeta,
+    showTitle,
+    showDescription,
+    showButtons,
+
+    metadataPosition,
+    primaryMetadata,
+    secondaryMetadata,
+  } = attributes;
 
 	const primaryMeta = getMeta( post, primaryMetadata );
 	const secondaryMeta = getMeta( post, secondaryMetadata );
@@ -160,7 +163,9 @@ const Post = ( props ) => {
 		showTitle,
 		showContent: showDescription,
 		showButtons,
-		hasFixedAspectRatio: thumbnailAspectRatioString !== 'auto'
+		hasFixedAspectRatio: thumbnailAspectRatioString !== 'auto',
+
+    className: `sm-variation-${ getContentVariation( attributes ) }`,
 	};
 
 	return <Card { ...cardProps } />
