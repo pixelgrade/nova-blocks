@@ -1,6 +1,6 @@
-import { colorAttributes } from '@novablocks/components';
-
 import { addFilter } from '@wordpress/hooks';
+
+import { colorAttributes } from '../../components';
 
 const enableOverlayColorAttributesOnBlocks = [
 	'novablocks/hero',
