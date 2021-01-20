@@ -163,7 +163,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 		$nova_editor_settings = novablocks_get_block_editor_settings();
 
-		$sm_palettes_value = get_option( 'sm_advanced_palette_source' );
+		$sm_palettes_value = get_option( 'sm_advanced_palette_output' );
 		$palettes = json_decode( $sm_palettes_value );
 
 		if ( empty( $palettes ) ) {

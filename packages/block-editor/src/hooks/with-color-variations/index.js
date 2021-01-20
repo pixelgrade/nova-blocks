@@ -33,16 +33,21 @@ function withAttributes( settings, name ) {
     return settings;
   }
 
+  const novaSettings = wp.data.select('novablocks').getSettings();
+  const { palettes } = novaSettings;
+  const palette = palettes[0];
+  const whiteIndex = palette.colors.findIndex( color => color.background.toUpperCase() === '#FFFFFF' );
+
   return Object.assign( {}, settings, {
     attributes: Object.assign( {}, settings.attributes, {
-      paletteVariation: {
-        type: "string",
-        default: "0"
-      },
       palette: {
         type: "string",
         default: "0"
-      }
+      },
+      paletteVariation: {
+        type: "string",
+        default: `${ whiteIndex }`
+      },
     } ),
   } )
 }

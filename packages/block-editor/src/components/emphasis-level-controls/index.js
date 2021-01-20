@@ -100,16 +100,22 @@ const PaletteControls = ( props ) => {
 		}
 	} = props;
 
-	const {
-		palette,
-	} = attributes;
+	const palette = parseInt( attributes.palette, 10 );
+	const paletteVariation = parseInt( attributes.paletteVariation, 10 );
 
 	return (
     <RadioControl
       label={ __( 'Base Color Scheme' ) }
-      selected={ palette }
-      onChange={ ( newPalette ) => {
-        setAttributes( { palette: newPalette } )
+      selected={ attributes.palette }
+      onChange={ ( newPaletteIndex ) => {
+        const paletteWhiteIndex = palettes[ palette ].colors.findIndex( color => color.background.toUpperCase() === '#FFFFFF' );
+        const newPaletteWhiteIndex = palettes[ newPaletteIndex ].colors.findIndex( color => color.background.toUpperCase() === '#FFFFFF' );
+        const newAttributes = {
+          palette: `${ newPaletteIndex }`,
+          paletteVariation: `${ ( paletteVariation + newPaletteWhiteIndex - paletteWhiteIndex ) % 12 }`
+        };
+
+        setAttributes( newAttributes );
       } }
       options={ palettes.map( ( palette, index ) => {
         return {
