@@ -99,7 +99,6 @@ class Edit extends Component {
 	}
 
 	innerBlocksPicker() {
-		const { hasInnerBlocks } = this.props;
 		return (
 			<Fragment>
 				<InnerBlocks
@@ -121,7 +120,10 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				layout
+				layout,
+        palette,
+        paletteVariation,
+        useSourceColorAsReference
 			},
 			blockType,
 			defaultVariation,
@@ -135,7 +137,12 @@ class Edit extends Component {
 		const classNames = classnames(
 			className,
 			`site-header`,
-			`site-header-${layout}`
+			`site-header-${ layout }`,
+      `sm-palette-${ palette }`,
+      `sm-variation-${ paletteVariation }`,
+      {
+        'sm-palette--shifted': !! useSourceColorAsReference
+      }
 		);
 
 

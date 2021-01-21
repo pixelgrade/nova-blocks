@@ -37,9 +37,19 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 			<?php $novablocks_responsive_navigation_outputted = true;
 
-		} ?>
+		}
 
-        <header id="masthead" class="site-header alignfull <?php echo esc_attr( 'site-header--' . $attributes['layout'] ); ?>">
+		$classes = array(
+			'site-header',
+			'site-header--' . $attributes['layout'],
+			'alignfull',
+		);
+
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$classes = array_merge( $classes, $blockPaletteClasses );
+		?>
+
+        <header id="masthead" class="<?php echo join( ' ', $classes ); ?>">
 	        <div class="site-header__wrapper">
 	            <div class="site-header__inner-container">
 	                <div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">

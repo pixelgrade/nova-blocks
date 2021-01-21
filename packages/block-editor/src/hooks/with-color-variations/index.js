@@ -9,11 +9,14 @@ import {
 } from "../../components";
 
 const enableColorSetControls = [
+  'novablocks/header',
   'novablocks/hero',
   'novablocks/slideshow',
   'novablocks/media',
   'novablocks/cards-collection',
   'novablocks/posts-collection',
+
+  'core/group',
 ];
 
 const enableColorSetControlsDeprecation = [
