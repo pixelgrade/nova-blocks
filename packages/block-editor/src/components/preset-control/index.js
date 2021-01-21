@@ -29,11 +29,15 @@ const PresetControl = ( props ) => {
 	const options = Array.isArray( props.options ) ? props.options.slice() : [];
 	const randomizeAttributes = typeof randomize === "function" ? randomize : noop;
 
-	options.push({
-		label: 'Just My Style™',
-		value: 'just-my-style',
-		preset: {}
-	});
+	if ( typeof randomize !== "undefined" ) {
+
+    options.push({
+      label: 'Just My Style™',
+      value: 'just-my-style',
+      preset: {}
+    });
+
+  }
 
 	const selectedPreset = getSelectedPreset( options, attributes );
 
@@ -51,6 +55,7 @@ const PresetControl = ( props ) => {
 					}
 
 					const newAttributes = getNewAttributesFromPreset( preset, options );
+				  console.log( newAttributes );
 					setAttributes( newAttributes );
 				} }
 			/>

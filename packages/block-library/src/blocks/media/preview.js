@@ -29,8 +29,10 @@ const MediaPreview = function( props ) {
     contentAreaWidth,
     layoutGutter,
 
+
     palette,
-    paletteVariation
+    paletteVariation,
+    useSourceColorAsReference
 	} = attributes;
 
 	const classNames = classnames(
@@ -57,6 +59,9 @@ const MediaPreview = function( props ) {
 		`content-is-${ contentStyle }`,
     `sm-palette-${ palette }`,
     `sm-variation-${ paletteVariation }`,
+    {
+      'sm-palette--shifted': !! useSourceColorAsReference
+    }
 	);
 
 	return (

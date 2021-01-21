@@ -54,12 +54,15 @@ export {
 
 export {
 	default as EmphasisLevelControls,
-  emphasisAttributes,
 	EmphasisContentAreaControls,
+} from './emphasis-level-controls';
+
+export {
+  colorSetAttributes,
   ColorSetControls,
   PaletteControls,
   PaletteVariationControls,
-} from './emphasis-level-controls';
+} from './color-set-controls';
 
 export {
 	GalleryPreview,

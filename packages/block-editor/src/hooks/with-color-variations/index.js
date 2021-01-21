@@ -1,12 +1,10 @@
 import _ from 'lodash';
 
-import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
 
 import {
-  ControlsSection,
-  ControlsTab,
+  colorSetAttributes,
   ColorSetControls
 } from "../../components";
 
@@ -33,22 +31,8 @@ function withAttributes( settings, name ) {
     return settings;
   }
 
-  const novaSettings = wp.data.select('novablocks').getSettings();
-  const { palettes } = novaSettings;
-  const palette = palettes[0];
-  const whiteIndex = palette.colors.findIndex( color => color.background.toUpperCase() === '#FFFFFF' );
-
   return Object.assign( {}, settings, {
-    attributes: Object.assign( {}, settings.attributes, {
-      palette: {
-        type: "string",
-        default: "0"
-      },
-      paletteVariation: {
-        type: "string",
-        default: `${ whiteIndex }`
-      },
-    } ),
+    attributes: Object.assign( {}, settings.attributes, colorSetAttributes ),
   } )
 }
 addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withAttributes );
@@ -96,11 +80,7 @@ const withColorSetControls = createHigherOrderComponent(OriginalComponent => {
 
     return (
       <Fragment>
-        <ControlsSection label={ __( 'Color Contrast' ) }>
-          <ControlsTab label={ __( 'Settings' ) }>
-            <ColorSetControls { ...props } />
-          </ControlsTab>
-        </ControlsSection>
+        <ColorSetControls { ...props } />
         <OriginalComponent { ...props } />
       </Fragment>
     );

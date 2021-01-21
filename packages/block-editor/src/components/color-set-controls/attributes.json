@@ -1,0 +1,14 @@
+{
+	"palette": {
+		"type": "number",
+		"default": 0
+	},
+	"paletteVariation": {
+		"type": "number",
+		"default": 0
+	},
+	"useSourceColorAsReference": {
+		"type": "boolean",
+		"default": false
+	}
+}

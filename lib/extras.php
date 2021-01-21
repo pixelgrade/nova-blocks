@@ -1610,10 +1610,16 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 }
 
 function novablocks_get_palette_classes( $attributes ) {
-	return array(
+	$classes = array(
 		'sm-palette-' . $attributes['palette'],
 		'sm-variation-' . $attributes['paletteVariation'],
 	);
+
+	if ( $attributes['useSourceColorAsReference'] ) {
+		$classes[] = 'sm-palette--shifted';
+	}
+
+	return $classes;
 }
 
 function novablocks_get_content_palette_classes( $attributes ) {
@@ -1627,20 +1633,8 @@ function novablocks_get_content_palette_classes( $attributes ) {
 function novablocks_get_content_variation( $parentVariation, $contentStyle ) {
 	$parentVariation = intval( $parentVariation );
 
-	if ( $contentStyle === 'moderate' ) {
-		if ( $parentVariation < 6 ) {
-			return max(0, $parentVariation - 2 );
-		} else {
-			return min(11, $parentVariation + 2 );
-		}
-	}
-
 	if ( $contentStyle === 'highlighted' ) {
-		if ( $parentVariation < 6 ) {
-			return min( 11, $parentVariation + 8 );
-		} else {
-			return 0;
-		}
+		return ( $parentVariation + 6 ) % 12;
 	}
 
 	return $parentVariation;

@@ -46,9 +46,5 @@
 	"showMeta": {
 		"type": "boolean",
 		"default": false
-	},
-	"paletteVariation": {
-		"type": "string",
-		"default": 0
 	}
 }
