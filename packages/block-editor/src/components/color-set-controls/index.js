@@ -17,7 +17,6 @@ import {
 } from "../index";
 
 import { __ } from "@wordpress/i18n";
-import PresetControl from "../preset-control";
 import PalettePresetControl from "../palette-preset-control";
 
 const ColorSetControls = ( props ) => {
@@ -197,6 +196,7 @@ const PaletteVariationControls = ( props ) => {
   return (
     <Fragment>
       <ToggleControl
+        key={ 'color-set-use-source-as-reference-control' }
         label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
         checked={ useSourceColorAsReference }
         onChange={ () => {
@@ -207,7 +207,7 @@ const PaletteVariationControls = ( props ) => {
         } }
       />
       <RangeControl
-        key={ 'collection-image-container-height' }
+        key={ 'color-set-variation-range-control' }
         label={ __( 'Variation', '__plugin_txtd' ) }
         value={ ( paletteVariation + offset ) % 12 }
         onChange={ newVariation => {
@@ -216,6 +216,15 @@ const PaletteVariationControls = ( props ) => {
         min={ 0 }
         max={ 11 }
         step={ 1 }
+      />
+      <RangeControl
+        key={ 'color-set-source-color-offset-control' }
+        label={ __( 'Soruce Color Offset', '__plugin_txtd' ) }
+        value={ useSourceColorAsReference ? ( paletteVariation + 6 ) % 12 - 6 : 0 }
+        min={ -6 }
+        max={ 6 }
+        step={ 0 }
+        disabled
       />
     </Fragment>
   )
