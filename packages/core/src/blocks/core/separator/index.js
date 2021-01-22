@@ -6,17 +6,34 @@ import { addFilter } from '@wordpress/hooks';
 export const addSeparatorFilters = ( settings ) => {
 
 	const Separator = ( props ) => {
-		const className = classnames(
-			'wp-block-separator',
-			props.className
-		);
 
-		return (
-			<div className={ className } dangerouslySetInnerHTML={ {
-				__html: settings.separator && settings.separator.markup
-			} }>
-			</div>
-		);
+	  const useBlockProps = wp.blockEditor.useBlockProps;
+    const separatorMarkup = settings.separator && settings.separator.markup;
+    const className = classnames(
+      'wp-block-separator',
+      props.className
+    );
+
+	  if( typeof useBlockProps !== "undefined" ) {
+      const blockProps = useBlockProps( {
+        className: className,
+      } );
+
+      return (
+        <div { ...blockProps } dangerouslySetInnerHTML={ {
+          __html: separatorMarkup
+        } }>
+        </div>
+      );
+    } else {
+
+        return (
+          <div className={ className } dangerouslySetInnerHTML={ {
+            __html: separatorMarkup
+          } }>
+          </div>
+        );
+    }
 	};
 
 	const replaceSeparatorEdit = createHigherOrderComponent( ( BlockEdit ) => {
