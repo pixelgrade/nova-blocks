@@ -8,30 +8,28 @@ export const addSeparatorFilters = ( settings ) => {
 	const Separator = ( props ) => {
 
 	  const useBlockProps = wp.blockEditor.useBlockProps;
+    const separatorMarkup = settings.separator && settings.separator.markup;
+    const className = classnames(
+      'wp-block-separator',
+      props.className
+    );
 
 	  if( typeof useBlockProps !== "undefined" ) {
       const blockProps = useBlockProps( {
-        className: classnames( {
-            className: 'wp-block-separator',
-          }
-        ),
+        className: className,
       } );
 
       return (
         <div { ...blockProps } dangerouslySetInnerHTML={ {
-          __html: settings.separator && settings.separator.markup
+          __html: separatorMarkup
         } }>
         </div>
       );
     } else {
-        const className = classnames(
-          'wp-block-separator',
-          props.className
-        );
 
         return (
           <div className={ className } dangerouslySetInnerHTML={ {
-            __html: settings.separator && settings.separator.markup
+            __html: separatorMarkup
           } }>
           </div>
         );

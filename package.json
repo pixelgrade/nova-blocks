@@ -4,7 +4,7 @@
 	"main": "blocks/index.js",
 	"license": "GPL-3.0+",
 	"engines": {
-		"node":">=10.15.3 <11.0.0"
+		"node": ">=10.15.3 <11.0.0"
 	},
 	"scripts": {
 		"clean:packages": "rimraf \"./packages/*/@(build|build-module|build-style)\"",
