@@ -7,6 +7,7 @@ export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
 export { default as Notice } from "./notice";
 export { default as PostCard } from './post-card';
+export { default as PalettePresetControl } from "./palette-preset-control";
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
 export { default as ToggleGroup } from "./toggle-group";

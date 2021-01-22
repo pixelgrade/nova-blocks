@@ -1,4 +1,4 @@
-import { emphasisAttributes, EmphasisLevelControls } from "../../index";
+import { EmphasisLevelControls } from "../../index";
 
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
@@ -47,7 +47,7 @@ function addEmphasisLevelAttribute( block ) {
 			type: 'number',
 			default: 1
 		}
-	}, emphasisAttributes );
+	} );
 
 	return block;
 }

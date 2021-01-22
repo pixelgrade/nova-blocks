@@ -1,9 +1,4 @@
-import { __ } from '@wordpress/i18n';
-
-import {
-	Button,
-	RadioControl,
- } from '@wordpress/components';
+import classnames from 'classnames';
 
 import {
 	Fragment,
@@ -22,57 +17,40 @@ import {
 	compose
  } from '@wordpress/compose';
 
-const PresetControl = ( props ) => {
-
-	const noop = () => { return {} };
-	const { randomize, attributes, setAttributes } = props;
+const PalettePresetControl = ( props ) => {
+	const { attributes, setAttributes, label } = props;
 	const options = Array.isArray( props.options ) ? props.options.slice() : [];
-	const randomizeAttributes = typeof randomize === "function" ? randomize : noop;
-
-	if ( typeof randomize !== "undefined" ) {
-
-    options.push({
-      label: 'Just My Style™',
-      value: 'just-my-style',
-      preset: {}
-    });
-
-  }
-
 	const selectedPreset = getSelectedPreset( options, attributes );
 
 	return (
-		<Fragment>
-			<RadioControl
-				{ ...props }
-				options={ options }
-				selected={ selectedPreset }
-				onChange={ preset => {
+	  <div className={ `components-base-control novablocks-palette-control` }>
+      { label && <label className="components-base-control__label novablocks-palette-control__label">{ label }</label> }
+      <div className={ 'novablocks-palette-control__field' }>
+        { options.map( option => {
+          const { label, value } = option;
+          const newAttributes = Object.assign( {}, attributes, getNewAttributesFromPreset( value, options ) );
+          const { palette, paletteVariation, useSourceColorAsReference } = newAttributes;
 
-					if ( 'just-my-style' === preset ) {
-						setAttributes( Object.assign( {}, randomizeAttributes() ) );
-						return;
-					}
+          const className = classnames(
+            'novablocks-palette-control__option',
+            `sm-palette-${ palette }`,
+            `sm-variation-${ paletteVariation }`,
+            {
+              'sm-palette--shifted': !! useSourceColorAsReference,
+              'novablocks-palette-control__option--selected': value === selectedPreset
+            }
+          );
 
-					const newAttributes = getNewAttributesFromPreset( preset, options );
-					setAttributes( newAttributes );
-				} }
-			/>
-			{
-				selectedPreset === 'just-my-style' &&
-				<div key={ 'advanced-gallery-surprise-control' }>
-					<Button
-						isLarge
-						isPrimary
-						onClick={ () => {
-							setAttributes( randomizeAttributes() )
-						} }>
-						{ __( '💡 Surprise me!' ) }
-					</Button>
-				</div>
-			}
-		</Fragment>
-	);
+          return (
+            <div className={ className } onClick={ () => {
+              const newAttributes = Object.assign( {}, attributes, getNewAttributesFromPreset( value, options ) )
+              setAttributes( newAttributes );
+            } }>{ label }</div>
+          )
+        } ) }
+      </div>
+    </div>
+  );
 };
 
 export const getNewAttributesFromPreset = ( preset, presets ) => {
@@ -125,4 +103,4 @@ const applyWithDispatch = withDispatch( ( dispatch, { clientId } ) => {
 	};
 } );
 
-export default compose( [ applyWithSelect, applyWithDispatch ] )( PresetControl );
+export default compose( [ applyWithSelect, applyWithDispatch ] )( PalettePresetControl );

@@ -18,6 +18,7 @@ import {
 
 import { __ } from "@wordpress/i18n";
 import PresetControl from "../preset-control";
+import PalettePresetControl from "../palette-preset-control";
 
 const ColorSetControls = ( props ) => {
 
@@ -62,7 +63,7 @@ const ColorSetControls = ( props ) => {
   return (
     <ControlsSection label={ __( 'Color Sets' ) }>
       <ControlsTab label={ __( 'General' ) }>
-        <PresetControl
+        <PalettePresetControl
           key={ 'novablocks-color-set-preset' }
           label={ __( 'Choose a color preset:', '__plugin_txtd' ) }
           options={ presets }
@@ -73,7 +74,7 @@ const ColorSetControls = ( props ) => {
           <PaletteControls { ...props } />
         </ControlsGroup>
         <ControlsGroup title={ __( 'Color Variation' ) }>
-          <PresetControl
+          <PalettePresetControl
             key={ 'novablocks-color-variation-preset-1' }
             label={ __( 'Choose a relative preset:', '__plugin_txtd' ) }
             options={ [ {
@@ -99,7 +100,7 @@ const ColorSetControls = ( props ) => {
               }
             } ] }
           />
-          <PresetControl
+          <PalettePresetControl
             key={ 'novablocks-color-variation-preset-2' }
             label={ __( 'Choose a absolute preset:', '__plugin_txtd' ) }
             options={ [ {
@@ -152,26 +153,21 @@ const ColorSetControls = ( props ) => {
 const PaletteControls = ( props ) => {
 
   const {
-    attributes,
-    setAttributes,
     settings: {
       palettes,
     }
   } = props;
 
   return (
-    <RadioControl
+    <PalettePresetControl
       label={ __( 'Main Color' ) }
-      selected={ attributes.palette }
-      onChange={ ( palette ) => {
-        setAttributes( {
-          palette: parseInt( palette, 10 )
-        } );
-      } }
       options={ palettes.map( ( palette, index ) => {
         return {
           label: palette.label,
-          value: index
+          value: `palette-${ index }`,
+          preset: {
+            palette: index
+          }
         }
       } ) }
     />
@@ -215,7 +211,7 @@ const PaletteVariationControls = ( props ) => {
         label={ __( 'Variation', '__plugin_txtd' ) }
         value={ ( paletteVariation + offset ) % 12 }
         onChange={ newVariation => {
-          setAttributes( { paletteVariation: ( newVariation + 12 - offset ) % 12 } )
+          setAttributes( { paletteVariation: ( newVariation - offset + 12 ) % 12 } )
         } }
         min={ 0 }
         max={ 11 }
