@@ -8,7 +8,10 @@ import {
   ColorSetControls
 } from "../../components";
 
+import { getClassNameWithPaletteHelpers } from "@novablocks/utils";
+
 const enableColorSetControls = [
+  'novablocks/announcement-bar',
   'novablocks/header',
   'novablocks/hero',
   'novablocks/slideshow',
@@ -22,6 +25,11 @@ const enableColorSetControls = [
 const enableColorSetControlsDeprecation = [
   'novablocks/hero',
   'novablocks/slideshow',
+];
+
+const enablePaletteClasses = [
+  'core/group',
+  'novablocks/announcement-bar'
 ];
 
 const {
@@ -89,4 +97,56 @@ const withColorSetControls = createHigherOrderComponent(OriginalComponent => {
     );
   };
 });
+
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-sets-controls', withColorSetControls );
+
+function withPaletteAttributes( settings, name ) {
+
+  if ( name !== 'core/group' ) {
+    return settings;
+  }
+
+  return Object.assign( {}, settings, {
+    attributes: Object.assign( {}, settings.attributes, {
+      palette: {
+        type: "number",
+        default: 0,
+      },
+      paletteVariation: {
+        type: "number",
+        default: 0,
+      },
+      useSourceColorAsReference: {
+        type: "boolean",
+        default: false,
+      }
+    } ),
+  } );
+}
+
+addFilter( 'blocks.registerBlockType', 'novablocks/add-color-set-class-names-to-edit', withPaletteAttributes );
+
+const withPaletteClassNames = createHigherOrderComponent( ( BlockEdit ) => {
+
+  return ( props ) => {
+
+    if ( ! enablePaletteClasses.includes( props.name ) ) {
+      return <BlockEdit { ...props } />
+    }
+
+    const className = props?.attributes?.className || '';
+    const newClassName = getClassNameWithPaletteHelpers( className, props.attributes );
+
+    const newProps = Object.assign( {}, props, {
+      attributes: Object.assign( {}, props.attributes, {
+        className: newClassName
+      } )
+    } );
+
+    return (
+      <BlockEdit { ...newProps } />
+    )
+  };
+}, "withPaletteClassNames" );
+
+addFilter( 'editor.BlockEdit', 'novablocks/add-color-set-class-names-to-edit', withPaletteClassNames );

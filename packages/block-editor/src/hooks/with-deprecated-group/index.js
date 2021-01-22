@@ -1,9 +1,21 @@
 import { addFilter } from '@wordpress/hooks';
+import { createHigherOrderComponent } from '@wordpress/compose';
+
+import { getClassNameWithPaletteHelpers } from '@novablocks/utils';
 
 const deprecatedStyles = {
-  'is-style-accent': '6',
-  'is-style-dark': '9',
-  'is-style-darker': '10',
+  'is-style-accent': {
+    paletteVariation: 6,
+    useSourceColorAsReference: true,
+  },
+  'is-style-dark': {
+    paletteVariation: 9,
+    useSourceColorAsReference: false,
+  },
+  'is-style-darker': {
+    paletteVariation: 10,
+    useSourceColorAsReference: false,
+  },
 };
 
 function addDeprecatedGroup( settings, name ) {
@@ -13,36 +25,26 @@ function addDeprecatedGroup( settings, name ) {
   }
 
   return Object.assign( {}, settings, {
-    attributes: Object.assign( {}, settings.attributes, {
-      paletteVariation: {
-        type: "string"
-      }
-    } ),
     deprecated: [ {
       attributes: settings.attributes,
       migrate( attributes, innerBlocks ) {
         const classAttr = attributes.className;
         const classes = classAttr.split(/\b\s+/);
-        let paletteVariation = '0';
+        let newAttributes = {};
 
-        const newClasses = classes.filter( className => {
+        classes.some( className => {
           let isDeprecated = typeof deprecatedStyles[className] !== "undefined";
 
           if ( isDeprecated ) {
-            paletteVariation = deprecatedStyles[className];
-            return false;
+            newAttributes = deprecatedStyles[className];
+            return true;
           }
 
-          return true;
+          return false;
         } )
 
-        newClasses.push( `sm-variation-${ paletteVariation }` );
-
         return [
-          Object.assign( {}, attributes, {
-            paletteVariation,
-            className: newClasses.join( " " )
-          } ),
+          Object.assign( {}, attributes, newAttributes ),
           innerBlocks
         ]
       },
@@ -60,4 +62,4 @@ function addDeprecatedGroup( settings, name ) {
     } ].concat( settings.deprecated ),
   } );
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/deprecate-group', addDeprecatedGroup );
+addFilter( 'blocks.registerBlockType', 'novablocks/deprecate-group', addDeprecatedGroup );

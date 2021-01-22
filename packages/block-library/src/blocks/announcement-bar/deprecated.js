@@ -25,7 +25,7 @@ const deprecatedStyles = {
 const deprecated = [
   {
     isEligible: ( attributes, innerBlocks ) => {
-      const classAttr = attributes.className;
+      const classAttr = attributes.className || '';
       const classes = classAttr.split(/\b\s+/);
 
       return classes.some( className => Object.keys( deprecatedStyles ).includes( className ) );
