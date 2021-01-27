@@ -111,13 +111,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 						<td class=""><label for="nb_conversation_starter_user_id"><strong><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<?php wp_dropdown_users(
-									[
+									apply_filters( 'novablocks_comments_post_conversation_starter_dropdown_users_args', [
 										'who'              => 'authors',
 										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
 										'include_selected' => true,
 										'show'             => 'display_name_with_login',
-									]
+									], $post )
 							); ?>
 							<p class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default, it\'s the post author.', '__plugin_txtd' ); ?></p>
 						</td>
