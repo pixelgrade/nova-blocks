@@ -17,6 +17,10 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 	function novablocks_render_navigation_block( $attributes, $content ) {
 
+		if ( ! has_nav_menu($attributes['slug'] ) ) {
+			return;
+		}
+
 		$classes = array(
 			'wp-block-novablocks-navigation',
 		);
@@ -33,8 +37,9 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 			<?php
 				wp_nav_menu( array(
                     'theme_location' => $attributes['slug'],
-                    'container' => '',
+                    'container' => 'nav',
                     'fallback_cb'    => false,
+					'container_class' => 'nav-menu-container',
 	            ) );
 			?>
 		</div>

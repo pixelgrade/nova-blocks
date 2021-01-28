@@ -8,11 +8,11 @@ const variations = [
 		icon: icons.logoLeft,
 		isDefault: true,
 		innerBlocks:  [
-			[ 'novablocks/logo' ],
-			[ 'novablocks/navigation', {
-				className: "site-header__menu site-header__menu--primary",
-				slug: "primary"
-			} ],
+        [ 'novablocks/logo' ],
+        [ 'novablocks/navigation', {
+          className: "site-header__menu site-header__menu--primary",
+          slug: "primary"
+        } ],
 		],
 		scope: [ 'block' ],
 	},
@@ -32,7 +32,65 @@ const variations = [
 			} ],
 		],
 		scope: [ 'block' ],
-	}
+	},
+  {
+    name: 'multiple-rows',
+    title: __( 'Logo centered and one navigation menu on each side', '__plugin_txtd' ),
+    icon: icons.logoCenter,
+    innerBlocks:  [
+      ['novablocks/header-row', {
+        className: 'site-header--secondary-navigation site-header--secondary-row'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--secondary",
+            slug: "secondary"
+          } ],
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--tertiary",
+            slug: "tertiary"
+          } ]
+        ]
+      ],
+      ['novablocks/header-row', {
+        className: 'site-header--logo-row'
+      },
+        [
+          ['novablocks/logo']
+        ]
+      ],
+      ['novablocks/header-row', {
+        className: 'site-header--primary-row is--multi-row'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--primary",
+            slug: "primary"
+          } ],
+        ]
+      ],
+    ],
+    scope: [ 'block' ],
+  },
+  {
+    name: 'single-row',
+    title: __( 'Simple header', '__plugin_txtd' ),
+    icon: icons.logoLeft,
+    innerBlocks:  [
+      ['novablocks/header-row', {
+        className: 'site-header--primary-row'
+      },
+        [
+          [ 'novablocks/logo'],
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--primary",
+            slug: "primary"
+          } ]
+        ]
+      ],
+    ],
+    scope: [ 'block' ],
+  }
 ];
 
 export default variations;

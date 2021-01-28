@@ -2,7 +2,8 @@
 
 @media only screen and (min-width: 1000px) {
 	// Nova Blocks hacks
-	.site-header {
+	.site-header,
+  .site-header-sticky {
 		// styles from Nova Blocks should only affect blocks created by it
 		@import 'scss/menu';
 	}
@@ -10,7 +11,6 @@
 	.site-header__content {
 		display: grid;
 		align-items: center;
-		grid-gap: 1em;
 
 		> * {
 			justify-content: center;
@@ -58,4 +58,21 @@
 @media not screen and (min-width: 1000px) {
 	@import 'scss/mobile';
 	@import 'scss/mobile-transitions';
+}
+
+
+.site-header--secondary-navigation[class][class] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header--multiple-rows[class][class] {
+  .site-header__menu--primary:last-child {
+    justify-content: center;
+  }
+  
+  .site-header--logo {
+    justify-content: center;
+  }
 }
