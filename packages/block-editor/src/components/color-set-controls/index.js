@@ -77,18 +77,18 @@ const ColorSetControls = ( props ) => {
             key={ 'novablocks-color-variation-preset-1' }
             label={ __( 'Choose a relative preset:', '__plugin_txtd' ) }
             options={ [ {
-              label: 'Color',
-              value: 'color',
-              preset: {
-                useSourceColorAsReference: true,
-                paletteVariation: 0
-              }
-            },{
               label: 'Lighter Color',
               value: 'lighter-color',
               preset: {
                 useSourceColorAsReference: true,
                 paletteVariation: 11
+              }
+            },{
+              label: 'Color',
+              value: 'color',
+              preset: {
+                useSourceColorAsReference: true,
+                paletteVariation: 0
               }
             },{
               label: 'Darker Color',
@@ -103,14 +103,14 @@ const ColorSetControls = ( props ) => {
             key={ 'novablocks-color-variation-preset-2' }
             label={ __( 'Choose a absolute preset:', '__plugin_txtd' ) }
             options={ [ {
-              label: 'White',
+              label: 'Always White',
               value: 'white',
               preset: {
                 useSourceColorAsReference: false,
                 paletteVariation: 0
               }
             },{
-              label: 'Lighter',
+              label: 'Almost White',
               value: 'lighter',
               preset: {
                 useSourceColorAsReference: false,
