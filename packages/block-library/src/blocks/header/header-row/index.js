@@ -14,7 +14,7 @@ import {getSvg} from "@novablocks/block-editor";
 
 registerBlockType('novablocks/header-row', {
   title: __('Header Row', '__plugin_txtd' ),
-  description: __('A header Row.', '__plugin_txtd'),
+  description: __('Outputs header row markup.', '__plugin_txtd'),
   category: 'nova-blocks',
   parent: 'novablocks/header',
   icon: getSvg( iconSvg ),
