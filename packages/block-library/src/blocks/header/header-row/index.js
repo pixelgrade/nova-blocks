@@ -17,12 +17,6 @@ registerBlockType('novablocks/header-row', {
   description: __('A header Row.', '__plugin_txtd'),
   category: 'nova-blocks',
   parent: 'novablocks/header',
-  attributes: {
-    shouldBeSticky: {
-      type: 'boolean',
-      default: false
-    }
-  },
   icon: getSvg( iconSvg ),
   edit,
   save

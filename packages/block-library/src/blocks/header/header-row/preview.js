@@ -29,28 +29,12 @@ let TEMPLATE = [
 
 const HeaderRowPreview = function( props ) {
   const {
-    attributes: {
-      shouldBeSticky,
-    },
-    clientId,
-    setAttributes,
     className,
   } = props;
 
   const classNames = classnames(
     className,
-    {
-      'site-header-row--sticky' : shouldBeSticky === true
-    }
   );
-
-  const { innerBlocksLength } = useSelect(select => ({
-    innerBlocks_length: select("core/block-editor").getBlockCount(clientId)
-  }));
-
-  useEffect(() => {
-    setAttributes({ innerBlocksLength });
-  }, [innerBlocksLength]);
 
   return (
     <div className={classNames}>

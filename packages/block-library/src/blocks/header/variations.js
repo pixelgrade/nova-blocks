@@ -60,7 +60,7 @@ const variations = [
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header--primary-row is--multi-row'
+        className: 'site-header__row site-header__row--primary'
       },
         [
           [ 'novablocks/navigation', {
@@ -78,7 +78,7 @@ const variations = [
     icon: icons.logoLeft,
     innerBlocks:  [
       ['novablocks/header-row', {
-        className: 'site-header--primary-row'
+        className: 'site-header__row site-header__row--primary'
       },
         [
           [ 'novablocks/logo'],
@@ -86,6 +86,120 @@ const variations = [
             className: "site-header__menu site-header__menu--primary",
             slug: "primary"
           } ]
+        ]
+      ],
+    ],
+    scope: [ 'block' ],
+  },
+  {
+    name: 'Fargo',
+    title: __('Logo left with one menu on the right.', '__plugin_txtd' ),
+    icon: icons.logoLeft,
+    innerBlocks: [
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--primary u-horizontal-layout'
+      },
+        [
+          ['novablocks/logo'],
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--primary",
+            slug: "primary"
+          } ]
+        ]
+      ]
+    ],
+    scope: [ 'block' ],
+  },
+  {
+    name: 'Rosa2',
+    title: __('Logo centered with one menu on the left and one menu on the right.', '__plugin_txtd' ),
+    icon: icons.logoCenter,
+    innerBlocks: [
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--primary u-columns-layout'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--secondary",
+            slug: "secondary"
+          } ],
+          ['novablocks/logo'],
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--primary",
+            slug: "primary"
+          } ]
+        ]
+      ]
+    ],
+    scope: [ 'block' ],
+  },
+  {
+    name: 'Heap',
+    title: __('Two Rows Header with centered logo and three menus.', '__plugin_txtd'),
+    icon: icons.logoCenter,
+    innerBlocks: [
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--logo u-columns-layout'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--secondary",
+            slug: "secondary"
+          } ],
+          ['novablocks/logo'],
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--tertiary",
+            slug: "tertiary"
+          } ]
+        ]
+      ],
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--primary'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--primary",
+            slug: "primary"
+          } ]
+        ]
+      ]
+    ],
+    scope: [ 'block' ],
+  },
+  {
+    name: 'Felt',
+    title: __('Three Rows Header with centered logo and three menus.', '__plugin_txtd'),
+    icon: icons.logoCenter,
+    innerBlocks:  [
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--secondary u-horizontal-layout'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--secondary",
+            slug: "secondary"
+          } ],
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--tertiary",
+            slug: "tertiary"
+          } ]
+        ]
+      ],
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--logo'
+      },
+        [
+          ['novablocks/logo']
+        ]
+      ],
+      ['novablocks/header-row', {
+        className: 'site-header__row site-header__row--primary'
+      },
+        [
+          [ 'novablocks/navigation', {
+            className: "site-header__menu site-header__menu--primary",
+            slug: "primary"
+          } ],
         ]
       ],
     ],

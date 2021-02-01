@@ -11,18 +11,19 @@
 	.site-header__content {
 		display: grid;
 		align-items: center;
-
-		> * {
-			justify-content: center;
-		}
-
-		> :first-child {
-			justify-content: flex-start;
-		}
-
-		> :last-child {
-			justify-content: flex-end;
-		}
+    
+    //
+		//> * {
+		//	justify-content: center;
+		//}
+    //
+		//> :first-child {
+		//	justify-content: flex-start;
+		//}
+    //
+		//> :last-child {
+		//	justify-content: flex-end;
+		//}
 
 		> .wp-block-novablocks-navigation {
 			> .menu,
@@ -76,3 +77,30 @@
     justify-content: center;
   }
 }
+
+@include above(lap) {
+  
+  .u-horizontal-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .u-columns-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    
+    .site-header__menu--secondary {
+      ul.menu {
+        justify-content: flex-start;
+      }
+    }
+    
+    .site-header__menu--primary {
+      ul.menu {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+

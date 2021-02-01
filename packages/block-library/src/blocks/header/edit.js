@@ -24,6 +24,8 @@ import {
 	withDispatch
  } from '@wordpress/data';
 
+import InspectorControls from "./inspector-controls";
+
 const TEMPLATE_OPTIONS = [
 	{
 		title: __( 'Logo on the left side and one navigation menu', '__plugin_txtd' ),
@@ -121,7 +123,8 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				layout
+				layout,
+        stickyRow
 			},
 			blockType,
 			defaultVariation,
@@ -135,13 +138,15 @@ class Edit extends Component {
 		const classNames = classnames(
 			className,
 			`site-header`,
-			`site-header-${layout}`
+			`site-header-${layout}`,
+			`site-header-${stickyRow}`
 		);
 
 
 		if ( hasInnerBlocks || !this.supportsBlockVariationPicker() ) {
 			return (
 				<Fragment>
+          <InspectorControls {...this.props} />
 					<div className={ classNames }>
 						{ this.supportsBlockVariationPicker() ? this.blockVariationPicker() : this.innerBlocksPicker() }
 					</div>

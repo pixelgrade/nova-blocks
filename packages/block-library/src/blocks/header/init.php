@@ -18,6 +18,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
+		$classes = array('site-header alignfull');
+
+		$classes[] = 'site-header--' . $attributes['layout'];
+
+		if ( $attributes['shouldBeSticky'] === true ) {
+			$classes[] = 'site-header__row--'. $attributes['stickyRow'] . '-is-sticky';
+		}
+
 		global $novablocks_responsive_navigation_outputted;
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
@@ -39,7 +47,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		} ?>
 
-        <header id="masthead" class="site-header alignfull <?php echo esc_attr( 'site-header--' . $attributes['layout'] ); ?>">
+        <header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 	        <div class="site-header__wrapper">
 	            <div class="site-header__inner-container">
 	                <div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">

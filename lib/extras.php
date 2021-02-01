@@ -189,6 +189,14 @@ function novablocks_get_header_attributes() {
 			'type'    => 'string',
 			'default' => 'logo-left',
 		),
+		'stickyRow' => array(
+			'type'    => 'string',
+			'default' => 'primary'
+		),
+		'shouldBeSticky' => array(
+			'type'	=> 'bool',
+			'default'	=> false
+		)
 	);
 }
 
