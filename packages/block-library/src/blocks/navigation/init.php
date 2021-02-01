@@ -17,10 +17,6 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 	function novablocks_render_navigation_block( $attributes, $content ) {
 
-		if ( ! has_nav_menu($attributes['slug'] ) ) {
-			return;
-		}
-
 		$classes = array(
 			'wp-block-novablocks-navigation',
 		);
