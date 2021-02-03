@@ -11,7 +11,7 @@ import {
 	Fragment
  } from '@wordpress/element';
 
-import { InnerBlocks, __experimentalBlockVariationPicker } from '@wordpress/block-editor';
+import { InnerBlocks, __experimentalBlockVariationPicker, BlockControls } from '@wordpress/block-editor';
 
 import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 
@@ -21,8 +21,15 @@ import {
 
 import {
 	withSelect,
-	withDispatch
+	withDispatch,
+  select,
+  dispatch,
  } from '@wordpress/data';
+
+import {
+  Toolbar,
+  IconButton
+} from '@wordpress/components';
 
 import InspectorControls from "./inspector-controls";
 
@@ -126,6 +133,7 @@ class Edit extends Component {
 				layout,
         stickyRow
 			},
+      clientId,
 			blockType,
 			defaultVariation,
 			replaceInnerBlocks,
@@ -142,10 +150,26 @@ class Edit extends Component {
 			`site-header-${stickyRow}`
 		);
 
+    const currentBlock = select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ];
+    const childBlocks = currentBlock.innerBlocks;
+
+    const clientIds = childBlocks.map( block => block.clientId );
+    const removeInnerBlocks = () => wp.data.dispatch( 'core/block-editor' ).removeBlocks( clientIds );
+
 
 		if ( hasInnerBlocks || !this.supportsBlockVariationPicker() ) {
 			return (
 				<Fragment>
+          <BlockControls>
+            <Toolbar>
+              <IconButton
+                className="components-icon-button components-toolbar__control"
+                label={ __( 'Change Layout', '__plugin_txtd' ) }
+                onClick={ () => removeInnerBlocks() }
+                icon="edit"
+              />
+            </Toolbar>
+          </BlockControls>
           <InspectorControls {...this.props} />
 					<div className={ classNames }>
 						{ this.supportsBlockVariationPicker() ? this.blockVariationPicker() : this.innerBlocksPicker() }
