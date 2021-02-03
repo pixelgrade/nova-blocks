@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 
-import { Fragment } from '@wordpress/element';
+import {Fragment} from '@wordpress/element';
 
 /**
  * Internal dependencies

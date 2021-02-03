@@ -4,10 +4,13 @@ import classnames from "classnames";
  * WordPress dependencies
  */
 
-import { InnerBlocks } from '@wordpress/block-editor';
+import {InnerBlocks} from '@wordpress/block-editor';
 
 const HeaderRowSave = function( props ) {
   const {
+    attributes: {
+      headerRowType
+    },
     className,
   } = props;
 
@@ -16,9 +19,9 @@ const HeaderRowSave = function( props ) {
   );
 
   return (
-      <div className={classNames}>
-          <InnerBlocks.Content/>
-      </div>
+    <div className={classNames}>
+      <InnerBlocks.Content/>
+    </div>
   )
 };
 

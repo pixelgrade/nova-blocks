@@ -9,10 +9,10 @@
 	}
 
 	.site-header__content {
-		display: grid;
-		align-items: center;
+		//display: grid;
+		//align-items: center;
     
-    //
+
 		//> * {
 		//	justify-content: center;
 		//}
@@ -32,17 +32,17 @@
 			}
 		}
 
-		.site-header--logo-left & {
-			grid-template-columns: auto 1fr;
-		}
-
-		.site-header--logo-center & {
-			grid-template-columns: 1fr auto 1fr;
-		}
-
-		.site-header--logo-right & {
-			grid-template-columns: 1fr auto;
-		}
+		//.site-header--logo-left & {
+		//	grid-template-columns: auto 1fr;
+		//}
+    //
+		//.site-header--logo-center & {
+		//	grid-template-columns: 1fr auto 1fr;
+		//}
+    //
+		//.site-header--logo-right & {
+		//	grid-template-columns: 1fr auto;
+		//}
 
 		&.alignfull[class] {
 			margin-left: 0;
@@ -61,46 +61,178 @@
 	@import 'scss/mobile-transitions';
 }
 
+.site-header-sticky {
+  position: fixed;
+  top: var(--admin-bar-height, 0);
 
-.site-header--secondary-navigation[class][class] {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  z-index: 1100;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .15s ease-in;
+  
+  &--is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
-.site-header--multiple-rows[class][class] {
-  .site-header__menu--primary:last-child {
-    justify-content: center;
+.site-header {
+  
+  &--is-sticky {
+    position: fixed;
+    top: var(--admin-bar-height, 0);
+  }
+}
+
+@include below(lap) {
+  
+  .site-header-sticky {
+    display: none;
   }
   
-  .site-header--logo {
-    justify-content: center;
+  .site-header--simple {
+    
+    .site-header__row {
+      display: flex;
+      flex-direction: column;
+      
+      .site-header__menu--primary {
+        order: -1;
+      }
+    }
+  }
+  
+  .site-header__row--primary {
+    order: -1;
   }
 }
 
 @include above(lap) {
   
-  .u-horizontal-layout {
+  .site-header__row {
+    
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    
+    &--secondary {
+      justify-content: space-between;
+    }
+    
+    &--logo {
+      &:not(:first-child),
+      &:not(:last-child) {
+        justify-content: center;
+      }
+    }
+    
+    &--primary {
+      justify-content: center;
+    }
   }
   
-  .u-columns-layout {
-    display: grid;
+  .site-header {
+    
+    &__row {
+      display: grid;
+    }
+    
+    &--logo-center {
+      
+      .site-header__row {
+        
+        grid-template-columns: 1fr auto 1fr;
+        
+        > :last-child {
+          justify-content: flex-end;
+          
+          > .menu {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+    
+    &--logo-left {
+      
+      .site-header__row {
+        grid-template-columns: auto 1fr;
+        
+        >:last-child > .menu {
+          justify-content: flex-end;
+        }
+      }
+      
+    }
+    
+    &--logo-center-two-rows {
+      
+      .site-header__row--logo {
+        grid-template-columns: 1fr auto 1fr;
+  
+        >:last-child > .menu {
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+}
+
+.site-header-sticky {
+  
+  .site-header__row--logo:first-child {
     grid-template-columns: 1fr auto 1fr;
     
-    .site-header__menu--secondary {
-      ul.menu {
+    >:first-child {
+      > .menu {
         justify-content: flex-start;
       }
     }
     
-    .site-header__menu--primary {
-      ul.menu {
+    >:last-child {
+      > .menu {
         justify-content: flex-end;
       }
     }
   }
 }
 
+.site-header__row--secondary {
+  grid-template-columns: repeat(2, 1fr);
+  
+  > :first-child {
+    > .menu {
+      justify-content: flex-start;
+    }
+  }
+  
+  > :last-child {
+    > .menu {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.site-header-sticky {
+  
+  .site-header__row--logo {
+    padding-top: var(--theme-spacing-default);
+    padding-bottom: var(--theme-spacing-default);
+  }
+}
+
+.site-header--logo-center-three-rows + .site-header-sticky {
+  
+  .site-header__row--logo {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    
+   
+    
+    > .c-branding {
+      justify-content: center;
+    }
+  }
+}

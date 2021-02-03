@@ -22,8 +22,18 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$classes[] = 'site-header--' . $attributes['layout'];
 
+		$header_is_simple = $attributes['layout'] === 'logo-left' ||  $attributes['layout'] === 'logo-center';
+
+		// By default no row is set to sticky.
+		$sticky_row = 'none';
+
+		// Get the sticky row.
 		if ( $attributes['shouldBeSticky'] === true ) {
-			$classes[] = 'site-header__row--'. $attributes['stickyRow'] . '-is-sticky';
+			$sticky_row = $attributes['stickyRow'];
+		}
+
+		if ($header_is_simple ) {
+			$classes[] = 'site-header--simple';
 		}
 
 		global $novablocks_responsive_navigation_outputted;
@@ -47,7 +57,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		} ?>
 
-        <header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+        <header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" data-sticky="<?php echo esc_attr($sticky_row); ?>">
 	        <div class="site-header__wrapper">
 	            <div class="site-header__inner-container">
 	                <div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
@@ -57,8 +67,100 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 	        </div>
 		</header>
 
+		<?php
+
+		// Get Sticky Row Block.
+		$stickyRowBlock = getStickyRowBlock($attributes);
+
+		// Get Primary Row Block to use it on hover if it's the case.
+		$primaryRowBlock = getPrimaryBlock();
+
+		if ( $attributes['shouldBeSticky'] === true && ! $header_is_simple ) { ?>
+			<div class="site-header-sticky">
+				<?php
+					echo render_block($stickyRowBlock);
+
+					if ( $attributes['stickyRow'] !== 'primary' ) {
+						echo render_block($primaryRowBlock);
+					}
+				?>
+			</div>
+		<?php } ?>
+
 		<?php do_action( 'novablocks_header:after' );
 
 		return ob_get_clean();
 	}
+}
+
+function getStickyRowBlock($attributes) {
+
+	$saved_sticky_row = $attributes['stickyRow'];
+	$post	= get_block_area_post( 'header' );
+
+	$block = '';
+
+	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
+
+		// Get all blocks inside Block Area;
+		$header_block = ( parse_blocks( $post->post_content ) )[0];
+
+		// Get InnerBlocks
+		$innerBlocks = $header_block['innerBlocks'];
+
+		foreach( $innerBlocks as $innerBlock) {
+
+			// Select InnerBlock which match Sticky Row attribute.
+			if ( $innerBlock['attrs']['headerRowType'] === $saved_sticky_row) {
+				$block = $innerBlock;
+			}
+		}
+	}
+
+	return $block;
+}
+
+function get_block_area_post($slug) {
+
+	$block_area = get_posts( array(
+		'name'        => $slug,
+		'post_type'   => 'block_area',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+		'fields'      => 'ids',
+	) );
+
+	// Header Block Area ID.
+	$block_area_id = $block_area[0];
+
+	// Header Block Area Post.
+	$post          = get_post( $block_area_id );
+
+	return $post;
+}
+
+function getPrimaryBlock() {
+
+	$post	= get_block_area_post( 'header' );
+
+	$block = '';
+
+	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
+
+		// Get all blocks inside Block Area;
+		$header_block = ( parse_blocks( $post->post_content ) )[0];
+
+		// Get InnerBlocks
+		$innerBlocks = $header_block['innerBlocks'];
+
+		foreach( $innerBlocks as $innerBlock) {
+
+			// Select InnerBlock which match Sticky Row attribute.
+			if ( $innerBlock['attrs']['headerRowType'] === 'primary') {
+				$block = $innerBlock;
+			}
+		}
+	}
+
+	return $block;
 }

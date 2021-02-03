@@ -14,8 +14,6 @@ import variations from './variations';
 
 import { getSvg } from "@novablocks/block-editor";
 
-import './header-row';
-
 registerBlockType( 'novablocks/header', {
 	title: __( 'Header', '__plugin_txtd' ),
 	description: __( 'Outputs custom header markup.', '__plugin_txtd' ),

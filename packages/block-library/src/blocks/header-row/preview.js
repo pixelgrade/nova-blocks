@@ -3,8 +3,6 @@
  */
 import classnames from 'classnames';
 import { InnerBlocks } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -42,6 +40,7 @@ const HeaderRowPreview = function( props ) {
           allowedBlocks={ALLOWED_BLOCKS}
           template={TEMPLATE}
           renderAppender={false}
+          templateLock = 'insert'
         />
     </div>
 
