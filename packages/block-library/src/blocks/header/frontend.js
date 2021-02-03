@@ -13,7 +13,9 @@ const HEADER_ROW_CLASS = '.site-header__row';
           HEADER_ROW_CLASS + '--' + stickyRow
         ).toString(),
         stickyHeaderShown = false,
-        mainHeaderShouldBeSticky = $siteHeader.data( 'sticky' ) === 'primary' && !$stickyHeader.length;
+        mainHeaderShouldBeSticky = $siteHeader.data( 'sticky' ) === 'primary' && !$stickyHeader.length,
+        wpAdminBar = $('#wpadminbar'),
+        wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight();
 
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
@@ -32,11 +34,11 @@ const HEADER_ROW_CLASS = '.site-header__row';
 
       let stickyRowOffSet = $( stickyRowClass ).offset().top,
         windowScrollY = window.scrollY,
-        isSticky = windowScrollY > stickyRowOffSet,
+        isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight,
         $promoBar = $('.js-promo-bar');
 
       if ( $promoBar.length ) {
-        isSticky = windowScrollY > stickyRowOffSet - $promoBar.outerHeight();
+        isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight - $promoBar.outerHeight();
       }
 
       if ( isSticky !== stickyHeaderShown ) {
