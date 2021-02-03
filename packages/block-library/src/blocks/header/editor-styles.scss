@@ -28,6 +28,8 @@
   
   .site-header__row {
     
+    display: block;
+    
     .block-editor-block-list__layout {
       display: grid;
       align-items: center;
@@ -53,15 +55,27 @@
       grid-template-columns: 1fr auto 1fr;
     }
   }
+  
+  .site-header__row--primary {
+    
+    .block-editor-block-list__layout {
+      justify-content: center;
+    }
+  }
 }
 
 .site-header-logo-center-three-rows {
   
+  .site-header__row--logo,
+  .site-header__row--primary {
+  
+    .block-editor-block-list__layout {
+      justify-content: center;
+    }
+  }
+  
   .site-header__row--secondary {
     
-    display: block;
-  
-  
     .block-editor-block-list__layout {
       display: flex;
       justify-content: space-between;
