@@ -31,6 +31,13 @@
   // Fix Header layout until
   // user hit save after migration.
  .site-header--is-old {
+   
+   &.site-header--logo-left {
+     
+     .site-header__content {
+       grid-template-columns: auto 1fr;
+     }
+   }
     .site-header__content {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
