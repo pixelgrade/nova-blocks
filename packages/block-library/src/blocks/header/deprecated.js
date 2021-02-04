@@ -4,7 +4,7 @@ import { createBlock } from '@wordpress/blocks';
 const blockAttributes = {
   layout: {
     type: 'string',
-    default: 'logo-center'
+    default: 'logo-left'
   },
   align: {
     type: 'string',
@@ -16,13 +16,13 @@ const deprecated = [
   {
 
     isEligible: ( attributes, innerBlocks ) => {
-      return typeof attributes.shouldBeSticky === 'undefined';
+      return innerBlocks[0].name !== 'novablocks/header-row';
     },
 
     attributes: {
       shouldBeSticky: {
         type: 'boolean',
-        default: true
+        default: false
       },
       stickyRow: {
         type: 'string',
