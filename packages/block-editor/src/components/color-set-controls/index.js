@@ -1,11 +1,12 @@
 import {
-  RadioControl,
   RangeControl,
-  ToggleControl
+  ToggleControl,
+  ColorPalette,
 } from "@wordpress/components";
 
 import {
-  Fragment
+  Fragment,
+  useState,
 } from "@wordpress/element";
 
 import colorSetAttributes from './attributes.json';
@@ -21,53 +22,8 @@ import PalettePresetControl from "../palette-preset-control";
 
 const ColorSetControls = ( props ) => {
 
-  const {
-    settings: {
-      palettes,
-    }
-  } = props;
-
-  const presetSets = [ {
-    label: 'Light',
-    useSourceColorAsReference: false,
-    paletteVariation: 0
-  }, {
-    label: 'Color',
-    useSourceColorAsReference: true,
-    paletteVariation: 0
-  }, {
-    label: 'Dark',
-    useSourceColorAsReference: false,
-    paletteVariation: 10
-  } ];
-
-  const presets = presetSets.reduce( ( presets, presetSet ) => {
-    const { label, useSourceColorAsReference, paletteVariation } = presetSet;
-
-    const newPresets = palettes.map( ( palette, index ) => {
-      return {
-        label: `${ label } ${ palette.label }`,
-        value: `${ label.toLowerCase() }-${ index }`,
-        preset: {
-          palette: index,
-          useSourceColorAsReference,
-          paletteVariation,
-        }
-      }
-    } )
-
-    return presets.concat( newPresets );
-  }, [] );
-
   return (
     <ControlsSection label={ __( 'Color Sets' ) }>
-      <ControlsTab label={ __( 'General' ) }>
-        <PalettePresetControl
-          key={ 'novablocks-color-set-preset' }
-          label={ __( 'Choose a color preset:', '__plugin_txtd' ) }
-          options={ presets }
-        />
-      </ControlsTab>
       <ControlsTab label={ __( 'Customize' ) }>
         <ControlsGroup title={ __( 'Color' ) }>
           <PaletteControls { ...props } />
@@ -149,28 +105,72 @@ const ColorSetControls = ( props ) => {
   )
 }
 
+const mapPalettesToColorPalette = palette => {
+  const { colors, sourceIndex } = palette;
+  return {
+    name: palette.label,
+    color: colors[sourceIndex].value
+  };
+}
+
+const isFunctionalPalette = palette => {
+  return palette.label.charAt(0) === '_';
+}
+
+const disableFunctionalColorsOnBlocks = [
+  'novablocks/cards-collection',
+  'novablocks/header',
+  'novablocks/hero',
+  'novablocks/media',
+  'novablocks/posts-collection',
+]
+
 const PaletteControls = ( props ) => {
 
   const {
+    attributes,
+    setAttributes,
     settings: {
       palettes,
     }
   } = props;
 
+  const disableFunctionalColors = disableFunctionalColorsOnBlocks.includes( props.name );
+
+  const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
+  const currentColor = currentPalette.colors[currentPalette.sourceIndex];
+  const [ showFunctional, setShowFunctional ] = useState( false );
+
+  const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) ).map( mapPalettesToColorPalette );
+  const brandColors = palettes.filter( palette => ! isFunctionalPalette( palette ) ).map( mapPalettesToColorPalette );
+
+  const onChange = ( color ) => {
+    const newPalette = palettes.find( currentPalette => {
+      const { colors, sourceIndex } = currentPalette;
+      return colors[sourceIndex]?.value === color
+    } );
+
+    if ( !! newPalette ) {
+      setAttributes( { palette: newPalette.id } );
+    }
+  }
+
   return (
-    <PalettePresetControl
-      label={ __( 'Main Color' ) }
-      options={ palettes.map( ( palette, index ) => {
-        return {
-          label: palette.label,
-          value: `palette-${ index }`,
-          preset: {
-            palette: index
-          }
-        }
-      } ) }
-    />
-  );
+    <Fragment>
+      <ColorPalette
+        colors={ showFunctional && ! disableFunctionalColors ? functionalColors : brandColors }
+        value={ currentColor }
+        onChange={ onChange }
+        clearable={ false }
+        disableCustomColors={ true }
+      />
+      { ! disableFunctionalColors && <ToggleControl
+        label={ __( 'Show Functional Colors', '__plugin_txtd' ) }
+        checked={ showFunctional }
+        onChange={ value => { setShowFunctional( value ) } }
+      /> }
+    </Fragment>
+  )
 };
 
 const PaletteVariationControls = ( props ) => {
@@ -179,7 +179,8 @@ const PaletteVariationControls = ( props ) => {
     attributes,
     setAttributes,
     settings: {
-      palettes
+      palettes,
+      customify_config
     },
   } = props;
 
@@ -191,7 +192,9 @@ const PaletteVariationControls = ( props ) => {
 
   const currentPalette = palettes[palette];
   const { sourceIndex } = currentPalette;
-  const offset = useSourceColorAsReference ? sourceIndex : 0 ;
+  const siteVariation = customify_config?.sm_site_color_variation?.value || 0;
+  const siteVariationOffset = useSourceColorAsReference ? 0 : siteVariation;
+  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
 
   return (
     <Fragment>
@@ -199,19 +202,23 @@ const PaletteVariationControls = ( props ) => {
         key={ 'color-set-use-source-as-reference-control' }
         label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
         checked={ useSourceColorAsReference }
-        onChange={ () => {
+        onChange={ newUseSourceAsReference => {
+          let offset = siteVariation - sourceIndex;
+          let newPaletteVariation = newUseSourceAsReference ? paletteVariation + offset : paletteVariation - offset;
+          newPaletteVariation = ( newPaletteVariation + 12 ) % 12;
+
           setAttributes( {
-            useSourceColorAsReference: ! useSourceColorAsReference,
-            paletteVariation: !! useSourceColorAsReference ? paletteVariation + sourceIndex : paletteVariation - sourceIndex,
+            useSourceColorAsReference: newUseSourceAsReference,
+            paletteVariation: newPaletteVariation,
           } )
         } }
       />
       <RangeControl
         key={ 'color-set-variation-range-control' }
         label={ __( 'Variation', '__plugin_txtd' ) }
-        value={ ( paletteVariation + offset ) % 12 }
-        onChange={ newVariation => {
-          setAttributes( { paletteVariation: ( newVariation - offset + 12 ) % 12 } )
+        value={ ( paletteVariation + colorReferenceOffset - siteVariationOffset + 12 ) % 12 }
+        onChange={ value => {
+          setAttributes( { paletteVariation: ( value - colorReferenceOffset - siteVariationOffset + 12 ) % 12 } )
         } }
         min={ 0 }
         max={ 11 }
@@ -220,7 +227,7 @@ const PaletteVariationControls = ( props ) => {
       <RangeControl
         key={ 'color-set-source-color-offset-control' }
         label={ __( 'Soruce Color Offset', '__plugin_txtd' ) }
-        value={ useSourceColorAsReference ? ( paletteVariation + 6 ) % 12 - 6 : 0 }
+        value={ ( ( useSourceColorAsReference ? paletteVariation : paletteVariation - siteVariation - sourceIndex ) + 18 ) % 12 - 6 }
         min={ -6 }
         max={ 6 }
         step={ 0 }

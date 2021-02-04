@@ -174,6 +174,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			$nova_editor_settings['palettes'] = $palettes;
 		}
 
+		if ( class_exists( 'PixCustomifyPlugin' ) ) {
+			$nova_editor_settings['customify_config'] = PixCustomifyPlugin()->get_options_configs();
+		}
+
 		$js_script = '
     ( function() {
         wp.novaBlocks.settings = %s;

@@ -26,8 +26,6 @@ import {
 
 const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
 
-console.log( 'si aici', attributes );
-
 /**
  * WordPress dependencies
  */

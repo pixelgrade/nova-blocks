@@ -20,13 +20,13 @@
 	&[class] {
 		position: relative;
 		padding: var(--block-content-padding);
+    background: none;
 
 		transform: translateZ(0);
 
 		transition: var(--novablocks-transition);
 		transition-property: padding, box-shadow;
 	}
-
 
 	h1, h2, h3, h4, h5, h6 {
 		width: 100%;
@@ -50,6 +50,11 @@
 
 			transition: var(--novablocks-transition);
 			transition-property: background-color, opacity;
+
+      .content-is-basic &,
+      .content-is-moderate & {
+        opacity: 0;
+      }
 		}
 	}
 }

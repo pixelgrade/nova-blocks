@@ -67,11 +67,14 @@ class Edit extends Component {
 
 		window.addEventListener('novablock.googlemaps_authfailure', this.onGoogleMapsAuthFailure);
 
+		console.log( 'aici' );
+
 		loadPromise.done( () => {
 			this.settings = new models.Settings();
 
 			this.settings.on( `change:${ API_KEY_SETTING_ID }`, model => {
 				const apiKey = model.get( API_KEY_SETTING_ID );
+				console.log( 'aici ', apiKey );
 
 				this.setState( {
 					fetchedApiKey: true,
