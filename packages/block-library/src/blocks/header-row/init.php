@@ -10,6 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
+	/**
+	 * Entry point to render the block with the given attributes, content, and context.
+	 *
+	 * @param array $attributes
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+
 	function novablocks_render_header_row_block( $attributes, $content ) {
 
 		ob_start();

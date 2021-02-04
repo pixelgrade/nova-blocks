@@ -10,6 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
+	/**
+	 * Entry point to render the block with the given attributes, content, and context.
+	 *
+	 * @param array $attributes
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+
 	function novablocks_render_header_block( $attributes, $content ) {
 
 		ob_start();
@@ -103,8 +112,12 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 	}
 }
 
-/*
+/**
  * Get the Header Row that has been marked as sticky.
+ *
+ * @param array $attributes
+ *
+ * @return array
  */
 
 function getStickyRowBlock($attributes) {
@@ -134,8 +147,12 @@ function getStickyRowBlock($attributes) {
 	return $block;
 }
 
-/*
+/**
  * Helper function to get Block Area Post.
+ *
+ * @param string $slug
+ *
+ * @return object;
  */
 
 function get_block_area_post($slug) {
@@ -157,16 +174,18 @@ function get_block_area_post($slug) {
 	return $post;
 }
 
-/*
+/**
  * Used to select Primary Header Row and use it
  * for sticky header when it's needed.
+ *
+ * @return array
  */
 
 function getPrimaryBlock() {
 
 	$post	= get_block_area_post( 'header' );
 
-	$block = '';
+	$block = [];
 
 	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
 
@@ -188,8 +207,10 @@ function getPrimaryBlock() {
 	return $block;
 }
 
-/*
+/**
  * Check if Header Blocks is using Header Rows.
+ *
+ * @return boolean
  */
 
 function headerBlockUpdated() {
