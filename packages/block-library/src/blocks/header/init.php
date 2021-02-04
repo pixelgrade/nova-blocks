@@ -22,6 +22,8 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$classes[] = 'site-header--' . $attributes['layout'];
 
+		// Logo Center and Logo Left layout are considered as simple,
+		// because they are on only one row.
 		$header_is_simple = $attributes['layout'] === 'logo-left' ||  $attributes['layout'] === 'logo-center';
 
 		// By default no row is set to sticky.
@@ -32,11 +34,15 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			$sticky_row = $attributes['stickyRow'];
 		}
 
-		if ($header_is_simple ) {
+		// Helper class for Header layout
+		// that is on only one row.
+		if ( $header_is_simple ) {
 			$classes[] = 'site-header--simple';
 		}
 
-		if (! headerBlockUpdated() ) {
+		// We need that class to style header block,
+		// if that user didn't hit save yet.
+		if ( ! headerBlockUpdated() ) {
 			$classes[] = 'site-header--is-old';
 		}
 
@@ -97,6 +103,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 	}
 }
 
+/*
+ * Get the Header Row that has been marked as sticky.
+ */
+
 function getStickyRowBlock($attributes) {
 
 	$saved_sticky_row = $attributes['stickyRow'];
@@ -124,6 +134,10 @@ function getStickyRowBlock($attributes) {
 	return $block;
 }
 
+/*
+ * Helper function to get Block Area Post.
+ */
+
 function get_block_area_post($slug) {
 
 	$block_area = get_posts( array(
@@ -142,6 +156,11 @@ function get_block_area_post($slug) {
 
 	return $post;
 }
+
+/*
+ * Used to select Primary Header Row and use it
+ * for sticky header when it's needed.
+ */
 
 function getPrimaryBlock() {
 
@@ -168,6 +187,10 @@ function getPrimaryBlock() {
 
 	return $block;
 }
+
+/*
+ * Check if Header Blocks is using Header Rows.
+ */
 
 function headerBlockUpdated() {
 
