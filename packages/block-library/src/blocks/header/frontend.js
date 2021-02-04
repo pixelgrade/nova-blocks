@@ -1,4 +1,5 @@
 import { below } from "@novablocks/utils";
+import { addSocialMenuClass } from "./utils";
 
 const HEADER_ROW_CLASS = '.site-header__row';
 
@@ -20,6 +21,8 @@ const HEADER_ROW_CLASS = '.site-header__row';
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
     $( window ).on( 'scroll', makeHeaderStickyOnScroll );
+
+    addSocialMenuClass();
 
     function showStickyHeaderOnScroll() {
 

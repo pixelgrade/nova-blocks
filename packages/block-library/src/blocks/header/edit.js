@@ -1,5 +1,7 @@
 import * as icons from './icons';
 
+import { addSocialMenuClass } from './utils';
+
 import classnames from 'classnames';
 import get from 'lodash/get';
 import map from "lodash/map";
@@ -106,6 +108,10 @@ class Edit extends Component {
 			this.setTemplate( defaultVariation );
 		}
 	}
+
+	componentDidUpdate() {
+    addSocialMenuClass.call(this);
+  }
 
 	innerBlocksPicker() {
 		const { hasInnerBlocks } = this.props;
