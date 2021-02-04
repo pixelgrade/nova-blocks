@@ -36,6 +36,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			$classes[] = 'site-header--simple';
 		}
 
+		if (! headerBlockUpdated() ) {
+			$classes[] = 'site-header--is-old';
+		}
+
 		global $novablocks_responsive_navigation_outputted;
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
@@ -163,4 +167,18 @@ function getPrimaryBlock() {
 	}
 
 	return $block;
+}
+
+function headerBlockUpdated() {
+
+	$post	= get_block_area_post( 'header' );
+
+	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
+
+		if ( has_block('novablocks/header-row', $post ) ) {
+			return true;
+		}
+	}
+
+	return false;
 }

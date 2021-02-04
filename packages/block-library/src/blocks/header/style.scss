@@ -9,21 +9,6 @@
   }
   
   .site-header__content {
-    //display: grid;
-    //align-items: center;
-    
-    
-    //> * {
-    //	justify-content: center;
-    //}
-    //
-    //> :first-child {
-    //	justify-content: flex-start;
-    //}
-    //
-    //> :last-child {
-    //	justify-content: flex-end;
-    //}
     
     > .wp-block-novablocks-navigation {
       > .menu,
@@ -31,18 +16,6 @@
         justify-content: inherit;
       }
     }
-    
-    //.site-header--logo-left & {
-    //	grid-template-columns: auto 1fr;
-    //}
-    //
-    //.site-header--logo-center & {
-    //	grid-template-columns: 1fr auto 1fr;
-    //}
-    //
-    //.site-header--logo-right & {
-    //	grid-template-columns: 1fr auto;
-    //}
     
     &.alignfull[class] {
       margin-left: 0;
@@ -57,7 +30,7 @@
   
   // Fix Header layout until
   // user hit save after migration.
-  .site-header:not(.site-header--simple) {
+ .site-header--is-old {
     .site-header__content {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
