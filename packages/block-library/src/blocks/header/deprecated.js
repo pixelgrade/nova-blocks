@@ -18,8 +18,7 @@ const deprecated = [
   {
 
     isEligible: ( attributes, innerBlocks ) => {
-//      return innerBlocks[0].name !== 'novablocks/header-row';
-      return true;
+      return innerBlocks[0].name !== 'novablocks/header-row';
     },
 
     attributes: {
