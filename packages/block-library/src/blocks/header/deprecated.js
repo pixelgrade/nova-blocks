@@ -21,6 +21,7 @@ const deprecated = [
       return innerBlocks[0].name !== 'novablocks/header-row';
     },
 
+
     attributes: {
       shouldBeSticky: {
         type: 'boolean',
@@ -37,14 +38,14 @@ const deprecated = [
       const { getSettings } = select( 'novablocks' );
       const settings = getSettings();
 
-      const headerStickyAttribute = settings.customify_config.header_position.value;
+      const headerShouldBeSticky = settings.customify_config.header_position.value === 'sticky';
 
-      if ( headerStickyAttribute === 'sticky' ) {
-        attributes.shouldBeSticky = true;
+      if (headerShouldBeSticky) {
+        attributes.shouldBeSticky = headerShouldBeSticky;
       }
 
       return [
-        omit(attributes, 'shouldBeSticky' ),
+        omit(attributes, 'stickyRow' ),
         [
           createBlock( 'novablocks/header-row', {
               className: 'site-header__row site-header__row--primary',
