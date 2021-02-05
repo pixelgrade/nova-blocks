@@ -163,6 +163,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 		$nova_editor_settings = novablocks_get_block_editor_settings();
 
+		if ( class_exists( 'PixCustomifyPlugin' ) ) {
+			$nova_editor_settings['customify_config'] = PixCustomifyPlugin()->get_options_configs();
+		}
+
 		list( $color_palette, ) = (array) get_theme_support( 'editor-color-palette' );
 
 		if ( false !== $color_palette ) {

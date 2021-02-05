@@ -1,5 +1,6 @@
 import { omit } from 'lodash';
 import { createBlock } from '@wordpress/blocks';
+import { select } from '@wordpress/data';
 
 const blockAttributes = {
   layout: {
@@ -9,14 +10,16 @@ const blockAttributes = {
   align: {
     type: 'string',
     default: 'full'
-  }
+  },
+
 }
 
 const deprecated = [
   {
 
     isEligible: ( attributes, innerBlocks ) => {
-      return innerBlocks[0].name !== 'novablocks/header-row';
+//      return innerBlocks[0].name !== 'novablocks/header-row';
+      return true;
     },
 
     attributes: {
@@ -32,6 +35,14 @@ const deprecated = [
     },
 
     migrate( attributes, innerBlocks ) {
+      const { getSettings } = select( 'novablocks' );
+      const settings = getSettings();
+
+      const headerStickyAttribute = settings.customify_config.header_position.value;
+
+      if ( headerStickyAttribute === 'sticky' ) {
+        attributes.shouldBeSticky = true;
+      }
 
       return [
         omit(attributes, 'shouldBeSticky' ),
