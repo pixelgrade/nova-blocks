@@ -190,7 +190,12 @@ const PaletteVariationControls = ( props ) => {
     useSourceColorAsReference,
   } = attributes;
 
-  const currentPalette = palettes[palette];
+  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette );
+
+  if ( ! currentPalette ) {
+    return null;
+  }
+
   const { sourceIndex } = currentPalette;
   const siteVariation = customify_config?.sm_site_color_variation?.value || 0;
   const siteVariationOffset = useSourceColorAsReference ? 0 : siteVariation;
