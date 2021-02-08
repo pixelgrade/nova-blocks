@@ -1,4 +1,4 @@
-import Chance from 'chance';
+import { MersenneTwister } from "fast-mersenne-twister";
 import getBoundsOfCurve from "./get-bounds-of-curve";
 
 import {
@@ -12,11 +12,13 @@ const BLOB_MAX_SIDES = 12;
 export const BLOB_RADIUS = 10;
 
 export const getRatioArray = ( sides, patternSeed ) => {
-	const chance = new Chance( patternSeed );
+  const pseudoRandomGenerator = MersenneTwister( patternSeed );
 
-	return Array.from( Array( sides ).keys() ).map( () => {
-		return chance.integer( { min: 1, max: 10 } ) / 10;
-	} );
+  return Array.from(Array(sides).keys()).map(() => {
+    const options = {min: 1, max: 10};
+
+    return (Math.floor(pseudoRandomGenerator.random() * (options.max - options.min + 1) + options.min)) / 10;
+  })
 }
 
 export const getPointsArray = ( attributes ) => {
