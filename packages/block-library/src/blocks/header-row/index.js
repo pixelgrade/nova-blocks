@@ -18,10 +18,6 @@ registerBlockType( 'novablocks/header-row', {
   category: 'nova-blocks',
   parent: 'novablocks/header',
   attributes: {
-    isSticky: {
-      type: 'boolean',
-      default: false
-    },
     headerRowType: {
       type: 'string',
     }
