@@ -27,7 +27,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
-		$classes = array( 'site-header alignfull' );
+		$classes = array( 'site-header site-header--default alignfull' );
 
 		$classes[] = 'site-header--' . $attributes['layout'];
 
@@ -97,7 +97,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$primaryRowBlock = getPrimaryBlock();
 
 		if ( $attributes['shouldBeSticky'] === true && ! $header_is_simple ) { ?>
-			<div class="site-header-sticky">
+			<div class="site-header--default site-header-sticky">
 				<?php
 				echo render_block( $stickyRowBlock );
 

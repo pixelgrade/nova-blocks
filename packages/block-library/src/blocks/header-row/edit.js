@@ -16,7 +16,7 @@ const HeaderRowEdit = function( props ) {
 
   const classNames = classnames(
     'site-header__row',
-    className
+    className,
   );
 
   return (

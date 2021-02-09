@@ -152,6 +152,7 @@ class Edit extends Component {
 		const classNames = classnames(
 			className,
 			`site-header`,
+			`site-header--default`,
 			`site-header-${layout}`,
 			`site-header-${stickyRow}`
 		);

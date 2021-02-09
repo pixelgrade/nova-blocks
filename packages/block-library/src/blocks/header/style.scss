@@ -2,8 +2,7 @@
 
 @media only screen and (min-width: 1000px) {
   // Nova Blocks hacks
-  .site-header,
-  .site-header-sticky {
+  .site-header--default {
     // styles from Nova Blocks should only affect blocks created by it
     @import 'scss/menu';
   }
