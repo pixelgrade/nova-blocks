@@ -9,7 +9,8 @@ import {InnerBlocks} from '@wordpress/block-editor';
 const HeaderRowSave = function( props ) {
   const {
     attributes: {
-      headerRowType
+      headerRowType,
+      headerRowLabel
     },
     className,
   } = props;

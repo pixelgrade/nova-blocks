@@ -20,6 +20,9 @@ registerBlockType( 'novablocks/header-row', {
   attributes: {
     headerRowType: {
       type: 'string',
+    },
+    headerRowLabel: {
+      type: 'string',
     }
   },
   icon: getSvg( iconSvg ),

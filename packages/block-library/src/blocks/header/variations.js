@@ -9,7 +9,8 @@ const variations = [
     innerBlocks: [
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        headerRowType: 'primary',
+        headerRowLabel: 'Row Primary'
       },
         [
           ['novablocks/logo'],
@@ -29,7 +30,8 @@ const variations = [
     innerBlocks: [
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        headerRowType: 'primary',
+        headerRowLabel: 'Primary Navigation'
       },
         [
           [ 'novablocks/navigation', {
@@ -53,7 +55,8 @@ const variations = [
     innerBlocks: [
       ['novablocks/header-row', {
         className: 'site-header__row--logo',
-        headerRowType: 'logo'
+        headerRowType: 'logo',
+        headerRowLabel: 'Site Identity (logo)'
       },
         [
           [ 'novablocks/navigation', {
@@ -69,7 +72,8 @@ const variations = [
       ],
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        headerRowType: 'primary',
+        headerRowLabel: 'Primary Navigation'
       },
         [
           [ 'novablocks/navigation', {
@@ -88,7 +92,8 @@ const variations = [
     innerBlocks:  [
       ['novablocks/header-row', {
         className: 'site-header__row--secondary',
-        headerRowType: 'secondary'
+        headerRowType: 'secondary',
+        headerRowLabel: 'Secondary Navigation'
       },
         [
           [ 'novablocks/navigation', {
@@ -103,7 +108,8 @@ const variations = [
       ],
       ['novablocks/header-row', {
         className: 'site-header__row--logo',
-        headerRowType: 'logo'
+        headerRowType: 'logo',
+        headerRowLabel: 'Site Identity (logo)'
       },
         [
           ['novablocks/logo']
@@ -111,7 +117,8 @@ const variations = [
       ],
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        headerRowType: 'primary',
+        headerRowLabel: 'Primary Navigation'
       },
         [
           [ 'novablocks/navigation', {
