@@ -36,7 +36,7 @@ const HeaderInspectorControls = ( props ) => {
       value: row.clientId
     }
   });
-
+  
   const stickyRow = rows.find( block => {
     return block.attributes.isSticky;
   } );
@@ -84,7 +84,7 @@ const HeaderInspectorControls = ( props ) => {
           ] }
         />
 
-        { !! stickyRow && <RadioControl
+        { !! stickyRow && rows.length > 1 && <RadioControl
           key={ 'sticky-header-controls' }
           label={ __( 'Sticky Row Selection', '__plugin_txtd' ) }
           help={__( 'Select which row to stay fixed while scrolling.', '__plugin_txtd' )}
