@@ -37,21 +37,21 @@ const ColorSetControls = ( props ) => {
               value: 'lighter-color',
               preset: {
                 useSourceColorAsReference: true,
-                paletteVariation: 11
+                paletteVariation: 12
               }
             },{
               label: 'Color',
               value: 'color',
               preset: {
                 useSourceColorAsReference: true,
-                paletteVariation: 0
+                paletteVariation: 1
               }
             },{
               label: 'Darker Color',
               value: 'darker-color',
               preset: {
                 useSourceColorAsReference: true,
-                paletteVariation: 1
+                paletteVariation: 2
               }
             } ] }
           />
@@ -63,35 +63,35 @@ const ColorSetControls = ( props ) => {
               value: 'white',
               preset: {
                 useSourceColorAsReference: false,
-                paletteVariation: 0
+                paletteVariation: 1
               }
             },{
               label: 'Almost White',
               value: 'lighter',
               preset: {
                 useSourceColorAsReference: false,
-                paletteVariation: 1
+                paletteVariation: 2
               }
             },{
               label: 'Light',
               value: 'light',
               preset: {
                 useSourceColorAsReference: false,
-                paletteVariation: 2
+                paletteVariation: 3
               }
             },{
               label: 'Dark',
               value: 'dark',
               preset: {
                 useSourceColorAsReference: false,
-                paletteVariation: 9
+                paletteVariation: 10
               }
             },{
               label: 'Darker',
               value: 'darker',
               preset: {
                 useSourceColorAsReference: false,
-                paletteVariation: 10
+                paletteVariation: 11
               }
             } ] }
           />
@@ -136,8 +136,12 @@ const PaletteControls = ( props ) => {
   } = props;
 
   const disableFunctionalColors = disableFunctionalColorsOnBlocks.includes( props.name );
+  const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette ) || palettes[0];
 
-  const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
+  if ( ! currentPalette ) {
+    return null;
+  }
+
   const currentColor = currentPalette.colors[currentPalette.sourceIndex];
   const [ showFunctional, setShowFunctional ] = useState( false );
 
@@ -197,8 +201,8 @@ const PaletteVariationControls = ( props ) => {
   }
 
   const { sourceIndex } = currentPalette;
-  const siteVariation = customify_config?.sm_site_color_variation?.value || 0;
-  const siteVariationOffset = useSourceColorAsReference ? 0 : siteVariation;
+  const siteVariation = customify_config?.sm_site_color_variation?.value || 1;
+  const siteVariationOffset = useSourceColorAsReference ? 0 : siteVariation - 1;
   const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
 
   return (
@@ -225,8 +229,8 @@ const PaletteVariationControls = ( props ) => {
         onChange={ value => {
           setAttributes( { paletteVariation: ( value - colorReferenceOffset - siteVariationOffset + 12 ) % 12 } )
         } }
-        min={ 0 }
-        max={ 11 }
+        min={ 1 }
+        max={ 12 }
         step={ 1 }
       />
       <RangeControl

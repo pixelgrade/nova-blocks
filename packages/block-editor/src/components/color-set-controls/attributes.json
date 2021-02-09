@@ -1,11 +1,11 @@
 {
 	"palette": {
 		"type": "number",
-		"default": 0
+		"default": 1
 	},
 	"paletteVariation": {
 		"type": "number",
-		"default": 0
+		"default": 1
 	},
 	"useSourceColorAsReference": {
 		"type": "boolean",
