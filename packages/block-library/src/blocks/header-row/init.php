@@ -23,7 +23,7 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		ob_start();
 
-		$classes = array('wp-block-novablocks-header-row');
+		$classes = array('wp-block-novablocks-header-row site-header__row');
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];

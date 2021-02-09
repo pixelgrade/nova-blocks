@@ -27,13 +27,13 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
-		$classes = array('site-header alignfull');
+		$classes = array( 'site-header alignfull' );
 
 		$classes[] = 'site-header--' . $attributes['layout'];
 
 		// Logo Center and Logo Left layout are considered as simple,
 		// because they are on only one row.
-		$header_is_simple = $attributes['layout'] === 'logo-left' ||  $attributes['layout'] === 'logo-center';
+		$header_is_simple = $attributes['layout'] === 'logo-left' || $attributes['layout'] === 'logo-center';
 
 		// By default no row is set to sticky.
 		$sticky_row = 'none';
@@ -59,37 +59,39 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
 
-            <input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
+			<input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
 
-            <label class="c-menu-toggle" for="nova-menu-toggle">
+			<label class="c-menu-toggle" for="nova-menu-toggle">
                 <span class="c-menu-toggle__wrap">
                     <span class="c-menu-toggle__icon">
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
                     </span>
-                    <span class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
+                    <span
+						class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
                 </span>
-            </label>
+			</label>
 
 			<?php $novablocks_responsive_navigation_outputted = true;
 
 		} ?>
 
-        <header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" data-sticky="<?php echo esc_attr($sticky_row); ?>">
-	        <div class="site-header__wrapper">
-	            <div class="site-header__inner-container">
-	                <div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
-	                    <?php echo $content; ?>
-	                </div>
-	            </div>
-	        </div>
+		<header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+				data-sticky="<?php echo esc_attr( $sticky_row ); ?>">
+			<div class="site-header__wrapper">
+				<div class="site-header__inner-container">
+					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
+						<?php echo $content; ?>
+					</div>
+				</div>
+			</div>
 		</header>
 
 		<?php
 
 		// Get Sticky Row Block.
-		$stickyRowBlock = getStickyRowBlock($attributes);
+		$stickyRowBlock = getStickyRowBlock( $attributes );
 
 		// Get Primary Row Block to use it on hover if it's the case.
 		$primaryRowBlock = getPrimaryBlock();
@@ -97,11 +99,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		if ( $attributes['shouldBeSticky'] === true && ! $header_is_simple ) { ?>
 			<div class="site-header-sticky">
 				<?php
-					echo render_block($stickyRowBlock);
+				echo render_block( $stickyRowBlock );
 
-					if ( $attributes['stickyRow'] !== 'primary' ) {
-						echo render_block($primaryRowBlock);
-					}
+				if ( $attributes['stickyRow'] !== 'primary' ) {
+					echo render_block( $primaryRowBlock );
+				}
 				?>
 			</div>
 		<?php } ?>
@@ -120,10 +122,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
  * @return array
  */
 
-function getStickyRowBlock($attributes) {
+function getStickyRowBlock( $attributes ) {
 
 	$saved_sticky_row = $attributes['stickyRow'];
-	$post	= get_block_area_post( 'header' );
+	$post             = get_block_area_post( 'header' );
 
 	$block = '';
 
@@ -135,10 +137,10 @@ function getStickyRowBlock($attributes) {
 		// Get InnerBlocks
 		$innerBlocks = $header_block['innerBlocks'];
 
-		foreach( $innerBlocks as $innerBlock) {
+		foreach ( $innerBlocks as $innerBlock ) {
 
 			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['headerRowType'] === $saved_sticky_row) {
+			if ( $innerBlock['attrs']['headerRowType'] === $saved_sticky_row ) {
 				$block = $innerBlock;
 			}
 		}
@@ -155,7 +157,7 @@ function getStickyRowBlock($attributes) {
  * @return object;
  */
 
-function get_block_area_post($slug) {
+function get_block_area_post( $slug ) {
 
 	$block_area = get_posts( array(
 		'name'        => $slug,
@@ -169,7 +171,7 @@ function get_block_area_post($slug) {
 	$block_area_id = $block_area[0];
 
 	// Header Block Area Post.
-	$post          = get_post( $block_area_id );
+	$post = get_post( $block_area_id );
 
 	return $post;
 }
@@ -183,7 +185,7 @@ function get_block_area_post($slug) {
 
 function getPrimaryBlock() {
 
-	$post	= get_block_area_post( 'header' );
+	$post = get_block_area_post( 'header' );
 
 	$block = [];
 
@@ -195,10 +197,10 @@ function getPrimaryBlock() {
 		// Get InnerBlocks
 		$innerBlocks = $header_block['innerBlocks'];
 
-		foreach( $innerBlocks as $innerBlock) {
+		foreach ( $innerBlocks as $innerBlock ) {
 
 			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['headerRowType'] === 'primary') {
+			if ( $innerBlock['attrs']['headerRowType'] === 'primary' ) {
 				$block = $innerBlock;
 			}
 		}
@@ -215,11 +217,11 @@ function getPrimaryBlock() {
 
 function headerBlockUpdated() {
 
-	$post	= get_block_area_post( 'header' );
+	$post = get_block_area_post( 'header' );
 
 	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
 
-		if ( has_block('novablocks/header-row', $post ) ) {
+		if ( has_block( 'novablocks/header-row', $post ) ) {
 			return true;
 		}
 	}

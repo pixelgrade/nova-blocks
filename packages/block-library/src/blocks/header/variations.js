@@ -5,10 +5,10 @@ const variations = [
   {
     name: 'logo-left',
     title: __('Logo left with one menu on the right.', '__plugin_txtd' ),
-    icon: icons.fargo,
+    icon: icons.logoLeft,
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--primary',
+        className: 'site-header__row--primary',
         headerRowType: 'primary'
       },
         [
@@ -25,10 +25,10 @@ const variations = [
   {
     name: 'logo-center',
     title: __('Logo centered with one menu on the left and one menu on the right.', '__plugin_txtd' ),
-    icon: icons.rosa2,
+    icon: icons.logoCenter,
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--primary',
+        className: 'site-header__row--primary',
         headerRowType: 'primary'
       },
         [
@@ -49,10 +49,10 @@ const variations = [
   {
     name: 'logo-center-two-rows',
     title: __('Two Rows Header with centered logo and three menus.', '__plugin_txtd'),
-    icon: icons.heap,
+    icon: icons.logoCenterTwoRows,
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--logo',
+        className: 'site-header__row--logo',
         headerRowType: 'logo'
       },
         [
@@ -68,7 +68,7 @@ const variations = [
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--primary',
+        className: 'site-header__row--primary',
         headerRowType: 'primary'
       },
         [
@@ -84,10 +84,10 @@ const variations = [
   {
     name: 'logo-center-three-rows',
     title: __('Three Rows Header with centered logo and three menus.', '__plugin_txtd'),
-    icon: icons.felt,
+    icon: icons.logoCenterThreeRows,
     innerBlocks:  [
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--secondary',
+        className: 'site-header__row--secondary',
         headerRowType: 'secondary'
       },
         [
@@ -102,7 +102,7 @@ const variations = [
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--logo',
+        className: 'site-header__row--logo',
         headerRowType: 'logo'
       },
         [
@@ -110,7 +110,7 @@ const variations = [
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header__row site-header__row--primary',
+        className: 'site-header__row--primary',
         headerRowType: 'primary'
       },
         [

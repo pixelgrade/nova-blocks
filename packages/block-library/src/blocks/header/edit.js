@@ -110,7 +110,7 @@ class Edit extends Component {
 	}
 
 	componentDidUpdate() {
-    addSocialMenuClass.call(this);
+    addSocialMenuClass();
   }
 
 	innerBlocksPicker() {

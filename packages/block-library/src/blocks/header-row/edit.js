@@ -1,19 +1,33 @@
 /**
  * WordPress dependencies
  */
-
-import {Fragment} from '@wordpress/element';
+import classnames from 'classnames';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
-import HeaderRowPreview from "./preview";
+const ALLOWED_BLOCKS = [ 'novablocks/logo', 'novablocks/navigation' ];
 
 const HeaderRowEdit = function( props ) {
+  const {
+    className,
+  } = props;
+
+  const classNames = classnames(
+    'site-header__row',
+    className
+  );
+
   return (
-    <Fragment>
-      <HeaderRowPreview {...props} />
-    </Fragment>
+    <div className={classNames}>
+      <InnerBlocks
+        allowedBlocks={ALLOWED_BLOCKS}
+        renderAppender={false}
+        templateLock = 'insert'
+      />
+    </div>
+
   );
 };
 

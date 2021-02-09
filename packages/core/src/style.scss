@@ -9,6 +9,15 @@
 @import 'scss/vendor/slick';
 @import 'scss/vendor/slick-theme';
 
+.admin-bar {
+  --admin-bar-height: 32px;
+  
+  @media screen and (max-width: 782px) {
+    --admin-bar-height: 46px;
+    
+  }
+}
+
 [class*="__inner-container"] > * {
 	margin-left: auto;
 	margin-right: auto;
