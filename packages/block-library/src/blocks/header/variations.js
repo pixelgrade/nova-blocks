@@ -9,7 +9,8 @@ const variations = [
     innerBlocks: [
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        label: 'primary',
+        isPrimary: true,
       },
         [
           ['novablocks/logo'],
@@ -29,7 +30,8 @@ const variations = [
     innerBlocks: [
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        label: 'primary',
+        isPrimary: true
       },
         [
           [ 'novablocks/navigation', {
@@ -53,7 +55,7 @@ const variations = [
     innerBlocks: [
       ['novablocks/header-row', {
         className: 'site-header__row--logo',
-        headerRowType: 'logo'
+        label: 'logo',
       },
         [
           [ 'novablocks/navigation', {
@@ -69,7 +71,8 @@ const variations = [
       ],
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        label: 'primary',
+        isPrimary: true
       },
         [
           [ 'novablocks/navigation', {
@@ -88,7 +91,7 @@ const variations = [
     innerBlocks:  [
       ['novablocks/header-row', {
         className: 'site-header__row--secondary',
-        headerRowType: 'secondary'
+        label: 'secondary'
       },
         [
           [ 'novablocks/navigation', {
@@ -103,7 +106,7 @@ const variations = [
       ],
       ['novablocks/header-row', {
         className: 'site-header__row--logo',
-        headerRowType: 'logo'
+        label: 'logo'
       },
         [
           ['novablocks/logo']
@@ -111,7 +114,8 @@ const variations = [
       ],
       ['novablocks/header-row', {
         className: 'site-header__row--primary',
-        headerRowType: 'primary'
+        label: 'primary',
+        isPrimary: true
       },
         [
           [ 'novablocks/navigation', {

@@ -9,16 +9,12 @@ const HEADER_ROW_CLASS = '.site-header__row';
     const $siteHeader = $( '.site-header' ),
           $stickyHeader = $( '.site-header-sticky' );
 
-    let stickyRow = $siteHeader.data( 'sticky' ),
-        stickyRowClass = (
-          HEADER_ROW_CLASS + '--' + stickyRow
-        ).toString(),
+    let $stickyRow = $('.site-header .site-header__row[data-sticky=true]'),
         stickyHeaderShown = false,
         primaryRowShown = false,
         mainHeaderShouldBeSticky = $siteHeader.data( 'sticky' ) === 'primary' && !$stickyHeader.length,
         wpAdminBar = $('#wpadminbar'),
         wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight();
-
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
     $( window ).on( 'scroll', makeHeaderStickyOnScroll );
@@ -31,7 +27,7 @@ const HEADER_ROW_CLASS = '.site-header__row';
     // the newly created sticky header.
     function showStickyHeaderOnScroll() {
 
-      if ( stickyRow === 'none' || ! $stickyHeader.length ) {
+      if ( ! $stickyRow.length || ! $stickyHeader.length ) {
         return;
       }
 
@@ -40,7 +36,7 @@ const HEADER_ROW_CLASS = '.site-header__row';
         return;
       }
 
-      let stickyRowOffSet = $( stickyRowClass ).offset().top,
+      let stickyRowOffSet = $stickyRow.offset().top,
           windowScrollY = window.scrollY,
           primaryRowIsVisible = windowScrollY > $siteHeader.outerHeight(),
           isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight,

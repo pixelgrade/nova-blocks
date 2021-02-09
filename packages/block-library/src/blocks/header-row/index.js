@@ -18,8 +18,16 @@ registerBlockType( 'novablocks/header-row', {
   category: 'nova-blocks',
   parent: 'novablocks/header',
   attributes: {
-    headerRowType: {
+    label: {
       type: 'string',
+    },
+    isSticky: {
+      type: 'boolean',
+      default: false,
+    },
+    isPrimary: {
+      type: 'boolean',
+      default: false
     }
   },
   icon: getSvg( iconSvg ),

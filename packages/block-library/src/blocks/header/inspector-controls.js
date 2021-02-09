@@ -10,28 +10,32 @@ import { capitalizeFirstLetter } from '@novablocks/utils';
  */
 import { __ } from '@wordpress/i18n';
 import {RadioControl, ToggleControl} from '@wordpress/components';
-import { select} from "@wordpress/data";
+import { select, withDispatch } from "@wordpress/data";
+import { useState } from "@wordpress/element";
 
-const HeaderInspectorControls = function( props ) {
+const HeaderInspectorControls = ( props ) => {
+
   const {
-    attributes: {
-      shouldBeSticky,
-      stickyRow,
-    },
     clientId,
-    setAttributes
+    updateNextStickyRow
   } = props;
 
   const { getBlock } = select( 'core/block-editor' );
   const header = getBlock( clientId );
   const rows = header.innerBlocks;
 
-  let stickyRowOptions = [ ];
+  const stickyRowOptions = rows.map( row => {
+    return {
+      label: capitalizeFirstLetter(row['attributes']['label']),
+      value: row.clientId
+    }
+  });
 
-  rows.forEach( element => stickyRowOptions.push({
-    label: capitalizeFirstLetter(element['attributes']['headerRowType']),
-    value: element['attributes']['headerRowType']
-  }));
+  const stickyRow = rows.find( block => {
+    return block.attributes.isSticky;
+  } );
+
+  const [ lastStickyRowId, setLastStickyRowId ] = useState( stickyRow?.clientId );
 
   return (
     <ControlsSection label={ __('Layout') }>
@@ -39,21 +43,47 @@ const HeaderInspectorControls = function( props ) {
         <ToggleControl
           label={__( 'Sticky', '__plugin_txtd' )}
           help={__( 'Use it if you want to make this row sticky.', '__plugin_txtd' )}
-          checked={shouldBeSticky}
-          onChange={() => setAttributes( {shouldBeSticky: !shouldBeSticky} )}
+          checked={ !! stickyRow }
+          onChange={ value => {
+            if ( value ) {
+              const nextStickyRowId = lastStickyRowId || rows[0].clientId;
+              updateNextStickyRow( nextStickyRowId );
+            } else {
+              updateNextStickyRow();
+            }
+          }}
         />
 
-        { shouldBeSticky &&<RadioControl
+        { !! stickyRow && <RadioControl
           key={ 'sticky-header-controls' }
           label={ __( 'Select sticky Row', '__plugin_txtd' ) }
-          value={ stickyRow }
-          selected={ stickyRow }
+          selected={ stickyRow.clientId }
           options={ stickyRowOptions }
-          onChange={ ( nextStickyRow ) => setAttributes( { stickyRow: nextStickyRow } ) }
+          onChange={ ( nextStickyRowId ) => {
+            setLastStickyRowId( nextStickyRowId );
+            updateNextStickyRow( nextStickyRowId );
+          } }
           /> }
       </ControlsTab>
     </ControlsSection>
   )
 };
 
-export default HeaderInspectorControls;
+const applyWithDispatch = withDispatch( ( dispatch, ownProps ) => {
+  const { innerBlocks } = ownProps;
+  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
+  const updateNextStickyRow = nextStickyRowClientId => {
+    innerBlocks.forEach( block => {
+      updateBlockAttributes( block.clientId, {
+        isSticky: block.clientId === nextStickyRowClientId
+      } )
+    } )
+  }
+
+  return {
+    updateNextStickyRow,
+  };
+} );
+
+export default applyWithDispatch( HeaderInspectorControls );

@@ -35,13 +35,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// because they are on only one row.
 		$header_is_simple = $attributes['layout'] === 'logo-left' || $attributes['layout'] === 'logo-center';
 
-		// By default no row is set to sticky.
-		$sticky_row = 'none';
-
 		// Get the sticky row.
-		if ( $attributes['shouldBeSticky'] === true ) {
-			$sticky_row = $attributes['stickyRow'];
-		}
+		$sticky_row = getStickyRowBlockLabel();
+
+		// Get Sticky Row Block.
+		$stickyRowBlock = getStickyRowBlock();
+
+		// Get Primary Row Block to use it on hover if it's the case.
+		$primaryRowBlock = getPrimaryBlock();
 
 		// Helper class for Header layout
 		// that is on only one row.
@@ -77,8 +78,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		} ?>
 
-		<header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				data-sticky="<?php echo esc_attr( $sticky_row ); ?>">
+		<header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<div class="site-header__wrapper">
 				<div class="site-header__inner-container">
 					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
@@ -90,20 +90,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		<?php
 
-		// Get Sticky Row Block.
-		$stickyRowBlock = getStickyRowBlock( $attributes );
-
-		// Get Primary Row Block to use it on hover if it's the case.
-		$primaryRowBlock = getPrimaryBlock();
-
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
-		if ( $attributes['shouldBeSticky'] === true && ! $header_is_simple ) { ?>
+		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
 			<div class="site-header--default site-header-sticky">
 				<?php
 				echo render_block( $stickyRowBlock );
 
-				if ( $attributes['stickyRow'] !== 'primary' ) {
+				if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
 					echo render_block( $primaryRowBlock );
 				}
 				?>
@@ -119,17 +113,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 /**
  * Get the Header Row that has been marked as sticky.
  *
- * @param array $attributes
- *
  * @return array
  */
 
-function getStickyRowBlock( $attributes ) {
+function getStickyRowBlock() {
 
-	$saved_sticky_row = $attributes['stickyRow'];
 	$post             = get_block_area_post( 'header' );
 
-	$block = '';
+	$block = [];
 
 	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
 
@@ -142,13 +133,26 @@ function getStickyRowBlock( $attributes ) {
 		foreach ( $innerBlocks as $innerBlock ) {
 
 			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['headerRowType'] === $saved_sticky_row ) {
+			if ( $innerBlock['attrs']['isSticky'] === true ) {
 				$block = $innerBlock;
 			}
 		}
 	}
 
 	return $block;
+}
+
+function getStickyRowBlockLabel() {
+
+	$sticky_block = getStickyRowBlock();
+
+	$sticky_row_label = 'none';
+
+		if ( ! empty( $sticky_block ) ) {
+			$sticky_row_label = $sticky_block['attrs']['label'];
+		}
+
+	return $sticky_row_label;
 }
 
 /**
@@ -202,7 +206,7 @@ function getPrimaryBlock() {
 		foreach ( $innerBlocks as $innerBlock ) {
 
 			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['headerRowType'] === 'primary' ) {
+			if ( $innerBlock['attrs']['isPrimary'] === true ) {
 				$block = $innerBlock;
 			}
 		}

@@ -31,7 +31,12 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+		<div
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			<?php if ( $attributes['isSticky'] === true )  { ?>
+				data-sticky= true
+			<?php } ?>
+		>
 			<?php echo $content; ?>
 		</div>
 

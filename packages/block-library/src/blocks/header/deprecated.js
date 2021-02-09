@@ -32,16 +32,13 @@ const deprecated = [
 
       const headerShouldBeSticky = settings.customify_config.header_position.value === 'sticky';
 
-      if (headerShouldBeSticky) {
-        attributes.shouldBeSticky = headerShouldBeSticky;
-      }
-
       return [
-        omit(attributes, 'stickyRow' ),
+       attributes,
         [
           createBlock( 'novablocks/header-row', {
               className: 'site-header__row site-header__row--primary',
-              headerRowType: 'primary',
+              label: 'primary',
+              isSticky: headerShouldBeSticky
             },
             innerBlocks
           )

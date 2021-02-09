@@ -109,101 +109,41 @@
     display: flex;
     align-items: center;
     
-    &--secondary {
-      justify-content: space-between;
+    > *:first-child:not(:last-child) {
+      justify-content: flex-start;
+      flex-shrink: 1;
+      flex-basis: 50%;
     }
     
-    &--logo {
-      &:not(:first-child),
-      &:not(:last-child) {
+    > *:only-child {
+      justify-content: center;
+      flex-grow: 1;
+      
+      &,
+      .menu {
         justify-content: center;
+  
       }
     }
     
-    &--primary {
+    > *:not(:first-child):not(:last-child) {
       justify-content: center;
     }
-  }
+    
+    > *:last-child:not(:first-child) {
+      
+      flex-shrink: 1;
+      flex-basis: 50%;
   
-  .site-header {
-    
-    &__row {
-      display: grid;
-    }
-    
-    &--logo-center {
+      margin-left: auto;
       
-      .site-header__row {
-        
-        grid-template-columns: 1fr auto 1fr;
-        
-        > :last-child {
-          justify-content: flex-end;
-          
-          > .menu {
-            justify-content: flex-end;
-          }
-        }
-      }
-    }
-    
-    &--logo-left {
-      
-      .site-header__row {
-        grid-template-columns: auto 1fr;
-        
-        > :last-child > .menu {
-          justify-content: flex-end;
-        }
-      }
-      
-    }
-    
-    &--logo-center-two-rows {
-      
-      .site-header__row--logo {
-        grid-template-columns: 1fr auto 1fr;
-        
-        > :last-child > .menu {
-          justify-content: flex-end;
-        }
-      }
-    }
-  }
-}
-
-.site-header-sticky {
-  
-  .site-header__row--logo:first-child {
-    grid-template-columns: 1fr auto 1fr;
-    
-    > :first-child {
-      > .menu {
-        justify-content: flex-start;
-      }
-    }
-    
-    > :last-child {
-      > .menu {
+      &,
+      .menu {
         justify-content: flex-end;
+  
       }
     }
-  }
-}
-
-.site-header__row--secondary {
-  grid-template-columns: repeat(2, 1fr);
-  
-  > :first-child {
-    > .menu {
-      justify-content: flex-start;
-    }
-  }
-  
-  > :last-child {
-    > .menu {
-      justify-content: flex-end;
-    }
+    
   }
 }
 
@@ -212,18 +152,5 @@
   .site-header__row--logo {
     padding-top: var(--theme-spacing-default);
     padding-bottom: var(--theme-spacing-default);
-  }
-}
-
-.site-header--logo-center-three-rows + .site-header-sticky {
-  
-  .site-header__row--logo {
-    grid-template-columns: 1fr;
-    justify-content: center;
-    
-    
-    > .c-branding {
-      justify-content: center;
-    }
   }
 }
