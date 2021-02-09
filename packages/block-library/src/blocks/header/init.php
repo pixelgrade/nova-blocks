@@ -50,7 +50,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		}
 
 		// We need that class to style header block,
-		// if that user didn't hit save yet.
+		// if the user didn't hit save yet.
 		if ( ! headerBlockUpdated() ) {
 			$classes[] = 'site-header--is-old';
 		}
@@ -96,6 +96,8 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// Get Primary Row Block to use it on hover if it's the case.
 		$primaryRowBlock = getPrimaryBlock();
 
+		// We will output the sticky header mark-up only
+		// when the layout used is on at least two rows.
 		if ( $attributes['shouldBeSticky'] === true && ! $header_is_simple ) { ?>
 			<div class="site-header--default site-header-sticky">
 				<?php
