@@ -17,8 +17,13 @@ import { useState } from "@wordpress/element";
 const HeaderInspectorControls = ( props ) => {
 
   const {
+    attributes: {
+      headerVariation,
+      headerPositionScroll,
+    },
     clientId,
-    updateNextStickyRow
+    updateNextStickyRow,
+    setAttributes
   } = props;
 
   const { getBlock } = select( 'core/block-editor' );
@@ -47,23 +52,42 @@ const HeaderInspectorControls = ( props ) => {
           content={ <p><strong>Quick start:</strong> Set up your header layout using the options below and go to <a href="#">Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
           dismissLabel={ '✔ Ok, I got it!' }
         />
-        <ToggleControl
-          label={__( 'Sticky', '__plugin_txtd' )}
-          help={__( 'Use it if you want to make this row sticky.', '__plugin_txtd' )}
-          checked={ !! stickyRow }
+
+        <RadioControl
+          key={ 'header-variation' }
+          label={ __( 'Header Layout Variation', '__plugin_txtd' ) }
+          selected={ headerVariation }
+          onChange={ headerVariation => setAttributes( { headerVariation } ) }
+          options={ [
+            { label: 'Minimal', value: '1' },
+            { label: 'Single Row', value: '2' },
+            { label: 'Two Rows', value: '3' },
+            { label: 'Three Rows', value: '4' },
+          ] }
+        />
+
+        <RadioControl
+          key={ 'header-position-scroll' }
+          label={ 'Header Position on Scroll' }
+          selected={ !! stickyRow ? 'sticky' : 'static' }
           onChange={ value => {
-            if ( value ) {
+            if ( value === 'sticky' ) {
               const nextStickyRowId = lastStickyRowId || rows[0].clientId;
               updateNextStickyRow( nextStickyRowId );
             } else {
               updateNextStickyRow();
             }
           }}
+          options={ [
+            { label: 'Static', value: 'static' },
+            { label: 'Sticky (fixed)', value: 'sticky' },
+          ] }
         />
 
         { !! stickyRow && <RadioControl
           key={ 'sticky-header-controls' }
-          label={ __( 'Select sticky Row', '__plugin_txtd' ) }
+          label={ __( 'Sticky Row Selection', '__plugin_txtd' ) }
+          help={__( 'Select which row to stay fixed while scrolling.', '__plugin_txtd' )}
           selected={ stickyRow.clientId }
           options={ stickyRowOptions }
           onChange={ ( nextStickyRowId ) => {
