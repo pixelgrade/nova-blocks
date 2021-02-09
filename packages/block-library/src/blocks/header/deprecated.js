@@ -23,14 +23,6 @@ const deprecated = [
 
 
     attributes: {
-      shouldBeSticky: {
-        type: 'boolean',
-        default: false
-      },
-      stickyRow: {
-        type: 'string',
-        default: 'primary'
-      },
       ...blockAttributes
     },
 
