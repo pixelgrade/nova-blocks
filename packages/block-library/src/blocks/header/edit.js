@@ -1,5 +1,7 @@
 import * as icons from './icons';
 
+import { addSocialMenuClass } from './utils';
+
 import classnames from 'classnames';
 import get from 'lodash/get';
 import map from "lodash/map";
@@ -11,7 +13,7 @@ import {
 	Fragment
  } from '@wordpress/element';
 
-import { InnerBlocks, __experimentalBlockVariationPicker } from '@wordpress/block-editor';
+import { InnerBlocks, __experimentalBlockVariationPicker, BlockControls } from '@wordpress/block-editor';
 
 import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 
@@ -21,8 +23,17 @@ import {
 
 import {
 	withSelect,
-	withDispatch
+	withDispatch,
+  select,
+  dispatch,
  } from '@wordpress/data';
+
+import {
+  Toolbar,
+  IconButton
+} from '@wordpress/components';
+
+import InspectorControls from "./inspector-controls";
 
 const TEMPLATE_OPTIONS = [
 	{
@@ -98,6 +109,10 @@ class Edit extends Component {
 		}
 	}
 
+	componentDidUpdate() {
+    addSocialMenuClass();
+  }
+
 	innerBlocksPicker() {
 		const { hasInnerBlocks } = this.props;
 		return (
@@ -121,8 +136,10 @@ class Edit extends Component {
 	render() {
 		const {
 			attributes: {
-				layout
+				layout,
+        stickyRow
 			},
+      clientId,
 			blockType,
 			defaultVariation,
 			replaceInnerBlocks,
@@ -135,13 +152,31 @@ class Edit extends Component {
 		const classNames = classnames(
 			className,
 			`site-header`,
-			`site-header-${layout}`
+			`site-header-${layout}`,
+			`site-header-${stickyRow}`
 		);
+
+    const currentBlock = select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ];
+    const childBlocks = currentBlock.innerBlocks;
+
+    const clientIds = childBlocks.map( block => block.clientId );
+    const removeInnerBlocks = () => wp.data.dispatch( 'core/block-editor' ).removeBlocks( clientIds );
 
 
 		if ( hasInnerBlocks || !this.supportsBlockVariationPicker() ) {
 			return (
 				<Fragment>
+          <BlockControls>
+            <Toolbar>
+              <IconButton
+                className="components-icon-button components-toolbar__control"
+                label={ __( 'Change Layout', '__plugin_txtd' ) }
+                onClick={ () => removeInnerBlocks() }
+                icon="edit"
+              />
+            </Toolbar>
+          </BlockControls>
+          <InspectorControls {...this.props} />
 					<div className={ classNames }>
 						{ this.supportsBlockVariationPicker() ? this.blockVariationPicker() : this.innerBlocksPicker() }
 					</div>
