@@ -47,7 +47,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			$classes[] = 'site-header--is-old';
 		}
 
-		$header_row_markup_start = '<!-- wp:novablocks/header-row {"label":"primary","isPrimary":true,"className":"site-header__row--dprimary"} -->';
+		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"site-header__row--primary"} -->';
 		$header_row_markup_end = '<!-- /wp:novablocks/header-row -->';
 
 		global $novablocks_responsive_navigation_outputted;

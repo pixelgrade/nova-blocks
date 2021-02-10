@@ -18,9 +18,13 @@ registerBlockType( 'novablocks/header-row', {
   category: 'nova-blocks',
   parent: 'novablocks/header',
   attributes: {
-    label: {
+    name: {
       type: 'string',
       default: 'Header Row'
+    },
+    label: {
+      type: 'string',
+      default: 'Header Row Navigation'
     },
     isSticky: {
       type: 'boolean',

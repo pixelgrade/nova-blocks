@@ -37,7 +37,8 @@ const deprecated = [
         [
           createBlock( 'novablocks/header-row', {
               className: 'site-header__row site-header__row--primary',
-              label: 'primary',
+              name: 'primary',
+              label: 'Primary Navigation',
               isSticky: headerShouldBeSticky
             },
             innerBlocks

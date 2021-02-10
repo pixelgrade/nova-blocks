@@ -45,7 +45,6 @@ const HeaderInspectorControls = ( props ) => {
           key={ 'header-position-quick-start' }
           id={ 'novablocks-header-position-quick-start' }
           content={ <p><strong>Quick start:</strong> Set up your header layout using the options below and go to <a href="#">Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
-          dismissLabel={ '✔ Ok, I got it!' }
         />
 
         <RadioControl

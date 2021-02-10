@@ -2,8 +2,14 @@
 	padding: 16px;
 	color: #191e23;
 	background-color: #e7f5f9;
+  
+  margin-bottom: 24px;
 
 	.components-button {
 		height: auto;
 	}
+  
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
