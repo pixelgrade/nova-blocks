@@ -17,13 +17,8 @@ import { useState } from "@wordpress/element";
 const HeaderInspectorControls = ( props ) => {
 
   const {
-    attributes: {
-      headerVariation,
-      headerPositionScroll,
-    },
     clientId,
     updateNextStickyRow,
-    setAttributes
   } = props;
 
   const { getBlock } = select( 'core/block-editor' );
@@ -51,19 +46,6 @@ const HeaderInspectorControls = ( props ) => {
           id={ 'novablocks-header-position-quick-start' }
           content={ <p><strong>Quick start:</strong> Set up your header layout using the options below and go to <a href="#">Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
           dismissLabel={ '✔ Ok, I got it!' }
-        />
-
-        <RadioControl
-          key={ 'header-variation' }
-          label={ __( 'Header Layout Variation', '__plugin_txtd' ) }
-          selected={ headerVariation }
-          onChange={ headerVariation => setAttributes( { headerVariation } ) }
-          options={ [
-            { label: 'Minimal', value: '1' },
-            { label: 'Single Row', value: '2' },
-            { label: 'Two Rows', value: '3' },
-            { label: 'Three Rows', value: '4' },
-          ] }
         />
 
         <RadioControl
