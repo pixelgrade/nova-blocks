@@ -20,6 +20,7 @@ registerBlockType( 'novablocks/header-row', {
   attributes: {
     label: {
       type: 'string',
+      default: 'Header Row'
     },
     isSticky: {
       type: 'boolean',

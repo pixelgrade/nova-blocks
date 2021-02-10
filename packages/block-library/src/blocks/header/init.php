@@ -27,7 +27,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
-		$classes = array( 'site-header site-header--default alignfull' );
+		$classes = array( 'site-header site-header--main alignfull' );
 
 		$classes[] = 'site-header--' . $attributes['layout'];
 
@@ -46,6 +46,9 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		if ( ! headerBlockUpdated() ) {
 			$classes[] = 'site-header--is-old';
 		}
+
+		$header_row_markup_start = '<!-- wp:novablocks/header-row {"label":"primary","isPrimary":true,"className":"site-header__row--dprimary"} -->';
+		$header_row_markup_end = '<!-- /wp:novablocks/header-row -->';
 
 		global $novablocks_responsive_navigation_outputted;
 
@@ -71,14 +74,20 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		<header id="masthead"
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				<?php if ( $header_is_simple )  { ?>
+				<?php if ( $header_is_simple && ! empty( $stickyRowBlock ) )  { ?>
 					data-sticky="true"
 				<?php } ?>
 		>
 			<div class="site-header__wrapper">
 				<div class="site-header__inner-container">
 					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
-						<?php echo $content; ?>
+						<?php
+
+						if ( ! headerBlockUpdated() ) {
+							$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
+						}
+						echo $content;
+						?>
 					</div>
 				</div>
 			</div>
@@ -89,7 +98,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
 		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
-			<div class="site-header--default site-header-sticky">
+			<div class="site-header site-header--secondary site-header-sticky site-header--sticky">
 				<?php
 				echo render_block( $stickyRowBlock );
 

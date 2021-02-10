@@ -2,7 +2,7 @@
 
 @media only screen and (min-width: 1000px) {
   // Nova Blocks hacks
-  .site-header--default {
+  .site-header {
     // styles from Nova Blocks should only affect blocks created by it
     @import 'scss/menu';
   }
@@ -26,26 +26,6 @@
   .c-menu-toggle {
     display: none;
   }
-  
-  // Fix Header layout until
-  // user hit save after migration.
- .site-header--is-old {
-   
-   &.site-header--logo-left {
-     
-     .site-header__content {
-       grid-template-columns: auto 1fr;
-     }
-   }
-    .site-header__content {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      
-      > :last-child {
-        justify-content: flex-end;
-      }
-    }
-  }
 }
 
 @media not screen and (min-width: 1000px) {
@@ -53,9 +33,7 @@
   @import 'scss/mobile-transitions';
 }
 
-.site-header-sticky {
-  position: fixed;
-  top: var(--admin-bar-height, 0);
+.site-header--secondary {
   
   width: 100%;
   z-index: 1100;
@@ -64,16 +42,16 @@
   pointer-events: none;
   
   transition: opacity .15s ease-in;
-  
-  &--is-visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+}
+
+.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .site-header {
   
-  &--is-sticky {
+  &--sticky {
     position: fixed;
     top: var(--admin-bar-height, 0);
   }
@@ -81,11 +59,11 @@
 
 @include below(lap) {
   
-  .site-header-sticky {
-    display: none;
+  .site-header--secondary[class][class][class] {
+    display: none !important;
   }
   
-  .site-header--simple {
+  .site-header {
     
     .site-header__row {
       display: flex;
@@ -109,13 +87,13 @@
     display: flex;
     align-items: center;
     
-    > *:first-child:not(:last-child) {
+    > :first-child:not(:last-child) {
       justify-content: flex-start;
       flex-shrink: 1;
       flex-basis: 50%;
     }
     
-    > *:only-child {
+    > :only-child {
       justify-content: center;
       flex-grow: 1;
       
@@ -126,11 +104,11 @@
       }
     }
     
-    > *:not(:first-child):not(:last-child) {
+    > :not(:first-child):not(:last-child) {
       justify-content: center;
     }
     
-    > *:last-child:not(:first-child) {
+    > :last-child:not(:first-child) {
       
       flex-shrink: 1;
       flex-basis: 50%;
@@ -147,7 +125,7 @@
   }
 }
 
-.site-header-sticky {
+.site-header--secondary {
   
   .site-header__row--logo {
     padding-top: var(--theme-spacing-default);
