@@ -16,7 +16,7 @@ registerBlockType( 'novablocks/header-row', {
   title: __( 'Header Row', '__plugin_txtd' ),
   description: __( 'Outputs header row markup.', '__plugin_txtd' ),
   category: 'nova-blocks',
-  parent: 'novablocks/header',
+  parent: ['novablocks/header'],
   attributes: {
     name: {
       type: 'string',
