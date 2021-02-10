@@ -18,18 +18,18 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
-		"@wordpress/api-fetch": "^3.20.0",
-		"@wordpress/blocks": "^6.24.1",
-		"@wordpress/components": "^11.1.1",
-		"@wordpress/date": "^3.12.0",
-		"@wordpress/element": "^2.18.0",
-		"@wordpress/html-entities": "^2.9.0",
-		"@wordpress/i18n": "^3.16.0",
-		"@wordpress/url": "^2.19.0",
+		"@wordpress/api-fetch": "^3.21.5",
+		"@wordpress/blocks": "^7.0.3",
+		"@wordpress/components": "^12.0.6",
+		"@wordpress/date": "^3.13.1",
+		"@wordpress/element": "^2.19.1",
+		"@wordpress/html-entities": "^2.10.1",
+		"@wordpress/i18n": "^3.18.0",
+		"@wordpress/url": "^2.21.2",
 		"lodash": "^4.17.20",
 		"unsplash-js": "^6.3.0"
 	},
 	"devDependencies": {
-		"@wordpress/viewport": "^2.25.0"
+		"@wordpress/viewport": "^2.25.6"
 	}
 }

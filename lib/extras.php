@@ -949,14 +949,18 @@ function novablocks_get_theme_support() {
 	$theme_support = get_theme_support( 'novablocks' );
 	$theme_support = is_array( $theme_support ) ? $theme_support[0] : false;
 
+	$required = array(
+		'header-row',
+	);
+
 	$default = array(
 		'hero',
 		'media',
-		'slideshow'
+		'slideshow',
 	);
 
 	if ( is_array( $theme_support ) ) {
-		$theme_support = array_unique( array_merge( $default, $theme_support ), SORT_REGULAR );
+		$theme_support = array_unique( array_merge( $required, $default, $theme_support ), SORT_REGULAR );
 	} else {
 		$theme_support = $default;
 	}

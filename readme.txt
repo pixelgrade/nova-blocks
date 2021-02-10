@@ -2,9 +2,9 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.2.2
-Tested up to: 5.5.3
+Tested up to: 5.6.1
 Requires PHP: 5.4.0
-Stable tag: 1.8.1
+Stable tag: 1.9.0
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.9.0 =
+* Enhance Header block to allow multiple rows layouts
+* Improve frontend performance by reducing scripts size
+* Fix Separator block selection inside the block editor
+* Fix display of scrolling indicators
 
 = 1.8.0 =
 * New Block: Conversation System to display an improved comments list and comment form
