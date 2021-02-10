@@ -12,7 +12,7 @@ const HEADER_ROW_CLASS = '.site-header__row';
     let $stickyRow = $('.site-header .site-header__row[data-sticky=true]'),
         stickyHeaderShown = false,
         primaryRowShown = false,
-        mainHeaderShouldBeSticky = $siteHeader.data( 'sticky' ) === 'primary' && !$stickyHeader.length,
+        mainHeaderShouldBeSticky = $('.site-header[data-sticky]').length && ! $stickyHeader.length,
         wpAdminBar = $('#wpadminbar'),
         wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight();
 

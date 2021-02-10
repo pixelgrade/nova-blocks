@@ -35,20 +35,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// because they are on only one row.
 		$header_is_simple = $attributes['layout'] === 'logo-left' || $attributes['layout'] === 'logo-center';
 
-		// Get the sticky row.
-		$sticky_row = getStickyRowBlockLabel();
-
 		// Get Sticky Row Block.
 		$stickyRowBlock = getStickyRowBlock();
 
 		// Get Primary Row Block to use it on hover if it's the case.
 		$primaryRowBlock = getPrimaryBlock();
-
-		// Helper class for Header layout
-		// that is on only one row.
-		if ( $header_is_simple ) {
-			$classes[] = 'site-header--simple';
-		}
 
 		// We need that class to style header block,
 		// if the user didn't hit save yet.
@@ -78,7 +69,12 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		} ?>
 
-		<header id="masthead" class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+		<header id="masthead"
+				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+				<?php if ( $header_is_simple )  { ?>
+					data-sticky="true"
+				<?php } ?>
+		>
 			<div class="site-header__wrapper">
 				<div class="site-header__inner-container">
 					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
@@ -140,19 +136,6 @@ function getStickyRowBlock() {
 	}
 
 	return $block;
-}
-
-function getStickyRowBlockLabel() {
-
-	$sticky_block = getStickyRowBlock();
-
-	$sticky_row_label = 'none';
-
-		if ( ! empty( $sticky_block ) ) {
-			$sticky_row_label = $sticky_block['attrs']['label'];
-		}
-
-	return $sticky_row_label;
 }
 
 /**
