@@ -38,13 +38,15 @@ const HeaderInspectorControls = ( props ) => {
 
   const [ lastStickyRowId, setLastStickyRowId ] = useState( stickyRow?.clientId );
 
+  const customizerHeaderLink = novablocks_urls.novablocks_customizer_header_link;
+
   return (
     <ControlsSection label={ __('Layout') }>
       <ControlsTab label={__('Settings') }>
         <Notice
           key={ 'header-position-quick-start' }
           id={ 'novablocks-header-position-quick-start' }
-          content={ <p><strong>Quick start:</strong> Set up your header layout using the options below and go to <a href="#">Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
+          content={ <p><strong>Quick start:</strong> Set up your header layout using the options below and go to <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
         />
 
         <RadioControl

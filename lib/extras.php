@@ -1614,3 +1614,26 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 
 	return $script;
 }
+
+function novablocks_get_customizer_link( $return_url = false,  $extra_query_args = array() ) {
+	global $wp;
+
+
+	if ( empty( $return_url ) ) {
+		// Get the current frontend URL.
+		$return_url = home_url( add_query_arg( array(), $wp->request ) );
+	}
+
+	// Now get the Customizer URL.
+	$link = wp_customize_url();
+
+	$link = add_query_arg( 'return_url', rawurlencode( $return_url ), $link );
+
+	if ( ! empty( $extra_query_args ) && is_array( $extra_query_args ) && ! wp_is_numeric_array( $extra_query_args ) ) {
+		foreach ( $extra_query_args as $key => $value ) {
+			$link = add_query_arg( rawurlencode( $key ), rawurlencode( utf8_uri_encode( $value ) ), $link );
+		}
+	}
+
+	return $link;
+}
