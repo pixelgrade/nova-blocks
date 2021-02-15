@@ -288,3 +288,12 @@ export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
 
   return newClasses.join( ' ' );
 }
+
+
+// Uppercase the first letter of a string in JavaScript
+// https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
+
+export const capitalizeFirstLetter = (string) => {
+  if (typeof string !== 'string') return ''
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}

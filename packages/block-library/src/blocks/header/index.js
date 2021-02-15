@@ -11,6 +11,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import iconSvg from './header-block.svg';
 import edit from './edit';
 import variations from './variations';
+import deprecated from './deprecated';
 
 import { getSvg } from "@novablocks/block-editor";
 
@@ -24,11 +25,13 @@ registerBlockType( 'novablocks/header', {
 	supports: {
     align: [ "wide", "full" ],
     default: "full",
-    html: false
+    html: false,
+    multiple: false
   },
 	variations,
+  deprecated,
 	edit,
 	save: function() {
 		return <InnerBlocks.Content />
-	}
+	},
 } );

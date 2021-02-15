@@ -143,3 +143,78 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 		return apply_filters( 'novablocks_after_parse_content_tags', $content, $original_content, $post_id, $user_id );
 	}
 }
+
+if ( ! function_exists ('novablocks_maybe_inline_svg_avatar' ) ) {
+	function novablocks_maybe_inline_svg_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
+		// We will rely on the URL passed in the arguments.
+		if ( empty( $args['url'] ) ) {
+			// Bail if no URL.
+			return $avatar;
+		}
+
+		if ( false !== strpos( $avatar, '<svg' ) ) {
+			// Bail if there is already an inline svg in the avatar.
+			return $avatar;
+		}
+
+		if ( ! class_exists( 'DOMDocument' ) ) {
+			// Bail if we don't have the PHP DOM extension.
+			return $avatar;
+		}
+
+		$mime_type = wp_check_filetype( $args['url'], [
+			'svg'  => 'image/svg+xml',
+			'svgz' => 'image/svg+xml',
+		] );
+		if ( empty( $mime_type['type'] ) || 'image/svg+xml' !== $mime_type['type'] ) {
+			// Bail if this is not a proper SVG.
+			return $avatar;
+		}
+
+		$upload_dir_details = wp_get_upload_dir();
+		if ( ! empty( $upload_dir_details ['baseurl'] )
+		     && ! empty( $upload_dir_details ['basedir'] )
+		     && 0 === strpos( $args['url'], $upload_dir_details['baseurl'] ) ) {
+
+			// We are dealing only with URLs to local SVG files.
+			$file_path     = str_replace( $upload_dir_details['baseurl'], $upload_dir_details ['basedir'], $args['url'] );
+			$file_contents = file_get_contents( $file_path );
+			if ( ! $file_contents ) {
+				return $avatar;
+			}
+
+			$svgdoc = new DOMDocument();
+			$svgdoc->loadXML( $file_contents );
+			$svg = $svgdoc->getElementsByTagName( 'svg' );
+			if ( empty( $svg ) ) {
+				// Bail if there was no <svg> in the file contents.
+				return $avatar;
+			}
+
+			// Now we will transfer the class,width, and height attribute from the received avatar markup to the <svg> element.
+			$avatardoc = new DOMDocument();
+			$avatardoc->loadHTML( $avatar );
+			$img = $avatardoc->getElementsByTagName( 'img' );
+			if ( ! empty( $img ) ) {
+				$classes = $img[0]->getAttribute( 'class' );
+				$classes .= ' inlined-svg';
+				$svg[0]->setAttribute( 'class', $classes );
+
+				$width = $img[0]->getAttribute( 'width' );
+				$svg[0]->setAttribute( 'width', $width );
+				$height = $img[0]->getAttribute( 'height' );
+				$svg[0]->setAttribute( 'height', $height );
+
+				// Set a role to the svg.
+				$svg[0]->setAttribute( 'role', 'img' );
+
+				// Set a ARIA label to the svg.
+				$svg[0]->setAttribute( 'aria-label', 'avatar' );
+			}
+
+			return $svgdoc->saveHTML( $svg[0] );
+		}
+
+		return $avatar;
+	}
+}

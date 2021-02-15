@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 
 	/**
-	 * The NovaBlocks Comments Meta logic class
+	 * The NovaBlocks Comments Post Meta logic class
 	 */
 	class NovaBlocks_Comments_Post_Meta {
 
@@ -24,6 +24,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		 * @var      NovaBlocks_Comments_Post_Meta
 		 */
 		protected static $_instance = null;
+
+		protected $excluded_post_types = [
+			'product', // the Product reviews is a separate problem to be solved.
+			'shop_order', // Comments are used internally, as notes.
+			'shop_subscription', // Comments are used internally, as notes.
+		];
 
 
 		public function __construct() {
@@ -43,19 +49,29 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		}
 
 		private function register_hooks() {
-			add_action( 'add_meta_boxes_post', [ $this, 'add_post_discussion_metabox' ], 10, 1 );
-			add_action( 'save_post_post', [ $this, 'save_post_metabox_fields' ], 10, 1 );
+			// Use the general, not post-type-specific hooks so we can add the metabox to any post-type that supports comments.
+			add_action( 'add_meta_boxes', [ $this, 'add_discussion_metabox' ], 10, 1 );
+			// It's safe to hook into any post-type save since we will only save if our specific nonce is present.
+			add_action( 'save_post', [ $this, 'save_metabox_fields' ], 10, 1 );
 		}
 
-		public function add_post_discussion_metabox( $post ) {
+		public function add_discussion_metabox( $post_type ) {
+			if ( ! post_type_supports( $post_type, 'comments' ) ) {
+				return;
+			}
+
+			if ( true !== apply_filters( 'novablocks_comments_add_post_type_metabox', ! in_array( $post_type, $this->excluded_post_types ), $post_type ) ) {
+				return;
+			}
+
 			add_meta_box( 'nb_post_discussion_extra_details', esc_html__( 'Discussion Extra Details', '__plugin_txtd' ), [
 					$this,
 					'posts_discussion_metabox_fields'
-			], 'post', 'normal', 'high' );
+			], $post_type, 'normal', 'high' );
 		}
 
 		/**
-		 * Output the comment edit metabox fields markup.
+		 * Output the post metabox fields markup.
 		 *
 		 * @param WP_Post $post
 		 */
@@ -95,13 +111,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 						<td class=""><label for="nb_conversation_starter_user_id"><strong><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<?php wp_dropdown_users(
-									[
+									apply_filters( 'novablocks_comments_post_conversation_starter_dropdown_users_args', [
 										'who'              => 'authors',
 										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
 										'include_selected' => true,
 										'show'             => 'display_name_with_login',
-									]
+									], $post )
 							); ?>
 							<p class="description"><?php esc_html_e( 'Who is doing the conversation starting? By default, it\'s the post author.', '__plugin_txtd' ); ?></p>
 						</td>
@@ -119,7 +135,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 			<?php
 		}
 
-		public function save_post_metabox_fields( $post_ID ) {
+		public function save_metabox_fields( $post_ID ) {
 			if ( ! isset( $_POST['nb_post_discussion_extra_details'] ) || ! wp_verify_nonce( $_POST['nb_post_discussion_extra_details'], 'nb_save_post_discussion_extras' ) ) {
 				return;
 			}

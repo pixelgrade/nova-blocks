@@ -27,10 +27,12 @@ const Notice = ( props ) => {
 		return null;
 	};
 
+	console.log(dismissLabel);
+
 	return (
 		<div className={ 'novablocks-notice' }>
 			{ content }
-			<Button isPrimary onClick={ onClick }>{ dismissLabel }</Button>
+      { dismissLabel !== undefined && <Button isPrimary onClick={ onClick }>{ dismissLabel }</Button> }
 		</div>
 	);
 };

@@ -11,13 +11,18 @@
 			windowHeight = $window.height(),
 			elements = [],
 			$bully,
+      $current,
 			lastScrollY = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0),
 			current = 0,
 			inversed = false,
 			frameRendered = true;
 
-		$bully = $( '<div class="c-bully">' ).appendTo( 'body' );
-		$current = $( '<div class="c-bully__bullet c-bully__bullet--active">' ).appendTo( $bully );
+    $( function() {
+      $bully.appendTo( 'body' );
+    } );
+
+    $bully = $( '<div class="c-bully">' );
+    $current = $( '<div class="c-bully__bullet c-bully__bullet--active">' ).appendTo( $bully );
 
 		(
 			function update() {

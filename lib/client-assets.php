@@ -191,7 +191,13 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			'novablocks_core_frontend_stylesheet' => novablocks_get_plugin_url() . '/build/core/style.css',
 			'novablocks_components_frontend_stylesheet' => novablocks_get_plugin_url() . '/build/components/style.css',
 			'novablocks_opentable_frontend_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/style.css',
-			'novablocks_opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css'
+			'novablocks_opentable_editor_stylesheet' => novablocks_get_plugin_url() . '/build/block-library/blocks/opentable/editor-styles.css',
+			'novablocks_customizer_header_link' => novablocks_get_customizer_link(false,
+				array(
+					"autofocus[panel]" => "theme_options_panel",
+					"autofocus[section]" => "rosa2_options[header_section]"
+					)
+			)
 		) );
 
 		wp_set_script_translations( 'novablocks-core', '__plugin_txtd', novablocks_get_plugin_path() . 'languages' );

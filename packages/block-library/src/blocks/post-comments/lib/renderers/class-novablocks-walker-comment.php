@@ -75,7 +75,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 						<?php
 						if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 						<div class="comment-author-avatar vcard">
-							<?php echo wp_kses_post( $avatar ); ?>
+							<?php echo $avatar; ?>
 						</div>
 						<?php } else { ?>
 						<div class="comment-author-avatar vcard empty-avatar">&nbsp;</div>
@@ -285,7 +285,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 						<?php
 						if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 							<div class="comment-author-avatar vcard">
-								<?php echo wp_kses_post( $avatar ); ?>
+								<?php echo $avatar; ?>
 							</div>
 						<?php } else { ?>
 							<div class="comment-author-avatar vcard empty-avatar">&nbsp;</div>

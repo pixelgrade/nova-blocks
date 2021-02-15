@@ -169,7 +169,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			 * RENDER THE COMMENTS LIST MARKUP
 			 */
 
-			ob_start(); ?>
+			ob_start();
+
+			// Register our hooks just before rendering.
+			$this->register_hooks(); ?>
 
 			<div id="comments" class="comment-list">
 
@@ -204,7 +207,18 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				<?php
 			}
 
+			// Unregister our hooks to make sure this instance's logic only applies to this render.
+			$this->unregister_hooks();
+
 			return ob_get_clean();
+		}
+
+		protected function register_hooks() {
+			add_filter( 'get_avatar', 'novablocks_maybe_inline_svg_avatar', 99, 6 );
+		}
+
+		protected function unregister_hooks() {
+			remove_filter( 'get_avatar', 'novablocks_maybe_inline_svg_avatar', 99 );
 		}
 
 		/**
