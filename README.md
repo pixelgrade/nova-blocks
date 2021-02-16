@@ -65,4 +65,4 @@ A manually curated list that include all the valuable people that have contribut
 ## License
 Nova Blocks source code is released under the [GNU GPL v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html) or later. This is so you have the freedom to create something beautiful and share it back with us.
 
-2019 © Pixelgrade.
+2019-2021 © Pixelgrade.

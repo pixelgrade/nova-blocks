@@ -1,0 +1,42 @@
+{
+    "name": "pixelgrade/nova-blocks",
+    "description": "Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.",
+	"keywords": [
+		"wordpress",
+		"block-editor",
+		"gutenberg",
+		"blocks",
+		"pixelgrade"
+	],
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-only",
+	"homepage": "https://github.com/pixelgrade/nova-blocks",
+    "authors": [
+		{
+			"name": "George Olaru",
+			"email": "george@pixelgrade.com",
+			"homepage": "https://pixelgrade.com/"
+		},
+		{
+			"name": "Razvan Onofrei",
+			"email": "razvan@pixelgrade.com",
+			"homepage": "https://pixelgrade.com/"
+		},
+		{
+			"name": "Vlad Olaru",
+			"email": "vlad@pixelgrade.com",
+			"homepage": "https://pixelgrade.com/"
+		},
+		{
+			"name": "Madalin Gorbanescu",
+			"email": "madalin@pixelgrade.com",
+			"homepage": "https://pixelgrade.com/"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/pixelgrade/nova-blocks/issues",
+		"source": "https://github.com/pixelgrade/nova-blocks"
+	},
+    "minimum-stability": "stable",
+    "require": {}
+}
