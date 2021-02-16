@@ -83,6 +83,10 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'balancemdandiw',
 			'hierarchycrossing',
 			'flipcolsrows',
+
+			'carouselLayout',
+			'postsToShowPerRow',
+			'showPagination'
 		);
 
 		$data_attributes = array();
@@ -238,9 +242,9 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 			<?php } ?>
 
 			<?php if ( ! empty( $attributes['showMeta'] ) ||
-			           ! empty( $attributes['showTitle'] ) ||
-			           ! empty( $attributes['showDescription'] ) ||
-			           ! empty( $attributes['showButtons'] ) ) { ?>
+					   ! empty( $attributes['showTitle'] ) ||
+					   ! empty( $attributes['showDescription'] ) ||
+					   ! empty( $attributes['showButtons'] ) ) { ?>
 
 				<div class="novablocks-card__layout-content novablocks-card__inner-container">
 
