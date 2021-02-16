@@ -1,0 +1,31 @@
+.c-logo {
+  position: relative;
+}
+
+.c-logo__inverted {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100%;
+
+  opacity: 0;
+
+  .is-dark-mode & {
+    opacity: 1;
+  }
+}
+
+.c-logo__default {
+  
+  .is-dark & {
+    opacity: 0;
+  }
+}
+
+.c-logo__default,
+.c-logo__inverted {
+  transition: var(--theme-transition);
+  transition-property: opacity;
+}

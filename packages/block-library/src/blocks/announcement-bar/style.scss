@@ -1,15 +1,11 @@
 .novablocks-announcement-bar {
 	--novablocks-announcement-bar-padding: #{11/16 * 1em};
 	--novablocks-announcement-bar-close-width: #{15/16 * 1em};
-	--novablocks-announcement-color: var(--sm-current-dark-color);
-	--novablocks-announcement-background-color: var(--sm-current-background-color);
 
 	position: relative;
 	overflow: hidden;
 	transform: translateZ(0);
 
-	color: var(--novablocks-announcement-color);
-	background-color: var(--novablocks-announcement-background-color);
 	text-align: center;
 
 	&.is-hidden {

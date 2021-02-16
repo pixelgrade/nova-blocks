@@ -1,0 +1,85 @@
+@mixin header-background {
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: var(--sm-current-bg-color);
+    opacity: var(--header-background-opacity, 1);
+
+    transition: var(--theme-transition);
+    transition-property: opacity;
+  }
+}
+
+@mixin header-shadow {
+
+  &:after {
+    content: "";
+    display: block;
+    @include cover;
+    box-shadow: var(--shadow-color, #000000) 0 var(--shadow-y-offset, 0.0625em) var(--shadow-blur, 0.125em);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--theme-transition);
+    transition-property: opacity;
+    z-index: -1;
+  }
+}
+
+@mixin header-menu-item-with-hover-animation {
+  position: relative;
+
+  > a {
+    &:before {
+      content: '';
+
+      position: absolute;
+      bottom: var(--header-links-bottom-spacing); // Margin bottom applied on header links
+
+      width: 100%;
+      height: 3px;
+
+      background: currentColor;
+
+      transform: scale3d(0, 1, 1);
+      transform-origin: right;
+
+      transition: var(--theme-transition);
+      transition-property: transform;
+
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+    }
+
+    &:hover:before {
+      transform: scale3d(1, 1, 1);
+      transform-origin: left;
+    }
+  }
+
+  &.menu-item-has-children > a:before {
+    width: calc(100% - 1.25em);
+    right: 1.25em;
+  }
+}
+
+@mixin header-menu-item-with-active-state {
+  > a {
+    &:before {
+      transform: scale3d(1, 1, 1);
+      transform-origin: left;
+    }
+
+    &:hover:before {
+      transform: scale3d(0, 1, 1);
+      transform-origin: right;
+    }
+  }
+}

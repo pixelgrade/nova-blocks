@@ -1,3 +1,11 @@
+@media only screen and (min-width: 1000px) {
+
+  .c-menu-toggle__checkbox,
+  .c-menu-toggle {
+    display: none;
+  }
+}
+
 .c-menu-toggle {
 	font-size: 1rem;
 }
@@ -7,15 +15,13 @@
 	align-items: center;
 
 	position: fixed;
-	top: 0;
+	top: var(--admin-bar-height, 0);
 	left: 0;
 	z-index: 1100;
 
-	padding: 1em;
+	padding: 1em var(--theme-header-sides-spacing, 0);
 
 	cursor: pointer;
-
-	@include wp-offset(top, 0, true);
 }
 
 .c-menu-toggle__checkbox {

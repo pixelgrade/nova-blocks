@@ -25,12 +25,14 @@ import { addSocialMenuClass } from "./utils";
     // the newly created sticky header.
     function showStickyHeaderOnScroll() {
 
+      console.log( $stickyRow.length, $stickyHeader.length );
+
       if ( ! $stickyRow.length || ! $stickyHeader.length ) {
         return;
       }
 
       // Do nothing if we are on mobile.
-      if ( below('lap') ) {
+      if ( below( 'lap' ) ) {
         return;
       }
 
@@ -65,7 +67,7 @@ import { addSocialMenuClass } from "./utils";
     function makeHeaderStickyOnScroll() {
 
       // Do nothing if we are on mobile.
-      if ( below('lap') ) {
+      if ( below( 'lap' ) ) {
         return;
       }
 

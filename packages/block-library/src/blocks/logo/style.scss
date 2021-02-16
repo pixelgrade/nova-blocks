@@ -1,24 +1,3 @@
-.site-branding {
-	display: flex;
-	align-items: center;
-	flex-shrink: 0;
-}
-
-.site-logo {
-	img {
-		display: block;
-	}
-}
-
-.site-info {
-	text-align: center;
-}
-
-.site-logo + .site-info {
-	text-align: left;
-
-	.site-title,
-	.site-description {
-		margin-left: 1rem;
-	}
-}
+@import "./scss/logo";
+@import "./scss/site-branding";
+@import "./scss/site-title";
