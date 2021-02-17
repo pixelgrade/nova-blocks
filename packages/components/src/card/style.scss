@@ -36,10 +36,6 @@
 	width: 100%;
 }
 
-.novablocks-card__media--placeholder {
-	background: var(--novablocks-current-light-secondary);
-}
-
 .novablocks-card--fixed-media-aspect-ratio {
 
 	.novablocks-card__media {
@@ -66,7 +62,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: var(--novablocks-current-light-tertiary);
+  background: var(--novablocks-bg-color);
 
 	svg {
 		max-width: 50%;

@@ -98,8 +98,8 @@
 	.novablocks-block[class] {
 		background: linear-gradient(
 				var(--novablocks-media-background-direction),
-				var(--sm-current-bg-color) 0,
-				var(--sm-current-bg-color) calc(var(--emphasis-area) * 1%),
+				var(--novablocks-bg-color) 0,
+				var(--novablocks-bg-color) calc(var(--emphasis-area) * 1%),
 				transparent calc(var(--emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;

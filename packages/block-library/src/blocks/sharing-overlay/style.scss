@@ -11,7 +11,7 @@
 		left: 0;
 		z-index: -1;
 
-		background: var(--novablocks-current-dark-primary);
+		background: var(--novablocks-fg1-color);
 		transition: var(--novablocks-transition);
 		transition-property: background-color;
 		transition-duration: .15s;
@@ -19,7 +19,7 @@
 	}
 
 	&:hover:before {
-		background: var(--novablocks-current-light-primary);
+		background: var(--novablocks-bg-color);
 	}
 }
 
@@ -60,8 +60,8 @@
 }
 
 .novablocks-sharing__wrap {
-	background-color: var(--novablocks-current-light-primary);
-	color: var(--novablocks-current-dark-primary);
+	background-color: var(--novablocks-bg-color);
+	color: var(--novablocks-fg1-color);
 
 	position: relative;
 
@@ -85,7 +85,7 @@
     bottom: 0;
     left: 0;
 
-    border: 1px solid var(--novablocks-dark-primary);
+    border: 1px solid currentColor;
     opacity: 0.1;
     pointer-events: none;
     border-radius: inherit;

@@ -191,11 +191,11 @@ function novablocks_get_header_attributes() {
 		),
 		"palette" => array(
 			"type" => "number",
-			"default" => 0
+			"default" => 1
 		),
 		"paletteVariation" => array(
 			"type" => "number",
-			"default" => 0
+			"default" => 1
 		)
 	);
 }

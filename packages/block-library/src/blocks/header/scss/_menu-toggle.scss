@@ -7,6 +7,11 @@
 }
 
 .c-menu-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+
 	font-size: 1rem;
 }
 
@@ -14,11 +19,7 @@
 	display: flex;
 	align-items: center;
 
-	position: fixed;
-	top: var(--admin-bar-height, 0);
-	left: 0;
-	z-index: 1100;
-
+  height: 100%;
 	padding: 1em var(--theme-header-sides-spacing, 0);
 
 	cursor: pointer;

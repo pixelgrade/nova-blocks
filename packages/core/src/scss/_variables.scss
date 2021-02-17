@@ -1,29 +1,8 @@
 :root {
-	--novablocks-color-1: #203AB6;
-	--novablocks-color-2: #FFE42E;
-	--novablocks-color-3: #323067;
-
-	--novablocks-dark-1: #323067;
-	--novablocks-dark-2: #272743;
-	--novablocks-dark-3: #000043;
-
-	--novablocks-light-1: #FFFFFF;
-	--novablocks-light-2: #EDF0F1;
-	--novablocks-light-3: #EDF0F1;
-
-	--novablocks-color-primary: var(--novablocks-color-1);
-	--novablocks-color-secondary: var(--novablocks-color-2);
-	--novablocks-color-tertiary: var(--novablocks-color-3);
-
-	--novablocks-dark-primary: var(--novablocks-dark-1);
-	--novablocks-dark-secondary: var(--novablocks-dark-2);
-	--novablocks-dark-tertiary: var(--novablocks-dark-3);
-
-	--novablocks-light-primary: var(--novablocks-light-1);
-	--novablocks-light-secondary: var(--novablocks-light-2);
-	--novablocks-light-tertiary: var(--novablocks-light-3);
-
-	@include variation( default, novablocks-current, novablocks );
+  --novablocks-bg-color: #FFFFFF;
+  --novablocks-accent-color: #203AB6;
+  --novablocks-fg1-color: #272743;
+  --novablocks-fg2-color: #000043;
 
 	--novablocks-spacing: 24px;
 	--novablocks-sides-spacings: var(--novablocks-spacing);

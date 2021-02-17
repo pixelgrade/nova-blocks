@@ -10,7 +10,7 @@
   display: none;
 
   &.site-header--scrolled {
-    color: var(--sm-current-fg2-color);
+    color: var(--novablocks-fg2-color);
   }
 }
 
@@ -19,16 +19,17 @@
   position: absolute;
   width: 100%;
 
-  @include header-background;
-  @include header-shadow;
-
-  &[class] {
-    background: none;
-  }
-
   // styles from Nova Blocks should only affect blocks created by it
   @import 'scss/menu';
   @import 'scss/menu-item';
+}
+
+.site-header-background {
+  @include header-background;
+}
+
+.site-header-shadow {
+  @include header-shadow;
 }
 
 @import "scss/header-secondary";

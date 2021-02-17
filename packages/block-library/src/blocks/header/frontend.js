@@ -25,8 +25,6 @@ import { addSocialMenuClass } from "./utils";
     // the newly created sticky header.
     function showStickyHeaderOnScroll() {
 
-      console.log( $stickyRow.length, $stickyHeader.length );
-
       if ( ! $stickyRow.length || ! $stickyHeader.length ) {
         return;
       }

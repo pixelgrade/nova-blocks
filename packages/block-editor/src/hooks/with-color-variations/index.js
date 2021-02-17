@@ -110,11 +110,11 @@ function withPaletteAttributes( settings, name ) {
     attributes: Object.assign( {}, settings.attributes, {
       palette: {
         type: "number",
-        default: 0,
+        default: 1,
       },
       paletteVariation: {
         type: "number",
-        default: 0,
+        default: 1,
       },
       useSourceColorAsReference: {
         type: "boolean",

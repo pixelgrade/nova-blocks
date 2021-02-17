@@ -71,8 +71,8 @@
 
 		width: 10em;
 
-		background: var(--novablocks-current-dark-secondary);
-		color: var(--novablocks-current-light-primary);
+		background: var(--novablocks-fg2-color);
+		color: var(--novablocks-bg-color);
 
 		.sub-menu,
 		.children {
@@ -137,8 +137,8 @@
     width: 15.625em;
     padding: .75em 0;
 
-    background-color: var(--sm-current-bg-color);
-    color: var(--sm-current-fg2-color);
+    background-color: var(--novablocks-bg-color);
+    color: var(--novablocks-fg2-color);
 
     border-radius: 0.1875em;
     box-shadow: 0 0.25em 2em rgba(0, 0, 0, 0.1), 0 0.125em 0.25em rgba(0, 0, 0, 0.1);

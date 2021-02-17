@@ -1,4 +1,5 @@
 @mixin header-background {
+  background: none !important;
 
   &:before {
     content: '';
@@ -10,10 +11,10 @@
     width: 100%;
     height: 100%;
 
-    background-color: var(--sm-current-bg-color);
+    background-color: var(--novablocks-bg-color);
     opacity: var(--header-background-opacity, 1);
 
-    transition: var(--theme-transition);
+    transition: var(--novablocks-transition);
     transition-property: opacity;
   }
 }
@@ -27,7 +28,7 @@
     box-shadow: var(--shadow-color, #000000) 0 var(--shadow-y-offset, 0.0625em) var(--shadow-blur, 0.125em);
     opacity: 0;
     pointer-events: none;
-    transition: var(--theme-transition);
+    transition: var(--novablocks-transition);
     transition-property: opacity;
     z-index: -1;
   }
@@ -51,7 +52,7 @@
       transform: scale3d(0, 1, 1);
       transform-origin: right;
 
-      transition: var(--theme-transition);
+      transition: var(--novablocks-transition);
       transition-property: transform;
 
       will-change: transform;
