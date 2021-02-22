@@ -34,20 +34,6 @@ class Edit extends Component {
 		};
 	}
 
-	onPrevArrowClick() {
-		const { attributes: { galleryImages } } = this.props;
-		const { selectedIndex } = this.state;
-		const newIndex = ( selectedIndex + galleryImages.length - 1 ) % galleryImages.length;
-		this.setState( { selectedIndex: newIndex } );
-	}
-
-	onNextArrowClick() {
-		const { attributes: { galleryImages } } = this.props;
-		const { selectedIndex } = this.state;
-		const newIndex = ( selectedIndex + 1 ) % galleryImages.length;
-		this.setState( { selectedIndex: newIndex } );
-	}
-
 	setIndex( selectedIndex ) {
 		this.setState( { selectedIndex } );
 	}
@@ -88,8 +74,6 @@ class Edit extends Component {
 				<SlideshowPreview
 					{ ...newProps }
 					previewImage={ galleryImages[ selectedIndex ] }
-					onPrevArrowClick={ this.onPrevArrowClick.bind( this ) }
-					onNextArrowClick={ this.onNextArrowClick.bind( this ) }
 				/>
 
 				<InspectorControls { ...{ ...newProps, setIndex, selectedIndex } } />

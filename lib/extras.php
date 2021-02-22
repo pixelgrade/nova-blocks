@@ -484,6 +484,16 @@ function novablocks_add_slideshow_settings( $settings ) {
 				'value' => 100,
 			),
 		),
+		'slideShowTypeOptions' => array(
+			array(
+				'label' => esc_html__('Gallery', '__plugin_txtd'),
+				'value'	=> 'gallery'
+			),
+			array(
+				'label'	=> esc_html__('Post', '__plugin_txtd'),
+				'value'	=> 'post'
+			)
+		)
 	);
 
 	$settings['slideshow'] = $slideshow_settings;

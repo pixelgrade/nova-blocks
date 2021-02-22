@@ -7,11 +7,13 @@ import {
 } from "@novablocks/utils";
 
 import {
-	LayoutControls,
-	GalleryPreview,
-	ControlsSection,
-	ControlsTab
+  LayoutControls,
+  GalleryPreview,
+  ControlsSection,
+  ControlsTab, ControlsGroup, ToggleGroup, CardsManager
 } from "@novablocks/block-editor";
+
+const { toggles } = CardsManager;
 
 /**
  * WordPress dependencies
@@ -19,8 +21,8 @@ import {
 import { __ } from '@wordpress/i18n';
 
 import {
-	FocalPointPicker,
-	RadioControl,
+  FocalPointPicker,
+  RadioControl, SelectControl,
 } from '@wordpress/components';
 
 import {
@@ -30,20 +32,23 @@ import {
 const SlideshowInspectorControls = function( props ) {
 
 	const {
-		attributes: {
-			galleryImages,
-			minHeight,
-			slideshowType,
-		},
+		attributes,
 		selectedIndex,
 		setIndex,
 		setAttributes,
 		settings: {
 			slideshow: {
 				minHeightOptions,
+        slideShowTypeOptions
 			},
 		},
 	} = props;
+
+	const {
+    galleryImages,
+    minHeight,
+    slideshowType,
+  } = attributes;
 
 	const selectedImage = galleryImages[ selectedIndex ];
 
@@ -72,9 +77,21 @@ const SlideshowInspectorControls = function( props ) {
 
 	return (
 		<Fragment>
-
+      <ControlsSection label={ __( 'Source' ) }>
+        <ControlsTab label={ __( 'Source' ) }>
+          <RadioControl
+            key={ 'slideshow-source-controls' }
+            label={ __( 'Select source', '__plugin_txtd' ) }
+            selected={ slideshowType }
+            onChange={ ( nextslideshowType ) => {
+              setAttributes( { slideshowType: nextslideshowType } );
+            } }
+            options={ slideShowTypeOptions }
+          />
+        </ControlsTab>
+      </ControlsSection>
 			{
-				!! galleryImages.length &&
+				!! galleryImages.length && 'gallery' === slideshowType &&
 				<ControlsSection label={ __( 'Slides' ) }>
 					<ControlsTab label={ __( 'General' ) }>
 						<GalleryPreview
@@ -105,27 +122,94 @@ const SlideshowInspectorControls = function( props ) {
 				</ControlsSection>
 			}
 
-			{
-				'gallery' === slideshowType &&
-				<Fragment>
-					<LayoutControls { ...props } />
-					<ControlsSection label={ __( 'Layout' ) }>
-						<ControlsTab label={ __( 'Settings' ) }>
-							<RadioControl
-								key={ 'slideshow-minimum-height-controls' }
-								label={ __( 'Minimum Height', '__plugin_txtd' ) }
-								selected={ minHeight }
-								onChange={ ( nextMinHeight ) => {
-									setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
-								} }
-								options={ minHeightOptions }
-							/>
-						</ControlsTab>
-					</ControlsSection>
-				</Fragment>
-			}
+
+      <Fragment>
+        <LayoutControls { ...props } />
+        <ControlsSection label={ __( 'Layout' ) }>
+          <ControlsTab label={ __( 'Settings' ) }>
+            <RadioControl
+              key={ 'slideshow-minimum-height-controls' }
+              label={ __( 'Minimum Height', '__plugin_txtd' ) }
+              selected={ minHeight }
+              onChange={ ( nextMinHeight ) => {
+                setAttributes( { minHeight: parseInt( nextMinHeight, 10 ) } );
+              } }
+              options={ minHeightOptions }
+            />
+          </ControlsTab>
+        </ControlsSection>
+      </Fragment>
+
+      {
+        'gallery' !== slideshowType &&
+        <ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
+          <ControlsTab label={ __( 'Settings' ) }>
+            <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+              <ToggleGroup
+                onChange={ setAttributes }
+                toggles={ toggles.filter( toggle => {
+                  return toggle.attribute !== 'showMedia' &&
+                         toggle.attribute !== 'showSubtitle' &&
+                         toggle.attribute !== 'showCollectionSubtitle' &&
+                         toggle.attribute !== 'showCollectionTitle';
+                } ).map( toggle => {
+                  return {
+                    ...toggle,
+                    value: attributes[ toggle.attribute ]
+                  }
+                } ) }
+              />
+            </ControlsGroup>
+            <MetaSource { ...props } />
+          </ControlsTab>
+        </ControlsSection>
+      }
 		</Fragment>
 	);
+};
+
+const MetaSource = ( props ) => {
+
+  const {
+    attributes: {
+      primaryMetadata,
+      secondaryMetadata,
+    },
+    setAttributes
+  } = props;
+
+  const metaSourceOptions = [
+    { label: 'None', value: 'none' },
+    { label: 'Author', value: 'author' },
+    { label: 'Category', value: 'category' },
+    { label: 'Comments', value: 'comments' },
+    { label: 'Date', value: 'date' },
+    { label: 'Tags', value: 'tags' },
+    { label: 'Reading time', value:'reading-time'}
+  ];
+
+  return (
+    <ControlsGroup title={ __( 'Additional Information', '__plugin_txtd' ) }>
+      <SelectControl
+        key={ 'primary-metadata-source' }
+        label={ __( 'Primary Metadata' ) }
+        value={ primaryMetadata }
+        onChange={ primaryMetadata => {
+          setAttributes( { primaryMetadata } )
+        } }
+        options={ metaSourceOptions }
+      />
+      <SelectControl
+        key={ 'secondary-metadata-source' }
+        label={ __( 'Secondary Metadata' ) }
+        value={ secondaryMetadata }
+        onChange={ secondaryMetadata => {
+          setAttributes( { secondaryMetadata } )
+        } }
+        options={ metaSourceOptions }
+      />
+    </ControlsGroup>
+  )
 };
 
 export default SlideshowInspectorControls;

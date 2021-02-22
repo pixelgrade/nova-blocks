@@ -1,8 +1,9 @@
 /**
  * Internal dependencies
  */
-import SlideshowBackground from './background';
-import { GalleryPlaceholder } from '@novablocks/block-editor';
+import Slide from './slide';
+
+import Slick from 'react-slick';
 
 /**
  * WordPress dependencies
@@ -57,9 +58,10 @@ const SlideshowPreview = class extends Component {
 				overlayFilterStyle,
 				// media
 				galleryImages,
+        slideshowType
 			},
-			previewImage,
 			className,
+      posts
 		} = this.props;
 
 		const classes = [
@@ -104,33 +106,26 @@ const SlideshowPreview = class extends Component {
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 
+		const sliderSettings = {
+		  infinite: true,
+      arrows: true,
+      dots: true,
+      speed: 0
+    };
+
+    let slide = getGallerySlideData( galleryImages, this.props );
+
+    if ( slideshowType === 'post' && !! posts ) {
+      slide = getPostSlideData( posts, this.props );
+    }
+
 		return (
 			<Fragment>
-				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
-					<div className="novablocks-slideshow__slider">
-						<div className="novablocks-slideshow__slide">
-							{ previewImage && <Fragment>
-								<SlideshowBackground { ...this.props } />
-								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
-									<div
-										className="novablocks-slideshow__inner-container novablocks-u-content-width"
-										style={ styles.content }
-										dangerouslySetInnerHTML={ {
-											__html:
-												( typeof previewImage.title === 'string' && `<h2>${ previewImage.title }</h2>` || '' ) +
-												( typeof previewImage.caption === 'string' && previewImage.caption || '' )
-										} }>
-									</div>
-								</div>
-							</Fragment> }
-						</div>
-					</div>
-					{ galleryImages.length > 1 && <div className="novablocks-slideshow__controls">
-						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--prev novablocks-slideshow__arrow--disabled" onClick={ this.props.onPrevArrowClick }></div>
-						<div className="novablocks-slideshow__arrow novablocks-slideshow__arrow--next novablocks-slideshow__arrow--disabled" onClick={ this.props.onNextArrowClick }></div>
-					</div> }
-				</div> }
-				{ ! galleryImages.length && <GalleryPlaceholder { ...this.props } /> }
+          <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
+             <Slick className="novablocks-slideshow__slider" {...sliderSettings}>
+               {slide}
+             </Slick>
+          </div>
 			</Fragment>
 		);
 	}
@@ -146,3 +141,23 @@ const SlideshowPreview = class extends Component {
 };
 
 export default SlideshowPreview;
+
+const getPostSlideData = ( posts, props ) => {
+  return (
+    posts.map( ( post, id ) => {
+      return (
+        <Slide id={id} className="novablocks-slideshow__slide" {...props} image={ wp.data.select( 'core').getMedia(post.featured_media) } post={ post } type="post"/>
+      )
+    } )
+  )
+};
+
+const getGallerySlideData = ( gallery, props ) => {
+  return (
+    gallery.map( ( image, id ) => {
+      return (
+        <Slide id={id} className="novablocks-slideshow__slide" {...props} type="gallery" image={image}/>
+      )
+    } )
+  )
+};

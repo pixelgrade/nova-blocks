@@ -39,6 +39,10 @@ const TRANSITION_EASING = "easeInOutCirc";
 				nextArrow: '<div class="novablocks-slideshow__arrow novablocks-slideshow__arrow--next"></div>',
 				appendArrows: $arrowContainer,
 				speed: 0,
+        dots: true,
+        customPaging: function(slick,index) {
+          return '<a>' + (index + 1) + '</a>';
+        }
 			});
 		}
 
@@ -54,6 +58,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 	}
 
 	function resetBlockMinHeight( $block ) {
+
 		$block.css( 'minHeight', '' );
 		$block.css( 'minHeight', getBlockMinHeight( $block ) );
 
@@ -61,16 +66,16 @@ const TRANSITION_EASING = "easeInOutCirc";
 	}
 
 	function getBlockMinHeight( $block ) {
-		var windowWidth = window.innerWidth;
 		var $slider = $block.find( SLIDER_SELECTOR );
 		var sliderWidth = $block.find( SLIDER_SELECTOR ).outerWidth();
 		var windowHeight = window.innerHeight;
 		var sliderMinHeight = parseInt( $block.data( 'min-height' ) ) * windowHeight / 100;
+		console.log(sliderMinHeight);
 		var mediaMinHeight = 0;
 		var slideMaxHeight = 0;
 		var maxAspectRatio = 0;
 
-		$block.find( SLIDE_SELECTOR ).each( function( i, obj ) {
+    $slider.each( function( i, obj ) {
 			var $slide = $( obj ),
 				$media = $slide.find( '.novablocks-slideshow__media' ),
 				width = $media.data( 'width' ),

@@ -29,7 +29,7 @@ import {
 	withDispatch,
 } from '@wordpress/data';
 
-const enablePostsQueryControlsOnBlocks = [ 'novablocks/posts-collection' ];
+const enablePostsQueryControlsOnBlocks = [ 'novablocks/posts-collection', 'novablocks/slideshow' ];
 
 const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 

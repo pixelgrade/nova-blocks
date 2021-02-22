@@ -21,5 +21,37 @@
 	"defaultsGenerated": {
 		"type": "boolean",
 		"default": false
+	},
+	"primaryMetadata": {
+		"type": "string",
+		"default": "category"
+	},
+	"secondaryMetadata": {
+		"type": "string",
+		"default": "date"
+	},
+	"showTitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showDescription": {
+		"type": "boolean",
+		"default": true
+	},
+	"showButtons": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMeta": {
+		"type": "boolean",
+		"default": true
+	},
+	"cardTitleLevel": {
+		"type": "number",
+		"default": 2
+	},
+	"metadataPosition": {
+		"type": "string",
+		"default": "above-title"
 	}
 }

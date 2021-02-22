@@ -26,7 +26,8 @@
 		"@novablocks/doppler": "file:packages/doppler",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",
-		"@novablocks/utils": "file:packages/utils"
+		"@novablocks/utils": "file:packages/utils",
+		"react-slick": "^0.28.0"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.12.13",

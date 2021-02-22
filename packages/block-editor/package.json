@@ -27,7 +27,8 @@
 		"@wordpress/i18n": "^3.18.0",
 		"@wordpress/url": "^2.21.2",
 		"lodash": "^4.17.20",
-		"unsplash-js": "^6.3.0"
+		"unsplash-js": "^6.3.0",
+		"react-slick": "^0.28.0"
 	},
 	"devDependencies": {
 		"@wordpress/viewport": "^2.25.6"

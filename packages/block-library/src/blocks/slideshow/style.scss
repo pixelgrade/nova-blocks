@@ -2,6 +2,28 @@
 	position: relative;
 	z-index: 20;
 	color: var(--novablocks-slideshow-text-color);
+  
+  --dots-spacing-bottom: 2em;
+  
+  .wp-block-buttons {
+    width: 100%;
+  }
+  
+  &.novablocks-u-halign-center {
+    .wp-block-buttons {
+      justify-content: center;
+    }
+  }
+  
+  &.novablocks-u-halign-right {
+    .wp-block-buttons {
+      justify-content: flex-end;
+    }
+  }
+  
+  .novablocks-u-content-padding {
+    padding-bottom: calc(var(--novablocks-content-padding) + var(--dots-spacing-bottom));
+  }
 }
 
 .novablocks-slideshow__slide {
@@ -159,4 +181,23 @@ $button-component-text-color: #555;
 			content: 'Edit Gallery';
 		}
 	}
+}
+
+.slick-dots[class][class] {
+  
+  bottom: var(--dots-spacing-bottom);
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  
+  z-index: 9999;
+  
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  
+  .slick-active a {
+    color: var(--novablocks-color-primary);
+    border-color: currentColor;
+  }
 }
