@@ -190,7 +190,7 @@ export const CarouselLayoutPreview = ( props ) => {
     showButtons,
   };
 
-  let fixedOptions = {
+  let defaultSliderOptions = {
     dots: showPagination,
     infinite: true,
     slidesToShow: postsToShowPerRow,
@@ -203,7 +203,7 @@ export const CarouselLayoutPreview = ( props ) => {
   };
 
   if ( carouselLayout !== 'variable' ) {
-    settings = fixedOptions;
+    settings = defaultSliderOptions;
   }
 
   return (

@@ -2,14 +2,16 @@
   --novablocks-collection-layout-spacing: 0;
 }
 
-[data-carousellayout="variable"] {
+.novablocks-collection-carousel--variable {
   
+  // Hackish way to allow
+  // variable width in Carousel
   .novablocks-card__layout {
     display: table;
     width: 1px;
   }
   
-  .novablocks-card--fixed-media-aspect-ratio .novablocks-card__media {
+  .novablocks-block__content .novablocks-card__media {
     
     padding-top: 0;
 
@@ -17,6 +19,8 @@
       position: static;
       
       width: auto;
+      // Height used for Carousel
+      // with Variable Width
       height: 20em;
       
       max-width: none;
@@ -27,12 +31,28 @@
 .novablocks-collection__layout {
   
   --carousel-arrow-width: 1.5rem;
+  --slider-gap: 1em;
   
-  .slick-arrow {
-    display: none;
+  @include below(desktop) {
+    .slick-arrow {
+      display: none !important;
+    }
+    
+    .slick-slide {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
   }
   
   @include above(lap) {
+    .slick-slide {
+      padding-left: var(--slider-gap);
+    }
+  
+    .slick-list {
+      margin-left: calc(-1 * var(--slider-gap));
+    }
+  
     .slick-arrow {
       height: 100%;
       display: flex;
@@ -61,48 +81,46 @@
     .slick-next {
       right: calc(var(--carousel-arrow-width) * -1 - 10px );
     }
+    
+    .slick-slider {
+      margin-bottom: 0;
+    }
   }
   
   .slick-slide {
-    padding-right: var(--slider-gap);
+    transition: opacity .2s ease;
   }
   
-  .slick-list {
-    --slider-gap: 1em;
-    margin-right: calc(-1 * var(--slider-gap));
+  .slick-arrow {
+    background-color: #FFF;
+    z-index: 100;
   }
   
-  .slick-dots {
-    
-    @include above(lap) {
-      margin-top: 1em;
-    }
-    
-    button {
-      
-      display: block;
-      padding: 0;
-      margin: 0 0.75em !important;
-      border: 0;
-      border-radius: 0;
-      border-bottom: 1px solid transparent;
-      background-color: transparent;
-      color: currentColor;
-      font-size: 1em;
-      outline: 0;
-      cursor: pointer;
-      
-      &:before {
-        content: none !important;
-      }
-    }
-    
-    .slick-active {
-      color: var(--novablocks-current-color-primary);
-      
-      button {
-        border-bottom-color: currentColor;
-      }
+  .slick-slide:not(.slick-active) {
+    opacity: 0.5;
+  }
+}
+
+.slick-dots {
+  
+  margin-left: -1em;
+  padding-left: 0 !important;
+  
+  z-index: 9999;
+  
+  > li {
+    margin-left: 1em;
+  }
+  
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  
+  .slick-active {
+    a {
+      color: var(--novablocks-color-primary);
+      border-color: currentColor;
     }
   }
 }

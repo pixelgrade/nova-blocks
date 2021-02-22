@@ -20,8 +20,6 @@ import {
 
 	const defaultBlockWidth = 1152; // magic
 
-  let $carousels = $('[data-layoutstyle="carousel"]');
-
 	$( '.novablocks-grid' ).each( function( i, grid ) {
 		const $grid = $( grid );
 		const $block = $grid.closest( '.novablocks-block' );
@@ -304,11 +302,7 @@ import {
 
 	function initCarousels() {
 
-	  if ( ! $carousels.length) {
-	    return;
-    }
-
-    $carousels.each( function( i, carousel ) {
+    $('.novablocks-collection--carousel .novablocks-collection__layout').each( function( i, carousel ) {
 
       let $carousel = $(carousel);
 
@@ -316,21 +310,21 @@ import {
         slidesToShow: $carousel.data('poststoshowperrow' ),
         dots: $carousel.data('showpagination') === 1,
         variableWidth: $carousel.data('carousellayout') === 'variable',
+        customPaging: function(slick,index) {
+          return '<a>' + (index + 1) + '</a>';
+        },
         infinite: true,
 
         responsive: [
           {
-            breakpoint: 1000,
+            breakpoint: 1024,
             settings: {
-              slidesToShow: 2,
+              arrows: false,
+              centerMode: true,
+              infinite: true,
+              slidesToShow: 1,
             }
           },
-          {
-            breakpoint: 1000,
-            settings: {
-              slidesToShow: 1
-            }
-          }
         ]
       }
 
