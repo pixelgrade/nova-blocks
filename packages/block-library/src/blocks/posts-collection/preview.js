@@ -98,6 +98,7 @@ const Preview = ( props ) => {
 
 	const classname = classnames(
 		'novablocks-block',
+		'novablocks-block-spacing',
 
 		`novablocks-collection`,
 		`novablocks-collection--align-${ contentAlign }`,

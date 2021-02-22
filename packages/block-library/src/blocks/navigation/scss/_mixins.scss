@@ -1,0 +1,53 @@
+@mixin header-menu-item-with-hover-animation {
+  position: relative;
+
+  > a {
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      bottom: var(--novablocks-navigation-item-bottom-margin); // Margin bottom applied on header links
+
+      width: 100%;
+      height: 3px;
+
+      background: currentColor;
+
+      transform: scale3d(0, 1, 1);
+      transform-origin: right;
+
+      transition: var(--novablocks-transition);
+      transition-property: transform;
+
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+    }
+
+    &:hover:before {
+      transform: scale3d(1, 1, 1);
+      transform-origin: left;
+    }
+  }
+
+  &.menu-item-has-children > a:before {
+    width: calc(100% - 1.25em);
+    right: 1.25em;
+  }
+}
+
+@mixin header-menu-item-with-active-state {
+
+  > a {
+
+    &:before {
+      transform: scale3d(1, 1, 1);
+      transform-origin: left;
+    }
+
+    &:hover:before {
+      transform: scale3d(0, 1, 1);
+      transform-origin: right;
+    }
+  }
+}

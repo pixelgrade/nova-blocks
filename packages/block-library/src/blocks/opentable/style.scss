@@ -195,15 +195,15 @@
 	}
 
 	&.novablocks-opentable__standard[class] {
-		background-color: var(--novablocks-fg1-color);
-		color: var(--novablocks-bg-color);
+		background-color: var(--novablocks-bg-color);
+		color: var(--novablocks-fg1-color);
 
 		padding: 3rem;
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link {
 			padding-left: 1.5rem;
 
-			color: var(--novablocks-bg-color);
+			color: var(--novablocks-fg1-color);
 			border-bottom: 2px solid currentColor;
 		}
 
@@ -226,14 +226,10 @@
 		}
 
 		.ot-button {
-			background-color: var(--novablocks-bg-color);
-			color: var(--novablocks-fg1-color);
+			background-color: var(--novablocks-fg1-color);
+			color: var(--novablocks-bg-color);
 
 			padding: 20px 0;
-
-			&:hover {
-				color: var(--novablocks-accent-color);
-			}
 		}
 
 		.ot-powered-by {

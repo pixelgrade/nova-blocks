@@ -11,6 +11,7 @@ import {__} from '@wordpress/i18n';
 import {registerBlockType} from '@wordpress/blocks';
 import {getSvg} from "@novablocks/block-editor";
 import {InnerBlocks} from "@wordpress/block-editor";
+import {select} from "@wordpress/data";
 
 registerBlockType( 'novablocks/header-row', {
   title: __( 'Header Row', '__plugin_txtd' ),
@@ -39,5 +40,9 @@ registerBlockType( 'novablocks/header-row', {
   edit,
   save: function() {
     return <InnerBlocks.Content/>
-  }
+  },
+  getEditWrapperProps() {
+    const settings = select( 'core/block-editor' ).getSettings();
+    return settings.alignWide ? { 'data-align': 'full' } : {};
+  },
 } );

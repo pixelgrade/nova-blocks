@@ -1189,20 +1189,23 @@ function novablocks_get_spacing_css( $attributes ) {
 	}
 
 	return array(
-		'--block-top-spacing: ' . $blockTopSpacing,
-		'--block-bottom-spacing: ' . $blockBottomSpacing,
-		'--emphasis-top-spacing: ' . $emphasisTopSpacing,
-		'--emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
+		'--novablocks-block-top-spacing: ' . $blockTopSpacing,
+		'--novablocks-block-bottom-spacing: ' . $blockBottomSpacing,
+		'--novablocks-emphasis-top-spacing: ' . $emphasisTopSpacing,
+		'--novablocks-emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
 	);
 }
 
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
-		$classes = array( 'novablocks-collection' );
-		$classes[] = 'novablocks-block';
-		$classes[] = 'alignfull';
-		$classes[] = 'novablocks-collection--align-' . $attributes[ 'contentAlign' ];
+		$classes = array(
+			'novablocks-block',
+			'novablocks-block-spacing',
+			'novablocks-collection',
+			'novablocks-collection--align-' . $attributes[ 'contentAlign' ],
+			'alignfull',
+		);
 
 		if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
 			$classes[] = 'novablocks-card--fixed-media-aspect-ratio';

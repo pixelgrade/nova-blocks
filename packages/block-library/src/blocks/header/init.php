@@ -27,9 +27,13 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
-		$classes = array( 'site-header site-header--main alignfull' );
-
-		$classes[] = 'site-header--' . $attributes['layout'];
+		$classes = array(
+			'site-header',
+			'site-header--main',
+			'site-header-background',
+			'site-header-shadow',
+			'alignfull'
+		);
 
 		// Logo Center and Logo Left layout are considered as simple,
 		// because they are on only one row.
@@ -40,12 +44,6 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		// Get Primary Row Block to use it on hover if it's the case.
 		$primaryRowBlock = getPrimaryBlock();
-
-		// We need that class to style header block,
-		// if the user didn't hit save yet.
-		if ( ! headerBlockUpdated() ) {
-			$classes[] = 'site-header--is-old';
-		}
 
 		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"site-header__row--primary"} -->';
 		$header_row_markup_end = '<!-- /wp:novablocks/header-row -->';
@@ -81,18 +79,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 					data-sticky="true"
 				<?php } ?>
 		>
-			<div class="site-header__wrapper">
-				<div class="site-header__inner-container">
-					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
-						<?php
+			<div class="site-header__inner-container">
+				<?php
 
-						if ( ! headerBlockUpdated() ) {
-							$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
-						}
-						echo $content;
-						?>
-					</div>
-				</div>
+				if ( ! headerBlockUpdated() ) {
+					$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
+				}
+				echo $content;
+				?>
 			</div>
 		</header>
 
@@ -101,7 +95,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
 		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
-			<div class="site-header site-header--secondary site-header-sticky site-header--sticky">
+			<div class="site-header site-header--secondary site-header--sticky site-header-background site-header-shadow">
 				<?php
 				echo render_block( $stickyRowBlock );
 

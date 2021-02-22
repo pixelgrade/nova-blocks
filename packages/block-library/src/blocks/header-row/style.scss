@@ -1,0 +1,15 @@
+@import "scss/mixins";
+
+.site-header__row {
+  --novablocks-element-spacing-multiplier: 0.5;
+
+  @include above(lap) {
+    @include navigation-block-layout-common-styles;
+  }
+
+  margin-top: calc( var(--novablocks-block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  margin-bottom: calc( var(--novablocks-block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+
+  padding-top: calc( var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  padding-bottom: calc( var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+}

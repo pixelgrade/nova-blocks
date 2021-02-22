@@ -20,10 +20,10 @@ const HeaderRowEdit = function( props ) {
   );
 
   return (
-    <div className={classNames}>
+    <div className={ classNames }>
       <InnerBlocks
-        allowedBlocks={ALLOWED_BLOCKS}
-        renderAppender={false}
+        allowedBlocks={ ALLOWED_BLOCKS }
+        renderAppender={ false }
         templateLock = 'insert'
       />
     </div>

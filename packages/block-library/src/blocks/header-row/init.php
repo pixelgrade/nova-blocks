@@ -23,7 +23,17 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		ob_start();
 
-		$classes = array('wp-block-novablocks-header-row site-header__row');
+		$classes = array(
+			'site-header__row',
+			'wp-block-novablocks-header-row',
+			'alignfull',
+		);
+
+		$style =
+			'--novablocks-block-top-spacing:' . $attributes['blockTopSpacing'] . ';' .
+			'--novablocks-block-bottom-spacing:' . $attributes['blockBottomSpacing'] . ';' .
+			'--novablocks-emphasis-top-spacing:' . $attributes['emphasisTopSpacing'] . ';' .
+			'--novablocks-emphasis-bottom-spacing:' . $attributes['emphasisBottomSpacing'] . ';';
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
@@ -33,8 +43,9 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		<div
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			<?php if ( $attributes['isSticky'] === true )  { ?>
-				data-sticky= true
+			style="<?php echo esc_attr( $style ); ?>"
+			<?php if ( $attributes['isSticky'] === true ) { ?>
+				data-sticky="true"
 			<?php } ?>
 		>
 			<?php echo $content; ?>

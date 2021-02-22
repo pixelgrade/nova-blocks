@@ -1,4 +1,3 @@
-.wp-block,
 .entry-content > *,
 .wp-block-column > *,
 [class*="__inner-container"] > * {
@@ -7,6 +6,7 @@
 
 .wp-block-column,
 [class*="__inner-container"] {
+  @include block-spacing-reset;
 	--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
 
 	& > & {

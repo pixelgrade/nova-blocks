@@ -37,8 +37,11 @@ import {
 
 const ALLOWED_BLOCKS = [
 	'novablocks/media',
+	'novablocks/hero',
+	'novablocks/slideshow',
 	'novablocks/cards-collection',
 	'novablocks/posts-collection',
+	'novablocks/header-row',
 ];
 
 const ALLOWED_BLOCKS_ADVANCED = [

@@ -41,6 +41,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		$classes = array(
 			'novablocks-block',
+			'novablocks-block-spacing',
 			'novablocks-collection',
 			'novablocks-collection--align-left',
 			'alignfull',

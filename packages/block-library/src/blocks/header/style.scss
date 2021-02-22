@@ -18,10 +18,6 @@
 .site-header {
   position: absolute;
   width: 100%;
-
-  // styles from Nova Blocks should only affect blocks created by it
-  @import 'scss/menu';
-  @import 'scss/menu-item';
 }
 
 .site-header-background {
@@ -78,77 +74,10 @@
   }
 }
 
-@include above(lap) {
-  
-  .site-header__row {
-    
-    display: flex;
-    align-items: center;
-    
-    > :first-child:not(:last-child) {
-      justify-content: flex-start;
-      flex-shrink: 1;
-      flex-basis: 50%;
-    }
-    
-    > :only-child {
-      justify-content: center;
-      flex-grow: 1;
-      
-      &,
-      .menu {
-        justify-content: center;
-  
-      }
-    }
-    
-    > :not(:first-child):not(:last-child) {
-      justify-content: center;
-    }
-    
-    > :last-child:not(:first-child) {
-      
-      flex-shrink: 1;
-      flex-basis: 50%;
-  
-      margin-left: auto;
-      
-      &,
-      .menu {
-        justify-content: flex-end;
-  
-      }
-    }
-  }
-}
-
 @media only screen and (min-width: 1000px) {
 
-  // used pseudo element to create site header border on its bottom
-  // in order to use currentColor and opacity for easier theming
-  // and avoiding altering its height
-  .site-header__wrapper {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    min-height: var(--theme-header-height);
-
-    transition: var(--theme-transition);
-    transition-property: min-height, color, background-color;
-    pointer-events: auto;
-
-    .site-header--main.site-header--sticky & {
-      min-height: calc( var(--theme-header-height) * var(--theme-header-scrolled-ratio, 0.75) );
-    }
-
-    .site-header--sticky &:after {
-      opacity: 0.1;
-    }
-  }
-
   .site-header--main {
-    top: var(--admin-bar-height, 0);
+    top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
@@ -159,39 +88,13 @@
     transition-property: opacity;
 
     will-change: transform;
-    pointer-events: none;
   }
-
-
 
   .site-header__inner-container {
     width: 100%;
   }
-
-  .site-header--transparent {
-    --header-background-opacity: 0;
-  }
 }
 
-.site-header__inner-container[class] {
-  padding-left: var(--theme-header-sides-spacing);
-  padding-right: var(--theme-header-sides-spacing);
-
-  @media only screen and (min-width: 1000px) {
-    transform: none !important;
-  }
-
-  > .site-header__content.alignfull {
-    margin-left: 0;
-    margin-right: 0;
-
-    @media only screen and (min-width: 1000px) {
-      margin-left: calc(-1 * var(--theme-header-sides-spacing));
-      margin-right: calc(-1 * var(--theme-header-sides-spacing));
-    }
-  }
-}
-
-.site-header__row {
-  --block-top-spacing: 0;
+.site-header--transparent {
+  --header-background-opacity: 0;
 }

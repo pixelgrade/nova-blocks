@@ -79,16 +79,16 @@ body.debug {
 		}
 
 		&:before {
-			--offset: calc( max( 0, -1 * var(--block-top-spacing, 0) ) );
-			padding-top: calc( -1 * var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
-			padding-bottom: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
+			--offset: calc( max( 0, -1 * var(--novablocks-block-top-spacing, 0) ) );
+			padding-top: calc( -1 * var(--novablocks-block-top-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-bottom: calc( var(--novablocks-block-top-spacing, 0) * var(--novablocks-media-spacing) );
 			bottom: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
 		}
 
 		&:after {
-			--offset: calc( max( 0, -1 * var(--block-bottom-spacing, 0) ) );
-			padding-top: calc( -1 * var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
-			padding-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+			--offset: calc( max( 0, -1 * var(--novablocks-block-bottom-spacing, 0) ) );
+			padding-top: calc( -1 * var(--novablocks-block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-bottom: calc( var(--novablocks-block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
 			top: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
 		}
 	}

@@ -111,6 +111,7 @@ export const CollectionPreview = ( props ) => {
 		props.className,
 		blockClassName,
 		'novablocks-block',
+		'novablocks-block-spacing',
 		`${ blockClassName }--align-${ contentAlign }`,
 		`content-is-${ contentStyle }`,
 		{

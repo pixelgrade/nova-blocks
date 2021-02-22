@@ -1,5 +1,6 @@
 .site-branding {
     display: flex;
+    justify-content: center;
     align-items: center;
     flex-shrink: 0;
 
@@ -27,13 +28,6 @@
     .c-logo__inverted img {
         width: 100%;
     }
-}
-
-.site-title {
-    //@include apply-font(heading-4);
-
-    --final-font-size: calc( var(--theme-header-logo-height) * 1.8 );
-    line-height: 1;
 }
 
 .site-info {

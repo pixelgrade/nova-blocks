@@ -1,3 +1,41 @@
+@mixin navigation-links-spacing {
+
+  ul.menu,
+  .menu > ul {
+    margin-left: calc( -1 * var(--novablocks-navigation-item-spacing) * var(--novablocks-navigation-item-spacing-multiplier, 1) );
+
+    > li {
+      margin-left: calc( var(--novablocks-navigation-item-spacing) * var(--novablocks-navigation-item-spacing-multiplier, 1) );
+    }
+  }
+}
+
 .wp-block-novablocks-navigation {
-	@import 'scss/menu';
+  --novablocks-navigation-item-padding-y: .75em;
+  @include navigation-links-spacing;
+
+  @import "scss/menu";
+  @import "scss/menu-item";
+
+  ul.menu,
+  .menu > ul,
+  ul.sub-menu,
+  ul.children {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  ul.menu,
+  .menu > ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    a {
+      display: block;
+      padding-top: var(--novablocks-navigation-item-padding-y);
+      padding-bottom: var(--novablocks-navigation-item-padding-y);
+      color: inherit;
+      text-decoration: none;
+    }
+  }
 }

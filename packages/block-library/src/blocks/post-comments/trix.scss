@@ -22,7 +22,7 @@ trix-toolbar {
   &[id] {
     @include block-spacing;
     --novablocks-element-spacing-multiplier: .175;
-    --block-top-spacing: 1;
+    --novablocks-block-top-spacing: 1;
   }
 
   background-color: var(--trix-input-bg-color);

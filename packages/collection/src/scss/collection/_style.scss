@@ -27,15 +27,6 @@
 }
 
 .novablocks-collection {
-	--block-top-spacing: var(--novablocks-block-top-spacing);
-	--block-bottom-spacing: var(--novablocks-block-bottom-spacing);
-	--emphasis-top-spacing: var(--novablocks-emphasis-top-spacing);
-	--emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing);
-
-	margin-top: calc(var(--block-top-spacing, 1) * var(--novablocks-spacing));
-	margin-bottom: calc(var(--block-bottom-spacing, 1) * var(--novablocks-spacing));
-	padding-top: calc(var(--emphasis-top-spacing, 1) * var(--novablocks-spacing));
-	padding-bottom: calc(var(--emphasis-bottom-spacing, 1) * var(--novablocks-spacing));
 
 	.novablocks-block__content {
 		padding: 0;
