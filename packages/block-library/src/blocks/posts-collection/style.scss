@@ -19,7 +19,7 @@
     }
   }
   
-  &[data-columns="1"] {
+  .novablocks-collection__layout[data-columns="1"] {
     .slick-slide {
       padding-left: 0;
       padding-right: 0;
