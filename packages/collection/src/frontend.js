@@ -307,7 +307,7 @@ import {
       let $carousel = $(carousel);
 
       const SLICK_OPTIONS = {
-        slidesToShow: $carousel.data('poststoshowperrow' ),
+        slidesToShow: $carousel.data('columns' ),
         dots: $carousel.data('showpagination') === 1,
         variableWidth: $carousel.data('carousellayout') === 'variable',
         customPaging: function(slick,index) {

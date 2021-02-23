@@ -177,6 +177,7 @@ export const CarouselLayoutPreview = ( props ) => {
     carouselLayout,
     postsToShow,
     postsToShowPerRow,
+    columns
   } = attributes;
 
   const cardProps = {
@@ -193,13 +194,13 @@ export const CarouselLayoutPreview = ( props ) => {
   let defaultSliderOptions = {
     dots: showPagination,
     infinite: true,
-    slidesToShow: postsToShowPerRow,
+    slidesToShow: columns,
   };
 
   let settings = {
     dots: showPagination,
     infinite: true,
-    variableWidth: true
+    variableWidth: true,
   };
 
   if ( carouselLayout !== 'variable' ) {

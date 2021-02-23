@@ -759,17 +759,14 @@ const CarouselLayoutControls = ( props ) => {
   const {
     attributes: {
       carouselLayout,
-      postsToShowPerRow,
-      showPagination
+      showPagination,
     },
     setAttributes
   } = props;
 
   return (
     <Fragment>
-      <ControlsGroup title={ __( 'Cards Count' ) }>
-        <PostsCountControl { ...props } />
-      </ControlsGroup>
+      <ClassicLayoutControls {...props} />
       <ControlsGroup title={ __( 'Layout' ) }>
         <RadioControl
           key={ 'carousel-layout' }
@@ -783,15 +780,6 @@ const CarouselLayoutControls = ( props ) => {
             { label: 'Variable Width', value: 'variable' },
           ] }
         />
-        { carouselLayout === 'fixed' &&<RangeControl
-          label={ __( `Number of Items per Row`, '__plugin_txtd' ) }
-          value={ postsToShowPerRow }
-          onChange={ postsToShowPerRow => {
-            setAttributes( { postsToShowPerRow } );
-          } }
-          min={ 1 }
-          max={ 6 }
-        /> }
         <ToggleControl
           label={__( 'Show Pagination', '__plugin_txtd' )}
           checked={ showPagination }

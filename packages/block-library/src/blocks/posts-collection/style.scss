@@ -2,6 +2,11 @@
   --novablocks-collection-layout-spacing: 0;
 }
 
+.novablocks-collection--carousel {
+  --carousel-arrow-width: 1.5rem;
+  --slider-gap: 1em;
+}
+
 .novablocks-collection-carousel--variable {
   
   // Hackish way to allow
@@ -31,9 +36,6 @@
 }
 
 .novablocks-collection__layout {
-  
-  --carousel-arrow-width: 1.5rem;
-  --slider-gap: 1em;
   
   @include below(desktop) {
     .slick-arrow {
@@ -111,6 +113,7 @@
     }
     
     a {
+      color: currentColor;
       text-decoration: none;
       border-bottom: 1px solid transparent;
     }
@@ -122,4 +125,12 @@
       }
     }
   }
+}
+
+
+.novablocks-collection__title,
+.novablocks-collection__subtitle {
+  // Make sure that title and subtitles
+  // are not overlapping carousel arrows.
+  padding-right: calc( 2 * var(--carousel-arrow-width) + 1rem );
 }

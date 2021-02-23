@@ -93,7 +93,6 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'flipcolsrows',
 
 			'carouselLayout',
-			'postsToShowPerRow',
 			'showPagination'
 		);
 
