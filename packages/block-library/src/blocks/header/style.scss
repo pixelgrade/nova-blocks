@@ -6,6 +6,12 @@
   --icons-horizontal-spacing-reducer: 2;
 }
 
+// Nova Blocks hacks
+.site-header {
+  position: absolute;
+  width: 100%;
+}
+
 .site-header--mobile {
   display: none;
 
@@ -14,24 +20,25 @@
   }
 }
 
-// Nova Blocks hacks
-.site-header {
-  position: absolute;
-  width: 100%;
-}
-
-.site-header-background {
-  @include header-background;
-}
-
-.site-header-shadow {
-  @include header-shadow;
-}
-
 @import "scss/header-secondary";
-@import "scss/header-sticky";
 
-@media only screen and (min-width: 1000px) {
+@include above(lap) {
+
+  .site-header--main {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    transition: var(--theme-transition);
+    transition-property: opacity;
+
+    will-change: transform;
+  }
+
+  .site-header__inner-container {
+    width: 100%;
+  }
 
   .site-header__content {
 
@@ -50,13 +57,11 @@
   }
 }
 
-@media not screen and (min-width: 1000px) {
-  @import 'scss/mobile';
-  @import 'scss/mobile-transitions';
-}
+@import 'scss/mobile';
+@import 'scss/mobile-transitions';
 
 @include below(lap) {
-  
+
   .site-header {
     
     .site-header__row {
@@ -74,27 +79,19 @@
   }
 }
 
-@media only screen and (min-width: 1000px) {
 
-  .site-header--main {
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-
-    min-height: var(--theme-header-height);
-
-    transition: var(--theme-transition);
-    transition-property: opacity;
-
-    will-change: transform;
-  }
-
-  .site-header__inner-container {
-    width: 100%;
-  }
+.site-header-background {
+  @include header-background;
 }
 
-.site-header--transparent {
-  --header-background-opacity: 0;
+.site-header-shadow {
+  @include header-shadow;
 }
+
+.site-header--sticky {
+  --header-background-opacity: 0.95;
+
+  position: fixed;
+  top: 0;
+}
+

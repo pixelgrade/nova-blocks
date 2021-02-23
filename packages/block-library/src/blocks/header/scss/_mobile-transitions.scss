@@ -1,25 +1,28 @@
-.site-header,
-.c-menu-toggle__slice {
-	transition: transform 0.3s ease-out;
-}
+@include below(lap) {
+
+  .site-header,
+  .c-menu-toggle__slice {
+    transition: transform 0.3s ease-out;
+  }
 
 
-.c-menu-toggle__checkbox {
+  .c-menu-toggle__checkbox {
 
-	&:checked {
+    &:checked {
 
-		~ .c-menu-toggle {
-			.c-menu-toggle__slice--top {
-				transform: rotate(45deg);
-			}
+      ~ .c-menu-toggle {
+        .c-menu-toggle__slice--top {
+          transform: rotate(45deg);
+        }
 
-			.c-menu-toggle__slice--middle {
-				opacity: 0;
-			}
+        .c-menu-toggle__slice--middle {
+          opacity: 0;
+        }
 
-			.c-menu-toggle__slice--bottom {
-				transform: rotate(-45deg);
-			}
-		}
-	}
+        .c-menu-toggle__slice--bottom {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
 }

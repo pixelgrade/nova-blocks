@@ -29,11 +29,7 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 			'alignfull',
 		);
 
-		$style =
-			'--novablocks-block-top-spacing:' . $attributes['blockTopSpacing'] . ';' .
-			'--novablocks-block-bottom-spacing:' . $attributes['blockBottomSpacing'] . ';' .
-			'--novablocks-emphasis-top-spacing:' . $attributes['emphasisTopSpacing'] . ';' .
-			'--novablocks-emphasis-bottom-spacing:' . $attributes['emphasisBottomSpacing'] . ';';
+		$style = novablocks_get_spacing_css( $attributes );
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];

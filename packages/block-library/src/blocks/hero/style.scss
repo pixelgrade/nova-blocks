@@ -5,6 +5,10 @@
 	display: flex;
 }
 
+.novablocks-hero {
+  @include block-spacing;
+}
+
 .novablocks-hero.scrolling-effect-doppler {
 	align-items: flex-start;
 }

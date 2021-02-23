@@ -37,11 +37,11 @@ import {
 
 const ALLOWED_BLOCKS = [
 	'novablocks/media',
+	'novablocks/header-row',
 	'novablocks/hero',
 	'novablocks/slideshow',
 	'novablocks/cards-collection',
 	'novablocks/posts-collection',
-	'novablocks/header-row',
 ];
 
 const ALLOWED_BLOCKS_ADVANCED = [
@@ -53,13 +53,13 @@ const getEmphasisAttributes = ( { emphasisBySpace, enableOverlapping, verticalAl
 	const actualEmphasis = ! enableOverlapping ? emphasisBySpace : -1 * emphasisBySpace;
 
 	return {
-		emphasisBySpace:        emphasisBySpace,
-		enableOverlapping:      enableOverlapping,
-		blockTopSpacing: 		( actualEmphasis < 0 && ['center', 'bottom'].includes( verticalAlignment ) ) 	? actualEmphasis : 0,
-		blockBottomSpacing: 	( actualEmphasis < 0 && ['center', 'top'].includes( verticalAlignment ) ) 		? actualEmphasis : 0,
-		emphasisTopSpacing: 	( verticalAlignment !== 'top' ) 	? actualEmphasis :  1,
-		emphasisBottomSpacing: 	( verticalAlignment !== 'bottom' ) 	? actualEmphasis : 	1,
-		verticalAlignment:      verticalAlignment,
+    emphasisBySpace: emphasisBySpace,
+    enableOverlapping: enableOverlapping,
+		blockTopSpacing: ( actualEmphasis < 0 && [ 'center', 'bottom' ].includes( verticalAlignment ) ) ? actualEmphasis : 0,
+		blockBottomSpacing: ( actualEmphasis < 0 && [ 'center', 'top' ].includes( verticalAlignment ) ) ? actualEmphasis : 0,
+		emphasisTopSpacing: ( verticalAlignment !== 'top' ) ? actualEmphasis :  1,
+		emphasisBottomSpacing: ( verticalAlignment !== 'bottom' ) ? actualEmphasis : 	1,
+		verticalAlignment: verticalAlignment,
 	};
 };
 

@@ -81,3 +81,13 @@
 		}
 	}
 }
+
+[data-type="novablocks/cards-collection"],
+[data-type="novablocks/posts-collection"] {
+  &[data-type] {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

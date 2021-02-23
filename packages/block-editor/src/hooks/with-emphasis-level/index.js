@@ -4,7 +4,7 @@ import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
 
-const enableFontSizeControlOnBlocks = [
+const enableEmphasisLevelControls = [
 	'novablocks/media',
 	'novablocks/cards-collection',
 	'novablocks/posts-collection',
@@ -14,7 +14,7 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 
 	return ( props ) => {
 
-		if ( ! enableFontSizeControlOnBlocks.includes( props.name ) ) {
+		if ( ! enableEmphasisLevelControls.includes( props.name ) ) {
 			return <OriginalComponent { ...props } />
 		}
 
@@ -26,11 +26,11 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
 		);
 	};
 });
-addFilter( 'editor.BlockEdit', 'novablocks/with-ehpasis-level-controls', withEmphasisLevelControls );
+addFilter( 'editor.BlockEdit', 'novablocks/with-ehphasis-level-controls', withEmphasisLevelControls );
 
 function addEmphasisLevelAttribute( block ) {
 
-	if ( ! enableFontSizeControlOnBlocks.includes( block.name ) ) {
+	if ( ! enableEmphasisLevelControls.includes( block.name ) ) {
 		return block;
 	}
 
