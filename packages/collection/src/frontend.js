@@ -323,7 +323,8 @@ import {
               centerMode: true,
               infinite: true,
               slidesToShow: 1,
-              variableWidth: false
+              variableWidth: false,
+              centerPadding: '30px',
             }
           },
         ]

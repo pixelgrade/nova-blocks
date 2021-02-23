@@ -5,6 +5,19 @@
 .novablocks-collection--carousel {
   --carousel-arrow-width: 1.5rem;
   --slider-gap: 1em;
+  
+  .novablocks-card--landscape .novablocks-card__layout {
+    @include below(lap) {
+      flex-direction: column;
+      --grid-item-content-display: block;
+      --grid-item-buttons-display: block;
+      --novablocks-card-title-font-size-modifier: 1;
+      
+      > .novablocks-card__layout-content {
+        flex: 1;
+      }
+    }
+  }
 }
 
 .novablocks-collection-carousel--variable {
@@ -68,7 +81,7 @@
   }
   
   .slick-arrow {
-    top: calc( -1 * var(--element-spacing) );
+    top: calc( -1 * var(--element-spacing) - 1.3rem );
     left: auto;
     width: var(--carousel-arrow-width);
     height: var(--carousel-arrow-width);
