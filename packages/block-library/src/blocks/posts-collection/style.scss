@@ -26,6 +26,10 @@
     }
   }
   
+  .slick-dotted.slick-slider {
+    margin-bottom: 0;
+  }
+  
   @include below(lap) {
     --slider-gap: 0.3rem;
     
