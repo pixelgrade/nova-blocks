@@ -19,13 +19,6 @@
     }
   }
   
-  .novablocks-collection__layout[data-columns="1"] {
-    .slick-slide {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  
   .slick-dotted.slick-slider {
     margin-bottom: 0;
   }
@@ -39,6 +32,15 @@
     
     .novablocks-collection__layout {
       margin-left: calc( var(--slider-gap) * -1 );
+    }
+  }
+  
+  @include above(lap) {
+    .novablocks-collection__layout[data-columns="1"] {
+      .slick-slide {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
   }
 }
