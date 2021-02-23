@@ -12,6 +12,10 @@ const variations = [
         name: 'primary',
         label: 'Primary Navigation',
         isPrimary: true,
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
       },
         [
           ['novablocks/logo'],
@@ -33,7 +37,11 @@ const variations = [
         className: 'site-header__row--primary',
         name: 'primary',
         label: 'Primary Navigation',
-        isPrimary: true
+        isPrimary: true,
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
       },
         [
           [ 'novablocks/navigation', {
@@ -58,7 +66,11 @@ const variations = [
       ['novablocks/header-row', {
         className: 'site-header__row--logo',
         name: 'logo',
-        label: 'Site identity(logo)',
+        label: 'Site identity (logo)',
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 2,
+        emphasisBottomSpacing: 2,
       },
         [
           [ 'novablocks/navigation', {
@@ -76,7 +88,11 @@ const variations = [
         className: 'site-header__row--primary',
         name: 'primary',
         label: 'Primary Navigation',
-        isPrimary: true
+        isPrimary: true,
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
       },
         [
           [ 'novablocks/navigation', {
@@ -97,6 +113,10 @@ const variations = [
         className: 'site-header__row--secondary',
         name: 'secondary',
         label: 'Secondary Navigation',
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
       },
         [
           [ 'novablocks/navigation', {
@@ -113,6 +133,10 @@ const variations = [
         className: 'site-header__row--logo',
         name: 'logo',
         label: 'Site identity(logo)',
+        blockTopSpacing: 3,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
       },
         [
           ['novablocks/logo']
@@ -122,7 +146,11 @@ const variations = [
         className: 'site-header__row--primary',
         name: 'primary',
         label: 'Primary Navigation',
-        isPrimary: true
+        isPrimary: true,
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
       },
         [
           [ 'novablocks/navigation', {

@@ -3,10 +3,11 @@
 .novablocks-hero {
 	position: relative;
 	display: flex;
-}
 
-.novablocks-hero {
-  @include block-spacing;
+  &[class] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .novablocks-hero.scrolling-effect-doppler {

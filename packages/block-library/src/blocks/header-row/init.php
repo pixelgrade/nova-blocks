@@ -29,7 +29,8 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 			'alignfull',
 		);
 
-		$style = novablocks_get_spacing_css( $attributes );
+		$spacingProps = novablocks_get_spacing_css( $attributes );
+		$style = join( '; ', $spacingProps ) . '; ';
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
