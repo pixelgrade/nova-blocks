@@ -23,3 +23,15 @@
 .novablocks-collection__layout .slick-slide[class] {
   opacity: 1;
 }
+
+.novablocks-collection--carousel {
+  .slick-slider {
+    // This will prevent carousel
+    // overflowing in editor
+    // source: https://github.com/kenwheeler/slick/issues/982#issuecomment-408044585
+    
+    overflow: hidden;
+    min-width: 100%;
+    width: 0;
+  }
+}
