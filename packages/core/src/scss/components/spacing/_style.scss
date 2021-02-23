@@ -1,6 +1,6 @@
 .entry-content,
 .wp-block-column,
-[class*="__inner-container"] {
+[class*="__inner-container"][class] {
   @include block-spacing-reset;
 
   > * {
