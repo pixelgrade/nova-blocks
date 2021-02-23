@@ -6,24 +6,26 @@
   
   // Hackish way to allow
   // variable width in Carousel
-  .novablocks-card__layout {
-    display: table;
-    width: 1px;
-  }
+  @include above(lap) {
+    .novablocks-card__layout {
+      display: table;
+      width: 1px;
+    }
   
-  .novablocks-block__content .novablocks-card__media {
+    .novablocks-block__content .novablocks-card__media {
     
-    padding-top: 0;
-
-    img {
-      position: static;
+      padding-top: 0;
+    
+      img {
+        position: static;
       
-      width: auto;
-      // Height used for Carousel
-      // with Variable Width
-      height: 20em;
+        width: auto;
+        // Height used for Carousel
+        // with Variable Width
+        height: 20em;
       
-      max-width: none;
+        max-width: none;
+      }
     }
   }
 }
@@ -45,41 +47,13 @@
   }
   
   @include above(lap) {
+    
     .slick-slide {
       padding-left: var(--slider-gap);
     }
   
     .slick-list {
       margin-left: calc(-1 * var(--slider-gap));
-    }
-  
-    .slick-arrow {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    
-      width: var(--carousel-arrow-width);
-    
-      &,
-      &:hover,
-      &:focus {
-        color: currentColor;
-      
-      }
-    
-      &:before {
-        font-size: var(--carousel-arrow-width);
-        color: currentColor;
-      }
-    }
-  
-    .slick-prev {
-      left: calc(var(--carousel-arrow-width) * -1 - 10px );
-    }
-  
-    .slick-next {
-      right: calc(var(--carousel-arrow-width) * -1 - 10px );
     }
     
     .slick-slider {
@@ -92,35 +66,60 @@
   }
   
   .slick-arrow {
-    background-color: #FFF;
+    top: calc( -1 * var(--element-spacing) );
+    left: auto;
+    width: var(--carousel-arrow-width);
+    height: var(--carousel-arrow-width);
+  
     z-index: 100;
+  
+    &,
+    &:hover,
+    &:focus {
+      color: currentColor;
+    
+    }
+  
+    &:before {
+      font-size: var(--carousel-arrow-width);
+      color: currentColor;
+    }
+    
+    &.slick-next {
+      right: 0;
+    }
+    
+    &.slick-prev {
+      right: calc( var(--carousel-arrow-width) + 1rem );
+    }
   }
   
   .slick-slide:not(.slick-active) {
     opacity: 0.5;
   }
-}
-
-.slick-dots {
   
-  margin-left: -1em;
-  padding-left: 0 !important;
-  
-  z-index: 9999;
-  
-  > li {
-    margin-left: 1em;
-  }
-  
-  a {
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-  }
-  
-  .slick-active {
+  .slick-dots {
+    
+    margin-left: -1em;
+    margin-top: 1em;
+    padding-left: 0 !important;
+    
+    z-index: 9999;
+    
+    > li {
+      margin-left: 1em;
+    }
+    
     a {
-      color: var(--novablocks-color-primary);
-      border-color: currentColor;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    
+    .slick-active {
+      a {
+        color: var(--novablocks-color-primary);
+        border-color: currentColor;
+      }
     }
   }
 }
