@@ -4,7 +4,7 @@
 
 .novablocks-collection--carousel {
   --carousel-arrow-width: 1.5rem;
-  --slider-gap: 1em;
+  --slider-gap: 0.5rem;
   
   .novablocks-card--landscape .novablocks-card__layout {
     @include below(lap) {
@@ -16,6 +16,25 @@
       > .novablocks-card__layout-content {
         flex: 1;
       }
+    }
+  }
+  
+  &[data-columns="1"] {
+    .slick-slide {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  
+  @include below(lap) {
+    --slider-gap: 0.3rem;
+    
+    .slick-list {
+      padding-left: 0 !important;
+    }
+    
+    .novablocks-collection__layout {
+      margin-left: calc( var(--slider-gap) * -1 );
     }
   }
 }
@@ -50,14 +69,14 @@
 
 .novablocks-collection__layout {
   
-  @include below(desktop) {
+  @include below(lap) {
     .slick-arrow {
       display: none !important;
     }
     
     .slick-slide {
-      padding-left: 5px;
-      padding-right: 5px;
+      padding-left: var(--slider-gap) ;
+      padding-right: var(--slider-gap) ;
     }
   }
   
@@ -65,10 +84,11 @@
     
     .slick-slide {
       padding-left: var(--slider-gap);
+      padding-right: var(--slider-gap);
     }
   
     .slick-list {
-      margin-left: calc(-1 * var(--slider-gap));
+      margin-left: calc( -1 * var(--slider-gap) );
     }
     
     .slick-slider {
