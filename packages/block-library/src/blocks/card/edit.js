@@ -15,6 +15,7 @@ import {
 } from '@novablocks/block-editor';
 
 import placeholderSvg from './card-media-placeholder.svg';
+import classnames from "classnames";
 
 const CardEdit = ( props ) => {
 
@@ -37,8 +38,17 @@ const CardEdit = ( props ) => {
 			showButtons,
 			showMeta,
 		},
+    className,
 		setAttributes,
 	} = props;
+
+  const classNames = classnames(
+    className,
+    `novablocks-card`,
+    `novablocks-card--fixed-media-aspect-ratio`,
+    `novablocks-card--portrait`,
+    `novablocks-block__content`
+  );
 
 	const CardMedia = ( props ) => {
 
@@ -69,7 +79,7 @@ const CardEdit = ( props ) => {
 	};
 
 	return (
-		<div className={ `novablocks-card novablocks-card--fixed-media-aspect-ratio novablocks-card--portrait novablocks-block__content` }>
+		<div className={ classNames }>
 			<div className="novablocks-card__layout">
 				{
 					showMedia &&
