@@ -140,7 +140,7 @@ function novablocks_get_post_slide_markup( $post, $attributes ) {
 	}
 
 	$classes = array(
-		'novablocks-slideshow__slide-wrap'
+		'novablocks-slideshow__slide'
 	);
 
 	$className = join( ' ', $classes );
@@ -149,7 +149,7 @@ function novablocks_get_post_slide_markup( $post, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="novablocks-slideshow__slide">
+	<div class="<?php echo esc_attr( $className ); ?>">
 		<div class="novablocks-slideshow__slide-wrap">
 			<div class="novablocks-slideshow__background novablocks-u-background">
 				<div class="novablocks-mask">
