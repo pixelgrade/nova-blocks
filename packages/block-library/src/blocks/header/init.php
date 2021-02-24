@@ -96,13 +96,15 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// when the layout used is on at least two rows.
 		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
 			<div class="site-header site-header--secondary site-header--sticky site-header-background site-header-shadow">
-				<?php
-				echo render_block( $stickyRowBlock );
+				<div class="site-header__inner-container">
+					<?php
+					echo render_block( $stickyRowBlock );
 
-				if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
-					echo render_block( $primaryRowBlock );
-				}
-				?>
+					if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
+						echo render_block( $primaryRowBlock );
+					}
+					?>
+				</div>
 			</div>
 		<?php } ?>
 

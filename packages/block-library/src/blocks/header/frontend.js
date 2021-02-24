@@ -37,13 +37,13 @@ import { addSocialMenuClass } from "./utils";
       let stickyRowOffSet = $stickyRow.offset().top,
           windowScrollY = window.scrollY,
           primaryRowIsVisible = windowScrollY > $siteHeader.outerHeight(),
-          isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight,
+          isSticky = windowScrollY > stickyRowOffSet,
           $promoBar = $('.js-promo-bar');
 
       // If we find any promo bar,
       // we should consider it's height for the offset.
       if ( $promoBar.length ) {
-        isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight - $promoBar.outerHeight();
+        isSticky = windowScrollY > stickyRowOffSet;
       }
 
       // Avoid showing primary row
@@ -63,11 +63,6 @@ import { addSocialMenuClass } from "./utils";
     // We are using this function when
     // header layout is simple (one-row).
     function makeHeaderStickyOnScroll() {
-
-      // Do nothing if we are on mobile.
-      if ( below( 'lap' ) ) {
-        return;
-      }
 
       let windowScrollY = window.scrollY,
           mainHeaderIsSticky = windowScrollY > 1;

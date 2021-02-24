@@ -16,16 +16,11 @@
 	margin-top: 0;
 }
 
-.site-header {
-  
-  .site-header__row {
-    
-    display: block;
-    
-    .block-editor-block-list__layout {
-      display: grid;
-      align-items: center;
-    }
+.site-header__row {
+  display: block;
+
+  .block-editor-block-list__layout {
+    display: grid;
+    align-items: center;
   }
 }
-

@@ -62,18 +62,15 @@
 
 @include below(lap) {
 
-  .site-header {
-    
-    .site-header__row {
-      display: flex;
-      flex-direction: column;
-      
-      .site-header__menu--primary {
-        order: -1;
-      }
+  .site-header__row {
+    display: flex;
+    flex-direction: column;
+
+    .site-header__menu--primary {
+      order: -1;
     }
   }
-  
+
   .site-header__row--primary {
     order: -1;
   }
