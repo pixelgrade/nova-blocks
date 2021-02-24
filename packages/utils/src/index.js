@@ -267,7 +267,7 @@ export const getContentVariation = ( attributes ) => {
   const contentStyle = attributes.contentStyle;
 
   if ( contentStyle === 'highlighted' ) {
-    return ( paletteVariation + 6 ) % 12;
+    return ( paletteVariation + 6 ) % 12 + 1;
   }
 
   return paletteVariation;

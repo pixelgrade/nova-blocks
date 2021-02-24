@@ -212,9 +212,9 @@ const PaletteVariationControls = ( props ) => {
         label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
         checked={ useSourceColorAsReference }
         onChange={ newUseSourceAsReference => {
-          let offset = siteVariation - sourceIndex;
+          let offset = siteVariation - sourceIndex - 1;
           let newPaletteVariation = newUseSourceAsReference ? paletteVariation + offset : paletteVariation - offset;
-          newPaletteVariation = ( newPaletteVariation + 12 ) % 12;
+          newPaletteVariation = normalizeVariationValue( newPaletteVariation );
 
           setAttributes( {
             useSourceColorAsReference: newUseSourceAsReference,
@@ -225,9 +225,9 @@ const PaletteVariationControls = ( props ) => {
       <RangeControl
         key={ 'color-set-variation-range-control' }
         label={ __( 'Variation', '__plugin_txtd' ) }
-        value={ ( paletteVariation + colorReferenceOffset - siteVariationOffset + 12 ) % 12 }
+        value={ normalizeVariationValue( paletteVariation + colorReferenceOffset - siteVariationOffset ) }
         onChange={ value => {
-          setAttributes( { paletteVariation: ( value - colorReferenceOffset - siteVariationOffset + 12 ) % 12 } )
+          setAttributes( { paletteVariation: normalizeVariationValue( value - colorReferenceOffset - siteVariationOffset ) } )
         } }
         min={ 1 }
         max={ 12 }
@@ -236,7 +236,7 @@ const PaletteVariationControls = ( props ) => {
       <RangeControl
         key={ 'color-set-source-color-offset-control' }
         label={ __( 'Soruce Color Offset', '__plugin_txtd' ) }
-        value={ ( ( useSourceColorAsReference ? paletteVariation : paletteVariation - siteVariation - sourceIndex ) + 18 ) % 12 - 6 }
+        value={ normalizeVariationValue( ( useSourceColorAsReference ? paletteVariation : ( paletteVariation - siteVariation - sourceIndex ) + 6 ) ) - 6 }
         min={ -6 }
         max={ 6 }
         step={ 0 }
@@ -244,6 +244,10 @@ const PaletteVariationControls = ( props ) => {
       />
     </Fragment>
   )
+}
+
+const normalizeVariationValue = ( value ) => {
+  return ( value + 11 ) % 12 + 1;
 }
 
 export {
