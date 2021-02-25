@@ -5,6 +5,7 @@ import { addSocialMenuClass } from "./utils";
   function( $, window, undefined ) {
 
     const $siteHeader = $( '.site-header--main' ),
+          $primaryRow = $siteHeader.find( '.site-header__row--primary' ),
           $stickyHeader = $( '.site-header--secondary' );
 
     let $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
@@ -35,16 +36,8 @@ import { addSocialMenuClass } from "./utils";
       }
 
       let stickyRowOffSet = $stickyRow.offset().top,
-          windowScrollY = window.scrollY,
-          primaryRowIsVisible = windowScrollY > $siteHeader.outerHeight(),
-          isSticky = windowScrollY > stickyRowOffSet,
-          $promoBar = $('.js-promo-bar');
-
-      // If we find any promo bar,
-      // we should consider it's height for the offset.
-      if ( $promoBar.length ) {
-        isSticky = windowScrollY > stickyRowOffSet;
-      }
+          primaryRowIsVisible = $primaryRow.offset().top + $primaryRow.outerHeight() < $stickyHeader.offset().top + $stickyHeader.outerHeight(),
+          isSticky = $stickyHeader.offset().top > stickyRowOffSet;
 
       // Avoid showing primary row
       // from sticky header on hover, when the primary row

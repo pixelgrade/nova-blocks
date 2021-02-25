@@ -202,8 +202,9 @@ const PaletteVariationControls = ( props ) => {
 
   const { sourceIndex } = currentPalette;
   const siteVariation = customify_config?.sm_site_color_variation?.value || 1;
-  const siteVariationOffset = useSourceColorAsReference ? 0 : siteVariation - 1;
+  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
   const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
+  const actualBlockVariation = paletteVariation + colorReferenceOffset + siteVariationOffset;
 
   return (
     <Fragment>
@@ -225,7 +226,7 @@ const PaletteVariationControls = ( props ) => {
       <RangeControl
         key={ 'color-set-variation-range-control' }
         label={ __( 'Variation', '__plugin_txtd' ) }
-        value={ normalizeVariationValue( paletteVariation + colorReferenceOffset - siteVariationOffset ) }
+        value={ normalizeVariationValue( actualBlockVariation ) }
         onChange={ value => {
           setAttributes( { paletteVariation: normalizeVariationValue( value - colorReferenceOffset - siteVariationOffset ) } )
         } }
@@ -236,7 +237,7 @@ const PaletteVariationControls = ( props ) => {
       <RangeControl
         key={ 'color-set-source-color-offset-control' }
         label={ __( 'Soruce Color Offset', '__plugin_txtd' ) }
-        value={ normalizeVariationValue( ( useSourceColorAsReference ? paletteVariation : ( paletteVariation - siteVariation - sourceIndex ) + 6 ) ) - 6 }
+        value={ normalizeVariationValue( ( actualBlockVariation - sourceIndex + 5 ) ) - 6 }
         min={ -6 }
         max={ 6 }
         step={ 0 }
