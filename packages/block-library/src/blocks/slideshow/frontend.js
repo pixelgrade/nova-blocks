@@ -74,7 +74,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 		var slideMaxHeight = 0;
 		var maxAspectRatio = 0;
 
-    $slider.each( function( i, obj ) {
+    $block.find( SLIDE_SELECTOR ).each( function( i, obj ) {
 			var $slide = $( obj ),
 				$media = $slide.find( '.novablocks-slideshow__media' ),
 				width = $media.data( 'width' ),
