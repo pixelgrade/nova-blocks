@@ -91,7 +91,7 @@ const SlideshowInspectorControls = function( props ) {
         </ControlsTab>
       </ControlsSection>
 			{
-				!! galleryImages.length && 'gallery' === source &&
+				!! galleryImages.length && 'custom' === source &&
 				<ControlsSection label={ __( 'Slides' ) }>
 					<ControlsTab label={ __( 'General' ) }>
 						<GalleryPreview
@@ -141,7 +141,7 @@ const SlideshowInspectorControls = function( props ) {
       </Fragment>
 
       {
-        'gallery' !== source &&
+        'custom' !== source &&
         <ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
           <ControlsTab label={ __( 'Settings' ) }>
             <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
