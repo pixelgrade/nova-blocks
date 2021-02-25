@@ -3,7 +3,7 @@
  */
 import Slide from './slide';
 
-import Slick from 'react-slick';
+import Slider from 'react-slick';
 
 /**
  * WordPress dependencies
@@ -58,7 +58,7 @@ const SlideshowPreview = class extends Component {
 				overlayFilterStyle,
 				// media
 				galleryImages,
-        slideshowType
+        slideshowSource
 			},
 			className,
       posts
@@ -107,6 +107,11 @@ const SlideshowPreview = class extends Component {
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 
 		const sliderSettings = {
+      customPaging: function(i) {
+        return (
+          <a> {i + 1}</a>
+        );
+      },
 		  infinite: true,
       arrows: true,
       dots: true,
@@ -115,16 +120,16 @@ const SlideshowPreview = class extends Component {
 
     let slide = getGallerySlideData( galleryImages, this.props );
 
-    if ( slideshowType === 'post' && !! posts ) {
+    if ( slideshowSource === 'post' && !! posts ) {
       slide = getPostSlideData( posts, this.props );
     }
 
 		return (
 			<Fragment>
           <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
-             <Slick className="novablocks-slideshow__slider" {...sliderSettings}>
+             <Slider className="novablocks-slideshow__slider" {...sliderSettings}>
                {slide}
-             </Slick>
+             </Slider>
           </div>
 			</Fragment>
 		);

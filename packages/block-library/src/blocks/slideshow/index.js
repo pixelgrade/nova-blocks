@@ -5,6 +5,7 @@ import iconSvg from './slideshow-block.svg';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
+import variations from './variations';
 import { select } from '@wordpress/data';
 
 import {
@@ -67,6 +68,7 @@ registerBlockType( 'novablocks/slideshow', {
 	edit,
 	save,
 	deprecated,
+  variations,
 	getEditWrapperProps() {
 		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
