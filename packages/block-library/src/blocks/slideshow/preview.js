@@ -58,7 +58,7 @@ const SlideshowPreview = class extends Component {
 				overlayFilterStyle,
 				// media
 				galleryImages,
-        slideshowSource
+        source
 			},
 			className,
       posts
@@ -120,7 +120,7 @@ const SlideshowPreview = class extends Component {
 
     let slide = getGallerySlideData( galleryImages, this.props );
 
-    if ( slideshowSource === 'post' && !! posts ) {
+    if ( source === 'post' && !! posts ) {
       slide = getPostSlideData( posts, this.props );
     }
 

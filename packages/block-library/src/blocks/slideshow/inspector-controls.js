@@ -39,7 +39,7 @@ const SlideshowInspectorControls = function( props ) {
 		settings: {
 			slideshow: {
 				minHeightOptions,
-        slideshowSources
+        sources
 			},
 		},
 	} = props;
@@ -47,7 +47,7 @@ const SlideshowInspectorControls = function( props ) {
 	const {
     galleryImages,
     minHeight,
-    slideshowSource,
+    source,
   } = attributes;
 
 	const selectedImage = galleryImages[ selectedIndex ];
@@ -82,16 +82,16 @@ const SlideshowInspectorControls = function( props ) {
           <RadioControl
             key={ 'slideshow-source-controls' }
             label={ __( 'Select source', '__plugin_txtd' ) }
-            selected={ slideshowSource }
-            onChange={ ( nextslideshowSource ) => {
-              setAttributes( { slideshowSource: nextslideshowSource } );
+            selected={ source }
+            onChange={ ( nextsource ) => {
+              setAttributes( { source: nextsource } );
             } }
-            options={ slideshowSources }
+            options={ sources }
           />
         </ControlsTab>
       </ControlsSection>
 			{
-				!! galleryImages.length && 'gallery' === slideshowSource &&
+				!! galleryImages.length && 'gallery' === source &&
 				<ControlsSection label={ __( 'Slides' ) }>
 					<ControlsTab label={ __( 'General' ) }>
 						<GalleryPreview
@@ -141,7 +141,7 @@ const SlideshowInspectorControls = function( props ) {
       </Fragment>
 
       {
-        'gallery' !== slideshowSource &&
+        'gallery' !== source &&
         <ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
           <ControlsTab label={ __( 'Settings' ) }>
             <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>

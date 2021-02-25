@@ -10,7 +10,7 @@
 		},
 		"default": []
 	},
-	"slideshowSource": {
+	"source": {
 		"type": "string",
 		"default": "gallery"
 	},

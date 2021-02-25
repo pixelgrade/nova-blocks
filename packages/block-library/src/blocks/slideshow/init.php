@@ -48,8 +48,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
 		}
 
-		if ( ! empty ($attributes['slideshowSource'] ) ) {
-			$classes[] = 'novablocks-slideshow--' . $attributes['slideshowSource'];
+		if ( ! empty ($attributes['source'] ) ) {
+			$classes[] = 'novablocks-slideshow--' . $attributes['source'];
 		}
 
 		$contentStyle = '';
@@ -94,7 +94,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
             <div class="novablocks-slideshow__slider">
 
-				<?php if ( $attributes['slideshowSource'] === 'gallery' ) {
+				<?php if ( $attributes['source'] === 'gallery' ) {
 					foreach ( $attributes['galleryImages'] as $media ) {
 
 						$thisMediaStyle = $mediaStyle;
@@ -107,7 +107,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 					}
 				} ?>
 
-				<?php if ( $attributes['slideshowSource'] === 'post' ) {
+				<?php if ( $attributes['source'] === 'post' ) {
 					foreach( $posts as $post ) {
 						array_push( $novablocks_rendered_posts_ids, $post->ID );
 						$slider_markup = novablocks_get_post_slide_markup($post, $attributes);
