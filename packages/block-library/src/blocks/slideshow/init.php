@@ -108,6 +108,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 						}
 
 						echo novablocks_get_gallery_slide_markup( $media, $thisMediaStyle);
+
 					}
 				} ?>
 
@@ -181,7 +182,8 @@ function novablocks_get_post_slide_markup( $post, $attributes ) {
 }
 
 function novablocks_get_gallery_slide_markup( $media, $thisMediaStyle ) {
-	ob_start(); ?>
+	ob_start();
+	?>
 		<div class="novablocks-slideshow__slide">
 			<div class="novablocks-slideshow__slide-wrap">
 				<div class="novablocks-slideshow__background novablocks-u-background">
@@ -236,5 +238,63 @@ function novablocks_get_gallery_slide_markup( $media, $thisMediaStyle ) {
 				</div>
 			</div>
 		</div>
+	<?php return ob_get_clean();
+}
+
+function get_slider_markup( $image, $content ) {
+
+	$image_src = $image['url'];
+	$width = $image['sizes']['full']['width'];
+	$height = $image['sizes']['full']['height'];
+
+	ob_start(); ?>
+
+	<div class="novablocks-slideshow__slide">
+		<div class="novablocks-slideshow__slide-wrap">
+			<div class="novablocks-slideshow__background novablocks-u-background">
+				<div class="novablocks-mask">
+					<div class="novablocks-parallax">
+						<?php
+						if ( $image['type'] === 'image' && ! empty( $image['url'] ) ) {
+							$id = attachment_url_to_postid( $image['url'] );
+							$width = $image['sizes']['full']['width'];
+							$height = $image['sizes']['full']['height'];
+
+							if ( ! empty( $id ) ) {
+								echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
+									'class' => 'novablocks-slideshow__media',
+									'data-width' => esc_attr( $width ),
+									'data-height' => esc_attr( $height )
+								) );
+							} else {
+
+								$image_url = novablocks_get_image_url($image, 'novablocks_large');
+
+								?>
+								<img class="novablocks-slideshow__media"
+									 src="<?php echo esc_url( $image_url ); ?>"
+									 data-width="<?php echo esc_attr( $width ); ?>"
+									 data-height="<?php echo esc_attr( $height ); ?>"
+								/>
+							<?php }
+						} ?>
+
+						<?php if ( 'video' === $image['type'] ) { ?>
+							<video class="novablocks-slideshow__media" muted autoplay playsInline loop
+								   src="<?php echo esc_url( $image['url'] ); ?>"
+								   data-width="<?php echo esc_attr( $width ); ?>"
+								   data-height="<?php echo esc_attr( $height ); ?>"/>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+			<div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
+				<div class="novablocks-slideshow__inner-container novablocks-u-content-width">
+					<?php echo $content ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<?php return ob_get_clean();
 }
