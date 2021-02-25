@@ -161,7 +161,7 @@ const getGallerySlideData = ( gallery, props ) => {
   return (
     gallery.map( ( image, id ) => {
       return (
-        <Slide id={id} className="novablocks-slideshow__slide" {...props} type="gallery" image={image}/>
+        <Slide id={id} className="novablocks-slideshow__slide" {...props} type="custom" image={image}/>
       )
     } )
   )

@@ -486,11 +486,11 @@ function novablocks_add_slideshow_settings( $settings ) {
 		),
 		'sources' => array(
 			array(
-				'label' => esc_html__('Gallery', '__plugin_txtd'),
-				'value'	=> 'gallery'
+				'label' => esc_html__('Custom', '__plugin_txtd'),
+				'value'	=> 'custom'
 			),
 			array(
-				'label'	=> esc_html__('Post', '__plugin_txtd'),
+				'label'	=> esc_html__('Posts', '__plugin_txtd'),
 				'value'	=> 'post'
 			)
 		)

@@ -94,7 +94,7 @@ const SliderContent = ( props ) => {
       }
 
       {
-        type === 'gallery' && <div
+        type === 'custom' && <div
           className="novablocks-slideshow__inner-container novablocks-u-content-width"
           dangerouslySetInnerHTML={{
             __html:

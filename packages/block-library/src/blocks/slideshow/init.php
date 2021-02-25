@@ -94,7 +94,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
             <div class="novablocks-slideshow__slider">
 
-				<?php if ( $attributes['source'] === 'gallery' ) {
+				<?php if ( $attributes['source'] === 'custom' ) {
 					foreach ( $attributes['galleryImages'] as $media ) {
 
 						$thisMediaStyle = $mediaStyle;
