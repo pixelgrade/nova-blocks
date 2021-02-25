@@ -29,6 +29,7 @@ const SlideshowBlockControls = function( props ) {
 	const {
 		attributes: {
 			galleryImages,
+      source,
 		},
 		onSelectImages,
 	} = props;
@@ -39,25 +40,26 @@ const SlideshowBlockControls = function( props ) {
 		<BlockControls>
 			<AlignmentToolbar { ...props } />
 			<ColorToolbar { ...props } />
-			<Toolbar>
-				<MediaUpload
-					accept="image/*"
-					addToGallery={ hasImages }
-					allowedTypes={ ALLOWED_MEDIA_TYPES }
-					gallery={ true }
-					multiple
-					onSelect={ onSelectImages }
-					render={ ( { open } ) => (
-						<Button
-							className="components-icon-button components-toolbar__control"
-							label={ __( 'Change Media', '__plugin_txtd' ) }
-							icon={ getIconSvg( 'swap' ) }
-							onClick={ open }
-						/>
-					) }
-					value={ galleryImages.map( ( image ) => image.id ) }
-				/>
-			</Toolbar>
+      {'custom' === source && <Toolbar>
+        <MediaUpload
+          accept="image/*"
+          addToGallery={hasImages}
+          allowedTypes={ALLOWED_MEDIA_TYPES}
+          gallery={true}
+          multiple
+          onSelect={onSelectImages}
+          render={( {open} ) => (
+            <Button
+              className="components-icon-button components-toolbar__control"
+              label={__( 'Change Media', '__plugin_txtd' )}
+              icon={getIconSvg( 'swap' )}
+              onClick={open}
+            />
+          )}
+          value={galleryImages.map( ( image ) => image.id )}
+        />
+        </Toolbar>
+      }
 		</BlockControls>
 	);
 };
