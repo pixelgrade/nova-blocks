@@ -191,6 +191,11 @@ export const CarouselLayoutPreview = ( props ) => {
   };
 
   let settings = {
+    customPaging: function(i) {
+      return (
+        <a> {i + 1}</a>
+      );
+    },
     dots: showPagination,
     infinite: true,
     slidesToShow: carouselLayout !== 'variable' ? columns : '1',
