@@ -35,6 +35,10 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			return '';
 		}
 
+		if ( $attributes['source'] === 'post' && empty($posts) ) {
+			return;
+		}
+
 		$classes = array_merge(
 			array( 'novablocks-slideshow', 'novablocks-doppler', 'alignfull' ),
 			novablocks_get_block_extra_classes( $attributes )
