@@ -70,7 +70,6 @@ const TRANSITION_EASING = "easeInOutCirc";
 		var sliderWidth = $block.find( SLIDER_SELECTOR ).outerWidth();
 		var windowHeight = window.innerHeight;
 		var sliderMinHeight = parseInt( $block.data( 'min-height' ) ) * windowHeight / 100;
-		console.log(sliderMinHeight);
 		var mediaMinHeight = 0;
 		var slideMaxHeight = 0;
 		var maxAspectRatio = 0;
