@@ -91,3 +91,19 @@
 .slick-arrow.slick-hidden {
 	display: none;
 }
+
+.slick-slide {
+  --carousel-arrow-width: 1.5rem;
+}
+
+.slick-arrow[class] {
+  width: var(--carousel-arrow-width);
+  height: var(--carousel-arrow-width);
+  
+  z-index: 100;
+  
+  &:before {
+    font-size: var(--carousel-arrow-width);
+    color: currentColor;
+  }
+}

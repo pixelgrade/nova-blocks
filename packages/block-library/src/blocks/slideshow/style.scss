@@ -21,8 +21,10 @@
     }
   }
   
-  .novablocks-u-content-padding {
-    padding-bottom: calc(var(--novablocks-content-padding) + var(--dots-spacing-bottom));
+  @include above(lap) {
+    .novablocks-u-content-padding {
+      padding-bottom: calc(var(--novablocks-content-padding) + var(--dots-spacing-bottom));
+    }
   }
 }
 
