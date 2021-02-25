@@ -1,6 +1,6 @@
 @include below(lap) {
 
-  .site-header {
+  .novablocks-header {
     display: none;
     overflow-y: auto;
 
@@ -19,7 +19,7 @@
     }
   }
 
-  .site-header__content {
+  .novablocks-header__content {
     display: flex;
     flex-direction: column;
 

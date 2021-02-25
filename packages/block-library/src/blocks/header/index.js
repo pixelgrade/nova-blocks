@@ -14,6 +14,7 @@ import variations from './variations';
 import deprecated from './deprecated';
 
 import { getSvg } from "@novablocks/block-editor";
+import {select} from "@wordpress/data";
 
 registerBlockType( 'novablocks/header', {
 	title: __( 'Header', '__plugin_txtd' ),
@@ -23,8 +24,6 @@ registerBlockType( 'novablocks/header', {
 	// Additional search terms
 	keywords: [ __( 'logo', '__plugin_txtd' ), __( 'menu', '__plugin_txtd' ) ],
 	supports: {
-    align: [ "wide", "full" ],
-    default: "full",
     html: false,
     multiple: false
   },
@@ -34,4 +33,8 @@ registerBlockType( 'novablocks/header', {
 	save: function() {
 		return <InnerBlocks.Content />
 	},
+  getEditWrapperProps() {
+    const settings = select( 'core/block-editor' ).getSettings();
+    return settings.alignWide ? { 'data-align': 'full' } : {};
+  }
 } );

@@ -18,25 +18,11 @@ registerBlockType( 'novablocks/header-row', {
   description: __( 'Outputs header row markup.', '__plugin_txtd' ),
   category: 'nova-blocks',
   parent: ['novablocks/header'],
-  attributes: {
-    name: {
-      type: 'string',
-      default: 'Header Row'
-    },
-    label: {
-      type: 'string',
-      default: 'Header Row Navigation'
-    },
-    isSticky: {
-      type: 'boolean',
-      default: false,
-    },
-    isPrimary: {
-      type: 'boolean',
-      default: false
-    }
-  },
   icon: getSvg( iconSvg ),
+  supports: {
+    align: [ "wide", "full" ],
+    html: false,
+  },
   edit,
   save: function() {
     return <InnerBlocks.Content/>

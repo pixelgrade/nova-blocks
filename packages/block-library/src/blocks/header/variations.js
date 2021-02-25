@@ -8,7 +8,7 @@ const variations = [
     icon: icons.logoLeft,
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'site-header__row--primary',
+        className: 'novablocks-header-row--primary',
         name: 'primary',
         label: 'Primary Navigation',
         isPrimary: true,
@@ -20,7 +20,7 @@ const variations = [
         [
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--primary",
+            className: "novablocks-navigation novablocks-navigation--primary",
             slug: "primary"
           } ]
         ]
@@ -34,7 +34,7 @@ const variations = [
     icon: icons.logoCenter,
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'site-header__row--primary',
+        className: 'novablocks-header-row--primary',
         name: 'primary',
         label: 'Primary Navigation',
         isPrimary: true,
@@ -45,12 +45,12 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--secondary",
+            className: "novablocks-navigation novablocks-navigation--secondary",
             slug: "secondary"
           } ],
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--primary",
+            className: "novablocks-navigation novablocks-navigation--primary",
             slug: "primary"
           } ]
         ]
@@ -64,7 +64,7 @@ const variations = [
     icon: icons.logoCenterTwoRows,
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'site-header__row--logo',
+        className: 'novablocks-header-row--logo',
         name: 'logo',
         label: 'Site identity (logo)',
         blockTopSpacing: 0,
@@ -74,18 +74,18 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--secondary",
+            className: "novablocks-navigation novablocks-navigation--secondary",
             slug: "secondary"
           } ],
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--tertiary",
+            className: "novablocks-navigation novablocks-navigation--tertiary",
             slug: "tertiary"
           } ]
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header__row--primary',
+        className: 'novablocks-header-row--primary',
         name: 'primary',
         label: 'Primary Navigation',
         isPrimary: true,
@@ -96,7 +96,7 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--primary",
+            className: "novablocks-navigation novablocks-navigation--primary",
             slug: "primary"
           } ]
         ]
@@ -110,7 +110,7 @@ const variations = [
     icon: icons.logoCenterThreeRows,
     innerBlocks:  [
       ['novablocks/header-row', {
-        className: 'site-header__row--secondary',
+        className: 'novablocks-header-row--secondary',
         name: 'secondary',
         label: 'Secondary Navigation',
         blockTopSpacing: 0,
@@ -120,17 +120,17 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--secondary",
+            className: "novablocks-navigation novablocks-navigation--secondary",
             slug: "secondary"
           } ],
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--tertiary",
+            className: "novablocks-navigation novablocks-navigation--tertiary",
             slug: "tertiary"
           } ]
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header__row--logo',
+        className: 'novablocks-header-row--logo',
         name: 'logo',
         label: 'Site identity(logo)',
         blockTopSpacing: 3,
@@ -143,7 +143,7 @@ const variations = [
         ]
       ],
       ['novablocks/header-row', {
-        className: 'site-header__row--primary',
+        className: 'novablocks-header-row--primary',
         name: 'primary',
         label: 'Primary Navigation',
         isPrimary: true,
@@ -154,7 +154,7 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "site-header__menu site-header__menu--primary",
+            className: "novablocks-navigation novablocks-navigation--primary",
             slug: "primary"
           } ],
         ]

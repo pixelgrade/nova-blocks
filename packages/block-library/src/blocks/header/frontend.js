@@ -4,14 +4,14 @@ import { addSocialMenuClass } from "./utils";
 (
   function( $, window, undefined ) {
 
-    const $siteHeader = $( '.site-header--main' ),
-          $primaryRow = $siteHeader.find( '.site-header__row--primary' ),
-          $stickyHeader = $( '.site-header--secondary' );
+    const $siteHeader = $( '.novablocks-header--main' ),
+          $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
+          $stickyHeader = $( '.novablocks-header--secondary' );
 
-    let $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
+    let $stickyRow = $('.novablocks-header--main .novablocks-header-row[data-sticky=true]'),
         stickyHeaderShown = false,
         primaryRowShown = false,
-        mainHeaderShouldBeSticky = $('.site-header--main[data-sticky]').length && ! $stickyHeader.length,
+        mainHeaderShouldBeSticky = $('.novablocks-header--main[data-sticky]').length && ! $stickyHeader.length,
         wpAdminBar = $('#wpadminbar'),
         wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight();
 
@@ -61,7 +61,7 @@ import { addSocialMenuClass } from "./utils";
           mainHeaderIsSticky = windowScrollY > 1;
 
       if ( mainHeaderShouldBeSticky && mainHeaderIsSticky !== stickyHeaderShown ) {
-        $siteHeader.toggleClass( 'site-header--sticky' );
+        $siteHeader.toggleClass( 'novablocks-header--sticky' );
         stickyHeaderShown = mainHeaderIsSticky;
       }
     }

@@ -18,6 +18,7 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 	function novablocks_render_navigation_block( $attributes, $content ) {
 
 		$classes = array(
+			'novablocks-navigation',
 			'wp-block-novablocks-navigation',
 		);
 

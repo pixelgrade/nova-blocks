@@ -10,7 +10,7 @@
   }
 }
 
-.site-header__row {
+.novablocks-header-row__inner-container > .wp-block {
 
   > .block-editor-inner-blocks > .block-editor-block-list__layout {
     @include navigation-block-layout-common-styles;

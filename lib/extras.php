@@ -188,15 +188,40 @@ function novablocks_get_header_attributes() {
 		'layout' => array(
 			'type'    => 'string',
 			'default' => 'logo-left',
+		)
+	);
+}
+
+function novablocks_get_header_row_attributes() {
+	return array(
+		"name"      => array(
+			"type"    => 'string',
+			"default" => 'Header Row'
 		),
-		"palette" => array(
-			"type" => "number",
+		"label"     => array(
+			"type"    => 'string',
+			"default" => 'Header Row Navigation'
+		),
+		"isSticky"  => array(
+			"type"    => 'boolean',
+			"default" => false,
+		),
+		"isPrimary" => array(
+			"type"    => 'boolean',
+			"default" => false
+		),
+		"align"     => array(
+			"type"    => 'string',
+			"default" => 'full'
+		),
+		"palette"   => array(
+			"type"    => "number",
 			"default" => 1
 		),
 		"paletteVariation" => array(
 			"type" => "number",
 			"default" => 1
-		)
+		),
 	);
 }
 

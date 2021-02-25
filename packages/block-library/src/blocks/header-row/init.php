@@ -23,8 +23,11 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		ob_start();
 
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_row_attributes() );
+
 		$classes = array(
-			'site-header__row',
+			'novablocks-header-row',
+			'novablocks-header-background',
 			'wp-block-novablocks-header-row',
 			'alignfull',
 		);
@@ -36,6 +39,9 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$classes = array_merge( $classes, $blockPaletteClasses );
+
 		?>
 
 		<div
@@ -45,7 +51,11 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 				data-sticky="true"
 			<?php } ?>
 		>
-			<?php echo $content; ?>
+			<div class="novablocks-header-row__inner-container">
+				<div class="wp-block <?php echo "align" . $attributes['align']; ?>">
+					<?php echo $content; ?>
+				</div>
+			</div>
 		</div>
 
 		<?php return ob_get_clean();

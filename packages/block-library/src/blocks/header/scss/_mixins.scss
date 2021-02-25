@@ -1,4 +1,5 @@
 @mixin header-background {
+  position: relative;
   background: none !important;
 
   &:before {

@@ -28,10 +28,9 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
 
 		$classes = array(
-			'site-header',
-			'site-header--main',
-			'site-header-background',
-			'site-header-shadow',
+			'novablocks-header',
+			'novablocks-header--main',
+			'novablocks-header-shadow',
 			'alignfull'
 		);
 
@@ -45,7 +44,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// Get Primary Row Block to use it on hover if it's the case.
 		$primaryRowBlock = getPrimaryBlock();
 
-		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"site-header__row--primary"} -->';
+		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"novablocks-header-row--primary"} -->';
 		$header_row_markup_end = '<!-- /wp:novablocks/header-row -->';
 
 		global $novablocks_responsive_navigation_outputted;
@@ -69,8 +68,6 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		}
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
-		$classes = array_merge( $classes, $blockPaletteClasses );
 		?>
 
 		<header id="masthead"
@@ -79,7 +76,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 					data-sticky="true"
 				<?php } ?>
 		>
-			<div class="site-header__inner-container">
+			<div class="novablocks-header__inner-container">
 				<?php
 
 				if ( ! headerBlockUpdated() ) {
@@ -95,8 +92,8 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
 		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
-			<div class="site-header site-header--secondary site-header--sticky site-header-background site-header-shadow">
-				<div class="site-header__inner-container">
+			<div class="novablocks-header novablocks-header--secondary novablocks-header--sticky novablocks-header-shadow">
+				<div class="novablocks-header__inner-container">
 					<?php
 					echo render_block( $stickyRowBlock );
 

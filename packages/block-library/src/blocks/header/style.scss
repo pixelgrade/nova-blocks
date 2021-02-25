@@ -7,15 +7,15 @@
 }
 
 // Nova Blocks hacks
-.site-header {
+.novablocks-header {
   position: absolute;
   width: 100%;
 }
 
-.site-header--mobile {
+.novablocks-header--mobile {
   display: none;
 
-  &.site-header--scrolled {
+  &.novablocks-header--scrolled {
     color: var(--novablocks-fg2-color);
   }
 }
@@ -24,7 +24,7 @@
 
 @include above(lap) {
 
-  .site-header--main {
+  .novablocks-header--main {
     top: 0;
     left: 0;
     right: 0;
@@ -36,23 +36,18 @@
     will-change: transform;
   }
 
-  .site-header__inner-container {
+  .novablocks-header__inner-container {
     width: 100%;
   }
 
-  .site-header__content {
+  .novablocks-header__content {
 
-    > .wp-block-novablocks-navigation {
+    > .novablocks-navigation {
 
       > .menu,
       > .menu > ul {
         justify-content: inherit;
       }
-    }
-
-    &.alignfull[class] {
-      margin-left: 0;
-      margin-right: 0;
     }
   }
 }
@@ -60,32 +55,15 @@
 @import 'scss/mobile';
 @import 'scss/mobile-transitions';
 
-@include below(lap) {
-
-  .site-header__row {
-    display: flex;
-    flex-direction: column;
-
-    .site-header__menu--primary {
-      order: -1;
-    }
-  }
-
-  .site-header__row--primary {
-    order: -1;
-  }
-}
-
-
-.site-header-background {
+.novablocks-header-background {
   @include header-background;
 }
 
-.site-header-shadow {
+.novablocks-header-shadow {
   @include header-shadow;
 }
 
-.site-header--sticky {
+.novablocks-header--sticky {
   --header-background-opacity: 0.95;
 
   position: fixed;

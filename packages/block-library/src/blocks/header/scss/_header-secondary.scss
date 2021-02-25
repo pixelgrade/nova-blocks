@@ -1,4 +1,4 @@
-.site-header--secondary {
+.novablocks-header--secondary {
   width: 100%;
   z-index: 1100;
 
@@ -18,7 +18,7 @@
 
   &:hover {
 
-    .site-header__row--primary:not(:only-child) {
+    .novablocks-header-row--primary:not(:only-child) {
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0);
@@ -27,12 +27,12 @@
 
   &:not(.primary-menu--is-visible) {
 
-    .site-header__row--primary:not(:only-child) {
+    .novablocks-header-row--primary:not(:only-child) {
       display: none;
     }
   }
 
-  .site-header__row--primary:not(:only-child) {
+  .novablocks-header-row--primary:not(:only-child) {
     position: absolute;
     z-index: -1;
 
