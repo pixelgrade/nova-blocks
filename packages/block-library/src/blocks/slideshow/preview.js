@@ -118,17 +118,17 @@ const SlideshowPreview = class extends Component {
       speed: 0
     };
 
-    let slide = getGallerySlideData( galleryImages, this.props );
+    let slides = getSlidesFromGalleryImages( galleryImages, this.props );
 
     if ( source === 'post' && !! posts ) {
-      slide = getPostSlideData( posts, this.props );
+      slides = getSlidesFromPosts( posts, this.props );
     }
 
 		return (
 			<Fragment>
           <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
              <Slider className="novablocks-slideshow__slider" {...sliderSettings}>
-               {slide}
+               {slides}
              </Slider>
           </div>
 			</Fragment>
@@ -147,7 +147,7 @@ const SlideshowPreview = class extends Component {
 
 export default SlideshowPreview;
 
-const getPostSlideData = ( posts, props ) => {
+const getSlidesFromPosts = ( posts, props ) => {
   return (
     posts.map( ( post, id ) => {
       return (
@@ -157,7 +157,7 @@ const getPostSlideData = ( posts, props ) => {
   )
 };
 
-const getGallerySlideData = ( gallery, props ) => {
+const getSlidesFromGalleryImages = ( gallery, props ) => {
   return (
     gallery.map( ( image, id ) => {
       return (
