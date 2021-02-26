@@ -107,16 +107,22 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 							$thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
 						}
 
-						echo novablocks_get_gallery_slide_markup( $media, $thisMediaStyle);
+						$image_id = attachment_url_to_postid( $media['url'] );
+						$content = novablocks_the_media_title( $media, '<h2>', '</h2>', false );
+						$content .= novablocks_the_media_caption( $media );
 
+						echo get_slider_markup( $image_id, $content, $media, $thisMediaStyle );
 					}
 				} ?>
 
 				<?php if ( $attributes['source'] === 'post' ) {
+
 					foreach( $posts as $post ) {
 						array_push( $novablocks_rendered_posts_ids, $post->ID );
-						$slider_markup = novablocks_get_post_slide_markup($post, $attributes);
-						echo $slider_markup;
+						$content = novablocks_get_post_card_markup($post, $attributes);
+						$image_id = get_post_thumbnail_id( $post );
+
+						echo get_slider_markup( $image_id, $content, $image = NULL, $mediaStyle );
 					}
 				} ?>
             </div>
@@ -131,121 +137,14 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 	}
 }
 
-function novablocks_get_post_slide_markup( $post, $attributes ) {
+function get_slider_markup( $image_id, $content, $image = NULL, $thisMediaStyle = NULL ) {
 
-	$slider_background_src = get_the_post_thumbnail_url( $post );
-	$thumbnail = wp_get_attachment_metadata( get_post_thumbnail_id($post) );
+	$image_metadata = wp_get_attachment_image_src ( $image_id, 'full' );
+	$image_url = $image_metadata[0];
+	$image_width = $image_metadata[1];
+	$image_height = $image_metadata[2];
 
-	$width = $thumbnail['sizes']['large']['width'];
-	$height = $thumbnail['sizes']['large']['height'];
-
-	$mediaStyle = '';
-	if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-		$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
-	}
-
-	$classes = array(
-		'novablocks-slideshow__slide'
-	);
-
-	$className = join( ' ', $classes );
-
-	$card_markup = novablocks_get_post_card_markup($post, $attributes);
-
-	ob_start(); ?>
-
-	<div class="<?php echo esc_attr( $className ); ?>">
-		<div class="novablocks-slideshow__slide-wrap">
-			<div class="novablocks-slideshow__background novablocks-u-background">
-				<div class="novablocks-mask">
-					<div class="novablocks-parallax">
-						<img class="novablocks-slideshow__media"
-							 src="<?php echo esc_url( $slider_background_src ); ?>"
-							 data-width="<?php echo esc_attr( $width ); ?>"
-							 data-height="<?php echo esc_attr( $height ); ?>"
-							 style="<?php echo esc_attr( $mediaStyle ); ?>"
-						/>
-					</div>
-				</div>
-			</div>
-
-			<div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
-				<div class="novablocks-slideshow__inner-container novablocks-u-content-width">
-					<?php echo $card_markup ?>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<?php return ob_get_clean();
-}
-
-function novablocks_get_gallery_slide_markup( $media, $thisMediaStyle ) {
-	ob_start();
-	?>
-		<div class="novablocks-slideshow__slide">
-			<div class="novablocks-slideshow__slide-wrap">
-				<div class="novablocks-slideshow__background novablocks-u-background">
-					<div class="novablocks-mask">
-						<div class="novablocks-parallax">
-
-							<?php
-							if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
-								$id = attachment_url_to_postid( $media['url'] );
-								$width = $media['sizes']['full']['width'];
-								$height = $media['sizes']['full']['height'];
-
-								if ( ! empty( $id ) ) {
-									echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
-										'class' => 'novablocks-slideshow__media',
-										'style' => esc_attr( $thisMediaStyle ),
-										'data-width' => esc_attr( $width ),
-										'data-height' => esc_attr( $height )
-									) );
-								} else {
-
-									$image_url = novablocks_get_image_url($media, 'novablocks_large');
-
-									?>
-									<img class="novablocks-slideshow__media"
-										 src="<?php echo esc_url( $image_url ); ?>"
-										 style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-										 data-width="<?php echo esc_attr( $width ); ?>"
-										 data-height="<?php echo esc_attr( $height ); ?>"
-									/>
-								<?php }
-							} ?>
-
-							<?php if ( 'video' === $media['type'] ) { ?>
-								<video class="novablocks-slideshow__media" muted autoplay playsInline loop
-									   src="<?php echo esc_url( $media['url'] ); ?>"
-									   style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-									   data-width="<?php echo esc_attr( $width ); ?>"
-									   data-height="<?php echo esc_attr( $height ); ?>"/>
-							<?php } ?>
-
-						</div>
-					</div>
-				</div>
-				<div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
-					<div class="novablocks-slideshow__inner-container novablocks-u-content-width">
-						<?php
-						novablocks_the_media_title( $media, '<h2>', '</h2>' );
-						novablocks_the_media_caption( $media );
-						?>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php return ob_get_clean();
-}
-
-function get_slider_markup( $image, $content ) {
-
-	$image_src = $image['url'];
-	$width = $image['sizes']['full']['width'];
-	$height = $image['sizes']['full']['height'];
+	$image_type = get_post_mime_type( $image_id );
 
 	ob_start(); ?>
 
@@ -254,36 +153,29 @@ function get_slider_markup( $image, $content ) {
 			<div class="novablocks-slideshow__background novablocks-u-background">
 				<div class="novablocks-mask">
 					<div class="novablocks-parallax">
-						<?php
-						if ( $image['type'] === 'image' && ! empty( $image['url'] ) ) {
-							$id = attachment_url_to_postid( $image['url'] );
-							$width = $image['sizes']['full']['width'];
-							$height = $image['sizes']['full']['height'];
 
-							if ( ! empty( $id ) ) {
-								echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
-									'class' => 'novablocks-slideshow__media',
-									'data-width' => esc_attr( $width ),
-									'data-height' => esc_attr( $height )
-								) );
-							} else {
-
-								$image_url = novablocks_get_image_url($image, 'novablocks_large');
-
-								?>
-								<img class="novablocks-slideshow__media"
-									 src="<?php echo esc_url( $image_url ); ?>"
-									 data-width="<?php echo esc_attr( $width ); ?>"
-									 data-height="<?php echo esc_attr( $height ); ?>"
-								/>
-							<?php }
+						<?php if ( empty($image_url ) ){
+							$image_url = novablocks_get_image_url( $image, 'novablocks_large');
+							$image_width = $image['width'];
+							$image_height = $image['height'];
+							$image_type = $image['type'];
 						} ?>
 
-						<?php if ( 'video' === $image['type'] ) { ?>
+						<?php if ( strpos($image_type, 'image') !== false ) { ?>
+							<img class="novablocks-slideshow__media"
+								 src="<?php echo esc_url( $image_url ); ?>"
+								 style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+								 data-width="<?php echo esc_attr( $image_width ); ?>"
+								 data-height="<?php echo esc_attr( $image_height ); ?>"
+							/>
+						<?php } ?>
+
+						<?php if ( 'video' === $image_type ) { ?>
 							<video class="novablocks-slideshow__media" muted autoplay playsInline loop
-								   src="<?php echo esc_url( $image['url'] ); ?>"
-								   data-width="<?php echo esc_attr( $width ); ?>"
-								   data-height="<?php echo esc_attr( $height ); ?>"/>
+								   src="<?php echo esc_url( $image_url ); ?>"
+								   style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+								   data-width="<?php echo esc_attr( $image_width ); ?>"
+								   data-height="<?php echo esc_attr( $image_height ); ?>"/>
 						<?php } ?>
 					</div>
 				</div>
