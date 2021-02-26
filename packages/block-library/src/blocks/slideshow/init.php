@@ -103,11 +103,16 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 						$thisMediaStyle = $mediaStyle;
 
+						// For Custom Source, we are letting users
+						// to select focal point for images. This style will change
+						// image focal point on frontend too.
 						if ( ! empty( $media['focalPoint'] ) ) {
 							$thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
 						}
 
+						// Image ID
 						$image_id = attachment_url_to_postid( $media['url'] );
+						// On Custom Source content will be image title + image caption.
 						$content = novablocks_the_media_title( $media, '<h2>', '</h2>', false );
 						$content .= novablocks_the_media_caption( $media );
 
@@ -117,12 +122,15 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 				<?php if ( $attributes['source'] === 'post' ) {
 
-					foreach( $posts as $post ) {
+					foreach ( $posts as $post ) {
 						array_push( $novablocks_rendered_posts_ids, $post->ID );
-						$content = novablocks_get_post_card_markup($post, $attributes);
+						// On Posts Source content will be rendered as a card,
+						// exactly like Posts Collection.
+						$content  = novablocks_get_post_card_markup( $post, $attributes );
+						// Image ID
 						$image_id = get_post_thumbnail_id( $post );
 
-						echo get_slider_markup( $image_id, $content, $image = NULL, $mediaStyle );
+						echo get_slider_markup( $image_id, $content, $image = null, $mediaStyle );
 					}
 				} ?>
             </div>
@@ -139,11 +147,15 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 function get_slider_markup( $image_id, $content, $image = NULL, $thisMediaStyle = NULL ) {
 
-	$image_metadata = wp_get_attachment_image_src ( $image_id, 'full' );
+	// Getting Image based on image ID.
+	$image_metadata = wp_get_attachment_image_src( $image_id, 'full' );
+	// Image URL
 	$image_url = $image_metadata[0];
+	// Image Width
 	$image_width = $image_metadata[1];
+	// Image Height
 	$image_height = $image_metadata[2];
-
+	// Image Type
 	$image_type = get_post_mime_type( $image_id );
 
 	ob_start(); ?>
@@ -153,24 +165,30 @@ function get_slider_markup( $image_id, $content, $image = NULL, $thisMediaStyle 
 			<div class="novablocks-slideshow__background novablocks-u-background">
 				<div class="novablocks-mask">
 					<div class="novablocks-parallax">
-
 						<?php if ( empty($image_url ) ){
+							// This is used when slideshow is using
+							// images that are not in Media Library. Eg: initial images from Unsplas.
 							$image_url = novablocks_get_image_url( $image, 'novablocks_large');
 							$image_width = $image['width'];
 							$image_height = $image['height'];
 							$image_type = $image['type'];
 						} ?>
 
-						<?php if ( strpos($image_type, 'image') !== false ) { ?>
+						<?php
+							// If we have an image, we will output an img tag.
+							if ( strpos($image_type, 'image') !== false ) { ?>
 							<img class="novablocks-slideshow__media"
 								 src="<?php echo esc_url( $image_url ); ?>"
 								 style="<?php echo esc_attr( $thisMediaStyle ); ?>"
 								 data-width="<?php echo esc_attr( $image_width ); ?>"
 								 data-height="<?php echo esc_attr( $image_height ); ?>"
 							/>
+
 						<?php } ?>
 
-						<?php if ( 'video' === $image_type ) { ?>
+						<?php
+							// If we have a video, we will output a video tag.
+							if ( 'video' === $image_type ) { ?>
 							<video class="novablocks-slideshow__media" muted autoplay playsInline loop
 								   src="<?php echo esc_url( $image_url ); ?>"
 								   style="<?php echo esc_attr( $thisMediaStyle ); ?>"
