@@ -13,6 +13,20 @@ import {
 	Fragment,
  } from '@wordpress/element';
 
+const SLIDER_SETTINGS = {
+  customPaging: function(i) {
+    return (
+      <a> {i + 1}</a>
+    );
+  },
+  infinite: true,
+  arrows: true,
+  dots: true,
+  speed: 0
+};
+
+const SLIDER_CLASS = "novablocks-slideshow__slider";
+
 const SlideshowPreview = class extends Component {
 	constructor() {
 		super( ...arguments );
@@ -106,30 +120,11 @@ const SlideshowPreview = class extends Component {
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 
-		const sliderSettings = {
-      customPaging: function(i) {
-        return (
-          <a> {i + 1}</a>
-        );
-      },
-		  infinite: true,
-      arrows: true,
-      dots: true,
-      speed: 0
-    };
-
-    let slides = getSlidesFromGalleryImages( galleryImages, this.props );
-
-    if ( source === 'post' && !! posts ) {
-      slides = getSlidesFromPosts( posts, this.props );
-    }
-
 		return (
 			<Fragment>
           <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
-             <Slider className="novablocks-slideshow__slider" {...sliderSettings}>
-               {slides}
-             </Slider>
+            <GallerySlider {...this.props} />
+            <PostsSlider {...this.props} />
           </div>
 			</Fragment>
 		);
@@ -166,3 +161,47 @@ const getSlidesFromGalleryImages = ( gallery, props ) => {
     } )
   )
 };
+
+const GallerySlider = ( props ) => {
+
+  const {
+    attributes
+  } = props;
+
+  const {
+    galleryImages,
+    source
+  } = attributes;
+
+  if ( source !== 'custom' ) {
+    return null;
+  }
+
+  return (
+    <Slider className={SLIDER_CLASS} {...SLIDER_SETTINGS}>
+      { getSlidesFromGalleryImages( galleryImages, {...props} ) }
+    </Slider>
+  )
+}
+
+const PostsSlider = ( props ) => {
+
+  const {
+    attributes,
+    posts
+  } = props;
+
+  const {
+    source
+  } = attributes;
+
+  if ( !posts || source !== 'post' ) {
+    return null;
+  }
+
+  return (
+    <Slider className={SLIDER_CLASS} {...SLIDER_SETTINGS}>
+      { getSlidesFromPosts( posts, {...props} ) }
+    </Slider>
+  );
+}
