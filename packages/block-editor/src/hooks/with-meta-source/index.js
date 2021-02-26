@@ -19,6 +19,7 @@ import {
 
 import {__} from "@wordpress/i18n";
 import {addFilter} from "@wordpress/hooks";
+import {ControlsGroup} from "../../../build-module";
 
 const ALLOWED_BLOCKS = [
   'novablocks/slideshow',
@@ -52,26 +53,28 @@ const withMetaSourceControls = createHigherOrderComponent( OriginalComponent => 
     return (
       <Fragment>
         <OriginalComponent {...props} />
-        <ControlsSection label={__( 'Meta Source' )} group={__( 'Block Modules' )}>
-          <ControlsTab label={__( 'Meta Settings' )}>
-            <SelectControl
-              key={'primary-metadata-source'}
-              label={__( 'Primary Metadata' )}
-              value={primaryMetadata}
-              onChange={primaryMetadata => {
-                setAttributes( {primaryMetadata} )
-              }}
-              options={metaSourceOptions}
-            />
-            <SelectControl
-              key={'secondary-metadata-source'}
-              label={__( 'Secondary Metadata' )}
-              value={secondaryMetadata}
-              onChange={secondaryMetadata => {
-                setAttributes( {secondaryMetadata} )
-              }}
-              options={metaSourceOptions}
-            />
+        <ControlsSection label={__( 'Display' )} group={__( 'Block Modules' )}>
+          <ControlsTab label={ __( 'Settings' ) }>
+            <ControlsGroup title={ __( 'Additional Information', '__plugin_txtd' ) }>
+              <SelectControl
+                key={'primary-metadata-source'}
+                label={__( 'Primary Metadata' )}
+                value={primaryMetadata}
+                onChange={primaryMetadata => {
+                  setAttributes( {primaryMetadata} )
+                }}
+                options={metaSourceOptions}
+              />
+              <SelectControl
+                key={'secondary-metadata-source'}
+                label={__( 'Secondary Metadata' )}
+                value={secondaryMetadata}
+                onChange={secondaryMetadata => {
+                  setAttributes( {secondaryMetadata} )
+                }}
+                options={metaSourceOptions}
+              />
+            </ControlsGroup>
           </ControlsTab>
         </ControlsSection>
       </Fragment>
