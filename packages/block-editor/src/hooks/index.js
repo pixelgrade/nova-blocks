@@ -6,6 +6,7 @@ import "./with-emphasis-level";
 import "./with-font-size-picker";
 import "./with-inner-blocks";
 import "./with-latest-posts";
+import "./with-meta-source";
 import "./with-overlay-color-attributes";
 import "./with-space-and-sizing-controls";
 
