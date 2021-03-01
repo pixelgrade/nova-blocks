@@ -35,6 +35,10 @@
 	// and we won't fix that at the moment
 	display: block;
 	margin: 0;
+  
+  .block-editor-block-list__layout {
+    width: 100%;
+  }
 
 	> [class][class] {
 		max-width: none;
