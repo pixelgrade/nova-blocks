@@ -31,8 +31,12 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			'novablocks-header',
 			'novablocks-header--main',
 			'novablocks-header-shadow',
+			'novablocks-header-background',
 			'alignfull'
 		);
+
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		// Logo Center and Logo Left layout are considered as simple,
 		// because they are on only one row.
@@ -49,11 +53,18 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		global $novablocks_responsive_navigation_outputted;
 
+		$toggleClasses = array(
+			'c-menu-toggle',
+		);
+
+		$toggleClasses = array_merge( $toggleClasses, $blockPaletteClasses );
+
+
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
 
 			<input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
 
-			<label class="c-menu-toggle" for="nova-menu-toggle">
+			<label class="<?php echo esc_attr( join( ' ', $toggleClasses ) ); ?>" for="nova-menu-toggle">
                 <span class="c-menu-toggle__wrap">
                     <span class="c-menu-toggle__icon">
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>

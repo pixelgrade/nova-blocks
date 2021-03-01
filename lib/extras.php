@@ -188,7 +188,15 @@ function novablocks_get_header_attributes() {
 		'layout' => array(
 			'type'    => 'string',
 			'default' => 'logo-left',
-		)
+		),
+		'palette' => array(
+			'type' => 'number',
+			'default' => 1,
+		),
+		'paletteVariation' => array(
+			'type' => 'number',
+			'default' => 12,
+		),
 	);
 }
 

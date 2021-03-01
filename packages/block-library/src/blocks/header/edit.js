@@ -25,7 +25,6 @@ import {
 	withSelect,
 	withDispatch,
   select,
-  dispatch,
  } from '@wordpress/data';
 
 import {

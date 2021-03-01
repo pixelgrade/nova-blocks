@@ -118,6 +118,7 @@ const isFunctionalPalette = palette => {
 }
 
 const disableFunctionalColorsOnBlocks = [
+  'novablocks/header',
   'novablocks/header-row',
   'novablocks/hero',
   'novablocks/media',

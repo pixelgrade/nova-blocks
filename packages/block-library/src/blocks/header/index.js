@@ -14,7 +14,7 @@ import variations from './variations';
 import deprecated from './deprecated';
 
 import { getSvg } from "@novablocks/block-editor";
-import {select} from "@wordpress/data";
+import { select } from "@wordpress/data";
 
 registerBlockType( 'novablocks/header', {
 	title: __( 'Header', '__plugin_txtd' ),

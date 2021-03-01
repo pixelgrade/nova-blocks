@@ -133,9 +133,9 @@ const variations = [
         className: 'novablocks-header-row--logo',
         name: 'logo',
         label: 'Site identity(logo)',
-        blockTopSpacing: 3,
+        blockTopSpacing: 0,
         blockBottomSpacing: 0,
-        emphasisTopSpacing: 1,
+        emphasisTopSpacing: 3,
         emphasisBottomSpacing: 1,
       },
         [

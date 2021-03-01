@@ -52,7 +52,9 @@ $( function() {
 			var newConfig = Object.assign( {}, config, {
 				scrollContainerHeight: getScrollContainerHeight()
 			} );
+
 			var state = getState( container, newConfig );
+
 			$container.data( 'state', state );
 			$container.data( 'config', newConfig );
 			frameRendered = false;
@@ -60,10 +62,13 @@ $( function() {
 
 		$( window ).on( 'scroll', parallaxUpdateState );
 		$( window ).on( 'resize', parallaxUpdateState );
+
+    parallaxUpdateState();
 	} );
 
 	function parallaxUpdateLoop() {
 		if ( ! frameRendered ) {
+
 			$blocks.each( function( i, obj ) {
 				let $container = $( obj );
 				let $background = $container.data( 'parallax' );

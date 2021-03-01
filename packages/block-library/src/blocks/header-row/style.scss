@@ -17,35 +17,29 @@
 }
 
 .novablocks-header-row[class][class] {
-  //contain margins
-  //margin-top: -1px;
-  //margin-bottom: -1px;
-  //padding-top: 1px;
-  //padding-bottom: 1px;
-
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
 }
 
-.novablocks-header-row {
-  --block-top-spacing: var(--novablocks-block-top-spacing, 0);
-  --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
-  --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
-  --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
-}
+@include above(lap) {
 
-.novablocks-header-row__inner-container[class] > .wp-block {
-  --novablocks-element-spacing-multiplier: 0.5;
-
-  @include above(lap) {
-    @include navigation-block-layout-common-styles;
+  .novablocks-header-row {
+    --block-top-spacing: var(--novablocks-block-top-spacing, 0);
+    --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
+    --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
+    --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
   }
 
-  margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-  margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  .novablocks-header-row__inner-container[class] > .wp-block {
+    --novablocks-element-spacing-multiplier: 1;
 
-  padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-  padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+
+    @include navigation-block-layout-common-styles;
+  }
 }

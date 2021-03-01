@@ -1,5 +1,12 @@
 @include below(lap) {
 
+  .novablocks-header--main {
+
+    &.novablocks-header-background:before {
+      position: fixed;
+    }
+  }
+
   .novablocks-header {
     display: none;
     overflow-y: auto;

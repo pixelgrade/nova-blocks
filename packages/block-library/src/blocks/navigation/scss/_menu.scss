@@ -1,5 +1,30 @@
 @import "mixins";
 
+ul.menu,
+.menu > ul,
+ul.sub-menu,
+ul.children {
+  padding-left: 0;
+  list-style: none;
+}
+
+ul.menu,
+.menu > ul {
+
+  @include above(lap) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  a {
+    display: block;
+    padding-top: var(--novablocks-navigation-item-padding-y);
+    padding-bottom: var(--novablocks-navigation-item-padding-y);
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
 .menu-item-has-children,
 .page_item_has_children {
 	position: relative;
@@ -59,7 +84,19 @@
 
     > .sub-menu,
     > .children {
-      background: rgba(0, 0, 0, 0.3);
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--sm-current-fg1-color);
+        opacity: 0.2;
+        pointer-events: none;
+      }
     }
   }
 }

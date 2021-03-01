@@ -12,6 +12,7 @@ import { getClassNameWithPaletteHelpers } from "@novablocks/utils";
 
 const enableColorSetControls = [
   'novablocks/announcement-bar',
+  'novablocks/header',
   'novablocks/header-row',
   'novablocks/hero',
   'novablocks/slideshow',

@@ -6,10 +6,16 @@
   --icons-horizontal-spacing-reducer: 2;
 }
 
-// Nova Blocks hacks
-.novablocks-header {
+.novablocks-header[class] {
   position: absolute;
   width: 100%;
+}
+
+.novablocks-header--sticky[class] {
+  --header-background-opacity: 0.95;
+
+  position: fixed;
+  top: 0;
 }
 
 .novablocks-header--mobile {
@@ -62,11 +68,3 @@
 .novablocks-header-shadow {
   @include header-shadow;
 }
-
-.novablocks-header--sticky {
-  --header-background-opacity: 0.95;
-
-  position: fixed;
-  top: 0;
-}
-
