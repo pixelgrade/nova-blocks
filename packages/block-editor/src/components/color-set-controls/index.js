@@ -1,3 +1,5 @@
+import { getIcon } from "@novablocks/icons";
+
 import {
   RangeControl,
   ToggleControl,
@@ -136,6 +138,10 @@ const PaletteControls = ( props ) => {
     }
   } = props;
 
+  const {
+    palette
+  } = attributes
+
   const disableFunctionalColors = disableFunctionalColorsOnBlocks.includes( props.name );
   const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette ) || palettes[0];
 
@@ -151,7 +157,6 @@ const PaletteControls = ( props ) => {
 
   const onChange = ( color ) => {
     const newPalette = palettes.find( currentPalette => {
-      const { colors, sourceIndex } = currentPalette;
       return colors[sourceIndex]?.value === color
     } );
 
@@ -162,12 +167,10 @@ const PaletteControls = ( props ) => {
 
   return (
     <Fragment>
-      <ColorPalette
-        colors={ showFunctional && ! disableFunctionalColors ? functionalColors : brandColors }
-        value={ currentColor }
-        onChange={ onChange }
-        clearable={ false }
-        disableCustomColors={ true }
+      <ColorPalettePicker
+        value={ palette }
+        palettes={ palettes }
+        onChange={ ( newPaletteId ) => { setAttributes( { palette: newPaletteId } ) } }
       />
       { ! disableFunctionalColors && <ToggleControl
         label={ __( 'Show Functional Colors', '__plugin_txtd' ) }
@@ -177,6 +180,41 @@ const PaletteControls = ( props ) => {
     </Fragment>
   )
 };
+
+const ColorPalettePicker = ( props ) => {
+  const { palettes, value, onChange } = props;
+  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === value );
+
+  return (
+    <div className="color-palette-picker">
+      <div className="color-palette-picker__palettes">
+        { palettes.map( palette => {
+          const colors = palette.source || [];
+          const isSelected = currentPalette?.id === palette.id;
+
+          return (
+            <div className={ `color-palette-picker__palette ${ isSelected ? 'is-selected' : '' }` } onClick={ () => {
+              const newPalette = palettes.find( paletteIterator => paletteIterator.id === palette.id );
+              if ( newPalette ) {
+                onChange( newPalette.id );
+              }
+            } }>
+              { colors.map( ( color, index ) => {
+                return (
+                  <div className="color-palette-picker__color" style={ { color } }>
+                    { isSelected && ( index === colors.length - 1 ) &&
+                      <div className="color-palette-picker__tick" dangerouslySetInnerHTML={ { __html: getIcon( 'tick' ) } }></div>
+                    }
+                  </div>
+                )
+              } ) }
+            </div>
+          )
+        } ) }
+      </div>
+    </div>
+  )
+}
 
 const PaletteVariationControls = ( props ) => {
 
