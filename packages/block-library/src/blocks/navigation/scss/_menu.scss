@@ -239,25 +239,6 @@ ul.menu,
     display: block;
   }
 
-  .novablocks-navigation {
-
-    > ul.menu,
-    > .menu > ul {
-
-      > li:not(.social-menu-item):not([class*="weglot"]):not(.is-cta-button):not(.icon-only) {
-        @include header-menu-item-with-hover-animation;
-      }
-
-      > li[class*="current"]:not(.menu-item-home) {
-        @include header-menu-item-with-active-state;
-
-        > a {
-          color: var(--current-color-primary);
-        }
-      }
-    }
-  }
-
   .sub-menu .sub-menu[class] {
     .menu-item-has-children > a:after {
       position: absolute;
