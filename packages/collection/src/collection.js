@@ -93,6 +93,9 @@ export const CollectionPreview = ( props ) => {
 
     palette,
     paletteVariation
+
+    layoutStyle,
+    carouselLayout
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
@@ -117,7 +120,8 @@ export const CollectionPreview = ( props ) => {
 		{
 			'has-appender': hasAppender,
 		},
-		//
+    `novablocks-collection--${ layoutStyle }`,
+    `novablocks-collection-carousel--${ carouselLayout }`,
 		'novablocks-grid__area',
 		{
 			'novablocks-grid__area--portrait': ! isLandscape,

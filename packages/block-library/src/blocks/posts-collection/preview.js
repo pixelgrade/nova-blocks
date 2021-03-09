@@ -11,7 +11,8 @@ import {
 
 const {
 	ClassicLayoutPreview,
-	ParametricLayoutPreview
+	ParametricLayoutPreview,
+  CarouselLayoutPreview
 } = GridGenerator;
 
 import { __ } from '@wordpress/i18n';
@@ -116,6 +117,10 @@ const Preview = ( props ) => {
 				layoutStyle === 'classic' &&
 				<ClassicLayoutPreview { ...props } />
 			}
+      {
+        layoutStyle === 'carousel' &&
+        <CarouselLayoutPreview { ...props } />
+      }
 			{
 				layoutStyle === 'parametric' &&
 				<div className={ classname }>

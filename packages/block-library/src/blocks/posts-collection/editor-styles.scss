@@ -1,0 +1,21 @@
+.novablocks-collection-carousel--variable {
+
+  .novablocks-card__layout {
+    display: table;
+    width: 1px;
+  }
+
+  .novablocks-card--fixed-media-aspect-ratio .novablocks-card__media {
+
+    padding-top: 0;
+
+    img {
+      position: static;
+
+      width: auto;
+      height: 20em;
+
+      max-width: none;
+    }
+  }
+}

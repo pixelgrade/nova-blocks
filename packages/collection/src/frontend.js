@@ -20,6 +20,8 @@ import {
 
 	const defaultBlockWidth = 1152; // magic
 
+  let $carousels = $('[data-layoutstyle="carousel"]');
+
 	$( '.novablocks-grid' ).each( function( i, grid ) {
 		const $grid = $( grid );
 		const $block = $grid.closest( '.novablocks-block' );
@@ -299,5 +301,44 @@ import {
 			areaColumn.row = areaColumn.row - spaceTop;
 		} );
 	}
+
+	function initCarousels() {
+
+	  if ( ! $carousels.length) {
+	    return;
+    }
+
+    $carousels.each( function( i, carousel ) {
+
+      let $carousel = $(carousel);
+
+      const SLICK_OPTIONS = {
+        slidesToShow: $carousel.data('poststoshowperrow' ),
+        dots: $carousel.data('showpagination') === 1,
+        variableWidth: $carousel.data('carousellayout') === 'variable',
+        infinite: true,
+
+        responsive: [
+          {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 2,
+            }
+          },
+          {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      }
+
+      $carousel.slick(SLICK_OPTIONS);
+
+    } );
+  }
+
+  initCarousels();
 
 })(jQuery, window);

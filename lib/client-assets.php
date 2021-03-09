@@ -218,7 +218,8 @@ function novablocks_register_block_types() {
 	);
 
 	$slick_dependent_scripts = array(
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/posts-collection/frontend',
 	);
 
 	$bully_dependent_scripts = array(

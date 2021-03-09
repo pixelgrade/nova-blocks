@@ -1,0 +1,108 @@
+.novablocks-collection__layout[data-layoutstyle="carousel"] {
+  --novablocks-collection-layout-spacing: 0;
+}
+
+[data-carousellayout="variable"] {
+  
+  .novablocks-card__layout {
+    display: table;
+    width: 1px;
+  }
+  
+  .novablocks-card--fixed-media-aspect-ratio .novablocks-card__media {
+    
+    padding-top: 0;
+
+    img {
+      position: static;
+      
+      width: auto;
+      height: 20em;
+      
+      max-width: none;
+    }
+  }
+}
+
+.novablocks-collection__layout {
+  
+  --carousel-arrow-width: 1.5rem;
+  
+  .slick-arrow {
+    display: none;
+  }
+  
+  @include above(lap) {
+    .slick-arrow {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+      width: var(--carousel-arrow-width);
+    
+      &,
+      &:hover,
+      &:focus {
+        color: currentColor;
+      
+      }
+    
+      &:before {
+        font-size: var(--carousel-arrow-width);
+        color: currentColor;
+      }
+    }
+  
+    .slick-prev {
+      left: calc(var(--carousel-arrow-width) * -1 - 10px );
+    }
+  
+    .slick-next {
+      right: calc(var(--carousel-arrow-width) * -1 - 10px );
+    }
+  }
+  
+  .slick-slide {
+    padding-right: var(--slider-gap);
+  }
+  
+  .slick-list {
+    --slider-gap: 1em;
+    margin-right: calc(-1 * var(--slider-gap));
+  }
+  
+  .slick-dots {
+    
+    @include above(lap) {
+      margin-top: 1em;
+    }
+    
+    button {
+      
+      display: block;
+      padding: 0;
+      margin: 0 0.75em !important;
+      border: 0;
+      border-radius: 0;
+      border-bottom: 1px solid transparent;
+      background-color: transparent;
+      color: currentColor;
+      font-size: 1em;
+      outline: 0;
+      cursor: pointer;
+      
+      &:before {
+        content: none !important;
+      }
+    }
+    
+    .slick-active {
+      color: var(--novablocks-current-color-primary);
+      
+      button {
+        border-bottom-color: currentColor;
+      }
+    }
+  }
+}
