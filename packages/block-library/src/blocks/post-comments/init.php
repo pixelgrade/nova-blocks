@@ -64,7 +64,7 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 				] );
 			}
 
-			if ( ! comments_open( $post->ID ) && ! is_null( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) ) { ?>
+			if ( ! comments_open( $post->ID ) && ! is_null( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) && $post_comments_renderer->list->get_comments_count() > 0 ) { ?>
 				<p class="comments-closed"><?php echo $post_comments_renderer->get_arg( 'commentsClosedMessage' ); ?></p>
 			<?php }
 

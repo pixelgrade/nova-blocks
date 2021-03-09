@@ -520,8 +520,9 @@
   }
 
   .comments-closed {
-    opacity: .5;
-    text-align: center;
+    border-top: 4px solid;
+    padding-top: .3em;
+    font-weight: 500;
   }
 
   .comments-pagination {
