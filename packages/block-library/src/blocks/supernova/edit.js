@@ -1,21 +1,43 @@
 import classnames from 'classnames';
 import Controls from './controls';
-
-import { PostContent } from './components/post/index';
+import CollectionLayout from './layout';
+import { PostCard } from './components/post';
 
 import { Fragment } from '@wordpress/element';
-import { withSelect } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
+import { InnerBlocks } from '@wordpress/block-editor';
+import { useSelect } from '@wordpress/data';
 
 import {
-  withDopplerContext,
   withDopplerControls,
-  withDopplerProvider,
 } from '@novablocks/doppler';
 
 const SuperNovaEdit = ( props ) => {
 
-  const { posts } = props;
+  const {
+    attributes: {
+      itemsCount
+    },
+    clientId,
+    posts,
+  } = props;
+
+
+  const { count } = useSelect( ( select ) => {
+    return {
+      count: select( 'core/block-editor' ).getBlockCount( clientId ),
+    };
+  }, [ clientId ] );
+
+  if ( true ) {
+    return (
+      <Fragment>
+        <Collection { ...props }>
+          <InnerBlocks />
+        </Collection>
+        <Controls { ...props } />
+      </Fragment>
+    )
+  }
 
   return (
     <Fragment>
@@ -27,55 +49,20 @@ const SuperNovaEdit = ( props ) => {
   )
 }
 
-const sanitizeMediaResponse = ( mediaObject ) => {
-
-  return {
-    type: mediaObject?.media_type,
-    width: mediaObject?.media_details?.width,
-    height: mediaObject?.media_details?.height,
-    src: mediaObject?.source_url,
-  }
-};
-
-const PostCard = withSelect( ( select, ownProps ) => {
-  const { getMedia } = select( 'core' );
-  const { featured_media } = ownProps.post;
-
-  if ( ! featured_media ) {
-    return null;
-  }
-
-  const mediaObject = getMedia( featured_media );
-
-  if ( ! mediaObject ) {
-    return {};
-  }
-
-  return {
-    media: sanitizeMediaResponse( mediaObject )
-  }
-} )( ( props ) => {
-
-  return (
-    <Card layout={ props?.attributes?.cardLayout } { ...props }>
-      <PostContent { ...props } />
-    </Card>
-  )
-} );
-
 const Collection = ( props ) => {
 
   const {
     attributes: {
       columnsCount,
-      itemsWidth,
       cardMediaOpacity,
+      layout,
+      itemsWidth,
     },
-    children,
   } = props;
 
   const layoutClassName = classnames(
     `supernova-collection__layout`,
+    `supernova-collection__layout--${ layout }`,
     `supernova-collection__layout--${ itemsWidth }-width`,
   );
 
@@ -85,74 +72,12 @@ const Collection = ( props ) => {
   };
 
   return (
-    <div className={ `supernova-collection` }>
-      <div className={ layoutClassName } style={ style }>
-        {
-          Array.isArray( children ) && children.map( child => {
-            return (
-              <div className={ "supernova-collection__layout-item" }>
-                { child }
-              </div>
-            );
-          } )
-        }
+    <div className={ `supernova-collection` } style={ style }>
+      <div className={ layoutClassName }>
+        <CollectionLayout { ...props } />
       </div>
     </div>
   )
 }
-
-const Card = ( props ) => {
-
-  const {
-    layout,
-    media,
-    attributes: {
-      palette,
-      paletteVariation
-    },
-  } = props;
-
-  const className = classnames(
-    `supernova-card`,
-    `supernova-card--layout-${ layout }`,
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
-  );
-
-  return (
-    <div className={ className }>
-      {
-        media &&
-        <div className={ `supernova-card__media-wrapper` }>
-          <CardMedia media={ media } { ...props } />
-        </div>
-      }
-      <div className={ `supernova-card__content` }>{ props.children }</div>
-    </div>
-  );
-}
-
-const withDopplerContextAndProvider = compose([
-  withDopplerProvider,
-  withDopplerContext,
-]);
-
-const CardMedia = withDopplerContextAndProvider( ( props ) => {
-
-  const {
-    media: {
-      type,
-      width,
-      height,
-      src,
-    }
-  } = props;
-
-  return (
-    <div className={ `novablocks-mask` }>
-      <img className={ `supernova-card__media` } src={ src } width={ width } height={ height } style={ props?.parallax?.style } />
-    </div>
-  );
-} );
 
 export default withDopplerControls( SuperNovaEdit );

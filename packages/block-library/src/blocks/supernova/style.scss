@@ -1,19 +1,6 @@
 .supernova-card {
   display: grid;
   grid-auto-columns: 1fr;
-  grid-template-areas:
-    "card-media"
-    "card-content";
-}
-
-.supernova-card__media-wrapper {
-  grid-area: card-media;
-}
-
-.supernova-card__content {
-  position: relative;
-  grid-area: card-content;
-  overflow: hidden;
 }
 
 .supernova-card--layout-vertical {
@@ -36,36 +23,75 @@
   grid-template-areas: "card-content card-media";
 }
 
+.supernova-card__media-wrapper {
+  grid-area: card-media;
+}
+
+.supernova-card__content {
+  grid-area: card-content;
+}
+
 .supernova-card--layout-stacked {
 
+  .supernova-card__media-wrapper,
   .supernova-card__content {
-    grid-area: card-media;
+    grid-area: none;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
   }
+}
+
+.supernova-card__content {
+  position: relative;
+  overflow: hidden;
+  padding: var(--novablocks-spacing);
 }
 
 .supernova-card__media-wrapper > div {
   position: relative;
+  height: 100%;
+}
 
-  &:before {
+.supernova-card__media {
+  display: block;
+  opacity: var(--collection-card-media-opacity, 1);
+}
+
+.supernova-collection__layout--fixed-width {
+
+  .supernova-card__media-wrapper > div:before {
     content: "";
     padding-top: 100%;
     display: block;
   }
-}
 
-.supernova-card__media {
-  opacity: var(--collection-card-media-opacity, 1);
-
-  &[class] {
+  .supernova-card__media {
     @include image-cover;
   }
 }
 
-.supernova-collection__layout {
+.supernova-collection__layout--grid {
   display: grid;
   grid-gap: var(--collection-gap, 10px);
-}
-
-.supernova-collection__layout--fixed-width {
   grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
 }
+
+//.supernova-collection__layout--carousel {
+//
+//  .slick-track {
+//    display: flex;
+//    align-items: stretch;
+//    margin-left: calc( -1 * var(--collection-gap, 10px) );
+//  }
+//
+//  .slick-slide {
+//    float: none;
+//    height: auto;
+//    margin-left: var(--collection-gap, 10px);
+//
+//    > div,
+//    > div > .supernova-card {
+//      height: 100%;
+//    }
+//  }
+//}

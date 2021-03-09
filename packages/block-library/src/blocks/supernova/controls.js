@@ -68,7 +68,7 @@ const CollectionControls = ( props ) => {
             value={ itemsWidth }
             options={ [
               { label: 'Fixed', value: 'fixed' },
-              { label: 'Auto', value: 'auto' },
+              { label: 'Variable', value: 'variable' },
             ] }
             onChange={ itemsWidth => {
               setAttributes( { itemsWidth } );

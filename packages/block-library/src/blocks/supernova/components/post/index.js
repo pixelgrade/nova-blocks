@@ -5,8 +5,9 @@ import {
 
 import { __ } from '@wordpress/i18n';
 import { TextPlaceholder } from "@novablocks/components";
-
 import { getMeta } from './utils';
+
+export * from './card';
 
 export const PostContent = ( props ) => {
 
