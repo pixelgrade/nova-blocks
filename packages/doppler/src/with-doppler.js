@@ -21,7 +21,7 @@ import {
 	compose
 } from '@wordpress/compose';
 
-const ParallaxContext = createContext();
+const DopplerContext = createContext();
 
 const withDopplerProvider = function( WrappedComponent ) {
 
@@ -141,14 +141,14 @@ const withDopplerProvider = function( WrappedComponent ) {
 			return (
 				<Fragment>
 					<div ref={ ( el ) => ( this.container = el ) }>
-						<ParallaxContext.Provider value={ {
+						<DopplerContext.Provider value={ {
 							style: this.getElementStyle(),
 							state: this.state,
 							container: this.container,
 							scrollContainer: this.scrollContainer,
 						} }>
 							<WrappedComponent { ...this.props } />
-						</ParallaxContext.Provider>
+						</DopplerContext.Provider>
 					</div>
 				</Fragment>
 			);
@@ -274,9 +274,9 @@ const withDopplerContext = function( WrappedComponent ) {
 
 		render() {
 			return (
-				<ParallaxContext.Consumer>
+				<DopplerContext.Consumer>
 					{ context => <WrappedComponent parallax={ context } { ...this.props } /> }
-				</ParallaxContext.Consumer>
+				</DopplerContext.Consumer>
 			)
 		}
 	}

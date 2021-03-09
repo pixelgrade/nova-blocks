@@ -58,7 +58,7 @@ const ScrollingEffectPanel = ( props ) => {
 
 	const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
 
-	if ( !! doppler && doppler.includes( name ) ) {
+	if ( !! doppler && ( doppler.includes( name ) ) ) {
 		scrollingEffectOptions.push( {
 			label: __( 'Doppler by Pixelgrade ®' ),
 			value: 'doppler'

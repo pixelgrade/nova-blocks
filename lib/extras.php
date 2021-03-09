@@ -984,6 +984,7 @@ function novablocks_get_theme_support() {
 
 	$required = array(
 		'header-row',
+		'supernova',
 	);
 
 	$default = array(
