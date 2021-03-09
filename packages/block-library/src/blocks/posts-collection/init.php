@@ -50,6 +50,14 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		if ( ! empty( $attributes['layoutStyle'] ) ) {
+			$classes[] = 'novablocks-collection--' . $attributes['layoutStyle'];
+		}
+
+		if ( ! empty( $attributes['layoutStyle'] ) &&  $attributes['carouselLayout'] === 'variable' ) {
+			$classes[] = 'novablocks-collection-carousel--variable';
+		}
+
 		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
 		$className = join( ' ', $classes );
 
@@ -83,6 +91,9 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'balancemdandiw',
 			'hierarchycrossing',
 			'flipcolsrows',
+
+			'carouselLayout',
+			'showPagination'
 		);
 
 		$data_attributes = array();
@@ -238,9 +249,9 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 			<?php } ?>
 
 			<?php if ( ! empty( $attributes['showMeta'] ) ||
-			           ! empty( $attributes['showTitle'] ) ||
-			           ! empty( $attributes['showDescription'] ) ||
-			           ! empty( $attributes['showButtons'] ) ) { ?>
+					   ! empty( $attributes['showTitle'] ) ||
+					   ! empty( $attributes['showDescription'] ) ||
+					   ! empty( $attributes['showButtons'] ) ) { ?>
 
 				<div class="novablocks-card__layout-content novablocks-card__inner-container">
 
