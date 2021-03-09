@@ -2,9 +2,9 @@
 /**
  * NovaBlocks_Comments_Form Class
  *
- * @author   Pixelgrade
- * @package  NovaBlocks
  * @since    1.8.0
+ * @package  NovaBlocks
+ * @author   Pixelgrade
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -53,10 +53,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			// Make sure defaults are in place.
 			$this->args = wp_parse_args( $args, [
 				// Output HTML5 markup
-				'html5' => current_theme_supports( 'html5', 'comment-form' ),
+				'html5'       => current_theme_supports( 'html5', 'comment-form' ),
 
 				// Double the actual size for high dpi displays. Set to zero (0) for no avatars.
-				'avatarSize' => 100,
+				'avatarSize'  => 100,
 				'avatarClass' => 'avatar',
 
 				'commentLabel'                   => esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),
@@ -125,6 +125,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				return '';
 			}
 
+			// Check if we should actually render.
+			if ( ! $this->should_render( $header_args ) ) {
+				return '';
+			}
+
 			/* ===============================
 			 * RENDER THE COMMENTS FORM MARKUP
 			 */
@@ -150,12 +155,15 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			// Remove the novalidate attribute on the form so HTML5 client validation works as intended.
 			// At some point in history it might be removed, but.. @link https://core.trac.wordpress.org/ticket/47595
-			$output = preg_replace( '/novalidate/im', '', $output,1 );
+			$output = preg_replace( '/novalidate/im', '', $output, 1 );
 
 			// If we have output and we have the `cancel-comment-reply-link` CSS somewhere,
 			// we need to make sure the comment-reply.js is enqueued (this should not be the theme's job).
-			if ( false !== strpos( $output, 'cancel-comment-reply-link' ) && comments_open( $this->post->ID ) && get_option( 'thread_comments' ) ) {
-				wp_enqueue_script('comment-reply' );
+			if ( false !== strpos( $output, 'cancel-comment-reply-link' )
+			     && comments_open( $this->post->ID )
+			     && get_option( 'thread_comments' ) ) {
+
+				wp_enqueue_script( 'comment-reply' );
 
 				// Localize the comment-reply script with our context.
 				$localizedConfig = [];
@@ -166,6 +174,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			}
 
 			return $output;
+		}
+
+		protected function should_render( $args = [] ) {
+			$should_render = true;
+
+			// Do not render the form section if the comments are not opened.
+			if ( ! comments_open( $this->post->ID ) ) {
+				$should_render = false;
+			}
+
+			return apply_filters( 'novablocks_comments_form_should_render', $should_render, $this->post, $args );
 		}
 
 		/**
@@ -207,7 +226,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$current_user = wp_get_current_user();
 
 			// Increase the instance count
-			self::$fakeFormButtonInstances++;
+			self::$fakeFormButtonInstances ++;
 			// Generate the anchor ID.
 			$moveAnchorId = 'fake-form-move-anchor_' . self::$fakeFormButtonInstances;
 
@@ -220,7 +239,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				// By default we will use the #respond ID.
 				'respondelement' => isset( $args['respondelement'] ) ? $args['respondelement'] : 'respond',
 
-				'replyto'        => $args['replyToText'],
+				'replyto' => $args['replyToText'],
 			);
 
 			// Handle the replyto text conversions.
@@ -263,11 +282,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			<div class="fake-form-move-anchor" id="<?php echo esc_attr( $moveAnchorId ); ?>"></div>
 			<div class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>">
 				<?php if ( 0 !== $args['avatarSize'] && ! empty( $avatar ) ) { ?>
-				<div class="comment-avatar">
-					<?php echo $avatar; ?>
-				</div>
+					<div class="comment-avatar">
+						<?php echo $avatar; ?>
+					</div>
 				<?php } ?>
-				<button class="fake-input-button js-open-comment-form" <?php echo $data_attributes_string; ?>><?php echo $args['commentPlaceholder']; ?></button>
+				<button
+					class="fake-input-button js-open-comment-form" <?php echo $data_attributes_string; ?>><?php echo $args['commentPlaceholder']; ?></button>
 			</div>
 
 			<?php
@@ -565,7 +585,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			// Change the submit button
 			$defaults['label_submit']  = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
-			$defaults['id_submit'] = 'comment-form-submit';
+			$defaults['id_submit']     = 'comment-form-submit';
 			$defaults['submit_button'] = '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>';
 
 			return $defaults;
