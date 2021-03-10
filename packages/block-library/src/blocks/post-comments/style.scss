@@ -88,7 +88,7 @@
     --novablocks-element-spacing-multiplier: .75;
 
     @include above(tablet) {
-      --novablocks-element-spacing-multiplier: 2;
+      --novablocks-element-spacing-multiplier: 1;
     }
 
     .no-avatar {
@@ -520,9 +520,13 @@
   }
 
   .comments-closed {
-    border-top: 4px solid;
-    padding-top: .9em;
+    --element-spacing: calc(var(--novablocks-spacing) * 0.5);
     --current-font-weight: bold;
+  
+    margin-top: var(--element-spacing);
+    padding-top: .9em;
+  
+    border-top: 4px solid;
   }
 
   .comments-pagination {
