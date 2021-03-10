@@ -523,7 +523,7 @@
     --element-spacing: calc(var(--novablocks-spacing) * 0.5);
     --current-font-weight: bold;
   
-    margin-top: var(--element-spacing);
+    margin-top: calc(var(--element-spacing) - 4px);
     padding-top: .9em;
   
     border-top: 4px solid;
