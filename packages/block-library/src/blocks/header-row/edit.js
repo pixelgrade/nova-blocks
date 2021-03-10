@@ -3,6 +3,7 @@
  */
 import classnames from 'classnames';
 import { InnerBlocks } from '@wordpress/block-editor';
+import { getColorSetClassnames } from '@novablocks/utils';
 
 /**
  * Internal dependencies.
@@ -10,23 +11,19 @@ import { InnerBlocks } from '@wordpress/block-editor';
 const ALLOWED_BLOCKS = [ 'novablocks/logo', 'novablocks/navigation' ];
 
 const HeaderRowEdit = function( props ) {
+
   const {
-    attributes: {
-      align,
-      palette,
-      paletteVariation,
-      useSourceColorAsReference,
-    },
-    className,
+    attributes,
+    className
   } = props;
+
+  const {
+    align,
+  } = attributes;
 
   const classNames = classnames(
     'novablocks-header-row',
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
-    {
-      'sm-palette--shifted': !! useSourceColorAsReference
-    },
+    getColorSetClassnames( attributes ),
     className,
   );
 
@@ -37,7 +34,7 @@ const HeaderRowEdit = function( props ) {
           <InnerBlocks
             allowedBlocks={ ALLOWED_BLOCKS }
             renderAppender={ false }
-            templateLock = 'insert'
+            templateLock="insert"
           />
         </div>
       </div>

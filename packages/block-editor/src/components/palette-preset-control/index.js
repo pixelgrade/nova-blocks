@@ -1,10 +1,6 @@
 import classnames from 'classnames';
 
 import {
-	Fragment,
- } from '@wordpress/element';
-
-import {
 	useBlockEditContext
  } from '@wordpress/block-editor';
 
@@ -16,6 +12,7 @@ import {
 import {
 	compose
  } from '@wordpress/compose';
+import {getColorSetClassnames} from "@novablocks/utils";
 
 const PalettePresetControl = ( props ) => {
 	const { attributes, setAttributes, label } = props;
@@ -29,14 +26,11 @@ const PalettePresetControl = ( props ) => {
         { options.map( option => {
           const { label, value } = option;
           const newAttributes = Object.assign( {}, attributes, getNewAttributesFromPreset( value, options ) );
-          const { palette, paletteVariation, useSourceColorAsReference } = newAttributes;
 
           const className = classnames(
             'novablocks-palette-control__option',
-            `sm-palette-${ palette }`,
-            `sm-variation-${ paletteVariation }`,
+            getColorSetClassnames( newAttributes ),
             {
-              'sm-palette--shifted': !! useSourceColorAsReference,
               'novablocks-palette-control__option--selected': value === selectedPreset
             }
           );

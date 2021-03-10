@@ -2,7 +2,7 @@ import classnames from "classnames";
 
 import { Card } from "@novablocks/components";
 import { PostCard } from "@novablocks/block-editor";
-import { getContentVariation } from "@novablocks/utils";
+import { getColorSetClassnames, getContentVariation } from "@novablocks/utils";
 
 import {
 	CollectionHeader,
@@ -39,13 +39,8 @@ const Preview = ( props ) => {
 
 		layoutStyle,
 		contentAlign,
-		contentStyle,
-		blockStyle,
 
 		headerPosition,
-
-    palette,
-    paletteVariation,
 	} = attributes;
 
 	markPostsAsDisplayed( clientId, posts );
@@ -103,11 +98,8 @@ const Preview = ( props ) => {
 
 		`novablocks-collection`,
 		`novablocks-collection--align-${ contentAlign }`,
-		`block-is-${ blockStyle }`,
-		`content-is-${ contentStyle }`,
 
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
+    getColorSetClassnames( attributes ),
 		className
 	);
 

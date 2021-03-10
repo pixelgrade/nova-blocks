@@ -1,33 +1,40 @@
 import classnames from 'classnames';
 
 import { compose, createHigherOrderComponent } from "@wordpress/compose";
+import { Children } from '@wordpress/element';
+
 import { withDopplerContext, withDopplerProvider } from "@novablocks/doppler";
+import AdvancedGallery from "@novablocks/advanced-gallery";
 
 export const Card = ( props ) => {
 
   const {
     media,
     attributes: {
-      palette,
-      paletteVariation,
       cardLayout,
+      cardMediaOpacity,
+      cardMediaAspectRatio,
     },
   } = props;
+
+  const { getPaddingTopFromContainerHeight } = AdvancedGallery.utils;
 
   const className = classnames(
     `supernova-card`,
     `supernova-card--layout-${ cardLayout }`,
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
   );
 
-  const children = Array.isArray( props.children ) ? props.children : [];
+  const style = {
+    '--collection-card-media-opacity': cardMediaOpacity / 100,
+    '--collection-card-media-aspect-ratio': getPaddingTopFromContainerHeight( cardMediaAspectRatio ),
+  }
 
+  const children = Children.toArray( props.children );
   const mediaChildren = children.filter( child => child.type === CardMedia )
   const passedChildren = children.filter( child => child.type !== CardMedia && child.type !== CardContent );
 
   return (
-    <div className={ className }>
+    <div className={ className } style={ style }>
       { ! mediaChildren.length && media && <CardMedia media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
       <CardContent>
@@ -73,8 +80,10 @@ const CardMediaItem = withDopplerContextAndProvider( ( props ) => {
   } = props;
 
   return (
-    <div className={ `novablocks-mask` }>
-      <img className={ `supernova-card__media` } src={ src } width={ width } height={ height } style={ props?.parallax?.style } />
+    <div className={ `supernova-card__media-aspect-ratio` }>
+      <div className={ `novablocks-mask` }>
+        <img className={ `supernova-card__media` } src={ src } width={ width } height={ height } style={ props?.parallax?.style } />
+      </div>
     </div>
   );
 } );

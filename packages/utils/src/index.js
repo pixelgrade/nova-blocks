@@ -293,7 +293,28 @@ export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
 // Uppercase the first letter of a string in JavaScript
 // https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
 
-export const capitalizeFirstLetter = (string) => {
-  if (typeof string !== 'string') return ''
-  return string.charAt(0).toUpperCase() + string.slice(1)
+export const capitalizeFirstLetter = ( string ) => {
+
+  if ( typeof string !== 'string' ) {
+    return '';
+  }
+
+  return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
+}
+
+export const getColorSetClassnames = ( attributes ) => {
+
+  const {
+    palette,
+    paletteVariation,
+    useSourceColorAsReference
+  } = attributes;
+
+  return classnames(
+    `sm-palette-${ palette }`,
+    `sm-variation-${ paletteVariation }`,
+    {
+      'sm-palette--shifted': !! useSourceColorAsReference
+    }
+  );
 }

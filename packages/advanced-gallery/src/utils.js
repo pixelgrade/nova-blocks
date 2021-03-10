@@ -12,24 +12,29 @@ export const getRandomAttributes = () => {
 };
 
 export const getGalleryStyle = ( attributes ) => {
-	let containerHeight = attributes.containerHeight / 50 - 1;
-	let numerator = 1;
-	let denominator = 1;
-
-	containerHeight = Math.min( Math.max( -1, containerHeight ), 1 );
-
-	if ( containerHeight > 0 ) {
-		numerator = 1 + containerHeight;
-	}
-
-	if ( containerHeight < 0 ) {
-		denominator = 1 + Math.abs( containerHeight );
-	}
 
 	return {
-		paddingTop: `${ numerator * 100 / denominator }%`,
+		paddingTop: `${ getPaddingTopFromContainerHeight( attributes.containerHeight ) }%`,
 	}
 };
+
+export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
+  let height = containerHeight / 50 - 1;
+  let numerator = 1;
+  let denominator = 1;
+
+  height = Math.min( Math.max( -1, height ), 1 );
+
+  if ( height > 0 ) {
+    numerator = 1 + height;
+  }
+
+  if ( height < 0 ) {
+    denominator = 1 + Math.abs( height );
+  }
+
+  return numerator * 100 / denominator;
+}
 
 export const getGridStyle = ( attributes ) => {
 	const { elementsDistance } = attributes;

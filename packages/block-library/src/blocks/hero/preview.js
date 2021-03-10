@@ -12,6 +12,8 @@ import {
 	select
  } from '@wordpress/data';
 
+import { getColorSetClassnames } from "@novablocks/utils";
+
 const HeroPreview = function( props ) {
 
 	const {
@@ -38,9 +40,6 @@ const HeroPreview = function( props ) {
 		contentColor,
 		overlayFilterStyle,
 
-    palette,
-    paletteVariation,
-
 		scrollingEffect,
 		displayInnerContent,
 	} = attributes;
@@ -54,8 +53,7 @@ const HeroPreview = function( props ) {
 		`novablocks-u-content-width-${ contentWidth }`,
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
-		`sm-palette-${ palette }`,
-		`sm-variation-${ paletteVariation }`,
+    getColorSetClassnames( attributes )
 	];
 
 	const styles = {

@@ -131,26 +131,23 @@ const withDopplerProvider = function( WrappedComponent ) {
 
 			const state = getState( this.container, Object.assign( {}, this.state, attributes ) );
 			const config = Object.assign( {}, state, attributes );
-			const styles = getStyles( config );
 
-			return styles;
+			return getStyles( config );
 		}
 
 		render() {
 
 			return (
-				<Fragment>
-					<div ref={ ( el ) => ( this.container = el ) }>
-						<DopplerContext.Provider value={ {
-							style: this.getElementStyle(),
-							state: this.state,
-							container: this.container,
-							scrollContainer: this.scrollContainer,
-						} }>
-							<WrappedComponent { ...this.props } />
-						</DopplerContext.Provider>
-					</div>
-				</Fragment>
+        <div className={ `novablocks-doppler-wrapper` } ref={ ( el ) => ( this.container = el ) }>
+          <DopplerContext.Provider value={ {
+            style: this.getElementStyle(),
+            state: this.state,
+            container: this.container,
+            scrollContainer: this.scrollContainer,
+          } }>
+            <WrappedComponent { ...this.props } />
+          </DopplerContext.Provider>
+        </div>
 			);
 		}
 	};

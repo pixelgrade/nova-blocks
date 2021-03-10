@@ -1,7 +1,7 @@
 import {createHigherOrderComponent} from "@wordpress/compose";
-import {dispatch, select} from "@wordpress/data";
+import { dispatch, select } from "@wordpress/data";
 
-const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
+const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlock ) => {
   return ( props ) => {
     if ( 'novablocks/supernova' === props.name ) {
       const { clientId, attributes } = props;
@@ -10,14 +10,14 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
       const collection = getBlock( clientId );
       const cards = collection.innerBlocks;
 
-      const newAttributes = ( ( { cardLayout, palette, paletteVariation } ) => {
-        return { cardLayout, palette, paletteVariation };
+      const newAttributes = ( ( { cardLayout } ) => {
+        return { cardLayout };
       } )( attributes );
+
+      newAttributes['containerHeight'] = attributes['cardMediaAspectRatio'];
 
       cards.forEach( block => {
         updateBlockAttributes( block.clientId, newAttributes );
-
-        console.log( block.clientId, newAttributes );
 
 //        if ( Array.isArray( block.innerBlocks ) ) {
 //          block.innerBlocks.forEach( innerBlock => {
@@ -30,6 +30,6 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
     }
     return <BlockListBlock { ...props } />
   };
-}, 'withCollectionVisibilityAttributes' );
+}, 'withSupernovaAttributesValues' );
 
-wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
+wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withSupernovaAttributesValues );

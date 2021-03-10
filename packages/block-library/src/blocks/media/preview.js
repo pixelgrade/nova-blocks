@@ -4,7 +4,7 @@
 import classnames from 'classnames';
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
-import { getContentVariation } from '@novablocks/utils';
+import {getColorSetClassnames, getContentVariation} from '@novablocks/utils';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -28,11 +28,6 @@ const MediaPreview = function( props ) {
 
     contentAreaWidth,
     layoutGutter,
-
-
-    palette,
-    paletteVariation,
-    useSourceColorAsReference
 	} = attributes;
 
 	const classNames = classnames(
@@ -57,12 +52,8 @@ const MediaPreview = function( props ) {
 	const blockClassNames = classnames(
 		`novablocks-block`,
 		`content-is-${ contentStyle }`,
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
-    {
-      'sm-palette--shifted': !! useSourceColorAsReference
-    }
-	);
+    getColorSetClassnames( attributes ),
+  );
 
 	return (
 		<div className={ classNames } style={ cssVars }>

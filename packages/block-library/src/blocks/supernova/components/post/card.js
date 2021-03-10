@@ -1,8 +1,8 @@
 import { withSelect } from "@wordpress/data";
 import { PostContent } from "./index";
-import { Card } from "../card";
+import { Card, CardContent } from "../card";
 
-const sanitizeMediaResponse = ( mediaObject ) => {
+const sanitizeMediaResponse = (   mediaObject ) => {
 
   return {
     type: mediaObject?.media_type,
@@ -36,7 +36,7 @@ const withMedia = withSelect( ( select, ownProps ) => {
 export const PostCard = withMedia( ( props ) => {
 
   return (
-    <Card layout={ props?.attributes?.cardLayout } { ...props }>
+    <Card { ...props }>
       <PostContent { ...props } />
     </Card>
   )

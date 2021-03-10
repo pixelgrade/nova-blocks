@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
-import { getCardMediaPaddingTop } from '@novablocks/utils'
+import {getCardMediaPaddingTop, getColorSetClassnames} from '@novablocks/utils'
 
 import attributes from './collection-attributes.json';
 import InspectorControls from "./collection-controls";
@@ -91,9 +91,6 @@ export const CollectionPreview = ( props ) => {
 		postsToShow,
 		isLandscape,
 
-    palette,
-    paletteVariation
-
     layoutStyle,
     carouselLayout
 	} = attributes;
@@ -130,8 +127,7 @@ export const CollectionPreview = ( props ) => {
 		getAreaClassnameByWidthRatio( widthRatio ),
 		getAreaClassnameByHeightRatio( heightRatio ),
 		`block-is-${ blockStyle }`,
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
+    getColorSetClassnames( attributes )
 	);
 
 	return (

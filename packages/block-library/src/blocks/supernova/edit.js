@@ -3,9 +3,9 @@ import Controls from './controls';
 import CollectionLayout from './layout';
 import { PostCard } from './components/post';
 
-import { Fragment } from '@wordpress/element';
 import { InnerBlocks } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
+
+import { getColorSetClassnames } from '@novablocks/utils';
 
 import {
   withDopplerControls,
@@ -15,50 +15,44 @@ const SuperNovaEdit = ( props ) => {
 
   const {
     attributes: {
-      itemsCount
+      sourceType,
     },
-    clientId,
     posts,
   } = props;
 
-
-  const { count } = useSelect( ( select ) => {
-    return {
-      count: select( 'core/block-editor' ).getBlockCount( clientId ),
-    };
-  }, [ clientId ] );
-
-  if ( true ) {
+  if ( sourceType === 'custom' ) {
     return (
-      <Fragment>
-        <Collection { ...props }>
-          <InnerBlocks />
-        </Collection>
-        <Controls { ...props } />
-      </Fragment>
+      <Collection { ...props }>
+        <InnerBlocks
+          allowedBlocks={ [ 'novablocks/supernova-item' ] }
+          renderAppender={ false }
+          templateInsertUpdatesSelection={ false }
+        />
+      </Collection>
     )
   }
 
   return (
-    <Fragment>
-      <Collection { ...props }>
-        { Array.isArray( posts ) && posts.map( post => <PostCard { ...props } post={ post } /> ) }
-      </Collection>
-      <Controls { ...props } />
-    </Fragment>
+    <Collection { ...props }>
+      { Array.isArray( posts ) && posts.map( post => <PostCard { ...props } post={ post } /> ) }
+    </Collection>
   )
 }
 
 const Collection = ( props ) => {
 
+  const { attributes } = props;
+
   const {
-    attributes: {
-      columnsCount,
-      cardMediaOpacity,
-      layout,
-      itemsWidth,
-    },
-  } = props;
+    align,
+    columnsCount,
+    cardMediaOpacity,
+    layout,
+    itemsWidth,
+    sourceType,
+  } = attributes;
+
+  const colorSetClassnames = getColorSetClassnames( attributes );
 
   const layoutClassName = classnames(
     `supernova-collection__layout`,
@@ -72,10 +66,17 @@ const Collection = ( props ) => {
   };
 
   return (
-    <div className={ `supernova-collection` } style={ style }>
-      <div className={ layoutClassName }>
-        <CollectionLayout { ...props } />
+    <div className={ `supernova ${ colorSetClassnames }` }>
+      <div className={ `supernova__inner-container` }>
+        <div className="wp-block" data-align={ align }>
+          <div className={ `supernova-collection` } style={ style }>
+            <div className={ layoutClassName } data-source={ sourceType }>
+              <CollectionLayout { ...props } />
+            </div>
+          </div>
+        </div>
       </div>
+      <Controls { ...props } />
     </div>
   )
 }

@@ -11,6 +11,7 @@ import {
 	Component,
 	Fragment,
  } from '@wordpress/element';
+import {getColorSetClassnames} from "@novablocks/utils";
 
 const SlideshowPreview = class extends Component {
 	constructor() {
@@ -42,28 +43,26 @@ const SlideshowPreview = class extends Component {
 
 	renderContent() {
 		const {
-			attributes: {
-				// layout
-				contentPadding,
-				contentPaddingCustom,
-				contentWidth,
-				contentWidthCustom,
-				minHeight,
-
-				// alignment
-				verticalAlignment,
-				horizontalAlignment,
-
-        // colors
-        palette,
-        paletteVariation,
-
-				// media
-				galleryImages,
-			},
+			attributes,
 			previewImage,
 			className,
 		} = this.props;
+
+    const {
+      // layout
+      contentPadding,
+      contentPaddingCustom,
+      contentWidth,
+      contentWidthCustom,
+      minHeight,
+
+      // alignment
+      verticalAlignment,
+      horizontalAlignment,
+
+      // media
+      galleryImages,
+    } = attributes;
 
 		const classes = [
 			className,
@@ -72,8 +71,7 @@ const SlideshowPreview = class extends Component {
 			`novablocks-u-halign-${ horizontalAlignment }`,
 			`novablocks-u-spacing-${ contentPadding }`,
 			`novablocks-u-content-width-${ contentWidth }`,
-      `sm-palette-${ palette }`,
-      `sm-variation-${ paletteVariation }`,
+      getColorSetClassnames( attributes )
     ];
 
 		const styles = {

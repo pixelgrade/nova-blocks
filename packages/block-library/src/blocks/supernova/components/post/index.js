@@ -38,7 +38,9 @@ export const PostContent = ( props ) => {
 };
 
 const withVisibilityAndPlaceholder = ( WrappedComponent ) => {
+
    return ( props ) => {
+
      const { show, placeholder } = props;
 
      if ( ! show && ! placeholder ) {

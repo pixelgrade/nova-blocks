@@ -11,37 +11,38 @@ import {
 	InnerBlocks,
 	MediaUpload,
  } from '@wordpress/block-editor';
+import {getColorSetClassnames} from "@novablocks/utils";
 
 const CardEdit = ( props ) => {
 
 	const {
-		attributes: {
-			level,
-			title,
-			subtitle,
-			description,
-			media,
-			meta,
-
-			contentAlign,
-			showMedia,
-			showTitle,
-			showSubtitle,
-			showDescription,
-			showButtons,
-			showMeta,
-
-      paletteVariation
-		},
+		attributes,
 		setAttributes,
 	} = props;
+
+	const {
+    level,
+    title,
+    subtitle,
+    description,
+    media,
+    meta,
+
+    contentAlign,
+    showMedia,
+    showTitle,
+    showSubtitle,
+    showDescription,
+    showButtons,
+    showMeta,
+  } = attributes;
 
 	const className = classnames(
     'novablocks-card',
     'novablocks-card--fixed-media-aspect-ratio',
     'novablocks-card--portrait',
     'novablocks-block__content',
-    `sm-variation-${ paletteVariation }`
+    getColorSetClassnames( attributes )
   );
 
 	return (

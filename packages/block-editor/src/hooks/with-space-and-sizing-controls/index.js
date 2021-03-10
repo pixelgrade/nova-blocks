@@ -42,6 +42,7 @@ const ALLOWED_BLOCKS = [
 	'novablocks/slideshow',
 	'novablocks/cards-collection',
 	'novablocks/posts-collection',
+	'novablocks/supernova',
 ];
 
 const ALLOWED_BLOCKS_ADVANCED = [
