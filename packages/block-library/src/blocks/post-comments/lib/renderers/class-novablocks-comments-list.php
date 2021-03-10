@@ -2,9 +2,9 @@
 /**
  * NovaBlocks_Comments_List Class
  *
- * @author   Pixelgrade
- * @package  NovaBlocks
  * @since    1.8.0
+ * @package  NovaBlocks
+ * @author   Pixelgrade
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,7 +52,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 * Instantiate a comments list renderer.
 		 *
 		 * @param WP_Post|int|null $post Optional. The post who's comments to render. Defaults to the current post.
-		 * @param array $args Optional. The arguments to consider when rendering.
+		 * @param array            $args Optional. The arguments to consider when rendering.
 		 */
 		public function __construct( $post = null, $args = [] ) {
 			$this->post = get_post( $post, OBJECT );
@@ -72,7 +72,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 				'displayCommenterBackground' => true,
 				// Double the actual size for high dpi displays. Set to zero (0) for no avatars.
-				'avatarSize'          => 100,
+				'avatarSize'                 => 100,
 
 				// The message to use in the comments list when a comment is not approved.
 				'moderationMessage'          => '',
@@ -105,8 +105,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 			// Setup the comments query and resulting comments list.
 			$this->query_args = $this->comments_query_args();
-			$this->query = new WP_Comment_Query( $this->query_args );
-			$this->comments = $this->get_comments_from_query( $this->query, $this->query_args );
+			$this->query      = new WP_Comment_Query( $this->query_args );
+			$this->comments   = $this->get_comments_from_query( $this->query, $this->query_args );
 		}
 
 		/**
@@ -123,7 +123,6 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			}
 
 			$comments = $this->get_comments();
-
 
 			$list_args = $this->parse_args( $args );
 
@@ -160,8 +159,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 			$this->localize_wp_list_comments_args( $wp_list_comments_args );
 
-			// We will not output anything if there are no comments.
-			if ( empty( $comments ) ) {
+			// Check if we should actually render.
+			if ( ! $this->should_render( $list_args, $comments ) ) {
 				return '';
 			}
 
@@ -200,7 +199,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 					$pagination_classes = ' only-next';
 				} ?>
 
-				<nav class="comments-pagination pagination<?php echo $pagination_classes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>" aria-label="<?php esc_attr_e( 'Comments', '__plugin_txtd' ); ?>">
+				<nav
+					class="comments-pagination pagination<?php echo $pagination_classes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>"
+					aria-label="<?php esc_attr_e( 'Comments', '__plugin_txtd' ); ?>">
 					<?php echo wp_kses_post( $comment_pagination ); ?>
 				</nav>
 
@@ -211,6 +212,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			$this->unregister_hooks();
 
 			return ob_get_clean();
+		}
+
+		protected function should_render( $args = [], $comments = [] ) {
+			$should_render = true;
+
+			// We will not output anything if there are no comments.
+			if ( empty( $comments ) ) {
+				$should_render = false;
+			}
+
+			return apply_filters( 'novablocks_comments_list_should_render', $should_render, $this->post, $args, $comments );
 		}
 
 		protected function register_hooks() {
@@ -230,12 +242,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 		/**
 		 * @param WP_Comment_Query $query
-		 * @param array $query_args
+		 * @param array            $query_args
 		 *
 		 * @return WP_Comment_Query|null
 		 */
-		public function set_query( $query, $query_args) {
-			$this->query = $query;
+		public function set_query( $query, $query_args ) {
+			$this->query      = $query;
 			$this->query_args = $query_args;
 
 			return $this->query;
@@ -265,7 +277,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 		/**
 		 * @param WP_Comment_Query $query
-		 * @param array $query_args
+		 * @param array            $query_args
 		 *
 		 * @return WP_Comment[]
 		 */
@@ -276,7 +288,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 		/**
 		 * @param WP_Comment_Query $query
-		 * @param array $query_args
+		 * @param array            $query_args
 		 *
 		 * @return WP_Comment[]
 		 */
@@ -394,7 +406,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 						 * @param int The time in minutes the comment should be visible to the author.
 						 * @param WP_Comment $comment
 						 */
-						$comment_preview_time = apply_filters( 'novablocks_comments_list_preview_time', $args['commentPreviewTime'], $comment );
+						$comment_preview_time    = apply_filters( 'novablocks_comments_list_preview_time', $args['commentPreviewTime'], $comment );
 						$comment_preview_expires = strtotime( $comment->comment_date_gmt . '+' . absint( $comment_preview_time ) . ' minute' );
 
 						if ( time() < $comment_preview_expires ) {
@@ -404,7 +416,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				}
 
 				if ( ! $unapproved_email ) {
-					$commenter       = wp_get_current_commenter();
+					$commenter        = wp_get_current_commenter();
 					$unapproved_email = $commenter['comment_author_email'];
 				}
 
@@ -451,28 +463,28 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			}
 
 			/**
-			 * Filters the arguments used to query comments in @see comments_template().
+			 * Filters the arguments used to query comments in @param array $comment_args {
+			 *                                               Array of WP_Comment_Query arguments.
 			 *
+			 * @type string|array $orderby                   Field(s) to order by.
+			 * @type string       $order                     Order of results. Accepts 'ASC' or 'DESC'.
+			 * @type string       $status                    Comment status.
+			 * @type array        $include_unapproved        Array of IDs or email addresses whose unapproved comments
+			 *                                                   will be included in results.
+			 * @type int          $post_id                   ID of the post.
+			 * @type bool         $no_found_rows             Whether to refrain from querying for found rows.
+			 * @type bool         $update_comment_meta_cache Whether to prime cache for comment meta.
+			 * @type bool|string  $hierarchical              Whether to query for comments hierarchically.
+			 * @type int          $offset                    Comment offset.
+			 * @type int          $number                    Number of comments to fetch.
+			 * }
 			 * @see WP_Comment_Query::__construct()
 			 *
-			 * @param array $comment_args {
-			 *     Array of WP_Comment_Query arguments.
+			 * @see comments_template().
 			 *
-			 *     @type string|array $orderby                   Field(s) to order by.
-			 *     @type string       $order                     Order of results. Accepts 'ASC' or 'DESC'.
-			 *     @type string       $status                    Comment status.
-			 *     @type array        $include_unapproved        Array of IDs or email addresses whose unapproved comments
-			 *                                                   will be included in results.
-			 *     @type int          $post_id                   ID of the post.
-			 *     @type bool         $no_found_rows             Whether to refrain from querying for found rows.
-			 *     @type bool         $update_comment_meta_cache Whether to prime cache for comment meta.
-			 *     @type bool|string  $hierarchical              Whether to query for comments hierarchically.
-			 *     @type int          $offset                    Comment offset.
-			 *     @type int          $number                    Number of comments to fetch.
-			 * }
 			 */
-			$comment_args  = apply_filters( 'comments_template_query_args', $comment_args );
-			$comment_args  = apply_filters( 'novablocks_comments_list_query_args', $comment_args );
+			$comment_args = apply_filters( 'comments_template_query_args', $comment_args );
+			$comment_args = apply_filters( 'novablocks_comments_list_query_args', $comment_args );
 
 			return $comment_args;
 		}
@@ -499,8 +511,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			return wp_add_inline_script( 'novablocks/post-comments/frontend',
 				novablocks_get_localize_to_window_script( 'nb_comments',
 					[
-						'ajaxUrl' => admin_url( 'admin-ajax.php' ), // @todo This should be set in a more general place.
-						'actions' => [
+						'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
+						// @todo This should be set in a more general place.
+						'actions'          => [
 							'toggleHighlight' => 'toggle_highlight_comment',
 						],
 						'commentsListArgs' => $args,
@@ -513,8 +526,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 * Get the markup of a comment as rendered in the comments list.
 		 *
 		 * @param WP_Comment|string|int|null $comment Optional. The comment to get the markup of. Defaults to the current comment.
-		 * @param array $args Optional. Arguments to pass to wp_list_comments().
-		 *                    Use the same arguments passed to NovaBlocks_Walker_Comment to get the same markup as in the list.
+		 * @param array                      $args    Optional. Arguments to pass to wp_list_comments().
+		 *                                            Use the same arguments passed to NovaBlocks_Walker_Comment to get the same markup as in the list.
 		 *
 		 * @return string
 		 */
@@ -527,16 +540,16 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			ob_start();
 
 			$args = wp_parse_args( $args, [
-					'walker'      => new NovaBlocks_Walker_Comment(),
-					'avatar_size' => 100,
-					'style'       => 'div',
-					'short_ping'  => true,
-					// Since we do the proper query above, we don't want the walker to do it once again.
-					// We just want all the passed comments displayed.
-					'page'        => 0,
-					'per_page'    => 0,
-					'max_depth'   => - 1, // Any depth will do.
-					'type'        => 'all', // We want all types since we trust the comment sent to be displayed.
+				'walker'      => new NovaBlocks_Walker_Comment(),
+				'avatar_size' => 100,
+				'style'       => 'div',
+				'short_ping'  => true,
+				// Since we do the proper query above, we don't want the walker to do it once again.
+				// We just want all the passed comments displayed.
+				'page'        => 0,
+				'per_page'    => 0,
+				'max_depth'   => - 1, // Any depth will do.
+				'type'        => 'all', // We want all types since we trust the comment sent to be displayed.
 			] );
 
 			wp_list_comments( $args, [ $comment ] );

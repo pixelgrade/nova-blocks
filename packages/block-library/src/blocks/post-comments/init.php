@@ -30,6 +30,10 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 			return '';
 		}
 
+		if ( ! apply_filters( 'novablocks_comments_block_should_render', true, $block->context[ 'postId' ], $attributes, $block ) ) {
+			return '';
+		}
+
 		$post_comments_renderer = new NovaBlocks_Comments_Renderer( $block->context[ 'postId' ], $attributes, $content );
 
 		$before = '
@@ -44,28 +48,54 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		/* ============================
 		 * RENDER THE COMMENTS SECTIONS
 		 */
+		$output = '';
+
+		$post = get_post( $block->context['postId'], OBJECT );
+
+		// We have a special case when we will not render anything except for a message, if a message is given.
+		if ( ! empty( $post )
+		     && ! comments_open( $post->ID )
+		     && $post->comment_count == 0 ) {
+
+			if ( ! empty( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) ) {
+				ob_start(); ?>
+
+				<p class="comments-closed comments-closed__no-comments"><?php echo $post_comments_renderer->get_arg( 'commentsClosedMessage' ); ?></p>
+
+				<?php
+				$output = ob_get_clean();
+				// If we had output, wrap it in the $before and $after.
+				if ( ! empty( trim( $output ) ) ) {
+					$output = $before . $output . $after;
+				}
+			}
+
+			return trim( $output );
+		}
+
 		$output = $post_comments_renderer->render( 'starter' );
 		$output .= $post_comments_renderer->render( 'header' );
 		$output .= $post_comments_renderer->render( 'form' );
 		$output .= $post_comments_renderer->render( 'list' );
 
 		// Add another form button after the comments list when we have a certain number of comments.
-		$post = get_post( $block->context['postId'], OBJECT );
 		if ( ! empty( $post ) ) {
-
 			ob_start();
 			$listEndCommentFormAfterNumComments = $post_comments_renderer->get_arg( 'listEndCommentFormAfterNumComments' );
 			if ( comments_open( $post->ID )
-			     && ! is_null( $listEndCommentFormAfterNumComments )
+			     && ! empty( $listEndCommentFormAfterNumComments )
 			     && $post_comments_renderer->list->get_comments_count() >= absint( $listEndCommentFormAfterNumComments ) ) {
 
-				$post_comments_renderer->form->the_form_button( [
-					''
-				] );
+				$post_comments_renderer->form->the_form_button();
 			}
 
-			if ( ! comments_open( $post->ID ) && ! is_null( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) && $post_comments_renderer->list->get_comments_count() > 0 ) { ?>
-				<p class="comments-closed"><?php echo $post_comments_renderer->get_arg( 'commentsClosedMessage' ); ?></p>
+			// Display the message about further comments or replies not allowed.
+			if ( ! comments_open( $post->ID )
+			     && $post->comment_count > 0
+			     && ! empty( $post_comments_renderer->get_arg( 'commentsNoFurtherCommentsMessage' ) ) ) { ?>
+
+				<p class="comments-closed comments-closed__no-further-comments"><?php echo $post_comments_renderer->get_arg( 'commentsNoFurtherCommentsMessage' ); ?></p>
+
 			<?php }
 
 			$output .= ob_get_clean();

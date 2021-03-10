@@ -89,6 +89,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 
 			$header_args = $this->parse_args( $args );
 
+			// Check if we should actually render.
+			if ( ! $this->should_render( $header_args ) ) {
+				return '';
+			}
+
 			/* =================================
 			 * RENDER THE COMMENTS HEADER MARKUP
 			 */
@@ -164,6 +169,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 			$this->unregister_hooks();
 
 			return ob_get_clean();
+		}
+
+		protected function should_render( $args = [] ) {
+			$should_render = true;
+
+			// Do not render the header section if there are not comments posted and the comments are not opened.
+			if ( ! comments_open( $this->post->ID ) && $this->post->comment_count == 0 ) {
+				$should_render = false;
+			}
+
+			return apply_filters( 'novablocks_comments_header_should_render', $should_render, $this->post, $args );
 		}
 
 		protected function register_hooks() {
