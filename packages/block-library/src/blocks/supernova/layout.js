@@ -1,12 +1,40 @@
 import Slider from "react-slick";
 
+import { Children } from '@wordpress/element';
+
+import {
+  GridGenerator,
+} from "@novablocks/collection";
+
+const {
+  ParametricLayoutPreview,
+} = GridGenerator;
+
 const CollectionLayout = ( props ) => {
 
   const {
-    attributes: {
-      layout
-    }
+    attributes,
   } = props;
+
+  const {
+    layout
+  } = attributes;
+
+  const children = Children.toArray( props.children );
+
+  const getContent = ( index ) => {
+    return children[ index ];
+  }
+
+  if ( layout === 'parametric' ) {
+    return (
+      <ParametricLayoutPreview
+        getContent={ getContent }
+        cardsCount={ children.length }
+        { ...props }
+      />
+    )
+  }
 
   if ( layout === 'carousel' ) {
     return <CarouselLayout { ...props } />

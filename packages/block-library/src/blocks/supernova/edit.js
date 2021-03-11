@@ -25,6 +25,10 @@ const SuperNovaEdit = withPreviewAttributes( ( props ) => {
     posts,
   } = props;
 
+  if ( ! preview ) {
+
+  }
+
   if ( sourceType === 'custom' ) {
 
     return (

@@ -50,8 +50,8 @@ const CollectionControls = ( props ) => {
     setAttributes( { postsToShow: itemsCount } );
   }, [ itemsCount ] );
 
-  const editModeLabel = __( 'Edit Mode', '__plugin_txtd' );
-  const previewModeLabel = __( 'Preview Mode', '__plugin_txtd' );
+  const editModeLabel = __( 'Exit Edit Mode', '__plugin_txtd' );
+  const previewModeLabel = __( 'Enter Edit Mode', '__plugin_txtd' );
 
   return (
     <Fragment>
@@ -113,6 +113,7 @@ const CollectionControls = ( props ) => {
               options={ [
                 { label: 'Grid', value: 'grid' },
                 { label: 'Carousel', value: 'carousel' },
+                { label: 'Parametric', value: 'parametric' },
               ] }
               onChange={ layout => {
                 setAttributes( { layout } );
