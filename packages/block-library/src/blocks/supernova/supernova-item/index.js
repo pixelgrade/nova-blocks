@@ -19,10 +19,14 @@ registerBlockType( 'novablocks/supernova-item', {
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes: {
+    cardContentAlign: {
+      type: 'string',
+      default: 'center center',
+    },
     cardLayout: {
       type: 'string',
       default: 'horizontal'
-    }
+    },
   },
   supports: {
     html: false

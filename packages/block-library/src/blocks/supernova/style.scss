@@ -1,138 +1,18 @@
-.supernova-card {
-  display: grid;
-  grid-auto-columns: 1fr;
+@import "scss/card";
+@import "scss/collection";
+
+.supernova {
+  --block-top-spacing: var(--novablocks-block-top-spacing, 0);
+  --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
+  --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
+  --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
 }
 
-.supernova-card--layout-vertical {
-  grid-template-areas:
-    "card-media"
-    "card-content";
+.supernova__inner-container[class] > .wp-block {
+  --novablocks-element-spacing-multiplier: 1;
+
+  margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
 }
-
-.supernova-card--layout-vertical-reverse {
-  grid-template-areas:
-    "card-content"
-    "card-media";
-}
-
-.supernova-card--layout-horizontal {
-  grid-template-areas: "card-media card-content";
-}
-
-.supernova-card--layout-horizontal-reverse {
-  grid-template-areas: "card-content card-media";
-}
-
-.supernova-card__media-wrapper {
-  grid-area: card-media;
-}
-
-.supernova-card__content {
-  grid-area: card-content;
-}
-
-.supernova-card--layout-stacked {
-
-  .supernova-card__media-wrapper,
-  .supernova-card__content {
-    grid-area: none;
-    grid-column: 1 / -1;
-    grid-row: 1 / -1;
-  }
-}
-
-.supernova-card__content {
-  position: relative;
-  overflow: hidden;
-  padding: var(--novablocks-spacing);
-}
-
-.supernova-card__media-wrapper > *,
-.supernova-card--layout-stacked .supernova-card__media-aspect-ratio {
-  height: 100%;
-}
-
-.supernova-card__media-aspect-ratio {
-  position: relative;
-
-  &:before {
-    content: "";
-    padding-top: calc( var(--collection-card-media-aspect-ratio, 100) * 1% );
-    display: block;
-  }
-}
-
-.supernova-card__media {
-  display: block;
-  opacity: var(--collection-card-media-opacity, 1);
-}
-
-.supernova-collection__layout--fixed-width {
-
-  .supernova-card__media {
-    @include image-cover;
-  }
-}
-
-.supernova-collection__layout--grid {
-
-  &:not([data-source]),
-  &[data-source="auto"],
-  &[data-source="custom"] > .block-editor-inner-blocks > .block-editor-block-list__layout {
-    display: grid;
-    grid-gap: var(--collection-gap, 10px);
-    grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
-  }
-
-  &[data-source="custom"] {
-
-    > .block-editor-inner-blocks > .block-editor-block-list__layout > * {
-      margin-left: 0;
-      margin-right: 0;
-
-      --novablocks-block-top-spacing: 0;
-      --novablocks-block-bottom-spacing: 0;
-      --novablocks-emphasis-top-spacing: 0;
-      --novablocks-emphasis-bottom-spacing: 0;
-    }
-  }
-}
-
-@include above(lap) {
-
-  .supernova {
-    --block-top-spacing: var(--novablocks-block-top-spacing, 0);
-    --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
-    --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
-    --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
-  }
-
-  .supernova__inner-container[class] > .wp-block {
-    --novablocks-element-spacing-multiplier: 1;
-
-    margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-    margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-    padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-    padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-  }
-}
-
-//.supernova-collection__layout--carousel {
-//
-//  .slick-track {
-//    display: flex;
-//    align-items: stretch;
-//    margin-left: calc( -1 * var(--collection-gap, 10px) );
-//  }
-//
-//  .slick-slide {
-//    float: none;
-//    height: auto;
-//    margin-left: var(--collection-gap, 10px);
-//
-//    > div,
-//    > div > .supernova-card {
-//      height: 100%;
-//    }
-//  }
-//}

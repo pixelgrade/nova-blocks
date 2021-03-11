@@ -143,7 +143,11 @@ const CardControls = ( props ) => {
       cardMediaAspectRatio,
     },
     setAttributes,
+    clientId,
   } = props;
+
+  const { getBlock } = select( 'core/block-editor' );
+  const block = getBlock( clientId );
 
   useEffect( () => {
     setAttributes( { thumbnailAspectRatio: cardMediaAspectRatio } )

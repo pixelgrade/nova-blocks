@@ -1,33 +1,31 @@
-import {createHigherOrderComponent} from "@wordpress/compose";
-import { dispatch, select } from "@wordpress/data";
+import { createHigherOrderComponent } from "@wordpress/compose";
+import { setAttributesToInnerBlocks, getAlignFromMatrix } from "@novablocks/block-editor";
 
 const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlock ) => {
+
   return ( props ) => {
+
     if ( 'novablocks/supernova' === props.name ) {
       const { clientId, attributes } = props;
-      const { getBlock } = select( 'core/block-editor' );
-      const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-      const collection = getBlock( clientId );
-      const cards = collection.innerBlocks;
 
-      const newAttributes = ( ( { cardLayout } ) => {
-        return { cardLayout };
+      const newAttributes = ( ( { cardContentAlign, cardLayout, cardMediaOpacity } ) => {
+        return { cardContentAlign, cardLayout, cardMediaOpacity };
       } )( attributes );
 
       newAttributes['containerHeight'] = attributes['cardMediaAspectRatio'];
 
-      cards.forEach( block => {
-        updateBlockAttributes( block.clientId, newAttributes );
-
-//        if ( Array.isArray( block.innerBlocks ) ) {
-//          block.innerBlocks.forEach( innerBlock => {
-//            updateBlockAttributes( innerBlock.clientId, {
-//              align: newAttributes.contentAlign
-//            } );
-//          } );
-//        }
-      } )
+      setAttributesToInnerBlocks( clientId, newAttributes );
     }
+
+    if ( 'novablocks/supernova-item' === props.name ) {
+      const { clientId, attributes } = props;
+      const alignment = getAlignFromMatrix( attributes.cardContentAlign );
+
+      setAttributesToInnerBlocks( clientId, {
+        align: alignment[1]
+      } );
+    }
+
     return <BlockListBlock { ...props } />
   };
 }, 'withSupernovaAttributesValues' );

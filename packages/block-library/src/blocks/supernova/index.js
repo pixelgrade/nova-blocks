@@ -43,17 +43,21 @@ registerBlockType( 'novablocks/supernova', {
       type: 'string',
       default: 'auto',
     },
+    cardContentAlign: {
+      type: 'string',
+      default: 'center center',
+    },
     cardLayout: {
       type: 'string',
       default: 'vertical',
     },
-    cardMediaOpacity: {
-      type: 'number',
-      default: 100,
-    },
     cardMediaAspectRatio: {
       type: 'number',
       default: 50,
+    },
+    cardMediaOpacity: {
+      type: 'number',
+      default: 100,
     },
   },
   supports: {

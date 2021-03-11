@@ -5,6 +5,7 @@ import { Children } from '@wordpress/element';
 
 import { withDopplerContext, withDopplerProvider } from "@novablocks/doppler";
 import AdvancedGallery from "@novablocks/advanced-gallery";
+import { getAlignFromMatrix } from "@novablocks/block-editor";
 
 export const Card = ( props ) => {
 
@@ -37,7 +38,7 @@ export const Card = ( props ) => {
     <div className={ className } style={ style }>
       { ! mediaChildren.length && media && <CardMedia media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
-      <CardContent>
+      <CardContent { ...props }>
         { passedChildren }
       </CardContent>
     </div>
@@ -45,8 +46,21 @@ export const Card = ( props ) => {
 }
 
 export const CardContent = ( props ) => {
+
+  const align = getAlignFromMatrix( props?.attributes?.cardContentAlign );
+
+  const className = classnames(
+    `supernova-card__content`,
+    `supernova-card__content--valign-${ align[0] }`,
+    `supernova-card__content--halign-${ align[1] }`,
+  )
+
   return (
-    <div className={ `supernova-card__content` }>{ props.children }</div>
+    <div className={ className }>
+      <div className={ `supernova-card__inner-container` }>
+        { props.children }
+      </div>
+    </div>
   )
 }
 
