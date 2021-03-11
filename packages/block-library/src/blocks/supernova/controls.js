@@ -4,19 +4,20 @@ import { select, dispatch, useSelect } from '@wordpress/data';
 import { Fragment, useEffect } from '@wordpress/element';
 
 import {
+  Button,
   RangeControl,
-  SelectControl,
+  SelectControl, Toolbar,
 } from '@wordpress/components';
 
 import {
   __experimentalBlockAlignmentMatrixToolbar as BlockAlignmentMatrixToolbar,
-  BlockControls,
+  BlockControls, MediaUpload,
 } from "@wordpress/block-editor";
 
 import {
   ControlsSection,
   ControlsTab,
-  ControlsGroup,
+  ControlsGroup, getIconSvg,
 } from "@novablocks/block-editor";
 
 const Controls = ( props ) => {
@@ -33,6 +34,7 @@ const CollectionControls = ( props ) => {
 
   const {
     attributes: {
+      preview,
       layout,
       itemsWidth,
       columnsCount,
@@ -42,18 +44,31 @@ const CollectionControls = ( props ) => {
     clientId,
   } = props;
 
-  const { itemsCount } = useSelect( ( select ) => {
-    const itemsCount = select( 'core/block-editor' ).getBlockCount( clientId );
-
-    return { itemsCount };
-  }, [ clientId ] );
+  const itemsCount = useSelect( ( select ) => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
 
   useEffect( () => {
     setAttributes( { postsToShow: itemsCount } );
-  }, [ itemsCount ] )
+  }, [ itemsCount ] );
+
+  const editModeLabel = __( 'Edit Mode', '__plugin_txtd' );
+  const previewModeLabel = __( 'Preview Mode', '__plugin_txtd' );
 
   return (
     <Fragment>
+      <BlockControls>
+        <Toolbar>
+          <div>
+            <Button
+              className="components-icon-button components-toolbar__control"
+              icon={ getIconSvg( 'swap' ) }
+              onClick={ () => {
+                setAttributes( { preview: ! preview } )
+              } }>
+              { preview ? previewModeLabel : editModeLabel }
+            </Button>
+          </div>
+        </Toolbar>
+      </BlockControls>
       <ControlsSection label={ __( 'Collection' ) }>
         <ControlsTab label={ __( 'Setting' ) }>
           <SelectControl
@@ -143,11 +158,7 @@ const CardControls = ( props ) => {
       cardMediaAspectRatio,
     },
     setAttributes,
-    clientId,
   } = props;
-
-  const { getBlock } = select( 'core/block-editor' );
-  const block = getBlock( clientId );
 
   useEffect( () => {
     setAttributes( { thumbnailAspectRatio: cardMediaAspectRatio } )

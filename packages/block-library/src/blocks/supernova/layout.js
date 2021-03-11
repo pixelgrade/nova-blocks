@@ -16,7 +16,7 @@ const CollectionLayout = ( props ) => {
 }
 
 const ClassicLayout = ( props ) => {
-  return props.children;
+  return props.children || null;
 }
 
 const CarouselLayout = ( props ) => {

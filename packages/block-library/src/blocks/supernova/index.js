@@ -31,6 +31,10 @@ registerBlockType( 'novablocks/supernova', {
       type: 'string',
       default: 'grid'
     },
+    preview: {
+      type: 'boolean',
+      default: true,
+    },
     itemsWidth: {
       type: 'string',
       default: 'fixed',

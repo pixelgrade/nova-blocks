@@ -27,6 +27,10 @@ registerBlockType( 'novablocks/supernova-item', {
       type: 'string',
       default: 'horizontal'
     },
+    preview: {
+      type: 'boolean',
+      default: true,
+    },
   },
   supports: {
     html: false

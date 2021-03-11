@@ -46,6 +46,7 @@ const AdvancedGallery = ( props ) => {
 
 export default {
 	Component: withSettings( AdvancedGallery ),
+  Preview: AdvancedGalleryPreview,
 	attributes,
 	utils,
 };

@@ -1,40 +1,87 @@
 import classnames from 'classnames';
+
+import { InnerBlocks } from "@wordpress/block-editor";
+import { getSaveElement } from '@wordpress/blocks';
+import { dispatch, select } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
+
+import { getColorSetClassnames } from '@novablocks/utils';
+import { withDopplerControls } from '@novablocks/doppler';
+import AdvancedGallery from "@novablocks/advanced-gallery";
+
 import Controls from './controls';
 import CollectionLayout from './layout';
 import { PostCard } from './components/post';
+import { Card, CardMedia } from "./components/card";
+import { withPreviewAttributes } from './with-preview-attributes';
 
-import { InnerBlocks } from '@wordpress/block-editor';
-
-import { getColorSetClassnames } from '@novablocks/utils';
-
-import {
-  withDopplerControls,
-} from '@novablocks/doppler';
-
-const SuperNovaEdit = ( props ) => {
+const SuperNovaEdit = withPreviewAttributes( ( props ) => {
 
   const {
     attributes: {
+      preview,
       sourceType,
     },
     posts,
   } = props;
 
   if ( sourceType === 'custom' ) {
+
     return (
-      <Collection { ...props }>
-        <InnerBlocks
-          allowedBlocks={ [ 'novablocks/supernova-item' ] }
-          renderAppender={ false }
-          templateInsertUpdatesSelection={ false }
-        />
-      </Collection>
+      <Fragment>
+        {
+          preview &&
+          <CollectionPreview { ...props } />
+        }
+        {
+          ! preview &&
+          <Collection { ...props }>
+            <InnerBlocks
+              allowedBlocks={ [ 'novablocks/supernova-item' ] }
+              renderAppender={ false }
+              templateInsertUpdatesSelection={ false }
+            />
+          </Collection>
+        }
+      </Fragment>
     )
   }
 
   return (
     <Collection { ...props }>
       { Array.isArray( posts ) && posts.map( post => <PostCard { ...props } post={ post } /> ) }
+    </Collection>
+  )
+} );
+
+const CardEdit = withPreviewAttributes( Card );
+
+const CollectionPreview = ( props ) => {
+  const { clientId } = props;
+  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+  const { getBlock } = select( 'core/block-editor' );
+  const { innerBlocks } = getBlock( clientId );
+
+  return (
+    <Collection { ...props }>
+      { innerBlocks.map( block => {
+
+      const blockProps = Object.assign( {}, props, {
+        attributes: block.attributes,
+        setAttributes: ( newAttributes ) => {
+          updateBlockAttributes( block.clientId, newAttributes );
+        }
+      } );
+
+      return (
+        <CardEdit { ...blockProps }>
+          <CardMedia { ...blockProps }>
+            <AdvancedGallery.Preview { ...blockProps } />
+          </CardMedia>
+          { getSaveElement( block.name, block.attributes, block.innerBlocks ) }
+        </CardEdit>
+      )
+    } ) }
     </Collection>
   )
 }
