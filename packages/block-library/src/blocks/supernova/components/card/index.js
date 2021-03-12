@@ -7,6 +7,8 @@ import { withDopplerContext, withDopplerProvider } from "@novablocks/doppler";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 import { getAlignFromMatrix } from "@novablocks/block-editor";
 
+export * from './contents';
+
 export const Card = ( props ) => {
 
   const {
@@ -31,21 +33,21 @@ export const Card = ( props ) => {
   }
 
   const children = Children.toArray( props.children );
-  const mediaChildren = children.filter( child => child.type === CardMedia )
-  const passedChildren = children.filter( child => child.type !== CardMedia && child.type !== CardContent );
+  const mediaChildren = children.filter( child => child.type === CardMediaWrapper )
+  const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
 
   return (
     <div className={ className } style={ style }>
-      { ! mediaChildren.length && media && <CardMedia media={ media } { ...props } /> }
+      { ! mediaChildren.length && media && <CardMediaWrapper media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
-      <CardContent { ...props }>
+      <CardContentWrapper { ...props }>
         { passedChildren }
-      </CardContent>
+      </CardContentWrapper>
     </div>
   );
 }
 
-export const CardContent = ( props ) => {
+export const CardContentWrapper = ( props ) => {
 
   const align = getAlignFromMatrix( props?.attributes?.cardContentAlign );
 
@@ -67,9 +69,9 @@ export const CardContent = ( props ) => {
 const withDopplerContextAndProvider = createHigherOrderComponent( compose( [
   withDopplerProvider,
   withDopplerContext,
-] ), 'CardMedia' );
+] ), 'CardMediaWrapper' );
 
-export const CardMedia = ( props ) => {
+export const CardMediaWrapper = ( props ) => {
 
   const { media } = props;
 

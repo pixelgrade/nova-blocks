@@ -76,8 +76,9 @@ const CollectionControls = ( props ) => {
             label={ __( 'Source Type', '__plugin_txtd' ) }
             value={ sourceType }
             options={ [
-              { label: 'Custom', value: 'custom' },
-              { label: 'Auto', value: 'auto' },
+              { label: 'Content', value: 'content' },
+              { label: 'Blocks', value: 'blocks' },
+              { label: 'Fields', value: 'fields' },
             ] }
             onChange={ sourceType => {
               setAttributes( { sourceType } );

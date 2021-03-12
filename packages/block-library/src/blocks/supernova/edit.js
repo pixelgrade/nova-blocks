@@ -12,7 +12,7 @@ import AdvancedGallery from "@novablocks/advanced-gallery";
 import Controls from './controls';
 import CollectionLayout from './layout';
 import { PostCard } from './components/post';
-import { Card, CardMedia } from "./components/card";
+import { Card, CardMeta, CardTitle, CardDescription, CardFooter, CardButton, CardMediaWrapper } from "./components/card";
 import { withPreviewAttributes } from './with-preview-attributes';
 
 const SuperNovaEdit = withPreviewAttributes( ( props ) => {
@@ -25,29 +25,20 @@ const SuperNovaEdit = withPreviewAttributes( ( props ) => {
     posts,
   } = props;
 
-  if ( ! preview ) {
+  if ( sourceType === 'blocks' || sourceType === 'fields' ) {
 
-  }
-
-  if ( sourceType === 'custom' ) {
+    if ( preview ) {
+      return <CollectionPreview { ...props } />
+    }
 
     return (
-      <Fragment>
-        {
-          preview &&
-          <CollectionPreview { ...props } />
-        }
-        {
-          ! preview &&
-          <Collection { ...props }>
-            <InnerBlocks
-              allowedBlocks={ [ 'novablocks/supernova-item' ] }
-              renderAppender={ false }
-              templateInsertUpdatesSelection={ false }
-            />
-          </Collection>
-        }
-      </Fragment>
+      <Collection { ...props }>
+        <InnerBlocks
+          allowedBlocks={ [ 'novablocks/supernova-item' ] }
+          renderAppender={ false }
+          templateInsertUpdatesSelection={ false }
+        />
+      </Collection>
     )
   }
 
@@ -79,14 +70,48 @@ const CollectionPreview = ( props ) => {
 
       return (
         <CardEdit { ...blockProps }>
-          <CardMedia { ...blockProps }>
+          <CardMediaWrapper { ...blockProps }>
             <AdvancedGallery.Preview { ...blockProps } />
-          </CardMedia>
-          { getSaveElement( block.name, block.attributes, block.innerBlocks ) }
+          </CardMediaWrapper>
+          {
+            block.attributes.sourceType === 'fields' ?
+              <FieldsPreview attributes={ block.attributes } /> :
+              getSaveElement( block.name, block.attributes, block.innerBlocks )
+          }
         </CardEdit>
       )
     } ) }
     </Collection>
+  )
+}
+
+const FieldsPreview = ( props ) => {
+
+  const {
+    attributes: {
+      metaAboveTitle,
+      title,
+      metaBelowTitle,
+      description,
+      showMeta,
+      showTitle,
+      showDescription,
+
+      buttonText,
+      showFooter,
+    }
+  } = props;
+
+  return (
+    <Fragment>
+      <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
+      <CardTitle show={ showTitle }>{ title }</CardTitle>
+      <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
+      <CardDescription show={ showDescription }>{ description }</CardDescription>
+      <CardFooter show={ showFooter && !! buttonText }>
+        <CardButton>{ buttonText }</CardButton>
+      </CardFooter>
+    </Fragment>
   )
 }
 

@@ -8,8 +8,8 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
     if ( 'novablocks/supernova' === props.name ) {
       const { clientId, attributes } = props;
 
-      const newAttributes = ( ( { cardContentAlign, cardLayout, cardMediaOpacity, preview } ) => {
-        return { cardContentAlign, cardLayout, cardMediaOpacity, preview };
+      const newAttributes = ( ( { cardContentAlign, cardLayout, cardMediaOpacity, sourceType, preview } ) => {
+        return { cardContentAlign, cardLayout, cardMediaOpacity, sourceType, preview };
       } )( attributes );
 
       newAttributes['containerHeight'] = attributes['cardMediaAspectRatio'];

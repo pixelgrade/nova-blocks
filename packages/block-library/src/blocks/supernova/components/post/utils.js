@@ -98,3 +98,13 @@ export const getMetadata = ( post, meta ) => {
 
   return null;
 };
+
+export const sanitizeMediaResponse = ( mediaObject ) => {
+
+  return {
+    type: mediaObject?.media_type,
+    width: mediaObject?.media_details?.width,
+    height: mediaObject?.media_details?.height,
+    src: mediaObject?.source_url,
+  }
+};

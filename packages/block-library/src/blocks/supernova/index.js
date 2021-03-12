@@ -45,7 +45,7 @@ registerBlockType( 'novablocks/supernova', {
     },
     sourceType: {
       type: 'string',
-      default: 'auto',
+      default: 'content',
     },
     cardContentAlign: {
       type: 'string',

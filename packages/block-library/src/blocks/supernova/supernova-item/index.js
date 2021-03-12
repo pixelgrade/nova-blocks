@@ -31,6 +31,66 @@ registerBlockType( 'novablocks/supernova-item', {
       type: 'boolean',
       default: true,
     },
+    level: {
+      type: 'number',
+      default: 2,
+    },
+    sourceType: {
+      type: 'string',
+      default: 'content',
+    },
+    metaAboveTitle: {
+      type: 'string',
+      default: '',
+    },
+    metaBelowTitle: {
+      type: 'string',
+      default: '',
+    },
+    showMeta: {
+      type: 'boolean',
+      default: true,
+    },
+    title: {
+      type: 'string',
+      default: '',
+    },
+    showTitle: {
+      type: 'boolean',
+      default: true,
+    },
+    subtitle: {
+      type: 'string',
+      default: '',
+    },
+    showSubtitle: {
+      type: 'boolean',
+      default: true,
+    },
+    description: {
+      type: 'string',
+      default: '',
+    },
+    showDescription: {
+      type: 'boolean',
+      default: true,
+    },
+    buttonText: {
+      type: 'string',
+      default: '',
+    },
+    buttonUrl: {
+      type: 'string',
+      default: '',
+    },
+    buttonOpensInNewTab: {
+      type: 'boolean',
+      default: false,
+    },
+    showFooter: {
+      type: 'boolean',
+      default: true,
+    }
   },
   supports: {
     html: false
