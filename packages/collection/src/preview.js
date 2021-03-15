@@ -81,84 +81,95 @@ export const ClassicLayoutPreview = ( props ) => {
 export const ParametricLayoutPreview = ( props ) => {
 
 	const {
-		attributes,
-		getContent,
-		cardsCount,
+		attributes: {
+		  headerPosition,
+      toggleMask,
+      toggleScale,
+    },
 	} = props;
 
-	const {
-		toggleScale,
-		toggleMask,
-
-		thumbnailAspectRatio,
-		imagePadding,
-		imageResizing,
-
-		headerPosition,
-	} = attributes;
-
-	const classname = classnames(
-		`novablocks-grid`,
-		{
-			'novablocks-grid--scaled': toggleScale,
-			'novablocks-grid--mask': toggleMask,
-		}
-	);
-
-	let areaColumns = applyLayoutEngine( attributes );
-	let addedCards = 0;
-
-	redistributeCardsInAreas( areaColumns, cardsCount, attributes );
-
-	const style = {
-		'--card-media-padding': imagePadding,
-		'--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
-		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
-		...getGridStyle( attributes ),
-	};
+  const gridClassName = classnames(
+    `novablocks-grid`,
+    {
+      'novablocks-grid--mask': toggleMask,
+      'novablocks-grid--scaled': toggleScale,
+    }
+  );
 
 	return (
 		<div className="wp-block-group__inner-container">
 			{ headerPosition === 0 && <CollectionHeader { ...props } /> }
 			<div className="novablocks-collection__cards block-editor-block-list__block">
 				<div className="novablocks-collection__layout">
-					<div className={ classname } style={ style }>
-						{
-							!! areaColumns && areaColumns.map( areaColumn => {
-								let { areas, row, col, width, height } = areaColumn;
-
-								const areaColumnStyle = {
-									gridColumnStart: col,
-									gridColumnEnd: col + width,
-									gridRowStart: row,
-									gridRowEnd: row + height,
-								};
-
-								return (
-									<div className={ `novablocks-grid__column` } style={ areaColumnStyle }>
-										{ areas.map( area => {
-											addedCards += area.postsCount;
-
-											return (
-												<div className={ getParametricLayoutAreaClassName( area, attributes ) }>
-													<AreaDebug area={ area } />
-													{ Array.from( Array( area.postsCount ).keys() ).map( i => {
-														const landscape = isLandscape( area, attributes );
-														return getContent( addedCards - area.postsCount + i, attributes, landscape );
-													} ) }
-												</div>
-											)
-										} ) }
-									</div>
-								);
-							} )
-						}
-					</div>
+          <ParametricGrid { ...props } gridClassName={ gridClassName }/>
 				</div>
 			</div>
 		</div>
 	)
 };
+
+export const ParametricGrid = ( props ) => {
+
+  const {
+    attributes,
+    getContent,
+    cardsCount,
+    gridClassName,
+  } = props;
+
+  const {
+    thumbnailAspectRatio,
+    imagePadding,
+    imageResizing,
+  } = attributes;
+
+  let areaColumns = applyLayoutEngine( attributes );
+  let addedCards = 0;
+
+  redistributeCardsInAreas( areaColumns, cardsCount, attributes );
+
+  const style = {
+    '--card-media-padding': imagePadding,
+    '--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
+    '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
+    ...getGridStyle( attributes ),
+  };
+
+  return (
+    <div className={ gridClassName } style={ style }>
+      {
+        !! areaColumns && areaColumns.map( areaColumn => {
+          let { areas, row, col, width, height } = areaColumn;
+
+          const areaColumnStyle = {
+            gridColumnStart: col,
+            gridColumnEnd: col + width,
+            gridRowStart: row,
+            gridRowEnd: row + height,
+          };
+
+          return (
+            <div className={ `novablocks-grid__column` } style={ areaColumnStyle }>
+              { areas.map( area => {
+                addedCards += area.postsCount;
+
+                return (
+                  <div className={ getParametricLayoutAreaClassName( area, attributes ) }>
+                    <AreaDebug area={ area } />
+                    { Array.from( Array( area.postsCount ).keys() ).map( i => {
+                      const landscape = isLandscape( area, attributes );
+                      return getContent( addedCards - area.postsCount + i, attributes, landscape );
+                    } ) }
+                  </div>
+                )
+              } ) }
+            </div>
+          );
+        } )
+      }
+    </div>
+  )
+}
 
 export const CarouselLayoutPreview = ( props ) => {
   const {

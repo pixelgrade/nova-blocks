@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-
 import { InnerBlocks } from "@wordpress/block-editor";
 import { getSaveElement } from '@wordpress/blocks';
 import { dispatch, select } from '@wordpress/data';
@@ -123,18 +121,11 @@ const Collection = ( props ) => {
     align,
     columnsCount,
     cardMediaOpacity,
-    layout,
-    itemsWidth,
-    sourceType,
   } = attributes;
 
   const colorSetClassnames = getColorSetClassnames( attributes );
 
-  const layoutClassName = classnames(
-    `supernova-collection__layout`,
-    `supernova-collection__layout--${ layout }`,
-    `supernova-collection__layout--${ itemsWidth }-width`,
-  );
+
 
   const style = {
     '--collection-columns-count': columnsCount,
@@ -146,9 +137,7 @@ const Collection = ( props ) => {
       <div className={ `supernova__inner-container` }>
         <div className="wp-block" data-align={ align }>
           <div className={ `supernova-collection` } style={ style }>
-            <div className={ layoutClassName } data-source={ sourceType }>
-              <CollectionLayout { ...props } />
-            </div>
+            <CollectionLayout { ...props } />
           </div>
         </div>
       </div>

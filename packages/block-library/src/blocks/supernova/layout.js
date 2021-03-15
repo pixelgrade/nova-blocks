@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import Slider from "react-slick";
 
 import { Children } from '@wordpress/element';
@@ -7,7 +8,7 @@ import {
 } from "@novablocks/collection";
 
 const {
-  ParametricLayoutPreview,
+  ParametricGrid,
 } = GridGenerator;
 
 const CollectionLayout = ( props ) => {
@@ -17,8 +18,15 @@ const CollectionLayout = ( props ) => {
   } = props;
 
   const {
-    layout
+    itemsWidth,
+    layout,
   } = attributes;
+
+  const layoutClassName = classnames(
+    `supernova-collection__layout`,
+    `supernova-collection__layout--${ layout }`,
+    `supernova-collection__layout--${ itemsWidth }-width`,
+  );
 
   const children = Children.toArray( props.children );
 
@@ -28,19 +36,28 @@ const CollectionLayout = ( props ) => {
 
   if ( layout === 'parametric' ) {
     return (
-      <ParametricLayoutPreview
+      <ParametricGrid
         getContent={ getContent }
         cardsCount={ children.length }
+        gridClassName={ layoutClassName }
         { ...props }
       />
     )
   }
 
   if ( layout === 'carousel' ) {
-    return <CarouselLayout { ...props } />
+    return (
+      <div className={ layoutClassName }>
+        <CarouselLayout { ...props } />
+      </div>
+    );
   }
 
-  return <ClassicLayout { ...props } />
+  return (
+    <div className={ layoutClassName }>
+      <ClassicLayout { ...props } />
+    </div>
+  );
 }
 
 const ClassicLayout = ( props ) => {
@@ -51,9 +68,9 @@ const CarouselLayout = ( props ) => {
 
   const {
     attributes: {
-      showPagination,
       columnsCount,
       itemsWidth,
+      showPagination,
     }
   } = props;
 

@@ -41,12 +41,6 @@
   }
 }
 
-.supernova-card__content {
-  position: relative;
-  overflow: hidden;
-  padding: var(--novablocks-spacing);
-}
-
 .supernova-card__media-wrapper > *,
 .supernova-card--layout-stacked .supernova-card__media-aspect-ratio {
   height: 100%;
@@ -70,6 +64,10 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  position: relative;
+  overflow: hidden;
+  padding: var(--novablocks-spacing) 0;
 
   &:before,
   &:after {
