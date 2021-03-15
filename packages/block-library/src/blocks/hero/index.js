@@ -5,6 +5,7 @@ import iconSvg from './hero-block.svg';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
+import transforms from './transforms';
 
 import { getRandomBetween } from "@novablocks/utils";
 import { getSvg } from "@novablocks/block-editor";
@@ -79,4 +80,5 @@ registerBlockType( 'novablocks/hero', {
 		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
+  transforms
 } );

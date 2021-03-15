@@ -25,7 +25,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
 		attributes,
 	} = props;
 
-	const gallery = attributes?.images;
+	const gallery = attributes?.images || [];
 	const galleryValue = gallery.map( ( image ) => image.id );
 
 	if ( ! gallery || ! gallery.length ) {

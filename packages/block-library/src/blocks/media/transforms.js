@@ -21,6 +21,38 @@ export default {
 		}
 	],
 	to: [
+    {
+      type: 'block',
+      blocks: ['novablocks/supernova'],
+      transform: function( attributes, innerBlocks ) {
+        const {
+          mediaPosition,
+          verticalAlignment,
+          horizontalAlignment
+        } = attributes;
+
+        const commonAttributes = {
+          cardLayout: mediaPosition === 'left' ? 'horizontal' : 'horizontal-reverse',
+          cardContentAlign: `${ verticalAlignment } ${ horizontalAlignment }`,
+          sourceType: 'blocks',
+        }
+
+        const cardAttributes = Object.assign( {}, attributes, commonAttributes );
+
+        const collectionAttributes = Object.assign( {}, commonAttributes, {
+          layout: 'grid',
+          itemsWidth: 'fixed',
+          columnsCount: 1,
+          cardMediaAspectRatio: attributes[ 'containerHeight' ],
+          cardMediaOpacity: 100,
+          align: 'wide',
+        } );
+
+        return createBlock( 'novablocks/supernova', collectionAttributes, [
+          createBlock( 'novablocks/supernova-item', cardAttributes, innerBlocks )
+        ] )
+      },
+    },
 		{
 			type: 'block',
 			blocks: ['novablocks/advanced-gallery'],
