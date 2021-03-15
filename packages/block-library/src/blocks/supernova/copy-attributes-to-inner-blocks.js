@@ -1,6 +1,8 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { setAttributesToInnerBlocks, getAlignFromMatrix } from "@novablocks/block-editor";
 
+import { cardsManagerAttributes } from './utils';
+
 const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
@@ -8,11 +10,17 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
     if ( 'novablocks/supernova' === props.name ) {
       const { clientId, attributes } = props;
 
-      const newAttributes = ( ( { cardContentAlign, cardLayout, cardMediaOpacity, sourceType, preview } ) => {
-        return { cardContentAlign, cardLayout, cardMediaOpacity, sourceType, preview };
-      } )( attributes );
+      const attributeKeys = Object.keys( cardsManagerAttributes ).concat( [
+        'cardContentAlign',
+        'cardLayout',
+        'cardMediaOpacity',
+        'sourceType',
+        'preview'
+      ] );
 
-      newAttributes['containerHeight'] = attributes['cardMediaAspectRatio'];
+      const newAttributes = {};
+      attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );
+      newAttributes[ 'containerHeight' ] = attributes[ 'cardMediaAspectRatio' ];
 
       setAttributesToInnerBlocks( clientId, newAttributes );
     }

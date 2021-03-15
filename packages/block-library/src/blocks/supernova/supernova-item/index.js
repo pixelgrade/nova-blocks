@@ -3,9 +3,9 @@
  */
 import { getSvg } from "@novablocks/block-editor";
 
+import { cardsManagerAttributes } from '../utils';
 import edit from './edit';
 import iconSvg from '../super-nova-block.svg';
-
 
 /**
  * WordPress dependencies
@@ -90,7 +90,8 @@ registerBlockType( 'novablocks/supernova-item', {
     showFooter: {
       type: 'boolean',
       default: true,
-    }
+    },
+    ...cardsManagerAttributes
   },
   supports: {
     html: false

@@ -5,6 +5,7 @@ import { select } from '@wordpress/data';
  */
 import { getSvg } from '@novablocks/block-editor';
 
+import { cardsManagerAttributes } from './utils';
 import edit from './edit';
 import iconSvg from './super-nova-block.svg';
 
@@ -63,6 +64,7 @@ registerBlockType( 'novablocks/supernova', {
       type: 'number',
       default: 100,
     },
+    ...cardsManagerAttributes
   },
   supports: {
     align: [ "wide", "full" ],
