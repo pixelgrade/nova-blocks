@@ -18,6 +18,7 @@ registerQueryStore( `novablocks/${ STORE_NAME }` );
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
+import { createBlock } from '@wordpress/blocks';
 
 import {
 	compose,
@@ -25,8 +26,14 @@ import {
 } from '@wordpress/compose';
 
 import {
+  SelectControl
+} from '@wordpress/components';
+
+import {
 	withSelect,
 	withDispatch,
+  dispatch,
+  useSelect,
 } from '@wordpress/data';
 
 const enablePostsQueryControlsOnBlocks = [
@@ -45,6 +52,7 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 		const {
 			attributes,
 			setAttributes,
+      clientId,
 		} = props;
 
 		const {
@@ -55,13 +63,30 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 			categories,
 			tags,
 			preventDuplicatePosts,
+      sourceType
 		} = attributes;
 
-		return (
+    const itemsCount = useSelect( ( select ) => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
+    const { innerBlocks } = useSelect( ( select ) => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
+
+    return (
 			<Fragment>
 				<OriginalComponent { ...props } />
 				<ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Cards Manager' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
+            <SelectControl
+              key={ 'collection-source-type' }
+              label={ __( 'Source Type', '__plugin_txtd' ) }
+              value={ sourceType }
+              options={ [
+                { label: 'Content', value: 'content' },
+                { label: 'Blocks', value: 'blocks' },
+                { label: 'Fields', value: 'fields' },
+              ] }
+              onChange={ sourceType => {
+                setAttributes( { sourceType } );
+              } }
+            />
 						<QueryControls
 							key={ 'query-controls' }
 							enableSpecific={ true }
@@ -70,9 +95,19 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 								setAttributes( { preventDuplicatePosts: _preventDuplicatePosts } )
 							} }
 							numberOfItems={ postsToShow }
-							onNumberOfItemsChange={ _postsToShow =>
+							onNumberOfItemsChange={ _postsToShow => {
+                const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
+                const newInnerBlocks = innerBlocks.slice( 0, _postsToShow );
+
+                if ( _postsToShow > itemsCount ) {
+                  for ( let i = 0; i < _postsToShow - itemsCount; i++ ) {
+                    newInnerBlocks.push( createBlock( 'novablocks/supernova-item' ) );
+                  }
+                }
+
+                replaceInnerBlocks( clientId, newInnerBlocks );
 								setAttributes( { postsToShow: _postsToShow } )
-							}
+							} }
 							loadingMode={ loadingMode }
 							onLoadingModeChange={ _loadingMode =>
 								setAttributes( { loadingMode: _loadingMode } )

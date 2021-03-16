@@ -23,22 +23,6 @@
 		"type": "string",
 		"default": ""
 	},
-	"emphasisArea": {
-		"type": "number",
-		"default": 100
-	},
-	"contentAreaWidth": {
-		"type": "number",
-		"default": 50
-	},
-	"balanceEmphasis": {
-		"type": "number",
-		"default": 0
-	},
-	"balanceFocalPoint": {
-		"type": "string",
-		"default": "content"
-	},
 	"layoutPreset": {
 		"type": "string",
 		"default": "stable"

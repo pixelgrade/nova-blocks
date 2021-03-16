@@ -7,16 +7,20 @@ import {
 } from '@wordpress/components';
 
 import {
-	ControlsGroup,
-	ControlsSection,
-	ControlsTab,
-	Notice,
-	PresetControl,
+  ControlsGroup,
+  ControlsSection,
+  ControlsTab,
+  Notice,
+  PresetControl,
+  withSettings,
 } from '@novablocks/block-editor';
 
-import { getRandomAttributes } from "./utils";
+import {
+  getRandomAttributes,
+  withOnSelectImages,
+} from "./utils";
 
-const AdvancedGalleryInspectorControls = ( props ) => {
+const AdvancedGalleryInspectorControls = props => {
 
 	const {
 		setAttributes,
@@ -158,4 +162,4 @@ const AdvancedGalleryInspectorControls = ( props ) => {
 	);
 };
 
-export default AdvancedGalleryInspectorControls;
+export default withSettings( withOnSelectImages( AdvancedGalleryInspectorControls ) );

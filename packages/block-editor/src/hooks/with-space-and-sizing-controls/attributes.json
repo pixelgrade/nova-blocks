@@ -7,10 +7,6 @@
 		"type": "boolean",
 		"default": false
 	},
-	"layoutGutter": {
-		"type": "number",
-		"default": 10
-	},
 	"blockTopSpacing": {
 		"type": "number",
 		"default": 0

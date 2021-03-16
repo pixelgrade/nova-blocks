@@ -1,10 +1,5 @@
 import { Fragment } from '@wordpress/element';
 
-import {
-	normalizeImages,
-	withSettings
-} from "@novablocks/block-editor";
-
 import AdvancedGalleryPreview from './preview';
 import AdvancedGalleryPlaceholder from './placeholder';
 import AdvancedGalleryInspectorControls from './inspector-controls';
@@ -22,31 +17,21 @@ export {
 
 const AdvancedGallery = ( props ) => {
 
-	const {
-		setAttributes
-	} = props;
-
-	const onSelectImages = ( images ) => {
-		normalizeImages( images ).then( newImages => {
-			setAttributes( { images: newImages } );
-		} )
-	};
-
-	const newProps = Object.assign( {}, props, { onSelectImages } );
-
 	return (
 		<Fragment>
-			<AdvancedGalleryPlaceholder { ...newProps } />
-			<AdvancedGalleryPreview { ...newProps } />
-			<AdvancedGalleryInspectorControls { ...newProps } />
-			<AdvancedGalleryBlockControls { ...newProps } />
+			<AdvancedGalleryPlaceholder { ...props } />
+			<AdvancedGalleryPreview { ...props } />
+			<AdvancedGalleryInspectorControls { ...props } />
+			<AdvancedGalleryBlockControls { ...props } />
 		</Fragment>
 	)
 };
 
 export default {
-	Component: withSettings( AdvancedGallery ),
+	Component: AdvancedGallery,
   Preview: AdvancedGalleryPreview,
+  InspectorControls: AdvancedGalleryInspectorControls,
+  BlockControls: AdvancedGalleryBlockControls,
 	attributes,
 	utils,
 };

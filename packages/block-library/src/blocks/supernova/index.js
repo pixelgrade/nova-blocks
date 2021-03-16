@@ -4,8 +4,8 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSvg } from '@novablocks/block-editor';
+import Blob from '@novablocks/blob';
 
-import { cardsManagerAttributes } from './utils';
 import edit from './edit';
 import iconSvg from './super-nova-block.svg';
 
@@ -28,25 +28,9 @@ registerBlockType( 'novablocks/supernova', {
       type: 'string',
       default: 'wide',
     },
-    layout: {
-      type: 'string',
-      default: 'grid'
-    },
     preview: {
       type: 'boolean',
       default: true,
-    },
-    itemsWidth: {
-      type: 'string',
-      default: 'fixed',
-    },
-    columnsCount: {
-      type: 'number',
-      default: 3,
-    },
-    sourceType: {
-      type: 'string',
-      default: 'content',
     },
     cardContentAlign: {
       type: 'string',
@@ -56,15 +40,11 @@ registerBlockType( 'novablocks/supernova', {
       type: 'string',
       default: 'vertical',
     },
-    cardMediaAspectRatio: {
-      type: 'number',
-      default: 50,
-    },
     cardMediaOpacity: {
       type: 'number',
       default: 100,
     },
-    ...cardsManagerAttributes
+    ...Blob.attributes
   },
   supports: {
     align: [ "wide", "full" ],
@@ -76,6 +56,6 @@ registerBlockType( 'novablocks/supernova', {
   },
   getEditWrapperProps() {
     const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
+    return settings.alignWide ? { 'data-spanac': 'full' } : {};
   },
 } );

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { normalizeImages } from "@novablocks/block-editor";
 import { debounce, isSafari, getRandomBetween } from "@novablocks/utils";
 
 export const getRandomAttributes = () => {
@@ -76,3 +77,17 @@ export const safariHeightFix = ( grid ) => {
 		} );
 	}
 };
+
+const onSelectImages = ( images ) => {
+  normalizeImages( images ).then( newImages => {
+    setAttributes( { images: newImages } );
+  } )
+};
+
+export const withOnSelectImages = ( WrappedComponent => {
+
+  return ( props ) => {
+    return <WrappedComponent { ...props } onSelectImages={ onSelectImages } />
+  }
+
+} );

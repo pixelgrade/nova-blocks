@@ -5,7 +5,7 @@
   }
 }
 
-.supernova-collection__layout--grid {
+.supernova-collection__layout--classic {
   display: grid;
   grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
 }

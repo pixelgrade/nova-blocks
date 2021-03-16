@@ -40,10 +40,8 @@ export default {
         const cardAttributes = Object.assign( {}, attributes, commonAttributes );
 
         const collectionAttributes = Object.assign( {}, commonAttributes, {
-          layout: 'grid',
-          itemsWidth: 'fixed',
-          columnsCount: 1,
-          cardMediaAspectRatio: attributes[ 'containerHeight' ],
+          layout: 'classic',
+          columns: 1,
           cardMediaOpacity: 100,
           align: 'wide',
         } );

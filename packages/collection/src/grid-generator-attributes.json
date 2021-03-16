@@ -57,7 +57,11 @@
 	},
 	"layoutStyle": {
 		"type": "string",
-		"default": "parametric"
+		"default": "classic"
+	},
+	"columns": {
+		"type": "number",
+		"default": 1
 	},
 	"headerPosition": {
 		"type": "number",

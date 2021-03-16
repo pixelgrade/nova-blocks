@@ -25,10 +25,9 @@ export default {
         } );
 
         const collectionAttributes = Object.assign( {}, commonAttributes, {
-          layout: 'grid',
-          itemsWidth: 'fixed',
+          layout: 'classic',
           cardMediaOpacity: ( 100 - overlayFilterStrength ),
-          columnsCount: 1,
+          columns: 1,
           align: 'full',
           emphasisTopSpacing: 0,
           emphasisBottomSpacing: 0,

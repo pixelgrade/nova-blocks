@@ -3,7 +3,6 @@
  */
 import { getSvg } from "@novablocks/block-editor";
 
-import { cardsManagerAttributes } from '../utils';
 import edit from './edit';
 import iconSvg from '../super-nova-block.svg';
 
@@ -13,6 +12,7 @@ import iconSvg from '../super-nova-block.svg';
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from "@wordpress/block-editor";
+import Blob from "@novablocks/blob";
 
 registerBlockType( 'novablocks/supernova-item', {
   title: __( 'Super Nova Item', '__plugin_txtd' ),
@@ -91,7 +91,7 @@ registerBlockType( 'novablocks/supernova-item', {
       type: 'boolean',
       default: true,
     },
-    ...cardsManagerAttributes
+    ...Blob.attributes
   },
   supports: {
     html: false

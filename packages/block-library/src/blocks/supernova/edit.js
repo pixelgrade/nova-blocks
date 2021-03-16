@@ -119,16 +119,14 @@ const Collection = ( props ) => {
 
   const {
     align,
-    columnsCount,
+    columns,
     cardMediaOpacity,
   } = attributes;
 
   const colorSetClassnames = getColorSetClassnames( attributes );
 
-
-
   const style = {
-    '--collection-columns-count': columnsCount,
+    '--collection-columns-count': columns,
     '--collection-card-media-opacity': cardMediaOpacity / 100,
   };
 
@@ -141,6 +139,7 @@ const Collection = ( props ) => {
           </div>
         </div>
       </div>
+      <AdvancedGallery.InspectorControls { ...props } />
       <Controls { ...props } />
     </div>
   )

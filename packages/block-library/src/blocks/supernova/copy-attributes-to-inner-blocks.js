@@ -2,7 +2,8 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 import { select } from "@wordpress/data";
 import { setAttributesToInnerBlocks, getAlignFromMatrix } from "@novablocks/block-editor";
 
-import { cardsManagerAttributes } from './utils';
+import AdvancedGallery from '@novablocks/advanced-gallery';
+import Blob from '@novablocks/blob';
 
 const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlock ) => {
 
@@ -13,7 +14,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
       const { getBlock } = select( 'core/block-editor' );
       const { innerBlocks } = getBlock( clientId );
 
-      const attributeKeys = Object.keys( cardsManagerAttributes ).concat( [
+      const attributeKeys = [
         'cardContentAlign',
         'cardLayout',
         'cardMediaOpacity',
@@ -25,7 +26,9 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'useSourceColorAsReference',
 
         'contentStyle',
-      ] );
+      ]
+      .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images' ] ) ) )
+      .concat( Object.keys( Blob.attributes ) );
 
       const newAttributes = {};
       attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );

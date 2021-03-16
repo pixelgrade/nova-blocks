@@ -11,7 +11,7 @@ const Blob = {
 	InspectorControls,
 	Debug,
 	withBlobsDecoration,
-	Utils: utils
+	utils
 };
 
 export default Blob;

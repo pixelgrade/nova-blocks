@@ -1,20 +1,4 @@
 {
-	"columns": {
-		"type": "number",
-		"default": 3
-	},
-	"collectionTitle": {
-		"type": "string",
-		"default": "Title"
-	},
-	"collectionDescription": {
-		"type": "string",
-		"default": "Description"
-	},
-	"isLandscape": {
-		"type": "boolean",
-		"default": false
-	},
 	"order": {
 		"type": "string",
 		"default": "desc"

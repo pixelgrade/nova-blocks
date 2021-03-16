@@ -18,14 +18,14 @@ const CollectionLayout = ( props ) => {
   } = props;
 
   const {
-    itemsWidth,
-    layout,
+    carouselLayout,
+    layoutStyle,
   } = attributes;
 
   const layoutClassName = classnames(
     `supernova-collection__layout`,
-    `supernova-collection__layout--${ layout }`,
-    `supernova-collection__layout--${ itemsWidth }-width`,
+    `supernova-collection__layout--${ layoutStyle }`,
+    `supernova-collection__layout--${ carouselLayout }-width`,
   );
 
   const children = Children.toArray( props.children );
@@ -34,7 +34,7 @@ const CollectionLayout = ( props ) => {
     return children[ index ];
   }
 
-  if ( layout === 'parametric' ) {
+  if ( layoutStyle === 'parametric' ) {
     return (
       <ParametricGrid
         getContent={ getContent }
@@ -45,7 +45,7 @@ const CollectionLayout = ( props ) => {
     )
   }
 
-  if ( layout === 'carousel' ) {
+  if ( layoutStyle === 'carousel' ) {
     return (
       <div className={ layoutClassName }>
         <CarouselLayout { ...props } />
@@ -68,8 +68,8 @@ const CarouselLayout = ( props ) => {
 
   const {
     attributes: {
-      columnsCount,
-      itemsWidth,
+      columns,
+      carouselLayout,
       showPagination,
     }
   } = props;
@@ -77,11 +77,11 @@ const CarouselLayout = ( props ) => {
   const settings = {
     dots: showPagination,
     infinite: true,
-    variableWidth: itemsWidth === 'variable',
+    variableWidth: carouselLayout === 'variable',
   };
 
-  if ( itemsWidth !== 'variable' ) {
-    settings.slidesToShow = columnsCount;
+  if ( carouselLayout !== 'variable' ) {
+    settings.slidesToShow = columns;
   }
 
   return (

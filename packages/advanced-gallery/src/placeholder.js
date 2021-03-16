@@ -3,7 +3,9 @@ import {
 	BlockIcon
  } from '@wordpress/block-editor';
 
-const AdvancedGalleryPlaceholder = ( props ) => {
+import { withOnSelectImages } from './utils';
+
+const AdvancedGalleryPlaceholder = withOnSelectImages( props => {
 
 	const {
 		attributes,
@@ -24,6 +26,6 @@ const AdvancedGalleryPlaceholder = ( props ) => {
 			onSelect={ onSelectImages }
 		/>
 	)
-}
+} );
 
 export default AdvancedGalleryPlaceholder;
