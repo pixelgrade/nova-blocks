@@ -18,7 +18,13 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'cardLayout',
         'cardMediaOpacity',
         'sourceType',
-        'preview'
+        'preview',
+
+        'palette',
+        'paletteVariation',
+        'useSourceColorAsReference',
+
+        'contentStyle',
       ] );
 
       const newAttributes = {};

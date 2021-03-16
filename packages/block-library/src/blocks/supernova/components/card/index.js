@@ -6,6 +6,7 @@ import { Children } from '@wordpress/element';
 import { withDopplerContext, withDopplerProvider } from "@novablocks/doppler";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 import { getAlignFromMatrix } from "@novablocks/block-editor";
+import { getContentVariation } from "@novablocks/utils";
 
 export * from './contents';
 
@@ -49,12 +50,15 @@ export const Card = ( props ) => {
 
 export const CardContentWrapper = ( props ) => {
 
-  const align = getAlignFromMatrix( props?.attributes?.cardContentAlign );
+  const { attributes } = props;
+
+  const align = getAlignFromMatrix( attributes?.cardContentAlign );
 
   const className = classnames(
     `supernova-card__content`,
     `supernova-card__content--valign-${ align[0] }`,
     `supernova-card__content--halign-${ align[1] }`,
+    `sm-variation-${ getContentVariation( attributes ) }`,
   )
 
   return (

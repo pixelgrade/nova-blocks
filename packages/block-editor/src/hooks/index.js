@@ -1,5 +1,7 @@
 import "./with-block-id";
 import "./with-block-index";
+import "./with-card-details-section";
+import "./with-card-elements-display-section";
 import "./with-cards-manager";
 import "./with-color-variations";
 import "./with-deprecated-group";

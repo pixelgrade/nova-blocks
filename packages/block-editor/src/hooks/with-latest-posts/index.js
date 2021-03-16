@@ -60,7 +60,7 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 		return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<ControlsSection label={ __( 'Content Filter' ) } group={ __( 'Block Modules' ) }>
+				<ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Cards Manager' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<QueryControls
 							key={ 'query-controls' }

@@ -5,7 +5,6 @@ import { Fragment, useEffect } from '@wordpress/element';
 
 import {
   Button,
-  PanelBody,
   RangeControl,
   SelectControl,
   Toolbar,
@@ -20,8 +19,6 @@ import {
   ControlsSection,
   ControlsTab,
   ControlsGroup,
-  ControlsDrawerContent,
-  CardsManager,
   getIconSvg,
 } from "@novablocks/block-editor";
 
@@ -195,11 +192,6 @@ const Controls = ( props ) => {
           } }
         />
       </BlockControls>
-      <ControlsDrawerContent>
-        <PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-          <CardsManager.Component { ...props } />
-        </PanelBody>
-      </ControlsDrawerContent>
     </Fragment>
   )
 }

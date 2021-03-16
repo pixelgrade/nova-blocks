@@ -1,9 +1,9 @@
 import { getIcon } from "@novablocks/icons";
+import { normalizeVariationValue } from "@novablocks/utils";
 
 import {
   RangeControl,
   ToggleControl,
-  ColorPalette,
 } from "@wordpress/components";
 
 import {
@@ -275,7 +275,7 @@ const PaletteVariationControls = ( props ) => {
       />
       <RangeControl
         key={ 'color-set-source-color-offset-control' }
-        label={ __( 'Soruce Color Offset', '__plugin_txtd' ) }
+        label={ __( 'Source Color Offset', '__plugin_txtd' ) }
         value={ normalizeVariationValue( ( actualBlockVariation - sourceIndex + 5 ) ) - 6 }
         min={ -6 }
         max={ 6 }
@@ -284,10 +284,6 @@ const PaletteVariationControls = ( props ) => {
       />
     </Fragment>
   )
-}
-
-const normalizeVariationValue = ( value ) => {
-  return ( value + 11 ) % 12 + 1;
 }
 
 export {

@@ -9,6 +9,8 @@ const withBlobControls = createHigherOrderComponent(OriginalComponent => {
 	return ( props ) => {
 
 		let themeSupport = props?.settings?.theme_support?.blobs;
+
+		// @todo avoid adding controls to block that don't actually support blobs
 		let enableBlobControls =  Array.isArray( themeSupport ) ? themeSupport : [];
 
 		if ( ! enableBlobControls.includes( props.name ) ) {

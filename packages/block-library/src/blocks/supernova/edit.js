@@ -1,5 +1,5 @@
 import { InnerBlocks } from "@wordpress/block-editor";
-import { getSaveElement } from '@wordpress/blocks';
+import { getSaveElement, getSaveContent } from '@wordpress/blocks';
 import { dispatch, select } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
@@ -74,7 +74,7 @@ const CollectionPreview = ( props ) => {
           {
             block.attributes.sourceType === 'fields' ?
               <FieldsPreview attributes={ block.attributes } /> :
-              getSaveElement( block.name, block.attributes, block.innerBlocks )
+              block.innerBlocks.map( innerBlock => getSaveElement( innerBlock.name, innerBlock.attributes, innerBlock.innerBlocks ) )
           }
         </CardEdit>
       )

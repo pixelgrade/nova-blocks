@@ -1,5 +1,6 @@
 .supernova-card {
   display: grid;
+  grid-gap: var(--novablocks-spacing);
   grid-auto-columns: 1fr;
 }
 

@@ -266,8 +266,12 @@ export const getContentVariation = ( attributes ) => {
   const paletteVariation = parseInt( attributes?.paletteVariation, 10 );
   const contentStyle = attributes.contentStyle;
 
+  if ( contentStyle === 'moderate' ) {
+    return normalizeVariationValue( Math.max( 0, paletteVariation - 2 ) );
+  }
+
   if ( contentStyle === 'highlighted' ) {
-    return ( paletteVariation + 6 ) % 12 + 1;
+    return normalizeVariationValue( paletteVariation + 6 );
   }
 
   return paletteVariation;
@@ -317,4 +321,38 @@ export const getColorSetClassnames = ( attributes ) => {
       'sm-palette--shifted': !! useSourceColorAsReference
     }
   );
+}
+
+export const normalizeVariationValue = ( value ) => {
+  return ( value + 11 ) % 12 + 1;
+}
+
+export const getLevelAttributes = ( attributes ) => {
+  const { level } = attributes;
+
+  return {
+    level,
+    collectionTitleLevel: level,
+    cardTitleLevel: level + 1
+  }
+}
+
+export const getAspectRatioAttributes = ( attributes ) => {
+  let {
+    thumbnailAspectRatio,
+    thumbnailAspectRatioString
+  } = attributes;
+
+  if ( thumbnailAspectRatioString === 'auto' ) {
+    return {};
+  }
+
+  if ( thumbnailAspectRatio < 50 ) {
+    thumbnailAspectRatioString = 'landscape';
+  }
+
+  return {
+    thumbnailAspectRatio,
+    thumbnailAspectRatioString,
+  }
 }

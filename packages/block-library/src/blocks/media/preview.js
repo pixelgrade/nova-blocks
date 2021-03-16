@@ -4,7 +4,7 @@
 import classnames from 'classnames';
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
-import {getColorSetClassnames, getContentVariation} from '@novablocks/utils';
+import { getColorSetClassnames, getContentVariation } from '@novablocks/utils';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 
