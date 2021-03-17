@@ -75,10 +75,6 @@
 		"type": "string",
 		"default": "fixed"
 	},
-	"postsToShowPerRow": {
-		"type": "number",
-		"default": 3
-	},
 	"showPagination": {
 		"type": "boolean",
 		"default": true

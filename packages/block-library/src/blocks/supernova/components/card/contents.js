@@ -53,6 +53,10 @@ export const CardMeta = withVisibilityAndPlaceholder( ( props ) => {
     children,
   } = props;
 
+  if ( ! placeholder && ! children ) {
+    return null;
+  }
+
   return (
     <div className="wp-block novablocks-grid__item-meta">
       <div className="novablocks-card__meta is-style-meta">

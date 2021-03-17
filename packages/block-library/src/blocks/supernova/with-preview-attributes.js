@@ -5,7 +5,7 @@ const getPreviewAttributes = ( attributes ) => {
   }
 
   return Object.assign( {}, attributes, {
-    layout: 'classic',
+    layoutStyle: 'classic',
     columns: 1,
     cardLayout: 'horizontal',
     cardMediaOpacity: 100,

@@ -18,11 +18,13 @@ const CollectionLayout = ( props ) => {
   } = props;
 
   const {
+    columns,
     carouselLayout,
     layoutStyle,
+    cardLayout,
   } = attributes;
 
-  const layoutClassName = classnames(
+  let layoutClassName = classnames(
     `supernova-collection__layout`,
     `supernova-collection__layout--${ layoutStyle }`,
     `supernova-collection__layout--${ carouselLayout }-width`,
@@ -44,6 +46,17 @@ const CollectionLayout = ( props ) => {
       />
     )
   }
+
+  const landscapeLayouts = [
+    'horizontal',
+    'horizontal-reverse',
+  ];
+
+  layoutClassName = classnames(
+    layoutClassName,
+    GridGenerator.utils.getAreaClassnameByWidthRatio( 1 / columns ),
+    `novablocks-grid__area--${ landscapeLayouts.includes( cardLayout ) ? 'landscape' : 'portrait' }`,
+  )
 
   if ( layoutStyle === 'carousel' ) {
     return (

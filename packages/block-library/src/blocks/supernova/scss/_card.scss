@@ -1,27 +1,21 @@
 .supernova-card {
   display: grid;
-  grid-gap: var(--novablocks-spacing);
+  grid-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 50 );
   grid-auto-columns: 1fr;
-}
-
-.supernova-card--layout-vertical {
   grid-template-areas:
     "card-media"
     "card-content";
-}
 
-.supernova-card--layout-vertical-reverse {
-  grid-template-areas:
-    "card-content"
-    "card-media";
-}
+  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
 
-.supernova-card--layout-horizontal {
-  grid-template-areas: "card-media card-content";
-}
+  &--style-basic {
+    --novablocks-card-content-padding: 0;
+  }
 
-.supernova-card--layout-horizontal-reverse {
-  grid-template-areas: "card-content card-media";
+  & &__inner-container[class] {
+    padding-left: var(--novablocks-card-content-padding, 0);
+    padding-right: var(--novablocks-card-content-padding, 0);
+  }
 }
 
 .supernova-card__media-wrapper {
@@ -30,6 +24,24 @@
 
 .supernova-card__content {
   grid-area: card-content;
+}
+
+.supernova-collection__layout {
+
+  &:not(&--parametric) .supernova-card--layout-vertical-reverse {
+    grid-template-areas:
+      "card-content"
+      "card-media";
+  }
+
+  &:not(&--parametric) .supernova-card--layout-horizontal,
+  &--parametric .novablocks-grid__area--landscape .supernova-card {
+    grid-template-areas: "card-media card-content";
+  }
+
+  &:not(&--parametric) .supernova-card--layout-horizontal-reverse {
+    grid-template-areas: "card-content card-media";
+  }
 }
 
 .supernova-card--layout-stacked {
@@ -68,7 +80,8 @@
 
   position: relative;
   overflow: hidden;
-  padding: var(--novablocks-spacing) 0;
+  padding-top: var(--novablocks-card-content-padding, 0);
+  padding-bottom: var(--novablocks-card-content-padding, 0);
 
   &:before,
   &:after {

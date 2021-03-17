@@ -18,6 +18,7 @@ export const Card = ( props ) => {
       cardLayout,
       cardMediaOpacity,
       containerHeight,
+      contentStyle
     },
   } = props;
 
@@ -26,6 +27,7 @@ export const Card = ( props ) => {
   const className = classnames(
     `supernova-card`,
     `supernova-card--layout-${ cardLayout }`,
+    `supernova-card--style-${ contentStyle }`,
   );
 
   const style = {

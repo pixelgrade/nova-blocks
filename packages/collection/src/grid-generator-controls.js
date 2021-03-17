@@ -445,14 +445,7 @@ const ClassicLayoutControls = ( props ) => {
 		<Fragment>
 			<ControlsGroup title={ __( 'Cards Count' ) }>
 				<PostsCountControl { ...props } />
-				<RangeControl
-					key={ 'posts-collection-display-controls' }
-					value={ columns }
-					onChange={ ( columns ) => setAttributes( { columns } ) }
-					label={ __( 'Columns' ) }
-					min={ 1 }
-					max={ 4 }
-				/>
+				<ItemsPerRowControl { ...props } />
 			</ControlsGroup>
 			<ControlsGroup title={ __( 'Card Layout' ) }>
         {
@@ -464,6 +457,30 @@ const ClassicLayoutControls = ( props ) => {
 		</Fragment>
 	)
 };
+
+const ItemsPerRowControl = ( props ) => {
+
+  const {
+    attributes: {
+      columns
+    },
+    setAttributes
+  } = props;
+
+  return (
+    <RangeControl
+      key={ 'posts-collection-display-controls' }
+      value={ columns }
+      onChange={ ( columns ) => {
+        console.log( columns );
+        setAttributes( { columns } );
+      } }
+      label={ __( 'Number of Items per Row' ) }
+      min={ 1 }
+      max={ 4 }
+    />
+  )
+}
 
 const LegacyCardLayoutControl = ( props ) => {
 
@@ -803,7 +820,7 @@ const CarouselLayoutControls = ( props ) => {
   const {
     attributes: {
       carouselLayout,
-      postsToShowPerRow,
+      columns,
       showPagination
     },
     setAttributes
@@ -827,15 +844,7 @@ const CarouselLayoutControls = ( props ) => {
             { label: 'Variable Width', value: 'variable' },
           ] }
         />
-        { carouselLayout === 'fixed' &&<RangeControl
-          label={ __( `Number of Items per Row`, '__plugin_txtd' ) }
-          value={ postsToShowPerRow }
-          onChange={ postsToShowPerRow => {
-            setAttributes( { postsToShowPerRow } );
-          } }
-          min={ 1 }
-          max={ 6 }
-        /> }
+        { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
         <ToggleControl
           label={__( 'Show Pagination', '__plugin_txtd' )}
           checked={ showPagination }

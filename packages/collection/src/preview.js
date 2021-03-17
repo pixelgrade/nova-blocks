@@ -153,9 +153,9 @@ export const ParametricGrid = ( props ) => {
               { areas.map( area => {
                 addedCards += area.postsCount;
 
-                return (
+                return !! area.postsCount && (
                   <div className={ getParametricLayoutAreaClassName( area, attributes ) }>
-                    <AreaDebug area={ area } />
+                    {/*<AreaDebug area={ area } />*/}
                     { Array.from( Array( area.postsCount ).keys() ).map( i => {
                       const landscape = isLandscape( area, attributes );
                       return getContent( addedCards - area.postsCount + i, attributes, landscape );
@@ -187,7 +187,7 @@ export const CarouselLayoutPreview = ( props ) => {
     showPagination,
     carouselLayout,
     postsToShow,
-    postsToShowPerRow,
+    columns,
   } = attributes;
 
   const cardProps = {
@@ -204,7 +204,7 @@ export const CarouselLayoutPreview = ( props ) => {
   let fixedOptions = {
     dots: showPagination,
     infinite: true,
-    slidesToShow: postsToShowPerRow,
+    slidesToShow: columns,
   };
 
   let settings = {

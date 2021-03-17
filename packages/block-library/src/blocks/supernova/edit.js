@@ -121,6 +121,7 @@ const Collection = ( props ) => {
     align,
     columns,
     cardMediaOpacity,
+    layoutGutter,
   } = attributes;
 
   const colorSetClassnames = getColorSetClassnames( attributes );
@@ -128,6 +129,7 @@ const Collection = ( props ) => {
   const style = {
     '--collection-columns-count': columns,
     '--collection-card-media-opacity': cardMediaOpacity / 100,
+    '--collection-card-layout-gutter': layoutGutter,
   };
 
   return (

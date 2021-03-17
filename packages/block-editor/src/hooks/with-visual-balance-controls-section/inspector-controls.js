@@ -65,7 +65,7 @@ const VisualBalanceInspectorControls = ( props ) => {
             label={ __( 'Layout Gutter' ) }
             min={ 0 }
             max={ 100 }
-            step={ 10 }
+            step={ 5 }
           />
         </ControlsGroup>
       </ControlsTab>

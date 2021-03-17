@@ -1,3 +1,7 @@
+.supernova-collection__layout {
+  --novablocks-grid-spacing: var(--novablocks-spacing);
+}
+
 .supernova-collection__layout--fixed-width {
 
   .supernova-card__media {
@@ -5,25 +9,41 @@
   }
 }
 
-.supernova-collection__layout--classic {
+.supernova-collection__layout--classic,
+.supernova-collection__layout--parametric {
   display: grid;
+  grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
   grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
 }
 
-//.supernova-collection__layout--carousel {
-//
-//  .slick-track {
-//    display: flex;
-//    align-items: stretch;
-//  }
-//
-//  .slick-slide {
-//    float: none;
-//    height: auto;
-//
-//    > div,
-//    > div > .supernova-card {
-//      height: 100%;
-//    }
-//  }
-//}
+.supernova-collection__layout--carousel {
+  margin-left: calc( -0.5 * var(--novablocks-grid-spacing) );
+  margin-right: calc( -0.5 * var(--novablocks-grid-spacing) );
+
+  .supernova-card {
+    margin-left: calc( 0.5 * var(--novablocks-grid-spacing) );
+    margin-right: calc( 0.5 * var(--novablocks-grid-spacing) );
+  }
+
+  .slick-track {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .slick-slide {
+    float: none;
+    height: auto;
+
+    > div,
+    > div > .supernova-card {
+      height: 100%;
+    }
+  }
+
+  .slick-dots {
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-top: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  }
+}

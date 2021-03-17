@@ -1,9 +1,8 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment, useEffect } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 
 import {
   Button,
-  RangeControl,
   Toolbar,
 } from '@wordpress/components';
 
@@ -13,9 +12,6 @@ import {
 } from "@wordpress/block-editor";
 
 import {
-  ControlsSection,
-  ControlsTab,
-  ControlsGroup,
   getIconSvg,
 } from "@novablocks/block-editor";
 
@@ -25,7 +21,6 @@ const Controls = ( props ) => {
     attributes: {
       preview,
       cardContentAlign,
-      cardMediaOpacity,
     },
     setAttributes,
   } = props;
@@ -56,23 +51,6 @@ const Controls = ( props ) => {
           } }
         />
       </BlockControls>
-      <ControlsSection label={ __( 'Collection' ) }>
-        <ControlsTab label={ __( 'Setting' ) }>
-          <ControlsGroup label={ __( 'Card', '__plugin_txtd' ) } >
-            <RangeControl
-              key={ 'collection-card-media-opacity' }
-              label={ __( 'Card Media Opacity', '__plugin_txtd' ) }
-              value={ cardMediaOpacity }
-              onChange={ cardMediaOpacity => {
-                setAttributes( { cardMediaOpacity } )
-              } }
-              min={ 0 }
-              max={ 100 }
-              step={ 10 }
-            />
-          </ControlsGroup>
-        </ControlsTab>
-      </ControlsSection>
     </Fragment>
   )
 }

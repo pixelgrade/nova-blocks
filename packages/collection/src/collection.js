@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
-import {getCardMediaPaddingTop, getColorSetClassnames} from '@novablocks/utils'
+import { getCardMediaPaddingTop, getColorSetClassnames } from '@novablocks/utils'
 
 import attributes from './collection-attributes.json';
 import InspectorControls from "./collection-controls";

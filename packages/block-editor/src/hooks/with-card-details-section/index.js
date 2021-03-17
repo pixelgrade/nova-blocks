@@ -38,6 +38,7 @@ const CardDetailsSection = ( props ) => {
   const {
     level, // title starting level
     collectionTitleLevel,
+    cardMediaOpacity,
     cardTitleLevel,
 
     metadataPosition,
@@ -141,6 +142,17 @@ const CardDetailsSection = ( props ) => {
               />
             </Fragment>
           }
+          <RangeControl
+            key={ 'collection-card-media-opacity' }
+            label={ __( 'Card Media Opacity', '__plugin_txtd' ) }
+            value={ cardMediaOpacity }
+            onChange={ cardMediaOpacity => {
+              setAttributes( { cardMediaOpacity } )
+            } }
+            min={ 0 }
+            max={ 100 }
+            step={ 10 }
+          />
           <RangeControl
             key={ 'collection-image-padding' }
             label={ __( 'Image padding', '__plugin_txtd' ) }
