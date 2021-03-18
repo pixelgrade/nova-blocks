@@ -85,7 +85,6 @@ const CarouselLayout = ( props ) => {
       carouselLayout,
       showPagination,
       cardLayout,
-      onBeforeSlideChange
     }
   } = props;
 

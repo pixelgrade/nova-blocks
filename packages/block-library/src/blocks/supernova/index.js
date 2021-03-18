@@ -44,6 +44,30 @@ registerBlockType( 'novablocks/supernova', {
       type: 'number',
       default: 100,
     },
+    headerPosition: {
+      type: 'number',
+      default: 0,
+    },
+    title: {
+      type: "string",
+      default: "Latest Posts"
+    },
+    subtitle: {
+      type: "string",
+      default: "A collection of our latest articles displayed in a cohesive layout"
+    },
+    showCollectionTitle: {
+      type: "boolean",
+      default: true
+    },
+    showCollectionSubtitle: {
+      type: "boolean",
+      default: true
+    },
+    collectionTitleLevel: {
+      type: "number",
+      default: 2
+    },
     ...Blob.attributes
   },
   supports: {

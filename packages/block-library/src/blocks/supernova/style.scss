@@ -1,22 +1,20 @@
 @import "scss/card";
 @import "scss/collection";
 
-.supernova {
-  --block-top-spacing: var(--novablocks-block-top-spacing, 0);
-  --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
-  --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
-  --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
-}
+//.supernova {
+//  --block-top-spacing: var(--novablocks-block-top-spacing, 0);
+//  --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
+//  --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
+//  --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
+//}
+//
+//.supernova__inner-container[class] > .wp-block {
+//  margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+//  margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+//  padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+//  padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+//}
 
-.supernova__inner-container[class] > .wp-block {
+.supernova-collection {
   --novablocks-element-spacing-multiplier: 1;
-
-  margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-  margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-  padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-  padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-
-  &__inner-container {
-    --novablocks-element-spacing-multiplier: 0.5;
-  }
 }

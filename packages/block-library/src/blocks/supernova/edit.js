@@ -1,10 +1,11 @@
 import { InnerBlocks } from "@wordpress/block-editor";
-import { getSaveElement, getSaveContent } from '@wordpress/blocks';
+import { getSaveElement } from '@wordpress/blocks';
 import { dispatch, select } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
 import { getColorSetClassnames } from '@novablocks/utils';
 import { withDopplerControls } from '@novablocks/doppler';
+import { CollectionHeader } from "@novablocks/collection";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 
 import Controls from './controls';
@@ -122,6 +123,7 @@ const Collection = ( props ) => {
     columns,
     cardMediaOpacity,
     layoutGutter,
+    headerPosition,
   } = attributes;
 
   const colorSetClassnames = getColorSetClassnames( attributes );
@@ -134,8 +136,16 @@ const Collection = ( props ) => {
 
   return (
     <div className={ `supernova ${ colorSetClassnames }` }>
-      <div className={ `supernova__inner-container` }>
-        <div className="wp-block" data-align={ align }>
+      <div className={ `wp-block__inner-container` }>
+        {
+          headerPosition === 0 &&
+          <div className="wp-block" data-align="full">
+            <div className={ `supernova__inner-container` }>
+              <CollectionHeader { ...props } />
+            </div>
+          </div>
+        }
+        <div className="wp-block" data-align="full">
           <div className={ `supernova-collection` } style={ style }>
             <CollectionLayout { ...props } />
           </div>

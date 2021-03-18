@@ -63,6 +63,7 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 			const { getBlock } = select( 'core/block-editor' );
 			const { updateBlockAttributes } = dispatch( 'core/block-editor' );
 			const collection = getBlock( clientId );
+
 			const cards = collection.innerBlocks;
 
 			const newAttributes = (
