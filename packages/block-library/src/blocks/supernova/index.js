@@ -7,6 +7,7 @@ import { getSvg } from '@novablocks/block-editor';
 import Blob from '@novablocks/blob';
 
 import edit from './edit';
+import variations from './variations';
 import iconSvg from './super-nova-block.svg';
 
 import './supernova-item';
@@ -78,6 +79,7 @@ registerBlockType( 'novablocks/supernova', {
   save: function() {
     return <InnerBlocks.Content />
   },
+  variations,
   getEditWrapperProps() {
     const settings = select( 'core/block-editor' ).getSettings();
     return settings.alignWide ? { 'data-spanac': 'full' } : {};
