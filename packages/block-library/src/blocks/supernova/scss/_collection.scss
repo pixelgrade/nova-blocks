@@ -45,5 +45,9 @@
     margin-left: 0;
     margin-bottom: 0;
     margin-top: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+
+    button {
+      color: inherit;
+    }
   }
 }

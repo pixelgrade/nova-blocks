@@ -14,6 +14,8 @@ export default {
           media
         } = attributes;
 
+        const { caption, title, ...image } = media;
+
         const commonAttributes = {
           cardLayout: 'stacked',
           cardContentAlign: `${ verticalAlignment } ${ horizontalAlignment }`,
@@ -21,7 +23,7 @@ export default {
         }
 
         const cardAttributes = Object.assign( {}, commonAttributes, {
-          images: [ media ],
+          images: [ image ],
         } );
 
         const collectionAttributes = Object.assign( {}, commonAttributes, {

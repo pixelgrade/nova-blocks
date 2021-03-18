@@ -51,13 +51,14 @@ async function getNewDefaults() {
 generateDefaults( 'novablocks/advanced-gallery', getNewDefaults );
 
 registerBlockType( 'novablocks/advanced-gallery', {
-	title: __( 'Gallery of the Stars', '__plugin_txtd' ),
+	title: __( 'Gallery of the Stars (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
 	supports: {
 		align: [ 'wide', 'full' ],
-    html: false
+    html: false,
+    inserter: false,
 	},
 	// Additional search terms
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],

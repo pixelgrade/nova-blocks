@@ -84,11 +84,13 @@ const CarouselLayout = ( props ) => {
       columns,
       carouselLayout,
       showPagination,
+      cardLayout,
+      onBeforeSlideChange
     }
   } = props;
 
   const settings = {
-    dots: showPagination,
+    dots: showPagination && cardLayout !== 'stacked',
     infinite: true,
     variableWidth: carouselLayout === 'variable',
   };

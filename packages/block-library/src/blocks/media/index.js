@@ -60,7 +60,7 @@ generateDefaults( 'novablocks/media', getNewDefaults );
 insertTemplate( 'novablocks/media', settings.media.template );
 
 registerBlockType( 'novablocks/media', {
-	title: __( 'Media Card Constellation', '__plugin_txtd' ),
+	title: __( 'Media Card Constellation (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: {

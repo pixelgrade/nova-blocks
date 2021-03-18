@@ -5,6 +5,7 @@ import iconSvg from './slideshow-block.svg';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
+import transforms from './transforms';
 import { select } from '@wordpress/data';
 
 import {
@@ -54,7 +55,7 @@ async function getNewDefaults() {
 generateDefaults( 'novablocks/slideshow', getNewDefaults );
 
 registerBlockType( 'novablocks/slideshow', {
-	title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
+	title: __( 'Slideshow Me the Way (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
@@ -67,6 +68,7 @@ registerBlockType( 'novablocks/slideshow', {
 	edit,
 	save,
 	deprecated,
+  transforms,
 	getEditWrapperProps() {
 		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};

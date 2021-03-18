@@ -97,14 +97,14 @@ const CardMediaItem = withDopplerContextAndProvider( ( props ) => {
       type,
       width,
       height,
-      src,
+      url,
     },
   } = props;
 
   return (
     <div className={ `supernova-card__media-aspect-ratio` }>
       <div className={ `novablocks-mask` }>
-        <img className={ `supernova-card__media` } src={ src } width={ width } height={ height } style={ props?.parallax?.style } />
+        <img className={ `supernova-card__media` } src={ url } width={ width } height={ height } style={ props?.parallax?.style } />
       </div>
     </div>
   );

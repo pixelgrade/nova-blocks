@@ -57,7 +57,7 @@ generateDefaults( 'novablocks/hero', getNewDefaults );
 insertTemplate( 'novablocks/hero', settings.hero.template );
 
 registerBlockType( 'novablocks/hero', {
-	title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
+	title: __( 'Hero of the Galaxy (Deprecated)', '__plugin_txtd' ),
 	description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
