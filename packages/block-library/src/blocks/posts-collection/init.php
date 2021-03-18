@@ -53,6 +53,14 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		if ( ! empty( $attributes['layoutStyle'] ) ) {
+			$classes[] = 'novablocks-collection--' . $attributes['layoutStyle'];
+		}
+
+		if ( ! empty( $attributes['layoutStyle'] ) &&  $attributes['carouselLayout'] === 'variable' ) {
+			$classes[] = 'novablocks-collection-carousel--variable';
+		}
+
 		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
 		$className = join( ' ', $classes );
 
@@ -88,7 +96,6 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'flipcolsrows',
 
 			'carouselLayout',
-			'postsToShowPerRow',
 			'showPagination'
 		);
 

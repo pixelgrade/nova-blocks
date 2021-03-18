@@ -10,72 +10,72 @@ import AreaDebug from "./area-debug";
 import { applyLayoutEngine } from "./layout-engine";
 
 import {
-	CollectionPreview,
-	CollectionHeader,
+  CollectionPreview,
+  CollectionHeader,
 } from './collection'
 
 import {
-	getParametricLayoutAreaClassName,
-	getGridStyle,
-	redistributeCardsInAreas,
-	isLandscape,
+  getParametricLayoutAreaClassName,
+  getGridStyle,
+  redistributeCardsInAreas,
+  isLandscape,
 } from "./utils";
 
 export const ClassicLayoutPreview = ( props ) => {
 
-	const {
-		attributes,
-		posts,
-	} = props;
+  const {
+    attributes,
+    posts,
+  } = props;
 
-	const {
-		columns,
-		isLandscape,
-		showMedia,
-		showMeta,
-		showTitle,
-		showDescription,
-		showButtons,
-		postsToShow,
-	} = attributes;
+  const {
+    columns,
+    isLandscape,
+    showMedia,
+    showMeta,
+    showTitle,
+    showDescription,
+    showButtons,
+    postsToShow,
+  } = attributes;
 
-	const style = {
-		'--columns': columns
-	};
+  const style = {
+    '--columns': columns
+  };
 
-	const cardProps = {
-		placeholder: true,
-		hasFixedAspectRatio: true,
-		isLandscape,
-		showMedia,
-		showMeta,
-		showTitle,
-		showContent: showDescription,
-		showButtons,
-	};
+  const cardProps = {
+    placeholder: true,
+    hasFixedAspectRatio: true,
+    isLandscape,
+    showMedia,
+    showMeta,
+    showTitle,
+    showContent: showDescription,
+    showButtons,
+  };
 
-	return (
-		<CollectionPreview hasAppender={ false } { ...props }>
-			<div className="block-editor-inner-blocks">
-				<div className="block-editor-block-list__layout" style={ style }>
-					{
-						!! posts && posts.map( ( post, idx ) => {
-							return (
-								<PostCard key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
-							);
-						} )
-					}
-					{
-						! posts && Array.from( Array( postsToShow ).keys() ).map( ( obj, idx ) => {
-							return (
-								<Card key={ idx } { ...cardProps } />
-							)
-						} )
-					}
-				</div>
-			</div>
-		</CollectionPreview>
-	);
+  return (
+    <CollectionPreview hasAppender={ false } { ...props }>
+      <div className="block-editor-inner-blocks">
+        <div className="block-editor-block-list__layout" style={ style }>
+          {
+            !! posts && posts.map( ( post, idx ) => {
+              return (
+                <PostCard key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+              );
+            } )
+          }
+          {
+            ! posts && Array.from( Array( postsToShow ).keys() ).map( ( obj, idx ) => {
+              return (
+                <Card key={ idx } { ...cardProps } />
+              )
+            } )
+          }
+        </div>
+      </div>
+    </CollectionPreview>
+  );
 };
 
 export const ParametricLayoutPreview = ( props ) => {
@@ -187,7 +187,7 @@ export const CarouselLayoutPreview = ( props ) => {
     showPagination,
     carouselLayout,
     postsToShow,
-    columns,
+    columns
   } = attributes;
 
   const cardProps = {
@@ -201,21 +201,17 @@ export const CarouselLayoutPreview = ( props ) => {
     showButtons,
   };
 
-  let fixedOptions = {
-    dots: showPagination,
-    infinite: true,
-    slidesToShow: columns,
-  };
-
   let settings = {
+    customPaging: function(i) {
+      return (
+        <a> {i + 1}</a>
+      );
+    },
     dots: showPagination,
     infinite: true,
-    variableWidth: true
+    slidesToShow: carouselLayout !== 'variable' ? columns : '1',
+    variableWidth: carouselLayout === 'variable'
   };
-
-  if ( carouselLayout !== 'variable' ) {
-    settings = fixedOptions;
-  }
 
   return (
     <CollectionPreview hasAppender={ false } { ...props }>

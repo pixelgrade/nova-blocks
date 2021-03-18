@@ -304,11 +304,7 @@ import {
 
 	function initCarousels() {
 
-	  if ( ! $carousels.length) {
-	    return;
-    }
-
-    $carousels.each( function( i, carousel ) {
+    $('.novablocks-collection--carousel .novablocks-collection__layout').each( function( i, carousel ) {
 
       let $carousel = $(carousel);
 
@@ -316,21 +312,23 @@ import {
         slidesToShow: $carousel.data('columns' ),
         dots: $carousel.data('showpagination') === 1,
         variableWidth: $carousel.data('carousellayout') === 'variable',
+        customPaging: function(slick,index) {
+          return '<a>' + (index + 1) + '</a>';
+        },
         infinite: true,
 
         responsive: [
           {
-            breakpoint: 1000,
+            breakpoint: 1024,
             settings: {
-              slidesToShow: 2,
+              arrows: false,
+              centerMode: true,
+              infinite: true,
+              slidesToShow: 1,
+              variableWidth: false,
+              centerPadding: '30px',
             }
           },
-          {
-            breakpoint: 1000,
-            settings: {
-              slidesToShow: 1
-            }
-          }
         ]
       }
 

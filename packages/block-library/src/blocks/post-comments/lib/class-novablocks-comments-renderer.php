@@ -2,9 +2,9 @@
 /**
  * NovaBlocks_Comments_Renderer Class
  *
- * @author   Pixelgrade
- * @package  NovaBlocks
  * @since    1.8.0
+ * @package  NovaBlocks
+ * @author   Pixelgrade
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -81,8 +81,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 
 			// Make sure defaults are in place.
 			$this->args    = wp_parse_args( $args, [
-				// Fallback to core's default.
-				'commentsClosedMessage'              => esc_html__( 'No further conversations or replies allowed, at this time.', '__plugin_txtd' ),
+				// This is the message shown when no comments have been posted to the post and no new ones are allowed.
+				// Set empty (empty string or false) to no display a message.
+				'commentsClosedMessage'              => false,
+
+				// This is the message shown when there are comments posted, but no further ones are allowed.
+				// Set empty (empty string or false) to no display a message.
+				'commentsNoFurtherCommentsMessage'   => esc_html__( 'This conversation has been closed. If you have more to share, please ', '__plugin_txtd' ) . '<a  href="mailto: ' . esc_attr( get_option( 'admin_email' ) ) . '">' . esc_html__( 'contact us', '__plugin_txtd' ) . '</a>' . '.',
 
 				// If this is 0 or false, no second form at the end of the comments list.
 				'listEndCommentFormAfterNumComments' => 7,

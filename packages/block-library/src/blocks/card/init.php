@@ -28,6 +28,10 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 			'novablocks-block__content'
 		);
 
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
+
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
 		}

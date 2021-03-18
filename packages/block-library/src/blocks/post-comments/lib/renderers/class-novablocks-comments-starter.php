@@ -64,6 +64,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 
 			$starter_args = $this->parse_args( $args );
 
+			// Check if we should actually render.
+			if ( ! $this->should_render( $starter_args ) ) {
+				return '';
+			}
+
 			/* ==================================
 			 * RENDER THE COMMENTS STARTER MARKUP
 			 */
@@ -115,6 +120,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 			$this->unregister_hooks();
 
 			return ob_get_clean();
+		}
+
+		protected function should_render( $args = [] ) {
+			$should_render = true;
+
+			// Do not render the starter section if the comments are not opened.
+			if ( ! comments_open( $this->post->ID ) ) {
+				$should_render = false;
+			}
+
+			return apply_filters( 'novablocks_comments_starter_should_render', $should_render, $this->post, $args );
 		}
 
 		protected function register_hooks() {

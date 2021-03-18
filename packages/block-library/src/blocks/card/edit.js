@@ -38,6 +38,7 @@ const CardEdit = ( props ) => {
   } = attributes;
 
 	const className = classnames(
+	  props.className,
     'novablocks-card',
     'novablocks-card--fixed-media-aspect-ratio',
     'novablocks-card--portrait',
