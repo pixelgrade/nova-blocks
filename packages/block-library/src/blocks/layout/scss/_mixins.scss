@@ -1,0 +1,94 @@
+@mixin layout-grid {
+  display: grid;
+  grid-template-columns: [fs] 1fr [ws] var(--wds) [cs] var(--content) [ce] var(--wde) [we] 1fr [fe];
+  grid-column-gap: var(--grid-gap);
+}
+
+@mixin layout-settings {
+  --wide-width: calc(var(--theme-content-width-wide) * 0.75);
+  --content-width: calc(var(--theme-content-width-normal) * 0.75);
+  --aside-width: calc( var(--wide-width) * 0.5 - var(--content-width) * 0.5 );
+  --full: 100%;
+  --wide:  calc( min( var(--wide-width), var(--full) ) );
+  --content: var(--content-width);
+  --ws: calc( max( 0px, 50% - var(--wide) * 0.5 ) );
+  --wd: calc( var(--wide) * 0.5 - var(--content) * 0.5 );
+  --wds: var(--wd);
+  --wde: var(--wd);
+  --grid-gap: 30px;
+}
+
+@mixin block-settings {
+  --block-limit-left: ws;
+  --block-limit-right: we;
+  --block-content-start: cs;
+  --block-content-end: ce;
+  --all-columns: fs/fe;
+  
+  &[data-align="full"],
+  &.alignfull {
+    --block-limit-left: fs;
+    --block-limit-right: fe;
+  }
+  
+  &[data-align="wide"],
+  .alignwide {
+    --block-limit-left: ws;
+    --block-limit-right: we;
+  }
+}
+
+@mixin block-alignments {
+  .align-full,
+  .alignfull {
+    --block-content-start: fs;
+    --block-content-end: fe;
+  }
+  
+  .align-wide,
+  .alignwide {
+    --block-content-start: ws;
+    --block-content-end: we;
+  }
+  
+  .align-pull-left {
+    --block-content-start: ws;
+    --block-content-end: cs;
+  }
+  
+  .align-pull-right {
+    --block-content-start: ce;
+    --block-content-end: we;
+  }
+  
+  .break-right {
+    --block-content-end: ce;
+  }
+  
+  .break-left {
+    --block-content-start: cs;
+  }
+}
+
+@mixin grid-border {
+  
+  position: relative;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: calc(100% + 20px);
+    height: 100%;
+  
+    margin-left: -10px;
+    
+    grid-column: var(--block-content-start)/var(--block-content-end);
+    border: 2px dotted #000;
+    
+    opacity: .2;
+  }
+}
+

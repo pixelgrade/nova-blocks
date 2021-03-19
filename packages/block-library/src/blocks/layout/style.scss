@@ -1,0 +1,117 @@
+@import 'scss/mixins';
+
+.entry-content {
+  
+  .novablocks-layout {
+    @include layout-grid;
+    @include layout-settings;
+    @include block-settings;
+    
+    // Temporary
+    max-width: 100% !important;
+    
+    > * {
+      grid-row: 1;
+    }
+    
+    .novablocks-content {
+      
+      grid-column: var(--all-columns);
+      @include layout-grid;
+  
+      [class*='__inner-container'] > * {
+        max-width: 100% !important;
+      }
+  
+      > * {
+        grid-column: var(--block-content-start)/var(--block-content-end);
+      }
+    }
+    
+    &--sidebar-left {
+      --block-content-start: cs;
+      --block-content-end: var(--block-limit-right);
+      
+      .novablocks-sidebar--left {
+        grid-column: var(--block-limit-left)/cs;
+      }
+    }
+  
+    &--sidebar-right {
+      --block-content-start: var(--block-limit-left);
+      --block-content-end: ce;
+    
+      .novablocks-sidebar--right {
+        grid-column: ce/var(--block-limit-right);
+      }
+    }
+    
+    &--complex {
+  
+      --block-content-start: cs;
+      --block-content-end: ce;
+      
+      .novablocks-sidebar--left {
+        grid-column: var(--block-limit-left)/cs;
+      }
+      
+      .novablocks-sidebar--right {
+        grid-column: ce/var(--block-limit-right);
+      }
+    }
+    
+    .novablocks-layout {
+      grid-column: var(--all-columns);
+      
+      .novablocks-content {
+        
+        > * {
+          --block-content-start: cs;
+          --block-content-end: ce;
+        }
+  
+        @include block-alignments;
+        
+      }
+    }
+    
+    @include block-alignments;
+  }
+}
+
+.novablocks-content[class][class],
+.novablocks-sidebar {
+  > * {
+    @include block-spacing;
+  }
+}
+
+
+// !!!! Temporary !!!!
+// @todo: Remove this
+.align-wide,
+.align-full {
+  
+  &,
+  * {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+.entry-content[class] {
+  
+  &,
+  [class*='__inner-container'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  > .alignwide,
+  > .alignfull {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
