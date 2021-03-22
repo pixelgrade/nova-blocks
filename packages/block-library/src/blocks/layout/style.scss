@@ -115,3 +115,19 @@
     margin-right: 0;
   }
 }
+
+.novablocks-content,
+.novablocks-layout {
+  flex-direction: column;
+}
+
+.novablocks-content {
+  order: -1;
+}
+
+// Temporary class
+// used for sticky elements
+.sticky-element {
+  position: sticky;
+  top: 0;
+}

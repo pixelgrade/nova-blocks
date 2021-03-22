@@ -1,5 +1,5 @@
 @mixin layout-grid {
-  display: grid;
+  display: var(--display-mode);
   grid-template-columns: [fs] 1fr [ws] var(--wds) [cs] var(--content) [ce] var(--wde) [we] 1fr [fe];
   grid-column-gap: var(--grid-gap);
 }
@@ -16,6 +16,11 @@
   --wds: var(--wd);
   --wde: var(--wd);
   --grid-gap: 30px;
+  --display-mode: flex;
+  
+  @include above(lap) {
+    --display-mode: grid;
+  }
 }
 
 @mixin block-settings {
