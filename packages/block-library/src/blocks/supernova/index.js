@@ -41,10 +41,6 @@ registerBlockType( 'novablocks/supernova', {
       type: 'string',
       default: 'vertical',
     },
-    cardMediaOpacity: {
-      type: 'number',
-      default: 100,
-    },
     headerPosition: {
       type: 'number',
       default: 0,
@@ -73,7 +69,7 @@ registerBlockType( 'novablocks/supernova', {
   },
   supports: {
     align: [ "wide", "full" ],
-    html: false
+    html: false,
   },
   edit,
   save: function() {
@@ -82,6 +78,6 @@ registerBlockType( 'novablocks/supernova', {
   variations,
   getEditWrapperProps() {
     const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-spanac': 'full' } : {};
+    return settings.alignWide ? { 'data-align': 'full' } : {};
   },
 } );

@@ -8,14 +8,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_media_attributes() {
-	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
-	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
-	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
-	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
-	$variation_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/color-set-controls/attributes.json' );
+function novablocks_merge_attributes_from_array( $pathsArray ) {
+	$accumulator = [];
 
-	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $variation_attributes, $blob_attributes );
+	foreach ( $pathsArray as $path ) {
+		$attributes = novablocks_get_attributes_from_json( $path );
+		$accumulator = array_merge( $accumulator, $attributes );
+	}
+
+	return $accumulator;
+}
+
+function novablocks_get_media_attributes() {
+
+	return novablocks_merge_attributes_from_array( array(
+		'packages/blob/src/attributes.json',
+		'packages/advanced-gallery/src/attributes.json',
+		'packages/block-library/src/blocks/media/attributes.json',
+		'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json',
+		'packages/block-editor/src/hooks/with-visual-balance-controls-section/attributes.json',
+		'packages/block-editor/src/components/color-set-controls/attributes.json',
+	) );
+
 }
 
 if ( ! function_exists( 'novablocks_render_media_block' ) ) {

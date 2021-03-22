@@ -25,21 +25,26 @@ export default {
       type: 'block',
       blocks: ['novablocks/supernova'],
       transform: function( attributes, innerBlocks ) {
+
         const {
+          contentStyle,
           mediaPosition,
           verticalAlignment,
-          horizontalAlignment
+          horizontalAlignment,
         } = attributes;
 
         const commonAttributes = {
           cardLayout: mediaPosition === 'left' ? 'horizontal' : 'horizontal-reverse',
           cardContentAlign: `${ verticalAlignment } ${ horizontalAlignment }`,
           sourceType: 'blocks',
+          showCollectionTitle: false,
+          showCollectionSubtitle: false,
+          contentPadding: contentStyle === 'basic' ? 0 : 50,
         }
 
         const cardAttributes = Object.assign( {}, attributes, commonAttributes );
 
-        const collectionAttributes = Object.assign( {}, commonAttributes, {
+        const collectionAttributes = Object.assign( {}, attributes, commonAttributes, {
           layout: 'classic',
           columns: 1,
           cardMediaOpacity: 100,

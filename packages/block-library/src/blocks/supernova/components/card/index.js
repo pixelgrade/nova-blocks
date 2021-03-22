@@ -56,16 +56,20 @@ export const CardContentWrapper = ( props ) => {
 
   const align = getAlignFromMatrix( attributes?.cardContentAlign );
 
-  const className = classnames(
+  const contentClassName = classnames(
     `supernova-card__content`,
     `supernova-card__content--valign-${ align[0] }`,
     `supernova-card__content--halign-${ align[1] }`,
+  );
+
+  const innerContainerClassName = classnames(
+    `supernova-card__inner-container`,
     `sm-variation-${ getContentVariation( attributes ) }`,
-  )
+  );
 
   return (
-    <div className={ className }>
-      <div className={ `supernova-card__inner-container` }>
+    <div className={ contentClassName }>
+      <div className={ innerContainerClassName }>
         { props.children }
       </div>
     </div>

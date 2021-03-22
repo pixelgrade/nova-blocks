@@ -12,7 +12,13 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
     if ( 'novablocks/supernova' === props.name ) {
       const { clientId, attributes } = props;
       const { getBlock } = select( 'core/block-editor' );
-      const { innerBlocks } = getBlock( clientId );
+      const block = getBlock( clientId );
+
+      if ( ! block ) {
+        return;
+      }
+
+      const { innerBlocks } = block;
 
       const attributeKeys = [
         'cardContentAlign',
@@ -25,9 +31,15 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'paletteVariation',
         'useSourceColorAsReference',
 
+        'showTitle',
+        'showSubtitle',
+        'showDescription',
+        'showMeta',
+        'showFooter',
+
         'contentStyle',
       ]
-      .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images' ] ) ) )
+      .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
       .concat( Object.keys( Blob.attributes ) );
 
       const newAttributes = {};

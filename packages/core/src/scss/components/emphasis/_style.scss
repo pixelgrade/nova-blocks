@@ -50,11 +50,6 @@
 
 			transition: var(--novablocks-transition);
 			transition-property: background-color, opacity;
-
-      .content-is-basic &,
-      .content-is-moderate & {
-        opacity: 0;
-      }
 		}
 	}
 }

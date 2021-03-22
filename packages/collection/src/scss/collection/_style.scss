@@ -65,25 +65,6 @@
 	}
 }
 
-.novablocks-collection:not(.content-is-basic) {
-
-	.novablocks-card__media-wrap {
-		margin: calc( -0.5 * var(--block-content-padding) );
-	}
-
-	.novablocks-block__content {
-		padding: calc( 0.5 * var(--block-content-padding) );
-	}
-
-	.novablocks-card--landscape .novablocks-card__media-wrap {
-		margin-right: 0;
-	}
-
-	.novablocks-card--portrait .novablocks-card__media-wrap {
-		margin-bottom: 0;
-	}
-}
-
 .novablocks-collection {
   @include block-spacing;
 }

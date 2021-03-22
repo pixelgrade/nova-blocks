@@ -1,20 +1,15 @@
 .supernova-card {
   display: grid;
-  grid-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 50 );
+  grid-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 10 );
   grid-auto-columns: 1fr;
   grid-template-areas:
     "card-media"
     "card-content";
 
-  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-
-  &--style-basic {
-    --novablocks-card-content-padding: 0;
-  }
+  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--supernova-card-content-padding-multiplier, 0) );
 
   & &__inner-container[class] {
-    padding-left: var(--novablocks-card-content-padding, 0);
-    padding-right: var(--novablocks-card-content-padding, 0);
+    padding: var(--novablocks-card-content-padding, 0);
   }
 }
 
@@ -44,6 +39,28 @@
   }
 }
 
+.supernova-card--layout-horizontal,
+.supernova-card--layout-horizontal-reverse {
+
+  @include above(tablet) {
+    margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) );
+    margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) );
+
+    padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--novablocks-spacing) );
+    padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
+
+    .supernova-card__media-wrapper {
+      margin-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
+      margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
+    }
+
+    .supernova-card__content {
+      padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
+      padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
+    }
+  }
+}
+
 .supernova-card--layout-stacked {
 
   .supernova-card__media-wrapper,
@@ -53,7 +70,7 @@
     grid-row: 1 / -1;
   }
 
-  .supernova-card__content {
+  .supernova-card__inner-container {
     background: none;
   }
 }
@@ -84,8 +101,6 @@
 
   position: relative;
   overflow: hidden;
-  padding-top: var(--novablocks-card-content-padding, 0);
-  padding-bottom: var(--novablocks-card-content-padding, 0);
 
   &:before,
   &:after {

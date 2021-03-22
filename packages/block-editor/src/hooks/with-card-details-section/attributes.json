@@ -1,0 +1,42 @@
+{
+	"level": {
+		"type": "number",
+		"default": 2
+	},
+	"cardTitleLevel": {
+		"type": "number",
+		"default": 3
+	},
+	"collectionTitleLevel": {
+		"type": "number",
+		"default": 2
+	},
+	"cardMediaOpacity": {
+		"type": "number",
+		"default": 100
+	},
+	"metadataPosition": {
+		"type": "string",
+		"default": "above-title"
+	},
+	"thumbnailAspectRatioString": {
+		"type": "string",
+		"default": "landscape"
+	},
+	"thumbnailAspectRatio": {
+		"type": "number",
+		"default": 50
+	},
+	"imageResizing": {
+		"type": "string",
+		"default": "cropped"
+	},
+	"imagePadding": {
+		"type": "number",
+		"default": 0
+	},
+	"contentPadding": {
+		"type": "number",
+		"default": 50
+	}
+}

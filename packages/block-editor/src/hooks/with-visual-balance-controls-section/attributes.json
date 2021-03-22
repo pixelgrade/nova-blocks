@@ -1,7 +1,7 @@
 {
 	"layoutGutter": {
 		"type": "number",
-		"default": 10
+		"default": 50
 	},
 	"balanceEmphasis": {
 		"type": "number",

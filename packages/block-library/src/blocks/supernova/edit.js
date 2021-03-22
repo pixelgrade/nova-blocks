@@ -124,6 +124,7 @@ const Collection = ( props ) => {
     cardMediaOpacity,
     layoutGutter,
     headerPosition,
+    contentPadding,
   } = attributes;
 
   const colorSetClassnames = getColorSetClassnames( attributes );
@@ -132,6 +133,7 @@ const Collection = ( props ) => {
     '--collection-columns-count': columns,
     '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-layout-gutter': layoutGutter,
+    '--supernova-card-content-padding-multiplier': contentPadding * 4 / 100,
   };
 
   return (
@@ -139,13 +141,13 @@ const Collection = ( props ) => {
       <div className={ `wp-block__inner-container` }>
         {
           headerPosition === 0 &&
-          <div className="wp-block" data-align="full">
+          <div className="wp-block" data-align="wide">
             <div className={ `supernova__inner-container` }>
               <CollectionHeader { ...props } />
             </div>
           </div>
         }
-        <div className="wp-block" data-align="full">
+        <div className="wp-block" data-align={ align }>
           <div className={ `supernova-collection` } style={ style }>
             <CollectionLayout { ...props } />
           </div>

@@ -24,13 +24,12 @@ const SuperNovaItemContent = ( props ) => {
   const {
     attributes: {
       sourceType,
+      level,
       metaAboveTitle,
       metaBelowTitle,
       title,
       subtitle,
-      level,
       description,
-
       buttonText,
       buttonUrl,
       buttonOpensInNewTab,

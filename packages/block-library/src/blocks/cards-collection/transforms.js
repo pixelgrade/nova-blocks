@@ -41,6 +41,7 @@ export default {
 
           return createBlock( 'novablocks/supernova-item', Object.assign( {}, commonAttributes, {
             images: [ image ],
+            defaultsGenerated: true,
             ...passedAttributes,
             ...getSupernovaItemAttributesFromButtons( block )
           } ) );
