@@ -1,10 +1,11 @@
 import { __ } from '@wordpress/i18n';
+import * as icons from './icons';
 
 const variations = [
   {
     name: 'sidebar-left',
     title: __('Sidebar Left with Content on the right', '__plugin_txtd' ),
-    icons: 'heart',
+    icon: icons.sidebarLeft,
     innerBlocks: [
       ['novablocks/layout-area', {
         className: 'novablocks-sidebar novablocks-sidebar--left',
@@ -18,7 +19,7 @@ const variations = [
   {
     name: 'sidebar-right',
     title: __('Sidebar Right with Content on the left', '__plugin_txtd' ),
-    icons: 'heart',
+    icon: icons.sidebarRight,
     innerBlocks: [
       ['novablocks/layout-area', {
         className: 'novablocks-content'
@@ -32,7 +33,7 @@ const variations = [
   {
     name: 'complex',
     title: __('Sidebar on Left and Right with Content on center', '__plugin_txtd' ),
-    icons: 'heart',
+    icon: icons.sidebarLeftRight,
     innerBlocks: [
       ['novablocks/layout-area', {
         className: 'novablocks-sidebar novablocks-sidebar--left'

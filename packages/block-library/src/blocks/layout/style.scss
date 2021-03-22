@@ -79,7 +79,7 @@
   }
 }
 
-.novablocks-content[class][class],
+.novablocks-content,
 .novablocks-sidebar {
   > * {
     @include block-spacing;

@@ -45,7 +45,8 @@
 
 @mixin block-alignments {
   .align-full,
-  .alignfull {
+  .alignfull,
+  [data-align="full"] {
     --block-content-start: fs;
     --block-content-end: fe;
   }
