@@ -6,7 +6,7 @@
     "card-media"
     "card-content";
 
-  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--supernova-card-content-padding-multiplier, 0) );
+  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-content-padding-multiplier, 0) ) );
 
   & &__inner-container[class] {
     padding: var(--novablocks-card-content-padding, 0);

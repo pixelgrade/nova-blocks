@@ -5,6 +5,8 @@ import { Fragment } from '@wordpress/element';
 import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 
+console.log( attributes );
+
 const blocksWithVisualBalanceInspectorControls = [
   'novablocks/media',
   'novablocks/supernova',

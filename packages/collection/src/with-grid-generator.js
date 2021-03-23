@@ -31,6 +31,8 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-grid-generator-controls', withGr
 
 function addGridGeneratorAttributes( block ) {
 
+	const newAttributes = JSON.parse( JSON.stringify( attributes ) );
+
 	if ( ! enableGridGeneratorControls.includes( block.name ) ) {
 		return block;
 	}
@@ -39,7 +41,11 @@ function addGridGeneratorAttributes( block ) {
 		block.attributes = {};
 	}
 
-	block.attributes = Object.assign( block.attributes, attributes );
+	if ( 'novablocks/posts-collection' === block.name ) {
+    newAttributes.layoutStyle.default = 'parametric';
+  }
+
+	block.attributes = Object.assign( block.attributes, newAttributes );
 
 	return block;
 }

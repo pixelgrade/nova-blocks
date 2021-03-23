@@ -144,7 +144,7 @@ const Collection = ( props ) => {
     '--collection-columns-count': columns,
     '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-layout-gutter': layoutGutter,
-    '--supernova-card-content-padding-multiplier': contentPadding * 4 / 100,
+    '--supernova-card-content-padding-multiplier': contentPadding / 100,
   };
 
   return (

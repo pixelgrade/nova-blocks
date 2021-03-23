@@ -6,8 +6,6 @@ const getSupernovaItemAttributesFromButtons = ( block ) => {
   const innerBlocks = block.innerBlocks.concat( ...buttonsBlocks.map( buttonsBlock => buttonsBlock.innerBlocks ) );
   const buttonBlock = innerBlocks.find( block => block.name === 'core/button' );
 
-  console.log( buttonsBlocks, innerBlocks, buttonBlock );
-
   if ( buttonBlock ) {
     return {
       buttonUrl: buttonBlock.attributes.url,
@@ -39,7 +37,7 @@ export default {
           const { media, ...passedAttributes } = block.attributes;
           const { caption, title, ...image } = media;
 
-          return createBlock( 'novablocks/supernova-item', Object.assign( {}, commonAttributes, {
+          return createBlock( 'novablocks/supernova-item', Object.assign( {}, attributes, commonAttributes, {
             images: [ image ],
             defaultsGenerated: true,
             ...passedAttributes,
@@ -47,7 +45,7 @@ export default {
           } ) );
         } );
 
-        return createBlock( 'novablocks/supernova', collectionAttributes, newInnerBlocks );
+        return createBlock( 'novablocks/supernova', Object.assign( {}, attributes, commonAttributes, collectionAttributes ), newInnerBlocks );
       },
     },
   ],

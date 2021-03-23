@@ -41,15 +41,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$args  = novablocks_build_articles_query( $attributes );
 		$posts = get_posts( $args );
 
-		$styleProps = array(
-			'--collection-columns-count:' . $attributes['columns'],
-			'--collection-card-media-opacity:' . $attributes['cardMediaOpacity'] / 100,
-			'--collection-card-layout-gutter:' . $attributes['layoutGutter'],
-			'--supernova-card-content-padding-multiplier:' . $attributes['contentPadding'] * 4 / 100,
-		);
-
-		$styleAttribute = 'style="' . join( '; ', $styleProps ) . '"';
-
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
@@ -71,7 +62,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'--collection-columns-count: ' . $attributes[ 'columns' ],
 			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
 			'--collection-card-layout-gutter: ' . $attributes[ 'layoutGutter' ],
-			'--supernova-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] * 4 / 100,
+			'--supernova-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );
@@ -86,7 +77,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 				<?php novablocks_get_collection_header_output( $attributes ); ?>
 			</div>
 			<div class="supernova__inner-container">
-				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>" <?php echo $styleAttribute; ?>>
+				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
 					<?php if ( "content" === $attributes[ 'sourceType' ] ) { ?>
 						<div class="novablocks-grid" <?php echo join( ' ', $data_attributes ); ?>>
 							<?php foreach ( $posts as $post ) {

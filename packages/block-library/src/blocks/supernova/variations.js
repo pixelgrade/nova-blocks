@@ -5,7 +5,7 @@ const cardAttributes = {
   layoutStyle: 'classic',
   cardLayout: 'vertical',
   contentPadding: 0,
-  layoutGutter: 50,
+  layoutGutter: 10,
   title: 'Title',
   showTitle: true,
   description: 'This is just an example of what a description for this card could look like',
@@ -18,7 +18,7 @@ const mediaCardAttributes = {
   sourceType: 'blocks',
   layoutStyle: 'classic',
   contentPadding: 100,
-  layoutGutter: 50,
+  layoutGutter: 10,
   cardLayout: 'horizontal',
 };
 
@@ -107,7 +107,7 @@ const variations = [
         sourceType: 'blocks',
         layoutStyle: 'classic',
         contentPadding: 100,
-        layoutGutter: 50,
+        layoutGutter: 10,
         cardLayout: 'stacked',
       }, [
         [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", fontSize: "larger" } ],
@@ -127,7 +127,7 @@ const variations = [
       sourceType: 'blocks',
       layoutStyle: 'classic',
       contentPadding: 100,
-      layoutGutter: 50,
+      layoutGutter: 10,
 
       postsToShow: 1,
       columns: 1,
@@ -151,7 +151,7 @@ const variations = [
       sourceType: 'fields',
       layoutStyle: 'classic',
       contentPadding: 0,
-      layoutGutter: 50,
+      layoutGutter: 10,
 
       postsToShow: 3,
       columns: 3,
