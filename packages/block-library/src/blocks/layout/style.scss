@@ -6,6 +6,8 @@
   @include layout-settings;
   @include block-settings;
   
+  flex-direction: column;
+  
   > * {
     grid-column: var(--block-content-start)/var(--block-content-end);
   }
@@ -101,6 +103,16 @@
   }
   
   @include block-alignments;
+  
+  > .alignfull {
+    --block-content-start: fs;
+    --block-content-end: fe;
+  }
+  
+  > .alignwide {
+    --block-content-start: ws;
+    --block-content-end: we;
+  }
 }
 
 .novablocks-content,

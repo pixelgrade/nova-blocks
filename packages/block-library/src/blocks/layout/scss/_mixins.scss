@@ -29,30 +29,19 @@
   --block-content-start: cs;
   --block-content-end: ce;
   --all-columns: fs/fe;
-  
-  &[data-align="full"],
-  &.alignfull {
-    --block-limit-left: fs;
-    --block-limit-right: fe;
-  }
-  
-  &[data-align="wide"],
-  .alignwide {
-    --block-limit-left: ws;
-    --block-limit-right: we;
-  }
 }
 
 @mixin block-alignments {
-  .align-full,
-  .alignfull,
-  [data-align="full"] {
+  &.align-full,
+  &.alignfull,
+  &[data-align="full"] {
     --block-content-start: fs;
     --block-content-end: fe;
   }
   
-  .align-wide,
-  .alignwide {
+  &.align-wide,
+  &.alignwide,
+  &[data-align="wide"] {
     --block-content-start: ws;
     --block-content-end: we;
   }
