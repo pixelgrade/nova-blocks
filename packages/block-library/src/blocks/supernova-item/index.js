@@ -4,7 +4,7 @@
 import { getSvg } from "@novablocks/block-editor";
 
 import edit from './edit';
-import iconSvg from '../super-nova-block.svg';
+import iconSvg from './super-nova-block.svg';
 
 /**
  * WordPress dependencies
@@ -18,6 +18,8 @@ import { generateDefaults, getPlaceholderImages } from "@novablocks/block-editor
 import AdvancedGallery from "@novablocks/advanced-gallery";
 import Blob from "@novablocks/blob";
 
+import attributes from './attributes.json';
+
 const { getRandomAttributes } = AdvancedGallery.utils;
 
 async function getNewDefaults( block ) {
@@ -26,7 +28,8 @@ async function getNewDefaults( block ) {
   const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
   const randomAttributes = getRandomAttributes();
 
-  if ( ! block?.attributes?.multiplePlaceholderImages ) { // @todo maybe allow more than one image in specific scenarios
+  // @todo maybe allow more than one image in specific scenarios
+  if ( ! block?.attributes?.multiplePlaceholderImages ) {
     randomImages.splice( 1 );
   }
 
@@ -52,66 +55,7 @@ registerBlockType( 'novablocks/supernova-item', {
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes: {
-    cardContentAlign: {
-      type: 'string',
-      default: 'center center',
-    },
-    cardLayout: {
-      type: 'string',
-      default: 'horizontal'
-    },
-    preview: {
-      type: 'boolean',
-      default: true,
-    },
-    level: {
-      type: 'number',
-      default: 2,
-    },
-    sourceType: {
-      type: 'string',
-      default: 'content',
-    },
-    metaAboveTitle: {
-      type: 'string',
-      default: '',
-    },
-    metaBelowTitle: {
-      type: 'string',
-      default: '',
-    },
-    title: {
-      type: 'string',
-      default: '',
-    },
-    subtitle: {
-      type: 'string',
-      default: '',
-    },
-    description: {
-      type: 'string',
-      default: '',
-    },
-    buttonText: {
-      type: 'string',
-      default: '',
-    },
-    buttonUrl: {
-      type: 'string',
-      default: '',
-    },
-    buttonOpensInNewTab: {
-      type: 'boolean',
-      default: false,
-    },
-    defaultsGenerated: {
-      type: 'boolean',
-      default: false
-    },
-    multiplePlaceholderImages: {
-      type: 'boolean',
-      default: false
-    },
+    ...attributes,
     ...Blob.attributes
   },
   supports: {

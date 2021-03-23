@@ -20,6 +20,8 @@ export { default as useApiFetch } from './use-api-fetch';
 export { default as useResizeObserver } from './use-resize-observer';
 export { default as useMemoryState } from './use-memory-state';
 
+export { default as SuperNova } from './supernova';
+
 export {
   getSvg,
   getIconSvg
@@ -57,13 +59,6 @@ export {
 	default as EmphasisLevelControls,
 	EmphasisContentAreaControls,
 } from './emphasis-level-controls';
-
-export {
-  colorSetAttributes,
-  ColorSetControls,
-  PaletteControls,
-  PaletteVariationControls,
-} from './color-set-controls';
 
 export {
 	GalleryPreview,

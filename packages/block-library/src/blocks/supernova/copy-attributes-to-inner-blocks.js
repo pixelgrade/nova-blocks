@@ -1,6 +1,7 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { select } from "@wordpress/data";
-import { setAttributesToInnerBlocks, getAlignFromMatrix } from "@novablocks/block-editor";
+import { setAttributesToInnerBlocks } from "@novablocks/block-editor";
+import { getAlignFromMatrix } from "@novablocks/utils";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
 import Blob from '@novablocks/blob';

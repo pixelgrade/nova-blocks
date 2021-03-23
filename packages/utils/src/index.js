@@ -356,3 +356,33 @@ export const getAspectRatioAttributes = ( attributes ) => {
     thumbnailAspectRatioString,
   }
 }
+
+export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
+  let height = containerHeight / 50 - 1;
+  let numerator = 1;
+  let denominator = 1;
+
+  height = Math.min( Math.max( -1, height ), 1 );
+
+  if ( height > 0 ) {
+    numerator = 1 + height;
+  }
+
+  if ( height < 0 ) {
+    denominator = 1 + Math.abs( height );
+  }
+
+  return numerator * 100 / denominator;
+}
+
+export const getAlignFromMatrix = ( alignMatrixValue ) => {
+
+  if ( typeof alignMatrixValue !== 'string' ) {
+    return [ 'center', 'center' ];
+  }
+
+  const align = alignMatrixValue.split( /\b\s+/ );
+
+  return [ align[0], align[1] || 'center' ];
+}
+

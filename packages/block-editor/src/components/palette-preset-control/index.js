@@ -1,18 +1,10 @@
 import classnames from 'classnames';
 
-import {
-	useBlockEditContext
- } from '@wordpress/block-editor';
+import { useBlockEditContext } from '@wordpress/block-editor';
+import { withDispatch, withSelect } from '@wordpress/data';
+import { compose } from '@wordpress/compose';
 
-import {
-	withDispatch,
-	withSelect,
- } from '@wordpress/data';
-
-import {
-	compose
- } from '@wordpress/compose';
-import {getColorSetClassnames} from "@novablocks/utils";
+import { getColorSetClassnames } from "@novablocks/utils";
 
 const PalettePresetControl = ( props ) => {
 	const { attributes, setAttributes, label } = props;

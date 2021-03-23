@@ -1,6 +1,5 @@
 import $ from 'jquery';
-import { normalizeImages } from "@novablocks/block-editor";
-import { debounce, isSafari, getRandomBetween } from "@novablocks/utils";
+import { debounce, isSafari, getRandomBetween, getPaddingTopFromContainerHeight } from "@novablocks/utils";
 
 export const getRandomAttributes = () => {
 	return {
@@ -18,24 +17,6 @@ export const getGalleryStyle = ( attributes ) => {
 		paddingTop: `${ getPaddingTopFromContainerHeight( attributes.containerHeight ) }%`,
 	}
 };
-
-export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
-  let height = containerHeight / 50 - 1;
-  let numerator = 1;
-  let denominator = 1;
-
-  height = Math.min( Math.max( -1, height ), 1 );
-
-  if ( height > 0 ) {
-    numerator = 1 + height;
-  }
-
-  if ( height < 0 ) {
-    denominator = 1 + Math.abs( height );
-  }
-
-  return numerator * 100 / denominator;
-}
 
 export const getGridStyle = ( attributes ) => {
 	const { elementsDistance } = attributes;
@@ -77,17 +58,3 @@ export const safariHeightFix = ( grid ) => {
 		} );
 	}
 };
-
-const onSelectImages = ( images ) => {
-  normalizeImages( images ).then( newImages => {
-    setAttributes( { images: newImages } );
-  } )
-};
-
-export const withOnSelectImages = ( WrappedComponent => {
-
-  return ( props ) => {
-    return <WrappedComponent { ...props } onSelectImages={ onSelectImages } />
-  }
-
-} );

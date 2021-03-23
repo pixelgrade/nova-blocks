@@ -10,7 +10,8 @@ import edit from './edit';
 import variations from './variations';
 import iconSvg from './super-nova-block.svg';
 
-import './supernova-item';
+import attributes from './attributes.json';
+
 import './copy-attributes-to-inner-blocks';
 
 /**
@@ -25,46 +26,7 @@ registerBlockType( 'novablocks/supernova', {
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes: {
-    align: {
-      type: 'string',
-      default: 'wide',
-    },
-    preview: {
-      type: 'boolean',
-      default: true,
-    },
-    cardContentAlign: {
-      type: 'string',
-      default: 'center center',
-    },
-    cardLayout: {
-      type: 'string',
-      default: 'vertical',
-    },
-    headerPosition: {
-      type: 'number',
-      default: 0,
-    },
-    title: {
-      type: "string",
-      default: "Latest Posts"
-    },
-    subtitle: {
-      type: "string",
-      default: "A collection of our latest articles displayed in a cohesive layout"
-    },
-    showCollectionTitle: {
-      type: "boolean",
-      default: true
-    },
-    showCollectionSubtitle: {
-      type: "boolean",
-      default: true
-    },
-    collectionTitleLevel: {
-      type: "number",
-      default: 2
-    },
+    ...attributes,
     ...Blob.attributes
   },
   supports: {

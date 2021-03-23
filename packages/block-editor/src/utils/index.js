@@ -9,14 +9,3 @@ export const setAttributesToInnerBlocks = ( clientId, attributes ) => {
     updateBlockAttributes( block.clientId, attributes );
   } );
 }
-
-export const getAlignFromMatrix = ( alignMatrixValue ) => {
-
-  if ( typeof alignMatrixValue !== 'string' ) {
-    return [ 'center', 'center' ];
-  }
-
-  const align = alignMatrixValue.split( /\b\s+/ );
-
-  return [ align[0], align[1] || 'center' ];
-}

@@ -193,12 +193,42 @@ function novablocks_get_tag_name( $tag ) {
 	return $tag->name;
 }
 
+function novablocks_show_card_contents( $attributes ) {
+	return ! empty( $attributes['showMeta'] ) ||
+		   ! empty( $attributes['showTitle'] ) ||
+		   ! empty( $attributes['showDescription'] ) ||
+		   ! empty( $attributes['showButtons'] );
+}
+
+function novablocks_get_post_card_contents( $post, $attributes ) {
+
+
+	ob_start();
+
+	$title = get_the_title( $post );
+	$postMeta       = novablocks_get_card_post_meta( $post, $attributes );
+	$aboveTitleMeta = $postMeta[0];
+	$belowTitleMeta = $postMeta[1];
+	echo novablocks_get_card_item_meta( $aboveTitleMeta, $attributes );
+	echo novablocks_get_card_item_title( $title, $attributes );
+	echo novablocks_get_card_item_meta( $belowTitleMeta, $attributes );
+
+	$excerpt        = get_the_excerpt( $post );
+	echo novablocks_get_card_item_description( $excerpt, $attributes );
+
+	echo novablocks_get_card_item_buttons( array(
+		array(
+			'text' => 'Read More',
+			'url' => get_permalink( $post )
+		)
+	), $attributes );
+
+	return ob_get_clean();
+}
+
 function novablocks_get_post_card_markup( $post, $attributes ) {
 	$media_url = get_the_post_thumbnail_url( $post );
-	$title     = get_the_title( $post );
-	$excerpt   = get_the_excerpt( $post );
 
-	$titleTag    = 'h' . $attributes['cardTitleLevel'];
 
 	$classes = array(
 		'novablocks-card',
@@ -211,28 +241,6 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 	if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
 		$classes[] = 'novablocks-card--fixed-media-aspect-ratio';
-	}
-
-	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
-	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
-
-	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
-		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
-	} else {
-		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
-	}
-
-	if ( 'above-title' === $attributes[ 'metadataPosition' ] ) {
-		$aboveTitleMeta = $combinedMeta;
-	}
-
-	if ( 'below-title' === $attributes[ 'metadataPosition' ] ) {
-		$belowTitleMeta = $combinedMeta;
-	}
-
-	if ( 'split' === $attributes[ 'metadataPosition' ] ) {
-		$aboveTitleMeta = $primaryMeta;
-		$belowTitleMeta = $secondaryMeta;
 	}
 
 	$className = join( ' ', $classes );
@@ -252,61 +260,10 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 				</div>
 			<?php } ?>
 
-			<?php if ( ! empty( $attributes['showMeta'] ) ||
-					   ! empty( $attributes['showTitle'] ) ||
-					   ! empty( $attributes['showDescription'] ) ||
-					   ! empty( $attributes['showButtons'] ) ) { ?>
-
+			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
 				<div class="novablocks-card__layout-content novablocks-card__inner-container">
-
-					<?php if ( ! empty( $attributes['showMeta'] ) && ! empty( $aboveTitleMeta ) ) { ?>
-						<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
-							<div class="novablocks-card__meta-size-modifier">
-								<?php echo $aboveTitleMeta; ?>
-							</div>
-						</div>
-					<?php }
-
-					if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-						echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
-						echo '<div class="novablocks-card__title-size-modifier">';
-						echo $title;
-						echo '</div>';
-						echo '</' . $titleTag . '>';
-					}
-
-					if ( ! empty( $attributes['showMeta'] ) && ! empty( $belowTitleMeta ) ) { ?>
-						<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
-							<div class="novablocks-card__meta-size-modifier">
-								<?php echo $belowTitleMeta; ?>
-							</div>
-						</div>
-					<?php }
-
-					if ( ! empty( $excerpt ) && ! empty( $attributes['showDescription'] ) ) { ?>
-						<div class="novablocks-grid__item-content novablocks-card__description">
-							<div class="novablocks-card__content-size-modifier">
-								<?php echo $excerpt; ?>
-							</div>
-						</div>
-					<?php } ?>
-
-					<?php if ( ! empty( $attributes['showButtons'] ) ) { ?>
-						<div class="novablocks-grid__item-buttons novablocks-card__buttons">
-							<div class="wp-block-buttons alignleft">
-								<div class="wp-block-button is-style-text">
-									<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">
-										<span class="novablocks-buttons-size-modifier">
-											Read More
-										</span>
-									</a>
-								</div>
-							</div>
-						</div>
-					<?php } ?>
-
+					<?php echo novablocks_get_post_card_contents( $post, $attributes ); ?>
 				</div>
-
 			<?php } ?>
 
 		</div>

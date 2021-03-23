@@ -15,10 +15,7 @@ import {
   withSettings,
 } from '@novablocks/block-editor';
 
-import {
-  getRandomAttributes,
-  withOnSelectImages,
-} from "./utils";
+import { getRandomAttributes } from "./utils";
 
 const AdvancedGalleryInspectorControls = props => {
 
@@ -162,4 +159,4 @@ const AdvancedGalleryInspectorControls = props => {
 	);
 };
 
-export default withSettings( withOnSelectImages( AdvancedGalleryInspectorControls ) );
+export default withSettings( AdvancedGalleryInspectorControls );

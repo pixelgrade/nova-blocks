@@ -3,12 +3,11 @@ import _ from 'lodash';
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
 
-import {
-  colorSetAttributes,
-  ColorSetControls
-} from "../../components";
-
 import { getClassNameWithPaletteHelpers } from "@novablocks/utils";
+import { addFilter } from '@wordpress/hooks';
+
+import InspectorControls from './inspector-controls';
+import attributes from './attributes.json';
 
 const enableColorSetControls = [
   'novablocks/announcement-bar',
@@ -25,35 +24,35 @@ const enableColorSetControls = [
   'core/group',
 ];
 
-const enableColorSetControlsDeprecation = [
+const enableColorSetsDeprecation = [
   'novablocks/hero',
   'novablocks/slideshow',
 ];
 
-const enablePaletteClasses = [
+const enableColorSetsClassnames = [
   'core/group',
   'novablocks/announcement-bar'
 ];
 
-const {
-  addFilter
-} = wp.hooks;
-
-function withAttributes( settings, name ) {
+const withColorSetsAttributes = ( block, name ) => {
 
   if ( ! enableColorSetControls.includes( name ) ) {
-    return settings;
+    return block;
   }
 
-  return Object.assign( {}, settings, {
-    attributes: Object.assign( {}, settings.attributes, colorSetAttributes ),
-  } )
+  return {
+    ...block,
+    attributes: {
+      ...block.attributes,
+      ...attributes
+    }
+  };
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withAttributes );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withColorSetsAttributes );
 
-function withDeprecation( settings, name ) {
+const withColorSetsDeprecation = ( settings, name ) => {
 
-  if ( ! enableColorSetControlsDeprecation.includes( name ) ) {
+  if ( ! enableColorSetsDeprecation.includes( name ) ) {
     return settings;
   }
 
@@ -82,9 +81,9 @@ function withDeprecation( settings, name ) {
     ].concat( settings.deprecated ),
   } );
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-deprecation', withDeprecation );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-deprecation', withColorSetsDeprecation );
 
-const withColorSetControls = createHigherOrderComponent(OriginalComponent => {
+const withColorSetsControls = createHigherOrderComponent(OriginalComponent => {
 
   return ( props ) => {
 
@@ -94,46 +93,19 @@ const withColorSetControls = createHigherOrderComponent(OriginalComponent => {
 
     return (
       <Fragment>
-        <ColorSetControls { ...props } />
+        <InspectorControls { ...props } />
         <OriginalComponent { ...props } />
       </Fragment>
     );
   };
 });
+addFilter( 'editor.BlockEdit', 'novablocks/with-color-sets-controls', withColorSetsControls );
 
-addFilter( 'editor.BlockEdit', 'novablocks/with-color-sets-controls', withColorSetControls );
-
-function withPaletteAttributes( settings, name ) {
-
-  if ( name !== 'core/group' ) {
-    return settings;
-  }
-
-  return Object.assign( {}, settings, {
-    attributes: Object.assign( {}, settings.attributes, {
-      palette: {
-        type: "number",
-        default: 1,
-      },
-      paletteVariation: {
-        type: "number",
-        default: 1,
-      },
-      useSourceColorAsReference: {
-        type: "boolean",
-        default: false,
-      }
-    } ),
-  } );
-}
-
-addFilter( 'blocks.registerBlockType', 'novablocks/add-color-set-class-names-to-edit', withPaletteAttributes );
-
-const withPaletteClassNames = createHigherOrderComponent( ( BlockEdit ) => {
+const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
 
   return ( props ) => {
 
-    if ( ! enablePaletteClasses.includes( props.name ) ) {
+    if ( ! enableColorSetsClassnames.includes( props.name ) ) {
       return <BlockEdit { ...props } />
     }
 
@@ -150,6 +122,5 @@ const withPaletteClassNames = createHigherOrderComponent( ( BlockEdit ) => {
       <BlockEdit { ...newProps } />
     )
   };
-}, "withPaletteClassNames" );
-
-addFilter( 'editor.BlockEdit', 'novablocks/add-color-set-class-names-to-edit', withPaletteClassNames );
+}, "withColorSetsClassnames" );
+addFilter( 'editor.BlockEdit', 'novablocks/add-color-set-class-names-to-edit', withColorSetsClassnames );

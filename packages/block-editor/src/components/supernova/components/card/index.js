@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 
-import { compose, createHigherOrderComponent } from "@wordpress/compose";
 import { Children } from '@wordpress/element';
 
-import { withDopplerContext, withDopplerProvider } from "@novablocks/doppler";
-import AdvancedGallery from "@novablocks/advanced-gallery";
-import { getAlignFromMatrix } from "@novablocks/block-editor";
-import { getContentVariation } from "@novablocks/utils";
+import {
+  getContentVariation,
+  getPaddingTopFromContainerHeight,
+  getAlignFromMatrix,
+} from "@novablocks/utils";
 
 export * from './contents';
 
@@ -21,8 +21,6 @@ export const Card = ( props ) => {
       contentStyle
     },
   } = props;
-
-  const { getPaddingTopFromContainerHeight } = AdvancedGallery.utils;
 
   const className = classnames(
     `supernova-card`,
@@ -76,11 +74,6 @@ export const CardContentWrapper = ( props ) => {
   )
 }
 
-const withDopplerContextAndProvider = createHigherOrderComponent( compose( [
-  withDopplerProvider,
-  withDopplerContext,
-] ), 'CardMediaWrapper' );
-
 export const CardMediaWrapper = ( props ) => {
 
   const { media } = props;
@@ -94,7 +87,7 @@ export const CardMediaWrapper = ( props ) => {
 
 }
 
-const CardMediaItem = withDopplerContextAndProvider( ( props ) => {
+const CardMediaItem = ( props ) => {
 
   const {
     media: {
@@ -112,4 +105,4 @@ const CardMediaItem = withDopplerContextAndProvider( ( props ) => {
       </div>
     </div>
   );
-} );
+}

@@ -16,10 +16,6 @@ import {
 	ToolbarButton,
 } from '@wordpress/components';
 
-import {
-  withOnSelectImages
-} from './utils';
-
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const AdvancedGalleryChangeMediaToolbar = ( props ) => {
@@ -88,4 +84,4 @@ const AdvancedGalleryBlockControls = ( props ) => {
 	)
 };
 
-export default withOnSelectImages( AdvancedGalleryBlockControls );
+export default AdvancedGalleryBlockControls;

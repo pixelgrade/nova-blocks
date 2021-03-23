@@ -985,6 +985,7 @@ function novablocks_get_theme_support() {
 	$required = array(
 		'header-row',
 		'supernova',
+		'supernova-item',
 	);
 
 	$default = array(
@@ -1053,6 +1054,12 @@ function novablocks_get_advanced_gallery_component_attributes() {
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
+	echo novablocks_get_advanced_gallery( $attributes );
+}
+
+function novablocks_get_advanced_gallery( $attributes ) {
+
+	ob_start();
 
 	$images = array();
 
@@ -1152,6 +1159,8 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		echo '</div>';
 
 	}
+
+	return ob_get_clean();
 }
 
 function novablocks_get_card_media_padding_top( $containerHeight ) {
@@ -1329,6 +1338,35 @@ function novablocks_get_card_media_markup( $media ) {
 	</div>
 
 	<?php return ob_get_clean();
+}
+
+function novablocks_get_card_post_meta( $post, $attributes ) {
+	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
+	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+
+	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
+		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
+	} else {
+		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
+	}
+
+	if ( 'above-title' === $attributes[ 'metadataPosition' ] ) {
+		$aboveTitleMeta = $combinedMeta;
+	}
+
+	if ( 'below-title' === $attributes[ 'metadataPosition' ] ) {
+		$belowTitleMeta = $combinedMeta;
+	}
+
+	if ( 'split' === $attributes[ 'metadataPosition' ] ) {
+		$aboveTitleMeta = $primaryMeta;
+		$belowTitleMeta = $secondaryMeta;
+	}
+
+	return array(
+		$aboveTitleMeta,
+		$belowTitleMeta
+	);
 }
 
 function novablocks_build_articles_query( $attributes ) {
@@ -1682,6 +1720,10 @@ function novablocks_get_content_palette_classes( $attributes ) {
 function novablocks_get_content_variation( $parentVariation, $contentStyle ) {
 	$parentVariation = intval( $parentVariation );
 
+	if ( $contentStyle === 'moderate' ) {
+		return max( 0, $parentVariation - 2 );
+	}
+
 	if ( $contentStyle === 'highlighted' ) {
 		return ( $parentVariation + 6 ) % 12;
 	}
@@ -1725,3 +1767,142 @@ function novablocks_get_customizer_link( $return_url = false,  $extra_query_args
 
 	return $link;
 }
+
+function novablocks_merge_attributes_from_array( $pathsArray ) {
+	$accumulator = [];
+
+	foreach ( $pathsArray as $path ) {
+		$attributes = novablocks_get_attributes_from_json( $path );
+		$accumulator = array_merge( $accumulator, $attributes );
+	}
+
+	return $accumulator;
+}
+
+
+function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
+
+	$cardClasses = array(
+		'supernova-card',
+		'supernova-card--layout-' . $attributes[ 'cardLayout' ],
+		'supernova-card--style-' . $attributes[ 'contentStyle' ],
+	);
+
+	$contentClasses = array(
+		'supernova-card__inner-container'
+	);
+
+	$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
+	$contentClasses = array_merge( $contentClasses, $contentPaletteClasses );
+
+	ob_start(); ?>
+	<div class="<?php echo join( ' ', $cardClasses ); ?>">
+		<div class="supernova-card__media-wrapper">
+			<?php echo $media; ?>
+		</div>
+		<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
+			<div class="supernova-card__content">
+				<div class="<?php echo join( ' ', $contentClasses ); ?>">
+					<?php echo $content; ?>
+				</div>
+			</div>
+		<?php } ?>
+	</div>
+	<?php return ob_get_clean();
+}
+
+function novablocks_get_supernova_card_markup_from_post( $post, $attributes ) {
+	$media_url = get_the_post_thumbnail_url( $post );
+
+	$media_markup = novablocks_get_card_media_markup( array(
+		'type' => 'image',
+		'url'  => $media_url,
+	) );
+
+	$content_markup = novablocks_get_post_card_contents( $post, $attributes );
+
+	return novablocks_get_supernova_card_markup( $media_markup, $content_markup, $attributes );
+
+}
+
+
+
+function novablocks_get_card_contents( $attributes ) {
+	ob_start();
+
+	echo novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
+	echo novablocks_get_card_item_title( $attributes['title'], $attributes );
+	echo novablocks_get_card_item_meta( $attributes['metaBelow'], $attributes );
+	echo novablocks_get_card_item_description( $attributes['description'], $attributes );
+	echo novablocks_get_card_item_buttons( array(
+		'text' => 'buttonText',
+		'url' => 'buttonUrl',
+	), $attributes );
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_meta( $metaValue, $attributes ) {
+	ob_start(); ?>
+
+	<?php if ( ! empty( $attributes['showMeta'] ) && ! empty( $metaValue ) ) { ?>
+		<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+			<div class="novablocks-card__meta-size-modifier">
+				<?php echo $metaValue; ?>
+			</div>
+		</div>
+	<?php }
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_title( $title, $attributes ) {
+	$titleTag = 'h' . $attributes['cardTitleLevel'];
+
+	ob_start();
+
+	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
+		echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
+		echo '<div class="novablocks-card__title-size-modifier">';
+		echo $title;
+		echo '</div>';
+		echo '</' . $titleTag . '>';
+	}
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_description( $description, $attributes ) {
+	ob_start();
+
+	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
+		<div class="novablocks-grid__item-content novablocks-card__description">
+			<div class="novablocks-card__content-size-modifier">
+				<?php echo $description; ?>
+			</div>
+		</div>
+	<?php }
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_buttons( $buttons, $attributes ) {
+	ob_start();
+
+	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons ) ) { ?>
+		<div class="novablocks-grid__item-buttons novablocks-card__buttons">
+			<div class="wp-block-buttons alignleft">
+				<?php foreach ( $buttons as $button ) { ?>
+					<div class="wp-block-button is-style-text">
+						<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
+							<span class="novablocks-buttons-size-modifier"><?php echo $button['text']; ?></span>
+						</a>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+	<?php }
+
+	return ob_get_clean();
+}
+

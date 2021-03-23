@@ -11,16 +11,14 @@ import {
   useState,
 } from "@wordpress/element";
 
-import colorSetAttributes from './attributes.json';
-
 import {
   ControlsGroup,
   ControlsSection,
-  ControlsTab
-} from "../index";
+  ControlsTab,
+  PalettePresetControl
+} from "../../index";
 
 import { __ } from "@wordpress/i18n";
-import PalettePresetControl from "../palette-preset-control";
 
 const ColorSetControls = ( props ) => {
 
@@ -149,21 +147,10 @@ const PaletteControls = ( props ) => {
     return null;
   }
 
-  const currentColor = currentPalette.colors[currentPalette.sourceIndex];
   const [ showFunctional, setShowFunctional ] = useState( false );
 
   const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) ).map( mapPalettesToColorPalette );
   const brandColors = palettes.filter( palette => ! isFunctionalPalette( palette ) ).map( mapPalettesToColorPalette );
-
-  const onChange = ( color ) => {
-    const newPalette = palettes.find( currentPalette => {
-      return colors[sourceIndex]?.value === color
-    } );
-
-    if ( !! newPalette ) {
-      setAttributes( { palette: newPalette.id } );
-    }
-  }
 
   return (
     <Fragment>
@@ -286,9 +273,4 @@ const PaletteVariationControls = ( props ) => {
   )
 }
 
-export {
-  colorSetAttributes,
-  ColorSetControls,
-  PaletteControls,
-  PaletteVariationControls
-}
+export default ColorSetControls;

@@ -1,4 +1,4 @@
-import { useApiFetch } from "@novablocks/block-editor";
+import useApiFetch from "../../../../use-api-fetch";
 
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';

@@ -4,8 +4,11 @@ import { Popover } from '@wordpress/components';
 
 import AdvancedGallery from "@novablocks/advanced-gallery";
 
-import { Card, CardButton, CardMediaWrapper } from '../components/card';
-import { withPreviewAttributes } from "../with-preview-attributes";
+import { SuperNova } from "@novablocks/block-editor";
+
+const { withPreviewAttributes } = SuperNova.utils;
+const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
+
 
 const SuperNovaItemEdit = withPreviewAttributes( props => {
 

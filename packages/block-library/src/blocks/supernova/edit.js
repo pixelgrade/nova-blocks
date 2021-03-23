@@ -6,13 +6,24 @@ import { Fragment } from '@wordpress/element';
 import { getColorSetClassnames } from '@novablocks/utils';
 import { withDopplerControls } from '@novablocks/doppler';
 import { CollectionHeader } from "@novablocks/collection";
+import { SuperNova } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
 
 import Controls from './controls';
 import CollectionLayout from './layout';
-import { PostCard } from './components/post';
-import { Card, CardMeta, CardTitle, CardDescription, CardFooter, CardButton, CardMediaWrapper } from "./components/card";
-import { withPreviewAttributes } from './with-preview-attributes';
+
+const { withPreviewAttributes } = SuperNova.utils;
+
+const {
+  Card,
+  CardMeta,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+  CardButton,
+  CardMediaWrapper,
+  PostCard
+} = SuperNova.components;
 
 const SuperNovaEdit = withPreviewAttributes( ( props ) => {
 
