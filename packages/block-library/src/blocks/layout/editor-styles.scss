@@ -6,7 +6,6 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   @include layout-grid;
   @include layout-settings;
   @include block-settings;
-  @include block-alignments;
   
   grid-auto-flow: row dense;
   

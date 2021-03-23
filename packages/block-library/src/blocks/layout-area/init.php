@@ -20,11 +20,15 @@ if ( ! function_exists('novablocks_render_layout_area_block' ) ) {
 
 	function novablocks_render_layout_area_block( $attributes, $content ) {
 
+		if ( ! $content ) {
+			return;
+		}
+
 		ob_start();
 
 		$classes = array('wp-block-novablocks-layout-area');
 
-		if (! empty($attributes['className' ] ) ) {
+		if ( ! empty($attributes['className' ] ) ) {
 			$classes[] = $attributes['className'];
 		}
 
