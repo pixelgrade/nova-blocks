@@ -1,14 +1,14 @@
 const gridList = document.querySelectorAll(".entry-content");
 
 gridList.forEach(grid => {
-  toggleOverlapClass(grid, ".align-wide", ".novablocks-sidebar--right > *", "break-right");
-  toggleOverlapClass(grid, ".align-full", ".novablocks-sidebar--right > *", "break-right");
-  toggleOverlapClass(grid, ".align-wide", ".novablocks-sidebar--left > *", "break-left");
-  toggleOverlapClass(grid, ".align-full", ".novablocks-sidebar--left > *", "break-left");
-  toggleOverlapClass(grid, ".alignfull", ".novablocks-sidebar--left > *", "break-left");
-  toggleOverlapClass(grid, ".alignfull", ".novablocks-sidebar--right > *", "break-right");
-  toggleOverlapClass(grid, ".alignwide", ".novablocks-sidebar--left > *", "break-left");
-  toggleOverlapClass(grid, ".alignwide", ".novablocks-sidebar--right > *", "break-right");
+  toggleOverlapClass(grid, ".align-wide:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
+  toggleOverlapClass(grid, ".align-full:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
+  toggleOverlapClass(grid, ".align-wide:not(.novablocks-layout)", ".novablocks-sidebar--left > *", "break-left");
+  toggleOverlapClass(grid, ".align-full:not(.novablocks-layout)", ".novablocks-sidebar--left > *", "break-left");
+  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-sidebar--left > *", "break-left");
+  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
+  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-sidebar--left > *", "break-left");
+  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
 });
 
 function toggleOverlapClass(

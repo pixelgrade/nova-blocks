@@ -13,7 +13,6 @@ import {__experimentalBlockVariationPicker, BlockControls, InnerBlocks} from "@w
 import {__} from "@wordpress/i18n";
 import {select, withDispatch, withSelect} from "@wordpress/data";
 import {IconButton, Toolbar} from "@wordpress/components";
-import InspectorControls from "../header/inspector-controls";
 
 import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 import { compose } from "@wordpress/compose";
@@ -152,7 +151,6 @@ class Edit extends Component {
               />
             </Toolbar>
           </BlockControls>
-          <InspectorControls {...this.props} />
           { this.supportsBlockVariationPicker() ? this.blockVariationPicker(this.props) : this.innerBlocksPicker() }
         </Fragment>
       );

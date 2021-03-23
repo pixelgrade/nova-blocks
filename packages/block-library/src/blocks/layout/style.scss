@@ -2,6 +2,28 @@
 
 .entry-content {
   
+  @include layout-grid;
+  @include layout-settings;
+  @include block-settings;
+  
+  > * {
+    grid-column: var(--block-content-start)/var(--block-content-end);
+  }
+  
+  > .novablocks-layout,
+  > .novablocks-block {
+    grid-column: var(--all-columns);
+  }
+  
+  > .novablocks-block {
+    @include layout-grid;
+    @include layout-settings;
+    
+    > * {
+      grid-column: var(--block-content-start)/var(--block-content-end);
+    }
+  }
+  
   .novablocks-layout {
     @include layout-grid;
     @include layout-settings;
@@ -77,6 +99,8 @@
     
     @include block-alignments;
   }
+  
+  @include block-alignments;
 }
 
 .novablocks-content,

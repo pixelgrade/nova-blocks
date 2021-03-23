@@ -24,6 +24,11 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   > [data-type="novablocks/layout"] {
     grid-column: var(--block-limit-left)/var(--block-limit-right);
   }
+  
+  > [data-align="full"] {
+    --block-content-start: fs;
+    --block-content-end: fe;
+  }
 }
 
 // Reset alignments
