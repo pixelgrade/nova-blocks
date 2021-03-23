@@ -14,9 +14,13 @@ function novablocks_get_media_attributes() {
 		'packages/block-library/src/blocks/media/attributes.json',
 		'packages/blob/src/attributes.json',
 		'packages/advanced-gallery/src/attributes.json',
+
+		'packages/block-editor/src/hooks/with-card-details/attributes.json',
 		'packages/block-editor/src/hooks/with-colors-sets/attributes.json',
-		'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json',
-		'packages/block-editor/src/hooks/with-visual-balance-controls-section/attributes.json',
+		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
+		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
+		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
 	) );
 
 }

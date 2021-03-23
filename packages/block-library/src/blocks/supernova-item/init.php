@@ -8,6 +8,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_get_supernova_item_attributes() {
+
+	return novablocks_merge_attributes_from_array( array(
+		'packages/advanced-gallery/src/attributes.json',
+		'packages/blob/src/attributes.json',
+		'packages/collection/src/collection-attributes.json',
+		'packages/collection/src/grid-generator-attributes.json',
+
+		'packages/block-library/src/blocks/supernova-item/attributes.json',
+
+		'packages/block-editor/src/hooks/with-card-details/attributes.json',
+		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/hooks/with-colors-sets/attributes.json',
+		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
+		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
+		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',
+		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
+	) );
+
+}
+
 if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 
 	function novablocks_render_supernova_item_block( $attributes, $content ) {

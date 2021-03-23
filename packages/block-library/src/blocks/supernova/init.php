@@ -24,8 +24,8 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
 		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',
-		'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json',
-		'packages/block-editor/src/hooks/with-visual-balance-controls-section/attributes.json',
+		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
 	) );
 
 }
