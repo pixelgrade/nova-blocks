@@ -34,9 +34,6 @@ class Inspector extends Component {
             setAttributes( { contentAlignment: newAlignment } );
           } }
           options={ [
-            { label: 'None', value: 'none' },
-            { label: 'Full', value: 'full' },
-            { label: 'Wide', value: 'wide' },
             { label: 'Pull Left', value: 'pull-left' },
             { label: 'Pull Right', value: 'pull-right' },
           ] }

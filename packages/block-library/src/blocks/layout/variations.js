@@ -8,7 +8,7 @@ const variations = [
     icon: icons.sidebarLeft,
     innerBlocks: [
       ['novablocks/layout-area', {
-        className: 'novablocks-sidebar novablocks-sidebar--left',
+        className: 'novablocks-sidebar novablocks-sidebar--left'
       }],
       ['novablocks/layout-area', {
         className: 'novablocks-content'

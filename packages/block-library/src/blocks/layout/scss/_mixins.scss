@@ -1,37 +1,121 @@
+// Default Layout Grid
+// fs - full start
+// ws - wide start
+// cs - content start
+// ce - content end
+// we - wide end
+// fe - full end
 @mixin layout-grid {
   display: var(--display-mode);
   grid-template-columns: [fs] 1fr [ws] var(--wds) [cs] var(--content) [ce] var(--wde) [we] 1fr [fe];
   grid-column-gap: var(--grid-gap);
 }
 
+// Default Layout Settings
+// --wide-width - Wide Blocks maximum width.
+// --content-width - Content column maximum width.
+// --display-mode - Block default display mode.
+// --grid-gap - Default gap between grid columns.
 @mixin layout-settings {
   --wide-width: calc(var(--theme-content-width-wide) * 0.75);
   --content-width: calc(var(--theme-content-width-normal) * 0.75);
-  --aside-width: calc( var(--wide-width) * 0.5 - var(--content-width) * 0.5 );
   --full: 100%;
   --wide:  calc( min( var(--wide-width), var(--full) ) );
   --content: var(--content-width);
-  --ws: calc( max( 0px, 50% - var(--wide) * 0.5 ) );
   --wd: calc( var(--wide) * 0.5 - var(--content) * 0.5 );
   --wds: var(--wd);
   --wde: var(--wd);
   --grid-gap: 30px;
   --display-mode: flex;
+  --all-columns: fs/fe;
   
   @include above(lap) {
     --display-mode: grid;
   }
 }
 
-@mixin block-settings {
-  --block-limit-left: ws;
-  --block-limit-right: we;
-  --block-content-start: cs;
-  --block-content-end: ce;
-  --all-columns: fs/fe;
+// Generate CSS Variables,
+// that will handle block limits,
+// based on block alignment.
+@mixin block-limits {
+  
+  //--block-limit-left: cs;
+  //--block-limit-right: ce;
+  
+  .alignwide,
+  .align-wide,
+  [data-align="wide"] {
+    
+    // Find a smarter way to solve
+    // specificity problem.
+    &[class][class] {
+      --block-limit-left: ws;
+      --block-limit-right: we;
+    }
+  }
+  
+  .alignfull,
+  .align-full,
+  [data-align="full"] {
+  
+    // Find a smarter way to solve
+    // specificity problem.
+    &[class][class] {
+      --block-limit-left: fs;
+      --block-limit-right: fe;
+    }
+  }
 }
 
+
+// Generate CSS Variables,
+// that will handle content block position.
+@mixin block-content-alignments {
+  --block-content-start: cs;
+  --block-content-end: ce;
+  
+  .align-full,
+  .alignfull,
+  [data-align="full"]{
+    --block-content-start: fs;
+    --block-content-end: fe;
+  }
+  
+  .alignwide,
+  .align-wide,
+  [data-align="wide"] {
+    --block-content-start: ws;
+    --block-content-end: we;
+  }
+  
+  
+  .align-pull-left[class][class] {
+    --block-content-start: ws;
+    --block-content-end: cs;
+  }
+  
+  .align-pull-right[class][class] {
+    --block-content-start: ce;
+    --block-content-end: we;
+  }
+  
+  .break-right {
+    --block-content-end: ce;
+  }
+  
+  .break-left {
+    --block-content-start: cs;
+  }
+}
+
+// Generate CSS Variables,
+// to handle block content position,
+// based on block alignment.
 @mixin block-alignments {
+  
+  --block-content-start: cs;
+  --block-content-end: ce;
+  
   &.align-full,
   &.alignfull,
   &[data-align="full"] {
@@ -44,24 +128,6 @@
   &[data-align="wide"] {
     --block-content-start: ws;
     --block-content-end: we;
-  }
-  
-  .align-pull-left {
-    --block-content-start: ws;
-    --block-content-end: cs;
-  }
-  
-  .align-pull-right {
-    --block-content-start: ce;
-    --block-content-end: we;
-  }
-  
-  .break-right {
-    --block-content-end: ce;
-  }
-  
-  .break-left {
-    --block-content-start: cs;
   }
 }
 
