@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Nova Blocks
+ * Plugin Name: Nova Blocks Beta
  * Plugin URI: https://github.com/pixelgrade/nova-blocks/
  * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
- * Version: 1.9.0
+ * Version: 1.10.0-beta24032021
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd

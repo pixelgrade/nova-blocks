@@ -1,4 +1,4 @@
-var plugin = 'nova-blocks',
+var plugin = 'nova-blocks-beta',
   gulp = require( 'gulp' ),
   del = require( 'del' ),
   fs = require( 'fs' ),
