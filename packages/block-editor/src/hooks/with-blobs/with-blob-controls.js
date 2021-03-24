@@ -1,6 +1,7 @@
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
+import { hasBlobSupport } from "./utils";
 
 import InspectorControls from './inspector-controls';
 
@@ -8,12 +9,7 @@ const withBlobControls = createHigherOrderComponent(OriginalComponent => {
 
 	return ( props ) => {
 
-		let themeSupport = props?.settings?.theme_support?.blobs;
-
-		// @todo avoid adding controls to block that don't actually support blobs
-		let enableBlobControls =  Array.isArray( themeSupport ) ? themeSupport : [];
-
-		if ( ! enableBlobControls.includes( props.name ) ) {
+		if ( ! hasBlobSupport( props ) ) {
 			return <OriginalComponent { ...props } />
 		}
 

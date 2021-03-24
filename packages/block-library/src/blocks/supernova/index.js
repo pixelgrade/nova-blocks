@@ -4,8 +4,6 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import { getSvg } from '@novablocks/block-editor';
-import AdvancedGallery from '@novablocks/advanced-gallery';
-import Blob from '@novablocks/blob';
 
 import edit from './edit';
 import variations from './variations';
@@ -28,7 +26,6 @@ registerBlockType( 'novablocks/supernova', {
   icon: getSvg( iconSvg ),
   attributes: {
     ...attributes,
-    ...Blob.attributes,
   },
   supports: {
     align: [ "wide", "full" ],

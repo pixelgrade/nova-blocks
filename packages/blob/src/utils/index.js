@@ -1,11 +1,6 @@
 import { MersenneTwister } from "fast-mersenne-twister";
 import getBoundsOfCurve from "./get-bounds-of-curve";
 
-import {
-	getRandomBetween,
-	getRandomFromArray
-} from '@novablocks/utils';
-
 export { getBoundsOfCurve };
 
 const BLOB_MAX_SIDES = 12;
@@ -213,23 +208,6 @@ export const scalePoints = ( points, bounds ) => {
 			x: ( x - xMin ) * xRatio,
 			y: ( y - yMin ) * yRatio,
 		}
-	}
-};
-
-export const getRandomBlobAttributes = ( prefix ) => {
-
-	const sides = getRandomBetween( 4, 7 );
-	const patternSeed = getRandomBetween( 0, 10 ) * 10;
-	const complexity = getRandomFromArray( [ 0, 50, 100, 100, 100 ] );
-	const smoothness = getRandomFromArray( [ 0, 50, 100, 100, 100 ] );
-	const rotation = getRandomBetween( 0, 10 ) * 10;
-
-	return {
-		[`${ prefix }Sides`]: sides,
-		[`${ prefix }PatternSeed`]: patternSeed,
-		[`${ prefix }Complexity`]: complexity,
-		[`${ prefix }Smoothness`]: smoothness,
-		[`${ prefix }Rotation`]: rotation,
 	}
 };
 

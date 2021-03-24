@@ -13,7 +13,6 @@ import {
 } from "@novablocks/utils";
 
 import AdvancedGallery from "@novablocks/advanced-gallery";
-import Blob from '@novablocks/blob';
 
 import {
   getSvg,
@@ -26,7 +25,7 @@ const { getRandomAttributes } = AdvancedGallery.utils;
 
 import blockAttributes from './attributes';
 
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes, Blob.attributes );
+const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
 
 /**
  * WordPress dependencies

@@ -4,7 +4,6 @@ import { setAttributesToInnerBlocks } from "@novablocks/block-editor";
 import { getAlignFromMatrix } from "@novablocks/utils";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
-import Blob from '@novablocks/blob';
 
 const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlock ) => {
 
@@ -45,7 +44,6 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'contentStyle',
       ]
       .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
-      .concat( Object.keys( Blob.attributes ) );
 
       const newAttributes = {};
       attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );

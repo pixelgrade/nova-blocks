@@ -8,8 +8,8 @@ import {
 } from '@wordpress/components';
 
 import { getControlsDirtyClasses, getControlsClasses, getRandomBetween, getRandomFromArray } from "@novablocks/utils";
-import { ControlsGroup, ControlsSection, ControlsTab, PresetControl } from "@novablocks/block-editor";
 
+import { ControlsGroup, ControlsSection, ControlsTab, PresetControl } from "../../components";
 import { getRandomBlobAttributes } from './utils';
 
 const blobsMixStyleOptions = [ {

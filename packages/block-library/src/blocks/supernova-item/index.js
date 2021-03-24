@@ -16,7 +16,6 @@ import { InnerBlocks } from "@wordpress/block-editor";
 import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
 import { generateDefaults, getPlaceholderImages } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
-import Blob from "@novablocks/blob";
 
 import attributes from './attributes.json';
 import {select} from "@wordpress/data";
@@ -57,7 +56,6 @@ registerBlockType( 'novablocks/supernova-item', {
   icon: getSvg( iconSvg ),
   attributes: {
     ...attributes,
-    ...Blob.attributes
   },
   supports: {
     html: false,
