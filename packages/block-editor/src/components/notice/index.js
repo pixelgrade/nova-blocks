@@ -25,9 +25,7 @@ const Notice = ( props ) => {
 
 	if ( hidden ) {
 		return null;
-	};
-
-	console.log(dismissLabel);
+	}
 
 	return (
 		<div className={ 'novablocks-notice' }>
