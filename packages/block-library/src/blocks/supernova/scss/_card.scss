@@ -1,12 +1,14 @@
 .supernova-card {
   display: grid;
-  grid-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 10 );
+  grid-gap: var(--novablocks-card-gap);
   grid-auto-columns: 1fr;
   grid-template-areas:
     "card-media"
     "card-content";
 
+  --novablocks-card-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 10 );
   --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-content-padding-multiplier, 0) ) );
+  --novablocks-card-content-column-width: calc( var(--collection-card-content-area-width) - var(--novablocks-card-gap) * 0.5 );
 
   & &__inner-container[class] {
     padding: var(--novablocks-card-content-padding, 0);
@@ -31,10 +33,12 @@
 
   &:not(&--parametric) .supernova-card--layout-horizontal,
   &--parametric .novablocks-grid__area--landscape .supernova-card {
+    grid-auto-columns: 1fr var(--novablocks-card-content-column-width);
     grid-template-areas: "card-media card-content";
   }
 
   &:not(&--parametric) .supernova-card--layout-horizontal-reverse {
+    grid-auto-columns: var(--novablocks-card-content-column-width) 1fr;
     grid-template-areas: "card-content card-media";
   }
 }

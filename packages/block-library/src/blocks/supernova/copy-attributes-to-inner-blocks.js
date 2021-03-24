@@ -25,6 +25,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'cardContentAlign',
         'cardLayout',
         'cardMediaOpacity',
+        'contentAreaWidth',
         'sourceType',
         'preview',
 
@@ -45,7 +46,6 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
 
       const newAttributes = {};
       attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );
-      newAttributes[ 'containerHeight' ] = attributes[ 'cardMediaAspectRatio' ];
 
       setAttributesToInnerBlocks( clientId, newAttributes );
 

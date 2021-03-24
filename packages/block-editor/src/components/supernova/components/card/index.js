@@ -18,7 +18,8 @@ export const Card = ( props ) => {
       cardLayout,
       cardMediaOpacity,
       containerHeight,
-      contentStyle
+      contentStyle,
+      contentAreaWidth,
     },
   } = props;
 
@@ -31,6 +32,7 @@ export const Card = ( props ) => {
   const style = {
     '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-media-aspect-ratio': getPaddingTopFromContainerHeight( containerHeight ),
+    '--collection-card-content-area-width': `${ contentAreaWidth }%`,
   }
 
   const children = Children.toArray( props.children );

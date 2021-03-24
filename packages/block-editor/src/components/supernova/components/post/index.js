@@ -15,16 +15,18 @@ import {
 
 const withMedia = withSelect( ( select, ownProps ) => {
   const { getMedia } = select( 'core' );
-  const { featured_media } = ownProps.post;
+  const { post, attributes } = ownProps;
+  const { showMedia } = attributes;
+  const { featured_media } = post;
 
-  if ( ! featured_media ) {
+  if ( ! featured_media || ! showMedia ) {
     return null;
   }
 
   const mediaObject = getMedia( featured_media );
 
   if ( ! mediaObject ) {
-    return {};
+    return null;
   }
 
   return {
@@ -34,7 +36,17 @@ const withMedia = withSelect( ( select, ownProps ) => {
 
 export const PostCard = withMedia( props => {
 
-  const { post } = props;
+  const {
+    attributes,
+    post
+  } = props;
+
+  const {
+    showMeta,
+    showTitle,
+    showDescription,
+    showFooter,
+  } = attributes;
 
   const {
     metaAboveTitle,
@@ -43,11 +55,11 @@ export const PostCard = withMedia( props => {
 
   return (
     <Card { ...props }>
-      <CardMeta show={ true }>{ metaAboveTitle }</CardMeta>
-      <CardTitle show={ true }>{ post.title.raw }</CardTitle>
-      <CardMeta show={ true }>{ metaBelowTitle }</CardMeta>
-      <CardDescription show={ true }>{ post.excerpt.rendered }</CardDescription>
-      <CardFooter show={ true }>
+      <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
+      <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
+      <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
+      <CardDescription show={ showDescription }>{ post.excerpt.rendered }</CardDescription>
+      <CardFooter show={ showFooter }>
         <CardButton>{ __( 'Read More' ) }</CardButton>
       </CardFooter>
     </Card>
