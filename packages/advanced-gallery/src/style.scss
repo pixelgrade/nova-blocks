@@ -36,6 +36,8 @@
 
 	display: flex;
 	flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
 	&[class] .credits {
 		font-size: 12px;
@@ -45,6 +47,7 @@
 .novablocks-advanced-gallery__grid-item-media {
 	position: relative;
 	flex: 1 1 0;
+  width: 100%;
 }
 
 .novablocks-advanced-gallery__grid-item-info {

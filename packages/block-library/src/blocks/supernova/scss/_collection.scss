@@ -3,9 +3,42 @@
 }
 
 .supernova-collection__layout--fixed-width {
+  .supernova-card:not(.supernova-card--aspect-ratio-auto) {
+    .supernova-card__media {
+      @include image-cover;
+    }
+  }
+}
 
-  .supernova-card__media {
-    @include image-cover;
+.supernova-card--aspect-ratio-auto {
+
+  .novablocks-advanced-gallery__image {
+    position: static;
+
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    transform: none;
+  }
+
+  .novablocks-advanced-gallery__grid-item-media {
+    flex-grow: 0;
+  }
+
+  .blob-mix {
+    position: relative;
+  }
+
+  .blob-mix__mask {
+    position: static;
+    height: auto;
+  }
+
+  .blob-mix__media {
+    position: relative;
+    height: auto;
   }
 }
 

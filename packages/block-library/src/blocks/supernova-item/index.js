@@ -69,6 +69,6 @@ registerBlockType( 'novablocks/supernova-item', {
   },
   getEditWrapperProps() {
     const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
+    return settings.alignWide ? { 'data-align': 'wide' } : {};
   },
 } );

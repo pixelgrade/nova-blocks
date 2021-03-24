@@ -20,6 +20,7 @@ export const Card = ( props ) => {
       containerHeight,
       contentStyle,
       contentAreaWidth,
+      thumbnailAspectRatioString,
     },
   } = props;
 
@@ -27,6 +28,7 @@ export const Card = ( props ) => {
     `supernova-card`,
     `supernova-card--layout-${ cardLayout }`,
     `supernova-card--style-${ contentStyle }`,
+    `supernova-card--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
 
   const style = {

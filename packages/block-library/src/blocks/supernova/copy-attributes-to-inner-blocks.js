@@ -39,6 +39,9 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'showMeta',
         'showFooter',
 
+        'thumbnailAspectRatio',
+        'thumbnailAspectRatioString',
+
         'contentStyle',
       ]
       .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
