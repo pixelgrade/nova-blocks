@@ -136,11 +136,13 @@ const Collection = ( props ) => {
     layoutGutter,
     headerPosition,
     contentPadding,
+    emphasisArea,
   } = attributes;
 
   const colorSetClassnames = getColorSetClassnames( attributes );
 
   const style = {
+    '--collection-emphasis-area': emphasisArea,
     '--collection-columns-count': columns,
     '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-layout-gutter': layoutGutter,
@@ -148,7 +150,7 @@ const Collection = ( props ) => {
   };
 
   return (
-    <div className={ `supernova ${ colorSetClassnames }` }>
+    <div className={ `supernova ${ colorSetClassnames }` } style={ style }>
       <div className={ `wp-block__inner-container` }>
         {
           headerPosition === 0 &&
@@ -159,7 +161,7 @@ const Collection = ( props ) => {
           </div>
         }
         <div className="wp-block" data-align={ align }>
-          <div className={ `supernova-collection` } style={ style }>
+          <div className={ `supernova-collection` }>
             <CollectionLayout { ...props } />
           </div>
         </div>

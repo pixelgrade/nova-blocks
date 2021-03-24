@@ -2,7 +2,7 @@ import { ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar } from "../
 import { __ } from "@wordpress/i18n";
 import { getAspectRatioAttributes, getControlsClasses, getLevelAttributes } from "@novablocks/utils";
 import { PanelRow, RadioControl, RangeControl, ToggleControl } from "@wordpress/components";
-import { Fragment } from "@wordpress/element";
+import { Fragment, useEffect } from "@wordpress/element";
 
 const InspectorControls = ( props ) => {
 
@@ -26,6 +26,10 @@ const InspectorControls = ( props ) => {
     imagePadding,
     contentPadding,
   } = attributes;
+
+  useEffect( () => {
+    setAttributes( { containerHeight: thumbnailAspectRatio } );
+  }, [ thumbnailAspectRatio ] );
 
   return (
     <ControlsSection label={ __( 'Card Details' ) }>

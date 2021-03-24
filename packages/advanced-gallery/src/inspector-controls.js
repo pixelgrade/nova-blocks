@@ -24,7 +24,8 @@ const AdvancedGalleryInspectorControls = props => {
 		attributes,
 		settings: {
 			advancedGalleryPresetOptions,
-		}
+		},
+    name
 	} = props;
 
 	const {
@@ -37,7 +38,6 @@ const AdvancedGalleryInspectorControls = props => {
 		// elements settings
 		imageResizing,
 		objectPosition,
-		containerHeight,
 		imageRotation,
 
 	} = attributes;
@@ -123,25 +123,7 @@ const AdvancedGalleryInspectorControls = props => {
 						/>
 					</ControlsGroup>
 					<ControlsGroup title={ __( 'Display' ) }>
-						<RangeControl
-							key={ 'advanced-gallery-image-container-height' }
-							label={ __( 'Image Container Height', '__plugin_txtd' ) }
-							value={ containerHeight }
-							onChange={ containerHeight => setAttributes( { containerHeight } ) }
-							min={ 0 }
-							max={ 100 }
-							step={ 5 }
-						/>
-						<RadioControl
-							key={ 'advanced-gallery-image-resizing' }
-							label={ 'Image Resizing' }
-							selected={ imageResizing }
-							onChange={ imageResizing => setAttributes( { imageResizing } ) }
-							options={ [
-								{ label: 'Stretch to fill the container', value: 'cropped' },
-								{ label: 'Shrink to fit (no crop)', value: 'original' },
-							] }
-						/>
+            <ImageResizingControls { ...props } />
 						<RangeControl
 							key={ 'advanced-gallery-image-position' }
 							label={ __( 'Image Position', '__plugin_txtd' ) }
@@ -158,5 +140,52 @@ const AdvancedGalleryInspectorControls = props => {
 		</Fragment>
 	);
 };
+
+const ImageResizingControls = ( props ) => {
+
+  const {
+    attributes,
+    setAttributes,
+    name
+  } = props;
+
+  const {
+    containerHeight,
+    imageResizing,
+  } = attributes;
+
+  const disabledForBlocks = [
+    'novablocks/supernova',
+    'novablocks/supernova-item'
+  ];
+
+  if ( disabledForBlocks.includes( name ) ) {
+    return null;
+  }
+
+  return (
+    <Fragment>
+      <RangeControl
+        key={ 'advanced-gallery-image-container-height' }
+        label={ __( 'Image Container Height', '__plugin_txtd' ) }
+        value={ containerHeight }
+        onChange={ containerHeight => setAttributes( { containerHeight } ) }
+        min={ 0 }
+        max={ 100 }
+        step={ 5 }
+      />
+      <RadioControl
+        key={ 'advanced-gallery-image-resizing' }
+        label={ 'Image Resizing' }
+        selected={ imageResizing }
+        onChange={ imageResizing => setAttributes( { imageResizing } ) }
+        options={ [
+          { label: 'Stretch to fill the container', value: 'cropped' },
+          { label: 'Shrink to fit (no crop)', value: 'original' },
+        ] }
+      />
+    </Fragment>
+  )
+}
 
 export default withSettings( AdvancedGalleryInspectorControls );

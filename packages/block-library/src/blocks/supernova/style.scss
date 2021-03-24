@@ -13,6 +13,17 @@
   --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
   --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
   --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
+
+  &[class] {
+    --emphasis-area-width: calc( var(--collection-emphasis-area, 100) * 1% );
+
+    background: linear-gradient(
+        90deg,
+        var(--novablocks-bg-color) 0,
+        var(--novablocks-bg-color) var(--emphasis-area-width),
+        transparent var(--emphasis-area-width)
+    );
+  }
 }
 
 .supernova__inner-container[class] > .wp-block {

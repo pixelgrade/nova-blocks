@@ -267,7 +267,7 @@ export const getContentVariation = ( attributes ) => {
   const contentStyle = attributes.contentStyle;
 
   if ( contentStyle === 'moderate' ) {
-    return normalizeVariationValue( Math.max( 0, paletteVariation - 2 ) );
+    return normalizeVariationValue( Math.max( 1, paletteVariation - 2 ) );
   }
 
   if ( contentStyle === 'highlighted' ) {

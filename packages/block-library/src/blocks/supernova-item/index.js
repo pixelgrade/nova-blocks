@@ -19,6 +19,7 @@ import AdvancedGallery from "@novablocks/advanced-gallery";
 import Blob from "@novablocks/blob";
 
 import attributes from './attributes.json';
+import {select} from "@wordpress/data";
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 
@@ -65,5 +66,9 @@ registerBlockType( 'novablocks/supernova-item', {
   edit,
   save: function() {
     return <InnerBlocks.Content />
+  },
+  getEditWrapperProps() {
+    const settings = select( 'core/block-editor' ).getSettings();
+    return settings.alignWide ? { 'data-align': 'full' } : {};
   },
 } );
