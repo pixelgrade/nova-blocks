@@ -74,8 +74,8 @@
   --block-content-start: cs;
   --block-content-end: ce;
   
-  .align-full,
-  .alignfull,
+  .align-full[class],
+  .alignfull[class],
   [data-align="full"]{
     --block-content-start: fs;
     --block-content-end: fe;
@@ -99,11 +99,11 @@
     --block-content-end: we;
   }
   
-  .break-right {
+  .break-right[class][class] {
     --block-content-end: ce;
   }
   
-  .break-left {
+  .break-left[class][class] {
     --block-content-start: cs;
   }
 }

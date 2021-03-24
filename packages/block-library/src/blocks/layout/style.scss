@@ -36,6 +36,23 @@
       grid-column: var(--block-content-start)/var(--block-content-end);
     }
   }
+  
+  .wp-block-group__inner-container {
+    @include layout-grid;
+    @include layout-settings;
+    
+    > * {
+      grid-column: var(--block-content-start)/var(--block-content-end);
+    }
+  }
+  
+  .novablocks-sidebar,
+  .wp-block-group {
+    
+    .wp-block-group__inner-container {
+      --display-mode: block;
+    }
+  }
 }
 
 .novablocks-layout {
@@ -195,4 +212,8 @@
 .sticky-element {
   position: sticky;
   top: 0;
+}
+
+.novablocks-collection {
+  grid-column: var(--all-columns) !important;
 }
