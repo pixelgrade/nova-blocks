@@ -4,7 +4,6 @@ import { dispatch, select } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
 import { getColorSetClassnames } from '@novablocks/utils';
-import { withDopplerControls } from '@novablocks/doppler';
 import { CollectionHeader } from "@novablocks/collection";
 import { SuperNova } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
@@ -172,4 +171,4 @@ const Collection = ( props ) => {
   )
 }
 
-export default withDopplerControls( SuperNovaEdit );
+export default SuperNovaEdit;

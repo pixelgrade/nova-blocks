@@ -5,7 +5,6 @@ import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
-import { withDoppler } from "@novablocks/doppler";
 import {
 	normalizeImages,
 	withSettings
@@ -100,7 +99,4 @@ class Edit extends Component {
 	}
 }
 
-export default createHigherOrderComponent(compose([
-	withSettings,
-	withDoppler,
-]))( Edit );
+export default createHigherOrderComponent( withSettings )( Edit );

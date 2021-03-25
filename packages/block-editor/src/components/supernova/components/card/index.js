@@ -1,12 +1,15 @@
 import classnames from 'classnames';
 
-import { Children } from '@wordpress/element';
+import { compose } from '@wordpress/compose';
+import { Children, Fragment } from '@wordpress/element';
 
 import {
   getContentVariation,
   getPaddingTopFromContainerHeight,
   getAlignFromMatrix,
 } from "@novablocks/utils";
+
+import { withDoppler } from "../../../../hooks";
 
 export * from './contents';
 
@@ -78,20 +81,35 @@ export const CardContentWrapper = ( props ) => {
   )
 }
 
-export const CardMediaWrapper = ( props ) => {
-
+const CardMediaContent = props => {
   const { media } = props;
 
   return (
-    <div className={ `supernova-card__media-wrapper` }>
+    <Fragment>
       { media && <CardMediaItem { ...props } /> }
       { ! media && props.children }
-    </div>
-  );
-
+    </Fragment>
+  )
 }
 
-const CardMediaItem = ( props ) => {
+const CardMediaContentWithDoppler = withDoppler( ( props ) => {
+  return (
+    <div style={ props?.parallax?.style }>
+      <CardMediaContent { ...props } />
+    </div>
+  )
+} );
+
+export const CardMediaWrapper = ( props ) => {
+
+  return (
+    <div className={ `supernova-card__media-wrapper` }>
+      <CardMediaContent { ...props } />
+    </div>
+  );
+}
+
+const CardMediaItemContent = withDoppler(( props ) => {
 
   const {
     media: {
@@ -103,9 +121,16 @@ const CardMediaItem = ( props ) => {
   } = props;
 
   return (
+    <img className={ `supernova-card__media` } src={ url } width={ width } height={ height } style={ props?.parallax?.style } />
+  )
+} );
+
+const CardMediaItem = ( props ) => {
+
+  return (
     <div className={ `supernova-card__media-aspect-ratio` }>
-      <div className={ `novablocks-mask` }>
-        <img className={ `supernova-card__media` } src={ url } width={ width } height={ height } style={ props?.parallax?.style } />
+      <div className="novablocks-mask">
+        <CardMediaItemContent { ...props } />
       </div>
     </div>
   );

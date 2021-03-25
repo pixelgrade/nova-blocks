@@ -6,6 +6,7 @@ import "./with-card-elements-display";
 import "./with-cards-manager";
 import "./with-colors-sets";
 import "./with-deprecated-group";
+import "./with-doppler";
 import "./with-controls-sections";
 import "./with-emphasis-area";
 import "./with-emphasis-level";
@@ -18,6 +19,8 @@ import "./with-visual-balance";
 
 import withSettings from './with-settings';
 import withBlobsDecoration from './with-blobs/with-blobs-decoration';
+
+export * from "./with-doppler";
 
 export {
   withSettings,

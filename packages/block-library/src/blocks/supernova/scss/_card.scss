@@ -99,6 +99,7 @@
 }
 
 .supernova-card__media-wrapper {
+  position: relative;
   opacity: var(--collection-card-media-opacity, 1);
 }
 
