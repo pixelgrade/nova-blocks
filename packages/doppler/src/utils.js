@@ -220,9 +220,13 @@ export const getProps = function( config, fixed ) {
 
 export const getState = function( container, config ) {
 
-	if ( ! container || ! config ) {
+	if ( ! config ) {
 		return {};
 	}
+
+	if ( ! container ) {
+	  return config;
+  }
 
 	const {
 		followThroughStart,
