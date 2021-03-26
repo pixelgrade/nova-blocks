@@ -25,7 +25,7 @@
   --wd: calc( var(--wide) * 0.5 - var(--content) * 0.5 );
   --wds: var(--wd);
   --wde: var(--wd);
-  --grid-gap: 30px;
+  --grid-gap: var(--novablocks-spacing);
   --display-mode: flex;
   --all-columns: fs/fe;
   
