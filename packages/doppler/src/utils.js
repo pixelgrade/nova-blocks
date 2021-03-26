@@ -26,10 +26,10 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 	}
 }
 
-export const getStyles = function( config ) {
-	const props = getProps( config );
-	const styles = getStylesFromProps( props );
-	return styles;
+export const getStyles = function( config, attributes ) {
+	const props = getProps( config, attributes );
+
+	return getStylesFromProps( props );
 }
 
 export const getStylesFromProps = function( props ) {
@@ -61,14 +61,13 @@ function getIntermediateValue( initialValue, finalValue, progress ) {
 	return initialValue + ( finalValue - initialValue ) * progress;
 }
 
-function getScales( config ) {
+function getScales( attributes, progress ) {
 
 	let {
 		scrollingEffect,
 		initialBackgroundScale,
 		finalBackgroundScale,
-		progress,
-	} = config;
+	} = attributes;
 
 	initialBackgroundScale = initialBackgroundScale || 1;
 
@@ -94,14 +93,13 @@ function getScales( config ) {
 	}
 }
 
-function getFocalPoint( config ) {
+function getFocalPoint( attributes, progress ) {
 
 	let {
 		scrollingEffect,
 		focalPoint,
 		finalFocalPoint,
-		progress,
-	} = config;
+	} = attributes;
 
 	if ( ! focalPoint ) {
 		focalPoint = {
@@ -127,19 +125,11 @@ function getNewImageHeight( config, parallaxAmount ) {
 	return containerHeight + ( scrollContainerHeight - containerHeight ) * parallaxAmount;
 }
 
-export const getProps = function( config, fixed ) {
+export const getProps = function( config, attributes, fixed ) {
 
 	const {
 		distance,
 		progress,
-		smoothStart,
-		smoothEnd,
-
-		scrollingEffect,
-		focalPoint,
-		finalFocalPoint,
-		initialBackgroundScale,
-		finalBackgroundScale,
 
 		container,
 		containerBox,
@@ -149,9 +139,20 @@ export const getProps = function( config, fixed ) {
 		scrollContainer,
 		scrollContainerBox,
 		scrollContainerHeight,
+
+		smoothStart,
+		smoothEnd,
 	} = config;
 
-	const newFocalPoint = getFocalPoint( config );
+	const {
+		scrollingEffect,
+		focalPoint,
+		finalFocalPoint,
+		initialBackgroundScale,
+		finalBackgroundScale,
+  } = attributes;
+
+	const newFocalPoint = getFocalPoint( attributes, progress );
 
 	if ( scrollingEffect === 'static' ) {
 
@@ -169,13 +170,13 @@ export const getProps = function( config, fixed ) {
 	}
 
 	const parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
-	const { maxScale, newScale } = getScales( config );
+	const { maxScale, newScale } = getScales( attributes, progress );
 	const newImageHeight = getNewImageHeight( config, parallaxAmount );
 
 	// keep in sync with scroll
 	let moveY = scrollContainerBox.top - containerBox.top;
 
-	if ( ! smoothStart ) {
+  if ( ! smoothStart ) {
 		if ( !! fixed && containerBox.top < 0 ) {
 			moveY = scrollContainerBox.top;
 		}
@@ -195,7 +196,6 @@ export const getProps = function( config, fixed ) {
 			}
 		}
 	}
-
 
 	// align top
 	let offsetY = newImageHeight * maxScale * ( newScale - 1 ) * 0.5;
@@ -218,27 +218,21 @@ export const getProps = function( config, fixed ) {
 	};
 }
 
-export const getState = function( container, config ) {
-
-	if ( ! config ) {
-		return {};
-	}
-
-	if ( ! container ) {
-	  return config;
-  }
+export const getState = function( config, attributes ) {
 
 	const {
-		followThroughStart,
-		followThroughEnd,
-		scrollingEffect,
 		scrollContainerHeight,
 		scrollContainerBox,
-	} = config;
+    containerWidth,
+    containerHeight,
+    containerBox,
+  } = config;
 
-	const containerWidth = container.offsetWidth;
-	const containerHeight = container.offsetHeight;
-	const containerBox = container.getBoundingClientRect();
+	const {
+		scrollingEffect,
+		followThroughStart,
+		followThroughEnd,
+	} = attributes;
 
 	const smoothStart = followThroughStart || scrollingEffect === 'parallax';
 	const smoothEnd = followThroughEnd || scrollingEffect === 'parallax';

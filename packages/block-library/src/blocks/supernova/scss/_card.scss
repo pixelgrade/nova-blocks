@@ -7,6 +7,7 @@
   --novablocks-card-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 10 );
   --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-content-padding-multiplier, 0) ) );
   --novablocks-card-content-column-width: calc( var(--collection-card-content-area-width) - var(--novablocks-card-gap) * 0.5 );
+  --novablocks-card-media-column-width: calc( 100% - var(--novablocks-card-content-column-width) - var(--novablocks-card-gap));
 
   & &__inner-container[class] {
     padding: var(--novablocks-card-content-padding, 0);
@@ -31,10 +32,12 @@
 
     .supernova-card__content {
       width: var(--novablocks-card-content-column-width);
+      flex: 0 0 var(--novablocks-card-content-column-width);
     }
 
     .supernova-card__media-wrapper {
-      width: calc( 100% - var(--novablocks-card-content-column-width) - var(--novablocks-card-gap));
+      width: var(--novablocks-card-media-column-width);
+      flex: 0 0 var(--novablocks-card-media-column-width);
     }
   }
 

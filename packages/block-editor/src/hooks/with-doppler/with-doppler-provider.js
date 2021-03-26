@@ -1,9 +1,9 @@
-import { useRef, useEffect, useState } from "@wordpress/element";
+import { useCallback, useEffect, useState } from "@wordpress/element";
 
 import Doppler from "@novablocks/doppler";
 
 import DopplerContext from "./context";
-import { createBlockObservers } from "./utils";
+import { createBlockObservers, getScrollContainer } from "./utils";
 
 const { getStyles, getState } = Doppler.utils;
 
@@ -13,75 +13,84 @@ const withDopplerProvider = ( WrappedComponent ) => {
 
     const { attributes } = props;
 
-    const [ dopplerState, setDopplerState ] = useState( {
-      scrollContainerWidth: 0,
-      scrollContainerHeight: 0,
-      progress: 0.5,
-    } );
+    const [ dopplerState, setDopplerState ] = useState( null );
+    const [ container, setContainer ] = useState( null );
+    const [ config, setConfig ] = useState( null );
+    const [ style, setStyle ] = useState( {} );
 
-    const getScrollContainer = () => {
-      return document.querySelector( '.edit-post-layout__content' ) ||
-             document.querySelector( '.edit-post-editor-regions__content' ) ||
-             document.querySelector( '.block-editor-editor-skeleton__content' ) ||
-             document.querySelector( '.interface-interface-skeleton__content' );
-    }
-
-    const ref = useRef()
-    const container = ref.current;
     const scrollContainer = getScrollContainer();
 
-    useEffect( () => {
-      const observers = createBlockObservers( container, updateState );
-      const unsubscribeUpdate = wp.data.subscribe( updateState );
-      window.addEventListener( 'resize', updateState );
+    const containerRef = useCallback( node => {
+      if ( node !== null ) {
+        setContainer( node );
+      }
+    }, [] );
 
-      if ( scrollContainer ) {
-        scrollContainer.addEventListener( 'scroll', updateState );
+    useEffect( () => {
+
+      if ( ! container ) {
+        return;
       }
 
-      updateState();
+      const observers = createBlockObservers( container, updateConfig );
+      const unsubscribeUpdate = wp.data.subscribe( updateConfig );
+      window.addEventListener( 'resize', updateConfig );
+
+      if ( scrollContainer ) {
+        scrollContainer.addEventListener( 'scroll', updateConfig );
+      }
 
       return (
         () => {
-          window.removeEventListener( 'resize', updateState );
+          window.removeEventListener( 'resize', updateConfig );
           observers.forEach( observer => observer.disconnect() );
           unsubscribeUpdate();
 
           if ( scrollContainer ) {
-            scrollContainer.removeEventListener( 'scroll', updateState );
+            scrollContainer.removeEventListener( 'scroll', updateConfig );
           }
         }
       )
-    }, [] );
+    }, [ container ] )
 
-    const updateState = () => {
-      const scrollContainerHeight = scrollContainer.offsetHeight;
-      const scrollContainerBox = scrollContainer.getBoundingClientRect();
+    useEffect( () => {
 
-      const config = Object.assign( {}, attributes, {
-        scrollContainerBox,
-        scrollContainerHeight,
-      } );
-
-      setDopplerState( getState( container, config ) );
-    }
-
-    const getElementStyle = () => {
-
-      if ( ! scrollContainer || ! container ) {
-        return {};
+      if ( ! config ) {
+        return;
       }
 
-      const state = getState( container, Object.assign( {}, dopplerState, attributes ) );
-      const config = Object.assign( {}, state, attributes );
+      setDopplerState( getState( config, attributes ) );
 
-      return getStyles( config );
+    }, [ config ] );
+
+    useEffect( () => {
+
+      if ( ! config || ! dopplerState ) {
+        return;
+      }
+
+      const cfg = Object.assign( {}, config, dopplerState );
+
+      setStyle( getStyles( cfg, attributes ) );
+
+    }, [ config, dopplerState ] )
+
+    const updateConfig = () => {
+
+      setConfig( {
+        scrollContainerHeight: scrollContainer.offsetHeight,
+        scrollContainerBox: scrollContainer.getBoundingClientRect(),
+        containerWidth: container.offsetWidth,
+        containerHeight: container.offsetHeight,
+        containerBox: container.getBoundingClientRect(),
+      } );
+
     }
 
     return (
-      <div className={`novablocks-doppler-wrapper`} ref={ ref }>
+      <div className={ `novablocks-mask novablocks-doppler-wrapper` } ref={ containerRef }>
         <DopplerContext.Provider value={ {
-          style: getElementStyle(),
+          style: style,
           state: dopplerState,
           container: container,
           scrollContainer: scrollContainer,

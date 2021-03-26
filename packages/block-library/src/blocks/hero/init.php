@@ -12,7 +12,7 @@ function novablocks_get_hero_attributes() {
 	$block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/hero/attributes.json' );
 	$alignment_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/alignment-controls/attributes.json' );
 	$color_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/color-controls/attributes.json' );
-	$scrolling_attributes = novablocks_get_attributes_from_json( 'packages/doppler/src/attributes.json' );
+	$scrolling_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-doppler/attributes.json' );
 	$layout_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/layout-controls/attributes.json' );
 
 	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );

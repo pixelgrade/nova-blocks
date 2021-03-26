@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 
 import { compose } from '@wordpress/compose';
-import { Children, Fragment } from '@wordpress/element';
+import { Children, Fragment, forwardRef } from '@wordpress/element';
 
 import {
   getContentVariation,
@@ -109,7 +109,7 @@ export const CardMediaWrapper = ( props ) => {
   );
 }
 
-const CardMediaItemContent = withDoppler(( props ) => {
+const CardMediaItemContent = withDoppler( ( props ) => {
 
   const {
     media: {
@@ -129,9 +129,7 @@ const CardMediaItem = ( props ) => {
 
   return (
     <div className={ `supernova-card__media-aspect-ratio` }>
-      <div className="novablocks-mask">
-        <CardMediaItemContent { ...props } />
-      </div>
+      <CardMediaItemContent { ...props } />
     </div>
   );
 }

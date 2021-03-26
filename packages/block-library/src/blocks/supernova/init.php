@@ -68,6 +68,19 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$spacingProps = novablocks_get_spacing_css( $attributes );
 		$cssProps = array_merge( $cssProps, $spacingProps );
 
+		if ( "content" === $attributes[ 'sourceType' ] ) {
+
+			ob_start();
+
+			foreach ( $posts as $post ) {
+				array_push( $novablocks_rendered_posts_ids, $post->ID );
+				$card_markup = novablocks_get_supernova_card_markup_from_post( $post, $attributes );
+				echo apply_filters( 'novablocks_get_supernova_card_markup', $card_markup, $post, $attributes );
+			}
+
+			$content = ob_get_clean();
+		}
+
 		ob_start(); ?>
 
         <div
@@ -78,13 +91,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			</div>
 			<div class="supernova__inner-container">
 				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
-					<?php if ( "content" === $attributes[ 'sourceType' ] ) { ?>
+					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) { ?>
 						<div class="novablocks-grid" <?php echo join( ' ', $data_attributes ); ?>>
-							<?php foreach ( $posts as $post ) {
-								array_push( $novablocks_rendered_posts_ids, $post->ID );
-								$card_markup = novablocks_get_supernova_card_markup_from_post( $post, $attributes );
-								echo apply_filters( 'novablocks_get_supernova_card_markup', $card_markup, $post, $attributes );
-							} ?>
+							<?php echo $content; ?>
 						</div>
 					<?php } else { ?>
 						<div class="<?php echo join( ' ', $layoutClasses );?>">

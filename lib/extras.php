@@ -1788,6 +1788,12 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 		'supernova-card--style-' . $attributes[ 'contentStyle' ],
 	);
 
+	$cssProps = array(
+		'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
+		'--collection-card-media-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes[ 'containerHeight' ] ),
+		'--collection-card-content-area-width: ' . $attributes[ 'contentAreaWidth' ] . '%',
+	);
+
 	$innerContainerClasses = array(
 		'supernova-card__inner-container'
 	);
@@ -1804,7 +1810,9 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 	);
 
 	ob_start(); ?>
-	<div class="<?php echo join( ' ', $cardClasses ); ?>">
+
+	<div class="<?php echo join( ' ', $cardClasses ); ?>"
+		 style="<?php echo join( '; ', $cssProps ); ?>">
 		<div class="supernova-card__media-wrapper">
 			<?php echo $media; ?>
 		</div>
