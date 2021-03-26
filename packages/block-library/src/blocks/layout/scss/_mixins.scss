@@ -7,7 +7,7 @@
 // fe - full end
 @mixin layout-grid {
   display: var(--display-mode);
-  grid-template-columns: [fs] 1fr [ws] var(--wds) [cs] var(--content) [ce] var(--wde) [we] 1fr [fe];
+  grid-template-columns: [fs] 1fr [ws] var(--wds) [cs] calc(var(--content) / 2) [cc] calc(var(--content) / 2) [ce] var(--wde) [we] 1fr [fe];
   grid-column-gap: var(--grid-gap);
 }
 

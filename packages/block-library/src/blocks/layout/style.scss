@@ -214,6 +214,15 @@
   top: 0;
 }
 
-.novablocks-collection {
-  grid-column: var(--all-columns) !important;
+// Helper classes
+.half-block-left {
+  grid-column: var(--block-limit-left)/cc;
+}
+
+.half-block-right {
+  grid-column: cc/var(--block-limit-right);
+}
+
+.novablocks-content .entry-content {
+  --display-mode: block;
 }
