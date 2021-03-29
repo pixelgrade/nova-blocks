@@ -72,25 +72,6 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
 // Reset alignments
 .novablocks-content {
   
-  [data-novablocks-alignment="pull-left"],
-  [data-novablocks-alignment="pull-right"],
-  
-  .alignfull,
-  .alignwide {
-    --block-limit-left: cs;
-    --block-limit-right: ce;
-  }
-  
-  [data-align="full"] {
-    --block-content-start: var(--block-limit-left) !important;
-    --block-content-end: ce !important;
-  }
-  
-  [data-align="wide"] {
-    --block-content-start: var(--block-limit-left) !important;
-    --block-content-end: ce !important;
-  }
-  
   > #{$grid-selector} {
     
     > * {
@@ -128,6 +109,23 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   
     --block-content-start: cs;
     --block-content-end: var(--block-limit-right);
+  
+    //@todo: Find a better solution for this resets,
+    //  to avoid repetition.
+    
+    .alignfull,
+    .alignwide,
+    [data-novablocks-alignment="pull-left"],
+    [data-novablocks-alignment="pull-right"] {
+      --block-limit-left: cs;
+      --block-limit-right: ce;
+    }
+  
+    [data-align="full"],
+    [data-align="wide"] {
+      --block-content-start: cs;
+      --block-content-end: var(--block-limit-right) !important;
+    }
     
     > #{$grid-selector} {
       
@@ -164,6 +162,26 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   }
   
   &--sidebar-right {
+  
+    --block-content-start: var(--block-limit-left);
+    --block-content-end: ce;
+    
+    //@todo: Find a better solution for this resets,
+    //  to avoid repetition.
+    
+    .alignfull,
+    .alignwide,
+    [data-novablocks-alignment="pull-left"],
+    [data-novablocks-alignment="pull-right"] {
+      --block-limit-left: cs;
+      --block-limit-right: ce;
+    }
+  
+    [data-align="full"],
+    [data-align="wide"] {
+      --block-content-start: var(--block-limit-left) !important;
+      --block-content-end: ce !important;
+    }
     
     > #{$grid-selector} {
       
@@ -202,6 +220,23 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   
     --block-content-start: cs;
     --block-content-end: ce;
+  
+    //@todo: Find a better solution for this resets,
+    //  to avoid repetition.
+  
+    .alignfull,
+    .alignwide,
+    [data-novablocks-alignment="pull-left"],
+    [data-novablocks-alignment="pull-right"] {
+      --block-limit-left: cs;
+      --block-limit-right: ce;
+    }
+  
+    [data-align="full"],
+    [data-align="wide"] {
+      --block-content-start: cs;
+      --block-content-end: ce !important;
+    }
     
     > #{$grid-selector} {
       
@@ -212,6 +247,10 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
       // Sidebar Left
       >:first-child {
         grid-column: var(--block-limit-left)/var(--block-content-start);
+  
+        // We need this z-index, to make sure that
+        // we can select blocks that are inside the sidebar.
+        z-index: 2;
       }
       
       // Content
@@ -235,6 +274,10 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
       // Sidebar Right
       >:last-child {
         grid-column: var(--block-content-end)/var(--block-limit-right);
+        
+        // We need this z-index, to make sure that
+        // we can select blocks that are inside the sidebar.
+        z-index: 2;
       }
     }
   }
@@ -277,8 +320,10 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
               
               > #{$grid-selector} {
                 
-                > * {
-                  grid-column: var(--block-content-start)/var(--block-content-end);
+                
+                > *,
+                &:before {
+                  grid-column: cs/ce;
                 }
               }
             }

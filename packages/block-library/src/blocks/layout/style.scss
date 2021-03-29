@@ -65,6 +65,8 @@
   --block-limit-left: ws;
   --block-limit-right: we;
   
+  grid-column: var(--all-columns);
+  
   // Temporary
   max-width: 100% !important;
   
@@ -138,26 +140,30 @@
     }
   }
   
-  // Make sure layout block is displayed on all columns.
+  @include block-alignments;
+}
+
+.entry-content {
   .novablocks-layout {
-    grid-column: var(--all-columns);
+    // Make sure layout block is displayed on all columns.
+    .novablocks-layout {
+      grid-column: var(--all-columns);
     
-    .novablocks-content {
+      .novablocks-content {
       
-      // By default all blocks inside content column,
-      // will be displayed between CS and CE.
-      // This could be changed based on layout used.
-      > * {
-        --block-content-start: cs;
-        --block-content-end: ce;
+        // By default all blocks inside content column,
+        // will be displayed between CS and CE.
+        // This could be changed based on layout used.
+        > * {
+          --block-content-start: cs;
+          --block-content-end: ce;
+        }
+      
+        @include block-alignments;
+      
       }
-      
-      @include block-alignments;
-      
     }
   }
-  
-  @include block-alignments;
 }
 
 .novablocks-content,
@@ -225,4 +231,21 @@
 
 .novablocks-content .entry-content {
   --display-mode: block;
+}
+
+.novablocks-layout-grid {
+  @include layout-grid;
+  @include layout-settings;
+  @include block-limits;
+  @include block-content-alignments;
+  @include block-alignments;
+  
+  grid-column: var(--all-columns) !important;
+  
+  --display-mode: grid !important;
+  
+  
+  > * {
+    grid-column: var(--block-content-start)/var(--block-content-end);
+  }
 }
