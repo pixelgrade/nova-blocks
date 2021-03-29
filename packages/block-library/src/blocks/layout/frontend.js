@@ -1,4 +1,4 @@
-const gridList = document.querySelectorAll(".entry-content");
+const gridList = document.querySelectorAll(".site-main");
 
 gridList.forEach(grid => {
   toggleOverlapClass(grid, ".align-wide:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
@@ -19,6 +19,7 @@ function toggleOverlapClass(
 ) {
   const elemList = container.querySelectorAll(selector);
   const collidersList = container.querySelectorAll(collisionSelector);
+
 
   elemList.forEach((elem) => {
     const elemBox = elem.getBoundingClientRect();

@@ -39,8 +39,8 @@
 // based on block alignment.
 @mixin block-limits {
   
-  //--block-limit-left: cs;
-  //--block-limit-right: ce;
+  --block-limit-left: cs;
+  --block-limit-right: ce;
   
   .alignwide,
   .align-wide,
