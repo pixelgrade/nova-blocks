@@ -6,7 +6,7 @@ import { isSafari } from "@novablocks/utils";
 import { withBlobsDecoration } from "@novablocks/block-editor";
 
 import { GridItemCollection } from "./grid-item";
-import { getGalleryStyle, getGridStyle } from "./utils";
+import { getGridStyle } from "./utils";
 
 const AdvancedGalleryPreview = ( props ) => {
 
@@ -44,7 +44,7 @@ const AdvancedGalleryPreview = ( props ) => {
 			onSelect={ onSelectImages }
 			value={ galleryValue }
 			render={ ( { open } ) => (
-				<div className={ 'novablocks-advanced-gallery' } style={ getGalleryStyle( attributes ) } ref={ ref }>
+				<div className={ 'novablocks-advanced-gallery' } ref={ ref }>
 					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` } onClick={ open }>
 						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 					</div>

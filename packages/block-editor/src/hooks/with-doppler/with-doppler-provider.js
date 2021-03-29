@@ -88,7 +88,7 @@ const withDopplerProvider = ( WrappedComponent ) => {
     }
 
     return (
-      <div className={ `novablocks-mask novablocks-doppler-wrapper` } ref={ containerRef }>
+      <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>
         <DopplerContext.Provider value={ {
           style: style,
           state: dopplerState,

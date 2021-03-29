@@ -21,6 +21,7 @@ function novablocks_get_supernova_item_attributes() {
 		'packages/block-editor/src/hooks/with-card-details/attributes.json',
 		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
 		'packages/block-editor/src/hooks/with-colors-sets/attributes.json',
+		'packages/block-editor/src/hooks/with-doppler/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
 		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',

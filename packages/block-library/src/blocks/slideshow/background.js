@@ -31,7 +31,7 @@ const SlideshowBackground = function( props ) {
 	const videoURL = previewImage?.url;
 
 	return (
-		<div className="novablocks-mask">
+		<div className="novablocks-doppler__mask">
 			<div className="novablocks-slideshow__background">
 				{ previewImage.type !== 'video' && <img className="novablocks-slideshow__media" src={ imageURL } alt="" style={ styles } /> }
 				{ previewImage.type === 'video' && <video className="novablocks-slideshow__media" src={ videoURL } muted autoPlay loop playsInline style={ styles } /> }

@@ -21,7 +21,7 @@ const HeroBackground = function( props ) {
 	}
 
 	return (
-		<div className="novablocks-mask">
+		<div className="novablocks-doppler__mask">
 			<div className="novablocks-hero__background">
 				{ !! media && media.type === 'image' && typeof media.sizes !== 'undefined' &&
 				  <img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } style={ styles } /> }

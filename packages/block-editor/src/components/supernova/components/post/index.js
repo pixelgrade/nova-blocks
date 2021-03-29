@@ -45,7 +45,7 @@ export const PostCard = withMedia( props => {
     showMeta,
     showTitle,
     showDescription,
-    showFooter,
+    showButtons,
   } = attributes;
 
   const {
@@ -59,7 +59,7 @@ export const PostCard = withMedia( props => {
       <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
       <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
       <CardDescription show={ showDescription }>{ post.excerpt.rendered }</CardDescription>
-      <CardFooter show={ showFooter }>
+      <CardFooter show={ showButtons }>
         <CardButton>{ __( 'Read More' ) }</CardButton>
       </CardFooter>
     </Card>

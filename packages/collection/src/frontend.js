@@ -20,7 +20,7 @@ import {
 
 	const defaultBlockWidth = 1152; // magic
 
-  let $carousels = $('[data-layoutstyle="carousel"]');
+  let $carousels = $( '[data-layoutstyle="carousel"]' );
 
 	$( '.novablocks-grid' ).each( function( i, grid ) {
 		const $grid = $( grid );
@@ -29,6 +29,8 @@ import {
 		const $posts = $grid.children( '.novablocks-card' );
 		const attributes = $grid.data();
 		const cardsCount = $posts.length;
+
+		console.log( grid );
 
 		let addedCards;
 

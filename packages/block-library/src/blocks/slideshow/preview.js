@@ -110,7 +110,7 @@ const SlideshowPreview = class extends Component {
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
+								<div className="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 									<div
 										className="novablocks-slideshow__inner-container novablocks-u-content-width"
 										style={ styles.content }

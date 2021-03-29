@@ -1,0 +1,10 @@
+{
+	"contentStyle": {
+		"type": "string",
+		"default": "basic"
+	},
+	"emphasisByContrast": {
+		"type": "number",
+		"default": 1
+	}
+}

@@ -61,8 +61,8 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 			?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<div class="novablocks-map__map-container">
-				<div class="novablocks-mask">
-					<div class="novablocks-parallax">
+				<div class="novablocks-doppler__mask">
+					<div class="novablocks-doppler__target">
 						<div
 							class="novablocks-map__map js-novablocks-google-map"
 							data-accent-color="<?php echo $map_accent_color; ?>"

@@ -1,5 +1,16 @@
 import { isUndefined } from "lodash";
 
+import { __ } from '@wordpress/i18n';
+import { Fragment, useEffect } from '@wordpress/element';
+import { dispatch, select, useSelect } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
+
+import {
+	RadioControl,
+	RangeControl,
+	ToggleControl,
+} from '@wordpress/components';
+
 import {
 	ControlsGroup,
 	ControlsSection,
@@ -15,22 +26,15 @@ import {
 
 import {
 	withSettings
-} from "@novablocks/block-editor"
+} from "@novablocks/block-editor";
 
-import { applyLayoutEngine } from './layout-engine'
+import { applyLayoutEngine } from './layout-engine';
+import presets from './presets';
+
 import {
 	getOptimalHeaderPosition,
 	getPostsCount
 } from './utils';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-
-import {
-	RadioControl,
-	RangeControl,
-	ToggleControl,
-} from '@wordpress/components';
 
 const getMinFeatureSize = ( attributes ) => {
 	return 1;
@@ -140,270 +144,7 @@ const LayoutControls = ( props ) => {
 				<PresetControl
 					key={ 'novablocks-collection-layout-preset' }
 					label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
-					options={ [ {
-						label: 'L27: Brancusi',
-						value: 'tear2down7',
-						preset: {
-							layoutStyle: 'parametric',
-							postsToShow: 6,
-							gridcolumns: 6,
-							gridrows: 6,
-							featuresize: 4,
-							featureposition: 1,
-							fragmentation: 1,
-							imageweightleft: 1,
-							imageweightright: 2,
-							metadetailsleft: 10,
-							metadetailsright: 6,
-							boostfeature: false,
-							subfeature: true,
-							balancemdandiw: false,
-							hierarchycrossing: 30,
-							flipcolsrows: false,
-							headerPosition: 0,
-						}
-					},
-						{
-							label: 'L47: Kafka',
-							value: 'tear4down7',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 6,
-								gridcolumns: 12,
-								gridrows: 8,
-								featuresize: 7,
-								featureposition: 3,
-								fragmentation: 0,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 0,
-								metadetailsright: 10,
-								boostfeature: true,
-								subfeature: true,
-								balancemdandiw: false,
-								hierarchycrossing: 153,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L13: Aristotle',
-							value: 'tear1down3',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 6,
-								gridcolumns: 5,
-								gridrows: 4,
-								featuresize: 2,
-								featureposition: 2,
-								fragmentation: 0,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 6,
-								metadetailsright: 3,
-								boostfeature: false,
-								subfeature: false,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L19: Nietzsche',
-							value: 'tear1down9',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 11,
-								gridcolumns: 6,
-								gridrows: 5,
-								featuresize: 3,
-								featureposition: 2,
-								fragmentation: 2,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 0,
-								metadetailsright: 0,
-								boostfeature: false,
-								subfeature: true,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L23: Popper',
-							value: 'tear1down9bis',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 11,
-								gridcolumns: 7,
-								gridrows: 5,
-								featuresize: 3,
-								featureposition: 3,
-								fragmentation: 2,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 0,
-								metadetailsright: 0,
-								boostfeature: false,
-								subfeature: true,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								containerHeight: 45,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L10: Tolstoy',
-							value: 'tear1down0',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 10,
-								gridcolumns: 10,
-								gridrows: 6,
-								featuresize: 3,
-								featureposition: 6,
-								fragmentation: 0,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 0,
-								metadetailsright: 0,
-								boostfeature: false,
-								subfeature: false,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L15: Asimov',
-							value: 'tear1down5',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 7,
-								gridcolumns: 6,
-								gridrows: 6,
-								featuresize: 2,
-								featureposition: 4,
-								fragmentation: 0,
-								imageweightleft: 8,
-								imageweightright: 2,
-								metadetailsleft: 7,
-								metadetailsright: 2,
-								boostfeature: false,
-								subfeature: false,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L45: Orwell',
-							value: 'tear4down5',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 13,
-								gridcolumns: 8,
-								gridrows: 6,
-								featuresize: 4,
-								featureposition: 1,
-								fragmentation: 2,
-								imageweightleft: 8,
-								imageweightright: 8,
-								metadetailsleft: 7,
-								metadetailsright: 2,
-								boostfeature: false,
-								subfeature: false,
-								balancemdandiw: false,
-								hierarchycrossing: 120,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L12: Dostoevsky',
-							value: 'tear1down2',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 7,
-								gridcolumns: 6,
-								gridrows: 4,
-								featuresize: 3,
-								featureposition: 1,
-								fragmentation: 2,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 7,
-								metadetailsright: 0,
-								boostfeature: false,
-								subfeature: false,
-								balancemdandiw: false,
-								hierarchycrossing: 50,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L32: Eliade',
-							status: 'development',
-							value: 'tear3down2',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 8,
-								gridcolumns: 4,
-								gridrows: 8,
-								featuresize: 2,
-								featureposition: 2,
-								fragmentation: 0,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 0,
-								metadetailsright: 3,
-								boostfeature: false,
-								subfeature: true,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L30: Tolkien',
-							value: 'tear3down0',
-							preset: {
-								layoutStyle: 'parametric',
-								postsToShow: 5,
-								gridcolumns: 4,
-								gridrows: 8,
-								featuresize: 2,
-								featureposition: 2,
-								fragmentation: 0,
-								imageweightleft: 1,
-								imageweightright: 0,
-								metadetailsleft: 0,
-								metadetailsright: 3,
-								boostfeature: false,
-								subfeature: true,
-								balancemdandiw: false,
-								hierarchycrossing: 0,
-								flipcolsrows: false,
-								headerPosition: 0,
-							}
-						},
-						{
-							label: 'L03: Dumas',
-							value: 'tear0down3',
-							preset: {
-								layoutStyle: 'classic',
-								postsToShow: 6,
-								columns: 3,
-							}
-						} ] }
+					options={ presets }
 					randomize={ getRandomAttributes }
 				/>
 			</ControlsTab>
@@ -434,17 +175,17 @@ const LayoutControls = ( props ) => {
 const ClassicLayoutControls = ( props ) => {
 
 	const {
-		attributes: {
-			columns,
-		},
-		setAttributes,
     name,
 	} = props;
 
 	return (
 		<Fragment>
 			<ControlsGroup title={ __( 'Cards Count' ) }>
-				<PostsCountControl { ...props } />
+        {
+          name === 'novablocks/supernova' ?
+            <SupernovaPostsCountControl { ...props } /> :
+				    <PostsCountControl { ...props } />
+        }
 				<ItemsPerRowControl { ...props } />
 			</ControlsGroup>
 			<ControlsGroup title={ __( 'Card Layout' ) }>
@@ -457,6 +198,64 @@ const ClassicLayoutControls = ( props ) => {
 		</Fragment>
 	)
 };
+
+const SupernovaPostsCountControl = ( props ) => {
+
+  const {
+    attributes: {
+      postsToShow,
+      sourceType,
+      cardLayout,
+      contentPadding,
+      layoutGutter,
+    },
+    setAttributes,
+    clientId,
+  } = props;
+
+  const { itemsCount } = useSelect( ( select ) => {
+    const itemsCount = select( 'core/block-editor' ).getBlockCount( clientId );
+
+    return { itemsCount };
+  }, [ clientId ] );
+
+  useEffect( () => {
+    setAttributes( { postsToShow: itemsCount } );
+  }, [ itemsCount ] );
+
+  return (
+    <RangeControl
+      key={ 'collection-items-count' }
+      label={ __( 'Items Count', '__plugin_txtd' ) }
+      value={ postsToShow }
+      onChange={ newItemsCount => {
+        const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
+        const { getBlock } = select( 'core/block-editor' );
+        const { innerBlocks } = getBlock( clientId );
+        const newInnerBlocks = innerBlocks.slice( 0, newItemsCount );
+
+        if ( newItemsCount > postsToShow ) {
+          for ( let i = 0; i < newItemsCount - postsToShow; i++ ) {
+            newInnerBlocks.push( createBlock( 'novablocks/supernova-item', {
+              sourceType,
+              cardLayout,
+              contentPadding,
+              layoutGutter,
+              title: 'Title',
+              description: 'This is just an example of what a description for this card could look like',
+              buttonText: 'Button',
+            } ) );
+          }
+        }
+
+        replaceInnerBlocks( clientId, newInnerBlocks );
+      } }
+      min={ 1 }
+      max={ 20 }
+      step={ 1 }
+    />
+  );
+}
 
 const ItemsPerRowControl = ( props ) => {
 
@@ -472,7 +271,6 @@ const ItemsPerRowControl = ( props ) => {
       key={ 'posts-collection-display-controls' }
       value={ columns }
       onChange={ ( columns ) => {
-        console.log( columns );
         setAttributes( { columns } );
       } }
       label={ __( 'Number of Items per Row' ) }

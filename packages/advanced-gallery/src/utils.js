@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { debounce, isSafari, getRandomBetween, getPaddingTopFromContainerHeight } from "@novablocks/utils";
+import { debounce, isSafari, getRandomBetween } from "@novablocks/utils";
 
 export const getRandomAttributes = () => {
 	return {
@@ -9,13 +9,6 @@ export const getRandomAttributes = () => {
 		placementVariation: getRandomBetween(1, 4) * 25,
 		stylePreset: 'just-my-style',
 	};
-};
-
-export const getGalleryStyle = ( attributes ) => {
-
-	return {
-		paddingTop: `${ getPaddingTopFromContainerHeight( attributes.containerHeight ) }%`,
-	}
 };
 
 export const getGridStyle = ( attributes ) => {

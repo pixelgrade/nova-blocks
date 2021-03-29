@@ -27,6 +27,7 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 }
 
 export const getStyles = function( config, attributes ) {
+
 	const props = getProps( config, attributes );
 
 	return getStylesFromProps( props );
@@ -35,6 +36,7 @@ export const getStyles = function( config, attributes ) {
 export const getStylesFromProps = function( props ) {
 
 	const {
+	  fixed,
 		parallaxAmount,
 		width,
 		height,
@@ -47,6 +49,9 @@ export const getStylesFromProps = function( props ) {
 	} = props;
 
 	return {
+	  position: fixed ? 'fixed' : 'absolute',
+    top: 0,
+    left: 0,
 		width: width || '',
 		height: height || '',
 		minHeight: 0,
@@ -204,6 +209,7 @@ export const getProps = function( config, attributes, fixed ) {
 	offsetY += newImageHeight * ( 1 - maxScale * newScale ) * newFocalPoint.y;
 
 	return {
+	  fixed,
 		distance: distance,
 		parallaxAmount: parallaxAmount,
 		progress: progress,

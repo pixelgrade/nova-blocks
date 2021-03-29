@@ -1,4 +1,8 @@
 {
+	"showMedia": {
+		"type": "boolean",
+		"default": true
+	},
 	"showMeta": {
 		"type": "boolean",
 		"default": true
@@ -15,7 +19,7 @@
 		"type": "boolean",
 		"default": true
 	},
-	"showFooter": {
+	"showButtons": {
 		"type": "boolean",
 		"default": true
 	}

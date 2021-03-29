@@ -32,12 +32,12 @@
 
     .supernova-card__content {
       width: var(--novablocks-card-content-column-width);
-      flex: 0 0 var(--novablocks-card-content-column-width);
+      flex: 1 0 var(--novablocks-card-content-column-width);
     }
 
     .supernova-card__media-wrapper {
       width: var(--novablocks-card-media-column-width);
-      flex: 0 0 var(--novablocks-card-media-column-width);
+      flex: 1 0 var(--novablocks-card-media-column-width);
     }
   }
 

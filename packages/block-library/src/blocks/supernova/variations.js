@@ -2,21 +2,16 @@ import { __ } from '@wordpress/i18n';
 
 const cardAttributes = {
   sourceType: 'fields',
-  layoutStyle: 'classic',
   cardLayout: 'vertical',
   contentPadding: 0,
   layoutGutter: 10,
   title: 'Title',
-  showTitle: true,
   description: 'This is just an example of what a description for this card could look like',
-  showDescription: true,
   buttonText: 'Button',
-  showButtons: true,
 };
 
 const mediaCardAttributes = {
   sourceType: 'blocks',
-  layoutStyle: 'classic',
   contentPadding: 100,
   layoutGutter: 10,
   cardLayout: 'horizontal',
@@ -40,25 +35,8 @@ const variations = [
       sourceType: 'content',
       layoutStyle: 'parametric',
       cardContentAlign: 'center left',
-
+      contentPadding: 0,
       postsToShow: 6,
-      columns: 3,
-
-      gridcolumns: 6,
-      gridrows: 6,
-      featuresize: 4,
-      featureposition: 1,
-      fragmentation: 1,
-      imageweightleft: 1,
-      imageweightright: 2,
-      metadetailsleft: 10,
-      metadetailsright: 6,
-      boostfeature: false,
-      subfeature: true,
-      balancemdandiw: false,
-      hierarchycrossing: 30,
-      flipcolsrows: false,
-      headerPosition: 0,
     }
   },
   {
@@ -66,6 +44,7 @@ const variations = [
     title: __( 'Slideshow me the Way', '__plugin_txtd' ),
     description: __( 'Slideshow me the Way', '__plugin_txtd' ),
     attributes: {
+      align: 'full',
       sourceType: 'content',
       layoutStyle: 'carousel',
 
@@ -101,6 +80,11 @@ const variations = [
       cardMediaOpacity: 40,
 
       paletteVariation: 12,
+
+      align: 'full',
+      emphasisTopSpacing: 0,
+      emphasisBottomSpacing: 0,
+      scrollingEffect: 'parallax',
     },
     innerBlocks: [
       [ 'novablocks/supernova-item', {
@@ -189,7 +173,7 @@ const variations = [
       showTitle: false,
       showSubtitle: false,
       showDescription: false,
-      showFooter: false,
+      showButtons: false,
     },
     innerBlocks: [
       [ 'novablocks/supernova-item', { multiplePlaceholderImages: true } ]

@@ -6,12 +6,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_posts_collection_attributes() {
-	$grid_generator_attributes = novablocks_get_attributes_from_json( 'packages/collection/src/grid-generator-attributes.json' );
-	$posts_query_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-latest-posts/attributes.json' );
-	$collection_attributes = novablocks_get_collection_attributes();
-	$posts_collection_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/posts-collection/attributes.json' );
 
-	return array_merge( $posts_collection_attributes, $collection_attributes, $grid_generator_attributes, $posts_query_attributes );
+	return novablocks_merge_attributes_from_array( array(
+		'packages/collection/src/grid-generator-attributes.json',
+		'packages/collection/src/collection-attributes.json',
+		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',
+		'packages/block-library/src/blocks/posts-collection/attributes.json',
+	) );
+
 }
 
 if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {

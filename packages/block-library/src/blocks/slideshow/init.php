@@ -95,8 +95,8 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                     <div class="<?php echo esc_attr( join( ' ', $slideClasses ) ); ?>">
                         <div class="novablocks-slideshow__slide-wrap">
 	                        <div class="novablocks-slideshow__background novablocks-u-background">
-								<div class="novablocks-mask">
-									<div class="novablocks-parallax">
+								<div class="novablocks-doppler__mask">
+									<div class="novablocks-doppler__target">
 
 										<?php
 										if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
@@ -136,7 +136,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 									</div>
 								</div>
 	                        </div>
-	                        <div class="novablocks-slideshow__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align">
+	                        <div class="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
                                 <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
                                     <?php
                                     novablocks_the_media_title( $media, '<h2>', '</h2>' );

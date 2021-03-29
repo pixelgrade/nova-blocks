@@ -3,7 +3,7 @@ import $ from 'jquery';
 import '@novablocks/blob/frontend';
 
 import { GridItemCollection } from './grid-item';
-import { getGalleryStyle, getGridStyle, safariHeightFix } from './utils';
+import { getGridStyle, safariHeightFix } from './utils';
 
 $( function() {
 
@@ -22,16 +22,6 @@ $( function() {
 			$item.css( gridItem.getStyle() );
 			$image.css( gridItem.getImageStyle() );
 		} );
-
-		const galleryStyle = getGalleryStyle( attributes );
-
-		for ( let propertyName in galleryStyle ) {
-			$gallery.css( galleryStyle );
-
-			if ( propertyName.indexOf( '--' ) === 0 ) {
-				gallery.style.setProperty( propertyName, galleryStyle[ propertyName ] );
-			}
-		}
 
 		if ( $grid.length ) {
 

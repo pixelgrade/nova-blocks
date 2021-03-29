@@ -36,7 +36,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'showSubtitle',
         'showDescription',
         'showMeta',
-        'showFooter',
+        'showButtons',
 
         'thumbnailAspectRatio',
         'thumbnailAspectRatioString',

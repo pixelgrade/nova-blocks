@@ -6,11 +6,6 @@
 	transform: none !important;
 }
 
-.novablocks-mask {
-	@include cover;
-	overflow: hidden;
-}
-
 .block-editor-inserter__preview {
 	transform: scale(0.8);
 	max-height: 300px;

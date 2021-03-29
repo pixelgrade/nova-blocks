@@ -27,7 +27,7 @@
 	},
 	"scrollingEffect": {
 		"type": "string",
-		"default": "parallax"
+		"default": "static"
 	},
 	"motionPreset": {
 		"type": "string",

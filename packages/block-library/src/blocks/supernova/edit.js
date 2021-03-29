@@ -107,7 +107,7 @@ const FieldsPreview = ( props ) => {
       showDescription,
 
       buttonText,
-      showFooter,
+      showButtons,
     }
   } = props;
 
@@ -117,7 +117,7 @@ const FieldsPreview = ( props ) => {
       <CardTitle show={ showTitle }>{ title }</CardTitle>
       <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
       <CardDescription show={ showDescription }>{ description }</CardDescription>
-      <CardFooter show={ showFooter && !! buttonText }>
+      <CardFooter show={ showButtons && !! buttonText }>
         <CardButton>{ buttonText }</CardButton>
       </CardFooter>
     </Fragment>

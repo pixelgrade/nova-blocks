@@ -7,16 +7,18 @@ const getScrollContainerHeight = () => {
 	return useOrientation && window.screen && window.screen.availHeight || window.innerHeight
 };
 
-const getAttributes = ( $container ) => {
+const getAttributes = ( container ) => {
+
+  const $block = $( container ).closest( '[data-scrolling-effect]' );
 
   return {
-    followThroughStart: !! $container.data( 'smooth-start' ),
-    followThroughEnd: !! $container.data( 'smooth-end' ),
-    scrollingEffect: $container.data( 'scrolling-effect' ),
-    focalPoint: $container.data( 'focal-point' ),
-    finalFocalPoint: $container.data( 'final-focal-point' ),
-    initialBackgroundScale: $container.data( 'initial-background-scale' ),
-    finalBackgroundScale: $container.data( 'final-background-scale' ),
+    followThroughStart: !! $block.data( 'smooth-start' ),
+    followThroughEnd: !! $block.data( 'smooth-end' ),
+    scrollingEffect: $block.data( 'scrolling-effect' ),
+    focalPoint: $block.data( 'focal-point' ),
+    finalFocalPoint: $block.data( 'final-focal-point' ),
+    initialBackgroundScale: $block.data( 'initial-background-scale' ),
+    finalBackgroundScale: $block.data( 'final-background-scale' ),
   };
 }
 
@@ -34,11 +36,11 @@ const getConfig = ( container ) => {
 $( function() {
 
 	let frameRendered = false;
-	let $blocks = $( '.novablocks-doppler' );
+	let $blocks = $( '.novablocks-doppler__wrapper' );
 
 	$blocks.each( function( i, container ) {
 		const $container = $( container );
-		const attributes = getAttributes( $container );
+		const attributes = getAttributes( container );
 		const config = getConfig( container );
 
 		$container.data( {
@@ -46,7 +48,9 @@ $( function() {
 			config: config,
 		} );
 
-		const $parallax = $container.find( '.novablocks-parallax' );
+		const $parallax = $container.find( '.novablocks-doppler__target' );
+
+		console.log( container, $parallax, attributes, config );
 
 		$container.data( 'parallax', $parallax );
 
@@ -70,11 +74,11 @@ $( function() {
 
 		if ( ! frameRendered ) {
 
-			$blocks.each( function( i, obj ) {
-				const $container = $( obj );
-        const attributes = getAttributes( $container );
+			$blocks.each( function( i, container ) {
+				const $container = $( container );
+        const attributes = getAttributes( container );
 				const $background = $container.data( 'parallax' );
-				const $foreground = $background.find( '.novablocks-foreground' );
+				const $foreground = $background.find( '.novablocks-doppler__foreground' );
 				const state = $container.data( 'state' );
 				const config = $container.data( 'config' );
 				const cfg = Object.assign( {}, state, config );

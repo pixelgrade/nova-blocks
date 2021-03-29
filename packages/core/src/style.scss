@@ -84,30 +84,18 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 	}
 }
 
-.novablocks-foreground[class] {
-
-	h1, h2, h3, h4, h5, h6,
-	ul, ol, dl,
-	.editor-block-list__block {
-		color: inherit;
-	}
-}
-
-.novablocks-mask {
-	@include cover;
+.novablocks-doppler__mask {
 	clip: rect(0 auto auto 0);
 	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
-.novablocks-parallax {
-	position: fixed;
-	top: 0;
-	left: 0;
-	object-fit: cover;
-
-	.scrolling-effect-static & {
-		position: static;
-	}
+// @todo
+.novablocks-doppler__wrapper:not(.supernova-card__media-aspect-ratio) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .novablocks-card__layout {
@@ -140,4 +128,9 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 			flex: 1 1 0;
 		}
 	}
+}
+
+.supernova-card__media[class] {
+  height: 100%;
+  object-fit: cover;
 }
