@@ -7,16 +7,16 @@ export default {
       blocks: ['novablocks/supernova'],
       transform: function( attributes, innerBlocks ) {
 
-        const {
-          galleryImages,
-          overlayFilterStrength
-        } = attributes;
+        const { galleryImages, overlayFilterStrength, ...passedAttributes } = attributes;
 
         const commonAttributes = {
           cardLayout: 'stacked',
           layoutStyle: 'carousel',
           sourceType: 'fields',
           cardContentAlign: 'center center',
+          showCollectionTitle: false,
+          showCollectionSubtitle: false,
+          ...passedAttributes
         }
 
         const collectionAttributes = Object.assign( {}, attributes, commonAttributes, {
