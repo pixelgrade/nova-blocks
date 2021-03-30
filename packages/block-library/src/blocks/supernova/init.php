@@ -92,8 +92,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			</div>
 			<div class="supernova__inner-container">
 				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
-					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) { ?>
-						<div class="novablocks-grid" <?php echo join( ' ', $data_attributes ); ?>>
+					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
+							$layoutClasses[] = 'novablocks-grid';
+						?>
+						<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
 							<?php echo $content; ?>
 						</div>
 					<?php } else { ?>

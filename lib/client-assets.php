@@ -239,7 +239,8 @@ function novablocks_register_block_types() {
 
 	$collection_style_dependent_blocks = array(
 		'cards-collection',
-		'posts-collection'
+		'posts-collection',
+		'supernova'
 	);
 
 

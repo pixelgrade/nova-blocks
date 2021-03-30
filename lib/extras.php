@@ -1881,8 +1881,10 @@ function novablocks_get_card_contents( $attributes ) {
 	echo novablocks_get_card_item_meta( $attributes['metaBelow'], $attributes );
 	echo novablocks_get_card_item_description( $attributes['description'], $attributes );
 	echo novablocks_get_card_item_buttons( array(
-		'text' => 'buttonText',
-		'url' => 'buttonUrl',
+		array(
+			'text' => $attributes[ 'buttonText' ],
+			'url' => $attributes ['buttonUrl' ],
+		)
 	), $attributes );
 
 	return ob_get_clean();
