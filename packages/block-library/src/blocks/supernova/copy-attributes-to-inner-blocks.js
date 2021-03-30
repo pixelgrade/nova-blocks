@@ -1,6 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { select } from "@wordpress/data";
-import { setAttributesToInnerBlocks } from "@novablocks/block-editor";
+import { setAttributesToInnerBlocks, blobAttributes } from "@novablocks/block-editor";
 import { getAlignFromMatrix } from "@novablocks/utils";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
@@ -42,6 +42,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'thumbnailAspectRatioString',
 
         'contentStyle',
+        ...Object.keys( blobAttributes )
       ]
       .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
 
