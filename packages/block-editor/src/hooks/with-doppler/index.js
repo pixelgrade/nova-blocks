@@ -14,12 +14,9 @@ export {
 }
 
 import attributes from './attributes.json';
+import altAttributes from './attributes-alt.json';
 
-const blocksWithDoppler = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-  'novablocks/google-map',
-];
+const blocksWithDoppler = [];
 
 const addDoppler = createHigherOrderComponent( OriginalComponent => {
 
@@ -82,3 +79,25 @@ function addDopplerAttributes( block ) {
   };
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/add-doppler-attributes', addDopplerAttributes );
+
+const blocksWithDopplerAltAttributes = [
+  'novablocks/hero',
+  'novablocks/slideshow',
+  'novablocks/google-map',
+];
+
+function addDopplerAltAttributes( block ) {
+
+  if ( ! blocksWithDopplerAltAttributes.includes( block.name ) ) {
+    return block;
+  }
+
+  return {
+    ...block,
+    attributes: {
+      ...block.attributes,
+      ...altAttributes
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/add-doppler-alt-attributes', addDopplerAltAttributes );

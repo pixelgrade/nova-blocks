@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import { withDoppler } from '@novablocks/block-editor';
 
 const HeroBackground = function( props ) {
 	const {
@@ -21,15 +22,13 @@ const HeroBackground = function( props ) {
 	}
 
 	return (
-		<div className="novablocks-doppler__mask">
-			<div className="novablocks-hero__background">
-				{ !! media && media.type === 'image' && typeof media.sizes !== 'undefined' &&
-				  <img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } style={ styles } /> }
-				{ !! media && media.type === 'video' &&
-				  <video muted autoPlay loop playsInline className="novablocks-hero__media" style={ styles } src={ media.url } /> }
-			</div>
-		</div>
+    <div className="novablocks-hero__background">
+      { !! media && media.type === 'image' && typeof media.sizes !== 'undefined' &&
+        <img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } style={ styles } /> }
+      { !! media && media.type === 'video' &&
+        <video muted autoPlay loop playsInline className="novablocks-hero__media" style={ styles } src={ media.url } /> }
+    </div>
 	);
 };
 
-export default HeroBackground;
+export default withDoppler( HeroBackground );

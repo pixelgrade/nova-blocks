@@ -8,6 +8,7 @@ import { addFilter } from '@wordpress/hooks';
 
 import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
+import altAttributes from './attributes-alt.json';
 
 const enableColorSetControls = [
   'novablocks/announcement-bar',
@@ -49,6 +50,27 @@ const withColorSetsAttributes = ( block, name ) => {
   };
 }
 addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withColorSetsAttributes );
+
+const withAltAttributes = [
+  'novablocks/hero',
+  'novablocks/slideshow',
+];
+
+const withColorSetsAltAttributes = ( block, name ) => {
+
+  if ( ! withAltAttributes.includes( name ) ) {
+    return block;
+  }
+
+  return {
+    ...block,
+    attributes: {
+      ...block.attributes,
+      ...altAttributes
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-alt-attributes', withColorSetsAltAttributes );
 
 const withColorSetsDeprecation = ( settings, name ) => {
 

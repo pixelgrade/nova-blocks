@@ -38,13 +38,5 @@
 	"displayInnerContent": {
 		"type": "boolean",
 		"default": true
-	},
-	"palette": {
-		"type": "number",
-		"default": 1
-	},
-	"paletteVariation": {
-		"type": "number",
-		"default": 12
 	}
 }

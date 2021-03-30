@@ -9,15 +9,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_slideshow_attributes() {
-	$block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/slideshow/attributes.json' );
 
-	$alignment_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/alignment-controls/attributes.json' );
-	$color_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/color-controls/attributes.json' );
-	$layout_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/components/layout-controls/attributes.json' );
+	return novablocks_merge_attributes_from_array( array(
+		'packages/block-library/src/blocks/slideshow/attributes.json',
+		'packages/block-editor/src/components/alignment-controls/attributes.json',
+		'packages/block-editor/src/components/color-controls/attributes.json',
+		'packages/block-editor/src/components/layout-controls/attributes.json',
 
-	$scrolling_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-doppler/attributes.json' );
+		"packages/block-editor/src/hooks/with-colors-sets/attributes.json",
+		"packages/block-editor/src/hooks/with-colors-sets/attributes-alt.json",
+		"packages/block-editor/src/hooks/with-doppler/attributes.json",
+		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
+	) );
 
-	return array_merge( $block_attributes, $alignment_attributes, $color_attributes, $scrolling_attributes, $layout_attributes );
 }
 
 if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
@@ -32,8 +36,13 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		}
 
 		$classes = array_merge(
-			array( 'novablocks-slideshow', 'novablocks-doppler', 'alignfull' ),
-			novablocks_get_block_extra_classes( $attributes )
+			array(
+				'novablocks-slideshow',
+				'novablocks-doppler',
+				'alignfull'
+			),
+			novablocks_get_block_extra_classes( $attributes ),
+			novablocks_get_palette_classes( $attributes )
 		);
 
 		if ( ! empty( $attributes['className'] ) ) {
@@ -84,10 +93,6 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                     	'novablocks-slideshow__slide'
 					);
 
-					if ( ! empty( $attributes['paletteVariation'] ) ) {
-						$slideClasses[] = 'sm-variation-' . $attributes['paletteVariation'];
-					}
-
                     if ( ! empty( $media['focalPoint'] ) ) {
                         $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
                     } ?>
@@ -95,45 +100,43 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
                     <div class="<?php echo esc_attr( join( ' ', $slideClasses ) ); ?>">
                         <div class="novablocks-slideshow__slide-wrap">
 	                        <div class="novablocks-slideshow__background novablocks-u-background">
-								<div class="novablocks-doppler__mask">
-									<div class="novablocks-doppler__target">
+								<div class="novablocks-doppler__mask  novablocks-doppler__wrapper">
 
-										<?php
-										if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
-											$id = attachment_url_to_postid( $media['url'] );
-											$width = $media['sizes']['full']['width'];
-											$height = $media['sizes']['full']['height'];
+									<?php
+									if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
+										$id = attachment_url_to_postid( $media['url'] );
+										$width = $media['sizes']['full']['width'];
+										$height = $media['sizes']['full']['height'];
 
-											if ( ! empty( $id ) ) {
-												echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
-													'class' => 'novablocks-slideshow__media',
-													'style' => esc_attr( $thisMediaStyle ),
-													'data-width' => esc_attr( $width ),
-				                                    'data-height' => esc_attr( $height )
-												) );
-											} else {
+										if ( ! empty( $id ) ) {
+											echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
+												'class' => 'novablocks-doppler__target  novablocks-slideshow__media',
+												'style' => esc_attr( $thisMediaStyle ),
+												'data-width' => esc_attr( $width ),
+												'data-height' => esc_attr( $height )
+											) );
+										} else {
 
-												$image_url = novablocks_get_image_url($media, 'novablocks_large');
+											$image_url = novablocks_get_image_url($media, 'novablocks_large');
 
-											    ?>
-											<img class="novablocks-slideshow__media"
-											     src="<?php echo esc_url( $image_url ); ?>"
-											     style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-											     data-width="<?php echo esc_attr( $width ); ?>"
-											     data-height="<?php echo esc_attr( $height ); ?>"
-											/>
-											<?php }
-										} ?>
+											?>
+										<img class="novablocks-doppler__target  novablocks-slideshow__media"
+											 src="<?php echo esc_url( $image_url ); ?>"
+											 style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+											 data-width="<?php echo esc_attr( $width ); ?>"
+											 data-height="<?php echo esc_attr( $height ); ?>"
+										/>
+										<?php }
+									} ?>
 
-										<?php if ( 'video' === $media['type'] ) { ?>
-											<video class="novablocks-slideshow__media" muted autoplay playsInline loop
-											       src="<?php echo esc_url( $media['url'] ); ?>"
-											       style="<?php echo esc_attr( $thisMediaStyle ); ?>"
-											       data-width="<?php echo esc_attr( $width ); ?>"
-											       data-height="<?php echo esc_attr( $height ); ?>"/>
-										<?php } ?>
+									<?php if ( 'video' === $media['type'] ) { ?>
+										<video class="novablocks-doppler__target  novablocks-slideshow__media" muted autoplay playsInline loop
+											   src="<?php echo esc_url( $media['url'] ); ?>"
+											   style="<?php echo esc_attr( $thisMediaStyle ); ?>"
+											   data-width="<?php echo esc_attr( $width ); ?>"
+											   data-height="<?php echo esc_attr( $height ); ?>"/>
+									<?php } ?>
 
-									</div>
 								</div>
 	                        </div>
 	                        <div class="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">

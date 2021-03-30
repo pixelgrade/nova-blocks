@@ -50,8 +50,6 @@ $( function() {
 
 		const $parallax = $container.find( '.novablocks-doppler__target' );
 
-		console.log( container, $parallax, attributes, config );
-
 		$container.data( 'parallax', $parallax );
 
 		function parallaxUpdateState() {

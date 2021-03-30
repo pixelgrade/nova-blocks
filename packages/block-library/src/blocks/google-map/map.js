@@ -1,14 +1,12 @@
+import { withDoppler } from '@novablocks/block-editor';
+
 import pin from './pin';
 import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
 import defaultMapCenter from './default-map-center';
 
 import { __ } from '@wordpress/i18n';
-
 import { Component } from '@wordpress/element';
-
-const {
-	Placeholder
-} = wp.components
+import { Placeholder } from '@wordpress/components';
 
 class Map extends Component {
 
@@ -72,8 +70,6 @@ class Map extends Component {
 			this.map.setCenter( getMarkersCenter.call( this ) );
 		}
 	}
-
-
 
 	initializeMap() {
 		const { attributes } = this.props;
@@ -165,7 +161,7 @@ class Map extends Component {
 	}
 
 	render() {
-		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` }></div>;
+		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` } style={ this.props.parallax }></div>;
 	}
 }
 
@@ -192,15 +188,11 @@ const MapWrapper = ( Map ) => {
 					</Placeholder>
 				</div>
 				<div className="novablocks-map__map-container">
-					<div className="novablocks-doppler__mask">
-						<div style={ parallax.style }>
-							<Map { ...otherProps }></Map>
-						</div>
-					</div>
+          <Map { ...otherProps }></Map>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default MapWrapper( Map );
+export default MapWrapper( withDoppler( Map ) );

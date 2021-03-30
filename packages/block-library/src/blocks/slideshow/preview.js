@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import SlideshowBackground from './background';
-import { GalleryPlaceholder } from '@novablocks/block-editor';
+import { GalleryPlaceholder, getEditorScrollContainer } from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies
@@ -11,7 +11,8 @@ import {
 	Component,
 	Fragment,
  } from '@wordpress/element';
-import {getColorSetClassnames} from "@novablocks/utils";
+
+import { getColorSetClassnames } from "@novablocks/utils";
 
 const SlideshowPreview = class extends Component {
 	constructor() {
@@ -42,6 +43,7 @@ const SlideshowPreview = class extends Component {
 	}
 
 	renderContent() {
+
 		const {
 			attributes,
 			previewImage,
@@ -99,7 +101,8 @@ const SlideshowPreview = class extends Component {
 			mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
 		} );
 
-		let attributesHeight = this.props.parallax.state.scrollContainerHeight * minHeight / 100;
+    const scrollContainer = getEditorScrollContainer();
+		const attributesHeight = scrollContainer.offsetHeight * minHeight / 100;
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 

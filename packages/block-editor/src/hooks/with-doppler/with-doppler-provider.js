@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "@wordpress/element";
 
 import Doppler from "@novablocks/doppler";
+import { getEditorScrollContainer } from "../../utils";
 
 import DopplerContext from "./context";
-import { createBlockObservers, getScrollContainer } from "./utils";
+import { createBlockObservers } from "./utils";
 
 const { getStyles, getState } = Doppler.utils;
 
@@ -18,7 +19,7 @@ const withDopplerProvider = ( WrappedComponent ) => {
     const [ config, setConfig ] = useState( null );
     const [ style, setStyle ] = useState( {} );
 
-    const scrollContainer = getScrollContainer();
+    const scrollContainer = getEditorScrollContainer();
 
     const containerRef = useCallback( node => {
       if ( node !== null ) {
