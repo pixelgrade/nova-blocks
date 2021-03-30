@@ -37,6 +37,6 @@
 	},
 	"contentPadding": {
 		"type": "number",
-		"default": 50
+		"default": 0
 	}
 }

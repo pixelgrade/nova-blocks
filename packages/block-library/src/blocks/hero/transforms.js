@@ -35,6 +35,7 @@ export default {
           emphasisBottomSpacing: 0,
           showCollectionTitle: false,
           showCollectionSubtitle: false,
+          contentPadding: 100,
         } );
 
         return createBlock( 'novablocks/supernova', collectionAttributes, [

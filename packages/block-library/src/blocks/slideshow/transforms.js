@@ -16,6 +16,7 @@ export default {
           cardContentAlign: 'center center',
           showCollectionTitle: false,
           showCollectionSubtitle: false,
+          contentPadding: 100,
           ...passedAttributes
         }
 

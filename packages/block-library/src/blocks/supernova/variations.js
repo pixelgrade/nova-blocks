@@ -47,6 +47,7 @@ const variations = [
       align: 'full',
       sourceType: 'content',
       layoutStyle: 'carousel',
+      contentPadding: 100,
 
       postsToShow: 3,
       columns: 1,
@@ -57,7 +58,6 @@ const variations = [
       cardLayout: 'stacked',
       cardContentAlign: 'center center',
       cardMediaOpacity: 40,
-
       paletteVariation: 12,
     }
   },
@@ -68,6 +68,7 @@ const variations = [
     attributes: {
       sourceType: 'blocks',
       layoutStyle: 'classic',
+      contentPadding: 100,
 
       postsToShow: 3,
       columns: 1,

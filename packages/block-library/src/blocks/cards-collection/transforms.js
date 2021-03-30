@@ -29,6 +29,7 @@ export default {
         };
 
         const collectionAttributes = Object.assign( {}, commonAttributes, {
+          align: 'wide',
           sourceType: 'fields',
           columns: innerBlocks.length,
         } );
