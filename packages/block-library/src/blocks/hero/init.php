@@ -35,8 +35,13 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$novablocks_settings = novablocks_get_block_editor_settings();
 
 		$classes = array_merge(
-			array( 'novablocks-hero', 'novablocks-doppler', 'alignfull' ),
-			novablocks_get_block_extra_classes( $attributes )
+			array(
+				'novablocks-hero',
+				'novablocks-doppler',
+				'alignfull'
+			),
+			novablocks_get_block_extra_classes( $attributes ),
+			novablocks_get_palette_classes( $attributes )
 		);
 
 		if ( ! empty( $attributes['className'] ) ) {
@@ -45,14 +50,6 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		if ( ! empty( $attributes['scrollingEffect'] ) ) {
 			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
-		}
-
-		if ( ! empty( $attributes['paletteVariation'] ) ) {
-			$classes[] = 'sm-variation-' . $attributes['paletteVariation'];
-		}
-
-		if ( ! empty( $attributes['palette'] ) ) {
-			$classes[] = 'sm-palette-' . $attributes['palette'];
 		}
 
 		if ( empty( $attributes['media'] || ! is_array( $attributes['media'] ) ) ) {

@@ -20,7 +20,10 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(
-			array( 'novablocks-map', 'novablocks-doppler' ),
+			array(
+				'novablocks-map',
+				'novablocks-doppler'
+			),
 			novablocks_get_block_extra_classes( $attributes )
 		);
 
@@ -61,19 +64,17 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 			?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<div class="novablocks-map__map-container">
-				<div class="novablocks-doppler__mask">
-					<div class="novablocks-doppler__target">
-						<div
-							class="novablocks-map__map js-novablocks-google-map"
-							data-accent-color="<?php echo $map_accent_color; ?>"
-							data-show-icons='<?php echo json_encode( $attributes['showIcons'] ); ?>'
-							data-show-labels='<?php echo json_encode( $attributes['showLabels'] ); ?>'
-							data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
-							data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
-							data-zoom="<?php echo $attributes['zoom']; ?>"
-							data-controls="<?php echo $attributes['showControls']; ?>"
-						>
-						</div>
+				<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
+					<div
+						class="novablocks-doppler__target novablocks-map__map js-novablocks-google-map"
+						data-accent-color="<?php echo $map_accent_color; ?>"
+						data-show-icons='<?php echo json_encode( $attributes['showIcons'] ); ?>'
+						data-show-labels='<?php echo json_encode( $attributes['showLabels'] ); ?>'
+						data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
+						data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
+						data-zoom="<?php echo $attributes['zoom']; ?>"
+						data-controls="<?php echo $attributes['showControls']; ?>"
+					>
 					</div>
 				</div>
 			</div>
