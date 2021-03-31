@@ -42,11 +42,25 @@
   }
 }
 
+@mixin with-editor-layout-selectors {
+  &:not(.supernova-collection__layout--edit),
+  &.supernova-collection__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
+    @content;
+  }
+}
+
 .supernova-collection__layout--classic,
 .supernova-collection__layout--parametric {
-  display: grid;
-  grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
-  grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
+
+  @include with-editor-layout-selectors {
+    display: grid;
+    grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+    grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
+
+    > * {
+      margin: 0;
+    }
+  }
 }
 
 .supernova-collection__layout--carousel {

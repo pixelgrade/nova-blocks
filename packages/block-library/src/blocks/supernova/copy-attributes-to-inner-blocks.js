@@ -25,8 +25,12 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'cardLayout',
         'cardMediaOpacity',
         'contentAreaWidth',
-        'sourceType',
+
+        // @todo useEffect could be used:
+        // setAttributes( { needsPreview: sourceType !== 'content' && layoutStyle === 'parametric' } );
         'preview',
+        'sourceType',
+        'layoutStyle',
 
         'palette',
         'paletteVariation',

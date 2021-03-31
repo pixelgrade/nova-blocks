@@ -22,12 +22,16 @@ const CollectionLayout = ( props ) => {
     carouselLayout,
     layoutStyle,
     cardLayout,
+    preview,
   } = attributes;
 
   let layoutClassName = classnames(
     `supernova-collection__layout`,
     `supernova-collection__layout--${ layoutStyle }`,
     `supernova-collection__layout--${ carouselLayout }-width`,
+    {
+      'supernova-collection__layout--edit': ! preview,
+    }
   );
 
   const children = Children.toArray( props.children );

@@ -13,17 +13,22 @@ import {
 
 import {
   getIconSvg,
+  SuperNova,
 } from "@novablocks/block-editor";
+
+const { needsPreview } = SuperNova.utils;
 
 const Controls = ( props ) => {
 
   const {
-    attributes: {
-      preview,
-      cardContentAlign,
-    },
+    attributes,
     setAttributes,
   } = props;
+
+  const {
+    preview,
+    cardContentAlign,
+  } = attributes;
 
   const editModeLabel = __( 'Exit Edit Mode', '__plugin_txtd' );
   const previewModeLabel = __( 'Enter Edit Mode', '__plugin_txtd' );
@@ -31,18 +36,21 @@ const Controls = ( props ) => {
   return (
     <Fragment>
       <BlockControls>
-        <Toolbar>
-          <div>
-            <Button
-              className="components-icon-button components-toolbar__control"
-              icon={ getIconSvg( 'swap' ) }
-              onClick={ () => {
-                setAttributes( { preview: ! preview } )
-              } }>
-              { preview ? previewModeLabel : editModeLabel }
-            </Button>
-          </div>
-        </Toolbar>
+        {
+          ( preview || needsPreview( attributes ) ) &&
+          <Toolbar>
+            <div>
+              <Button
+                className="components-icon-button components-toolbar__control"
+                icon={ getIconSvg( 'swap' ) }
+                onClick={ () => {
+                  setAttributes( { preview: ! preview } )
+                } }>
+                { preview ? previewModeLabel : editModeLabel }
+              </Button>
+            </div>
+          </Toolbar>
+        }
         <BlockAlignmentMatrixToolbar
           label={ __( 'Change content position' ) }
           value={ cardContentAlign }
