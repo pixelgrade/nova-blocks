@@ -1,0 +1,8 @@
+{
+	"sidebarWidth": {
+		"type": "string"
+	},
+	"layout": {
+		"type": "string"
+	}
+}

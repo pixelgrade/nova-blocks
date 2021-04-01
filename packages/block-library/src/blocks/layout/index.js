@@ -12,16 +12,14 @@ import iconSvg from './layout.svg';
 
 import {getSvg} from "@novablocks/block-editor";
 
+import attributes from "./attributes"
+
 registerBlockType('novablocks/layout', {
   title: __('Layout', '__plugin_txtd'),
   description: __('Custom Layout Block', '__plugin_txtd'),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-  attributes: {
-    layout: {
-      type: 'string',
-    }
-  },
+  attributes,
   supports: {
     align: [ 'wide', 'full' ],
     html: false,

@@ -1,0 +1,6 @@
+{
+	"lastItemIsSticky": {
+		"type": "boolean",
+		"default": false
+	}
+}

@@ -7,9 +7,6 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   @include layout-settings;
   @include block-limits;
   
-  //--block-original-limit-left: ws;
-  //--block-original-limit-right: we;
-  
   [data-type="novablocks/layout"] {
     
     --block-limit-left: ws;
@@ -137,7 +134,7 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
       
       // Sidebar
       >:first-child {
-        grid-column: var(--block-limit-left)/var(--block-content-start);
+        grid-column: var(--block-limit-left)/gs;
         z-index: 2;
       }
       
@@ -211,7 +208,7 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
       
       // Sidebar
       > :last-child {
-        grid-column: var(--block-content-end)/var(--block-limit-right);
+        grid-column: ge/var(--block-limit-right);
       }
     }
   }
@@ -246,7 +243,7 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
       
       // Sidebar Left
       >:first-child {
-        grid-column: var(--block-limit-left)/var(--block-content-start);
+        grid-column: var(--block-limit-left)/gs;
   
         // We need this z-index, to make sure that
         // we can select blocks that are inside the sidebar.
@@ -273,7 +270,7 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
       
       // Sidebar Right
       >:last-child {
-        grid-column: var(--block-content-end)/var(--block-limit-right);
+        grid-column: ge/var(--block-limit-right);
         
         // We need this z-index, to make sure that
         // we can select blocks that are inside the sidebar.

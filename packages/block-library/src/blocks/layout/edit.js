@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import classnames from 'classnames';
 import {
   Component,
   Fragment
@@ -16,6 +17,8 @@ import {IconButton, Toolbar} from "@wordpress/components";
 
 import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 import { compose } from "@wordpress/compose";
+
+import InspectorControls from "./inspector-controls";
 
 const TEMPLATE_OPTIONS = [
   {
@@ -73,15 +76,14 @@ class Edit extends Component {
     return !!registerBlockVariation;
   }
 
-  blockVariationPicker( props ) {
+  blockVariationPicker() {
     return (
-    <div className={`novablocks-layout novablocks-layout--${props.attributes.layout}`}>
       <Fragment>
         <InnerBlocks
           renderAppender = { false }
+          templateLock = 'all'
         />
       </Fragment>
-    </div>
     );
   }
 
@@ -120,7 +122,8 @@ class Edit extends Component {
     const {
       attributes: {
         layout,
-        layoutType
+        layoutType,
+        sidebarWidth
       },
       clientId,
       blockType,
@@ -131,6 +134,13 @@ class Edit extends Component {
       setAttributes,
       className
     } = this.props;
+
+    const classNames = classnames(
+      className,
+      `novablocks-layout`,
+      `novablocks-layout--${layout}`,
+      `novablocks-sidebar--${sidebarWidth}`
+    );
 
     const currentBlock = select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ];
     const childBlocks = currentBlock.innerBlocks;
@@ -151,7 +161,10 @@ class Edit extends Component {
               />
             </Toolbar>
           </BlockControls>
+          <InspectorControls { ...this.props }/>
+          <div className={ classNames }>
           { this.supportsBlockVariationPicker() ? this.blockVariationPicker(this.props) : this.innerBlocksPicker() }
+          </div>
         </Fragment>
       );
     }

@@ -3,29 +3,47 @@
 // ws - wide start
 // cs - content start
 // ce - content end
+// cc - content center
 // we - wide end
 // fe - full end
+// gs - gap start
+// ge - gap end
+// gcs - gap content start
+// gce - gap content end
+// [cs] [cc] column will be equal with minmax(22ch, var(--content-width-start)
+// to make sure that we always have a minimum of characters displayed.
+// The same thing applies for [cc] [ce].
+// Doing that, in content will always be at least 44 characters.
 @mixin layout-grid {
   display: var(--display-mode);
-  grid-template-columns: [fs] 1fr [ws] var(--wds) [cs] calc(var(--content) / 2) [cc] calc(var(--content) / 2) [ce] var(--wde) [we] 1fr [fe];
-  grid-column-gap: var(--grid-gap);
+  grid-template-columns: [fs] 1fr [ws] var(--wds) [gs] var(--grid-gap-size) [cs] minmax(22ch, var(--content-width-start-max-value)) [gcs] calc(var(--grid-gap-size)/2) [cc] calc(var(--grid-gap-size)/2) [gce]  minmax(22ch, var(--content-width-end-max-value)) [ce] var(--grid-gap-size) [ge] var(--wde) [we] 1fr [fe];
 }
 
 // Default Layout Settings
 // --wide-width - Wide Blocks maximum width.
 // --content-width - Content column maximum width.
-// --display-mode - Block default display mode.
-// --grid-gap - Default gap between grid columns.
+// --display-mode - Block default display mode. (eg. grid or flex)
+// --grid-gap-size - Default gap between grid columns.
+// --minimum-sidebar-*-width - Minimum sidebar Width for specific Sidebar.
+// This minimum sidebar width is useful when user will display an ad inside
+// the sidebar and want the sidebar to have a minimum size.
 @mixin layout-settings {
-  --wide-width: calc(var(--theme-content-width-wide) * 0.75);
-  --content-width: calc(var(--theme-content-width-normal) * 0.75);
-  --full: 100%;
+  --default-width-small-sidebar: 230px;
+  --default-width-large-sidebar: 300px;
+  --sticky-element-top-spacing: 0px;
+  --grid-gap-size: 30px;
+  --minimum-sidebar-left-width: var(--default-width-small-sidebar);
+  --minimum-sidebar-right-width: var(--default-width-small-sidebar);
+  --wide-width: calc(var(--theme-content-width-wide));
+  --content-width: var(--theme-content-width-normal);
+  --content-width-start-max-value: calc((var(--content-width) - var(--minimum-sidebar-left-width))/2 - var(--grid-gap-size));
+  --content-width-end-max-value:  calc((var(--content-width) - var(--minimum-sidebar-right-width))/2  - var(--grid-gap-size));
+  --full: 100vw;
   --wide:  calc( min( var(--wide-width), var(--full) ) );
   --content: var(--content-width);
   --wd: calc( var(--wide) * 0.5 - var(--content) * 0.5 );
-  --wds: var(--wd);
-  --wde: var(--wd);
-  --grid-gap: 30px;
+  --wds: minmax( var(--minimum-sidebar-left-width), var(--wd));
+  --wde: minmax( var(--minimum-sidebar-right-width), var(--wd));
   --display-mode: flex;
   --all-columns: fs/fe;
   
@@ -91,11 +109,11 @@
   
   .align-pull-left[class][class] {
     --block-content-start: ws;
-    --block-content-end: cs;
+    --block-content-end: gs;
   }
   
   .align-pull-right[class][class] {
-    --block-content-start: ce;
+    --block-content-start: ge;
     --block-content-end: we;
   }
   

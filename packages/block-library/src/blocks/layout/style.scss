@@ -103,7 +103,7 @@
     --block-content-end: var(--block-limit-right);
     
     .novablocks-sidebar--left {
-      grid-column: var(--block-limit-left)/cs;
+      grid-column: var(--block-limit-left)/gs;
     }
   }
   
@@ -118,7 +118,7 @@
     --block-content-end: ce;
     
     .novablocks-sidebar--right {
-      grid-column: ce/var(--block-limit-right);
+      grid-column: ge/var(--block-limit-right);
     }
   }
   
@@ -132,11 +132,11 @@
     --block-content-end: ce;
     
     .novablocks-sidebar--left {
-      grid-column: var(--block-limit-left)/cs;
+      grid-column: var(--block-limit-left)/gs;
     }
     
     .novablocks-sidebar--right {
-      grid-column: ce/var(--block-limit-right);
+      grid-column: ge/var(--block-limit-right);
     }
   }
   
@@ -154,7 +154,7 @@
         // By default all blocks inside content column,
         // will be displayed between CS and CE.
         // This could be changed based on layout used.
-        > * {
+        > *:not(.alignfull):not(.alignwide):not([class*="align-pull"]) {
           --block-content-start: cs;
           --block-content-end: ce;
         }
@@ -188,22 +188,6 @@
   }
 }
 
-.entry-content[class] {
-  
-  &,
-  [class*='__inner-container'] {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  
-  > .alignwide,
-  > .alignfull {
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
 .novablocks-content,
 .novablocks-layout {
   flex-direction: column;
@@ -222,11 +206,11 @@
 
 // Helper classes
 .half-block-left {
-  grid-column: var(--block-limit-left)/cc;
+  grid-column: var(--block-limit-left)/gcs;
 }
 
 .half-block-right {
-  grid-column: cc/var(--block-limit-right);
+  grid-column: gce/var(--block-limit-right);
 }
 
 .novablocks-content .entry-content {
@@ -242,10 +226,53 @@
   
   grid-column: var(--all-columns) !important;
   
-  --display-mode: grid !important;
+  
+  @include above(lap) {
+    --display-mode: grid !important;
+  }
   
   
   > * {
     grid-column: var(--block-content-start)/var(--block-content-end);
+  }
+}
+
+.last-block-is-sticky {
+  
+  >:last-child {
+    position: sticky;
+    top: var(--sticky-element-top-spacing);
+    z-index: -1;
+  }
+}
+
+
+// Minimum Sidebar Width Logic
+// At first, we will change the sidebar minimum width
+// for the layout block, and if we have a nested layout block,
+// we will change minimum sidebar width for that block too.
+// Doing that, we will make sure that both blocks are sharing the same grid
+// and alignments are working properly.
+.novablocks-layout {
+  
+  &.novablocks-sidebar--large {
+    
+    &.novablocks-layout--sidebar-right {
+      
+      &,
+      .novablocks-layout,
+      .wp-block-group__inner-container {
+        --minimum-sidebar-right-width: var(--default-width-large-sidebar);
+      }
+    }
+    
+    &.novablocks-layout--sidebar-left {
+      
+      &,
+      .novablocks-layout,
+      .wp-block-group__inner-container {
+        --minimum-sidebar-left-width: var(--default-width-large-sidebar);
+      }
+    }
   }
 }
