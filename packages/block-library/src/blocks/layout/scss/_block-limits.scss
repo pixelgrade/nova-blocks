@@ -1,0 +1,13 @@
+.alignwide,
+.align-wide,
+[data-align="wide"] {
+  --block-limit-left: ws;
+  --block-limit-right: we;
+}
+
+.alignfull,
+.align-full,
+[data-align="full"] {
+  --block-limit-left: fs;
+  --block-limit-right: fe;
+}

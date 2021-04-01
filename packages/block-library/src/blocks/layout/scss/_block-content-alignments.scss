@@ -1,0 +1,32 @@
+.align-full,
+.alignfull,
+[data-align="full"]{
+  --block-content-start: fs;
+  --block-content-end: fe;
+}
+
+.alignwide,
+.align-wide,
+[data-align="wide"] {
+  --block-content-start: ws;
+  --block-content-end: we;
+}
+
+
+.align-pull-left {
+  --block-content-start: ws;
+  --block-content-end: gs;
+}
+
+.align-pull-right {
+  --block-content-start: ge;
+  --block-content-end: we;
+}
+
+.break-right {
+  --block-content-end: ce;
+}
+
+.break-left {
+  --block-content-start: cs;
+}

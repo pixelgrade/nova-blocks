@@ -11,11 +11,17 @@ const TEMPLATE = [
 
 const LayoutAreaPreview = function( props ) {
   const {
+    attributes,
     className
   } = props;
 
+  const { lastItemIsSticky } = attributes;
+
   const classNames = classnames(
     className,
+    {
+      'last-block-is-sticky' : lastItemIsSticky === true
+    }
   )
 
   return (
