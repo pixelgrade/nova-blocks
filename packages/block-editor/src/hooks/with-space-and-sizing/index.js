@@ -4,6 +4,7 @@ import {
 	getControlsClasses,
 	getRandomBetween,
 	getRandomArrayFromArray,
+  getSpacingCSSProps
 } from "@novablocks/utils";
 
 import {
@@ -34,6 +35,8 @@ import {
 import {
 	addFilter
 } from '@wordpress/hooks';
+
+import { select } from '@wordpress/data';
 
 const ALLOWED_BLOCKS = [
 	'novablocks/media',
@@ -126,18 +129,15 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 		);
 	};
 });
-
-const componentWithSettings = compose( [
-	withSpaceAndSizingControlsAdvanced
-] );
-
-addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing-advanced', componentWithSettings );
+addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing-advanced', withSpaceAndSizingControlsAdvanced );
 
 const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
 
-		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+		if ( ! ALLOWED_BLOCKS.includes( props.name ) && ! supports?.novaBlocks?.spacing ) {
 			return <OriginalComponent { ...props } />
 		}
 
@@ -163,17 +163,9 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		const CONTENT_SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
 		const CONTENT_SPACING_MAX_VALUE = 3;
 
-		const cssVars = {
-			'--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-			'--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
-			'--novablocks-block-top-spacing': blockTopSpacing,
-			'--novablocks-block-bottom-spacing': blockBottomSpacing,
-			'--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
-		};
-
 		return (
 			<Fragment>
-				<div style={ cssVars }>
+				<div style={ getSpacingCSSProps( attributes ) }>
 					<OriginalComponent { ...props } />
 				</div>
 				<ControlsSection label={ __( 'Space and Sizing' ) }>
@@ -269,7 +261,7 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing', withSpaceAndS
 
 function addSpaceAndSizingAttributes( block ) {
 
-	if ( ! ALLOWED_BLOCKS.includes( block.name ) ) {
+	if ( ! ALLOWED_BLOCKS.includes( block.name ) && ! block?.supports?.novaBlocks?.spacing ) {
 		return block;
 	}
 

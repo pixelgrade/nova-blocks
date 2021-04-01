@@ -567,3 +567,22 @@ export const getSignalAttributes = ( signal, palette, sticky = false ) => {
 
   }
 }
+
+export const getSpacingCSSProps = ( attributes ) => {
+
+  const {
+    blockTopSpacing,
+    blockBottomSpacing,
+    emphasisTopSpacing,
+    emphasisBottomSpacing,
+    verticalAlignment
+  } = attributes;
+
+  return {
+    '--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+    '--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+    '--novablocks-block-top-spacing': blockTopSpacing,
+    '--novablocks-block-bottom-spacing': blockBottomSpacing,
+    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
+  }
+}

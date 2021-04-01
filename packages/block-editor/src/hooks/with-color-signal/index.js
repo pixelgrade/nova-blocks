@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { select } from '@wordpress/data';
 
 import { getClassNameWithPaletteHelpers } from "@novablocks/utils";
 import { addFilter } from '@wordpress/hooks';
@@ -35,7 +36,7 @@ const enableColorSetsClassnames = [
 
 const withColorSetsAttributes = ( block, name ) => {
 
-  if ( ! enableColorSetControls.includes( name ) ) {
+  if ( ! enableColorSetControls.includes( name ) && ! block?.supports?.novaBlocks?.colorsSets ) {
     return block;
   }
 
@@ -103,11 +104,13 @@ const withColorSetsDeprecation = ( settings, name ) => {
 }
 addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-deprecation', withColorSetsDeprecation );
 
-const withColorSetsControls = createHigherOrderComponent(OriginalComponent => {
+const withColorSetsControls = createHigherOrderComponent( OriginalComponent => {
 
-  return ( props ) => {
+  return props => {
 
-    if ( ! enableColorSetControls.includes( props.name ) ) {
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! enableColorSetControls.includes( props.name ) && ! supports?.novaBlocks?.colorsSets ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -117,8 +120,8 @@ const withColorSetsControls = createHigherOrderComponent(OriginalComponent => {
         <OriginalComponent { ...props } />
       </Fragment>
     );
-  };
-});
+  }
+} );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-sets-controls', withColorSetsControls );
 
 const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {

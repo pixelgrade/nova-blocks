@@ -1,22 +1,5 @@
 import { getRandomBetween, getRandomFromArray } from "@novablocks/utils";
 
-const blocksWithBlobs = [
-  'novablocks/media',
-  'novablocks/advanced-gallery',
-  'novablocks/supernova',
-  'novablocks/supernova-item',
-];
-
-export const hasBlobSupport = ( props ) => {
-
-//  @todo avoid adding controls to block that don't actually support blobs
-//  let themeSupport = props?.settings?.theme_support?.blobs;
-//  let enableBlobControls = Array.isArray( themeSupport ) ? themeSupport : [];
-//  return enableBlobControls.includes( props.name );
-
-  return blocksWithBlobs.includes( props.name );
-}
-
 export const getRandomBlobAttributes = ( prefix ) => {
 
   const sides = getRandomBetween( 4, 7 );
