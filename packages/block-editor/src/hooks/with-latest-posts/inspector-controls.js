@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { createBlock } from "@wordpress/blocks";
 import { SelectControl } from "@wordpress/components";
-import { useSelect } from "@wordpress/data";
+import { useSelect, dispatch } from "@wordpress/data";
 import { ControlsSection, ControlsTab, QueryControls } from "../../components";
 
 const Controls = ( props ) => {

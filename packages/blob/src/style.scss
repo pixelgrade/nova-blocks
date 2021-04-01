@@ -12,6 +12,7 @@
   position: relative;
 	z-index: 10;
 	transform: var(--blob-mix-media-transform);
+  transform-origin: 0 0;
 }
 
 .blob-mix__decoration {
