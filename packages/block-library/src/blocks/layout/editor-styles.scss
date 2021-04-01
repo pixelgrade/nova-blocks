@@ -1,46 +1,17 @@
 $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
+$align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-alignment="pull-left"], [data-novablocks-alignment="pull-right"]';
 
 @import 'scss/mixins';
 
 .block-editor-block-list__layout.is-root-container {
   @include layout-grid;
   @include layout-settings;
-  @include block-limits;
   
-  [data-type="novablocks/layout"] {
-    
-    --block-limit-left: ws;
-    --block-limit-right: we;
-    
-    &[data-align="wide"] {
-      --block-original-limit-left: ws;
-      --block-original-limit-right: we;
-    }
-  
-    &[data-align="full"] {
-      --block-original-limit-left: fs;
-      --block-original-limit-right: fe;
-    }
-  }
-  
-  .novablocks-layout [data-align][class][class] {
-    --block-limit-left: var(--block-original-limit-left);
-    --block-limit-right: var(--block-original-limit-left);
-  }
+  @import 'scss/block-limits.scss';
   
   grid-auto-flow: row dense;
   
-  .wp-block {
-    max-width: 100% !important;
-  }
-  
   >  * {
-    --block-limit-left: cs;
-    --block-limit-right: ce;
-    
-    --block-content-start: var(--block-limit-left);
-    --block-content-end: var(--block-limit-right);
-    
     grid-column: var(--block-content-start) / var(--block-content-end);
     align-self: flex-start;
     
@@ -52,17 +23,15 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
     margin-right: 0 !important;
   }
   
-  > [data-type="novablocks/layout"] {
-    grid-column: var(--block-limit-left)/var(--block-limit-right);
+  > [data-type='novablocks/layout'] {
+    grid-column: var(--all-columns);
   }
   
-  > [data-align="full"] {
-    --block-content-start: fs;
-    --block-content-end: fe;
-  }
-  
-  .block-list-appender {
-    grid-column: var(--block-content-start)/var(--block-content-end);
+  // Markup is different compared to front-end,
+  // and because of that, the last block is
+  // currently not sticky inside the editor.
+  .last-block-is-sticky > :last-child {
+    z-index: 1;
   }
 }
 
@@ -106,22 +75,10 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   
     --block-content-start: cs;
     --block-content-end: var(--block-limit-right);
-  
-    //@todo: Find a better solution for this resets,
-    //  to avoid repetition.
-    
-    .alignfull,
-    .alignwide,
-    [data-novablocks-alignment="pull-left"],
-    [data-novablocks-alignment="pull-right"] {
-      --block-limit-left: cs;
-      --block-limit-right: ce;
-    }
-  
-    [data-align="full"],
-    [data-align="wide"] {
+    &,
+    #{$align-selectors} {
       --block-content-start: cs;
-      --block-content-end: var(--block-limit-right) !important;
+      --block-content-end: var(--block-limit-right);
     }
     
     > #{$grid-selector} {
@@ -160,24 +117,10 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   
   &--sidebar-right {
   
-    --block-content-start: var(--block-limit-left);
-    --block-content-end: ce;
-    
-    //@todo: Find a better solution for this resets,
-    //  to avoid repetition.
-    
-    .alignfull,
-    .alignwide,
-    [data-novablocks-alignment="pull-left"],
-    [data-novablocks-alignment="pull-right"] {
-      --block-limit-left: cs;
-      --block-limit-right: ce;
-    }
-  
-    [data-align="full"],
-    [data-align="wide"] {
-      --block-content-start: var(--block-limit-left) !important;
-      --block-content-end: ce !important;
+    &,
+    #{$align-selectors} {
+      --block-content-start: var(--block-limit-left);
+      --block-content-end: ce;
     }
     
     > #{$grid-selector} {
@@ -202,6 +145,10 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
             > * {
               grid-column: var(--block-content-start)/var(--block-content-end);
             }
+  
+            [data-type='novablocks/layout'] {
+              grid-column: var(--all-columns);
+            }
           }
         }
       }
@@ -215,24 +162,11 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   
   &--complex {
   
-    --block-content-start: cs;
-    --block-content-end: ce;
-  
-    //@todo: Find a better solution for this resets,
-    //  to avoid repetition.
-  
-    .alignfull,
-    .alignwide,
-    [data-novablocks-alignment="pull-left"],
-    [data-novablocks-alignment="pull-right"] {
-      --block-limit-left: cs;
-      --block-limit-right: ce;
-    }
-  
-    [data-align="full"],
-    [data-align="wide"] {
+    &,
+    #{$align-selectors} {
       --block-content-start: cs;
-      --block-content-end: ce !important;
+      --block-content-end: ce;
+  
     }
     
     > #{$grid-selector} {
@@ -283,15 +217,8 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   &--sidebar-left,
   &--sidebar-right,
   &--complex {
-   display: block !important;
+   display: block;
   }
-}
-
-[data-type='novablocks/layout'] {
-  
-  //@include block-limits;
-  
-  grid-column: var(--all-columns) !important;
 }
 
 // Layout inside layout
@@ -300,13 +227,22 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
   
   [data-type='novablocks/layout'] {
     
-    grid-column: var(--all-columns) !important;
-    
     .novablocks-layout {
+  
+      > #{$grid-selector} {
+    
+        > :first-child {
+          grid-column: var(--block-limit-left)/gs;
+        }
+    
+        > :last-child {
+          grid-column: var(--block-content-start)/var(--block-limit-right);
+        }
+      }
       
       &--sidebar-left {
         
-        > #{$grid-selector}[class][class][class] {
+        > #{$grid-selector} {
           
           // Properly position content
           > :last-child {
@@ -316,7 +252,6 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
             .novablocks-content {
               
               > #{$grid-selector} {
-                
                 
                 > *,
                 &:before {
@@ -328,7 +263,7 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
         }
       }
       
-      &--sidebar-right[class] {
+      &--sidebar-right{
         
         > #{$grid-selector} {
           
@@ -350,17 +285,6 @@ $grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
           > :last-child {
             grid-column: var(--block-content-end)/var(--block-limit-right);
           }
-        }
-      }
-      
-      > #{$grid-selector} {
-        
-        > :first-child {
-          grid-column: var(--block-limit-left)/var(--block-content-start);
-        }
-        
-        > :last-child {
-          grid-column: var(--block-content-start)/var(--block-limit-right);
         }
       }
     }

@@ -21,12 +21,20 @@
 
 // Default Layout Settings
 // --wide-width - Wide Blocks maximum width.
+// This can also be considered as container width,
+// because a layout block with sidebar will use this width.
 // --content-width - Content column maximum width.
 // --display-mode - Block default display mode. (eg. grid or flex)
 // --grid-gap-size - Default gap between grid columns.
 // --minimum-sidebar-*-width - Minimum sidebar Width for specific Sidebar.
 // This minimum sidebar width is useful when user will display an ad inside
 // the sidebar and want the sidebar to have a minimum size.
+// --sticky-element-to-spacing - Used to position the sticky block.
+// In Rosa2 this value will be equal with site header height, in this way,
+// the sticky block will not be under the header.
+// --content-width-*-max-value - Content column is separated in two columns (start and end),
+// which will allow us to achieve layouts with a higher level of complexity.
+// --all-columns - Used for blacks that need to span on the entire grid.
 @mixin layout-settings {
   --default-width-small-sidebar: 230px;
   --default-width-large-sidebar: 300px;
@@ -47,105 +55,17 @@
   --display-mode: flex;
   --all-columns: fs/fe;
   
+  // Default position for blocks is between cs and ce.
+  --block-content-start: cs;
+  --block-content-end: ce;
+  
+  // Default block limits are ws and we.
+  --block-limit-left: ws;
+  --block-limit-right: we;
+  
+  // Make it grid only above 1024px.
   @include above(lap) {
     --display-mode: grid;
-  }
-}
-
-// Generate CSS Variables,
-// that will handle block limits,
-// based on block alignment.
-@mixin block-limits {
-  
-  --block-limit-left: cs;
-  --block-limit-right: ce;
-  
-  .alignwide,
-  .align-wide,
-  [data-align="wide"] {
-    
-    // Find a smarter way to solve
-    // specificity problem.
-    &[class][class] {
-      --block-limit-left: ws;
-      --block-limit-right: we;
-    }
-  }
-  
-  .alignfull,
-  .align-full,
-  [data-align="full"] {
-  
-    // Find a smarter way to solve
-    // specificity problem.
-    &[class][class] {
-      --block-limit-left: fs;
-      --block-limit-right: fe;
-    }
-  }
-}
-
-
-// Generate CSS Variables,
-// that will handle content block position.
-@mixin block-content-alignments {
-  --block-content-start: cs;
-  --block-content-end: ce;
-  
-  .align-full[class],
-  .alignfull[class],
-  [data-align="full"]{
-    --block-content-start: fs;
-    --block-content-end: fe;
-  }
-  
-  .alignwide,
-  .align-wide,
-  [data-align="wide"] {
-    --block-content-start: ws;
-    --block-content-end: we;
-  }
-  
-  
-  .align-pull-left[class][class] {
-    --block-content-start: ws;
-    --block-content-end: gs;
-  }
-  
-  .align-pull-right[class][class] {
-    --block-content-start: ge;
-    --block-content-end: we;
-  }
-  
-  .break-right[class][class] {
-    --block-content-end: ce;
-  }
-  
-  .break-left[class][class] {
-    --block-content-start: cs;
-  }
-}
-
-// Generate CSS Variables,
-// to handle block content position,
-// based on block alignment.
-@mixin block-alignments {
-  
-  --block-content-start: cs;
-  --block-content-end: ce;
-  
-  &.align-full,
-  &.alignfull,
-  &[data-align="full"] {
-    --block-content-start: fs;
-    --block-content-end: fe;
-  }
-  
-  &.align-wide,
-  &.alignwide,
-  &[data-align="wide"] {
-    --block-content-start: ws;
-    --block-content-end: we;
   }
 }
 

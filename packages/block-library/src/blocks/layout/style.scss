@@ -1,14 +1,14 @@
 @import 'scss/mixins';
+@import 'scss/block-limits';
+@import 'scss/block-content-alignments';
+
+:root {
+  @include layout-settings;
+}
 
 .entry-content {
   
   @include layout-grid;
-  @include layout-settings;
-  @include block-limits;
-  @include block-content-alignments;
-  @include block-alignments;
-  
-  flex-direction: column;
   
   // Everything is treated as a grid element,
   // So we are going to position it,
@@ -23,14 +23,11 @@
   // them that could use alignments, so by default,
   // we are going to display the main div on all columns,
   // and position the block inside them based on their alignments.
-  > .novablocks-layout,
-  > .novablocks-block {
+  > .novablocks-layout {
     grid-column: var(--all-columns);
   }
   
   > .novablocks-block {
-    @include layout-grid;
-    @include layout-settings;
     
     > * {
       grid-column: var(--block-content-start)/var(--block-content-end);
@@ -39,7 +36,6 @@
   
   .wp-block-group__inner-container {
     @include layout-grid;
-    @include layout-settings;
     
     > * {
       grid-column: var(--block-content-start)/var(--block-content-end);
@@ -58,38 +54,11 @@
 .novablocks-layout {
   
   @include layout-grid;
-  @include layout-settings;
-  @include block-limits;
-  @include block-content-alignments;
-  
-  --block-limit-left: ws;
-  --block-limit-right: we;
   
   grid-column: var(--all-columns);
   
-  // Temporary
-  max-width: 100% !important;
-  
   > * {
     grid-row: 1;
-  }
-  
-  // Content column will always be
-  // displayed on all columns. Doing that,
-  // we can easily position pull-left and pull-right
-  // items on the same grid, as the one used on the parent block.
-  .novablocks-content {
-    
-    grid-column: var(--all-columns);
-    @include layout-grid;
-    
-    [class*='__inner-container'] > * {
-      max-width: 100% !important;
-    }
-    
-    > * {
-      grid-column: var(--block-content-start)/var(--block-content-end);
-    }
   }
   
   // Sidebar Left with Content on the Right Layout.
@@ -98,7 +67,7 @@
   // is given by layout block alignment.
   // Sidebar will always start at block limit on
   // the left and will end at CS.
-  &--sidebar-left[class][class] {
+  &--sidebar-left {
     --block-content-start: cs;
     --block-content-end: var(--block-limit-right);
     
@@ -113,7 +82,7 @@
   // is given by layout block alignment.
   // Sidebar will always start at CE and will end
   // at block limit on the right.
-  &--sidebar-right[class][class] {
+  &--sidebar-right {
     --block-content-start: var(--block-limit-left);
     --block-content-end: ce;
     
@@ -126,7 +95,7 @@
   // Content will always start at CS and will end at CE.
   // Sidebar Left will start at block limit left and end at CS.
   // Sidebar Right will start at CE and will end at block limit on right.
-  &--complex[class][class] {
+  &--complex {
     
     --block-content-start: cs;
     --block-content-end: ce;
@@ -139,13 +108,35 @@
       grid-column: ge/var(--block-limit-right);
     }
   }
-  
-  @include block-alignments;
 }
 
-.entry-content {
-  .novablocks-layout {
-    // Make sure layout block is displayed on all columns.
+// Content column will always be
+// displayed on all columns. Doing that,
+// we can easily position pull-left and pull-right
+// items on the same grid, as the one used on the parent block.
+.novablocks-content {
+  
+  grid-column: var(--all-columns);
+  @include layout-grid;
+  
+  > * {
+    grid-column: var(--block-content-start)/var(--block-content-end);
+  }
+  
+  // Collections are coming with .alignfull,
+  // to help us with background-color.
+  // Neste in Collection Block is an inner-container
+  // which will be treated as a grid too.
+  > .novablocks-collection {
+    grid-column: var(--all-columns);
+  }
+}
+
+.novablocks-layout {
+  
+  // Make sure nested layout block is displayed on all columns.
+  .novablocks-content:not(.entry-content) {
+    
     .novablocks-layout {
       grid-column: var(--all-columns);
     
@@ -158,14 +149,15 @@
           --block-content-start: cs;
           --block-content-end: ce;
         }
-      
-        @include block-alignments;
-      
       }
     }
   }
 }
 
+
+// Apply top and bottom spacing
+// on all blocks inside content
+// and sidebar.
 .novablocks-content,
 .novablocks-sidebar {
   
@@ -175,33 +167,16 @@
 }
 
 
-// !!!! Temporary !!!!
-// @todo: Remove this
-.align-wide,
-.align-full {
-  
-  &,
-  * {
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-}
-
+// When grid is not used (eg. under 1024px),
+// we are using flex with direction column.
 .novablocks-content,
 .novablocks-layout {
   flex-direction: column;
 }
 
+// Content should always have priority!
 .novablocks-content {
   order: -1;
-}
-
-// Temporary class
-// used for sticky elements
-.sticky-element {
-  position: sticky;
-  top: 0;
 }
 
 // Helper classes
@@ -211,30 +186,6 @@
 
 .half-block-right {
   grid-column: gce/var(--block-limit-right);
-}
-
-.novablocks-content .entry-content {
-  --display-mode: block;
-}
-
-.novablocks-layout-grid {
-  @include layout-grid;
-  @include layout-settings;
-  @include block-limits;
-  @include block-content-alignments;
-  @include block-alignments;
-  
-  grid-column: var(--all-columns) !important;
-  
-  
-  @include above(lap) {
-    --display-mode: grid !important;
-  }
-  
-  
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
 }
 
 .last-block-is-sticky {
