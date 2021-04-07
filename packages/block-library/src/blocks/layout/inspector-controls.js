@@ -17,7 +17,8 @@ const LayoutInspectorControls = ( props ) => {
   } = props;
 
   const {
-    sidebarWidth
+    sidebarWidth,
+    sidebarPosition
   } = attributes;
 
   return (
@@ -27,14 +28,31 @@ const LayoutInspectorControls = ( props ) => {
           key={ 'layout-sidebar-controls' }
           label={ __( 'Set Sidebar Width', '__plugin_txtd' ) }
           selected={ sidebarWidth }
-          options={ [
-            { label: 'Small', value: 'small' },
-            { label: 'Large', value: 'large' },
-          ] }
+          options={
+            [
+              { label: 'Small', value: 'small' },
+              { label: 'Large', value: 'large' },
+            ]
+          }
           onChange={ ( nextSidebarWidth ) => {
             setAttributes( { sidebarWidth: nextSidebarWidth } );
           } }
         />
+
+        <RadioControl
+          key = {'layout-sidebar-position'}
+          label = {__('Set Sidebar Position', '__plugin_txtd' ) }
+          selected={ sidebarPosition }
+          options={
+            [
+              { label: 'Left', value: 'left' },
+              { label: 'Right', value: 'right' }
+            ]
+          }
+          onChange={ (nextSidebarPosition) => {
+            setAttributes({sidebarPosition: nextSidebarPosition});
+          } }
+          />
       </ControlsTab>
     </ControlsSection>
   )

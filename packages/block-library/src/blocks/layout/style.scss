@@ -61,6 +61,14 @@
     grid-row: 1;
   }
   
+  // Sidebar Right with Content on the Right Layout.
+  // Content will always start at layout block limit on the left and
+  // will end at CE. Limit on the left
+  // is given by layout block alignment.
+  // Sidebar will always start at CE and will end
+  // at block limit on the right.
+  --block-content-end: ce;
+  
   // Sidebar Left with Content on the Right Layout.
   // Content will always start at CS and it
   // will end at layout block limit on the right. Limit on the right
@@ -71,25 +79,11 @@
     --block-content-start: cs;
     --block-content-end: var(--block-limit-right);
     
-    .novablocks-sidebar--left {
+    .novablocks-sidebar {
       grid-column: var(--block-limit-left)/gs;
     }
   }
   
-  // Sidebar Right with Content on the Right Layout.
-  // Content will always start at layout block limit on the left and
-  // will end at CE. Limit on the left
-  // is given by layout block alignment.
-  // Sidebar will always start at CE and will end
-  // at block limit on the right.
-  &--sidebar-right {
-    --block-content-start: var(--block-limit-left);
-    --block-content-end: ce;
-    
-    .novablocks-sidebar--right {
-      grid-column: ge/var(--block-limit-right);
-    }
-  }
   
   // Sidebar Left with Content Centered and Sidebar Right Layout.
   // Content will always start at CS and will end at CE.
@@ -108,6 +102,10 @@
       grid-column: ge/var(--block-limit-right);
     }
   }
+}
+
+.novablocks-sidebar {
+  grid-column: ge/var(--block-limit-right);
 }
 
 // Content column will always be
@@ -154,7 +152,6 @@
   }
 }
 
-
 // Apply top and bottom spacing
 // on all blocks inside content
 // and sidebar.
@@ -194,6 +191,13 @@
     position: sticky;
     top: var(--sticky-element-top-spacing);
     z-index: -1;
+    opacity: 1;
+    
+    transition: opacity .2s ease;
+    
+    &.block-is-hidden {
+      opacity: 0;
+    }
   }
 }
 
@@ -208,13 +212,10 @@
   
   &.novablocks-sidebar--large {
     
-    &.novablocks-layout--sidebar-right {
-      
-      &,
-      .novablocks-layout,
-      .wp-block-group__inner-container {
-        --minimum-sidebar-right-width: var(--default-width-large-sidebar);
-      }
+    &,
+    .novablocks-layout,
+    .wp-block-group__inner-container {
+      --minimum-sidebar-right-width: var(--default-width-large-sidebar);
     }
     
     &.novablocks-layout--sidebar-left {
@@ -226,4 +227,8 @@
       }
     }
   }
+}
+
+.novablocks-content {
+  grid-column: var(--all-columns);
 }

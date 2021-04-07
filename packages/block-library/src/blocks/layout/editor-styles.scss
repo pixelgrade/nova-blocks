@@ -11,6 +11,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   grid-auto-flow: row dense;
   
+  .wp-block[data-align="wide"] {
+    max-width: 100% !important;
+  }
+  
   >  * {
     grid-column: var(--block-content-start) / var(--block-content-end);
     align-self: flex-start;
@@ -68,97 +72,82 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
-// Block Grid
+// The default layout is Content Left with Sidebar Right.
+// Content will always be the first child of layout block,
+// and it will change it's grid position, according
+// to sidebar position (left or right).
 .novablocks-layout {
-  
-  &--sidebar-left {
-  
-    --block-content-start: cs;
-    --block-content-end: var(--block-limit-right);
-    &,
-    #{$align-selectors} {
-      --block-content-start: cs;
-      --block-content-end: var(--block-limit-right);
-    }
-    
-    > #{$grid-selector} {
-      
-      > * {
-        grid-row: 1;
-      }
-      
-      @include layout-grid;
-      
-      // Sidebar
-      >:first-child {
-        grid-column: var(--block-limit-left)/gs;
-        z-index: 2;
-      }
-      
-      // Content
-      >:last-child {
-        
-        grid-column: var(--all-columns);
-        
-        > .novablocks-content {
-          
-          > #{$grid-selector} {
-            
-            @include layout-grid;
-            
-            > * {
-              grid-column: var(--block-content-start)/var(--block-content-end);
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  &--sidebar-right {
   
     &,
     #{$align-selectors} {
       --block-content-start: var(--block-limit-left);
       --block-content-end: ce;
     }
-    
-    > #{$grid-selector} {
-      
-      > * {
-        grid-row: 1;
-      }
-      
-      @include layout-grid;
-      
-      // Content
-      > :first-child {
-        
-        grid-column: var(--all-columns);
-        
-        > .novablocks-content {
-          
-          > #{$grid-selector} {
-            
-            @include layout-grid;
-            
-            > * {
-              grid-column: var(--block-content-start)/var(--block-content-end);
-            }
   
-            [data-type='novablocks/layout'] {
-              grid-column: var(--all-columns);
-            }
+  > #{$grid-selector} {
+  
+    > * {
+      grid-row: 1;
+    }
+  
+    @include layout-grid;
+  
+    // Content
+    > :first-child {
+    
+      grid-column: var(--all-columns);
+    
+      > .wp-block-novablocks-layout-area {
+      
+        > #{$grid-selector} {
+        
+          @include layout-grid;
+        
+          > * {
+            grid-column: var(--block-content-start)/var(--block-content-end);
+          }
+        
+          [data-type='novablocks/layout'] {
+            grid-column: var(--all-columns);
           }
         }
       }
-      
+    }
+  
+    // Sidebar
+    > :last-child {
+      grid-column: ge/var(--block-limit-right);
+    }
+  }
+  
+  &--sidebar-left {
+  
+    &,
+    #{$align-selectors} {
+      --block-content-start: cs;
+      --block-content-end: var(--block-limit-right);
+    }
+  
+    > #{$grid-selector} {
+  
       // Sidebar
       > :last-child {
-        grid-column: ge/var(--block-limit-right);
+        grid-column: var(--block-limit-left)/gs;
+        z-index: 2;
       }
     }
   }
+  
+  .novablocks-content,
+  &--sidebar-left,
+  &--sidebar-right,
+  &--complex {
+    display: block;
+  }
+}
+
+// Block Grid
+.novablocks-layout {
   
   &--complex {
   
@@ -166,7 +155,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     #{$align-selectors} {
       --block-content-start: cs;
       --block-content-end: ce;
-  
     }
     
     > #{$grid-selector} {
@@ -212,89 +200,15 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       }
     }
   }
-  
-  .novablocks-content,
-  &--sidebar-left,
-  &--sidebar-right,
-  &--complex {
-   display: block;
-  }
-}
-
-// Layout inside layout
-
-[data-type='novablocks/layout'] {
-  
-  [data-type='novablocks/layout'] {
-    
-    .novablocks-layout {
-  
-      > #{$grid-selector} {
-    
-        > :first-child {
-          grid-column: var(--block-limit-left)/gs;
-        }
-    
-        > :last-child {
-          grid-column: var(--block-content-start)/var(--block-limit-right);
-        }
-      }
-      
-      &--sidebar-left {
-        
-        > #{$grid-selector} {
-          
-          // Properly position content
-          > :last-child {
-            
-            grid-column:var(--all-columns);
-            
-            .novablocks-content {
-              
-              > #{$grid-selector} {
-                
-                > *,
-                &:before {
-                  grid-column: cs/ce;
-                }
-              }
-            }
-          }
-        }
-      }
-      
-      &--sidebar-right{
-        
-        > #{$grid-selector} {
-          
-          > :first-child {
-            
-            grid-column: var(--all-columns);
-  
-            .novablocks-content {
-    
-              > #{$grid-selector} {
-      
-                > * {
-                  grid-column: var(--block-content-start)/var(--block-content-end);
-                }
-              }
-            }
-          }
-          
-          > :last-child {
-            grid-column: var(--block-content-end)/var(--block-limit-right);
-          }
-        }
-      }
-    }
-  }
 }
 
 .novablocks-layout--sidebar-right .novablocks-layout--sidebar-left,
 .novablocks-layout--sidebar-left .novablocks-layout--sidebar-right {
-  --block-content-start: cs;
-  --block-content-end: ce;
+  
+  #{$align-selectors} {
+    --block-content-start: cs;
+    --block-content-end: ce;
+  }
 }
 
 .novablocks-layout--sidebar-right .novablocks-layout--sidebar-right {
@@ -307,5 +221,67 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-content {
   > #{$grid-selector} {
     @include grid-border;
+  }
+}
+
+[data-type="novablocks/layout-area"] {
+  &.is-highlighted,
+  &.is-selected,
+  &.has-child-selected {
+    
+    &:after {
+      box-shadow: none !important;
+    }
+    
+    &.is-highlighted {
+      
+      .novablocks-content,
+      .novablocks-sidebar {
+    
+        > #{$grid-selector} {
+      
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            grid-column: var(--block-content-start)/var(--block-content-end);
+            box-shadow: 0 0 0 2px #007cba;
+            box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+            border-radius: 1px;
+            outline: 2px solid transparent;
+          }
+        }
+      }
+    }
+    
+  }
+}
+
+[data-type="novablocks/layout"] {
+  
+  [data-align="full"] {
+    --block-content-start: ws;
+  }
+  
+  [data-type="novablocks/layout"] {
+  
+    .novablocks-content {
+      [data-align="full"],
+      [data-align="wide"] {
+        --block-content-start: cs;
+        --block-content-end: ce;
+      }
+    }
+  }
+  
+  .novablocks-layout--sidebar-left {
+  
+    [data-align="full"] {
+      --block-content-start: cs;
+      --block-content-end: we;
+    }
   }
 }

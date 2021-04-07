@@ -22,14 +22,15 @@ if ( ! function_exists('novablocks_render_layout_block' ) ) {
 	function novablocks_render_layout_block( $attributes, $content ) {
 
 		ob_start();
+
 		$classes = array( 'novablocks-layout' );
 
-		if ( ! empty( $attributes['layout'] ) ) {
-			$classes[] = 'novablocks-layout--' . $attributes['layout'];
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
 		}
 
-		if ( ! empty( $attributes['align'] ) ) {
-			$classes[] = 'align' . $attributes['align'];
+		if ( ! empty($attributes['sidebarPosition'] ) ) {
+			$classes[] = 'novablocks-layout--sidebar-' . $attributes['sidebarPosition'];
 		}
 
 		if ( ! empty( $attributes['sidebarWidth'] ) ) {

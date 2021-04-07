@@ -1,8 +1,13 @@
 {
 	"sidebarWidth": {
-		"type": "string"
+		"type": "string",
+		"default": "small"
 	},
 	"layout": {
 		"type": "string"
+	},
+	"sidebarPosition": {
+		"type": "string",
+		"default": "right"
 	}
 }

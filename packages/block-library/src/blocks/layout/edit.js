@@ -81,7 +81,6 @@ class Edit extends Component {
       <Fragment>
         <InnerBlocks
           renderAppender = { false }
-          templateLock = 'all'
         />
       </Fragment>
     );
@@ -123,7 +122,8 @@ class Edit extends Component {
       attributes: {
         layout,
         layoutType,
-        sidebarWidth
+        sidebarWidth,
+        sidebarPosition
       },
       clientId,
       blockType,
@@ -138,7 +138,7 @@ class Edit extends Component {
     const classNames = classnames(
       className,
       `novablocks-layout`,
-      `novablocks-layout--${layout}`,
+      `novablocks-layout--sidebar-${sidebarPosition}`,
       `novablocks-sidebar--${sidebarWidth}`
     );
 

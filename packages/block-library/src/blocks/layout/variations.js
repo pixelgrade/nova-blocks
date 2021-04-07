@@ -6,12 +6,13 @@ const variations = [
     name: 'sidebar-left',
     title: __('Sidebar Left with Content on the right', '__plugin_txtd' ),
     icon: icons.sidebarLeft,
+    attributes: { sidebarPosition: 'left', className: 'alignwide'},
     innerBlocks: [
       ['novablocks/layout-area', {
-        className: 'novablocks-sidebar novablocks-sidebar--left'
+        className: 'novablocks-content'
       }],
       ['novablocks/layout-area', {
-        className: 'novablocks-content'
+        className: 'novablocks-sidebar'
       }],
     ],
     scope: [ 'block' ],
@@ -20,12 +21,13 @@ const variations = [
     name: 'sidebar-right',
     title: __('Sidebar Right with Content on the left', '__plugin_txtd' ),
     icon: icons.sidebarRight,
+    attributes: { sidebarPosition: 'right', className: 'alignwide'},
     innerBlocks: [
       ['novablocks/layout-area', {
         className: 'novablocks-content'
       }],
       ['novablocks/layout-area', {
-        className: 'novablocks-sidebar novablocks-sidebar--right'
+        className: 'novablocks-sidebar'
       }],
     ],
     scope: [ 'block' ],

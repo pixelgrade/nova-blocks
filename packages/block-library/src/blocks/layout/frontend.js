@@ -1,10 +1,10 @@
 const gridList = document.querySelectorAll(".site-main");
 
 gridList.forEach(grid => {
-  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-sidebar--left > *", "break-left");
-  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
-  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-sidebar--left > *", "break-left");
-  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-sidebar--right > *", "break-right");
+  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-layout--sidebar-left .novablocks-sidebar > *", "break-left");
+  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-layout:not(.novablocks-layout--sidebar-left) .novablocks-sidebar > *", "break-right");
+  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-layout--sidebar-left .novablocks-sidebar > *", "break-left");
+  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-layout:not(.novablocks-layout--sidebar-left) .novablocks-sidebar > *", "break-right");
 });
 
 function toggleOverlapClass(
@@ -31,5 +31,40 @@ function toggleOverlapClass(
       elem.classList.add( noCollisionClass );
     }
   });
-
 }
+
+function handleStickyItemsOpacity(stickyBlocks, colliders) {
+
+  stickyBlocks.forEach((elem) => {
+
+    console.log(colliders);
+
+    const elemBox = elem.getBoundingClientRect();
+    const overlap = Array.from(colliders).some((collider)=> {
+
+      const colliderBox = collider.getBoundingClientRect();
+
+      return (
+        elemBox.top === 0 &&
+        elemBox.bottom >=colliderBox.top &&
+        colliderBox.bottom >= 0 &&
+        elemBox.left <= colliderBox.right
+      )
+    });
+
+    if ( overlap !== initialOverlap ) {
+      elem.classList.toggle('block-is-hidden' );
+      initialOverlap = overlap;
+    }
+  });
+}
+
+let stickyBlocks = document.querySelectorAll('.last-block-is-sticky > :last-child');
+let colliders = document.querySelectorAll(".entry-content .alignfull:not([class*='novablocks-layout']):not([class*='break']), .entry-content .alignwide:not([class*='novablocks-layout']):not([class*='break'])");
+
+let initialOverlap = false;
+
+document.addEventListener('scroll', function(e) {
+  handleStickyItemsOpacity(stickyBlocks, colliders);
+});
+
