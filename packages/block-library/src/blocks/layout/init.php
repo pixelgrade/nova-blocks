@@ -37,6 +37,11 @@ if ( ! function_exists('novablocks_render_layout_block' ) ) {
 			$classes[] = 'novablocks-sidebar--' . $attributes['sidebarWidth'];
 		}
 
+		if ( ! empty($attributes['lastItemIsSticky'] ) &&  $attributes['lastItemIsSticky'] === true) {
+			$classes[] = 'last-block-is-sticky';
+		}
+
+
 		?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">

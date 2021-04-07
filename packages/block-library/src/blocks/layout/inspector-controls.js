@@ -8,7 +8,7 @@ import {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { RadioControl } from '@wordpress/components';
+import {RadioControl, ToggleControl} from '@wordpress/components';
 
 const LayoutInspectorControls = ( props ) => {
   const {
@@ -18,7 +18,8 @@ const LayoutInspectorControls = ( props ) => {
 
   const {
     sidebarWidth,
-    sidebarPosition
+    sidebarPosition,
+    lastItemIsSticky
   } = attributes;
 
   return (
@@ -26,7 +27,7 @@ const LayoutInspectorControls = ( props ) => {
       <ControlsTab label={ __( 'Settings' ) }>
         <RadioControl
           key={ 'layout-sidebar-controls' }
-          label={ __( 'Set Sidebar Width', '__plugin_txtd' ) }
+          label={ __( 'Sidebar Size', '__plugin_txtd' ) }
           selected={ sidebarWidth }
           options={
             [
@@ -41,7 +42,7 @@ const LayoutInspectorControls = ( props ) => {
 
         <RadioControl
           key = {'layout-sidebar-position'}
-          label = {__('Set Sidebar Position', '__plugin_txtd' ) }
+          label = {__('Sidebar Position', '__plugin_txtd' ) }
           selected={ sidebarPosition }
           options={
             [
@@ -53,6 +54,12 @@ const LayoutInspectorControls = ( props ) => {
             setAttributes({sidebarPosition: nextSidebarPosition});
           } }
           />
+
+        <ToggleControl
+          label={__( 'Enable sticky sidebar', '__plugin_txtd' )}
+          checked={lastItemIsSticky}
+          onChange={ () => setAttributes( {lastItemIsSticky: !lastItemIsSticky} )}
+        />
       </ControlsTab>
     </ControlsSection>
   )
