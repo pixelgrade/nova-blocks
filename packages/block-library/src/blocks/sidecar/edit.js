@@ -26,8 +26,8 @@ const TEMPLATE_OPTIONS = [
     title: __('Sidebar Left with Content on the right', '__plugin_txtd' ),
     icons: 'heart',
     innerBlocks: [
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
     ],
     scope: [ 'block' ],
   },
@@ -36,8 +36,8 @@ const TEMPLATE_OPTIONS = [
     title: __('Sidebar Right with Content on the left', '__plugin_txtd' ),
     icons: 'heart',
     innerBlocks: [
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
     ],
     scope: [ 'block' ],
   },
@@ -46,9 +46,9 @@ const TEMPLATE_OPTIONS = [
     title: __('Sidebar on Left and Right with Content on center', '__plugin_txtd' ),
     icons: 'heart',
     innerBlocks: [
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
     ],
     scope: [ 'block' ],
   }
@@ -81,6 +81,7 @@ class Edit extends Component {
       <Fragment>
         <InnerBlocks
           renderAppender = { false }
+          templateLock = 'all'
         />
       </Fragment>
     );
