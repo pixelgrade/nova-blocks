@@ -58,7 +58,8 @@
 // Currently, this is preventing
 // dropdown menus to be shown
 // on sticky header.
-.site-header-sticky {
+.site-header-sticky,
+.site-header__wrapper {
   overflow: hidden;
 }
 
@@ -71,7 +72,7 @@
   }
   
   .site-header__row {
-    transform: translateY(100%);
+    transform: translateY(calc(100% + 50px));
     pointer-events: none;
   }
 }

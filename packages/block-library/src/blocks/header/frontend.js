@@ -4,9 +4,10 @@ import { addSocialMenuClass } from "./utils";
 (
   function( $, window, undefined ) {
 
-    const $siteHeader = $( '.site-header--main' ),
+    let   $siteHeader = $( '.site-header--main' ),
           $stickyHeader = $( '.site-header--secondary' ),
-          $stickyMenuTrigger = $( '.js-sticky-menu-trigger' );
+          $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
+          currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader;
 
     let $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
         stickyHeaderShown = false,
@@ -102,14 +103,16 @@ import { addSocialMenuClass } from "./utils";
 
       $( window ).on( 'scroll', function() {
         let $progressBar = $( '.js-reading-progress' ),
-          scrollPosition = $( window ).scrollTop(),
-          startPosition = $entryContent.offset().top;
+            scrollPosition = $( window ).scrollTop(),
+            startPosition = $entryContent.offset().top;
 
-        if ( scrollPosition > startPosition ) {
-          max = $entryContent.outerHeight();
-          $progressBar.attr( 'max', max ).css( 'opacity', 0 );
-          $progressBar.css( 'opacity', 0.95 ).attr( 'value', scrollPosition - startPosition );
-        }
+          if ( scrollPosition > startPosition ) {
+            max = $entryContent.outerHeight() - $entryContent.offset().top;
+            $progressBar.attr( 'max', max ).css( 'opacity', 0 );
+            $progressBar.css( 'opacity', 0.95 ).attr( 'value', scrollPosition - startPosition );
+          } else {
+            $progressBar.attr( 'value', 0 );
+          }
       } )
     }
 
@@ -120,7 +123,7 @@ import { addSocialMenuClass } from "./utils";
       let $window = $( window ),
           $title = $('.entry-title');
 
-      if ( below('lap') || ! isArticle || ! $stickyHeader.length || ! $title.length ) {
+      if ( below('lap') || ! isArticle ) {
         return;
       }
 
@@ -162,18 +165,19 @@ import { addSocialMenuClass } from "./utils";
             next = true;
           }
         }
+
         // Toggle Class to show Next Article
-        $stickyHeader.toggleClass( 'site-header--next', next );
+        currentHeader.toggleClass( 'site-header--next', next );
 
         // Toggle Class to show Current Article
-        $stickyHeader.toggleClass( 'site-header--reading', reading );
+        currentHeader.toggleClass( 'site-header--reading', reading );
       }
     }
 
     // Helper function to hide Reading/Next
     // and show default header.
     function onClickStickyMenu() {
-      $stickyHeader.removeClass('site-header--reading site-header--next');
+      currentHeader.removeClass('site-header--reading site-header--next');
     }
   }
 )( jQuery, window );
