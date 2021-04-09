@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle the Layout Area block server logic.
+ * Handle the Sidecar Area block server logic.
  */
 
 // If this file is called directly, abort.
@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists('novablocks_render_layout_area_block' ) ) {
+if ( ! function_exists('novablocks_render_sidecar_area_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
@@ -18,7 +18,7 @@ if ( ! function_exists('novablocks_render_layout_area_block' ) ) {
 	 * @return string
 	 */
 
-	function novablocks_render_layout_area_block( $attributes, $content ) {
+	function novablocks_render_sidecar_area_block( $attributes, $content ) {
 
 		if ( ! $content ) {
 			return;
@@ -26,7 +26,7 @@ if ( ! function_exists('novablocks_render_layout_area_block' ) ) {
 
 		ob_start();
 
-		$classes = array('wp-block-novablocks-layout-area');
+		$classes = array('wp-block-novablocks-sidecar-area');
 
 		if ( ! empty($attributes['className' ] ) ) {
 			$classes[] = $attributes['className'];
