@@ -11,7 +11,7 @@ import {
   Toolbar,
 } from '@wordpress/components';
 
-const LAYOUT_ALIGNMENTS_CONTROLS = {
+const SIDECAR_ALIGNMENTS_CONTROLS = {
   left: {
     icon: 'align-pull-left',
     title: __( 'Show Sidebar on Left Side', '__plugin_txtd' ),
@@ -22,7 +22,7 @@ const LAYOUT_ALIGNMENTS_CONTROLS = {
   },
 };
 
-const LayoutBlockControls = function( props ) {
+const SidecarBlockControls = function( props ) {
 
   const {
     attributes,
@@ -37,9 +37,9 @@ const LayoutBlockControls = function( props ) {
     <BlockControls>
 
       <Toolbar
-        controls={ Object.keys( LAYOUT_ALIGNMENTS_CONTROLS ).map( ( control ) => {
+        controls={ Object.keys( SIDECAR_ALIGNMENTS_CONTROLS ).map( ( control ) => {
           return {
-            ...LAYOUT_ALIGNMENTS_CONTROLS[ control ],
+            ...SIDECAR_ALIGNMENTS_CONTROLS[ control ],
             onClick: () => {
               setAttributes( { sidebarPosition: control } );
             },
@@ -52,4 +52,4 @@ const LayoutBlockControls = function( props ) {
   );
 };
 
-export default LayoutBlockControls;
+export default SidecarBlockControls;

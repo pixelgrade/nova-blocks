@@ -1,16 +1,13 @@
-import {
-  ControlsTab,
-  ControlsSection,
-} from "@novablocks/block-editor";
+import { InspectorControls} from "@wordpress/block-editor";
 
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {RadioControl, ToggleControl} from '@wordpress/components';
+import {RadioControl, ToggleControl, PanelBody} from '@wordpress/components';
 
-const LayoutInspectorControls = ( props ) => {
+const SidecarInspectorControls = ( props ) => {
   const {
     attributes,
     setAttributes
@@ -23,10 +20,10 @@ const LayoutInspectorControls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsSection label={ __( 'Layout' ) }>
-      <ControlsTab label={ __( 'Settings' ) }>
+    <InspectorControls>
+      <PanelBody title={ __( 'Settings' ) }>
         <RadioControl
-          key={ 'layout-sidebar-controls' }
+          key={ 'sidecar-sidebar-controls' }
           label={ __( 'Sidebar Size', '__plugin_txtd' ) }
           selected={ sidebarWidth }
           options={
@@ -41,7 +38,7 @@ const LayoutInspectorControls = ( props ) => {
         />
 
         <RadioControl
-          key = {'layout-sidebar-position'}
+          key = {'sidecar-sidebar-position'}
           label = {__('Sidebar Position', '__plugin_txtd' ) }
           selected={ sidebarPosition }
           options={
@@ -53,16 +50,16 @@ const LayoutInspectorControls = ( props ) => {
           onChange={ (nextSidebarPosition) => {
             setAttributes({sidebarPosition: nextSidebarPosition});
           } }
-          />
+        />
 
         <ToggleControl
           label={__( 'Enable sticky sidebar', '__plugin_txtd' )}
           checked={lastItemIsSticky}
           onChange={ () => setAttributes( {lastItemIsSticky: !lastItemIsSticky} )}
         />
-      </ControlsTab>
-    </ControlsSection>
+      </PanelBody>
+    </InspectorControls>
   )
 }
 
-export default LayoutInspectorControls;
+export default SidecarInspectorControls;

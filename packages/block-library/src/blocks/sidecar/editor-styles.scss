@@ -53,7 +53,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     }
   }
 }
-.novablocks-layout > #{$grid-selector} {
+.novablocks-sidecar > #{$grid-selector} {
   
   @include layout-grid;
   
@@ -76,7 +76,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 // Content will always be the first child of layout block,
 // and it will change it's grid position, according
 // to sidebar position (left or right).
-.novablocks-layout {
+.novablocks-sidecar {
   
     &,
     #{$align-selectors} {
@@ -147,7 +147,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 }
 
 // Block Grid
-.novablocks-layout {
+.novablocks-sidecar {
   
   &--complex {
   
@@ -202,8 +202,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
-.novablocks-layout--sidebar-right .novablocks-layout--sidebar-left,
-.novablocks-layout--sidebar-left .novablocks-layout--sidebar-right {
+.novablocks-sidecar--sidebar-right .novablocks-sidecar--sidebar-left,
+.novablocks-sidecar--sidebar-left .novablocks-sidecar--sidebar-right {
   
   #{$align-selectors} {
     --block-content-start: cs;
@@ -211,7 +211,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
-.novablocks-layout--sidebar-right .novablocks-layout--sidebar-right {
+.novablocks-sidecar--sidebar-right .novablocks-sidecar--sidebar-right {
   --block-content-start: var(--block-limit-left);
   --block-content-end: ce;
 }
@@ -277,7 +277,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     }
   }
   
-  .novablocks-layout--sidebar-left {
+  .novablocks-sidecar--sidebar-left {
   
     [data-align="full"] {
       --block-content-start: cs;

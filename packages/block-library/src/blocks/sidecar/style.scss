@@ -23,7 +23,7 @@
   // them that could use alignments, so by default,
   // we are going to display the main div on all columns,
   // and position the block inside them based on their alignments.
-  > .novablocks-layout {
+  > .novablocks-sidecar {
     grid-column: var(--all-columns);
   }
   
@@ -51,7 +51,7 @@
   }
 }
 
-.novablocks-layout {
+.novablocks-sidecar {
   
   @include layout-grid;
   
@@ -130,12 +130,12 @@
   }
 }
 
-.novablocks-layout {
+.novablocks-sidecar {
   
   // Make sure nested layout block is displayed on all columns.
   .novablocks-content:not(.entry-content) {
     
-    .novablocks-layout {
+    .novablocks-sidecar {
       grid-column: var(--all-columns);
     
       .novablocks-content {
@@ -167,7 +167,7 @@
 // When grid is not used (eg. under 1024px),
 // we are using flex with direction column.
 .novablocks-content,
-.novablocks-layout {
+.novablocks-sidecar {
   flex-direction: column;
 }
 
@@ -208,20 +208,20 @@
 // we will change minimum sidebar width for that block too.
 // Doing that, we will make sure that both blocks are sharing the same grid
 // and alignments are working properly.
-.novablocks-layout {
+.novablocks-sidecar {
   
   &.novablocks-sidebar--large {
     
     &,
-    .novablocks-layout,
+    .novablocks-sidecar,
     .wp-block-group__inner-container {
       --minimum-sidebar-right-width: var(--default-width-large-sidebar);
     }
     
-    &.novablocks-layout--sidebar-left {
+    &.novablocks-sidecar--sidebar-left {
       
       &,
-      .novablocks-layout,
+      .novablocks-sidecar,
       .wp-block-group__inner-container {
         --minimum-sidebar-left-width: var(--default-width-large-sidebar);
       }

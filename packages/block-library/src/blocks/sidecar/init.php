@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle the Layout block server logic.
+ * Handle the Sidecar block server logic.
  */
 
 // If this file is called directly, abort.
@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists('novablocks_render_layout_block' ) ) {
+if ( ! function_exists('novablocks_render_sidecar_block' ) ) {
 
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
@@ -19,18 +19,18 @@ if ( ! function_exists('novablocks_render_layout_block' ) ) {
 	 * @return string
 	 */
 
-	function novablocks_render_layout_block( $attributes, $content ) {
+	function novablocks_render_sidecar_block( $attributes, $content ) {
 
 		ob_start();
 
-		$classes = array( 'novablocks-layout' );
+		$classes = array( 'novablocks-sidecar' );
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
 
 		if ( ! empty($attributes['sidebarPosition'] ) ) {
-			$classes[] = 'novablocks-layout--sidebar-' . $attributes['sidebarPosition'];
+			$classes[] = 'novablocks-sidecar--sidebar-' . $attributes['sidebarPosition'];
 		}
 
 		if ( ! empty( $attributes['sidebarWidth'] ) ) {
@@ -40,7 +40,6 @@ if ( ! function_exists('novablocks_render_layout_block' ) ) {
 		if ( ! empty($attributes['lastItemIsSticky'] ) &&  $attributes['lastItemIsSticky'] === true) {
 			$classes[] = 'last-block-is-sticky';
 		}
-
 
 		?>
 

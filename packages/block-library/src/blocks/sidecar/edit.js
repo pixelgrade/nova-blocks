@@ -18,7 +18,7 @@ import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 import { compose } from "@wordpress/compose";
 
 import InspectorControls from "./inspector-controls";
-import LayoutBlockControls from "./block-controls";
+import SidecarBlockControls from "./block-controls";
 
 const TEMPLATE_OPTIONS = [
   {
@@ -139,8 +139,8 @@ class Edit extends Component {
 
     const classNames = classnames(
       className,
-      `novablocks-layout`,
-      `novablocks-layout--sidebar-${sidebarPosition}`,
+      `novablocks-sidecar`,
+      `novablocks-sidecar--sidebar-${sidebarPosition}`,
       `novablocks-sidebar--${sidebarWidth}`,
       {
         'last-block-is-sticky' : lastItemIsSticky === true
@@ -156,7 +156,7 @@ class Edit extends Component {
     if ( hasInnerBlocks || !this.supportsBlockVariationPicker() ) {
       return (
         <Fragment>
-          <LayoutBlockControls {...this.props} />
+          <SidecarBlockControls {...this.props} />
           <InspectorControls { ...this.props }/>
           <div className={ classNames }>
           { this.supportsBlockVariationPicker() ? this.blockVariationPicker(this.props) : this.innerBlocksPicker() }

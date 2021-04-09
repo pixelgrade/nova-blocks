@@ -1,10 +1,10 @@
 const gridList = document.querySelectorAll(".site-main");
 
 gridList.forEach(grid => {
-  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-layout--sidebar-left .novablocks-sidebar > *", "break-left");
-  toggleOverlapClass(grid, ".alignfull:not(.novablocks-layout)", ".novablocks-layout:not(.novablocks-layout--sidebar-left) .novablocks-sidebar > *", "break-right");
-  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-layout--sidebar-left .novablocks-sidebar > *", "break-left");
-  toggleOverlapClass(grid, ".alignwide:not(.novablocks-layout)", ".novablocks-layout:not(.novablocks-layout--sidebar-left) .novablocks-sidebar > *", "break-right");
+  toggleOverlapClass(grid, ".alignfull:not(.novablocks-sidecar)", ".novablocks-sidecar--sidebar-left .novablocks-sidebar > *", "break-left");
+  toggleOverlapClass(grid, ".alignfull:not(.novablocks-sidecar)", ".novablocks-sidecar:not(.novablocks-sidecar--sidebar-left) .novablocks-sidebar > *", "break-right");
+  toggleOverlapClass(grid, ".alignwide:not(.novablocks-sidecar)", ".novablocks-sidecar--sidebar-left .novablocks-sidebar > *", "break-left");
+  toggleOverlapClass(grid, ".alignwide:not(.novablocks-sidecar)", ".novablocks-sidecar:not(.novablocks-sidecar--sidebar-left) .novablocks-sidebar > *", "break-right");
 });
 
 function toggleOverlapClass(
@@ -60,7 +60,7 @@ function handleStickyItemsOpacity(stickyBlocks, colliders) {
 }
 
 let stickyBlocks = document.querySelectorAll('.last-block-is-sticky > :last-child');
-let colliders = document.querySelectorAll(".entry-content .alignfull:not([class*='novablocks-layout']):not([class*='break']), .entry-content .alignwide:not([class*='novablocks-layout']):not([class*='break'])");
+let colliders = document.querySelectorAll(".entry-content .alignfull:not([class*='novablocks-sidecar']):not([class*='break']), .entry-content .alignwide:not([class*='novablocks-sidecar']):not([class*='break'])");
 
 let initialOverlap = false;
 
