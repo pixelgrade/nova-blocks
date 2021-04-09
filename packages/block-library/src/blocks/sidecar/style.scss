@@ -91,14 +91,16 @@
   // Sidebar Right will start at CE and will end at block limit on right.
   &--complex {
     
-    --block-content-start: cs;
-    --block-content-end: ce;
+    .novablocks-content {
+      --block-content-start: cs;
+      --block-content-end: ce;
+    }
     
-    .novablocks-sidebar--left {
+    .novablocks-sidebar {
       grid-column: var(--block-limit-left)/gs;
     }
     
-    .novablocks-sidebar--right {
+    .novablocks-sidebar:last-child {
       grid-column: ge/var(--block-limit-right);
     }
   }

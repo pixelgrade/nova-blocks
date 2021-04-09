@@ -12,7 +12,7 @@ import map from 'lodash/map';
 
 import {__experimentalBlockVariationPicker, InnerBlocks} from "@wordpress/block-editor";
 import {__} from "@wordpress/i18n";
-import {select, withDispatch, withSelect} from "@wordpress/data";
+import {withDispatch, withSelect} from "@wordpress/data";
 
 import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 import { compose } from "@wordpress/compose";
@@ -99,7 +99,6 @@ class Edit extends Component {
   }
 
   innerBlocksPicker() {
-    const { hasInnerBlocks } = this.props;
     return (
       <Fragment>
         <InnerBlocks
@@ -122,12 +121,10 @@ class Edit extends Component {
     const {
       attributes: {
         layout,
-        layoutType,
         sidebarWidth,
         sidebarPosition,
         lastItemIsSticky
       },
-      clientId,
       blockType,
       defaultVariation,
       replaceInnerBlocks,
@@ -143,20 +140,17 @@ class Edit extends Component {
       `novablocks-sidecar--sidebar-${sidebarPosition}`,
       `novablocks-sidebar--${sidebarWidth}`,
       {
-        'last-block-is-sticky' : lastItemIsSticky === true
+        'last-block-is-sticky' : lastItemIsSticky === true,
+        'novablocks-sidecar--complex' : layout === 'complex'
       }
     );
 
-    const currentBlock = select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ];
-    const childBlocks = currentBlock.innerBlocks;
-
-    const clientIds = childBlocks.map( block => block.clientId );
-    const removeInnerBlocks = () => wp.data.dispatch( 'core/block-editor' ).removeBlocks( clientIds );
+    const layoutIsComplex = layout === 'complex';
 
     if ( hasInnerBlocks || !this.supportsBlockVariationPicker() ) {
       return (
         <Fragment>
-          <SidecarBlockControls {...this.props} />
+          { ! layoutIsComplex && <SidecarBlockControls {...this.props} /> }
           <InspectorControls { ...this.props }/>
           <div className={ classNames }>
           { this.supportsBlockVariationPicker() ? this.blockVariationPicker(this.props) : this.innerBlocksPicker() }

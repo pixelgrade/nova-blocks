@@ -1,11 +1,9 @@
-import { InspectorControls} from "@wordpress/block-editor";
-
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import {RadioControl, ToggleControl, PanelBody} from '@wordpress/components';
+import { InspectorControls} from "@wordpress/block-editor";
 
 const SidecarInspectorControls = ( props ) => {
   const {
@@ -14,10 +12,13 @@ const SidecarInspectorControls = ( props ) => {
   } = props;
 
   const {
+    layout,
     sidebarWidth,
     sidebarPosition,
     lastItemIsSticky
   } = attributes;
+
+  const layoutIsComplex = layout === 'complex';
 
   return (
     <InspectorControls>
@@ -37,7 +38,7 @@ const SidecarInspectorControls = ( props ) => {
           } }
         />
 
-        <RadioControl
+        { ! layoutIsComplex && <RadioControl
           key = {'sidecar-sidebar-position'}
           label = {__('Sidebar Position', '__plugin_txtd' ) }
           selected={ sidebarPosition }
@@ -50,7 +51,7 @@ const SidecarInspectorControls = ( props ) => {
           onChange={ (nextSidebarPosition) => {
             setAttributes({sidebarPosition: nextSidebarPosition});
           } }
-        />
+        /> }
 
         <ToggleControl
           label={__( 'Enable sticky sidebar', '__plugin_txtd' )}

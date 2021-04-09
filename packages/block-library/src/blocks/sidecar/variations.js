@@ -38,13 +38,13 @@ const variations = [
     icon: icons.sidebarLeftRight,
     innerBlocks: [
       ['novablocks/sidecar-area', {
-        className: 'novablocks-sidebar novablocks-sidebar--left'
-      }],
-      ['novablocks/sidecar-area', {
         className: 'novablocks-content'
       }],
       ['novablocks/sidecar-area', {
-        className: 'novablocks-sidebar novablocks-sidebar--right'
+        className: 'novablocks-sidebar'
+      }],
+      ['novablocks/sidecar-area', {
+        className: 'novablocks-sidebar'
       }],
     ],
     scope: [ 'block' ],

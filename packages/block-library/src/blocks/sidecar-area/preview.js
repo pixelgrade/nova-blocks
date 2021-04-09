@@ -14,7 +14,7 @@ const TEMPLATE = [
 
 
 
-const LayoutAreaPreview = function( props ) {
+const SidecarAreaPreview = function( props ) {
   const {
     attributes,
     className,
@@ -47,4 +47,4 @@ const LayoutAreaPreview = function( props ) {
   )
 }
 
-export default LayoutAreaPreview;
+export default SidecarAreaPreview;

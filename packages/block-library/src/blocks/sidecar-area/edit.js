@@ -4,14 +4,14 @@
 
 import { Fragment } from '@wordpress/element';
 
-import LayoutAreaPreview from "./preview";
+import SidecarAreaPreview from "./preview";
 
-const LayoutAreaEdit = function (props) {
+const SidecarAreaEdit = function (props) {
   return (
     <Fragment>
-      <LayoutAreaPreview {...props} />
+      <SidecarAreaPreview {...props} />
     </Fragment>
   )
 }
 
-export default LayoutAreaEdit;
+export default SidecarAreaEdit;
