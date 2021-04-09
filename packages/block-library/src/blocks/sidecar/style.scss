@@ -189,16 +189,20 @@
 
 .last-block-is-sticky {
   
-  >:last-child {
-    position: sticky;
-    top: var(--sticky-element-top-spacing);
-    z-index: -1;
-    opacity: 1;
+  .novablocks-sidebar {
     
-    transition: opacity .2s ease;
+    >:last-child {
+      position: sticky;
+      top: var(--sticky-element-top-spacing);
+      margin-bottom: 1em;
+      
+      opacity: 1;
     
-    &.block-is-hidden {
-      opacity: 0;
+      transition: opacity .2s ease;
+    
+      &.block-is-hidden {
+        opacity: 0;
+      }
     }
   }
 }
