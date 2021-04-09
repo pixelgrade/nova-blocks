@@ -1,7 +1,10 @@
 import classnames from 'classnames';
 
-import { Inserter, InnerBlocks, ButtonBlockerAppender } from '@wordpress/block-editor';
-import { IconButton } from '@wordpress/components';
+import { InnerBlocks } from '@wordpress/block-editor';
+import { dispatch, select } from '@wordpress/data';
+
+const { getBlockRootClientId } = select( 'core/block-editor' );
+const { selectBlock } = dispatch( 'core/editor' );
 
 const TEMPLATE = [
   [
@@ -9,13 +12,23 @@ const TEMPLATE = [
   ]
 ];
 
-const LayoutAreaPreview = function( props ) {
+
+
+const SidecarAreaPreview = function( props ) {
   const {
     attributes,
-    className
+    className,
+    clientId,
+    isSelected
   } = props;
 
+  const parentClientId = getBlockRootClientId( clientId );
+
   const { lastItemIsSticky } = attributes;
+
+  if ( isSelected ) {
+    selectBlock(parentClientId);
+  }
 
   const classNames = classnames(
     className,
@@ -28,9 +41,10 @@ const LayoutAreaPreview = function( props ) {
     <div className={classNames}>
       <InnerBlocks
         template={TEMPLATE}
+        templateLock ={false}
       />
     </div>
   )
 }
 
-export default LayoutAreaPreview;
+export default SidecarAreaPreview;

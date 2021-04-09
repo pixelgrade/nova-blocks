@@ -10,15 +10,15 @@ import {
 import get from 'lodash/get';
 import map from 'lodash/map';
 
-import {__experimentalBlockVariationPicker, BlockControls, InnerBlocks} from "@wordpress/block-editor";
+import {__experimentalBlockVariationPicker, InnerBlocks} from "@wordpress/block-editor";
 import {__} from "@wordpress/i18n";
-import {select, withDispatch, withSelect} from "@wordpress/data";
-import {IconButton, Toolbar} from "@wordpress/components";
+import {withDispatch, withSelect} from "@wordpress/data";
 
 import { createBlock, registerBlockVariation } from '@wordpress/blocks';
 import { compose } from "@wordpress/compose";
 
 import InspectorControls from "./inspector-controls";
+import SidecarBlockControls from "./block-controls";
 
 const TEMPLATE_OPTIONS = [
   {
@@ -26,8 +26,8 @@ const TEMPLATE_OPTIONS = [
     title: __('Sidebar Left with Content on the right', '__plugin_txtd' ),
     icons: 'heart',
     innerBlocks: [
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
     ],
     scope: [ 'block' ],
   },
@@ -36,8 +36,8 @@ const TEMPLATE_OPTIONS = [
     title: __('Sidebar Right with Content on the left', '__plugin_txtd' ),
     icons: 'heart',
     innerBlocks: [
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
     ],
     scope: [ 'block' ],
   },
@@ -46,9 +46,9 @@ const TEMPLATE_OPTIONS = [
     title: __('Sidebar on Left and Right with Content on center', '__plugin_txtd' ),
     icons: 'heart',
     innerBlocks: [
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
-      ['novablocks/layout-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
+      ['novablocks/sidecar-area'],
     ],
     scope: [ 'block' ],
   }
@@ -99,7 +99,6 @@ class Edit extends Component {
   }
 
   innerBlocksPicker() {
-    const { hasInnerBlocks } = this.props;
     return (
       <Fragment>
         <InnerBlocks
@@ -122,10 +121,10 @@ class Edit extends Component {
     const {
       attributes: {
         layout,
-        layoutType,
-        sidebarWidth
+        sidebarWidth,
+        sidebarPosition,
+        lastItemIsSticky
       },
-      clientId,
       blockType,
       defaultVariation,
       replaceInnerBlocks,
@@ -137,30 +136,21 @@ class Edit extends Component {
 
     const classNames = classnames(
       className,
-      `novablocks-layout`,
-      `novablocks-layout--${layout}`,
-      `novablocks-sidebar--${sidebarWidth}`
+      `novablocks-sidecar`,
+      `novablocks-sidecar--sidebar-${sidebarPosition}`,
+      `novablocks-sidebar--${sidebarWidth}`,
+      {
+        'last-block-is-sticky' : lastItemIsSticky === true,
+        'novablocks-sidecar--complex' : layout === 'complex'
+      }
     );
 
-    const currentBlock = select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ];
-    const childBlocks = currentBlock.innerBlocks;
-
-    const clientIds = childBlocks.map( block => block.clientId );
-    const removeInnerBlocks = () => wp.data.dispatch( 'core/block-editor' ).removeBlocks( clientIds );
+    const layoutIsComplex = layout === 'complex';
 
     if ( hasInnerBlocks || !this.supportsBlockVariationPicker() ) {
       return (
         <Fragment>
-          <BlockControls>
-            <Toolbar>
-              <IconButton
-                className="components-icon-button components-toolbar__control"
-                label={ __( 'Change Layout', '__plugin_txtd' ) }
-                onClick={ () => removeInnerBlocks() }
-                icon="edit"
-              />
-            </Toolbar>
-          </BlockControls>
+          { ! layoutIsComplex && <SidecarBlockControls {...this.props} /> }
           <InspectorControls { ...this.props }/>
           <div className={ classNames }>
           { this.supportsBlockVariationPicker() ? this.blockVariationPicker(this.props) : this.innerBlocksPicker() }

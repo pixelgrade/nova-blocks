@@ -8,17 +8,18 @@ import { select } from '@wordpress/data';
 
 import edit from './edit';
 import variations from './variations';
-import iconSvg from './layout.svg';
+import iconSvg from './sidecar.svg';
 import {getSvg} from "@novablocks/block-editor";
 import attributes from "./attributes"
 
-registerBlockType('novablocks/layout', {
-  title: __('Layout', '__plugin_txtd'),
-  description: __('Custom Layout Block', '__plugin_txtd'),
+registerBlockType('novablocks/sidecar', {
+  title: __('Sidecar', '__plugin_txtd'),
+  description: __('Establish supporting sections that relates to the main content, yet can stand alone when separated.', '__plugin_txtd'),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes,
   edit,
+  keywords: [ __( 'layout', '__plugin_txtd' ), __( 'sidebar', '__plugin_txtd' ), __( 'content', '__plugin_txtd' ), __( 'aside', '__plugin_txtd' ) ],
   save: function() {
     return <InnerBlocks.Content />
   },

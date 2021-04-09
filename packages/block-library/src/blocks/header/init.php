@@ -90,6 +90,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 						?>
 					</div>
 				</div>
+
+				<?php if ($header_is_simple ) {
+					echo renderReadingBar();
+				} ?>
 			</div>
 		</header>
 
@@ -100,12 +104,28 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
 			<div class="site-header site-header--secondary site-header-sticky site-header--sticky">
 				<?php
-				echo render_block( $stickyRowBlock );
 
-				if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
-					echo render_block( $primaryRowBlock );
+				// On all pages except articles,
+				// show sticky row and primary row,
+				// if primary is not sticky.
+				if ( ! is_single() ) {
+
+					echo render_block( $stickyRowBlock );
+
+					if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
+						echo render_block( $primaryRowBlock );
+					}
 				}
-				?>
+
+				// On articles always show primary row,
+				// reading bar and reading progress.
+				if( is_single() && ! is_attachment() ) { ?>
+
+					<?php
+						echo render_block( $primaryRowBlock );
+					  	echo renderReadingBar();
+					?>
+				<?php } ?>
 			</div>
 		<?php } ?>
 
@@ -226,3 +246,50 @@ function headerBlockUpdated() {
 
 	return false;
 }
+
+/**
+ * Render Reading Bar and Reading Progress
+ */
+
+function renderReadingBar() { ?>
+	<!--Reading Bar-->
+	<div class="c-reading-bar  js-reading-bar  u-header-sides-spacing">
+
+		<!--Menu Button-->
+		<div class="c-reading-bar__wrapper-menu-trigger">
+			<?php if ( has_nav_menu( 'primary' ) ) { ?>
+				<div class="wp-block-buttons">
+					<div class="wp-block-button">
+						<button class="wp-block-button__link c-reading-bar__menu-trigger  js-sticky-menu-trigger">
+							<span class="novablocks-menu__button-label"><?php esc_html_e( 'Menu', '__theme_txtd' ); ?></span>
+						</button>
+					</div>
+				</div>
+			<?php } ?>
+		</div>
+
+		<!--Reading/Next Article-->
+		<?php
+		$next_post = get_next_post();
+		if ( ! empty( $next_post ) && ! is_wp_error( $next_post ) ): ?>
+			<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--next">
+				<label class="post-title__label"><?php esc_html_e( 'Next:', '__theme_txtd' ); ?></label>
+				<a class="post-title__post-name" href="<?php the_permalink( $next_post ); ?>">
+					<?php echo get_the_title( $next_post ); ?>
+				</a>
+			</div><!-- .c-reading-bar__wrapper-title -->
+		<?php endif; ?>
+		<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--current">
+			<label class="post-title__label"><?php esc_html_e( 'Reading:', '__theme_txtd' ); ?></label>
+			<?php the_title( '<span class="post-title__post-name">', '</span>' ); ?>
+		</div><!-- .c-reading-bar__wrapper-title -->
+
+		<!--Share Button-->
+		<div class="c-reading-bar__wrapper-social">
+			<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay {"buttonLabel":"Share"} --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
+		</div><!-- .c-reading-bar__wrapper-social -->
+	</div><!-- .c-reading-bar -->
+
+	<!--Reading Progress Bar-->
+	<progress class="c-reading-progress  js-reading-progress"></progress>
+<?php }
