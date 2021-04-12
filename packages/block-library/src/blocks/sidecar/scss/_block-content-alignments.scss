@@ -23,10 +23,12 @@
   --block-content-end: we;
 }
 
-.break-right {
+.break-right,
+.break-right * {
   --block-content-end: ce;
 }
 
-.break-left {
+.break-left,
+.break-left * {
   --block-content-start: cs;
 }
