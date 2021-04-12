@@ -3,17 +3,20 @@ import { below } from "@novablocks/utils";
 const sidecars = document.querySelectorAll(".novablocks-sidecar");
 
 sidecars.forEach( sidecar => {
+
   let content = sidecar.querySelector(".novablocks-content"),
       sidebar = sidecar.querySelector(".novablocks-sidebar"),
-      contentBlocks = Array.from(content.children),
-      sidebarIsLeft = content.parentElement.classList.contains('novablocks-sidecar--sidebar-left'),
-      noCollisionClass = sidebarIsLeft ? "break-left" : "break-right";
+      dontBreakBlock = sidecar.classList.contains('ignore-breaks');
 
   // We don't need break classes on mobiles,
   // and on sidecars without sidebar.
-  if ( below('lap') || sidebar === null ) {
+  if ( below('lap') || sidebar === null || dontBreakBlock ) {
     return;
   }
+
+  let contentBlocks = Array.from(content.children),
+      sidebarIsLeft = content.parentElement.classList.contains('novablocks-sidecar--sidebar-left'),
+      noCollisionClass = sidebarIsLeft ? "break-left" : "break-right";
 
   contentBlocks.forEach( block => {
 
