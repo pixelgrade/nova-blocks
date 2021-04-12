@@ -1,4 +1,5 @@
-const gridList = document.querySelectorAll(".site-main");
+import { below } from "@novablocks/utils";
+
 const sidecars = document.querySelectorAll(".novablocks-sidecar");
 
 sidecars.forEach( sidecar => {
@@ -7,6 +8,11 @@ sidecars.forEach( sidecar => {
       contentBlocks = Array.from(content.children),
       sidebarIsLeft = content.parentElement.classList.contains('novablocks-sidecar--sidebar-left'),
       noCollisionClass = sidebarIsLeft ? "break-left" : "break-right";
+
+  // We don't need break classes on mobiles.
+  if ( below('lap') ) {
+    return;
+  }
 
   contentBlocks.forEach( block => {
 
