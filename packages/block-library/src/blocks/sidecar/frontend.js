@@ -9,8 +9,9 @@ sidecars.forEach( sidecar => {
       sidebarIsLeft = content.parentElement.classList.contains('novablocks-sidecar--sidebar-left'),
       noCollisionClass = sidebarIsLeft ? "break-left" : "break-right";
 
-  // We don't need break classes on mobiles.
-  if ( below('lap') ) {
+  // We don't need break classes on mobiles,
+  // and on sidecars without sidebar.
+  if ( below('lap') || sidebar === null ) {
     return;
   }
 
