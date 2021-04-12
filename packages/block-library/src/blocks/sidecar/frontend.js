@@ -9,7 +9,8 @@ sidecars.forEach( sidecar => {
       dontBreakBlock = sidecar.classList.contains('ignore-breaks');
 
   // We don't need break classes on mobiles,
-  // and on sidecars without sidebar.
+  // on sidecars without sidebar,
+  // or on sidecars which are ignoring breaking.
   if ( below('lap') || sidebar === null || dontBreakBlock ) {
     return;
   }
