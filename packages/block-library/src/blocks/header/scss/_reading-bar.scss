@@ -158,17 +158,6 @@
   }
 }
 
-.c-reading-bar__wrapper-menu-trigger,
-.c-reading-bar__wrapper-social {
-  
-  &[class][class] {
-    span {
-      font-size: .8em;
-      text-transform: uppercase;
-    }
-  }
-}
-
 .site-header--next .c-reading-bar__wrapper-title--next {
   z-index: 10;
   pointer-events: auto;

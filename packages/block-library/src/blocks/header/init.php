@@ -260,9 +260,9 @@ function renderReadingBar() { ?>
 			<?php if ( has_nav_menu( 'primary' ) ) { ?>
 				<div class="wp-block-buttons">
 					<div class="wp-block-button">
-						<button class="wp-block-button__link c-reading-bar__menu-trigger  js-sticky-menu-trigger">
+						<a class="wp-block-button__link c-reading-bar__menu-trigger  js-sticky-menu-trigger">
 							<span class="novablocks-menu__button-label"><?php esc_html_e( 'Menu', '__theme_txtd' ); ?></span>
-						</button>
+						</a>
 					</div>
 				</div>
 			<?php } ?>
