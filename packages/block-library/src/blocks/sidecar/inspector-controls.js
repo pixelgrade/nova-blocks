@@ -44,8 +44,8 @@ const SidecarInspectorControls = ( props ) => {
           selected={ sidebarPosition }
           options={
             [
-              { label: 'Left', value: 'left' },
-              { label: 'Right', value: 'right' }
+              { label: 'Show sidebar on left', value: 'left' },
+              { label: 'Show sidebar on right', value: 'right' }
             ]
           }
           onChange={ (nextSidebarPosition) => {

@@ -14,7 +14,7 @@ import attributes from "./attributes"
 
 registerBlockType('novablocks/sidecar', {
   title: __('Sidecar', '__plugin_txtd'),
-  description: __('Establish supporting sections that relates to the main content, yet can stand alone when separated.', '__plugin_txtd'),
+  description: __('Establish supporting sections that relates to the main content.', '__plugin_txtd'),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes,

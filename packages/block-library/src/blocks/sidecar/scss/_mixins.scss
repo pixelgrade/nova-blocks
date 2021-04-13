@@ -89,9 +89,7 @@
     margin-left: -10px;
     
     grid-column: var(--block-content-start)/var(--block-content-end);
-    border: 2px dotted #000;
-    
-    opacity: .2;
+    border: 2px dashed var(--novablocks-color-1);
   }
 }
 
