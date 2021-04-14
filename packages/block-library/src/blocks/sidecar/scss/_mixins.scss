@@ -16,7 +16,6 @@
 // Doing that, in content will always be at least 44 characters.
 @mixin layout-grid {
   display: var(--display-mode);
-  
   flex-direction: column;
   
   grid-template-columns: [fs] 1fr [ws] var(--wds) [gs] var(--grid-gap-size) [cs] minmax(22ch, var(--content-width-start-max-value)) [gcs] calc(var(--grid-gap-size)/2) [cc] calc(var(--grid-gap-size)/2) [gce]  minmax(22ch, var(--content-width-end-max-value)) [ce] var(--grid-gap-size) [ge] var(--wde) [we] 1fr [fe];

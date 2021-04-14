@@ -1,33 +1,47 @@
 import { below } from "@novablocks/utils";
 
 const sidecars = document.querySelectorAll(".novablocks-sidecar");
+const BREAK_LEFT_CLASS = "break-left";
+const BREAK_RIGHT_CLASS = "break-right";
 
 sidecars.forEach( sidecar => {
 
-  let content = sidecar.querySelector(".novablocks-content"),
-      sidebar = sidecar.querySelector(".novablocks-sidebar"),
-      dontBreakBlock = sidecar.classList.contains('ignore-breaks');
+  let content = sidecar.querySelector( ".novablocks-content" ),
+    sidebars = sidecar.querySelectorAll( ".novablocks-sidebar" ),
+    dontBreakBlock = sidecar.classList.contains( 'ignore-breaks' ),
+    layoutIsComplex = sidecar.classList.contains( 'novablocks-sidecar--complex' );
 
   // We don't need break classes on mobiles,
   // on sidecars without sidebar,
   // or on sidecars which are ignoring breaking.
-  if ( below('lap') || sidebar === null || dontBreakBlock ) {
+  if ( below( 'lap' ) || sidebars === null || dontBreakBlock ) {
     return;
   }
 
-  let contentBlocks = Array.from(content.children),
-      sidebarIsLeft = content.parentElement.classList.contains('novablocks-sidecar--sidebar-left'),
-      noCollisionClass = sidebarIsLeft ? "break-left" : "break-right";
+  let contentBlocks = Array.from( content.children ).filter( block => block.classList.contains('alignwide') || block.classList.contains('alignfull')),
+    sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
+    noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
   contentBlocks.forEach( block => {
 
-    const overlap = doesOverlap(block, sidebar);
+    sidebars.forEach( ( sidebar, index ) => {
 
-     if ( overlap ) {
-        block.classList.add( noCollisionClass );
-    }
-  } ) 
-})
+      let sidebarBlocks = Array.from( sidebar.children );
+
+      if ( layoutIsComplex && index === 0 ) {
+        noCollisionClass = BREAK_LEFT_CLASS;
+      }
+
+      sidebarBlocks.forEach( sidebarBlock => {
+        const overlap = doesOverlap( block, sidebarBlock );
+
+        if ( overlap ) {
+          block.classList.add( noCollisionClass );
+        }
+      } )
+    } )
+  } )
+} )
 
 // Helper function to check
 // if two elements are overlapping
