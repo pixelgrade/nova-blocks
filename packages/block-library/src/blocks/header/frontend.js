@@ -166,6 +166,14 @@ import { addSocialMenuClass } from "./utils";
           }
         }
 
+        if ( reading || next ) {
+          currentHeader.css('overflow', 'hidden');
+        } else {
+          setTimeout( () => {
+            currentHeader.css( 'overflow', '' );
+          }, 350 );
+        }
+
         // Toggle Class to show Next Article
         currentHeader.toggleClass( 'site-header--next', next );
 

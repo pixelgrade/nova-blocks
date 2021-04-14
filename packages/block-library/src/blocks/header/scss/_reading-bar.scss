@@ -55,14 +55,6 @@
   }
 }
 
-// Currently, this is preventing
-// dropdown menus to be shown
-// on sticky header.
-.site-header-sticky,
-.site-header__wrapper {
-  overflow: hidden;
-}
-
 .site-header--next,
 .site-header--reading {
   
