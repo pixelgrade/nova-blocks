@@ -6,9 +6,14 @@
   @include layout-settings;
 }
 
-.entry-content {
-  
+.entry-content,
+.novablocks-content,
+.novablocks-sidecar {
   @include layout-grid;
+  align-items: start;
+}
+
+.entry-content {
   
   // Everything is treated as a grid element,
   // So we are going to position it,
@@ -52,8 +57,6 @@
 }
 
 .novablocks-sidecar {
-  
-  @include layout-grid;
   
   grid-column: var(--all-columns);
   
@@ -117,7 +120,6 @@
 .novablocks-content {
   
   grid-column: var(--all-columns);
-  @include layout-grid;
   
   > * {
     grid-column: var(--block-content-start)/var(--block-content-end);
@@ -237,4 +239,22 @@
 
 .novablocks-content {
   grid-column: var(--all-columns);
+}
+
+.block-no-sidebar {
+  
+  &,
+  * {
+    --novablocks-content-addon: max( var(--default-width-small-sidebar), calc( var(--wide) * 0.5 - var(--content) * 0.5));
+    --gap-is-active: 0;
+  
+    
+    --wd: calc( max(var(--default-width-small-sidebar) * 0.5, calc( var(--wide) * 0.25 - var(--content) * 0.25 ) ) + var(--grid-gap-size) * 0.5 );
+    --minimum-sidebar-left-width: 0px;
+    --minimum-sidebar-right-width: 0px;
+  }
+}
+
+.strech-grid-items {
+  align-items: stretch;
 }
