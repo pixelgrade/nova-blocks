@@ -1,3 +1,13 @@
+:root {
+  --novablocks-wide-width: 60em;
+  --novablocks-content-width: 40em;
+}
+
+:root {
+  --novablocks-wide-width: calc(var(--theme-content-width-wide));
+  --novablocks-content-width: var(--theme-content-width-normal);
+}
+
 // Default Layout Grid
 // fs - full start
 // ws - wide start
@@ -10,33 +20,36 @@
 // ge - gap end
 // gcs - gap content start
 // gce - gap content end
-// [cs] [cc] column will be equal with minmax(22ch, var(--content-width-start)
+// [cs] [cc] column will be equal with minmax(22ch, var(--novablocks-content-width-start)
 // to make sure that we always have a minimum of characters displayed.
 // The same thing applies for [cc] [ce].
 // Doing that, in content will always be at least 44 characters.
+
 @mixin layout-grid {
   display: var(--display-mode);
   flex-direction: column;
   
-  grid-template-columns: [fs] 1fr [ws] var(--wds) [gs] var(--grid-gap-size) [cs] minmax(22ch, var(--content-width-start-max-value)) [gcs] calc(var(--grid-gap-size)/2) [cc] calc(var(--grid-gap-size)/2) [gce]  minmax(22ch, var(--content-width-end-max-value)) [ce] var(--grid-gap-size) [ge] var(--wde) [we] 1fr [fe];
   
-  --wide-width: calc(var(--theme-content-width-wide));
-  --content-width: var(--theme-content-width-normal);
-  --content-width-start-max-value: calc((var(--content-width) - var(--minimum-sidebar-left-width))/2 - var(--grid-gap-size));
-  --content-width-end-max-value:  calc((var(--content-width) - var(--minimum-sidebar-right-width))/2  - var(--grid-gap-size));
+  --grid-gap: calc(var(--grid-gap-size) * var(--gap-is-active, 1));
+  --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
+  --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
+  
   --full: 100vw;
-  --wide:  calc( min( var(--wide-width), var(--full) ) );
-  --content: var(--content-width);
+  --wide:  calc( min( var(--novablocks-wide-width), var(--full) ) );
+  
+  --content: var(--novablocks-content-width);
   --wd: calc( var(--wide) * 0.5 - var(--content) * 0.5 );
-  --wds: minmax( var(--minimum-sidebar-left-width), var(--wd));
-  --wde: minmax( var(--minimum-sidebar-right-width), var(--wd));
+  --wds:minmax( var(--minimum-sidebar-left-width), var(--wd));
+  --wde:minmax( var(--minimum-sidebar-right-width), var(--wd));
+  
+  grid-template-columns: [fs] 1fr [ws] var(--wds) [gs] var(--grid-gap) [cs] minmax(0, var(--novablocks-content-width-start-max-value)) [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  minmax(0, var(--novablocks-content-width-end-max-value)) [ce] var(--grid-gap) [ge] var(--wde) [we] 1fr [fe];
 }
 
 // Default Layout Settings
-// --wide-width - Wide Blocks maximum width.
+// --novablocks-wide-width - Wide Blocks maximum width.
 // This can also be considered as container width,
 // because a layout block with sidebar will use this width.
-// --content-width - Content column maximum width.
+// --novablocks-content-width - Content column maximum width.
 // --display-mode - Block default display mode. (eg. grid or flex)
 // --grid-gap-size - Default gap between grid columns.
 // --minimum-sidebar-*-width - Minimum sidebar Width for specific Sidebar.
@@ -45,7 +58,7 @@
 // --sticky-element-to-spacing - Used to position the sticky block.
 // In Rosa2 this value will be equal with site header height, in this way,
 // the sticky block will not be under the header.
-// --content-width-*-max-value - Content column is separated in two columns (start and end),
+// --novablocks-content-width-*-max-value - Content column is separated in two columns (start and end),
 // which will allow us to achieve layouts with a higher level of complexity.
 // --all-columns - Used for blacks that need to span on the entire grid.
 @mixin layout-settings {

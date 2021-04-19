@@ -11,6 +11,10 @@ sidecars.forEach( sidecar => {
     dontBreakBlock = sidecar.classList.contains( 'ignore-breaks' ),
     layoutIsComplex = sidecar.classList.contains( 'novablocks-sidecar--complex' );
 
+  if ( ! sidebars.length && ! sidecar.classList.contains('ignore-sidebar') ) {
+    sidecar.classList.add( 'block-no-sidebar' );
+  }
+
   // We don't need break classes on mobiles,
   // on sidecars without sidebar,
   // or on sidecars which are ignoring breaking.
@@ -19,8 +23,8 @@ sidecars.forEach( sidecar => {
   }
 
   let contentBlocks = Array.from( content.children ).filter( block => block.classList.contains('alignwide') || block.classList.contains('alignfull')),
-    sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
-    noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
+      noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
   contentBlocks.forEach( block => {
 
@@ -50,8 +54,8 @@ function doesOverlap( elem, collider ) {
   const elemBox = elem.getBoundingClientRect();
   const colliderBox = collider.getBoundingClientRect();
 
-  return ! (
-    colliderBox.top + colliderBox.height <= elemBox.top ||
-    colliderBox.top >= elemBox.top + elemBox.height
-  );
+  const overlap = colliderBox.top + colliderBox.height <= elemBox.top ||
+                  colliderBox.top >= elemBox.top + elemBox.height;
+
+  return ! overlap;
 }
