@@ -1,8 +1,8 @@
 import { below } from "@novablocks/utils";
 
 const sidecars = document.querySelectorAll(".novablocks-sidecar");
-const BREAK_LEFT_CLASS = "break-left";
-const BREAK_RIGHT_CLASS = "break-right";
+const BREAK_LEFT_CLASS = "stop-left";
+const BREAK_RIGHT_CLASS = "stop-right";
 
 sidecars.forEach( sidecar => {
 
