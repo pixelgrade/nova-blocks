@@ -3,11 +3,6 @@
   --novablocks-content-width: 40em;
 }
 
-:root {
-  --novablocks-wide-width: calc(var(--theme-content-width-wide));
-  --novablocks-content-width: var(--theme-content-width-normal);
-}
-
 // Default Layout Grid
 // fs - full start
 // ws - wide start
@@ -34,11 +29,11 @@
   --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
   --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
   
-  --full: 100vw;
-  --wide:  calc( min( var(--novablocks-wide-width), var(--full) ) );
+  --novablocks-sidecar-full: 100vw;
+  --novablocks-sidecar-wide:  calc( min( var(--novablocks-wide-width), var(--novablocks-sidecar-full) ) );
   
   --content: var(--novablocks-content-width);
-  --wd: calc( var(--wide) * 0.5 - var(--content) * 0.5 );
+  --wd: calc( var(--novablocks-sidecar-wide) * 0.5 - var(--content) * 0.5 );
   --wds:minmax( var(--minimum-sidebar-left-width), var(--wd));
   --wde:minmax( var(--minimum-sidebar-right-width), var(--wd));
   

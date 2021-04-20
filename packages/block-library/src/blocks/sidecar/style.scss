@@ -241,15 +241,19 @@
   grid-column: var(--all-columns);
 }
 
+// Helper class to tell us if Sidecar has a sidebar.
+// If not, do some math to distribute the sidebar width
+// between content columns.
 .block-no-sidebar {
   
   &,
   * {
-    --novablocks-content-addon: max( var(--default-width-small-sidebar), calc( var(--wide) * 0.5 - var(--content) * 0.5));
+    
+    --novablocks-content-addon: max( var(--default-width-small-sidebar), calc( var(--novablocks-sidecar-wide) * 0.5 - var(--content) * 0.5));
     --gap-is-active: 0;
   
     
-    --wd: calc( max(var(--default-width-small-sidebar) * 0.5, calc( var(--wide) * 0.25 - var(--content) * 0.25 ) ) + var(--grid-gap-size) * 0.5 );
+    --wd: calc( max(var(--default-width-small-sidebar) * 0.5, calc( var(--novablocks-sidecar-wide) * 0.25 - var(--content) * 0.25 ) ) + var(--grid-gap-size) * 0.5 );
     --minimum-sidebar-left-width: 0px;
     --minimum-sidebar-right-width: 0px;
   }
