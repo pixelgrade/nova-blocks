@@ -55,7 +55,7 @@
 // the sticky block will not be under the header.
 // --novablocks-content-width-*-max-value - Content column is separated in two columns (start and end),
 // which will allow us to achieve layouts with a higher level of complexity.
-// --all-columns - Used for blacks that need to span on the entire grid.
+// --all-columns - Used for blocks that need to span on the entire grid.
 @mixin layout-settings {
   --default-width-small-sidebar: 230px;
   --default-width-large-sidebar: 300px;
