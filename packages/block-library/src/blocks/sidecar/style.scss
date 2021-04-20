@@ -247,9 +247,9 @@
   * {
     --novablocks-content-addon: max( var(--default-width-small-sidebar), calc( var(--wide) * 0.5 - var(--content) * 0.5));
     --gap-is-active: 0;
-  
     
-    --wd: calc( max(var(--default-width-small-sidebar) * 0.5, calc( var(--wide) * 0.25 - var(--content) * 0.25 ) ) + var(--grid-gap-size) * 0.5 );
+    --wd: calc( var(--wide) * 0.25 - var(--content) * 0.25 + var(--grid-gap-size) * 0.5 );
+    
     --minimum-sidebar-left-width: 0px;
     --minimum-sidebar-right-width: 0px;
   }
