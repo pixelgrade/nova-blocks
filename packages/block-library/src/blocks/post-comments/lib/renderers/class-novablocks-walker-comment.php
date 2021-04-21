@@ -147,6 +147,21 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 		}
 
 		/**
+		 * Filters the comment text.
+		 *
+		 * We don't want it to do anything.
+		 * @see Walker_Comment::filter_comment_text()
+		 *
+		 * @param string          $comment_text Text of the current comment.
+		 * @param WP_Comment|null $comment      The comment object. Null if not found.
+		 * @return string Filtered text of the current comment.
+		 */
+		public function filter_comment_text( $comment_text, $comment ) {
+
+			return $comment_text;
+		}
+
+		/**
 		 * Checks if the specified comment is written by the author of the post commented on.
 		 *
 		 * @param object $comment Comment data.

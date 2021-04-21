@@ -88,6 +88,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 
 		private function register_hooks() {
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 99 );
+
+			// Handle comment submission kses filtering to allow certain HTML tags, even for guests
+			// or users that don't have the 'unfiltered_html' capability.
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_comment_allowed_html_tags' ], 10, 2 );
 		}
 
 		public function enqueue_scripts() {
@@ -97,6 +101,136 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			// We want to replace the core `comment-reply.js` with our own.
 			wp_deregister_script( 'comment-reply' );
 			wp_register_script( 'comment-reply', $block_dir_url . 'lib/js/comment-reply.js', [], false, true );
+		}
+
+		public function filter_comment_allowed_html_tags( $allowedtags, $context ) {
+			if ( 'pre_comment_content' === $context ) {
+				if ( empty( $allowedtags ) ) {
+					$allowedtags = [];
+				}
+				// We add these beside the ones in the global $allowedtags.
+				$allowedtags['br'] = [
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['div'] = [
+					'align' => true,
+					'dir' => true,
+					'lang' => true,
+					'xml:lang' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['h1'] = [
+					'align' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['li'] = [
+					'align' => true,
+					'value' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['ul'] = [
+					'type' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['ol'] = [
+					'start' => true,
+					'type' => true,
+					'reversed' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['pre'] = [
+					'width' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+				$allowedtags['blockquote'] = [
+					'cite' => true,
+					'lang' => true,
+					'xml:lang' => true,
+					'aria-describedby' => true,
+					'aria-details' => true,
+					'aria-label' => true,
+					'aria-labelledby' => true,
+					'aria-hidden' => true,
+					'class' => true,
+					'id' => true,
+					'style' => true,
+					'title' => true,
+					'role' => true,
+					'data-*' => true,
+				];
+			}
+
+			return $allowedtags;
 		}
 
 		/**
