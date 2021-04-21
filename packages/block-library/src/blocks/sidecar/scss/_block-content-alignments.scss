@@ -13,12 +13,12 @@
 }
 
 
-.align-pull-left {
+.align-pull-left[class] {
   --block-content-start: ws;
   --block-content-end: gs;
 }
 
-.align-pull-right {
+.align-pull-right[class] {
   --block-content-start: ge;
   --block-content-end: we;
 }
