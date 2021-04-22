@@ -34,10 +34,10 @@
   
   --content: var(--novablocks-content-width);
   --wd: calc( var(--novablocks-sidecar-wide) * 0.5 - var(--content) * 0.5 );
-  --wds:minmax( var(--minimum-sidebar-left-width), var(--wd));
-  --wde:minmax( var(--minimum-sidebar-right-width), var(--wd));
+  --wds:minmax( calc(var(--minimum-sidebar-left-width) * 0.5), calc(var(--wd) * 0.5));
+  --wde:minmax( calc(var(--minimum-sidebar-right-width) * 0.5), calc(var(--wd) * 0.5));
   
-  grid-template-columns: [fs] 1fr [ws] var(--wds) [gs] var(--grid-gap) [cs] minmax(0, var(--novablocks-content-width-start-max-value)) [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  minmax(0, var(--novablocks-content-width-end-max-value)) [ce] var(--grid-gap) [ge] var(--wde) [we] 1fr [fe];
+  grid-template-columns: [fs] 1fr [ws] var(--wds) [wsgs] calc(var(--grid-gap)/2) [wsc] calc(var(--grid-gap)/2) [wsge] var(--wds) [gs] var(--grid-gap) [cs] minmax(0, var(--novablocks-content-width-start-max-value)) [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  minmax(0, var(--novablocks-content-width-end-max-value)) [ce] var(--grid-gap) [ge] var(--wde) [wegs] calc(var(--grid-gap)/2) [wec] calc(var(--grid-gap)/2) [wege] var(--wde) [we] 1fr [fe];
 }
 
 // Default Layout Settings
