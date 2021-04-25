@@ -7,7 +7,6 @@
 }
 
 .entry-content,
-.novablocks-content,
 .novablocks-sidecar {
   @include layout-grid;
   align-items: start;
@@ -272,5 +271,109 @@
   
   .align-pull-right {
     --block-content-start: wege;
+  }
+}
+
+.novablocks-content {
+  
+  .novablocks-content {
+    display: block;
+    grid-column: var(--block-limit-left)/ce;
+    position: relative;
+    
+    .alignfull {
+      margin-left: calc(-1 * var(--pull-left-value));
+      margin-right: calc(-1 * var(--pull-right-value));
+    }
+  
+    .alignwide {
+      margin-right: calc(-1 * var(--pull-right-value));
+      margin-left: calc(-1 * var(--pull-left-value));
+    }
+  }
+}
+
+.align-pull-right {
+  @include pull-align-item(right, true);
+}
+
+.novablocks-sidecar {
+  // Excess around wide area
+  --full-pull-value: calc(100vw - var(--novablocks-sidecar-wide));
+  --pull-left-value: 0px;
+  --pull-right-value: 0px;
+}
+
+.alignfull {
+  // Default values when sidebar is right
+  --pull-left-value: calc( var(--full-pull-value) );
+  --pull-right-value: calc(var(--full-pull-value) + max(var(--wd), var(--minimum-sidebar-right-width)) + 2 * var(--grid-gap));
+}
+
+.alignwide {
+  // Default value when sidebar is right
+  --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+}
+
+.novablocks-sidecar--sidebar-left {
+  
+  &[class][class] {
+    .align-pull-right {
+      @include pull-align-item(right, false);
+    }
+  
+    .align-pull-left {
+      @include pull-align-item(left, true);
+    }
+  }
+  
+  .alignfull {
+    // Default values when sidebar is left
+    --pull-left-value: calc(var(--full-pull-value) + max(var(--wd), var(--minimum-sidebar-left-width)) + 2 * var(--grid-gap));
+    --pull-right-value: calc( var(--full-pull-value) );
+  }
+  
+  .alignwide {
+    // Default value when sidebar is right
+    --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
+    --pull-right-value: 0px;
+  }
+  
+  .novablocks-content {
+    grid-column: cs/var(--block-limit-right);
+  }
+  
+}
+
+.content-area {
+  overflow-x: hidden;
+}
+
+.novablocks-content {
+  
+  &[class] {
+    
+    .stop-right {
+      --pull-right-value: 0px;
+    }
+  
+    .stop-left {
+      --pull-left-value: 0px;
+    }
+  }
+}
+
+.novablocks-block {
+  
+  &.alignfull {
+    --pull-left-value: 0px;
+    --pull-right-value: 0px;
+  }
+}
+
+.novablocks-sidecar {
+  .align-pull-left {
+    
+    @include pull-align-item(left, false);
   }
 }
