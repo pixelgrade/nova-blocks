@@ -82,14 +82,18 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$content = ob_get_clean();
 		}
 
+		$supernova_header = novablocks_get_collection_header_output( $attributes );
+
 		ob_start(); ?>
 
         <div
 			class="<?php echo join( ' ', $classes ); ?>"
 			style="<?php echo join(';', $cssProps ); ?>">
-			<div class="supernova__inner-container">
-				<?php novablocks_get_collection_header_output( $attributes ); ?>
-			</div>
+			<?php if ( $supernova_header ) { ?>
+				<div class="supernova__inner-container">
+					<?php echo $supernova_header ?>
+				</div>
+			<?php } ?>
 			<div class="supernova__inner-container">
 				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
 					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {

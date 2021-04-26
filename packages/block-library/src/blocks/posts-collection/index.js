@@ -15,9 +15,8 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 import { getSvg } from "@novablocks/block-editor";
 
-import blockAttributes from "./attributes";
+import attributes from "./attributes";
 import { Collection } from "@novablocks/collection";
-const attributes = Object.assign( {}, blockAttributes, Collection.attributes );
 
 registerBlockType( 'novablocks/posts-collection', {
 	title: __( 'Posts Collection (Deprecated)', '__plugin_txtd' ),

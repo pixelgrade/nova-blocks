@@ -6,6 +6,7 @@ import { Fragment } from '@wordpress/element';
 import { getCardMediaPaddingTop, getColorSetClassnames } from '@novablocks/utils'
 
 import attributes from './collection-attributes.json';
+import './with-collection-attributes';
 import InspectorControls from "./collection-controls";
 
 import {

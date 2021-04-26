@@ -2,7 +2,7 @@ const getPreviewAttributes = ( attributes ) => {
 
   if ( ! needsPreview( attributes ) ) {
     return Object.assign( {}, attributes, {
-      preview: false,
+      preview: true,
     } );
   }
 

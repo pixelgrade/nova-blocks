@@ -37,7 +37,7 @@ const Controls = ( props ) => {
     <Fragment>
       <BlockControls>
         {
-          ( preview || needsPreview( attributes ) ) &&
+          needsPreview( attributes ) &&
           <Toolbar>
             <div>
               <Button
