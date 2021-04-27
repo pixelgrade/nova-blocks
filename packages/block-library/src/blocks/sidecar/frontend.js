@@ -22,7 +22,7 @@ sidecars.forEach( sidecar => {
     return;
   }
 
-  let contentBlocks = Array.from( content.children ).filter( block => block.classList.contains('alignwide') || block.classList.contains('alignfull')),
+  let contentBlocks = Array.from( content.children ).filter( block => block.classList.contains('alignwide') || block.classList.contains('alignfull') || block.classList.contains('align-pull-right') || block.classList.contains('align-pull-left')),
       sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
       noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 

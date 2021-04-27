@@ -7,11 +7,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   @include layout-grid;
   @include layout-settings;
   
+  display: block !important;
+  
   @import 'scss/block-limits.scss';
   
   grid-auto-flow: row dense;
   
-  .wp-block[data-align="wide"] {
+  .wp-block[data-align='wide'] {
     max-width: 100% !important;
   }
   
@@ -66,7 +68,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     margin-right: 0 !important;
   }
   
-  [class*="__inner-container"]:not(.novablocks-card__layout-content) {
+  [class*='__inner-container']:not(.novablocks-card__layout-content) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -94,14 +96,14 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
     // Content
     > :first-child {
-    
-      grid-column: var(--all-columns);
+      
+      grid-column: var(--block-content-start)/var(--block-content-end);
     
       > .wp-block-novablocks-sidecar-area {
       
         > #{$grid-selector} {
         
-          @include layout-grid;
+          //@include layout-grid;
         
           > * {
             grid-column: var(--block-content-start)/var(--block-content-end);
@@ -129,6 +131,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     }
   
     > #{$grid-selector} {
+  
+      > :first-child {
+        grid-column: var(--block-content-start)/var(--block-content-end);
+      }
   
       // Sidebar
       > :last-child {
@@ -225,7 +231,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
-[data-type="novablocks/sidecar-area"] {
+[data-type='novablocks/sidecar-area'] {
   &.is-highlighted,
   &.is-selected,
   &.has-child-selected {
@@ -261,17 +267,17 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
-[data-type="novablocks/sidecar"] {
+[data-type='novablocks/sidecar'] {
   
-  [data-align="full"] {
+  [data-align='full'] {
     --block-content-start: ws;
   }
   
-  [data-type="novablocks/sidecar"] {
+  [data-type='novablocks/sidecar'] {
   
     .novablocks-content {
-      [data-align="full"],
-      [data-align="wide"] {
+      [data-align='full'],
+      [data-align='wide'] {
         --block-content-start: cs;
         --block-content-end: ce;
       }
@@ -280,7 +286,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   .novablocks-sidecar--sidebar-left {
   
-    [data-align="full"] {
+    [data-align='full'] {
       --block-content-start: cs;
       --block-content-end: we;
     }

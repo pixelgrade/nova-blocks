@@ -6,8 +6,8 @@
   @include layout-settings;
 }
 
-.entry-content,
 .novablocks-sidecar {
+  position: relative;
   @include layout-grid;
   align-items: start;
 }
@@ -45,7 +45,7 @@
     @include layout-grid;
     
     > * {
-      grid-column: var(--block-content-start)/var(--block-content-end);
+      grid-column: var(--block-content-start)/var(--block-limit-right);
     }
   }
   
@@ -274,23 +274,26 @@
   }
 }
 
+  
 .novablocks-content {
+  display: block;
+  grid-column: var(--block-limit-left)/ce;
+  position: relative;
   
-  .novablocks-content {
-    display: block;
-    grid-column: var(--block-limit-left)/ce;
-    position: relative;
-    
-    .alignfull {
-      margin-left: calc(-1 * var(--pull-left-value));
-      margin-right: calc(-1 * var(--pull-right-value));
-    }
-  
-    .alignwide {
-      margin-right: calc(-1 * var(--pull-right-value));
-      margin-left: calc(-1 * var(--pull-left-value));
-    }
+  > .alignfull:not(.novablocks-sidecar):not(.novablocks-slideshow) {
+    margin-left: calc(-1 * var(--pull-left-value));
+    margin-right: calc(-1 * var(--pull-right-value));
   }
+
+  > .alignwide:not(.novablocks-sidecar):not(.novablocks-slideshow) {
+    margin-right: calc(-1 * var(--pull-right-value));
+    margin-left: calc(-1 * var(--pull-left-value));
+  }
+}
+
+
+.novablocks-sidecar.ignore-breaks > .novablocks-content {
+    grid-column: var(--all-columns);
 }
 
 .align-pull-right {
@@ -299,7 +302,7 @@
 
 .novablocks-sidecar {
   // Excess around wide area
-  --full-pull-value: calc(100vw - var(--novablocks-sidecar-wide));
+  --full-pull-value: calc((100vw - var(--novablocks-sidecar-wide)) * 0.5);
   --pull-left-value: 0px;
   --pull-right-value: 0px;
 }
@@ -353,11 +356,13 @@
   
   &[class] {
     
-    .stop-right {
+    .stop-right,
+    .stop-right *{
       --pull-right-value: 0px;
     }
   
-    .stop-left {
+    .stop-left,
+    .stop-left *{
       --pull-left-value: 0px;
     }
   }
@@ -372,8 +377,67 @@
 }
 
 .novablocks-sidecar {
+  
   .align-pull-left {
     
     @include pull-align-item(left, false);
+  }
+}
+
+.novablocks-sidecar:not(.ignore-breaks) {
+
+  .novablocks-sidecar--sidebar-left,
+  .novablocks-sidecar {
+
+    .novablocks-content {
+      
+      > * {
+        --pull-right-value: var(--pull-left-value);
+      }
+  
+      .align-pull-right {
+        @include pull-align-item(right, true);
+      }
+    }
+  }
+}
+
+.align-pull-left {
+  --minimum-sidebar-width: var(--minimum-sidebar-left-width);
+  
+  &[class*='stop'] {
+    @include pull-align-item(left, false);
+  }
+}
+
+.align-pull-right {
+  --minimum-sidebar-width: var(--minimum-sidebar-right-width);
+  
+  &[class*='stop'] {
+    @include pull-align-item(right, false);
+  }
+}
+
+.novablocks-sidecar:not(.ignore-breaks) {
+  
+  > .novablocks-content:only-child {
+  
+    .alignwide {
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) * 0.5 + var(--grid-gap));
+      --pull-left-value: var(--pull-right-value);
+    }
+    
+    .alignfull {
+      --pull-right-value:calc(var(--full-pull-value) + max(var(--wd), var(--minimum-sidebar-right-width)) * 0.5 - var(--grid-gap) * 0.5);
+      --pull-left-value: var(--pull-right-value);
+    }
+  
+    .align-pull-right {
+      @include pull-align-item(right, true, true);
+    }
+  
+    .align-pull-left {
+      @include pull-align-item(left, true, true);
+    }
   }
 }
