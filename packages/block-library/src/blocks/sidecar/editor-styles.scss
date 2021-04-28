@@ -18,19 +18,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
   
   >  * {
-    grid-column: var(--block-content-start) / var(--block-content-end);
-    align-self: flex-start;
-    
-    
-    // Temporary
-    //@todo: Remove this
     max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  
-  > [data-type='novablocks/sidecar'] {
-    grid-column: var(--all-columns);
   }
   
   // Markup is different compared to front-end,
@@ -41,20 +29,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
-// Reset alignments
-.novablocks-content {
-  
-  > #{$grid-selector} {
-    
-    > * {
-      // Temporary
-      // @todo: Remove this
-      max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-  }
-}
 .novablocks-sidecar > #{$grid-selector} {
   
   @include layout-grid;
@@ -64,8 +38,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     // @todo: Remove this
     margin-top: 0 !important;
     max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
   }
   
   [class*='__inner-container']:not(.novablocks-card__layout-content) {
@@ -231,6 +203,9 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
+// Overwrite default focus style
+// and apply them around grid columns.
+
 [data-type='novablocks/sidecar-area'] {
   &.is-highlighted,
   &.is-selected,
@@ -264,6 +239,14 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       }
     }
     
+  }
+}
+
+.novablocks-content {
+  
+  .wp-block {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
