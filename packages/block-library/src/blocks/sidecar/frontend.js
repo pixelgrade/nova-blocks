@@ -4,8 +4,6 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar");
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
-const IS_WORDPRESS_CUSTOMIZER = wp.customize !== undefined;
-
 // Select all block inside the sidebar and create array,
 // to avoid doing that for every block inside the content.
 const sidebarBlocks = Array.from(document.querySelectorAll( ".novablocks-sidebar" )).flatMap(sideBlock => Array.from(sideBlock.children));
@@ -91,9 +89,6 @@ const handleSidecarTransformations  = function() {
 
 const debouncedSidecarTransformations = debounce(handleSidecarTransformations, 200)
 
-window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
-window.addEventListener('resize', debouncedSidecarTransformations );
-
 // Helper function to check
 // if two elements are overlapping
 function doesOverlap( elem, collider ) {
@@ -107,14 +102,21 @@ function doesOverlap( elem, collider ) {
   return ! overlap;
 }
 
-if ( IS_WORDPRESS_CUSTOMIZER ) {
-  // We want to listen to Content Width setting change,
-  // so we can break wide and full elements
-  // if there is not enough available space.
-  wp.customize( `${customify.config.options_name}[content_width]`, ( setting ) => {
-    setting.bind( value => {
-      debouncedSidecarTransformations()
-    } );
-  } )
+function sidecarTransformationsInCustomizer() {
+
+  if ( wp.customize !== undefined ) {
+    // We want to listen to Content Width setting change,
+    // so we can break wide and full elements
+    // if there is not enough available space.
+    wp.customize( `${customify.config.options_name}[content_width]`, ( setting ) => {
+      setting.bind( value => {
+        debouncedSidecarTransformations()
+      } );
+    } )
+  }
 }
+
+window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
+window.addEventListener('DOMContentLoaded', sidecarTransformationsInCustomizer);
+window.addEventListener('resize', debouncedSidecarTransformations );
 
