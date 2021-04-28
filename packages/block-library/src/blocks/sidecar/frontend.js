@@ -51,10 +51,6 @@ const handleSidecarTransformations  = function() {
         if ( overlap ) {
           block.classList.add( noCollisionClass );
         }
-
-        if ( ! overlap && block.classList.contains(noCollisionClass) ) {
-          block.classList.remove(noCollisionClass);
-        }
       } )
     } )
 
@@ -76,10 +72,6 @@ const handleSidecarTransformations  = function() {
 
           if ( overlap ) {
             block.classList.add( noCollisionClass );
-          }
-
-          if ( ! overlap && block.classList.contains(noCollisionClass) ) {
-            block.classList.remove(noCollisionClass);
           }
         })
       })
