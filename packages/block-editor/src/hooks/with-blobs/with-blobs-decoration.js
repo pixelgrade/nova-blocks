@@ -43,8 +43,6 @@ const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => 
 		const svgMaskPath = generatePath( blobMaskAtts );
 		const svgPath = generatePath( blobAtts );
 
-		console.log( blobsEnableMask, blobsEnableDecoration );
-
 		return (
 			<div className={ 'blob-mix' } style={ blobsStyles }>
 				<Spring config={ { delay: 0 } } to={ { path: svgMaskPath } }>
