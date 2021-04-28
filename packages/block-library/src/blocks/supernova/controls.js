@@ -7,7 +7,7 @@ import {
 } from '@wordpress/components';
 
 import {
-  __experimentalBlockAlignmentMatrixToolbar as BlockAlignmentMatrixToolbar,
+  __experimentalBlockAlignmentMatrixControl as BlockAlignmentMatrixControl,
   BlockControls,
 } from "@wordpress/block-editor";
 
@@ -51,7 +51,7 @@ const Controls = ( props ) => {
             </div>
           </Toolbar>
         }
-        <BlockAlignmentMatrixToolbar
+        <BlockAlignmentMatrixControl
           label={ __( 'Change content position' ) }
           value={ cardContentAlign }
           onChange={ ( cardContentAlign ) => {
