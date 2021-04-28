@@ -1,4 +1,3 @@
-.align-full,
 .alignfull,
 [data-align="full"]{
   --block-content-start: fs;
@@ -6,20 +5,8 @@
 }
 
 .alignwide,
-.align-wide,
 [data-align="wide"] {
   --block-content-start: ws;
-  --block-content-end: we;
-}
-
-
-.align-pull-left[class] {
-  --block-content-start: ws;
-  --block-content-end: gs;
-}
-
-.align-pull-right[class] {
-  --block-content-start: ge;
   --block-content-end: we;
 }
 
@@ -31,4 +18,256 @@
 .stop-left,
 .stop-left * {
   --block-content-start: cs;
+}
+
+.novablocks-sidecar {
+  --full-pull-value:  calc(var(--novablocks-final-excess-width) * 0.5);
+  --pull-left-value: 0px;
+  --pull-right-value: 0px;
+}
+
+// ALIGNMENTS
+// NO SIDEBAR
+
+.alignfull {
+  --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
+  --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
+}
+
+.alignwide {
+  --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+  --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) * 0.5 + var(--grid-gap));
+}
+
+.align-pull-right {
+  @include pull-align-item(right, true, true);
+}
+
+.align-pull-left {
+  @include pull-align-item(left, true, true);
+}
+
+// ALIGNMENTS
+// RIGHT SIDEBAR
+.novablocks-sidecar {
+  
+  .novablocks-content:not(:only-child) {
+  
+    .alignfull {
+      --pull-left-value: var(--full-pull-value);
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+    }
+    
+    .alignwide {
+      --pull-left-value: 0px;
+      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+    }
+    
+    .align-pull-left {
+      @include pull-align-item(left, false, false);
+    }
+    
+    .align-pull-right {
+      @include pull-align-item(right, true, false);
+    }
+    
+    .novablocks-block {
+      --pull-left-value: 0px;
+      --pull-right-value: 0px;
+    }
+  }
+}
+
+// ALIGNMENTS
+// LEFT SIDEBAR
+.novablocks-sidecar--sidebar-left {
+  
+  .novablocks-content:not(:only-child) {
+    
+    .alignfull {
+      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value: var(--full-pull-value);
+    }
+  
+    .alignwide {
+      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
+      --pull-right-value: 0px;
+    }
+  
+    .align-pull-left {
+      @include pull-align-item(left, true, false);
+    }
+  
+    .align-pull-right {
+      @include pull-align-item(right, false, false);
+    }
+  }
+}
+
+// ALIGNMENTS
+// TWO SIDEBARS
+.novablocks-sidecar--complex {
+  
+  .novablocks-content:not(:only-child) {
+    
+    .alignfull {
+      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+    }
+    
+    .alignwide {
+      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
+      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+    }
+  
+    .align-pull-left {
+      @include pull-align-item(left, true, false);
+    }
+  
+    .align-pull-right {
+      @include pull-align-item(right, true, false);
+    }
+  }
+}
+
+// ALIGNMENTS
+// SIDECAR IN SIDECAR
+.novablocks-sidecar:not(.ignore-block) {
+  
+  .novablocks-sidecar--sidebar-left {
+    
+    .alignfull {
+      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+    }
+    
+    .alignwide {
+      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
+      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+    }
+  
+    .align-pull-left {
+      @include pull-align-item(left, true, false);
+      
+      &.stop-left {
+        @include pull-align-item(left, false, false);
+      }
+    }
+  
+    .align-pull-right {
+      @include pull-align-item(right, true, false);
+      
+      &.stop-right {
+        @include pull-align-item(right, false, false);
+      }
+    }
+  }
+}
+
+
+.novablocks-content {
+  display: block;
+  grid-column: var(--block-content-start)/var(--block-content-end);
+  position: relative;
+  
+  > .alignfull {
+    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
+    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
+  }
+  
+  > .alignwide {
+    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
+    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
+  }
+}
+
+.novablocks-content {
+  
+  // Pull Left and Right value are very specific
+  // and to reach that level of specificity
+  // a lot of classes will be needed. Because of that,
+  // we have choose to use !important in this case.
+  // Just because, whenever this class exist,
+  // we want this CSS to be applied.
+  .stop-right,
+  .stop-right *{
+    --pull-right-value: 0px !important;
+  }
+  
+  .stop-left,
+  .stop-left *{
+    --pull-left-value: 0px !important;
+  }
+}
+
+
+.align-pull-left {
+  --minimum-sidebar-width: var(--minimum-sidebar-left-width);
+  
+  // That means our aligned block is overlapping
+  // with blocks from sidebar. In this case, we are going to
+  // align pulled block inside the content,
+  // exactly as a regular block.
+  &[class*='stop'] {
+    @include pull-align-item(left, false);
+  }
+}
+
+.align-pull-right {
+  --minimum-sidebar-width: var(--minimum-sidebar-right-width);
+  
+  // That means our aligned block is overlapping
+  // with blocks from sidebar. In this case, we are going to
+  // align pulled block inside the content,
+  // exactly as a regular block.
+  &[class*='stop'] {
+    @include pull-align-item(right, false);
+  }
+}
+
+
+// No Sidebar Case
+// When we have only content and no sidebar,
+// we want to do some math, to make sure that
+// our blocks are properly aligned.
+// In this case, content is centered, so
+// --pull-left-value will always be equal
+// with --pull-right-value.
+// Also, in this case, pulled blocks are treated differently.
+// Because wide section is taking only half of initial width,
+// we are going to display pulled blocks on that
+// width plus half of the space until full width.
+
+
+.novablocks-sidecar--sidebar-left {
+  
+  .novablocks-content {
+    grid-column: cs/var(--block-limit-right);
+    
+    > * {
+      --pull-right-value: var(--pull-left-value);
+    }
+  }
+  
+}
+
+// @todo: This should not remain in Nova
+.novablocks-sidecar:not(.ignore-block) {
+  
+  .novablocks-sidecar--sidebar-left {
+    
+    .novablocks-content {
+      grid-column: cs/ce;
+    }
+  }
+}
+
+@include below(lap) {
+  .alignwide,
+  .alignfull,
+  .align-pull-right,
+  .align-pull-left {
+    --pull-left-value: 0px !important;
+    --pull-right-value: 0px !important;
+  }
 }

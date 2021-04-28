@@ -4,47 +4,74 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar");
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
+const sidebarBlocks = Array.from(document.querySelectorAll( ".novablocks-sidebar" )).flatMap(sideBlock => Array.from(sideBlock.children));
+
 sidecars.forEach( sidecar => {
 
   let content = sidecar.querySelector( ".novablocks-content" ),
     sidebars = sidecar.querySelectorAll( ".novablocks-sidebar" ),
-    dontBreakBlock = sidecar.classList.contains( 'ignore-breaks' ),
-    layoutIsComplex = sidecar.classList.contains( 'novablocks-sidecar--complex' );
-
-  if ( ! sidebars.length && ! sidecar.classList.contains('ignore-sidebar') ) {
-    sidecar.classList.add( 'block-no-sidebar' );
-  }
+    layoutIsComplex = sidecar.classList.contains( 'novablocks-sidecar--complex' ),
+    pulledBlocks = Array.from(content.children).filter(block => block.classList.contains('align-pull-right') || block.classList.contains('align-pull-left')),
+    alignedBlocks = Array.from(content.children).filter(block => (block.classList.contains('alignfull') || block.classList.contains('alignwide')) && ! block.classList.contains('novablocks-sidecar'));
 
   // We don't need break classes on mobiles,
   // on sidecars without sidebar,
   // or on sidecars which are ignoring breaking.
-  if ( below( 'lap' ) || sidebars === null || dontBreakBlock ) {
+  if ( below( 'lap' ) ) {
     return;
   }
 
-  let contentBlocks = Array.from( content.children ).filter( block => block.classList.contains('alignwide') || block.classList.contains('alignfull')),
+  let contentBlocks = alignedBlocks.concat(pulledBlocks),
       sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
-      noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      sidecarIsNested = sidecar.parentElement.classList.contains( 'novablocks-content' ) && ! sidecar.parentElement.parentElement.classList.contains('ignore-block'),
+      noCollisionClass = sidebarIsLeft && !sidecarIsNested ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
   contentBlocks.forEach( block => {
 
-    sidebars.forEach( ( sidebar, index ) => {
-
-      let sidebarBlocks = Array.from( sidebar.children );
+    sidebarBlocks.forEach( ( sidebarBlock, index ) => {
 
       if ( layoutIsComplex && index === 0 ) {
         noCollisionClass = BREAK_LEFT_CLASS;
       }
 
-      sidebarBlocks.forEach( sidebarBlock => {
+      if ( block.classList.contains('align-pull-right')) {
+        noCollisionClass = BREAK_RIGHT_CLASS;
+      }
+
+      if ( block.classList.contains('align-pull-left')) {
+        noCollisionClass = BREAK_LEFT_CLASS;
+      }
+
         const overlap = doesOverlap( block, sidebarBlock );
 
         if ( overlap ) {
           block.classList.add( noCollisionClass );
         }
-      } )
     } )
   } )
+
+  // When sidebar does not exist,
+  // we are going to give priority to pulled blocks,
+  // in front of wide and aligned blocks.
+  // If a pulled block will overlap with a full or wide block,
+  // the pulled block will take the space, while the full or wide block,
+  // will stop right before the pulled block.
+  if ( ! sidebars.length ) {
+
+    alignedBlocks.forEach( block => {
+
+      pulledBlocks.forEach( (pulledBlock, index) => {
+
+        let noCollisionClass = pulledBlock.classList.contains('align-pull-left') ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+
+        const overlap = doesOverlap( block, pulledBlock );
+
+        if ( overlap ) {
+          block.classList.add( noCollisionClass );
+        }
+      })
+    })
+  }
 } )
 
 // Helper function to check
