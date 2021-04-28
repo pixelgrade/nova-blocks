@@ -4,7 +4,7 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar");
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
-const IS_WORDPRESS_CUSTOMIZE_PREVIEW = wp.customize !== undefined;
+const IS_WORDPRESS_CUSTOMIZE_PREVIEW = wp !== undefined && wp.customize !== undefined;
 
 // Select all block inside the sidebar and create array,
 // to avoid doing that for every block inside the content.
