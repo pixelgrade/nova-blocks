@@ -1,11 +1,11 @@
 .alignfull,
-[data-align="full"]{
+[data-align='full']{
   --block-content-start: fs;
   --block-content-end: fe;
 }
 
 .alignwide,
-[data-align="wide"] {
+[data-align='wide'] {
   --block-content-start: ws;
   --block-content-end: we;
 }
@@ -19,7 +19,7 @@
 .stop-left * {
   --block-content-start: cs;
 }
-
+// Default values used for alignments
 .novablocks-sidecar {
   --full-pull-value:  calc(var(--novablocks-final-excess-width) * 0.5);
   --pull-left-value: 0px;
@@ -27,11 +27,66 @@
 }
 
 // ALIGNMENTS
+// There are four types of alignments available,
+// besides the classic left, right and center.
+// 1) Alignfull - This align will help element to break
+// out of the container, and make it full screen.
+// 2) Wide - This align will help element to break
+// out of container, to be slightly bigger than content,
+// based on yout settings.
+// 3) Pull Right - This align will pull element outside
+// of the content on the right side.
+// 4) Pul Left - This align will pull element outside
+//// of the content on the left side.
+
+// To have more flexibility, our choice for full
+// and wide alignments is using negative margins.
+// Values used for negative margins,
+// are adjusted based on layout type.
+// The math behind them should be really simple,
+// however, we do not recommend altering them.
+// Please keep in mind that this alignments will work,
+// as long as there is enough space available on the screen.
+// Proceed with caution!
+
+.novablocks-content {
+  
+  display: block;
+  grid-column: var(--block-content-start)/var(--block-content-end);
+  position: relative;
+  
+  > .alignfull {
+    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
+    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
+  }
+  
+  > .alignwide {
+    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
+    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
+  }
+  
+  // Pull Left and Right value are very specific
+  // and to reach that level of specificity
+  // a lot of classes will be needed. Because of that,
+  // we have choose to use !important in this case.
+  // Just because, whenever this class exist,
+  // we want this CSS to be applied.
+  .stop-right,
+  .stop-right *{
+    --pull-right-value: 0px !important;
+  }
+  
+  .stop-left,
+  .stop-left *{
+    --pull-left-value: 0px !important;
+  }
+}
+
 // NO SIDEBAR
 
 .alignfull {
   --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
-  --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
+  --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
 }
 
 .alignwide {
@@ -47,7 +102,6 @@
   @include pull-align-item(left, true, true);
 }
 
-// ALIGNMENTS
 // RIGHT SIDEBAR
 .novablocks-sidecar {
   
@@ -78,7 +132,6 @@
   }
 }
 
-// ALIGNMENTS
 // LEFT SIDEBAR
 .novablocks-sidecar--sidebar-left {
   
@@ -104,7 +157,6 @@
   }
 }
 
-// ALIGNMENTS
 // TWO SIDEBARS
 .novablocks-sidecar--complex {
   
@@ -130,7 +182,6 @@
   }
 }
 
-// ALIGNMENTS
 // SIDECAR IN SIDECAR
 .novablocks-sidecar:not(.ignore-block) {
   
@@ -164,40 +215,9 @@
   }
 }
 
-
-.novablocks-content {
-  display: block;
-  grid-column: var(--block-content-start)/var(--block-content-end);
-  position: relative;
-  
-  > .alignfull {
-    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
-    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
-  }
-  
-  > .alignwide {
-    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
-    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
-  }
-}
-
 .novablocks-content {
   
-  // Pull Left and Right value are very specific
-  // and to reach that level of specificity
-  // a lot of classes will be needed. Because of that,
-  // we have choose to use !important in this case.
-  // Just because, whenever this class exist,
-  // we want this CSS to be applied.
-  .stop-right,
-  .stop-right *{
-    --pull-right-value: 0px !important;
-  }
-  
-  .stop-left,
-  .stop-left *{
-    --pull-left-value: 0px !important;
-  }
+
 }
 
 
@@ -223,32 +243,6 @@
   &[class*='stop'] {
     @include pull-align-item(right, false);
   }
-}
-
-
-// No Sidebar Case
-// When we have only content and no sidebar,
-// we want to do some math, to make sure that
-// our blocks are properly aligned.
-// In this case, content is centered, so
-// --pull-left-value will always be equal
-// with --pull-right-value.
-// Also, in this case, pulled blocks are treated differently.
-// Because wide section is taking only half of initial width,
-// we are going to display pulled blocks on that
-// width plus half of the space until full width.
-
-
-.novablocks-sidecar--sidebar-left {
-  
-  .novablocks-content {
-    grid-column: cs/var(--block-limit-right);
-    
-    > * {
-      --pull-right-value: var(--pull-left-value);
-    }
-  }
-  
 }
 
 // @todo: This should not remain in Nova
