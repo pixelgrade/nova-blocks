@@ -29,13 +29,17 @@
   --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
   --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
   
+  --novablocks-final-content-width: calc(var(--novablocks-content-width-start-max-value) + var(--novablocks-content-width-end-max-value) + var(--grid-gap));
+  --novablocks-final-wide-width: calc(var(--novablocks-final-content-width) + calc(Max(var(--wd) * 2, var(--minimum-sidebar-left-width) * 0.5)) + var(--grid-gap) * 4);
+  --novablocks-final-excess-width: Max(0px, calc(100vw - var(--novablocks-final-wide-width)));
+  
   --novablocks-sidecar-full: 100vw;
   --novablocks-sidecar-wide:  calc( min( var(--novablocks-wide-width), var(--novablocks-sidecar-full) ) );
   
   --content: var(--novablocks-content-width);
   --wd: calc( var(--novablocks-sidecar-wide) * 0.5 - var(--content) * 0.5 );
-  --wds:minmax( calc(var(--minimum-sidebar-left-width) * 0.5), calc(var(--wd) * 0.5));
-  --wde:minmax( calc(var(--minimum-sidebar-right-width) * 0.5), calc(var(--wd) * 0.5));
+  --wds:MinMax( calc(var(--minimum-sidebar-left-width) * 0.5), calc(var(--wd) * 0.5));
+  --wde:MinMax( calc(var(--minimum-sidebar-right-width) * 0.5), calc(var(--wd) * 0.5));
   
   grid-template-columns: [fs] 1fr [ws] var(--wds) [wsgs] calc(var(--grid-gap)/2) [wsc] calc(var(--grid-gap)/2) [wsge] var(--wds) [gs] var(--grid-gap) [cs] minmax(0, var(--novablocks-content-width-start-max-value)) [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  minmax(0, var(--novablocks-content-width-end-max-value)) [ce] var(--grid-gap) [ge] var(--wde) [wegs] calc(var(--grid-gap)/2) [wec] calc(var(--grid-gap)/2) [wege] var(--wde) [we] 1fr [fe];
 }
@@ -109,6 +113,7 @@
   @if ($is-absolute) {
     position: absolute;
     width: calc( Max(var(--minimum-sidebar-width), var(--wd)) + var(--grid-gap) );
+    max-width: 100%;
     
     // Update left or right position,
     // based on item direction.
@@ -126,7 +131,7 @@
     position: relative;
     float: #{$direction};
     width: auto;
-    max-width: var(--wd);
+    max-width: Max(var(--minimum-sidebar-width), var(--wd));
     
     // Overwrite some variables, based on item position,
     // and set it's margins to --grid-gap.
@@ -145,6 +150,7 @@
   // but it's width will be equal with half of wide section
   // plus half of remaining space.
   @if( $no-sidebar ) {
-    width: calc(Max( calc(var(--minimum-sidebar-width) * 0.5) , calc(var(--wd) * 0.5 + var(--full-pull-value) * 0.5)) - var(--grid-gap));
+    width: calc(Max( calc(var(--minimum-sidebar-width) * 0.5) , calc(var(--wd) * 0.5 + var(--full-pull-value) * 0.5) - var(--grid-gap)));
+    max-width: 100%;
   }
 }

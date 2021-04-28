@@ -33,7 +33,7 @@
   > .novablocks-sidecar {
     grid-column: var(--all-columns);
   }
-  
+  --full-pull-value
   > .novablocks-block {
     
     > * {
@@ -122,7 +122,7 @@
 // items on the same grid, as the one used on the parent block.
 .novablocks-content {
   
-  grid-column: var(--all-columns);
+  //grid-column: var(--all-columns);
   
   > * {
     grid-column: var(--block-content-start)/var(--block-content-end);
@@ -242,202 +242,13 @@
 // By default, novablocks-content will
 // be spanned on all grid columns.
 .novablocks-content {
-  grid-column: var(--all-columns);
+  //grid-column: var(--all-columns);
 }
 
 .strech-grid-items {
   align-items: stretch;
 }
 
-// For the scenario when a sidebar does not exist,
-// we are going to reduce sides width to half,
-// and add that width to content columns.
-// In this case, the content will start from wsge,
-// which represent the center of left side,
-// and it will end at wegs, which represent
-// the center of right side.
-
-// In this scenario, pull-left and pull-right blocks
-// will take only half of the sides.
-
-.block-no-sidebar {
-  
-  --block-content-start: wsge;
-  --block-content-end: wegs;
-  
-  .align-pull-left {
-    --block-content-end: wsgs;
-  }
-  
-  .align-pull-right {
-    --block-content-start: wege;
-  }
-}
-
-  
-.novablocks-content {
-  display: block;
-  grid-column: var(--block-limit-left)/ce;
-  position: relative;
-  
-  > .alignfull:not(.novablocks-sidecar):not(.novablocks-slideshow) {
-    margin-left: calc(-1 * var(--pull-left-value));
-    margin-right: calc(-1 * var(--pull-right-value));
-  }
-
-  > .alignwide:not(.novablocks-sidecar):not(.novablocks-slideshow) {
-    margin-right: calc(-1 * var(--pull-right-value));
-    margin-left: calc(-1 * var(--pull-left-value));
-  }
-}
-
-
-.novablocks-sidecar.ignore-breaks > .novablocks-content {
-    grid-column: var(--all-columns);
-}
-
-.align-pull-right {
-  @include pull-align-item(right, true);
-}
-
-.novablocks-sidecar {
-  // Excess around wide area
-  --full-pull-value: calc((100vw - var(--novablocks-sidecar-wide)) * 0.5);
-  --pull-left-value: 0px;
-  --pull-right-value: 0px;
-}
-
-.alignfull {
-  // Default values when sidebar is right
-  --pull-left-value: calc( var(--full-pull-value) );
-  --pull-right-value: calc(var(--full-pull-value) + max(var(--wd), var(--minimum-sidebar-right-width)) + 2 * var(--grid-gap));
-}
-
-.alignwide {
-  // Default value when sidebar is right
-  --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
-}
-
-.novablocks-sidecar--sidebar-left {
-  
-  &[class][class] {
-    .align-pull-right {
-      @include pull-align-item(right, false);
-    }
-  
-    .align-pull-left {
-      @include pull-align-item(left, true);
-    }
-  }
-  
-  .alignfull {
-    // Default values when sidebar is left
-    --pull-left-value: calc(var(--full-pull-value) + max(var(--wd), var(--minimum-sidebar-left-width)) + 2 * var(--grid-gap));
-    --pull-right-value: calc( var(--full-pull-value) );
-  }
-  
-  .alignwide {
-    // Default value when sidebar is right
-    --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
-    --pull-right-value: 0px;
-  }
-  
-  .novablocks-content {
-    grid-column: cs/var(--block-limit-right);
-  }
-  
-}
-
-.content-area {
-  overflow-x: hidden;
-}
-
-.novablocks-content {
-  
-  &[class] {
-    
-    .stop-right,
-    .stop-right *{
-      --pull-right-value: 0px;
-    }
-  
-    .stop-left,
-    .stop-left *{
-      --pull-left-value: 0px;
-    }
-  }
-}
-
-.novablocks-block {
-  
-  &.alignfull {
-    --pull-left-value: 0px;
-    --pull-right-value: 0px;
-  }
-}
-
-.novablocks-sidecar {
-  
-  .align-pull-left {
-    
-    @include pull-align-item(left, false);
-  }
-}
-
-.novablocks-sidecar:not(.ignore-breaks) {
-
-  .novablocks-sidecar--sidebar-left,
-  .novablocks-sidecar {
-
-    .novablocks-content {
-      
-      > * {
-        --pull-right-value: var(--pull-left-value);
-      }
-  
-      .align-pull-right {
-        @include pull-align-item(right, true);
-      }
-    }
-  }
-}
-
-.align-pull-left {
-  --minimum-sidebar-width: var(--minimum-sidebar-left-width);
-  
-  &[class*='stop'] {
-    @include pull-align-item(left, false);
-  }
-}
-
-.align-pull-right {
-  --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-  
-  &[class*='stop'] {
-    @include pull-align-item(right, false);
-  }
-}
-
-.novablocks-sidecar:not(.ignore-breaks) {
-  
-  > .novablocks-content:only-child {
-  
-    .alignwide {
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) * 0.5 + var(--grid-gap));
-      --pull-left-value: var(--pull-right-value);
-    }
-    
-    .alignfull {
-      --pull-right-value:calc(var(--full-pull-value) + max(var(--wd), var(--minimum-sidebar-right-width)) * 0.5 - var(--grid-gap) * 0.5);
-      --pull-left-value: var(--pull-right-value);
-    }
-  
-    .align-pull-right {
-      @include pull-align-item(right, true, true);
-    }
-  
-    .align-pull-left {
-      @include pull-align-item(left, true, true);
-    }
-  }
+.novablocks-sidecar > .novablocks-content:only-child {
+  grid-column: var(--block-limit-left)/var(--block-limit-right);
 }
