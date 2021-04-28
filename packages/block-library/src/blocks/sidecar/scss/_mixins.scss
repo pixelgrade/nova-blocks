@@ -31,7 +31,7 @@
   
   --novablocks-final-content-width: calc(var(--novablocks-content-width-start-max-value) + var(--novablocks-content-width-end-max-value) + var(--grid-gap));
   --novablocks-final-wide-width: calc(var(--novablocks-final-content-width) + calc(2 * Max(var(--wd), var(--minimum-sidebar-left-width))) + var(--grid-gap) * 4 );
-  --novablocks-final-excess-width: Max(var(--container-spacings, 0px) * 2, calc(100vw - var(--novablocks-final-wide-width)));
+  --novablocks-final-excess-width: Max(var(--novablocks-container-spacings, 0px) * 2, calc(100vw - var(--novablocks-final-wide-width)));
   
   --novablocks-sidecar-full: 100vw;
   --novablocks-sidecar-wide:  calc( min( var(--novablocks-wide-width), var(--novablocks-sidecar-full) ) );
