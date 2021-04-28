@@ -4,6 +4,8 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar");
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
+// Select all block inside the sidebar and create array,
+// to avoid doing that for every block inside the content.
 const sidebarBlocks = Array.from(document.querySelectorAll( ".novablocks-sidebar" )).flatMap(sideBlock => Array.from(sideBlock.children));
 
 sidecars.forEach( sidecar => {

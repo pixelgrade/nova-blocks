@@ -1,6 +1,7 @@
 @import 'scss/mixins';
 @import 'scss/block-limits';
 @import 'scss/block-content-alignments';
+@import 'scss/utility';
 
 :root {
   @include layout-settings;
@@ -12,55 +13,7 @@
   align-items: start;
 }
 
-// Entry-content is considered the default class
-// for content, so we are going to apply a grid on it
-// and treat blocks inside entry-content as grid-items.
-.entry-content {
-  
-  // Everything is treated as a grid element,
-  // So we are going to position it,
-  // according his alignments.
-  // By default every block is displayed
-  // between CS and CE columns.
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
-  
-  // These blocks are having another blocks inside
-  // them that could use alignments, so by default,
-  // we are going to display the main div on all columns,
-  // and position the block inside them based on their alignments.
-  > .novablocks-sidecar {
-    grid-column: var(--all-columns);
-  }
-  --full-pull-value
-  > .novablocks-block {
-    
-    > * {
-      grid-column: var(--block-content-start)/var(--block-content-end);
-    }
-  }
-  
-  .wp-block-group__inner-container {
-    @include layout-grid;
-    
-    > * {
-      grid-column: var(--block-content-start)/var(--block-limit-right);
-    }
-  }
-  
-  .novablocks-sidebar,
-  .wp-block-group {
-    
-    .wp-block-group__inner-container {
-      --display-mode: block;
-    }
-  }
-}
-
 .novablocks-sidecar {
-  
-  grid-column: var(--all-columns);
   
   > * {
     grid-row: 1;
@@ -114,49 +67,8 @@
 // so it will be positioned between [ge] and block-limit-right.
 .novablocks-sidebar {
   grid-column: ge/var(--block-limit-right);
-}
-
-// Content column will always be
-// displayed on all columns. Doing that,
-// we can easily position pull-left and pull-right
-// items on the same grid, as the one used on the parent block.
-.novablocks-content {
   
-  //grid-column: var(--all-columns);
-  
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
-  
-  // Collections are coming with .alignfull,
-  // to help us with background-color.
-  // Neste in Collection Block is an inner-container
-  // which will be treated as a grid too.
-  > .novablocks-collection {
-    grid-column: var(--all-columns);
-  }
-}
-
-.novablocks-sidecar {
-  
-  // Make sure nested layout block is displayed on all columns.
-  .novablocks-content:not(.entry-content) {
-    
-    .novablocks-sidecar {
-      grid-column: var(--all-columns);
-    
-      .novablocks-content {
-      
-        // By default all blocks inside content column,
-        // will be displayed between CS and CE.
-        // This could be changed based on layout used.
-        > *:not(.alignfull):not(.alignwide):not([class*="align-pull"]) {
-          --block-content-start: cs;
-          --block-content-end: ce;
-        }
-      }
-    }
-  }
+  height: 100%;
 }
 
 // Apply top and bottom spacing
@@ -178,19 +90,13 @@
   flex-direction: column;
 }
 
-// Content should always have priority!
+// Content should always have priority
+// and stay on top.
 .novablocks-content {
   order: -1;
 }
 
-.half-block-left {
-  grid-column: var(--block-limit-left)/gcs;
-}
-
-.half-block-right {
-  grid-column: gce/var(--block-limit-right);
-}
-
+// Make last block from Sidebar Sticky
 .last-block-is-sticky {
   
   .novablocks-sidebar {
@@ -199,14 +105,6 @@
       position: sticky;
       top: var(--sticky-element-top-spacing);
       margin-bottom: 1em;
-      
-      opacity: 1;
-    
-      transition: opacity .2s ease;
-    
-      &.block-is-hidden {
-        opacity: 0;
-      }
     }
   }
 }
@@ -218,37 +116,36 @@
 // we will change minimum sidebar width for that block too.
 // Doing that, we will make sure that both blocks are sharing the same grid
 // and alignments are working properly.
-.novablocks-sidecar {
+.novablocks-sidebar--large {
+    
+  &,
+  .novablocks-sidecar,
+  .wp-block-group__inner-container {
+    --minimum-sidebar-right-width: var(--default-width-large-sidebar);
+  }
   
-  &.novablocks-sidebar--large {
+  &.novablocks-sidecar--sidebar-left {
     
     &,
     .novablocks-sidecar,
     .wp-block-group__inner-container {
-      --minimum-sidebar-right-width: var(--default-width-large-sidebar);
-    }
-    
-    &.novablocks-sidecar--sidebar-left {
-      
-      &,
-      .novablocks-sidecar,
-      .wp-block-group__inner-container {
-        --minimum-sidebar-left-width: var(--default-width-large-sidebar);
-      }
+      --minimum-sidebar-left-width: var(--default-width-large-sidebar);
     }
   }
 }
 
-// By default, novablocks-content will
-// be spanned on all grid columns.
-.novablocks-content {
-  //grid-column: var(--all-columns);
+.wp-block-group__inner-container {
+  @include layout-grid;
+  
+  > * {
+    grid-column: var(--block-content-start)/var(--block-limit-right);
+  }
 }
 
-.strech-grid-items {
-  align-items: stretch;
-}
-
-.novablocks-sidecar > .novablocks-content:only-child {
-  grid-column: var(--block-limit-left)/var(--block-limit-right);
+.novablocks-sidebar,
+.wp-block-group {
+  
+  .wp-block-group__inner-container {
+    --display-mode: block;
+  }
 }
