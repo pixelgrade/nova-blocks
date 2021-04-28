@@ -63,7 +63,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'--collection-columns-count: ' . $attributes[ 'columns' ],
 			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
 			'--collection-card-layout-gutter: ' . $attributes[ 'layoutGutter' ],
+
 			'--supernova-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
+			'--supernova-card-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );

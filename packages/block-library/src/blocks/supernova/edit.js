@@ -134,6 +134,7 @@ const Collection = ( props ) => {
     cardMediaOpacity,
     layoutGutter,
     headerPosition,
+    imagePadding,
     contentPadding,
     emphasisArea,
   } = attributes;
@@ -145,7 +146,9 @@ const Collection = ( props ) => {
     '--collection-columns-count': columns,
     '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-layout-gutter': layoutGutter,
+
     '--supernova-card-content-padding-multiplier': contentPadding / 100,
+    '--supernova-card-image-padding-multiplier': imagePadding / 100,
   };
 
   return (
