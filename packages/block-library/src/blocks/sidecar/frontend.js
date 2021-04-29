@@ -4,19 +4,26 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar");
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
-// Select all block inside the sidebar and create array,
-// to avoid doing that for every block inside the content.
-const sidebarBlocks = Array.from(document.querySelectorAll( ".novablocks-sidebar" )).flatMap(sideBlock => Array.from(sideBlock.children));
+function generateOverlappingBlocks(primaryArea, secondaryArea) {
 
-const handleSidecarTransformations  = function() {
+  let array = []
+
+  primaryArea.forEach( primaryAreaBlock => {
+
+    secondaryArea.forEach( secondaryAreaBlock => {
+
+      if ( doesOverlap(secondaryAreaBlock, primaryAreaBlock) && ! array.includes(secondaryAreaBlock)) {
+        array.push(secondaryAreaBlock);
+      }
+    })
+  })
+
+  return array;
+}
+
+const handleSidecarTransformations = function() {
 
   sidecars.forEach( sidecar => {
-
-    let content = sidecar.querySelector( ".novablocks-content" ),
-      sidebars = sidecar.querySelectorAll( ".novablocks-sidebar" ),
-      layoutIsComplex = sidecar.classList.contains( 'novablocks-sidecar--complex' ),
-      pulledBlocks = Array.from(content.children).filter(block => block.classList.contains('align-pull-right') || block.classList.contains('align-pull-left')),
-      alignedBlocks = Array.from(content.children).filter(block => (block.classList.contains('alignfull') || block.classList.contains('alignwide')) && ! block.classList.contains('novablocks-sidecar'));
 
     // We don't need break classes on mobiles,
     // on sidecars without sidebar,
@@ -25,57 +32,46 @@ const handleSidecarTransformations  = function() {
       return;
     }
 
-    let contentBlocks = alignedBlocks.concat(pulledBlocks),
+    let content = sidecar.querySelector( ".novablocks-content" ),
+      pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( 'align-pull-right' ) || block.classList.contains( 'align-pull-left' ) ),
       sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
-      sidecarIsNested = sidecar.parentElement.classList.contains( 'novablocks-content' ) && ! sidecar.parentElement.parentElement.classList.contains('ignore-block'),
-      noCollisionClass = sidebarIsLeft && !sidecarIsNested ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      sidecarIsNested = sidecar.parentElement.classList.contains( 'novablocks-content' ) && !sidecar.parentElement.parentElement.classList.contains( 'ignore-block' ),
+      sidebarBlocks = Array.from( sidecar.querySelectorAll( ".novablocks-sidebar" ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
+      allContentBlocks = Array.from( sidecar.querySelectorAll( '.novablocks-content' ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
+      alignedContentBlocks = allContentBlocks.filter( block => (
+                                                                 block.classList.contains( 'alignfull' ) || block.classList.contains( 'alignwide' )
+                                                               ) && !block.classList.contains( 'novablocks-sidecar' ) ),
+      allSidebarBlocks = sidebarBlocks.concat( pulledBlocks ),
+      // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
+      sidebarContentOverlapBlocks = generateOverlappingBlocks( allSidebarBlocks, alignedContentBlocks );
 
-    contentBlocks.forEach( block => {
+    sidebarContentOverlapBlocks.forEach( block => {
 
-      sidebarBlocks.forEach( ( sidebarBlock, index ) => {
+      let noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
-        if ( layoutIsComplex && index === 0 ) {
-          noCollisionClass = BREAK_LEFT_CLASS;
-        }
+      if ( block.classList.contains( 'align-pull-right' ) ) {
+        noCollisionClass = BREAK_RIGHT_CLASS;
+      }
 
-        if ( block.classList.contains('align-pull-right')) {
-          noCollisionClass = BREAK_RIGHT_CLASS;
-        }
+      if ( block.classList.contains( 'align-pull-left' ) ) {
+        noCollisionClass = BREAK_LEFT_CLASS;
+      }
 
-        if ( block.classList.contains('align-pull-left')) {
-          noCollisionClass = BREAK_LEFT_CLASS;
-        }
+      block.classList.add( noCollisionClass );
 
-        const overlap = doesOverlap( block, sidebarBlock );
-
-        if ( overlap ) {
-          block.classList.add( noCollisionClass );
-        }
-      } )
     } )
 
-    // When sidebar does not exist,
-    // we are going to give priority to pulled blocks,
-    // in front of wide and aligned blocks.
-    // If a pulled block will overlap with a full or wide block,
-    // the pulled block will take the space, while the full or wide block,
-    // will stop right before the pulled block.
-    if ( ! sidebars.length ) {
+    // Overlapping between pulled blocks and sidebar blocks.
+    let sidebarPullOverlapBlocks = generateOverlappingBlocks( sidebarBlocks, pulledBlocks );
 
-      alignedBlocks.forEach( block => {
+    sidebarPullOverlapBlocks.forEach( block => {
 
-        pulledBlocks.forEach( (pulledBlock, index) => {
+      let noCollisionClass = block.classList.contains( 'align-pull-left' ) ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
-          let noCollisionClass = pulledBlock.classList.contains('align-pull-left') ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      block.classList.add( noCollisionClass );
+    } )
 
-          const overlap = doesOverlap( block, pulledBlock );
-
-          if ( overlap ) {
-            block.classList.add( noCollisionClass );
-          }
-        })
-      })
-    }
+    recalculateOverlappedBlocks( sidecar, sidebarContentOverlapBlocks);
   } )
 }
 
@@ -108,7 +104,18 @@ function sidecarTransformationsInCustomizer() {
   }
 }
 
+function recalculateOverlappedBlocks( sidecar, blocks ) {
+
+  const hasBreakingClass = Array.from( sidecar.querySelectorAll( '.stop-left:not(.align-pull-left), .stop-right:not(.align-pull-right)' ) );
+
+  hasBreakingClass.forEach( block => {
+
+    if ( ! blocks.includes( block ) ) {
+      block.classList.remove(BREAK_LEFT_CLASS, BREAK_RIGHT_CLASS);
+    }
+  } )
+}
+
 window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
 window.addEventListener('DOMContentLoaded', sidecarTransformationsInCustomizer);
 window.addEventListener('resize', debouncedSidecarTransformations );
-
