@@ -111,18 +111,20 @@
   // inside wide area and it's width will
   // be equal with that area width.
   @if ($is-absolute) {
-    position: absolute;
-    width: calc( Max(var(--minimum-sidebar-width), var(--wd)) + var(--grid-gap) );
-    max-width: 100%;
-    
-    // Update left or right position,
-    // based on item direction.
-    @if ($direction == right) {
-      left: calc(100% + var(--grid-gap));
-      margin-left: 0;
-    } @else {
-      right: calc(100% + var(--grid-gap));
-      margin-right: 0;
+    @include above(lap) {
+      position: absolute;
+      width: calc( Max(var(--minimum-sidebar-width), var(--wd)) + var(--grid-gap) );
+      max-width: 100%;
+  
+      // Update left or right position,
+      // based on item direction.
+      @if ($direction == right) {
+        left: calc(100% + var(--grid-gap));
+        margin-left: 0;
+      } @else {
+        right: calc(100% + var(--grid-gap));
+        margin-right: 0;
+      }
     }
   } @else {
     // In some cases, the item cannot be pulled left or right,
@@ -150,7 +152,9 @@
   // but it's width will be equal with half of wide section
   // plus half of remaining space.
   @if( $no-sidebar ) {
-    width: calc(Max( calc(var(--minimum-sidebar-width) * 0.5) , calc(var(--wd) * 0.5 + var(--full-pull-value) * 0.5) - var(--grid-gap)));
+    @include above(lap) {
+      width: calc(Max( calc(var(--minimum-sidebar-width) * 0.5) , calc(var(--wd) * 0.5 + var(--full-pull-value) * 0.5) - var(--grid-gap)));
+    }
     max-width: 100%;
   }
 }
