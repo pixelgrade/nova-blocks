@@ -109,7 +109,7 @@
   
     .alignfull {
       --pull-left-value: var(--full-pull-value);
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
     }
     
     .alignwide {
@@ -149,6 +149,10 @@
   
     .align-pull-left {
       @include pull-align-item(left, true, false);
+      
+      &.stop-left {
+        @include pull-align-item(left, false, false);
+      }
     }
   
     .align-pull-right {
