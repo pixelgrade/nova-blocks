@@ -21,6 +21,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     max-width: 100% !important;
   }
   
+  [data-type="novablocks/sidecar-area"] {
+    width: 100% !important;
+  }
+  
   // Markup is different compared to front-end,
   // and because of that, the last block is
   // currently not sticky inside the editor.
