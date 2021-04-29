@@ -199,20 +199,28 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   --block-content-end: ce;
 }
 
-// Show grid lines
-.novablocks-sidebar,
-.novablocks-content {
-  > #{$grid-selector} {
-    @include grid-border;
+// Show Sidecar inner areas outline
+// when the main block is selected
+[data-type='novablocks/sidecar'] {
+  &.is-selected,
+  &.is-highlighted,
+  &.is-multi-selected,
+  &.has-child-selected {
+    .novablocks-sidebar,
+    .novablocks-content {
+      > #{$grid-selector} {
+        @include block-outline;
+      }
+    }
   }
 }
 
-// Overwrite default focus style
+// Overwrite default focus block style
 // and apply them around grid columns.
-
 [data-type='novablocks/sidecar-area'] {
-  &.is-highlighted,
   &.is-selected,
+  &.is-highlighted,
+  &.is-multi-selected,
   &.has-child-selected {
     
     &:after {
