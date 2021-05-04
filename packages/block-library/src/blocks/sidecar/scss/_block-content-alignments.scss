@@ -72,7 +72,7 @@
   // Just because, whenever this class exist,
   // we want this CSS to be applied.
   .stop-right,
-  .stop-right *{
+  .stop-right * {
     --pull-right-value: 0px !important;
   }
   
@@ -85,13 +85,13 @@
 // NO SIDEBAR
 
 .alignfull {
-  --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
-  --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
+  --pull-left-value: calc((max(var(--wd) * var(--sidebar-left-size-modifier), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
+  --pull-right-value: calc((max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
 }
 
 .alignwide {
-  --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-  --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) * 0.5 + var(--grid-gap));
+  --pull-left-value: calc((max(var(--wd) * var(--sidebar-left-size-modifier), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+  --pull-right-value: calc((max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width))) * 0.5 + var(--grid-gap));
 }
 
 .align-pull-right {
@@ -109,12 +109,12 @@
   
     .alignfull {
       --pull-left-value: var(--full-pull-value);
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value: calc((max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
     }
     
     .alignwide {
       --pull-left-value: 0px;
-      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+      --pull-right-value: calc(max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
     }
     
     .align-pull-left {
@@ -128,6 +128,10 @@
     .novablocks-block {
       --pull-left-value: 0px;
       --pull-right-value: 0px;
+    }
+    
+    .alignleft {
+      --pull-left-value: 0px;
     }
   }
 }
@@ -157,6 +161,10 @@
   
     .align-pull-right {
       @include pull-align-item(right, false, false);
+    }
+    
+    .alignright {
+      --pull-right-value: 0px;
     }
   }
 }

@@ -45,6 +45,8 @@ const handleSidecarTransformations = function() {
       // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
       sidebarContentOverlapBlocks = generateOverlappingBlocks( allSidebarBlocks, alignedContentBlocks );
 
+    console.log(sidebarContentOverlapBlocks);
+
     sidebarContentOverlapBlocks.forEach( block => {
 
       let noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;

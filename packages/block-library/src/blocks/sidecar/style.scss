@@ -118,7 +118,7 @@
 // and alignments are working properly.
 .novablocks-sidebar--large {
     
-  &,
+  &:not(.novablocks-sidecar--sidebar-left),
   .novablocks-sidecar,
   .wp-block-group__inner-container {
     --minimum-sidebar-right-width: var(--default-width-large-sidebar);
@@ -148,4 +148,62 @@
   .wp-block-group__inner-container {
     --display-mode: block;
   }
+}
+
+.novablocks-sidebar--large {
+  --sidebar-excess-width: calc((var(--wd) * 0.3) * 0.5);
+}
+
+.novablocks-sidecar {
+  
+  &.novablocks-sidebar--large,
+  .wp-block-group__inner-container {
+    
+    &,
+    .novablocks-sidecar {
+      --sidebar-right-size-modifier: 1.3;
+    }
+  }
+}
+
+.novablocks-sidecar:not(.ignore-block) {
+  
+  &:not(.novablocks-sidecar--sidebar-left) {
+  
+    &.novablocks-sidebar--large {
+      --sidebar-right-size-modifier: 1.3;
+    }
+  }
+  
+  &.novablocks-sidecar--sidebar-left {
+  
+    &.novablocks-sidebar--large {
+      --sidebar-left-size-modifier: 1.3;
+    }
+  }
+}
+
+@include above(lap) {
+  .novablocks-content[class] {
+    
+    .alignleft {
+      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+    }
+    
+    .alignright {
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+    }
+    
+    .alignleft {
+      margin-left: calc(-1 * var(--pull-left-value, 0px));
+    }
+    
+    .alignright {
+      margin-right: calc(-1 * var(--pull-right-value, 0px));
+    }
+  }
+}
+
+.novablocks-sidebar--large {
+  --grid-sidebar-width: var(--default-width-large-sidebar);
 }

@@ -26,11 +26,14 @@
   
   
   --grid-gap: calc(var(--grid-gap-size) * var(--gap-is-active, 1));
-  --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
-  --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap));
+  --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap) - var(--sidebar-excess-width, 0px) );
+  --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap) - var(--sidebar-excess-width, 0px) );
+  --sidebar-left-size-modifier: 1;
+  --sidebar-right-size-modifier: 1;
+  --grid-sidebar-width: var(--default-width-small-sidebar);
   
   --novablocks-final-content-width: calc(var(--novablocks-content-width-start-max-value) + var(--novablocks-content-width-end-max-value) + var(--grid-gap));
-  --novablocks-final-wide-width: calc(var(--novablocks-final-content-width) + calc(2 * Max(var(--wd), var(--minimum-sidebar-left-width))) + var(--grid-gap) * 4 );
+  --novablocks-final-wide-width: calc(var(--novablocks-final-content-width) + calc(2 * Max(var(--wd), var(--grid-sidebar-width))) + var(--grid-gap) * 4 );
   --novablocks-final-excess-width: Max(var(--novablocks-container-spacings, 0px) * 2, calc(100vw - var(--novablocks-final-wide-width)));
   
   --novablocks-sidecar-full: 100vw;
@@ -38,8 +41,8 @@
   
   --content: var(--novablocks-content-width);
   --wd: calc( var(--novablocks-sidecar-wide) * 0.5 - var(--content) * 0.5 );
-  --wds:MinMax( calc(var(--minimum-sidebar-left-width) * 0.5), calc(var(--wd) * 0.5));
-  --wde:MinMax( calc(var(--minimum-sidebar-right-width) * 0.5), calc(var(--wd) * 0.5));
+  --wds:MinMax( calc(var(--minimum-sidebar-left-width) * 0.5), calc(var(--wd) * 0.5 * var(--sidebar-left-size-modifier)));
+  --wde:MinMax( calc(var(--minimum-sidebar-right-width) * 0.5), calc(var(--wd) * 0.5 * var(--sidebar-right-size-modifier)));
   
   grid-template-columns: [fs] 1fr [ws] var(--wds) [wsgs] calc(var(--grid-gap)/2) [wsc] calc(var(--grid-gap)/2) [wsge] var(--wds) [gs] var(--grid-gap) [cs] minmax(0, var(--novablocks-content-width-start-max-value)) [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  minmax(0, var(--novablocks-content-width-end-max-value)) [ce] var(--grid-gap) [ge] var(--wde) [wegs] calc(var(--grid-gap)/2) [wec] calc(var(--grid-gap)/2) [wege] var(--wde) [we] 1fr [fe];
 }

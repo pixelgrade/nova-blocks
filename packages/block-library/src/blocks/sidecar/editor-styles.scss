@@ -3,6 +3,17 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
 @import 'scss/mixins';
 
+:root {
+  --inspector-controls-width: 280px;
+}
+
+.is-sidebar-opened {
+  
+  .novablocks-sidecar {
+    --full-pull-value: calc(var(--novablocks-final-excess-width) * 0.5 - var(--inspector-controls-width) * 0.5);
+  }
+}
+
 .block-editor-block-list__layout.is-root-container {
   @include layout-grid;
   @include layout-settings;
@@ -260,6 +271,46 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     margin-left: 0;
     margin-right: 0;
   }
+  
+  #{$grid-selector} {
+  
+    > .alignfull,
+    [data-align="full"] {
+      margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
+      margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
+    }
+  
+    > .alignwide,
+    [data-align="wide"] {
+      margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
+      margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
+    }
+  
+    // Pull Left and Right value are very specific
+    // and to reach that level of specificity
+    // a lot of classes will be needed. Because of that,
+    // we have choose to use !important in this case.
+    // Just because, whenever this class exist,
+    // we want this CSS to be applied.
+    .stop-right,
+    .stop-right *{
+      --pull-right-value: 0px !important;
+    }
+  
+    .stop-left,
+    .stop-left *{
+      --pull-left-value: 0px !important;
+    }
+  }
+  
+  [data-type="novablocks/sidecar"] {
+    
+    &,
+    > .wp-block {
+      margin: 0 !important;
+    }
+  }
+  
 }
 
 [data-type='novablocks/sidecar'] {
@@ -284,6 +335,119 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     [data-align='full'] {
       --block-content-start: cs;
       --block-content-end: we;
+    }
+  }
+}
+
+.novablocks-content > #{$grid-selector} > * {
+  z-index: 1;
+}
+
+
+// Block Alignments
+.novablocks-sidecar--sidebar-right {
+
+  .novablocks-content {
+
+    .alignfull,
+    [data-align='full'] {
+      --pull-left-value: var(--full-pull-value);
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+    }
+
+    .alignwide,
+    [data-align='wide']{
+      --pull-left-value: 0px;
+      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+    }
+
+    [data-novablocks-alignment="pull-left"] {
+      --minimum-sidebar-width: var(--minimum-sidebar-left-width);
+      @include pull-align-item(left, false, false);
+    }
+  
+    [data-novablocks-alignment="pull-right"] {
+      --minimum-sidebar-width: var(--minimum-sidebar-right-width);
+      @include pull-align-item(right, true, false);
+    }
+  }
+}
+
+.novablocks-sidecar--sidebar-left {
+  
+  .novablocks-content {
+    
+    .alignfull,
+    [data-align='full'] {
+      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value:var(--full-pull-value);
+    }
+    
+    .alignwide,
+    [data-align='wide']{
+      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+      --pull-right-value: 0px;
+    }
+    
+    [data-novablocks-alignment="pull-left"] {
+      --minimum-sidebar-width: var(--minimum-sidebar-left-width);
+      @include pull-align-item(left, true, false);
+    }
+    
+    [data-novablocks-alignment="pull-right"] {
+      --minimum-sidebar-width: var(--minimum-sidebar-right-width);
+      @include pull-align-item(right, false, false);
+    }
+  }
+}
+
+.wp-block[data-align=wide] {
+  
+  &[class][class][class] {
+    max-width: none !important;
+  }
+}
+
+.novablocks-sidecar {
+  
+  &:not(.novablocks-sidecar--sidebar-left) {
+    
+    &.novablocks-sidebar--large {
+      
+      > #{$grid-selector} {
+        --sidebar-right-size-modifier: 1.3;
+      }
+    }
+  }
+}
+
+.novablocks-sidecar.novablocks-sidecar--sidebar-left {
+  
+  &.novablocks-sidebar--large {
+    
+    > #{$grid-selector} {
+      --sidebar-left-size-modifier: 1.3;
+    }
+  }
+}
+
+@include above(lap) {
+  .novablocks-content[class] {
+    
+    [data-align="left"] {
+      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+    }
+  
+    [data-align="right"] {
+      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+    }
+  
+    [data-align="left"] {
+      margin-left: calc(-1 * var(--pull-left-value, 0px));
+    }
+  
+    [data-align="right"] {
+      margin-right: calc(-1 * var(--pull-right-value, 0px));
     }
   }
 }
