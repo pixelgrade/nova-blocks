@@ -399,7 +399,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
     [data-novablocks-alignment="pull-right"] {
       --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-      @include pull-align-item(right, true, false);
+      @include pull-align-item(right, false, false);
     }
   
     [data-align="left"][class] {
@@ -523,8 +523,12 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
 [data-type="novablocks/sidecar-area"] {
   
-  [data-align="full"] {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+  [data-type="novablocks/posts-collection"] {
+  
+    &,
+    [data-align="full"] {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
   }
 }
