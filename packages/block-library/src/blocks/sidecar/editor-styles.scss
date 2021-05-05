@@ -44,9 +44,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     max-width: 100vw !important;
     margin-left: auto;
     margin-right: auto;
-    
-      //max-width: 100% !important;
-    }
+  }
   
   > [data-align="wide"][class] {
     max-width: calc(var(--novablocks-final-content-width) + var(--wd) * 2 + var(--grid-gap) * 4) !important;
@@ -81,13 +79,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-sidecar > #{$grid-selector} {
   
   @include layout-grid;
-  
-  > * {
-    // Temporary
-    // @todo: Remove this
-    margin-top: 0 !important;
-    max-width: 100% !important;
-  }
   
   [class*='__inner-container']:not(.novablocks-card__layout-content) {
     padding-left: 0;
@@ -297,11 +288,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 }
 
 .novablocks-content {
-  
-  .wp-block {
-    margin-left: 0;
-    margin-right: 0;
-  }
   
   #{$grid-selector} {
   

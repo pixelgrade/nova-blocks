@@ -4,6 +4,12 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar:not(.ignore-bloc
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
+// Helper function to generate overlapping blocks,
+// based on two areas
+// We will create an array with
+// blocks from secondaryArea that are overlapping with
+// blocks from primaryArea.
+
 function generateOverlappingBlocks(primaryArea, secondaryArea) {
 
   let array = []
@@ -20,6 +26,14 @@ function generateOverlappingBlocks(primaryArea, secondaryArea) {
 
   return array;
 }
+
+// There are 3 types of blocks in this system:
+// content blocks, sidebar blocks and pulled blocks.
+// Pulled blocks can be considered content blocks too,
+// because they usually are found in content area.
+// However, there are cases when a pulled block
+// can overlap with a content block and this is the
+// reason why we treat them differently.
 
 const handleSidecarTransformations = function() {
 
@@ -73,7 +87,6 @@ const handleSidecarTransformations = function() {
     recalculateOverlappedBlocks( sidecar, sidebarContentOverlapBlocks);
   } )
 }
-
 const debouncedSidecarTransformations = debounce(handleSidecarTransformations, 200)
 
 // Helper function to check
@@ -89,12 +102,13 @@ function doesOverlap( elem, collider ) {
   return ! overlap;
 }
 
+// We want to listen to Content Width setting
+// change inside Customizer Preview,
+// so we can break wide and full elements
+// if there is not enough available space.
 function sidecarTransformationsInCustomizer() {
 
   if ( wp.customize !== undefined ) {
-    // We want to listen to Content Width setting change,
-    // so we can break wide and full elements
-    // if there is not enough available space.
     wp.customize( `${customify.config.options_name}[content_width]`, ( setting ) => {
       setting.bind( value => {
         debouncedSidecarTransformations()
@@ -102,6 +116,7 @@ function sidecarTransformationsInCustomizer() {
     } )
   }
 }
+
 
 function recalculateOverlappedBlocks( sidecar, blocks ) {
 
