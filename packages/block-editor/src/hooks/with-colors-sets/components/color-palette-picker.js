@@ -7,7 +7,7 @@ import {
   getSignalFromVariation,
 
   getCurrentPalette,
-} from "../utils";
+} from "@novablocks/utils";
 
 const ColorPalettePicker = ( props ) => {
 

@@ -25,13 +25,11 @@ import {
   getVariationFromSignal,
   getSignalFromVariation,
   getAttributesFromSignal,
-  getAbsoluteVariation,
   isFunctionalPalette,
   mapPalettesToColorPalette,
   getAbsoluteColorVariation,
-  getCurrentPalette,
   getCurrentPaletteRelativeColorVariation,
-} from "./utils";
+} from "@novablocks/utils";
 
 import { Notice } from "../../components";
 
@@ -97,7 +95,7 @@ const ColorSetControls = ( props ) => {
         <ControlsGroup>
           <ColorGradesControl { ...props }
                               label={ __( 'Block Color Signal', '__plugin_txtd' ) }
-                              value={ normalizeVariationValue( actualBlockVariation ) }
+                              value={ actualBlockVariation }
                               onChange={ value => {
                                 setAttributes( {
                                   paletteVariation: getCurrentPaletteRelativeColorVariation( value, props )
@@ -147,8 +145,6 @@ const MiscellanousControls = ( props ) => {
           const offsetFactor = useSourceColorAsReference ? -1 : 1;
           const offset = offsetFactor * currentPalette.sourceIndex;
           const nextVariation = normalizeVariationValue( paletteVariation + offset );
-
-          console.log( paletteVariation, currentPalette.sourceIndex, nextVariation );
 
           setAttributes( {
             paletteVariation: nextVariation,

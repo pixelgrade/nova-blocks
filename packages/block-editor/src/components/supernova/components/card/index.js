@@ -57,10 +57,9 @@ export const Card = ( props ) => {
 export const CardContentWrapper = ( props ) => {
 
   const { attributes } = props;
-  const { paletteVariation, contentSignal } = attributes;
+  const { palette } = attributes;
   const align = getAlignFromMatrix( attributes?.cardContentAlign );
-
-  const contentVariation = useMemo( () => getContentVariationBySignal( contentSignal, paletteVariation ), [ contentSignal, paletteVariation ] );
+  const contentVariation = getContentVariationBySignal( props );
 
   const contentClassName = classnames(
     `supernova-card__content`,
@@ -71,6 +70,7 @@ export const CardContentWrapper = ( props ) => {
   const innerContainerClassName = classnames(
     `supernova-card__inner-container`,
     `sm-variation-${ contentVariation }`,
+    `sm-palette-${ palette }`,
   );
 
   return (

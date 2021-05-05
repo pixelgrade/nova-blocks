@@ -13,8 +13,8 @@ import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 
 import { Card } from "@novablocks/components";
+
 import {
-  getContentVariation,
   getContentVariationBySignal,
 } from "@novablocks/utils";
 
@@ -110,7 +110,7 @@ const Post = ( props ) => {
 
 	const primaryMeta = getMeta( post, primaryMetadata );
 	const secondaryMeta = getMeta( post, secondaryMetadata );
-  const contentVariation = useMemo( () => getContentVariationBySignal( contentSignal, paletteVariation ), [ contentSignal, paletteVariation ] );
+  const contentVariation = getContentVariationBySignal( props );
 
 	let combinedMeta;
 	let metaAboveTitle;
