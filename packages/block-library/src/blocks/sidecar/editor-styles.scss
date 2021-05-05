@@ -20,7 +20,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   display: block !important;
   
-  @import 'scss/block-limits.scss';
+  @import 'scss/block-limits';
   
   grid-auto-flow: row dense;
   
@@ -92,11 +92,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 // to sidebar position (left or right).
 .novablocks-sidecar {
   
-    &,
-    #{$align-selectors} {
-      --block-content-start: var(--block-limit-left);
-      --block-content-end: ce;
-    }
+    --block-content-start: var(--block-limit-left);
+    --block-content-end: ce;
   
   > #{$grid-selector} {
   
@@ -135,12 +132,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
   
   &--sidebar-left {
-  
-    &,
-    #{$align-selectors} {
       --block-content-start: cs;
       --block-content-end: var(--block-limit-right);
-    }
   
     > #{$grid-selector} {
   
@@ -168,14 +161,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-sidecar {
   
   &--complex {
-    
-    &[class] {
-      
-      #{$align-selectors} {
-        --block-content-start: cs;
-        --block-content-end: ce;
-      }
-    }
     
     > #{$grid-selector} {
       
@@ -215,15 +200,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
         z-index: 2;
       }
     }
-  }
-}
-
-.novablocks-sidecar--sidebar-right .novablocks-sidecar--sidebar-left,
-.novablocks-sidecar--sidebar-left .novablocks-sidecar--sidebar-right {
-  
-  #{$align-selectors} {
-    --block-content-start: cs;
-    --block-content-end: ce;
   }
 }
 
