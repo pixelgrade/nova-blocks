@@ -1,3 +1,19 @@
+.components-nb-color-grades-control {
+
+  .components-base-control__field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .nb-signal-icon {
+      --bar-width: 6px;
+      --bar-space: 2px;
+      --bar-height: 20px;
+      --bar-height-diff: 7px;
+    }
+  }
+}
+
 .nb-palette__grades {
   display: flex;
   margin-left: -2px;

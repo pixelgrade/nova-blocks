@@ -58,7 +58,7 @@ const ColorSetControls = ( props ) => {
   const initialSignal = getSignalFromVariation( actualBlockVariation );
 
   return (
-    <ControlsSection label={ __( 'Color Sets' ) }>
+    <ControlsSection label={ __( 'Color Signal' ) }>
       <ControlsTab label={ __( 'Customize' ) }>
         <Notice
           key={ 'color-signal-quick-start' }

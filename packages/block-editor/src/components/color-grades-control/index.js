@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import { getIcon } from "@novablocks/icons";
+import { getSignalFromVariation } from "@novablocks/utils";
 
 const ColorGradesControl = ( props ) => {
 
@@ -22,11 +23,29 @@ const ColorGradesControl = ( props ) => {
 
   const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
   const { sourceIndex } = currentPalette;
+  const signal = getSignalFromVariation( value );
+
+  const iconClassName = classnames(
+    `nb-signal-icon`,
+    {
+      [ `nb-signal-icon--none` ]: signal === 0,
+      [ `nb-signal-icon--low` ]: signal === 1,
+      [ `nb-signal-icon--medium` ]: signal === 2,
+      [ `nb-signal-icon--high` ]: signal === 3,
+    }
+  );
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>
       <div className="components-base-control__field">
         <div className="components-base-control__label">{ label }</div>
+        <div className="components-base-control__label-icon">
+          <div className={ iconClassName }>
+            <div className="nb-signal-icon__bar" />
+            <div className="nb-signal-icon__bar" />
+            <div className="nb-signal-icon__bar" />
+          </div>
+        </div>
       </div>
       <div className="nb-palette">
         <div className="nb-palette__grades">
