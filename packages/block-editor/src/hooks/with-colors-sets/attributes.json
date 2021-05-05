@@ -10,5 +10,13 @@
 	"useSourceColorAsReference": {
 		"type": "boolean",
 		"default": false
+	},
+	"contentSignal": {
+		"type": "number",
+		"default": 0
+	},
+	"contentPaletteVariation": {
+		"type": "number",
+		"default": 1
 	}
 }

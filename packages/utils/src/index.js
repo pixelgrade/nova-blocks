@@ -277,6 +277,23 @@ export const getContentVariation = ( attributes ) => {
   return paletteVariation;
 }
 
+export const getContentVariationBySignal = ( contentSignal, paletteVariation ) => {
+
+  if ( contentSignal === 1 ) {
+    return Math.max( 1, paletteVariation - 2 );
+  }
+
+  if ( contentSignal === 2 ) {
+    return Math.min( 12, paletteVariation + 5 );
+  }
+
+  if ( contentSignal === 3 ) {
+    return Math.min( 12, paletteVariation + 7 );
+  }
+
+  return paletteVariation;
+}
+
 export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
   const classes = className.split(/\b\s+/);
   const newClasses = classes.filter( classname => {

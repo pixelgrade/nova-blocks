@@ -37,7 +37,7 @@ const SuperNovaItemContent = ( props ) => {
       buttonUrl,
       buttonOpensInNewTab,
     },
-    setAttributes
+    setAttributes,
   } = props;
 
   const [ showPopover, setShowPopover ] = useState( false );

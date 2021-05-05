@@ -136,8 +136,6 @@ import {
 						const $card = $posts.eq( addedCards - area.postsCount + i );
 						const landscape = isLandscape( area, attributes );
 
-						console.log( $posts );
-
 						$card.toggleClass( 'novablocks-card--landscape', !! landscape );
 						$card.toggleClass( 'novablocks-card--portrait', ! landscape );
 

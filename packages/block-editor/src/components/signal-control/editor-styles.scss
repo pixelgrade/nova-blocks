@@ -1,0 +1,64 @@
+.nb-signal {
+  display: flex;
+}
+
+.components-base-control__label + .components-nb-signal-control__root {
+  margin-top: 12px;
+}
+
+.nb-signal__icon {
+  width: 32px;
+  height: 28px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.nb-signal__bar {
+  width: 8px;
+  border: 1px solid currentColor;
+
+  &:nth-child(1) { height: 8px }
+  &:nth-child(2) { height: 18px }
+  &:nth-child(3) { height: 28px }
+
+  .nb-signal__icon--low &:nth-child(1),
+  .nb-signal__icon--medium &:nth-child(1),
+  .nb-signal__icon--medium &:nth-child(2),
+  .nb-signal__icon--high &:nth-child(1),
+  .nb-signal__icon--high &:nth-child(2),
+  .nb-signal__icon--high &:nth-child(3) {
+    background: var(--novablocks-section-controls-accent);
+    border-color: var(--novablocks-section-controls-accent);
+  }
+}
+
+.nb-signal__text {
+  margin-right: auto;
+
+  .nb-signal__icon + & {
+    margin-left: 8px;
+  }
+}
+
+.nb-signal__icon-label {
+  font-size: 12px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.nb-signal__value-label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.nb-signal__controls {
+  display: flex;
+
+  > * + * {
+    margin-left: 11px;
+  }
+}

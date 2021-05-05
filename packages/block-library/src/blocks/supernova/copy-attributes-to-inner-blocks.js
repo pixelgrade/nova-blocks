@@ -33,6 +33,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'palette',
         'paletteVariation',
         'useSourceColorAsReference',
+        'contentSignal',
 
         'showTitle',
         'showSubtitle',
@@ -51,6 +52,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
       .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
 
       const newAttributes = {};
+
       attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );
 
       setAttributesToInnerBlocks( clientId, newAttributes );
@@ -58,6 +60,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
       if ( Array.isArray( innerBlocks ) ) {
         innerBlocks.forEach( block => {
           const alignment = getAlignFromMatrix( attributes.cardContentAlign );
+
           setAttributesToInnerBlocks( block.clientId, { align: alignment[1] } );
         } );
       }

@@ -1,0 +1,125 @@
+.nb-palette__grades {
+  display: flex;
+  margin-left: -2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.nb-palette__grade {
+  flex: 1 1 0;
+  margin-left: 2px;
+  position: relative;
+  background: none !important;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 150%;
+  }
+
+  &--selected {
+    cursor: default;
+  }
+}
+
+.nb-palette__grade-surface {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: rgba(0,0,0,0.05) 0 0 0 1px inset;
+  background: var(--sm-current-bg-color);
+
+  .nb-palette__grade--selected & {
+    top: -7px;
+    bottom: -7px;
+    left: -7px;
+    right: -7px;
+    border: 2px solid white;
+    z-index: 20;
+  }
+
+  .nb-palette__grade--source:not(.nb-palette__grade--selected) & {
+    background: none;
+    box-shadow: none;
+  }
+}
+
+.nb-palette__grade-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  width: 1em;
+  transform: translate(-50%,-50%);
+
+  svg {
+    display: block;
+  }
+
+  .nb-palette__grade--source:not(.nb-palette__grade--selected) & {
+    color: var(--sm-current-bg-color);
+  }
+}
+
+.nb-palette__labels {
+  display: flex;
+  position: relative;
+  font-size: 11px;
+  opacity: 0.75;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #CCC;
+  }
+}
+
+.nb-palette__label {
+  position: relative;
+  padding-top: 5px;
+
+  &:before,
+  &:last-child:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -5px;
+    height: 11px;
+  }
+
+  &:before {
+    left: 0;
+    border-left: 1px solid #CCC;
+  }
+
+  &:last-child:after {
+    right: 0;
+    border-right: 1px solid #CCC;
+  }
+}
+
+.nb-palette__label {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.nb-palette__label--1,
+.nb-palette__label--12 {
+  flex: 1 0 0;
+}
+
+.nb-palette__label--low,
+.nb-palette__label--high {
+  flex: 3 0 0;
+}
+
+.nb-palette__label--medium {
+  flex: 4 0 0;
+}

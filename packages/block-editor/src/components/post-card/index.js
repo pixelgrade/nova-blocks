@@ -5,15 +5,18 @@ import {
 } from '@wordpress/date';
 
 import {
-	Fragment,
-	RawHTML
+  Fragment,
+  RawHTML, useMemo
 } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 
 import { Card } from "@novablocks/components";
-import { getContentVariation } from "@novablocks/utils";
+import {
+  getContentVariation,
+  getContentVariationBySignal,
+} from "@novablocks/utils";
 
 import Author from "./author";
 import Category from "./category";
@@ -100,10 +103,14 @@ const Post = ( props ) => {
     metadataPosition,
     primaryMetadata,
     secondaryMetadata,
+
+    contentSignal,
+    paletteVariation,
   } = attributes;
 
 	const primaryMeta = getMeta( post, primaryMetadata );
 	const secondaryMeta = getMeta( post, secondaryMetadata );
+  const contentVariation = useMemo( () => getContentVariationBySignal( contentSignal, paletteVariation ), [ contentSignal, paletteVariation ] );
 
 	let combinedMeta;
 	let metaAboveTitle;
@@ -165,7 +172,7 @@ const Post = ( props ) => {
 		showButtons,
 		hasFixedAspectRatio: thumbnailAspectRatioString !== 'auto',
 
-    className: `sm-variation-${ getContentVariation( attributes ) }`,
+    className: `sm-variation-${ contentVariation }`,
 	};
 
 	return <Card { ...cardProps } />
