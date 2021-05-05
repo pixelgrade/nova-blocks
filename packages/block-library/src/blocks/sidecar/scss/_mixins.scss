@@ -25,16 +25,14 @@
   display: var(--display-mode);
   flex-direction: column;
   
+  --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap) - var(--sidebar-medium-addon-width, 0px) );
+  --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap) - var(--sidebar-medium-addon-width, 0px) );
   
-  --grid-gap: calc(var(--grid-gap-size) * var(--gap-is-active, 1));
-  --novablocks-content-width-start-max-value: calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap) - var(--sidebar-large-addon-width, 0px) );
-  --novablocks-content-width-end-max-value:  calc( (var(--novablocks-content-width) + var(--novablocks-content-addon, 0px))/2 - var(--grid-gap) - var(--sidebar-large-addon-width, 0px) );
   --sidebar-left-size-modifier: 1;
   --sidebar-right-size-modifier: 1;
-  --grid-sidebar-width: var(--default-width-small-sidebar);
   
   --novablocks-final-content-width: calc(var(--novablocks-content-width-start-max-value) + var(--novablocks-content-width-end-max-value) + var(--grid-gap));
-  --novablocks-final-wide-width: calc( var(--novablocks-final-content-width) + Max(var(--wd), var(--minimum-sidebar-left-width)) + Max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 4 - var(--sidebar-addon, 0px));
+  --novablocks-final-wide-width: calc( var(--novablocks-final-content-width) + Max(var(--wd) * var(--sidebar-left-size-modifier), var(--minimum-sidebar-left-width)) + Max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 4 - var(--sidebar-addon, 0px));
   --novablocks-final-excess-width: Max(var(--novablocks-container-spacings, 0px) * 2, calc(100vw - var(--novablocks-final-wide-width)));
   
   --novablocks-sidecar-full: 100vw;
@@ -54,7 +52,6 @@
 // because a layout block with sidebar will use this width.
 // --novablocks-content-width - Content column maximum width.
 // --display-mode - Block default display mode. (eg. grid or flex)
-// --grid-gap-size - Default gap between grid columns.
 // --minimum-sidebar-*-width - Minimum sidebar Width for specific Sidebar.
 // This minimum sidebar width is useful when user will display an ad inside
 // the sidebar and want the sidebar to have a minimum size.
@@ -66,9 +63,9 @@
 // --all-columns - Used for blocks that need to span on the entire grid.
 @mixin layout-settings {
   --default-width-small-sidebar: 230px;
-  --default-width-large-sidebar: 300px;
+  --default-width-medium-sidebar: 300px;
   --sticky-element-top-spacing: 0px;
-  --grid-gap-size: 2rem;
+  --grid-gap: 2rem;
   --minimum-sidebar-left-width: var(--default-width-small-sidebar);
   --minimum-sidebar-right-width: var(--default-width-small-sidebar);
   --display-mode: flex;
@@ -102,10 +99,9 @@
     width: calc(100% + 0px);
     height: 100%;
   
-    margin-left: 0px;
+    margin-left: 0;
     
     grid-column: var(--block-content-start)/var(--block-content-end);
-    // border: 2px solid var(--novablocks-color-1);
 
     box-shadow: 0 0 0 2px var(--wp-admin-theme-color);
     box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);

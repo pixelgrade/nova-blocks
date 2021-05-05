@@ -132,10 +132,14 @@
       --pull-right-value: 0px;
     }
     
+    // We don't want left aligned
+    // item to be pulled out of content.
     .alignleft {
       --pull-left-value: 0px;
     }
-    
+  
+    // We don't want right aligned
+    // item to be pulled out of content.
     .alignright {
       --pull-right-value: 0px;
     }
@@ -169,10 +173,6 @@
   
     .align-pull-right {
       @include pull-align-item(right, false, false);
-    }
-    
-    .alignright {
-      --pull-right-value: 0px;
     }
   }
 }
@@ -235,11 +235,6 @@
   }
 }
 
-.novablocks-content {
-  
-
-}
-
 
 .align-pull-left {
   --minimum-sidebar-width: var(--minimum-sidebar-left-width);
@@ -283,5 +278,13 @@
   .align-pull-left {
     --pull-left-value: 0px !important;
     --pull-right-value: 0px !important;
+  }
+}
+
+figure {
+  
+  &.alignleft,
+  &.alignright {
+    max-width: 50%;
   }
 }

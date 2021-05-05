@@ -481,7 +481,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   &:not(.novablocks-sidecar--sidebar-left) {
     
-    &.novablocks-sidebar--large {
+    &.novablocks-sidebar--medium {
       
       > #{$grid-selector} {
         --sidebar-right-size-modifier: 1.3;
@@ -492,7 +492,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
 .novablocks-sidecar.novablocks-sidecar--sidebar-left {
   
-  &.novablocks-sidebar--large {
+  &.novablocks-sidebar--medium {
     
     > #{$grid-selector} {
       --sidebar-left-size-modifier: 1.3;

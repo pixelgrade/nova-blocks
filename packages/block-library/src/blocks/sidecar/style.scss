@@ -116,12 +116,12 @@
 // we will change minimum sidebar width for that block too.
 // Doing that, we will make sure that both blocks are sharing the same grid
 // and alignments are working properly.
-.novablocks-sidebar--large {
+.novablocks-sidebar--medium {
     
   &:not(.novablocks-sidecar--sidebar-left),
   .novablocks-sidecar,
   .wp-block-group__inner-container {
-    --minimum-sidebar-right-width: var(--default-width-large-sidebar);
+    --minimum-sidebar-right-width: var(--default-width-medium-sidebar);
   }
   
   &.novablocks-sidecar--sidebar-left {
@@ -129,7 +129,7 @@
     &,
     .novablocks-sidecar,
     .wp-block-group__inner-container {
-      --minimum-sidebar-left-width: var(--default-width-large-sidebar);
+      --minimum-sidebar-left-width: var(--default-width-medium-sidebar);
     }
   }
 }
@@ -150,20 +150,20 @@
   }
 }
 
-.novablocks-sidebar--large {
-  --sidebar-large-addon-width: calc((max(var(--minimum-sidebar-width), var(--wd)) * 0.3) * 0.5);
-  --sidebar-right-addon-width: var(--sidebar-large-addon-width);
+.novablocks-sidebar--medium {
+  --sidebar-medium-addon-width: calc((max(var(--minimum-sidebar-width), var(--wd)) * 0.3) * 0.5);
+  --sidebar-right-addon-width: var(--sidebar-medium-addon-width);
   --sidebar-addon: var(--sidebar-right-addon-width);
   
   &.novablocks-sidecar--sidebar-left {
-    --sidebar-right-addon-width: var(--sidebar-large-addon-width);
+    --sidebar-right-addon-width: var(--sidebar-medium-addon-width);
     --sidebar-addon: var(--sidebar-left-addon-width);
   }
 }
 
 .novablocks-sidecar {
   
-  &.novablocks-sidebar--large {
+  &.novablocks-sidebar--medium {
     
     &,
     .novablocks-sidecar {
@@ -176,14 +176,14 @@
   
   &:not(.novablocks-sidecar--sidebar-left) {
   
-    &.novablocks-sidebar--large {
+    &.novablocks-sidebar--medium {
       --sidebar-right-size-modifier: 1.3;
     }
   }
   
   &.novablocks-sidecar--sidebar-left {
   
-    &.novablocks-sidebar--large {
+    &.novablocks-sidebar--medium {
       --sidebar-left-size-modifier: 1.3;
     }
   }
@@ -208,8 +208,4 @@
       margin-right: calc(-1 * var(--pull-right-value, 0px));
     }
   }
-}
-
-.novablocks-sidebar--large {
-  --grid-sidebar-width: var(--default-width-large-sidebar);
 }
