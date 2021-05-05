@@ -105,6 +105,8 @@
 // RIGHT SIDEBAR
 .novablocks-sidecar {
   
+  --minimum-sidebar-width: var(--minimum-sidebar-right-width);
+  
   .novablocks-content:not(:only-child) {
   
     .alignfull {
@@ -114,7 +116,7 @@
     
     .alignwide {
       --pull-left-value: 0px;
-      --pull-right-value: calc(max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+      --pull-right-value: calc(max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2 );
     }
     
     .align-pull-left {
@@ -138,6 +140,8 @@
 
 // LEFT SIDEBAR
 .novablocks-sidecar--sidebar-left {
+  
+  --minimum-sidebar-width: var(--minimum-sidebar-left-width);
   
   .novablocks-content:not(:only-child) {
     

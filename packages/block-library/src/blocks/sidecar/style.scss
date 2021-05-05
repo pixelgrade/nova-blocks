@@ -151,13 +151,19 @@
 }
 
 .novablocks-sidebar--large {
-  --sidebar-excess-width: calc((var(--wd) * 0.3) * 0.5);
+  --sidebar-large-addon-width: calc((max(var(--minimum-sidebar-width), var(--wd)) * 0.3) * 0.5);
+  --sidebar-right-addon-width: var(--sidebar-large-addon-width);
+  --sidebar-addon: var(--sidebar-right-addon-width);
+  
+  &.novablocks-sidecar--sidebar-left {
+    --sidebar-right-addon-width: var(--sidebar-large-addon-width);
+    --sidebar-addon: var(--sidebar-left-addon-width);
+  }
 }
 
 .novablocks-sidecar {
   
-  &.novablocks-sidebar--large,
-  .wp-block-group__inner-container {
+  &.novablocks-sidebar--large {
     
     &,
     .novablocks-sidecar {

@@ -29,11 +29,45 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
   
   >  * {
-    max-width: 100% !important;
+    &:not([data-type="novablocks/sidecar"]),
+    &:not([data-align="full"]),
+    &:not([data-align="wide"]) {
+      max-width: calc(var(--novablocks-final-content-width) + var(--wd)) !important;
+    }
   }
   
   [data-type="novablocks/sidecar-area"] {
     width: 100% !important;
+  }
+  
+  > [data-align="full"][class]  {
+    max-width: 100vw !important;
+    margin-left: auto;
+    margin-right: auto;
+    
+      //max-width: 100% !important;
+    }
+  
+  > [data-align="wide"][class] {
+    max-width: calc(var(--novablocks-final-content-width) + var(--wd) * 2 + var(--grid-gap) * 4) !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  > [data-align="left"] {
+    --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+  }
+  
+  > [data-align="right"]  {
+    --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
+  }
+  
+  > [data-align="left"] > figure  {
+    margin-left: calc(-1 * var(--pull-left-value, 0px));
+  }
+  
+  > [data-align="right"] > figure  {
+    margin-right: calc(-1 * var(--pull-right-value, 0px));
   }
   
   // Markup is different compared to front-end,
@@ -160,7 +194,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       
       // Sidebar Left
       >:first-child {
-        grid-column: var(--all-columns);
         
         --block-content-start: cs;
         --block-content-end: ce;
@@ -168,8 +201,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
         > .novablocks-content {
     
           > #{$grid-selector} {
-      
-            @include layout-grid;
       
             > * {
               grid-column: var(--block-content-start)/var(--block-content-end);
@@ -352,13 +383,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     .alignfull,
     [data-align='full'] {
       --pull-left-value: var(--full-pull-value);
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-right-value: 0px;
     }
 
     .alignwide,
     [data-align='wide']{
       --pull-left-value: 0px;
-      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+      --pull-right-value: 0px;
     }
 
     [data-novablocks-alignment="pull-left"] {
@@ -370,6 +401,14 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       --minimum-sidebar-width: var(--minimum-sidebar-right-width);
       @include pull-align-item(right, true, false);
     }
+  
+    [data-align="left"][class] {
+      --pull-left-value: 0px;
+    }
+  
+    [data-align="right"][class] {
+      --pull-right-value: 0px;
+    }
   }
 }
 
@@ -379,32 +418,62 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     
     .alignfull,
     [data-align='full'] {
-      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
+      --pull-left-value: 0px;
       --pull-right-value:var(--full-pull-value);
     }
     
     .alignwide,
     [data-align='wide']{
-      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+      --pull-left-value: 0px;
       --pull-right-value: 0px;
     }
     
     [data-novablocks-alignment="pull-left"] {
       --minimum-sidebar-width: var(--minimum-sidebar-left-width);
-      @include pull-align-item(left, true, false);
+      @include pull-align-item(left, false, false);
     }
     
     [data-novablocks-alignment="pull-right"] {
       --minimum-sidebar-width: var(--minimum-sidebar-right-width);
       @include pull-align-item(right, false, false);
     }
+  
+    [data-align="left"][class] {
+      --pull-left-value: 0px;
+    }
+  
+    [data-align="right"][class] {
+      --pull-right-value: 0px;
+    }
   }
 }
 
-.wp-block[data-align=wide] {
+.novablocks-sidecar--complex {
   
-  &[class][class][class] {
-    max-width: none !important;
+  .novablocks-content {
+    
+    .alignfull,
+    [data-align='full'] {
+      --pull-left-value: 0px;
+      --pull-right-value: 0px;
+    }
+  
+    .alignwide,
+    [data-align='wide']{
+      --pull-left-value: 0px;
+      --pull-right-value: 0px;
+    }
+  
+    [data-novablocks-alignment="pull-left"] {
+      --minimum-sidebar-width: var(--minimum-sidebar-left-width);
+      @include pull-align-item(left, false, false);
+    }
+  
+    [data-novablocks-alignment="pull-right"] {
+      --minimum-sidebar-width: var(--minimum-sidebar-right-width);
+      @include pull-align-item(right, false, false);
+    }
+    
   }
 }
 
@@ -449,5 +518,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     [data-align="right"] {
       margin-right: calc(-1 * var(--pull-right-value, 0px));
     }
+  }
+}
+
+[data-type="novablocks/sidecar-area"] {
+  
+  [data-align="full"] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
