@@ -277,25 +277,55 @@ export const getContentVariation = ( attributes ) => {
   return paletteVariation;
 }
 
-export const getContentVariationBySignal = ( props ) => {
+export const getVariationFromSignal = ( signal ) => {
 
+  if ( signal === 1 ) {
+    return 3;
+  }
+
+  if ( signal === 2 ) {
+    return 6;
+  }
+
+  if ( signal === 3 ) {
+    return 10;
+  }
+
+  return 1;
+}
+
+export const getSignalFromVariation = ( variation ) => {
+
+  if ( variation === 1 ) {
+    return 0;
+  }
+
+  if ( variation < 5 ) {
+    return 1;
+  }
+
+  if ( variation < 9 ) {
+    return 2;
+  }
+
+  return 3;
+}
+
+export const getContentVariationBySignal = ( props ) => {
   const { attributes } = props;
   const { contentSignal } = attributes;
   const actualBlockVariation = getAbsoluteColorVariation( props );
+  const blockSignal = getSignalFromVariation( actualBlockVariation );
 
-  if ( contentSignal === 1 ) {
-    return Math.max( 1, actualBlockVariation - 2 );
-  }
+  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
+    return index === blockSignal ? actualBlockVariation : getVariationFromSignal( index );
+  } );
 
-  if ( contentSignal === 2 ) {
-    return Math.min( 12, actualBlockVariation + 5 );
-  }
+  variationOptions.sort( ( variation1, variation2 ) => {
+    return Math.abs( actualBlockVariation - variation1 ) < Math.abs( actualBlockVariation - variation2 ) ? -1 : 1;
+  } );
 
-  if ( contentSignal === 3 ) {
-    return Math.min( 12, actualBlockVariation + 7 );
-  }
-
-  return actualBlockVariation;
+  return variationOptions[ contentSignal ];
 }
 
 export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
@@ -405,40 +435,6 @@ export const getAlignFromMatrix = ( alignMatrixValue ) => {
   const align = alignMatrixValue.split( /\b\s+/ );
 
   return [ align[0], align[1] || 'center' ];
-}
-
-export const getVariationFromSignal = ( signal ) => {
-
-  if ( signal === 1 ) {
-    return 3;
-  }
-
-  if ( signal === 2 ) {
-    return 6;
-  }
-
-  if ( signal === 3 ) {
-    return 10;
-  }
-
-  return 1;
-}
-
-export const getSignalFromVariation = ( variation ) => {
-
-  if ( variation === 1 ) {
-    return 0;
-  }
-
-  if ( variation < 5 ) {
-    return 1;
-  }
-
-  if ( variation < 9 ) {
-    return 2;
-  }
-
-  return 3;
 }
 
 export const isFunctionalPalette = palette => {
