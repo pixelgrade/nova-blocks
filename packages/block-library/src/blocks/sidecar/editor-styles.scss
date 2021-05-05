@@ -32,7 +32,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     &:not([data-type="novablocks/sidecar"]),
     &:not([data-align="full"]),
     &:not([data-align="wide"]) {
-      max-width: calc(var(--novablocks-final-content-width) + var(--wd)) !important;
+      max-width: calc(var(--novablocks-final-content-width) + var(--wd) + var(--grid-gap) * 2) !important;
     }
   }
   
