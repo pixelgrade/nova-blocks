@@ -68,6 +68,20 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     margin-right: calc(-1 * var(--pull-right-value, 0px));
   }
   
+  > [data-novablocks-alignment="pull-right"] {
+    @include pull-align-item(right, true, true);
+    right: 0;
+    left: unset !important;
+    padding-left: var(--grid-gap);
+  }
+  
+  > [data-novablocks-alignment="pull-left"] {
+    @include pull-align-item(left, true, true);
+    left: 0;
+    right: unset !important;
+    padding-right: var(--grid-gap);
+  }
+  
   // Markup is different compared to front-end,
   // and because of that, the last block is
   // currently not sticky inside the editor.
