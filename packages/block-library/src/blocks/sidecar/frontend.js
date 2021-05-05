@@ -1,6 +1,6 @@
 import { debounce, below } from "@novablocks/utils";
 
-const sidecars = document.querySelectorAll(".novablocks-sidecar");
+const sidecars = document.querySelectorAll(".novablocks-sidecar:not(.ignore-block)");
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
@@ -35,7 +35,6 @@ const handleSidecarTransformations = function() {
     let content = sidecar.querySelector( ".novablocks-content" ),
       pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( 'align-pull-right' ) || block.classList.contains( 'align-pull-left' ) ),
       sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
-      sidecarIsNested = sidecar.parentElement.classList.contains( 'novablocks-content' ) && !sidecar.parentElement.parentElement.classList.contains( 'ignore-block' ),
       sidebarBlocks = Array.from( sidecar.querySelectorAll( ".novablocks-sidebar" ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
       allContentBlocks = Array.from( sidecar.querySelectorAll( '.novablocks-content' ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
       alignedContentBlocks = allContentBlocks.filter( block => (
@@ -44,8 +43,6 @@ const handleSidecarTransformations = function() {
       allSidebarBlocks = sidebarBlocks.concat( pulledBlocks ),
       // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
       sidebarContentOverlapBlocks = generateOverlappingBlocks( allSidebarBlocks, alignedContentBlocks );
-
-    console.log(sidebarContentOverlapBlocks);
 
     sidebarContentOverlapBlocks.forEach( block => {
 
