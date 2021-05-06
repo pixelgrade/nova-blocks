@@ -438,7 +438,8 @@ export const getAlignFromMatrix = ( alignMatrixValue ) => {
 }
 
 export const isFunctionalPalette = palette => {
-  return palette.label.charAt(0) === '_';
+  const id = palette.id + '';
+  return id.charAt(0) === '_';
 }
 
 export const mapPalettesToColorPalette = palette => {

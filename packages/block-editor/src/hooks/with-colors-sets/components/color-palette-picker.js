@@ -2,11 +2,11 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
-  disableFunctionalColorsOnBlocks,
   getAttributesFromSignal,
   getSignalFromVariation,
 
   getCurrentPalette,
+  isFunctionalPalette,
 } from "@novablocks/utils";
 
 const ColorPalettePicker = ( props ) => {
@@ -16,7 +16,8 @@ const ColorPalettePicker = ( props ) => {
     setAttributes,
     settings: {
       palettes,
-    }
+    },
+    showFunctionalColors,
   } = props;
 
   const {
@@ -25,13 +26,17 @@ const ColorPalettePicker = ( props ) => {
     useSourceColorAsReference,
   } = attributes;
 
-  const disableFunctionalColors = disableFunctionalColorsOnBlocks.includes( props.name );
   const currentPalette = getCurrentPalette( props );
+
+  const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) );
+  const brandColors = palettes.filter( palette => ! isFunctionalPalette( palette ) );
+
+  const visiblePalattes = showFunctionalColors ? functionalColors : brandColors;
 
   return (
     <div className="components-base-control color-palette-picker">
       <div className="color-palette-picker__palettes">
-        { palettes.map( thisPalette => {
+        { visiblePalattes.map( thisPalette => {
           const colors = thisPalette.source || [];
           const isSelected = palette === thisPalette.id;
           const isSourceSelected = ( isSelected && paletteVariation === 1 && useSourceColorAsReference );
