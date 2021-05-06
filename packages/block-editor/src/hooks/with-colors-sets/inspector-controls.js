@@ -1,10 +1,11 @@
-import { useMemoryState } from '../../components';
 import { normalizeVariationValue } from "@novablocks/utils";
+import { useMemoryState } from "../../components";
 
 import {
   ToggleControl,
 } from "@wordpress/components";
 
+import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 import {
@@ -51,7 +52,7 @@ const ColorSetControls = ( props ) => {
 
   const actualBlockVariation = getAbsoluteColorVariation( props );
   const initialSignal = getSignalFromVariation( actualBlockVariation );
-  const [ showFunctional, setShowFunctional ] = useMemoryState( false );
+  const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
 
   return (
     <ControlsSection label={ __( 'Color Signal' ) }>
@@ -81,12 +82,12 @@ const ColorSetControls = ( props ) => {
                          } } />
         </ControlsGroup>
         <ControlsGroup>
-          <ColorPalettePicker showFunctionalColors={ showFunctional } { ...props } label={ 'Color Palette' } />
+          <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } />
         </ControlsGroup>
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>
         <ControlsGroup>
-          <ColorPalettePicker showFunctionalColors={ showFunctional } { ...props } label={ 'Color Palette' } />
+          <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } />
         </ControlsGroup>
         <ControlsGroup>
           <ColorGradesControl { ...props }
@@ -98,7 +99,7 @@ const ColorSetControls = ( props ) => {
                                 } )
                               } } />
         </ControlsGroup>
-        <MiscellanousControls { ...props } showFunctional={ showFunctional } setShowFunctional={ setShowFunctional } />
+        <MiscellanousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />
       </ControlsTab>
     </ControlsSection>
   )
@@ -112,8 +113,8 @@ const MiscellanousControls = ( props ) => {
     settings: {
       palettes,
     },
-    showFunctional,
-    setShowFunctional
+    showFunctionalColors,
+    setShowFunctionalColors
   } = props;
 
   const {
@@ -129,8 +130,8 @@ const MiscellanousControls = ( props ) => {
     <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
       { ! disableFunctionalColors && <ToggleControl
         label={ __( 'Show Functional Colors', '__plugin_txtd' ) }
-        checked={ showFunctional }
-        onChange={ value => { setShowFunctional( value ) } }
+        checked={ showFunctionalColors }
+        onChange={ value => { setShowFunctionalColors( value ) } }
       /> }
       <ToggleControl
         key={ 'color-set-use-source-as-reference-control' }

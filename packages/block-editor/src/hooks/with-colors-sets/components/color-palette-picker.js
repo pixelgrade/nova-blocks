@@ -9,6 +9,8 @@ import {
   isFunctionalPalette,
 } from "@novablocks/utils";
 
+import { useMemoryState } from "../../../components";
+
 const ColorPalettePicker = ( props ) => {
 
   const {
@@ -17,7 +19,7 @@ const ColorPalettePicker = ( props ) => {
     settings: {
       palettes,
     },
-    showFunctionalColors,
+    showFunctionalColors
   } = props;
 
   const {
@@ -49,7 +51,7 @@ const ColorPalettePicker = ( props ) => {
           );
 
           return (
-            <button className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
+            <button key={ thisPalette.id } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
               const nextVariation = ( isSelected || useSourceColorAsReference ) ? ( currentPalette.sourceIndex + 1 ) : paletteVariation;
               const signal = getSignalFromVariation( nextVariation );
               const newAttributes = getAttributesFromSignal( signal, thisPalette, nextVariation );
