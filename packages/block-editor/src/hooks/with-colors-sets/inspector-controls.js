@@ -5,7 +5,6 @@ import {
   ToggleControl,
 } from "@wordpress/components";
 
-import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 import {
@@ -129,7 +128,7 @@ const MiscellanousControls = ( props ) => {
   return (
     <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
       { ! disableFunctionalColors && <ToggleControl
-        label={ __( 'Show Functional Colors', '__plugin_txtd' ) }
+        label={ __( 'Use Functional Colors', '__plugin_txtd' ) }
         checked={ showFunctionalColors }
         onChange={ value => { setShowFunctionalColors( value ) } }
       /> }
