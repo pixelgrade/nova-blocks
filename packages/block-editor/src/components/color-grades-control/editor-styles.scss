@@ -34,6 +34,10 @@
     padding-top: 150%;
   }
 
+  &:hover {
+    z-index: 50;
+  }
+
   &--selected {
     cursor: default;
   }
@@ -48,6 +52,7 @@
   box-shadow: rgba(0,0,0,0.05) 0 0 0 1px inset;
   background: var(--sm-current-bg-color);
 
+  .nb-palette__grade:hover &,
   .nb-palette__grade--selected & {
     top: -7px;
     bottom: -7px;
@@ -57,7 +62,7 @@
     z-index: 20;
   }
 
-  .nb-palette__grade--source:not(.nb-palette__grade--selected) & {
+  .nb-palette__grade--source:not(:hover):not(.nb-palette__grade--selected) & {
     background: none;
     box-shadow: none;
   }
@@ -75,7 +80,7 @@
     display: block;
   }
 
-  .nb-palette__grade--source:not(.nb-palette__grade--selected) & {
+  .nb-palette__grade--source:not(:hover):not(.nb-palette__grade--selected) & {
     color: var(--sm-current-bg-color);
   }
 }
