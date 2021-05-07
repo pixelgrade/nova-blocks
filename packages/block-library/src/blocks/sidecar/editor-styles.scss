@@ -72,6 +72,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     padding-right: 0;
   }
   
+  > * {
+    z-index: 1;
+  }
+  
   > :first-child {
     grid-column: var(--all-columns) !important;
   }
@@ -375,7 +379,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 // for Image Block.
 
 [data-align="left"],
-[data-align="right"] {
+[data-align="right"],
+.novablocks-sidebar {
   
   .wp-block-image {
     margin-left: 0 !important;
