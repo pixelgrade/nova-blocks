@@ -3,7 +3,6 @@
  */
 import iconSvg from './posts-collection-block.svg';
 import edit from './edit';
-import transforms from './transforms';
 import variations from './variations';
 
 /**
@@ -19,7 +18,7 @@ import attributes from "./attributes";
 import { Collection } from "@novablocks/collection";
 
 registerBlockType( 'novablocks/posts-collection', {
-	title: __( 'Posts Collection (Deprecated)', '__plugin_txtd' ),
+	title: __( 'Posts Collection', '__plugin_txtd' ),
 	description: __( 'Show Latest Posts', '__plugin_txtd' ),
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
@@ -32,7 +31,6 @@ registerBlockType( 'novablocks/posts-collection', {
 	save() {
 		return <InnerBlocks.Content />;
 	},
-  transforms,
 	getEditWrapperProps() {
 		const settings = wp.data.select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};

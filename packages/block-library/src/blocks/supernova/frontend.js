@@ -1,1 +1,0 @@
-import '@novablocks/collection/frontend';

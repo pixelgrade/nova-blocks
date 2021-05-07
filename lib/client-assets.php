@@ -234,13 +234,11 @@ function novablocks_register_block_types() {
 	$advanced_gallery_style_dependent_blocks = array(
 		'advanced-gallery',
 		'media',
-		'supernova',
 	);
 
 	$collection_style_dependent_blocks = array(
 		'cards-collection',
 		'posts-collection',
-		'supernova'
 	);
 
 

@@ -19,8 +19,6 @@ const enableColorSetControls = [
   'novablocks/media',
   'novablocks/cards-collection',
   'novablocks/posts-collection',
-  'novablocks/supernova',
-  'novablocks/supernova-item',
 
   'core/group',
 ];

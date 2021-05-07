@@ -5,7 +5,6 @@ import iconSvg from './hero-block.svg';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import transforms from './transforms';
 
 import { getRandomBetween } from "@novablocks/utils";
 import { getSvg } from "@novablocks/block-editor";
@@ -53,7 +52,7 @@ generateDefaults( 'novablocks/hero', getNewDefaults );
 insertTemplate( 'novablocks/hero', settings.hero.template );
 
 registerBlockType( 'novablocks/hero', {
-	title: __( 'Hero of the Galaxy (Deprecated)', '__plugin_txtd' ),
+	title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
 	description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
@@ -76,5 +75,4 @@ registerBlockType( 'novablocks/hero', {
 		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
-  transforms
 } );
