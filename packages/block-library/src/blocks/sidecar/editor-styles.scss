@@ -364,3 +364,18 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 [data-type="novablocks/posts-collection"] {
   grid-column: var(--all-columns) !important;
 }
+
+[data-align="left"],
+[data-align="right"] {
+  
+  .wp-block-image {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    
+    .components-resizable-box__container {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+  }
+}
