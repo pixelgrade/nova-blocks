@@ -277,6 +277,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
 
 // Block Alignments
+
+// Right Sidebar
 .novablocks-sidecar--sidebar-right {
 
   .novablocks-content {
@@ -298,6 +300,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
+// Left Sidebar
 .novablocks-sidecar--sidebar-left {
   
   .novablocks-content {
@@ -327,6 +330,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
+// Two Sidebars
 .novablocks-sidecar--complex {
   
   .novablocks-content {
@@ -361,9 +365,14 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 }
 
+// We want Posts Collection
+// to span on all columns.
 [data-type="novablocks/posts-collection"] {
   grid-column: var(--all-columns) !important;
 }
+
+// Remove resizable component behaviour
+// for Image Block.
 
 [data-align="left"],
 [data-align="right"] {
