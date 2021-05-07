@@ -505,6 +505,10 @@ export const getCurrentPalette = ( props ) => {
 
 export const getAbsoluteColorVariation = ( props ) => {
 
+  if ( ! props?.settings?.customify_config ) {
+    debugger;
+  }
+
   const {
     settings: {
       customify_config

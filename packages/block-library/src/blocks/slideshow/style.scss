@@ -24,6 +24,10 @@
 
 .novablocks-slideshow__background {
   background-color: var(--novablocks-bg-color);
+
+  > .novablocks-doppler__mask {
+    @include cover;
+  }
 }
 
 .novablocks-slideshow__slide-wrap {

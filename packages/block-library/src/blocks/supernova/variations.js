@@ -142,7 +142,7 @@ const variations = [
       columns: 3,
 
       cardLayout: 'vertical',
-      cardContentAlign: 'center left',
+      cardContentAlign: 'top left',
       cardMediaOpacity: 100,
     },
     innerBlocks: [
