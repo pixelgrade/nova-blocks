@@ -7,86 +7,59 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   --inspector-controls-width: 280px;
 }
 
-.is-sidebar-opened {
-  
-  .novablocks-sidecar {
-    --full-pull-value: calc(var(--novablocks-final-excess-width) * 0.5 - var(--inspector-controls-width) * 0.5);
-  }
-}
-
 .block-editor-block-list__layout.is-root-container {
   @include layout-grid;
   @include layout-settings;
   
-  display: block !important;
-  
   @import 'scss/block-limits';
-  
-  grid-auto-flow: row dense;
-  
-  .wp-block[data-align='wide'] {
-    max-width: 100% !important;
-  }
-  
-  >  * {
-    &:not([data-type="novablocks/sidecar"]),
-    &:not([data-align="full"]),
-    &:not([data-align="wide"]) {
-      max-width: calc(var(--novablocks-final-content-width) + var(--wd) + var(--grid-gap) * 2) !important;
-    }
-  }
-  
-  [data-type="novablocks/sidecar-area"] {
-    width: 100% !important;
-  }
-  
-  > [data-align="full"][class]  {
-    max-width: 100vw !important;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  > [data-align="wide"][class] {
-    max-width: calc(var(--novablocks-final-content-width) + var(--wd) * 2 + var(--grid-gap) * 4) !important;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  > [data-align="left"] {
-    --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-  }
-  
-  > [data-align="right"]  {
-    --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-  }
-  
-  > [data-align="left"] > figure  {
-    margin-left: calc(-1 * var(--pull-left-value, 0px));
-  }
-  
-  > [data-align="right"] > figure  {
-    margin-right: calc(-1 * var(--pull-right-value, 0px));
-  }
-  
-  > [data-novablocks-alignment="pull-right"] {
-    @include pull-align-item(right, true, true);
-    right: 0;
-    left: unset !important;
-    padding-left: var(--grid-gap);
-  }
-  
-  > [data-novablocks-alignment="pull-left"] {
-    @include pull-align-item(left, true, true);
-    left: 0;
-    right: unset !important;
-    padding-right: var(--grid-gap);
-  }
   
   // Markup is different compared to front-end,
   // and because of that, the last block is
   // currently not sticky inside the editor.
   .last-block-is-sticky > :last-child {
     z-index: 1;
+  }
+  
+  > * {
+    width: 100%;
+    
+    grid-column: var(--block-content-start) / var(--block-content-end);
+    align-self: flex-start;
+  }
+  
+  .wp-block {
+    
+    &[data-align=wide],
+    &[data-align=full] {
+      max-width: 100%;
+    }
+  }
+  
+  [data-align="left"],
+  [data-novablocks-alignment="pull-left"],
+  [data-align="right"],
+  [data-novablocks-alignment="pull-right"] {
+    grid-row: span 3;
+  }
+  
+  [data-align="left"],
+  [data-novablocks-alignment="pull-left"] {
+    --block-content-start: ws;
+    --block-content-end: gs;
+  }
+  
+  [data-align="right"],
+  [data-novablocks-alignment="pull-right"] {
+    --block-content-start: ge;
+    --block-content-end: we;
+  }
+  
+  [data-type="novablocks/sidecar"] {
+    grid-column: var(--all-columns);
+  }
+  
+  [data-align="left"] + * {
+    --block-content-start: cs;
   }
 }
 
@@ -97,6 +70,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   [class*='__inner-container']:not(.novablocks-card__layout-content) {
     padding-left: 0;
     padding-right: 0;
+  }
+  
+  > :first-child {
+    grid-column: var(--all-columns) !important;
   }
 }
 
@@ -158,7 +135,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       // Sidebar
       > :last-child {
         grid-column: var(--block-limit-left)/gs;
-        z-index: 2;
       }
     }
   }
@@ -208,10 +184,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       // Sidebar Right
       >:last-child {
         grid-column: ge/var(--block-limit-right);
-        
-        // We need this z-index, to make sure that
-        // we can select blocks that are inside the sidebar.
-        z-index: 2;
       }
     }
   }
@@ -279,34 +251,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
 .novablocks-content {
   
-  #{$grid-selector} {
+  > #{$grid-selector} {
+    
+    @include layout-grid;
   
-    > .alignfull,
-    [data-align="full"] {
-      margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
-      margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
-    }
-  
-    > .alignwide,
-    [data-align="wide"] {
-      margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
-      margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
-    }
-  
-    // Pull Left and Right value are very specific
-    // and to reach that level of specificity
-    // a lot of classes will be needed. Because of that,
-    // we have choose to use !important in this case.
-    // Just because, whenever this class exist,
-    // we want this CSS to be applied.
-    .stop-right,
-    .stop-right *{
-      --pull-right-value: 0px !important;
-    }
-  
-    .stop-left,
-    .stop-left *{
-      --pull-left-value: 0px !important;
+    > * {
+      grid-column: var(--block-content-start)/var(--block-content-end);
+      width: 100%;
     }
   }
   
@@ -320,32 +271,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
 }
 
-[data-type='novablocks/sidecar'] {
-  
-  [data-align='full'] {
-    --block-content-start: ws;
-  }
-  
-  [data-type='novablocks/sidecar'] {
-  
-    .novablocks-content {
-      [data-align='full'],
-      [data-align='wide'] {
-        --block-content-start: cs;
-        --block-content-end: ce;
-      }
-    }
-  }
-  
-  .novablocks-sidecar--sidebar-left {
-  
-    [data-align='full'] {
-      --block-content-start: cs;
-      --block-content-end: we;
-    }
-  }
-}
-
 .novablocks-content > #{$grid-selector} > * {
   z-index: 1;
 }
@@ -355,35 +280,20 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-sidecar--sidebar-right {
 
   .novablocks-content {
-
-    .alignfull,
-    [data-align='full'] {
-      --pull-left-value: var(--full-pull-value);
-      --pull-right-value: 0px;
-    }
-
-    .alignwide,
-    [data-align='wide']{
-      --pull-left-value: 0px;
-      --pull-right-value: 0px;
-    }
-
-    [data-novablocks-alignment="pull-left"] {
-      --minimum-sidebar-width: var(--minimum-sidebar-left-width);
-      @include pull-align-item(left, false, false);
+  
+    [data-align="full"],
+    [data-align="wide"] {
+      --block-content-end: ce;
     }
   
-    [data-novablocks-alignment="pull-right"] {
-      --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-      @include pull-align-item(right, false, false);
-    }
-  
-    [data-align="left"][class] {
-      --pull-left-value: 0px;
-    }
-  
-    [data-align="right"][class] {
-      --pull-right-value: 0px;
+    [data-novablocks-alignment="pull-left"],
+    [data-align="left"] {
+      --block-content-start: ge;
+      --block-content-end: we;
+    
+      + *:not([class*='align']):not([data-novablocks-alignment]) {
+        --block-content-end: ce;
+      }
     }
   }
 }
@@ -392,34 +302,27 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   .novablocks-content {
     
-    .alignfull,
-    [data-align='full'] {
-      --pull-left-value: 0px;
-      --pull-right-value:var(--full-pull-value);
-    }
-    
-    .alignwide,
-    [data-align='wide']{
-      --pull-left-value: 0px;
-      --pull-right-value: 0px;
-    }
-    
-    [data-novablocks-alignment="pull-left"] {
-      --minimum-sidebar-width: var(--minimum-sidebar-left-width);
-      @include pull-align-item(left, false, false);
-    }
-    
-    [data-novablocks-alignment="pull-right"] {
-      --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-      @include pull-align-item(right, false, false);
+    [data-align="full"],
+    [data-align="wide"] {
+      --block-content-start: cs;
     }
   
-    [data-align="left"][class] {
-      --pull-left-value: 0px;
+    [data-novablocks-alignment="pull-left"],
+    [data-align="left"] {
+      --block-content-start: ge;
+      --block-content-end: we;
+      
+      + *:not([class*='align']):not([data-novablocks-alignment]) {
+        --block-content-end: ce;
+      }
     }
   
-    [data-align="right"][class] {
-      --pull-right-value: 0px;
+    [data-novablocks-alignment="pull-right"],
+    [data-align="right"] {
+    
+      + *:not([class*='align']):not([data-novablocks-alignment]) {
+        --block-content-end: ce;
+      }
     }
   }
 }
@@ -427,84 +330,37 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-sidecar--complex {
   
   .novablocks-content {
-    
-    .alignfull,
-    [data-align='full'] {
-      --pull-left-value: 0px;
-      --pull-right-value: 0px;
-    }
   
-    .alignwide,
-    [data-align='wide']{
-      --pull-left-value: 0px;
-      --pull-right-value: 0px;
+    [data-align="full"],
+    [data-align="wide"] {
+      --block-content-start: cs;
+      --block-content-end: ce;
     }
   
     [data-novablocks-alignment="pull-left"] {
-      --minimum-sidebar-width: var(--minimum-sidebar-left-width);
-      @include pull-align-item(left, false, false);
+      --block-content-start: ws;
+      --block-content-end: gs;
     }
   
     [data-novablocks-alignment="pull-right"] {
-      --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-      @include pull-align-item(right, false, false);
+      --block-content-start: ge;
+      --block-content-end: we;
     }
     
   }
 }
 
-.novablocks-sidecar {
+.novablocks-content {
   
-  &:not(.novablocks-sidecar--sidebar-left) {
-    
-    &.novablocks-sidebar--medium {
-      
-      > #{$grid-selector} {
-        --sidebar-right-size-modifier: 1.3;
-      }
+  .novablocks-content {
+  
+    [data-novablocks-alignment="pull-left"] {
+      --block-content-start: ws;
+      --block-content-end: gs;
     }
   }
 }
 
-.novablocks-sidecar.novablocks-sidecar--sidebar-left {
-  
-  &.novablocks-sidebar--medium {
-    
-    > #{$grid-selector} {
-      --sidebar-left-size-modifier: 1.3;
-    }
-  }
-}
-
-@include above(lap) {
-  .novablocks-content[class] {
-    
-    [data-align="left"] {
-      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-    }
-  
-    [data-align="right"] {
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-    }
-  
-    [data-align="left"] {
-      margin-left: calc(-1 * var(--pull-left-value, 0px));
-    }
-  
-    [data-align="right"] {
-      margin-right: calc(-1 * var(--pull-right-value, 0px));
-    }
-  }
-}
-
-[data-type="novablocks/sidecar-area"] {
-  
-  [data-type="novablocks/posts-collection"] {
-  
-    &,
-    [data-align="full"] {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-  }
+[data-type="novablocks/posts-collection"] {
+  grid-column: var(--all-columns) !important;
 }

@@ -31,6 +31,7 @@ const SidecarInspectorControls = ( props ) => {
             [
               { label: 'Small', value: 'small' },
               { label: 'Medium', value: 'medium' },
+              { label: 'Large', value: 'large' },
             ]
           }
           onChange={ ( nextSidebarWidth ) => {

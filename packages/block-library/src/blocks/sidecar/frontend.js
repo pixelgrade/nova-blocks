@@ -46,8 +46,10 @@ const handleSidecarTransformations = function() {
       return;
     }
 
+    console.log(content);
+
     let content = sidecar.querySelector( ".novablocks-content" ),
-      pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( 'align-pull-right' ) || block.classList.contains( 'align-pull-left' ) ),
+      pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( 'pull-right' ) || block.classList.contains( 'pull-left' ) ),
       sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
       sidebarBlocks = Array.from( sidecar.querySelectorAll( ".novablocks-sidebar" ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
       allContentBlocks = Array.from( sidecar.querySelectorAll( '.novablocks-content' ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
@@ -62,11 +64,11 @@ const handleSidecarTransformations = function() {
 
       let noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
-      if ( block.classList.contains( 'align-pull-right' ) ) {
+      if ( block.classList.contains( 'pull-right' ) ) {
         noCollisionClass = BREAK_RIGHT_CLASS;
       }
 
-      if ( block.classList.contains( 'align-pull-left' ) ) {
+      if ( block.classList.contains( 'pull-left' ) ) {
         noCollisionClass = BREAK_LEFT_CLASS;
       }
 
@@ -79,7 +81,7 @@ const handleSidecarTransformations = function() {
 
     sidebarPullOverlapBlocks.forEach( block => {
 
-      let noCollisionClass = block.classList.contains( 'align-pull-left' ) ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      let noCollisionClass = block.classList.contains( 'pull-left' ) ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
       block.classList.add( noCollisionClass );
     } )
@@ -120,7 +122,7 @@ function sidecarTransformationsInCustomizer() {
 
 function recalculateOverlappedBlocks( sidecar, blocks ) {
 
-  const hasBreakingClass = Array.from( sidecar.querySelectorAll( '.stop-left:not(.align-pull-left), .stop-right:not(.align-pull-right)' ) );
+  const hasBreakingClass = Array.from( sidecar.querySelectorAll( '.stop-left:not(.pull-left), .stop-right:not(.pull-right)' ) );
 
   hasBreakingClass.forEach( block => {
 
@@ -130,6 +132,26 @@ function recalculateOverlappedBlocks( sidecar, blocks ) {
   } )
 }
 
+function moveImageClassesToBlock() {
+
+  // Select all Block Images inside Content.
+  let blockImages = Array.from(document.querySelectorAll(".novablocks-content > .wp-block-image:not([class*='align'])"));
+
+  blockImages.forEach( block => {
+
+    let image = block.querySelector('figure');
+    let classList = image.classList;
+
+    // Add classes to block.
+    block.classList.add(...classList);
+
+    // Remove classes from image.
+    image.classList.remove(...classList);
+  })
+
+}
+
+window.addEventListener('DOMContentLoaded', moveImageClassesToBlock);
 window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
 window.addEventListener('DOMContentLoaded', sidecarTransformationsInCustomizer);
 window.addEventListener('resize', debouncedSidecarTransformations );

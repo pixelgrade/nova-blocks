@@ -7,13 +7,35 @@
   @include layout-settings;
 }
 
-.novablocks-sidecar {
+.novablocks-sidecar,
+.novablocks-content {
   position: relative;
   @include layout-grid;
   align-items: start;
 }
 
+.novablocks-content {
+  
+  grid-column: var(--all-columns);
+  
+  --block-content-end: ce;
+  
+  > * {
+    grid-column: var(--block-content-start)/var(--block-content-end);
+  }
+  
+  // Collections are coming with .alignfull,
+  // to help us with background-color.
+  // Neste in Collection Block is an inner-container
+  // which will be treated as a grid too.
+  > .novablocks-collection {
+    grid-column: var(--all-columns);
+  }
+}
+
 .novablocks-sidecar {
+  
+  grid-column: var(--all-columns) !important;
   
   > * {
     grid-row: 1;
@@ -25,7 +47,7 @@
   // is given by layout block alignment.
   // Sidebar will always start at CE and will end
   // at block limit on the right.
-  --block-content-end: ce;
+  //--block-content-end: ce;
   
   // Sidebar Left with Content on the Right Layout.
   // Content will always start at CS and it
@@ -69,6 +91,10 @@
   grid-column: ge/var(--block-limit-right);
   
   height: 100%;
+  
+  > * {
+    z-index: 1;
+  }
 }
 
 // Apply top and bottom spacing
@@ -134,11 +160,29 @@
   }
 }
 
+.novablocks-sidebar--large {
+  
+  &:not(.novablocks-sidecar--sidebar-left),
+  .novablocks-sidecar,
+  .wp-block-group__inner-container {
+    --minimum-sidebar-right-width: var(--default-width-large-sidebar);
+  }
+  
+  &.novablocks-sidecar--sidebar-left {
+    
+    &,
+    .novablocks-sidecar,
+    .wp-block-group__inner-container {
+      --minimum-sidebar-left-width: var(--default-width-large-sidebar);
+    }
+  }
+}
+
 .wp-block-group__inner-container {
   @include layout-grid;
   
   > * {
-    grid-column: var(--block-content-start)/var(--block-limit-right);
+    grid-column: var(--block-content-start)/var(--block-content-end);
   }
 }
 
@@ -150,62 +194,10 @@
   }
 }
 
-.novablocks-sidebar--medium {
-  --sidebar-medium-addon-width: calc((max(var(--minimum-sidebar-width), var(--wd)) * 0.3) * 0.5);
-  --sidebar-right-addon-width: var(--sidebar-medium-addon-width);
-  --sidebar-addon: var(--sidebar-right-addon-width);
+.novablocks-sidecar--sidebar-left {
   
-  &.novablocks-sidecar--sidebar-left {
-    --sidebar-right-addon-width: var(--sidebar-medium-addon-width);
-    --sidebar-addon: var(--sidebar-left-addon-width);
-  }
-}
-
-.novablocks-sidecar {
-  
-  &.novablocks-sidebar--medium {
+  .novablocks-content {
     
-    &,
-    .novablocks-sidecar {
-      --sidebar-right-size-modifier: 1.3;
-    }
-  }
-}
-
-.novablocks-sidecar:not(.ignore-block) {
-  
-  &:not(.novablocks-sidecar--sidebar-left) {
-  
-    &.novablocks-sidebar--medium {
-      --sidebar-right-size-modifier: 1.3;
-    }
-  }
-  
-  &.novablocks-sidecar--sidebar-left {
-  
-    &.novablocks-sidebar--medium {
-      --sidebar-left-size-modifier: 1.3;
-    }
-  }
-}
-
-@include above(lap) {
-  .novablocks-content[class] {
-    
-    .alignleft {
-      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-    }
-    
-    .alignright {
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-    }
-    
-    .alignleft {
-      margin-left: calc(-1 * var(--pull-left-value, 0px));
-    }
-    
-    .alignright {
-      margin-right: calc(-1 * var(--pull-right-value, 0px));
-    }
+    --block-content-end: var(--block-limit-right);
   }
 }

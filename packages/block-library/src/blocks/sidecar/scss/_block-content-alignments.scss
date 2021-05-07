@@ -19,11 +19,47 @@
 .stop-left * {
   --block-content-start: cs;
 }
-// Default values used for alignments
-.novablocks-sidecar {
-  --full-pull-value:  calc(var(--novablocks-final-excess-width) * 0.5);
-  --pull-left-value: 0px;
-  --pull-right-value: 0px;
+
+.alignleft,
+.pull-left,
+[data-novablocks-alignment='pull-left'] {
+    
+  --block-content-start: ws;
+  --block-content-end: gs;
+
+  &.stop-left {
+  
+    --block-content-start: ge;
+    --block-content-end: we;
+  
+    + *:not([class*='align']) {
+      --block-content-end: ce;
+    }
+  }
+}
+
+.alignright,
+.pull-right,
+[data-novablocks-alignment='pull-right'] {
+  
+  --block-content-start: ge;
+  --block-content-end: we;
+
+  &.stop-right {
+    --block-content-start: ws;
+    --block-content-end: gs;
+  
+    + *:not([class*='align']) {
+      --block-content-start: cs;
+    }
+  }
+}
+
+.alignright,
+.alignleft,
+.pull-right,
+.pull-left {
+  grid-row-end: span 3;
 }
 
 // ALIGNMENTS
@@ -50,56 +86,9 @@
 // Proceed with caution!
 
 .novablocks-content {
-  
   display: block;
   grid-column: var(--block-content-start)/var(--block-content-end);
   position: relative;
-  
-  > .alignfull {
-    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
-    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
-  }
-  
-  > .alignwide {
-    margin-right: calc(-1 * Max(0px, var(--pull-right-value)));
-    margin-left: calc(-1 * Max(0px, var(--pull-left-value)));
-  }
-  
-  // Pull Left and Right value are very specific
-  // and to reach that level of specificity
-  // a lot of classes will be needed. Because of that,
-  // we have choose to use !important in this case.
-  // Just because, whenever this class exist,
-  // we want this CSS to be applied.
-  .stop-right,
-  .stop-right * {
-    --pull-right-value: 0px !important;
-  }
-  
-  .stop-left,
-  .stop-left *{
-    --pull-left-value: 0px !important;
-  }
-}
-
-// NO SIDEBAR
-
-.alignfull {
-  --pull-left-value: calc((max(var(--wd) * var(--sidebar-left-size-modifier), var(--minimum-sidebar-left-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
-  --pull-right-value: calc((max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width))) * 0.5 + var(--full-pull-value) + var(--grid-gap));
-}
-
-.alignwide {
-  --pull-left-value: calc((max(var(--wd) * var(--sidebar-left-size-modifier), var(--minimum-sidebar-left-width))) * 0.5 + var(--grid-gap));
-  --pull-right-value: calc((max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width))) * 0.5 + var(--grid-gap));
-}
-
-.align-pull-right {
-  @include pull-align-item(right, true, true);
-}
-
-.align-pull-left {
-  @include pull-align-item(left, true, true);
 }
 
 // RIGHT SIDEBAR
@@ -108,40 +97,28 @@
   --minimum-sidebar-width: var(--minimum-sidebar-right-width);
   
   .novablocks-content:not(:only-child) {
+
+    // There is not space on the left side,
+    // so we are going to treat pull left as pull right.
+    .pull-left {
+        --block-content-start: ge;
+        --block-content-end: we;
   
-    .alignfull {
-      --pull-left-value: var(--full-pull-value);
-      --pull-right-value: calc((max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
-    }
-    
-    .alignwide {
-      --pull-left-value: 0px;
-      --pull-right-value: calc(max(var(--wd) * var(--sidebar-right-size-modifier), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2 );
-    }
-    
-    .align-pull-left {
-      @include pull-align-item(left, false, false);
-    }
-    
-    .align-pull-right {
-      @include pull-align-item(right, true, false);
-    }
-    
-    .novablocks-block {
-      --pull-left-value: 0px;
-      --pull-right-value: 0px;
-    }
-    
-    // We don't want left aligned
-    // item to be pulled out of content.
-    .alignleft {
-      --pull-left-value: 0px;
-    }
+        + *:not([class*='align']) {
+          --block-content-end: ce;
+        }
+      
+      // In case that there is not enough space,
+      // We are going to treat it as an regular align left
+      // inside content.
+        &.stop-right {
+          --block-content-start: ws;
+          --block-content-end: gs;
   
-    // We don't want right aligned
-    // item to be pulled out of content.
-    .alignright {
-      --pull-right-value: 0px;
+        + *:not([class*='align']) {
+          --block-content-start: cs;
+        }
+      }
     }
   }
 }
@@ -152,28 +129,31 @@
   --minimum-sidebar-width: var(--minimum-sidebar-left-width);
   
   .novablocks-content:not(:only-child) {
+  
+    .pull-right {
     
-    .alignfull {
-      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
-      --pull-right-value: var(--full-pull-value);
-    }
+      &[class*='stop'] {
+        --block-content-start: ge;
+        --block-content-end: we;
+      }
   
-    .alignwide {
-      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
-      --pull-right-value: 0px;
+      + *:not([class*='align']) {
+        --block-content-end: ce;
+      }
     }
+    
+    .pull-left {
+      --block-content-start: ws;
+      --block-content-end: gs;
   
-    .align-pull-left {
-      @include pull-align-item(left, true, false);
-      
+      // There is not space on the left side,
+      // so we are going to treat pull left as pull right.
       &.stop-left {
-        @include pull-align-item(left, false, false);
+        --block-content-start: ge;
+        --block-content-end: we;
       }
     }
   
-    .align-pull-right {
-      @include pull-align-item(right, false, false);
-    }
   }
 }
 
@@ -181,110 +161,98 @@
 .novablocks-sidecar--complex {
   
   .novablocks-content:not(:only-child) {
-    
-    .alignfull {
-      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
-    }
-    
-    .alignwide {
-      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
-      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
+  
+    .pull-left {
+      
+      --block-content-start: ws;
+      --block-content-end: gs;
+  
+      // There is not space on the left side,
+      // so we are going to treat pull left as pull right.
+      &.stop-left {
+        --block-content-start: cs;
+        --block-content-end: ce;
+      }
     }
   
-    .align-pull-left {
-      @include pull-align-item(left, true, false);
+    .pull-right {
+    
+      --block-content-start: ge;
+      --block-content-end: we;
+    
+      // There is not space on the left side,
+      // so we are going to treat pull left as pull right.
+      &.stop-right {
+        --block-content-start: cs;
+        --block-content-end: ce;
+      }
     }
   
-    .align-pull-right {
-      @include pull-align-item(right, true, false);
-    }
   }
 }
 
 // SIDECAR IN SIDECAR
 .novablocks-sidecar:not(.ignore-block) {
   
-  .novablocks-sidecar--sidebar-left {
-    
-    .alignfull {
-      --pull-left-value: calc((max(var(--wd), var(--minimum-sidebar-left-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
-      --pull-right-value: calc((max(var(--wd), var(--minimum-sidebar-right-width))) + var(--full-pull-value) + var(--grid-gap) * 2);
-    }
-    
-    .alignwide {
-      --pull-left-value: calc(max(var(--wd), var(--minimum-sidebar-left-width)) + var(--grid-gap) * 2);
-      --pull-right-value: calc(max(var(--wd), var(--minimum-sidebar-right-width)) + var(--grid-gap) * 2);
-    }
+  // Sidecar with Sidebar Left
+  // inside Sidecar with Sidebar Right
+  .novablocks-sidecar {
   
-    .align-pull-left {
-      @include pull-align-item(left, true, false);
-      
+    .novablocks-content {
+      --block-content-start: cs;
+      --block-content-end: ce;
+    }
+  }
+  
+  // Sidecar with Sidebar Right
+  // inside Sidecar with Sidebar Left
+  
+  &.novablocks-sidecar--sidebar-left {
+    
+    .novablocks-sidecar {
+  
+      .novablocks-sidebar {
+        
+        grid-column: ge/var(--block-limit-right);
+      }
+    }
+  }
+}
+
+.novablocks-content {
+  
+  .alignfull {
+    margin-left: calc(-1 * var(--novablocks-container-spacings));
+    margin-right: calc(-1 * var(--novablocks-container-spacings));
+    
+    @include above(lap) {
       &.stop-left {
-        @include pull-align-item(left, false, false);
+        margin-left: 0;
       }
-    }
   
-    .align-pull-right {
-      @include pull-align-item(right, true, false);
-      
       &.stop-right {
-        @include pull-align-item(right, false, false);
+        margin-right: 0;
       }
     }
   }
 }
 
-
-.align-pull-left {
-  --minimum-sidebar-width: var(--minimum-sidebar-left-width);
+.novablocks-sidebar {
   
-  // That means our aligned block is overlapping
-  // with blocks from sidebar. In this case, we are going to
-  // align pulled block inside the content,
-  // exactly as a regular block.
-  &[class*='stop'] {
-    @include pull-align-item(left, false);
+  .alignfull {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
-.align-pull-right {
-  --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-  
-  // That means our aligned block is overlapping
-  // with blocks from sidebar. In this case, we are going to
-  // align pulled block inside the content,
-  // exactly as a regular block.
-  &[class*='stop'] {
-    @include pull-align-item(right, false);
-  }
-}
-
-// @todo: This should not remain in Nova
 .novablocks-sidecar:not(.ignore-block) {
   
-  .novablocks-sidecar--sidebar-left { 
-    
-    .novablocks-content {
-      grid-column: cs/ce;
-    }
+  .novablocks-collection {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
-@include below(lap) {
-  .alignwide,
-  .alignfull,
-  .align-pull-right,
-  .align-pull-left {
-    --pull-left-value: 0px !important;
-    --pull-right-value: 0px !important;
-  }
-}
-
-figure {
-  
-  &.alignleft,
-  &.alignright {
-    max-width: 50%;
-  }
+.alignleft + *:not([class*='align']) {
+  --block-content-start: cs;
 }

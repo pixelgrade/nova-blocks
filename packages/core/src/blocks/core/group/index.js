@@ -71,7 +71,7 @@ export const addGroupFilters = ( settings ) => {
     const { contentAlignment } = attributes;
 
     if ( allowedBlocks.includes( blockType.name ) && contentAlignment ) {
-      extraProps.className = classnames( extraProps.className, 'align-' + contentAlignment );
+      extraProps.className = classnames( extraProps.className, contentAlignment );
     }
 
     return extraProps;
