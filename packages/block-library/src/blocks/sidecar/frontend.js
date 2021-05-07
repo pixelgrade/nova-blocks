@@ -4,29 +4,6 @@ const sidecars = document.querySelectorAll(".novablocks-sidecar:not(.ignore-bloc
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
-// Helper function to generate overlapping blocks,
-// based on two areas
-// We will create an array with
-// blocks from secondaryArea that are overlapping with
-// blocks from primaryArea.
-
-function generateOverlappingBlocks(primaryArea, secondaryArea) {
-
-  let array = []
-
-  primaryArea.forEach( primaryAreaBlock => {
-
-    secondaryArea.forEach( secondaryAreaBlock => {
-
-      if ( doesOverlap(secondaryAreaBlock, primaryAreaBlock) && ! array.includes(secondaryAreaBlock)) {
-        array.push(secondaryAreaBlock);
-      }
-    })
-  })
-
-  return array;
-}
-
 // There are 3 types of blocks in this system:
 // content blocks, sidebar blocks and pulled blocks.
 // Pulled blocks can be considered content blocks too,
@@ -102,6 +79,29 @@ function doesOverlap( elem, collider ) {
   return ! overlap;
 }
 
+// Helper function to generate overlapping blocks,
+// based on two areas
+// We will create an array with
+// blocks from secondaryArea that are overlapping with
+// blocks from primaryArea.
+
+function generateOverlappingBlocks(primaryArea, secondaryArea) {
+
+  let array = []
+
+  primaryArea.forEach( primaryAreaBlock => {
+
+    secondaryArea.forEach( secondaryAreaBlock => {
+
+      if ( doesOverlap(secondaryAreaBlock, primaryAreaBlock) && ! array.includes(secondaryAreaBlock)) {
+        array.push(secondaryAreaBlock);
+      }
+    })
+  })
+
+  return array;
+}
+
 // We want to listen to Content Width setting
 // change inside Customizer Preview,
 // so we can break wide and full elements
@@ -109,7 +109,7 @@ function doesOverlap( elem, collider ) {
 function sidecarTransformationsInCustomizer() {
 
   if ( wp.customize !== undefined ) {
-    wp.customize( `${customify.config.options_name}[content_width]`, ( setting ) => {
+    wp.customize( `${customify.config.options_name}[content_wide_width_addon_new]`, ( setting ) => {
       setting.bind( value => {
         debouncedSidecarTransformations()
       } );
