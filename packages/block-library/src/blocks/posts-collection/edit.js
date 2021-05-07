@@ -53,8 +53,12 @@ const PreviewEdit = ( props ) => {
     )
   }
 
-  const getContent = ( index, attributes, isLandscape ) => {
+  const getContent = ( index, props, isLandscape ) => {
     const post = posts?.[ index ];
+
+    const {
+      attributes
+    } = props;
 
     const cardProps = {
       placeholder: true,
@@ -79,7 +83,7 @@ const PreviewEdit = ( props ) => {
         {
           post &&
           <div className="novablocks-grid__item">
-            <PostCard post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+            <PostCard { ...props } post={ post } isLandscape={ isLandscape } />
           </div>
         }
         {

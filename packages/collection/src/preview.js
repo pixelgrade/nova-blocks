@@ -61,7 +61,7 @@ export const ClassicLayoutPreview = ( props ) => {
           {
             !! posts && posts.map( ( post, idx ) => {
               return (
-                <PostCard key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+                <PostCard { ...props } key={ idx } post={ post } isLandscape={ isLandscape } />
               );
             } )
           }
@@ -158,7 +158,7 @@ export const ParametricGrid = ( props ) => {
                     {/*<AreaDebug area={ area } />*/}
                     { Array.from( Array( area.postsCount ).keys() ).map( i => {
                       const landscape = isLandscape( area, attributes );
-                      return getContent( addedCards - area.postsCount + i, attributes, landscape );
+                      return getContent( addedCards - area.postsCount + i, props, landscape );
                     } ) }
                   </div>
                 )
@@ -221,7 +221,7 @@ export const CarouselLayoutPreview = ( props ) => {
             {
               !! posts && posts.map( ( post, idx ) => {
                 return (
-                  <PostCard key={ idx } post={ post } isLandscape={ isLandscape } attributes={ attributes } />
+                  <PostCard { ...props } key={ idx } post={ post } isLandscape={ isLandscape } />
                 );
               } )
             }
