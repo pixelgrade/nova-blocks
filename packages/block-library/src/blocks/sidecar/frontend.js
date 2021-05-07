@@ -46,8 +46,6 @@ const handleSidecarTransformations = function() {
       return;
     }
 
-    console.log(content);
-
     let content = sidecar.querySelector( ".novablocks-content" ),
       pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( 'pull-right' ) || block.classList.contains( 'pull-left' ) ),
       sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
