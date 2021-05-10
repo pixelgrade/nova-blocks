@@ -145,7 +145,11 @@
   .novablocks-sidecar,
   .wp-block-group__inner-container {
     --minimum-sidebar-right-width: var(--default-width-medium-sidebar);
-  }
+    
+    .novablocks-content:only-child {
+      --minimum-sidebar-left-width: var(--default-width-medium-sidebar);
+    }
+   }
   
   &.novablocks-sidecar--sidebar-left {
     
@@ -196,5 +200,14 @@
   .novablocks-content {
     
     --block-content-end: var(--block-limit-right);
+  }
+}
+
+.no-sidebar {
+  --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
+  --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
+  
+  @include above(ultra) {
+    --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
   }
 }

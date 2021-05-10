@@ -1,6 +1,8 @@
 :root {
   --novablocks-wide-width: 60em;
   --novablocks-content-width: 40em;
+  --body-font-size: 16;
+  --offset-addon: 230;
 }
 
 // Default Layout Grid
@@ -28,8 +30,8 @@
   --default-sidebar-left-width: calc(var(--minimum-sidebar-left-width) * 0.5);
   --default-sidebar-right-width: calc(var(--minimum-sidebar-right-width) * 0.5);
   
-  --wds: var(--theme-offset-width, var(--default-sidebar-left-width));
-  --wde: var(--theme-offset-width, var(--default-sidebar-right-width));
+  --wds: var(--default-width-offset-sidebar, var(--default-sidebar-left-width));
+  --wde: var(--default-width-offset-sidebar, var(--default-sidebar-right-width));
   
   --full: calc((100vw - var(--theme-content-width-wide-new)) * 0.5);
   

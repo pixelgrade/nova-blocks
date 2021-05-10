@@ -143,6 +143,14 @@
         }
       }
     }
+    
+    .alignleft {
+  
+      + *:not([class*='align']) {
+        --block-content-start: cs;
+      }
+      
+    }
   }
 }
 
@@ -174,6 +182,13 @@
       &.stop-left {
         --block-content-start: ge;
         --block-content-end: we;
+      }
+    }
+    
+    .alignright {
+  
+      + *:not([class*='align']) {
+        --block-content-end: ce;
       }
     }
   
