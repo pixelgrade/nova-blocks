@@ -127,16 +127,13 @@
         --block-content-start: ge;
         --block-content-end: we;
   
-        + *:not([class*='align']) {
-          --block-content-end: ce;
-        }
+      + *:not([class*='align']) {
+        --block-content-end: ce;
+      }
       
-      // In case that there is not enough space,
-      // We are going to treat it as an regular align left
-      // inside content.
-        &.stop-right {
-          --block-content-start: ws;
-          --block-content-end: gs;
+      &[class*='stop'] {
+        --block-content-start: ws;
+        --block-content-end: gs;
   
         + *:not([class*='align']) {
           --block-content-start: cs;
@@ -145,11 +142,18 @@
     }
     
     .alignleft {
-  
       + *:not([class*='align']) {
         --block-content-start: cs;
       }
-      
+    }
+    
+    .alignright {
+      --block-content-start: gce;
+      --block-content-end: ce;
+  
+      + *:not([class*='align']) {
+        --block-content-end: gcs;
+      }
     }
   }
 }
@@ -162,6 +166,9 @@
   .novablocks-content:not(:only-child) {
   
     .pull-right {
+      
+      --block-content-start: ge;
+      --block-content-end: we;
     
       &[class*='stop'] {
         --block-content-start: ge;
@@ -184,9 +191,20 @@
         --block-content-end: we;
       }
     }
-    
-    .alignright {
   
+    .alignleft {
+      --block-content-start: cs;
+      --block-content-end: gcs;
+      
+      + *:not([class*='align']) {
+        --block-content-start: gce;
+      }
+    }
+  
+    .alignright {
+      --block-content-start: ge;
+      --block-content-end: we;
+    
       + *:not([class*='align']) {
         --block-content-end: ce;
       }
@@ -208,8 +226,8 @@
       // There is not space on the left side,
       // so we are going to treat pull left as pull right.
       &.stop-left {
-        --block-content-start: cs;
-        --block-content-end: ce;
+        --block-content-start: ge;
+        --block-content-end: we;
       }
     }
   
@@ -221,8 +239,32 @@
       // There is not space on the left side,
       // so we are going to treat pull left as pull right.
       &.stop-right {
+        --block-content-start: ws;
+        --block-content-end: gs;
+      }
+    }
+    
+    .alignleft {
+      
+      &[class*='stop'] {
         --block-content-start: cs;
+        --block-content-end: gcs;
+  
+        + *:not([class*='align']) {
+          --block-content-start: gce;
+        }
+      }
+    }
+    
+    .alignright {
+      
+      &[class*='stop'] {
+        --block-content-start: gce;
         --block-content-end: ce;
+    
+        + *:not([class*='align']) {
+          --block-content-end: gcs;
+        }
       }
     }
   
