@@ -59,8 +59,8 @@
   --default-width-large-sidebar: calc(500px - var(--grid-gap));
   --sticky-element-top-spacing: 0px;
   --grid-gap: 2em;
-  --minimum-sidebar-left-width: var(--default-width-small-sidebar);
-  --minimum-sidebar-right-width: var(--default-width-small-sidebar);
+  --minimum-sidebar-left-width: var(--default-width-medium-sidebar);
+  --minimum-sidebar-right-width: var(--default-width-medium-sidebar);
   --display-mode: flex;
   --all-columns: fs/fe;
   
