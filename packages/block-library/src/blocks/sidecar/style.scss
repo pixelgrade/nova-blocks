@@ -203,7 +203,7 @@
   }
 }
 
-.no-sidebar {
+body:not(.has-sidebar) {
   --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
   --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
   
