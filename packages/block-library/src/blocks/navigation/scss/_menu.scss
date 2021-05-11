@@ -38,7 +38,7 @@ ul.menu,
       width: var(--dropdown-icon-size);
       height: var(--dropdown-icon-size);
 
-      //mask: url($arrow-down-svg-path) no-repeat 50% 50%;
+      mask: url($arrow-down-svg-path) no-repeat 50% 50%;
       mask-size: contain;
       mask-position: center;
 
