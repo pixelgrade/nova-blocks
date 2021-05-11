@@ -139,6 +139,29 @@
 // we will change minimum sidebar width for that block too.
 // Doing that, we will make sure that both blocks are sharing the same grid
 // and alignments are working properly.
+
+.novablocks-sidebar--small {
+  
+  &:not(.novablocks-sidecar--sidebar-left),
+  .novablocks-sidecar,
+  .wp-block-group__inner-container {
+    --minimum-sidebar-right-width: var(--default-width-small-sidebar);
+    
+    .novablocks-content:only-child {
+      --minimum-sidebar-left-width: var(--default-width-small-sidebar);
+    }
+  }
+  
+  &.novablocks-sidecar--sidebar-left {
+    
+    &,
+    .novablocks-sidecar,
+    .wp-block-group__inner-container {
+      --minimum-sidebar-left-width: var(--default-width-small-sidebar);
+    }
+  }
+}
+
 .novablocks-sidebar--medium {
     
   &:not(.novablocks-sidecar--sidebar-left),
@@ -203,7 +226,7 @@
   }
 }
 
-body:not(.has-sidebar) {
+body:not(.has-sidebar):not(.block-editor-page) {
   --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
   --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
   
