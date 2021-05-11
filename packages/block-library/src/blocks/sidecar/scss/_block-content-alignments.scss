@@ -117,8 +117,6 @@
 // RIGHT SIDEBAR
 .novablocks-sidecar {
   
-  --minimum-sidebar-width: var(--minimum-sidebar-right-width);
-  
   .novablocks-content:not(:only-child) {
   
     .pull-left,
@@ -141,8 +139,6 @@
 
 // LEFT SIDEBAR
 .novablocks-sidecar--sidebar-left {
-  
-  --minimum-sidebar-width: var(--minimum-sidebar-left-width);
   
   .novablocks-content:not(:only-child)[class] {
   

@@ -27,11 +27,10 @@
   display: var(--display-mode);
   flex-direction: column;
   
-  --default-sidebar-left-width: calc(var(--minimum-sidebar-left-width) * 0.5);
-  --default-sidebar-right-width: calc(var(--minimum-sidebar-right-width) * 0.5);
+  --default-sidebar-width: calc(var(--minimum-sidebar-width) * 0.5);
   
-  --wds: var(--default-width-offset-sidebar, var(--default-sidebar-left-width));
-  --wde: var(--default-width-offset-sidebar, var(--default-sidebar-right-width));
+  --wds: var(--default-width-offset-sidebar, var(--default-sidebar-width));
+  --wde: var(--default-width-offset-sidebar, var(--default-sidebar-width));
   
   --full: calc((100vw - var(--theme-content-width-wide-new)) * 0.5);
   
@@ -59,8 +58,7 @@
   --default-width-large-sidebar: calc(500px - var(--grid-gap));
   --sticky-element-top-spacing: 0px;
   --grid-gap: 2em;
-  --minimum-sidebar-left-width: var(--default-width-medium-sidebar);
-  --minimum-sidebar-right-width: var(--default-width-medium-sidebar);
+  --minimum-sidebar-width: var(--default-width-medium-sidebar);
   --display-mode: flex;
   --all-columns: fs/fe;
   

@@ -141,65 +141,16 @@
 // and alignments are working properly.
 
 .novablocks-sidebar--small {
-  
-  &:not(.novablocks-sidecar--sidebar-left),
-  .novablocks-sidecar,
-  .wp-block-group__inner-container {
-    --minimum-sidebar-right-width: var(--default-width-small-sidebar);
-    
-    .novablocks-content:only-child {
-      --minimum-sidebar-left-width: var(--default-width-small-sidebar);
-    }
-  }
-  
-  &.novablocks-sidecar--sidebar-left {
-    
-    &,
-    .novablocks-sidecar,
-    .wp-block-group__inner-container {
-      --minimum-sidebar-left-width: var(--default-width-small-sidebar);
-    }
-  }
+  --minimum-sidebar-width:  var(--default-width-small-sidebar);
 }
 
 .novablocks-sidebar--medium {
-    
-  &:not(.novablocks-sidecar--sidebar-left),
-  .novablocks-sidecar,
-  .wp-block-group__inner-container {
-    --minimum-sidebar-right-width: var(--default-width-medium-sidebar);
-    
-    .novablocks-content:only-child {
-      --minimum-sidebar-left-width: var(--default-width-medium-sidebar);
-    }
-   }
   
-  &.novablocks-sidecar--sidebar-left {
-    
-    &,
-    .novablocks-sidecar,
-    .wp-block-group__inner-container {
-      --minimum-sidebar-left-width: var(--default-width-medium-sidebar);
-    }
-  }
+  --minimum-sidebar-width:  var(--default-width-medium-sidebar);
 }
 
 .novablocks-sidebar--large {
-  
-  &:not(.novablocks-sidecar--sidebar-left),
-  .novablocks-sidecar,
-  .wp-block-group__inner-container {
-    --minimum-sidebar-right-width: var(--default-width-large-sidebar);
-  }
-  
-  &.novablocks-sidecar--sidebar-left {
-    
-    &,
-    .novablocks-sidecar,
-    .wp-block-group__inner-container {
-      --minimum-sidebar-left-width: var(--default-width-large-sidebar);
-    }
-  }
+  --minimum-sidebar-width:  var(--default-width-large-sidebar);
 }
 
 .wp-block-group__inner-container {
