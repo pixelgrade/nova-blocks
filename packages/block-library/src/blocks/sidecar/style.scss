@@ -14,11 +14,6 @@
   align-items: start;
 }
 
-.novablocks-content,
-.novablocks-sidebar {
-  z-index: 1;
-}
-
 .novablocks-sidebar {
   
   @include below(lap) {
