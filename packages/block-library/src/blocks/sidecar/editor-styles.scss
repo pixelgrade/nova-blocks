@@ -392,3 +392,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 [data-type="novablocks/sidecar-area"] {
   z-index: 1;
 }
+
+.last-block-is-sticky .novablocks-sidebar > :last-child {
+  position: static;
+}
