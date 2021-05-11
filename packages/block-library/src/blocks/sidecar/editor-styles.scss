@@ -390,3 +390,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     
   }
 }
+
+[data-type="novablocks/sidecar-area"] {
+  z-index: 1;
+}
