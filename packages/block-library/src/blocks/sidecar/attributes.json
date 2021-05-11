@@ -1,7 +1,7 @@
 {
 	"sidebarWidth": {
 		"type": "string",
-		"default": "small"
+		"default": "medium"
 	},
 	"layout": {
 		"type": "string"

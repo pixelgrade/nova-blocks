@@ -19,6 +19,13 @@
   z-index: 1;
 }
 
+.novablocks-sidebar {
+  
+  @include below(lap) {
+    margin-top: var(--grid-gap);
+  }
+}
+
 .novablocks-content {
   
   grid-column: var(--all-columns);
@@ -74,11 +81,11 @@
     }
     
     .novablocks-sidebar {
-      grid-column: var(--block-limit-left)/gs;
+      grid-column: ws/gs;
     }
     
     .novablocks-sidebar:last-child {
-      grid-column: ge/var(--block-limit-right);
+      grid-column: ge/we;
     }
   }
 }
