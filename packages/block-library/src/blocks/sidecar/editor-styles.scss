@@ -11,7 +11,9 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   @include layout-grid;
   @include layout-settings;
   
-  --full: calc((100vw - var(--theme-content-width-wide-new) - var(--inspector-controls-width, 0px) +  var(--theme-wrapper-sides-spacing) + 20px) * 0.5);
+  &[class][class] {
+    --editor-full: calc((100vw - var(--theme-content-width-wide-new) - var(--inspector-controls-width, 0px) + 2 * var(--theme-wrapper-sides-spacing) + 20px) * 0.5);
+  }
   
   @import 'scss/block-limits';
   

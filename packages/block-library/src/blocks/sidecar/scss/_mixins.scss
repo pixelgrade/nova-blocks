@@ -35,7 +35,7 @@
   
   --full: calc((100vw - var(--theme-content-width-wide-new)) * 0.5);
   
-  grid-template-columns: [fs] Max(0px, var(--full)) [ws] var(--wds) [wsgs] calc(var(--grid-gap)/2) [wsc] calc(var(--grid-gap)/2) [wsge] var(--wds) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] var(--wde) [wegs] calc(var(--grid-gap)/2) [wec] calc(var(--grid-gap)/2) [wege] var(--wde) [we] Max(0px, var(--full)) [fe];
+  grid-template-columns: [fs] Max(0px, var(--editor-full, var(--full))) [ws] var(--wds) [wsgs] calc(var(--grid-gap)/2) [wsc] calc(var(--grid-gap)/2) [wsge] var(--wds) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] var(--wde) [wegs] calc(var(--grid-gap)/2) [wec] calc(var(--grid-gap)/2) [wege] var(--wde) [we] Max(0px, var(--editor-full, var(--full))) [fe];
 }
 
 // Default Layout Settings
