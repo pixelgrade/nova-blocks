@@ -144,7 +144,7 @@
   
   --minimum-sidebar-width: var(--minimum-sidebar-left-width);
   
-  .novablocks-content:not(:only-child) {
+  .novablocks-content:not(:only-child)[class] {
   
     .pull-left,
     .pull-right,
