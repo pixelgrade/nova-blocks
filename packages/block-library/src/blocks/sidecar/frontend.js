@@ -29,7 +29,7 @@ const handleSidecarTransformations = function() {
       sidebarBlocks = Array.from( sidecar.querySelectorAll( ".novablocks-sidebar" ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
       allContentBlocks = Array.from( sidecar.querySelectorAll( '.novablocks-content' ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
       alignedContentBlocks = allContentBlocks.filter( block => (
-                                                                 block.classList.contains( 'alignfull' ) || block.classList.contains( 'alignwide' )
+                                                                 block.classList.contains( 'alignfull' ) || block.classList.contains( 'alignwide' ) || block.classList.contains('alignleft') || block.classList.contains('alignright')
                                                                ) && !block.classList.contains( 'novablocks-sidecar' ) ),
       allSidebarBlocks = sidebarBlocks.concat( pulledBlocks ),
       // Overlapping between content blocks and sidebar blocks combined with pulled blocks.

@@ -64,6 +64,15 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       --block-content-start: cs;
     }
   }
+  
+  [data-align="right"],
+  [data-align="left"] {
+    height: 100%;
+    
+    > * {
+      float: none;
+    }
+  }
 }
 
 .novablocks-sidecar > #{$grid-selector} {
@@ -287,31 +296,12 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       --block-content-end: ce;
     }
   
-    [data-novablocks-alignment="pull-right"] {
-      --block-content-start: ws;
-      --block-content-end: gs;
-  
-      + *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
-        --block-content-start: cs;
-      }
-    }
-    
-  
-    [data-novablocks-alignment="pull-left"],
-    [data-align="left"] {
-      
-      + *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
-        --block-content-start: cs;
-      }
-    }
-  
-    [data-align="right"] {
-      --block-content-start: cc;
+    [data-align="right"],
+    [data-align="left"],
+    [data-novablocks-alignment="pull-right"],
+    [data-novablocks-alignment="pull-left"] {
+      --block-content-start: var(--block-limit-left);
       --block-content-end: ce;
-  
-      + *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
-        --block-content-end: gcs;
-      }
     }
   }
 }
@@ -326,33 +316,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       --block-content-start: cs;
     }
   
-    [data-novablocks-alignment="pull-left"] {
-      --block-content-start: ge;
-      --block-content-end: we;
-      
-      + *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
-        --block-content-end: ce;
-      }
-    }
-  
+    [data-align="right"],
+    [data-align="left"],
     [data-novablocks-alignment="pull-right"],
-    [data-align="right"] {
-    
-      + *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
-        --block-content-end: ce;
-      }
-    }
-    
-    [data-align="left"] {
-  
+    [data-novablocks-alignment="pull-left"] {
       --block-content-start: cs;
-      --block-content-end: gcs;
-      
-      + *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
-        --block-content-start: gce;
-      }
+      --block-content-end: var(--block-limit-right)
     }
-    
   }
 }
 
@@ -362,26 +332,15 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   .novablocks-content[class] {
   
     [data-align="full"],
-    [data-align="wide"] {
+    [data-align="wide"],
+    [data-align='right'],
+    [data-align='left'],
+    [data-novablocks-alignment="pull-left"],
+    [data-novablocks-alignment="pull-right"] {
       --block-content-start: cs;
       --block-content-end: ce;
     }
-  
-    [data-novablocks-alignment="pull-left"] {
-      --block-content-start: ws;
-      --block-content-end: gs;
-    }
-  
-    [data-novablocks-alignment="pull-right"] {
-      --block-content-start: ge;
-      --block-content-end: we;
-    }
     
-    [data-align='right'] {
-      
-      --block-content-start: ge;
-      --block-content-end: we;
-    }
   }
 }
 
@@ -389,15 +348,15 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-content {
   
   .novablocks-content {
-  
-    [data-novablocks-alignment="pull-left"] {
-      --block-content-start: ws;
-      --block-content-end: gs;
-    }
-  
+    
+    [data-align="full"],
+    [data-align="wide"],
+    [data-align='right'],
+    [data-align='left'],
+    [data-novablocks-alignment="pull-left"],
     [data-novablocks-alignment="pull-right"] {
-      --block-content-start: ge;
-      --block-content-end: we;
+      --block-content-start: cs;
+      --block-content-end: ce;
     }
    
   }

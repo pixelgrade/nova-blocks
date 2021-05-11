@@ -120,39 +120,20 @@
   --minimum-sidebar-width: var(--minimum-sidebar-right-width);
   
   .novablocks-content:not(:only-child) {
-
-    // There is not space on the left side,
-    // so we are going to treat pull left as pull right.
-    .pull-left {
-        --block-content-start: ge;
-        --block-content-end: we;
   
-      + *:not([class*='align']) {
-        --block-content-end: ce;
-      }
+    .pull-left,
+    .pull-right,
+    .alignleft,
+    .alignright {
+      @include grid-item-position('right');
       
       &[class*='stop'] {
-        --block-content-start: ws;
-        --block-content-end: gs;
+        --block-content-start: var(--block-limit-left);
+        --block-content-end: ce;
   
         + *:not([class*='align']) {
-          --block-content-start: cs;
+          --block-content-start: var(--block-limit-left);
         }
-      }
-    }
-    
-    .alignleft {
-      + *:not([class*='align']) {
-        --block-content-start: cs;
-      }
-    }
-    
-    .alignright {
-      --block-content-start: gce;
-      --block-content-end: ce;
-  
-      + *:not([class*='align']) {
-        --block-content-end: gcs;
       }
     }
   }
@@ -165,107 +146,86 @@
   
   .novablocks-content:not(:only-child) {
   
-    .pull-right {
-      
-      --block-content-start: ge;
-      --block-content-end: we;
-    
-      &[class*='stop'] {
-        --block-content-start: ge;
-        --block-content-end: we;
-      }
-  
-      + *:not([class*='align']) {
-        --block-content-end: ce;
-      }
-    }
-    
-    .pull-left {
-      --block-content-start: ws;
-      --block-content-end: gs;
-  
-      // There is not space on the left side,
-      // so we are going to treat pull left as pull right.
-      &.stop-left {
-        --block-content-start: ge;
-        --block-content-end: we;
-      }
-    }
-  
-    .alignleft {
-      --block-content-start: cs;
-      --block-content-end: gcs;
-      
-      + *:not([class*='align']) {
-        --block-content-start: gce;
-      }
-    }
-  
+    .pull-left,
+    .pull-right,
+    .alignleft,
     .alignright {
-      --block-content-start: ge;
-      --block-content-end: we;
-    
+      @include grid-item-position('left');
+  
       + *:not([class*='align']) {
-        --block-content-end: ce;
+        --block-content-start: cs;
+        --block-content-end: var(--block-limit-right);
+      }
+      
+      &[class*='stop'] {
+        --block-content-start: cs;
+        --block-content-end: var(--block-limit-right);
       }
     }
-  
   }
 }
 
 // TWO SIDEBARS
 .novablocks-sidecar--complex {
   
-  .novablocks-content:not(:only-child) {
+  .novablocks-content:not(:only-child)[class] {
   
     .pull-left {
-      
-      --block-content-start: ws;
-      --block-content-end: gs;
+  
+      @include grid-item-position('left');
   
       // There is not space on the left side,
       // so we are going to treat pull left as pull right.
       &.stop-left {
-        --block-content-start: ge;
-        --block-content-end: we;
+        @include grid-item-position('right');
       }
     }
   
     .pull-right {
-    
-      --block-content-start: ge;
-      --block-content-end: we;
+  
+      @include grid-item-position('right');
     
       // There is not space on the left side,
       // so we are going to treat pull left as pull right.
       &.stop-right {
-        --block-content-start: ws;
-        --block-content-end: gs;
+        @include grid-item-position('left');
       }
     }
     
     .alignleft {
-      
-      &[class*='stop'] {
-        --block-content-start: cs;
-        --block-content-end: gcs;
   
-        + *:not([class*='align']) {
-          --block-content-start: gce;
-        }
+      @include grid-item-position('left');
+      
+      &[class*='stop-left'] {
+        @include grid-item-position('right');
+      }
+      
+      &[class*='stop-right'] {
+        @include grid-item-position('left');
       }
     }
     
     .alignright {
       
       &[class*='stop'] {
-        --block-content-start: gce;
-        --block-content-end: ce;
+        @include grid-item-position('content-right');
     
         + *:not([class*='align']) {
           --block-content-end: gcs;
         }
       }
+    }
+    
+    .alignleft,
+    .alignright,
+    .pull-left,
+    .pull-right {
+    
+      + *:not([class*='align']) {
+        
+        --block-content-start: cs;
+      }
+    
     }
   
   }
@@ -279,8 +239,45 @@
   .novablocks-sidecar {
   
     .novablocks-content {
-      --block-content-start: cs;
-      --block-content-end: ce;
+      
+      @include grid-item-position('content');
+      
+      .pull-left {
+        @include grid-item-position('left');
+      }
+      
+      .pull-right {
+        @include grid-item-position('right');
+      }
+  
+      .alignleft {
+        
+        @include grid-item-position('left');
+    
+        &[class*='stop'] {
+          @include grid-item-position('right');
+        }
+      }
+  
+      .alignright {
+  
+        @include grid-item-position('right');
+    
+        &[class*='stop'] {
+          @include grid-item-position('left');
+        }
+      }
+      
+      .alignleft,
+      .alignright,
+      .pull-left,
+      .pull-right {
+        
+        + *:not([class*='align']) {
+          --block-content-start: cs;
+          --block-content-end: ce;
+        }
+      }
     }
   }
   

@@ -108,3 +108,31 @@
     outline: 2px solid transparent;
   }
 }
+
+@mixin grid-item-position($position) {
+  
+  @if ($position == 'left') {
+    --block-content-start: ws;
+    --block-content-end: gs;
+  }
+  
+  @if ($position == 'right' ) {
+    --block-content-start: ge;
+    --block-content-end: we;
+  }
+  
+  @if ($position == 'content-left') {
+    --block-content-start: cs;
+    --block-content-end: gcs;
+  }
+  
+  @if ($position == 'content-right') {
+    --block-content-start: gce;
+    --block-content-end: ce;
+  }
+  
+  @if ($position == 'content' ) {
+    --block-content-start: cs;
+    --block-content-end: ce;
+  }
+}
