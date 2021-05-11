@@ -41,7 +41,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   [data-novablocks-alignment="pull-left"],
   [data-align="right"],
   [data-novablocks-alignment="pull-right"] {
-    grid-row: span 3;
+    grid-row-end: span 5;
   }
   
   [data-align="left"],

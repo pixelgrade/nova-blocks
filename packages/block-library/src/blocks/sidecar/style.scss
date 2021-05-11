@@ -179,7 +179,7 @@
   }
 }
 
-.novablock-sidecar:not(.ignore-block) {
+.novablocks-sidecar:not(.ignore-block) {
   
   .novablocks-content:only-child {
     --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
@@ -190,7 +190,9 @@
     }
   }
 }
-
-body:not(.has-sidebar):not(.block-editor-page) {
-
+.novablocks-collection {
+  
+  .wp-block-group__inner-container[class] {
+    --font-size-modifier: 1;
+  }
 }
