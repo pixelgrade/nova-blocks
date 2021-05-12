@@ -89,6 +89,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   > :first-child {
     grid-column: var(--all-columns) !important;
   }
+  
+  > * {
+    width: 100%;
+  }
 }
 
 // The default layout is Content Left with Sidebar Right.

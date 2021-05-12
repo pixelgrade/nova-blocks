@@ -188,14 +188,17 @@
 // that we will transform that width to em.
 // By default --offset-addon will be equal to 230,
 // but this value can be easily controlled using a Customizer control.
-.novablocks-sidecar:not(.ignore-block) {
+body:not(.block-editor-page) {
   
-  .novablocks-content:only-child {
-    --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
-    --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
-  
-    @include above(ultra) {
-      --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
+  .novablocks-sidecar:not(.ignore-block) {
+    
+    .novablocks-content:only-child {
+      --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
+      --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
+      
+      @include above(ultra) {
+        --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
+      }
     }
   }
 }
