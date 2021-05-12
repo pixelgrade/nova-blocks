@@ -188,7 +188,7 @@
 // that we will transform that width to em.
 // By default --offset-addon will be equal to 230,
 // but this value can be easily controlled using a Customizer control.
-body:not(.block-editor-page) {
+body:not(.block-editor-page):not(.has-sidebar) {
   
   .novablocks-sidecar:not(.ignore-block) {
     
