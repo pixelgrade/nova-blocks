@@ -190,7 +190,7 @@
 // but this value can be easily controlled using a Customizer control.
 body:not(.block-editor-page):not(.has-sidebar) {
   
-  .novablocks-sidecar:not(.ignore-block) {
+  .novablocks-sidecar {
     
     .novablocks-content:only-child {
       --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
