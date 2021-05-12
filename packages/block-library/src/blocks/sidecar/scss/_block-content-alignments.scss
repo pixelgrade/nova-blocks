@@ -146,7 +146,6 @@
       @include grid-item-position('left');
   
       + *:not([class*='align']) {
-        --block-content-start: cs;
         --block-content-end: var(--block-limit-right);
       }
       
@@ -261,16 +260,16 @@
         }
       }
       
-      .alignleft,
-      .alignright,
-      .pull-left,
-      .pull-right {
-        
-        + *:not([class*='align']) {
-          --block-content-start: cs;
-          --block-content-end: ce;
-        }
-      }
+      //.alignleft,
+      //.alignright,
+      //.pull-left,
+      //.pull-right {
+      //
+      //  + *:not([class*='align']) {
+      //    --block-content-start: cs;
+      //    --block-content-end: ce;
+      //  }
+      //}
     }
   }
   
