@@ -3,9 +3,9 @@
 // besides the classic left, right and center.
 // 1) Alignfull - This align will help element to break
 // out of the container, and make it full screen.
-// 2) Wide - This align will help element to break
+// 2) Alignwide - This align will help element to break
 // out of container, to be slightly bigger than content,
-// based on yout settings.
+// based on your settings.
 // 3) Alignright & Pull Right - This align will pull element outside
 // of the content on the right side.
 // 4) Alignleft & Pull Left - This align will pull element outside
@@ -31,7 +31,7 @@
 
 // Stop Right
 // That means the block
-// cannot span anymore columns
+// cannot span any columns
 // on the right, so we are going to
 // stop it at the [ce] column.
 .stop-right,
@@ -41,7 +41,7 @@
 
 // Stop Left
 // That means the block
-// cannot span anymore columns
+// cannot span any columns
 // on the left, so we are going to
 // stop it at the [cs] column.
 .stop-left,
@@ -53,13 +53,10 @@
 // Inside Sidecar they are treated the same.
 // They will span on the left wide side,
 // between [ws] column and [gs] column.
-// However, if we do not have enought space on the left,
+// However, if we do not have enough space on the left,
 // we are going to consider
 // user intention of pulling the block and pull
 // the block on the right side.
-// Also, if the block will be pulled on the right,
-// the following block will stop at [ce] column,
-// so it will not overlap with pulled block.
 //
 // The same logic is applied for alignright and pull-right.
 .alignleft,
@@ -318,6 +315,8 @@
 
 .novablocks-sidebar {
   
+  // We do not need negative margins for
+  // alignfull items inside the Sidebar.
   .alignfull {
     margin-left: 0;
     margin-right: 0;

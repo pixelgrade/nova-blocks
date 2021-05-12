@@ -7,6 +7,7 @@
   @include layout-settings;
 }
 
+// This is where magic starts.
 .novablocks-sidecar,
 .novablocks-content {
   position: relative;
@@ -14,6 +15,9 @@
   align-items: start;
 }
 
+// Under 1024px everything is shown
+// on one column, so we need to add
+// a margin top to the sidebar.
 .novablocks-sidebar {
   
   @include below(lap) {
@@ -24,7 +28,6 @@
 .novablocks-content {
   
   grid-column: var(--all-columns);
-  
   --block-content-end: ce;
   
   > * {
@@ -48,7 +51,7 @@
     grid-row: 1;
   }
   
-  // Sidebar Left with Content on the Right Layout.
+  // Sidebar Left with Content on the Right.
   // Content will always start at CS and it
   // will end at layout block limit on the right. Limit on the right
   // is given by layout block alignment.
@@ -63,8 +66,7 @@
     }
   }
   
-  
-  // Sidebar Left with Content Centered and Sidebar Right Layout.
+  // Sidebar Left with Content Centered and Sidebar Right.
   // Content will always start at CS and will end at CE.
   // Sidebar Left will start at block limit left and end at CS.
   // Sidebar Right will start at CE and will end at block limit on right.
@@ -88,7 +90,6 @@
 // so it will be positioned between [ge] and block-limit-right.
 .novablocks-sidebar {
   grid-column: ge/var(--block-limit-right);
-  
   height: 100%;
   
   > * {
@@ -106,7 +107,6 @@
     @include block-spacing;
   }
 }
-
 
 // When grid is not used (eg. under 1024px),
 // we are using flex with direction column.
@@ -130,31 +130,31 @@
       position: sticky;
       top: var(--sticky-element-top-spacing);
       margin-bottom: 1em;
+      
+      z-index: -1;
     }
   }
 }
 
 
 // Minimum Sidebar Width Logic
-// At first, we will change the sidebar minimum width
-// for the layout block, and if we have a nested layout block,
-// we will change minimum sidebar width for that block too.
-// Doing that, we will make sure that both blocks are sharing the same grid
-// and alignments are working properly.
 
+// Small Sidebar
 .novablocks-sidebar--small {
   --minimum-sidebar-width:  var(--default-width-small-sidebar);
 }
 
+// Medium Sidebar
 .novablocks-sidebar--medium {
-  
   --minimum-sidebar-width:  var(--default-width-medium-sidebar);
 }
 
+// Large Sidebar
 .novablocks-sidebar--large {
   --minimum-sidebar-width:  var(--default-width-large-sidebar);
 }
 
+// Applying Grid on Group Block
 .wp-block-group__inner-container {
   @include layout-grid;
   
@@ -162,6 +162,7 @@
     grid-column: var(--block-content-start)/var(--block-content-end);
   }
 }
+
 
 .novablocks-sidebar,
 .wp-block-group {
@@ -179,6 +180,14 @@
   }
 }
 
+// Custom Offset Logic
+// On blocks without sidebar, we want to
+// adjust the offset based on user needs.
+// Until 1800px, we will use the same logic as minimum sidebar,
+// keeping the minimum width, and after
+// that we will transform that width to em.
+// By default --offset-addon will be equal to 230,
+// but this value can be easily controlled using a Customizer control.
 .novablocks-sidecar:not(.ignore-block) {
   
   .novablocks-content:only-child {
@@ -192,6 +201,8 @@
 }
 .novablocks-collection {
   
+  // We do not want to alter font size modifier
+  // inside Nova Blocks Collections
   .wp-block-group__inner-container[class] {
     --font-size-modifier: 1;
   }
