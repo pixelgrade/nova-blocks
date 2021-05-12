@@ -32,23 +32,6 @@ const variations = [
     ],
     scope: [ 'block' ],
   },
-  {
-    name: 'complex',
-    title: __('Sidebar on Left and Right with Content on center', '__plugin_txtd' ),
-    icon: icons.sidebarLeftRight,
-    innerBlocks: [
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-content'
-      }],
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-sidebar'
-      }],
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-sidebar'
-      }],
-    ],
-    scope: [ 'block' ],
-  }
 
 ];
 

@@ -6,14 +6,6 @@ import { dispatch, select } from '@wordpress/data';
 const { getBlockRootClientId } = select( 'core/block-editor' );
 const { selectBlock } = dispatch( 'core/editor' );
 
-const TEMPLATE = [
-  [
-    'core/paragraph', { content: 'For example, car dealers have websites packed with details about the cars they sell and the services they provide. All of their core web content is meant to encourage potential customers to buy a car or come and get their vehicle serviced.'},
-  ]
-];
-
-
-
 const SidecarAreaPreview = function( props ) {
   const {
     attributes,
@@ -40,8 +32,8 @@ const SidecarAreaPreview = function( props ) {
   return (
     <div className={classNames}>
       <InnerBlocks
-        template={TEMPLATE}
         templateLock ={false}
+        renderAppender={ InnerBlocks.ButtonBlockAppender }
       />
     </div>
   )
