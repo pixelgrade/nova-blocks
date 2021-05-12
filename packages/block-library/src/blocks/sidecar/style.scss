@@ -32,6 +32,7 @@
   
   > * {
     grid-column: var(--block-content-start)/var(--block-content-end);
+    width: 100%;
   }
   
   // Collections are coming with .alignfull,
