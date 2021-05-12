@@ -224,69 +224,70 @@
 }
 
 // SIDECAR IN SIDECAR
-.novablocks-sidecar:not(.ignore-block) {
-  
-  // Sidecar with Sidebar Left
-  // inside Sidecar with Sidebar Right
-  .novablocks-sidecar {
-  
-    .novablocks-content {
-      
-      @include grid-item-position('content');
-      
-      .pull-left {
-        @include grid-item-position('left');
-      }
-      
-      .pull-right {
-        @include grid-item-position('right');
-      }
-  
-      .alignleft {
-        
-        @include grid-item-position('left');
-    
-        &[class*='stop'] {
-          @include grid-item-position('right');
-        }
-      }
-  
-      .alignright {
-  
-        @include grid-item-position('right');
-    
-        &[class*='stop'] {
-          @include grid-item-position('left');
-        }
-      }
-      
-      //.alignleft,
-      //.alignright,
-      //.pull-left,
-      //.pull-right {
-      //
-      //  + *:not([class*='align']) {
-      //    --block-content-start: cs;
-      //    --block-content-end: ce;
-      //  }
-      //}
-    }
-  }
-  
-  // Sidecar with Sidebar Right
-  // inside Sidecar with Sidebar Left
-  
-  &.novablocks-sidecar--sidebar-left {
-    
-    .novablocks-sidecar {
-  
-      .novablocks-sidebar {
-        
-        grid-column: ge/var(--block-limit-right);
-      }
-    }
-  }
-}
+// On Hold for the moment
+//.novablocks-sidecar:not(.ignore-block) {
+//
+//  // Sidecar with Sidebar Left
+//  // inside Sidecar with Sidebar Right
+//  .novablocks-sidecar {
+//
+//    .novablocks-content {
+//
+//      @include grid-item-position('content');
+//
+//      .pull-left {
+//        @include grid-item-position('left');
+//      }
+//
+//      .pull-right {
+//        @include grid-item-position('right');
+//      }
+//
+//      .alignleft {
+//
+//        @include grid-item-position('left');
+//
+//        &[class*='stop'] {
+//          @include grid-item-position('right');
+//        }
+//      }
+//
+//      .alignright {
+//
+//        @include grid-item-position('right');
+//
+//        &[class*='stop'] {
+//          @include grid-item-position('left');
+//        }
+//      }
+//
+//      //.alignleft,
+//      //.alignright,
+//      //.pull-left,
+//      //.pull-right {
+//      //
+//      //  + *:not([class*='align']) {
+//      //    --block-content-start: cs;
+//      //    --block-content-end: ce;
+//      //  }
+//      //}
+//    }
+//  }
+//
+//  // Sidecar with Sidebar Right
+//  // inside Sidecar with Sidebar Left
+//
+//  &.novablocks-sidecar--sidebar-left {
+//
+//    .novablocks-sidecar {
+//
+//      .novablocks-sidebar {
+//
+//        grid-column: ge/var(--block-limit-right);
+//      }
+//    }
+//  }
+//}
 
 .novablocks-content {
   
