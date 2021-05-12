@@ -146,6 +146,7 @@
       @include grid-item-position('left');
   
       + *:not([class*='align']) {
+        --block-content-start: cs;
         --block-content-end: var(--block-limit-right);
       }
       
