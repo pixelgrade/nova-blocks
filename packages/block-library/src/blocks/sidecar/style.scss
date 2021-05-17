@@ -20,6 +20,8 @@
 // a margin top to the sidebar.
 .novablocks-sidebar {
   
+  z-index: 2;
+  
   @include below(lap) {
     margin-top: var(--grid-gap);
   }
@@ -188,20 +190,23 @@
 // that we will transform that width to em.
 // By default --offset-addon will be equal to 230,
 // but this value can be easily controlled using a Customizer control.
-body:not(.block-editor-page):not(.has-sidebar) {
+
+.novablocks-content:first-of-type:last-child {
+  --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
+  --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
   
-  .novablocks-sidecar {
-    
-    .novablocks-content:only-child {
-      --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
-      --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
-      
-      @include above(ultra) {
-        --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
-      }
-    }
+  @include above(ultra) {
+    --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
   }
 }
+
+.ignore-block {
+  
+  .novablocks-sidecar {
+    --default-width-offset-sidebar: var(--default-sidebar-width);
+  }
+}
+
 .novablocks-collection {
   
   // We do not want to alter font size modifier

@@ -13,6 +13,19 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   --editor-full: calc((100vw - var(--theme-content-width-wide-new) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px) ) * 0.5);
   
+  --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
+  --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
+  
+  @include above(ultra) {
+    --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
+  }
+  
+  [data-type="novablocks/sidecar"][class][class],
+  .novablocks-content[class][class] {
+    --default-width-offset-sidebar: var(--default-sidebar-width);
+  }
+  
+  
   @import 'scss/block-limits';
   
   // Markup is different compared to front-end,
