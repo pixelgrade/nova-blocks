@@ -1,6 +1,8 @@
 @import "../mixins";
 
 .novablocks-collection__title[class] {
+  
+  width: 100%;
 
 	&[class] {
 		margin-top: 0;
