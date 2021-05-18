@@ -11,7 +11,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   @include layout-grid;
   @include layout-settings;
   
-  --editor-full: calc((100vw - var(--theme-content-width-wide-new) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px) ) * 0.5);
+  --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px) ) * 0.5);
   
   --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
   --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );

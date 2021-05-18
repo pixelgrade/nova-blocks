@@ -1,6 +1,4 @@
 :root {
-  --novablocks-wide-width: 60em;
-  --novablocks-content-width: 40em;
   --body-font-size: 16;
   --offset-addon: 230;
 }
@@ -32,25 +30,16 @@
   --wds: var(--default-width-offset-sidebar, var(--default-sidebar-width));
   --wde: var(--default-width-offset-sidebar, var(--default-sidebar-width));
   
-  --full: calc((100vw - var(--theme-content-width-wide-new)) * 0.5);
+  --full: calc((100vw - var(--theme-content-width-wide)) * 0.5);
   
-  grid-template-columns: [fs] Max(0px, var(--editor-full, var(--full))) [ws] var(--wds) [wsgs] calc(var(--grid-gap)/2) [wsc] calc(var(--grid-gap)/2) [wsge] var(--wds) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] var(--wde) [wegs] calc(var(--grid-gap)/2) [wec] calc(var(--grid-gap)/2) [wege] var(--wde) [we] Max(0px, var(--editor-full, var(--full))) [fe];
+  grid-template-columns: [fs] Max(0px, var(--editor-full, var(--full))) [ws] calc(var(--wds) * 2) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] calc(var(--wde) * 2) [we] Max(0px, var(--editor-full, var(--full))) [fe];
 }
 
 // Default Layout Settings
-// --novablocks-wide-width - Wide Blocks maximum width.
-// This can also be considered as container width,
-// because a layout block with sidebar will use this width.
-// --novablocks-content-width - Content column maximum width.
 // --display-mode - Block default display mode. (eg. grid or flex)
-// --minimum-sidebar-*-width - Minimum sidebar Width for specific Sidebar.
-// This minimum sidebar width is useful when user will display an ad inside
-// the sidebar and want the sidebar to have a minimum size.
-// --sticky-element-to-spacing - Used to position the sticky block.
+// --sticky-element-top-spacing - Used to position the sticky block.
 // In Rosa2 this value will be equal with site header height, in this way,
 // the sticky block will not be under the header.
-// --novablocks-content-width-*-max-value - Content column is separated in two columns (start and end),
-// which will allow us to achieve layouts with a higher level of complexity.
 // --all-columns - Used for blocks that need to span on the entire grid.
 @mixin layout-settings {
   --default-width-small-sidebar: calc(230px - var(--grid-gap));
