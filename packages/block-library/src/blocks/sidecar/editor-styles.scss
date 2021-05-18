@@ -20,7 +20,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
   }
   
-  [data-type="novablocks/sidecar"][class][class],
+  .novablocks-sidecar[class][class],
   .novablocks-content[class][class] {
     --default-width-offset-sidebar: var(--default-sidebar-width);
   }

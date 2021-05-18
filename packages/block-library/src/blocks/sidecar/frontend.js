@@ -1,6 +1,7 @@
 import { debounce, below } from "@novablocks/utils";
 
 const sidecars = document.querySelectorAll(".novablocks-sidecar:not(.ignore-block)");
+const IS_EDITOR = document.getElementsByTagName('body')[0].classList.contains('block-editor-page');
 const BREAK_LEFT_CLASS = "stop-left";
 const BREAK_RIGHT_CLASS = "stop-right";
 
@@ -149,7 +150,9 @@ function moveImageClassesToBlock() {
 
 }
 
-window.addEventListener('DOMContentLoaded', moveImageClassesToBlock);
-window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
-window.addEventListener('DOMContentLoaded', sidecarTransformationsInCustomizer);
-window.addEventListener('resize', debouncedSidecarTransformations );
+if ( ! IS_EDITOR ) {
+  window.addEventListener('DOMContentLoaded', moveImageClassesToBlock);
+  window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
+  window.addEventListener('DOMContentLoaded', sidecarTransformationsInCustomizer);
+  window.addEventListener('resize', debouncedSidecarTransformations );
+}
