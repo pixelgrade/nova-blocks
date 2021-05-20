@@ -42,9 +42,9 @@
 // the sticky block will not be under the header.
 // --all-columns - Used for blocks that need to span on the entire grid.
 @mixin layout-settings {
-  --default-width-small-sidebar: calc(230px - var(--grid-gap));
-  --default-width-medium-sidebar: calc(300px - var(--grid-gap));
-  --default-width-large-sidebar: calc(500px - var(--grid-gap));
+  --default-width-small-sidebar: 230px;
+  --default-width-medium-sidebar: 300px;
+  --default-width-large-sidebar: 500px;
   --sticky-element-top-spacing: 0px;
   --grid-gap: 3em;
   --minimum-sidebar-width: var(--default-width-medium-sidebar);
@@ -65,9 +65,9 @@
   }
   
   @include above(ultra) {
-    --default-width-small-sidebar: calc(10.5em - var(--grid-gap));
-    --default-width-medium-sidebar: calc(13.7em - var(--grid-gap));
-    --default-width-large-sidebar: calc(22.8em - var(--grid-gap));
+    --default-width-small-sidebar: 10.5em;
+    --default-width-medium-sidebar: 13.7em;
+    --default-width-large-sidebar: 22.8em;
   }
 }
 
