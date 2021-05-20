@@ -103,9 +103,6 @@ const Post = ( props ) => {
     metadataPosition,
     primaryMetadata,
     secondaryMetadata,
-
-    contentSignal,
-    paletteVariation,
   } = attributes;
 
 	const primaryMeta = getMeta( post, primaryMetadata );

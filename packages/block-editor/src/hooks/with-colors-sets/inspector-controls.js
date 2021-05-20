@@ -19,11 +19,12 @@ import ColorPalettePicker from './components/color-palette-picker';
 
 import {
   disableFunctionalColorsOnBlocks,
-  getVariationFromSignal,
-  getSignalFromVariation,
-  getAttributesFromSignal,
-  getAbsoluteColorVariation,
+  getSignalOptionsFromVariation,
   getCurrentPaletteRelativeColorVariation,
+  getSiteColorVariation,
+  getSignalRelativeToVariation,
+
+  getSignalAttributes,
 } from "@novablocks/utils";
 
 import { Notice } from "../../components";
@@ -39,8 +40,9 @@ const ColorSetControls = ( props ) => {
   } = props;
 
   const {
-    contentSignal,
-    palette,
+    colorSignal,
+    contentColorSignal,
+    paletteVariation,
   } = attributes;
 
   const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
@@ -49,8 +51,6 @@ const ColorSetControls = ( props ) => {
     return null;
   }
 
-  const actualBlockVariation = getAbsoluteColorVariation( props );
-  const initialSignal = getSignalFromVariation( actualBlockVariation );
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
 
   return (
@@ -63,21 +63,16 @@ const ColorSetControls = ( props ) => {
           dismissLabel={ '✔ Ok, I get it!' }
         />
         <ControlsGroup>
-          <SignalControl { ...props } label={ 'Block Color Signal' } signal={ initialSignal } onChange={ newSignal => {
-            const paletteVariation = getVariationFromSignal( newSignal );
-            const newAttributes = getAttributesFromSignal( newSignal, currentPalette, paletteVariation );
-
-            setAttributes( newAttributes );
+          <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
+            setAttributes( getSignalAttributes( nextSignal, currentPalette ) );
           } } />
         </ControlsGroup>
         <ControlsGroup>
           <SignalControl { ...props }
                          label={ 'Content Area Color Signal' }
-                         signal={ contentSignal }
-                         onChange={ newContentSignal => {
-                           setAttributes( {
-                             contentSignal: newContentSignal,
-                           } )
+                         signal={ contentColorSignal }
+                         onChange={ contentColorSignal => {
+                           setAttributes( { contentColorSignal: contentColorSignal } )
                          } } />
         </ControlsGroup>
         <ControlsGroup>
@@ -91,11 +86,17 @@ const ColorSetControls = ( props ) => {
         <ControlsGroup>
           <ColorGradesControl { ...props }
                               label={ __( 'Block Color Signal', '__plugin_txtd' ) }
-                              value={ actualBlockVariation }
+                              value={ paletteVariation }
+                              signal={ colorSignal }
                               onChange={ value => {
+                                const siteVariation = getSiteColorVariation();
+                                const nextPaletteVariation = getCurrentPaletteRelativeColorVariation( value, props );
+                                const nextSignal = getSignalRelativeToVariation( value, siteVariation );
+
                                 setAttributes( {
-                                  paletteVariation: getCurrentPaletteRelativeColorVariation( value, props )
-                                } )
+                                  paletteVariation: nextPaletteVariation,
+                                  colorSignal: nextSignal
+                                } );
                               } } />
         </ControlsGroup>
         <MiscellanousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />
@@ -137,8 +138,9 @@ const MiscellanousControls = ( props ) => {
         label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
         checked={ useSourceColorAsReference }
         onChange={ useSourceColorAsReference => {
+          const siteVariation = getSiteColorVariation();
           const offsetFactor = useSourceColorAsReference ? -1 : 1;
-          const offset = offsetFactor * currentPalette.sourceIndex;
+          const offset = offsetFactor * ( siteVariation - 1 + currentPalette.sourceIndex );
           const nextVariation = normalizeVariationValue( paletteVariation + offset );
 
           setAttributes( {

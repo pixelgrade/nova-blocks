@@ -4,7 +4,12 @@
 import classnames from 'classnames';
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
-import { getColorSetClassnames, getContentVariation } from '@novablocks/utils';
+import {
+  getColorSetClassnames,
+  normalizeVariationValue,
+  getSignalOptionsFromVariation,
+  getSiteColorVariation,
+} from '@novablocks/utils';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -28,7 +33,16 @@ const MediaPreview = function( props ) {
 
     contentAreaWidth,
     layoutGutter,
+
+    palette,
+    paletteVariation,
+    contentColorSignal,
+    useSourceColorAsReference,
 	} = attributes;
+
+	const {
+	  palettes
+  } = settings;
 
 	const classNames = classnames(
 		className,
@@ -55,14 +69,33 @@ const MediaPreview = function( props ) {
     getColorSetClassnames( attributes ),
   );
 
-	return (
+	const siteVariation = getSiteColorVariation();
+  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette );
+  const { sourceIndex } = currentPalette;
+
+  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
+  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
+	const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
+	const contentVariation = normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset );
+
+	const contentClassNames = classnames(
+    `novablocks-media__inner-container`,
+    `novablocks-block__content`,
+    `sm-palette-${ palette }`,
+    `sm-variation-${ contentVariation }`,
+    {
+      'sm-palette--shifted': useSourceColorAsReference
+    }
+  );
+
+  return (
 		<div className={ classNames } style={ cssVars }>
 			<div className={ blockClassNames }>
 				<div className="wp-block-group__inner-container">
 					<div className="wp-block" data-align="wide">
 						<div className="novablocks-media__layout">
 							<div className="novablocks-media__content">
-								<div className={ `novablocks-media__inner-container novablocks-block__content sm-variation-${ getContentVariation( attributes ) }` }>
+								<div className={ contentClassNames }>
 									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
 								</div>
 							</div>

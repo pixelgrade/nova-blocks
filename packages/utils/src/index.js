@@ -294,6 +294,14 @@ export const getVariationFromSignal = ( signal ) => {
   return 1;
 }
 
+export const getSignalRelativeToVariation = ( compare, reference ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference );
+
+  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
+  }, 0 );
+}
+
 export const getSignalFromVariation = ( variation ) => {
 
   if ( variation === 1 ) {
@@ -311,21 +319,27 @@ export const getSignalFromVariation = ( variation ) => {
   return 3;
 }
 
-export const getContentVariationBySignal = ( props ) => {
-  const { attributes } = props;
-  const { contentSignal } = attributes;
-  const actualBlockVariation = getAbsoluteColorVariation( props );
-  const blockSignal = getSignalFromVariation( actualBlockVariation );
+export const getSignalOptionsFromVariation = ( variation ) => {
+  const blockSignal = getSignalFromVariation( variation );
 
   const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
-    return index === blockSignal ? actualBlockVariation : getVariationFromSignal( index );
+    return index === blockSignal ? variation : getVariationFromSignal( index );
   } );
 
   variationOptions.sort( ( variation1, variation2 ) => {
-    return Math.abs( actualBlockVariation - variation1 ) < Math.abs( actualBlockVariation - variation2 ) ? -1 : 1;
+    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
   } );
 
-  return variationOptions[ contentSignal ];
+  return variationOptions;
+}
+
+export const getContentVariationBySignal = ( props ) => {
+  const { attributes } = props;
+  const { contentColorSignal } = attributes;
+  const actualBlockVariation = getAbsoluteColorVariation( props );
+  const variationOptions = getSignalOptionsFromVariation( actualBlockVariation );
+
+  return variationOptions[ contentColorSignal ];
 }
 
 export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
@@ -452,7 +466,7 @@ export const mapPalettesToColorPalette = palette => {
 
 export const getAttributesFromSignal = ( signal, palette, paletteVariation ) => {
   const { sourceIndex } = palette;
-  const sourceSignal = sourceIndex < 4 ? 1 : sourceIndex < 8 ? 2 : 3;
+  const sourceSignal = getSignalFromVariation( sourceIndex + 1 );
 
   const newAttributes = {
     palette: palette.id,
@@ -469,20 +483,21 @@ export const getAttributesFromSignal = ( signal, palette, paletteVariation ) => 
 
 export const compileVariationAttributes = ( palette, paletteVariation, useSourceColorAsReference ) => {
   const { sourceIndex } = palette;
-  const siteVariation = window?.customify_config?.sm_site_color_variation?.value || 1;
+  const siteVariation = getSiteColorVariation();
+
   let offset = siteVariation - sourceIndex - 1;
   let newPaletteVariation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation;
   newPaletteVariation = normalizeVariationValue( newPaletteVariation );
 
   return {
     useSourceColorAsReference: useSourceColorAsReference,
-    paletteVariation: newPaletteVariation,
+    paletteVariation: paletteVariation,
   }
 }
 
 export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorAsReference ) => {
   const { sourceIndex } = palette;
-  const siteVariation = window?.customify_config?.sm_site_color_variation?.value || 1;
+  const siteVariation = getSiteColorVariation();
   let offset = siteVariation - sourceIndex - 1;
   let variation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation - offset
 
@@ -506,9 +521,6 @@ export const getCurrentPalette = ( props ) => {
 export const getAbsoluteColorVariation = ( props ) => {
 
   const {
-    settings: {
-      customify_config
-    },
     attributes: {
       paletteVariation,
       useSourceColorAsReference
@@ -517,30 +529,31 @@ export const getAbsoluteColorVariation = ( props ) => {
 
   const currentPalette = getCurrentPalette( props );
   const { sourceIndex } = currentPalette;
-  const siteVariation = customify_config?.sm_site_color_variation?.value || 1;
-  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
+  const siteVariation = getSiteColorVariation();
+  const siteVariationOffset = siteVariation - 1;
   const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
 
-  return normalizeVariationValue( paletteVariation + colorReferenceOffset + siteVariationOffset );
+  return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
 }
 
 export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
   return getRelativeColorVariation( getCurrentPalette( props ), paletteVariation, props );
 }
 
+export const getSiteColorVariation = () => {
+  return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
+}
+
 export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
 
   const {
-    settings: {
-      customify_config
-    },
     attributes: {
       useSourceColorAsReference
     }
   } = props;
 
   const { sourceIndex } = paletteConfig;
-  const siteVariation = customify_config?.sm_site_color_variation?.value || 1;
+  const siteVariation = getSiteColorVariation();
   const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
   const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
 
@@ -555,3 +568,18 @@ export const disableFunctionalColorsOnBlocks = [
   'novablocks/cards-collection',
   'novablocks/posts-collection',
 ];
+
+export const getSignalAttributes = ( signal, palette ) => {
+  const { sourceIndex } = palette;
+  const siteVariation = getSiteColorVariation();
+  const variationOptions = getSignalOptionsFromVariation( siteVariation );
+  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
+  const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
+
+  return {
+    colorSignal: signal,
+    palette: palette.id,
+    paletteVariation: nextVariation,
+    useSourceColorAsReference: sourceSignal === signal,
+  }
+}

@@ -1,6 +1,10 @@
 import classnames from 'classnames';
 import { getIcon } from "@novablocks/icons";
-import { getSignalFromVariation } from "@novablocks/utils";
+import {
+  getSignalFromVariation,
+  getSiteColorVariation,
+  normalizeVariationValue
+} from "@novablocks/utils";
 
 const ColorGradesControl = ( props ) => {
 
@@ -9,12 +13,15 @@ const ColorGradesControl = ( props ) => {
     settings,
     label,
     value,
+    signal,
   } = props;
 
   const onChange = props.onChange || (() => {});
+  const siteVariation = getSiteColorVariation();
 
   const {
     palette,
+    useSourceColorAsReference,
   } = attributes;
 
   const {
@@ -23,7 +30,6 @@ const ColorGradesControl = ( props ) => {
 
   const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
   const { sourceIndex } = currentPalette;
-  const signal = getSignalFromVariation( value );
 
   const iconClassName = classnames(
     `nb-signal-icon`,
@@ -53,17 +59,20 @@ const ColorGradesControl = ( props ) => {
             let content = '';
             let modifier = '';
 
+            const currentVariation = normalizeVariationValue( index + 1 - siteVariation + 1 );
+            const actualSelectedIndex = ( ( useSourceColorAsReference ? value + sourceIndex - 1 : value - siteVariation ) + 12 ) % 12;
+
             const className = classnames(
               `nb-palette__grade`,
               `sm-palette-${ palette }`,
-              `sm-variation-${ index + 1 }`,
+              `sm-variation-${ currentVariation }`,
               {
-                'nb-palette__grade--selected': value === index + 1,
+                'nb-palette__grade--selected': actualSelectedIndex === index,
                 'nb-palette__grade--source': sourceIndex === index,
               }
             );
 
-            if ( value === index + 1 ) {
+            if ( actualSelectedIndex === index ) {
               content = getIcon( 'tick' );
             }
 

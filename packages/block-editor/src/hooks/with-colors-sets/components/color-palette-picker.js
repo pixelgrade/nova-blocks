@@ -2,14 +2,13 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
-  getAttributesFromSignal,
-  getSignalFromVariation,
-
   getCurrentPalette,
   isFunctionalPalette,
-} from "@novablocks/utils";
 
-import { useMemoryState } from "../../../components";
+  getSignalAttributes,
+  getSignalRelativeToVariation,
+  getSiteColorVariation,
+} from "@novablocks/utils";
 
 const ColorPalettePicker = ( props ) => {
 
@@ -26,6 +25,7 @@ const ColorPalettePicker = ( props ) => {
     palette,
     paletteVariation,
     useSourceColorAsReference,
+    colorSignal,
   } = attributes;
 
   const currentPalette = getCurrentPalette( props );
@@ -52,10 +52,19 @@ const ColorPalettePicker = ( props ) => {
 
           return (
             <button key={ thisPalette.id } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
-              const nextVariation = ( isSelected || useSourceColorAsReference ) ? ( currentPalette.sourceIndex + 1 ) : paletteVariation;
-              const signal = getSignalFromVariation( nextVariation );
-              const newAttributes = getAttributesFromSignal( signal, thisPalette, nextVariation );
-              setAttributes( newAttributes );
+              if ( isSelected ) {
+                const siteVariation = getSiteColorVariation();
+                const sourceSignal = getSignalRelativeToVariation( thisPalette.sourceIndex + 1, siteVariation );
+
+                setAttributes( {
+                  palette: thisPalette.id,
+                  paletteVariation: 1,
+                  colorSignal: sourceSignal,
+                  useSourceColorAsReference: true,
+                } )
+              } else {
+                setAttributes( getSignalAttributes( colorSignal, thisPalette ) );
+              }
             } }>
               <svg className="color-palette-picker__color-svg" width="48" height="48" viewBox="0 0 48 48">
                 <circle className="color-palette-picker__color-dash" stroke="none" fill="none" r="20" cx="24" cy="24" />
