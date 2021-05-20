@@ -1703,12 +1703,44 @@ function novablocks_get_palette_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_content_palette_classes( $attributes ) {
-	$contentVariation = novablocks_get_content_variation( $attributes['paletteVariation'], $attributes['contentStyle'] );
+function novablocks_normalize_variation_value( $variation ) {
+	return ( $variation + 11 ) % 12 + 1;
+}
 
-	return array(
+function novablocks_get_content_palette_classes( $attributes ) {
+	$palettes_output = Pixelgrade\Customify\get_option( 'sm_advanced_palette_output', '[]' );
+	$palettes = json_decode( $palettes_output );
+
+	$current_palette = null;
+	foreach ( $palettes as $palette ) {
+		if ( $attributes['palette'] == $palette->id ) {
+			$current_palette = $palette;
+			break;
+		}
+	}
+
+	$sourceIndex = $current_palette->sourceIndex;
+	$siteVariation = Pixelgrade\Customify\get_option( 'sm_site_color_variation', 1 );
+	$offset = $siteVariation - 1;
+
+	if ( $attributes[ 'useSourceColorAsReference' ] ) {
+		$offset = $sourceIndex;
+	}
+
+	$referenceVariation = novablocks_normalize_variation_value( $attributes['paletteVariation'] + $offset );
+	$contentSignalOptions = novablocks_get_signal_options_from_variation( $referenceVariation );
+	$contentVariation = novablocks_normalize_variation_value( $contentSignalOptions[ $attributes['contentColorSignal'] ] - $offset );
+
+	$classes = array(
+		'sm-palette-' . $attributes['palette'],
 		'sm-variation-' . $contentVariation
 	);
+
+	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
+		$classes[] = 'sm-palette--shifted';
+	}
+
+	return $classes;
 }
 
 function novablocks_get_content_variation( $parentVariation, $contentStyle ) {
@@ -1854,3 +1886,56 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 	return ob_get_clean();
 }
 
+function novablocks_get_signal_options_from_variation( $variation ) {
+	$blockSignal = novablocks_get_signal_from_variation( $variation );
+
+	$variationOptions = array();
+
+	for ( $index = 0; $index < 4; $index++ ) {
+		if ( $index === $blockSignal ) {
+			$variationOptions[] = $variation;
+		} else {
+			$variationOptions[] = novablocks_get_variation_from_signal( $index );
+		}
+	}
+
+	usort( $variationOptions, function( $variation1, $variation2 ) use ( $variation ) {
+		return abs( $variation - $variation1 ) < abs( $variation - $variation2 ) ? - 1 : 1;
+	} );
+
+	return $variationOptions;
+}
+
+function novablocks_get_signal_from_variation( $variation ) {
+
+	if ( $variation === 1 ) {
+		return 0;
+	}
+
+	if ( $variation < 5 ) {
+		return 1;
+	}
+
+	if ( $variation < 9 ) {
+		return 2;
+	}
+
+	return 3;
+}
+
+function novablocks_get_variation_from_signal( $signal ) {
+
+	if ( $signal === 1 ) {
+		return 3;
+	}
+
+	if ( $signal === 2 ) {
+		return 6;
+	}
+
+	if ( $signal === 3 ) {
+		return 10;
+	}
+
+	return 1;
+}

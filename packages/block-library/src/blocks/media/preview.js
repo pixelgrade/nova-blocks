@@ -76,6 +76,9 @@ const MediaPreview = function( props ) {
   const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
   const referenceVariation = normalizeVariationValue( paletteVariation + offset );
 	const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
+
+	console.log( contentSignalOptions );
+
 	const contentVariation = normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset );
 
 	const contentClassNames = classnames(
