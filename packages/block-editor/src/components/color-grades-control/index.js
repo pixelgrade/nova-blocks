@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import { getIcon } from "@novablocks/icons";
 import {
-  getSignalFromVariation,
   getSiteColorVariation,
   normalizeVariationValue
 } from "@novablocks/utils";

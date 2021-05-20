@@ -464,23 +464,6 @@ export const mapPalettesToColorPalette = palette => {
   };
 }
 
-export const getAttributesFromSignal = ( signal, palette, paletteVariation ) => {
-  const { sourceIndex } = palette;
-  const sourceSignal = getSignalFromVariation( sourceIndex + 1 );
-
-  const newAttributes = {
-    palette: palette.id,
-    paletteVariation,
-    useSourceColorAsReference: false
-  }
-
-  if ( signal === sourceSignal ) {
-    Object.assign( newAttributes, compileVariationAttributes( palette, sourceIndex + 1, true ) );
-  }
-
-  return newAttributes;
-}
-
 export const compileVariationAttributes = ( palette, paletteVariation, useSourceColorAsReference ) => {
   const { sourceIndex } = palette;
   const siteVariation = getSiteColorVariation();

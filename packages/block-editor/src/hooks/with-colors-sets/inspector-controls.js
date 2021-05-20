@@ -19,7 +19,6 @@ import ColorPalettePicker from './components/color-palette-picker';
 
 import {
   disableFunctionalColorsOnBlocks,
-  getSignalOptionsFromVariation,
   getCurrentPaletteRelativeColorVariation,
   getSiteColorVariation,
   getSignalRelativeToVariation,
