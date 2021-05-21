@@ -17,6 +17,8 @@ import {
 import placeholderSvg from './card-media-placeholder.svg';
 import classnames from "classnames";
 
+import classnames from "classnames";
+
 const CardEdit = ( props ) => {
 
 	const blockClassName = 'novablocks-card';
