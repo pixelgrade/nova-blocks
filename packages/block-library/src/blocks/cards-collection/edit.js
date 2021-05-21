@@ -49,6 +49,7 @@ const CardsCollectionEdit = ( props ) => {
 				<InnerBlocks
 					allowedBlocks={ ALLOWED_BLOCKS }
 					template={ CARDS_COLLECTION_TEMPLATE }
+          renderAppender={ hasAppender ? window.undefined : false }
 				/>
 			</Collection.Component>
 		</Fragment>
