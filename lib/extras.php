@@ -1708,7 +1708,7 @@ function novablocks_normalize_variation_value( $variation ) {
 }
 
 function novablocks_get_content_palette_classes( $attributes ) {
-	$palettes_output = Pixelgrade\Customify\get_option( 'sm_advanced_palette_output', '[]' );
+	$palettes_output = get_option( 'sm_advanced_palette_output', '[]' );
 	$palettes = json_decode( $palettes_output );
 
 	$current_palette = null;
@@ -1720,7 +1720,7 @@ function novablocks_get_content_palette_classes( $attributes ) {
 	}
 
 	$sourceIndex = $current_palette->sourceIndex;
-	$siteVariation = Pixelgrade\Customify\get_option( 'sm_site_color_variation', 1 );
+	$siteVariation = get_option( 'sm_site_color_variation', 1 );
 	$offset = $siteVariation - 1;
 
 	if ( $attributes[ 'useSourceColorAsReference' ] ) {
