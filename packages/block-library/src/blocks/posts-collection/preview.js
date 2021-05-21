@@ -10,8 +10,7 @@ import {
 
 const {
 	ClassicLayoutPreview,
-	ParametricLayoutPreview,
-  CarouselLayoutPreview
+	ParametricLayoutPreview
 } = GridGenerator;
 
 import { __ } from '@wordpress/i18n';
@@ -93,6 +92,7 @@ const Preview = ( props ) => {
 
 	const classname = classnames(
 		'novablocks-block',
+
 		`novablocks-collection`,
 		`novablocks-collection--align-${ contentAlign }`,
 		`block-is-${ blockStyle }`,
@@ -106,10 +106,6 @@ const Preview = ( props ) => {
 				layoutStyle === 'classic' &&
 				<ClassicLayoutPreview { ...props } />
 			}
-      {
-        layoutStyle === 'carousel' &&
-        <CarouselLayoutPreview { ...props } />
-      }
 			{
 				layoutStyle === 'parametric' &&
 				<div className={ classname }>

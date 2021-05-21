@@ -300,41 +300,4 @@ import {
 		} );
 	}
 
-	function initCarousels() {
-
-    $('.novablocks-collection--carousel .novablocks-collection__layout').each( function( i, carousel ) {
-
-      let $carousel = $(carousel);
-
-      const SLICK_OPTIONS = {
-        slidesToShow: $carousel.data('columns' ),
-        dots: $carousel.data('showpagination') === 1,
-        variableWidth: $carousel.data('carousellayout') === 'variable',
-        customPaging: function(slick,index) {
-          return '<a>' + (index + 1) + '</a>';
-        },
-        infinite: true,
-
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              infinite: true,
-              slidesToShow: 1,
-              variableWidth: false,
-              centerPadding: '30px',
-            }
-          },
-        ]
-      }
-
-      $carousel.slick(SLICK_OPTIONS);
-
-    } );
-  }
-
-  initCarousels();
-
 })(jQuery, window);
