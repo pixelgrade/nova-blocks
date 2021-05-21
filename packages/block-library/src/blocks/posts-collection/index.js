@@ -3,6 +3,7 @@
  */
 import iconSvg from './posts-collection-block.svg';
 import edit from './edit';
+import variations from './variations';
 
 /**
  * WordPress dependencies
@@ -23,6 +24,7 @@ registerBlockType( 'novablocks/posts-collection', {
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes,
+  variations,
   supports: {
     html: false
   },

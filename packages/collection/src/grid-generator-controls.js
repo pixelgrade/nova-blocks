@@ -419,11 +419,13 @@ const LayoutControls = ( props ) => {
 						options={ [
 							{ label: 'Parametric Grid', value: 'parametric' },
 							{ label: 'Classic Grid', value: 'classic' },
+							{ label: 'Carousel', value: 'carousel' },
 						] }
 					/>
 				</ControlsGroup>
 				{ layoutStyle === 'classic' && <ClassicLayoutControls { ...props } /> }
 				{ layoutStyle === 'parametric' && <ParametricLayoutControls { ...props } /> }
+				{ layoutStyle === 'carousel' && <CarouselLayoutControls { ...props } /> }
 			</ControlsTab>
 		</ControlsSection>
 	);
@@ -751,6 +753,43 @@ const ParametricLayoutControls = ( props ) => {
 			}
 		</Fragment>
 	)
+};
+
+const CarouselLayoutControls = ( props ) => {
+  const {
+    attributes: {
+      carouselLayout,
+      showPagination,
+    },
+    setAttributes
+  } = props;
+
+  return (
+    <Fragment>
+      <ClassicLayoutControls {...props} />
+      <ControlsGroup title={ __( 'Layout' ) }>
+        <RadioControl
+          key={ 'carousel-layout' }
+          label={ __( 'Items Layout' ) }
+          selected={ carouselLayout }
+          onChange={ carouselLayout => {
+            setAttributes( { carouselLayout } )
+          } }
+          options={ [
+            { label: 'Fixed Width', value: 'fixed' },
+            { label: 'Variable Width', value: 'variable' },
+          ] }
+        />
+        <ToggleControl
+          label={__( 'Show Pagination', '__plugin_txtd' )}
+          checked={ showPagination }
+          onChange={ ( showPagination ) => {
+            setAttributes( { showPagination } )
+          } }
+        />
+      </ControlsGroup>
+    </Fragment>
+  )
 };
 
 const DebugControls = withSettings(( props ) => {
