@@ -24,9 +24,14 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		$classes = array(
 			'novablocks-card',
+			'novablocks-card--fixed-media-aspect-ratio',
 			'novablocks-card--portrait',
 			'novablocks-block__content'
 		);
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		if ( ! empty( $attributes['contentStyle'] ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
