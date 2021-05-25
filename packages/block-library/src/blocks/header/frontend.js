@@ -7,15 +7,16 @@ import { addSocialMenuClass } from "./utils";
     let   $siteHeader = $( '.site-header--main' ),
           $stickyHeader = $( '.site-header--secondary' ),
           $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
-          currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader;
-
-    let $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
-        stickyHeaderShown = false,
-        primaryRowShown = false,
-        mainHeaderShouldBeSticky = $('.site-header--main[data-sticky]').length && ! $stickyHeader.length,
-        wpAdminBar = $('#wpadminbar'),
-        wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
-        isArticle = $(body).hasClass('single');
+          currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
+          $elementWithOverflow = currentHeader,
+          $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
+          stickyHeaderShown = false,
+          primaryRowShown = false,
+          mainHeaderShouldBeSticky = $('.site-header--main[data-sticky]').length && ! $stickyHeader.length,
+          wpAdminBar = $('#wpadminbar'),
+          wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
+          isArticle = $(body).hasClass('single'),
+          $progressBar = $( '.js-reading-progress' );
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
     $( window ).on( 'scroll', makeHeaderStickyOnScroll );
@@ -102,8 +103,8 @@ import { addSocialMenuClass } from "./utils";
       }
 
       $( window ).on( 'scroll', function() {
-        let $progressBar = $( '.js-reading-progress' ),
-            scrollPosition = $( window ).scrollTop(),
+
+        let scrollPosition = $( window ).scrollTop(),
             startPosition = $entryContent.offset().top;
 
           if ( scrollPosition > startPosition ) {
@@ -166,11 +167,18 @@ import { addSocialMenuClass } from "./utils";
           }
         }
 
+
+
         if ( reading || next ) {
-          currentHeader.css('overflow', 'hidden');
+
+          if (currentHeader.hasClass('site-header--main')) {
+            $elementWithOverflow = currentHeader.find('.site-header__wrapper');
+          }
+
+          $elementWithOverflow.css('overflow', 'hidden');
         } else {
           setTimeout( () => {
-            currentHeader.css( 'overflow', '' );
+            $elementWithOverflow.css( 'overflow', '' );
           }, 350 );
         }
 
