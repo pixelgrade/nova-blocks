@@ -24,6 +24,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		$classes = array(
 			'novablocks-card',
+			'novablocks-card--fixed-media-aspect-ratio',
 			'novablocks-card--portrait',
 			'novablocks-block__content'
 		);
