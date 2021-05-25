@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import {__} from '@wordpress/i18n';
 import {RadioControl, ToggleControl, PanelBody} from '@wordpress/components';
-import { InspectorControls} from "@wordpress/block-editor";
+import {InspectorControls} from "@wordpress/block-editor";
 
 const SidecarInspectorControls = ( props ) => {
   const {
@@ -55,7 +55,7 @@ const SidecarInspectorControls = ( props ) => {
         /> }
 
         <ToggleControl
-          label={__( 'Enable sticky sidebar', '__plugin_txtd' )}
+          label={__( 'Enable sticky sidebar on scroll', '__plugin_txtd' )}
           checked={lastItemIsSticky}
           onChange={ () => setAttributes( {lastItemIsSticky: !lastItemIsSticky} )}
         />

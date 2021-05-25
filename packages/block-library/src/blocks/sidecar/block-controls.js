@@ -3,22 +3,18 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import {
-  BlockControls,
-} from '@wordpress/block-editor';
+import { BlockControls } from '@wordpress/block-editor';
 
-import {
-  Toolbar,
-} from '@wordpress/components';
+import { Toolbar } from '@wordpress/components';
 
 const SIDECAR_ALIGNMENTS_CONTROLS = {
   left: {
     icon: 'align-pull-left',
-    title: __( 'Show Sidebar on Left Side', '__plugin_txtd' ),
+    title: __( 'Show sidebar on left side', '__plugin_txtd' ),
   },
   right: {
     icon: 'align-pull-right',
-    title: __( 'Show Sidebar on Right Side', '__plugin_txtd' ),
+    title: __( 'Show sidebar on right side', '__plugin_txtd' ),
   },
 };
 
