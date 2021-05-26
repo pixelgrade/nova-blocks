@@ -31,16 +31,24 @@ const handleSidecarTransformations = function() {
     }
 
     let content = sidecar.querySelector( CONTENT_CLASS ),
-        pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( PULL_RIGHT_CLASS ) || block.classList.contains( PULL_LEFT_CLASS ) ),
-        sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
-        sidebarBlocks = Array.from( sidecar.querySelectorAll( SIDEBAR_CLASS ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
-        contentBlocks = Array.from( sidecar.querySelectorAll( CONTENT_CLASS ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
-        alignedBlocks = contentBlocks.filter ( (block) => ALIGN_CLASSES.some( ALIGN_CLASS => block.classList.contains(ALIGN_CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
-        allSidebarBlocks = sidebarBlocks.concat( pulledBlocks ),
-        // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
-        sidebarContentOverlapBlocks = generateOverlappingBlocks( allSidebarBlocks, alignedBlocks );
+        sidebar = sidecar.querySelector( SIDEBAR_CLASS ),
 
-    sidebarContentOverlapBlocks.forEach( block => {
+        pulledBlocks = document.querySelectorAll("[class*='pull-']"),
+        contentBlocks = content.children,
+        sidebarBlocks = sidebar.children,
+
+        pulledBlocksArray = Array.from(pulledBlocks),
+        contentBlocksArray = Array.from(contentBlocks),
+        sidebarBlocksArray = Array.from(sidebarBlocks),
+        alignedBlocks = contentBlocksArray.filter ( (block) => ALIGN_CLASSES.some( ALIGN_CLASS => block.classList.contains(ALIGN_CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
+        breakingBlocks = alignedBlocks.concat(pulledBlocksArray),
+
+        sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
+
+        // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
+        overlappingBlocks = generateOverlappingBlocks( breakingBlocks, sidebarBlocksArray );
+
+    overlappingBlocks.forEach( block => {
 
       let noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
@@ -56,17 +64,7 @@ const handleSidecarTransformations = function() {
 
     } )
 
-    // Overlapping between pulled blocks and sidebar blocks.
-    let sidebarPullOverlapBlocks = generateOverlappingBlocks( sidebarBlocks, pulledBlocks );
-
-    sidebarPullOverlapBlocks.forEach( block => {
-
-      let noCollisionClass = block.classList.contains( PULL_LEFT_CLASS ) ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
-
-      block.classList.add( noCollisionClass );
-    } )
-
-    recalculateOverlappedBlocks( sidecar, sidebarContentOverlapBlocks);
+    recalculateOverlappedBlocks( sidecar, overlappingBlocks);
   } )
 }
 const debouncedSidecarTransformations = debounce(handleSidecarTransformations, 200)
@@ -98,8 +96,13 @@ function generateOverlappingBlocks(primaryArea, secondaryArea) {
 
     secondaryArea.forEach( secondaryAreaBlock => {
 
-      if ( doesOverlap(secondaryAreaBlock, primaryAreaBlock) && ! array.includes(secondaryAreaBlock)) {
-        array.push(secondaryAreaBlock);
+      // Avoid useless iterations.
+      if ( array.includes( primaryAreaBlock ) ) {
+        return;
+      }
+
+      if ( doesOverlap(primaryAreaBlock, secondaryAreaBlock)) {
+        array.push(primaryAreaBlock);
       }
     })
   })
