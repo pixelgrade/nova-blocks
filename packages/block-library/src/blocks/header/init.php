@@ -62,7 +62,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
 
-			<input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox">
+			<input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox" autocomplete="off">
 
 			<label class="<?php echo esc_attr( join( ' ', $toggleClasses ) ); ?>" for="nova-menu-toggle">
                 <span class="c-menu-toggle__wrap">

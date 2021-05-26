@@ -11,7 +11,8 @@ import {
 	InnerBlocks,
 	MediaUpload,
  } from '@wordpress/block-editor';
-import {getColorSetClassnames} from "@novablocks/utils";
+
+import { getColorSetClassnames } from "@novablocks/utils";
 
 const CardEdit = ( props ) => {
 
