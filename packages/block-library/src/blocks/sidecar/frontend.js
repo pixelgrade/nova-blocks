@@ -1,9 +1,15 @@
 import { debounce, below } from "@novablocks/utils";
 
-const sidecars = document.querySelectorAll(".novablocks-sidecar:not(.ignore-block)");
+const SIDECARS = document.querySelectorAll('.novablocks-sidecar:not(.ignore-block)');
 const IS_EDITOR = document.getElementsByTagName('body')[0].classList.contains('block-editor-page');
-const BREAK_LEFT_CLASS = "stop-left";
-const BREAK_RIGHT_CLASS = "stop-right";
+const BREAK_LEFT_CLASS = 'stop-left';
+const BREAK_RIGHT_CLASS = 'stop-right';
+const CONTENT_CLASS = '.novablocks-content';
+const SIDEBAR_CLASS = '.novablocks-sidebar';
+const SIDECAR_CLASS = '.novablocks-sidecar';
+const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
+const PULL_RIGHT_CLASS = '.pull-right';
+const PULL_LEFT_CLASS = '.pull-left';
 
 // There are 3 types of blocks in this system:
 // content blocks, sidebar blocks and pulled blocks.
@@ -15,7 +21,7 @@ const BREAK_RIGHT_CLASS = "stop-right";
 
 const handleSidecarTransformations = function() {
 
-  sidecars.forEach( sidecar => {
+  SIDECARS.forEach( sidecar => {
 
     // We don't need break classes on mobiles,
     // on sidecars without sidebar,
@@ -24,27 +30,25 @@ const handleSidecarTransformations = function() {
       return;
     }
 
-    let content = sidecar.querySelector( ".novablocks-content" ),
-      pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( 'pull-right' ) || block.classList.contains( 'pull-left' ) ),
-      sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
-      sidebarBlocks = Array.from( sidecar.querySelectorAll( ".novablocks-sidebar" ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
-      allContentBlocks = Array.from( sidecar.querySelectorAll( '.novablocks-content' ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
-      alignedContentBlocks = allContentBlocks.filter( block => (
-                                                                 block.classList.contains( 'alignfull' ) || block.classList.contains( 'alignwide' ) || block.classList.contains('alignleft') || block.classList.contains('alignright')
-                                                               ) && !block.classList.contains( 'novablocks-sidecar' ) ),
-      allSidebarBlocks = sidebarBlocks.concat( pulledBlocks ),
-      // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
-      sidebarContentOverlapBlocks = generateOverlappingBlocks( allSidebarBlocks, alignedContentBlocks );
+    let content = sidecar.querySelector( CONTENT_CLASS ),
+        pulledBlocks = Array.from( content.children ).filter( block => block.classList.contains( PULL_RIGHT_CLASS ) || block.classList.contains( PULL_LEFT_CLASS ) ),
+        sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
+        sidebarBlocks = Array.from( sidecar.querySelectorAll( SIDEBAR_CLASS ) ).flatMap( sideBlock => Array.from( sideBlock.children ) ),
+        contentBlocks = Array.from( sidecar.querySelectorAll( CONTENT_CLASS ) ).flatMap( contentBlock => Array.from( contentBlock.children ) ),
+        alignedBlocks = contentBlocks.filter ( (block) => ALIGN_CLASSES.some( ALIGN_CLASS => block.classList.contains(ALIGN_CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
+        allSidebarBlocks = sidebarBlocks.concat( pulledBlocks ),
+        // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
+        sidebarContentOverlapBlocks = generateOverlappingBlocks( allSidebarBlocks, alignedBlocks );
 
     sidebarContentOverlapBlocks.forEach( block => {
 
       let noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
-      if ( block.classList.contains( 'pull-right' ) ) {
+      if ( block.classList.contains( PULL_RIGHT_CLASS ) ) {
         noCollisionClass = BREAK_RIGHT_CLASS;
       }
 
-      if ( block.classList.contains( 'pull-left' ) ) {
+      if ( block.classList.contains( PULL_LEFT_CLASS ) ) {
         noCollisionClass = BREAK_LEFT_CLASS;
       }
 
@@ -57,7 +61,7 @@ const handleSidecarTransformations = function() {
 
     sidebarPullOverlapBlocks.forEach( block => {
 
-      let noCollisionClass = block.classList.contains( 'pull-left' ) ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      let noCollisionClass = block.classList.contains( PULL_LEFT_CLASS ) ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
       block.classList.add( noCollisionClass );
     } )
@@ -131,6 +135,12 @@ function recalculateOverlappedBlocks( sidecar, blocks ) {
   } )
 }
 
+// Image Block Current Markup
+// <div><figure><img></img></figure</div>
+// For Image Block, the align class
+// is on figure element, inside the div.
+// We need that class to be on div,
+// so we are going to alter the markup.
 function moveImageClassesToBlock() {
 
   // Select all Block Images inside Content.
@@ -151,8 +161,12 @@ function moveImageClassesToBlock() {
 }
 
 if ( ! IS_EDITOR ) {
-  window.addEventListener('DOMContentLoaded', moveImageClassesToBlock);
-  window.addEventListener('DOMContentLoaded', handleSidecarTransformations);
-  window.addEventListener('DOMContentLoaded', sidecarTransformationsInCustomizer);
+
+  window.addEventListener( 'DOMContentLoaded', () => {
+    moveImageClassesToBlock();
+    handleSidecarTransformations();
+    sidecarTransformationsInCustomizer();
+  });
+
   window.addEventListener('resize', debouncedSidecarTransformations );
 }
