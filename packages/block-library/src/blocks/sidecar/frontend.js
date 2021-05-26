@@ -117,7 +117,7 @@ function generateOverlappingBlocks(primaryArea, secondaryArea) {
 function sidecarTransformationsInCustomizer() {
 
   if ( wp.customize !== undefined ) {
-    wp.customize( `${customify.config.options_name}[content_wide_width_addon_new]`, ( setting ) => {
+    wp.customize( `${customify.config.options_name}[content_wide_width_addon]`, ( setting ) => {
       setting.bind( value => {
         debouncedSidecarTransformations()
       } );
