@@ -17,9 +17,20 @@ const blockAttributes = {
 };
 
 const deprecatedStyles = {
-  'is-style-accent': 'sm-variation-6',
-  'is-style-alternative': 'sm-variation-10',
-  'is-style-alert': '',
+  'is-style-accent': {
+    paletteVariation: 6,
+    colorSignal: 2,
+  },
+  'is-style-alternative': {
+    palette: 2,
+    paletteVariation: 6,
+    colorSignal: 2,
+  },
+  'is-style-alert': {
+    palette: '_error',
+    paletteVariation: 6,
+    colorSignal: 2,
+  },
 };
 
 const deprecated = [
@@ -41,16 +52,18 @@ const deprecated = [
     migrate( attributes, innerBlocks ) {
       const classAttr = attributes.className;
       const classes = classAttr.split(/\b\s+/);
+      let newAttributes = {};
 
-      const newClassName = classes.map( className => {
+      const newClassName = classes.filter( className => {
         if ( typeof deprecatedStyles[className] !== "undefined" ) {
-          return deprecatedStyles[className];
+          newAttributes = deprecatedStyles[className];
+          return false;
         }
-        return className;
-      } ).filter( className => !! className.length ).join( ' ' );
+        return !! className.length;
+      } ).join( ' ' );
 
       return [
-        Object.assign( {}, attributes, { className: newClassName } ),
+        Object.assign( {}, attributes, newAttributes, { className: newClassName } ),
         innerBlocks
       ]
     },
