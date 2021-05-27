@@ -8,6 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_get_header_row_attributes() {
+
+	return novablocks_merge_attributes_from_array( array(
+		"packages/block-library/src/blocks/header-row/attributes.json",
+		"packages/block-editor/src/hooks/with-colors-sets/attributes.json",
+	) );
+
+}
+
 if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 	/**
@@ -23,7 +32,8 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		ob_start();
 
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_row_attributes() );
+		$attributes_config = novablocks_get_header_row_attributes();
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array(
 			'novablocks-header-row',
