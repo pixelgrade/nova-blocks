@@ -83,8 +83,8 @@ function doesOverlap( elem, collider ) {
 // Helper function to generate overlapping blocks,
 // based on two areas
 // We will create an array with
-// blocks from secondaryArea that are overlapping with
-// blocks from primaryArea.
+// blocks from primaryArea that are overlapping with
+// blocks from secondaryArea.
 
 function generateOverlappingBlocks(primaryArea, secondaryArea) {
 
