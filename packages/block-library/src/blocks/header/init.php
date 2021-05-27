@@ -251,7 +251,15 @@ function header_block_updated() {
  * Render Reading Bar and Reading Progress
  */
 
-function get_reading_bar_markup() { ?>
+function get_reading_bar_markup() {
+
+	// We want to show Reading Bar
+	// only on Posts.
+	if ( ! is_singular('post') ) {
+		return;
+	}
+
+	?>
 	<!--Reading Bar-->
 	<div class="c-reading-bar  js-reading-bar  u-header-sides-spacing">
 
