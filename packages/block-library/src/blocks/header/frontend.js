@@ -167,8 +167,6 @@ import { addSocialMenuClass } from "./utils";
           }
         }
 
-
-
         if ( reading || next ) {
 
           if (currentHeader.hasClass('site-header--main')) {
