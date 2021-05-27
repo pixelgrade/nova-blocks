@@ -23,9 +23,7 @@ const handleSidecarTransformations = function() {
 
   SIDECARS.forEach( sidecar => {
 
-    // We don't need break classes on mobiles,
-    // on sidecars without sidebar,
-    // or on sidecars which are ignoring breaking.
+    // We don't need stop classes on mobiles.
     if ( below( 'lap' ) ) {
       return;
     }
@@ -45,7 +43,7 @@ const handleSidecarTransformations = function() {
 
         sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
 
-        // Overlapping between content blocks and sidebar blocks combined with pulled blocks.
+        // Overlapping between content blocks and sidebar blocks.
         overlappingBlocks = generateOverlappingBlocks( breakingBlocks, sidebarBlocksArray );
 
     overlappingBlocks.forEach( block => {
