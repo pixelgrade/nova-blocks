@@ -282,7 +282,7 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 								<div class="wp-block-button is-style-text">
 									<a class="wp-block-button__link" href="<?php echo get_permalink( $post ); ?>">
 										<span class="novablocks-buttons-size-modifier">
-											Read More
+											<?php esc_html_e( 'Read More', '__plugin_txtd' ) ?>
 										</span>
 									</a>
 								</div>
