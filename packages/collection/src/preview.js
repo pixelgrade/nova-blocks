@@ -6,7 +6,6 @@ import { PostCard } from "@novablocks/block-editor";
 
 import Slider from "react-slick";
 
-import AreaDebug from "./area-debug";
 import { applyLayoutEngine } from "./layout-engine";
 
 import {

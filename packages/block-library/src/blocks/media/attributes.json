@@ -7,10 +7,6 @@
 		"type": "string",
 		"default": "left"
 	},
-	"blockStyle": {
-		"type": "string",
-		"default": "basic"
-	},
 	"contentStyle": {
 		"type": "string",
 		"default": "moderate"
