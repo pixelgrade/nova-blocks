@@ -50,7 +50,7 @@
 		"gulp-replace": "^1.0.0",
 		"gulp-rsync": "0.0.9",
 		"loadsh": "0.0.4",
-		"node-sass": "^4.14.1",
+		"node-sass": "^5.0.0",
 		"node-watch": "^0.7.1",
 		"os": "^0.1.1",
 		"path": "^0.12.7",

@@ -36,14 +36,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$header_is_simple = $attributes['layout'] === 'logo-left' || $attributes['layout'] === 'logo-center';
 
 		// Get Sticky Row Block.
-		$stickyRowBlock = getStickyRowBlock();
+		$sticky_row_block = get_sticky_row_block();
 
 		// Get Primary Row Block to use it on hover if it's the case.
-		$primaryRowBlock = getPrimaryBlock();
+		$primary_row_block = get_primary_block();
 
 		// We need that class to style header block,
 		// if the user didn't hit save yet.
-		if ( ! headerBlockUpdated() ) {
+		if ( ! header_block_updated() ) {
 			$classes[] = 'site-header--is-old';
 		}
 
@@ -74,7 +74,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		<header id="masthead"
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				<?php if ( $header_is_simple && ! empty( $stickyRowBlock ) )  { ?>
+				<?php if ( $header_is_simple && ! empty( $sticky_row_block ) )  { ?>
 					data-sticky="true"
 				<?php } ?>
 		>
@@ -83,13 +83,17 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
 						<?php
 
-						if ( ! headerBlockUpdated() ) {
+						if ( ! header_block_updated() ) {
 							$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
 						}
 						echo $content;
 						?>
 					</div>
 				</div>
+
+				<?php if ( $header_is_simple ) {
+					echo get_reading_bar_markup();
+				} ?>
 			</div>
 		</header>
 
@@ -97,15 +101,31 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
-		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
+		if ( ! empty( $sticky_row_block ) && ! $header_is_simple ) { ?>
 			<div class="site-header site-header--secondary site-header-sticky site-header--sticky">
 				<?php
-				echo render_block( $stickyRowBlock );
 
-				if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
-					echo render_block( $primaryRowBlock );
+				// On all pages except articles,
+				// show sticky row and primary row,
+				// if primary is not sticky.
+				if ( ! is_single() ) {
+
+					echo render_block( $sticky_row_block );
+
+					if ( $sticky_row_block['attrs']['isPrimary']  !== true ) {
+						echo render_block( $primary_row_block );
+					}
 				}
-				?>
+
+				// On articles always show primary row,
+				// reading bar and reading progress.
+				if( is_single() && ! is_attachment() ) { ?>
+
+					<?php
+						echo render_block( $primary_row_block );
+					  	echo get_reading_bar_markup();
+					?>
+				<?php } ?>
 			</div>
 		<?php } ?>
 
@@ -121,7 +141,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
  * @return array
  */
 
-function getStickyRowBlock() {
+function get_sticky_row_block() {
 
 	$post             = get_block_area_post( 'header' );
 
@@ -133,13 +153,13 @@ function getStickyRowBlock() {
 		$header_block = ( parse_blocks( $post->post_content ) )[0];
 
 		// Get InnerBlocks
-		$innerBlocks = $header_block['innerBlocks'];
+		$inner_blocks = $header_block['innerBlocks'];
 
-		foreach ( $innerBlocks as $innerBlock ) {
+		foreach ( $inner_blocks as $inner_block ) {
 
 			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['isSticky'] === true ) {
-				$block = $innerBlock;
+			if ( $inner_block['attrs']['isSticky'] === true ) {
+				$block = $inner_block;
 			}
 		}
 	}
@@ -181,7 +201,7 @@ function get_block_area_post( $slug ) {
  * @return array
  */
 
-function getPrimaryBlock() {
+function get_primary_block() {
 
 	$post = get_block_area_post( 'header' );
 
@@ -193,13 +213,13 @@ function getPrimaryBlock() {
 		$header_block = ( parse_blocks( $post->post_content ) )[0];
 
 		// Get InnerBlocks
-		$innerBlocks = $header_block['innerBlocks'];
+		$inner_blocks = $header_block['innerBlocks'];
 
-		foreach ( $innerBlocks as $innerBlock ) {
+		foreach ( $inner_blocks as $inner_block ) {
 
 			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['isPrimary'] === true ) {
-				$block = $innerBlock;
+			if ( $inner_block['attrs']['isPrimary'] === true ) {
+				$block = $inner_block;
 			}
 		}
 	}
@@ -213,7 +233,7 @@ function getPrimaryBlock() {
  * @return boolean
  */
 
-function headerBlockUpdated() {
+function header_block_updated() {
 
 	$post = get_block_area_post( 'header' );
 
@@ -226,3 +246,50 @@ function headerBlockUpdated() {
 
 	return false;
 }
+
+/**
+ * Render Reading Bar and Reading Progress
+ */
+
+function get_reading_bar_markup() { ?>
+	<!--Reading Bar-->
+	<div class="c-reading-bar  js-reading-bar  u-header-sides-spacing">
+
+		<!--Menu Button-->
+		<div class="c-reading-bar__wrapper-menu-trigger">
+			<?php if ( has_nav_menu( 'primary' ) ) { ?>
+				<div class="wp-block-buttons">
+					<div class="wp-block-button">
+						<a class="wp-block-button__link c-reading-bar__menu-trigger  js-sticky-menu-trigger">
+							<span class="novablocks-menu__button-label"><?php esc_html_e( 'Menu', '__theme_txtd' ); ?></span>
+						</a>
+					</div>
+				</div>
+			<?php } ?>
+		</div>
+
+		<!--Reading/Next Article-->
+		<?php
+		$next_post = get_next_post();
+		if ( ! empty( $next_post ) && ! is_wp_error( $next_post ) ): ?>
+			<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--next">
+				<label class="post-title__label"><?php esc_html_e( 'Next:', '__theme_txtd' ); ?></label>
+				<a class="post-title__post-name" href="<?php the_permalink( $next_post ); ?>">
+					<?php echo get_the_title( $next_post ); ?>
+				</a>
+			</div><!-- .c-reading-bar__wrapper-title -->
+		<?php endif; ?>
+		<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--current">
+			<label class="post-title__label"><?php esc_html_e( 'Reading:', '__theme_txtd' ); ?></label>
+			<?php the_title( '<span class="post-title__post-name">', '</span>' ); ?>
+		</div><!-- .c-reading-bar__wrapper-title -->
+
+		<!--Share Button-->
+		<div class="c-reading-bar__wrapper-social">
+			<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay {"buttonLabel":"Share"} --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
+		</div><!-- .c-reading-bar__wrapper-social -->
+	</div><!-- .c-reading-bar -->
+
+	<!--Reading Progress Bar-->
+	<progress class="c-reading-progress  js-reading-progress"></progress>
+<?php }
