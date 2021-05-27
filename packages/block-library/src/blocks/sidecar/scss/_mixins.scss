@@ -1,3 +1,4 @@
+// Default Settings for Sidecar Block
 :root {
   --body-font-size: 16;
   --offset-addon: 230;
@@ -15,10 +16,7 @@
 // ge - gap end
 // gcs - gap content start
 // gce - gap content end
-// [cs] [cc] column will be equal with minmax(22ch, var(--novablocks-content-width-start)
-// to make sure that we always have a minimum of characters displayed.
 // The same thing applies for [cc] [ce].
-// Doing that, in content will always be at least 44 characters.
 
 //noinspection ALL
 @mixin layout-grid {
