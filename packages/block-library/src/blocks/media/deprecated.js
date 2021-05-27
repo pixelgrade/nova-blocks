@@ -9,26 +9,54 @@ const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attribute
 const deprecated = [
 	{
 		attributes: {
-			...omit( attributes, ['images'] ),
+			...omit( attributes, [ 'images' ] ),
 			gallery: attributes.images
 		},
 		isEligible( attributes ) {
-			return !! attributes?.defaultsGenerated;
+      return ! attributes.images && !! attributes?.gallery;
 		},
 		migrate( attributes ) {
-			const { contentStyle, gallery } = attributes;
+      const { gallery } = attributes;
 			const images = Array.isArray( gallery ) && !! gallery.length ? gallery : attributes.images;
 
 			return {
-				...omit( attributes, ['gallery'] ),
+				...omit( attributes, [ 'gallery' ] ),
 				images: images,
-				contentStyle: contentStyle === 'basic' ? 'moderate' : contentStyle,
-				upgradedToModerate: true,
-				defaultsGenerated: true
 			};
 		},
 		save
 	},
+//  {
+//    attributes,
+//    isEligible( attributes ) {
+//      return ! attributes?.upgradedToModerate;
+//    },
+//    migrate( attributes ) {
+//      const { contentStyle } = attributes;
+//      const newContentStyle = contentStyle === 'basic' ? 'moderate' : contentStyle;
+//
+//      return {
+//        ...attributes,
+//				contentStyle: newContentStyle,
+//        upgradedToModerate: true
+//      };
+//    },
+//    save
+//  },
+  {
+    attributes,
+    isEligible( attributes ) {
+      return ! attributes?.defaultsGenerated;
+    },
+    migrate( attributes ) {
+
+      return {
+        ...attributes,
+        defaultsGenerated: true
+      };
+    },
+    save
+  },
   {
     attributes: {
       ...attributes,
@@ -46,12 +74,13 @@ const deprecated = [
       },
     },
     isEligible( attributes ) {
-      return !! attributes?.blockStyle || !! attributes?.contentStyle ;
+      return !! attributes?.blockStyle || !! attributes?.contentStyle;
     },
     migrate( attributes ) {
       const newAttributes = {};
 
       if ( attributes.blockStyle === 'highlighted' ) {
+
         if ( attributes?.style === 'alternate' ) {
           newAttributes.colorSignal = 2;
           newAttributes.paletteVariation = 7;
@@ -64,6 +93,14 @@ const deprecated = [
       if ( attributes.blockStyle === 'moderate' ) {
         newAttributes.colorSignal = 1;
         newAttributes.paletteVariation = 3;
+
+        if ( attributes.contentStyle === 'moderate' ) {
+          newAttributes.contentColorSignal = 1;
+        }
+
+        if ( attributes.contentStyle === 'highlighted' ) {
+          newAttributes.contentColorSignal = 3;
+        }
       }
 
       newAttributes.palette = 1;
