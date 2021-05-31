@@ -262,21 +262,6 @@ export const isAnyPartOfElementInViewport = (element) => {
 	return (vertInView && horInView);
 }
 
-export const getContentVariation = ( attributes ) => {
-  const paletteVariation = parseInt( attributes?.paletteVariation, 10 );
-  const contentStyle = attributes.contentStyle;
-
-  if ( contentStyle === 'moderate' ) {
-    return normalizeVariationValue( Math.max( 1, paletteVariation - 2 ) );
-  }
-
-  if ( contentStyle === 'highlighted' ) {
-    return normalizeVariationValue( paletteVariation + 6 );
-  }
-
-  return paletteVariation;
-}
-
 export const getVariationFromSignal = ( signal ) => {
 
   if ( signal === 1 ) {
@@ -334,12 +319,17 @@ export const getSignalOptionsFromVariation = ( variation ) => {
 }
 
 export const getContentVariationBySignal = ( props ) => {
-  const { attributes } = props;
-  const { contentColorSignal } = attributes;
-  const actualBlockVariation = getAbsoluteColorVariation( props );
-  const variationOptions = getSignalOptionsFromVariation( actualBlockVariation );
+  const { attributes, settings } = props;
+  const { palettes } = settings;
+  const { contentColorSignal, palette, paletteVariation, useSourceColorAsReference } = attributes;
+  const siteVariation = getSiteColorVariation();
+  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette );
+  const { sourceIndex } = currentPalette;
+  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
+  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
+  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
 
-  return variationOptions[ contentColorSignal ];
+  return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
 }
 
 export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
@@ -552,17 +542,27 @@ export const disableFunctionalColorsOnBlocks = [
   'novablocks/posts-collection',
 ];
 
-export const getSignalAttributes = ( signal, palette ) => {
+export const getSignalAttributes = ( signal, palette, sticky = false ) => {
   const { sourceIndex } = palette;
   const siteVariation = getSiteColorVariation();
   const variationOptions = getSignalOptionsFromVariation( siteVariation );
   const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
   const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
 
-  return {
-    colorSignal: signal,
-    palette: palette.id,
-    paletteVariation: nextVariation,
-    useSourceColorAsReference: sourceSignal === signal,
+  if ( sticky ) {
+
+    return {
+      colorSignal: signal,
+      palette: palette.id,
+      paletteVariation: nextVariation,
+      useSourceColorAsReference: sourceSignal === signal,
+    }
+
+  } else {
+
+    return {
+      palette: palette.id
+    }
+
   }
 }

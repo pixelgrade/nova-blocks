@@ -63,7 +63,7 @@ const ColorSetControls = ( props ) => {
         />
         <ControlsGroup>
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            setAttributes( getSignalAttributes( nextSignal, currentPalette ) );
+            setAttributes( getSignalAttributes( nextSignal, currentPalette, true ) );
           } } />
         </ControlsGroup>
         <ControlsGroup>
@@ -75,7 +75,7 @@ const ColorSetControls = ( props ) => {
                          } } />
         </ControlsGroup>
         <ControlsGroup>
-          <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } />
+          <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } sticky={ true } />
         </ControlsGroup>
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>

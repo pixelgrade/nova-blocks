@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { Collection } from "@novablocks/collection";
-import { getContentVariation } from '@novablocks/utils';
+import { getContentVariationBySignal } from '@novablocks/utils';
 
 /**
  * WordPress dependencies
@@ -72,7 +72,7 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 					const atts = { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
 
 					return Object.assign( {}, atts, {
-					  paletteVariation: getContentVariation( attributes )
+					  paletteVariation: getContentVariationBySignal( props )
           } );
 				}
 			)( attributes );

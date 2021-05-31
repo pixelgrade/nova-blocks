@@ -69,48 +69,8 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		ob_start();
 
-		$posts_collection_attributes = array(
-			'thumbnailAspectRatioString',
-			'thumbnailAspectRatio',
-
-			'imagePadding',
-			'imageResizing',
-			'headerPosition',
-
-			'layoutStyle',
-			'isLandscape',
-			'columns',
-
-			'postsToShow',
-			'gridcolumns',
-			'gridrows',
-			'featuresize',
-			'featureposition',
-			'featureposition',
-			'fragmentation',
-			'imageweightleft',
-			'imageweightright',
-			'metadetailsleft',
-			'metadetailsright',
-			'boostfeature',
-			'subfeature',
-			'balancemdandiw',
-			'hierarchycrossing',
-			'flipcolsrows',
-
-			'carouselLayout',
-			'showPagination'
-		);
-
-		$data_attributes = array();
-
-		foreach ( $posts_collection_attributes as $attribute ) {
-			if ( empty( $attributes[ $attribute ] ) ) {
-				$attributes[ $attribute ] = 0;
-			}
-
-			$data_attributes[] = 'data-' . $attribute . '="' . $attributes[ $attribute ] . '"';
-		}
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		echo '<div class="' . $className . '" ' . 'style="'. $style . '">';
 		echo '<div class="wp-block-group__inner-container">';
@@ -256,10 +216,14 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 
 			<?php if ( ! empty( $attributes['showMedia'] ) ) { ?>
 				<div class="novablocks-card__layout-media novablocks-grid__item-media">
-					<?php echo novablocks_get_card_media_markup( array(
-						'type' => 'image',
-						'url'  => $media_url,
-					) ); ?>
+					<div class="novablocks-card__media-wrap">
+						<div class="novablocks-card__media">
+							<?php echo novablocks_get_card_media_markup( array(
+								'type' => 'image',
+								'url'  => $media_url,
+							) ); ?>
+						</div>
+					</div>
 				</div>
 			<?php } ?>
 

@@ -4,11 +4,10 @@
 import classnames from 'classnames';
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
+
 import {
   getColorSetClassnames,
-  normalizeVariationValue,
-  getSignalOptionsFromVariation,
-  getSiteColorVariation,
+  getContentVariationBySignal
 } from '@novablocks/utils';
 
 import { InnerBlocks } from '@wordpress/block-editor';
@@ -35,14 +34,8 @@ const MediaPreview = function( props ) {
     layoutGutter,
 
     palette,
-    paletteVariation,
-    contentColorSignal,
     useSourceColorAsReference,
 	} = attributes;
-
-	const {
-	  palettes
-  } = settings;
 
 	const classNames = classnames(
 		className,
@@ -69,14 +62,7 @@ const MediaPreview = function( props ) {
     getColorSetClassnames( attributes ),
   );
 
-	const siteVariation = getSiteColorVariation();
-  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette );
-  const { sourceIndex } = currentPalette;
-
-  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
-	const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-	const contentVariation = normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset );
+	const contentVariation = getContentVariationBySignal( props );
 
 	const contentClassNames = classnames(
     `novablocks-media__inner-container`,

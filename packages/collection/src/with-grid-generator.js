@@ -41,12 +41,13 @@ function addGridGeneratorAttributes( block ) {
 		block.attributes = {};
 	}
 
-	if ( 'novablocks/posts-collection' === block.name ) {
-    newAttributes.layoutStyle.default = 'parametric';
-  }
+//  @todo supernova default should be 'classic' check alternate solutions
+//	if ( 'novablocks/posts-collection' === block.name ) {
+//    newAttributes.layoutStyle.default = 'parametric';
+//  }
 
 	block.attributes = Object.assign( block.attributes, newAttributes );
 
 	return block;
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addGridGeneratorAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/add-grid-generator-attributes', addGridGeneratorAttributes );

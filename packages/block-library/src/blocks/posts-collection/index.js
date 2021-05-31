@@ -6,16 +6,20 @@ import edit from './edit';
 import variations from './variations';
 
 /**
+ * Nova Blocks dependencies
+ */
+import { getSvg } from "@novablocks/block-editor";
+import { Collection } from "@novablocks/collection";
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-import { getSvg } from "@novablocks/block-editor";
-
-import attributes from "./attributes";
-import { Collection } from "@novablocks/collection";
+import blockAttributes from './attributes';
+const attributes = Object.assign( {}, blockAttributes, Collection.attributes );
 
 registerBlockType( 'novablocks/posts-collection', {
 	title: __( 'Posts Collection', '__plugin_txtd' ),

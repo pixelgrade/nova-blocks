@@ -57,7 +57,7 @@
 	},
 	"layoutStyle": {
 		"type": "string",
-		"default": "classic"
+		"default": "parametric"
 	},
 	"columns": {
 		"type": "number",

@@ -18,7 +18,8 @@ const ColorPalettePicker = ( props ) => {
     settings: {
       palettes,
     },
-    showFunctionalColors
+    showFunctionalColors,
+    sticky
   } = props;
 
   const {
@@ -28,11 +29,8 @@ const ColorPalettePicker = ( props ) => {
     colorSignal,
   } = attributes;
 
-  const currentPalette = getCurrentPalette( props );
-
   const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) );
   const brandColors = palettes.filter( palette => ! isFunctionalPalette( palette ) );
-
   const visiblePalattes = showFunctionalColors ? functionalColors : brandColors;
 
   return (
@@ -63,7 +61,7 @@ const ColorPalettePicker = ( props ) => {
                   useSourceColorAsReference: true,
                 } )
               } else {
-                setAttributes( getSignalAttributes( colorSignal, thisPalette ) );
+                setAttributes( getSignalAttributes( colorSignal, thisPalette, sticky ) );
               }
             } }>
               <svg className="color-palette-picker__color-svg" width="48" height="48" viewBox="0 0 48 48">
