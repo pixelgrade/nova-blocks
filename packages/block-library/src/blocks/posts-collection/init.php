@@ -10,7 +10,9 @@ function novablocks_get_posts_collection_attributes() {
 	return novablocks_merge_attributes_from_array( array(
 		'packages/collection/src/grid-generator-attributes.json',
 		'packages/collection/src/collection-attributes.json',
+		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
 		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/hooks/with-card-details/attributes.json',
 		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',
 		'packages/block-library/src/blocks/posts-collection/attributes.json',
 	) );
@@ -38,7 +40,9 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		$cssProps = novablocks_get_spacing_css( $attributes );
 
-		$cssProps[] = '--card-media-padding: ' . $attributes['imagePadding'];
+		$cssProps[ '--card-media-padding' ] = $attributes['imagePadding'];
+		$cssProps[ '--card-media-padding-top' ] = novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%';
+		$cssProps[ '--card-media-object-fit' ] = $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down';
 
 		$style = join( '; ', $cssProps );
 

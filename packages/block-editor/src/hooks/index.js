@@ -4,7 +4,7 @@ import "./with-block-index";
 import "./with-card-details";
 import "./with-card-elements-display";
 import "./with-cards-manager";
-import "./with-colors-sets";
+import "./with-color-signal";
 import "./with-deprecated-group";
 import "./with-doppler";
 import "./with-controls-sections";

@@ -16,7 +16,7 @@ function novablocks_get_media_attributes() {
 		'packages/advanced-gallery/src/attributes.json',
 
 		'packages/block-editor/src/hooks/with-card-details/attributes.json',
-		'packages/block-editor/src/hooks/with-colors-sets/attributes.json',
+		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
 		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',

@@ -22,10 +22,6 @@ import {
 	getRandomBooleanValue,
 } from "@novablocks/utils";
 
-import {
-	withSettings
-} from "@novablocks/block-editor";
-
 import { applyLayoutEngine } from './layout-engine';
 import presets from './presets';
 

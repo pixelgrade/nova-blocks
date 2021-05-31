@@ -6,9 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_card_attributes() {
-	$card_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/card/attributes.json' );
 
-	return $card_attributes;
+	return novablocks_merge_attributes_from_array( array(
+		'packages/block-library/src/blocks/card/attributes.json',
+		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
+		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/hooks/with-card-details/attributes.json',
+	) );
 }
 
 if ( ! function_exists( 'novablocks_render_card_block' ) ) {
@@ -56,7 +60,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 						</div>
 			        <?php } ?>
 				</div>
-				<div class="novablocks-card__layout-content">
+				<div class="novablocks-card__layout-content novablocks-card__inner-container">
 			        <?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
 						<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
 					<?php }

@@ -93,6 +93,6 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 	};
 }, 'withCollectionVisibilityAttributes' );
 
-wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
+wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
 
 export default CardsCollectionEdit;

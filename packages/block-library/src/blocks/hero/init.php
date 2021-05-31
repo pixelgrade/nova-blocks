@@ -17,8 +17,8 @@ function novablocks_get_hero_attributes() {
 		"packages/block-editor/src/components/color-controls/attributes.json",
 		"packages/block-editor/src/components/layout-controls/attributes.json",
 
-		"packages/block-editor/src/hooks/with-colors-sets/attributes.json",
-		"packages/block-editor/src/hooks/with-colors-sets/attributes-alt.json",
+		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
+		"packages/block-editor/src/hooks/with-color-signal/attributes-alt.json",
 		"packages/block-editor/src/hooks/with-doppler/attributes.json",
 		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
 	) );
