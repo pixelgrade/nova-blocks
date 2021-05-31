@@ -121,10 +121,9 @@ const PreviewEdit = ( props ) => {
         layoutStyle === 'parametric' &&
         <div className={ classname }>
           <ParametricLayoutPreview
+            { ...props }
             getContent={ getContent }
             cardsCount={ posts?.length || attributes?.postsToShow || 0 }
-            attributes={ attributes }
-            setAttributes={ setAttributes }
             posts={ posts }
             isSelected={ isSelected }
           />

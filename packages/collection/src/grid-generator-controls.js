@@ -587,7 +587,7 @@ const CarouselLayoutControls = ( props ) => {
   )
 };
 
-const DebugControls = withSettings(( props ) => {
+const DebugControls = ( props ) => {
 
 	const {
 		attributes: {
@@ -617,6 +617,6 @@ const DebugControls = withSettings(( props ) => {
 		</ControlsGroup>
 
 	);
-});
+}
 
 export default LayoutControls;

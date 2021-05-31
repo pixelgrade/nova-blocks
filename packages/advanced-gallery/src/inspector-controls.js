@@ -12,7 +12,6 @@ import {
   ControlsTab,
   Notice,
   PresetControl,
-  withSettings,
 } from '@novablocks/block-editor';
 
 import { getRandomAttributes } from "./utils";
@@ -188,4 +187,4 @@ const ImageResizingControls = ( props ) => {
   )
 }
 
-export default withSettings( AdvancedGalleryInspectorControls );
+export default AdvancedGalleryInspectorControls;
