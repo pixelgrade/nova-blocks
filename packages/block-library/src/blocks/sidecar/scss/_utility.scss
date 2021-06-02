@@ -1,11 +1,3 @@
 .strech-grid-items {
   align-items: stretch !important;
 }
-
-.half-block-left {
-  grid-column: var(--block-limit-left)/gcs;
-}
-
-.half-block-right {
-  grid-column: gce/var(--block-limit-right);
-}
