@@ -10,6 +10,7 @@ const SIDECAR_CLASS = '.novablocks-sidecar';
 const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
 const PULL_RIGHT_CLASS = '.pull-right';
 const PULL_LEFT_CLASS = '.pull-left';
+const SIDEBAR_LEFT_CLASS = 'novablocks-sidecar--sidebar-left'
 
 // There are 3 types of blocks in this system:
 // content blocks, sidebar blocks and pulled blocks.
@@ -41,14 +42,14 @@ const handleSidecarTransformations = function() {
         alignedBlocks = contentBlocksArray.filter ( (block) => ALIGN_CLASSES.some( ALIGN_CLASS => block.classList.contains(ALIGN_CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
         breakingBlocks = alignedBlocks.concat(pulledBlocksArray),
 
-        sidebarIsLeft = content.parentElement.classList.contains( 'novablocks-sidecar--sidebar-left' ),
+        SIDEBAR_IS_LEFT = content.parentElement.classList.contains( SIDEBAR_LEFT_CLASS ),
 
         // Overlapping between content blocks and sidebar blocks.
         overlappingBlocks = generateOverlappingBlocks( breakingBlocks, sidebarBlocksArray );
 
     overlappingBlocks.forEach( block => {
 
-      let noCollisionClass = sidebarIsLeft ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+      let noCollisionClass = SIDEBAR_IS_LEFT ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
 
       if ( block.classList.contains( PULL_RIGHT_CLASS ) ) {
         noCollisionClass = BREAK_RIGHT_CLASS;
