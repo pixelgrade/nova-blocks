@@ -56,6 +56,11 @@ const SidecarInspectorControls = ( props ) => {
 
         <ToggleControl
           label={__( 'Enable sticky sidebar on scroll', '__plugin_txtd' )}
+          help={
+            lastItemIsSticky
+              ? __( 'The last item inside sidebar will be sticky on scroll.', '__plugin_txtd' )
+              : __( 'All blocks inside sidebar will be static.', '__plugin_txtd' )
+          }
           checked={lastItemIsSticky}
           onChange={ () => setAttributes( {lastItemIsSticky: !lastItemIsSticky} )}
         />
