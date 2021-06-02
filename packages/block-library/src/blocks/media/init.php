@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_media_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-library/src/blocks/media/attributes.json',
 		'packages/blob/src/attributes.json',
 		'packages/advanced-gallery/src/attributes.json',
 
@@ -21,6 +20,8 @@ function novablocks_get_media_attributes() {
 		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
 		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
+
+		'packages/block-library/src/blocks/media/attributes.json',
 	) );
 
 }

@@ -323,7 +323,7 @@ export const getContentVariationBySignal = ( props ) => {
   const { palettes } = settings;
   const { contentColorSignal, palette, paletteVariation, useSourceColorAsReference } = attributes;
   const siteVariation = getSiteColorVariation();
-  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette );
+  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
   const { sourceIndex } = currentPalette;
   const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
   const referenceVariation = normalizeVariationValue( paletteVariation + offset );
