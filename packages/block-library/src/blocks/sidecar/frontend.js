@@ -39,7 +39,7 @@ const handleSidecarTransformations = function() {
         pulledBlocksArray = Array.from(pulledBlocks),
         contentBlocksArray = Array.from(contentBlocks),
         sidebarBlocksArray = Array.from(sidebarBlocks),
-        alignedBlocks = contentBlocksArray.filter ( (block) => ALIGN_CLASSES.some( ALIGN_CLASS => block.classList.contains(ALIGN_CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
+        alignedBlocks = contentBlocksArray.filter ( (block) => ALIGN_CLASSES.some( CLASS => block.classList.contains(CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
         breakingBlocks = alignedBlocks.concat(pulledBlocksArray),
 
         SIDEBAR_IS_LEFT = content.parentElement.classList.contains( SIDEBAR_LEFT_CLASS ),
