@@ -12,11 +12,12 @@ import { addSocialMenuClass } from "./utils";
           wpAdminBar = $('#wpadminbar'),
           wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
           isArticle = $(body).hasClass('single'),
-          $progressBar = $( '.js-reading-progress' );
+          $progressBar = $( '.js-reading-progress' ),
+          $promoBar = $('.js-promo-bar');
 
     let  stickyHeaderShown = false,
          primaryRowShown = false,
-         $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
+         $stickyRow = isArticle ?  $('.site-header__row--primary') : $('.site-header--main .site-header__row[data-sticky=true]'),
          $elementWithOverflow = currentHeader;
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
@@ -45,15 +46,10 @@ import { addSocialMenuClass } from "./utils";
         return;
       }
 
-      if ( isArticle ) {
-        $stickyRow = $('.site-header__row--primary');
-      }
-
       let stickyRowOffSet = $stickyRow.offset().top,
           windowScrollY = window.scrollY,
           primaryRowIsVisible = windowScrollY > $siteHeader.outerHeight(),
-          isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight,
-          $promoBar = $('.js-promo-bar');
+          isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight;
 
       // If we find any promo bar,
       // we should consider it's height for the offset.
