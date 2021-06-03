@@ -61,6 +61,10 @@
     .color-palette-picker__color-dash {
       stroke: currentColor;
     }
+
+    &:not(:hover) .color-palette-picker__color-dash {
+      animation-play-state: paused;
+    }
   }
 
   &--favorite[class] {
