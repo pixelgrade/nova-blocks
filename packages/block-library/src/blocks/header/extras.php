@@ -1,5 +1,40 @@
 <?php
 
+if ( ! function_exists('get_header_row_block' ) ) {
+
+	/**
+	 * Get the Header Row based on attributes.
+	 *
+	 * @return array
+	 */
+
+	function get_header_row_block( $row_type, $row_type_value ) {
+
+		$post = get_block_area_post( 'header' );
+
+		$block = [];
+
+		if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
+
+			// Get all blocks inside Block Area;
+			$header_block = ( parse_blocks( $post->post_content ) )[0];
+
+			// Get InnerBlocks
+			$inner_blocks = $header_block['innerBlocks'];
+
+			foreach ( $inner_blocks as $inner_block ) {
+
+				// Select InnerBlock which match Sticky Row attribute.
+				if ( $inner_block['attrs'][$row_type] === $row_type_value ) {
+					$block = $inner_block;
+				}
+			}
+		}
+
+		return $block;
+	}
+}
+
 if ( ! function_exists('header_block_updated') ) {
 
 	/**
@@ -20,41 +55,6 @@ if ( ! function_exists('header_block_updated') ) {
 		}
 
 		return false;
-	}
-}
-
-if ( ! function_exists('get_sticky_row_block' ) ) {
-
-	/**
-	 * Get the Header Row that has been marked as sticky.
-	 *
-	 * @return array
-	 */
-
-	function get_sticky_row_block() {
-
-		$post             = get_block_area_post( 'header' );
-
-		$block = [];
-
-		if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
-
-			// Get all blocks inside Block Area;
-			$header_block = ( parse_blocks( $post->post_content ) )[0];
-
-			// Get InnerBlocks
-			$inner_blocks = $header_block['innerBlocks'];
-
-			foreach ( $inner_blocks as $inner_block ) {
-
-				// Select InnerBlock which match Sticky Row attribute.
-				if ( $inner_block['attrs']['isSticky'] === true ) {
-					$block = $inner_block;
-				}
-			}
-		}
-
-		return $block;
 	}
 }
 
@@ -85,42 +85,6 @@ if ( ! function_exists('get_block_area_post') ) {
 		$post = get_post( $block_area_id );
 
 		return $post;
-	}
-}
-
-if ( ! function_exists('get_primary_block') ) {
-
-	/**
-	 * Used to select Primary Header Row and use it
-	 * for sticky header when it's needed.
-	 *
-	 * @return array
-	 */
-
-	function get_primary_block() {
-
-		$post = get_block_area_post( 'header' );
-
-		$block = [];
-
-		if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
-
-			// Get all blocks inside Block Area;
-			$header_block = ( parse_blocks( $post->post_content ) )[0];
-
-			// Get InnerBlocks
-			$inner_blocks = $header_block['innerBlocks'];
-
-			foreach ( $inner_blocks as $inner_block ) {
-
-				// Select InnerBlock which match Sticky Row attribute.
-				if ( $inner_block['attrs']['isPrimary'] === true ) {
-					$block = $inner_block;
-				}
-			}
-		}
-
-		return $block;
 	}
 }
 

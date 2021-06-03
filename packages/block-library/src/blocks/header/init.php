@@ -38,10 +38,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$header_is_simple = $attributes['layout'] === 'logo-left' || $attributes['layout'] === 'logo-center';
 
 		// Get Sticky Row Block.
-		$sticky_row_block = get_sticky_row_block();
+		$sticky_row_block = get_header_row_block('isSticky', true);
 
 		// Get Primary Row Block to use it on hover if it's the case.
-		$primary_row_block = get_primary_block();
+		$primary_row_block = get_header_row_block('isPrimary', true);
 
 		// We need that class to style header block,
 		// if the user didn't hit save yet.
