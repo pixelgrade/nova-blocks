@@ -41,17 +41,6 @@ const TEMPLATE_OPTIONS = [
     ],
     scope: [ 'block' ],
   },
-  {
-    name: 'sidebar-left-right',
-    title: __('Sidebar on Left and Right with Content on center', '__plugin_txtd' ),
-    icons: 'heart',
-    innerBlocks: [
-      ['novablocks/sidecar-area'],
-      ['novablocks/sidecar-area'],
-      ['novablocks/sidecar-area'],
-    ],
-    scope: [ 'block' ],
-  }
 ];
 
 class Edit extends Component {
