@@ -61,9 +61,8 @@ const handleSidecarTransformations = function() {
 
       block.classList.add( noCollisionClass );
 
+      recalculateOverlappedBlocks( sidecar, overlappingBlocks);
     } )
-
-    recalculateOverlappedBlocks( sidecar, overlappingBlocks);
   } )
 }
 const debouncedSidecarTransformations = debounce(handleSidecarTransformations, 200)
