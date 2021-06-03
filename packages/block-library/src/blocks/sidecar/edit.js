@@ -78,12 +78,10 @@ class Edit extends Component {
 
   blockVariationPicker() {
     return (
-      <Fragment>
         <InnerBlocks
           renderAppender = { false }
           templateLock = 'all'
         />
-      </Fragment>
     );
   }
 
@@ -91,10 +89,6 @@ class Edit extends Component {
     const { hasInnerBlocks, innerBlocks, defaultVariation } = this.props;
     if ( hasInnerBlocks ) {
       this.setState( { template: innerBlocks } );
-    }
-
-    if ( !this.supportsInnerBlocksPicker() && !this.supportsBlockVariationPicker() && hasInnerBlocks === false ) {
-      this.setTemplate( defaultVariation );
     }
   }
 
@@ -177,16 +171,14 @@ class Edit extends Component {
     };
 
     return (
-      <Fragment>
-        <__experimentalBlockVariationPicker
-          icon={ get( blockType, [ 'icon', 'src' ] ) }
-          label={ get( blockType, [ 'title' ] ) }
-          instructions={ __( 'Select a variation to start with.', '__plugin_txtd' ) }
-          variations={ variations }
-          allowSkip
-          onSelect={ ( nextVariation ) => blockVariationPickerOnSelect( nextVariation ) }
-        />
-      </Fragment>
+      <__experimentalBlockVariationPicker
+        icon={ get( blockType, [ 'icon', 'src' ] ) }
+        label={ get( blockType, [ 'title' ] ) }
+        instructions={ __( 'Select a variation to start with.', '__plugin_txtd' ) }
+        variations={ variations }
+        allowSkip
+        onSelect={ ( nextVariation ) => blockVariationPickerOnSelect( nextVariation ) }
+      />
     );
   }
 }

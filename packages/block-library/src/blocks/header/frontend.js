@@ -11,7 +11,7 @@ import { addSocialMenuClass } from "./utils";
           mainHeaderShouldBeSticky = $('.site-header--main[data-sticky]').length && ! $stickyHeader.length,
           wpAdminBar = $('#wpadminbar'),
           wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
-          isArticle = $(body).hasClass('single'),
+          isArticle = $('body').hasClass('single'),
           $progressBar = $( '.js-reading-progress' ),
           $promoBar = $('.js-promo-bar');
 
