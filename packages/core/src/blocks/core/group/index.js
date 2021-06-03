@@ -35,7 +35,7 @@ export const addGroupFilters = ( settings ) => {
       return(
         <Fragment>
           <BlockEdit {...props} />
-          { props.isSelected && allowedBlocks.includes( props.name ) && <Inspector { ...{ ...props } } /> }
+          { allowedBlocks.includes( props.name ) && <Inspector { ...{ ...props } } /> }
         </Fragment>
       )
     }
