@@ -25,9 +25,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     --default-width-offset-sidebar: var(--default-sidebar-width);
   }
   
-  
-  @import 'scss/block-limits';
-  
   // Markup is different compared to front-end,
   // and because of that, the last block is
   // currently not sticky inside the editor.

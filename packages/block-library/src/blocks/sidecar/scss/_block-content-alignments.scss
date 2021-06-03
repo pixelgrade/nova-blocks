@@ -11,6 +11,18 @@
 // 4) Alignleft & Pull Left - This align will pull element outside
 // of the content on the left side.
 
+.alignwide,
+[data-align="wide"] {
+  --block-limit-left: ws;
+  --block-limit-right: we;
+}
+
+.alignfull,
+[data-align="full"] {
+  --block-limit-left: fs;
+  --block-limit-right: fe;
+}
+
 // Full
 // It will span from
 // [fs] column to [fe] column.
