@@ -4,19 +4,20 @@ import { addSocialMenuClass } from "./utils";
 (
   function( $, window, undefined ) {
 
-    let   $siteHeader = $( '.site-header--main' ),
+    const $siteHeader = $( '.site-header--main' ),
           $stickyHeader = $( '.site-header--secondary' ),
           $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
           currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
-          $elementWithOverflow = currentHeader,
-          $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
-          stickyHeaderShown = false,
-          primaryRowShown = false,
           mainHeaderShouldBeSticky = $('.site-header--main[data-sticky]').length && ! $stickyHeader.length,
           wpAdminBar = $('#wpadminbar'),
           wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
           isArticle = $(body).hasClass('single'),
           $progressBar = $( '.js-reading-progress' );
+
+    let  stickyHeaderShown = false,
+         primaryRowShown = false,
+         $stickyRow = $('.site-header--main .site-header__row[data-sticky=true]'),
+         $elementWithOverflow = currentHeader;
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
     $( window ).on( 'scroll', makeHeaderStickyOnScroll );
