@@ -50,7 +50,6 @@ const handleSidecarTransformations = function() {
         overlappingBlocks = generateOverlappingBlocks( breakingBlocks, sidebarBlocksArray );
 
     addStopClasses( overlappingBlocks, SIDEBAR_IS_LEFT );
-    recalculateOverlappedBlocks( sidecar, overlappingBlocks );
   } )
 }
 
@@ -87,6 +86,9 @@ function doesOverlap( elem, collider ) {
   return ! overlap;
 }
 
+// Helper function to check if two boxes
+// are overlapping. This is different compared to doesOverlap()
+// because in this case height is not important.
 function doBoxesOverlap( box1, box2 ) {
 
   return ! ( box1.right < box2.left ||
@@ -163,13 +165,25 @@ function moveImageClassesToBlock() {
 
 }
 
+// This function will handle sticky block
+// behaviour on scroll.
+
+// We are comparing sticky block top and bottom
+// with all content blocks, and if overlaps on scroll,
+// we are adding a class, which we will use to add opacity.
 const handleOverlappingOnScroll = () => {
+
+  // We don't need sticky behaviour on mobiles.
+  if ( below( 'lap' ) ) {
+    return;
+  }
 
   let contentBlocksArray = [];
   let sidebarBlocksArray = [];
 
   SIDECARS.forEach( sidecar => {
 
+    // If option for sticky block is not enabled we should stop.
     if ( ! sidecar.classList.contains( 'last-block-is-sticky' ) ) {
       return;
     }
@@ -195,8 +209,6 @@ const handleOverlappingOnScroll = () => {
     }
 
   } );
-
-  console.log( sidebarBlocksArray );
 
   if ( ! sidebarBlocksArray.length ) {
     return;
