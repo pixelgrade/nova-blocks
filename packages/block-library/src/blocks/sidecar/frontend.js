@@ -60,8 +60,6 @@ const handleSidecarTransformations = function() {
       }
 
       block.classList.add( noCollisionClass );
-
-      recalculateOverlappedBlocks( sidecar, overlappingBlocks);
     } )
   } )
 }
@@ -121,19 +119,6 @@ function sidecarTransformationsInCustomizer() {
       } );
     } )
   }
-}
-
-
-function recalculateOverlappedBlocks( sidecar, blocks ) {
-
-  const hasBreakingClass = Array.from( sidecar.querySelectorAll( '.stop-left:not(.pull-left), .stop-right:not(.pull-right)' ) );
-
-  hasBreakingClass.forEach( block => {
-
-    if ( ! blocks.includes( block ) ) {
-      block.classList.remove(BREAK_LEFT_CLASS, BREAK_RIGHT_CLASS);
-    }
-  } )
 }
 
 // Image Block Current Markup
