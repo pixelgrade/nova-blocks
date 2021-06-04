@@ -133,6 +133,12 @@
       margin-bottom: 1em;
       
       z-index: -1;
+      transition: var(--novablocks-transition);
+      transition-property: opacity;
+
+      &.novablocks-hidden-block {
+        opacity: 0;
+      }
     }
   }
 }

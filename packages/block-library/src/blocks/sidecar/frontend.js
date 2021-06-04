@@ -1,7 +1,8 @@
 import { debounce, below } from "@novablocks/utils";
 
-const SIDECARS = document.querySelectorAll('.novablocks-sidecar:not(.ignore-block)');
-const IS_EDITOR = document.getElementsByTagName('body')[0].classList.contains('block-editor-page');
+const SIDECARS = document.querySelectorAll( '.novablocks-sidecar:not(.ignore-block)' );
+
+const IS_EDITOR = document.getElementsByTagName( 'body' )[0].classList.contains( 'block-editor-page' );
 const BREAK_LEFT_CLASS = 'stop-left';
 const BREAK_RIGHT_CLASS = 'stop-right';
 const CONTENT_CLASS = '.novablocks-content';
@@ -10,7 +11,8 @@ const SIDECAR_CLASS = '.novablocks-sidecar';
 const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
 const PULL_RIGHT_CLASS = '.pull-right';
 const PULL_LEFT_CLASS = '.pull-left';
-const SIDEBAR_LEFT_CLASS = 'novablocks-sidecar--sidebar-left'
+const SIDEBAR_LEFT_CLASS = 'novablocks-sidecar--sidebar-left';
+const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
 // There are 3 types of blocks in this system:
 // content blocks, sidebar blocks and pulled blocks.
@@ -22,12 +24,12 @@ const SIDEBAR_LEFT_CLASS = 'novablocks-sidecar--sidebar-left'
 
 const handleSidecarTransformations = function() {
 
-  SIDECARS.forEach( sidecar => {
+  // We don't need stop classes on mobiles.
+  if ( below( 'lap' ) ) {
+    return;
+  }
 
-    // We don't need stop classes on mobiles.
-    if ( below( 'lap' ) ) {
-      return;
-    }
+  SIDECARS.forEach( sidecar => {
 
     let content = sidecar.querySelector( CONTENT_CLASS ),
         sidebar = sidecar.querySelector( SIDEBAR_CLASS ),
@@ -47,22 +49,28 @@ const handleSidecarTransformations = function() {
         // Overlapping between content blocks and sidebar blocks.
         overlappingBlocks = generateOverlappingBlocks( breakingBlocks, sidebarBlocksArray );
 
-    overlappingBlocks.forEach( block => {
-
-      let noCollisionClass = SIDEBAR_IS_LEFT ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
-
-      if ( block.classList.contains( PULL_RIGHT_CLASS ) ) {
-        noCollisionClass = BREAK_RIGHT_CLASS;
-      }
-
-      if ( block.classList.contains( PULL_LEFT_CLASS ) ) {
-        noCollisionClass = BREAK_LEFT_CLASS;
-      }
-
-      block.classList.add( noCollisionClass );
-    } )
+    addStopClasses( overlappingBlocks, SIDEBAR_IS_LEFT );
   } )
 }
+
+const addStopClasses = ( overlappingBlocks, SIDEBAR_IS_LEFT ) => {
+
+  overlappingBlocks.forEach( block => {
+
+    let noCollisionClass = SIDEBAR_IS_LEFT ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
+
+    if ( block.classList.contains( PULL_RIGHT_CLASS ) ) {
+      noCollisionClass = BREAK_RIGHT_CLASS;
+    }
+
+    if ( block.classList.contains( PULL_LEFT_CLASS ) ) {
+      noCollisionClass = BREAK_LEFT_CLASS;
+    }
+
+      block.classList.add( noCollisionClass );
+  } )
+}
+
 const debouncedSidecarTransformations = debounce(handleSidecarTransformations, 200)
 
 // Helper function to check
@@ -76,6 +84,17 @@ function doesOverlap( elem, collider ) {
                   colliderBox.top >= elemBox.top + elemBox.height;
 
   return ! overlap;
+}
+
+// Helper function to check if two boxes
+// are overlapping. This is different compared to doesOverlap()
+// because in this case height is not important.
+function doBoxesOverlap( box1, box2 ) {
+
+  return ! ( box1.right < box2.left ||
+          box1.left > box2.right ||
+          box1.bottom < box2.top ||
+          box1.top > box2.bottom );
 }
 
 // Helper function to generate overlapping blocks,
@@ -146,12 +165,111 @@ function moveImageClassesToBlock() {
 
 }
 
+// This function will handle sticky block
+// behaviour on scroll.
+
+// We are comparing sticky block top and bottom
+// with all content blocks, and if overlaps on scroll,
+// we are adding a class, which we will use to add opacity.
+const handleOverlappingOnScroll = () => {
+
+  // We don't need sticky behaviour on mobiles.
+  if ( below( 'lap' ) ) {
+    return;
+  }
+
+  let contentBlocksArray = [];
+  let sidebarBlocksArray = [];
+
+  SIDECARS.forEach( sidecar => {
+
+    // If option for sticky block is not enabled we should stop.
+    if ( ! sidecar.classList.contains( 'last-block-is-sticky' ) ) {
+      return;
+    }
+
+    const children = Array.from( sidecar.children );
+
+    const content = children.filter( child => child.classList.contains( 'novablocks-content' ) );
+
+    if ( content.length ) {
+      const contentBlocks = content[0].children;
+      contentBlocksArray = contentBlocksArray.concat( Array.from( contentBlocks ) );
+    }
+
+    const sidebar = children.filter( child => child.classList.contains( 'novablocks-sidebar' ) );
+
+    if ( sidebar.length ) {
+      const sidebarBlocks = sidebar[0].children;
+      const partialSidebarBlocksArray = Array.from( sidebarBlocks );
+
+      if ( partialSidebarBlocksArray.length ) {
+        sidebarBlocksArray.push( partialSidebarBlocksArray.pop() );
+      }
+    }
+
+  } );
+
+  if ( ! sidebarBlocksArray.length ) {
+    return;
+  }
+
+  const allBlocksArray = contentBlocksArray.concat( sidebarBlocksArray );
+
+  updateBoxDataset( allBlocksArray );
+
+  let scrollY = window.scrollY,
+    lastScrollY = -1;
+
+  window.addEventListener( 'scroll', () => {
+    scrollY = window.scrollY;
+  } );
+
+  const updateLoop = () => {
+
+    if ( lastScrollY !== scrollY ) {
+
+      updateBoxDataset( allBlocksArray );
+
+      sidebarBlocksArray.forEach( sidebarBlock => {
+
+        const overlap = contentBlocksArray.some( block => {
+          const box1 = JSON.parse( sidebarBlock.dataset.box );
+          const box2 = JSON.parse( block.dataset.box );
+
+          return doBoxesOverlap( box1, box2 );
+        } );
+
+        if ( overlap ) {
+          sidebarBlock.classList.add( HIDDEN_BLOCK_CLASS );
+        } else {
+          sidebarBlock.classList.remove( HIDDEN_BLOCK_CLASS );
+        }
+
+      } );
+    }
+
+    lastScrollY = scrollY;
+
+    requestAnimationFrame( updateLoop );
+  }
+
+  requestAnimationFrame( updateLoop );
+}
+
+const updateBoxDataset = ( blocks ) => {
+  blocks.forEach( block => {
+    block.dataset.box = JSON.stringify( block.getBoundingClientRect() );
+  } );
+}
+
 if ( ! IS_EDITOR ) {
 
   window.addEventListener( 'DOMContentLoaded', () => {
     moveImageClassesToBlock();
     handleSidecarTransformations();
     sidecarTransformationsInCustomizer();
+    handleOverlappingOnScroll();
   });
 
   window.addEventListener('resize', debouncedSidecarTransformations );
