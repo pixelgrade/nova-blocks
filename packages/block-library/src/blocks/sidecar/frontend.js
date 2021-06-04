@@ -32,9 +32,13 @@ const handleSidecarTransformations = function() {
   SIDECARS.forEach( sidecar => {
 
     let content = sidecar.querySelector( CONTENT_CLASS ),
-        sidebar = sidecar.querySelector( SIDEBAR_CLASS ),
+        sidebar = sidecar.querySelector( SIDEBAR_CLASS );
 
-        pulledBlocks = document.querySelectorAll("[class*='pull-']"),
+    if ( sidebar === null) {
+      return;
+    }
+
+    let  pulledBlocks = document.querySelectorAll("[class*='pull-']"),
         contentBlocks = content.children,
         sidebarBlocks = sidebar.children,
 
