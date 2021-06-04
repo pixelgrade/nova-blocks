@@ -6,15 +6,6 @@
     display: flex;
     flex-direction: column;
 
-    --novablocks-bg-color: inherit;
-    --novablocks-accent-color: inherit;
-    --novablocks-fg1-color: inherit;
-    --novablocks-fg2-color: inherit;
-
-    &:before {
-      content: none;
-    }
-
     .novablocks-navigation--primary {
       order: -1;
     }
