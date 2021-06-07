@@ -98,7 +98,8 @@ function removeUnneededFiles() {
 		'**/package-lock.json',
 
 		'bin',
-		'babel.config.js'
+		'babel.config.js',
+    '.nvmrc'
 	];
 
   files_to_remove.forEach( function( e, k ) {

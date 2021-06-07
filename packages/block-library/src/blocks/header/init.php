@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once dirname( __FILE__ ) . '/extras.php';
+
 function novablocks_get_header_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
@@ -53,10 +55,16 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$header_is_simple = $attributes['layout'] === 'logo-left' || $attributes['layout'] === 'logo-center';
 
 		// Get Sticky Row Block.
-		$stickyRowBlock = getStickyRowBlock();
+		$sticky_row_block = get_header_row_block('isSticky', true);
 
 		// Get Primary Row Block to use it on hover if it's the case.
-		$primaryRowBlock = getPrimaryBlock();
+		$primary_row_block = get_header_row_block('isPrimary', true);
+
+		// We need that class to style header block,
+		// if the user didn't hit save yet.
+		if ( ! header_block_updated() ) {
+			$classes[] = 'novablocks-header--is-old';
+		}
 
 		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"novablocks-header-row--primary"} -->';
 		$header_row_markup_end = '<!-- /wp:novablocks/header-row -->';
@@ -93,18 +101,24 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		<header id="masthead"
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				<?php if ( $header_is_simple && ! empty( $stickyRowBlock ) )  { ?>
+				<?php if ( $header_is_simple && ! empty( $sticky_row_block ) )  { ?>
 					data-sticky="true"
 				<?php } ?>
 		>
 			<div class="novablocks-header__inner-container">
 				<?php
 
-				if ( ! headerBlockUpdated() ) {
-					$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
-				}
-				echo $content;
-				?>
+						if ( ! header_block_updated() ) {
+							$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
+						}
+						echo $content;
+						?>
+					</div>
+				</div>
+
+				<?php if ( $header_is_simple ) {
+					echo get_reading_bar_markup();
+				} ?>
 			</div>
 		</header>
 
@@ -112,17 +126,31 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
-		if ( ! empty( $stickyRowBlock ) && ! $header_is_simple ) { ?>
-			<div class="novablocks-header novablocks-header--secondary novablocks-header--sticky novablocks-header-shadow">
-				<div class="novablocks-header__inner-container">
-					<?php
-					echo render_block( $stickyRowBlock );
+		if ( ! empty( $sticky_row_block ) && ! $header_is_simple ) { ?>
+			<div class="novablocks-header novablocks-header--secondary novablocks-header-sticky novablocks-header--sticky">
+				<?php
 
-					if ( $stickyRowBlock['attrs']['isPrimary']  !== true ) {
-						echo render_block( $primaryRowBlock );
+				// On all pages except articles,
+				// show sticky row and primary row,
+				// if primary is not sticky.
+				if ( ! is_single() ) {
+
+					echo render_block( $sticky_row_block );
+
+					if ( $sticky_row_block['attrs']['isPrimary']  !== true ) {
+						echo render_block( $primary_row_block );
 					}
+				}
+
+				// On articles always show primary row,
+				// reading bar and reading progress.
+				if( is_single() && ! is_attachment() ) { ?>
+
+					<?php
+						echo render_block( $primary_row_block );
+					  	echo get_reading_bar_markup();
 					?>
-				</div>
+				<?php } ?>
 			</div>
 		<?php } ?>
 
@@ -130,116 +158,4 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		return ob_get_clean();
 	}
-}
-
-/**
- * Get the Header Row that has been marked as sticky.
- *
- * @return array
- */
-
-function getStickyRowBlock() {
-
-	$post             = get_block_area_post( 'header' );
-
-	$block = [];
-
-	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
-
-		// Get all blocks inside Block Area;
-		$header_block = ( parse_blocks( $post->post_content ) )[0];
-
-		// Get InnerBlocks
-		$innerBlocks = $header_block['innerBlocks'];
-
-		foreach ( $innerBlocks as $innerBlock ) {
-
-			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['isSticky'] === true ) {
-				$block = $innerBlock;
-			}
-		}
-	}
-
-	return $block;
-}
-
-/**
- * Helper function to get Block Area Post.
- *
- * @param string $slug
- *
- * @return object;
- */
-
-function get_block_area_post( $slug ) {
-
-	$block_area = get_posts( array(
-		'name'        => $slug,
-		'post_type'   => 'block_area',
-		'post_status' => 'publish',
-		'numberposts' => 1,
-		'fields'      => 'ids',
-	) );
-
-	// Header Block Area ID.
-	$block_area_id = $block_area[0];
-
-	// Header Block Area Post.
-	$post = get_post( $block_area_id );
-
-	return $post;
-}
-
-/**
- * Used to select Primary Header Row and use it
- * for sticky header when it's needed.
- *
- * @return array
- */
-
-function getPrimaryBlock() {
-
-	$post = get_block_area_post( 'header' );
-
-	$block = [];
-
-	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
-
-		// Get all blocks inside Block Area;
-		$header_block = ( parse_blocks( $post->post_content ) )[0];
-
-		// Get InnerBlocks
-		$innerBlocks = $header_block['innerBlocks'];
-
-		foreach ( $innerBlocks as $innerBlock ) {
-
-			// Select InnerBlock which match Sticky Row attribute.
-			if ( $innerBlock['attrs']['isPrimary'] === true ) {
-				$block = $innerBlock;
-			}
-		}
-	}
-
-	return $block;
-}
-
-/**
- * Check if Header Blocks is using Header Rows.
- *
- * @return boolean
- */
-
-function headerBlockUpdated() {
-
-	$post = get_block_area_post( 'header' );
-
-	if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
-
-		if ( has_block( 'novablocks/header-row', $post ) ) {
-			return true;
-		}
-	}
-
-	return false;
 }

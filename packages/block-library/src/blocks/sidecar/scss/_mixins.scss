@@ -1,0 +1,123 @@
+// Default Settings for Sidecar Block
+:root {
+  --body-font-size: 16;
+  --offset-addon: 230;
+}
+
+// Default Layout Grid
+// fs - full start
+// ws - wide start
+// cs - content start
+// ce - content end
+// cc - content center
+// we - wide end
+// fe - full end
+// gs - gap start
+// ge - gap end
+// gcs - gap content start
+// gce - gap content end
+// The same thing applies for [cc] [ce].
+
+//noinspection ALL
+@mixin layout-grid {
+  display: var(--display-mode);
+  flex-direction: column;
+  
+  --default-sidebar-width: calc(var(--minimum-sidebar-width) * 0.5);
+  
+  --wds: var(--default-width-offset-sidebar, var(--default-sidebar-width));
+  --wde: var(--default-width-offset-sidebar, var(--default-sidebar-width));
+  
+  --full: calc((100vw - var(--theme-content-width-wide)) * 0.5);
+  
+  grid-template-columns: [fs] Max(0px, var(--editor-full, var(--full))) [ws] calc(var(--wds) * 2) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] calc(var(--wde) * 2) [we] Max(0px, var(--editor-full, var(--full))) [fe];
+}
+
+// Default Layout Settings
+// --display-mode - Block default display mode. (eg. grid or flex)
+// --sticky-element-top-spacing - Used to position the sticky block.
+// In Rosa2 this value will be equal with site header height, in this way,
+// the sticky block will not be under the header.
+// --all-columns - Used for blocks that need to span on the entire grid.
+@mixin layout-settings {
+  --default-width-small-sidebar: 230px;
+  --default-width-medium-sidebar: 300px;
+  --default-width-large-sidebar: 500px;
+  --sticky-element-top-spacing: 0px;
+  --grid-gap: 3em;
+  --minimum-sidebar-width: var(--default-width-medium-sidebar);
+  --display-mode: block;
+  --all-columns: fs/fe;
+  
+  // Default position for blocks is between cs and ce.
+  --block-content-start: cs;
+  --block-content-end: ce;
+  
+  // Default block limits are ws and we.
+  --block-limit-left: ws;
+  --block-limit-right: we;
+  
+  // Make it grid only above 1024px.
+  @include above(lap) {
+    --display-mode: grid;
+  }
+  
+  @include above(ultra) {
+    --default-width-small-sidebar: 10.5em;
+    --default-width-medium-sidebar: 13.7em;
+    --default-width-large-sidebar: 22.8em;
+  }
+}
+
+// Add an outline around a block
+@mixin block-outline {
+  
+  position: relative;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: calc(100% + 0px);
+    height: 100%;
+  
+    margin-left: 0;
+    
+    grid-column: var(--block-content-start)/var(--block-content-end);
+
+    box-shadow: 0 0 0 2px var(--wp-admin-theme-color);
+    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+    border-radius: 1px;
+    outline: 2px solid transparent;
+  }
+}
+
+@mixin grid-item-position($position) {
+  
+  @if ($position == 'left') {
+    --block-content-start: ws;
+    --block-content-end: gs;
+  }
+  
+  @if ($position == 'right' ) {
+    --block-content-start: ge;
+    --block-content-end: we;
+  }
+  
+  @if ($position == 'content-left') {
+    --block-content-start: cs;
+    --block-content-end: gcs;
+  }
+  
+  @if ($position == 'content-right') {
+    --block-content-start: gce;
+    --block-content-end: ce;
+  }
+  
+  @if ($position == 'content' ) {
+    --block-content-start: cs;
+    --block-content-end: ce;
+  }
+}

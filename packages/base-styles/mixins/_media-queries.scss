@@ -3,6 +3,7 @@ $nova-breakpoints: (
 	tablet: 768px,
 	lap: 1024px,
 	desktop: 1366px,
+  ultra: 1800px
 );
 
 @mixin above($value) {

@@ -174,7 +174,9 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			$nova_editor_settings['palettes'] = $palettes;
 		}
 
-		if ( class_exists( 'PixCustomifyPlugin' ) ) {
+		if ( function_exists( 'Pixelgrade\StyleManager\get_option_details_all' ) ) {
+			$nova_editor_settings['customify_config'] = \Pixelgrade\StyleManager\get_option_details_all();
+		} elseif ( class_exists( 'PixCustomifyPlugin' ) ) {
 			$nova_editor_settings['customify_config'] = PixCustomifyPlugin()->get_options_configs();
 		}
 

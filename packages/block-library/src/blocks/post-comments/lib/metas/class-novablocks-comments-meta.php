@@ -57,9 +57,23 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 		 * @return array
 		 */
 		public function verify_comment_meta_data( $commentdata ) {
+			// We only do the checks on the frontend, not in the WordPress Dashboard.
+			if ( current_user_can( 'moderate_comments' ) && is_admin() ) {
+				return $commentdata;
+			}
+
 			// We only enforce the commenter background for comments, not other types like reviews.
 			if ( empty( $commentdata['comment_type'] ) || 'comment' !== $commentdata['comment_type'] ) {
 				return $commentdata;
+			}
+
+			// Through some management interfaces (probably WordPress admin), replies to other comment types may come here as regular comments ("comment" type).
+			// We skip the checks for replies with parent comments that are not of the "comment" type.
+			if ( ! empty( $commentdata['comment_parent'] ) ) {
+				$parent_comment = get_comment( $commentdata['comment_parent'] );
+				if ( ! empty( $parent_comment ) && 'comment' !== $parent_comment->comment_type ) {
+					return $commentdata;
+				}
 			}
 
 			if ( empty( $_POST['nb_commenter_background'] ) ) {

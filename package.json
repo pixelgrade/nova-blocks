@@ -1,6 +1,6 @@
 {
 	"name": "nova-blocks",
-	"version": "1.12.0",
+	"version": "1.11.1",
 	"main": "blocks/index.js",
 	"license": "GPL-3.0+",
 	"engines": {
@@ -26,8 +26,7 @@
 		"@novablocks/doppler": "file:packages/doppler",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",
-		"@novablocks/utils": "file:packages/utils",
-		"node-gyp": "^3.8.0"
+		"@novablocks/utils": "file:packages/utils"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.12.13",
@@ -55,7 +54,7 @@
 		"node-watch": "^0.7.1",
 		"os": "^0.1.1",
 		"path": "^0.12.7",
-		"postcss": "^8.2.10",
+		"postcss": "^8.2.5",
 		"rimraf": "^3.0.2",
 		"rtlcss": "^3.1.2",
 		"svg-sprite-loader": "^5.2.1",
