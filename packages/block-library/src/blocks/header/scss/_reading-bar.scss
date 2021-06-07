@@ -53,6 +53,10 @@
     transform: translateY(0);
     pointer-events: auto;
   }
+  
+  @include below(lap) {
+    display: none;
+  }
 }
 
 .site-header--next,
