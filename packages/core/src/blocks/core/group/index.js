@@ -22,7 +22,7 @@ export const addGroupFilters = ( settings ) => {
       settings.attributes = Object.assign( settings.attributes, {
         contentAlignment: {
           type: 'string',
-          default: 'full'
+          default: 'pull-none'
         },
       } );
     }
