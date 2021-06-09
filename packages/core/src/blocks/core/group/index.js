@@ -70,7 +70,7 @@ export const addGroupFilters = ( settings ) => {
 
     const { contentAlignment } = attributes;
 
-    if ( allowedBlocks.includes( blockType.name ) && contentAlignment ) {
+    if ( allowedBlocks.includes( blockType.name ) && contentAlignment !== 'pull-none' ) {
       extraProps.className = classnames( extraProps.className, contentAlignment );
     }
 
