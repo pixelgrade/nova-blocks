@@ -135,11 +135,20 @@ function generateOverlappingBlocks(primaryArea, secondaryArea) {
 // if there is not enough available space.
 function sidecarTransformationsInCustomizer() {
 
+  const options = [
+    'sm_site_container_width',
+    'sm_content_inset',
+    'sm_spacing_level'
+  ];
+
   if ( wp.customize !== undefined ) {
-    wp.customize( `${customify.config.options_name}[content_wide_width_addon]`, ( setting ) => {
-      setting.bind( value => {
-        debouncedSidecarTransformations()
-      } );
+
+    options.forEach( option => {
+      wp.customize( option, ( setting ) => {
+        setting.bind( value => {
+          debouncedSidecarTransformations()
+        } );
+      } )
     } )
   }
 }

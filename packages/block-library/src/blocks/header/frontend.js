@@ -15,8 +15,9 @@ import { addSocialMenuClass } from "./utils";
       wpAdminBarHeight = !wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
       isArticle = $( 'body' ).hasClass( 'single-post' ),
       $progressBar = $( '.js-reading-progress' ),
-      $promoBar = $( '.js-promo-bar' ),
-      stickyHeaderShown = false,
+      $promoBar = $( '.js-promo-bar' );
+
+    let stickyHeaderShown = false,
       primaryRowShown = false,
       $elementWithOverflow = currentHeader;
 
