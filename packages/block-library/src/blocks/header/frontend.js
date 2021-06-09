@@ -88,25 +88,46 @@ import { addSocialMenuClass } from "./utils";
     // Init Reading Progress Bar
     function progressBarInit() {
 
-      let $entryContent = $( '.entry-content' ),
-        max = 0;
-
+      // Reading Progress Bar should
+      // exist only on articles.
       if ( ! isArticle ) {
         return;
       }
 
+      // ignoredElements can be updated if we will add other elements
+      // inside the mark-up that will affect entry-content height.
+      // articleHeaderHeight is needed to
+      // have a better starting point,
+      // for reading progress bar.
+
+      let $entryContent = $( '.entry-content' ),
+        ignoredElements = ['.article-header', '.post-navigation', '.novablocks-conversations'],
+        ignoredElementsHeight = 0,
+        articleHeaderHeight = $( '.article-header' ).outerHeight(),
+        max = 0;
+
+      // We want to know all ignored elements combined height,
+      // so we can remove it from entry-content height.
+      $( ignoredElements ).each( function( index, block ) {
+
+        let element = $( block ),
+            elementHeight = element.outerHeight();
+
+        ignoredElementsHeight += elementHeight;
+      } )
+
       $( window ).on( 'scroll', function() {
 
         let scrollPosition = $( window ).scrollTop(),
-            startPosition = $entryContent.offset().top;
+          startPosition = $entryContent.offset().top + articleHeaderHeight;
 
-          if ( scrollPosition > startPosition ) {
-            max = $entryContent.outerHeight() - $entryContent.offset().top;
-            $progressBar.attr( 'max', max ).css( 'opacity', 0 );
-            $progressBar.css( 'opacity', 0.95 ).attr( 'value', scrollPosition - startPosition );
-          } else {
-            $progressBar.attr( 'value', 0 );
-          }
+        if ( scrollPosition > startPosition ) {
+          max = $entryContent.outerHeight() - $entryContent.offset().top - ignoredElementsHeight;
+          $progressBar.attr( 'max', max ).css( 'opacity', 0 );
+          $progressBar.css( 'opacity', 0.95 ).attr( 'value', scrollPosition - startPosition );
+        } else {
+          $progressBar.attr( 'value', 0 );
+        }
       } )
     }
 
@@ -170,7 +191,7 @@ import { addSocialMenuClass } from "./utils";
         } else {
           setTimeout( () => {
             $elementWithOverflow.css( 'overflow', '' );
-          }, 350 );
+          }, 100 );
         }
 
         // Toggle Class to show Next Article
