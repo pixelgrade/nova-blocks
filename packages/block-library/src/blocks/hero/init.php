@@ -68,7 +68,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );
 		$heroStyle = join( '; ', $spacingProps );
-		$heroStyle .= '--novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
+		$heroStyle .= '; --novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
 
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
