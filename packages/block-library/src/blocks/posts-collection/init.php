@@ -182,7 +182,7 @@ function novablocks_get_tag_name( $tag ) {
 function novablocks_get_post_card_markup( $post, $attributes ) {
 
 
-	$media_url = get_the_post_thumbnail_url( $post );
+	$media_url = get_the_post_thumbnail_url( $post, 'novablocks_medium' );
 	$title     = get_the_title( $post );
 	$excerpt   = get_the_excerpt( $post );
 
