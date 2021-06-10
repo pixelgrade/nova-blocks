@@ -58,6 +58,9 @@ registerBlockType( 'novablocks/advanced-gallery', {
 		align: [ 'wide', 'full' ],
     html: false,
     inserter: false,
+    novaBlocks: {
+      blobs: true
+    }
 	},
 	// Additional search terms
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],

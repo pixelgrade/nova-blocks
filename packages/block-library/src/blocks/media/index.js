@@ -72,6 +72,7 @@ registerBlockType( 'novablocks/media', {
     novaBlocks: {
       colorSignal: true,
       contentColorSignal: true,
+      blobs: true
     },
   },
 	edit,

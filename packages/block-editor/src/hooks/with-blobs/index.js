@@ -20,7 +20,7 @@ const withBlobControls = createHigherOrderComponent(OriginalComponent => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-    if ( ! blocksWithBlobs.includes( props.name ) && ! supports?.novaBlocks?.blobs ) {
+    if ( ! supports?.novaBlocks?.blobs ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -37,7 +37,7 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-blob-controls', withBlobControls
 
 function addBlobAttributes( block ) {
 
-  if ( ! blocksWithBlobs.includes( block ) && ! block?.supports?.novaBlocks?.blobs ) {
+  if ( ! block?.supports?.novaBlocks?.blobs ) {
     return block;
   }
 
