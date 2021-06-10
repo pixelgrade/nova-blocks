@@ -69,7 +69,11 @@ registerBlockType( 'novablocks/media', {
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 	attributes,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true,
+      contentColorSignal: true,
+    },
   },
 	edit,
 	save,

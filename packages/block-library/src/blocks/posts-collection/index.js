@@ -29,7 +29,11 @@ registerBlockType( 'novablocks/posts-collection', {
   attributes,
   variations,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true,
+      contentColorSignal: true,
+    },
   },
 	edit,
 	save() {

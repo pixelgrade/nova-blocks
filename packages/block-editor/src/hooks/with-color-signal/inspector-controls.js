@@ -5,6 +5,10 @@ import {
   ToggleControl,
 } from "@wordpress/components";
 
+import {
+  select
+} from "@wordpress/data";
+
 import { __ } from "@wordpress/i18n";
 
 import {
@@ -44,6 +48,7 @@ const ColorSetControls = ( props ) => {
     paletteVariation,
   } = attributes;
 
+  const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
   const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
 
   if ( ! currentPalette ) {
@@ -66,14 +71,17 @@ const ColorSetControls = ( props ) => {
             setAttributes( getSignalAttributes( nextSignal, currentPalette, true ) );
           } } />
         </ControlsGroup>
-        <ControlsGroup>
-          <SignalControl { ...props }
-                         label={ 'Content Area Color Signal' }
-                         signal={ contentColorSignal }
-                         onChange={ contentColorSignal => {
-                           setAttributes( { contentColorSignal: contentColorSignal } )
-                         } } />
-        </ControlsGroup>
+        {
+          supports?.novaBlocks?.contentColorSignal &&
+          <ControlsGroup>
+            <SignalControl { ...props }
+                           label={ 'Content Area Color Signal' }
+                           signal={ contentColorSignal }
+                           onChange={ contentColorSignal => {
+                             setAttributes( { contentColorSignal: contentColorSignal } )
+                           } } />
+          </ControlsGroup>
+        }
         <ControlsGroup>
           <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } sticky={ true } />
         </ControlsGroup>

@@ -22,6 +22,9 @@ registerBlockType( 'novablocks/header-row', {
   supports: {
     align: [ "wide", "full" ],
     html: false,
+    novaBlocks: {
+      colorSignal: true,
+    },
   },
   edit,
   save: function() {

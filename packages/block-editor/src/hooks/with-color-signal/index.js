@@ -11,32 +11,32 @@ import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
-const enableColorSetControls = [
+const enableColorSignalControls = [
   'novablocks/announcement-bar',
+  'novablocks/cards-collection',
   'novablocks/header',
   'novablocks/header-row',
   'novablocks/hero',
-  'novablocks/slideshow',
   'novablocks/media',
-  'novablocks/cards-collection',
   'novablocks/posts-collection',
+  'novablocks/slideshow',
 
   'core/group',
 ];
 
-const enableColorSetsDeprecation = [
+const enableColorSignalDeprecation = [
   'novablocks/hero',
   'novablocks/slideshow',
 ];
 
-const enableColorSetsClassnames = [
+const enableColorSignalClassnames = [
   'core/group',
   'novablocks/announcement-bar'
 ];
 
 const withColorSetsAttributes = ( block, name ) => {
 
-  if ( ! enableColorSetControls.includes( name ) && ! block?.supports?.novaBlocks?.colorsSets ) {
+  if ( ! block?.supports?.novaBlocks?.colorSignal ) {
     return block;
   }
 
@@ -57,7 +57,7 @@ const withAltAttributes = [
 
 const withColorSetsAltAttributes = ( block, name ) => {
 
-  if ( ! withAltAttributes.includes( name ) ) {
+  if ( ! block?.supports?.novaBlocks?.colorSignal || ! withAltAttributes.includes( name ) ) {
     return block;
   }
 
@@ -73,7 +73,7 @@ addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-alt-attribut
 
 const withColorSetsDeprecation = ( settings, name ) => {
 
-  if ( ! enableColorSetsDeprecation.includes( name ) ) {
+  if ( ! enableColorSignalDeprecation.includes( name ) ) {
     return settings;
   }
 
@@ -102,15 +102,15 @@ const withColorSetsDeprecation = ( settings, name ) => {
     ].concat( settings.deprecated ),
   } );
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-deprecation', withColorSetsDeprecation );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-deprecation', withColorSetsDeprecation );
 
-const withColorSetsControls = createHigherOrderComponent( OriginalComponent => {
+const withColorSignalControls = createHigherOrderComponent( OriginalComponent => {
 
   return props => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-    if ( ! enableColorSetControls.includes( props.name ) && ! supports?.novaBlocks?.colorsSets ) {
+    if ( ! supports?.novaBlocks?.colorSignal ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -122,13 +122,13 @@ const withColorSetsControls = createHigherOrderComponent( OriginalComponent => {
     );
   }
 } );
-addFilter( 'editor.BlockEdit', 'novablocks/with-color-sets-controls', withColorSetsControls );
+addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 
 const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
 
   return ( props ) => {
 
-    if ( ! enableColorSetsClassnames.includes( props.name ) ) {
+    if ( ! enableColorSignalClassnames.includes( props.name ) ) {
       return <BlockEdit { ...props } />
     }
 
@@ -146,4 +146,5 @@ const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
     )
   };
 }, "withColorSetsClassnames" );
-addFilter( 'editor.BlockEdit', 'novablocks/add-color-set-class-names-to-edit', withColorSetsClassnames );
+
+addFilter( 'editor.BlockEdit', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );

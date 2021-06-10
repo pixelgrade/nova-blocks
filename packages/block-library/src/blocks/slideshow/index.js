@@ -58,7 +58,10 @@ registerBlockType( 'novablocks/slideshow', {
 	keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
 	attributes,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true,
+    },
   },
 	edit,
 	save,

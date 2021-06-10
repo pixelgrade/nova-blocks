@@ -25,7 +25,10 @@ registerBlockType( 'novablocks/header', {
 	keywords: [ __( 'logo', '__plugin_txtd' ), __( 'menu', '__plugin_txtd' ) ],
 	supports: {
     html: false,
-    multiple: false
+    multiple: false,
+    novaBlocks: {
+      colorSignal: true,
+    },
   },
 	variations,
   deprecated,

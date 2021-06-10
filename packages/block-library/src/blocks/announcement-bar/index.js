@@ -56,7 +56,10 @@ registerBlockType( 'novablocks/announcement-bar', {
 		}
 	},
   supports: {
-	  html: false
+	  html: false,
+    novaBlocks: {
+	    colorSignal: true,
+    }
   },
 	save() {
 		return <InnerBlocks.Content />;
