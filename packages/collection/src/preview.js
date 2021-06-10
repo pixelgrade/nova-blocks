@@ -120,6 +120,7 @@ export const ParametricGrid = ( props ) => {
     thumbnailAspectRatio,
     imagePadding,
     imageResizing,
+    contentPadding,
   } = attributes;
 
   let areaColumns = applyLayoutEngine( attributes );
@@ -129,6 +130,7 @@ export const ParametricGrid = ( props ) => {
 
   const style = {
     '--card-media-padding': imagePadding,
+    '--card-content-padding': contentPadding,
     '--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
     '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
     ...getGridStyle( attributes ),

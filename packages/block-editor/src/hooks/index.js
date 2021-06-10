@@ -8,8 +8,6 @@ import "./with-color-signal";
 import "./with-deprecated-group";
 import "./with-doppler";
 import "./with-controls-sections";
-import "./with-emphasis-area";
-import "./with-emphasis-level";
 import "./with-font-size-picker";
 import "./with-inner-blocks";
 import "./with-latest-posts";

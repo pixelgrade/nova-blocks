@@ -1,6 +1,4 @@
 .novablocks-block {
-	--novablocks-block-content-current-box-shadow: none;
-
 	--novablocks-block-padding: var(--novablocks-spacing);
 	--novablocks-block-content-padding: var(--novablocks-spacing);
 }
@@ -10,61 +8,36 @@
 	z-index: var(--novablocks-current-zindex);
 }
 
-.novablocks-block {
-	--block-padding: 0;
-	--block-content-padding: 0;
-}
-
 .novablocks-block__content {
 
-	&[class] {
-		position: relative;
-		padding: var(--block-content-padding);
+  &[class] {
+    position: relative;
     background: none;
 
-		transform: translateZ(0);
+    transform: translateZ(0);
 
-		transition: var(--novablocks-transition);
-		transition-property: padding, box-shadow;
-	}
+    transition: var(--novablocks-transition);
+    transition-property: padding, box-shadow;
+  }
 
-	h1, h2, h3, h4, h5, h6 {
-		width: 100%;
-	}
+  h1, h2, h3, h4, h5, h6 {
+    width: 100%;
+  }
 
-	@include above(tablet) {
-		box-shadow: var(--novablocks-block-content-current-box-shadow);
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
 
-		&:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			z-index: -1;
+    display: block;
+    background-color: var(--novablocks-bg-color, transparent);
+    pointer-events: none;
 
-			display: block;
-			background-color: var(--novablocks-bg-color, transparent);
-			pointer-events: none;
-
-			transition: var(--novablocks-transition);
-			transition-property: background-color, opacity;
-		}
-	}
-}
-
-@include below(tablet) {
-
-	.novablocks-block {
-		--block-padding: var(--novablocks-block-padding);
-	}
-}
-
-@include above(tablet) {
-
-	.content-is-moderate,
-	.content-is-highlighted {
-		--block-content-padding: calc( var(--novablocks-block-content-padding) * var(--novablocks-block-content-padding-multiplier, 1) );
-	}
+    transition: var(--novablocks-transition);
+    transition-property: background-color, opacity;
+  }
 }

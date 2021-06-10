@@ -16,7 +16,10 @@ const VisualBalanceInspectorControls = ( props ) => {
     balanceEmphasis,
     balanceFocalPoint,
     contentAreaWidth,
-    layoutGutter
+    layoutGutter,
+
+    contentPadding,
+    emphasisArea,
   } = attributes;
 
   return (
@@ -64,6 +67,25 @@ const VisualBalanceInspectorControls = ( props ) => {
             onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
             label={ __( 'Layout Gutter' ) }
             min={ 0 }
+            max={ 100 }
+            step={ 5 }
+          />
+          <RangeControl
+            key={ 'collection-content-padding' }
+            label={ __( 'Content padding', '__plugin_txtd' ) }
+            value={ contentPadding }
+            onChange={ contentPadding => {
+              setAttributes( { contentPadding } )
+            } }
+            min={ 0 }
+            max={ 100 }
+            step={ 50 }
+          />
+          <RangeControl
+            value={ emphasisArea }
+            onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
+            label={ __( 'Emphasis Area' ) }
+            min={ 10 }
             max={ 100 }
             step={ 5 }
           />

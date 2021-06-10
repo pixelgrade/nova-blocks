@@ -40,9 +40,10 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		$cssProps = novablocks_get_spacing_css( $attributes );
 
-		$cssProps[ '--card-media-padding' ] = $attributes['imagePadding'];
-		$cssProps[ '--card-media-padding-top' ] = novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%';
-		$cssProps[ '--card-media-object-fit' ] = $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down';
+		$cssProps[] = '--card-content-padding: ' . $attributes['contentPadding'];
+		$cssProps[] = '--card-media-padding: ' . $attributes['imagePadding'];
+		$cssProps[] = '--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%';
+		$cssProps[] = '--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );
 
 		$style = join( '; ', $cssProps );
 
@@ -232,8 +233,10 @@ function novablocks_get_post_card_markup( $post, $attributes ) {
 			<?php } ?>
 
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
-				<div class="novablocks-card__layout-content novablocks-card__inner-container">
-					<?php echo novablocks_get_post_card_contents( $post, $attributes ); ?>
+				<div class="novablocks-card__layout-content">
+					<div class="novablocks-card__inner-container">
+						<?php echo novablocks_get_post_card_contents( $post, $attributes ); ?>
+					</div>
 				</div>
 			<?php } ?>
 

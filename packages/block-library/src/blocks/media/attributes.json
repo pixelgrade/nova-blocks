@@ -30,5 +30,13 @@
   	"templateInserted": {
 	  	"type": "boolean",
 	  	"default": false
-  	}
+  	},
+	"contentPadding": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisArea": {
+		"type": "number",
+		"default": 100
+	}
 }

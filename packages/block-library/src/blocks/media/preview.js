@@ -35,6 +35,8 @@ const MediaPreview = function( props ) {
 
     palette,
     useSourceColorAsReference,
+
+    contentPadding,
 	} = attributes;
 
 	const classNames = classnames(
@@ -52,6 +54,7 @@ const MediaPreview = function( props ) {
 
 	const cssVars = {
 		'--emphasis-area': emphasisArea,
+    '--card-content-padding': contentPadding,
 		'--novablocks-media-content-width': `${ contentAreaWidth }%`,
 		'--novablocks-media-gutter': `calc( ${ layoutGutter } * var(--novablocks-spacing) * 5 / 100 )`,
 	};

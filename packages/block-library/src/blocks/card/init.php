@@ -60,28 +60,30 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 						</div>
 			        <?php } ?>
 				</div>
-				<div class="novablocks-card__layout-content novablocks-card__inner-container">
-			        <?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
-						<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
-					<?php }
+				<div class="novablocks-card__layout-content">
+					<div class="novablocks-card__inner-container">
+						<?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
+							<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
+						<?php }
 
-					if ( false != $attributes['showTitle'] && ! empty( $attributes['title'] ) ) {
-						echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
-					}
+						if ( false != $attributes['showTitle'] && ! empty( $attributes['title'] ) ) {
+							echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
+						}
 
-					if ( false != $attributes['showSubtitle'] && ! empty( $attributes['subtitle'] ) ) {
-						echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
-					}
+						if ( false != $attributes['showSubtitle'] && ! empty( $attributes['subtitle'] ) ) {
+							echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
+						}
 
-					if ( false != $attributes['showDescription'] && ! empty( $attributes['description'] ) ) { ?>
-						<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
-					<?php }
+						if ( false != $attributes['showDescription'] && ! empty( $attributes['description'] ) ) { ?>
+							<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
+						<?php }
 
-					if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>
-						<div class="novablocks-card__buttons">
-							<?php echo $content; ?>
-						</div>
-					<?php } ?>
+						if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>
+							<div class="novablocks-card__buttons">
+								<?php echo $content; ?>
+							</div>
+						<?php } ?>
+					</div>
 				</div>
 			</div>
 		</div>

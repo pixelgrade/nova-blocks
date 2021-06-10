@@ -307,34 +307,6 @@ function novablocks_add_media_settings( $settings ) {
 				)
 			),
 		),
-		'contentAreaOptions' => array(
-			array(
-				'label' => esc_html__( 'Basic', '__plugin_txtd' ),
-				'value' => 'basic',
-			),
-			array(
-				'label' => esc_html__( 'Moderate', '__plugin_txtd' ),
-				'value' => 'moderate',
-			),
-			array(
-				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
-				'value' => 'highlighted',
-			),
-		),
-		'blockAreaOptions'   => array(
-			array(
-				'label' => esc_html__( 'Basic', '__plugin_txtd' ),
-				'value' => 'basic',
-			),
-			array(
-				'label' => esc_html__( 'Moderate', '__plugin_txtd' ),
-				'value' => 'moderate',
-			),
-			array(
-				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
-				'value' => 'highlighted',
-			),
-		),
 	);
 
 	$settings['media'] = $media_settings;
@@ -1203,6 +1175,7 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		}
 
 		$cssProps = array(
+			'--card-content-padding: ' . $attributes['contentPadding'],
 			'--card-media-padding: ' . $attributes['imagePadding'],
 			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%',
 			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
