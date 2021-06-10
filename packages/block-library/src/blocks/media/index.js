@@ -5,7 +5,6 @@ import iconSvg from './media-block.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';
-import deprecated from './deprecated';
 
 import {
   getRandomArrayFromArray,
@@ -81,6 +80,5 @@ registerBlockType( 'novablocks/media', {
 		const settings = wp.data.select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
-	deprecated,
 	transforms,
 } );

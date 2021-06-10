@@ -24,6 +24,11 @@ const enableColorSignalControls = [
   'core/group',
 ];
 
+const withAltAttributes = [
+  'novablocks/hero',
+  'novablocks/slideshow',
+];
+
 const enableColorSignalDeprecation = [
   'novablocks/hero',
   'novablocks/slideshow',
@@ -44,32 +49,12 @@ const withColorSetsAttributes = ( block, name ) => {
     ...block,
     attributes: {
       ...block.attributes,
-      ...attributes
+      ...attributes,
+      ...( withAltAttributes.includes( name ) ? altAttributes : {} )
     }
   };
 }
 addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withColorSetsAttributes );
-
-const withAltAttributes = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-];
-
-const withColorSetsAltAttributes = ( block, name ) => {
-
-  if ( ! block?.supports?.novaBlocks?.colorSignal || ! withAltAttributes.includes( name ) ) {
-    return block;
-  }
-
-  return {
-    ...block,
-    attributes: {
-      ...block.attributes,
-      ...altAttributes
-    }
-  };
-}
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-alt-attributes', withColorSetsAltAttributes );
 
 const withColorSetsDeprecation = ( settings, name ) => {
 
