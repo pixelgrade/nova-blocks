@@ -28,6 +28,8 @@ import { addSocialMenuClass } from "./utils";
     $(document).ready(function($) {
       progressBarInit();
       readingHeaderInit();
+      showStickyHeaderOnScroll();
+      makeHeaderStickyOnScroll();
     })
 
     // This function will add .social-menu-item class
