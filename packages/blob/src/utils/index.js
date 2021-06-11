@@ -40,7 +40,7 @@ export const getPointsArray = ( attributes ) => {
 };
 
 export const generatePath = ( attributes ) => {
-	const { sides } = attributes;
+	const sides = attributes.sides || 0;
 	const curvePoints = getCurvePoints( attributes );
 	const missingPoints = BLOB_MAX_SIDES - sides;
 
@@ -60,6 +60,10 @@ export const getPathFromCurvePoints = ( curvePoints, missingPoints = 0 ) => {
 	let path;
 	let curves = '';
 	let firstPoint = '';
+
+	if ( ! curvePoints.length ) {
+	  return '';
+  }
 
 	for ( let i = 0; i < curvePoints.length; i ++ ) {
 		const c = curvePoints[i];
