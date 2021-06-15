@@ -195,8 +195,7 @@ function novablocks_get_post_card_contents( $post, $attributes ) {
 }
 
 function novablocks_get_post_card_markup( $post, $attributes ) {
-	$media_url = get_the_post_thumbnail_url( $post );
-
+	$media_url = get_the_post_thumbnail_url( $post, 'novablocks_medium' );
 
 	$classes = array(
 		'novablocks-card',

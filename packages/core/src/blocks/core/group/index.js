@@ -22,7 +22,7 @@ export const addGroupFilters = ( settings ) => {
       settings.attributes = Object.assign( settings.attributes, {
         contentAlignment: {
           type: 'string',
-          default: 'full'
+          default: 'pull-none'
         },
       } );
     }
@@ -70,7 +70,7 @@ export const addGroupFilters = ( settings ) => {
 
     const { contentAlignment } = attributes;
 
-    if ( allowedBlocks.includes( blockType.name ) && contentAlignment ) {
+    if ( allowedBlocks.includes( blockType.name ) && contentAlignment !== 'pull-none' ) {
       extraProps.className = classnames( extraProps.className, contentAlignment );
     }
 
