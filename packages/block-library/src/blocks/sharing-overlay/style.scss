@@ -105,6 +105,11 @@
 	> * {
 		--novablocks-element-spacing-multiplier: 0.5;
 		@include block-spacing;
+  
+    &:not(:first-child) {
+      --novablocks-block-top-spacing: 1;
+      --novablocks-block-bottom-spacing: 0;
+    }
 	}
 }
 
