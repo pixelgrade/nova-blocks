@@ -74,12 +74,14 @@ const withColorSetsDeprecation = ( settings, name ) => {
           const { contentColor, overlayFilterStyle } = attributes;
           const hadDarkText = !! contentColor && contentColor.search( '000' ) > -1;
           const hadLightBackground = !! overlayFilterStyle && overlayFilterStyle === 'light';
-          const paletteVariation = hadDarkText || hadLightBackground ? '0' : '10';
+          const paletteVariation = hadDarkText || hadLightBackground ? '0' : '12';
+          const colorSignal = hadDarkText || hadLightBackground ? 0 : 3;
 
           return {
             ...attributes,
             defaultsGenerated: true,
-            paletteVariation: paletteVariation
+            paletteVariation,
+            colorSignal,
           };
         },
         save: settings.save,
