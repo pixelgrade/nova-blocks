@@ -16,6 +16,9 @@
 }
 
 .c-menu-toggle__wrap {
+  
+  position: relative;
+  
 	display: flex;
 	align-items: center;
 
@@ -42,8 +45,8 @@
 
 .c-menu-toggle__slice {
 	display: block;
-	width: 1em;
-	height: 3px;
+	width: 21px;
+	height: 2px;
 	background: currentColor;
 }
 
@@ -54,10 +57,14 @@
 	left: 0;
 }
 
+.c-menu-toggle__slice--middle {
+  width: 16px;
+}
+
 .c-menu-toggle__slice--top {
-	transform: translate3d(0, -(6em/16), 0);
+  transform: translate3d(0, -7px, 0);
 }
 
 .c-menu-toggle__slice--bottom {
-	transform: translate3d(0, (6em/16), 0);
+  transform: translate3d(0, 7px, 0);
 }
