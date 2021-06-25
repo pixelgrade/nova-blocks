@@ -1,0 +1,24 @@
+.menu-item {
+
+  margin-top: 0;
+
+  position: relative;
+  --dropdown-icon-size: 0.75em;
+
+  .menu-description {
+    display: block;
+    order: 2;
+
+    font-size: 0.75em;
+    color: var(--current-dark-primary);
+    opacity: .5;
+    line-height: 1.5;
+    font-weight: 400;
+
+    padding-right: var(--dropdown-icon-size);
+
+    @include below(lap) {
+      width: 100%;
+    }
+  }
+}

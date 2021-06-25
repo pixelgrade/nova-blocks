@@ -1,0 +1,6 @@
+{
+	"scrollingEffect": {
+		"type": "string",
+		"default": "parallax"
+	}
+}

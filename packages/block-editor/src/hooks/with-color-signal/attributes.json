@@ -1,0 +1,22 @@
+{
+	"palette": {
+		"type": "number",
+		"default": 1
+	},
+	"paletteVariation": {
+		"type": "number",
+		"default": 1
+	},
+	"useSourceColorAsReference": {
+		"type": "boolean",
+		"default": false
+	},
+	"colorSignal": {
+		"type": "number",
+		"default": 0
+	},
+	"contentColorSignal": {
+		"type": "number",
+		"default": 0
+	}
+}

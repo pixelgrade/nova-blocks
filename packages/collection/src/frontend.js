@@ -20,24 +20,26 @@ import {
 
 	const defaultBlockWidth = 1152; // magic
 
+  let $carousels = $( '[data-layoutstyle="carousel"]' );
+
 	$( '.novablocks-grid' ).each( function( i, grid ) {
 		const $grid = $( grid );
 		const $block = $grid.closest( '.novablocks-block' );
 		const $cards = $grid.closest( '.novablocks-collection__cards' );
-		const $posts = $grid.children( '.novablocks-card' );
+		const $posts = $grid.children( '.novablocks-card, .supernova-card' );
 		const attributes = $grid.data();
 		const cardsCount = $posts.length;
 
 		let addedCards;
 
-		grid.style.setProperty( '--card-media-padding', attributes.imagepadding );
-		grid.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailaspectratio ) );
-		grid.style.setProperty( '--card-media-object-fit', attributes.imageresizing === 'cropped' ? 'cover' : 'scale-down' );
+		grid.style.setProperty( '--card-media-padding', attributes.imagePadding );
+		grid.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailAspectRatio ) );
+		grid.style.setProperty( '--card-media-object-fit', attributes.imageResizing === 'cropped' ? 'cover' : 'scale-down' );
 
-		if ( attributes.layoutstyle !== 'parametric' ) {
+		if ( attributes.layoutStyle !== 'parametric' ) {
 			$grid.removeClass( 'novablocks-grid' );
 			$grid.addClass( 'novablocks-collection__layout' );
-			$grid.addClass( `novablocks-grid__area--${ attributes.islandscape ? 'landscape' : 'portrait' }` );
+			$grid.addClass( `novablocks-grid__area--${ attributes.isLandscape ? 'landscape' : 'portrait' }` );
 			$grid.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
 
 			$block.addClass( 'novablocks-block--ready' );
@@ -107,7 +109,7 @@ import {
 
 			$grid.css( getGridStyle( compiledAttributes ) );
 
-			if ( below( 'lap' ) || attributes.headerposition === 0 ) {
+			if ( below( 'lap' ) || attributes.headerPosition === 0 ) {
 				$title.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
 				$subtitle.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
 			}
@@ -139,7 +141,7 @@ import {
 
 						$card.appendTo( $gridItem );
 
-						if ( ! below( 'lap' ) && attributes.headerposition === addedCards - area.postsCount + i + 1 ) {
+						if ( ! below( 'lap' ) && attributes.headerPosition === addedCards - area.postsCount + i + 1 ) {
 							const $header = $( '<div class="novablocks-grid__item js-collection-element-clone">' );
 							$title.clone().appendTo( $header );
 							$subtitle.clone().appendTo( $header );
@@ -299,5 +301,42 @@ import {
 			areaColumn.row = areaColumn.row - spaceTop;
 		} );
 	}
+
+	function initCarousels() {
+
+    $('.novablocks-collection--carousel .novablocks-collection__layout').each( function( i, carousel ) {
+
+      let $carousel = $(carousel);
+
+      const SLICK_OPTIONS = {
+        slidesToShow: $carousel.data('columns' ),
+        dots: $carousel.data('showpagination') === 1,
+        variableWidth: $carousel.data('carousellayout') === 'variable',
+        customPaging: function(slick,index) {
+          return '<a>' + (index + 1) + '</a>';
+        },
+        infinite: true,
+
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              infinite: true,
+              slidesToShow: 1,
+              variableWidth: false,
+              centerPadding: '30px',
+            }
+          },
+        ]
+      }
+
+      $carousel.slick(SLICK_OPTIONS);
+
+    } );
+  }
+
+  initCarousels();
 
 })(jQuery, window);

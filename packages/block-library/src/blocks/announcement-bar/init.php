@@ -11,8 +11,6 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 	function novablocks_render_announcement_bar_block( $attributes, $content ) {
 
-		$classes = array();
-
 		$attributes_config = novablocks_get_announcement_bar_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
@@ -26,6 +24,9 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 		if ( ! empty( $attributes['opensInNewTab'] ) ) {
 			$target = 'target="_blank"';
 		}
+
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		ob_start();
 

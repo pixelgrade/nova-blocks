@@ -7,8 +7,11 @@ export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
 export { default as Notice } from "./notice";
 export { default as PostCard } from './post-card';
+export { default as PalettePresetControl } from "./palette-preset-control";
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
+export { default as SignalControl } from "./signal-control";
+export { default as ColorGradesControl } from "./color-grades-control";
 export { default as ToggleGroup } from "./toggle-group";
 
 export { default as insertTemplate } from './insert-template';
@@ -32,8 +35,6 @@ export {
 
 export {
 	colorAttributes,
-	ColorControls,
-	ColorPanel,
 	ColorToolbar,
 	OverlayControls
 } from './color-controls';
@@ -56,7 +57,6 @@ export {
 
 export {
 	default as EmphasisLevelControls,
-	EmphasisBlockAreaControls,
 	EmphasisContentAreaControls,
 } from './emphasis-level-controls';
 

@@ -163,16 +163,21 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 		$nova_editor_settings = novablocks_get_block_editor_settings();
 
+		$sm_palettes_value = pixelgrade_option( 'sm_advanced_palette_output' );
+		$palettes = json_decode( $sm_palettes_value );
+
+		if ( empty( $palettes ) && function_exists( 'get_fallback_palettes' ) ) {
+			$palettes = get_fallback_palettes();
+		}
+
+		if ( ! empty( $palettes ) ) {
+			$nova_editor_settings['palettes'] = $palettes;
+		}
+
 		if ( function_exists( 'Pixelgrade\StyleManager\get_option_details_all' ) ) {
 			$nova_editor_settings['customify_config'] = \Pixelgrade\StyleManager\get_option_details_all();
 		} elseif ( class_exists( 'PixCustomifyPlugin' ) ) {
 			$nova_editor_settings['customify_config'] = PixCustomifyPlugin()->get_options_configs();
-		}
-
-		list( $color_palette, ) = (array) get_theme_support( 'editor-color-palette' );
-
-		if ( false !== $color_palette ) {
-			$nova_editor_settings['colors'] = $color_palette;
 		}
 
 		$js_script = '
@@ -215,7 +220,8 @@ function novablocks_register_block_types() {
 	);
 
 	$slick_dependent_scripts = array(
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/posts-collection/frontend',
 	);
 
 	$bully_dependent_scripts = array(
@@ -234,7 +240,7 @@ function novablocks_register_block_types() {
 
 	$collection_style_dependent_blocks = array(
 		'cards-collection',
-		'posts-collection'
+		'posts-collection',
 	);
 
 

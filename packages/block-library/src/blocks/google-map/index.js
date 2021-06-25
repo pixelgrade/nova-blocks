@@ -12,9 +12,7 @@ import edit from "./edit";
 
 import { getSvg } from "@novablocks/block-editor";
 
-import blockAttributes from "./attributes"
-import { scrollingAttributes } from "@novablocks/doppler";
-const attributes = Object.assign( {}, blockAttributes, scrollingAttributes );
+import attributes from "./attributes";
 
 registerBlockType( 'novablocks/google-map', {
 	title: __( 'Map of the World', '__plugin_txtd' ),

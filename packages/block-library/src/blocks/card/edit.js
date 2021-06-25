@@ -1,85 +1,54 @@
 /**
  * WordPress dependencies
  */
+import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+
+import CardMedia from './media';
 
 import {
 	InnerBlocks,
 	MediaUpload,
  } from '@wordpress/block-editor';
 
-import {
-  getSvg
-} from '@novablocks/block-editor';
-
-import placeholderSvg from './card-media-placeholder.svg';
-import classnames from "classnames";
+import { getColorSetClassnames } from "@novablocks/utils";
 
 const CardEdit = ( props ) => {
 
-	const blockClassName = 'novablocks-card';
-
 	const {
-		attributes: {
-			level,
-			title,
-			subtitle,
-			description,
-			media,
-			meta,
-
-			contentAlign,
-			showMedia,
-			showTitle,
-			showSubtitle,
-			showDescription,
-			showButtons,
-			showMeta,
-		},
-    className,
+		attributes,
 		setAttributes,
 	} = props;
 
-  const classNames = classnames(
-    className,
-    `novablocks-card`,
-    `novablocks-card--fixed-media-aspect-ratio`,
-    `novablocks-card--portrait`,
-    `novablocks-block__content`
+	const {
+    level,
+    title,
+    subtitle,
+    description,
+    media,
+    meta,
+
+    contentAlign,
+    showMedia,
+    showTitle,
+    showSubtitle,
+    showDescription,
+    showButtons,
+    showMeta,
+  } = attributes;
+
+	const className = classnames(
+	  props.className,
+    'novablocks-card',
+    'novablocks-card--fixed-media-aspect-ratio',
+    'novablocks-card--portrait',
+    'novablocks-block__content',
+    getColorSetClassnames( attributes )
   );
 
-	const CardMedia = ( props ) => {
-
-		const {
-			attributes: {
-				media
-			},
-		} = props;
-
-    const mediaURL = media?.sizes?.novablocks_medium?.url || media?.url;
-
-    if ( !! mediaURL ) {
-      return (
-        <Fragment>
-          { media.type !== 'video' &&
-            <img className={ `${ blockClassName }__media-image` } src={ mediaURL } alt={ media?.alt } /> }
-          { media.type === 'video' &&
-            <video muted autoPlay loop playsInline className={ `${ blockClassName }__media-image` } src={ media?.url } /> }
-        </Fragment>
-      )
-    }
-
-		return (
-			<div className={ `${ blockClassName }__media-placeholder` }>
-				{ getSvg( placeholderSvg ) }
-			</div>
-		);
-	};
-
 	return (
-		<div className={ classNames }>
+		<div className={ className }>
 			<div className="novablocks-card__layout">
 				{
 					showMedia &&
@@ -89,9 +58,9 @@ const CardEdit = ( props ) => {
 							value={ !! media && media.id }
 							onSelect={ ( media ) => setAttributes( { media } ) }
 							render={ ( { open } ) => (
-								<div className={ `${ blockClassName }__media-wrap` } onClick={ open }>
-									<div className={ `${ blockClassName }__media` }>
-										<div className={ `${ blockClassName }__media-edit novablocks-change-media-overlay` }>
+								<div className={ `novablocks-card__media-wrap` } onClick={ open }>
+									<div className={ `novablocks-card__media` }>
+										<div className={ `novablocks-card__media-edit novablocks-change-media-overlay` }>
 											<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 										</div>
 										<CardMedia { ...props } />
@@ -107,7 +76,7 @@ const CardEdit = ( props ) => {
 						{
 							showMeta &&
 							<RichText
-								className={ `${ blockClassName }__meta block-editor-block-list__block is-style-meta` }
+								className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
 								tagName={ 'p' }
 								value={meta}
 								onChange={meta => {
@@ -119,7 +88,7 @@ const CardEdit = ( props ) => {
 						{
 							showTitle &&
 							<RichText
-								className={`${blockClassName}__title block-editor-block-list__block`}
+								className={ `novablocks-card__title block-editor-block-list__block` }
 								tagName={`h${level + 1}`}
 								value={title}
 								onChange={title => {
@@ -127,12 +96,11 @@ const CardEdit = ( props ) => {
 								}}
 								allowedFormats={ [] }
 							/>
-
 						}
 						{
 							showSubtitle &&
 							<RichText
-								className={ `${ blockClassName }__subtitle block-editor-block-list__block` }
+								className={ `novablocks-card__subtitle block-editor-block-list__block` }
 								tagName={ `h${level + 2}` }
 								value={subtitle}
 								onChange={subtitle => {
@@ -144,7 +112,7 @@ const CardEdit = ( props ) => {
 						{
 							showDescription &&
 							<RichText
-								className={ `${ blockClassName }__description block-editor-block-list__block` }
+								className={ `novablocks-card__description block-editor-block-list__block` }
 								tagName={ 'p' }
 								value={description}
 								onChange={description => {
@@ -155,7 +123,7 @@ const CardEdit = ( props ) => {
 						}
 						{
 							showButtons &&
-							<div className={ `${ blockClassName }__buttons block-editor-block-list__block` }>
+							<div className={ `novablocks-card__buttons block-editor-block-list__block` }>
 								<InnerBlocks
 									allowedBlocks={ [ 'core/buttons' ] }
 									renderAppender={ false }

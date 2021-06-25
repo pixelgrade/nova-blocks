@@ -1,4 +1,12 @@
 [data-type="novablocks/media"] {
+
+  &[data-type] {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
 	@include advanced-gallery-overlay-styles;
 }
 
@@ -21,12 +29,12 @@
 }
 
 .novablocks-media__inner-container {
-	padding-left: var(--novablocks-media-spacing);
-	padding-right: var(--novablocks-media-spacing);
+	padding-left: var(--novablocks-spacing);
+	padding-right: var(--novablocks-spacing);
 
 	> [data-align='full'] {
-		margin-left: calc(-1 * var(--novablocks-media-spacing));
-		margin-right: calc(-1 * var(--novablocks-media-spacing));
+		margin-left: calc(-1 * var(--novablocks-spacing));
+		margin-right: calc(-1 * var(--novablocks-spacing));
 	}
 }
 

@@ -1,0 +1,50 @@
+.novablocks-header--secondary {
+  width: 100%;
+  z-index: 1100;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .15s ease-in;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &:after {
+    opacity: 0.1;
+  }
+
+  &:hover {
+
+    .novablocks-header-row--primary:not(:only-child) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &:not(.primary-menu--is-visible) {
+
+    .novablocks-header-row--primary:not(:only-child) {
+      display: none;
+    }
+  }
+
+  .novablocks-header-row--primary:not(:only-child) {
+    position: absolute;
+    z-index: -1;
+
+    width: 100%;
+    margin-left: calc(-1 * var(--novablocks-wrapper-sides-spacing));
+    margin-right: calc(-1 * var(--novablocks-wrapper-sides-spacing));
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+  }
+
+  @include below(lap) {
+    display: none !important;
+  }
+}

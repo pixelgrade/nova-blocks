@@ -1,4 +1,17 @@
+@media only screen and (min-width: 1000px) {
+
+  .c-menu-toggle__checkbox,
+  .c-menu-toggle {
+    display: none;
+  }
+}
+
 .c-menu-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+
 	font-size: 1rem;
 }
 
@@ -6,16 +19,10 @@
 	display: flex;
 	align-items: center;
 
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1100;
-
-	padding: 1em;
+  height: 100%;
+	padding: 1em var(--novablocks-wrapper-sides-spacing, 0);
 
 	cursor: pointer;
-
-	@include wp-offset(top, 0, true);
 }
 
 .c-menu-toggle__checkbox {

@@ -6,7 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_cards_collection_attributes() {
-	return novablocks_get_collection_attributes();
+
+	return novablocks_merge_attributes_from_array( array(
+		'packages/collection/src/collection-attributes.json',
+		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
+		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/hooks/with-card-details/attributes.json',
+	) );
+
 }
 
 if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {

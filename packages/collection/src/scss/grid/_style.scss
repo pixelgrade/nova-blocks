@@ -67,7 +67,6 @@
 		--novablocks-card-title-font-size-modifier: 1;
 	}
 
-
 	&.novablocks-grid__area--width-m {
 
 		@include above(tablet) {
@@ -85,10 +84,6 @@
 			--novablocks-card-spacing-modifier: 0.25;
 			--novablocks-card-meta-font-size-modifier: 0.8;
 			--novablocks-card-title-font-size-modifier: 0.6;
-
-			.novablocks-card__inner-container {
-				--novablocks-element-spacing-multiplier: 0.25;
-			}
 		}
 	}
 
@@ -103,10 +98,6 @@
 			--novablocks-card-meta-font-size-modifier: 0.6;
 			--novablocks-card-title-font-size-modifier: 0.5;
 			--novablocks-card-content-font-size-modifier: 0.6;
-
-			.novablocks-card__inner-container {
-				--novablocks-element-spacing-multiplier: 0.25;
-			}
 		}
 	}
 }
@@ -162,12 +153,8 @@
 }
 
 .novablocks-grid__area + .novablocks-grid__area,
-.novablocks-grid__item + .novablocks-grid__item {
+.novablocks-grid__area > * + * {
 	margin-top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
-}
-
-.novablocks-grid__item + .novablocks-grid__item {
-	--novablocks-grid-spacing-modifier: 0.5;
 }
 
 .novablocks-grid--mask {

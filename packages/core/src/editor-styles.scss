@@ -6,11 +6,6 @@
 	transform: none !important;
 }
 
-.novablocks-mask {
-	@include cover;
-	overflow: hidden;
-}
-
 .block-editor-inserter__preview {
 	transform: scale(0.8);
 	max-height: 300px;
@@ -32,6 +27,7 @@
 
 // debug
 body.debug {
+
 	.wp-block-group__inner-container {
 		position: relative;
 		z-index: 10;
@@ -44,7 +40,7 @@ body.debug {
 
 			content: '';
 			display: block;
-			height: calc( 5 * var(--novablocks-media-spacing) );
+			height: calc( 5 * var(--novablocks-spacing) );
 			background:
 				linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, rgba(0,0,0,0) 1px),
 				linear-gradient(to bottom, transparent 40%, red 40%, red calc(40% + 1px), transparent calc(40% + 1px));
@@ -54,11 +50,11 @@ body.debug {
 		}
 
 		&:before {
-			top: calc( -2 * var(--novablocks-media-spacing) );
+			top: calc( -2 * var(--novablocks-spacing) );
 		}
 
 		&:after {
-			bottom: calc( -3 * var(--novablocks-media-spacing) );
+			bottom: calc( -3 * var(--novablocks-spacing) );
 		}
 	}
 
@@ -74,25 +70,26 @@ body.debug {
 			left: 0;
 			right: 0;
 
-			transition: var(--novablocks-media-transition);
+			transition: var(--novablocks-transition);
 			transition-property: padding, top, bottom;
 		}
 
 		&:before {
-			--offset: calc( max( 0, -1 * var(--block-top-spacing, 0) ) );
-			padding-top: calc( -1 * var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
-			padding-bottom: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
-			bottom: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
+			--offset: calc( max( 0, -1 * var(--novablocks-block-top-spacing, 0) ) );
+			padding-top: calc( -1 * var(--novablocks-block-top-spacing, 0) * var(--novablocks-spacing) );
+			padding-bottom: calc( var(--novablocks-block-top-spacing, 0) * var(--novablocks-spacing) );
+			bottom: calc( 100% - var(--offset) * var(--novablocks-spacing) );
 		}
 
 		&:after {
-			--offset: calc( max( 0, -1 * var(--block-bottom-spacing, 0) ) );
-			padding-top: calc( -1 * var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
-			padding-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
-			top: calc( 100% - var(--offset) * var(--novablocks-media-spacing) );
+			--offset: calc( max( 0, -1 * var(--novablocks-block-bottom-spacing, 0) ) );
+			padding-top: calc( -1 * var(--novablocks-block-bottom-spacing, 0) * var(--novablocks-spacing) );
+			padding-bottom: calc( var(--novablocks-block-bottom-spacing, 0) * var(--novablocks-spacing) );
+			top: calc( 100% - var(--offset) * var(--novablocks-spacing) );
 		}
 	}
 }
+
 .block-editor-block-variation-picker__variations[class][class][class] {
 	padding-left: 0;
 
@@ -102,6 +99,7 @@ body.debug {
 }
 
 [data-type='novablocks/header'] {
+
 	.block-editor-block-variation-picker__variation-label[class] {
 		display: none;
 	}

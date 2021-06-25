@@ -4,21 +4,22 @@ import { addSocialMenuClass } from "./utils";
 (
   function( $, window, undefined ) {
 
-    const $siteHeader = $( '.site-header--main' ),
-          $stickyHeader = $( '.site-header--secondary' ),
-          $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
-          currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
-          mainHeaderShouldBeSticky = $('.site-header--main[data-sticky]').length && ! $stickyHeader.length,
-          wpAdminBar = $('#wpadminbar'),
-          wpAdminBarHeight = ! wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
-          isArticle = $('body').hasClass('single-post'),
-          $progressBar = $( '.js-reading-progress' ),
-          $promoBar = $('.js-promo-bar');
+    const $siteHeader = $( '.novablocks-header--main' ),
+      $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
+      $stickyRow = $siteHeader.find( '.novablocks-header-row[data-sticky=true]' ),
+      $stickyHeader = $( '.novablocks-header--secondary' ),
+      $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
+      currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
+      mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
+      wpAdminBar = $( '#wpadminbar' ),
+      wpAdminBarHeight = !wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
+      isArticle = $( 'body' ).hasClass( 'single-post' ),
+      $progressBar = $( '.js-reading-progress' ),
+      $promoBar = $( '.js-promo-bar' );
 
-    let  stickyHeaderShown = false,
-         primaryRowShown = false,
-         $stickyRow = isArticle ?  $('.site-header__row--primary') : $('.site-header--main .site-header__row[data-sticky=true]'),
-         $elementWithOverflow = currentHeader;
+    let stickyHeaderShown = false,
+      primaryRowShown = false,
+      $elementWithOverflow = currentHeader;
 
     $( window ).on( 'scroll', showStickyHeaderOnScroll );
     $( window ).on( 'scroll', makeHeaderStickyOnScroll );
@@ -27,6 +28,8 @@ import { addSocialMenuClass } from "./utils";
     $(document).ready(function($) {
       progressBarInit();
       readingHeaderInit();
+      showStickyHeaderOnScroll();
+      makeHeaderStickyOnScroll();
     })
 
     // This function will add .social-menu-item class
@@ -42,14 +45,14 @@ import { addSocialMenuClass } from "./utils";
       }
 
       // Do nothing if we are on mobile.
-      if ( below('lap') ) {
+      if ( below( 'lap' ) ) {
         return;
       }
 
       let stickyRowOffSet = $stickyRow.offset().top,
           windowScrollY = window.scrollY,
-          primaryRowIsVisible = windowScrollY > $siteHeader.outerHeight(),
-          isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight;
+          primaryRowIsVisible = $primaryRow.offset().top + $primaryRow.outerHeight() < $stickyHeader.offset().top + $stickyHeader.outerHeight(),
+          isSticky = $stickyHeader.offset().top > stickyRowOffSet;
 
       // If we find any promo bar,
       // we should consider it's height for the offset.
@@ -75,16 +78,11 @@ import { addSocialMenuClass } from "./utils";
     // header layout is simple (one-row).
     function makeHeaderStickyOnScroll() {
 
-      // Do nothing if we are on mobile.
-      if ( below('lap') ) {
-        return;
-      }
-
       let windowScrollY = window.scrollY,
           mainHeaderIsSticky = windowScrollY > 1;
 
       if ( mainHeaderShouldBeSticky && mainHeaderIsSticky !== stickyHeaderShown ) {
-        $siteHeader.toggleClass( 'site-header--sticky' );
+        $siteHeader.toggleClass( 'novablocks-header--sticky' );
         stickyHeaderShown = mainHeaderIsSticky;
       }
     }

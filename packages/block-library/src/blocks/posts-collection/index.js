@@ -3,6 +3,13 @@
  */
 import iconSvg from './posts-collection-block.svg';
 import edit from './edit';
+import variations from './variations';
+
+/**
+ * Nova Blocks dependencies
+ */
+import { getSvg } from "@novablocks/block-editor";
+import { Collection } from "@novablocks/collection";
 
 /**
  * WordPress dependencies
@@ -11,10 +18,7 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-import { getSvg } from "@novablocks/block-editor";
-
-import blockAttributes from "./attributes";
-import { Collection } from "@novablocks/collection";
+import blockAttributes from './attributes';
 const attributes = Object.assign( {}, blockAttributes, Collection.attributes );
 
 registerBlockType( 'novablocks/posts-collection', {
@@ -23,8 +27,13 @@ registerBlockType( 'novablocks/posts-collection', {
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes,
+  variations,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true,
+      contentColorSignal: true,
+    },
   },
 	edit,
 	save() {

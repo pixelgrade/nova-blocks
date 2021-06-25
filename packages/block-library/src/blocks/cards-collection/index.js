@@ -17,9 +17,17 @@ registerBlockType( 'novablocks/cards-collection', {
 	description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-	keywords: [ __( 'grid', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'collection', '__plugin_txtd' ), __( 'group', '__plugin_txtd' ) ],
+	keywords: [
+	  __( 'grid', '__plugin_txtd' ),
+    __( 'columns', '__plugin_txtd' ),
+    __( 'collection', '__plugin_txtd' ),
+    __( 'group', '__plugin_txtd' ) ],
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true,
+      contentColorSignal: true,
+    },
   },
 	edit,
 	save() {

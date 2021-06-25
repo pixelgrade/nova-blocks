@@ -24,13 +24,13 @@ $( function() {
 				blobMaskPatternSeed: attributes.blobMaskPatternSeed + j
 			} );
 
-			const blobAtts = getBlobAttsFromAttributes( newAttributes, 'blob' );
-			const blobMaskAtts = getBlobAttsFromAttributes( newAttributes, 'blobMask' );
+			const { blobsEnableMask, blobsEnableDecoration } = attributes;
 
-			const svgMaskPath = generatePath( blobMaskAtts );
+			const blobAtts = getBlobAttsFromAttributes( newAttributes, 'blob' );
 			const svgPath = generatePath( blobAtts );
 
-			const { blobsEnableMask, blobsEnableDecoration } = attributes;
+			const blobMaskAtts = getBlobAttsFromAttributes( newAttributes, 'blobMask' );
+			const svgMaskPath = generatePath( blobMaskAtts );
 
 			$media.wrap( '<div class="blob-mix">' );
 			$media.wrap( '<div class="novablocks-advanced-gallery__grid-item-mask blob-mix__media"> ');

@@ -1,0 +1,22 @@
+{
+	"name": {
+		"type": "string",
+		"default": "Header Row"
+	},
+	"label": {
+		"type": "string",
+		"default": "Header Row Navigation"
+	},
+	"isSticky": {
+		"type": "boolean",
+		"default": false
+	},
+	"isPrimary": {
+		"type": "boolean",
+		"default": false
+	},
+	"align": {
+		"type": "string",
+		"default": "full"
+	}
+}

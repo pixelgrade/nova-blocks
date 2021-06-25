@@ -5,7 +5,6 @@ import iconSvg from './media-block.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';
-import deprecated from './deprecated';
 
 import {
   getRandomArrayFromArray,
@@ -13,7 +12,6 @@ import {
 } from "@novablocks/utils";
 
 import AdvancedGallery from "@novablocks/advanced-gallery";
-import Blob from '@novablocks/blob';
 
 import {
   getSvg,
@@ -26,7 +24,7 @@ const { getRandomAttributes } = AdvancedGallery.utils;
 
 import blockAttributes from './attributes';
 
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes, Blob.attributes );
+const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
 
 /**
  * WordPress dependencies
@@ -70,7 +68,12 @@ registerBlockType( 'novablocks/media', {
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
 	attributes,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true,
+      contentColorSignal: true,
+      blobs: true
+    },
   },
 	edit,
 	save,
@@ -78,6 +81,5 @@ registerBlockType( 'novablocks/media', {
 		const settings = wp.data.select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
-	deprecated,
 	transforms,
 } );

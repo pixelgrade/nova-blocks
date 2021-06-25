@@ -12,6 +12,8 @@ import {
 	select
  } from '@wordpress/data';
 
+import { getColorSetClassnames } from "@novablocks/utils";
+
 const HeroPreview = function( props ) {
 
 	const {
@@ -51,6 +53,7 @@ const HeroPreview = function( props ) {
 		`novablocks-u-content-width-${ contentWidth }`,
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
+    getColorSetClassnames( attributes )
 	];
 
 	const styles = {
@@ -97,7 +100,7 @@ const HeroPreview = function( props ) {
 	return (
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>
 			<HeroBackground { ...props } />
-			<div className="novablocks-hero__foreground novablocks-foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
+			<div className="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
 				<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
 					{ displayInnerContent && <InnerBlocks /> }
 				</div>

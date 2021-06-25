@@ -1,7 +1,9 @@
 .novablocks-advanced-gallery {
 	// padding top to make sure negative margin of child doesn't collapse
 	position: relative;
-	padding-top: 50%;
+
+  height: 100%;
+	padding-top: var( --collection-card-media-aspect-ratio, 50% );
 
 	margin-top: var(--novablocks-advanced-gallery-vertical-spacing);
 	margin-bottom: var(--novablocks-advanced-gallery-vertical-spacing);
@@ -36,6 +38,8 @@
 
 	display: flex;
 	flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
 	&[class] .credits {
 		font-size: 12px;
@@ -45,6 +49,14 @@
 .novablocks-advanced-gallery__grid-item-media {
 	position: relative;
 	flex: 1 1 0;
+  width: 100%;
+
+  .blob-mix,
+  .blob-mix__media,
+  .blob-mix__mask {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .novablocks-advanced-gallery__grid-item-info {

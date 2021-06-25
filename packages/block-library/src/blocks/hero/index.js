@@ -20,11 +20,7 @@ import {
 	layoutAttributes,
 } from "@novablocks/block-editor";
 
-import {
-	scrollingAttributes,
-} from "@novablocks/doppler";
-
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes );
 
 /**
  * WordPress dependencies
@@ -70,6 +66,9 @@ registerBlockType( 'novablocks/hero', {
 	supports: {
 		anchor: true,
     html: false,
+    novaBlocks: {
+      colorSignal: true,
+    },
 	},
 	deprecated,
 	attributes,

@@ -5,37 +5,45 @@ import classnames from 'classnames';
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
 
+import {
+  getColorSetClassnames,
+  getContentVariationBySignal
+} from '@novablocks/utils';
+
 import { InnerBlocks } from '@wordpress/block-editor';
 
 const MediaPreview = function( props ) {
+
+  const {
+    attributes,
+    settings,
+  } = props;
+
 	const {
-		attributes: {
-			contentStyle,
-			blockStyle,
-			style,
-			accentColor,
+    className,
+    contentStyle,
 
-			mediaPosition,
-			images,
+    mediaPosition,
+    images,
 
-			// alignment
-			verticalAlignment,
-			emphasisArea,
+    // alignment
+    verticalAlignment,
+    emphasisArea,
 
-			contentAreaWidth,
-			layoutGutter,
-			className,
-		},
-		settings,
-	} = props;
+    contentAreaWidth,
+    layoutGutter,
+
+    palette,
+    useSourceColorAsReference,
+
+    contentPadding,
+	} = attributes;
 
 	const classNames = classnames(
 		className,
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`novablocks-u-valign-${ verticalAlignment }`,
-		`is-style-${ style }`,
-		`has-${ accentColor }-accent-color`,
 	);
 
 	const passedProps = props;
@@ -46,24 +54,37 @@ const MediaPreview = function( props ) {
 
 	const cssVars = {
 		'--emphasis-area': emphasisArea,
-		'--novablocks-media-content-width': `${contentAreaWidth}%`,
-		'--novablocks-media-gutter': `calc( ${layoutGutter} * var(--novablocks-spacing) * 5 / 100 )`,
+    '--card-content-padding': contentPadding,
+		'--novablocks-media-content-width': `${ contentAreaWidth }%`,
+		'--novablocks-media-gutter': `calc( ${ layoutGutter } * var(--novablocks-spacing) * 5 / 100 )`,
 	};
 
 	const blockClassNames = classnames(
 		`novablocks-block`,
-		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
-	);
+    getColorSetClassnames( attributes ),
+  );
 
-	return (
+	const contentVariation = getContentVariationBySignal( props );
+
+	const contentClassNames = classnames(
+    `novablocks-media__inner-container`,
+    `novablocks-block__content`,
+    `sm-palette-${ palette }`,
+    `sm-variation-${ contentVariation }`,
+    {
+      'sm-palette--shifted': useSourceColorAsReference
+    }
+  );
+
+  return (
 		<div className={ classNames } style={ cssVars }>
 			<div className={ blockClassNames }>
 				<div className="wp-block-group__inner-container">
 					<div className="wp-block" data-align="wide">
 						<div className="novablocks-media__layout">
 							<div className="novablocks-media__content">
-								<div className="novablocks-media__inner-container novablocks-block__content">
+								<div className={ contentClassNames }>
 									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
 								</div>
 							</div>

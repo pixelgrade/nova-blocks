@@ -1,0 +1,6 @@
+{
+	"paletteVariation": {
+		"type": "number",
+		"default": 12
+	}
+}

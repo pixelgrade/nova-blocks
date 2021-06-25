@@ -1,5 +1,4 @@
 import AdvancedGallery from '@novablocks/advanced-gallery';
-import Blob from '@novablocks/blob';
 
 import iconSvg from './advanced-gallery-block.svg';
 
@@ -22,7 +21,7 @@ import blockAttributes from './attributes';
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes, Blob.attributes );
+const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
 
 /**
  * WordPress dependencies
@@ -57,7 +56,11 @@ registerBlockType( 'novablocks/advanced-gallery', {
 	icon: getSvg( iconSvg ),
 	supports: {
 		align: [ 'wide', 'full' ],
-    html: false
+    html: false,
+    inserter: false,
+    novaBlocks: {
+      blobs: true
+    }
 	},
 	// Additional search terms
 	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],

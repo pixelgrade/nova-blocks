@@ -10,11 +10,6 @@ import {
 	withSettings
 } from '@novablocks/block-editor';
 
-import {
-	withDoppler,
-} from '@novablocks/doppler';
-
-
 import heroAttributes from './attributes';
 
 import HeroPreview from './preview';
@@ -166,7 +161,4 @@ class HeroEdit extends Component {
 	}
 }
 
-export default createHigherOrderComponent(compose([
-	withSettings,
-	withDoppler,
-]))( HeroEdit );
+export default createHigherOrderComponent( withSettings )( HeroEdit );

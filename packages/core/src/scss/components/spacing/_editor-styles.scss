@@ -4,27 +4,10 @@
 }
 
 .block-editor-block-list__layout {
+  @include block-spacing-reset;
 	@include block-spacing-apply-multiplier;
 
 	> * {
 		@include block-spacing;
-	}
-}
-
-[data-type="novablocks/cards-collection"],
-[data-type="novablocks/media"] {
-
-	&[data-type] {
-		--block-top-spacing: 0;
-		--block-bottom-spacing: 0;
-	}
-}
-
-[data-type="novablocks/hero"],
-[data-type="novablocks/slideshow"] {
-
-	& + &,
-	[data-type="novablocks/media"] + & {
-		--block-top-spacing: 0;
 	}
 }

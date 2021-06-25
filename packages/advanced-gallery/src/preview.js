@@ -3,10 +3,10 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
 import { isSafari } from "@novablocks/utils";
-import Blob from "@novablocks/blob";
+import { withBlobsDecoration } from "@novablocks/block-editor";
 
 import { GridItemCollection } from "./grid-item";
-import { getGalleryStyle, getGridStyle } from "./utils";
+import { getGridStyle } from "./utils";
 
 const AdvancedGalleryPreview = ( props ) => {
 
@@ -15,7 +15,7 @@ const AdvancedGalleryPreview = ( props ) => {
 		onSelectImages,
 	} = props;
 
-	const gallery = attributes?.images;
+	const gallery = attributes?.images || [];
 	const galleryValue = gallery.map( ( image ) => image.id );
 
 	if ( ! gallery || ! gallery.length ) {
@@ -44,7 +44,7 @@ const AdvancedGalleryPreview = ( props ) => {
 			onSelect={ onSelectImages }
 			value={ galleryValue }
 			render={ ( { open } ) => (
-				<div className={ 'novablocks-advanced-gallery' } style={ getGalleryStyle( attributes ) } ref={ ref }>
+				<div className={ 'novablocks-advanced-gallery' } ref={ ref }>
 					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` } onClick={ open }>
 						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 					</div>
@@ -59,7 +59,7 @@ const AdvancedGalleryPreview = ( props ) => {
 	);
 };
 
-const AdvancedGalleryItemMedia = Blob.withBlobsDecoration(( props ) => {
+const AdvancedGalleryItemMedia = ( props ) => {
 	const { gridItem } = props;
 	const image = gridItem?.image;
 	const imageURL = image?.sizes?.novablocks_medium?.url || image?.url;
@@ -73,7 +73,9 @@ const AdvancedGalleryItemMedia = Blob.withBlobsDecoration(( props ) => {
 			  <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
 		</Fragment>
 	)
-});
+}
+
+const AdvancedGalleryItemMediaWithBlobs = withBlobsDecoration( AdvancedGalleryItemMedia );
 
 const AdvancedGalleryItem = ( props ) => {
 
@@ -93,7 +95,7 @@ const AdvancedGalleryItem = ( props ) => {
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
-				<AdvancedGalleryItemMedia { ...props } seedOffset={ props?.index } />
+				<AdvancedGalleryItemMediaWithBlobs { ...props } seedOffset={ props?.index } />
 			</div>
 			{
 				( hasCaption || hasDescription ) &&

@@ -36,7 +36,7 @@ const deprecated = [
        attributes,
         [
           createBlock( 'novablocks/header-row', {
-              className: 'site-header__row site-header__row--primary',
+              className: 'novablocks-header-row novablocks-header-row--primary',
               name: 'primary',
               label: 'Primary Navigation',
               isSticky: headerShouldBeSticky

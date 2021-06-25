@@ -52,37 +52,44 @@
 	transition-property: padding, margin;
 }
 
-.novablocks-media[class][class] {
-	--block-top-spacing: var(--novablocks-block-top-spacing);
-	--block-bottom-spacing: var(--novablocks-block-bottom-spacing);
-	--emphasis-top-spacing: var(--novablocks-emphasis-top-spacing);
-	--emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing);
+.novablocks-media {
+  --novablocks-spacing: var(--novablocks-media-spacing);
+
+  --block-top-spacing: var(--novablocks-block-top-spacing, 0);
+  --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
+  --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
+  --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
+
+  &[class][class] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
 	@include above(tablet) {
-		margin-top: calc( var(--block-top-spacing, 0) * var(--novablocks-media-spacing) );
-		margin-bottom: calc( var(--block-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) );
+		margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) );
 
-		padding-top: calc( -1 * var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+		padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--novablocks-spacing) );
+		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
 
 		.components-placeholder,
 		.novablocks-advanced-gallery {
-			margin-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-			margin-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+			margin-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
+			margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
 		}
 
 		.novablocks-media__content {
-			padding-top: calc( var(--emphasis-top-spacing, 0) * var(--novablocks-media-spacing) );
-			padding-bottom: calc( var(--emphasis-bottom-spacing, 0) * var(--novablocks-media-spacing) );
+			padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
+			padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
 		}
 	}
 
 	@include below(tablet) {
 		--novablocks-media-gutter: 0 !important;
-		--block-top-spacing: 1;
-		--block-bottom-spacing: 1;
-		--emphasis-top-spacing: 0;
-		--emphasis-bottom-spacing: 0;
+		--novablocks-block-top-spacing: 1;
+		--novablocks-block-bottom-spacing: 1;
+		--novablocks-emphasis-top-spacing: 0;
+		--novablocks-emphasis-bottom-spacing: 0;
 
 		.novablocks-block,
 		.novablocks-media__content,
@@ -98,8 +105,8 @@
 	.novablocks-block[class] {
 		background: linear-gradient(
 				var(--novablocks-media-background-direction),
-				var(--novablocks-block-background-color) 0,
-				var(--novablocks-block-background-color) calc(var(--emphasis-area) * 1%),
+				var(--novablocks-bg-color) 0,
+				var(--novablocks-bg-color) calc(var(--emphasis-area) * 1%),
 				transparent calc(var(--emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;

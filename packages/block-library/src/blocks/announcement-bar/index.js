@@ -37,17 +37,6 @@ registerBlockType( 'novablocks/announcement-bar', {
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
 	keywords: [ __( 'Promo Bar', '__plugin_txtd' ), __( 'Welcome Header Bar', '__plugin_txtd' ), __( 'Top Bar', '__plugin_txtd' ) ],
-	styles: [ {
-		name: 'accent',
-		label: __( 'Accent', '__plugin_txtd' ),
-		isDefault: true
-	}, {
-		name: 'alternative',
-		label: __( 'Alternative', '__plugin_txtd' )
-	}, {
-		name: 'alert',
-		label: __( 'Alert', '__plugin_txtd' )
-	} ],
 	attributes: {
 		align: {
 			type: 'string',
@@ -67,7 +56,10 @@ registerBlockType( 'novablocks/announcement-bar', {
 		}
 	},
   supports: {
-	  html: false
+	  html: false,
+    novaBlocks: {
+	    colorSignal: true,
+    }
   },
 	save() {
 		return <InnerBlocks.Content />;

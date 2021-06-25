@@ -3,7 +3,15 @@
 .novablocks-hero {
 	position: relative;
 	display: flex;
-	color: var(--novablocks-hero-text-color);
+
+  &[class] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  > .novablocks-doppler__mask {
+    @include cover;
+  }
 }
 
 .novablocks-hero.scrolling-effect-doppler {

@@ -7,6 +7,7 @@ import { Fragment } from '@wordpress/element';
 
 const enableGridGeneratorControls = [
 	'novablocks/posts-collection',
+	'novablocks/supernova',
 ];
 
 const withGridGeneratorControls = createHigherOrderComponent(OriginalComponent => {
@@ -30,6 +31,8 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-grid-generator-controls', withGr
 
 function addGridGeneratorAttributes( block ) {
 
+	const newAttributes = JSON.parse( JSON.stringify( attributes ) );
+
 	if ( ! enableGridGeneratorControls.includes( block.name ) ) {
 		return block;
 	}
@@ -38,8 +41,13 @@ function addGridGeneratorAttributes( block ) {
 		block.attributes = {};
 	}
 
-	block.attributes = Object.assign( block.attributes, attributes );
+//  @todo supernova default should be 'classic' check alternate solutions
+//	if ( 'novablocks/posts-collection' === block.name ) {
+//    newAttributes.layoutStyle.default = 'parametric';
+//  }
+
+	block.attributes = Object.assign( block.attributes, newAttributes );
 
 	return block;
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addGridGeneratorAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/add-grid-generator-attributes', addGridGeneratorAttributes );

@@ -30,7 +30,7 @@ export default ( blockType, getNewDefaults ) => {
 
 		getBlocksByClientId( addedBlocks ).map( block => {
 			if ( block.name === blockType && ! block.attributes.defaultsGenerated && typeof getNewDefaults === "function" ) {
-				getNewDefaults().then( defaults => {
+				getNewDefaults( block ).then( defaults => {
 					updateBlockAttributes( block.clientId, {
 						...defaults,
 						defaultsGenerated: true
