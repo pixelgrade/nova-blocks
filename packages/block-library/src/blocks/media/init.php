@@ -34,9 +34,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$blockClasses = [];
 
 		// having no default value makes the card stretch vertically which is a desired outcome
-		if ( ! empty( $attributes['verticalAlignment'] ) ) {
-			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
-		}
+		$classes = novablocks_get_alignment_classes( $attributes );
 
 		$blockClasses[] = novablocks_get_content_style_class( $attributes );
 

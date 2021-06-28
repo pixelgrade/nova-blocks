@@ -29,6 +29,7 @@ export {
 
 export {
 	alignmentAttributes,
+	alignmentDeprecated,
 	AlignmentControls,
 	AlignmentToolbar
 } from './alignment-controls';

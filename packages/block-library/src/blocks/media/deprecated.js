@@ -127,6 +127,17 @@ const mediaAddDeprecated = ( settings, name ) => {
     }
   ];
 
+  import { alignmentAttributes, alignmentDeprecated } from "@novablocks/block-editor";
+
+  deprecated.push({
+    attributes: {
+      ...attributes,
+      ...alignmentAttributes,
+    },
+    ...alignmentDeprecated,
+    save,
+  });
+
   return {
     ...settings,
     deprecated

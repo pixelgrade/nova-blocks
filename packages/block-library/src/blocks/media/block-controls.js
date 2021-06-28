@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { AlignmentToolbar } from '@novablocks/block-editor';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -27,6 +22,8 @@ const MEDIA_ALIGNMENTS_CONTROLS = {
 	},
 };
 
+const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
+
 const MediaBlockControls = function( props ) {
 
 	const {
@@ -35,12 +32,19 @@ const MediaBlockControls = function( props ) {
 	} = props;
 
 	const {
+		contentPosition,
 		mediaPosition,
 	} = attributes;
 
 	return (
 		<BlockControls>
-
+			<BlockAlignmentMatrixToolbar
+				label={ __( 'Change content position' ) }
+				value={ contentPosition }
+				onChange={ ( nextPosition ) =>
+					setAttributes( { contentPosition: nextPosition } )
+				}
+			/>
 			<Toolbar
 				controls={ Object.keys( MEDIA_ALIGNMENTS_CONTROLS ).map( ( control ) => {
 					return {
@@ -52,9 +56,6 @@ const MediaBlockControls = function( props ) {
 					};
 				} ) }
 			/>
-
-			<AlignmentToolbar { ...props } />
-
 		</BlockControls>
 	);
 };

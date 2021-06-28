@@ -1,9 +1,10 @@
 import save from "./save";
 
 import {
-	alignmentAttributes,
-	colorAttributes,
-	layoutAttributes,
+  alignmentAttributes,
+  alignmentDeprecated,
+  colorAttributes,
+  layoutAttributes,
 } from "@novablocks/block-editor";
 
 import blockAttributes from "./attributes";
@@ -23,5 +24,14 @@ const deprecated = [{
   },
   save,
 }];
+
+deprecated.push({
+  attributes: {
+    ...attributes,
+    ...alignmentAttributes,
+  },
+  ...alignmentDeprecated,
+  save,
+});
 
 export default deprecated;

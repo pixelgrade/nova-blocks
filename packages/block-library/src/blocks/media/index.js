@@ -15,9 +15,9 @@ import AdvancedGallery from "@novablocks/advanced-gallery";
 
 import {
   getSvg,
-	generateDefaults,
-	getPlaceholderImages,
-	insertTemplate,
+  generateDefaults,
+  getPlaceholderImages,
+  insertTemplate,
 } from "@novablocks/block-editor";
 
 const { getRandomAttributes } = AdvancedGallery.utils;

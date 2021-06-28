@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import {
-  AlignmentToolbar,
   ColorToolbar,
   getIconSvg
 } from '@novablocks/block-editor';
@@ -22,16 +21,28 @@ import {
 	Toolbar,
  } from '@wordpress/components';
 
+const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
+
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const HeroBlockControls = function( props ) {
+
 	const {
+		attributes: {
+			contentPosition,
+		},
 		setAttributes,
 	} = props;
 
 	return (
 		<BlockControls>
-			<AlignmentToolbar { ...props } />
+			<BlockAlignmentMatrixToolbar
+				label={ __( 'Change content position' ) }
+				value={ contentPosition }
+				onChange={ ( nextPosition ) =>
+					setAttributes( { contentPosition: nextPosition } )
+				}
+			/>
 			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
