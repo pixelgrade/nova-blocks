@@ -22,8 +22,6 @@ const MEDIA_ALIGNMENTS_CONTROLS = {
 	},
 };
 
-const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
-
 const MediaBlockControls = function( props ) {
 
 	const {
@@ -32,19 +30,11 @@ const MediaBlockControls = function( props ) {
 	} = props;
 
 	const {
-		contentPosition,
 		mediaPosition,
 	} = attributes;
 
 	return (
 		<BlockControls>
-			<BlockAlignmentMatrixToolbar
-				label={ __( 'Change content position' ) }
-				value={ contentPosition }
-				onChange={ ( nextPosition ) =>
-					setAttributes( { contentPosition: nextPosition } )
-				}
-			/>
 			<Toolbar
 				controls={ Object.keys( MEDIA_ALIGNMENTS_CONTROLS ).map( ( control ) => {
 					return {

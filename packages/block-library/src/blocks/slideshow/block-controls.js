@@ -20,8 +20,6 @@ import {
 	MediaUpload,
 } from '@wordpress/block-editor';
 
-const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
-
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const SlideshowBlockControls = function( props ) {
@@ -29,23 +27,14 @@ const SlideshowBlockControls = function( props ) {
 	const {
 		attributes: {
 			galleryImages,
-			contentPosition,
 		},
 		onSelectImages,
-    setAttributes,
 	} = props;
 
 	const hasImages = !! galleryImages.length;
 
 	return (
 		<BlockControls>
-			<BlockAlignmentMatrixToolbar
-				label={ __( 'Change content position' ) }
-				value={ contentPosition }
-				onChange={ ( nextPosition ) =>
-					setAttributes( { contentPosition: nextPosition } )
-				}
-			/>
 			<Toolbar>
 				<MediaUpload
 					accept="image/*"

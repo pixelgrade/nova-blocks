@@ -38,9 +38,5 @@
 	"emphasisArea": {
 		"type": "number",
 		"default": 100
-	},
-	"contentPosition": {
-		"type": "string",
-		"default": "center center"
 	}
 }

@@ -20,28 +20,16 @@ import {
 	Toolbar,
  } from '@wordpress/components';
 
-const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
-
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const HeroBlockControls = function( props ) {
 
 	const {
-		attributes: {
-			contentPosition,
-		},
 		setAttributes,
 	} = props;
 
 	return (
 		<BlockControls>
-			<BlockAlignmentMatrixToolbar
-				label={ __( 'Change content position' ) }
-				value={ contentPosition }
-				onChange={ ( nextPosition ) =>
-					setAttributes( { contentPosition: nextPosition } )
-				}
-			/>
 			<Toolbar>
 				<MediaUpload
 					allowedTypes={ ALLOWED_MEDIA_TYPES }

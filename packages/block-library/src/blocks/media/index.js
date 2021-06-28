@@ -72,7 +72,8 @@ registerBlockType( 'novablocks/media', {
     novaBlocks: {
       colorSignal: true,
       contentColorSignal: true,
-      blobs: true
+      blobs: true,
+      contentPositionMatrixToolbar: true,
     },
   },
 	edit,

@@ -61,6 +61,7 @@ registerBlockType( 'novablocks/slideshow', {
     novaBlocks: {
       colorSignal: true,
       overlayFilterStrength: true,
+      contentPositionMatrixToolbar: true,
     },
   },
 	edit,

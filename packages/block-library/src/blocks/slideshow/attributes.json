@@ -21,9 +21,5 @@
 	"defaultsGenerated": {
 		"type": "boolean",
 		"default": false
-	},
-	"contentPosition": {
-		"type": "string",
-		"default": "center center"
 	}
 }

@@ -1,12 +1,15 @@
+// before any other hooks that may add controls to prevent losing focus
+import "./with-doppler";
+
 import "./with-blobs";
 import "./with-block-id";
 import "./with-block-index";
 import "./with-card-details";
 import "./with-card-elements-display";
 import "./with-cards-manager";
+import "./with-content-position-matrix";
 import "./with-color-signal";
 import "./with-deprecated-group";
-import "./with-doppler";
 import "./with-controls-sections";
 import "./with-font-size-picker";
 import "./with-inner-blocks";

@@ -28,13 +28,6 @@ export {
 } from './get-svg';
 
 export {
-	alignmentAttributes,
-	alignmentDeprecated,
-	AlignmentControls,
-	AlignmentToolbar
-} from './alignment-controls';
-
-export {
 	ControlsDrawerContent,
 	ControlsSection,
 	ControlsSections,

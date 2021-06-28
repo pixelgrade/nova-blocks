@@ -1,0 +1,6 @@
+{
+	"contentPosition": {
+		"type": "string",
+		"default": "center center"
+	}
+}

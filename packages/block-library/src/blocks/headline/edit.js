@@ -36,7 +36,7 @@ export default function HeadlineEdit( props ) {
 				<HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level } onChange={ ( newLevel ) => setAttributes( { level: newLevel } ) } />
 				<AlignmentToolbar
 					value={ align }
-					onChange={ ( nextAlign ) => {
+					onChange={ nextAlign => {
 						setAttributes( { align: nextAlign } );
 					} }
 				/>
