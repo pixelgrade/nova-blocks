@@ -3,13 +3,12 @@ import save from "./save";
 import {
   alignmentAttributes,
   alignmentDeprecated,
-  colorAttributes,
   layoutAttributes,
 } from "@novablocks/block-editor";
 
 import blockAttributes from "./attributes";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, layoutAttributes );
 
 const deprecated = [{
   attributes,

@@ -16,11 +16,10 @@ import {
 	getPlaceholderImages,
 	insertTemplate,
 	alignmentAttributes,
-	colorAttributes,
 	layoutAttributes,
 } from "@novablocks/block-editor";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, layoutAttributes );
 
 /**
  * WordPress dependencies
@@ -68,6 +67,7 @@ registerBlockType( 'novablocks/hero', {
     html: false,
     novaBlocks: {
       colorSignal: true,
+      overlayFilterStrength: true,
     },
 	},
 	deprecated,

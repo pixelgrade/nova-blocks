@@ -5,11 +5,10 @@ import blockAttributes from "./attributes";
 import {
 	alignmentAttributes,
   alignmentDeprecated,
-	colorAttributes,
 	layoutAttributes,
 } from "@novablocks/block-editor";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, layoutAttributes );
 
 const deprecated = [
   {

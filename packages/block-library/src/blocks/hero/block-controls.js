@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import {
-  ColorToolbar,
   getIconSvg
 } from '@novablocks/block-editor';
 
@@ -43,7 +42,6 @@ const HeroBlockControls = function( props ) {
 					setAttributes( { contentPosition: nextPosition } )
 				}
 			/>
-			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
 					allowedTypes={ ALLOWED_MEDIA_TYPES }

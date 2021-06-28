@@ -14,7 +14,6 @@ import {
 
 import {
 	alignmentAttributes,
-	colorAttributes,
 	layoutAttributes,
 	getPlaceholderImages,
 	generateDefaults,
@@ -23,7 +22,7 @@ import {
 
 import blockAttributes from "./attributes";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, layoutAttributes );
 
 /**
  * WordPress dependencies
@@ -61,6 +60,7 @@ registerBlockType( 'novablocks/slideshow', {
     html: false,
     novaBlocks: {
       colorSignal: true,
+      overlayFilterStrength: true,
     },
   },
 	edit,

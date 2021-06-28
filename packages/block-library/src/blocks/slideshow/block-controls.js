@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import {
-	ColorToolbar,
   getIconSvg
 } from '@novablocks/block-editor';
 
@@ -47,7 +46,6 @@ const SlideshowBlockControls = function( props ) {
 					setAttributes( { contentPosition: nextPosition } )
 				}
 			/>
-			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
 					accept="image/*"

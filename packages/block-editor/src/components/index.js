@@ -35,12 +35,6 @@ export {
 } from './alignment-controls';
 
 export {
-	colorAttributes,
-	ColorToolbar,
-	OverlayControls
-} from './color-controls';
-
-export {
 	ControlsDrawerContent,
 	ControlsSection,
 	ControlsSections,
