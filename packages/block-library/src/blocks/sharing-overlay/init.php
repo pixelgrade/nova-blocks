@@ -10,7 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 function novablocks_get_sharing_overlay_attributes() {
-	return novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/sharing-overlay/attributes.json' );
+
+	return novablocks_merge_attributes_from_array( array(
+		"packages/block-library/src/blocks/sharing-overlay/attributes.json",
+
+		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
+		"packages/block-editor/src/hooks/with-color-signal/attributes-alt.json",
+	) );
+
 }
 
 if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
@@ -18,6 +25,7 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 	function novablocks_render_sharing_overlay_block( $attributes, $content ) {
 
 		$attributes_config = novablocks_get_sharing_overlay_attributes();
+		
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
@@ -26,9 +34,16 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		$data_attributes[] = 'data-url="' . get_permalink() . '"';
 
 		ob_start();
+
+		$classes = array( 'novablocks-sharing' );
+
+		if ( ! empty( $attributes[ 'className' ] ) ) {
+			$classes[] = $attributes[ 'className' ];
+		}
+
 		?>
 
-		<div class="novablocks-sharing" <?php echo join( ' ', $data_attributes ); ?>>
+		<div class="<?php echo join( ' ', $classes ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<div class="wp-block-buttons">
 				<div class="wp-block-button">
 					<button class="wp-block-button__link js-sharing-overlay-trigger">

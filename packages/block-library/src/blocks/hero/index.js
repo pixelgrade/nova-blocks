@@ -67,7 +67,10 @@ registerBlockType( 'novablocks/hero', {
 		anchor: true,
     html: false,
     novaBlocks: {
-      colorSignal: true,
+      colorSignal: {
+        altAttributes: true,
+        addOverlayColorDeprecatedMethod: true,
+      },
     },
 	},
 	deprecated,
