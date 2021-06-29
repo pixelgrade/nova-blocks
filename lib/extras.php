@@ -154,8 +154,7 @@ function novablocks_get_doppler_attributes() {
 
 function novablocks_get_alignment( $attributes ) {
 	if ( ! empty( $attributes['contentPosition'] ) ) {
-		$alignment = explode( ' ', $attributes['contentPosition'] );
-		return $alignment;
+		return explode( ' ', $attributes['contentPosition'] );
 	} else {
 		return array(
 			$attributes['verticalAlignment'],

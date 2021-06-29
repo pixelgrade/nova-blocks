@@ -13,14 +13,15 @@ function novablocks_get_hero_attributes() {
 	return novablocks_merge_attributes_from_array( array(
 		"packages/block-library/src/blocks/hero/attributes.json",
 
-		"packages/block-editor/src/components/alignment-controls/attributes.json",
 		"packages/block-editor/src/components/color-controls/attributes.json",
 		"packages/block-editor/src/components/layout-controls/attributes.json",
 
 		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
 		"packages/block-editor/src/hooks/with-color-signal/attributes-alt.json",
+		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
 		"packages/block-editor/src/hooks/with-doppler/attributes.json",
 		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
+		'packages/block-editor/src/hooks/with-overlay-filter-strength-controls/attributes.json',
 	) );
 
 }
