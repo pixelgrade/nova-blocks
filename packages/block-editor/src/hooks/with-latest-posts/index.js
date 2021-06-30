@@ -24,12 +24,7 @@ import {
 	withDispatch,
 } from '@wordpress/data';
 
-const enableLatestPostsOnBlocks = [
-  'novablocks/supernova',
-  'novablocks/posts-collection'
-];
-
-const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
+const withPostsQueryControls = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
 
@@ -42,12 +37,16 @@ const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
 	}
 } );
 
-function withPostsQueryAttributes( block ) {
+function withPostsQueryAttributes( settings ) {
 
-	return {
-	  ...block,
+  if ( ! settings?.supports?.novaBlocks?.latestPosts ) {
+    return settings;
+  }
+
+  return {
+	  ...settings,
     attributes: {
-	    ...block.attributes,
+	    ...settings.attributes,
       ...attributes,
     }
   };
@@ -93,7 +92,7 @@ const maybeWithLatestPosts = createHigherOrderComponent( BlockEdit => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-    if ( ! enableLatestPostsOnBlocks.includes( props.name ) && ! supports?.novaBlocks?.latestPosts ) {
+    if ( supports?.novaBlocks?.latestPosts ) {
       return <BlockEdit { ...props } />
     }
 

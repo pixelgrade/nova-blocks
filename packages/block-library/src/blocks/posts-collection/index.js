@@ -33,6 +33,7 @@ registerBlockType( 'novablocks/posts-collection', {
     novaBlocks: {
       colorSignal: true,
       contentColorSignal: true,
+      latestPosts: true,
     },
   },
 	edit,

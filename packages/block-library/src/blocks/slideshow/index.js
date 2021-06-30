@@ -59,7 +59,10 @@ registerBlockType( 'novablocks/slideshow', {
   supports: {
     html: false,
     novaBlocks: {
-      colorSignal: true,
+      colorSignal: {
+        altAttributes: true,
+        addOverlayColorDeprecatedMethod: true,
+      },
       overlayFilterStrength: true,
       contentPositionMatrixToolbar: true,
     },

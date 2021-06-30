@@ -38,7 +38,10 @@ registerBlockType( 'novablocks/opentable', {
 		}
 	},
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: true
+    }
   },
 	edit,
 	save

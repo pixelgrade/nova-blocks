@@ -11,46 +11,23 @@ import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
-const enableColorSignalControls = [
-  'novablocks/announcement-bar',
-  'novablocks/cards-collection',
-  'novablocks/header',
-  'novablocks/header-row',
-  'novablocks/hero',
-  'novablocks/media',
-  'novablocks/posts-collection',
-  'novablocks/slideshow',
-
-  'core/group',
-];
-
-const withAltAttributes = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-];
-
-const enableColorSignalDeprecation = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-];
-
 const enableColorSignalClassnames = [
   'core/group',
   'novablocks/announcement-bar'
 ];
 
-const withColorSetsAttributes = ( block, name ) => {
+const withColorSetsAttributes = ( settings, name ) => {
 
-  if ( ! block?.supports?.novaBlocks?.colorSignal ) {
-    return block;
+  if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
+    return settings;
   }
 
   return {
-    ...block,
+    ...settings,
     attributes: {
-      ...block.attributes,
+      ...settings.attributes,
       ...attributes,
-      ...( withAltAttributes.includes( name ) ? altAttributes : {} )
+      ...( !! settings?.supports?.novaBlocks?.colorSignal?.altAttributes ? altAttributes : {} )
     }
   };
 }
@@ -58,7 +35,7 @@ addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes',
 
 const withColorSetsDeprecation = ( settings, name ) => {
 
-  if ( ! enableColorSignalDeprecation.includes( name ) ) {
+  if ( ! settings?.supports?.novaBlocks?.colorSignal?.addOverlayColorDeprecatedMethod ) {
     return settings;
   }
 
