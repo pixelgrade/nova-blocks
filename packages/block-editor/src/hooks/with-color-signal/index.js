@@ -11,11 +11,6 @@ import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
-const enableColorSignalClassnames = [
-  'core/group',
-  'novablocks/announcement-bar'
-];
-
 const withColorSetsAttributes = ( settings, name ) => {
 
   if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
@@ -88,17 +83,18 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 } );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 
-const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
+const withColorSetsClassnames = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
-    if ( ! enableColorSignalClassnames.includes( props.name ) ) {
-      return <BlockEdit { ...props } />
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.colorSignal?.classNames ) {
+      return <BlockListBlock { ...props } />
     }
 
     const className = props?.attributes?.className || '';
     const newClassName = getClassNameWithPaletteHelpers( className, props.attributes );
-
     const newProps = Object.assign( {}, props, {
       attributes: Object.assign( {}, props.attributes, {
         className: newClassName
@@ -106,9 +102,9 @@ const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
     } );
 
     return (
-      <BlockEdit { ...newProps } />
+      <BlockListBlock { ...newProps } />
     )
   };
 }, "withColorSetsClassnames" );
 
-addFilter( 'editor.BlockEdit', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );
+addFilter( 'editor.BlockListBlock', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );
