@@ -8,16 +8,16 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 import { select, dispatch } from "@wordpress/data";
 import { Fragment } from "@wordpress/element";
 
-function withContentPositionMatrixAttributes( block ) {
+function withContentPositionMatrixAttributes( settings ) {
 
-  if ( ! block?.supports?.novaBlocks?.contentPositionMatrixToolbar ) {
-    return block;
+  if ( ! settings?.supports?.novaBlocks?.contentPositionMatrixToolbar ) {
+    return settings;
   }
 
   return {
-    ...block,
+    ...settings,
     attributes: {
-      ...block.attributes,
+      ...settings.attributes,
       ...attributes
     }
   };
@@ -48,7 +48,8 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const blockType = select( 'core/blocks' ).getBlockType( props.name );
+    const supports = blockType.supports;
 
     if ( ! supports?.novaBlocks?.contentPositionMatrixToolbar ) {
       return <OriginalComponent { ...props } />
@@ -56,6 +57,7 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 
     const { clientId, attributes } = props;
     const { contentPosition } = attributes;
+
     const { getBlock } = select( 'core/block-editor' );
 
     const alignment = contentPosition.split( " " );
@@ -73,11 +75,11 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
     return <OriginalComponent { ...props } />
   };
 }, 'withInnerBlocksContentPosition' );
-addFilter( 'editor.BlockListBlock', 'novablocks/with-content-position-matrix-inner-blocks', withInnerBlocksContentPosition );
+addFilter( 'editor.BlockEdit', 'novablocks/with-content-position-matrix-inner-blocks', withInnerBlocksContentPosition );
 
 const withContentPositionMatrixDeprecated = ( settings, name ) => {
 
-  if ( ! settings?.supports?.novaBlocks?.contentPositionMatrixToolbar ) {
+  if ( ! settings?.supports?.novaBlocks?.contentPositionMatrixToolbar?.deprecated ) {
     return settings;
   }
 
