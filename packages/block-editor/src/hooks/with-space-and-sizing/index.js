@@ -148,6 +148,11 @@ const VerticalAnchoringCustomize = ( props ) => {
     setAttributes
   } = props;
 
+  const {
+    emphasisBySpace,
+    enableOverlapping
+  } = attributes;
+
   const contentPosition = typeof attributes.contentPosition === "string" ? attributes.contentPosition : 'center center';
   const alignment = contentPosition.split( ' ' );
   const verticalAlignment = alignment[0] || 'center';
