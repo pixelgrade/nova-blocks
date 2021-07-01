@@ -6,10 +6,6 @@
 .novablocks-slideshow__slide {
 	position: relative;
 	overflow: hidden;
-
-  > .novablocks-doppler__mask {
-    @include cover;
-  }
 }
 
 .novablocks-slideshow.is-ready {
@@ -28,6 +24,14 @@
 
 .novablocks-slideshow__background {
   background-color: var(--novablocks-bg-color);
+}
+
+.novablocks-slideshow__background,
+.novablocks-slideshow__slide {
+
+  > .novablocks-doppler__mask {
+    @include cover;
+  }
 }
 
 .novablocks-slideshow__slide-wrap {

@@ -1,14 +1,8 @@
 import { normalizeVariationValue } from "@novablocks/utils";
 import { useMemoryState } from "../../components";
 
-import {
-  ToggleControl,
-} from "@wordpress/components";
-
-import {
-  select
-} from "@wordpress/data";
-
+import { ToggleControl } from "@wordpress/components";
+import { select } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
 
 import {
@@ -22,7 +16,6 @@ import {
 import ColorPalettePicker from './components/color-palette-picker';
 
 import {
-  disableFunctionalColorsOnBlocks,
   getCurrentPaletteRelativeColorVariation,
   getSiteColorVariation,
   getSignalRelativeToVariation,
@@ -131,7 +124,8 @@ const MiscellanousControls = ( props ) => {
   } = attributes;
 
   const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette );
-  const disableFunctionalColors = disableFunctionalColorsOnBlocks.includes( props.name );
+  const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+  const disableFunctionalColors = ! supports?.novaBlocks?.colorSignal?.functionalColors;
 
   return (
     <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>

@@ -15,6 +15,7 @@ function novablocks_get_header_attributes() {
 	return novablocks_merge_attributes_from_array( array(
 		"packages/block-library/src/blocks/header/attributes.json",
 		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
+		"packages/block-library/src/blocks/header/attributes-color-signal.json",
 	) );
 
 }
