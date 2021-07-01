@@ -24,7 +24,6 @@ import {
 } from '@wordpress/components';
 
 import {
-	compose,
 	createHigherOrderComponent
 } from '@wordpress/compose';
 

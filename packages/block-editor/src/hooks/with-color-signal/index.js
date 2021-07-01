@@ -11,7 +11,7 @@ import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
-const withColorSetsAttributes = ( settings, name ) => {
+const withColorSignalAttributes = ( settings, name ) => {
 
   if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
     return settings;
@@ -26,9 +26,9 @@ const withColorSetsAttributes = ( settings, name ) => {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withColorSetsAttributes );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-attributes', withColorSignalAttributes );
 
-const withColorSetsDeprecation = ( settings, name ) => {
+const withColorSignalsDeprecation = ( settings, name ) => {
 
   if ( ! settings?.supports?.novaBlocks?.colorSignal?.addOverlayColorDeprecatedMethod ) {
     return settings;
@@ -61,7 +61,7 @@ const withColorSetsDeprecation = ( settings, name ) => {
     ].concat( settings.deprecated ),
   } );
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-deprecation', withColorSetsDeprecation );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-deprecation', withColorSignalsDeprecation );
 
 const withColorSignalControls = createHigherOrderComponent( OriginalComponent => {
 
@@ -83,7 +83,7 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 } );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 
-const withColorSetsClassnames = createHigherOrderComponent( ( BlockListBlock ) => {
+const withColorSignalsClassnames = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
@@ -105,6 +105,6 @@ const withColorSetsClassnames = createHigherOrderComponent( ( BlockListBlock ) =
       <BlockListBlock { ...newProps } />
     )
   };
-}, "withColorSetsClassnames" );
+}, "withColorSignalsClassnames" );
 
-addFilter( 'editor.BlockListBlock', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );
+addFilter( 'editor.BlockListBlock', 'novablocks/add-color-signal-classnames-to-edit', withColorSignalsClassnames );
