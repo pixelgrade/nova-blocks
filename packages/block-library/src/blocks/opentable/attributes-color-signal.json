@@ -1,7 +1,7 @@
 {
 	"paletteVariation": {
 		"type": "number",
-		"default": 12
+		"default": 10
 	},
 	"colorSignal": {
 		"type": "number",

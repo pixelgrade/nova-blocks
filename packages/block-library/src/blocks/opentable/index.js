@@ -12,6 +12,9 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { getSvg } from "@novablocks/block-editor";
 
+import attributes from './attributes.json';
+import attributesColorSignal from './attributes-color-signal.json';
+
 registerBlockType( 'novablocks/opentable', {
 	title: __( 'OpenTable Reservation', '__plugin_txtd' ),
 	description: __( 'Add OpenTable online reservation booking to your site.', '__plugin_txtd' ),
@@ -19,24 +22,7 @@ registerBlockType( 'novablocks/opentable', {
   icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [ __( 'reservations', '__plugin_txtd' ), __( 'bookings', '__plugin_txtd' ) ],
-	attributes: {
-		restaurantId: {
-			type: 'number',
-			default: 1
-		},
-		language: {
-			type: 'string',
-			default: 'en-US'
-		},
-		showOpenTableLogo: {
-			type: 'boolean',
-			default: true
-		},
-		layoutForm: {
-			type: 'string',
-			default: 'wide'
-		}
-	},
+	attributes,
   supports: {
     html: false,
     novaBlocks: {
@@ -46,3 +32,21 @@ registerBlockType( 'novablocks/opentable', {
 	edit,
 	save
 } );
+
+const alterAttributes = ( settings ) => {
+
+  if ( settings.name !== 'novablocks/opentable' ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesColorSignal
+    }
+  };
+}
+
+addFilter( 'blocks.registerBlockType', 'novablocks/opentable/color-signal-attributes-overwrite', alterAttributes, 20 );
+

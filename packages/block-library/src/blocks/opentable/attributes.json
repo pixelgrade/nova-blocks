@@ -1,0 +1,18 @@
+{
+	"restaurantId": {
+		"type": "number",
+		"default": 1
+	},
+	"language": {
+		"type": "string",
+		"default": "en-US"
+	},
+	"showOpenTableLogo": {
+		"type": "boolean",
+		"default": true
+	},
+	"layoutForm": {
+		"type": "string",
+		"default": "wide"
+	}
+}
