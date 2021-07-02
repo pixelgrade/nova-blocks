@@ -1,5 +1,4 @@
 import { addFilter } from "@wordpress/hooks";
-import { alignmentAttributes, alignmentDeprecated } from "@novablocks/block-editor";
 
 import save from "./save";
 import { omit } from 'lodash';
@@ -49,20 +48,6 @@ const mediaAddDeprecated = ( settings, name ) => {
 //    },
 //    save
 //  },
-    {
-      attributes,
-      isEligible( attributes ) {
-        return ! attributes?.defaultsGenerated;
-      },
-      migrate( attributes ) {
-
-        return {
-          ...attributes,
-          defaultsGenerated: true
-        };
-      },
-      save
-    },
     {
       attributes: {
         ...attributes,
@@ -127,15 +112,6 @@ const mediaAddDeprecated = ( settings, name ) => {
       save
     }
   ];
-
-  deprecated.push({
-    attributes: {
-      ...attributes,
-      ...alignmentAttributes,
-    },
-    ...alignmentDeprecated,
-    save,
-  });
 
   return {
     ...settings,

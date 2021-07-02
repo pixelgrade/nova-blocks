@@ -4,7 +4,6 @@
 import iconSvg from './slideshow-block.svg';
 import edit from './edit';
 import save from './save';
-import deprecated from './deprecated';
 import { select } from '@wordpress/data';
 
 import {
@@ -13,7 +12,6 @@ import {
 } from "@novablocks/utils";
 
 import {
-	alignmentAttributes,
 	layoutAttributes,
 	getPlaceholderImages,
 	generateDefaults,
@@ -22,7 +20,7 @@ import {
 
 import blockAttributes from "./attributes";
 
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
 
 /**
  * WordPress dependencies
@@ -64,12 +62,14 @@ registerBlockType( 'novablocks/slideshow', {
         addOverlayColorDeprecatedMethod: true,
       },
       overlayFilterStrength: true,
-      contentPositionMatrixToolbar: true,
+      contentPositionMatrixToolbar: {
+        deprecated: true
+      },
+      customDefaults: true
     },
   },
 	edit,
 	save,
-	deprecated,
 	getEditWrapperProps() {
 		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
