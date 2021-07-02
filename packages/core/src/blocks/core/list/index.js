@@ -6,106 +6,105 @@ import classnames from 'classnames';
 /**
  * WordPress Dependencies
  */
-const { addFilter } = wp.hooks;
-const { Fragment } = wp.element;
-const { createHigherOrderComponent } = wp.compose;
+const {addFilter} = wp.hooks;
+const {Fragment} = wp.element;
+const {createHigherOrderComponent} = wp.compose;
 
-const allowedBlocks = [ 'core/list' ];
+const allowedBlocks = ['core/list'];
 
 import Inspector from './controls';
 
-export const addListFilters = ( settings ) => {
+const alterSettings = ( settings ) => {
 
-  function addAttributes(settings) {
-    if (allowedBlocks.includes(settings.name)) {
-      settings.attributes = Object.assign( settings.attributes, {
-        listStyle: {
-          type: 'string',
-          default: 'list-bullet-style'
-        },
-        listConnection: {
-          type: 'string',
-          default: 'is-style-no-connection'
-        }
-      });
-    }
-
+  if ( settings.name !== 'core/list' ) {
     return settings;
   }
 
-  const withControls = createHigherOrderComponent((BlockEdit) => {
-    return (props) => {
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      listStyle: {
+        type: 'string',
+        default: 'list-bullet-style'
+      },
+      listConnection: {
+        type: 'string',
+        default: 'is-style-no-connection'
+      },
+    },
+    supports: {
+      ...settings.supports,
+      novaBlocks: {
+        colorSignal: {
+          classNames: true,
+          functionalColors: true
+        },
+        contentColorSignal: true
+      }
+    }
+  }
+}
+
+const withControls = createHigherOrderComponent( ( BlockEdit ) => {
+  return ( props ) => {
+
+    if ( 'core/list' !== props.name ) {
       return (
-        <Fragment>
-          <BlockEdit {...props} />
-          { allowedBlocks.includes(props.name) && <Inspector { ...props} /> }
-        </Fragment>
-      )
+        <BlockEdit {...props}/>
+      );
     }
-  })
+    return (
+      <Fragment>
+        <BlockEdit {...props} />
+        <Inspector {...props} />
+      </Fragment>
+    )
+  }
+} );
 
-  const addEditorBlockAttributes = createHigherOrderComponent((BlockListBlock) => {
-    return (props) => {
-      const { name, attributes } = props
-      const { listStyle, listConnection } = attributes;
+const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
+  return ( props ) => {
+    const {name, attributes} = props
+    const {listStyle, listConnection} = attributes;
 
-      let wrapperProps = props.wrapperProps;
-      let customData = {};
+    let wrapperProps = props.wrapperProps;
+    let customData = {};
 
-      if ( allowedBlocks.includes(name) && listStyle && listConnection ) {
-        customData = Object.assign( customData, {
-          'data-novablocks-list-style': listStyle,
-          'data-novablocks-connection-style': listConnection
-        })
-      }
+    if ( allowedBlocks.includes( name ) && listStyle && listConnection ) {
+      customData = Object.assign( customData, {
+        'data-novablocks-list-style': listStyle,
+        'data-novablocks-connection-style': listConnection
+      } )
+    }
 
-      wrapperProps = {
-        ...wrapperProps,
-        ...customData
-      };
-
-      return <BlockListBlock {...props} wrapperProps = {wrapperProps} />;
+    wrapperProps = {
+      ...wrapperProps,
+      ...customData
     };
-  }, 'addEditorBlockAttributes');
 
-  function applyFontEndClasses ( extraProps, blockType, attributes ) {
-    const { listStyle, listConnection, ordered } = attributes;
+    return <BlockListBlock {...props} wrapperProps={wrapperProps}/>;
+  };
+}, 'addEditorBlockAttributes' );
 
-    if (allowedBlocks.includes(blockType.name) ) {
+function applyFontEndClasses( extraProps, blockType, attributes ) {
+  const {listStyle, listConnection, ordered} = attributes;
 
-      if (listStyle !== 'list-bullet-style' && ! ordered ) {
-        extraProps.className = classnames(extraProps.className, listStyle);
-      }
+  if ( allowedBlocks.includes( blockType.name ) ) {
 
-      if (listConnection !== 'is-style-no-connection') {
-        extraProps.className = classnames(extraProps.className, listConnection);
-      }
+    if ( listStyle !== 'list-bullet-style' && !ordered ) {
+      extraProps.className = classnames( extraProps.className, listStyle );
     }
 
-    return extraProps;
+    if ( listConnection !== 'is-style-no-connection' ) {
+      extraProps.className = classnames( extraProps.className, listConnection );
+    }
   }
 
-  addFilter(
-    'blocks.registerBlockType',
-    'novablocks/list/attributes',
-    addAttributes
-  );
-
-  addFilter(
-    'editor.BlockEdit',
-    'novablocks/list-style',
-    withControls
-  )
-
-  addFilter(
-    'blocks.getSaveContent.extraProps',
-    'novablocks/list/applyFrontEndClasses',
-    applyFontEndClasses
-  );
-
-  addFilter(
-    'editor.BlockListBlock',
-    'novablocks/list/addEditorBlockAttributes',
-    addEditorBlockAttributes
-  )
+  return extraProps;
 }
+
+addFilter( 'blocks.registerBlockType', 'novablocks/list/settings', alterSettings, 1 );
+addFilter( 'editor.BlockEdit', 'novablocks/list-style', withControls, 1 );
+addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/list/applyFrontEndClasses', applyFontEndClasses, 1 );
+addFilter( 'editor.BlockListBlock', 'novablocks/list/addEditorBlockAttributes', addEditorBlockAttributes, 1 )
