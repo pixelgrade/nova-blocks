@@ -10,6 +10,8 @@ import save from './save';
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from '@wordpress/hooks';
+
 import { getSvg } from "@novablocks/block-editor";
 
 import attributes from './attributes.json';
