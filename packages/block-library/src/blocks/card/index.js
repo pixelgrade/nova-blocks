@@ -4,7 +4,6 @@
 import edit from './edit';
 import save from './save';
 import iconSvg from './card-block.svg';
-import deprecated from './deprecated';
 
 import {
   getRandomArrayFromArray,
@@ -48,9 +47,11 @@ registerBlockType( 'novablocks/card', {
 	keywords: [ __( 'image with text', '__plugin_txtd' ) ],
 	attributes,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      customDefaults: true,
+    }
   },
-	deprecated,
 	edit,
 	save,
 } );

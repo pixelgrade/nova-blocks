@@ -152,16 +152,30 @@ function novablocks_get_doppler_attributes() {
 	);
 }
 
-function novablocks_get_block_extra_classes( $attributes ) {
+function novablocks_get_alignment( $attributes ) {
+	if ( ! empty( $attributes['contentPosition'] ) ) {
+		return explode( ' ', $attributes['contentPosition'] );
+	} else {
+		return array(
+			$attributes['verticalAlignment'],
+			$attributes['horizontalAlignment']
+		);
+	}
+}
+
+function novablocks_get_alignment_classes( $attributes ) {
 	$classes = array();
 
-	if ( ! empty( $attributes['verticalAlignment'] ) ) {
-		$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
-	}
+	$alignment = novablocks_get_alignment( $attributes );
 
-	if ( ! empty( $attributes['horizontalAlignment'] ) ) {
-		$classes[] = 'novablocks-u-halign-' . $attributes['horizontalAlignment'];
-	}
+	$classes[] = 'novablocks-u-valign-' . $alignment[0];
+	$classes[] = 'novablocks-u-halign-' . $alignment[1];
+
+	return $classes;
+}
+
+function novablocks_get_block_extra_classes( $attributes ) {
+	$classes = novablocks_get_alignment_classes( $attributes );
 
 	if ( ! empty( $attributes['contentPadding'] ) ) {
 		$classes[] = 'novablocks-u-spacing-' . $attributes['contentPadding'];

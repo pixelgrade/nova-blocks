@@ -24,7 +24,6 @@ import {
 } from '@wordpress/block-editor';
 
 import {
-	compose,
 	createHigherOrderComponent,
 } from '@wordpress/compose';
 

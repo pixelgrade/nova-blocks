@@ -1,15 +1,13 @@
 /**
  * Internal dependencies
  */
-import { getIconSvg } from '../get-svg';
-
-export { default as colorAttributes } from './attributes';
+import { getIconSvg } from '../../components';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { BlockControls } from '@wordpress/block-editor';
 
 import {
 	Dropdown,
@@ -18,7 +16,8 @@ import {
 	Toolbar,
 } from '@wordpress/components';
 
-const OverlayControls = function( props ) {
+const OverlayControls = ( props ) => {
+
 	const {
 		attributes: {
 			overlayFilterStrength,
@@ -38,7 +37,8 @@ const OverlayControls = function( props ) {
 	);
 };
 
-const ColorToolbar = function( props ) {
+const ColorToolbar = ( props ) => {
+
 	return (
 		<Toolbar className="pixelgrade-hero-block-toolbar">
 			<Dropdown
@@ -55,16 +55,20 @@ const ColorToolbar = function( props ) {
 				) }
 				focusOnMount={ false }
 				renderContent={ () => (
-					<Fragment>
-						<OverlayControls { ...props } />
-					</Fragment>
+          <OverlayControls { ...props } />
 				) }
 			/>
 		</Toolbar>
 	);
 };
 
-export {
-	ColorToolbar,
-	OverlayControls,
-};
+const Controls = ( props ) => {
+
+  return (
+    <BlockControls>
+      <ColorToolbar { ...props } />
+    </BlockControls>
+  );
+}
+
+export default Controls;
