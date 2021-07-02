@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { withSettings } from '@novablocks/block-editor';
 import BlockControls from './block-controls';
 import MediaPreview from './preview';
 
@@ -25,4 +24,4 @@ const MediaEdit = function( props ) {
 	);
 };
 
-export default withSettings( MediaEdit );
+export default MediaEdit;

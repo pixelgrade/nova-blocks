@@ -49,20 +49,6 @@ const mediaAddDeprecated = ( settings, name ) => {
 //    save
 //  },
     {
-      attributes,
-      isEligible( attributes ) {
-        return ! attributes?.defaultsGenerated;
-      },
-      migrate( attributes ) {
-
-        return {
-          ...attributes,
-          defaultsGenerated: true
-        };
-      },
-      save
-    },
-    {
       attributes: {
         ...attributes,
         accentColor: {

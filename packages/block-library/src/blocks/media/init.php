@@ -16,6 +16,7 @@ function novablocks_get_media_attributes() {
 
 		'packages/block-editor/src/hooks/with-card-details/attributes.json',
 		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
+		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
 		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
 		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
@@ -34,9 +35,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$blockClasses = [];
 
 		// having no default value makes the card stretch vertically which is a desired outcome
-		if ( ! empty( $attributes['verticalAlignment'] ) ) {
-			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
-		}
+		$classes = novablocks_get_alignment_classes( $attributes );
 
 		$blockClasses[] = novablocks_get_content_style_class( $attributes );
 

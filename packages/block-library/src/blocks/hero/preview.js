@@ -30,8 +30,7 @@ const HeroPreview = function( props ) {
 		contentWidth,
 		contentWidthCustom,
 		// alignment
-		verticalAlignment,
-		horizontalAlignment,
+		contentPosition,
 		// height
 		minHeightFallback,
 		// indicators
@@ -43,6 +42,10 @@ const HeroPreview = function( props ) {
 		scrollingEffect,
 		displayInnerContent,
 	} = attributes;
+
+	const alignment = contentPosition.split( " " );
+	const verticalAlignment = alignment[0];
+	const horizontalAlignment = alignment[1];
 
 	const classes = [
 		className,

@@ -161,4 +161,4 @@ class HeroEdit extends Component {
 	}
 }
 
-export default createHigherOrderComponent( withSettings )( HeroEdit );
+export default HeroEdit;
