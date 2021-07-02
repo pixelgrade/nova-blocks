@@ -63,13 +63,22 @@
 	}
 
 	.ot-dtp-picker {
-		background: transparent;
 		width: 100%;
+    padding: calc( 2 * var(--novablocks-spacing) );
+		background: transparent;
 	}
 
 	.picker__holder:focus {
 		outline: none;
 	}
+
+  .ot-dtp-picker .ot-dtp-picker-selector .ot-dtp-picker-selector-link {
+
+    &, &:before, &:after {
+      color: inherit;
+    }
+
+  }
 
 	.ot-dtp-picker .ot-dtp-picker-selector:hover .ot-dtp-picker-selector-link {
 		outline: none;
@@ -197,10 +206,8 @@
 		background-color: var(--novablocks-bg-color);
 		color: var(--novablocks-fg1-color);
 
-		padding: 3rem;
-
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link {
-			padding-left: 1.5rem;
+			padding-left: var(--novablocks-spacing);
 
 			color: var(--novablocks-fg1-color);
 			border-bottom: 2px solid currentColor;
@@ -208,7 +215,6 @@
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link:before {
 			left: 0;
-			color: var(--novablocks-bg-color);
 		}
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link:after {
