@@ -90,7 +90,10 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
 
 		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+
 		$blockClasses = array_merge( $blockClasses, $blockPaletteClasses );
+		$contentVariation = novablocks_get_content_variation( $attributes );
+		$blockClasses[] = 'sm-variation-' . $contentVariation . '@below-tablet';
 
 		$contentClasses = array(
 			'novablocks-media__inner-container',
@@ -99,6 +102,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
 		$contentClasses = array_merge( $contentClasses, $contentPaletteClasses );
+
 
 		ob_start(); ?>
 

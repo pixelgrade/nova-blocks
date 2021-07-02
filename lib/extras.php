@@ -1627,6 +1627,21 @@ function novablocks_normalize_variation_value( $variation ) {
 }
 
 function novablocks_get_content_palette_classes( $attributes ) {
+	$contentVariation = novablocks_get_content_variation( $attributes );
+
+	$classes = array(
+		'sm-palette-' . $attributes['palette'],
+		'sm-variation-' . $contentVariation
+	);
+
+	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
+		$classes[] = 'sm-palette--shifted';
+	}
+
+	return $classes;
+}
+
+function novablocks_get_content_variation( $attributes ) {
 	$palettes_output = pixelgrade_option( 'sm_advanced_palette_output' );
 	$palettes = json_decode( $palettes_output );
 
@@ -1648,32 +1663,7 @@ function novablocks_get_content_palette_classes( $attributes ) {
 
 	$referenceVariation = novablocks_normalize_variation_value( $attributes['paletteVariation'] + $offset );
 	$contentSignalOptions = novablocks_get_signal_options_from_variation( $referenceVariation );
-	$contentVariation = novablocks_normalize_variation_value( $contentSignalOptions[ $attributes['contentColorSignal'] ] - $offset );
-
-	$classes = array(
-		'sm-palette-' . $attributes['palette'],
-		'sm-variation-' . $contentVariation
-	);
-
-	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
-		$classes[] = 'sm-palette--shifted';
-	}
-
-	return $classes;
-}
-
-function novablocks_get_content_variation( $parentVariation, $contentStyle ) {
-	$parentVariation = intval( $parentVariation );
-
-	if ( $contentStyle === 'moderate' ) {
-		return max( 0, $parentVariation - 2 );
-	}
-
-	if ( $contentStyle === 'highlighted' ) {
-		return ( $parentVariation + 6 ) % 12;
-	}
-
-	return $parentVariation;
+	return novablocks_normalize_variation_value( $contentSignalOptions[ $attributes['contentColorSignal'] ] - $offset );
 }
 
 function novablocks_get_content_style_class( $attributes ) {
