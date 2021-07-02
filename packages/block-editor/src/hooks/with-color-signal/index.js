@@ -11,46 +11,18 @@ import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
-const enableColorSignalControls = [
-  'novablocks/announcement-bar',
-  'novablocks/cards-collection',
-  'novablocks/header',
-  'novablocks/header-row',
-  'novablocks/hero',
-  'novablocks/media',
-  'novablocks/posts-collection',
-  'novablocks/slideshow',
+const withColorSetsAttributes = ( settings, name ) => {
 
-  'core/group',
-];
-
-const withAltAttributes = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-];
-
-const enableColorSignalDeprecation = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-];
-
-const enableColorSignalClassnames = [
-  'core/group',
-  'novablocks/announcement-bar'
-];
-
-const withColorSetsAttributes = ( block, name ) => {
-
-  if ( ! block?.supports?.novaBlocks?.colorSignal ) {
-    return block;
+  if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
+    return settings;
   }
 
   return {
-    ...block,
+    ...settings,
     attributes: {
-      ...block.attributes,
+      ...settings.attributes,
       ...attributes,
-      ...( withAltAttributes.includes( name ) ? altAttributes : {} )
+      ...( !! settings?.supports?.novaBlocks?.colorSignal?.altAttributes ? altAttributes : {} )
     }
   };
 }
@@ -58,7 +30,7 @@ addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes',
 
 const withColorSetsDeprecation = ( settings, name ) => {
 
-  if ( ! enableColorSignalDeprecation.includes( name ) ) {
+  if ( ! settings?.supports?.novaBlocks?.colorSignal?.addOverlayColorDeprecatedMethod ) {
     return settings;
   }
 
@@ -74,12 +46,14 @@ const withColorSetsDeprecation = ( settings, name ) => {
           const { contentColor, overlayFilterStyle } = attributes;
           const hadDarkText = !! contentColor && contentColor.search( '000' ) > -1;
           const hadLightBackground = !! overlayFilterStyle && overlayFilterStyle === 'light';
-          const paletteVariation = hadDarkText || hadLightBackground ? '0' : '10';
+          const paletteVariation = hadDarkText || hadLightBackground ? '0' : '12';
+          const colorSignal = hadDarkText || hadLightBackground ? 0 : 3;
 
           return {
             ...attributes,
             defaultsGenerated: true,
-            paletteVariation: paletteVariation
+            paletteVariation,
+            colorSignal,
           };
         },
         save: settings.save,
@@ -109,17 +83,18 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 } );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 
-const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
+const withColorSetsClassnames = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
-    if ( ! enableColorSignalClassnames.includes( props.name ) ) {
-      return <BlockEdit { ...props } />
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.colorSignal?.classNames ) {
+      return <BlockListBlock { ...props } />
     }
 
     const className = props?.attributes?.className || '';
     const newClassName = getClassNameWithPaletteHelpers( className, props.attributes );
-
     const newProps = Object.assign( {}, props, {
       attributes: Object.assign( {}, props.attributes, {
         className: newClassName
@@ -127,9 +102,9 @@ const withColorSetsClassnames = createHigherOrderComponent( ( BlockEdit ) => {
     } );
 
     return (
-      <BlockEdit { ...newProps } />
+      <BlockListBlock { ...newProps } />
     )
   };
 }, "withColorSetsClassnames" );
 
-addFilter( 'editor.BlockEdit', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );
+addFilter( 'editor.BlockListBlock', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );

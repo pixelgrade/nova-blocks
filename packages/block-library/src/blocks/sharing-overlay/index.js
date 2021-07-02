@@ -21,7 +21,12 @@ registerBlockType( 'novablocks/sharing-overlay', {
 	keywords: [ __( 'sharing', '__plugin_txtd' ) ],
 	attributes,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      colorSignal: {
+        altAttributes: true
+      }
+    }
   },
 	edit,
 	save: function() {

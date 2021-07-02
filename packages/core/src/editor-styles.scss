@@ -104,3 +104,20 @@ body.debug {
 		display: none;
 	}
 }
+
+/* START Hero Block Toolbar Popovers adjustments */
+.components-popover {
+
+  .components-panel__row .components-toolbar {
+    flex-wrap: nowrap;
+  }
+
+  span + .components-toolbar {
+    margin-left: var(--novablocks-spacing);
+  }
+
+  .components-range-control__wrapper {
+    min-width: 60px;
+  }
+}
+/* END Hero Block Toolbar Popovers adjustments */

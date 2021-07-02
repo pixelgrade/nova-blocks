@@ -33,7 +33,7 @@
   	},
 	"contentPadding": {
 		"type": "number",
-		"default": 0
+		"default": 100
 	},
 	"emphasisArea": {
 		"type": "number",

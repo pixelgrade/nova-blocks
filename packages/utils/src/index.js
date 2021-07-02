@@ -534,15 +534,6 @@ export const getRelativeColorVariation = ( paletteConfig, paletteVariation, prop
   return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
 }
 
-export const disableFunctionalColorsOnBlocks = [
-  'novablocks/header',
-  'novablocks/header-row',
-  'novablocks/hero',
-  'novablocks/media',
-  'novablocks/cards-collection',
-  'novablocks/posts-collection',
-];
-
 export const getSignalAttributes = ( signal, palette, sticky = false ) => {
   const { sourceIndex } = palette;
   const siteVariation = getSiteColorVariation();

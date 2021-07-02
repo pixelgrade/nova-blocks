@@ -3,39 +3,38 @@ import classnames from "classnames";
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { getColorSetClassnames } from "@novablocks/utils";
 
 const OpenTableSave = function( props ) {
+
 	const {
-		attributes: {
-			restaurantId,
-			language,
-			showOpenTableLogo,
-			layoutForm
-		},
+		attributes,
 		className
 	} = props;
 
-	const formSrc = `//www.opentable.com/widget/reservation/loader?rid=${restaurantId}&domain=com&type=standard&theme=${layoutForm}&iframe=false&overlay=false&domain=com&lang=${language}`
+	const {
+    restaurantId,
+    language,
+    showOpenTableLogo,
+    layoutForm
+  } = attributes;
 
-	const classNames = classnames(
-		className,
-		`novablocks-opentable`,
-		`novablocks-opentable__${ layoutForm }`,
+	const formSrc = `//www.opentable.com/widget/reservation/loader?rid=${ restaurantId }&domain=com&type=standard&theme=${ layoutForm }&iframe=false&overlay=false&domain=com&lang=${ language }`
 
-		{
-			'has-opentable-logo': showOpenTableLogo === true
-		}
-
-	);
+  const classNames = classnames(
+    className,
+    `novablocks-opentable`,
+    `novablocks-opentable__${ layoutForm }`,
+    {
+      'has-opentable-logo': showOpenTableLogo === true
+    },
+    getColorSetClassnames( attributes )
+  );
 
 	return (
-
-		<div className={classNames}>
-			<script type="text/javascript" src = {formSrc}>
-			</script>
+		<div className={ classNames }>
+			<script type="text/javascript" src={ formSrc }></script>
 		</div>
-
 	);
 };
 
