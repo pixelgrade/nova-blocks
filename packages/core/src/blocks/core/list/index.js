@@ -39,8 +39,7 @@ const alterSettings = ( settings ) => {
         colorSignal: {
           functionalColors: true,
           colorSignalClassname: true,
-          paletteClassname: true,
-          variationClassname: true
+          paletteClassname: true
         },
       }
     }

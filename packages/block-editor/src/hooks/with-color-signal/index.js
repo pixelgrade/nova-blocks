@@ -4,7 +4,6 @@ import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { select } from '@wordpress/data';
 
-import { getClassNameWithPaletteHelpers } from "@novablocks/utils";
 import { addFilter } from '@wordpress/hooks';
 
 import InspectorControls from './inspector-controls';

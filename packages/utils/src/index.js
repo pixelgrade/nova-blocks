@@ -333,23 +333,6 @@ export const getContentVariationBySignal = ( props ) => {
   return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
 }
 
-export const getClassNameWithPaletteHelpers = ( className, attributes ) => {
-  const classes = className.split(/\b\s+/);
-  const newClasses = classes.filter( classname => {
-    return classname.search( 'sm-palette-' ) !== -1 && classname.search( 'sm-variation-' ) !== -1;
-  } );
-
-  newClasses.push( `sm-palette-${ attributes.palette }` );
-  newClasses.push( `sm-variation-${ attributes.paletteVariation }` );
-
-  if ( attributes.useSourceColorAsReference ) {
-    newClasses.push( `sm-palette--shifted` );
-  }
-
-  return newClasses.join( ' ' );
-}
-
-
 // Uppercase the first letter of a string in JavaScript
 // https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
 

@@ -1,8 +1,6 @@
 import { addFilter } from '@wordpress/hooks';
 import { createHigherOrderComponent } from '@wordpress/compose';
 
-import { getClassNameWithPaletteHelpers } from '@novablocks/utils';
-
 const deprecatedStyles = {
   'is-style-accent': {
     paletteVariation: 6,
