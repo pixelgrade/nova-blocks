@@ -37,10 +37,11 @@ const alterSettings = ( settings ) => {
       ...settings.supports,
       novaBlocks: {
         colorSignal: {
-          classNames: true,
-          functionalColors: true
+          functionalColors: true,
+          colorSignalClassname: true,
+          paletteClassname: true,
+          variationClassname: true
         },
-        contentColorSignal: true
       }
     }
   }
@@ -87,8 +88,9 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
   };
 }, 'addEditorBlockAttributes' );
 
-function applyFontEndClasses( extraProps, blockType, attributes ) {
-  const {listStyle, listConnection, ordered} = attributes;
+function applyFrontEndClasses( extraProps, blockType, attributes ) {
+
+  const { listStyle, listConnection, ordered } = attributes;
 
   if ( allowedBlocks.includes( blockType.name ) ) {
 
@@ -105,6 +107,6 @@ function applyFontEndClasses( extraProps, blockType, attributes ) {
 }
 
 addFilter( 'blocks.registerBlockType', 'novablocks/list/settings', alterSettings, 1 );
-addFilter( 'editor.BlockEdit', 'novablocks/list-style', withControls, 1 );
-addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/list/applyFrontEndClasses', applyFontEndClasses, 1 );
+addFilter( 'editor.BlockEdit', 'novablocks/list/list-style', withControls, 1 );
+addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/list/applyFrontEndClasses', applyFrontEndClasses, 1 );
 addFilter( 'editor.BlockListBlock', 'novablocks/list/addEditorBlockAttributes', addEditorBlockAttributes, 1 )

@@ -33,7 +33,8 @@ const alterSettings = ( settings ) => {
       ...settings.supports,
       novaBlocks: {
         colorSignal: {
-          classNames: true,
+          paletteClassname: true,
+          variationClassname: true,
           functionalColors: true,
         },
       }

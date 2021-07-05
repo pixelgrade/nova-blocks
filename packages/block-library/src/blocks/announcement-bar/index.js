@@ -59,7 +59,8 @@ registerBlockType( 'novablocks/announcement-bar', {
 	  html: false,
     novaBlocks: {
 	    colorSignal: {
-	      classNames: true
+        paletteClassname: true,
+        variationClassname: true
       },
     }
   },

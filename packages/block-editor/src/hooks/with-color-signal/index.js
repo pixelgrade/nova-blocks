@@ -83,28 +83,87 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 } );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 
-const withColorSetsClassnames = createHigherOrderComponent( ( BlockListBlock ) => {
+// Add Palette Classes
+const withPaletteClassname = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-    if ( ! supports?.novaBlocks?.colorSignal?.classNames ) {
+    if ( ! supports?.novaBlocks?.colorSignal?.paletteClassname ) {
       return <BlockListBlock { ...props } />
     }
 
     const className = props?.attributes?.className || '';
-    const newClassName = getClassNameWithPaletteHelpers( className, props.attributes );
-    const newProps = Object.assign( {}, props, {
-      attributes: Object.assign( {}, props.attributes, {
-        className: newClassName
-      } )
-    } );
+
+    const newProps = {
+      ...props,
+      attributes: {
+        ...props.attributes,
+        className: `${ className } sm-palette-${ props.attributes.palette } ${ props.attributes.useSourceColorAsReference ? 'sm-palette--shifted' : ''}`
+      }
+    };
 
     return (
       <BlockListBlock { ...newProps } />
     )
   };
-}, "withColorSetsClassnames" );
+}, "withPaletteClassname" );
+addFilter( 'editor.BlockListBlock', 'novablocks/with-palette-classname', withPaletteClassname );
 
-addFilter( 'editor.BlockListBlock', 'novablocks/add-color-signal-classnames-to-edit', withColorSetsClassnames );
+// Add Variation Classes
+const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) => {
+
+  return ( props ) => {
+
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.colorSignal?.variationClassname ) {
+      return <BlockListBlock { ...props } />
+    }
+
+    const className = props?.attributes?.className || '';
+
+    const newProps = {
+      ...props,
+      attributes: {
+        ...props.attributes,
+        className: `${ className } sm-variation-${ props.attributes.paletteVariation }`
+      }
+    };
+
+    return (
+      <BlockListBlock { ...newProps } />
+    )
+  };
+}, "withVariationClassname" );
+addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withVariationClassname );
+
+// Add Color Signal Classes
+const withColorSignalClassname = createHigherOrderComponent( ( BlockListBlock ) => {
+
+  return ( props ) => {
+
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
+      return <BlockListBlock { ...props } />
+    }
+
+    const className = props?.attributes?.className || '';
+
+    const newProps = {
+      ...props,
+      attributes: {
+        ...props.attributes,
+        className: `${ className } sm-color-signal-${ props.attributes.colorSignal }`
+      }
+    };
+
+    return (
+      <BlockListBlock { ...newProps } />
+    )
+  };
+}, "withColorSignalClassname" );
+
+addFilter( 'editor.BlockListBlock', 'novablocks/with-color-signal-classname', withColorSignalClassname );
