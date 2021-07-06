@@ -10,6 +10,8 @@ import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
+import classnames from 'classnames';
+
 const withColorSetsAttributes = ( settings, name ) => {
 
   if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
@@ -82,7 +84,7 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 } );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 
-// Add Palette Classes
+// Add Palette Classes in Edit
 const withPaletteClassname = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
@@ -99,18 +101,32 @@ const withPaletteClassname = createHigherOrderComponent( ( BlockListBlock ) => {
       ...props,
       attributes: {
         ...props.attributes,
-        className: `${ className } sm-palette-${ props.attributes.palette } ${ props.attributes.useSourceColorAsReference ? 'sm-palette--shifted' : ''}`
       }
     };
 
     return (
-      <BlockListBlock { ...newProps } />
+      <BlockListBlock { ...newProps } classname={`${ className } sm-palette-${ props.attributes.palette } ${ props.attributes.useSourceColorAsReference ? 'sm-palette--shifted' : ''}`} />
     )
   };
 }, "withPaletteClassname" );
 addFilter( 'editor.BlockListBlock', 'novablocks/with-palette-classname', withPaletteClassname );
 
-// Add Variation Classes
+// Add Palette Classes on Save
+const applyPaletteFrontEndClasses = (extraProps, blockType, attributes) => {
+
+  const { palette } = attributes;
+
+  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+
+  if ( supports?.novaBlocks?.colorSignal?.paletteClassname ) {
+    extraProps.className = classnames(extraProps.className, `sm-palette-${ palette }`)
+  }
+
+  return extraProps;
+}
+addFilter('blocks.getSaveContent.extraProps', 'novablocks-with-palette-classname-frontend', applyPaletteFrontEndClasses, 1);
+
+// Add Variation Classes on Edit
 const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
@@ -126,17 +142,31 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
     const newProps = {
       ...props,
       attributes: {
-        ...props.attributes,
-        className: `${ className } sm-variation-${ props.attributes.paletteVariation }`
+        ...props.attributes
       }
     };
 
     return (
-      <BlockListBlock { ...newProps } />
+      <BlockListBlock { ...newProps } className={ `${ className } sm-variation-${ props.attributes.paletteVariation }`} />
     )
-  };
+  }
 }, "withVariationClassname" );
 addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withVariationClassname );
+
+// Add Variation Classes on Save
+const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
+
+  const { paletteVariation } = attributes;
+
+  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+
+  if ( supports?.novaBlocks?.colorSignal?.variationClassname ) {
+    extraProps.className = classnames(extraProps.className, `sm-variation-${ paletteVariation }`)
+  }
+
+  return extraProps;
+}
+addFilter('blocks.getSaveContent.extraProps', 'novablocks-with-variation-classname-frontend', applyVariationFrontEndClasses, 1);
 
 // Add Color Signal Classes
 const withColorSignalClassname = createHigherOrderComponent( ( BlockListBlock ) => {
@@ -154,15 +184,29 @@ const withColorSignalClassname = createHigherOrderComponent( ( BlockListBlock ) 
     const newProps = {
       ...props,
       attributes: {
-        ...props.attributes,
-        className: `${ className } sm-color-signal-${ props.attributes.colorSignal }`
+        ...props.attributes
       }
     };
 
     return (
-      <BlockListBlock { ...newProps } />
+      <BlockListBlock { ...newProps }   className={ `${ className } sm-color-signal-${ props.attributes.colorSignal }`} />
     )
-  };
+  }
 }, "withColorSignalClassname" );
 
 addFilter( 'editor.BlockListBlock', 'novablocks/with-color-signal-classname', withColorSignalClassname );
+
+// Add Color Signal Classes on Save
+const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
+
+  const { colorSignal } = attributes;
+
+  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+
+  if ( supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
+    extraProps.className = classnames(extraProps.className, `sm-color-signal-${ colorSignal }`)
+  }
+
+  return extraProps;
+}
+addFilter('blocks.getSaveContent.extraProps', 'novablocks-with-color-signal-classname-frontend', applyColorSignalFrontEndClasses, 1);
