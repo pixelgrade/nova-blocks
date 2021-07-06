@@ -39,7 +39,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   transition: 0.35s transform ease;
   will-change: transform;
   
@@ -48,6 +48,10 @@
   
   padding-left: 32px;
   padding-right: 32px;
+
+  &[class] {
+    background: none;
+  }
   
   .site-header--reading & {
     transform: translateY(0);
