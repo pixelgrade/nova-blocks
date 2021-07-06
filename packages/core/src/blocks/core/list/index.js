@@ -76,13 +76,14 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
     if ( allowedBlocks.includes( name ) && listStyle && listConnection ) {
       customData = Object.assign( customData, {
         'data-list-style': listStyle,
-        'data-connection-style': listConnection
+        'data-connection-style': listConnection,
+        'data-nb': 'list'
       } )
     }
 
     wrapperProps = {
       ...wrapperProps,
-      ...customData
+      ...customData,
     };
 
     return <BlockListBlock {...props} wrapperProps={wrapperProps} />;
@@ -95,7 +96,7 @@ function applyFrontEndClasses( extraProps, blockType, attributes ) {
 
   if ( allowedBlocks.includes( blockType.name ) ) {
 
-    extraProps.className = classnames( extraProps.className, 'novablocks-list' );
+    extraProps.className = classnames( extraProps.className, 'nb-list' );
 
     if ( listStyle !== 'list-bullet-style' && !ordered ) {
       extraProps.className = classnames( extraProps.className, listStyle );
