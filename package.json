@@ -13,6 +13,8 @@
 		"build:packages": "node ./bin/packages/build.js",
 		"dev": "npm run build:packages && concurrently \"wp-scripts start\" \"npm run dev:packages\"",
 		"dev:packages": "node ./bin/packages/watch.js",
+		"prezip": "npm run build",
+		"zip": "gulp zip",
 		"postinstall": "node ./bin/packages/install.js"
 	},
 	"dependencies": {

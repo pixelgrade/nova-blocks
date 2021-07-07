@@ -69,6 +69,7 @@ const cssTransform = ( content ) => {
 				preset: [
 					'default',
 					{
+            convertValues: false,
 						discardComments: {
 							removeAll: true,
 						},
