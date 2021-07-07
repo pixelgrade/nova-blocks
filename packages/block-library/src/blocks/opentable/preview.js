@@ -1,12 +1,16 @@
 import classnames from "classnames";
 import isShallowEqual from '@wordpress/is-shallow-equal';
 
-
 /**
  * WordPress dependencies
  */
 import { Component } from '@wordpress/element';
 import { SandBox } from '@wordpress/components';
+import { getColorSetClassnames } from "@novablocks/utils";
+
+const grabStylesheet = ( url ) => {
+  return url && `<link rel="stylesheet" href="${ url }" type="text/css"/>` || '';
+}
 
 class OpenTablePreview extends Component {
 
@@ -30,10 +34,10 @@ class OpenTablePreview extends Component {
 			className,
 			`novablocks-opentable`,
 			`novablocks-opentable__${ layoutForm }`,
-
 			{
 				'has-opentable-logo': showOpenTableLogo === true
-			}
+			},
+      getColorSetClassnames( this.props.attributes )
 		);
 
 		const OpenTable = ( props ) => {
@@ -42,10 +46,12 @@ class OpenTablePreview extends Component {
 
 		const html = `<div class="novablocks-opentable ${ classNames }">` +
 		             `<script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=${ restaurantId }&type=standard&theme=${ layoutForm }&iframe=false&overlay=false&domain=com&lang=${ language }'></script>` +
-		             `<link rel="stylesheet" href="${ novablocks_urls.novablocks_core_frontend_stylesheet }" type="text/css"/>` +
-		             `<link rel="stylesheet" href="${ novablocks_urls.novablocks_components_frontend_stylesheet }" type="text/css"/>` +
-		             `<link rel="stylesheet" href="${ novablocks_urls.novablocks_opentable_frontend_stylesheet }" type="text/css"/>` +
-		             `<link rel="stylesheet" href="${ novablocks_urls.novablocks_opentable_editor_stylesheet }" type="text/css"/>` +
+		             grabStylesheet( style_manager_strings?.style_manager_colors_custom_properties_url ) +
+                 ( style_manager_strings?.sm_advanced_palettes_output && `<style>${ style_manager_strings?.sm_advanced_palettes_output }</style>` || '' ) +
+		             grabStylesheet( novablocks_urls?.novablocks_core_frontend_stylesheet ) +
+		             grabStylesheet( novablocks_urls?.novablocks_components_frontend_stylesheet ) +
+		             grabStylesheet( novablocks_urls?.novablocks_opentable_frontend_stylesheet ) +
+		             grabStylesheet( novablocks_urls?.novablocks_opentable_editor_stylesheet ) +
 		             '</div>';
 
 		return (
@@ -55,7 +61,6 @@ class OpenTablePreview extends Component {
 				type="embed"
 			/>
 		);
-
 	}
 }
 

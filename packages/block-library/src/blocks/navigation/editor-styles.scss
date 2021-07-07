@@ -1,7 +1,3 @@
-.wp-block[data-type='novablocks/navigation'] {
-	@import 'scss/menu';
-
-	.menu {
-		pointer-events: none;
-	}
+.novablocks-navigation ul li[class][class] {
+  margin-top: 0;
 }

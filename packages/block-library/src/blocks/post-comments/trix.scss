@@ -2,7 +2,7 @@
   --trix-button-size: 2.2em;
   --trix-button-active-color: rgba(0, 0, 0, 0.1);
   --trix-input-bg-color: #FFF;
-  --trix-input-border-color: rgba(0,0,0, 0.25);
+  --trix-input-border-color: rgba(0, 0, 0, 0.25);
   --trix-input-border-radius: 0;
 
   // Since we want client HTML5 validation, we need to use the input holding the actual value for this.
@@ -19,81 +19,76 @@
 
 trix-toolbar {
 
-  &[id]{
-	@include block-spacing;
-	--novablocks-element-spacing-multiplier: .175;
-	--block-top-spacing: 1;
+  &[id] {
+    @include block-spacing;
+    --novablocks-element-spacing-multiplier: .175;
+    --novablocks-block-top-spacing: 1;
   }
 
   background-color: var(--trix-input-bg-color);
   border: 1px solid var(--trix-input-border-color);
 
   .trix-button-group {
-	border: 0;
-	margin-bottom: 0;
+    border: 0;
+    margin-bottom: 0;
   }
 
   .trix-button {
-	border: 0;
-	padding: 0 1em;
+    border: 0;
+    padding: 0 1em;
 
-	font-size: 1rem;
+    font-size: 1rem;
 
-	&:not(:first-child) {
-	  border-left: 0;
-	}
+    &:not(:first-child) {
+      border-left: 0;
+    }
   }
 
   .trix-button--icon {
 
-	width: var(--trix-button-size);
-	height: var(--trix-button-size);
+    width: var(--trix-button-size);
+    height: var(--trix-button-size);
 
-	&:before {
-	  opacity: .8;
-	  background-size: 65%;
-	}
+    &:before {
+      opacity: .8;
+      background-size: 65%;
+    }
   }
 
   .trix-button {
 
-	&.trix-active {
-	  background-color: var(--trix-button-active-color);
-	}
+    &.trix-active {
+      background-color: var(--trix-button-active-color);
+    }
   }
 
   .trix-dialog--link[class] {
-	max-width: 100%;
+    max-width: 100%;
 
-	border-radius: var(--trix-input-border-radius);
+    border-radius: var(--trix-input-border-radius);
   }
 
   .trix-dialog__link-fields {
-	align-items: stretch;
+    align-items: stretch;
 
-	input[type=button] {
-	  background: var(--novablocks-color-1);
-	  color: #FFF;
+    input[type=button] {
 
-	  &:last-of-type {
-		background: var(--novablocks-light-3);
-		color: rgba(0, 0, 0, 0.5);
-
-		margin-left: .5rem;
-	  }
-	}
+      &:last-of-type {
+        margin-left: .5rem;
+      }
+    }
   }
 
   @include below(tablet) {
-	.trix-button-row {
-	  display: block;
-	  height: 2em;
-    overflow-y: hidden;
-	}
+    .trix-button-row {
+      display: block;
+      height: 2em;
+      overflow-y: hidden;
+    }
 
-	.trix-button-group {
-	  display: inline-block;
-	}
+    .trix-button-group {
+      display: inline-block;
+    }
   }
 }
 
@@ -105,37 +100,37 @@ trix-editor {
   border-color: var(--trix-input-border-color);
 
   blockquote {
-	padding-left: 1em;
-	border-left: 2px solid currentColor;
-	font-style: italic;
+    padding-left: 1em;
+    border-left: 2px solid currentColor;
+    font-style: italic;
   }
 }
 
 @include below(tablet) {
   .novablocks-conversations__form.expanded {
 
-	trix-editor,
-	trix-toolbar {
-	  transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
-	  width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
-	}
+    trix-editor,
+    trix-toolbar {
+      transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
+      width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
+    }
 
-	trix-toolbar {
-	  margin-top: 20px;
-	}
+    trix-toolbar {
+      margin-top: 20px;
+    }
   }
 
   .comment {
-	.novablocks-conversations__form {
-	  trix-editor,
-	  trix-toolbar {
-		transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
-		width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
-	  }
+    .novablocks-conversations__form {
+      trix-editor,
+      trix-toolbar {
+        transform: translateX(calc(-1 * var(--avatar-column-size) - var(--comments-grid-gap)));
+        width: calc(100% + var(--avatar-column-size) + var(--comments-grid-gap));
+      }
 
-	  trix-toolbar {
-		margin-top: 20px;
-	  }
-	}
+      trix-toolbar {
+        margin-top: 20px;
+      }
+    }
   }
 }

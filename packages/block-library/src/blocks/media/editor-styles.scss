@@ -1,4 +1,12 @@
 [data-type="novablocks/media"] {
+
+  &[data-type] {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
 	@include advanced-gallery-overlay-styles;
 }
 
@@ -18,16 +26,6 @@
 	height: 100%;
 
 	background-color: #EEEEEE;
-}
-
-.novablocks-media__inner-container {
-	padding-left: var(--novablocks-media-spacing);
-	padding-right: var(--novablocks-media-spacing);
-
-	> [data-align='full'] {
-		margin-left: calc(-1 * var(--novablocks-media-spacing));
-		margin-right: calc(-1 * var(--novablocks-media-spacing));
-	}
 }
 
 .novablocks-media__content:before,

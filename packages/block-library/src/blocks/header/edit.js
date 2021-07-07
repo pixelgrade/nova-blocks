@@ -25,7 +25,6 @@ import {
 	withSelect,
 	withDispatch,
   select,
-  dispatch,
  } from '@wordpress/data';
 
 import {
@@ -43,7 +42,7 @@ const TEMPLATE_OPTIONS = [
 		template: [
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
-				className: "site-header__menu site-header__menu--primary",
+				className: "novablocks-navigation novablocks-navigation--primary",
 				slug: "primary"
 			} ],
 		],
@@ -54,12 +53,12 @@ const TEMPLATE_OPTIONS = [
 		icon: icons.logoCenter,
 		template: [
 			[ 'novablocks/navigation', {
-				className: "site-header__menu site-header__menu--secondary",
+				className: "novablocks-navigation novablocks-navigation--secondary",
 				slug: "secondary"
 			} ],
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
-				className: "site-header__menu site-header__menu--primary",
+				className: "novablocks-navigation novablocks-navigation--primary",
 				slug: "primary"
 			} ],
 		],
@@ -114,7 +113,6 @@ class Edit extends Component {
   }
 
 	innerBlocksPicker() {
-		const { hasInnerBlocks } = this.props;
 		return (
 			<Fragment>
 				<InnerBlocks
@@ -137,7 +135,6 @@ class Edit extends Component {
 		const {
 			attributes: {
 				layout,
-        stickyRow
 			},
       clientId,
 			blockType,
@@ -151,9 +148,8 @@ class Edit extends Component {
 
 		const classNames = classnames(
 			className,
-			`site-header`,
-			`site-header-${layout}`,
-			`site-header-${stickyRow}`
+			`novablocks-header`,
+			`novablocks-header-${ layout }`,
 		);
 
     const currentBlock = select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ];

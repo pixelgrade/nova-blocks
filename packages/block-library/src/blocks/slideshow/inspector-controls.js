@@ -7,10 +7,10 @@ import {
 } from "@novablocks/utils";
 
 import {
-	LayoutControls,
-	GalleryPreview,
-	ControlsSection,
-	ControlsTab
+  LayoutControls,
+  GalleryPreview,
+  ControlsSection,
+  ControlsTab,
 } from "@novablocks/block-editor";
 
 /**
@@ -72,7 +72,6 @@ const SlideshowInspectorControls = function( props ) {
 
 	return (
 		<Fragment>
-
 			{
 				!! galleryImages.length &&
 				<ControlsSection label={ __( 'Slides' ) }>

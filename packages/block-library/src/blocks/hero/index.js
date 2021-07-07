@@ -4,7 +4,6 @@
 import iconSvg from './hero-block.svg';
 import edit from './edit';
 import save from './save';
-import deprecated from './deprecated';
 
 import { getRandomBetween } from "@novablocks/utils";
 import { getSvg } from "@novablocks/block-editor";
@@ -15,16 +14,10 @@ import {
 	generateDefaults,
 	getPlaceholderImages,
 	insertTemplate,
-	alignmentAttributes,
-	colorAttributes,
 	layoutAttributes,
 } from "@novablocks/block-editor";
 
-import {
-	scrollingAttributes,
-} from "@novablocks/doppler";
-
-const attributes = Object.assign( {}, blockAttributes, alignmentAttributes, colorAttributes, layoutAttributes, scrollingAttributes );
+const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
 
 /**
  * WordPress dependencies
@@ -70,8 +63,19 @@ registerBlockType( 'novablocks/hero', {
 	supports: {
 		anchor: true,
     html: false,
+    novaBlocks: {
+      colorSignal: {
+        altAttributes: true,
+        addOverlayColorDeprecatedMethod: true,
+      },
+      overlayFilterStrength: true,
+      contentPositionMatrixToolbar: {
+        deprecated: true
+      },
+      customDefaults: true
+    },
 	},
-	deprecated,
+//	deprecated,
 	attributes,
 	edit,
 	save,

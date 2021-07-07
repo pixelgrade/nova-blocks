@@ -1,0 +1,10 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"layout": {
+		"type": "string",
+		"default": "logo-left"
+	}
+}

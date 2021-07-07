@@ -1,6 +1,7 @@
 import { Fragment } from "@wordpress/element";
 
 import {
+  getBoundsOfCurve,
 	getBoundsFromCurves,
 	getCurvePointsFromPoints,
 	getPointsArray,
@@ -8,7 +9,6 @@ import {
 	scaleCurvePoints,
 	BLOB_RADIUS
 } from "./utils";
-import getBoundsOfCurve from "./get-bounds-of-curve";
 
 const BlobDebug = ( attributes ) => {
 	const points = getPointsArray( attributes );

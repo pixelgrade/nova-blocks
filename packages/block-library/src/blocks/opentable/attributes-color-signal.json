@@ -1,0 +1,10 @@
+{
+	"paletteVariation": {
+		"type": "number",
+		"default": 10
+	},
+	"colorSignal": {
+		"type": "number",
+		"default": 3
+	}
+}

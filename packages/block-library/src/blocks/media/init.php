@@ -9,12 +9,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_media_attributes() {
-	$blob_attributes = novablocks_get_attributes_from_json( 'packages/blob/src/attributes.json' );
-	$gallery_attributes = novablocks_get_attributes_from_json( 'packages/advanced-gallery/src/attributes.json' );
-	$media_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/media/attributes.json' );
-	$space_and_sizing_attributes = novablocks_get_attributes_from_json( 'packages/block-editor/src/hooks/with-space-and-sizing-controls/attributes.json' );
 
-	return array_merge( $media_attributes, $gallery_attributes, $space_and_sizing_attributes, $blob_attributes );
+	return novablocks_merge_attributes_from_array( array(
+		'packages/blob/src/attributes.json',
+		'packages/advanced-gallery/src/attributes.json',
+
+		'packages/block-editor/src/hooks/with-card-details/attributes.json',
+		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
+		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
+		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
+		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
+		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
+
+		'packages/block-library/src/blocks/media/attributes.json',
+	) );
+
 }
 
 if ( ! function_exists( 'novablocks_render_media_block' ) ) {
@@ -25,21 +35,9 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$blockClasses = [];
 
 		// having no default value makes the card stretch vertically which is a desired outcome
-		if ( ! empty( $attributes['verticalAlignment'] ) ) {
-			$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
-		}
+		$classes = novablocks_get_alignment_classes( $attributes );
 
-		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$contentStyle = $attributes['contentStyle'];
-		} else {
-			$contentStyle = 'moderate';
-		}
-
-		if ( ! isset( $attributes['upgradedToModerate'] ) && $contentStyle === 'basic' ) {
-			$contentStyle = 'moderate';
-		}
-
-		$blockClasses[] = 'content-is-' . $contentStyle;
+		$blockClasses[] = novablocks_get_content_style_class( $attributes );
 
 		$attributes_config = novablocks_get_media_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -80,12 +78,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$blockClasses[] = 'novablocks-block';
 
-		if ( ! empty( $attributes['blockStyle'] ) ) {
-			$blockClasses[] = 'block-is-' . $attributes['blockStyle'];
-		} else {
-			$blockClasses[] = 'block-is-basic';
-		}
-
 		$style =
 			'--novablocks-block-top-spacing:' . $blockTopSpacing . ';' .
 			'--novablocks-block-bottom-spacing:' . $blockBottomSpacing . ';' .
@@ -93,7 +85,23 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--novablocks-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
 			'--emphasis-area:' . $emphasisArea . ';' .
 			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
-			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 5 / 100 )';
+			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-spacing) * 5 / 100 );' .
+			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
+
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+
+		$blockClasses = array_merge( $blockClasses, $blockPaletteClasses );
+		$contentVariation = novablocks_get_content_variation( $attributes );
+		$blockClasses[] = 'sm-variation-' . $contentVariation . '@below-tablet';
+
+		$contentClasses = array(
+			'novablocks-media__inner-container',
+			'novablocks-block__content'
+		);
+
+		$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
+		$contentClasses = array_merge( $contentClasses, $contentPaletteClasses );
+
 
 		ob_start(); ?>
 
@@ -104,7 +112,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		                <div class="novablocks-media__layout">
 							<?php if ( ! empty ( $content ) ) { ?>
 								<div class="novablocks-media__content">
-									<div class="novablocks-media__inner-container novablocks-block__content">
+									<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
 										<?php echo $content; ?>
 									</div>
 								</div>

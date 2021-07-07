@@ -1,10 +1,8 @@
 /**
  * Internal dependencies
  */
-import { withSettings } from '@novablocks/block-editor';
 import BlockControls from './block-controls';
 import MediaPreview from './preview';
-import InspectorControls from './inspector-controls';
 
 /**
  * WordPress dependencies
@@ -20,11 +18,10 @@ const MediaEdit = function( props ) {
 
 	return (
 		<Fragment>
-			<InspectorControls { ...props } />
 			<MediaPreview { ...{ ...props, updateImages } } />
 			<BlockControls { ...{ ...props, updateImages } } />
 		</Fragment>
 	);
 };
 
-export default withSettings( MediaEdit );
+export default MediaEdit;

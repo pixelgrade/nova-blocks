@@ -82,10 +82,10 @@ const CollectionInspectorControls = ( props ) => {
 				<PanelRow>
 					<span>{__( 'Content Alignment', '__plugin_txtd' )}</span>
 					<AlignmentToolbar
-						value={contentAlign}
-						isCollapsed={false}
-						onChange={( contentAlign ) => {
-							onChange( {contentAlign} )
+						value={ contentAlign }
+						isCollapsed={ false }
+						onChange={ contentAlign => {
+							onChange( { contentAlign } )
 						}}
 					/>
 				</PanelRow>

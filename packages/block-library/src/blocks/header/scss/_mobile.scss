@@ -1,32 +1,42 @@
-.site-header {
-	display: none;
-	overflow-y: auto;
+@include below(lap) {
 
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 1000;
+  .novablocks-header--main {
 
-	background: #fff;
+    &.novablocks-header-background:before {
+      position: fixed;
+    }
+  }
 
-	@include wp-offset(top, 0, true);
+  .novablocks-header {
+    display: none;
+    overflow-y: auto;
 
-	.c-menu-toggle__checkbox ~ & {
-		display: block;
-	}
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
 
-	.c-menu-toggle__checkbox:not(:checked) ~ & {
-		transform: translateX(-100%);
-	}
-}
+    .c-menu-toggle__checkbox ~ & {
+      display: block;
+    }
 
-.site-header__content {
-	display: flex;
-	flex-direction: column;
+    .c-menu-toggle__checkbox:not(:checked) ~ & {
+      transform: translateX(-100%);
+    }
+  }
 
-	.site-branding {
-		padding: 1em;
-		order: -1;
-	}
+  .novablocks-header__content {
+    display: flex;
+    flex-direction: column;
+
+    [class*="__inner-container"] > & {
+      max-width: none;
+    }
+
+    .site-branding {
+      padding: 1em;
+      order: -1;
+    }
+  }
 }

@@ -5,102 +5,73 @@ import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
 
-import { withDoppler } from "@novablocks/doppler";
 import {
-	normalizeImages,
-	withSettings
+	normalizeImages
 } from "@novablocks/block-editor";
 
 /**
  * WordPress dependencies
  */
 import {
-	Component,
-	Fragment,
- } from '@wordpress/element';
+  Fragment,
+  useState,
+  useEffect,
+} from '@wordpress/element';
 
-import {
-	compose,
-	createHigherOrderComponent,
- } from '@wordpress/compose';
+const Edit = ( props ) => {
 
-class Edit extends Component {
+  const {
+    attributes: {
+      galleryImages,
+    },
+  } = props;
 
-	constructor() {
-		super( ...arguments );
+  const [ selectedIndex, setSelectedIndex ] = useState(0);
 
-		this.state = {
-			selectedIndex: 0,
-		};
-	}
+  useEffect( () => {
+    if ( selectedIndex >= galleryImages.length ) {
+      setSelectedIndex( galleryImages.length - 1 );
+    }
+  }, [ selectedIndex ] );
 
-	onPrevArrowClick() {
-		const { attributes: { galleryImages } } = this.props;
-		const { selectedIndex } = this.state;
+	const onPrevArrowClick = () => {
 		const newIndex = ( selectedIndex + galleryImages.length - 1 ) % galleryImages.length;
-		this.setState( { selectedIndex: newIndex } );
+		setSelectedIndex( newIndex );
 	}
 
-	onNextArrowClick() {
-		const { attributes: { galleryImages } } = this.props;
-		const { selectedIndex } = this.state;
+	const onNextArrowClick = () => {
 		const newIndex = ( selectedIndex + 1 ) % galleryImages.length;
-		this.setState( { selectedIndex: newIndex } );
+		setSelectedIndex( newIndex );
 	}
 
-	setIndex( selectedIndex ) {
-		this.setState( { selectedIndex } );
-	}
-
-	onSelectImages( images ) {
+	const onSelectImages = ( images ) => {
 
 		const {
 			setAttributes
-		} = this.props;
+		} = props;
 
 		normalizeImages( images ).then( newImages => {
 			setAttributes( { galleryImages: newImages } );
 		} )
 	};
 
-	render() {
+  const newProps = Object.assign( {}, props, { onSelectImages } );
 
-		const {
-			attributes: {
-				galleryImages,
-			},
-		} = this.props;
+  return (
+    <Fragment>
 
-		const onSelectImages = this.onSelectImages.bind( this );
-		const newProps = Object.assign( {}, this.props, { onSelectImages } );
+      <SlideshowPreview
+        { ...newProps }
+        previewImage={ galleryImages[ selectedIndex ] }
+        onPrevArrowClick={ onPrevArrowClick }
+        onNextArrowClick={ onNextArrowClick }
+      />
 
-		const setIndex = this.setIndex.bind( this );
+      <InspectorControls { ...{ ...newProps, setIndex: setSelectedIndex, selectedIndex } } />
+      <BlockControls { ...newProps } />
 
-		let { selectedIndex } = this.state;
-
-		if ( selectedIndex >= galleryImages.length ) {
-			selectedIndex = galleryImages.length - 1;
-		}
-
-		return (
-			<Fragment>
-
-				<SlideshowPreview
-					{ ...newProps }
-					previewImage={ galleryImages[ selectedIndex ] }
-					onPrevArrowClick={ this.onPrevArrowClick.bind( this ) }
-					onNextArrowClick={ this.onNextArrowClick.bind( this ) }
-				/>
-
-				<InspectorControls { ...{ ...newProps, setIndex, selectedIndex } } />
-				<BlockControls { ...newProps } />
-
-			</Fragment>
-		);
-	}
+    </Fragment>
+  );
 }
 
-export default createHigherOrderComponent(compose([
-	withSettings,
-	withDoppler,
-]))( Edit );
+export default Edit;

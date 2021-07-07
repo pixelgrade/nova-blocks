@@ -17,8 +17,8 @@ registerBlockType( 'novablocks/post-comments', {
 	description: __( 'Display your post comments section.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
 	category: 'nova-blocks',
-  parent: ['novablocks/post-comments-dummy'],
   supports: {
+    inserter: false,
     html: false
   },
 	edit,

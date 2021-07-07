@@ -14,6 +14,14 @@ if ( ! function_exists( 'novablocks_get_announcement_bar_attributes') ) {
 			'opensInNewTab' => array(
 				'type' => 'boolean',
 				'default' => false,
+			),
+			'palette' => array(
+				'type' => 'number',
+				'default' => 1,
+			),
+			'paletteVariation' => array(
+				'type' => 'number',
+				'default' => 1,
 			)
 		);
 	}

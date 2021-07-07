@@ -113,7 +113,7 @@ const TRANSITION_EASING = "easeInOutCirc";
 	function hasFixedBackground( $slide ) {
 		let fixed = false;
 
-		if ( $slide.find( '.novablocks-parallax' ).css( 'position' ) === 'fixed' ) {
+		if ( $slide.find( '.novablocks-doppler__target' ).css( 'position' ) === 'fixed' ) {
 			return true;
 		}
 

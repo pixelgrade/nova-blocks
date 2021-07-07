@@ -1,4 +1,8 @@
 {
+	"sourceType": {
+		"type": "string",
+		"default": "content"
+	},
 	"postsToShow": {
 		"type": "integer",
 		"default": 6

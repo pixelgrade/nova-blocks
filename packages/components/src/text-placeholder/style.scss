@@ -1,6 +1,5 @@
 :root {
 	--novablocks-text-placeholder-line-height: 1.5;
-	--novablocks-text-placeholder-shine-color: var(--novablocks-current-light-primary);
 	--novablocks-text-placeholder-shine-width: 5em;
 }
 
@@ -8,7 +7,7 @@
 	--novablocks-text-placeholder-margin: calc((var(--novablocks-text-placeholder-line-height) - 1) * 0.5em);
 	position: relative;
 	height: 0.8em;
-	background: var(--novablocks-current-light-tertiary);
+  background: var(--novablocks-fg1-color);
 
 	border: 0 solid transparent;
 	border-top-width: var(--novablocks-text-placeholder-margin);
@@ -24,7 +23,7 @@
 		bottom: 0;
 		left: 0;
 
-		background-image: linear-gradient(90deg, transparent 0%, var(--novablocks-text-placeholder-shine-color) 50%, transparent 100%);
+		background-image: linear-gradient(90deg, transparent 0%, var(--novablocks-bg-color) 50%, transparent 100%);
 		background-size: var(--novablocks-text-placeholder-shine-width) 100%;
 		background-repeat: no-repeat;
 		display: block;

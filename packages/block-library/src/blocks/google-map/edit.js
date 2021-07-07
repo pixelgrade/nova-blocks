@@ -3,7 +3,6 @@ import Map from './map';
 import InspectorControls from './inspector-controls';
 
 import { withSettings } from '@novablocks/block-editor';
-import { withDoppler } from '@novablocks/doppler';
 
 import { __ } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
@@ -25,7 +24,6 @@ import {
 } from '@wordpress/block-editor';
 
 import {
-	compose,
 	createHigherOrderComponent,
 } from '@wordpress/compose';
 
@@ -202,7 +200,4 @@ class Edit extends Component {
 	}
 }
 
-export default createHigherOrderComponent(compose([
-	withSettings,
-	withDoppler,
-]))( Edit );
+export default createHigherOrderComponent( withSettings )( Edit );

@@ -9,6 +9,10 @@
 	@include above(desktop) {
 		padding-top: percentage(9/16);
 	}
+
+  > .novablocks-doppler__mask {
+    @include cover;
+  }
 }
 
 .novablocks-map__map {

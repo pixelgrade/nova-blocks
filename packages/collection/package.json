@@ -16,5 +16,8 @@
 	},
 	"bugs": {
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
+	},
+	"dependencies": {
+		"react-slick": "^0.28.1"
 	}
 }

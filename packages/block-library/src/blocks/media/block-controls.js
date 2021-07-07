@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { AlignmentToolbar } from '@novablocks/block-editor';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -40,7 +35,6 @@ const MediaBlockControls = function( props ) {
 
 	return (
 		<BlockControls>
-
 			<Toolbar
 				controls={ Object.keys( MEDIA_ALIGNMENTS_CONTROLS ).map( ( control ) => {
 					return {
@@ -52,9 +46,6 @@ const MediaBlockControls = function( props ) {
 					};
 				} ) }
 			/>
-
-			<AlignmentToolbar { ...props } />
-
 		</BlockControls>
 	);
 };

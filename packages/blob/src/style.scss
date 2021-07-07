@@ -1,6 +1,4 @@
 .blob-mix__mask-debug,
-.blob-mix__mask,
-.blob-mix__media,
 .blob-mix__decoration {
 	position: absolute;
 	top: 0;
@@ -11,15 +9,13 @@
 }
 
 .blob-mix__media {
+  position: relative;
 	z-index: 10;
 	transform: var(--blob-mix-media-transform);
+  transform-origin: 0 0;
 }
 
 .blob-mix__decoration {
 	transform: var(--blob-mix-decoration-transform);
-	fill: var(--novablocks-current-color-primary);
-
-	.novablocks-block & {
-		fill: var(--novablocks-block-accent-color);
-	}
+  fill: var(--novablocks-accent-color);
 }

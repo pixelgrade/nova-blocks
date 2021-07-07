@@ -2,8 +2,6 @@
  * Internal dependencies
  */
 import {
-	AlignmentToolbar,
-	ColorToolbar,
   getIconSvg
 } from '@novablocks/block-editor';
 
@@ -37,8 +35,6 @@ const SlideshowBlockControls = function( props ) {
 
 	return (
 		<BlockControls>
-			<AlignmentToolbar { ...props } />
-			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
 					accept="image/*"

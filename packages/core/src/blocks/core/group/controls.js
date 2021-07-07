@@ -12,6 +12,7 @@ import {
 } from "@novablocks/block-editor";
 
 class Inspector extends Component {
+
   render() {
     const {
       attributes,
@@ -25,7 +26,6 @@ class Inspector extends Component {
     return (
     <ControlsSection label={ __( 'Layout' ) }>
       <ControlsTab label={ __( 'Alignments' ) }>
-
         <RadioControl
           key={ 'novablocks-card-layout-controls' }
           selected={ contentAlignment }

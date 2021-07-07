@@ -139,8 +139,10 @@ const AutomatedControls = ( props ) => {
 			onChange={ onPreventDuplicatePostsChange }
 		/>,
 		<QueryControls
-			key="queryControls" { ...props }
-			minItems={ 2 }
+			key="queryControls"
+			minItems={ 1 }
+      maxItems={ 20 }
+      { ...props }
 		/>,
 		onAuthorsChange && (
 			<AutocompleteTokenField

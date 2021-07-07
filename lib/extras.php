@@ -152,16 +152,30 @@ function novablocks_get_doppler_attributes() {
 	);
 }
 
-function novablocks_get_block_extra_classes( $attributes ) {
+function novablocks_get_alignment( $attributes ) {
+	if ( ! empty( $attributes['contentPosition'] ) ) {
+		return explode( ' ', $attributes['contentPosition'] );
+	} else {
+		return array(
+			$attributes['verticalAlignment'],
+			$attributes['horizontalAlignment']
+		);
+	}
+}
+
+function novablocks_get_alignment_classes( $attributes ) {
 	$classes = array();
 
-	if ( ! empty( $attributes['verticalAlignment'] ) ) {
-		$classes[] = 'novablocks-u-valign-' . $attributes['verticalAlignment'];
-	}
+	$alignment = novablocks_get_alignment( $attributes );
 
-	if ( ! empty( $attributes['horizontalAlignment'] ) ) {
-		$classes[] = 'novablocks-u-halign-' . $attributes['horizontalAlignment'];
-	}
+	$classes[] = 'novablocks-u-valign-' . $alignment[0];
+	$classes[] = 'novablocks-u-halign-' . $alignment[1];
+
+	return $classes;
+}
+
+function novablocks_get_block_extra_classes( $attributes ) {
+	$classes = novablocks_get_alignment_classes( $attributes );
 
 	if ( ! empty( $attributes['contentPadding'] ) ) {
 		$classes[] = 'novablocks-u-spacing-' . $attributes['contentPadding'];
@@ -177,27 +191,6 @@ function novablocks_get_block_extra_classes( $attributes ) {
 	}
 
 	return $classes;
-}
-
-function novablocks_get_header_attributes() {
-	return array(
-		'align'  => array(
-			'type'    => 'string',
-			'default' => 'full',
-		),
-		'layout' => array(
-			'type'    => 'string',
-			'default' => 'logo-left',
-		),
-		'stickyRow' => array(
-			'type'    => 'string',
-			'default' => 'primary'
-		),
-		'shouldBeSticky' => array(
-			'type'	=> 'bool',
-			'default'	=> false
-		)
-	);
 }
 
 function novablocks_get_collection_attributes() {
@@ -326,34 +319,6 @@ function novablocks_add_media_settings( $settings ) {
 						),
 					),
 				)
-			),
-		),
-		'contentAreaOptions' => array(
-			array(
-				'label' => esc_html__( 'Basic', '__plugin_txtd' ),
-				'value' => 'basic',
-			),
-			array(
-				'label' => esc_html__( 'Moderate', '__plugin_txtd' ),
-				'value' => 'moderate',
-			),
-			array(
-				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
-				'value' => 'highlighted',
-			),
-		),
-		'blockAreaOptions'   => array(
-			array(
-				'label' => esc_html__( 'Basic', '__plugin_txtd' ),
-				'value' => 'basic',
-			),
-			array(
-				'label' => esc_html__( 'Moderate', '__plugin_txtd' ),
-				'value' => 'moderate',
-			),
-			array(
-				'label' => esc_html__( 'Highlighted', '__plugin_txtd' ),
-				'value' => 'highlighted',
 			),
 		),
 	);
@@ -1019,6 +984,12 @@ function novablocks_get_advanced_gallery_component_attributes() {
 }
 
 function novablocks_render_advanced_gallery( $attributes ) {
+	echo novablocks_get_advanced_gallery( $attributes );
+}
+
+function novablocks_get_advanced_gallery( $attributes ) {
+
+	ob_start();
 
 	$images = array();
 
@@ -1118,6 +1089,8 @@ function novablocks_render_advanced_gallery( $attributes ) {
 		echo '</div>';
 
 	}
+
+	return ob_get_clean();
 }
 
 function novablocks_get_card_media_padding_top( $containerHeight ) {
@@ -1140,7 +1113,7 @@ function novablocks_get_card_media_padding_top( $containerHeight ) {
 		$denominator = 1 + abs( $containerHeight );
 	}
 
-	return ( $numerator * 100 / $denominator ) . '%';
+	return ( $numerator * 100 / $denominator );
 }
 
 function novablocks_get_color_classes( $attributes ) {
@@ -1189,20 +1162,23 @@ function novablocks_get_spacing_css( $attributes ) {
 	}
 
 	return array(
-		'--block-top-spacing: ' . $blockTopSpacing,
-		'--block-bottom-spacing: ' . $blockBottomSpacing,
-		'--emphasis-top-spacing: ' . $emphasisTopSpacing,
-		'--emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
+		'--novablocks-block-top-spacing: ' . $blockTopSpacing,
+		'--novablocks-block-bottom-spacing: ' . $blockBottomSpacing,
+		'--novablocks-emphasis-top-spacing: ' . $emphasisTopSpacing,
+		'--novablocks-emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
 	);
 }
 
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
-		$classes = array( 'novablocks-collection' );
-		$classes[] = 'novablocks-block';
-		$classes[] = 'alignfull';
-		$classes[] = 'novablocks-collection--align-' . $attributes[ 'contentAlign' ];
+		$classes = array(
+			'novablocks-block',
+			'novablocks-block-spacing',
+			'novablocks-collection',
+			'novablocks-collection--align-' . $attributes[ 'contentAlign' ],
+			'alignfull',
+		);
 
 		if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
 			$classes[] = 'novablocks-card--fixed-media-aspect-ratio';
@@ -1213,8 +1189,9 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		}
 
 		$cssProps = array(
+			'--card-content-padding: ' . $attributes['contentPadding'],
 			'--card-media-padding: ' . $attributes['imagePadding'],
-			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ),
+			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%',
 			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
 
@@ -1222,6 +1199,8 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		$style = join( '; ', $cssProps );
 
 		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
+
+		$classes = array_merge( $classes, novablocks_get_palette_classes( $attributes ) );
 		$className = join( ' ', $classes );
 
 		ob_start(); ?>
@@ -1267,29 +1246,54 @@ function novablocks_get_card_media_markup( $media ) {
 
 	$url = $media['url'];
 
-	ob_start(); ?>
-
-	<div class="novablocks-card__media-wrap">
-		<div class="novablocks-card__media">
-			<?php if ( ! empty( $url ) ) {
-				if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-					echo '<video muted autoplay loop playsinline class="novablocks-card__media-image" src="' . esc_url( $url ) . '"/>';
-				} else {
-					$url = novablocks_get_image_url( $media, 'novablocks_medium' );
-					echo '<img class="novablocks-card__media-image" src="' . $url . '" />';
-				}
-			} else { ?>
-				<div class="novablocks-card__media-placeholder">
-					<svg width="100" height="67" viewBox="0 0 100 67" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z" fill="currentColor"/>
-						<path d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z" fill="currentColor"/>
-					</svg>
-				</div>
-			<?php } ?>
+	ob_start(); 
+	
+	if ( ! empty( $url ) ) {
+		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
+			echo '<video class="novablocks-card__media-image" muted autoplay loop playsinline src="' . esc_url( $url ) . '"/>';
+		} else {
+			$url = novablocks_get_image_url( $media, 'novablocks_medium' );
+			echo '<img class="novablocks-card__media-image" src="' . $url . '" />';
+		}
+	} else { ?>
+		<div class="novablocks-card__media-placeholder">
+			<svg width="100" height="67" viewBox="0 0 100 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z" fill="currentColor"/>
+				<path d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z" fill="currentColor"/>
+			</svg>
 		</div>
-	</div>
+	<?php } 
+	
+	return ob_get_clean();
+}
 
-	<?php return ob_get_clean();
+function novablocks_get_card_post_meta( $post, $attributes ) {
+	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
+	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+
+	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
+		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
+	} else {
+		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
+	}
+
+	if ( 'above-title' === $attributes[ 'metadataPosition' ] ) {
+		$aboveTitleMeta = $combinedMeta;
+	}
+
+	if ( 'below-title' === $attributes[ 'metadataPosition' ] ) {
+		$belowTitleMeta = $combinedMeta;
+	}
+
+	if ( 'split' === $attributes[ 'metadataPosition' ] ) {
+		$aboveTitleMeta = $primaryMeta;
+		$belowTitleMeta = $secondaryMeta;
+	}
+
+	return array(
+		$aboveTitleMeta,
+		$belowTitleMeta
+	);
 }
 
 function novablocks_build_articles_query( $attributes ) {
@@ -1619,6 +1623,77 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 	return $script;
 }
 
+function novablocks_get_palette_classes( $attributes ) {
+	$classes = array(
+		'sm-palette-' . $attributes['palette'],
+		'sm-variation-' . $attributes['paletteVariation'],
+	);
+
+	if ( $attributes['useSourceColorAsReference'] ) {
+		$classes[] = 'sm-palette--shifted';
+	}
+
+	return $classes;
+}
+
+function novablocks_normalize_variation_value( $variation ) {
+	return ( $variation + 11 ) % 12 + 1;
+}
+
+function novablocks_get_content_palette_classes( $attributes ) {
+	$contentVariation = novablocks_get_content_variation( $attributes );
+
+	$classes = array(
+		'sm-palette-' . $attributes['palette'],
+		'sm-variation-' . $contentVariation
+	);
+
+	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
+		$classes[] = 'sm-palette--shifted';
+	}
+
+	return $classes;
+}
+
+function novablocks_get_content_variation( $attributes ) {
+	$palettes_output = pixelgrade_option( 'sm_advanced_palette_output' );
+	$palettes = json_decode( $palettes_output );
+
+	$current_palette = null;
+	foreach ( $palettes as $palette ) {
+		if ( $attributes['palette'] == $palette->id ) {
+			$current_palette = $palette;
+			break;
+		}
+	}
+
+	$sourceIndex = $current_palette->sourceIndex;
+	$siteVariation = pixelgrade_option( 'sm_site_color_variation' );
+	$offset = $siteVariation - 1;
+
+	if ( $attributes[ 'useSourceColorAsReference' ] ) {
+		$offset = $sourceIndex;
+	}
+
+	$referenceVariation = novablocks_normalize_variation_value( $attributes['paletteVariation'] + $offset );
+	$contentSignalOptions = novablocks_get_signal_options_from_variation( $referenceVariation );
+	return novablocks_normalize_variation_value( $contentSignalOptions[ $attributes['contentColorSignal'] ] - $offset );
+}
+
+function novablocks_get_content_style_class( $attributes ) {
+	$contentStyle = 'moderate';
+
+	if ( ! empty( $attributes['contentStyle'] ) ) {
+		$contentStyle = $attributes['contentStyle'];
+	}
+
+	if ( ! isset( $attributes['upgradedToModerate'] ) && $contentStyle === 'basic' ) {
+		$contentStyle = 'moderate';
+	}
+
+	return 'content-is-' . $contentStyle;
+}
+
 function novablocks_get_customizer_link( $return_url = false,  $extra_query_args = array() ) {
 	global $wp;
 
@@ -1640,4 +1715,150 @@ function novablocks_get_customizer_link( $return_url = false,  $extra_query_args
 	}
 
 	return $link;
+}
+
+function novablocks_merge_attributes_from_array( $pathsArray ) {
+	$accumulator = [];
+
+	foreach ( $pathsArray as $path ) {
+		$attributes = novablocks_get_attributes_from_json( $path );
+		$accumulator = array_merge( $accumulator, $attributes );
+	}
+
+	return $accumulator;
+}
+
+function novablocks_get_card_contents( $attributes ) {
+	ob_start();
+
+	echo novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
+	echo novablocks_get_card_item_title( $attributes['title'], $attributes );
+	echo novablocks_get_card_item_meta( $attributes['metaBelow'], $attributes );
+	echo novablocks_get_card_item_description( $attributes['description'], $attributes );
+	echo novablocks_get_card_item_buttons( array(
+		array(
+			'text' => $attributes[ 'buttonText' ],
+			'url' => $attributes ['buttonUrl' ],
+		)
+	), $attributes );
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_meta( $metaValue, $attributes ) {
+	ob_start(); ?>
+
+	<?php if ( ! empty( $attributes['showMeta'] ) && ! empty( $metaValue ) ) { ?>
+		<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+			<div class="novablocks-card__meta-size-modifier">
+				<?php echo $metaValue; ?>
+			</div>
+		</div>
+	<?php }
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_title( $title, $attributes ) {
+	$titleTag = 'h' . $attributes['cardTitleLevel'];
+
+	ob_start();
+
+	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
+		echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
+		echo '<div class="novablocks-card__title-size-modifier">';
+		echo $title;
+		echo '</div>';
+		echo '</' . $titleTag . '>';
+	}
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_description( $description, $attributes ) {
+	ob_start();
+
+	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
+		<div class="novablocks-grid__item-content novablocks-card__description">
+			<div class="novablocks-card__content-size-modifier">
+				<?php echo $description; ?>
+			</div>
+		</div>
+	<?php }
+
+	return ob_get_clean();
+}
+
+function novablocks_get_card_item_buttons( $buttons, $attributes ) {
+	ob_start();
+
+	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons ) ) { ?>
+		<div class="novablocks-grid__item-buttons novablocks-card__buttons">
+			<div class="wp-block-buttons alignleft">
+				<?php foreach ( $buttons as $button ) { ?>
+					<div class="wp-block-button is-style-text">
+						<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
+							<span class="novablocks-buttons-size-modifier"><?php echo $button['text']; ?></span>
+						</a>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+	<?php }
+
+	return ob_get_clean();
+}
+
+function novablocks_get_signal_options_from_variation( $variation ) {
+	$blockSignal = novablocks_get_signal_from_variation( $variation );
+
+	$variationOptions = array();
+
+	for ( $index = 0; $index < 4; $index++ ) {
+		if ( $index === $blockSignal ) {
+			$variationOptions[] = $variation;
+		} else {
+			$variationOptions[] = novablocks_get_variation_from_signal( $index );
+		}
+	}
+
+	usort( $variationOptions, function( $variation1, $variation2 ) use ( $variation ) {
+		return abs( $variation - $variation1 ) < abs( $variation - $variation2 ) ? - 1 : 1;
+	} );
+
+	return $variationOptions;
+}
+
+function novablocks_get_signal_from_variation( $variation ) {
+
+	if ( $variation === 1 ) {
+		return 0;
+	}
+
+	if ( $variation < 5 ) {
+		return 1;
+	}
+
+	if ( $variation < 9 ) {
+		return 2;
+	}
+
+	return 3;
+}
+
+function novablocks_get_variation_from_signal( $signal ) {
+
+	if ( $signal === 1 ) {
+		return 3;
+	}
+
+	if ( $signal === 2 ) {
+		return 6;
+	}
+
+	if ( $signal === 3 ) {
+		return 10;
+	}
+
+	return 1;
 }

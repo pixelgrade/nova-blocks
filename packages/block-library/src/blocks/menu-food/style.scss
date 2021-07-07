@@ -1,7 +1,7 @@
 @at-root {
 
 	:root {
-		--nova-food-menu-item-highlight-color: var(--novablocks-current-color-primary);
+		--nova-food-menu-item-highlight-color: var(--novablocks-accent-color);
 	}
 }
 
@@ -88,7 +88,7 @@
 		display: block;
 		height: calc( 0.75 * var( --item-padding ) );
 
-		background-color: var(--novablocks-current-light-primary);
+		background-color: var(--novablocks-bg-color);
 		border-top-left-radius: var(--item-border-radius);
 		border-top-right-radius: var(--item-border-radius);
 	}
@@ -126,7 +126,7 @@
 
 	margin-bottom: 0 !important;
 
-	background-color: var(--novablocks-current-light-primary);
+	background-color: var(--novablocks-bg-color);
 }
 
 .item-description {
@@ -152,7 +152,7 @@
 }
 
 .nova-food-menu-item__label[class] {
-	color: var(--novablocks-current-light-primary);
+	color: var(--novablocks-bg-color);
 
 	margin: 0;
 }

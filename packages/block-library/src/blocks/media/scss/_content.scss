@@ -4,4 +4,8 @@
 	justify-content: center;
 
 	word-break: break-word;
+
+  &[class][class] {
+    padding: calc( var(--novablocks-spacing) * var(--card-content-padding, 0) / 100 );
+  }
 }
