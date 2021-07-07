@@ -4,7 +4,7 @@ import {
 	subscribe,
 } from '@wordpress/data';
 
-export default ( blockType, getNewDefaults ) => {
+const generateDefaults = ( blockType, getNewDefaults ) => {
 	const { getBlocksByClientId, getClientIdsWithDescendants } = select( 'core/block-editor' );
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' );
 
@@ -40,3 +40,5 @@ export default ( blockType, getNewDefaults ) => {
 		} );
 	} );
 }
+
+export default generateDefaults;

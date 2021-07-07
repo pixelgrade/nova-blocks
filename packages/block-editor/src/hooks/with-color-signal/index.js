@@ -12,7 +12,7 @@ import altAttributes from './attributes-alt.json';
 
 import classnames from 'classnames';
 
-const withColorSetsAttributes = ( settings, name ) => {
+const withColorSignalAttributes = ( settings, name ) => {
 
   if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
     return settings;
@@ -27,9 +27,9 @@ const withColorSetsAttributes = ( settings, name ) => {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-sets-attributes', withColorSetsAttributes );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-attributes', withColorSignalAttributes );
 
-const withColorSetsDeprecation = ( settings, name ) => {
+const withColorSignalsDeprecation = ( settings, name ) => {
 
   if ( ! settings?.supports?.novaBlocks?.colorSignal?.addOverlayColorDeprecatedMethod ) {
     return settings;
@@ -62,7 +62,7 @@ const withColorSetsDeprecation = ( settings, name ) => {
     ].concat( settings.deprecated ),
   } );
 }
-addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-deprecation', withColorSetsDeprecation );
+addFilter( 'blocks.registerBlockType', 'nova-blocks/with-color-signal-deprecation', withColorSignalsDeprecation );
 
 const withColorSignalControls = createHigherOrderComponent( OriginalComponent => {
 

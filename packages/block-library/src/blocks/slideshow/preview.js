@@ -59,12 +59,15 @@ const SlideshowPreview = class extends Component {
       minHeight,
 
       // alignment
-      verticalAlignment,
-      horizontalAlignment,
+      contentPosition,
 
       // media
       galleryImages,
     } = attributes;
+
+		const alignment = contentPosition.split( " " );
+		const verticalAlignment = alignment[0];
+		const horizontalAlignment = alignment[1];
 
 		const classes = [
 			className,

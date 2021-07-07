@@ -2,8 +2,6 @@
  * Internal dependencies
  */
 import {
-  AlignmentToolbar,
-  ColorToolbar,
   getIconSvg
 } from '@novablocks/block-editor';
 
@@ -25,14 +23,13 @@ import {
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const HeroBlockControls = function( props ) {
+
 	const {
 		setAttributes,
 	} = props;
 
 	return (
 		<BlockControls>
-			<AlignmentToolbar { ...props } />
-			<ColorToolbar { ...props } />
 			<Toolbar>
 				<MediaUpload
 					allowedTypes={ ALLOWED_MEDIA_TYPES }

@@ -1,5 +1,4 @@
 @import "components/autocomplete-tokenfield/editor-styles";
-@import "components/color-controls/editor-styles";
 @import 'components/controls-sections/editor-styles';
 @import 'components/controls-group/editor-styles';
 @import 'components/drawer/editor-styles';
@@ -8,6 +7,7 @@
 @import 'components/signal-control/editor-styles';
 @import 'components/color-grades-control/editor-styles';
 
+@import "hooks/with-overlay-filter-strength-controls/editor-styles";
 @import 'hooks/with-color-signal/editor-styles';
 
 .novablocks-change-media-overlay {

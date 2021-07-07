@@ -98,7 +98,7 @@ export const ParametricLayoutPreview = ( props ) => {
 	return (
 		<div className="wp-block-group__inner-container">
 			{ headerPosition === 0 && <CollectionHeader { ...props } /> }
-			<div className="novablocks-collection__cards block-editor-block-list__block">
+			<div className="novablocks-collection__cards block-editor-block-list__block" data-align="wide">
 				<div className="novablocks-collection__layout">
           <ParametricGrid { ...props } gridClassName={ gridClassName }/>
 				</div>

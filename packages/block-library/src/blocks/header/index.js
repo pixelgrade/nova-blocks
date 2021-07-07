@@ -2,8 +2,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { addFilter } from '@wordpress/hooks';
 import { registerBlockType } from '@wordpress/blocks';
+import { select } from "@wordpress/data";
 import { InnerBlocks } from '@wordpress/block-editor';
+
+import { getSvg } from "@novablocks/block-editor";
 
 /**
  * Internal dependencies
@@ -12,9 +16,25 @@ import iconSvg from './header-block.svg';
 import edit from './edit';
 import variations from './variations';
 import deprecated from './deprecated';
+import attributes from './attributes.json';
+import attributesColorSignal from './attributes-color-signal.json';
 
-import { getSvg } from "@novablocks/block-editor";
-import { select } from "@wordpress/data";
+const withColorSignalAttributes = ( settings ) => {
+
+  if ( 'novablocks/header' !== settings.name ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesColorSignal
+    }
+  };
+
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/header-color-signal-attributes-overwrite', withColorSignalAttributes, 20 );
 
 registerBlockType( 'novablocks/header', {
 	title: __( 'Header', '__plugin_txtd' ),
@@ -32,6 +52,7 @@ registerBlockType( 'novablocks/header', {
   },
 	variations,
   deprecated,
+  attributes,
 	edit,
 	save: function() {
 		return <InnerBlocks.Content />

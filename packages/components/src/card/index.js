@@ -41,14 +41,12 @@ const Card = ( props ) => {
 				}
 				{
 					( showMeta || showTitle || showContent || showButtons || placeholder ) &&
-					<div className="novablocks-card__layout-content">
-            <div className="novablocks-card__inner-container">
-              <CardMeta { ...props } meta={ metaAboveTitle } />
-              <CardTitle { ...props } />
-              <CardMeta { ...props } meta={ metaBelowTitle } />
-              <CardContent { ...props } />
-              <CardFooter { ...props } />
-            </div>
+					<div className="novablocks-card__layout-content novablocks-card__inner-container">
+            <CardMeta { ...props } meta={ metaAboveTitle } />
+            <CardTitle { ...props } />
+            <CardMeta { ...props } meta={ metaBelowTitle } />
+            <CardContent { ...props } />
+            <CardFooter { ...props } />
 					</div>
 				}
 			</div>

@@ -92,7 +92,7 @@ const maybeWithLatestPosts = createHigherOrderComponent( BlockEdit => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-    if ( supports?.novaBlocks?.latestPosts ) {
+    if ( ! supports?.novaBlocks?.latestPosts ) {
       return <BlockEdit { ...props } />
     }
 

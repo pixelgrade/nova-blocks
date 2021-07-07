@@ -28,16 +28,6 @@
 	background-color: #EEEEEE;
 }
 
-.novablocks-media__inner-container {
-	padding-left: var(--novablocks-spacing);
-	padding-right: var(--novablocks-spacing);
-
-	> [data-align='full'] {
-		margin-left: calc(-1 * var(--novablocks-spacing));
-		margin-right: calc(-1 * var(--novablocks-spacing));
-	}
-}
-
 .novablocks-media__content:before,
 .novablocks-media__content:after,
 .novablocks-media__inner-container {

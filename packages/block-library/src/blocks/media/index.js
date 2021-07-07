@@ -15,9 +15,9 @@ import AdvancedGallery from "@novablocks/advanced-gallery";
 
 import {
   getSvg,
-	generateDefaults,
-	getPlaceholderImages,
-	insertTemplate,
+  generateDefaults,
+  getPlaceholderImages,
+  insertTemplate,
 } from "@novablocks/block-editor";
 
 const { getRandomAttributes } = AdvancedGallery.utils;
@@ -72,7 +72,10 @@ registerBlockType( 'novablocks/media', {
     novaBlocks: {
       colorSignal: true,
       contentColorSignal: true,
-      blobs: true
+      blobs: true,
+      contentPositionMatrixToolbar: {
+        deprecated: true
+      },
     },
   },
 	edit,
