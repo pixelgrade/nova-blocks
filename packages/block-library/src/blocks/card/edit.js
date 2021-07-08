@@ -83,6 +83,7 @@ const CardEdit = ( props ) => {
                   onChange={meta => {
                     setAttributes( {meta} )
                   }}
+                  placeholder={ __( 'Meta' ) }
                   allowedFormats={ [] }
                 />
               }
@@ -95,6 +96,7 @@ const CardEdit = ( props ) => {
                   onChange={title => {
                     setAttributes( {title} )
                   }}
+                  placeholder={ __( 'Title' ) }
                   allowedFormats={ [] }
                 />
               }
@@ -107,6 +109,7 @@ const CardEdit = ( props ) => {
                   onChange={subtitle => {
                     setAttributes( {subtitle} )
                   }}
+                  placeholder={ __( 'Subtitle' ) }
                   allowedFormats={ [] }
                 />
               }
@@ -119,6 +122,7 @@ const CardEdit = ( props ) => {
                   onChange={description => {
                     setAttributes( {description} )
                   }}
+                  placeholder={ __( 'This is just an example of what a description for this card could look like' ) }
                   allowedFormats={ [] }
                 />
               }
