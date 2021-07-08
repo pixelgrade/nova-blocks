@@ -87,6 +87,7 @@ export const CollectionPreview = ( props ) => {
 		imageResizing,
 		containerHeight,
 		imagePadding,
+    contentPadding,
 
 		columns,
 		postsToShow,
@@ -101,6 +102,7 @@ export const CollectionPreview = ( props ) => {
 
 	const style = {
 		'--card-media-padding': imagePadding,
+    '--card-content-padding': contentPadding,
 		'--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};

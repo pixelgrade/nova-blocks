@@ -37,7 +37,7 @@
 	}
 }
 
-.novablocks-card__inner-container {
+.novablocks-card__inner-container[class][class] {
   padding: calc( var(--novablocks-spacing) * var(--card-content-padding, 0) / 100 );
 }
 

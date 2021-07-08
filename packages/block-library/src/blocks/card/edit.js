@@ -72,69 +72,71 @@ const CardEdit = ( props ) => {
 				}
 				{
 					( showMeta || showTitle || showSubtitle || showDescription || showButtons ) &&
-					<div className="novablocks-card__layout-content novablocks-card__inner-container">
-						{
-							showMeta &&
-							<RichText
-								className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
-								tagName={ 'p' }
-								value={meta}
-								onChange={meta => {
-									setAttributes( {meta} )
-								}}
-								allowedFormats={ [] }
-							/>
-						}
-						{
-							showTitle &&
-							<RichText
-								className={ `novablocks-card__title block-editor-block-list__block` }
-								tagName={`h${level + 1}`}
-								value={title}
-								onChange={title => {
-									setAttributes( {title} )
-								}}
-								allowedFormats={ [] }
-							/>
-						}
-						{
-							showSubtitle &&
-							<RichText
-								className={ `novablocks-card__subtitle block-editor-block-list__block` }
-								tagName={ `h${level + 2}` }
-								value={subtitle}
-								onChange={subtitle => {
-									setAttributes( {subtitle} )
-								}}
-								allowedFormats={ [] }
-							/>
-						}
-						{
-							showDescription &&
-							<RichText
-								className={ `novablocks-card__description block-editor-block-list__block` }
-								tagName={ 'p' }
-								value={description}
-								onChange={description => {
-									setAttributes( {description} )
-								}}
-								allowedFormats={ [] }
-							/>
-						}
-						{
-							showButtons &&
-							<div className={ `novablocks-card__buttons block-editor-block-list__block` }>
-								<InnerBlocks
-									allowedBlocks={ [ 'core/buttons' ] }
-									renderAppender={ false }
-									template={ [
-										[ 'core/buttons', { align: contentAlign },
-											[ [ 'core/button', { text: 'Button', className: 'is-style-text' } ] ]
-										]
-									] }
-								/>
-							</div>
-						}
+					<div className="novablocks-card__layout-content">
+            <div className="novablocks-card__inner-container">
+              {
+                showMeta &&
+                <RichText
+                  className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
+                  tagName={ 'p' }
+                  value={meta}
+                  onChange={meta => {
+                    setAttributes( {meta} )
+                  }}
+                  allowedFormats={ [] }
+                />
+              }
+              {
+                showTitle &&
+                <RichText
+                  className={ `novablocks-card__title block-editor-block-list__block` }
+                  tagName={`h${level + 1}`}
+                  value={title}
+                  onChange={title => {
+                    setAttributes( {title} )
+                  }}
+                  allowedFormats={ [] }
+                />
+              }
+              {
+                showSubtitle &&
+                <RichText
+                  className={ `novablocks-card__subtitle block-editor-block-list__block` }
+                  tagName={ `h${level + 2}` }
+                  value={subtitle}
+                  onChange={subtitle => {
+                    setAttributes( {subtitle} )
+                  }}
+                  allowedFormats={ [] }
+                />
+              }
+              {
+                showDescription &&
+                <RichText
+                  className={ `novablocks-card__description block-editor-block-list__block` }
+                  tagName={ 'p' }
+                  value={description}
+                  onChange={description => {
+                    setAttributes( {description} )
+                  }}
+                  allowedFormats={ [] }
+                />
+              }
+              {
+                showButtons &&
+                <div className={ `novablocks-card__buttons block-editor-block-list__block` }>
+                  <InnerBlocks
+                    allowedBlocks={ [ 'core/buttons' ] }
+                    renderAppender={ false }
+                    template={ [
+                      [ 'core/buttons', { align: contentAlign },
+                        [ [ 'core/button', { text: 'Button', className: 'is-style-text' } ] ]
+                      ]
+                    ] }
+                  />
+                </div>
+              }
+            </div>
 					</div>
 				}
 			</div>
