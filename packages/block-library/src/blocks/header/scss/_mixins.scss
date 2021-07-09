@@ -21,13 +21,20 @@
 }
 
 @mixin header-shadow {
+  
+  --header-shadow-opacity: 0;
+  
+  &.novablocks-header--sticky,
+  &.novablocks-header--mobile[style*='fixed']{
+    --header-shadow-opacity: 0.1;
+  }
 
   &:after {
     content: "";
     display: block;
     @include cover;
     box-shadow: var(--shadow-color, #000000) 0 var(--shadow-y-offset, 0.0625em) var(--shadow-blur, 0.125em);
-    opacity: 0;
+    opacity: var(--header-shadow-opacity, 0);
     pointer-events: none;
     transition: var(--novablocks-transition);
     transition-property: opacity;

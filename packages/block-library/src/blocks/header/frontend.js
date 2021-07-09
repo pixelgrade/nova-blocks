@@ -5,7 +5,6 @@ import { addSocialMenuClass } from "./utils";
 
   const $siteHeader = $( '.novablocks-header--main' ),
     $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
-    $stickyRow = $siteHeader.find( '.novablocks-header-row[data-sticky=true]' ),
     $stickyHeader = $( '.novablocks-header--secondary' ),
     $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
     $currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
@@ -14,7 +13,8 @@ import { addSocialMenuClass } from "./utils";
     wpAdminBarHeight = !wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
     isArticle = $( 'body' ).hasClass( 'single-post' ),
     $progressBar = $( '.js-reading-progress' ),
-    $promoBar = $( '.js-promo-bar' );
+    $promoBar = $( '.js-promo-bar' ),
+    $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
 
   const $readingBar = $currentHeader.find( '.js-reading-bar' )
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();
