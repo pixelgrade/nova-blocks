@@ -33,6 +33,12 @@
   }
 
   .novablocks-header-row__inner-container[class] > .wp-block {
+    
+    .novablocks-header--sticky & {
+      --emphasis-top-spacing: 0.5;
+      --emphasis-bottom-spacing: 0.5;
+    }
+    
     --novablocks-element-spacing-multiplier: 1;
 
     margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
