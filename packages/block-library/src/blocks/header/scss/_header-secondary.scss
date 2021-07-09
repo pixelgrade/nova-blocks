@@ -17,31 +17,30 @@
   }
 
   &:hover {
-
-    .novablocks-header-row--primary:not(:only-child) {
+  
+    > .novablocks-header__inner-container:not(:only-child):last-child {
       opacity: 1;
       pointer-events: auto;
     }
   }
 
   &:not(.primary-menu--is-visible) {
-
-    .novablocks-header-row--primary:not(:only-child) {
+  
+    > .novablocks-header__inner-container:not(:only-child):last-child {
       display: none;
     }
   }
 
-  .novablocks-header-row--primary:not(:only-child) {
+  > .novablocks-header__inner-container:not(:only-child):last-child {
     position: absolute;
     z-index: -1;
 
     width: 100%;
-    margin-left: calc(-1 * var(--novablocks-wrapper-sides-spacing));
-    margin-right: calc(-1 * var(--novablocks-wrapper-sides-spacing));
 
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.1s ease;
+    transition: transform 0.2s ease 0s, opacity 0.1s ease 0.1s;
+  
   }
 
   @include below(lap) {

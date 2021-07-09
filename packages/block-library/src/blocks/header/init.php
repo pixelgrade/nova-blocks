@@ -106,15 +106,13 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 				data-sticky="true"
 			<?php } ?>
 		>
-			<div class="novablocks-header__inner-container">
-				<?php
+			<?php
 
-				if ( ! header_block_updated() ) {
-					$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
-				}
-				echo $content;
-				?>
-			</div>
+			if ( ! header_block_updated() ) {
+				$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
+			}
+			echo $content;
+			?>
 
 			<?php if ( $header_is_simple ) {
 				echo get_reading_bar_markup();
