@@ -10,8 +10,10 @@
   border: none;
   appearance: none;
   
-  background-color: transparent;
-  color: inherit;
+  
+  &[class] {
+    background-color: transparent;
+  }
 }
 
 .c-reading-progress::-webkit-progress-bar {
