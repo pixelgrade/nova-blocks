@@ -1016,9 +1016,15 @@ function novablocks_get_advanced_gallery( $attributes ) {
 
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
+	$cssProps = array(
+		'--novablocks-advanced-gallery-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%'
+	);
+
+	$style = join( '; ', $cssProps );
+
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
-		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . '>';
+		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . ' style="' . $style . '">';
 		echo '<div class="novablocks-advanced-gallery__grid">';
 
 		foreach ( $images as $image ) {

@@ -95,17 +95,13 @@ const withPaletteClassname = createHigherOrderComponent( ( BlockListBlock ) => {
       return <BlockListBlock { ...props } />
     }
 
-    const className = props?.attributes?.className || '';
-
-    const newProps = {
+    const blockProps = {
       ...props,
-      attributes: {
-        ...props.attributes,
-      }
-    };
+      className: `${ props.className } sm-palette-${ props.attributes.palette } ${ props.attributes.useSourceColorAsReference ? 'sm-palette--shifted' : '' }`
+    } ;
 
     return (
-      <BlockListBlock { ...newProps } classname={`${ className } sm-palette-${ props.attributes.palette } ${ props.attributes.useSourceColorAsReference ? 'sm-palette--shifted' : ''}`} />
+      <BlockListBlock { ...blockProps } />
     )
   };
 }, "withPaletteClassname" );
@@ -137,20 +133,17 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
       return <BlockListBlock { ...props } />
     }
 
-    const className = props?.attributes?.className || '';
-
-    const newProps = {
+    const blockProps = {
       ...props,
-      attributes: {
-        ...props.attributes
-      }
+      className: `${ props.className } sm-variation-${ props.attributes.paletteVariation }`
     };
 
     return (
-      <BlockListBlock { ...newProps } className={ `${ className } sm-variation-${ props.attributes.paletteVariation }`} />
+      <BlockListBlock { ...blockProps } />
     )
   }
 }, "withVariationClassname" );
+
 addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withVariationClassname );
 
 // Add Variation Classes on Save
@@ -161,7 +154,7 @@ const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
   const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
 
   if ( supports?.novaBlocks?.colorSignal?.variationClassname ) {
-    extraProps.className = classnames(extraProps.className, `sm-variation-${ paletteVariation }`)
+    extraProps.className = classnames( extraProps.className, `sm-variation-${ paletteVariation }` )
   }
 
   return extraProps;
@@ -179,17 +172,13 @@ const withColorSignalClassname = createHigherOrderComponent( ( BlockListBlock ) 
       return <BlockListBlock { ...props } />
     }
 
-    const className = props?.attributes?.className || '';
-
-    const newProps = {
+    const blockProps = {
       ...props,
-      attributes: {
-        ...props.attributes
-      }
+      className: `${ props.className } sm-color-signal-${ props.attributes.colorSignal }`
     };
 
     return (
-      <BlockListBlock { ...newProps }   className={ `${ className } sm-color-signal-${ props.attributes.colorSignal }`} />
+      <BlockListBlock { ...blockProps } />
     )
   }
 }, "withColorSignalClassname" );
@@ -204,7 +193,7 @@ const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
   const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
 
   if ( supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
-    extraProps.className = classnames(extraProps.className, `sm-color-signal-${ colorSignal }`)
+    extraProps.className = classnames( extraProps.className, `sm-color-signal-${ colorSignal }` )
   }
 
   return extraProps;
