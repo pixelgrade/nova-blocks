@@ -95,6 +95,9 @@ const withContentPositionMatrixDeprecated = ( settings, name ) => {
           default: "center"
         }
       },
+      isEligible( attributes, innerBlocks ) {
+        return ! isUndefined( attributes.horizontalAlignment ) || ! isUndefined( attributes.verticalAlignment );
+      },
       migrate( oldAttributes, innerBlocks ) {
         const { horizontalAlignment, verticalAlignment, ...attributes } = oldAttributes;
 
@@ -102,9 +105,6 @@ const withContentPositionMatrixDeprecated = ( settings, name ) => {
           ...attributes,
           contentPosition: `${ verticalAlignment } ${ horizontalAlignment }`
         };
-      },
-      isEligible( attributes, innerBlocks ) {
-        return ! isUndefined( attributes.horizontalAlignment ) || ! isUndefined( attributes.verticalAlignment );
       },
       save: settings.save
     } ].concat( settings.deprecated ),
