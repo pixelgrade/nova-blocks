@@ -1662,7 +1662,7 @@ function novablocks_get_content_palette_classes( $attributes ) {
 }
 
 function novablocks_get_content_variation( $attributes ) {
-	$palettes_output = pixelgrade_option( 'sm_advanced_palette_output' );
+	$palettes_output = get_option( 'sm_advanced_palette_output', '[]' );
 	$palettes = json_decode( $palettes_output );
 
 	$current_palette = null;
@@ -1674,7 +1674,7 @@ function novablocks_get_content_variation( $attributes ) {
 	}
 
 	$sourceIndex = $current_palette->sourceIndex;
-	$siteVariation = pixelgrade_option( 'sm_site_color_variation' );
+	$siteVariation = get_option( 'sm_site_color_variation', 1 );
 	$offset = $siteVariation - 1;
 
 	if ( $attributes[ 'useSourceColorAsReference' ] ) {
