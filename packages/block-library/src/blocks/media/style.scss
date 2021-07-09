@@ -10,6 +10,12 @@
 	// make sure negative margin used for layout doesnt overlap other blocks
 	.wp-block-group__inner-container > .wp-block {
 		display: flex;
+    
+    // We want all items inside Media Content
+    // to have 100%. We do the same on front-end.
+    // Doing that, we avoid squashing the Media Card, when
+    // content is not long enough.
+    width: 100%;
 
 		> * {
 			flex-grow: 1;
