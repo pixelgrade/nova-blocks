@@ -1,3 +1,13 @@
 .novablocks-navigation ul li[class][class] {
   margin-top: 0;
 }
+
+.novablocks-navigation {
+  
+  .menu-item {
+    
+    a {
+      pointer-events: none !important;
+    }
+  }
+}
