@@ -2,7 +2,8 @@ import classnames from 'classnames';
 import { getIcon } from "@novablocks/icons";
 import {
   getSiteColorVariation,
-  normalizeVariationValue
+  normalizeVariationValue,
+  getCurrentPaletteConfig
 } from "@novablocks/utils";
 
 const ColorGradesControl = ( props ) => {
@@ -23,11 +24,7 @@ const ColorGradesControl = ( props ) => {
     useSourceColorAsReference,
   } = attributes;
 
-  const {
-    palettes
-  } = settings;
-
-  const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
+  const currentPalette = getCurrentPaletteConfig(props);
   const { sourceIndex } = currentPalette;
 
   const iconClassName = classnames(

@@ -319,18 +319,33 @@ export const getSignalOptionsFromVariation = ( variation ) => {
 }
 
 export const getContentVariationBySignal = ( props ) => {
-  const { attributes, settings } = props;
-  const { palettes } = settings;
-  const { contentColorSignal, palette, paletteVariation, useSourceColorAsReference } = attributes;
+  const { attributes } = props;
+  const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
   const siteVariation = getSiteColorVariation();
-  const currentPalette = palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
+  const currentPalette = getCurrentPaletteConfig(props);
   const { sourceIndex } = currentPalette;
+
   const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
   const referenceVariation = normalizeVariationValue( paletteVariation + offset );
 
   const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
 
   return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
+}
+
+// Helper function to get current Palette Config,
+// and generate a default, if a palette does not exist.
+export const getCurrentPaletteConfig = ( props ) => {
+  const { attributes, settings } = props;
+  const { palette } = attributes;
+  const { palettes } = settings;
+
+
+  if ( ! Array.isArray( palettes) || ! palettes.length ) {
+    return { sourceIndex: 6 }
+  }
+
+  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
 }
 
 // Uppercase the first letter of a string in JavaScript
