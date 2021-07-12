@@ -42,7 +42,7 @@ const ColorSetControls = ( props ) => {
   } = attributes;
 
   const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
-  const currentPalette = palettes.find( currentPalette => currentPalette.id === attributes.palette );
+  const currentPalette = palettes?.find( currentPalette => currentPalette.id === attributes.palette );
 
   if ( ! currentPalette ) {
     return null;
