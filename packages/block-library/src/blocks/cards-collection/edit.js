@@ -68,8 +68,13 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 			const cards = collection.innerBlocks;
 
 			const newAttributes = (
-				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => {
-					const atts = { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
+				( attributes ) => {
+				  const { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } = attributes;
+					const atts = { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
+
+					// Card edit applies the value of the level attribute + 1 for the card title heading level
+          // we'll keep this as it is for now since we're implementing supernova
+					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
 
 					return Object.assign( {}, atts, {
 					  paletteVariation: getContentVariationBySignal( props )
