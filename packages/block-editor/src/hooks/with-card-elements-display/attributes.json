@@ -1,0 +1,26 @@
+{
+	"showMedia": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMeta": {
+		"type": "boolean",
+		"default": true
+	},
+	"showTitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showSubtitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showDescription": {
+		"type": "boolean",
+		"default": true
+	},
+	"showButtons": {
+		"type": "boolean",
+		"default": true
+	}
+}

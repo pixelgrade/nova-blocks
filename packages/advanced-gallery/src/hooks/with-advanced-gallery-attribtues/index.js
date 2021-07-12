@@ -5,6 +5,8 @@ import { addFilter } from '@wordpress/hooks';
 const enableAdvancedMediaAttributeOnBlocks = [
 	'novablocks/media',
 	'novablocks/advanced-gallery',
+  'novablocks/supernova',
+  'novablocks/supernova-item',
 ];
 
 function addAdvancedGalleryAttributes( block ) {

@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { Collection } from "@novablocks/collection";
+import { getContentVariationBySignal } from '@novablocks/utils';
 
 /**
  * WordPress dependencies
@@ -63,12 +64,22 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 			const { getBlock } = select( 'core/block-editor' );
 			const { updateBlockAttributes } = dispatch( 'core/block-editor' );
 			const collection = getBlock( clientId );
+
 			const cards = collection.innerBlocks;
 
 			const newAttributes = (
-				( { level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } ) => (
-					{ level, contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta }
-				)
+				( attributes ) => {
+				  const { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } = attributes;
+					const atts = { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
+
+					// Card edit applies the value of the level attribute + 1 for the card title heading level
+          // we'll keep this as it is for now since we're implementing supernova
+					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
+
+					return Object.assign( {}, atts, {
+					  paletteVariation: getContentVariationBySignal( props )
+          } );
+				}
 			)( attributes );
 
 			cards.forEach( block => {
@@ -87,6 +98,6 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 	};
 }, 'withCollectionVisibilityAttributes' );
 
-wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
+wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
 
 export default CardsCollectionEdit;

@@ -10,6 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once dirname( __FILE__ ) . '/extras.php';
 
+function novablocks_get_header_attributes() {
+
+	return novablocks_merge_attributes_from_array( array(
+		"packages/block-library/src/blocks/header/attributes.json",
+		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
+		"packages/block-library/src/blocks/header/attributes-color-signal.json",
+	) );
+
+}
+
 if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 	/**
@@ -27,11 +37,19 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		do_action( 'novablocks_header:before' );
 
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, novablocks_get_header_attributes() );
+		$attributes_config = novablocks_get_header_attributes();
+		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$classes = array( 'site-header site-header--main alignfull' );
+		$classes = array(
+			'novablocks-header',
+			'novablocks-header--main',
+			'novablocks-header-shadow',
+			'novablocks-header-background',
+			'alignfull'
+		);
 
-		$classes[] = 'site-header--' . $attributes['layout'];
+		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		// Logo Center and Logo Left layout are considered as simple,
 		// because they are on only one row.
@@ -46,57 +64,59 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// We need that class to style header block,
 		// if the user didn't hit save yet.
 		if ( ! header_block_updated() ) {
-			$classes[] = 'site-header--is-old';
+			$classes[] = 'novablocks-header--is-old';
 		}
 
-		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"site-header__row--primary"} -->';
+		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"novablocks-header-row--primary"} -->';
 		$header_row_markup_end = '<!-- /wp:novablocks/header-row -->';
 
 		global $novablocks_responsive_navigation_outputted;
+
+		$toggleClasses = array(
+			'c-menu-toggle',
+		);
+
+		$toggleClasses = array_merge( $toggleClasses, $blockPaletteClasses );
+
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
 
 			<input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox" autocomplete="off">
 
-			<label class="c-menu-toggle" for="nova-menu-toggle">
+			<label class="<?php echo esc_attr( join( ' ', $toggleClasses ) ); ?>" for="nova-menu-toggle">
                 <span class="c-menu-toggle__wrap">
                     <span class="c-menu-toggle__icon">
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--middle"></b>
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
                     </span>
-                    <span
-						class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
+                    <span class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
                 </span>
 			</label>
 
 			<?php $novablocks_responsive_navigation_outputted = true;
 
-		} ?>
+		}
+
+		?>
 
 		<header id="masthead"
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				<?php if ( $header_is_simple && ! empty( $sticky_row_block ) )  { ?>
-					data-sticky="true"
-				<?php } ?>
+			<?php if ( $header_is_simple && ! empty( $sticky_row_block ) ) { ?>
+				data-sticky="true"
+			<?php } ?>
 		>
-			<div class="site-header__wrapper">
-				<div class="site-header__inner-container">
-					<div class="site-header__content <?php echo esc_attr( 'align' . $attributes['align'] ); ?>">
-						<?php
+			<?php
 
-						if ( ! header_block_updated() ) {
-							$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
-						}
-						echo $content;
-						?>
-					</div>
-				</div>
+			if ( ! header_block_updated() ) {
+				$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
+			}
+			echo $content;
+			?>
 
-				<?php if ( $header_is_simple ) {
-					echo get_reading_bar_markup();
-				} ?>
-			</div>
+			<?php if ( $header_is_simple ) {
+				echo get_reading_bar_markup();
+			} ?>
 		</header>
 
 		<?php
@@ -104,7 +124,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// We will output the sticky header mark-up only
 		// when the layout used is on at least two rows.
 		if ( ! empty( $sticky_row_block ) && ! $header_is_simple ) { ?>
-			<div class="site-header site-header--secondary site-header-sticky site-header--sticky">
+			<div class="novablocks-header novablocks-header--secondary novablocks-header-sticky novablocks-header--sticky">
 				<?php
 
 				// On all pages except articles,
@@ -114,7 +134,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 					echo render_block( $sticky_row_block );
 
-					if ( $sticky_row_block['attrs']['isPrimary']  !== true ) {
+					if ( ! isset( $sticky_row_block['attrs']['isPrimary'] ) || true !== $sticky_row_block['attrs']['isPrimary'] ) {
 						echo render_block( $primary_row_block );
 					}
 				}

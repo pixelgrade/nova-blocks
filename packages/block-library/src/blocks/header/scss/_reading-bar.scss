@@ -10,8 +10,10 @@
   border: none;
   appearance: none;
   
-  background-color: transparent;
-  color: inherit;
+  
+  &[class] {
+    background-color: transparent;
+  }
 }
 
 .c-reading-progress::-webkit-progress-bar {
@@ -39,7 +41,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   transition: 0.35s transform ease;
   will-change: transform;
   
@@ -48,6 +50,10 @@
   
   padding-left: 32px;
   padding-right: 32px;
+
+  &[class] {
+    background: none;
+  }
   
   .site-header--reading & {
     transform: translateY(0);
@@ -59,6 +65,17 @@
   }
 }
 
+.novablocks-header-row {
+  
+  .wp-block {
+    
+    &[class][class][class][class][class][class] {
+      transition: all .25s ease;
+      transition-property: all;
+    }
+  }
+}
+
 .site-header--next,
 .site-header--reading {
   
@@ -67,9 +84,12 @@
     pointer-events: auto;
   }
   
-  .site-header__row {
-    transform: translateY(calc(100% + 50px));
-    pointer-events: none;
+  .novablocks-header-row__inner-container {
+    
+    > .wp-block {
+      transform: translateY(calc(100% + 50px));
+      pointer-events: none;
+    }
   }
 }
 
@@ -86,10 +106,6 @@
   .c-reading-bar__wrapper-title--next {
     opacity: 1;
   }
-}
-
-.site-header__row {
-  transition: 0.35s transform ease;
 }
 
 .c-reading-bar__wrapper-title {
@@ -109,6 +125,7 @@
   
   .post-title__post-name {
     text-decoration: none;
+    color: currentColor;
     
     &:hover {
       text-decoration: underline;

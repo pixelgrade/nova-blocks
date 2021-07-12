@@ -1,4 +1,5 @@
-import postsQueryAttributes from './attributes';
+import attributes from './attributes';
+import InpectorControls from './inspector-controls';
 
 import {
 	isSpecificPostModeActive,
@@ -7,15 +8,8 @@ import {
 
 import { STORE_NAME, registerQueryStore } from "./store";
 
-import {
-	ControlsSection,
-	ControlsTab,
-	QueryControls,
-} from "../../components";
-
 registerQueryStore( `novablocks/${ STORE_NAME }` );
 
-import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
 
@@ -25,122 +19,87 @@ import {
 } from '@wordpress/compose';
 
 import {
+  select,
 	withSelect,
 	withDispatch,
 } from '@wordpress/data';
 
-const enablePostsQueryControlsOnBlocks = [ 'novablocks/posts-collection' ];
-
-const withPostsQueryControls = createHigherOrderComponent(OriginalComponent => {
+const withPostsQueryControls = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
 
-		if ( ! enablePostsQueryControlsOnBlocks.includes( props.name ) ) {
-			return <OriginalComponent { ...props } />
-		}
-
-		const {
-			attributes,
-			setAttributes,
-		} = props;
-
-		const {
-			postsToShow,
-			loadingMode,
-			specificPosts,
-			authors,
-			categories,
-			tags,
-			preventDuplicatePosts,
-		} = attributes;
-
-		return (
+    return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-				<ControlsSection label={ __( 'Content Filter' ) } group={ __( 'Block Modules' ) }>
-					<ControlsTab label={ __( 'Settings' ) }>
-						<QueryControls
-							key={ 'query-controls' }
-							enableSpecific={ true }
-							preventDuplicatePosts={ preventDuplicatePosts }
-							onPreventDuplicatePostsChange={ _preventDuplicatePosts => {
-								setAttributes( { preventDuplicatePosts: _preventDuplicatePosts } )
-							} }
-							numberOfItems={ postsToShow }
-							onNumberOfItemsChange={ _postsToShow =>
-								setAttributes( { postsToShow: _postsToShow } )
-							}
-							loadingMode={ loadingMode }
-							onLoadingModeChange={ _loadingMode =>
-								setAttributes( { loadingMode: _loadingMode } )
-							}
-							specificPosts={ specificPosts }
-							onSpecificPostsChange={ _specificPosts =>
-								setAttributes( { specificPosts: _specificPosts } )
-							}
-							authors={ authors }
-							onAuthorsChange={
-								_authors => setAttributes( { authors: _authors } )
-							}
-							categories={ categories }
-							onCategoriesChange={
-								_categories => setAttributes( { categories: _categories } )
-							}
-							tags={ tags }
-							onTagsChange={ _tags => {
-								setAttributes( { tags: _tags } );
-							} }
-						/>
-					</ControlsTab>
-				</ControlsSection>
+        <InpectorControls { ...props } />
 			</Fragment>
 		)
 	}
 } );
 
-function withPostsQueryAttributes( block ) {
+function withPostsQueryAttributes( settings ) {
 
-	if ( ! enablePostsQueryControlsOnBlocks.includes( block.name ) ) {
-		return block;
-	}
+  if ( ! settings?.supports?.novaBlocks?.latestPosts ) {
+    return settings;
+  }
 
-	if ( typeof block.attributes === 'undefined' ) {
-		block.attributes = {};
-	}
-
-	block.attributes = Object.assign( block.attributes, postsQueryAttributes );
-
-	return block;
+  return {
+	  ...settings,
+    attributes: {
+	    ...settings.attributes,
+      ...attributes,
+    }
+  };
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/with-posts-query-attributes', withPostsQueryAttributes );
 
+const withMarkPostsAsDisplayed = withDispatch( ( dispatch, props ) => {
+  const { attributes } = props;
+  const markPostsAsDisplayed = isSpecificPostModeActive( attributes )
+    ? dispatch( STORE_NAME ).markSpecificPostsAsDisplayed
+    : dispatch( STORE_NAME ).markPostsAsDisplayed;
+
+  return {
+    markPostsAsDisplayed,
+  };
+} );
+
+const withPosts = withSelect( ( select, props ) => {
+  const { attributes, clientId } = props;
+  const { preventDuplicatePosts } = attributes;
+
+  const latestPostsQuery = queryCriteriaFromAttributes( attributes );
+
+  if ( ! isSpecificPostModeActive( attributes ) && preventDuplicatePosts ) {
+    const postIdsToExclude = select( STORE_NAME ).previousPostIds( clientId );
+    latestPostsQuery.exclude = postIdsToExclude.join( ',' );
+  }
+
+  return {
+    posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery )
+  };
+} );
+
 const withLatestPosts = compose( [
-	withSelect( ( select, props ) => {
-		const { attributes, clientId } = props;
-		const { preventDuplicatePosts } = attributes;
-
-		const latestPostsQuery = queryCriteriaFromAttributes( attributes );
-
-		if ( ! isSpecificPostModeActive( attributes ) && preventDuplicatePosts ) {
-			const postIdsToExclude = select( STORE_NAME ).previousPostIds( clientId );
-			latestPostsQuery.exclude = postIdsToExclude.join( ',' );
-		}
-
-		return {
-			posts: select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery )
-		};
-	} ),
-	withDispatch( ( dispatch, props ) => {
-		const { attributes } = props;
-		const markPostsAsDisplayed = isSpecificPostModeActive( attributes )
-			? dispatch( STORE_NAME ).markSpecificPostsAsDisplayed
-			: dispatch( STORE_NAME ).markPostsAsDisplayed;
-
-		return {
-			markPostsAsDisplayed,
-		};
-	} ),
+	withPosts,
+  withMarkPostsAsDisplayed,
 	withPostsQueryControls
 ] );
-addFilter( 'editor.BlockEdit', 'novablocks/with-latest-posts', withLatestPosts );
+
+const maybeWithLatestPosts = createHigherOrderComponent( BlockEdit => {
+
+  return ( props ) => {
+
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.latestPosts ) {
+      return <BlockEdit { ...props } />
+    }
+
+    const BlockEditWithLatestPosts = withLatestPosts( BlockEdit );
+
+    return <BlockEditWithLatestPosts { ...props } />
+  }
+} );
+addFilter( 'editor.BlockEdit', 'novablocks/with-latest-posts', maybeWithLatestPosts );
 

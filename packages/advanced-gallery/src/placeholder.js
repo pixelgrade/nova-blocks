@@ -3,7 +3,7 @@ import {
 	BlockIcon
  } from '@wordpress/block-editor';
 
-const AdvancedGalleryPlaceholder = ( props ) => {
+const AdvancedGalleryPlaceholder = props => {
 
 	const {
 		attributes,

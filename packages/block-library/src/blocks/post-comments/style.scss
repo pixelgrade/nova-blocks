@@ -1,19 +1,21 @@
 :root {
   --avatar-column-size: 45px;
   --comments-grid-gap: 10px;
-  --component-accent-color: var(--novablocks-color-1);
+  --component-accent-color: var(--novablocks-accent-color);
   --novablocks-conversations-width: 48em;
   --field-description-color: #000;
   --field-description-font-size: 13px;
   --conversations-bg-color: #E4E3E4;
   --conversations-reply-bg-color: #CDCCCD;
-  --comment-author-color: var(--novablocks-color-1);
+  --comment-author-color: var(--novablocks-accent-color);
   --comment-font-size: 15px;
-  --comment-links-color: var(--novablocks-color-1);
+  --comment-links-color: var(--novablocks-accent-color);
   --comment-highlighted-color: #FFF2CE;
   --label-font-size: 15px;
-  --label-bg-color: #9195AB;
-  --label-highlighted-bg-color: #1479D2;
+  --label-bg-color: var(--novablocks-fg1-color);
+  --label-bg-opacity: 0.4;
+  --label-highlighted-bg-color: var(--novablocks-accent-color);
+  --label-highlighted-bg-opacity: 1;
   --label-border-radius: 999em;
   --comment-footer-font-size: 13px;
 
@@ -283,6 +285,7 @@
 
       .commenter-background-label {
         --label-bg-color: var(--label-highlighted-bg-color);
+        --label-bg-opacity: var(--label-highlighted-bg-opacity);
       }
 
       .comment-dropdown-menu {
@@ -453,16 +456,35 @@
   }
 
   .commenter-background-label {
+    transform: translateZ(0);
+
     display: inline-block;
     padding: .3em .75em;
 
-    border-radius: var(--label-border-radius);
-    background-color: var(--label-bg-color);
-    color: var(--novablocks-light-1);
+    color: var(--novablocks-bg-color);
+
+    &:before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+
+      width: 100%;
+      height: 100%;
+
+      border-radius: var(--label-border-radius);
+      background-color: var(--label-bg-color);
+      opacity: var(--label-bg-opacity);
+    }
 
     @include below(tablet) {
-      padding: 0.1em 0.45em 0.15em 0.5em;
       --label-border-radius: 0.3em;
+
+      &:before {
+        padding: 0.1em 0.45em 0.15em 0.5em;
+      }
     }
   }
 
@@ -470,6 +492,7 @@
 
     .commenter-background-label {
       --label-bg-color: var(--label-highlighted-bg-color);
+      --label-bg-opacity: var(--label-highlighted-bg-opacity);
       --label-border-radius: 0;
     }
   }
@@ -725,8 +748,8 @@
   z-index: 100;
   
   span {
-    background: var(--novablocks-dark-1);
-    color: var(--novablocks-light-1);
+    background: var(--novablocks-bg-color);
+    color: var(--novablocks-fg1-color);
     padding: 10px;
     border-radius: 0 10px;
     
@@ -782,7 +805,7 @@
   display: flex;
   flex-direction: column;
 
-  background: var(--novablocks-light-1);
+  background: var(--novablocks-bg-color);
   min-width: 200px;
   padding: .5em .75em;
 

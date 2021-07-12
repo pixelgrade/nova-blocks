@@ -59,6 +59,10 @@
 		"type": "string",
 		"default": "parametric"
 	},
+	"columns": {
+		"type": "number",
+		"default": 1
+	},
 	"headerPosition": {
 		"type": "number",
 		"default": 0
@@ -66,5 +70,13 @@
 	"headerColumn": {
 		"type": "number",
 		"default": 0
+	},
+	"carouselLayout": {
+		"type": "string",
+		"default": "fixed"
+	},
+	"showPagination": {
+		"type": "boolean",
+		"default": true
 	}
 }

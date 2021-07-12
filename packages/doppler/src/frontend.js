@@ -7,52 +7,56 @@ const getScrollContainerHeight = () => {
 	return useOrientation && window.screen && window.screen.availHeight || window.innerHeight
 };
 
+const getAttributes = ( container ) => {
+
+  const $block = $( container ).closest( '[data-scrolling-effect]' );
+
+  return {
+    followThroughStart: !! $block.data( 'smooth-start' ),
+    followThroughEnd: !! $block.data( 'smooth-end' ),
+    scrollingEffect: $block.data( 'scrolling-effect' ),
+    focalPoint: $block.data( 'focal-point' ),
+    finalFocalPoint: $block.data( 'final-focal-point' ),
+    initialBackgroundScale: $block.data( 'initial-background-scale' ),
+    finalBackgroundScale: $block.data( 'final-background-scale' ),
+  };
+}
+
+const getConfig = ( container ) => {
+
+  return {
+    scrollContainerBox: { top: 0, left: 0 },
+    scrollContainerHeight: getScrollContainerHeight(),
+    containerWidth: container.offsetWidth,
+    containerHeight: container.offsetHeight,
+    containerBox: container.getBoundingClientRect(),
+  }
+}
+
 $( function() {
 
 	let frameRendered = false;
-	let scrollContainerHeight = getScrollContainerHeight();
-	let $blocks = $( '.novablocks-doppler' );
+	let $blocks = $( '.novablocks-doppler__wrapper' );
 
 	$blocks.each( function( i, container ) {
-		var $container = $( container );
-		var followThroughStart = !! $container.data( 'smooth-start' );
-		var followThroughEnd = !! $container.data( 'smooth-end' );
-		var scrollingEffect = $container.data( 'scrolling-effect' );
-		var focalPoint = $container.data( 'focal-point' );
-		var finalFocalPoint = $container.data( 'final-focal-point' );
-		var initialBackgroundScale = $container.data( 'initial-background-scale' );
-		var finalBackgroundScale = $container.data( 'final-background-scale' );
-		var scrollContainerBox = {
-			top: 0,
-			left: 0,
-		};
-
-		var config = {
-			followThroughStart,
-			followThroughEnd,
-			scrollingEffect,
-			scrollContainerHeight,
-			scrollContainerBox,
-			focalPoint,
-			finalFocalPoint,
-			initialBackgroundScale,
-			finalBackgroundScale,
-		};
+		const $container = $( container );
+		const attributes = getAttributes( container );
+		const config = getConfig( container );
 
 		$container.data( {
-			state: getState( container, config ),
+			state: getState( config, attributes ),
 			config: config,
 		} );
 
-		var $parallax = $container.find( '.novablocks-parallax' );
+		const $parallax = $container.find( '.novablocks-doppler__target' );
 
 		$container.data( 'parallax', $parallax );
 
 		function parallaxUpdateState() {
-			var newConfig = Object.assign( {}, config, {
-				scrollContainerHeight: getScrollContainerHeight()
-			} );
-			var state = getState( container, newConfig );
+			const newConfig = Object.assign( {}, config, getConfig( container ) );
+
+			const state = getState( newConfig, attributes );
+
 			$container.data( 'state', state );
 			$container.data( 'config', newConfig );
 			frameRendered = false;
@@ -60,20 +64,24 @@ $( function() {
 
 		$( window ).on( 'scroll', parallaxUpdateState );
 		$( window ).on( 'resize', parallaxUpdateState );
+
+    parallaxUpdateState();
 	} );
 
 	function parallaxUpdateLoop() {
+
 		if ( ! frameRendered ) {
-			$blocks.each( function( i, obj ) {
-				let $container = $( obj );
-				let $background = $container.data( 'parallax' );
-				let $foreground = $background.find( '.novablocks-foreground' );
-				let state = $container.data( 'state' );
-				let config = $container.data( 'config' );
 
-				config = Object.assign( {}, state, config );
+			$blocks.each( function( i, container ) {
+				const $container = $( container );
+        const attributes = getAttributes( container );
+				const $background = $container.data( 'parallax' );
+				const $foreground = $background.find( '.novablocks-doppler__foreground' );
+				const state = $container.data( 'state' );
+				const config = $container.data( 'config' );
+				const cfg = Object.assign( {}, state, config );
 
-				let props = getProps( config, true );
+				const props = getProps( cfg, attributes, true );
 
 				$foreground.css( 'transform', `translate3d(0,${ -props.moveY * props.parallaxAmount }px,0)` );
 

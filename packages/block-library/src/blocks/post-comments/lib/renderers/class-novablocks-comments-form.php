@@ -125,6 +125,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				return '';
 			}
 
+			$header_args = $this->parse_args( $args );
+
 			// Check if we should actually render.
 			if ( ! $this->should_render( $header_args ) ) {
 				return '';

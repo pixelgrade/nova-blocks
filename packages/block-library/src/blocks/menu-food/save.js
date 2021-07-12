@@ -3,8 +3,6 @@ import classnames from "classnames";
 /**
  * External dependencies
  */
-
-import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
 const FoodMenuSave = function( props ) {

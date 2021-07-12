@@ -262,11 +262,302 @@ export const isAnyPartOfElementInViewport = (element) => {
 	return (vertInView && horInView);
 }
 
+export const getVariationFromSignal = ( signal ) => {
+
+  if ( signal === 1 ) {
+    return 3;
+  }
+
+  if ( signal === 2 ) {
+    return 6;
+  }
+
+  if ( signal === 3 ) {
+    return 10;
+  }
+
+  return 1;
+}
+
+export const getSignalRelativeToVariation = ( compare, reference ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference );
+
+  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
+  }, 0 );
+}
+
+export const getSignalFromVariation = ( variation ) => {
+
+  if ( variation === 1 ) {
+    return 0;
+  }
+
+  if ( variation < 5 ) {
+    return 1;
+  }
+
+  if ( variation < 9 ) {
+    return 2;
+  }
+
+  return 3;
+}
+
+export const getSignalOptionsFromVariation = ( variation ) => {
+  const blockSignal = getSignalFromVariation( variation );
+
+  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
+    return index === blockSignal ? variation : getVariationFromSignal( index );
+  } );
+
+  variationOptions.sort( ( variation1, variation2 ) => {
+    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
+  } );
+
+  return variationOptions;
+}
+
+export const getContentVariationBySignal = ( props ) => {
+  const { attributes } = props;
+  const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+  const siteVariation = getSiteColorVariation();
+  const currentPalette = getCurrentPaletteConfig(props);
+  const { sourceIndex } = currentPalette;
+
+  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
+  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
+
+  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
+
+  return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
+}
+
+// Helper function to get current Palette Config,
+// and generate a default, if a palette does not exist.
+export const getCurrentPaletteConfig = ( props ) => {
+  const { attributes, settings } = props;
+  const { palette } = attributes;
+  const { palettes } = settings;
+
+
+  if ( ! Array.isArray( palettes) || ! palettes.length ) {
+    return { sourceIndex: 6 }
+  }
+
+  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
+}
 
 // Uppercase the first letter of a string in JavaScript
 // https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
 
-export const capitalizeFirstLetter = (string) => {
-  if (typeof string !== 'string') return ''
-  return string.charAt(0).toUpperCase() + string.slice(1)
+export const capitalizeFirstLetter = ( string ) => {
+
+  if ( typeof string !== 'string' ) {
+    return '';
+  }
+
+  return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
+}
+
+export const getColorSetClassnames = ( attributes ) => {
+
+  const {
+    palette,
+    paletteVariation,
+    useSourceColorAsReference
+  } = attributes;
+
+  return classnames(
+    `sm-palette-${ palette }`,
+    `sm-variation-${ paletteVariation }`,
+    {
+      'sm-palette--shifted': !! useSourceColorAsReference
+    }
+  );
+}
+
+export const normalizeVariationValue = ( value ) => {
+  return ( value + 11 ) % 12 + 1;
+}
+
+export const getLevelAttributes = ( attributes ) => {
+  const { level } = attributes;
+
+  return {
+    level,
+    collectionTitleLevel: level,
+    cardTitleLevel: level + 1
+  }
+}
+
+export const getAspectRatioAttributes = ( attributes ) => {
+  let {
+    thumbnailAspectRatio,
+    thumbnailAspectRatioString
+  } = attributes;
+
+  if ( thumbnailAspectRatioString === 'auto' ) {
+    return {};
+  }
+
+  if ( thumbnailAspectRatio < 50 ) {
+    thumbnailAspectRatioString = 'landscape';
+  }
+
+  return {
+    thumbnailAspectRatio,
+    thumbnailAspectRatioString,
+  }
+}
+
+export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
+  let height = containerHeight / 50 - 1;
+  let numerator = 1;
+  let denominator = 1;
+
+  height = Math.min( Math.max( -1, height ), 1 );
+
+  if ( height > 0 ) {
+    numerator = 1 + height;
+  }
+
+  if ( height < 0 ) {
+    denominator = 1 + Math.abs( height );
+  }
+
+  return numerator * 100 / denominator;
+}
+
+export const getAlignFromMatrix = ( alignMatrixValue ) => {
+
+  if ( typeof alignMatrixValue !== 'string' ) {
+    return [ 'center', 'center' ];
+  }
+
+  const align = alignMatrixValue.split( /\b\s+/ );
+
+  return [ align[0], align[1] || 'center' ];
+}
+
+export const isFunctionalPalette = palette => {
+  const id = palette.id + '';
+  return id.charAt(0) === '_';
+}
+
+export const mapPalettesToColorPalette = palette => {
+  const { colors, sourceIndex } = palette;
+  return {
+    name: palette.label,
+    color: colors[sourceIndex].value
+  };
+}
+
+export const compileVariationAttributes = ( palette, paletteVariation, useSourceColorAsReference ) => {
+  const { sourceIndex } = palette;
+  const siteVariation = getSiteColorVariation();
+
+  let offset = siteVariation - sourceIndex - 1;
+  let newPaletteVariation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation;
+  newPaletteVariation = normalizeVariationValue( newPaletteVariation );
+
+  return {
+    useSourceColorAsReference: useSourceColorAsReference,
+    paletteVariation: paletteVariation,
+  }
+}
+
+export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorAsReference ) => {
+  const { sourceIndex } = palette;
+  const siteVariation = getSiteColorVariation();
+  let offset = siteVariation - sourceIndex - 1;
+  let variation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation - offset
+
+  return normalizeVariationValue( variation );
+}
+
+export const getAbsoluteColorVariation = ( props ) => {
+
+  const {
+    attributes: {
+      paletteVariation,
+      useSourceColorAsReference
+    }
+  } = props;
+
+  const currentPalette = getCurrentPaletteConfig( props );
+  const { sourceIndex } = currentPalette;
+  const siteVariation = getSiteColorVariation();
+  const siteVariationOffset = siteVariation - 1;
+  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
+
+  return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
+}
+
+export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
+  return getRelativeColorVariation( getCurrentPaletteConfig( props ), paletteVariation, props );
+}
+
+export const getSiteColorVariation = () => {
+  return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
+}
+
+export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
+
+  const {
+    attributes: {
+      useSourceColorAsReference
+    }
+  } = props;
+
+  const { sourceIndex } = paletteConfig;
+  const siteVariation = getSiteColorVariation();
+  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
+  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
+
+  return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
+}
+
+export const getSignalAttributes = ( signal, palette, sticky = false ) => {
+  const { sourceIndex } = palette;
+  const siteVariation = getSiteColorVariation();
+  const variationOptions = getSignalOptionsFromVariation( siteVariation );
+  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
+  const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
+
+  if ( sticky ) {
+
+    return {
+      colorSignal: signal,
+      palette: palette.id,
+      paletteVariation: nextVariation,
+      useSourceColorAsReference: sourceSignal === signal,
+    }
+
+  } else {
+
+    return {
+      palette: palette.id
+    }
+
+  }
+}
+
+export const getSpacingCSSProps = ( attributes ) => {
+
+  const {
+    blockTopSpacing,
+    blockBottomSpacing,
+    emphasisTopSpacing,
+    emphasisBottomSpacing,
+    verticalAlignment
+  } = attributes;
+
+  return {
+    '--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
+    '--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
+    '--novablocks-block-top-spacing': blockTopSpacing,
+    '--novablocks-block-bottom-spacing': blockBottomSpacing,
+    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
+  }
 }

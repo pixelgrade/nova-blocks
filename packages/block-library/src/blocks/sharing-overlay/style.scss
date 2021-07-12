@@ -1,26 +1,7 @@
-@mixin novablocks-sharing-link-hover {
-	transform: translateZ(0);
+@import "scss/mixins.scss";
 
-	&:before {
-		content: "";
-
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
-
-		background: var(--novablocks-current-dark-primary);
-		transition: var(--novablocks-transition);
-		transition-property: background-color;
-		transition-duration: .15s;
-		opacity: 0.1;
-	}
-
-	&:hover:before {
-		background: var(--novablocks-current-light-primary);
-	}
+:root {
+  --novablocks-sharing-overlay-spacing: calc( var(--novablocks-spacing) / 3 );
 }
 
 .novablocks-sharing {
@@ -51,17 +32,14 @@
 
 	max-width: 100%;
 
-	// equal to --theme-spacing ??
-	--block-spacing: calc( var(--novablocks-spacing) / 3 );
-
 	&:not(.is-visible) {
 		display: none;
 	}
 }
 
 .novablocks-sharing__wrap {
-	background-color: var(--novablocks-current-light-primary);
-	color: var(--novablocks-current-dark-primary);
+	background-color: var(--novablocks-bg-color);
+	color: var(--novablocks-fg1-color);
 
 	position: relative;
 
@@ -85,7 +63,7 @@
     bottom: 0;
     left: 0;
 
-    border: 1px solid var(--novablocks-dark-primary);
+    border: 1px solid currentColor;
     opacity: 0.1;
     pointer-events: none;
     border-radius: inherit;
@@ -96,7 +74,7 @@
 	position: relative;
 	max-height: 100%;
 
-	padding: calc( var(--block-spacing) * 1.5 );
+	padding: calc( var(--novablocks-sharing-overlay-spacing) * 1.5 );
 	overflow: auto;
 }
 
@@ -105,13 +83,18 @@
 	> * {
 		--novablocks-element-spacing-multiplier: 0.5;
 		@include block-spacing;
+  
+    &:not(:first-child) {
+      --novablocks-block-top-spacing: 1;
+      --novablocks-block-bottom-spacing: 0;
+    }
 	}
 }
 
 .novablocks-sharing__close {
 	position: absolute;
-	top: var(--block-spacing);
-	right: var(--block-spacing);
+	top: var(--novablocks-sharing-overlay-spacing);
+	right: var(--novablocks-sharing-overlay-spacing);
 
 	display: flex;
 	justify-content: center;
@@ -224,19 +207,25 @@
 
 .novablocks-sharing__link,
 .novablocks-sharing__copy-input {
-	padding: calc( var(--block-spacing) * 3 / 4 );
+	padding: calc( var(--novablocks-sharing-overlay-spacing) * 3 / 4 );
 }
 
 .novablocks-sharing__link {
 	display: flex;
 	align-items: center;
 
+  // reset possible link styles
+  &[class][class] {
+    color: var(--novablocks-fg1-color);
+    text-decoration: none;
+  }
+
 	@include novablocks-sharing-link-hover;
 
-	margin-left: calc( var(--block-spacing) * -3 / 4 );
+	margin-left: calc( var(--novablocks-sharing-overlay-spacing) * -3 / 4 );
 
 	> * {
-		margin-left: calc( var(--block-spacing) * 3 / 4 );
+		margin-left: calc( var(--novablocks-sharing-overlay-spacing) * 3 / 4 );
 	}
 }
 

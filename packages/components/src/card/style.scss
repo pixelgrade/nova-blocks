@@ -1,6 +1,7 @@
 .novablocks-card {
 	@include clearfix;
-	--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+  overflow: hidden;
+  --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
 
 	.wp-block-buttons[class] {
 		float: none;
@@ -9,6 +10,23 @@
 	> .block-editor-block-list__layout {
 		@include clearfix;
 	}
+
+  a:not(.novablocks-card__link) {
+    position: relative;
+    z-index: 20;
+  }
+
+  a.novablocks-card__link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+
+    display: block;
+    margin: 0;
+  }
 }
 
 .novablocks-card__layout-content {
@@ -17,6 +35,10 @@
 	> .novablocks-grid__item-buttons {
 		--novablocks-element-spacing-multiplier: 1;
 	}
+}
+
+.novablocks-card__inner-container[class][class] {
+  padding: calc( var(--novablocks-spacing) * var(--card-content-padding, 0) / 100 );
 }
 
 .novablocks-card__media-wrap {
@@ -34,10 +56,6 @@
 .novablocks-card__media-image {
 	display: block;
 	width: 100%;
-}
-
-.novablocks-card__media--placeholder {
-	background: var(--novablocks-current-light-secondary);
 }
 
 .novablocks-card--fixed-media-aspect-ratio {
@@ -66,7 +84,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: var(--novablocks-current-light-tertiary);
+  background: var(--novablocks-bg-color);
 
 	svg {
 		max-width: 50%;
@@ -85,25 +103,5 @@
 	a {
 		text-decoration: inherit;
 		color: inherit;
-	}
-}
-
-.novablocks-card {
-
-	a:not(.novablocks-card__link) {
-		position: relative;
-		z-index: 20;
-	}
-
-	a.novablocks-card__link {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 10;
-
-		display: block;
-		margin: 0;
 	}
 }

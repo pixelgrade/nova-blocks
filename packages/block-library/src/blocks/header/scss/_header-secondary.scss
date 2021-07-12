@@ -1,0 +1,49 @@
+.novablocks-header--secondary {
+  width: 100%;
+  z-index: 1100;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .15s ease-in;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &:after {
+    opacity: 0.1;
+  }
+
+  &:hover {
+  
+    > .novablocks-header__inner-container:not(:only-child):last-child {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &:not(.primary-menu--is-visible) {
+  
+    > .novablocks-header__inner-container:not(:only-child):last-child {
+      display: none;
+    }
+  }
+
+  > .novablocks-header__inner-container:not(:only-child):last-child {
+    position: absolute;
+    z-index: -1;
+
+    width: 100%;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease 0s, opacity 0.1s ease 0.1s;
+  
+  }
+
+  @include below(lap) {
+    display: none !important;
+  }
+}

@@ -10,6 +10,14 @@
 			--novablocks-transition-duration: .15s;
 		}
 
+    .novablocks-advanced-gallery__grid {
+      pointer-events: none;
+    }
+
+    .novablocks-advanced-gallery__grid-item {
+      pointer-events: auto;
+    }
+
 		&:hover {
 
 			.novablocks-change-media-overlay {

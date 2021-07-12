@@ -3,9 +3,10 @@ import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
-import { getCardMediaPaddingTop } from '@novablocks/utils'
+import { getCardMediaPaddingTop, getColorSetClassnames } from '@novablocks/utils'
 
 import attributes from './collection-attributes.json';
+import './with-collection-attributes';
 import InspectorControls from "./collection-controls";
 
 import {
@@ -86,10 +87,14 @@ export const CollectionPreview = ( props ) => {
 		imageResizing,
 		containerHeight,
 		imagePadding,
+    contentPadding,
 
 		columns,
 		postsToShow,
 		isLandscape,
+
+    layoutStyle,
+    carouselLayout
 	} = attributes;
 
 	const blockClassName = 'novablocks-collection';
@@ -97,6 +102,7 @@ export const CollectionPreview = ( props ) => {
 
 	const style = {
 		'--card-media-padding': imagePadding,
+    '--card-content-padding': contentPadding,
 		'--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
 		'--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 	};
@@ -108,13 +114,17 @@ export const CollectionPreview = ( props ) => {
 		props.className,
 		blockClassName,
 		'novablocks-block',
+		'novablocks-block-spacing',
 		`${ blockClassName }--align-${ contentAlign }`,
-		`block-is-${ blockStyle }`,
 		`content-is-${ contentStyle }`,
 		{
 			'has-appender': hasAppender,
 		},
-		//
+    `novablocks-collection--${ layoutStyle }`,
+    `novablocks-collection-carousel--${ carouselLayout }`,
+    {
+      'novablocks-collection-carousel--variable': layoutStyle === 'carousel' && carouselLayout === 'variable',
+    },
 		'novablocks-grid__area',
 		{
 			'novablocks-grid__area--portrait': ! isLandscape,
@@ -122,6 +132,8 @@ export const CollectionPreview = ( props ) => {
 		},
 		getAreaClassnameByWidthRatio( widthRatio ),
 		getAreaClassnameByHeightRatio( heightRatio ),
+		`block-is-${ blockStyle }`,
+    getColorSetClassnames( attributes )
 	);
 
 	return (

@@ -1,20 +1,22 @@
 @import 'scss/variables';
 
 @import 'scss/components/alignment/style';
-@import 'scss/components/colors/style';
 @import 'scss/components/emphasis/style';
 @import 'scss/components/layout/style';
 @import 'scss/components/spacing/style';
+
+$slick-arrow-color: var(--sm-current-fg1-color);
 
 @import 'scss/vendor/slick';
 @import 'scss/vendor/slick-theme';
 
 .admin-bar {
   --admin-bar-height: 32px;
-  
+  --admin-bar-offset: 0;
+
   @media screen and (max-width: 782px) {
     --admin-bar-height: 46px;
-    
+    --admin-bar-offset: 46px;
   }
 }
 
@@ -81,43 +83,17 @@
 	}
 }
 
-.novablocks-foreground[class] {
-
-	h1, h2, h3, h4, h5, h6,
-	ul, ol, dl,
-	.editor-block-list__block {
-		color: inherit;
-	}
-}
-
-.novablocks-mask {
-	@include cover;
+.novablocks-doppler__mask {
 	clip: rect(0 auto auto 0);
 	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
-.novablocks-parallax {
-	position: fixed;
-	top: 0;
-	left: 0;
-	object-fit: cover;
-
-	.scrolling-effect-static & {
-		position: static;
-	}
-}
-
-.wp-block-novablocks-posts .wp-block {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.wp-block-novablocks-posts .wp-block.alignwide {
-	max-width: var(--theme-content-width-wide) !important;
-}
-
-.wp-block-novablocks-posts .novablocks-media__inner-container {
-	padding: 5em;
+.supernova-card__media-aspect-ratio > * {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .novablocks-card__layout {
@@ -150,4 +126,10 @@
 			flex: 1 1 0;
 		}
 	}
+}
+
+.supernova-card__media[class] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

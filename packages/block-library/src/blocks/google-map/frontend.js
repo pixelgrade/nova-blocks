@@ -13,44 +13,44 @@ import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
 			return;
 		}
 
-		$( '.js-novablocks-google-map' ).each( function( i, obj ) {
+    $( '.js-novablocks-google-map' ).each( function( i, obj ) {
 
-			var $obj = $( obj ),
-				accentColor = $obj.data( 'accent-color' ),
-				markers = $obj.data( 'markers' ),
-				showLabels = $obj.data( 'show-labels' ),
-				showIcons = $obj.data( 'show-icons' ),
-				styles = $obj.data( 'styles' ),
-				stylesWithColor = addColorToStyles( styles, accentColor ),
-				zoom = $obj.data( 'zoom' ),
-				hideControls = ! $obj.data( 'controls' ),
-				mapOptions = {
-					mapTypeId: 'roadmap',
-					center: getCenterFromMarkers( markers ),
-					zoom: zoom,
-					styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
-					disableDefaultUI: hideControls,
-					clickableIcons: false,
-					keyboardShortcuts: false,
-				},
-				map = new google.maps.Map( obj, mapOptions );
+      const $obj = $( obj );
+      const accentColor = $obj.data( 'accent-color' );
+      const markers = $obj.data( 'markers' );
+      const showLabels = $obj.data( 'show-labels' );
+      const showIcons = $obj.data( 'show-icons' );
+      const styles = $obj.data( 'styles' );
+      const stylesWithColor = addColorToStyles( styles, accentColor );
+      const zoom = $obj.data( 'zoom' );
+      const hideControls = !$obj.data( 'controls' );
+      const mapOptions = {
+        mapTypeId: 'roadmap',
+        center: getCenterFromMarkers( markers ),
+        zoom: zoom,
+        styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
+        disableDefaultUI: hideControls,
+        clickableIcons: false,
+        keyboardShortcuts: false,
+      };
+      const map = new google.maps.Map( obj, mapOptions );
 
-			var pinMarkup = pin.replace( /%ACCENT_COLOR%/g, accentColor );
-			var mapMarkers = markers.map( markerString => {
-				const marker = JSON.parse( markerString );
+      const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, accentColor );
+      const mapMarkers = markers.map( markerString => {
+        const marker = JSON.parse( markerString );
 
-				return new google.maps.Marker( {
-					map: map,
-					icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
-					title: marker.title,
-					position: marker.geometry.location,
-				} );
-			} );
+        return new google.maps.Marker( {
+          map: map,
+          icon: {url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup )},
+          title: marker.title,
+          position: marker.geometry.location,
+        } );
+      } );
 
-			$obj.data( 'map', map );
-			$obj.data( 'mapMarkers', mapMarkers );
+      $obj.data( 'map', map );
+      $obj.data( 'mapMarkers', mapMarkers );
 
-		} );
+    } );
 
 		const api = window?.parent?.wp?.customize;
 

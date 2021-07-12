@@ -6,6 +6,17 @@
 		var(--novablocks-transition-easing);
 }
 
+
+[data-type="novablocks/hero"] {
+
+  &[data-type] {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
 .wp-block-novablocks-hero.novablocks-hero {
 	transition: var(--novablocks-hero-transition);
 	transition-property: color, background-color, opacity;
@@ -18,6 +29,7 @@
 }
 
 .pixelgrade-hero-block-toolbar-dropdown {
+
 	button {
 		display: flex;
 		align-items: center;

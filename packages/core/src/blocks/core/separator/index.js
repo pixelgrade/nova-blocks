@@ -5,35 +5,25 @@ import { addFilter } from '@wordpress/hooks';
 
 export const addSeparatorFilters = ( settings ) => {
 
+  const separatorMarkup = settings?.separator?.markup;
+
 	const Separator = ( props ) => {
 
 	  const useBlockProps = wp.blockEditor.useBlockProps;
-    const separatorMarkup = settings.separator && settings.separator.markup;
     const className = classnames(
       'wp-block-separator',
       props.className
     );
 
-	  if( typeof useBlockProps !== "undefined" ) {
+	  if ( typeof useBlockProps !== "undefined" ) {
       const blockProps = useBlockProps( {
         className: className,
       } );
 
-      return (
-        <div { ...blockProps } dangerouslySetInnerHTML={ {
-          __html: separatorMarkup
-        } }>
-        </div>
-      );
-    } else {
-
-        return (
-          <div className={ className } dangerouslySetInnerHTML={ {
-            __html: separatorMarkup
-          } }>
-          </div>
-        );
+      return <div { ...blockProps } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
     }
+
+    return <div className={ className } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
 	};
 
 	const replaceSeparatorEdit = createHigherOrderComponent( ( BlockEdit ) => {
@@ -47,11 +37,11 @@ export const addSeparatorFilters = ( settings ) => {
 	}, "replaceSeparatorEdit" );
 
 	const replaceSeparatorSave = ( element, blockType, attributes ) => {
-		if ( 'core/separator' !== blockType.name ) {
-			return element;
+		if ( 'core/separator' === blockType.name ) {
+      return <div className={ `wp-block-separator ${ attributes.className }` } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
 		}
 
-		return null;
+    return element;
 	};
 
 	addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );

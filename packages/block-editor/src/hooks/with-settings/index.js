@@ -3,6 +3,7 @@ import { withSelect } from '@wordpress/data';
 import { addFilter } from '@wordpress/hooks';
 
 const withSettings = createHigherOrderComponent( ( Component ) => {
+
 	return withSelect( ( select, ownProps ) => {
 		const { getSettings } = select( 'novablocks' );
 
