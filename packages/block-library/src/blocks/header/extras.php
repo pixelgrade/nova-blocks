@@ -14,20 +14,24 @@ if ( ! function_exists('get_header_row_block' ) ) {
 
 		$block = [];
 
-		if ( ! empty( $post->post_content ) && has_blocks( $post->post_content ) ) {
+		if ( empty( $post->post_content ) || ! has_blocks( $post->post_content ) ) {
+			return $block;
+		}
 
-			// Get all blocks inside Block Area;
-			$header_block = ( parse_blocks( $post->post_content ) )[0];
+		// Get all blocks inside Block Area;
+		$blocks = parse_blocks( $post->post_content );
+		$header_block = reset( $blocks );
+		if ( empty( $header_block['innerBlocks'] ) ) {
+			return $block;
+		}
 
-			// Get InnerBlocks
-			$inner_blocks = $header_block['innerBlocks'];
+		// Get InnerBlocks
+		foreach ( $header_block['innerBlocks'] as $inner_block ) {
 
-			foreach ( $inner_blocks as $inner_block ) {
-
-				// Select InnerBlock which match Sticky Row attribute.
-				if ( $inner_block['attrs'][$row_type] === $row_type_value ) {
-					$block = $inner_block;
-				}
+			// Select InnerBlock which match Sticky Row attribute.
+			// Stop at first.
+			if ( isset( $inner_block['attrs'][$row_type] ) && $inner_block['attrs'][$row_type] === $row_type_value ) {
+				return $inner_block;
 			}
 		}
 
