@@ -476,20 +476,6 @@ export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorA
   return normalizeVariationValue( variation );
 }
 
-export const getCurrentPalette = ( props ) => {
-
-  const {
-    settings: {
-      palettes
-    },
-    attributes: {
-      palette
-    }
-  } = props;
-
-  return palettes.find( paletteIterator => paletteIterator.id === palette );
-}
-
 export const getAbsoluteColorVariation = ( props ) => {
 
   const {
@@ -499,7 +485,7 @@ export const getAbsoluteColorVariation = ( props ) => {
     }
   } = props;
 
-  const currentPalette = getCurrentPalette( props );
+  const currentPalette = getCurrentPaletteConfig( props );
   const { sourceIndex } = currentPalette;
   const siteVariation = getSiteColorVariation();
   const siteVariationOffset = siteVariation - 1;
@@ -509,7 +495,7 @@ export const getAbsoluteColorVariation = ( props ) => {
 }
 
 export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
-  return getRelativeColorVariation( getCurrentPalette( props ), paletteVariation, props );
+  return getRelativeColorVariation( getCurrentPaletteConfig( props ), paletteVariation, props );
 }
 
 export const getSiteColorVariation = () => {
