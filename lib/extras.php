@@ -1276,6 +1276,8 @@ function novablocks_get_card_media_markup( $media ) {
 function novablocks_get_card_post_meta( $post, $attributes ) {
 	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
 	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+	$aboveTitleMeta = '';
+	$belowTitleMeta = '';
 
 	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
 		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
