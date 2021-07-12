@@ -25,7 +25,6 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 	function novablocks_render_sharing_overlay_block( $attributes, $content ) {
 
 		$attributes_config = novablocks_get_sharing_overlay_attributes();
-		
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );

@@ -134,7 +134,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 					echo render_block( $sticky_row_block );
 
-					if ( $sticky_row_block['attrs']['isPrimary']  !== true ) {
+					if ( ! isset( $sticky_row_block['attrs']['isPrimary'] ) || true !== $sticky_row_block['attrs']['isPrimary'] ) {
 						echo render_block( $primary_row_block );
 					}
 				}

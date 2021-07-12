@@ -1252,8 +1252,8 @@ function novablocks_get_card_media_markup( $media ) {
 
 	$url = $media['url'];
 
-	ob_start(); 
-	
+	ob_start();
+
 	if ( ! empty( $url ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
 			echo '<video class="novablocks-card__media-image" muted autoplay loop playsinline src="' . esc_url( $url ) . '"/>';
@@ -1268,14 +1268,16 @@ function novablocks_get_card_media_markup( $media ) {
 				<path d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z" fill="currentColor"/>
 			</svg>
 		</div>
-	<?php } 
-	
+	<?php }
+
 	return ob_get_clean();
 }
 
 function novablocks_get_card_post_meta( $post, $attributes ) {
 	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
 	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+	$aboveTitleMeta = '';
+	$belowTitleMeta = '';
 
 	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
 		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
@@ -1635,7 +1637,7 @@ function novablocks_get_palette_classes( $attributes ) {
 		'sm-variation-' . $attributes['paletteVariation'],
 	);
 
-	if ( $attributes['useSourceColorAsReference'] ) {
+	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
 		$classes[] = 'sm-palette--shifted';
 	}
 
