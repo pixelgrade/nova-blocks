@@ -77,7 +77,7 @@ import { addSocialMenuClass } from "./utils";
         mainHeaderIsSticky = windowScrollY > 1;
 
     if ( mainHeaderShouldBeSticky && mainHeaderIsSticky !== stickyHeaderShown ) {
-      $siteHeader.toggleClass( 'novablocks-header--sticky', stickyHeaderShown );
+      $siteHeader.toggleClass( 'novablocks-header--sticky', mainHeaderIsSticky );
       stickyHeaderShown = mainHeaderIsSticky;
     }
   }

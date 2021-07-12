@@ -65,32 +65,44 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
 
   return ( props ) => {
 
-    const {name, attributes} = props
-    const {listStyle, listConnection} = attributes;
+    const {name, attributes } = props
+    const {listStyle, listConnection, ordered, start} = attributes;
 
     let wrapperProps = props.wrapperProps;
     let customData = {};
+    let customStyle = {};
 
-    if ( allowedBlocks.includes( name ) && listStyle && listConnection ) {
-      customData = Object.assign( customData, {
-        'data-list-style': listStyle,
-        'data-connection-style': listConnection,
-        'data-nb': 'list'
-      } )
+    if ( allowedBlocks.includes( name )  ) {
+
+      if ( listStyle && listConnection ) {
+        customData = Object.assign( customData, {
+          'data-list-style': listStyle,
+          'data-connection-style': listConnection,
+          'data-nb': 'list',
+        } )
+      }
+
+      if ( ordered && start !== undefined ) {
+        customStyle = Object.assign(customStyle, {
+          '--nb-list-start-at': (start - 1) + ''
+        })
+      }
+
     }
 
     wrapperProps = {
       ...wrapperProps,
       ...customData,
+      style: customStyle
     };
 
-    return <BlockListBlock {...props} wrapperProps={wrapperProps} />;
+    return <BlockListBlock {...props} wrapperProps={wrapperProps}/>;
   };
 }, 'addEditorBlockAttributes' );
 
 function applyFrontEndClasses( extraProps, blockType, attributes ) {
 
-  const { listStyle, listConnection, ordered } = attributes;
+  const { listStyle, listConnection, ordered, start } = attributes;
 
   if ( allowedBlocks.includes( blockType.name ) ) {
 
@@ -102,6 +114,10 @@ function applyFrontEndClasses( extraProps, blockType, attributes ) {
 
     if ( listConnection !== 'is-style-no-connection' ) {
       extraProps.className = classnames( extraProps.className, listConnection );
+    }
+
+    if ( ordered && start !== undefined ) {
+      extraProps.style = { '--nb-list-start-at': (start - 1) + '' }
     }
   }
 
