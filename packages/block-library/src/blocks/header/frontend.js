@@ -9,11 +9,8 @@ import { addSocialMenuClass } from "./utils";
     $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
     $currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
     mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
-    wpAdminBar = $( '#wpadminbar' ),
-    wpAdminBarHeight = !wpAdminBar.length ? '0' : wpAdminBar.outerHeight(),
     isArticle = $( 'body' ).hasClass( 'single-post' ),
     $progressBar = $( '.js-reading-progress' ),
-    $promoBar = $( '.js-promo-bar' ),
     $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
 
   const $readingBar = $currentHeader.find( '.js-reading-bar' )
@@ -55,26 +52,19 @@ import { addSocialMenuClass } from "./utils";
     }
 
     let stickyRowOffSet = $stickyRow.offset().top,
-        windowScrollY = window.scrollY,
         primaryRowIsVisible = $primaryRow.offset().top + $primaryRow.outerHeight() < $stickyHeader.offset().top + $stickyHeader.outerHeight(),
         isSticky = $stickyHeader.offset().top > stickyRowOffSet;
-
-    // If we find any promo bar,
-    // we should consider it's height for the offset.
-    if ( $promoBar.length ) {
-      isSticky = windowScrollY > stickyRowOffSet - wpAdminBarHeight - $promoBar.outerHeight();
-    }
 
     // Avoid showing primary row
     // from sticky header on hover, when the primary row
     // from main header is still visible.
-    if ( primaryRowIsVisible !==  primaryRowShown) {
-      $stickyHeader.toggleClass( 'primary-menu--is-visible' );
+    if ( primaryRowIsVisible !== primaryRowShown ) {
+      $stickyHeader.toggleClass( 'primary-menu--is-visible', primaryRowIsVisible );
       primaryRowShown = primaryRowIsVisible;
     }
 
     if ( isSticky !== stickyHeaderShown ) {
-      $stickyHeader.toggleClass( 'is-visible' );
+      $stickyHeader.toggleClass( 'is-visible', isSticky );
       stickyHeaderShown = isSticky;
     }
   }
@@ -87,7 +77,7 @@ import { addSocialMenuClass } from "./utils";
         mainHeaderIsSticky = windowScrollY > 1;
 
     if ( mainHeaderShouldBeSticky && mainHeaderIsSticky !== stickyHeaderShown ) {
-      $siteHeader.toggleClass( 'novablocks-header--sticky' );
+      $siteHeader.toggleClass( 'novablocks-header--sticky', stickyHeaderShown );
       stickyHeaderShown = mainHeaderIsSticky;
     }
   }
