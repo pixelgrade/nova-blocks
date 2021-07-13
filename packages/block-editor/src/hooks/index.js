@@ -14,6 +14,7 @@ import "./with-controls-sections";
 import "./with-font-size-picker";
 import "./with-inner-blocks";
 import "./with-latest-posts";
+import "./with-on-select-images";
 import "./with-overlay-filter-strength-controls";
 import "./with-random-defaults";
 import "./with-space-and-sizing";

@@ -1,16 +1,20 @@
 import { addFilter } from "@wordpress/hooks";
-import normalizeImages from "../../components/normalize-images/index";
+import { createHigherOrderComponent } from '@wordpress/compose';
 
-const onSelectImages = ( images ) => {
-  normalizeImages( images ).then( newImages => {
-    setAttributes( { images: newImages } );
-  } )
-};
+import normalizeImages from "../../components/normalize-images/index";
 
 export const withOnSelectImages = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
-    return <WrappedComponent { ...props } onSelectImages={ onSelectImages } />
+    const { setAttributes } = props;
+
+    return (
+      <WrappedComponent { ...props } onSelectImages={ ( images ) => {
+        normalizeImages( images ).then( newImages => {
+          setAttributes( { images: newImages } );
+        } )
+      } } />
+    )
   }
 
 }, 'withOnSelectImages' );
