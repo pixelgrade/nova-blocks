@@ -9,7 +9,7 @@ import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
 
 	function mapInit() {
 
-		if ( typeof google === "undefined" || typeof google.maps === "undefined" ) {
+		if ( ! window?.google?.maps ) {
 			return;
 		}
 

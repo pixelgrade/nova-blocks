@@ -72,7 +72,10 @@ registerBlockType( 'novablocks/hero', {
       contentPositionMatrixToolbar: {
         deprecated: true
       },
-      customDefaults: true
+      customDefaults: true,
+      doppler: {
+        altAttributes: true
+      }
     },
 	},
 //	deprecated,

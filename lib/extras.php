@@ -153,14 +153,26 @@ function novablocks_get_doppler_attributes() {
 }
 
 function novablocks_get_alignment( $attributes ) {
+
 	if ( ! empty( $attributes['contentPosition'] ) ) {
 		return explode( ' ', $attributes['contentPosition'] );
-	} else {
-		return array(
-			$attributes['verticalAlignment'],
-			$attributes['horizontalAlignment']
-		);
 	}
+
+	$verticalAlignment = 'center';
+	$horizontalAlignment = 'center';
+
+	if ( isset( $attributes['verticalAlignment'] ) ) {
+		$verticalAlignment = $attributes['verticalAlignment'];
+	}
+
+	if ( isset( $attributes['horizontalAlignment'] ) ) {
+		$horizontalAlignment = $attributes['horizontalAlignment'];
+	}
+
+	return array(
+		$verticalAlignment,
+		$horizontalAlignment,
+	);
 }
 
 function novablocks_get_alignment_classes( $attributes ) {
