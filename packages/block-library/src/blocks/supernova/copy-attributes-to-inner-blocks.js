@@ -1,7 +1,7 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { select } from "@wordpress/data";
 import { setAttributesToInnerBlocks, blobAttributes } from "@novablocks/block-editor";
-import { getAlignFromMatrix } from "@novablocks/utils";
+import { getAlignFromMatrix, getContentVariationBySignal } from "@novablocks/utils";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
 
@@ -31,7 +31,6 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
         'layoutStyle',
 
         'palette',
-        'paletteVariation',
         'useSourceColorAsReference',
         'contentSignal',
 
@@ -54,6 +53,7 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
       const newAttributes = {};
 
       attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );
+      newAttributes.paletteVariation = getContentVariationBySignal( props );
 
       setAttributesToInnerBlocks( clientId, newAttributes );
 
@@ -70,4 +70,4 @@ const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlo
   };
 }, 'withSupernovaAttributesValues' );
 
-//wp.hooks.addFilter( 'editor.BlockListBlock', 'novablocks/with-collection-visibility-attributes', withSupernovaAttributesValues );
+wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-collection-visibility-attributes', withSupernovaAttributesValues );

@@ -32,7 +32,9 @@ registerBlockType( 'novablocks/supernova', {
     html: false,
     novaBlocks: {
       colorSignal: true,
+      contentColorSignal: true,
       latestPosts: true,
+      contentPositionMatrixToolbar: true,
     }
   },
   edit,
