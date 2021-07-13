@@ -161,7 +161,7 @@ class Map extends Component {
 	}
 
 	render() {
-		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` } style={ this.props.parallax }></div>;
+		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` } style={ this.props.parallax.style }></div>;
 	}
 }
 

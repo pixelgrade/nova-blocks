@@ -65,7 +65,10 @@ registerBlockType( 'novablocks/slideshow', {
       contentPositionMatrixToolbar: {
         deprecated: true
       },
-      customDefaults: true
+      customDefaults: true,
+      doppler: {
+        altAttributes: true
+      }
     },
   },
 	edit,

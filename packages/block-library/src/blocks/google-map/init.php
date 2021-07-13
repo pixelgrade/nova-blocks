@@ -8,15 +8,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_get_google_map_attributes() {
+
+	return novablocks_merge_attributes_from_array( array(
+		'packages/block-editor/src/hooks/with-doppler/attributes.json',
+		'packages/block-editor/src/hooks/with-doppler/attributes-alt.json',
+		'packages/block-library/src/blocks/google-map/attributes.json'
+	) );
+
+}
+
 if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 
 	function novablocks_render_google_map_block( $attributes, $content ) {
 
-		$scrolling_attributes = novablocks_get_attributes_from_json( 'ppackages/block-editor/src/hooks/with-doppler/attributes.json' );
-		$map_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/google-map/attributes.json' );
-
-		$attributes_config = array_merge( $map_attributes, $scrolling_attributes );
-
+		$attributes_config = novablocks_get_google_map_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(

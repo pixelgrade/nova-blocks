@@ -33,7 +33,12 @@ registerBlockType( 'novablocks/google-map', {
 	},
 	attributes,
   supports: {
-    html: false
+    html: false,
+    novaBlocks: {
+      doppler: {
+        altAttributes: true
+      }
+    }
   },
 	edit,
 	save: function() {

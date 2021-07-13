@@ -1,5 +1,6 @@
 import { addFilter } from "@wordpress/hooks";
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { select } from "@wordpress/data";
 
 import withDoppler from "./with-doppler";
 import withDopplerControls from "./with-doppler-controls";
@@ -16,13 +17,13 @@ export {
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
 
-const blocksWithDoppler = [];
-
 const addDoppler = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
-    if ( ! blocksWithDoppler.includes( props.name ) ) {
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.doppler ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -33,19 +34,13 @@ const addDoppler = createHigherOrderComponent( OriginalComponent => {
 });
 addFilter( 'editor.BlockEdit', 'novablocks/with-doppler', addDoppler );
 
-const blocksWithDopplerControls = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-  'novablocks/google-map',
-  'novablocks/supernova',
-  'novablocks/supernova-item',
-];
-
 const addDopplerControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
-    if ( ! blocksWithDopplerControls.includes( props.name ) ) {
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.doppler ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -56,48 +51,19 @@ const addDopplerControls = createHigherOrderComponent( OriginalComponent => {
 });
 addFilter( 'editor.BlockEdit', 'novablocks/with-doppler-controls', addDopplerControls );
 
-const blocksWithDopplerAttributes = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-  'novablocks/google-map',
-  'novablocks/supernova',
-  'novablocks/supernova-item',
-];
+const addDopplerAttributes = ( settings ) => {
 
-function addDopplerAttributes( block ) {
-
-  if ( ! blocksWithDopplerAttributes.includes( block.name ) ) {
-    return block;
+  if ( ! settings?.supports?.novaBlocks?.doppler ) {
+    return settings;
   }
 
   return {
-    ...block,
+    ...settings,
     attributes: {
-      ...block.attributes,
-      ...attributes
+      ...settings.attributes,
+      ...attributes,
+      ...( !! settings?.supports?.novaBlocks?.doppler?.altAttributes ? altAttributes : {} )
     }
   };
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/add-doppler-attributes', addDopplerAttributes );
-
-const blocksWithDopplerAltAttributes = [
-  'novablocks/hero',
-  'novablocks/slideshow',
-  'novablocks/google-map',
-];
-
-function addDopplerAltAttributes( block ) {
-
-  if ( ! blocksWithDopplerAltAttributes.includes( block.name ) ) {
-    return block;
-  }
-
-  return {
-    ...block,
-    attributes: {
-      ...block.attributes,
-      ...altAttributes
-    }
-  };
-}
-addFilter( 'blocks.registerBlockType', 'novablocks/add-doppler-alt-attributes', addDopplerAltAttributes );
