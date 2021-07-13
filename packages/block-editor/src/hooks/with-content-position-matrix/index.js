@@ -77,7 +77,7 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 }, 'withInnerBlocksContentPosition' );
 addFilter( 'editor.BlockEdit', 'novablocks/with-content-position-matrix-inner-blocks', withInnerBlocksContentPosition );
 
-const withContentPositionMatrixDeprecated = ( settings, name ) => {
+const withContentPositionMatrixDeprecated = ( settings ) => {
 
   if ( ! settings?.supports?.novaBlocks?.contentPositionMatrixToolbar?.deprecated ) {
     return settings;
@@ -95,10 +95,10 @@ const withContentPositionMatrixDeprecated = ( settings, name ) => {
           default: "center"
         }
       },
-      isEligible( attributes, innerBlocks ) {
-        return ! isUndefined( attributes.horizontalAlignment ) || ! isUndefined( attributes.verticalAlignment );
+      isEligible( attributes ) {
+        return ! isUndefined( attributes.horizontalAlignment ) && ! isUndefined( attributes.verticalAlignment ) && isUndefined( attributes.contentPosition );
       },
-      migrate( oldAttributes, innerBlocks ) {
+      migrate( oldAttributes ) {
         const { horizontalAlignment, verticalAlignment, ...attributes } = oldAttributes;
 
         return {
