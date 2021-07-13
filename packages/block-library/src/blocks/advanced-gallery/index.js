@@ -50,7 +50,7 @@ async function getNewDefaults() {
 generateDefaults( 'novablocks/advanced-gallery', getNewDefaults );
 
 registerBlockType( 'novablocks/advanced-gallery', {
-	title: __( 'Gallery of the Stars', '__plugin_txtd' ),
+	title: __( 'Gallery of the Stars (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),

@@ -32,6 +32,7 @@
 		"@wordpress/server-side-render": "^1.20.6",
 		"@wordpress/viewport": "^2.25.6",
 		"js-cookie": "^2.2.1",
+		"react-slick": "^0.28.1",
 		"shariff": "^3.2.1"
 	}
 }

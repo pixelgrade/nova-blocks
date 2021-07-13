@@ -1,0 +1,58 @@
+{
+	"preview": {
+		"type": "boolean",
+		"default": true
+	},
+	"cardLayout": {
+		"type": "string",
+		"default": "horizontal"
+	},
+	"level": {
+		"type": "number",
+		"default": 2
+	},
+	"sourceType": {
+		"type": "string",
+		"default": "content"
+	},
+	"metaAboveTitle": {
+		"type": "string",
+		"default": ""
+	},
+	"metaBelowTitle": {
+		"type": "string",
+		"default": ""
+	},
+	"title": {
+		"type": "string",
+		"default": ""
+	},
+	"subtitle": {
+		"type": "string",
+		"default": ""
+	},
+	"description": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonText": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonUrl": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonOpensInNewTab": {
+		"type": "boolean",
+		"default": false
+	},
+	"defaultsGenerated": {
+		"type": "boolean",
+		"default": false
+	},
+	"multiplePlaceholderImages": {
+		"type": "boolean",
+		"default": false
+	}
+}

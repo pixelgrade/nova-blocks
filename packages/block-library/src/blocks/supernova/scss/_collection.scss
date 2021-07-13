@@ -1,0 +1,103 @@
+.supernova-collection__layout {
+  --novablocks-grid-spacing: var(--novablocks-spacing);
+}
+
+.supernova-collection__layout--fixed-width {
+  .supernova-card:not(.supernova-card--aspect-ratio-auto) {
+    .novablocks-card__media-image {
+      @include image-cover;
+    }
+  }
+}
+
+.supernova-card--aspect-ratio-auto {
+
+  .novablocks-advanced-gallery__image {
+    position: static;
+
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    transform: none;
+  }
+
+  .novablocks-advanced-gallery__grid-item-media {
+    flex-grow: 0;
+  }
+
+  .blob-mix {
+    position: relative;
+  }
+
+  .blob-mix__mask {
+    position: static;
+    height: auto;
+  }
+
+  .blob-mix__media {
+    position: relative;
+    height: auto;
+  }
+}
+
+@mixin with-editor-layout-selectors {
+
+  &:not(.supernova-collection__layout--edit),
+  &.supernova-collection__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
+    @content;
+  }
+}
+
+.supernova-collection__layout--classic,
+.supernova-collection__layout--parametric {
+
+  @include with-editor-layout-selectors {
+    @debug &;
+
+    display: grid;
+    grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+    grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
+
+    > * {
+      margin: 0;
+    }
+  }
+}
+
+.supernova-collection__layout--carousel {
+  margin-left: calc( -0.5 * var(--novablocks-grid-spacing) );
+  margin-right: calc( -0.5 * var(--novablocks-grid-spacing) );
+
+  .supernova-card {
+    margin-left: calc( 0.5 * var(--novablocks-grid-spacing) );
+    margin-right: calc( 0.5 * var(--novablocks-grid-spacing) );
+  }
+
+  .slick-track {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .slick-slide {
+    float: none;
+    height: auto;
+
+    > div,
+    > div > .supernova-card {
+      height: 100%;
+    }
+  }
+
+  .slick-dots {
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-top: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+
+    button {
+      color: inherit;
+    }
+  }
+}
