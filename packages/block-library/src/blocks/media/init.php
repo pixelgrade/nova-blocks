@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_media_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/blob/src/attributes.json',
+		'packages/block-editor/src/hooks/with-blobs/attributes.json',
 		'packages/advanced-gallery/src/attributes.json',
 
 		'packages/block-editor/src/hooks/with-card-details/attributes.json',
