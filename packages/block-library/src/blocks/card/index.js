@@ -50,6 +50,7 @@ registerBlockType( 'novablocks/card', {
     html: false,
     novaBlocks: {
       customDefaults: true,
+      colorSignal: true,
     }
   },
 	edit,

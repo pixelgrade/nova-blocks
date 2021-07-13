@@ -76,8 +76,9 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
           // we'll keep this as it is for now since we're implementing supernova
 					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
 
-					return Object.assign( {}, atts, {
-					  paletteVariation: getContentVariationBySignal( props )
+          return Object.assign( {}, atts, {
+            paletteVariation: getContentVariationBySignal( props ),
+            useSourceColorAsReference: attributes.useSourceColorAsReference
           } );
 				}
 			)( attributes );
