@@ -65,12 +65,15 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
 
   return ( props ) => {
 
-    const {name, attributes } = props
-    const {listStyle, listConnection, ordered, start} = attributes;
+    const { name, attributes } = props
+    const { listStyle, listConnection, ordered, start, reversed, values } = attributes;
 
     let wrapperProps = props.wrapperProps;
     let customData = {};
     let customStyle = {};
+
+    const listDomElement = new DOMParser().parseFromString(values, 'text/html');
+    const listCount = listDomElement.querySelectorAll('body > li').length;
 
     if ( allowedBlocks.includes( name )  ) {
 
@@ -88,6 +91,12 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
         })
       }
 
+      if ( ordered && reversed ) {
+        customStyle = Object.assign(customStyle, {
+          '--nb-list-items-count': (listCount + 1) + ''
+        })
+      }
+
     }
 
     wrapperProps = {
@@ -102,11 +111,17 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
 
 function applyFrontEndClasses( extraProps, blockType, attributes ) {
 
-  const { listStyle, listConnection, ordered, start } = attributes;
+  const { listStyle, listConnection, ordered, start, reversed, values } = attributes;
+
+  let customStyle = {}
 
   if ( allowedBlocks.includes( blockType.name ) ) {
 
     extraProps.className = classnames( extraProps.className, 'nb-list' );
+    extraProps.style = {}
+
+    const listDomElement = new DOMParser().parseFromString(values, 'text/html');
+    const listCount = listDomElement.querySelectorAll('body > li').length;
 
     if ( listStyle !== 'list-bullet-style' && !ordered ) {
       extraProps.className = classnames( extraProps.className, listStyle );
@@ -116,9 +131,19 @@ function applyFrontEndClasses( extraProps, blockType, attributes ) {
       extraProps.className = classnames( extraProps.className, listConnection );
     }
 
-    if ( ordered && start !== undefined ) {
-      extraProps.style = { '--nb-list-start-at': (start - 1) + '' }
+    if ( ordered ) {
+
+      if ( start !== undefined ) {
+        customStyle['--nb-list-start-at'] = (start - 1) + '' ;
+      }
+
+      if ( reversed ) {
+        customStyle['--nb-list-items-count'] = (listCount + 1)  + '';
+      }
+
+      extraProps.style = Object.assign(extraProps.style, customStyle)
     }
+
   }
 
   return extraProps;
