@@ -63,6 +63,7 @@ registerBlockType( 'novablocks/supernova-item', {
     novaBlocks: {
       colorSignal: true,
       latestPosts: true,
+      doppler: true,
     }
   },
   edit,

@@ -95,7 +95,7 @@ const CardMediaContent = props => {
 
 const CardMediaContentWithDoppler = withDoppler( ( props ) => {
   return (
-    <div style={ props?.parallax?.style }>
+    <div className={ `supernova-card__media-doppler` } style={ props?.parallax?.style }>
       <CardMediaContent { ...props } />
     </div>
   )

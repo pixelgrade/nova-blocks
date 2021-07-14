@@ -1854,7 +1854,7 @@ function novablocks_get_card_contents( $attributes ) {
 
 	echo novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
 	echo novablocks_get_card_item_title( $attributes['title'], $attributes );
-	echo novablocks_get_card_item_meta( $attributes['metaBelow'], $attributes );
+	echo novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
 	echo novablocks_get_card_item_description( $attributes['description'], $attributes );
 	echo novablocks_get_card_item_buttons( array(
 		array(

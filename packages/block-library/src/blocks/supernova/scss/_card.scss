@@ -108,6 +108,10 @@
   opacity: var(--collection-card-media-opacity, 1);
 }
 
+.supernova-card__media-doppler {
+  width: 100%;
+}
+
 .supernova-card__content {
   display: flex;
   flex-direction: column;
