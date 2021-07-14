@@ -4,14 +4,15 @@ import { addSocialMenuClass } from "./utils";
 ( function( $, window, undefined ) {
 
   const $siteHeader = $( '.novablocks-header--main' ),
-    $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
-    $stickyHeader = $( '.novablocks-header--secondary' ),
-    $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
-    $currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
-    mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
-    isArticle = $( 'body' ).hasClass( 'single-post' ),
-    $progressBar = $( '.js-reading-progress' ),
-    $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
+        $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
+        $stickyHeader = $( '.novablocks-header--secondary' ),
+        $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
+        $currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
+        mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
+        isArticle = $( 'body' ).hasClass( 'single-post' ),
+        $progressBar = $( '.js-reading-progress' ),
+        $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' ),
+        isLegacyHeader = $siteHeader.hasClass('novablocks-header--legacy');
 
   const $readingBar = $currentHeader.find( '.js-reading-bar' )
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();
@@ -87,7 +88,7 @@ import { addSocialMenuClass } from "./utils";
 
     // Reading Progress Bar should
     // exist only on articles.
-    if ( ! isArticle ) {
+    if ( ! isArticle || isLegacyHeader ) {
       return;
     }
 
@@ -135,7 +136,7 @@ import { addSocialMenuClass } from "./utils";
     let $window = $( window ),
         $title = $('.entry-title');
 
-    if ( below('lap') || ! isArticle ) {
+    if ( below('lap') || ! isArticle || isLegacyHeader ) {
       return;
     }
 
