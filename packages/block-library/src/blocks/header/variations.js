@@ -45,13 +45,13 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
-            slug: "secondary"
+            className: "novablocks-navigation novablocks-navigation--primary",
+            slug: "primary"
           } ],
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
-            slug: "primary"
+            className: "novablocks-navigation novablocks-navigation--secondary",
+            slug: "secondary"
           } ]
         ]
       ]
