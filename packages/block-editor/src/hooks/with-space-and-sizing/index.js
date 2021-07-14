@@ -1,5 +1,3 @@
-import { isUndefined } from "lodash";
-
 import attributes from './attributes';
 
 import {
@@ -39,20 +37,6 @@ import {
 
 import { select } from '@wordpress/data';
 
-const ALLOWED_BLOCKS = [
-	'novablocks/media',
-	'novablocks/header-row',
-	'novablocks/hero',
-	'novablocks/slideshow',
-	'novablocks/cards-collection',
-	'novablocks/posts-collection',
-	'novablocks/supernova',
-];
-
-const ALLOWED_BLOCKS_ADVANCED = [
-	'novablocks/media',
-];
-
 const getEmphasisAttributes = ( emphasis, overlap, contentPosition = 'center center' ) => {
 
   const actualEmphasis = ! overlap ? emphasis : -1 * emphasis;
@@ -70,7 +54,6 @@ const getEmphasisAttributes = ( emphasis, overlap, contentPosition = 'center cen
     contentPosition: `${ verticalAlignment } ${ horizontalAlignment }`
 	};
 };
-
 const getRandomAttributes = () => {
 	const getRandomSign = () => { return getRandomArrayFromArray( [ -1, 0, 1 ], 1 )[0] };
 	const block = getRandomBetween( 0, 3 );
@@ -96,7 +79,9 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
 	return ( props ) => {
 
-		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
+    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+
+    if ( ! supports?.novaBlocks?.spaceAndSizing ) {
 			return <OriginalComponent { ...props } />
 		}
 
@@ -108,7 +93,7 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 		if ( Array.isArray( presetOptions ) ) {
 			presets.push( ...presetOptions );
 
-			if ( Array.isArray( advancedPresetOptions ) && ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ) {
+			if ( Array.isArray( advancedPresetOptions ) && supports?.novaBlocks?.spaceAndSizing?.advancedSpacing ) {
 				presets.push( ...advancedPresetOptions );
 			}
 		}
@@ -206,7 +191,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-		if ( ! ALLOWED_BLOCKS.includes( props.name ) && ! supports?.novaBlocks?.spacing ) {
+		if ( ! supports?.novaBlocks?.spaceAndSizing ) {
 			return <OriginalComponent { ...props } />
 		}
 
@@ -231,7 +216,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 		const BLOCK_SPACING_MIN_VALUE = -3;
 		const BLOCK_SPACING_MAX_VALUE = 3;
 
-		const CONTENT_SPACING_MIN_VALUE = ALLOWED_BLOCKS_ADVANCED.includes( props.name ) ? -3 : 0;
+		const CONTENT_SPACING_MIN_VALUE = supports?.novaBlocks?.spaceAndSizing?.advancedSpacing ? -3 : 0;
 		const CONTENT_SPACING_MAX_VALUE = 3;
 
 		return (
@@ -317,7 +302,7 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-space-and-sizing', withSpaceAndS
 
 function addSpaceAndSizingAttributes( block ) {
 
-	if ( ! ALLOWED_BLOCKS.includes( block.name ) && ! block?.supports?.novaBlocks?.spacing ) {
+	if ( ! block?.supports?.novaBlocks?.spaceAndSizing ) {
 		return block;
 	}
 
