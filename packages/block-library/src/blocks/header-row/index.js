@@ -24,6 +24,7 @@ registerBlockType( 'novablocks/header-row', {
     html: false,
     novaBlocks: {
       colorSignal: true,
+      spaceAndSizing: true,
     },
   },
   edit,

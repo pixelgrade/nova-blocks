@@ -76,6 +76,9 @@ registerBlockType( 'novablocks/media', {
       contentPositionMatrixToolbar: {
         deprecated: true
       },
+      spaceAndSizing: {
+        advancedSpacing: true
+      }
     },
   },
 	edit,

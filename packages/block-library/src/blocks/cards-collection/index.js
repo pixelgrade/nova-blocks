@@ -27,6 +27,7 @@ registerBlockType( 'novablocks/cards-collection', {
     novaBlocks: {
       colorSignal: true,
       contentColorSignal: true,
+      spaceAndSizing: true,
     },
   },
 	edit,

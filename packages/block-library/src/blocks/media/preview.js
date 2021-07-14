@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import AdvancedGallery from '@novablocks/advanced-gallery';
 
 import {
+  getAlignmentClassnames,
   getColorSetClassnames,
   getContentVariationBySignal
 } from '@novablocks/utils';
@@ -44,6 +45,7 @@ const MediaPreview = function( props ) {
 		`novablocks-media`,
 		`has-image-on-the-${ mediaPosition }`,
 		`novablocks-u-valign-${ verticalAlignment }`,
+    getAlignmentClassnames( attributes )
 	);
 
 	const passedProps = props;
