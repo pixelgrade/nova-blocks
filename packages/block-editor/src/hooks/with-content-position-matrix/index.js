@@ -68,7 +68,9 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 
     block.innerBlocks.forEach( block => {
       updateBlockAttributes( block.clientId, {
-        align: horizontalAlignment
+        align: horizontalAlignment,
+        textAlign: horizontalAlignment,
+        contentJustification: horizontalAlignment,
       } );
     } );
 

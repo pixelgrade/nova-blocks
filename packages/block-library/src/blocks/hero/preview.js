@@ -8,11 +8,12 @@ import HeroBackground from './background';
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 
-import {
-	select
- } from '@wordpress/data';
+import { select } from '@wordpress/data';
 
-import { getColorSetClassnames } from "@novablocks/utils";
+import {
+  getAlignmentClassnames,
+  getColorSetClassnames
+} from "@novablocks/utils";
 
 const HeroPreview = function( props ) {
 
@@ -29,8 +30,6 @@ const HeroPreview = function( props ) {
 		contentPaddingCustom,
 		contentWidth,
 		contentWidthCustom,
-		// alignment
-		contentPosition,
 		// height
 		minHeightFallback,
 		// indicators
@@ -43,20 +42,15 @@ const HeroPreview = function( props ) {
 		displayInnerContent,
 	} = attributes;
 
-	const alignment = contentPosition.split( " " );
-	const verticalAlignment = alignment[0];
-	const horizontalAlignment = alignment[1];
-
 	const classes = [
 		className,
 		'novablocks-hero',
-		`novablocks-u-valign-${ verticalAlignment }`,
-		`novablocks-u-halign-${ horizontalAlignment }`,
 		`novablocks-u-spacing-${ contentPadding }`,
 		`novablocks-u-content-width-${ contentWidth }`,
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
-    getColorSetClassnames( attributes )
+    getColorSetClassnames( attributes ),
+    getAlignmentClassnames( attributes )
 	];
 
 	const styles = {
