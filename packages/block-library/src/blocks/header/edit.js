@@ -53,13 +53,13 @@ const TEMPLATE_OPTIONS = [
 		icon: icons.logoCenter,
 		template: [
 			[ 'novablocks/navigation', {
-				className: "novablocks-navigation novablocks-navigation--secondary",
-				slug: "secondary"
+				className: "novablocks-navigation novablocks-navigation--primary",
+				slug: "primary"
 			} ],
 			[ 'novablocks/logo' ],
 			[ 'novablocks/navigation', {
-				className: "novablocks-navigation novablocks-navigation--primary",
-				slug: "primary"
+				className: "novablocks-navigation novablocks-navigation--secondary",
+				slug: "secondary"
 			} ],
 		],
 	}
