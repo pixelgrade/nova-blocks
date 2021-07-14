@@ -11,8 +11,7 @@ import { addSocialMenuClass } from "./utils";
         mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
         isArticle = $( 'body' ).hasClass( 'single-post' ),
         $progressBar = $( '.js-reading-progress' ),
-        $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' ),
-        isLegacyHeader = $siteHeader.hasClass('novablocks-header--legacy');
+        $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
 
   const $readingBar = $currentHeader.find( '.js-reading-bar' )
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();
@@ -88,7 +87,7 @@ import { addSocialMenuClass } from "./utils";
 
     // Reading Progress Bar should
     // exist only on articles.
-    if ( ! isArticle || isLegacyHeader ) {
+    if ( ! isArticle ) {
       return;
     }
 
@@ -136,7 +135,7 @@ import { addSocialMenuClass } from "./utils";
     let $window = $( window ),
         $title = $('.entry-title');
 
-    if ( below('lap') || ! isArticle || isLegacyHeader ) {
+    if ( below('lap') || ! isArticle ) {
       return;
     }
 
