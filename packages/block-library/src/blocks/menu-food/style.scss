@@ -151,10 +151,12 @@
 	}
 }
 
-.nova-food-menu-item__label[class] {
-	color: var(--novablocks-bg-color);
-
-	margin: 0;
+.nova-food-menu-item__label{
+	
+  &[class][class] {
+    color: var(--novablocks-bg-color);
+    margin: 0;
+  }
 }
 
 .nova-food-menu__section {
