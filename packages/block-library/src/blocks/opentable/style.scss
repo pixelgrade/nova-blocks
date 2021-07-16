@@ -181,7 +181,7 @@
 		}
 
 		.ot-button {
-			background-color: var(--novablocks-accent-color);
+			background-color: var(--sm-button-background-color, var(--novablocks-accent-color));
 			color: var(--novablocks-bg-color);
 			border-radius: 0;
 			border-color: var(--novablocks-accent-color);

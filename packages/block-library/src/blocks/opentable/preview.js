@@ -48,6 +48,7 @@ class OpenTablePreview extends Component {
 		             `<script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=${ restaurantId }&type=standard&theme=${ layoutForm }&iframe=false&overlay=false&domain=com&lang=${ language }'></script>` +
 		             grabStylesheet( window?.styleManager?.colorsCustomPropertiesUrl ) +
                  ( window?.styleManager?.smAdvancedPalettesOutput && `<style>${ window.styleManager.smAdvancedPalettesOutput }</style>` || '' ) +
+                 ( window?.styleManager?.frontendOutput && `<style>${ window.styleManager.frontendOutput }</style>` || '' ) +
 		             grabStylesheet( novablocks_urls?.novablocks_core_frontend_stylesheet ) +
 		             grabStylesheet( novablocks_urls?.novablocks_components_frontend_stylesheet ) +
 		             grabStylesheet( novablocks_urls?.novablocks_opentable_frontend_stylesheet ) +
