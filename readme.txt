@@ -94,6 +94,17 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 1.12.7 =
+* Fixed spacing inside Conversations block.
+* Fixed Food Menu label color.
+* Fixed OpenTable Block preview.
+* Add palette shifted class on frontend when Use Color as Reference is checked.
+* Fixed a bug in Advanced Gallery that was preventing the block from being inserted.
+* Improved OpenTable styling inside the Editor.
+* Removed theme related styles for Site Logo.
+* Update logic for Scroll Button.
+* Removed Header Row background on mobiles.
+
 = 1.12.0 =
 * New Color Signal component for an enhanced experience editing block colors
 * Updated Hero, Media and Slideshow blocks to use core Matrix Alignment component
