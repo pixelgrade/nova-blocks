@@ -5,7 +5,9 @@ import '@novablocks/doppler/frontend';
 	let windowScrollY;
 	let scrollButtonHidden = false;
 
-	const $scrollButton = $( '.novablocks-hero__indicator' );
+	const $scrollButton = $( '.novablocks-hero__indicator' ),
+        $scrollButtonMiddle = $scrollButton.filter( '.novablocks-hero__indicator--middle' ),
+        SCROLL_BUTTON_HIDDEN_CLASS = 'novablocks-hero__indicator--hidden';
 
 	bulletsInit();
 	scrollButtonInit();
@@ -16,9 +18,7 @@ import '@novablocks/doppler/frontend';
 	function updateScroll() {
 		windowScrollY = window.scrollY;
 
-		if ( windowScrollY > 200 ) {
-			hideScrollButton();
-		}
+    hideScrollButton( windowScrollY );
 	}
 
 	function bulletsInit() {
@@ -30,15 +30,14 @@ import '@novablocks/doppler/frontend';
 		}
 	}
 
-	function hideScrollButton() {
+	function hideScrollButton( scrollY ) {
 
-		if ( scrollButtonHidden ) {
-			return;
-		}
+	  const hideScrollButton = scrollY > 200;
 
-		$scrollButton.filter( '.novablocks-hero__indicator--middle' ).addClass( 'novablocks-hero__indicator--hidden' );
-		scrollButtonHidden = true;
-
+	  if ( hideScrollButton !== scrollButtonHidden ) {
+      $scrollButtonMiddle.toggleClass(SCROLL_BUTTON_HIDDEN_CLASS);
+      scrollButtonHidden = hideScrollButton;
+    }
 	}
 
 	function scrollButtonInit() {
