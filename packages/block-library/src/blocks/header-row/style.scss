@@ -6,6 +6,12 @@
     display: flex;
     flex-direction: column;
 
+    --novablocks-accent-color: inherit;
+    --novablocks-fg1-color: inherit;
+    --novablocks-bg-color: inherit;
+    --novablocks-fg2-color: inherit;
+    --header-background-opacity: 0;
+
     .novablocks-navigation--primary {
       order: -1;
     }
@@ -33,18 +39,18 @@
   }
 
   .novablocks-header-row__inner-container[class] > .wp-block {
-    
+
     .novablocks-header--sticky & {
       --emphasis-top-spacing: 0.5;
       --emphasis-bottom-spacing: 0.5;
     }
-    
+
     --novablocks-element-spacing-multiplier: 1;
 
-    margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-    margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-    padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-    padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    margin-top: calc(var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
+    margin-bottom: calc(var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
+    padding-top: calc(var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
+    padding-bottom: calc(var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
 
     @include navigation-block-layout-common-styles;
   }
