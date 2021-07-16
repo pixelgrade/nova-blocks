@@ -17,12 +17,7 @@
         display: block;
         max-width: 100%;
         width: auto;
-        height: var(--theme-mobile-header-logo-height, 20px);
         object-fit: contain;
-
-        @include above(lap) {
-            height: var(--theme-header-logo-height);
-        }
     }
 }
 
