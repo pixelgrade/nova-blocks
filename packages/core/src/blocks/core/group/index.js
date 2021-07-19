@@ -13,6 +13,7 @@ const { createHigherOrderComponent } = wp.compose;
 const allowedBlocks = [ 'core/group' ];
 
 import Inspector from './controls';
+import {select} from "@wordpress/data";
 
 const alterSettings = ( settings ) => {
 
@@ -37,6 +38,7 @@ const alterSettings = ( settings ) => {
           variationClassname: true,
           functionalColors: true,
         },
+        spaceAndSizing: true,
       }
     }
   };
@@ -88,10 +90,32 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
 
 const applyFrontEndClasses = ( extraProps, blockType, attributes ) =>{
 
-  const { contentAlignment } = attributes;
+  const { contentAlignment, blockTopSpacing, blockBottomSpacing, emphasisTopSpacing, emphasisBottomSpacing
+  } = attributes;
 
-  if ( allowedBlocks.includes( blockType.name ) && contentAlignment !== 'pull-none' ) {
-    extraProps.className = classnames( extraProps.className, contentAlignment );
+  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+
+  let spaceAndSizingStyle = {};
+
+  extraProps.style = {};
+
+  if ( allowedBlocks.includes( blockType.name ) ) {
+
+    if (contentAlignment !== 'pull-none' ) {
+      extraProps.className = classnames( extraProps.className, contentAlignment );
+    }
+
+    if (supports?.novaBlocks?.spaceAndSizing ) {
+
+      spaceAndSizingStyle = {
+        '--novablocks-block-top-spacing': blockTopSpacing + '',
+        '--novablocks-block-bottom-spacing': blockBottomSpacing + '',
+        '--novablocks-emphasis-top-spacing': emphasisTopSpacing + '',
+        '--novablocks-emphasis-bottom-spacing': emphasisBottomSpacing + '',
+      }
+
+      extraProps.style = Object.assign(extraProps.style, spaceAndSizingStyle);
+    }
   }
 
   return extraProps;
