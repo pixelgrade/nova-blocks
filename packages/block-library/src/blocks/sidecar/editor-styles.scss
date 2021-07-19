@@ -91,11 +91,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   @include layout-grid;
   
-  [class*='__inner-container'] {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  
   > :first-child {
     grid-column: var(--all-columns) !important;
   }
