@@ -75,7 +75,8 @@ registerBlockType( 'novablocks/hero', {
       customDefaults: true,
       doppler: {
         altAttributes: true
-      }
+      },
+      spaceAndSizing: true
     },
 	},
 //	deprecated,
