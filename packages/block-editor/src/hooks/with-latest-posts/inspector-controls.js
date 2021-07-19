@@ -20,7 +20,8 @@ const Controls = ( props ) => {
     categories,
     tags,
     preventDuplicatePosts,
-    sourceType
+    sourceType,
+    sticky
   } = attributes;
 
   const itemsCount = useSelect( ( select ) => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
@@ -66,6 +67,10 @@ const Controls = ( props ) => {
           loadingMode={ loadingMode }
           onLoadingModeChange={ _loadingMode =>
             setAttributes( { loadingMode: _loadingMode } )
+          }
+          sticky={ sticky }
+          onStickyChange = { _sticky =>
+            setAttributes( { sticky: _sticky } )
           }
           specificPosts={ specificPosts }
           onSpecificPostsChange={ _specificPosts =>

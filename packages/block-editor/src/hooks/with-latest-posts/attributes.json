@@ -42,5 +42,9 @@
 		"items": {
 			"type": "integer"
 		}
+	},
+	"sticky": {
+		"type": "string",
+		"default": "exclude"
 	}
 }

@@ -1320,6 +1320,29 @@ function novablocks_get_card_post_meta( $post, $attributes ) {
 
 function novablocks_build_articles_query( $attributes ) {
 	global $novablocks_rendered_posts_ids;
+	global $wp_query;
+
+	if ( 'inherited' === $attributes['loadingMode'] ) {
+		$args = array_merge(
+			array(
+				'post__not_in' => array(),
+				'ignore_sticky_posts' => 1,
+			),
+			$wp_query->query_vars
+		);
+
+		if ( isset( $attributes['sticky'] ) && ! empty( $attributes['sticky'] ) ) {
+			$sticky = get_option( 'sticky_posts' );
+			if ( 'only' === $attributes['sticky'] ) {
+				$args['post__in'] = $sticky;
+			}
+			if ( 'exclude' === $attributes['sticky'] ) {
+				$args['post__not_in'] = array_merge( $args['post__not_in'], $sticky );
+			}
+		}
+
+		return $args;
+	}
 
 	if ( ! $novablocks_rendered_posts_ids ) {
 		$novablocks_rendered_posts_ids = array();
@@ -1333,7 +1356,7 @@ function novablocks_build_articles_query( $attributes ) {
 	$manual_mode             = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
 	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
 
-	$args           = array(
+	$args = array(
 		'post_status'         => 'publish',
 		'suppress_filters'    => false,
 		'ignore_sticky_posts' => true,
