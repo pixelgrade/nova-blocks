@@ -27,11 +27,6 @@ import {
 } from '@wordpress/element';
 
 import {
-	compose,
-	createHigherOrderComponent
-} from '@wordpress/compose';
-
-import {
 	select
 } from '@wordpress/data';
 

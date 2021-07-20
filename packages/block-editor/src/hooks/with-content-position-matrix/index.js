@@ -57,26 +57,39 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 
     const { clientId, attributes } = props;
     const { contentPosition } = attributes;
-
-    const { getBlock } = select( 'core/block-editor' );
-
     const alignment = contentPosition.split( " " );
     const horizontalAlignment = alignment[1] || 'center';
 
-    const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-    const block = getBlock( clientId );
-
-    block.innerBlocks.forEach( block => {
-      updateBlockAttributes( block.clientId, {
-        align: horizontalAlignment,
-        textAlign: horizontalAlignment,
-        contentJustification: horizontalAlignment,
-      } );
-    } );
+    alignBlockChildren( clientId, horizontalAlignment );
 
     return <OriginalComponent { ...props } />
   };
 }, 'withInnerBlocksContentPosition' );
+
+const alignBlockChildren = ( clientId, horizontalAlignment ) => {
+  const { getBlock } = select( 'core/block-editor' );
+  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+  const block = getBlock( clientId );
+
+  block.innerBlocks.forEach( innerBlock => {
+    const block = getBlock( innerBlock.clientId );
+    console.log( block, innerBlock );
+    const blockType = wp.data.select( 'core/blocks' ).getBlockType( block.name );
+    const supportsAlign = blockType?.supports?.align;
+
+    if ( Array.isArray( supportsAlign ) && ( supportsAlign.indexOf( 'wide' ) > -1 || supportsAlign.indexOf( 'full' ) > -1 ) ) {
+      alignBlockChildren( block.clientId, horizontalAlignment );
+      return;
+    }
+
+    updateBlockAttributes( block.clientId, {
+      align: horizontalAlignment,
+      textAlign: horizontalAlignment,
+      contentJustification: horizontalAlignment,
+    } );
+  } );
+}
+
 addFilter( 'editor.BlockEdit', 'novablocks/with-content-position-matrix-inner-blocks', withInnerBlocksContentPosition );
 
 const withContentPositionMatrixDeprecated = ( settings ) => {
