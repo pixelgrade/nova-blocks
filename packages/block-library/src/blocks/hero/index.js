@@ -17,6 +17,7 @@ import {
 	layoutAttributes,
 } from "@novablocks/block-editor";
 
+// Load deprecated file
 import deprecated from './deprecated';
 
 const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
