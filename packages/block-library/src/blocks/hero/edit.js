@@ -134,7 +134,6 @@ class HeroEdit extends Component {
 			<Fragment>
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
-				<LayoutControls { ...this.props } />
 				<BlockHeightControls { ...this.props } />
 				<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>

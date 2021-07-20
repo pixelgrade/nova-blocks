@@ -3,8 +3,6 @@ import { omit } from 'lodash';
 
 import save from "./save";
 
-console.log('here');
-
 const slideshowAddDeprecated = (settings, name) => {
 
   if ( name !== 'novablocks/slideshow' ) {
