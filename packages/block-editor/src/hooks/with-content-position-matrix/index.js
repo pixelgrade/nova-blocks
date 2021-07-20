@@ -73,7 +73,6 @@ const alignBlockChildren = ( clientId, horizontalAlignment ) => {
 
   block.innerBlocks.forEach( innerBlock => {
     const block = getBlock( innerBlock.clientId );
-    console.log( block, innerBlock );
     const blockType = wp.data.select( 'core/blocks' ).getBlockType( block.name );
     const supportsAlign = blockType?.supports?.align;
 
