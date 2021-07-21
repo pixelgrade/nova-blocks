@@ -11,10 +11,10 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { getSvg } from "@novablocks/block-editor";
 
-import {dispatch, select} from "@wordpress/data";
+import { dispatch, select } from "@wordpress/data";
 
-const {getBlockRootClientId} = select( 'core/block-editor' );
-const {selectBlock, clearSelectedBlock} = dispatch( 'core/editor' );
+const { getBlockRootClientId } = select( 'core/block-editor' );
+const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
 
 registerBlockType( 'novablocks/navigation', {
 	title: __( 'Space Navigation', '__plugin_txtd' ),
