@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { select } from '@wordpress/data';
 
 export const getRandomBetween = ( min, max ) => {
 	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
@@ -338,7 +339,7 @@ export const getComputedVariation = ( palette, parentVariation, currentSignal, u
 }
 
 export const getComputedVariationFromParents = ( clientId ) => {
-  const { getBlockParents, getBlock } = wp.data.select( 'core/block-editor' );
+  const { getBlockParents, getBlock } = select( 'core/block-editor' );
 
   const blocks = getBlockParents( clientId ).slice();
   blocks.push( clientId );
@@ -353,7 +354,7 @@ export const getComputedVariationFromParents = ( clientId ) => {
 }
 
 export const getPaletteConfig = ( palette ) => {
-  const settings = wp.data.select( 'novablocks' ).getSettings();
+  const settings = select( 'novablocks' ).getSettings();
   const { palettes } = settings;
 
   if ( ! Array.isArray( palettes ) || ! palettes.length ) {

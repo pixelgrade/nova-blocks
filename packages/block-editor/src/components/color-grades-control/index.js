@@ -1,4 +1,5 @@
-import classnames from 'classnames';
+import classnames from "classnames";
+import { select } from "@wordpress/data";
 import { getIcon } from "@novablocks/icons";
 import {
   getComputedVariationFromParents,
@@ -25,6 +26,7 @@ const ColorGradesControl = ( props ) => {
   } = attributes;
 
   const currentPalette = getPaletteConfig( palette );
+  const { getBlockParents } = select( 'core/block-editor' );
   const { sourceIndex } = currentPalette;
 
   const iconClassName = classnames(
@@ -37,7 +39,7 @@ const ColorGradesControl = ( props ) => {
     }
   );
 
-  const parents = wp.data.select( 'core/block-editor' ).getBlockParents( clientId );
+  const parents = getBlockParents( clientId );
 
   let offset = 0;
 
@@ -66,8 +68,6 @@ const ColorGradesControl = ( props ) => {
             const selected = getComputedVariationFromParents( clientId ) - offset;
             const currentVariation = normalizeVariationValue( index + 1 - siteVariation + offset  + 1 );
             const actualSelectedIndex = ( ( useSourceColorAsReference ? selected + sourceIndex - 1 : selected - siteVariation ) + 12 ) % 12;
-
-            console.log( actualSelectedIndex );
 
             const className = classnames(
               `nb-palette__grade`,

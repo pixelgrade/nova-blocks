@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { withSettings } from '../../hooks';
+import { withSettings } from '../../filters';
 
 /**
  * WordPress dependencies

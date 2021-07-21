@@ -17,9 +17,6 @@ export { default as insertTemplate } from './insert-template';
 export { default as generateDefaults } from './generate-defaults';
 export { default as getPlaceholderImages } from './get-placeholder-images';
 export { default as normalizeImages } from './normalize-images';
-export { default as useApiFetch } from './use-api-fetch';
-export { default as useResizeObserver } from './use-resize-observer';
-export { default as useMemoryState } from './use-memory-state';
 
 export {
   getSvg,

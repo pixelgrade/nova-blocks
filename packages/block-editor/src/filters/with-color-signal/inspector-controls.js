@@ -1,16 +1,18 @@
 import { normalizeVariationValue, getPaletteConfig }  from "@novablocks/utils";
-import { useMemoryState } from "../../components";
 
 import { ToggleControl } from "@wordpress/components";
 import { select } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
 
 import {
+  ColorGradesControl,
   ControlsGroup,
   ControlsSection,
   ControlsTab,
+  Notice,
   SignalControl,
-  ColorGradesControl,
+  useMemoryState,
+  useSupports,
 } from "../../index";
 
 import ColorPalettePicker from './components/color-palette-picker';
@@ -23,13 +25,12 @@ import {
   getSignalAttributes,
 } from "@novablocks/utils";
 
-import { Notice } from "../../components";
-
 const ColorSetControls = ( props ) => {
 
   const {
     attributes,
     setAttributes,
+    name
   } = props;
 
   const {
@@ -39,7 +40,7 @@ const ColorSetControls = ( props ) => {
     paletteVariation,
   } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+  const supports = useSupports( name );
   const currentPalette = getPaletteConfig( palette );
 
   if ( ! currentPalette ) {
@@ -105,14 +106,45 @@ const ColorSetControls = ( props ) => {
 
 const MiscellanousControls = ( props ) => {
 
+  return (
+    <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
+      <FunctionalColorsToggleControl { ...props } />
+      <ColorReferenceToggleControl { ...props } />
+    </ControlsGroup>
+  )
+}
+
+const FunctionalColorsToggleControl = ( props ) => {
+
+  const {
+    showFunctionalColors,
+    setShowFunctionalColors,
+    name
+  } = props;
+
+  const supports = useSupports( name );
+  const disableFunctionalColors = ! supports?.novaBlocks?.colorSignal?.functionalColors;
+
+  if ( disableFunctionalColors ) {
+    return null;
+  }
+
+  return (
+    <ToggleControl
+      label={ __( 'Use Functional Colors', '__plugin_txtd' ) }
+      checked={ showFunctionalColors }
+      onChange={ value => { setShowFunctionalColors( value ) } }
+    />
+  )
+}
+
+const ColorReferenceToggleControl = ( props ) => {
+  const { getBlockParents } = select( 'core/block-editor' );
+
   const {
     attributes,
     setAttributes,
-    settings: {
-      palettes,
-    },
-    showFunctionalColors,
-    setShowFunctionalColors
+    clientId,
   } = props;
 
   const {
@@ -122,33 +154,29 @@ const MiscellanousControls = ( props ) => {
   } = attributes;
 
   const currentPalette = getPaletteConfig( palette );
-  const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
-  const disableFunctionalColors = ! supports?.novaBlocks?.colorSignal?.functionalColors;
+  const parents = getBlockParents( clientId );
+
+  if ( Array.isArray( parents ) && parents.length ) {
+    return null;
+  }
 
   return (
-    <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
-      { ! disableFunctionalColors && <ToggleControl
-        label={ __( 'Use Functional Colors', '__plugin_txtd' ) }
-        checked={ showFunctionalColors }
-        onChange={ value => { setShowFunctionalColors( value ) } }
-      /> }
-      <ToggleControl
-        key={ 'color-set-use-source-as-reference-control' }
-        label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
-        checked={ useSourceColorAsReference }
-        onChange={ useSourceColorAsReference => {
-          const siteVariation = getSiteColorVariation();
-          const offsetFactor = useSourceColorAsReference ? -1 : 1;
-          const offset = offsetFactor * ( siteVariation - 1 + currentPalette.sourceIndex );
-          const nextVariation = normalizeVariationValue( paletteVariation + offset );
+    <ToggleControl
+      key={ 'color-set-use-source-as-reference-control' }
+      label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
+      checked={ useSourceColorAsReference }
+      onChange={ useSourceColorAsReference => {
+        const siteVariation = getSiteColorVariation();
+        const offsetFactor = useSourceColorAsReference ? -1 : 1;
+        const offset = offsetFactor * ( siteVariation - 1 + currentPalette.sourceIndex );
+        const nextVariation = normalizeVariationValue( paletteVariation + offset );
 
-          setAttributes( {
-            paletteVariation: nextVariation,
-            useSourceColorAsReference
-          } );
-        } }
-      />
-    </ControlsGroup>
+        setAttributes( {
+          paletteVariation: nextVariation,
+          useSourceColorAsReference
+        } );
+      } }
+    />
   )
 }
 
