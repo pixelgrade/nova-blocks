@@ -76,6 +76,7 @@ phpstan.neon.dist
 
 # Nova Blocks specifics
 src/**/*.js
+src/vendor/trix
 bundlesize.config.json
 packages/*/build
 packages/*/build-module
