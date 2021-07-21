@@ -6,6 +6,8 @@ import { select } from '@wordpress/data';
 
 import { addFilter } from '@wordpress/hooks';
 
+import { getComputedVariationFromParents, getSignalFromVariation } from '@novablocks/utils';
+
 import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
@@ -133,9 +135,12 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
       return <BlockListBlock { ...props } />
     }
 
+    const { clientId } = props;
+    const variation = getComputedVariationFromParents( clientId );
+
     const blockProps = {
       ...props,
-      className: `${ props.className } sm-variation-${ props.attributes.paletteVariation }`
+      className: `${ props.className } sm-variation-${ variation }`
     };
 
     return (

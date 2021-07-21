@@ -61,7 +61,7 @@ const ColorPalettePicker = ( props ) => {
                   palette: thisPalette.id,
                   paletteVariation: 1,
                   colorSignal: sourceSignal,
-                  useSourceColorAsReference: true,
+//                  useSourceColorAsReference: true,
                 } )
               } else {
                 setAttributes( getSignalAttributes( colorSignal, thisPalette, sticky ) );

@@ -1,19 +1,19 @@
 import classnames from 'classnames';
 import { getIcon } from "@novablocks/icons";
 import {
+  getComputedVariationFromParents,
   getSiteColorVariation,
   normalizeVariationValue,
-  getCurrentPaletteConfig
+  getPaletteConfig,
 } from "@novablocks/utils";
 
 const ColorGradesControl = ( props ) => {
 
   const {
     attributes,
-    settings,
     label,
-    value,
     signal,
+    clientId,
   } = props;
 
   const onChange = props.onChange || (() => {});
@@ -24,7 +24,7 @@ const ColorGradesControl = ( props ) => {
     useSourceColorAsReference,
   } = attributes;
 
-  const currentPalette = getCurrentPaletteConfig(props);
+  const currentPalette = getPaletteConfig( palette );
   const { sourceIndex } = currentPalette;
 
   const iconClassName = classnames(
@@ -36,6 +36,14 @@ const ColorGradesControl = ( props ) => {
       [ `nb-signal-icon--high` ]: signal === 3,
     }
   );
+
+  const parents = wp.data.select( 'core/block-editor' ).getBlockParents( clientId );
+
+  let offset = 0;
+
+  if ( Array.isArray( parents ) && parents.length ) {
+    offset = getComputedVariationFromParents( parents[ parents.length - 1 ] ) - 1;
+  }
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>
@@ -55,8 +63,11 @@ const ColorGradesControl = ( props ) => {
             let content = '';
             let modifier = '';
 
-            const currentVariation = normalizeVariationValue( index + 1 - siteVariation + 1 );
-            const actualSelectedIndex = ( ( useSourceColorAsReference ? value + sourceIndex - 1 : value - siteVariation ) + 12 ) % 12;
+            const selected = getComputedVariationFromParents( clientId ) - offset;
+            const currentVariation = normalizeVariationValue( index + 1 - siteVariation + offset  + 1 );
+            const actualSelectedIndex = ( ( useSourceColorAsReference ? selected + sourceIndex - 1 : selected - siteVariation ) + 12 ) % 12;
+
+            console.log( actualSelectedIndex );
 
             const className = classnames(
               `nb-palette__grade`,

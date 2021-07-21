@@ -119,3 +119,5 @@ const mediaAddDeprecated = ( settings, name ) => {
   }
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/media-add-deprecated', mediaAddDeprecated, 20 );
+
+console.log('aici');

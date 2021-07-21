@@ -321,27 +321,42 @@ export const getSignalOptionsFromVariation = ( variation ) => {
 export const getContentVariationBySignal = ( props ) => {
   const { attributes } = props;
   const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
-  const siteVariation = getSiteColorVariation();
-  const currentPalette = getCurrentPaletteConfig(props);
-  const { sourceIndex } = currentPalette;
-
-  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
-
-  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-
-  return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
+  return getComputedVariation( paletteVariation, contentColorSignal, useSourceColorAsReference, props );
 }
 
-// Helper function to get current Palette Config,
-// and generate a default, if a palette does not exist.
-export const getCurrentPaletteConfig = ( props ) => {
-  const { attributes, settings } = props;
-  const { palette } = attributes;
+export const getComputedVariation = ( palette, parentVariation, currentSignal, useSourceColorAsReference ) => {
+  const siteVariation = getSiteColorVariation();
+  const currentPalette = getPaletteConfig( palette );
+  const { sourceIndex } = currentPalette;
+  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
+  const referenceVariation = normalizeVariationValue( parentVariation + offset );
+  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
+  const computedVariation = normalizeVariationValue( contentSignalOptions[ currentSignal ] - offset );
+
+  console.log( parentVariation, currentSignal, contentSignalOptions, computedVariation );
+  return computedVariation
+}
+
+export const getComputedVariationFromParents = ( clientId ) => {
+  const { getBlockParents, getBlock } = wp.data.select( 'core/block-editor' );
+
+  const blocks = getBlockParents( clientId ).slice();
+  blocks.push( clientId );
+  let currentVariation = 1;
+
+  blocks.forEach( blockId => {
+    const block = getBlock( blockId );
+    currentVariation = getComputedVariation( block.attributes.palette, currentVariation, block.attributes.colorSignal, false );
+  } );
+
+  return currentVariation;
+}
+
+export const getPaletteConfig = ( palette ) => {
+  const settings = wp.data.select( 'novablocks' ).getSettings();
   const { palettes } = settings;
 
-
-  if ( ! Array.isArray( palettes) || ! palettes.length ) {
+  if ( ! Array.isArray( palettes ) || ! palettes.length ) {
     return { sourceIndex: 6 }
   }
 
@@ -490,12 +505,13 @@ export const getAbsoluteColorVariation = ( props ) => {
 
   const {
     attributes: {
+      palette,
       paletteVariation,
       useSourceColorAsReference
     }
   } = props;
 
-  const currentPalette = getCurrentPaletteConfig( props );
+  const currentPalette = getPaletteConfig( props );
   const { sourceIndex } = currentPalette;
   const siteVariation = getSiteColorVariation();
   const siteVariationOffset = siteVariation - 1;
@@ -504,8 +520,9 @@ export const getAbsoluteColorVariation = ( props ) => {
   return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
 }
 
-export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
-  return getRelativeColorVariation( getCurrentPaletteConfig( props ), paletteVariation, props );
+export const getCurrentPaletteRelativeColorVariation = ( palette, paletteVariation, props ) => {
+  const paletteConfig = getPaletteConfig( palette );
+  return getRelativeColorVariation( paletteConfig, paletteVariation, props );
 }
 
 export const getSiteColorVariation = () => {

@@ -1,4 +1,4 @@
-import { normalizeVariationValue, getCurrentPaletteConfig } from "@novablocks/utils";
+import { normalizeVariationValue, getPaletteConfig }  from "@novablocks/utils";
 import { useMemoryState } from "../../components";
 
 import { ToggleControl } from "@wordpress/components";
@@ -35,11 +35,12 @@ const ColorSetControls = ( props ) => {
   const {
     colorSignal,
     contentColorSignal,
+    palette,
     paletteVariation,
   } = attributes;
 
   const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
-  const currentPalette = getCurrentPaletteConfig(props);
+  const currentPalette = getPaletteConfig( palette );
 
   if ( ! currentPalette ) {
     return null;
@@ -87,7 +88,7 @@ const ColorSetControls = ( props ) => {
                               signal={ colorSignal }
                               onChange={ value => {
                                 const siteVariation = getSiteColorVariation();
-                                const nextPaletteVariation = getCurrentPaletteRelativeColorVariation( value, props );
+                                const nextPaletteVariation = getCurrentPaletteRelativeColorVariation( palette, value, props );
                                 const nextSignal = getSignalRelativeToVariation( value, siteVariation );
 
                                 setAttributes( {
@@ -120,7 +121,7 @@ const MiscellanousControls = ( props ) => {
     useSourceColorAsReference,
   } = attributes;
 
-  const currentPalette = getCurrentPaletteConfig(props);
+  const currentPalette = getPaletteConfig( palette );
   const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
   const disableFunctionalColors = ! supports?.novaBlocks?.colorSignal?.functionalColors;
 
