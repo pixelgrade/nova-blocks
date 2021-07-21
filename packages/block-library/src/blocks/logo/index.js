@@ -11,10 +11,10 @@ import attributes from "./attributes";
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import {dispatch, select} from "@wordpress/data";
+import { dispatch, select } from "@wordpress/data";
 
-const {getBlockRootClientId} = select( 'core/block-editor' );
-const {selectBlock, clearSelectedBlock} = dispatch( 'core/editor' );
+const { getBlockRootClientId } = select( 'core/block-editor' );
+const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
 
 registerBlockType( 'novablocks/logo', {
 	title: __( 'Logo', '__plugin_txtd' ),
