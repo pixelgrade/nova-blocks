@@ -2,11 +2,11 @@ import _ from 'lodash';
 
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
-import { select } from '@wordpress/data';
+import { dispatch, select } from '@wordpress/data';
 
 import { addFilter } from '@wordpress/hooks';
 
-import { getComputedVariationFromParents, getSignalFromVariation } from '@novablocks/utils';
+import { getComputedVariationFromParents } from '@novablocks/utils';
 
 import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
@@ -138,6 +138,10 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
     const { clientId } = props;
     const variation = getComputedVariationFromParents( clientId );
 
+    let currentBlock = select( 'core/block-editor' ).getBlock( clientId );
+
+    updateInnerBlocks( currentBlock );
+
     const blockProps = {
       ...props,
       className: `${ props.className } sm-variation-${ variation }`
@@ -148,6 +152,22 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
     )
   }
 }, "withVariationClassname" );
+
+const updateInnerBlocks = ( block ) => {
+  if ( Array.isArray( block.innerBlocks ) ) {
+    block.innerBlocks.forEach( innerBlock => {
+      const { clientId } = innerBlock;
+      const variation = getComputedVariationFromParents( clientId );
+      const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
+      updateBlockAttributes( clientId, {
+        paletteVariation: variation
+      } );
+
+      updateInnerBlocks( innerBlock );
+    } )
+  }
+}
 
 addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withVariationClassname );
 

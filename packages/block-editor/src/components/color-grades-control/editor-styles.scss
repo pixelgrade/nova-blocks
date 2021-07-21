@@ -102,6 +102,27 @@
   }
 }
 
+.nb-palette__signal-previews {
+  display: flex;
+  gap: 2px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  > * {
+    flex: 1 0 0;
+  }
+}
+
+.nb-palette__signal-preview {
+  border: 1px solid rgba(0,0,0,0.1);
+  min-height: 30px;
+
+  &--1 { background: #DDDDDD }
+  &--2 { background: #888888 }
+  &--3 { background: #222222 }
+}
+
 .nb-palette__label {
   position: relative;
   padding-top: 5px;

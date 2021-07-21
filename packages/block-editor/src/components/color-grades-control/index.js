@@ -6,6 +6,7 @@ import {
   getSiteColorVariation,
   normalizeVariationValue,
   getPaletteConfig,
+  arrayRotate, getSignalRelativeToVariation,
 } from "@novablocks/utils";
 
 const ColorGradesControl = ( props ) => {
@@ -41,11 +42,18 @@ const ColorGradesControl = ( props ) => {
 
   const parents = getBlockParents( clientId );
 
-  let offset = 0;
+  let parentVariation = 1;
 
   if ( Array.isArray( parents ) && parents.length ) {
-    offset = getComputedVariationFromParents( parents[ parents.length - 1 ] ) - 1;
+    parentVariation = getComputedVariationFromParents( parents[ parents.length - 1 ] );
   }
+
+  const anotherOffset = parentVariation - 1;
+  const variations = Array.from( Array( 12 ) ).map( ( undefined, index ) => index + 1 );
+  const selectedOffset = useSourceColorAsReference ? sourceIndex : 0;
+  const selectedVariation = normalizeVariationValue( getComputedVariationFromParents( clientId ) + selectedOffset );
+
+  arrayRotate( variations, anotherOffset );
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>
@@ -61,39 +69,39 @@ const ColorGradesControl = ( props ) => {
       </div>
       <div className="nb-palette">
         <div className="nb-palette__grades">
-          { Array.from( Array( 12 ) ).map( ( undefined, index ) => {
+          { variations.map( currentVariation => {
             let content = '';
-            let modifier = '';
 
-            const selected = getComputedVariationFromParents( clientId ) - offset;
-            const currentVariation = normalizeVariationValue( index + 1 - siteVariation + offset  + 1 );
-            const actualSelectedIndex = ( ( useSourceColorAsReference ? selected + sourceIndex - 1 : selected - siteVariation ) + 12 ) % 12;
+            const isSelected = selectedVariation === currentVariation;
+            const isSource = normalizeVariationValue( sourceIndex + 1 ) === currentVariation;
 
             const className = classnames(
               `nb-palette__grade`,
               `sm-palette-${ palette }`,
               `sm-variation-${ currentVariation }`,
               {
-                'nb-palette__grade--selected': actualSelectedIndex === index,
-                'nb-palette__grade--source': sourceIndex === index,
+                'nb-palette__grade--selected': isSelected,
+                'nb-palette__grade--source': isSource,
               }
             );
 
-            if ( actualSelectedIndex === index ) {
-              content = getIcon( 'tick' );
-            }
-
-            if ( sourceIndex === index ) {
-              content = getIcon( 'star' );
-            }
+            if ( isSelected ) { content = getIcon( 'tick' ) }
+            if ( isSource ) { content = getIcon( 'star' ) }
 
             return (
-              <div className={ className } onClick={ () => {
-                onChange( index + 1 );
-              } }>
+              <div className={ className } onClick={ () => { onChange( currentVariation ) } }>
                 <div className="nb-palette__grade-surface" />
                 <div className="nb-palette__grade-icon" dangerouslySetInnerHTML={ { __html: content } } />
               </div>
+            )
+          } ) }
+        </div>
+        <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
+          { variations.map( currentVariation => {
+            const signal = getSignalRelativeToVariation( currentVariation, parentVariation );
+
+            return (
+              <div className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
             )
           } ) }
         </div>

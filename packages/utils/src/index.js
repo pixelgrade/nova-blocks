@@ -282,7 +282,6 @@ export const getVariationFromSignal = ( signal ) => {
 
 export const getSignalRelativeToVariation = ( compare, reference ) => {
   const variationOptions = getSignalOptionsFromVariation( reference );
-
   return variationOptions.reduce( ( prev, curr, index, arr ) => {
     return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
   }, 0 );
@@ -330,12 +329,10 @@ export const getComputedVariation = ( palette, parentVariation, currentSignal, u
   const currentPalette = getPaletteConfig( palette );
   const { sourceIndex } = currentPalette;
   const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( parentVariation + offset );
+  const referenceVariation = normalizeVariationValue( parentVariation );
   const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-  const computedVariation = normalizeVariationValue( contentSignalOptions[ currentSignal ] - offset );
 
-  console.log( parentVariation, currentSignal, contentSignalOptions, computedVariation );
-  return computedVariation
+  return normalizeVariationValue( contentSignalOptions[ currentSignal ] - offset );
 }
 
 export const getComputedVariationFromParents = ( clientId ) => {
@@ -347,7 +344,7 @@ export const getComputedVariationFromParents = ( clientId ) => {
 
   blocks.forEach( blockId => {
     const block = getBlock( blockId );
-    currentVariation = getComputedVariation( block.attributes.palette, currentVariation, block.attributes.colorSignal, false );
+    currentVariation = getComputedVariation( block.attributes.palette, currentVariation, block.attributes.colorSignal, block.attributes.useSourceColorAsReference );
   } );
 
   return currentVariation;
@@ -559,7 +556,7 @@ export const getSignalAttributes = ( signal, palette, sticky = false ) => {
       colorSignal: signal,
       palette: palette.id,
       paletteVariation: nextVariation,
-      useSourceColorAsReference: sourceSignal === signal,
+//      useSourceColorAsReference: sourceSignal === signal,
     }
 
   } else {
@@ -588,4 +585,18 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--novablocks-block-bottom-spacing': blockBottomSpacing,
     '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
   }
+}
+
+export const arrayRotate = (arr, count, reverse) => {
+  count = count % arr.length;
+
+  for ( let i = 1; i <= count; i++ ) {
+    if ( reverse ) {
+      arr.unshift( arr.pop() );
+    } else {
+      arr.push( arr.shift() );
+    }
+  }
+
+  return arr;
 }

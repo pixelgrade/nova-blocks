@@ -155,16 +155,14 @@ const ColorReferenceToggleControl = ( props ) => {
 
   const currentPalette = getPaletteConfig( palette );
   const parents = getBlockParents( clientId );
-
-  if ( Array.isArray( parents ) && parents.length ) {
-    return null;
-  }
+  const isDisabled = Array.isArray( parents ) && parents.length;
 
   return (
     <ToggleControl
       key={ 'color-set-use-source-as-reference-control' }
       label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
       checked={ useSourceColorAsReference }
+      disabled={ isDisabled }
       onChange={ useSourceColorAsReference => {
         const siteVariation = getSiteColorVariation();
         const offsetFactor = useSourceColorAsReference ? -1 : 1;
