@@ -98,7 +98,7 @@ const HeroPreview = function( props ) {
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>
 			<HeroBackground { ...props } />
 			<div className="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
-				<div className="novablocks-hero__inner-container novablocks-u-content-width" style={ styles.content }>
+				<div className="novablocks-hero__inner-container wp-block-group__inner-container novablocks-u-content-width" style={ styles.content }>
 					{ displayInnerContent && <InnerBlocks /> }
 				</div>
 				{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }

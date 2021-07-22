@@ -4,6 +4,10 @@
 	position: relative;
 	display: flex;
   
+  &__inner-container {
+    width: 100%;
+  }
+  
   &[class][class] {
     padding-top: 0;
     padding-bottom: 0;
