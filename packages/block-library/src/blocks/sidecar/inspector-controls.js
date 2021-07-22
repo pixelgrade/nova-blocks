@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import {__} from '@wordpress/i18n';
-import {RadioControl, ToggleControl, PanelBody} from '@wordpress/components';
+import {RadioControl, ToggleControl, PanelBody, RangeControl} from '@wordpress/components';
 import {InspectorControls} from "@wordpress/block-editor";
 
 const SidecarInspectorControls = ( props ) => {
@@ -13,6 +13,7 @@ const SidecarInspectorControls = ( props ) => {
 
   const {
     layout,
+    sidebarCustomSize,
     sidebarWidth,
     sidebarPosition,
     lastItemIsSticky
@@ -32,12 +33,23 @@ const SidecarInspectorControls = ( props ) => {
               { label: 'Small', value: 'small' },
               { label: 'Medium', value: 'medium' },
               { label: 'Large', value: 'large' },
+              { label: 'Custom', value: 'custom' }
             ]
           }
           onChange={ ( nextSidebarWidth ) => {
             setAttributes( { sidebarWidth: nextSidebarWidth } );
           } }
         />
+
+        { sidebarWidth === 'custom' && <RangeControl
+          key={ 'sidecar-sidebar-controls' }
+          value={ sidebarCustomSize }
+          onChange={ ( newSidebarCustomSize ) => setAttributes( { sidebarCustomSize: newSidebarCustomSize } ) }
+          min={ 0 }
+          max={ 1 }
+          step={ 0.01 }
+          label={ __( 'Sidebar Size', '__plugin_txtd' ) }
+        /> }
 
         { ! layoutIsComplex && <RadioControl
           key = {'sidecar-sidebar-position'}

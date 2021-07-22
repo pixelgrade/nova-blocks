@@ -56,9 +56,15 @@ if ( ! function_exists('novablocks_render_sidecar_block' ) ) {
 			$classes[] = 'last-block-is-sticky';
 		}
 
+		$sidecarStyle ='';
+
+		if ( ! empty( $attributes['sidebarCustomSize'] ) ) {
+			$sidecarStyle .= '--novablocks-custom-sidebar-size:' . $attributes['sidebarCustomSize'];
+		}
+
 		?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $sidecarStyle ); ?>">
 			<?php echo $content ?>
 		</div>
 

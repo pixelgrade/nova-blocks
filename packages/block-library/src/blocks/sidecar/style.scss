@@ -219,3 +219,13 @@
     --font-size-modifier: 1;
   }
 }
+
+.novablocks-sidecar {
+  --sidecar-block-width: calc(100% - var(--editor-full, var(--full)) * 2);
+  --nb-custom-sidebar: calc( var(--sidecar-block-width) * var(--novablocks-custom-sidebar-size) - var(--grid-gap) * 0.5);
+}
+
+.novablocks-sidebar--custom {
+  --default-width-offset-sidebar: calc( var(--nb-custom-sidebar) * 0.5) !important;
+}
+

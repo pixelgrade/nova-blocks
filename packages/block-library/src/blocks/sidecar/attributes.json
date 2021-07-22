@@ -13,5 +13,9 @@
 	"lastItemIsSticky": {
 		"type": "boolean",
 		"default": false
+	},
+	"sidebarCustomSize": {
+		"type": "number",
+		"default": 0.33
 	}
 }
