@@ -2,10 +2,12 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
-  isFunctionalPalette,
-
   getSignalAttributes,
   getSignalRelativeToVariation,
+} from "../../../utils";
+
+import {
+  isFunctionalPalette,
   getSiteColorVariation,
 } from "@novablocks/utils";
 

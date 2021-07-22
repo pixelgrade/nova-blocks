@@ -1,13 +1,17 @@
 import classnames from "classnames";
 import { select } from "@wordpress/data";
 import { getIcon } from "@novablocks/icons";
+
 import {
-  getComputedVariationFromParents,
+  arrayRotate,
   getSiteColorVariation,
   normalizeVariationValue,
-  getPaletteConfig,
-  arrayRotate, getSignalRelativeToVariation,
 } from "@novablocks/utils";
+
+import {
+  getPaletteConfig, getReferenceVariation,
+  getSignalRelativeToVariation,
+} from "../../utils";
 
 const ColorGradesControl = ( props ) => {
 
@@ -16,6 +20,7 @@ const ColorGradesControl = ( props ) => {
     label,
     signal,
     clientId,
+    value,
   } = props;
 
   const onChange = props.onChange || (() => {});
@@ -27,7 +32,6 @@ const ColorGradesControl = ( props ) => {
   } = attributes;
 
   const currentPalette = getPaletteConfig( palette );
-  const { getBlockParents } = select( 'core/block-editor' );
   const { sourceIndex } = currentPalette;
 
   const iconClassName = classnames(
@@ -40,20 +44,12 @@ const ColorGradesControl = ( props ) => {
     }
   );
 
-  const parents = getBlockParents( clientId );
-
-  let parentVariation = 1;
-
-  if ( Array.isArray( parents ) && parents.length ) {
-    parentVariation = getComputedVariationFromParents( parents[ parents.length - 1 ] );
-  }
-
-  const anotherOffset = parentVariation - 1;
+  const parentVariation = getReferenceVariation( clientId );
   const variations = Array.from( Array( 12 ) ).map( ( undefined, index ) => index + 1 );
-  const selectedOffset = useSourceColorAsReference ? sourceIndex : 0;
-  const selectedVariation = normalizeVariationValue( getComputedVariationFromParents( clientId ) + selectedOffset );
+  const sourceOffset = useSourceColorAsReference ? sourceIndex : 0;
+  const selectedVariation = normalizeVariationValue( value + sourceOffset );
 
-  arrayRotate( variations, anotherOffset );
+  arrayRotate( variations, parentVariation - 1 );
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>

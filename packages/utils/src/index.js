@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import { select } from '@wordpress/data';
 
 export const getRandomBetween = ( min, max ) => {
 	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
@@ -263,104 +262,6 @@ export const isAnyPartOfElementInViewport = (element) => {
 	return (vertInView && horInView);
 }
 
-export const getVariationFromSignal = ( signal ) => {
-
-  if ( signal === 1 ) {
-    return 3;
-  }
-
-  if ( signal === 2 ) {
-    return 6;
-  }
-
-  if ( signal === 3 ) {
-    return 10;
-  }
-
-  return 1;
-}
-
-export const getSignalRelativeToVariation = ( compare, reference ) => {
-  const variationOptions = getSignalOptionsFromVariation( reference );
-  return variationOptions.reduce( ( prev, curr, index, arr ) => {
-    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
-  }, 0 );
-}
-
-export const getSignalFromVariation = ( variation ) => {
-
-  if ( variation === 1 ) {
-    return 0;
-  }
-
-  if ( variation < 5 ) {
-    return 1;
-  }
-
-  if ( variation < 9 ) {
-    return 2;
-  }
-
-  return 3;
-}
-
-export const getSignalOptionsFromVariation = ( variation ) => {
-  const blockSignal = getSignalFromVariation( variation );
-
-  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
-    return index === blockSignal ? variation : getVariationFromSignal( index );
-  } );
-
-  variationOptions.sort( ( variation1, variation2 ) => {
-    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
-  } );
-
-  return variationOptions;
-}
-
-export const getContentVariationBySignal = ( props ) => {
-  const { attributes } = props;
-  const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
-  return getComputedVariation( paletteVariation, contentColorSignal, useSourceColorAsReference, props );
-}
-
-export const getComputedVariation = ( palette, parentVariation, currentSignal, useSourceColorAsReference ) => {
-  const siteVariation = getSiteColorVariation();
-  const currentPalette = getPaletteConfig( palette );
-  const { sourceIndex } = currentPalette;
-  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( parentVariation );
-  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-
-  return normalizeVariationValue( contentSignalOptions[ currentSignal ] - offset );
-}
-
-export const getComputedVariationFromParents = ( clientId ) => {
-  const { getBlockParents, getBlock } = select( 'core/block-editor' );
-
-  const blocks = getBlockParents( clientId ).slice();
-  blocks.push( clientId );
-  let currentVariation = 1;
-
-  blocks.forEach( blockId => {
-    const block = getBlock( blockId );
-    currentVariation = getComputedVariation( block.attributes.palette, currentVariation, block.attributes.colorSignal, block.attributes.useSourceColorAsReference );
-  } );
-
-  return currentVariation;
-}
-
-export const getPaletteConfig = ( palette ) => {
-  const settings = select( 'novablocks' ).getSettings();
-  const { palettes } = settings;
-
-  if ( ! Array.isArray( palettes ) || ! palettes.length ) {
-    return { sourceIndex: 6 }
-  }
-
-  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
-}
-
 // Uppercase the first letter of a string in JavaScript
 // https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
 
@@ -499,73 +400,8 @@ export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorA
   return normalizeVariationValue( variation );
 }
 
-export const getAbsoluteColorVariation = ( props ) => {
-
-  const {
-    attributes: {
-      palette,
-      paletteVariation,
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const currentPalette = getPaletteConfig( props );
-  const { sourceIndex } = currentPalette;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = siteVariation - 1;
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
-}
-
-export const getCurrentPaletteRelativeColorVariation = ( palette, paletteVariation, props ) => {
-  const paletteConfig = getPaletteConfig( palette );
-  return getRelativeColorVariation( paletteConfig, paletteVariation, props );
-}
-
 export const getSiteColorVariation = () => {
   return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
-}
-
-export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
-
-  const {
-    attributes: {
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const { sourceIndex } = paletteConfig;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
-}
-
-export const getSignalAttributes = ( signal, palette, sticky = false ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  const variationOptions = getSignalOptionsFromVariation( siteVariation );
-  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
-  const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
-
-  if ( sticky ) {
-
-    return {
-      colorSignal: signal,
-      palette: palette.id,
-      paletteVariation: nextVariation,
-//      useSourceColorAsReference: sourceSignal === signal,
-    }
-
-  } else {
-
-    return {
-      palette: palette.id
-    }
-
-  }
 }
 
 export const getSpacingCSSProps = ( attributes ) => {

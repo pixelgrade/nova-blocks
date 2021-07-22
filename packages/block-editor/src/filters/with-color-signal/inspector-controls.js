@@ -1,5 +1,3 @@
-import { normalizeVariationValue, getPaletteConfig }  from "@novablocks/utils";
-
 import { ToggleControl } from "@wordpress/components";
 import { select } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
@@ -11,18 +9,24 @@ import {
   ControlsTab,
   Notice,
   SignalControl,
+} from "../../components";
+
+import {
   useMemoryState,
   useSupports,
-} from "../../index";
+} from "../../hooks";
+
+import {
+  getComputedVariation,
+  getPaletteConfig, getReferenceVariation,
+  getSignalRelativeToVariation,
+} from "../../utils";
 
 import ColorPalettePicker from './components/color-palette-picker';
 
 import {
-  getCurrentPaletteRelativeColorVariation,
   getSiteColorVariation,
-  getSignalRelativeToVariation,
-
-  getSignalAttributes,
+  normalizeVariationValue,
 } from "@novablocks/utils";
 
 const ColorSetControls = ( props ) => {
@@ -30,7 +34,8 @@ const ColorSetControls = ( props ) => {
   const {
     attributes,
     setAttributes,
-    name
+    name,
+    clientId,
   } = props;
 
   const {
@@ -48,6 +53,7 @@ const ColorSetControls = ( props ) => {
   }
 
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
+  const parentVariation = getReferenceVariation( clientId );
 
   return (
     <ControlsSection label={ __( 'Color Signal' ) }>
@@ -60,7 +66,11 @@ const ColorSetControls = ( props ) => {
         />
         <ControlsGroup>
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            setAttributes( getSignalAttributes( nextSignal, currentPalette, true ) );
+            const computedVariation = getComputedVariation( palette, parentVariation, nextSignal );
+            setAttributes( {
+              colorSignal: nextSignal,
+              paletteVariation: computedVariation,
+            } );
           } } />
         </ControlsGroup>
         {
@@ -88,12 +98,10 @@ const ColorSetControls = ( props ) => {
                               value={ paletteVariation }
                               signal={ colorSignal }
                               onChange={ value => {
-                                const siteVariation = getSiteColorVariation();
-                                const nextPaletteVariation = getCurrentPaletteRelativeColorVariation( palette, value, props );
-                                const nextSignal = getSignalRelativeToVariation( value, siteVariation );
+                                const nextSignal = getSignalRelativeToVariation( value, parentVariation );
 
                                 setAttributes( {
-                                  paletteVariation: nextPaletteVariation,
+                                  paletteVariation: value,
                                   colorSignal: nextSignal
                                 } );
                               } } />

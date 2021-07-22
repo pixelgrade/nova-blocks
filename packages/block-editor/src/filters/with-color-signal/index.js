@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import classnames from 'classnames';
 
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
@@ -6,13 +7,15 @@ import { dispatch, select } from '@wordpress/data';
 
 import { addFilter } from '@wordpress/hooks';
 
-import { getComputedVariationFromParents } from '@novablocks/utils';
+import {
+  getSupports,
+  getComputedVariationFromParents,
+} from "../../utils";
 
+import { useSupports } from "../../index";
 import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
-
-import classnames from 'classnames';
 
 const withColorSignalAttributes = ( settings, name ) => {
 
@@ -70,7 +73,7 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 
   return props => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal ) {
       return <OriginalComponent { ...props } />
@@ -91,7 +94,7 @@ const withPaletteClassname = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal?.paletteClassname ) {
       return <BlockListBlock { ...props } />
@@ -114,7 +117,7 @@ const applyPaletteFrontEndClasses = (extraProps, blockType, attributes) => {
 
   const { palette, useSourceColorAsReference } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+  const supports = getSupports( blockType.name );
 
   if ( supports?.novaBlocks?.colorSignal?.paletteClassname ) {
     extraProps.className = classnames(extraProps.className, `sm-palette-${ palette } ${ useSourceColorAsReference ? 'sm-palette--shifted' : '' }`)
@@ -129,23 +132,34 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal?.variationClassname ) {
       return <BlockListBlock { ...props } />
     }
 
-    const { clientId } = props;
-    const variation = getComputedVariationFromParents( clientId );
+    const {
+      attributes: {
+        paletteVariation,
+        colorSignal,
+        useSourceColorAsReference
+      },
+      clientId
+    } = props;
 
-    let currentBlock = select( 'core/block-editor' ).getBlock( clientId );
+    const currentBlock = select( 'core/block-editor' ).getBlock( clientId );
+    let className = props.className;
+
+    if ( colorSignal !== 0 || ! useSourceColorAsReference ) {
+      className = classnames(
+        props.className,
+        `sm-variation-${ paletteVariation }`
+      );
+    }
 
     updateInnerBlocks( currentBlock );
 
-    const blockProps = {
-      ...props,
-      className: `${ props.className } sm-variation-${ variation }`
-    };
+    const blockProps = { ...props, className };
 
     return (
       <BlockListBlock { ...blockProps } />
@@ -176,7 +190,7 @@ const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
 
   const { paletteVariation } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+  const supports = getSupports( blockType.name );
 
   if ( supports?.novaBlocks?.colorSignal?.variationClassname ) {
     extraProps.className = classnames( extraProps.className, `sm-variation-${ paletteVariation }` )
@@ -191,7 +205,7 @@ const withColorSignalClassname = createHigherOrderComponent( ( BlockListBlock ) 
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
       return <BlockListBlock { ...props } />
@@ -215,7 +229,7 @@ const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
 
   const { colorSignal } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+  const supports = getSupports( blockType.name );
 
   if ( supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
     extraProps.className = classnames( extraProps.className, `sm-color-signal-${ colorSignal }` )
