@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { Collection } from "@novablocks/collection";
-import { getContentVariationBySignal } from '@novablocks/utils';
+import { getContentVariationBySignal } from '@novablocks/block-editor';
 
 /**
  * WordPress dependencies

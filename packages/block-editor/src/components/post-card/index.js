@@ -16,7 +16,7 @@ import { Card } from "@novablocks/components";
 
 import {
   getContentVariationBySignal,
-} from "@novablocks/utils";
+} from "../../utils";
 
 import Author from "./author";
 import Category from "./category";

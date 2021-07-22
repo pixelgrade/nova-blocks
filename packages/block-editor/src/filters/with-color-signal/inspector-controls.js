@@ -1,6 +1,7 @@
 import { ToggleControl } from "@wordpress/components";
 import { select } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
+import { useCallback } from "@wordpress/element";
 
 import {
   ColorGradesControl,
@@ -43,6 +44,7 @@ const ColorSetControls = ( props ) => {
     contentColorSignal,
     palette,
     paletteVariation,
+    useSourceColorAsReference,
   } = attributes;
 
   const supports = useSupports( name );
@@ -55,6 +57,16 @@ const ColorSetControls = ( props ) => {
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
   const parentVariation = getReferenceVariation( clientId );
 
+  const updateColors = useCallback( ( nextVariation, nextColorSignal, useSourceColorAsReference ) => {
+    const newVariation = getComputedVariation( parentVariation, nextColorSignal, nextVariation );
+
+    setAttributes( {
+      colorSignal: nextColorSignal,
+      paletteVariation: newVariation,
+    } );
+
+  }, [ parentVariation ] )
+
   return (
     <ControlsSection label={ __( 'Color Signal' ) }>
       <ControlsTab label={ __( 'Customize' ) }>
@@ -66,11 +78,7 @@ const ColorSetControls = ( props ) => {
         />
         <ControlsGroup>
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            const computedVariation = getComputedVariation( palette, parentVariation, nextSignal );
-            setAttributes( {
-              colorSignal: nextSignal,
-              paletteVariation: computedVariation,
-            } );
+            updateColors( paletteVariation, nextSignal, useSourceColorAsReference );
           } } />
         </ControlsGroup>
         {
@@ -99,11 +107,7 @@ const ColorSetControls = ( props ) => {
                               signal={ colorSignal }
                               onChange={ value => {
                                 const nextSignal = getSignalRelativeToVariation( value, parentVariation );
-
-                                setAttributes( {
-                                  paletteVariation: value,
-                                  colorSignal: nextSignal
-                                } );
+                                updateColors( value, nextSignal, useSourceColorAsReference );
                               } } />
         </ControlsGroup>
         <MiscellanousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />

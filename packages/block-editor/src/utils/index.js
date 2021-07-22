@@ -37,10 +37,10 @@ export const getReferenceVariation = ( clientId ) => {
     }
 
     const { attributes } = block;
-    const { palette, colorSignal, useSourceColorAsReference } = attributes;
+    const { paletteVariation, colorSignal, useSourceColorAsReference } = attributes;
 
     currentVariation = useSourceColorAsReference ? 1 : currentVariation;
-    currentVariation = getComputedVariation( palette, currentVariation, colorSignal );
+    currentVariation = getComputedVariation( currentVariation, colorSignal, paletteVariation );
   } );
 
   return currentVariation;
@@ -51,9 +51,9 @@ export const getComputedVariationFromParents = ( clientId ) => {
   const referenceVariation = getReferenceVariation( clientId );
   const block = getBlock( clientId );
   const { attributes } = block;
-  const { palette, colorSignal } = attributes;
+  const { paletteVariation, colorSignal } = attributes;
 
-  return getComputedVariation( palette, referenceVariation, colorSignal );;
+  return getComputedVariation( referenceVariation, colorSignal, paletteVariation );
 }
 
 export const getPaletteConfig = ( palette ) => {
@@ -155,19 +155,24 @@ export const getContentVariationBySignal = ( props ) => {
   const {
     attributes: {
       contentColorSignal,
-      palette,
       paletteVariation,
     }
   } = props;
 
-  return getComputedVariation( palette, paletteVariation, contentColorSignal );
+  return getComputedVariation( paletteVariation, contentColorSignal );
 }
 
-export const getComputedVariation = ( palette, parentVariation, currentSignal ) => {
-  const referenceVariation = normalizeVariationValue( parentVariation );
-  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
+export const getComputedVariation = ( referenceVariation, signal, paletteVariation ) => {
+  referenceVariation = normalizeVariationValue( referenceVariation );
+  const currentSignal = getSignalRelativeToVariation( paletteVariation, referenceVariation );
 
-  return normalizeVariationValue( contentSignalOptions[ currentSignal ] );
+  if ( currentSignal === signal ) {
+    return paletteVariation;
+  }
+
+  const signalOptions = getSignalOptionsFromVariation( referenceVariation );
+
+  return signalOptions[ signal ];
 }
 
 export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
