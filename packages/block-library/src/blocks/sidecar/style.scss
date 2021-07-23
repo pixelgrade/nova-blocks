@@ -220,12 +220,31 @@
   }
 }
 
-.novablocks-sidecar {
-  --sidecar-block-width: calc(100% - var(--editor-full, var(--full)) * 2);
-  --nb-custom-sidebar: calc( var(--sidecar-block-width) * var(--novablocks-custom-sidebar-size) - var(--grid-gap) * 0.5);
+
+// EXPERIMENTAL FEATURE
+// Custom Sidebar Size
+.novablocks-sidebar--half {
+  --nb-sidebar-percentage: calc(1/2);
 }
 
-.novablocks-sidebar--custom {
+.novablocks-sidebar--third {
+  --nb-sidebar-percentage: calc(1/3);
+}
+
+.novablocks-sidebar--quarter {
+  --nb-sidebar-percentage: calc(1/4);
+}
+
+.novablocks-sidecar {
+  --nb-sidecar-block-width: calc(100% - Max(var(--editor-full, var(--full)), 0px) * 2);
+  --nb-custom-sidebar: calc( (var(--nb-sidecar-block-width) - var(--grid-gap) * 2) * var(--nb-sidebar-percentage))
+}
+
+.novablocks-sidebar--custom,
+.novablocks-sidebar--custom * {
   --default-width-offset-sidebar: calc( var(--nb-custom-sidebar) * 0.5) !important;
 }
 
+.novablocks-grid-custom-gap {
+  --grid-gap: var(--novablocks-spacing);
+}

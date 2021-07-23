@@ -37,7 +37,7 @@ if ( ! function_exists('novablocks_render_sidecar_block' ) ) {
 		$classes = array( 'novablocks-sidecar' );
 
 		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
+			$classes[] = $attributes['className'];	
 		}
 
 		if ( ! empty( $attributes['layout']  && $attributes['layout'] === 'complex' ) ) {
@@ -56,15 +56,17 @@ if ( ! function_exists('novablocks_render_sidecar_block' ) ) {
 			$classes[] = 'last-block-is-sticky';
 		}
 
-		$sidecarStyle ='';
+		if ( !empty($attributes['customGap']) &&  $attributes['customGap'] === true ) {
+			$classes[] = 'novablocks-grid-custom-gap';
+		}
 
-		if ( ! empty( $attributes['sidebarCustomSize'] ) ) {
-			$sidecarStyle .= '--novablocks-custom-sidebar-size:' . $attributes['sidebarCustomSize'];
+		if ( ! empty($attributes['sidebarCustomSize']) ) {
+			$classes[] = 'novablocks-sidebar--' . $attributes['sidebarCustomSize'];
 		}
 
 		?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $sidecarStyle ); ?>">
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php echo $content ?>
 		</div>
 

@@ -104,6 +104,7 @@ class Edit extends Component {
     const {
       attributes: {
         layout,
+        customGap,
         sidebarWidth,
         sidebarPosition,
         sidebarCustomSize,
@@ -123,16 +124,14 @@ class Edit extends Component {
       `novablocks-sidecar`,
       `novablocks-sidecar--sidebar-${sidebarPosition}`,
       `novablocks-sidebar--${sidebarWidth}`,
+      `novablocks-sidebar--${sidebarCustomSize}`,
       {
         'last-block-is-sticky' : lastItemIsSticky === true,
         'novablocks-sidecar--complex' : layout === 'complex',
-        'novablocks-sidebar-is-custom' : layout === 'custom'
+        'novablocks-sidebar-is-custom' : layout === 'custom',
+        'novablocks-grid-custom-gap' : customGap === true,
       }
     );
-
-    const styles = {
-      '--novablocks-custom-sidebar-size': sidebarCustomSize
-    }
 
     const layoutIsComplex = layout === 'complex';
 
@@ -141,7 +140,7 @@ class Edit extends Component {
         <Fragment>
           { ! layoutIsComplex && <SidecarBlockControls {...this.props} /> }
           <InspectorControls { ...this.props }/>
-          <div className={ classNames } style = { styles }>
+          <div className={ classNames }>
           { this.supportsBlockVariationPicker() ? this.blockVariationPicker(this.props) : this.innerBlocksPicker() }
           </div>
         </Fragment>

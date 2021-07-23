@@ -15,7 +15,11 @@
 		"default": false
 	},
 	"sidebarCustomSize": {
-		"type": "number",
-		"default": 0.33
+		"type": "string",
+		"default": "half"
+	},
+	"customGap": {
+		"type": "boolean",
+		"default": false
 	}
 }
