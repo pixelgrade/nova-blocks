@@ -16,12 +16,12 @@ function novablocks_get_hero_attributes() {
 		"packages/block-editor/src/components/color-controls/attributes.json",
 		"packages/block-editor/src/components/layout-controls/attributes.json",
 
-		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
-		"packages/block-editor/src/hooks/with-color-signal/attributes-alt.json",
-		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
-		"packages/block-editor/src/hooks/with-doppler/attributes.json",
-		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
-		'packages/block-editor/src/hooks/with-overlay-filter-strength-controls/attributes.json',
+		"packages/block-editor/src/filters/with-color-signal/attributes.json",
+		"packages/block-editor/src/filters/with-color-signal/attributes-alt.json",
+		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
+		"packages/block-editor/src/filters/with-doppler/attributes.json",
+		"packages/block-editor/src/filters/with-doppler/attributes-alt.json",
+		'packages/block-editor/src/filters/with-overlay-filter-strength-controls/attributes.json',
 	) );
 
 }

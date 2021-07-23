@@ -991,7 +991,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 function novablocks_get_advanced_gallery_component_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-editor/src/hooks/with-blobs/attributes.json',
+		'packages/block-editor/src/filters/with-blobs/attributes.json',
 		'packages/advanced-gallery/src/attributes.json'
 	) );
 	

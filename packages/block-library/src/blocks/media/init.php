@@ -11,16 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_media_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-editor/src/hooks/with-blobs/attributes.json',
+		'packages/block-editor/src/filters/with-blobs/attributes.json',
 		'packages/advanced-gallery/src/attributes.json',
 
-		'packages/block-editor/src/hooks/with-card-details/attributes.json',
-		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
-		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/hooks/with-emphasis-area/attributes.json',
-		'packages/block-editor/src/hooks/with-emphasis-level/attributes.json',
-		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
+		'packages/block-editor/src/filters/with-card-details/attributes.json',
+		'packages/block-editor/src/filters/with-color-signal/attributes.json',
+		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
+		'packages/block-editor/src/filters/with-emphasis-area/attributes.json',
+		'packages/block-editor/src/filters/with-emphasis-level/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/filters/with-visual-balance/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes.json',
 	) );
