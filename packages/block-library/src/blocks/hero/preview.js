@@ -6,7 +6,9 @@ import HeroBackground from './background';
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor';
+import {
+  __experimentalUseInnerBlocksProps as useInnerBlocksProps
+} from "@wordpress/block-editor";
 
 import { select } from '@wordpress/data';
 
@@ -94,13 +96,25 @@ const HeroPreview = function( props ) {
 	const scrollIndicatorFallback = index === 0 && heroHeight >= 100;
 	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
+  const innerContainerClasses = [
+    "novablocks-hero__inner-container",
+    "wp-block-group__inner-container",
+    "novablocks-u-content-width",
+  ];
+
+  const innerContainerStyle = styles.content;
+  const innerBlocksProps = useInnerBlocksProps(
+    {
+      className: innerContainerClasses,
+      style: innerContainerStyle,
+    },
+  );
+
 	return (
 		<div className={ classes.join( ' ' ) } style={ styles.hero }>
 			<HeroBackground { ...props } />
 			<div className="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
-				<div className="novablocks-hero__inner-container wp-block-group__inner-container novablocks-u-content-width" style={ styles.content }>
-					{ displayInnerContent && <InnerBlocks /> }
-				</div>
+				{ displayInnerContent && <div style={ styles.content } { ...innerBlocksProps } /> }
 				{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }
 			</div>
 		</div>

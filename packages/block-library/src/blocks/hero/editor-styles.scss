@@ -21,29 +21,6 @@
   
   &__inner-container {
     
-    --display-mode: block;
-  
-    #{$grid-selector} {
-      
-      --display-mode: grid;
-      --block-content-start: cs;
-      --block-content-end: ce;
-      
-      @include layout-grid;
-      
-      > * {
-        grid-column: var(--block-content-start)/var(--block-content-end);
-        
-        &:not([data-align='full']) {
-          width: 100%;
-        }
-        
-        &[data-align='full'][class][class] {
-          max-width: none;
-        }
-      }
-    }
-  
     [data-align="full"] {
       margin-left: calc(-1 * var(--novablocks-container-spacings));
       margin-right: calc(-1 * var(--novablocks-container-spacings));

@@ -38,9 +38,9 @@
   
   .wp-block {
     
-    &[data-align=wide],
-    &[data-align=full] {
+    &[data-align=wide] {
       max-width: 100%;
+      width: 100%;
     }
   }
   
