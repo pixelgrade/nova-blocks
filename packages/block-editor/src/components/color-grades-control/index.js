@@ -91,7 +91,6 @@ const ColorGradesControl = ( props ) => {
           <div className="nb-palette__label nb-palette__label--low">Low</div>
           <div className="nb-palette__label nb-palette__label--medium">Medium</div>
           <div className="nb-palette__label nb-palette__label--high">High</div>
-          <div className="nb-palette__label nb-palette__label--12">12</div>
         </div>
       </div>
     </div>

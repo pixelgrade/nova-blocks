@@ -265,15 +265,15 @@ export const isAnyPartOfElementInViewport = (element) => {
 export const getVariationFromSignal = ( signal ) => {
 
   if ( signal === 1 ) {
-    return 3;
+    return 2;
   }
 
   if ( signal === 2 ) {
-    return 6;
+    return 8;
   }
 
   if ( signal === 3 ) {
-    return 10;
+    return 11;
   }
 
   return 1;

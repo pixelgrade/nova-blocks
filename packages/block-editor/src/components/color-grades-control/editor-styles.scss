@@ -131,16 +131,18 @@
   text-transform: uppercase;
 }
 
-.nb-palette__label--1,
-.nb-palette__label--12 {
+.nb-palette__label--1 {
   flex: 1 0 0;
 }
 
-.nb-palette__label--low,
-.nb-palette__label--high {
+.nb-palette__label--low {
   flex: 3 0 0;
 }
 
 .nb-palette__label--medium {
-  flex: 4 0 0;
+  flex: 6 0 0;
+}
+
+.nb-palette__label--high {
+  flex: 2 0 0;
 }
