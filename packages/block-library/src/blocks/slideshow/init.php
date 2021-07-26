@@ -59,6 +59,9 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
 		}
 
+		$spacingProps = novablocks_get_spacing_css( $attributes );
+		$slideshowStyle = join( '; ', $spacingProps );
+
 		ob_start();
 
 		do_action( 'novablocks_slideshow:before' );
@@ -81,7 +84,9 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
             ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>>
+			style="<?php echo esc_attr( $slideshowStyle ); ?>"
+			data-min-height=<?php echo esc_attr( $attributes['minHeight'] ); ?>"
+		>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
 

@@ -17,6 +17,17 @@
   }
 }
 
+.novablocks-hero {
+  
+  &__inner-container {
+    
+    [data-align="full"] {
+      margin-left: calc(-1 * var(--novablocks-container-spacings));
+      margin-right: calc(-1 * var(--novablocks-container-spacings));
+    }
+  }
+}
+
 .wp-block-novablocks-hero.novablocks-hero {
 	transition: var(--novablocks-hero-transition);
 	transition-property: color, background-color, opacity;
