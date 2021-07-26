@@ -90,14 +90,7 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
 
 const applyFrontEndClasses = ( extraProps, blockType, attributes ) =>{
 
-  const { contentAlignment, blockTopSpacing, blockBottomSpacing, emphasisTopSpacing, emphasisBottomSpacing
-  } = attributes;
-
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
-
-  let spaceAndSizingStyle = {};
-
-  extraProps.style = {};
+  const { contentAlignment } = attributes;
 
   if ( allowedBlocks.includes( blockType.name ) ) {
 
@@ -105,21 +98,9 @@ const applyFrontEndClasses = ( extraProps, blockType, attributes ) =>{
       extraProps.className = classnames( extraProps.className, contentAlignment );
     }
 
-    if (supports?.novaBlocks?.spaceAndSizing ) {
-
-      spaceAndSizingStyle = {
-        '--novablocks-block-top-spacing': blockTopSpacing + '',
-        '--novablocks-block-bottom-spacing': blockBottomSpacing + '',
-        '--novablocks-emphasis-top-spacing': emphasisTopSpacing + '',
-        '--novablocks-emphasis-bottom-spacing': emphasisBottomSpacing + '',
-      }
-
-      extraProps.style = Object.assign(extraProps.style, spaceAndSizingStyle);
-    }
   }
 
   return extraProps;
-
 }
 
 function updateBlockTopSpacingAttribute( block ) {
