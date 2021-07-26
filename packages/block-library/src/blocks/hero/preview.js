@@ -6,9 +6,8 @@ import HeroBackground from './background';
 /**
  * WordPress dependencies
  */
-import {
-  __experimentalUseInnerBlocksProps as useInnerBlocksProps
-} from "@wordpress/block-editor";
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
+
 
 import { select } from '@wordpress/data';
 
@@ -103,6 +102,7 @@ const HeroPreview = function( props ) {
   ];
 
   const innerContainerStyle = styles.content;
+
   const innerBlocksProps = useInnerBlocksProps(
     {
       className: innerContainerClasses,
