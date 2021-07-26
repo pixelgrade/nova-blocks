@@ -16,6 +16,14 @@
   @include above(ultra) {
     --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
   }
+
+  // If is Widget Editor,
+  // alter --wds and --wde,
+  // so the sidebar will have a smaller width.
+  &.edit-widgets-main-block-list {
+    --wds: 12.5%;
+    --wde: 12.5%;
+  }
   
   .novablocks-sidecar[class][class],
   .novablocks-content[class][class] {
@@ -408,5 +416,14 @@
   
   .block-editor-inner-blocks {
     margin-top: 0;
+  }
+}
+
+// This will apply only on new Widget Editor,
+// available in WordPress 5.8
+.interface-interface-skeleton__secondary-sidebar + .interface-interface-skeleton__content {
+  
+  .edit-widgets-main-block-list {
+    --inspector-controls-width: 175px;
   }
 }

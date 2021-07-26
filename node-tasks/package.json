@@ -1,0 +1,10 @@
+{
+    "name": "style-manager-node-tasks",
+    "description": "",
+    "private": false,
+    "sideEffects": false,
+    "license": "GPL-2.0+",
+    "dependencies": {
+        "semver": "^7.3.5"
+    }
+}
