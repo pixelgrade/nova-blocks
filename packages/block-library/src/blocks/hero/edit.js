@@ -5,9 +5,7 @@ import {
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
-	LayoutControls,
 	ToggleGroup,
-	withSettings
 } from '@novablocks/block-editor';
 
 import heroAttributes from './attributes';
@@ -25,11 +23,6 @@ import {
 	Component,
 	Fragment
 } from '@wordpress/element';
-
-import {
-	compose,
-	createHigherOrderComponent
-} from '@wordpress/compose';
 
 import {
 	select
@@ -139,7 +132,6 @@ class HeroEdit extends Component {
 			<Fragment>
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
-				<LayoutControls { ...this.props } />
 				<BlockHeightControls { ...this.props } />
 				<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>

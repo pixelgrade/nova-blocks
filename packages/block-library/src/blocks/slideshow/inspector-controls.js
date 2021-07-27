@@ -107,7 +107,6 @@ const SlideshowInspectorControls = function( props ) {
 			{
 				'gallery' === slideshowType &&
 				<Fragment>
-					<LayoutControls { ...props } />
 					<ControlsSection label={ __( 'Layout' ) }>
 						<ControlsTab label={ __( 'Settings' ) }>
 							<RadioControl

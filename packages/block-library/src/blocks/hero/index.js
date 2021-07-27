@@ -17,6 +17,9 @@ import {
 	layoutAttributes,
 } from "@novablocks/block-editor";
 
+// Load deprecated file
+import deprecated from './deprecated';
+
 const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
 
 /**
@@ -75,10 +78,10 @@ registerBlockType( 'novablocks/hero', {
       customDefaults: true,
       doppler: {
         altAttributes: true
-      }
+      },
+      spaceAndSizing: true
     },
 	},
-//	deprecated,
 	attributes,
 	edit,
 	save,

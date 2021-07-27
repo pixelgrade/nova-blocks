@@ -6,6 +6,9 @@ import edit from './edit';
 import save from './save';
 import { select } from '@wordpress/data';
 
+// Load deprecated file
+import deprecated from './deprecated';
+
 import {
   getRandomArrayFromArray,
   getRandomBetween,
@@ -68,7 +71,8 @@ registerBlockType( 'novablocks/slideshow', {
       customDefaults: true,
       doppler: {
         altAttributes: true
-      }
+      },
+      spaceAndSizing: true
     },
   },
 	edit,

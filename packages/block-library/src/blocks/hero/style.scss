@@ -3,14 +3,22 @@
 .novablocks-hero {
 	position: relative;
 	display: flex;
-
-  &[class] {
+  
+  &__inner-container {
+    width: 100%;
+  }
+  
+  &[class][class] {
     padding-top: 0;
     padding-bottom: 0;
   }
 
   > .novablocks-doppler__mask {
     @include cover;
+  }
+  
+  @include above(tablet) {
+   @include block-spacing;
   }
 }
 
