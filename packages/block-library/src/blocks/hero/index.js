@@ -14,13 +14,12 @@ import {
 	generateDefaults,
 	getPlaceholderImages,
 	insertTemplate,
-	layoutAttributes,
 } from "@novablocks/block-editor";
 
 // Load deprecated file
 import deprecated from './deprecated';
 
-const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes );
 
 /**
  * WordPress dependencies

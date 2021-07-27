@@ -7,7 +7,6 @@ import {
 } from "@novablocks/utils";
 
 import {
-  LayoutControls,
   GalleryPreview,
   ControlsSection,
   ControlsTab,

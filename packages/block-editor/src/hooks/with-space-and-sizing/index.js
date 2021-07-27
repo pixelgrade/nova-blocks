@@ -324,7 +324,10 @@ const addSpaceAndSizingStyle = ( extraProps, blockType, attributes ) => {
   } = attributes;
 
   let spaceAndSizingStyle = {};
-  extraProps.style = {};
+
+  if ( ! extraProps.hasOwnProperty('style') ) {
+    extraProps.style = {};
+  }
 
   if ( blockType?.supports?.novaBlocks?.spaceAndSizing ) {
 

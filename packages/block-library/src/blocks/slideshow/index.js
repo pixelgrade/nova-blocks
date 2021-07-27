@@ -15,7 +15,6 @@ import {
 } from "@novablocks/utils";
 
 import {
-	layoutAttributes,
 	getPlaceholderImages,
 	generateDefaults,
   getSvg
@@ -23,7 +22,7 @@ import {
 
 import blockAttributes from "./attributes";
 
-const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
+const attributes = Object.assign( {}, blockAttributes );
 
 /**
  * WordPress dependencies
