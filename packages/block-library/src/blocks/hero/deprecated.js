@@ -49,6 +49,7 @@ export const migrateContentPadding = (attributes) => {
         ...newAttributes
       }
     },
+    save
   }
 }
 const migrateContentToGroup = (attributes) => {
@@ -113,4 +114,4 @@ const heroAddDeprecated = (settings, name) => {
   }
 }
 
-addFilter('blocks.registerBlockType', 'novablocks/hero-add-deprecated', heroAddDeprecated, 20 );
+addFilter('blocks.registerBlockType', 'novablocks/hero-add-deprecated', heroAddDeprecated );

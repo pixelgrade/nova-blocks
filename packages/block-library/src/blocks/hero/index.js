@@ -82,7 +82,6 @@ registerBlockType( 'novablocks/hero', {
       spaceAndSizing: true
     },
 	},
-//	deprecated,
 	attributes,
 	edit,
 	save,

@@ -5,9 +5,7 @@ import {
 	ControlsGroup,
 	ControlsSection,
 	ControlsTab,
-	LayoutControls,
 	ToggleGroup,
-	withSettings
 } from '@novablocks/block-editor';
 
 import heroAttributes from './attributes';
