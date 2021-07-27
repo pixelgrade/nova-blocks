@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
-import { dispatch, select } from '@wordpress/data';
+import { dispatch, select, subscribe } from '@wordpress/data';
 
 import { addFilter } from '@wordpress/hooks';
 
@@ -147,7 +147,6 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
       clientId
     } = props;
 
-    const currentBlock = select( 'core/block-editor' ).getBlock( clientId );
     let className = props.className;
 
     if ( colorSignal !== 0 || ! useSourceColorAsReference ) {
@@ -156,8 +155,6 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
         `sm-variation-${ paletteVariation }`
       );
     }
-
-    updateInnerBlocks( currentBlock );
 
     const blockProps = { ...props, className };
 
@@ -168,19 +165,24 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
 }, "withVariationClassname" );
 
 const updateInnerBlocks = ( block ) => {
+
   if ( Array.isArray( block.innerBlocks ) ) {
     block.innerBlocks.forEach( innerBlock => {
-      const { clientId } = innerBlock;
-      const variation = getComputedVariationFromParents( clientId );
-      const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-
-      updateBlockAttributes( clientId, {
-        paletteVariation: variation
-      } );
-
-      updateInnerBlocks( innerBlock );
+      updateBlock( innerBlock );
     } )
   }
+}
+
+const updateBlock = ( block ) => {
+  const { clientId } = block;
+  const variation = getComputedVariationFromParents( clientId );
+  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
+  updateBlockAttributes( clientId, {
+    paletteVariation: variation
+  } );
+
+  updateInnerBlocks( block );
 }
 
 addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withVariationClassname );
@@ -238,3 +240,22 @@ const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
   return extraProps;
 }
 addFilter('blocks.getSaveContent.extraProps', 'novablocks-with-color-signal-classname-frontend', applyColorSignalFrontEndClasses, 1);
+
+
+//
+const getBlockList = () => select( 'core/editor' ).getBlocks();
+
+let blockList = getBlockList();
+
+subscribe( () => {
+  const newBlockList = getBlockList();
+  const blockListChanged = newBlockList !== blockList;
+  blockList = newBlockList;
+
+  if ( blockListChanged ) {
+    // You can trigger here any behavior when the block list in the post changes.
+    blockList.forEach( ( block ) => {
+      updateBlock( block );
+    } );
+  }
+} );
