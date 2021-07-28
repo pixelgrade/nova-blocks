@@ -419,7 +419,7 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
     '--novablocks-block-top-spacing': blockTopSpacing,
     '--novablocks-block-bottom-spacing': blockBottomSpacing,
-    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
+    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
   }
 }
 

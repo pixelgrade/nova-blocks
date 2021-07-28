@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { BlockControls } from '@wordpress/block-editor';
 
-const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
+const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixControl;
 
 const Controls = ( props ) => {
 

@@ -48,8 +48,3 @@ export {
 	GalleryPreview,
 	GalleryPlaceholder
 } from './gallery-options';
-
-export {
-	layoutAttributes,
-	LayoutControls
-} from './layout-controls';

@@ -241,34 +241,46 @@ function novablocks_add_hero_settings( $settings ) {
 	$hero_settings = array(
 		'template'   => array(
 			array(
-				'core/heading',
-				array(
-					'content' => esc_html__( 'This is a catchy title', '__plugin_txtd' ),
-					'align'   => 'center',
-					'level'   => 1,
-				),
-			),
-			array(
-				'core/paragraph',
-				array(
-					'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
-					'align'   => 'center',
-				),
-			),
-			array(
-				'core/buttons',
-				array(
-					'align' => 'center',
-				),
+				'core/group',
+				array(),
 				array(
 					array(
-						'core/button',
+						'novablocks/headline',
 						array(
-							'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
+							'secondary' => esc_html__( 'This is a catchy', '__theme_txtd' ),
+							'primary'   => esc_html__( 'Headline', '__plugin_txtd' ),
+							'align'     => 'center',
+							'level'     => 1,
+							'fontSize'     => 'larger',
+							'className' => 'has-larger-font-size',
 						),
 					),
-				),
-			)
+					array(
+						'core/paragraph',
+						array(
+							'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
+							'align'   => 'center',
+							'className' => 'is-style-lead',
+						),
+					),
+					array(
+						'core/buttons',
+						array(
+							'align' => 'center',
+							'contentJustification' => 'center'
+						),
+						array(
+							array(
+								'core/button',
+								array(
+									'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
+								),
+							),
+						),
+					)
+				)
+			),
+
 		),
 	);
 
