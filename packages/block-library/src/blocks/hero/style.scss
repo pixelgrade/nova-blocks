@@ -56,6 +56,17 @@
     --display-mode: grid;
   }
   
+  .wp-block-group {
+    
+    &:not(.alignfull) {
+    
+      [class*="__inner-container"] {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+  
 }
 
 .novablocks-hero__indicator {
