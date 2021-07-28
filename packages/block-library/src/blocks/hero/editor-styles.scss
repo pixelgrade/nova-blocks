@@ -25,6 +25,13 @@
       margin-left: calc(-1 * var(--novablocks-container-spacings));
       margin-right: calc(-1 * var(--novablocks-container-spacings));
     }
+  
+    > *:not([data-align]) {
+      --block-content-start: cs;
+      --block-content-end: ce;
+    
+      width: 100%;
+    }
   }
 }
 

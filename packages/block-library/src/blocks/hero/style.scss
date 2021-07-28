@@ -38,6 +38,17 @@
 	h1, h2, h3, h4, h5, h6 {
 		color: inherit;
 	}
+  
+  &:not([class*='block-editor']) {
+    
+    > *:not([class*='align']) {
+      --block-content-start: cs;
+      --block-content-end: ce;
+    
+      width: 100%;
+    }
+  }
+  
 }
 
 .novablocks-hero__indicator {
