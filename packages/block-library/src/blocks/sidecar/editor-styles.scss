@@ -73,6 +73,9 @@
   
   [data-type="novablocks/sidecar"] {
     grid-column: var(--all-columns);
+    
+    max-width: none;
+    width: 100%;
   }
   
   [data-align="left"] {

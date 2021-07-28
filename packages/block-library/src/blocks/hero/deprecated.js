@@ -63,7 +63,7 @@ const migrateContentToGroup = (attributes) => {
     },
 
     isEligible( attributes, innerBlocks ) {
-      return innerBlocks[0].name !== 'core/group';
+      return innerBlocks[0].name !== 'core/group' && innerBlocks[0].name !== 'novablocks/sidecar';
     },
 
     migrate( attributes, innerBlocks ) {

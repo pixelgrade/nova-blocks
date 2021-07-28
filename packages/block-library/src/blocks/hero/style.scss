@@ -35,6 +35,9 @@
 }
 
 .novablocks-hero__inner-container[class] {
+  
+  max-width: none;
+ 
 	h1, h2, h3, h4, h5, h6 {
 		color: inherit;
 	}
@@ -47,6 +50,10 @@
     
       width: 100%;
     }
+  }
+  
+  .novablocks-sidecar {
+    --display-mode: grid;
   }
   
 }
