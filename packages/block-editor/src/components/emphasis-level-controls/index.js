@@ -1,4 +1,4 @@
-import { withSettings } from '../../hooks';
+import { withSettings } from '../../filters';
 
 import {
 	ControlsGroup,

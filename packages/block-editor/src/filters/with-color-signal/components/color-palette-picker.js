@@ -2,10 +2,13 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
-  isFunctionalPalette,
-
+  getReferenceVariation,
   getSignalAttributes,
   getSignalRelativeToVariation,
+} from "../../../utils";
+
+import {
+  isFunctionalPalette,
   getSiteColorVariation,
 } from "@novablocks/utils";
 
@@ -18,14 +21,12 @@ const ColorPalettePicker = ( props ) => {
       palettes,
     },
     showFunctionalColors,
-    sticky
+    clientId,
   } = props;
 
   const {
     palette,
     paletteVariation,
-    useSourceColorAsReference,
-    colorSignal,
   } = attributes;
 
   if( ! Array.isArray(palettes)) {
@@ -42,7 +43,7 @@ const ColorPalettePicker = ( props ) => {
         { visiblePalettes.map( thisPalette => {
           const colors = thisPalette.source || [];
           const isSelected = palette === thisPalette.id;
-          const isSourceSelected = ( isSelected && paletteVariation === 1 && useSourceColorAsReference );
+          const isSourceSelected = ( isSelected && paletteVariation === thisPalette.sourceIndex + 1 );
           const icon = isSourceSelected ? 'star' : 'tick';
           const colorClassnames = classnames(
             "color-palette-picker__color",
@@ -53,18 +54,20 @@ const ColorPalettePicker = ( props ) => {
 
           return (
             <button key={ thisPalette.id } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
+
               if ( isSelected ) {
-                const siteVariation = getSiteColorVariation();
-                const sourceSignal = getSignalRelativeToVariation( thisPalette.sourceIndex + 1, siteVariation );
+                const newVariation = thisPalette.sourceIndex + 1;
+                const parentVariation = getReferenceVariation( clientId );
 
                 setAttributes( {
                   palette: thisPalette.id,
-                  paletteVariation: 1,
-                  colorSignal: sourceSignal,
-                  useSourceColorAsReference: true,
-                } )
+                  paletteVariation: newVariation,
+                  colorSignal: getSignalRelativeToVariation( newVariation, parentVariation )
+                } );
               } else {
-                setAttributes( getSignalAttributes( colorSignal, thisPalette, sticky ) );
+                setAttributes( {
+                  palette: thisPalette.id
+                } );
               }
             } }>
               <svg className="color-palette-picker__color-svg" width="48" height="48" viewBox="0 0 48 48">

@@ -102,6 +102,28 @@
   }
 }
 
+.nb-palette__signal-previews {
+  display: flex;
+  gap: 2px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  > * {
+    flex: 1 0 0;
+  }
+}
+
+.nb-palette__signal-preview {
+  min-height: 30px;
+  background-image: linear-gradient(58deg, white 48%, transparent 52%);
+  box-shadow: rgba(0,0,0,0.1) 0 0 0 1px inset;
+
+  &--1 { background-color: #DDDDDD }
+  &--2 { background-color: #888888 }
+  &--3 { background-color: #222222 }
+}
+
 .nb-palette__label {
   position: relative;
   padding-top: 5px;

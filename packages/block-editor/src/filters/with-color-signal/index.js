@@ -1,16 +1,21 @@
 import _ from 'lodash';
+import classnames from 'classnames';
 
 import { Fragment } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
-import { select } from '@wordpress/data';
+import { dispatch, select, subscribe } from '@wordpress/data';
 
 import { addFilter } from '@wordpress/hooks';
 
+import {
+  getSupports,
+  getComputedVariationFromParents,
+} from "../../utils";
+
+import { useSupports } from "../../index";
 import InspectorControls from './inspector-controls';
 import attributes from './attributes.json';
 import altAttributes from './attributes-alt.json';
-
-import classnames from 'classnames';
 
 const withColorSignalAttributes = ( settings, name ) => {
 
@@ -68,7 +73,7 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 
   return props => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal ) {
       return <OriginalComponent { ...props } />
@@ -89,7 +94,7 @@ const withPaletteClassname = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal?.paletteClassname ) {
       return <BlockListBlock { ...props } />
@@ -112,7 +117,7 @@ const applyPaletteFrontEndClasses = (extraProps, blockType, attributes) => {
 
   const { palette, useSourceColorAsReference } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+  const supports = getSupports( blockType.name );
 
   if ( supports?.novaBlocks?.colorSignal?.paletteClassname ) {
     extraProps.className = classnames(extraProps.className, `sm-palette-${ palette } ${ useSourceColorAsReference ? 'sm-palette--shifted' : '' }`)
@@ -127,22 +132,58 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal?.variationClassname ) {
       return <BlockListBlock { ...props } />
     }
 
-    const blockProps = {
-      ...props,
-      className: `${ props.className } sm-variation-${ props.attributes.paletteVariation }`
-    };
+    const {
+      attributes: {
+        paletteVariation,
+        colorSignal,
+        useSourceColorAsReference
+      },
+      clientId
+    } = props;
+
+    let className = props.className;
+
+    if ( colorSignal !== 0 || ! useSourceColorAsReference ) {
+      className = classnames(
+        props.className,
+        `sm-variation-${ paletteVariation }`
+      );
+    }
+
+    const blockProps = { ...props, className };
 
     return (
       <BlockListBlock { ...blockProps } />
     )
   }
 }, "withVariationClassname" );
+
+const updateInnerBlocks = ( block ) => {
+
+  if ( Array.isArray( block.innerBlocks ) ) {
+    block.innerBlocks.forEach( innerBlock => {
+      updateBlock( innerBlock );
+    } )
+  }
+}
+
+const updateBlock = ( block ) => {
+  const { clientId } = block;
+  const variation = getComputedVariationFromParents( clientId );
+  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+
+  updateBlockAttributes( clientId, {
+    paletteVariation: variation
+  } );
+
+  updateInnerBlocks( block );
+}
 
 addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withVariationClassname );
 
@@ -151,7 +192,7 @@ const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
 
   const { paletteVariation } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+  const supports = getSupports( blockType.name );
 
   if ( supports?.novaBlocks?.colorSignal?.variationClassname ) {
     extraProps.className = classnames( extraProps.className, `sm-variation-${ paletteVariation }` )
@@ -166,7 +207,7 @@ const withColorSignalClassname = createHigherOrderComponent( ( BlockListBlock ) 
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
       return <BlockListBlock { ...props } />
@@ -190,7 +231,7 @@ const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
 
   const { colorSignal } = attributes;
 
-  const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
+  const supports = getSupports( blockType.name );
 
   if ( supports?.novaBlocks?.colorSignal?.colorSignalClassname ) {
     extraProps.className = classnames( extraProps.className, `sm-color-signal-${ colorSignal }` )
@@ -199,3 +240,22 @@ const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
   return extraProps;
 }
 addFilter('blocks.getSaveContent.extraProps', 'novablocks-with-color-signal-classname-frontend', applyColorSignalFrontEndClasses, 1);
+
+
+//
+const getBlockList = () => select( 'core/editor' ).getBlocks();
+
+let blockList = getBlockList();
+
+subscribe( () => {
+  const newBlockList = getBlockList();
+  const blockListChanged = newBlockList !== blockList;
+  blockList = newBlockList;
+
+  if ( blockListChanged ) {
+    // You can trigger here any behavior when the block list in the post changes.
+    blockList.forEach( ( block ) => {
+      updateBlock( block );
+    } );
+  }
+} );

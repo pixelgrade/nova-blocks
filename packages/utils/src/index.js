@@ -262,77 +262,6 @@ export const isAnyPartOfElementInViewport = (element) => {
 	return (vertInView && horInView);
 }
 
-export const getVariationFromSignal = ( signal ) => {
-
-  if ( signal === 1 ) {
-    return 2;
-  }
-
-  if ( signal === 2 ) {
-    return 8;
-  }
-
-  if ( signal === 3 ) {
-    return 11;
-  }
-
-  return 1;
-}
-
-export const getSignalRelativeToVariation = ( compare, reference ) => {
-  const variationOptions = getSignalOptionsFromVariation( reference );
-
-  return variationOptions.reduce( ( prev, curr, index, arr ) => {
-    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
-  }, 0 );
-}
-
-export const getSignalFromVariation = ( variation ) => {
-
-  if ( variation === 1 ) {
-    return 0;
-  }
-
-  if ( variation < 5 ) {
-    return 1;
-  }
-
-  if ( variation < 9 ) {
-    return 2;
-  }
-
-  return 3;
-}
-
-export const getSignalOptionsFromVariation = ( variation ) => {
-  const blockSignal = getSignalFromVariation( variation );
-
-  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
-    return index === blockSignal ? variation : getVariationFromSignal( index );
-  } );
-
-  variationOptions.sort( ( variation1, variation2 ) => {
-    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
-  } );
-
-  return variationOptions;
-}
-
-export const getContentVariationBySignal = ( props ) => {
-  const { attributes } = props;
-  const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
-  const siteVariation = getSiteColorVariation();
-  const currentPalette = getCurrentPaletteConfig(props);
-  const { sourceIndex } = currentPalette;
-
-  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
-
-  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-
-  return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
-}
-
 // Helper function to get current Palette Config,
 // and generate a default, if a palette does not exist.
 export const getCurrentPaletteConfig = ( props ) => {
@@ -486,28 +415,6 @@ export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorA
   return normalizeVariationValue( variation );
 }
 
-export const getAbsoluteColorVariation = ( props ) => {
-
-  const {
-    attributes: {
-      paletteVariation,
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const currentPalette = getCurrentPaletteConfig( props );
-  const { sourceIndex } = currentPalette;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = siteVariation - 1;
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
-}
-
-export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
-  return getRelativeColorVariation( getCurrentPaletteConfig( props ), paletteVariation, props );
-}
-
 export const getSiteColorVariation = () => {
   return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
 }
@@ -571,3 +478,18 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
   }
 }
+
+export const arrayRotate = (arr, count, reverse) => {
+  count = count % arr.length;
+
+  for ( let i = 1; i <= count; i++ ) {
+    if ( reverse ) {
+      arr.unshift( arr.pop() );
+    } else {
+      arr.push( arr.shift() );
+    }
+  }
+
+  return arr;
+}
+

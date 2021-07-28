@@ -51,7 +51,6 @@ const HeroPreview = function( props ) {
 		`novablocks-u-content-width-${ contentWidth }`,
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
-    getColorSetClassnames( attributes ),
     getAlignmentClassnames( attributes )
 	];
 

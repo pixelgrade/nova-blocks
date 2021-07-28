@@ -9,9 +9,9 @@ function novablocks_get_card_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
 		'packages/block-library/src/blocks/card/attributes.json',
-		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
-		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
-		'packages/block-editor/src/hooks/with-card-details/attributes.json',
+		'packages/block-editor/src/filters/with-color-signal/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/filters/with-card-details/attributes.json',
 	) );
 }
 

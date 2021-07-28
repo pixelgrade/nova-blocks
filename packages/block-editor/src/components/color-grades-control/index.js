@@ -1,19 +1,26 @@
-import classnames from 'classnames';
+import classnames from "classnames";
+import { select } from "@wordpress/data";
 import { getIcon } from "@novablocks/icons";
+
 import {
+  arrayRotate,
   getSiteColorVariation,
   normalizeVariationValue,
-  getCurrentPaletteConfig
 } from "@novablocks/utils";
+
+import {
+  getPaletteConfig, getReferenceVariation,
+  getSignalRelativeToVariation,
+} from "../../utils";
 
 const ColorGradesControl = ( props ) => {
 
   const {
     attributes,
-    settings,
     label,
-    value,
     signal,
+    clientId,
+    value,
   } = props;
 
   const onChange = props.onChange || (() => {});
@@ -24,7 +31,7 @@ const ColorGradesControl = ( props ) => {
     useSourceColorAsReference,
   } = attributes;
 
-  const currentPalette = getCurrentPaletteConfig(props);
+  const currentPalette = getPaletteConfig( palette );
   const { sourceIndex } = currentPalette;
 
   const iconClassName = classnames(
@@ -36,6 +43,13 @@ const ColorGradesControl = ( props ) => {
       [ `nb-signal-icon--high` ]: signal === 3,
     }
   );
+
+  const parentVariation = getReferenceVariation( clientId );
+  const variations = Array.from( Array( 12 ) ).map( ( undefined, index ) => index + 1 );
+  const sourceOffset = useSourceColorAsReference ? sourceIndex : 0;
+  const selectedVariation = normalizeVariationValue( value + sourceOffset );
+
+  arrayRotate( variations, parentVariation - 1 );
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>
@@ -51,38 +65,39 @@ const ColorGradesControl = ( props ) => {
       </div>
       <div className="nb-palette">
         <div className="nb-palette__grades">
-          { Array.from( Array( 12 ) ).map( ( undefined, index ) => {
+          { variations.map( currentVariation => {
             let content = '';
-            let modifier = '';
 
-            const currentVariation = normalizeVariationValue( index + 1 - siteVariation + 1 );
-            const actualSelectedIndex = ( ( useSourceColorAsReference ? value + sourceIndex - 1 : value - siteVariation ) + 12 ) % 12;
+            const isSelected = selectedVariation === currentVariation;
+            const isSource = normalizeVariationValue( sourceIndex + 1 ) === currentVariation;
 
             const className = classnames(
               `nb-palette__grade`,
               `sm-palette-${ palette }`,
               `sm-variation-${ currentVariation }`,
               {
-                'nb-palette__grade--selected': actualSelectedIndex === index,
-                'nb-palette__grade--source': sourceIndex === index,
+                'nb-palette__grade--selected': isSelected,
+                'nb-palette__grade--source': isSource,
               }
             );
 
-            if ( actualSelectedIndex === index ) {
-              content = getIcon( 'tick' );
-            }
-
-            if ( sourceIndex === index ) {
-              content = getIcon( 'star' );
-            }
+            if ( isSelected ) { content = getIcon( 'tick' ) }
+            if ( isSource ) { content = getIcon( 'star' ) }
 
             return (
-              <div className={ className } onClick={ () => {
-                onChange( index + 1 );
-              } }>
+              <div className={ className } onClick={ () => { onChange( currentVariation ) } }>
                 <div className="nb-palette__grade-surface" />
                 <div className="nb-palette__grade-icon" dangerouslySetInnerHTML={ { __html: content } } />
               </div>
+            )
+          } ) }
+        </div>
+        <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
+          { variations.map( currentVariation => {
+            const signal = getSignalRelativeToVariation( currentVariation, parentVariation );
+
+            return (
+              <div className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
             )
           } ) }
         </div>
