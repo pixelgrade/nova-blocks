@@ -56,29 +56,31 @@ import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
 
 		if ( !! api ) {
 
-			api( 'sm_color_primary' ).bind( new_value => {
-				$( '.js-novablocks-google-map' ).each( function( i, obj ) {
-					const $obj = $( obj );
-					const map = $obj.data( 'map' );
-					const mapMarkers = $obj.data( 'mapMarkers' );
-					const styles = $obj.data( 'styles' );
-					const stylesWithColor = addColorToStyles( styles, new_value );
+			api( 'sm_color_primary', ( setting ) => {
+			  setting.bind( new_value => {
+          $( '.js-novablocks-google-map' ).each( function( i, obj ) {
+            const $obj = $( obj );
+            const map = $obj.data( 'map' );
+            const mapMarkers = $obj.data( 'mapMarkers' );
+            const styles = $obj.data( 'styles' );
+            const stylesWithColor = addColorToStyles( styles, new_value );
 
-					const showLabels = $obj.data( 'show-labels' );
-					const showIcons = $obj.data( 'show-icons' );
-					const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, new_value );
+            const showLabels = $obj.data( 'show-labels' );
+            const showIcons = $obj.data( 'show-icons' );
+            const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, new_value );
 
-					map.setOptions( {
-						styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
-					} );
+            map.setOptions( {
+              styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
+            } );
 
-					mapMarkers.forEach( mapMarker => {
-						mapMarker.setOptions( {
-							icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
-						} );
-					} )
-				} );
-			} );
+            mapMarkers.forEach( mapMarker => {
+              mapMarker.setOptions( {
+                icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
+              } );
+            } )
+          } );
+        } );
+      } );
 		}
 	}
 
