@@ -6,7 +6,6 @@ import { getSvg } from '@novablocks/block-editor';
 import iconSvg from './icon.svg';
 export { default as store } from './store';
 import { addSeparatorFilters } from "./blocks/core/separator";
-//import { addListFilters } from "./blocks/core/list";
 
 import "./blocks/core/group";
 import "./blocks/core/list";

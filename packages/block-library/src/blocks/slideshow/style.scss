@@ -1,6 +1,13 @@
 .novablocks-slideshow {
 	position: relative;
 	z-index: 20;
+  
+  @include block-spacing;
+  
+  &[class] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .novablocks-slideshow__slide {

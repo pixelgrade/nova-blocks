@@ -313,3 +313,39 @@ function addSpaceAndSizingAttributes( block ) {
 	return block;
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/add-space-and-sizing-attributes', addSpaceAndSizingAttributes );
+
+const addSpaceAndSizingStyle = ( extraProps, blockType, attributes ) => {
+
+  const {
+    blockTopSpacing,
+    blockBottomSpacing,
+    emphasisTopSpacing,
+    emphasisBottomSpacing,
+  } = attributes;
+
+  let spaceAndSizingStyle = {};
+
+  if ( ! extraProps.hasOwnProperty('style') ) {
+    extraProps.style = {};
+  }
+
+  if ( blockType?.supports?.novaBlocks?.spaceAndSizing ) {
+
+    spaceAndSizingStyle = {
+      "--novablocks-block-top-spacing": blockTopSpacing + "",
+      "--novablocks-block-bottom-spacing": blockBottomSpacing + "",
+      "--novablocks-emphasis-top-spacing": emphasisTopSpacing + "",
+      "--novablocks-emphasis-bottom-spacing": emphasisBottomSpacing + "",
+    };
+
+    extraProps.style = Object.assign( extraProps.style, spaceAndSizingStyle );
+  }
+
+  return extraProps;
+};
+
+addFilter(
+  "blocks.getSaveContent.extraProps",
+  "novablocks/add-space-and-sizing-style",
+  addSpaceAndSizingStyle
+);
