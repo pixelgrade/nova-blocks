@@ -130,7 +130,7 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
     const supportsVariationClassname = supports?.novaBlocks?.colorSignal?.variationClassname;
 
-    if ( ! supportsVariationClassname || supportsVariationClassname && props.attributes.colorSignal < 1 ) {
+    if ( ! supportsVariationClassname || props.attributes.colorSignal < 1 ) {
       return <BlockListBlock { ...props } />
     }
 
