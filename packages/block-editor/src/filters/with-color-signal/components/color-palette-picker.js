@@ -2,14 +2,13 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
+  getAbsoluteColorVariation,
   getReferenceVariation,
-  getSignalAttributes,
   getSignalRelativeToVariation,
 } from "../../../utils";
 
 import {
   isFunctionalPalette,
-  getSiteColorVariation,
 } from "@novablocks/utils";
 
 const ColorPalettePicker = ( props ) => {
@@ -27,6 +26,7 @@ const ColorPalettePicker = ( props ) => {
   const {
     palette,
     paletteVariation,
+    useSourceColorAsReference
   } = attributes;
 
   if( ! Array.isArray(palettes)) {
@@ -43,7 +43,7 @@ const ColorPalettePicker = ( props ) => {
         { visiblePalettes.map( thisPalette => {
           const colors = thisPalette.source || [];
           const isSelected = palette === thisPalette.id;
-          const isSourceSelected = ( isSelected && paletteVariation === thisPalette.sourceIndex + 1 );
+          const isSourceSelected = ( isSelected && paletteVariation === 1 && useSourceColorAsReference );
           const icon = isSourceSelected ? 'star' : 'tick';
           const colorClassnames = classnames(
             "color-palette-picker__color",
@@ -56,13 +56,17 @@ const ColorPalettePicker = ( props ) => {
             <button key={ thisPalette.id } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
 
               if ( isSelected ) {
-                const newVariation = thisPalette.sourceIndex + 1;
-                const parentVariation = getReferenceVariation( clientId );
+                const newAttributes = Object.assign( {}, attributes, {
+                  paletteVariation: 1,
+                  useSourceColorAsReference: true,
+                } );
+                const absoluteVariation = getAbsoluteColorVariation( newAttributes );
+                const referenceVariation = getReferenceVariation( clientId, { useSourceColorAsReference: true } );
 
                 setAttributes( {
-                  palette: thisPalette.id,
-                  paletteVariation: newVariation,
-                  colorSignal: getSignalRelativeToVariation( newVariation, parentVariation )
+                  paletteVariation: 1,
+                  colorSignal: getSignalRelativeToVariation( absoluteVariation, referenceVariation ),
+                  useSourceColorAsReference: true
                 } );
               } else {
                 setAttributes( {

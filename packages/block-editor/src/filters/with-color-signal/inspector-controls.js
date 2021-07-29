@@ -1,7 +1,5 @@
 import { ToggleControl } from "@wordpress/components";
-import { select } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
-import { useCallback } from "@wordpress/element";
 
 import {
   ColorGradesControl,
@@ -19,19 +17,16 @@ import {
 
 import {
   getAbsoluteColorVariation,
-  getComputedVariation,
   getPaletteConfig,
   getReferenceVariation,
-  getSignalFromVariation,
   getSignalRelativeToVariation,
 } from "../../utils";
 
-import ColorPalettePicker from './components/color-palette-picker';
-
 import {
-  getSiteColorVariation,
-  normalizeVariationValue,
+  normalizeVariationValue
 } from "@novablocks/utils";
+
+import ColorPalettePicker from './components/color-palette-picker';
 
 const ColorSetControls = ( props ) => {
 
@@ -52,6 +47,7 @@ const ColorSetControls = ( props ) => {
 
   const supports = useSupports( name );
   const currentPalette = getPaletteConfig( palette );
+  const { sourceIndex } = currentPalette;
 
   if ( ! currentPalette ) {
     return null;
@@ -59,18 +55,6 @@ const ColorSetControls = ( props ) => {
 
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
   const parentVariation = getReferenceVariation( clientId );
-
-  const updateColors = useCallback( ( nextVariation, nextColorSignal, useSourceColorAsReference ) => {
-    const referenceVariation = useSourceColorAsReference ? 1 : parentVariation;
-    const newVariation = getComputedVariation( referenceVariation, nextColorSignal, nextVariation );
-
-    setAttributes( {
-      colorSignal: nextColorSignal,
-      paletteVariation: newVariation,
-      useSourceColorAsReference: useSourceColorAsReference
-    } );
-
-  }, [ parentVariation ] )
 
   return (
     <ControlsSection label={ __( 'Color Signal' ) }>
@@ -83,7 +67,7 @@ const ColorSetControls = ( props ) => {
         />
         <ControlsGroup>
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            updateColors( paletteVariation, nextSignal, useSourceColorAsReference );
+            setAttributes( { colorSignal: nextSignal } );
           } } />
         </ControlsGroup>
         {
@@ -98,7 +82,10 @@ const ColorSetControls = ( props ) => {
           </ControlsGroup>
         }
         <ControlsGroup>
-          <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } sticky={ true } />
+          <ColorPalettePicker showFunctionalColors={ showFunctionalColors } { ...props } label={ 'Color Palette' } />
+        </ControlsGroup>
+        <ControlsGroup>
+          <ColorReferenceToggleControl { ...props } />
         </ControlsGroup>
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>
@@ -110,10 +97,13 @@ const ColorSetControls = ( props ) => {
                               label={ __( 'Block Color Signal', '__plugin_txtd' ) }
                               value={ paletteVariation }
                               signal={ colorSignal }
-                              onChange={ value => {
-                                const nextVariation = useSourceColorAsReference ? normalizeVariationValue( value - currentPalette.sourceIndex ) : value;
+                              onChange={ nextVariation => {
                                 const nextSignal = getSignalRelativeToVariation( nextVariation, parentVariation );
-                                updateColors( nextVariation, nextSignal, useSourceColorAsReference );
+
+                                setAttributes( {
+                                  colorSignal: nextSignal,
+                                  paletteVariation: nextVariation
+                                } );
                               } } />
         </ControlsGroup>
         <MiscellanousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />
@@ -157,7 +147,6 @@ const FunctionalColorsToggleControl = ( props ) => {
 }
 
 const ColorReferenceToggleControl = ( props ) => {
-  const { getBlockParents } = select( 'core/block-editor' );
 
   const {
     attributes,
@@ -166,14 +155,8 @@ const ColorReferenceToggleControl = ( props ) => {
   } = props;
 
   const {
-    palette,
-    paletteVariation,
     useSourceColorAsReference,
   } = attributes;
-
-  const currentPalette = getPaletteConfig( palette );
-  const { sourceIndex } = currentPalette;
-  const parentVariation = getReferenceVariation( clientId );
 
   return (
     <ToggleControl
@@ -182,12 +165,11 @@ const ColorReferenceToggleControl = ( props ) => {
       checked={ useSourceColorAsReference }
       onChange={ useSourceColorAsReference => {
         const absoluteVariation = getAbsoluteColorVariation( attributes );
-        const siteVariation = getSiteColorVariation();
-        const nextVariation = normalizeVariationValue( useSourceColorAsReference ? paletteVariation : absoluteVariation );
-        const nextSignal = getSignalFromVariation( nextVariation );
+        const referenceVariation = getReferenceVariation( clientId, { useSourceColorAsReference } );
+        const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
 
         setAttributes( {
-          paletteVariation: nextVariation,
+          paletteVariation: absoluteVariation,
           colorSignal: nextSignal,
           useSourceColorAsReference
         } );

@@ -22,10 +22,25 @@ export const getEditorScrollContainer = () => {
          document.querySelector( '.interface-interface-skeleton__content' );
 }
 
-export const getReferenceVariation = ( clientId ) => {
+export const getParentVariation = ( clientId ) => {
   const { getBlockParents, getBlock } = select( 'core/block-editor' );
+  const parents = getBlockParents( clientId ).slice();
+
+  if ( parents.length ) {
+    const parentClientId = parents.pop();
+    const parentBlock = getBlock( parentClientId );
+    const parentAttributes = parentBlock.attributes;
+
+    return getAbsoluteColorVariation( parentAttributes );
+  }
+
+  return 1;
+}
+
+export const getReferenceVariation = ( clientId, newAttributes = {} ) => {
+  const { getBlock } = select( 'core/block-editor' );
   const block = getBlock( clientId );
-  const { attributes } = block;
+  const attributes = Object.assign( {}, block.attributes, newAttributes );
   const { palette, useSourceColorAsReference } = attributes;
   const currentPalette = getPaletteConfig( palette );
   const { sourceIndex } = currentPalette;
@@ -34,35 +49,26 @@ export const getReferenceVariation = ( clientId ) => {
     return sourceIndex + 1;
   }
 
-  const parents = getBlockParents( clientId ).slice();
-  let currentVariation = 1;
-
-  parents.forEach( ( parentId, index ) => {
-    const parent = getBlock( parentId );
-    const supports = getSupports( parent.name );
-
-    if ( ! supports?.novaBlocks?.colorSignal ) {
-      return;
-    }
-
-    const { attributes } = parent;
-    const { paletteVariation, colorSignal } = attributes;
-
-    currentVariation = getComputedVariation( currentVariation, colorSignal, paletteVariation );
-  } );
-
-  return currentVariation;
+  return getParentVariation( clientId );
 }
 
 export const getComputedVariationFromParents = ( clientId ) => {
   const { getBlock } = select( 'core/block-editor' );
   const block = getBlock( clientId );
   const { attributes } = block;
-  const { paletteVariation, colorSignal, useSourceColorAsReference } = attributes;
+  const { palette, paletteVariation, colorSignal, useSourceColorAsReference } = attributes;
   const parentVariation = getReferenceVariation( clientId );
-  const referenceVariation = useSourceColorAsReference ? 1 : parentVariation;
 
-  return getComputedVariation( referenceVariation, colorSignal, paletteVariation );
+  const nextVariation = getComputedVariation( parentVariation, colorSignal, paletteVariation );
+
+  if ( useSourceColorAsReference ) {
+    const currentPalette = getPaletteConfig( palette );
+    const { sourceIndex } = currentPalette;
+
+    return normalizeVariationValue( nextVariation - sourceIndex );
+  }
+
+  return getComputedVariation( parentVariation, colorSignal, paletteVariation );
 }
 
 export const getPaletteConfig = ( palette ) => {
@@ -95,11 +101,6 @@ export const getAbsoluteColorVariation = ( attributes ) => {
   const absoluteVariation = paletteVariation + variationOffset;
 
   return normalizeVariationValue( absoluteVariation );
-}
-
-export const getCurrentPaletteRelativeColorVariation = ( palette, paletteVariation, props ) => {
-  const paletteConfig = getPaletteConfig( palette );
-  return getRelativeColorVariation( paletteConfig, paletteVariation, props );
 }
 
 export const getVariationFromSignal = ( signal ) => {
@@ -170,7 +171,6 @@ export const getContentVariationBySignal = ( props ) => {
 }
 
 export const getComputedVariation = ( referenceVariation, signal, paletteVariation ) => {
-  referenceVariation = normalizeVariationValue( referenceVariation );
   const currentSignal = getSignalRelativeToVariation( paletteVariation, referenceVariation );
 
   if ( currentSignal === signal ) {
@@ -180,47 +180,4 @@ export const getComputedVariation = ( referenceVariation, signal, paletteVariati
   const signalOptions = getSignalOptionsFromVariation( referenceVariation );
 
   return signalOptions[ signal ];
-}
-
-export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
-
-  const {
-    attributes: {
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const { sourceIndex } = paletteConfig;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
-}
-
-export const getSignalAttributes = ( signal, palette, sticky = false ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  const variationOptions = getSignalOptionsFromVariation( siteVariation );
-  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
-  const nextVariation = normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
-
-  if ( sticky ) {
-
-    return {
-      colorSignal: signal,
-      palette: palette.id,
-      paletteVariation: sourceSignal === signal ? 1 : nextVariation,
-      useSourceColorAsReference: sourceSignal === signal,
-    }
-
-  } else {
-
-    return {
-      colorSignal: signal,
-      palette: palette.id,
-      paletteVariation: nextVariation
-    }
-
-  }
 }

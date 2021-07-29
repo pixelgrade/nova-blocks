@@ -419,47 +419,6 @@ export const getSiteColorVariation = () => {
   return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
 }
 
-export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
-
-  const {
-    attributes: {
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const { sourceIndex } = paletteConfig;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
-}
-
-export const getSignalAttributes = ( signal, palette, sticky = false ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  const variationOptions = getSignalOptionsFromVariation( siteVariation );
-  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
-  const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
-
-  if ( sticky ) {
-
-    return {
-      colorSignal: signal,
-      palette: palette.id,
-      paletteVariation: nextVariation,
-      useSourceColorAsReference: sourceSignal === signal,
-    }
-
-  } else {
-
-    return {
-      palette: palette.id
-    }
-
-  }
-}
-
 export const getSpacingCSSProps = ( attributes ) => {
 
   const {

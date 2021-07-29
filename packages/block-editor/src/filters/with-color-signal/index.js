@@ -133,9 +133,8 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
   return ( props ) => {
 
     const supports = useSupports( props.name );
-    const supportsVariationClassname = supports?.novaBlocks?.colorSignal?.variationClassname;
 
-    if ( ! supportsVariationClassname || supportsVariationClassname && props.attributes.colorSignal < 1 ) {
+    if ( ! supports?.novaBlocks?.colorSignal?.variationClassname ) {
       return <BlockListBlock { ...props } />
     }
 
@@ -145,17 +144,16 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
         colorSignal,
         useSourceColorAsReference
       },
-      clientId
     } = props;
 
-    let className = props.className;
-
-    if ( colorSignal !== 0 || ! useSourceColorAsReference ) {
-      className = classnames(
-        props.className,
-        `sm-variation-${ paletteVariation }`
-      );
+    if ( colorSignal === 0 && ! useSourceColorAsReference ) {
+      return <BlockListBlock { ...props } />
     }
+
+    const className = classnames(
+      props.className,
+      `sm-variation-${ paletteVariation }`
+    );
 
     const blockProps = { ...props, className };
 
@@ -199,7 +197,7 @@ const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
       return extraProps;
   }
 
-  if ( paletteVariation === 1 && colorSignal === 0 && ! useSourceColorAsReference ) {
+  if ( colorSignal === 0 && ! useSourceColorAsReference ) {
     return extraProps;
   }
 
