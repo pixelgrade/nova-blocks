@@ -191,13 +191,19 @@ addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withV
 // Add Variation Classes on Save
 const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
 
-  const { paletteVariation, colorSignal } = attributes;
+  const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
 
   const supports = getSupports( blockType.name );
 
-  if ( supports?.novaBlocks?.colorSignal?.variationClassname && colorSignal > 0 ) {
-    extraProps.className = classnames( extraProps.className, `sm-variation-${ paletteVariation }` )
+  if ( ! supports?.novaBlocks?.colorSignal?.variationClassname  ) {
+      return extraProps;
   }
+
+  if ( paletteVariation === 1 && colorSignal === 0 && ! useSourceColorAsReference ) {
+    return extraProps;
+  }
+
+  extraProps.className = classnames( extraProps.className, `sm-variation-${ paletteVariation }` )
 
   return extraProps;
 }

@@ -9,7 +9,8 @@ import {
 } from "@novablocks/utils";
 
 import {
-  getPaletteConfig, getReferenceVariation,
+  getPaletteConfig,
+  getReferenceVariation,
   getSignalRelativeToVariation,
 } from "../../utils";
 
