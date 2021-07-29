@@ -133,8 +133,9 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
   return ( props ) => {
 
     const supports = useSupports( props.name );
+    const supportsVariationClassname = supports?.novaBlocks?.colorSignal?.variationClassname;
 
-    if ( ! supports?.novaBlocks?.colorSignal?.variationClassname ) {
+    if ( ! supportsVariationClassname || supportsVariationClassname && props.attributes.colorSignal < 1 ) {
       return <BlockListBlock { ...props } />
     }
 
@@ -190,11 +191,11 @@ addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withV
 // Add Variation Classes on Save
 const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
 
-  const { paletteVariation } = attributes;
+  const { paletteVariation, colorSignal } = attributes;
 
   const supports = getSupports( blockType.name );
 
-  if ( supports?.novaBlocks?.colorSignal?.variationClassname ) {
+  if ( supports?.novaBlocks?.colorSignal?.variationClassname && colorSignal > 0 ) {
     extraProps.className = classnames( extraProps.className, `sm-variation-${ paletteVariation }` )
   }
 
