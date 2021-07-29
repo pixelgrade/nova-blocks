@@ -37,6 +37,14 @@
 .novablocks-hero__inner-container[class] {
   
   max-width: none;
+  
+  > .wp-block-group {
+  
+    &:not([class*='align']) {
+      --block-content-start: cs;
+      --block-content-end: ce;
+    }
+  }
  
 	h1, h2, h3, h4, h5, h6 {
 		color: inherit;
@@ -53,18 +61,20 @@
   }
   
   .novablocks-sidecar {
-    --display-mode: grid;
-  }
-  
-  .wp-block-group {
     
-    &:not(.alignfull) {
-    
-      [class*="__inner-container"] {
-        padding-left: 0;
-        padding-right: 0;
-      }
+    @include above(lap) {
+      --display-mode: grid;
     }
+    
+    > .novablocks-content:only-child {
+
+      > *:not([class*='align']) {
+        --block-content-start: cs;
+        --block-content-end: ce;
+      }
+      
+    }
+    
   }
   
 }
