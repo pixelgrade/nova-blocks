@@ -3,7 +3,7 @@ import { getIcon } from "@novablocks/icons";
 
 import {
   getAbsoluteColorVariation,
-  getReferenceVariation,
+  getParentVariation,
   getSignalRelativeToVariation,
 } from "../../../utils";
 
@@ -61,7 +61,7 @@ const ColorPalettePicker = ( props ) => {
                   useSourceColorAsReference: true,
                 } );
                 const absoluteVariation = getAbsoluteColorVariation( newAttributes );
-                const referenceVariation = getReferenceVariation( clientId, { useSourceColorAsReference: true } );
+                const referenceVariation = getParentVariation( clientId, { useSourceColorAsReference: true } );
 
                 setAttributes( {
                   paletteVariation: 1,

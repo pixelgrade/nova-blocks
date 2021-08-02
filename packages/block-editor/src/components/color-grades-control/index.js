@@ -10,7 +10,7 @@ import {
 
 import {
   getPaletteConfig,
-  getReferenceVariation,
+  getParentVariation,
   getSignalRelativeToVariation,
 } from "../../utils";
 
@@ -45,12 +45,12 @@ const ColorGradesControl = ( props ) => {
     }
   );
 
-  const parentVariation = getReferenceVariation( clientId );
+  const parentVariation = getParentVariation( clientId );
   const variations = Array.from( Array( 12 ) ).map( ( undefined, index ) => index + 1 );
   const sourceOffset = useSourceColorAsReference ? sourceIndex : 0;
   const selectedVariation = normalizeVariationValue( value + sourceOffset );
 
-  arrayRotate( variations, parentVariation - 1 );
+//  arrayRotate( variations, parentVariation - 1 );
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>

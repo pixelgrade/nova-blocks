@@ -38,27 +38,12 @@ export const getParentVariation = ( clientId ) => {
   return siteVariation;
 }
 
-export const getReferenceVariation = ( clientId, newAttributes = {} ) => {
-  const { getBlock } = select( 'core/block-editor' );
-  const block = getBlock( clientId );
-  const attributes = Object.assign( {}, block.attributes, newAttributes );
-  const { palette, useSourceColorAsReference } = attributes;
-  const currentPalette = getPaletteConfig( palette );
-  const { sourceIndex } = currentPalette;
-
-  if ( useSourceColorAsReference ) {
-    return sourceIndex + 1;
-  }
-
-  return getParentVariation( clientId );
-}
-
 export const getComputedVariationFromParents = ( clientId ) => {
   const { getBlock } = select( 'core/block-editor' );
   const block = getBlock( clientId );
   const { attributes } = block;
   const { palette, paletteVariation, colorSignal, useSourceColorAsReference } = attributes;
-  const parentVariation = getReferenceVariation( clientId );
+  const parentVariation = getParentVariation( clientId );
   const absoluteVariation = getAbsoluteColorVariation( attributes );
 
   const nextVariation = getComputedVariation( parentVariation, colorSignal, absoluteVariation );
@@ -98,8 +83,8 @@ export const getAbsoluteColorVariation = ( attributes ) => {
 
   const currentPalette = getPaletteConfig( palette );
   const { sourceIndex } = currentPalette;
-  const siteVariation = getSiteColorVariation();
-  const variationOffset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
+
+  const variationOffset = useSourceColorAsReference ? sourceIndex : 0;
   const absoluteVariation = paletteVariation + variationOffset;
 
   return normalizeVariationValue( absoluteVariation );
@@ -124,6 +109,7 @@ export const getVariationFromSignal = ( signal ) => {
 
 export const getSignalRelativeToVariation = ( compare, reference ) => {
   const variationOptions = getSignalOptionsFromVariation( reference );
+
   return variationOptions.reduce( ( prev, curr, index, arr ) => {
     return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
   }, 0 );

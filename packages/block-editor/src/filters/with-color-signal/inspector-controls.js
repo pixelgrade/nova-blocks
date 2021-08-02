@@ -16,9 +16,8 @@ import {
 } from "../../hooks";
 
 import {
-  getAbsoluteColorVariation,
   getPaletteConfig,
-  getReferenceVariation,
+  getParentVariation,
   getSignalRelativeToVariation,
 } from "../../utils";
 
@@ -54,7 +53,7 @@ const ColorSetControls = ( props ) => {
   }
 
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
-  const parentVariation = getReferenceVariation( clientId );
+  const parentVariation = getParentVariation( clientId );
 
   return (
     <ControlsSection label={ __( 'Color Signal' ) }>
@@ -67,7 +66,13 @@ const ColorSetControls = ( props ) => {
         />
         <ControlsGroup>
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            setAttributes( { colorSignal: nextSignal } );
+            const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, parentVariation );
+
+            setAttributes( {
+              useSourceColorAsReference: sourceSignal === nextSignal,
+              paletteVariation: sourceSignal === nextSignal ? 1 : paletteVariation,
+              colorSignal: nextSignal
+            } );
           } } />
         </ControlsGroup>
         {
@@ -100,9 +105,13 @@ const ColorSetControls = ( props ) => {
                               onChange={ value => {
                                 const nextVariation = useSourceColorAsReference ? normalizeVariationValue( value - sourceIndex ) : value;
                                 const nextSignal = getSignalRelativeToVariation( value, parentVariation );
+                                const nextSourceAsReference = value === sourceIndex + 1;
+
+                                console.log( nextVariation );
 
                                 setAttributes( {
-                                  paletteVariation: nextVariation,
+                                  useSourceColorAsReference: nextSourceAsReference,
+                                  paletteVariation: nextSourceAsReference ? 1 : nextVariation,
                                   colorSignal: nextSignal,
                                 } );
                               } } />
@@ -150,31 +159,17 @@ const FunctionalColorsToggleControl = ( props ) => {
 const ColorReferenceToggleControl = ( props ) => {
 
   const {
-    attributes,
-    setAttributes,
-    clientId,
+    attributes: {
+      useSourceColorAsReference
+    },
   } = props;
-
-  const {
-    useSourceColorAsReference,
-  } = attributes;
 
   return (
     <ToggleControl
       key={ 'color-set-use-source-as-reference-control' }
       label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
       checked={ useSourceColorAsReference }
-      onChange={ useSourceColorAsReference => {
-        const absoluteVariation = getAbsoluteColorVariation( attributes );
-        const referenceVariation = getReferenceVariation( clientId, { useSourceColorAsReference } );
-        const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
-
-        setAttributes( {
-          paletteVariation: absoluteVariation,
-          colorSignal: nextSignal,
-          useSourceColorAsReference
-        } );
-      } }
+      disabled
     />
   )
 }
