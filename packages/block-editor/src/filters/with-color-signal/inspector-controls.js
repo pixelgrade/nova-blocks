@@ -97,12 +97,13 @@ const ColorSetControls = ( props ) => {
                               label={ __( 'Block Color Signal', '__plugin_txtd' ) }
                               value={ paletteVariation }
                               signal={ colorSignal }
-                              onChange={ nextVariation => {
-                                const nextSignal = getSignalRelativeToVariation( nextVariation, parentVariation );
+                              onChange={ value => {
+                                const nextVariation = useSourceColorAsReference ? normalizeVariationValue( value - sourceIndex ) : value;
+                                const nextSignal = getSignalRelativeToVariation( value, parentVariation );
 
                                 setAttributes( {
+                                  paletteVariation: nextVariation,
                                   colorSignal: nextSignal,
-                                  paletteVariation: nextVariation
                                 } );
                               } } />
         </ControlsGroup>

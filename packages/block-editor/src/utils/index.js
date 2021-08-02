@@ -25,6 +25,7 @@ export const getEditorScrollContainer = () => {
 export const getParentVariation = ( clientId ) => {
   const { getBlockParents, getBlock } = select( 'core/block-editor' );
   const parents = getBlockParents( clientId ).slice();
+  const siteVariation = getSiteColorVariation();
 
   if ( parents.length ) {
     const parentClientId = parents.pop();
@@ -34,7 +35,7 @@ export const getParentVariation = ( clientId ) => {
     return getAbsoluteColorVariation( parentAttributes );
   }
 
-  return 1;
+  return siteVariation;
 }
 
 export const getReferenceVariation = ( clientId, newAttributes = {} ) => {
@@ -58,8 +59,9 @@ export const getComputedVariationFromParents = ( clientId ) => {
   const { attributes } = block;
   const { palette, paletteVariation, colorSignal, useSourceColorAsReference } = attributes;
   const parentVariation = getReferenceVariation( clientId );
+  const absoluteVariation = getAbsoluteColorVariation( attributes );
 
-  const nextVariation = getComputedVariation( parentVariation, colorSignal, paletteVariation );
+  const nextVariation = getComputedVariation( parentVariation, colorSignal, absoluteVariation );
 
   if ( useSourceColorAsReference ) {
     const currentPalette = getPaletteConfig( palette );
@@ -68,7 +70,7 @@ export const getComputedVariationFromParents = ( clientId ) => {
     return normalizeVariationValue( nextVariation - sourceIndex );
   }
 
-  return getComputedVariation( parentVariation, colorSignal, paletteVariation );
+  return nextVariation;
 }
 
 export const getPaletteConfig = ( palette ) => {
