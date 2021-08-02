@@ -117,7 +117,7 @@ function updateBlockTopSpacingAttribute( block ) {
 }
 
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings', alterSettings, 1 );
-addFilter( 'blocks.registerBlockType', 'novablocks/update-block-top-spacing-attribute', updateBlockTopSpacingAttribute, 11 );
+// addFilter( 'blocks.registerBlockType', 'novablocks/update-block-top-spacing-attribute', updateBlockTopSpacingAttribute, 11 );
 addFilter( 'editor.BlockEdit', 'novablocks/group/content-alignment', withControls, 1 );
 addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/group/frontend-classes', applyFrontEndClasses, 1 );
 addFilter( 'editor.BlockListBlock', 'novablocks/group/addEditorBlockAttributes', addEditorBlockAttributes, 1 );
