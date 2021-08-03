@@ -1,27 +1,16 @@
 import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
-import {
-  getAbsoluteColorVariation,
-  getParentVariation,
-  getSignalRelativeToVariation,
-  getPaletteConfig
-} from "../../../utils";
-
-import {
-  isFunctionalPalette,
-} from "@novablocks/utils";
+import { isFunctionalPalette } from "@novablocks/utils";
 
 const ColorPalettePicker = ( props ) => {
 
   const {
     attributes,
-    setAttributes,
     settings: {
       palettes,
     },
     showFunctionalColors,
-    clientId,
     onChange,
   } = props;
 
@@ -31,7 +20,7 @@ const ColorPalettePicker = ( props ) => {
     useSourceColorAsReference
   } = attributes;
 
-  if( ! Array.isArray(palettes)) {
+  if( ! Array.isArray( palettes ) ) {
     return null;
   }
 

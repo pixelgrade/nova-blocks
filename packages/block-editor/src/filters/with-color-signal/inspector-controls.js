@@ -1,6 +1,6 @@
 import { ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useCallback } from "@wordpress/element";
+import { Fragment, useCallback } from "@wordpress/element";
 
 import {
   ColorGradesControl,
@@ -113,11 +113,9 @@ const ColorSetControls = ( props ) => {
 
   const ColorPicker = () => {
     return (
-      <ColorPalettePicker
-        { ...props }
-        label={ 'Color Palette' }
-        showFunctionalColors={ showFunctionalColors }
-        onChange={ onPaletteChange } />
+      <ControlsGroup>
+        <ColorPalettePicker label={ 'Color Palette' } showFunctionalColors={ showFunctionalColors } onChange={ onPaletteChange } { ...props } />
+      </ControlsGroup>
     )
   }
 
@@ -144,17 +142,11 @@ const ColorSetControls = ( props ) => {
                            } } />
           </ControlsGroup>
         }
-        <ControlsGroup>
-          <ColorPicker />
-        </ControlsGroup>
-        <ControlsGroup>
-          <ColorReferenceToggleControl { ...props } />
-        </ControlsGroup>
+        <ColorPicker />
+        <ColorReferenceToggleControl { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>
-        <ControlsGroup>
-          <ColorPicker />
-        </ControlsGroup>
+        <ColorPicker />
         <ControlsGroup>
           <ColorGradesControl { ...props }
                               label={ __( 'Block Color Signal', '__plugin_txtd' ) }
@@ -171,10 +163,12 @@ const ColorSetControls = ( props ) => {
 const MiscellanousControls = ( props ) => {
 
   return (
-    <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
-      <FunctionalColorsToggleControl { ...props } />
+    <Fragment>
+      <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
+        <FunctionalColorsToggleControl { ...props } />
+      </ControlsGroup>
       <ColorReferenceToggleControl { ...props } />
-    </ControlsGroup>
+    </Fragment>
   )
 }
 
@@ -208,15 +202,24 @@ const ColorReferenceToggleControl = ( props ) => {
     attributes: {
       useSourceColorAsReference
     },
+    settings: {
+      debug
+    }
   } = props;
 
+  if ( ! debug ) {
+    return null;
+  }
+
   return (
-    <ToggleControl
-      key={ 'color-set-use-source-as-reference-control' }
-      label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
-      checked={ useSourceColorAsReference }
-      disabled
-    />
+    <ControlsGroup>
+      <ToggleControl
+        key={ 'color-set-use-source-as-reference-control' }
+        label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }
+        checked={ useSourceColorAsReference }
+        disabled
+      />
+    </ControlsGroup>
   )
 }
 
