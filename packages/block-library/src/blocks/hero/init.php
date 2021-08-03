@@ -12,6 +12,7 @@ function novablocks_get_hero_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
 		"packages/block-library/src/blocks/hero/attributes.json",
+		"packages/block-library/src/blocks/hero/attributes-spacing.json",
 
 		"packages/block-editor/src/components/color-controls/attributes.json",
 		"packages/block-editor/src/components/layout-controls/attributes.json",
