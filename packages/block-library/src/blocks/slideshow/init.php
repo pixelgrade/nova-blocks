@@ -21,6 +21,8 @@ function novablocks_get_slideshow_attributes() {
 		"packages/block-editor/src/hooks/with-doppler/attributes.json",
 		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
 		'packages/block-editor/src/hooks/with-overlay-filter-strength-controls/attributes.json',
+		"packages/block-editor/src/hooks/with-space-and-sizing/attributes.json",
+		"packages/block-library/src/blocks/slideshow/attributes-spacing.json",
 	) );
 
 }
