@@ -8,8 +8,10 @@ import { dispatch, select, subscribe } from '@wordpress/data';
 import { addFilter } from '@wordpress/hooks';
 
 import {
+  computeColorSignal,
+  getAbsoluteColorVariation,
+  getParentVariation,
   getSupports,
-  getComputedVariationFromParents,
 } from "../../utils";
 
 import { useSupports } from "../../index";
@@ -173,12 +175,15 @@ const updateInnerBlocks = ( block ) => {
 }
 
 const updateBlock = ( block ) => {
-  const { clientId } = block;
-  const variation = getComputedVariationFromParents( clientId );
   const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+  const { attributes, clientId } = block;
+  const { colorSignal, useSourceColorAsReference } = attributes;
+  const parentVariation = getParentVariation( clientId );
+  const absoluteVariation = getAbsoluteColorVariation( attributes );
+  const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
 
   updateBlockAttributes( clientId, {
-    paletteVariation: variation
+    paletteVariation: useSourceColorAsReference ? 1 : nextVariation,
   } );
 
   updateInnerBlocks( block );

@@ -1,10 +1,6 @@
 import { dispatch, select } from "@wordpress/data";
 
-import {
-  getSiteColorVariation,
-  normalizeVariationValue
-} from "@novablocks/utils";
-import { useSupports } from "../hooks";
+import { getSiteColorVariation } from "@novablocks/utils";
 
 export const setAttributesToInnerBlocks = ( clientId, attributes ) => {
   const { getBlock } = select( 'core/block-editor' );
@@ -41,23 +37,6 @@ export const getParentVariation = ( clientId ) => {
   }
 
   return siteVariation;
-}
-
-export const getComputedVariationFromParents = ( clientId ) => {
-  const { getBlock } = select( 'core/block-editor' );
-  const block = getBlock( clientId );
-  const { attributes } = block;
-  const { palette, paletteVariation, colorSignal, useSourceColorAsReference } = attributes;
-  const parentVariation = getParentVariation( clientId );
-  const absoluteVariation = getAbsoluteColorVariation( attributes );
-
-  const nextVariation = getComputedVariation( parentVariation, colorSignal, absoluteVariation );
-
-  if ( useSourceColorAsReference ) {
-    return 1;
-  }
-
-  return nextVariation;
 }
 
 export const getPaletteConfig = ( palette ) => {
@@ -148,10 +127,10 @@ export const getContentVariationBySignal = ( props ) => {
     }
   } = props;
 
-  return getComputedVariation( paletteVariation, contentColorSignal );
+  return computeColorSignal( paletteVariation, contentColorSignal );
 }
 
-export const getComputedVariation = ( referenceVariation, signal, paletteVariation ) => {
+export const computeColorSignal = ( referenceVariation, signal, paletteVariation ) => {
   const currentSignal = getSignalRelativeToVariation( paletteVariation, referenceVariation );
 
   if ( currentSignal === signal ) {

@@ -17,11 +17,11 @@ import {
 } from "../../hooks";
 
 import {
-  getAbsoluteColorVariation, getComputedVariation,
+  computeColorSignal,
+  getAbsoluteColorVariation,
   getPaletteConfig,
   getParentVariation,
   getSignalRelativeToVariation,
-  getVariationFromSignal,
 } from "../../utils";
 
 import ColorPalettePicker from './components/color-palette-picker';
@@ -43,6 +43,7 @@ const ColorSetControls = ( props ) => {
   } = attributes;
 
   const supports = useSupports( name );
+  const referenceVariation = getParentVariation( clientId );
 
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
 
@@ -51,12 +52,11 @@ const ColorSetControls = ( props ) => {
     const { palette } = nextAttributes;
     const currentPalette = getPaletteConfig( palette );
     const { sourceIndex } = currentPalette;
-    const referenceVariation = getParentVariation( clientId );
     const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
     const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
     const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, referenceVariation );
     const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === sourceIndex + 1 );
-    const nextVariation = getComputedVariation( referenceVariation, nextSignal, absoluteVariation );
+    const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
 
     setAttributes( {
       palette: palette,
@@ -67,28 +67,32 @@ const ColorSetControls = ( props ) => {
 
   }, [ clientId, attributes ] )
 
-  const onChangePaletteVariation = useCallback( nextVariation => {
+  const onPaletteVariationChange = useCallback( nextVariation => {
     updateBlock( {
       paletteVariation: nextVariation,
       useSourceColorAsReference: false,
     } );
   }, [ updateBlock ] )
 
-  const onChangePalette = useCallback( nextPalette => {
+  const onPaletteChange = useCallback( nextPalette => {
 
     const newAttributes = {
       palette: nextPalette,
     };
 
     if ( nextPalette === palette ) {
+      const currentPalette = getPaletteConfig( palette );
+      const { sourceIndex } = currentPalette;
       const { useSourceColorAsReference } = attributes;
       const nextSourceColorAsReference = ! useSourceColorAsReference;
-      const absoluteVariation = getAbsoluteColorVariation( attributes );
+      const absoluteVariation = sourceIndex + 1;
       const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
+      const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
 
       setAttributes( {
         useSourceColorAsReference: nextSourceColorAsReference,
         paletteVariation: nextVariation,
+        colorSignal: nextSignal,
       } );
 
       return;
@@ -99,7 +103,7 @@ const ColorSetControls = ( props ) => {
 
   const onSignalChange = useCallback( nextSignal => {
     const referenceVariation = getParentVariation( clientId );
-    const nextVariation = getComputedVariation( referenceVariation, nextSignal, attributes.paletteVariation );
+    const nextVariation = computeColorSignal( referenceVariation, nextSignal, attributes.paletteVariation );
 
     updateBlock( {
       useSourceColorAsReference: false,
@@ -113,7 +117,7 @@ const ColorSetControls = ( props ) => {
         { ...props }
         label={ 'Color Palette' }
         showFunctionalColors={ showFunctionalColors }
-        onChange={ onChangePalette } />
+        onChange={ onPaletteChange } />
     )
   }
 
@@ -156,7 +160,7 @@ const ColorSetControls = ( props ) => {
                               label={ __( 'Block Color Signal', '__plugin_txtd' ) }
                               value={ paletteVariation }
                               signal={ colorSignal }
-                              onChange={ onChangePaletteVariation } />
+                              onChange={ onPaletteVariationChange } />
         </ControlsGroup>
         <MiscellanousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />
       </ControlsTab>
