@@ -103,21 +103,7 @@ const applyFrontEndClasses = ( extraProps, blockType, attributes ) =>{
   return extraProps;
 }
 
-function updateBlockTopSpacingAttribute( block ) {
-
-  if ( ! block?.supports?.novaBlocks?.spaceAndSizing || ! allowedBlocks.includes( block.name ) ) {
-    return block;
-  }
-
-  if ( typeof block.attributes !== 'undefined' ) {
-    block.attributes.blockTopSpacing.default = 1;
-  }
-
-  return block;
-}
-
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings', alterSettings, 1 );
-// addFilter( 'blocks.registerBlockType', 'novablocks/update-block-top-spacing-attribute', updateBlockTopSpacingAttribute, 11 );
 addFilter( 'editor.BlockEdit', 'novablocks/group/content-alignment', withControls, 1 );
 addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/group/frontend-classes', applyFrontEndClasses, 1 );
 addFilter( 'editor.BlockListBlock', 'novablocks/group/addEditorBlockAttributes', addEditorBlockAttributes, 1 );
