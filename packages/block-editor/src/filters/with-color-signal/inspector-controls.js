@@ -20,12 +20,8 @@ import {
   getAbsoluteColorVariation,
   getPaletteConfig,
   getParentVariation,
-  getSignalRelativeToVariation,
+  getSignalRelativeToVariation, getVariationFromSignal,
 } from "../../utils";
-
-import {
-  normalizeVariationValue
-} from "@novablocks/utils";
 
 import ColorPalettePicker from './components/color-palette-picker';
 
@@ -43,19 +39,11 @@ const ColorSetControls = ( props ) => {
     contentColorSignal,
     palette,
     paletteVariation,
-    useSourceColorAsReference,
   } = attributes;
 
   const supports = useSupports( name );
-  const currentPalette = getPaletteConfig( palette );
-  const { sourceIndex } = currentPalette;
-
-  if ( ! currentPalette ) {
-    return null;
-  }
 
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
-  const referenceVariation = getParentVariation( clientId );
 
   const updateBlock = useCallback( ( newAttributes, sticky = false ) => {
     const nextAttributes = { ...attributes, ...newAttributes };
@@ -122,9 +110,12 @@ const ColorSetControls = ( props ) => {
         />
         <ControlsGroup>
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            setAttributes( {
-              colorSignal: nextSignal
-            } );
+            const nextVariation = getVariationFromSignal( nextSignal );
+
+            updateBlock( {
+              useSourceColorAsReference: false,
+              paletteVariation: nextVariation
+            }, true );
           } } />
         </ControlsGroup>
         {
