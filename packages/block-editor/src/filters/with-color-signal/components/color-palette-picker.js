@@ -5,6 +5,7 @@ import {
   getAbsoluteColorVariation,
   getParentVariation,
   getSignalRelativeToVariation,
+  getPaletteConfig
 } from "../../../utils";
 
 import {
@@ -21,6 +22,7 @@ const ColorPalettePicker = ( props ) => {
     },
     showFunctionalColors,
     clientId,
+    onChange,
   } = props;
 
   const {
@@ -54,25 +56,7 @@ const ColorPalettePicker = ( props ) => {
 
           return (
             <button key={ thisPalette.id } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
-
-              if ( isSelected ) {
-                const newAttributes = Object.assign( {}, attributes, {
-                  paletteVariation: 1,
-                  useSourceColorAsReference: true,
-                } );
-                const absoluteVariation = getAbsoluteColorVariation( newAttributes );
-                const referenceVariation = getParentVariation( clientId, { useSourceColorAsReference: true } );
-
-                setAttributes( {
-                  paletteVariation: 1,
-                  colorSignal: getSignalRelativeToVariation( absoluteVariation, referenceVariation ),
-                  useSourceColorAsReference: true
-                } );
-              } else {
-                setAttributes( {
-                  palette: thisPalette.id
-                } );
-              }
+              onChange( thisPalette.id );
             } }>
               <svg className="color-palette-picker__color-svg" width="48" height="48" viewBox="0 0 48 48">
                 <circle className="color-palette-picker__color-dash" stroke="none" fill="none" r="20" cx="24" cy="24" />

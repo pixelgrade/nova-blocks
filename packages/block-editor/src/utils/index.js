@@ -27,6 +27,7 @@ export const getParentVariation = ( clientId ) => {
   const parents = getBlockParents( clientId ).slice();
   const siteVariation = getSiteColorVariation();
 
+  // @todo go up the parents array until we find a block with color signal component
   if ( parents.length ) {
     const parentClientId = parents.pop();
     const parentBlock = getBlock( parentClientId );
@@ -49,10 +50,7 @@ export const getComputedVariationFromParents = ( clientId ) => {
   const nextVariation = getComputedVariation( parentVariation, colorSignal, absoluteVariation );
 
   if ( useSourceColorAsReference ) {
-    const currentPalette = getPaletteConfig( palette );
-    const { sourceIndex } = currentPalette;
-
-    return normalizeVariationValue( nextVariation - sourceIndex );
+    return 1;
   }
 
   return nextVariation;
@@ -74,20 +72,11 @@ export const getSupports = ( blockType ) => {
 }
 
 export const getAbsoluteColorVariation = ( attributes ) => {
-
-  const {
-    palette,
-    paletteVariation,
-    useSourceColorAsReference
-  } = attributes;
-
+  const { palette, paletteVariation, useSourceColorAsReference } = attributes;
   const currentPalette = getPaletteConfig( palette );
   const { sourceIndex } = currentPalette;
 
-  const variationOffset = useSourceColorAsReference ? sourceIndex : 0;
-  const absoluteVariation = paletteVariation + variationOffset;
-
-  return normalizeVariationValue( absoluteVariation );
+  return useSourceColorAsReference ? sourceIndex + 1 : paletteVariation;
 }
 
 export const getVariationFromSignal = ( signal ) => {
