@@ -98,7 +98,7 @@ const ColorGradesControl = ( props ) => {
             const signal = getSignalRelativeToVariation( currentVariation, parentVariation );
 
             return (
-              <div className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
+              <div data-current={ currentVariation } data-parent={ `${ parentVariation }` } className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
             )
           } ) }
         </div>

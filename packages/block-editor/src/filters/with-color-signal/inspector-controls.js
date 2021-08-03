@@ -17,10 +17,11 @@ import {
 } from "../../hooks";
 
 import {
-  getAbsoluteColorVariation,
+  getAbsoluteColorVariation, getComputedVariation,
   getPaletteConfig,
   getParentVariation,
-  getSignalRelativeToVariation, getVariationFromSignal,
+  getSignalRelativeToVariation,
+  getVariationFromSignal,
 } from "../../utils";
 
 import ColorPalettePicker from './components/color-palette-picker';
@@ -47,25 +48,24 @@ const ColorSetControls = ( props ) => {
 
   const updateBlock = useCallback( ( newAttributes, sticky = false ) => {
     const nextAttributes = { ...attributes, ...newAttributes };
-    const referenceVariation = getParentVariation( clientId );
-    const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
     const { palette } = nextAttributes;
-    const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
     const currentPalette = getPaletteConfig( palette );
     const { sourceIndex } = currentPalette;
+    const referenceVariation = getParentVariation( clientId );
+    const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
+    const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
     const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, referenceVariation );
     const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === sourceIndex + 1 );
-
-    console.log( nextSignal, nextSourceAsReference, absoluteVariation );
+    const nextVariation = getComputedVariation( referenceVariation, nextSignal, absoluteVariation );
 
     setAttributes( {
       palette: palette,
-      paletteVariation: nextSourceAsReference ? 1 : absoluteVariation,
+      paletteVariation: nextSourceAsReference ? 1 : nextVariation,
       useSourceColorAsReference: nextSourceAsReference,
       colorSignal: nextSignal,
     } );
 
-  }, [ attributes ] )
+  }, [ clientId, attributes ] )
 
   const onChangePaletteVariation = useCallback( nextVariation => {
     updateBlock( {
@@ -75,19 +75,37 @@ const ColorSetControls = ( props ) => {
   }, [ updateBlock ] )
 
   const onChangePalette = useCallback( nextPalette => {
+
     const newAttributes = {
       palette: nextPalette,
     };
 
     if ( nextPalette === palette ) {
-      Object.assign( newAttributes, {
-        useSourceColorAsReference: true,
-        paletteVariation: 1,
-      } )
+      const { useSourceColorAsReference } = attributes;
+      const nextSourceColorAsReference = ! useSourceColorAsReference;
+      const absoluteVariation = getAbsoluteColorVariation( attributes );
+      const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
+
+      setAttributes( {
+        useSourceColorAsReference: nextSourceColorAsReference,
+        paletteVariation: nextVariation,
+      } );
+
+      return;
     }
 
     updateBlock( newAttributes, true );
   }, [ attributes, updateBlock ] );
+
+  const onSignalChange = useCallback( nextSignal => {
+    const referenceVariation = getParentVariation( clientId );
+    const nextVariation = getComputedVariation( referenceVariation, nextSignal, attributes.paletteVariation );
+
+    updateBlock( {
+      useSourceColorAsReference: false,
+      paletteVariation: nextVariation
+    }, true );
+  }, [ clientId, attributes ] );
 
   const ColorPicker = () => {
     return (
@@ -109,14 +127,7 @@ const ColorSetControls = ( props ) => {
           dismissLabel={ '✔ Ok, I get it!' }
         />
         <ControlsGroup>
-          <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ nextSignal => {
-            const nextVariation = getVariationFromSignal( nextSignal );
-
-            updateBlock( {
-              useSourceColorAsReference: false,
-              paletteVariation: nextVariation
-            }, true );
-          } } />
+          <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ onSignalChange } />
         </ControlsGroup>
         {
           supports?.novaBlocks?.contentColorSignal &&

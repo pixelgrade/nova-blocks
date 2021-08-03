@@ -4,6 +4,7 @@ import {
   getSiteColorVariation,
   normalizeVariationValue
 } from "@novablocks/utils";
+import { useSupports } from "../hooks";
 
 export const setAttributesToInnerBlocks = ( clientId, attributes ) => {
   const { getBlock } = select( 'core/block-editor' );
@@ -27,13 +28,16 @@ export const getParentVariation = ( clientId ) => {
   const parents = getBlockParents( clientId ).slice();
   const siteVariation = getSiteColorVariation();
 
-  // @todo go up the parents array until we find a block with color signal component
-  if ( parents.length ) {
+  // Loop through parents array until we find a block with Color Signal component enabled
+  while ( parents.length ) {
     const parentClientId = parents.pop();
     const parentBlock = getBlock( parentClientId );
     const parentAttributes = parentBlock.attributes;
+    const supports = getSupports( parentBlock.name );
 
-    return getAbsoluteColorVariation( parentAttributes );
+    if ( supports?.novaBlocks?.colorSignal ) {
+      return getAbsoluteColorVariation( parentAttributes );
+    }
   }
 
   return siteVariation;
