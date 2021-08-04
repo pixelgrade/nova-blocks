@@ -1,6 +1,9 @@
 import { dispatch, select } from "@wordpress/data";
 
-import { getSiteColorVariation } from "@novablocks/utils";
+import {
+  getSiteColorVariation,
+  normalizeVariationValue,
+} from "@novablocks/utils";
 
 export const setAttributesToInnerBlocks = ( clientId, attributes ) => {
   const { getBlock } = select( 'core/block-editor' );
@@ -36,7 +39,7 @@ export const getParentVariation = ( clientId ) => {
     }
   }
 
-  return siteVariation;
+  return 1;
 }
 
 export const getPaletteConfig = ( palette ) => {
@@ -56,27 +59,27 @@ export const getSupports = ( blockType ) => {
 
 export const getAbsoluteColorVariation = ( attributes ) => {
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
-  const currentPalette = getPaletteConfig( palette );
-  const { sourceIndex } = currentPalette;
+  const sourceIndex = getSourceIndexFromPaletteId( palette );
 
   return useSourceColorAsReference ? sourceIndex + 1 : paletteVariation;
 }
 
 export const getVariationFromSignal = ( signal ) => {
+  let variation = 1;
 
   if ( signal === 1 ) {
-    return 3;
+    variation = 3;
   }
 
   if ( signal === 2 ) {
-    return 8;
+    variation = 8;
   }
 
   if ( signal === 3 ) {
-    return 11;
+    variation = 11;
   }
 
-  return 1;
+  return removeSiteVariationOffset( variation );
 }
 
 export const getSignalRelativeToVariation = ( compare, reference ) => {
@@ -87,6 +90,15 @@ export const getSignalRelativeToVariation = ( compare, reference ) => {
   }, 0 );
 }
 
+export const getSignalBetweenShiftedVariations = ( compare, reference ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference );
+
+  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
+  }, 0 );
+}
+
+//
 export const getSignalFromVariation = ( variation ) => {
 
   if ( variation === 1 ) {
@@ -130,14 +142,35 @@ export const getContentVariationBySignal = ( props ) => {
   return computeColorSignal( paletteVariation, contentColorSignal );
 }
 
-export const computeColorSignal = ( referenceVariation, signal, paletteVariation ) => {
-  const currentSignal = getSignalRelativeToVariation( paletteVariation, referenceVariation );
+export const computeColorSignal = ( reference, signal, current ) => {
+  console.log( reference, current );
+  const currentSignal = getSignalRelativeToVariation( current, reference );
 
   if ( currentSignal === signal ) {
-    return paletteVariation;
+    return current;
   }
 
-  const signalOptions = getSignalOptionsFromVariation( referenceVariation );
+  const signalOptions = getSignalOptionsFromVariation( reference );
+
+  console.log( reference, signal, signalOptions );
 
   return signalOptions[ signal ];
+}
+
+export const getSourceIndexFromPaletteId = ( palette ) => {
+  const paletteConfig = getPaletteConfig( palette );
+  const siteVariation = getSiteColorVariation();
+  const { sourceIndex } = paletteConfig;
+
+  return ( sourceIndex - siteVariation + 1 + 12 ) % 12;
+}
+
+export const addSiteVariationOffset = ( variation ) => {
+  const siteVariation = getSiteColorVariation();
+  return normalizeVariationValue( variation + siteVariation - 1 );
+}
+
+export const removeSiteVariationOffset = ( variation ) => {
+  const siteVariation = getSiteColorVariation();
+  return normalizeVariationValue( variation - siteVariation + 1 );
 }

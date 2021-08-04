@@ -17,11 +17,14 @@ import {
 } from "../../hooks";
 
 import {
+  addSiteVariationOffset,
+  removeSiteVariationOffset,
   computeColorSignal,
   getAbsoluteColorVariation,
   getPaletteConfig,
   getParentVariation,
   getSignalRelativeToVariation,
+  getSourceIndexFromPaletteId,
 } from "../../utils";
 
 import ColorPalettePicker from './components/color-palette-picker';
@@ -50,8 +53,7 @@ const ColorSetControls = ( props ) => {
   const updateBlock = useCallback( ( newAttributes, sticky = false ) => {
     const nextAttributes = { ...attributes, ...newAttributes };
     const { palette } = nextAttributes;
-    const currentPalette = getPaletteConfig( palette );
-    const { sourceIndex } = currentPalette;
+    const sourceIndex = getSourceIndexFromPaletteId( palette );
     const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
     const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
     const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, referenceVariation );
@@ -81,8 +83,7 @@ const ColorSetControls = ( props ) => {
     };
 
     if ( nextPalette === palette ) {
-      const currentPalette = getPaletteConfig( palette );
-      const { sourceIndex } = currentPalette;
+      const sourceIndex = getSourceIndexFromPaletteId( palette );
       const { useSourceColorAsReference } = attributes;
       const nextSourceColorAsReference = ! useSourceColorAsReference;
       const absoluteVariation = sourceIndex + 1;
@@ -103,11 +104,11 @@ const ColorSetControls = ( props ) => {
 
   const onSignalChange = useCallback( nextSignal => {
     const referenceVariation = getParentVariation( clientId );
-    const nextVariation = computeColorSignal( referenceVariation, nextSignal, attributes.paletteVariation );
+    const nextVariation = computeColorSignal( referenceVariation, nextSignal, paletteVariation );
 
     updateBlock( {
+      paletteVariation: nextVariation,
       useSourceColorAsReference: false,
-      paletteVariation: nextVariation
     }, true );
   }, [ clientId, attributes ] );
 

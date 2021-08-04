@@ -1,17 +1,16 @@
 import classnames from "classnames";
-import { select } from "@wordpress/data";
 import { getIcon } from "@novablocks/icons";
 
 import {
   arrayRotate,
-  getSiteColorVariation,
   normalizeVariationValue,
 } from "@novablocks/utils";
 
 import {
-  getPaletteConfig,
   getParentVariation,
   getSignalRelativeToVariation,
+  getSourceIndexFromPaletteId,
+  addSiteVariationOffset,
 } from "../../utils";
 
 const ColorGradesControl = ( props ) => {
@@ -25,15 +24,13 @@ const ColorGradesControl = ( props ) => {
   } = props;
 
   const onChange = props.onChange || (() => {});
-  const siteVariation = getSiteColorVariation();
 
   const {
     palette,
     useSourceColorAsReference,
   } = attributes;
 
-  const currentPalette = getPaletteConfig( palette );
-  const { sourceIndex } = currentPalette;
+  const sourceIndex = getSourceIndexFromPaletteId( palette );
 
   const iconClassName = classnames(
     `nb-signal-icon`,
@@ -70,7 +67,7 @@ const ColorGradesControl = ( props ) => {
             let content = '';
 
             const isSelected = selectedVariation === currentVariation;
-            const isSource = normalizeVariationValue( sourceIndex + 1 ) === currentVariation;
+            const isSource = sourceIndex + 1 === currentVariation;
 
             const className = classnames(
               `nb-palette__grade`,
@@ -93,21 +90,24 @@ const ColorGradesControl = ( props ) => {
             )
           } ) }
         </div>
-        <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
-          { variations.map( currentVariation => {
-            const signal = getSignalRelativeToVariation( currentVariation, parentVariation );
+        {
+          props?.settings?.debug &&
+          <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
+            { variations.map( currentVariation => {
+              const current = addSiteVariationOffset( currentVariation );
+              const parent = addSiteVariationOffset( parentVariation )
+              const signal = getSignalRelativeToVariation( current, parent );
 
-            return (
-              <div data-current={ currentVariation } data-parent={ `${ parentVariation }` } className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
-            )
-          } ) }
-        </div>
-        <div className="nb-palette__labels">
-          <div className="nb-palette__label nb-palette__label--1">1</div>
-          <div className="nb-palette__label nb-palette__label--low">Low</div>
-          <div className="nb-palette__label nb-palette__label--medium">Medium</div>
-          <div className="nb-palette__label nb-palette__label--high">High</div>
-        </div>
+              return (
+                <div className="nb-palette__signal-preview-wrap">
+                  <div className="nb-palette__signal-preview-wrap__above">{ currentVariation }</div>
+                  <div className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
+                  <div className="nb-palette__signal-preview-wrap__below">{ parentVariation }</div>
+                </div>
+              )
+            } ) }
+          </div>
+        }
       </div>
     </div>
   );

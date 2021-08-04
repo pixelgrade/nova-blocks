@@ -392,31 +392,8 @@ export const mapPalettesToColorPalette = palette => {
   };
 }
 
-export const compileVariationAttributes = ( palette, paletteVariation, useSourceColorAsReference ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-
-  let offset = siteVariation - sourceIndex - 1;
-  let newPaletteVariation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation;
-  newPaletteVariation = normalizeVariationValue( newPaletteVariation );
-
-  return {
-    useSourceColorAsReference: useSourceColorAsReference,
-    paletteVariation: paletteVariation,
-  }
-}
-
-export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorAsReference ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  let offset = siteVariation - sourceIndex - 1;
-  let variation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation - offset
-
-  return normalizeVariationValue( variation );
-}
-
 export const getSiteColorVariation = () => {
-  return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
+  return parseInt( window?.styleManager.siteColorVariation || 1, 10 );
 }
 
 export const getSpacingCSSProps = ( attributes ) => {
