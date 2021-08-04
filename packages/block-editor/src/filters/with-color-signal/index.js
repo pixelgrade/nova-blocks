@@ -264,17 +264,17 @@ const addColorSignalDataToSaveElement = ( element, blockType, attributes ) => {
 
   const supports = getSupports( blockType.name );
 
-  if ( ! supports?.novaBlocks?.colorSignal ) {
+  if ( ! element || ! supports?.novaBlocks?.colorSignal ) {
     return element;
   }
 
   return Object.assign( {}, element, {
     props: {
-      ...element.props,
-      'data-palette': attributes.palette,
-      'data-palette-variation': attributes.paletteVariation,
-      'data-use-source-color-as-reference': attributes.useSourceColorAsReference,
-      'data-color-signal': attributes.colorSignal,
+      ...element?.props,
+      'data-palette': attributes?.palette,
+      'data-palette-variation': attributes?.paletteVariation,
+      'data-use-source-color-as-reference': attributes?.useSourceColorAsReference,
+      'data-color-signal': attributes?.colorSignal,
     }
   } );
 }

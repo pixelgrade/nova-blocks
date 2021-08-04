@@ -64,8 +64,10 @@ registerBlockType( 'novablocks/announcement-bar', {
       },
     }
   },
-	save() {
-		return <InnerBlocks.Content />;
+	save: () => {
+		return (
+		  <InnerBlocks.Content />
+    )
 	},
 	edit: function( props ) {
 
