@@ -34,6 +34,8 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 
 		$attributes_config = novablocks_get_header_row_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$classes = array(
 			'novablocks-header-row',
@@ -58,6 +60,7 @@ if ( ! function_exists('novablocks_render_header_row_block' ) ) {
 			<div
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 				style="<?php echo esc_attr( $style ); ?>"
+				<?php echo join( " ", $data_attributes ); ?>
 				<?php if ( $attributes['isSticky'] === true ) { ?>
 					data-sticky="true"
 				<?php } ?>

@@ -39,6 +39,8 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$attributes_config = novablocks_get_header_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$classes = array(
 			'novablocks-header',
@@ -102,6 +104,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		<header id="masthead"
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+				<?php echo join( " ", $data_attributes ); ?>
 			<?php if ( $header_is_simple && ! empty( $sticky_row_block ) ) { ?>
 				data-sticky="true"
 			<?php } ?>

@@ -1204,6 +1204,9 @@ function novablocks_get_spacing_css( $attributes ) {
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+
 		$classes = array(
 			'novablocks-block',
 			'novablocks-block-spacing',
@@ -1237,7 +1240,11 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
+		<div
+			class="<?php echo $className; ?>"
+			style="<?php echo $style; ?>"
+			<?php echo join( " ", $data_attributes ); ?>
+		>
 			<div class="wp-block-group__inner-container">
 				<?php echo novablocks_get_collection_header_output( $attributes ); ?>
 				<div class="novablocks-collection__cards wp-block alignwide">

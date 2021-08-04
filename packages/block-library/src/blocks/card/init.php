@@ -21,6 +21,13 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		$attributes_config = novablocks_get_card_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+
+		if ( ( $key = array_search( 'media', $data_attributes_array ) ) !== false ) {
+			unset( $data_attributes_array[ $key ] );
+		}
+
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$hlevel = $attributes['level'];
 		$titleTag = 'h' . ( $hlevel + 1 );
@@ -48,45 +55,45 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		ob_start(); ?>
 
-		<div>
-		<div class="<?php echo $className; ?>">
-			<div class="novablocks-card__layout">
-				<div class="novablocks-card__layout-media">
-			        <?php if ( false != $attributes['showMedia'] ) { ?>
-						<div class="novablocks-card__media-wrap">
-							<div class="novablocks-card__media">
-								<?php echo novablocks_get_card_media_markup( $attributes['media'] ); ?>
-							</div>
-						</div>
-			        <?php } ?>
-				</div>
-				<div class="novablocks-card__layout-content">
-					<div class="novablocks-card__inner-container">
-						<?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
-							<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
-						<?php }
-
-						if ( false != $attributes['showTitle'] && ! empty( $attributes['title'] ) ) {
-							echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
-						}
-
-						if ( false != $attributes['showSubtitle'] && ! empty( $attributes['subtitle'] ) ) {
-							echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
-						}
-
-						if ( false != $attributes['showDescription'] && ! empty( $attributes['description'] ) ) { ?>
-							<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
-						<?php }
-
-						if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>
-							<div class="novablocks-card__buttons">
-								<?php echo $content; ?>
+		<div <?php echo join( " ", $data_attributes ); ?>>
+			<div class="<?php echo $className; ?>">
+				<div class="novablocks-card__layout">
+					<div class="novablocks-card__layout-media">
+						<?php if ( false != $attributes['showMedia'] ) { ?>
+							<div class="novablocks-card__media-wrap">
+								<div class="novablocks-card__media">
+									<?php echo novablocks_get_card_media_markup( $attributes['media'] ); ?>
+								</div>
 							</div>
 						<?php } ?>
 					</div>
+					<div class="novablocks-card__layout-content">
+						<div class="novablocks-card__inner-container">
+							<?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
+								<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
+							<?php }
+
+							if ( false != $attributes['showTitle'] && ! empty( $attributes['title'] ) ) {
+								echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
+							}
+
+							if ( false != $attributes['showSubtitle'] && ! empty( $attributes['subtitle'] ) ) {
+								echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
+							}
+
+							if ( false != $attributes['showDescription'] && ! empty( $attributes['description'] ) ) { ?>
+								<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
+							<?php }
+
+							if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>
+								<div class="novablocks-card__buttons">
+									<?php echo $content; ?>
+								</div>
+							<?php } ?>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 
 		<?php return ob_get_clean();
