@@ -23,6 +23,7 @@ function novablocks_get_media_attributes() {
 		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes.json',
+		"packages/block-library/src/blocks/media/attributes-spacing.json",
 	) );
 
 }

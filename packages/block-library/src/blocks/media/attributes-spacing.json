@@ -1,0 +1,14 @@
+{
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"emphasisBottomSpacing": {
+		"type": "number",
+		"default": 1
+	}
+}

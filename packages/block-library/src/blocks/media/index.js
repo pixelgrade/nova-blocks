@@ -20,6 +20,9 @@ import {
   insertTemplate,
 } from "@novablocks/block-editor";
 
+// Load extras file
+import extras from './extras';
+
 const { getRandomAttributes } = AdvancedGallery.utils;
 
 import blockAttributes from './attributes';
