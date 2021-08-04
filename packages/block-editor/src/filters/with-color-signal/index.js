@@ -11,7 +11,7 @@ import {
   computeColorSignal,
   getAbsoluteColorVariation,
   getParentVariation,
-  getSupports,
+  getSupports, removeSiteVariationOffset,
 } from "../../utils";
 
 import { useSupports } from "../../index";
@@ -175,16 +175,24 @@ const updateInnerBlocks = ( block ) => {
 }
 
 const updateBlock = ( block ) => {
-  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-  const { attributes, clientId } = block;
-  const { colorSignal, useSourceColorAsReference } = attributes;
-  const parentVariation = getParentVariation( clientId );
-  const absoluteVariation = getAbsoluteColorVariation( attributes );
-  const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
 
-  updateBlockAttributes( clientId, {
-    paletteVariation: useSourceColorAsReference ? 1 : nextVariation,
-  } );
+  const supports = getSupports( block.name );
+
+  if ( supports?.novaBlocks?.colorSignal ) {
+    const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+    const { attributes, clientId } = block;
+    const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+    const parentVariation = getParentVariation( clientId );
+    const absoluteVariation = getAbsoluteColorVariation( attributes );
+    const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
+    const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
+
+    if ( paletteVariation !== finalVariation ) {
+      updateBlockAttributes( clientId, {
+        paletteVariation: finalVariation,
+      } );
+    }
+  }
 
   updateInnerBlocks( block );
 }

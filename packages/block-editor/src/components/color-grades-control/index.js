@@ -2,7 +2,6 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
-  arrayRotate,
   normalizeVariationValue,
 } from "@novablocks/utils";
 
@@ -46,8 +45,6 @@ const ColorGradesControl = ( props ) => {
   const variations = Array.from( Array( 12 ) ).map( ( undefined, index ) => index + 1 );
   const sourceOffset = useSourceColorAsReference ? sourceIndex : 0;
   const selectedVariation = normalizeVariationValue( value + sourceOffset );
-
-//  arrayRotate( variations, parentVariation - 1 );
 
   return (
     <div className={ 'components-base-control components-nb-color-grades-control' }>
@@ -95,12 +92,11 @@ const ColorGradesControl = ( props ) => {
           <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
             { variations.map( currentVariation => {
               const current = addSiteVariationOffset( currentVariation );
-              const parent = addSiteVariationOffset( parentVariation )
-              const signal = getSignalRelativeToVariation( current, parent );
+              const signal = getSignalRelativeToVariation( current, parentVariation );
 
               return (
                 <div className="nb-palette__signal-preview-wrap">
-                  <div className="nb-palette__signal-preview-wrap__above">{ currentVariation }</div>
+                  <div className="nb-palette__signal-preview-wrap__above">{ current }</div>
                   <div className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
                   <div className="nb-palette__signal-preview-wrap__below">{ parentVariation }</div>
                 </div>

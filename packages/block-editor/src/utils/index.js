@@ -25,7 +25,6 @@ export const getEditorScrollContainer = () => {
 export const getParentVariation = ( clientId ) => {
   const { getBlockParents, getBlock } = select( 'core/block-editor' );
   const parents = getBlockParents( clientId ).slice();
-  const siteVariation = getSiteColorVariation();
 
   // Loop through parents array until we find a block with Color Signal component enabled
   while ( parents.length ) {
@@ -39,7 +38,7 @@ export const getParentVariation = ( clientId ) => {
     }
   }
 
-  return 1;
+  return getSiteColorVariation();
 }
 
 export const getPaletteConfig = ( palette ) => {
@@ -61,7 +60,7 @@ export const getAbsoluteColorVariation = ( attributes ) => {
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
   const sourceIndex = getSourceIndexFromPaletteId( palette );
 
-  return useSourceColorAsReference ? sourceIndex + 1 : paletteVariation;
+  return useSourceColorAsReference ? sourceIndex + 1 : addSiteVariationOffset( paletteVariation );
 }
 
 export const getVariationFromSignal = ( signal ) => {
@@ -117,11 +116,7 @@ export const getSignalFromVariation = ( variation ) => {
 }
 
 export const getSignalOptionsFromVariation = ( variation ) => {
-  const blockSignal = getSignalFromVariation( variation );
-
-  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
-    return index === blockSignal ? variation : getVariationFromSignal( index );
-  } );
+  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => getVariationFromSignal( index ) );
 
   variationOptions.sort( ( variation1, variation2 ) => {
     return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
@@ -143,7 +138,6 @@ export const getContentVariationBySignal = ( props ) => {
 }
 
 export const computeColorSignal = ( reference, signal, current ) => {
-  console.log( reference, current );
   const currentSignal = getSignalRelativeToVariation( current, reference );
 
   if ( currentSignal === signal ) {
@@ -152,7 +146,7 @@ export const computeColorSignal = ( reference, signal, current ) => {
 
   const signalOptions = getSignalOptionsFromVariation( reference );
 
-  console.log( reference, signal, signalOptions );
+  console.log( signalOptions );
 
   return signalOptions[ signal ];
 }

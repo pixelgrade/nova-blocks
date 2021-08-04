@@ -21,7 +21,6 @@ import {
   removeSiteVariationOffset,
   computeColorSignal,
   getAbsoluteColorVariation,
-  getPaletteConfig,
   getParentVariation,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
@@ -57,12 +56,13 @@ const ColorSetControls = ( props ) => {
     const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
     const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
     const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, referenceVariation );
-    const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === sourceIndex + 1 );
+    const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === addSiteVariationOffset( sourceIndex + 1 ) );
     const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
+    const finalVariation = removeSiteVariationOffset( nextVariation );
 
     setAttributes( {
       palette: palette,
-      paletteVariation: nextSourceAsReference ? 1 : nextVariation,
+      paletteVariation: nextSourceAsReference ? 1 : finalVariation,
       useSourceColorAsReference: nextSourceAsReference,
       colorSignal: nextSignal,
     } );
@@ -70,10 +70,12 @@ const ColorSetControls = ( props ) => {
   }, [ clientId, attributes ] )
 
   const onPaletteVariationChange = useCallback( nextVariation => {
+
     updateBlock( {
       paletteVariation: nextVariation,
       useSourceColorAsReference: false,
     } );
+
   }, [ updateBlock ] )
 
   const onPaletteChange = useCallback( nextPalette => {
@@ -104,10 +106,12 @@ const ColorSetControls = ( props ) => {
 
   const onSignalChange = useCallback( nextSignal => {
     const referenceVariation = getParentVariation( clientId );
-    const nextVariation = computeColorSignal( referenceVariation, nextSignal, paletteVariation );
+    const absoluteVariation = getAbsoluteColorVariation( attributes );
+    const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
+    const finalVariation = removeSiteVariationOffset( nextVariation );
 
     updateBlock( {
-      paletteVariation: nextVariation,
+      paletteVariation: finalVariation,
       useSourceColorAsReference: false,
     }, true );
   }, [ clientId, attributes ] );
