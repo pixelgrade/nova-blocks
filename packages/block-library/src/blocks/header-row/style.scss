@@ -47,6 +47,19 @@
       --emphasis-top-spacing: 0.5;
       --emphasis-bottom-spacing: 0.5;
     }
+    
+    > [class*='branding'] {
+      
+      &[class][class][class] {
+        flex-basis: auto;
+      }
+    }
+    
+    > [class*='novablocks-navigation'] {
+        &[class][class][class] {
+          flex-grow: 1;
+        }
+    }
 
     --novablocks-element-spacing-multiplier: 1;
 
