@@ -259,6 +259,27 @@ const applyColorSignalFrontEndClasses = (extraProps, blockType, attributes) => {
 }
 addFilter('blocks.getSaveContent.extraProps', 'novablocks-with-color-signal-classname-frontend', applyColorSignalFrontEndClasses, 1);
 
+// Add Color Signal Classes on Save
+const addColorSignalDataToSaveElement = ( element, blockType, attributes ) => {
+
+  const supports = getSupports( blockType.name );
+
+  if ( ! supports?.novaBlocks?.colorSignal ) {
+    return element;
+  }
+
+  return Object.assign( {}, element, {
+    props: {
+      ...element.props,
+      'data-palette': attributes.palette,
+      'data-palette-variation': attributes.paletteVariation,
+      'data-use-source-color-as-reference': attributes.useSourceColorAsReference,
+      'data-color-signal': attributes.colorSignal,
+    }
+  } );
+}
+addFilter('blocks.getSaveElement', 'novablocks/add-color-signal-data-to-save-element', addColorSignalDataToSaveElement, 1);
+
 
 //
 const getBlockList = () => select( 'core/editor' ).getBlocks();
