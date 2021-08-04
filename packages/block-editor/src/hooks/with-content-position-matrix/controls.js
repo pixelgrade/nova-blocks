@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { BlockControls } from '@wordpress/block-editor';
 
-const BlockAlignmentMatrixToolbar = wp.blockEditor.__experimentalBlockAlignmentMatrixToolbar;
+const BlockAlignmentMatrixControl = wp.blockEditor.__experimentalBlockAlignmentMatrixControl;
 
 const Controls = ( props ) => {
 
@@ -12,13 +12,13 @@ const Controls = ( props ) => {
     setAttributes,
   } = props;
 
-  if ( ! BlockAlignmentMatrixToolbar ) {
+  if ( ! BlockAlignmentMatrixControl ) {
     return null;
   }
 
   return (
-    <BlockControls>
-      <BlockAlignmentMatrixToolbar
+    <BlockControls group={ "block" }>
+      <BlockAlignmentMatrixControl
         label={ __( 'Change content position' ) }
         value={ contentPosition }
         onChange={ ( nextPosition ) =>
