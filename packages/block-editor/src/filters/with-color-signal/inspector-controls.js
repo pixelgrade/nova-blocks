@@ -85,12 +85,13 @@ const ColorSetControls = ( props ) => {
     };
 
     if ( nextPalette === palette ) {
+      const referenceVariation = getParentVariation( clientId );
       const sourceIndex = getSourceIndexFromPaletteId( palette );
       const { useSourceColorAsReference } = attributes;
       const nextSourceColorAsReference = ! useSourceColorAsReference;
       const absoluteVariation = sourceIndex + 1;
       const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
-      const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
+      const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation );
 
       setAttributes( {
         useSourceColorAsReference: nextSourceColorAsReference,
