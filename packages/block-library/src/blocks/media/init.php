@@ -41,6 +41,13 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$attributes_config = novablocks_get_media_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+
+		if ( ( $key = array_search( 'images', $data_attributes_array ) ) !== false ) {
+			unset( $data_attributes_array[ $key ] );
+		}
+
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
@@ -105,7 +112,11 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		ob_start(); ?>
 
-        <div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo $style ?>">
+        <div
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			style="<?php echo $style ?>"
+			<?php echo join( " ", $data_attributes ); ?>
+		>
             <div class="<?php echo esc_attr( join( ' ', $blockClasses ) ); ?>">
 	            <div class="wp-block-group__inner-container">
 		            <div class="wp-block alignwide">
