@@ -12,21 +12,35 @@ const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
 
 ready( () => {
 
+  const siteVariation = getSiteColorVariation();
+
+  updateAllBlocksSignal( siteVariation );
+
+  if ( parent?.wp?.customize ) {
+    parent.wp.customize( 'sm_site_color_variation', setting => {
+      setting.bind( ( newValue, oldValue ) => {
+        updateAllBlocksSignal( newValue );
+      } );
+    } )
+  }
+
+} );
+
+const updateAllBlocksSignal = ( siteVariation ) => {
+
   // finding all top level blocks with color signal data
   const blocks = Array.from( document.querySelectorAll( COLOR_SIGNAL_SELECTOR ) ).filter( node => {
     const hasParentsWithSignal = node.parentNode && node.parentNode.closest( COLOR_SIGNAL_SELECTOR );
     return ! hasParentsWithSignal;
   } );
 
-  const siteVariation = getSiteColorVariation();
-
   blocks.forEach( block => {
-    updateSignal( block, siteVariation );
+    updateBlockSignal( block, siteVariation );
   } );
 
-} );
+}
 
-const updateSignal = ( block, parentVariation ) => {
+const updateBlockSignal = ( block, parentVariation ) => {
   const attributes = block.dataset;
   const { useSourceColorAsReference } = attributes;
   const palette = parseInt( attributes?.palette, 10 );
@@ -35,7 +49,7 @@ const updateSignal = ( block, parentVariation ) => {
 
   if ( ! attributes?.colorSignal ) {
     innerBlocks.forEach( innerBlock => {
-      updateSignal( innerBlock, parentVariation );
+      updateBlockSignal( innerBlock, parentVariation );
     } );
     return;
   }
@@ -58,6 +72,6 @@ const updateSignal = ( block, parentVariation ) => {
   }
 
   innerBlocks.forEach( innerBlock => {
-    updateSignal( innerBlock, nextVariation );
+    updateBlockSignal( innerBlock, nextVariation );
   } );
 }
