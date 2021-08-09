@@ -443,8 +443,9 @@ export const getPaletteConfig = ( palette ) => {
 export const getAbsoluteColorVariation = ( attributes ) => {
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
   const sourceIndex = getSourceIndexFromPaletteId( palette );
+  const absoluteVariation = useSourceColorAsReference ? sourceIndex + 1 : paletteVariation;
 
-  return useSourceColorAsReference ? sourceIndex + 1 : addSiteVariationOffset( paletteVariation );
+  return addSiteVariationOffset( absoluteVariation );
 }
 
 export const getVariationFromSignal = ( signal ) => {

@@ -58,8 +58,9 @@ const ColorSetControls = ( props ) => {
     const sourceIndex = getSourceIndexFromPaletteId( palette );
     const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
     const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
-    const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, referenceVariation );
-    const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === addSiteVariationOffset( sourceIndex + 1 ) );
+    const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
+    const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation );
+    const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === sourceVariation );
     const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
     const finalVariation = removeSiteVariationOffset( nextVariation );
 
