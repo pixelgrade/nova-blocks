@@ -510,14 +510,12 @@ export const getSignalOptionsFromVariation = ( variation ) => {
   return variationOptions;
 }
 
-export const getContentVariationBySignal = ( props ) => {
+export const getContentVariationBySignal = ( attributes ) => {
 
   const {
-    attributes: {
-      contentColorSignal,
-      paletteVariation,
-    }
-  } = props;
+    contentColorSignal,
+    paletteVariation,
+  } = attributes;
 
   return computeColorSignal( paletteVariation, contentColorSignal );
 }

@@ -60,7 +60,7 @@ const PreviewEdit = ( props ) => {
   const getContent = ( index, props, isLandscape ) => {
     const post = posts?.[ index ];
 
-    const contentVariation = getContentVariationBySignal( props );
+    const contentVariation = getContentVariationBySignal( props.attributes );
 
     const cardProps = {
       placeholder: true,

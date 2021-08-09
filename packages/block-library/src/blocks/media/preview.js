@@ -67,7 +67,7 @@ const MediaPreview = function( props ) {
     getColorSetClassnames( attributes ),
   );
 
-	const contentVariation = getContentVariationBySignal( props );
+	const contentVariation = getContentVariationBySignal( attributes );
 
 	const contentClassNames = classnames(
     `novablocks-media__inner-container`,

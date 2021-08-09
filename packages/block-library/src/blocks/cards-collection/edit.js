@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { Collection } from "@novablocks/collection";
-import { getContentVariationBySignal } from '@novablocks/block-editor';
+import { getContentVariationBySignal } from '@novablocks/utils';
 
 /**
  * WordPress dependencies
@@ -77,7 +77,7 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
 
           return Object.assign( {}, atts, {
-            paletteVariation: getContentVariationBySignal( props ),
+            paletteVariation: getContentVariationBySignal( attributes ),
             useSourceColorAsReference: attributes.useSourceColorAsReference
           } );
 				}

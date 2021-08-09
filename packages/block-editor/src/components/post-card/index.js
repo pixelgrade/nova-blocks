@@ -107,7 +107,7 @@ const Post = ( props ) => {
 
 	const primaryMeta = getMeta( post, primaryMetadata );
 	const secondaryMeta = getMeta( post, secondaryMetadata );
-  const contentVariation = getContentVariationBySignal( props );
+  const contentVariation = getContentVariationBySignal( attributes );
 
 	let combinedMeta;
 	let metaAboveTitle;
