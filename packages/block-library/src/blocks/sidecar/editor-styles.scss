@@ -24,7 +24,7 @@
     --wds: 12.5%;
     --wde: 12.5%;
   }
-  
+
   .novablocks-sidecar[class][class],
   .novablocks-content[class][class] {
     --default-width-offset-sidebar: var(--default-sidebar-width);
@@ -73,7 +73,7 @@
   
   [data-type="novablocks/sidecar"] {
     grid-column: var(--all-columns);
-    
+
     max-width: none;
     width: 100%;
   }
@@ -98,7 +98,7 @@
 .novablocks-sidecar > #{$grid-selector} {
   
   @include layout-grid;
-  
+
   > :first-child {
     grid-column: var(--all-columns) !important;
   }
@@ -416,7 +416,7 @@
 }
 
 .novablocks-sidebar {
-  
+
   .block-editor-inner-blocks {
     margin-top: 0;
   }
@@ -425,7 +425,7 @@
 // This will apply only on new Widget Editor,
 // available in WordPress 5.8
 .interface-interface-skeleton__secondary-sidebar + .interface-interface-skeleton__content {
-  
+
   .edit-widgets-main-block-list {
     --inspector-controls-width: 175px;
   }
