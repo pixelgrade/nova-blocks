@@ -6,7 +6,7 @@ import {
 
 import {
   Fragment,
-  RawHTML, useMemo
+  RawHTML,
 } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
@@ -16,7 +16,7 @@ import { Card } from "@novablocks/components";
 
 import {
   getContentVariationBySignal,
-} from "../../utils";
+} from "@novablocks/utils";
 
 import Author from "./author";
 import Category from "./category";

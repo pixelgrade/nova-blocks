@@ -2,14 +2,14 @@ import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
 import {
+  addSiteVariationOffset,
+  getSignalRelativeToVariation,
+  getSourceIndexFromPaletteId,
   normalizeVariationValue,
 } from "@novablocks/utils";
 
 import {
   getParentVariation,
-  getSignalRelativeToVariation,
-  getSourceIndexFromPaletteId,
-  addSiteVariationOffset,
 } from "../../utils";
 
 const ColorGradesControl = ( props ) => {

@@ -1,12 +1,12 @@
 import classnames from "classnames";
 
 import { Card } from "@novablocks/components";
-import {
-  PostCard,
-  getContentVariationBySignal
-} from "@novablocks/block-editor";
+import { PostCard } from "@novablocks/block-editor";
 
-import { getColorSetClassnames } from "@novablocks/utils";
+import {
+  getColorSetClassnames,
+  getContentVariationBySignal,
+} from "@novablocks/utils";
 
 import {
   CollectionHeader,

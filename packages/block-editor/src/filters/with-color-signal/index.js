@@ -8,11 +8,15 @@ import { dispatch, select, subscribe } from '@wordpress/data';
 import { addFilter } from '@wordpress/hooks';
 
 import {
+  getParentVariation,
+  getSupports,
+} from "../../utils";
+
+import {
   computeColorSignal,
   getAbsoluteColorVariation,
-  getParentVariation,
-  getSupports, removeSiteVariationOffset,
-} from "../../utils";
+  removeSiteVariationOffset,
+} from "@novablocks/utils";
 
 import { useSupports } from "../../index";
 import InspectorControls from './inspector-controls';
@@ -268,13 +272,22 @@ const addColorSignalDataToSaveElement = ( element, blockType, attributes ) => {
     return element;
   }
 
+  const newProps = {
+    'data-palette': attributes?.palette,
+    'data-palette-variation': attributes?.paletteVariation,
+    'data-color-signal': attributes?.colorSignal,
+  }
+
+  if ( attributes.useSourceColorAsReference ) {
+    Object.assign( newProps, {
+      'data-use-source-color-as-reference': attributes?.useSourceColorAsReference,
+    } );
+  }
+
   return Object.assign( {}, element, {
     props: {
       ...element?.props,
-      'data-palette': attributes?.palette,
-      'data-palette-variation': attributes?.paletteVariation,
-      'data-use-source-color-as-reference': attributes?.useSourceColorAsReference,
-      'data-color-signal': attributes?.colorSignal,
+      ...newProps,
     }
   } );
 }

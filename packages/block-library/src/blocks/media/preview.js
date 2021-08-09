@@ -8,11 +8,8 @@ import AdvancedGallery from '@novablocks/advanced-gallery';
 import {
   getAlignmentClassnames,
   getColorSetClassnames,
+  getContentVariationBySignal,
 } from '@novablocks/utils';
-
-import {
-  getContentVariationBySignal
-} from '@novablocks/block-editor'
 
 import { InnerBlocks } from '@wordpress/block-editor';
 

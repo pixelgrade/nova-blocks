@@ -393,7 +393,7 @@ export const mapPalettesToColorPalette = palette => {
 }
 
 export const getSiteColorVariation = () => {
-  return parseInt( window?.styleManager.siteColorVariation || 1, 10 );
+  return parseInt( window?.styleManager?.siteColorVariation || 1, 10 );
 }
 
 export const getSpacingCSSProps = ( attributes ) => {
@@ -429,3 +429,152 @@ export const arrayRotate = (arr, count, reverse) => {
   return arr;
 }
 
+
+export const getPaletteConfig = ( palette ) => {
+  const palettes = window?.styleManager?.palettes;
+
+  if ( ! Array.isArray( palettes ) || ! palettes.length ) {
+    return { sourceIndex: 6 }
+  }
+
+  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
+}
+
+export const getAbsoluteColorVariation = ( attributes ) => {
+  const { palette, paletteVariation, useSourceColorAsReference } = attributes;
+  const sourceIndex = getSourceIndexFromPaletteId( palette );
+
+  return useSourceColorAsReference ? sourceIndex + 1 : addSiteVariationOffset( paletteVariation );
+}
+
+export const getVariationFromSignal = ( signal ) => {
+  let variation = 1;
+
+  if ( signal === 1 ) {
+    variation = 3;
+  }
+
+  if ( signal === 2 ) {
+    variation = 8;
+  }
+
+  if ( signal === 3 ) {
+    variation = 11;
+  }
+
+  return removeSiteVariationOffset( variation );
+}
+
+export const getSignalRelativeToVariation = ( compare, reference ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference );
+
+  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
+  }, 0 );
+}
+
+export const getSignalBetweenShiftedVariations = ( compare, reference ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference );
+
+  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
+  }, 0 );
+}
+
+//
+export const getSignalFromVariation = ( variation ) => {
+
+  if ( variation === 1 ) {
+    return 0;
+  }
+
+  if ( variation < 6 ) {
+    return 1;
+  }
+
+  if ( variation < 10 ) {
+    return 2;
+  }
+
+  return 3;
+}
+
+export const getSignalOptionsFromVariation = ( variation ) => {
+  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => getVariationFromSignal( index ) );
+
+  variationOptions.sort( ( variation1, variation2 ) => {
+    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
+  } );
+
+  return variationOptions;
+}
+
+export const getContentVariationBySignal = ( props ) => {
+
+  const {
+    attributes: {
+      contentColorSignal,
+      paletteVariation,
+    }
+  } = props;
+
+  return computeColorSignal( paletteVariation, contentColorSignal );
+}
+
+export const computeColorSignal = ( reference, signal, current ) => {
+  const currentSignal = getSignalRelativeToVariation( current, reference );
+
+  if ( currentSignal === signal ) {
+    return current;
+  }
+
+  const signalOptions = getSignalOptionsFromVariation( reference );
+
+  return signalOptions[ signal ];
+}
+
+export const getSourceIndexFromPaletteId = ( palette ) => {
+  const paletteConfig = getPaletteConfig( palette );
+  const siteVariation = getSiteColorVariation();
+  const { sourceIndex } = paletteConfig;
+
+  return ( sourceIndex - siteVariation + 1 + 12 ) % 12;
+}
+
+export const addSiteVariationOffset = ( variation ) => {
+  const siteVariation = getSiteColorVariation();
+  return normalizeVariationValue( variation + siteVariation - 1 );
+}
+
+export const removeSiteVariationOffset = ( variation ) => {
+  const siteVariation = getSiteColorVariation();
+  return normalizeVariationValue( variation - siteVariation + 1 );
+}
+
+export const ready = ( fn ) => {
+  if ( document.readyState != 'loading' ) {
+    fn();
+  } else {
+    document.addEventListener( 'DOMContentLoaded', fn );
+  }
+}
+
+export const addClass = ( element, classes ) => {
+  const classesArray = classes.split( /\s+/ ).filter( x => x.trim().length );
+
+  if ( classesArray.length ) {
+    element.classList.add( ...classesArray );
+  }
+}
+
+export const removeClass = ( element, classes ) => {
+  const classesArray = classes.split(/\s+/).filter( x => x.trim().length );
+
+  if ( classesArray.length ) {
+    element.classList.remove( ...classesArray );
+  }
+}
+
+export const hasClass = ( element, className ) => {
+  return element.classList.contains( className );
+}

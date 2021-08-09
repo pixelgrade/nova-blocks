@@ -994,7 +994,9 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 			$value = json_encode( $value );
 		}
 
-		$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
+		if ( ! empty( $value ) && $value !== "false" ) {
+			$data_attributes[] = 'data-' . $data_attribute . '="' . $value . '"';
+		}
 	}
 
 	return $data_attributes;

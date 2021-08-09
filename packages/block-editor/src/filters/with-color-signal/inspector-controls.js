@@ -17,14 +17,17 @@ import {
 } from "../../hooks";
 
 import {
+  getParentVariation,
+} from "../../utils";
+
+import {
   addSiteVariationOffset,
   removeSiteVariationOffset,
   computeColorSignal,
   getAbsoluteColorVariation,
-  getParentVariation,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
-} from "../../utils";
+} from "@novablocks/utils";
 
 import ColorPalettePicker from './components/color-palette-picker';
 
