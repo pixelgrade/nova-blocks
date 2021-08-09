@@ -214,7 +214,7 @@ const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
       return extraProps;
   }
 
-  if ( colorSignal === 0 && ! useSourceColorAsReference ) {
+  if ( colorSignal === 0 ) {
     return extraProps;
   }
 

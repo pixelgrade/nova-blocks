@@ -42,7 +42,6 @@ const updateAllBlocksSignal = ( siteVariation ) => {
 
 const updateBlockSignal = ( block, parentVariation ) => {
   const attributes = block.dataset;
-  const { useSourceColorAsReference } = attributes;
   const palette = parseInt( attributes?.palette, 10 );
   const colorSignal = parseInt( attributes?.colorSignal, 10 );
   const innerBlocks = Array.from( block.children );
@@ -65,7 +64,10 @@ const updateBlockSignal = ( block, parentVariation ) => {
   removeClass( block, `${ paletteClassname } ${ variationClassname } sm-palette--shifted` );
 
   addClass( block, `sm-palette-${ palette }` );
-  addClass( block, `sm-variation-${ finalVariation }` );
+
+  if ( colorSignal > 0 ) {
+    addClass( block, `sm-variation-${ finalVariation }` );
+  }
 
   if ( useSourceColorAsReference ) {
     addClass( block, `sm-palette--shifted` );
