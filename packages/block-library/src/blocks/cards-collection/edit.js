@@ -77,8 +77,7 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
 
           return Object.assign( {}, atts, {
-            paletteVariation: getContentVariationBySignal( attributes ),
-            useSourceColorAsReference: attributes.useSourceColorAsReference
+            colorSignal: attributes.contentColorSignal,
           } );
 				}
 			)( attributes );
