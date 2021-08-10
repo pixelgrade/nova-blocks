@@ -52,15 +52,17 @@ const ColorSetControls = ( props ) => {
 
   const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
 
-  const updateBlock = useCallback( ( newAttributes, sticky = false ) => {
+  const updateBlock = useCallback( ( newAttributes, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
     const nextAttributes = { ...attributes, ...newAttributes };
-    const { palette } = nextAttributes;
+    const { palette, useSourceColorAsReference } = nextAttributes;
     const sourceIndex = getSourceIndexFromPaletteId( palette );
     const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
     const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
     const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
     const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation );
-    const nextSourceAsReference = ( sticky && nextSignal === sourceSignal ) || ( absoluteVariation === sourceVariation );
+    const nextSourceAsReference = useSourceColorAsReference ||
+                                  ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
+                                  ( useSourceOnSameVariation && absoluteVariation === sourceVariation );
     const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
     const finalVariation = removeSiteVariationOffset( nextVariation );
 
@@ -78,7 +80,7 @@ const ColorSetControls = ( props ) => {
     updateBlock( {
       paletteVariation: nextVariation,
       useSourceColorAsReference: false,
-    } );
+    }, true, false );
 
   }, [ updateBlock ] )
 
@@ -106,7 +108,7 @@ const ColorSetControls = ( props ) => {
       return;
     }
 
-    updateBlock( newAttributes, true );
+    updateBlock( newAttributes );
   }, [ attributes, updateBlock ] );
 
   const onSignalChange = useCallback( nextSignal => {
@@ -118,7 +120,7 @@ const ColorSetControls = ( props ) => {
     updateBlock( {
       paletteVariation: finalVariation,
       useSourceColorAsReference: false,
-    }, true );
+    }, true, true );
   }, [ clientId, attributes ] );
 
   const ColorPicker = () => {
