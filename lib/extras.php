@@ -977,8 +977,17 @@ function novablocks_kebab_case_to_camel_case( $string ) {
 	return $str;
 }
 
-function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
+function novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist = array() ) {
 	$data_attributes = array();
+	$default_blacklist = array( 'align' );
+	$blacklist = array_merge( $default_blacklist, $blacklist );
+
+	foreach ( $blacklist as $blacklistAttribute ) {
+
+		if ( ( $key = array_search( $blacklistAttribute, $data_attributes_array ) ) !== false ) {
+			unset( $data_attributes_array[ $key ] );
+		}
+	}
 
 	foreach ( $data_attributes_array as $data_attribute ) {
 		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
@@ -995,7 +1004,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 		}
 
 		if ( ! empty( $value ) && $value !== "false" ) {
-			$data_attributes[] = 'data-' . $data_attribute . '="' . $value . '"';
+			$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
 		}
 	}
 

@@ -33,12 +33,8 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$attributes_config = novablocks_get_hero_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-
-		if ( ( $key = array_search( 'media', $data_attributes_array ) ) !== false ) {
-			unset( $data_attributes_array[ $key ] );
-		}
-
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$blacklist = array( 'media' );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$novablocks_settings = novablocks_get_block_editor_settings();
 
