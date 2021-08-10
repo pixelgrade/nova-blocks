@@ -5,6 +5,8 @@ import {
   computeColorSignal,
   getAbsoluteColorVariation,
   getSiteColorVariation,
+  getSourceIndexFromPaletteId,
+  addSiteVariationOffset,
   removeSiteVariationOffset,
 } from "@novablocks/utils";
 
@@ -57,6 +59,8 @@ const updateBlockSignal = ( block, parentVariation ) => {
   const absoluteVariation = getAbsoluteColorVariation( attributes );
   const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
   const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
+  const sourceIndex = getSourceIndexFromPaletteId( palette );
+  const finalAbsoluteVariation = useSourceColorAsReference ? addSiteVariationOffset( sourceIndex + 1 ) : finalVariation;
 
   const classes = Array.from( block.classList );
   const paletteClassname = classes.find( classname => classname.indexOf( 'sm-palette-' ) > -1 );
@@ -75,6 +79,6 @@ const updateBlockSignal = ( block, parentVariation ) => {
   }
 
   innerBlocks.forEach( innerBlock => {
-    updateBlockSignal( innerBlock, nextVariation );
+    updateBlockSignal( innerBlock, finalAbsoluteVariation );
   } );
 }
