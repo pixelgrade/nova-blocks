@@ -148,11 +148,10 @@ const withVariationClassname = createHigherOrderComponent( ( BlockListBlock ) =>
       attributes: {
         paletteVariation,
         colorSignal,
-        useSourceColorAsReference
       },
     } = props;
 
-    if ( colorSignal === 0 && ! useSourceColorAsReference ) {
+    if ( colorSignal === 0 ) {
       return <BlockListBlock { ...props } />
     }
 
@@ -206,7 +205,7 @@ addFilter( 'editor.BlockListBlock', 'novablocks/with-variation-classname', withV
 // Add Variation Classes on Save
 const applyVariationFrontEndClasses = (extraProps, blockType, attributes) => {
 
-  const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+  const { colorSignal, paletteVariation } = attributes;
 
   const supports = getSupports( blockType.name );
 

@@ -9,13 +9,9 @@ import HeroBackground from './background';
 import { InnerBlocks } from '@wordpress/block-editor';
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
-
 import { select } from '@wordpress/data';
 
-import {
-  getAlignmentClassnames,
-  getColorSetClassnames
-} from "@novablocks/utils";
+import { getAlignmentClassnames } from "@novablocks/utils";
 
 const HeroPreview = function( props ) {
 

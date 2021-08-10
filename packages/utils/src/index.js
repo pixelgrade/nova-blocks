@@ -441,7 +441,8 @@ export const getPaletteConfig = ( palette ) => {
 }
 
 export const getAbsoluteColorVariation = ( attributes ) => {
-  const { palette, paletteVariation, useSourceColorAsReference } = attributes;
+  const { palette, useSourceColorAsReference } = attributes;
+  const paletteVariation = parseInt( attributes.paletteVariation, 10 );
   const sourceIndex = getSourceIndexFromPaletteId( palette );
   const absoluteVariation = useSourceColorAsReference ? sourceIndex + 1 : paletteVariation;
 
@@ -522,12 +523,11 @@ export const getContentVariationBySignal = ( attributes ) => {
 
 export const computeColorSignal = ( reference, signal, current ) => {
   const currentSignal = getSignalRelativeToVariation( current, reference );
+  const signalOptions = getSignalOptionsFromVariation( reference );
 
   if ( currentSignal === signal ) {
     return current;
   }
-
-  const signalOptions = getSignalOptionsFromVariation( reference );
 
   return signalOptions[ signal ];
 }
