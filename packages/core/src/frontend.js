@@ -14,10 +14,13 @@ const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
 
 ready( () => {
 
+  // Get the Palette Basis Offset value to use it as the top most reference variation
   const siteVariation = getSiteColorVariation();
 
   updateAllBlocksSignal( siteVariation );
 
+  // If we are inside the Customize Preview iframe, update the palette variation for all blocks
+  // every time the Palette Basis Offset value is changed
   if ( parent?.wp?.customize ) {
     parent.wp.customize( 'sm_site_color_variation', setting => {
       setting.bind( ( newValue, oldValue ) => {
@@ -28,6 +31,13 @@ ready( () => {
 
 } );
 
+/**
+ *  * If the Palette Basis Offset value has been changed after the content has been created
+ * the changes are that the colorSignal attribute and the output paletteVariation aren't synced anymore.
+ * That's why on page load, we compute from top to bottom the colorSignal for each block and regenerate
+ * the color signal utility classes
+ * @param siteVariation the top most reference variation
+ */
 const updateAllBlocksSignal = ( siteVariation ) => {
 
   // finding all top level blocks with color signal data
@@ -36,12 +46,17 @@ const updateAllBlocksSignal = ( siteVariation ) => {
     return ! hasParentsWithSignal;
   } );
 
+  // recursively update each blocks and its descendants
   blocks.forEach( block => {
     updateBlockSignal( block, siteVariation );
   } );
 
 }
 
+/**
+ * @param block current element
+ * @param parentVariation reference color variation
+ */
 const updateBlockSignal = ( block, parentVariation ) => {
   const attributes = block.dataset;
   const { useSourceColorAsReference } = attributes;
