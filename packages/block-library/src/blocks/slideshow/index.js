@@ -22,6 +22,9 @@ import {
 
 import blockAttributes from "./attributes";
 
+// Load extras file
+import extras from './extras';
+
 const attributes = Object.assign( {}, blockAttributes );
 
 /**

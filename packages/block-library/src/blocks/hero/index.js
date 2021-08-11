@@ -8,7 +8,7 @@ import save from './save';
 import { getRandomBetween } from "@novablocks/utils";
 import { getSvg } from "@novablocks/block-editor";
 
-import blockAttributes from "./attributes";
+import attributes from './attributes.json';
 
 import {
 	generateDefaults,
@@ -19,7 +19,8 @@ import {
 // Load deprecated file
 import deprecated from './deprecated';
 
-const attributes = Object.assign( {}, blockAttributes );
+// Load extras file
+import extras from './extras';
 
 /**
  * WordPress dependencies

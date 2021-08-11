@@ -20,9 +20,7 @@ const SlideshowBackground = function( props ) {
 		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 	};
 
-	if ( overlayFilterStyle !== 'none' ) {
-		styles.opacity = 1 - ( overlayFilterStrength / 100 );
-	}
+	styles.opacity = 1 - ( overlayFilterStrength / 100 );
 
 	const imageURL = previewImage?.sizes?.novablocks_large?.url ||
 	                 previewImage?.sizes?.novablocks_huge?.url ||

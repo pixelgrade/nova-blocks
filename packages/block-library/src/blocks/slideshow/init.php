@@ -12,6 +12,7 @@ function novablocks_get_slideshow_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
 		'packages/block-library/src/blocks/slideshow/attributes.json',
+
 		'packages/block-editor/src/components/color-controls/attributes.json',
 		'packages/block-editor/src/components/layout-controls/attributes.json',
 
@@ -20,7 +21,10 @@ function novablocks_get_slideshow_attributes() {
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		"packages/block-editor/src/filters/with-doppler/attributes.json",
 		"packages/block-editor/src/filters/with-doppler/attributes-alt.json",
-		'packages/block-editor/src/filters/with-overlay-filter-strength-controls/attributes.json',
+		"packages/block-editor/src/filters/with-overlay-filter-strength-controls/attributes.json",
+		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
+
+		"packages/block-library/src/blocks/slideshow/attributes-spacing.json",
 	) );
 
 }
@@ -62,7 +66,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		}
 
 		$mediaStyle = '';
-		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
 		}
 
@@ -97,7 +101,9 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
                     if ( ! empty( $media['focalPoint'] ) ) {
                         $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
-                    } ?>
+                    }
+
+                    ?>
 
                     <div class="<?php echo esc_attr( join( ' ', $slideClasses ) ); ?>">
                         <div class="novablocks-slideshow__slide-wrap">
