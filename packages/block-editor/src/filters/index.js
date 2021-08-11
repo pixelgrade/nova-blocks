@@ -18,14 +18,13 @@ import "./with-on-select-images";
 import "./with-overlay-filter-strength-controls";
 import "./with-random-defaults";
 import "./with-space-and-sizing";
+import './with-settings';
 import "./with-visual-balance";
 
-import withSettings from './with-settings';
 import withBlobsDecoration from './with-blobs/with-blobs-decoration';
 
 export * from "./with-doppler";
 
 export {
-  withSettings,
   withBlobsDecoration,
 }

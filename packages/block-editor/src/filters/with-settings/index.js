@@ -15,5 +15,3 @@ const withSettings = createHigherOrderComponent( ( Component ) => {
 }, 'withSetting' );
 
 addFilter( 'editor.BlockEdit', 'novablocks/with-settings', withSettings, Number.MAX_SAFE_INTEGER );
-
-export default withSettings;
