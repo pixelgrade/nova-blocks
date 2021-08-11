@@ -71,7 +71,8 @@ const SlideshowPreview = class extends Component {
 
 		const classes = [
 			className,
-			'novablocks-slideshow is-ready',
+      'is-ready',
+			'novablocks-slideshow',
 			`novablocks-u-valign-${ verticalAlignment }`,
 			`novablocks-u-halign-${ horizontalAlignment }`,
 			`novablocks-u-spacing-${ contentPadding }`,

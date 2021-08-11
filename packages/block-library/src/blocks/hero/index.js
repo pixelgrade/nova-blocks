@@ -70,9 +70,6 @@ registerBlockType( 'novablocks/hero', {
       colorSignal: {
         altAttributes: true,
         addOverlayColorDeprecatedMethod: true,
-        paletteClassname: true,
-        variationClassname: true,
-        colorSignalClassname: true,
       },
       overlayFilterStrength: true,
       contentPositionMatrixToolbar: {
@@ -80,7 +77,8 @@ registerBlockType( 'novablocks/hero', {
       },
       customDefaults: true,
       doppler: {
-        altAttributes: true
+        altAttributes: true,
+        customWrapper: true,
       },
       spaceAndSizing: true
     },

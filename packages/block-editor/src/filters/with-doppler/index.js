@@ -23,7 +23,7 @@ const addDoppler = createHigherOrderComponent( OriginalComponent => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
 
-    if ( ! supports?.novaBlocks?.doppler ) {
+    if ( ! supports?.novaBlocks?.doppler || !! supports?.novaBlocks?.doppler.customWrapper ) {
       return <OriginalComponent { ...props } />
     }
 

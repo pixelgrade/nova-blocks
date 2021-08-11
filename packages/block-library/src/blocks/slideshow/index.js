@@ -72,7 +72,8 @@ registerBlockType( 'novablocks/slideshow', {
       },
       customDefaults: true,
       doppler: {
-        altAttributes: true
+        altAttributes: true,
+        customWrapper: true,
       },
       spaceAndSizing: true
     },
