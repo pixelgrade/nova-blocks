@@ -94,6 +94,12 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 1.12.8 =
+* Improved selection of Header Row and Sidecar blocks inside the block editor
+* Improved Header Row blocks layout when Site Logo is missing
+* Fixed Block Alignment Matrix toolbar control
+* Fixed blocks layout inside the Widget Editor
+
 = 1.12.7 =
 * Fixed spacing inside Conversations block.
 * Fixed Food Menu label color.
