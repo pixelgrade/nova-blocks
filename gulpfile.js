@@ -37,76 +37,22 @@ gulp.task( 'copy-folder', copyFolder );
 // -----------------------------------------------------------------------------
 // Remove unneeded files and folders from the build folder
 // -----------------------------------------------------------------------------
-function removeUnneededFiles() {
+async function removeUnneededFiles() {
   // Files that should not be present in build
-	files_to_remove = [
-		'**/codekit-config.json',
-		'node_modules',
-		'config.rb',
-		'gulp-tasks',
-		'gulpfile.js',
-		'webpack.common.js',
-		'webpack.dev.js',
-		'webpack.prod.js',
-		'css',
-		'.idea',
-		'.editorconfig',
-		'**/.svn*',
-		'**/*.css.map',
-		'**/.sass*',
-		'.sass*',
-		'**/.git*',
-		'*.sublime-project',
-		'.DS_Store',
-		'**/.DS_Store',
-		'__MACOSX',
-		'**/__MACOSX',
-		'README.md',
-		'**/README.md',
-		'CONTRIBUTING.md',
-		'.csscomb',
-		'.csscomb.json',
-		'.codeclimate.yml',
-		'tests',
-		'circle.yml',
-		'.circleci',
-		'.labels',
-		'.jscsrc',
-		'.jshintignore',
-		'browserslist',
-		'.stylelintrc',
-		'tsconfig.json',
-		'tslint.json',
-		'webpack.config.js',
-		'.jscsrc',
-		'.jshintignore',
-		'phpcs.xml.dist',
-		'phpunit.xml.dist',
-		'bundlesize.config.json',
-		'postcss.config.js',
+  const files_to_remove = [];
+  const contents = fs.readFileSync( '.zipignore', 'utf8' );
 
-		'src/**/*.js',
+  // Files that should not be present in build
+  contents.split(/[\r\n]/).forEach(function(path) {
+    path = path.trim();
 
-		'packages/*/build',
-		'packages/*/build-module',
-		'packages/*/build-style',
+    // We will skip line starting with # since those are comments (as per the .gitignore standard).
+    if ( path && !path.startsWith('#') ) {
+      files_to_remove.push( '../build/' + plugin + '/' + path );
+    }
+  });
 
-		'packages/**/*.js',
-		'packages/**/*.scss',
-
-		'**/package.json',
-		'**/package-lock.json',
-
-		'bin',
-		'babel.config.js',
-    '.nvmrc'
-	];
-
-  files_to_remove.forEach( function( e, k ) {
-    files_to_remove[k] = '../build/' + plugin + '/' + e;
-  } );
-
-  return del( files_to_remove, {force: true} );
+  return del.sync( files_to_remove, {force: true} );
 }
 removeUnneededFiles.description = 'Remove unneeded files and folders from the build folder';
 gulp.task( 'remove-unneeded-files', removeUnneededFiles );

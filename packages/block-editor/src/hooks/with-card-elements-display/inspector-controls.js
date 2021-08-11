@@ -11,6 +11,8 @@ const ElementsDisplaySection = ( props ) => {
     setAttributes
   } = props;
 
+  const { showMeta } = attributes;
+
   return (
     <ControlsSection label={ __( 'Elements Visibility' ) } group={ __( 'Cards Manager' ) }>
       <ControlsTab label={ __( 'Settings' ) }>
@@ -27,7 +29,7 @@ const ElementsDisplaySection = ( props ) => {
             } ) }
           />
         </ControlsGroup>
-        <MetaSource { ...props } />
+        { showMeta && <MetaSource { ...props } /> }
       </ControlsTab>
     </ControlsSection>
   );

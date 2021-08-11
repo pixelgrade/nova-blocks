@@ -14,10 +14,12 @@ import {
 	generateDefaults,
 	getPlaceholderImages,
 	insertTemplate,
-	layoutAttributes,
 } from "@novablocks/block-editor";
 
-const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
+// Load deprecated file
+import deprecated from './deprecated';
+
+const attributes = Object.assign( {}, blockAttributes );
 
 /**
  * WordPress dependencies
@@ -75,10 +77,10 @@ registerBlockType( 'novablocks/hero', {
       customDefaults: true,
       doppler: {
         altAttributes: true
-      }
+      },
+      spaceAndSizing: true
     },
 	},
-//	deprecated,
 	attributes,
 	edit,
 	save,

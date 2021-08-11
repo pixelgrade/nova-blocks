@@ -2,9 +2,19 @@
 	"name": "nova-blocks",
 	"version": "1.12.8",
 	"main": "blocks/index.js",
+	"private": false,
+	"sideEffects": false,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pixelgrade/nova-blocks.git"
+	},
 	"license": "GPL-3.0+",
+	"bugs": {
+		"url": "https://github.com/pixelgrade/nova-blocks/issues"
+	},
 	"engines": {
-		"node": ">=10.15.3 <11.0.0"
+		"node": ">=14.17.3",
+		"npm": ">=6.14.13"
 	},
 	"scripts": {
 		"clean:packages": "rimraf \"./packages/*/@(build|build-module|build-style)\"",
@@ -15,6 +25,7 @@
 		"dev:packages": "node ./bin/packages/watch.js",
 		"prezip": "npm run build",
 		"zip": "gulp zip",
+		"preinstall": "cd ./node-tasks/ && npm install && node ./lock_node_version.js",
 		"postinstall": "node ./bin/packages/install.js"
 	},
 	"dependencies": {
