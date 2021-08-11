@@ -46,7 +46,7 @@ const ControlsFallback = ( props ) => {
   }
 
   return (
-    <BlockControls>
+    <BlockControls group="block">
       <BlockAlignmentMatrixToolbar
         label={ __( 'Change content position' ) }
         value={ contentPosition }

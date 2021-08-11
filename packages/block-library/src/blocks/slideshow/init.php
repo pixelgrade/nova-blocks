@@ -21,6 +21,8 @@ function novablocks_get_slideshow_attributes() {
 		"packages/block-editor/src/hooks/with-doppler/attributes.json",
 		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
 		'packages/block-editor/src/hooks/with-overlay-filter-strength-controls/attributes.json',
+		"packages/block-editor/src/hooks/with-space-and-sizing/attributes.json",
+		"packages/block-library/src/blocks/slideshow/attributes-spacing.json",
 	) );
 
 }
@@ -55,7 +57,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		}
 
 		$mediaStyle = '';
-		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
+		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . ';';
 		}
 
@@ -101,7 +103,9 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
                     if ( ! empty( $media['focalPoint'] ) ) {
                         $thisMediaStyle = $thisMediaStyle . novablocks_get_focal_point_style( $media['focalPoint'] );
-                    } ?>
+                    }
+
+                    ?>
 
                     <div class="<?php echo esc_attr( join( ' ', $slideClasses ) ); ?>">
                         <div class="novablocks-slideshow__slide-wrap">
