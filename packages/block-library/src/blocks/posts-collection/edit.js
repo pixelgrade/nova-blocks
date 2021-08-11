@@ -4,7 +4,7 @@ import { Card } from "@novablocks/components";
 import { PostCard } from "@novablocks/block-editor";
 
 import {
-  getColorSetClassnames,
+  getColorSignalClassnames,
   getContentVariationBySignal,
 } from "@novablocks/utils";
 
@@ -105,7 +105,7 @@ const PreviewEdit = ( props ) => {
     `novablocks-collection`,
     `novablocks-collection--align-${ contentAlign }`,
 
-    getColorSetClassnames( attributes ),
+    getColorSignalClassnames( attributes, true ),
     className
   );
 

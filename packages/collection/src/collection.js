@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
-import { getCardMediaPaddingTop, getColorSetClassnames } from '@novablocks/utils'
+import { getCardMediaPaddingTop, getColorSignalClassnames } from '@novablocks/utils'
 
 import attributes from './collection-attributes.json';
 import './with-collection-attributes';
@@ -133,7 +133,7 @@ export const CollectionPreview = ( props ) => {
 		getAreaClassnameByWidthRatio( widthRatio ),
 		getAreaClassnameByHeightRatio( heightRatio ),
 		`block-is-${ blockStyle }`,
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
 	);
 
 	return (

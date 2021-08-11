@@ -12,7 +12,7 @@ import {
 	Fragment,
  } from '@wordpress/element';
 
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SlideshowPreview = class extends Component {
 	constructor() {
@@ -77,7 +77,7 @@ const SlideshowPreview = class extends Component {
 			`novablocks-u-halign-${ horizontalAlignment }`,
 			`novablocks-u-spacing-${ contentPadding }`,
 			`novablocks-u-content-width-${ contentWidth }`,
-      getColorSetClassnames( attributes )
+      getColorSignalClassnames( attributes, true )
     ];
 
 		const styles = {

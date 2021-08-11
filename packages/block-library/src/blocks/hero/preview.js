@@ -11,7 +11,7 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
 
 import { select } from '@wordpress/data';
 
-import { getAlignmentClassnames, getColorSetClassnames } from "@novablocks/utils";
+import { getAlignmentClassnames, getColorSignalClassnames } from "@novablocks/utils";
 
 const HeroPreview = function( props ) {
 
@@ -48,7 +48,7 @@ const HeroPreview = function( props ) {
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
     getAlignmentClassnames( attributes ),
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
 	];
 
 	const styles = {

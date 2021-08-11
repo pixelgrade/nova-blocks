@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import { debounce, getColorSetClassnames, isMobileDevice, titleCase } from '@novablocks/utils';
+import { debounce, getColorSignalClassnames, isMobileDevice, titleCase } from '@novablocks/utils';
 import { getIcon } from "@novablocks/icons";
 
 import Shariff from 'shariff';
@@ -24,11 +24,11 @@ import services from './services';
 		const shareIcon = getIcon( 'share' );
 		$openButton.prepend( shareIcon );
 
-    $wrap.addClass( getColorSetClassnames( {
+    $wrap.addClass( getColorSignalClassnames( {
       palette: $block.data( 'palette' ),
       paletteVariation: $block.data( 'palette-variation' ),
-      useSourceColorAsReference: !! $wrap.addClass( 'sm-palette--shifted' ),
-    } ) );
+      useSourceColorAsReference: !! $block.data( 'use-source-color-as-reference' ),
+    }, true ) );
 
 		$content.appendTo( $container );
 		$container.appendTo( $wrap );

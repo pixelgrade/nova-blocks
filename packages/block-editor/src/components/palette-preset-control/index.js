@@ -4,7 +4,7 @@ import { useBlockEditContext } from '@wordpress/block-editor';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const PalettePresetControl = ( props ) => {
 	const { attributes, setAttributes, label } = props;
@@ -21,7 +21,7 @@ const PalettePresetControl = ( props ) => {
 
           const className = classnames(
             'novablocks-palette-control__option',
-            getColorSetClassnames( newAttributes ),
+            getColorSignalClassnames( newAttributes, true ),
             {
               'novablocks-palette-control__option--selected': value === selectedPreset
             }

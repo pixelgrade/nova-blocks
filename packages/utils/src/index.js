@@ -289,21 +289,30 @@ export const capitalizeFirstLetter = ( string ) => {
   return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
 }
 
-export const getColorSetClassnames = ( attributes ) => {
+export const getColorSignalClassnames = ( attributes, supports ) => {
+  const { palette, paletteVariation, useSourceColorAsReference, colorSignal } = attributes;
+  const colorSignalSupport = supports?.novaBlocks?.colorSignal;
+  const newClassnames = [];
 
-  const {
-    palette,
-    paletteVariation,
-    useSourceColorAsReference
-  } = attributes;
+  if ( supports === true || colorSignalSupport?.paletteClassname ) {
+    newClassnames.push( `sm-palette-${ palette }` );
 
-  return classnames(
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
-    {
-      'sm-palette--shifted': !! useSourceColorAsReference
+    if ( useSourceColorAsReference ) {
+      newClassnames.push( 'sm-palette--shifted' );
     }
-  );
+  }
+
+  if ( supports === true || colorSignalSupport?.paletteVariationClassname ) {
+    if ( colorSignal !== 0 ) {
+      newClassnames.push( `sm-variation-${ paletteVariation }` );
+    }
+  }
+
+  if ( supports === true || colorSignalSupport?.colorSignalClassname ) {
+    newClassnames.push( `sm-color-signal-${ colorSignal }` );
+  }
+
+  return newClassnames.join( " " );
 }
 
 export const getAlignmentClassnames = ( attributes ) => {

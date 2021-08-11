@@ -64,9 +64,9 @@ const updateBlockSignal = ( block, parentVariation ) => {
 
   const classes = Array.from( block.classList );
   const paletteClassname = classes.find( classname => classname.indexOf( 'sm-palette-' ) > -1 );
-  const variationClassname = classes.find( classname => classname.indexOf( 'sm-variation-' ) > -1 );
+  const paletteVariationClassname = classes.find( classname => classname.indexOf( 'sm-variation-' ) > -1 );
 
-  removeClass( block, `${ paletteClassname } ${ variationClassname } sm-palette--shifted` );
+  removeClass( block, `${ paletteClassname } ${ paletteVariationClassname } sm-palette--shifted` );
 
   addClass( block, `sm-palette-${ palette }` );
 
