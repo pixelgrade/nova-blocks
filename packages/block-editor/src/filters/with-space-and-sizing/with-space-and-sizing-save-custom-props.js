@@ -1,7 +1,7 @@
 import { getSupports } from "../../utils";
 import { getSpacingCSSProps } from "@novablocks/utils";
 
-const withSpaceAndSizingCustomProps = ( element, blockType, attributes ) => {
+const withSpaceAndSizingSaveCustomProps = ( element, blockType, attributes ) => {
 
   const supports = getSupports( blockType.name );
 
@@ -20,4 +20,4 @@ const withSpaceAndSizingCustomProps = ( element, blockType, attributes ) => {
   } );
 };
 
-export default withSpaceAndSizingCustomProps;
+export default withSpaceAndSizingSaveCustomProps;

@@ -15,8 +15,8 @@ const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalC
 
     return (
       <Fragment>
-        <OriginalComponent { ...props } />
         <ControlsAdvanced { ...props } />
+        <OriginalComponent { ...props } />
       </Fragment>
     );
   };

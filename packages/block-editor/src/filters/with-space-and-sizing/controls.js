@@ -3,6 +3,7 @@ import { BlockVerticalAlignmentToolbar, ControlsGroup, ControlsSection, Controls
 import { __ } from "@wordpress/i18n";
 import { PanelRow, RangeControl, ToggleControl } from "@wordpress/components";
 import { select } from "@wordpress/data";
+import { useSupports } from "../../hooks";
 
 const SpaceAndSizingControls = ( props ) => {
 
@@ -22,11 +23,10 @@ const SpaceAndSizingControls = ( props ) => {
     contentPosition,
   } = attributes;
 
+  const supports = useSupports( props.name );
   const showVerticalAlignment = shouldShowVerticalAlignment( props );
-
   const BLOCK_SPACING_MIN_VALUE = -3;
   const BLOCK_SPACING_MAX_VALUE = 3;
-
   const CONTENT_SPACING_MIN_VALUE = supports?.novaBlocks?.spaceAndSizing?.advancedSpacing ? -3 : 0;
   const CONTENT_SPACING_MAX_VALUE = 3;
 
