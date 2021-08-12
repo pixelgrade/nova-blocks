@@ -1,6 +1,6 @@
-import {addFilter} from "@wordpress/hooks";
+import { addFilter } from "@wordpress/hooks";
 
-import {migrateContentPadding} from '../hero/deprecated';
+import { migrateContentPadding } from '../hero/deprecated';
 
 const slideshowAddDeprecated = ( settings, name ) => {
 
