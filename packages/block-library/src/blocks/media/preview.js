@@ -7,8 +7,8 @@ import AdvancedGallery from '@novablocks/advanced-gallery';
 
 import {
   getAlignmentClassnames,
-  getColorSetClassnames,
-  getContentVariationBySignal
+  getColorSignalClassnames,
+  getContentVariationBySignal,
 } from '@novablocks/utils';
 
 import { InnerBlocks } from '@wordpress/block-editor';
@@ -64,10 +64,10 @@ const MediaPreview = function( props ) {
 	const blockClassNames = classnames(
 		`novablocks-block`,
 		`content-is-${ contentStyle }`,
-    getColorSetClassnames( attributes ),
+    getColorSignalClassnames( attributes, true ),
   );
 
-	const contentVariation = getContentVariationBySignal( props );
+	const contentVariation = getContentVariationBySignal( attributes );
 
 	const contentClassNames = classnames(
     `novablocks-media__inner-container`,

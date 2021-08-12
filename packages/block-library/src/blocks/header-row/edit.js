@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames';
 import { InnerBlocks } from '@wordpress/block-editor';
-import { getColorSetClassnames } from '@novablocks/utils';
+import { getColorSignalClassnames } from '@novablocks/utils';
 
 /**
  * Internal dependencies.
@@ -23,7 +23,7 @@ const HeaderRowEdit = function( props ) {
 
   const classNames = classnames(
     'novablocks-header-row',
-    getColorSetClassnames( attributes ),
+    getColorSignalClassnames( attributes, true ),
     className,
   );
 

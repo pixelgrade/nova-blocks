@@ -9,13 +9,9 @@ import HeroBackground from './background';
 import { InnerBlocks } from '@wordpress/block-editor';
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
-
 import { select } from '@wordpress/data';
 
-import {
-  getAlignmentClassnames,
-  getColorSetClassnames
-} from "@novablocks/utils";
+import { getAlignmentClassnames, getColorSignalClassnames } from "@novablocks/utils";
 
 const HeroPreview = function( props ) {
 
@@ -51,8 +47,8 @@ const HeroPreview = function( props ) {
 		`novablocks-u-content-width-${ contentWidth }`,
 		`novablocks-u-background`,
 		`novablocks-u-background-${ overlayFilterStyle }`,
-    getColorSetClassnames( attributes ),
-    getAlignmentClassnames( attributes )
+    getAlignmentClassnames( attributes ),
+    getColorSignalClassnames( attributes, true )
 	];
 
 	const styles = {

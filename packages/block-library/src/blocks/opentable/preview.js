@@ -6,7 +6,7 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
  */
 import { Component } from '@wordpress/element';
 import { SandBox } from '@wordpress/components';
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const grabStylesheet = ( url ) => {
   return url && `<link rel="stylesheet" href="${ url }" type="text/css"/>` || '';
@@ -37,7 +37,7 @@ class OpenTablePreview extends Component {
 			{
 				'has-opentable-logo': showOpenTableLogo === true
 			},
-      getColorSetClassnames( this.props.attributes )
+      getColorSignalClassnames( this.props.attributes, true )
 		);
 
 		const OpenTable = ( props ) => {

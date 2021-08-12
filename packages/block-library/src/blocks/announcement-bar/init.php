@@ -5,7 +5,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once dirname( __FILE__ ) . '/extras.php';
+
+if ( ! function_exists( 'novablocks_get_announcement_bar_attributes' ) ) {
+	function novablocks_get_announcement_bar_attributes() {
+		return novablocks_merge_attributes_from_array( array(
+			"packages/block-library/src/blocks/announcement-bar/attributes.json",
+			"packages/block-editor/src/filters/with-color-signal/attributes.json",
+		) );
+	}
+}
 
 if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
@@ -13,6 +21,8 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 		$attributes_config = novablocks_get_announcement_bar_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$classes = array( 'novablocks-announcement-bar', 'is-hidden', 'alignfull' );
 
@@ -36,7 +46,7 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 		?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>" data-id="<?php echo $attributes['blockId'] ;?>">
+		<div class="<?php echo join( ' ', $classes ); ?>" data-id="<?php echo $attributes['blockId'] ;?>" <?php echo join( " ", $data_attributes ); ?>>
 			<div class="novablocks-announcement-bar__wrapper">
 				<div class="novablocks-announcement-bar__content">
 					<?php

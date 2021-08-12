@@ -3,7 +3,7 @@ import classnames from "classnames";
 /**
  * WordPress dependencies.
  */
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const OpenTableSave = function( props ) {
 
@@ -28,7 +28,7 @@ const OpenTableSave = function( props ) {
     {
       'has-opentable-logo': showOpenTableLogo === true
     },
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
   );
 
 	return (

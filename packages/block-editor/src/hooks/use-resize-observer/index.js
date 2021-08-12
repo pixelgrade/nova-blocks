@@ -1,9 +1,9 @@
-const {
+import {
 	useRef,
 	useLayoutEffect,
 	useState,
 	useCallback,
-} = wp.element;
+} from '@wordpress/element';
 
 const useResizeObserver = () => {
 	const [entry, setEntry] = useState( {} );

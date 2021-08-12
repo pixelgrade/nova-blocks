@@ -16,13 +16,14 @@ function novablocks_get_hero_attributes() {
 		"packages/block-editor/src/components/color-controls/attributes.json",
 		"packages/block-editor/src/components/layout-controls/attributes.json",
 
-		"packages/block-editor/src/hooks/with-color-signal/attributes.json",
-		"packages/block-editor/src/hooks/with-color-signal/attributes-alt.json",
-		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
-		"packages/block-editor/src/hooks/with-doppler/attributes.json",
-		"packages/block-editor/src/hooks/with-doppler/attributes-alt.json",
-		"packages/block-editor/src/hooks/with-overlay-filter-strength-controls/attributes.json",
-		"packages/block-editor/src/hooks/with-space-and-sizing/attributes.json",
+		"packages/block-editor/src/filters/with-color-signal/attributes.json",
+		"packages/block-editor/src/filters/with-color-signal/attributes-alt.json",
+		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
+		"packages/block-editor/src/filters/with-doppler/attributes.json",
+		"packages/block-editor/src/filters/with-doppler/attributes-alt.json",
+		"packages/block-editor/src/filters/with-overlay-filter-strength-controls/attributes.json",
+		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
+
 		"packages/block-library/src/blocks/hero/attributes-spacing.json",
 	) );
 
@@ -34,6 +35,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$attributes_config = novablocks_get_hero_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$blacklist = array( 'media' );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$novablocks_settings = novablocks_get_block_editor_settings();
 
@@ -122,20 +126,10 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$id = 'id="' . esc_attr( $attributes['anchor'] ) . '" ';
 		} ?>
 
-		<div <?php
-
-			echo $id;
-			echo "data-scrolling-effect='" . esc_attr( $attributes['scrollingEffect'] ) . "' ";
-			echo "data-focal-point='" . json_encode( $attributes['focalPoint'] ) . "' ";
-			echo "data-final-focal-point='" . json_encode( $attributes['finalFocalPoint'] ) . "' ";
-			echo 'data-initial-background-scale="' . esc_attr( $attributes['initialBackgroundScale'] ) . '"';
-			echo 'data-final-background-scale="' . esc_attr( $attributes['finalBackgroundScale'] ) . '" ';
-			echo 'data-smooth-start="' . esc_attr( $attributes['followThroughStart'] ) . '" ';
-			echo 'data-smooth-end="' . esc_attr( $attributes['followThroughEnd'] ) . '" ';
-
-			?>
+		<div <?php echo $id; ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( $heroStyle ); ?>"
+			<?php echo join( " ", $data_attributes ); ?>
 		>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>

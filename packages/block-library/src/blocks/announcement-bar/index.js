@@ -60,12 +60,14 @@ registerBlockType( 'novablocks/announcement-bar', {
     novaBlocks: {
 	    colorSignal: {
         paletteClassname: true,
-        variationClassname: true
+        paletteVariationClassname: true
       },
     }
   },
-	save() {
-		return <InnerBlocks.Content />;
+	save: () => {
+		return (
+		  <InnerBlocks.Content />
+    )
 	},
 	edit: function( props ) {
 

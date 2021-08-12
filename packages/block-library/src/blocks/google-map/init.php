@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_google_map_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-editor/src/hooks/with-doppler/attributes.json',
-		'packages/block-editor/src/hooks/with-doppler/attributes-alt.json',
+		'packages/block-editor/src/filters/with-doppler/attributes.json',
+		'packages/block-editor/src/filters/with-doppler/attributes-alt.json',
 		'packages/block-library/src/blocks/google-map/attributes.json'
 	) );
 

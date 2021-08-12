@@ -977,8 +977,17 @@ function novablocks_kebab_case_to_camel_case( $string ) {
 	return $str;
 }
 
-function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
+function novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist = array() ) {
 	$data_attributes = array();
+	$default_blacklist = array( 'align' );
+	$blacklist = array_merge( $default_blacklist, $blacklist );
+
+	foreach ( $blacklist as $blacklistAttribute ) {
+
+		if ( ( $key = array_search( $blacklistAttribute, $data_attributes_array ) ) !== false ) {
+			unset( $data_attributes_array[ $key ] );
+		}
+	}
 
 	foreach ( $data_attributes_array as $data_attribute ) {
 		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
@@ -994,7 +1003,9 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 			$value = json_encode( $value );
 		}
 
-		$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
+		if ( ! empty( $value ) && $value !== "false" ) {
+			$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
+		}
 	}
 
 	return $data_attributes;
@@ -1003,7 +1014,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 function novablocks_get_advanced_gallery_component_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-editor/src/hooks/with-blobs/attributes.json',
+		'packages/block-editor/src/filters/with-blobs/attributes.json',
 		'packages/advanced-gallery/src/attributes.json'
 	) );
 	
@@ -1204,6 +1215,9 @@ function novablocks_get_spacing_css( $attributes ) {
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+
 		$classes = array(
 			'novablocks-block',
 			'novablocks-block-spacing',
@@ -1237,7 +1251,11 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
+		<div
+			class="<?php echo $className; ?>"
+			style="<?php echo $style; ?>"
+			<?php echo join( " ", $data_attributes ); ?>
+		>
 			<div class="wp-block-group__inner-container">
 				<?php echo novablocks_get_collection_header_output( $attributes ); ?>
 				<div class="novablocks-collection__cards wp-block alignwide">

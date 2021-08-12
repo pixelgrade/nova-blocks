@@ -1,34 +1,26 @@
 import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
-import {
-  isFunctionalPalette,
-
-  getSignalAttributes,
-  getSignalRelativeToVariation,
-  getSiteColorVariation,
-} from "@novablocks/utils";
+import { isFunctionalPalette } from "@novablocks/utils";
 
 const ColorPalettePicker = ( props ) => {
 
   const {
     attributes,
-    setAttributes,
     settings: {
       palettes,
     },
     showFunctionalColors,
-    sticky
+    onChange,
   } = props;
 
   const {
     palette,
     paletteVariation,
-    useSourceColorAsReference,
-    colorSignal,
+    useSourceColorAsReference
   } = attributes;
 
-  if( ! Array.isArray(palettes)) {
+  if( ! Array.isArray( palettes ) ) {
     return null;
   }
 
@@ -53,19 +45,7 @@ const ColorPalettePicker = ( props ) => {
 
           return (
             <button key={ thisPalette.id } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
-              if ( isSelected ) {
-                const siteVariation = getSiteColorVariation();
-                const sourceSignal = getSignalRelativeToVariation( thisPalette.sourceIndex + 1, siteVariation );
-
-                setAttributes( {
-                  palette: thisPalette.id,
-                  paletteVariation: 1,
-                  colorSignal: sourceSignal,
-                  useSourceColorAsReference: true,
-                } )
-              } else {
-                setAttributes( getSignalAttributes( colorSignal, thisPalette, sticky ) );
-              }
+              onChange( thisPalette.id );
             } }>
               <svg className="color-palette-picker__color-svg" width="48" height="48" viewBox="0 0 48 48">
                 <circle className="color-palette-picker__color-dash" stroke="none" fill="none" r="20" cx="24" cy="24" />
