@@ -9,7 +9,7 @@
 	},
 	"blockTopSpacing": {
 		"type": "number",
-		"default": 0
+		"default": 1
 	},
 	"blockBottomSpacing": {
 		"type": "number",
