@@ -44,7 +44,8 @@ async function getNewDefaults() {
 
 	return {
 		galleryImages: images,
-	};
+    blockTopSpacing: 1,
+  };
 }
 
 generateDefaults( 'novablocks/slideshow', getNewDefaults );

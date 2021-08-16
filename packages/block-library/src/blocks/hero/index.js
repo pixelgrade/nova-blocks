@@ -39,7 +39,8 @@ async function getNewDefaults() {
 		media: {
 			...image,
 			type: 'image',
-		}
+		},
+    blockTopSpacing: 1,
 	};
 }
 
