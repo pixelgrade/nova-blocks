@@ -34,22 +34,23 @@ import { registerBlockType } from '@wordpress/blocks';
 import { select } from "@wordpress/data";
 
 async function getNewDefaults() {
-	const numberOfImages = getRandomBetween( 2, 4 );
-	const placeholderImages = await getPlaceholderImages();
-	const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
-	const randomAttributes = getRandomAttributes();
+  const numberOfImages = getRandomBetween( 2, 4 );
+  const placeholderImages = await getPlaceholderImages();
+  const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
+  const randomAttributes = getRandomAttributes();
 
-	randomImages.forEach( image => {
-		if ( typeof image?.download === "function" ) {
-			image.download();
-		}
-	} );
+  randomImages.forEach( image => {
+    if ( typeof image?.download === "function" ) {
+      image.download();
+    }
+  } );
 
-	return {
-		...randomAttributes,
-		verticalAlignment: "center",
-		images: randomImages
-	};
+  return {
+    ...randomAttributes,
+    verticalAlignment: "center",
+    images: randomImages,
+    blockTopSpacing: 1,
+  };
 }
 
 const settings = select( 'novablocks' ).getSettings();
