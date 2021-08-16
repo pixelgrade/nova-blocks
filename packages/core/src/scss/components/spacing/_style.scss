@@ -2,17 +2,10 @@
 .wp-block-column,
 [class*="__inner-container"][class] {
   @include block-spacing-reset;
+  @include block-spacing-top-level-multiplier;
+  @include block-spacing-nested-levels-multiplier;
 
   > * {
     @include block-spacing;
-  }
-}
-
-.wp-block-column,
-[class*="__inner-container"] {
-  --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
-
-  & & {
-    --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
   }
 }

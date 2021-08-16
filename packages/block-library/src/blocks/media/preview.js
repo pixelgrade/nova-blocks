@@ -58,7 +58,7 @@ const MediaPreview = function( props ) {
 		'--emphasis-area': emphasisArea,
     '--card-content-padding': contentPadding,
 		'--novablocks-media-content-width': `${ contentAreaWidth }%`,
-		'--novablocks-media-gutter': `calc( ${ layoutGutter } * var(--novablocks-spacing) * 5 / 100 )`,
+		'--novablocks-media-gutter': `calc( ${ layoutGutter } * var(--novablocks-media-spacing) * 5 / 100 )`,
 	};
 
 	const blockClassNames = classnames(
