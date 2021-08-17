@@ -12,7 +12,7 @@ import {
 	MediaUpload,
  } from '@wordpress/block-editor';
 
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const CardEdit = ( props ) => {
 
@@ -44,7 +44,7 @@ const CardEdit = ( props ) => {
     'novablocks-card--fixed-media-aspect-ratio',
     'novablocks-card--portrait',
     'novablocks-block__content',
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
   );
 
 	return (

@@ -1,5 +1,3 @@
-import { withSettings } from '../../hooks';
-
 import {
 	ControlsGroup,
 	ControlsTab,
@@ -45,4 +43,4 @@ export {
   EmphasisContentAreaControls,
 };
 
-export default withSettings( EmphasisLevelControls );
+export default EmphasisLevelControls;

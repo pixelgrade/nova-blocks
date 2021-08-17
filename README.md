@@ -62,6 +62,14 @@ A manually curated list that include all the valuable people that have contribut
 
 [![](https://github.com/razwan.png?size=64)](https://github.com/razwan) [![](https://github.com/georgeolaru.png?size=64)](https://github.com/georgeolaru) [![](https://github.com/oanafilip.png?size=64)](https://github.com/oanafilip) [![](https://github.com/vladolaru.png?size=64)](https://github.com/vladolaru)  [![](https://github.com/madalingorbanescu.png?size=64)](https://github.com/madalingorbanescu) [![](https://github.com/acosmin.png?size=64)](https://github.com/acosmin) [![](https://github.com/loxK.png?size=64)](https://github.com/loxK) 
 
+## Local Environment Setup Pointers
+
+You need to be careful since we **require** certain **node versions (v14) and PHP versions (v7.4).**
+
+For ease of development, it is best to use `nvm` (https://github.com/nvm-sh/nvm) for node version management and automatic node version switching on shell navigation. For the `zsh` shell the easiest way is to use [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) with the `nvm` [plugin](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/nvm) activated.
+
+We use the following oh-my-zsh plugins: `plugins=(composer git nvm npm)` configured in `~/.zshrc`. For automatic node version switching, place this line in `~/.zshrc` just below the plugins line: `NVM_AUTOLOAD=1`. Now whenever you enter a directory through the shell, if it finds a `.nvmrc` file, it will switch to the specified node version.
+
 ## License
 Nova Blocks source code is released under the [GNU GPL v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html) or later. This is so you have the freedom to create something beautiful and share it back with us.
 

@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { Fragment } from "@wordpress/element";
 
 import { getIconSvg } from "@novablocks/block-editor";
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 import Controls from './controls';
 
@@ -28,13 +28,11 @@ const SharingEdit = ( props ) => {
 
 const SharingOverlayPreview = ( props ) => {
 
-  const {
-    attributes
-  } = props;
+  const { attributes } = props;
 
   const classNames = classnames(
     'novablocks-sharing__wrap',
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
   );
 
   return (

@@ -1,37 +1,45 @@
 @mixin block-spacing-apply-multiplier {
+  @include block-spacing-top-level-multiplier;
+  @include block-spacing-nested-levels-multiplier;
+}
 
-	& {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
-	}
+@mixin block-spacing-top-level-multiplier {
 
-	& & {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
-	}
+  & {
+    --novablocks-element-spacing-multiplier: calc(2 * var(--novablocks-element-spacing-level-1-multiplier));
 
-	& & & {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
-	}
+    > p + p {
+      --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
+    }
+  }
+}
+
+@mixin block-spacing-nested-levels-multiplier {
+
+  & & {
+    --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
+  }
+
+  & & & {
+    --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+  }
 }
 
 @mixin block-spacing-reset {
-
-  > * {
-	  --novablocks-block-top-spacing: 1;
-    --novablocks-block-bottom-spacing: 0;
-    --novablocks-emphasis-top-spacing: 0;
-    --novablocks-emphasis-bottom-spacing: 0;
-  }
+  --novablocks-block-top-spacing: 1;
+  --novablocks-block-bottom-spacing: 0;
+  --novablocks-emphasis-top-spacing: 0;
+  --novablocks-emphasis-bottom-spacing: 0;
 
   > :first-child {
     --novablocks-block-top-spacing: 0;
   }
-
 }
 
 @mixin block-spacing {
-	margin-top: calc( var(--novablocks-block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-	margin-bottom: calc( var(--novablocks-block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-	padding-top: calc( var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-	padding-bottom: calc( var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+  margin-top: calc(var(--novablocks-block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
+  margin-bottom: calc(var(--novablocks-block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
+  padding-top: calc(var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
+  padding-bottom: calc(var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
 }
 

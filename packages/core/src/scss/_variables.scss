@@ -1,9 +1,7 @@
 :root {
-
 	--novablocks-spacing: 24px;
 	--novablocks-sides-spacings: var(--novablocks-spacing);
 	--novablocks-media-spacing: var(--novablocks-spacing);
-	--novablocks-media-gutter: var(--novablocks-spacing);
 	--novablocks-media-background-direction: 90deg;
 
   --novablocks-wrapper-sides-spacing: var(--novablocks-spacing);
@@ -12,9 +10,10 @@
 	--novablocks-transition-easing: ease;
 	--novablocks-transition: all var(--novablocks-transition-duration) var(--novablocks-transition-easing);
 
+  --novablocks-element-spacing-multiplier: 1;
 	--novablocks-element-spacing-level-1-multiplier: 1;
-	--novablocks-element-spacing-level-2-multiplier: 0.5;
-	--novablocks-element-spacing-level-3-multiplier: 0.25;
+	--novablocks-element-spacing-level-2-multiplier: 0.75;
+	--novablocks-element-spacing-level-3-multiplier: 0.5;
 
 	--novablocks-block-content-box-shadow:
 		0 32px 128px rgba(42, 54, 52, 0.1),

@@ -241,34 +241,46 @@ function novablocks_add_hero_settings( $settings ) {
 	$hero_settings = array(
 		'template'   => array(
 			array(
-				'core/heading',
-				array(
-					'content' => esc_html__( 'This is a catchy title', '__plugin_txtd' ),
-					'align'   => 'center',
-					'level'   => 1,
-				),
-			),
-			array(
-				'core/paragraph',
-				array(
-					'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
-					'align'   => 'center',
-				),
-			),
-			array(
-				'core/buttons',
-				array(
-					'align' => 'center',
-				),
+				'core/group',
+				array(),
 				array(
 					array(
-						'core/button',
+						'novablocks/headline',
 						array(
-							'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
+							'secondary' => esc_html__( 'This is a catchy', '__theme_txtd' ),
+							'primary'   => esc_html__( 'Headline', '__plugin_txtd' ),
+							'align'     => 'center',
+							'level'     => 1,
+							'fontSize'     => 'larger',
+							'className' => 'has-larger-font-size',
 						),
 					),
-				),
-			)
+					array(
+						'core/paragraph',
+						array(
+							'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
+							'align'   => 'center',
+							'className' => 'is-style-lead',
+						),
+					),
+					array(
+						'core/buttons',
+						array(
+							'align' => 'center',
+							'contentJustification' => 'center'
+						),
+						array(
+							array(
+								'core/button',
+								array(
+									'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
+								),
+							),
+						),
+					)
+				)
+			),
+
 		),
 	);
 
@@ -967,8 +979,17 @@ function novablocks_kebab_case_to_camel_case( $string ) {
 	return $str;
 }
 
-function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
+function novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist = array() ) {
 	$data_attributes = array();
+	$default_blacklist = array( 'align' );
+	$blacklist = array_merge( $default_blacklist, $blacklist );
+
+	foreach ( $blacklist as $blacklistAttribute ) {
+
+		if ( ( $key = array_search( $blacklistAttribute, $data_attributes_array ) ) !== false ) {
+			unset( $data_attributes_array[ $key ] );
+		}
+	}
 
 	foreach ( $data_attributes_array as $data_attribute ) {
 		$attribute = novablocks_kebab_case_to_camel_case( $data_attribute );
@@ -993,7 +1014,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes ) {
 function novablocks_get_advanced_gallery_component_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-editor/src/hooks/with-blobs/attributes.json',
+		'packages/block-editor/src/filters/with-blobs/attributes.json',
 		'packages/advanced-gallery/src/attributes.json'
 	) );
 	
@@ -1194,6 +1215,9 @@ function novablocks_get_spacing_css( $attributes ) {
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+
 		$classes = array(
 			'novablocks-block',
 			'novablocks-block-spacing',
@@ -1227,7 +1251,11 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo $className; ?>" style="<?php echo $style; ?>">
+		<div
+			class="<?php echo $className; ?>"
+			style="<?php echo $style; ?>"
+			<?php echo join( " ", $data_attributes ); ?>
+		>
 			<div class="wp-block-group__inner-container">
 				<?php echo novablocks_get_collection_header_output( $attributes ); ?>
 				<div class="novablocks-collection__cards wp-block alignwide">

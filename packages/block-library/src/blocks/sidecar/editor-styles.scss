@@ -1,6 +1,3 @@
-$grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
-$align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-alignment="pull-left"], [data-novablocks-alignment="pull-right"]';
-
 @import 'scss/mixins';
 
 .is-sidebar-opened {
@@ -21,13 +18,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   }
 
   // If is Widget Editor,
-  // alter --wds and --wde, 
+  // alter --wds and --wde,
   // so the sidebar will have a smaller width.
   &.edit-widgets-main-block-list {
     --wds: 12.5%;
     --wde: 12.5%;
   }
-  
+
   .novablocks-sidecar[class][class],
   .novablocks-content[class][class] {
     --default-width-offset-sidebar: var(--default-sidebar-width);
@@ -49,9 +46,9 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   .wp-block {
     
-    &[data-align=wide],
-    &[data-align=full] {
+    &[data-align=wide] {
       max-width: 100%;
+      width: 100%;
     }
   }
   
@@ -76,6 +73,9 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   
   [data-type="novablocks/sidecar"] {
     grid-column: var(--all-columns);
+
+    max-width: none;
+    width: 100%;
   }
   
   [data-align="left"] {
@@ -98,12 +98,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 .novablocks-sidecar > #{$grid-selector} {
   
   @include layout-grid;
-  
-  [class*='__inner-container'] {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  
+
   > :first-child {
     grid-column: var(--all-columns) !important;
   }
@@ -420,10 +415,17 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   position: static;
 }
 
+.novablocks-sidebar {
+
+  .block-editor-inner-blocks {
+    margin-top: 0;
+  }
+}
+
 // This will apply only on new Widget Editor,
 // available in WordPress 5.8
 .interface-interface-skeleton__secondary-sidebar + .interface-interface-skeleton__content {
-  
+
   .edit-widgets-main-block-list {
     --inspector-controls-width: 175px;
   }

@@ -162,19 +162,24 @@ function sidecarTransformationsInCustomizer() {
 function moveImageClassesToBlock() {
 
   // Select all Block Images inside Content.
-  let blockImages = Array.from(document.querySelectorAll(".novablocks-content > .wp-block-image:not([class*='align'])"));
+  let blockImages = Array.from( document.querySelectorAll( ".novablocks-content > .wp-block-image:not([class*='align'])" ) );
 
   blockImages.forEach( block => {
 
-    let image = block.querySelector('figure');
+    let image = block.querySelector( 'figure' );
+
+    if ( !image ) {
+      return;
+    }
+
     let classList = image.classList;
 
     // Add classes to block.
-    block.classList.add(...classList);
+    block.classList.add( ...classList );
 
     // Remove classes from image.
-    image.classList.remove(...classList);
-  })
+    image.classList.remove( ...classList );
+  } );
 
 }
 

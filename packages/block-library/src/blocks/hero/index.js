@@ -9,16 +9,16 @@ import transforms from './transforms';
 import { getRandomBetween } from "@novablocks/utils";
 import { getSvg } from "@novablocks/block-editor";
 
-import blockAttributes from "./attributes";
+import attributes from './attributes.json';
 
 import {
 	generateDefaults,
 	getPlaceholderImages,
 	insertTemplate,
-	layoutAttributes,
 } from "@novablocks/block-editor";
 
-const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
+// Load deprecated file
+import './deprecated';
 
 /**
  * WordPress dependencies
@@ -40,7 +40,7 @@ async function getNewDefaults() {
 		media: {
 			...image,
 			type: 'image',
-		}
+		},
 	};
 }
 
@@ -75,11 +75,12 @@ registerBlockType( 'novablocks/hero', {
       },
       customDefaults: true,
       doppler: {
-        altAttributes: true
-      }
+        altAttributes: true,
+        customWrapper: true,
+      },
+      spaceAndSizing: true
     },
 	},
-//	deprecated,
 	attributes,
 	edit,
 	save,

@@ -262,77 +262,6 @@ export const isAnyPartOfElementInViewport = (element) => {
 	return (vertInView && horInView);
 }
 
-export const getVariationFromSignal = ( signal ) => {
-
-  if ( signal === 1 ) {
-    return 3;
-  }
-
-  if ( signal === 2 ) {
-    return 6;
-  }
-
-  if ( signal === 3 ) {
-    return 10;
-  }
-
-  return 1;
-}
-
-export const getSignalRelativeToVariation = ( compare, reference ) => {
-  const variationOptions = getSignalOptionsFromVariation( reference );
-
-  return variationOptions.reduce( ( prev, curr, index, arr ) => {
-    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
-  }, 0 );
-}
-
-export const getSignalFromVariation = ( variation ) => {
-
-  if ( variation === 1 ) {
-    return 0;
-  }
-
-  if ( variation < 5 ) {
-    return 1;
-  }
-
-  if ( variation < 9 ) {
-    return 2;
-  }
-
-  return 3;
-}
-
-export const getSignalOptionsFromVariation = ( variation ) => {
-  const blockSignal = getSignalFromVariation( variation );
-
-  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
-    return index === blockSignal ? variation : getVariationFromSignal( index );
-  } );
-
-  variationOptions.sort( ( variation1, variation2 ) => {
-    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
-  } );
-
-  return variationOptions;
-}
-
-export const getContentVariationBySignal = ( props ) => {
-  const { attributes } = props;
-  const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
-  const siteVariation = getSiteColorVariation();
-  const currentPalette = getCurrentPaletteConfig(props);
-  const { sourceIndex } = currentPalette;
-
-  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
-
-  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-
-  return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
-}
-
 // Helper function to get current Palette Config,
 // and generate a default, if a palette does not exist.
 export const getCurrentPaletteConfig = ( props ) => {
@@ -360,21 +289,36 @@ export const capitalizeFirstLetter = ( string ) => {
   return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
 }
 
-export const getColorSetClassnames = ( attributes ) => {
+/**
+ *
+ * @param attributes block's attributes
+ * @param supports blockType's supports; it can be set to true to assume colorSignal support is fully enabled
+ * @returns {string} utility classnames joined in a single string based on block attributes and support
+ */
+export const getColorSignalClassnames = ( attributes, supports ) => {
+  const { palette, paletteVariation, useSourceColorAsReference, colorSignal } = attributes;
+  const colorSignalSupport = supports?.novaBlocks?.colorSignal;
+  const newClassnames = [];
 
-  const {
-    palette,
-    paletteVariation,
-    useSourceColorAsReference
-  } = attributes;
+  if ( supports === true || colorSignalSupport?.paletteClassname ) {
+    newClassnames.push( `sm-palette-${ palette }` );
 
-  return classnames(
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
-    {
-      'sm-palette--shifted': !! useSourceColorAsReference
+    if ( useSourceColorAsReference ) {
+      newClassnames.push( 'sm-palette--shifted' );
     }
-  );
+  }
+
+  if ( supports === true || colorSignalSupport?.paletteVariationClassname ) {
+    if ( colorSignal !== 0 ) {
+      newClassnames.push( `sm-variation-${ paletteVariation }` );
+    }
+  }
+
+  if ( supports === true || colorSignalSupport?.colorSignalClassname ) {
+    newClassnames.push( `sm-color-signal-${ colorSignal }` );
+  }
+
+  return newClassnames.join( " " );
 }
 
 export const getAlignmentClassnames = ( attributes ) => {
@@ -463,94 +407,8 @@ export const mapPalettesToColorPalette = palette => {
   };
 }
 
-export const compileVariationAttributes = ( palette, paletteVariation, useSourceColorAsReference ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-
-  let offset = siteVariation - sourceIndex - 1;
-  let newPaletteVariation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation;
-  newPaletteVariation = normalizeVariationValue( newPaletteVariation );
-
-  return {
-    useSourceColorAsReference: useSourceColorAsReference,
-    paletteVariation: paletteVariation,
-  }
-}
-
-export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorAsReference ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  let offset = siteVariation - sourceIndex - 1;
-  let variation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation - offset
-
-  return normalizeVariationValue( variation );
-}
-
-export const getAbsoluteColorVariation = ( props ) => {
-
-  const {
-    attributes: {
-      paletteVariation,
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const currentPalette = getCurrentPaletteConfig( props );
-  const { sourceIndex } = currentPalette;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = siteVariation - 1;
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
-}
-
-export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
-  return getRelativeColorVariation( getCurrentPaletteConfig( props ), paletteVariation, props );
-}
-
 export const getSiteColorVariation = () => {
-  return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
-}
-
-export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
-
-  const {
-    attributes: {
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const { sourceIndex } = paletteConfig;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
-}
-
-export const getSignalAttributes = ( signal, palette, sticky = false ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  const variationOptions = getSignalOptionsFromVariation( siteVariation );
-  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
-  const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
-
-  if ( sticky ) {
-
-    return {
-      colorSignal: signal,
-      palette: palette.id,
-      paletteVariation: nextVariation,
-      useSourceColorAsReference: sourceSignal === signal,
-    }
-
-  } else {
-
-    return {
-      palette: palette.id
-    }
-
-  }
+  return parseInt( window?.styleManager?.siteColorVariation || 1, 10 );
 }
 
 export const getSpacingCSSProps = ( attributes ) => {
@@ -568,6 +426,192 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
     '--novablocks-block-top-spacing': blockTopSpacing,
     '--novablocks-block-bottom-spacing': blockBottomSpacing,
-    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) )
+    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
   }
+}
+
+export const arrayRotate = (arr, count, reverse) => {
+  count = count % arr.length;
+
+  for ( let i = 1; i <= count; i++ ) {
+    if ( reverse ) {
+      arr.unshift( arr.pop() );
+    } else {
+      arr.push( arr.shift() );
+    }
+  }
+
+  return arr;
+}
+
+
+export const getPaletteConfig = ( palette ) => {
+  const palettes = window?.styleManager?.palettes;
+
+  if ( ! Array.isArray( palettes ) || ! palettes.length ) {
+    return { sourceIndex: 6 }
+  }
+
+  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
+}
+
+/**
+ * For a given set of attributes, return the absolute variation value
+ * which can differ from the actual paletteVariation attribute value
+ * when the useSourceColorAsReference attribute is set to true or Palette Basis Offset is different than 1
+ * @param attributes
+ * @returns {*}
+ */
+export const getAbsoluteColorVariation = ( attributes ) => {
+  const { palette, useSourceColorAsReference } = attributes;
+  const paletteVariation = parseInt( attributes.paletteVariation, 10 );
+  const sourceIndex = getSourceIndexFromPaletteId( palette );
+  const absoluteVariation = useSourceColorAsReference ? sourceIndex + 1 : paletteVariation;
+
+  return addSiteVariationOffset( absoluteVariation );
+}
+
+export const getVariationFromSignal = ( signal ) => {
+  let variation = 1;
+
+  if ( signal === 1 ) {
+    variation = 3;
+  }
+
+  if ( signal === 2 ) {
+    variation = 8;
+  }
+
+  if ( signal === 3 ) {
+    variation = 11;
+  }
+
+  return removeSiteVariationOffset( variation );
+}
+
+/**
+ * Calculate what's the colorSignal generated by a variation for a given reference variation
+ * @param compared the paletteVariation to be used
+ * @param reference the block's parent variation or any given reference variation for that matter
+ * @returns {*}
+ */
+export const getSignalRelativeToVariation = ( compared, reference ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference );
+
+  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+    return ( Math.abs(curr - compared ) < Math.abs( arr[prev] - compared ) ? index : prev );
+  }, 0 );
+}
+
+/**
+ * For a given reference value, returns an array containing the paletteVariation values generated
+ * by every colorSignal value from 0 to 3
+ * @param variation
+ * @returns {*[]}
+ */
+export const getSignalOptionsFromVariation = ( variation ) => {
+  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => getVariationFromSignal( index ) );
+
+  variationOptions.sort( ( variation1, variation2 ) => {
+    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
+  } );
+
+  return variationOptions;
+}
+
+/**
+ * Shorthand to calculate the colorSignal of child elements for blocks that have support for contentColorSignal
+ * @param attributes
+ * @returns {*}
+ */
+export const getContentVariationBySignal = ( attributes ) => {
+
+  const {
+    contentColorSignal,
+    paletteVariation,
+  } = attributes;
+
+  return computeColorSignal( paletteVariation, contentColorSignal );
+}
+
+/**
+ * For a given pair of a reference paletteVariation and a colorSignal value return a new paletteVariation value
+ * If the signal between the reference and the current variation is the same as the passed colorSignal value
+ * We return the current paletteVariation instead of calculating it again, since it's probably a value
+ * intentionally chosen by the user.
+ * @param reference the reference variation to compute the colorSignal on
+ * @param colorSignal the desired colorSignal value
+ * @param paletteVariation the block's current paletteVariation attribute's value
+ * @returns {*}
+ */
+export const computeColorSignal = ( reference, colorSignal, paletteVariation ) => {
+  const currentSignal = getSignalRelativeToVariation( paletteVariation, reference );
+  const signalOptions = getSignalOptionsFromVariation( reference );
+
+  if ( currentSignal === colorSignal ) {
+    return paletteVariation;
+  }
+
+  return signalOptions[ colorSignal ];
+}
+
+/**
+ * Returns a palette's source color position after it has been shifted with the Palette Basis Offset option
+ * @param palette
+ * @returns {number}
+ */
+export const getSourceIndexFromPaletteId = ( palette ) => {
+  const paletteConfig = getPaletteConfig( palette );
+  const siteVariation = getSiteColorVariation();
+  const { sourceIndex } = paletteConfig;
+
+  return ( sourceIndex - siteVariation + 1 + 12 ) % 12;
+}
+
+/**
+ * Add the value of the Palette Basis Offset control to a variation to simplify calculations
+ * @param variation
+ * @returns {*}
+ */
+export const addSiteVariationOffset = ( variation ) => {
+  const siteVariation = getSiteColorVariation();
+  return normalizeVariationValue( variation + siteVariation - 1 );
+}
+
+/**
+ * Remove the value of the Palette Basis Offset control, that was previously added to simplify calculations
+ * @param variation
+ * @returns {*}
+ */
+export const removeSiteVariationOffset = ( variation ) => {
+  const siteVariation = getSiteColorVariation();
+  return normalizeVariationValue( variation - siteVariation + 1 );
+}
+
+export const ready = ( fn ) => {
+  if ( document.readyState != 'loading' ) {
+    fn();
+  } else {
+    document.addEventListener( 'DOMContentLoaded', fn );
+  }
+}
+
+export const addClass = ( element, classes ) => {
+  const classesArray = classes.split( /\s+/ ).filter( x => x.trim().length );
+
+  if ( classesArray.length ) {
+    element.classList.add( ...classesArray );
+  }
+}
+
+export const removeClass = ( element, classes ) => {
+  const classesArray = classes.split(/\s+/).filter( x => x.trim().length );
+
+  if ( classesArray.length ) {
+    element.classList.remove( ...classesArray );
+  }
+}
+
+export const hasClass = ( element, className ) => {
+  return element.classList.contains( className );
 }

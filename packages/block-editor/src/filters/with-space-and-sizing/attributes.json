@@ -1,0 +1,26 @@
+{
+	"emphasisBySpace": {
+		"type": "number",
+		"default": 1
+	},
+	"enableOverlapping": {
+		"type": "boolean",
+		"default": false
+	},
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"blockBottomSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisTopSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisBottomSpacing": {
+		"type": "number",
+		"default": 0
+	}
+}

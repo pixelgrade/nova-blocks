@@ -2,7 +2,11 @@ import classnames from "classnames";
 
 import { Card } from "@novablocks/components";
 import { PostCard } from "@novablocks/block-editor";
-import { getColorSetClassnames, getContentVariationBySignal } from "@novablocks/utils";
+
+import {
+  getColorSignalClassnames,
+  getContentVariationBySignal,
+} from "@novablocks/utils";
 
 import {
   CollectionHeader,
@@ -56,7 +60,7 @@ const PreviewEdit = ( props ) => {
   const getContent = ( index, props, isLandscape ) => {
     const post = posts?.[ index ];
 
-    const contentVariation = getContentVariationBySignal( props );
+    const contentVariation = getContentVariationBySignal( props.attributes );
 
     const cardProps = {
       placeholder: true,
@@ -101,7 +105,7 @@ const PreviewEdit = ( props ) => {
     `novablocks-collection`,
     `novablocks-collection--align-${ contentAlign }`,
 
-    getColorSetClassnames( attributes ),
+    getColorSignalClassnames( attributes, true ),
     className
   );
 
