@@ -49,7 +49,6 @@ async function getNewDefaults() {
     ...randomAttributes,
     verticalAlignment: "center",
     images: randomImages,
-    blockTopSpacing: 1,
   };
 }
 

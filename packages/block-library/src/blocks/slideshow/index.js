@@ -44,7 +44,6 @@ async function getNewDefaults() {
 
 	return {
 		galleryImages: images,
-    blockTopSpacing: 1,
   };
 }
 

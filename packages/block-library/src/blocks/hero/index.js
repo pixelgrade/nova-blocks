@@ -40,7 +40,6 @@ async function getNewDefaults() {
 			...image,
 			type: 'image',
 		},
-    blockTopSpacing: 1,
 	};
 }
 
