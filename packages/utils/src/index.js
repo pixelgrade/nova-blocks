@@ -377,6 +377,16 @@ export const getColorSetClassnames = ( attributes ) => {
   );
 }
 
+export const getAlignmentClassnames = ( attributes ) => {
+  const { contentPosition } = attributes;
+
+  const alignment = contentPosition.split( " " );
+  const verticalAlignment = alignment[0];
+  const horizontalAlignment = alignment[1];
+
+  return `novablocks-u-valign-${ verticalAlignment } novablocks-u-halign-${ horizontalAlignment }`;
+}
+
 export const normalizeVariationValue = ( value ) => {
   return ( value + 11 ) % 12 + 1;
 }

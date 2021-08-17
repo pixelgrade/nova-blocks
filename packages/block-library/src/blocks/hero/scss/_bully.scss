@@ -8,19 +8,17 @@
 	position: fixed;
 	top: 50%;
 	right: 0;
-	font-size: 12px;
-	transform: translate(0, -50%);
 	z-index: 9000;
-	color: #000;
+
 	margin-right: 30px;
 
-	//@include below(lap) {
-	//	display: none;
-	//}
+	font-size: 12px;
+	transform: translate(0, -50%);
+	color: #000000;
 }
 
 .c-bully--inversed {
-	color: #fff;
+	color: #FFFFFF;
 }
 
 .c-bully__bullet {
@@ -37,7 +35,7 @@
 	width: 1em;
 	height: 1em;
 
-	border: 2px solid currentColor;
+	border: 0.175em solid currentColor;
 	border-radius: 50%;
 
 	will-change: transform;
@@ -53,13 +51,16 @@
 
 .c-bully__bullet--active:before {
 	content: '';
-	width: 1em;
-	height: 1em;
+
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	font-size: 14px;
-	transform: translate(-50%, -50%);
+
+	width: 1em;
+	height: 1em;
+
+	//font-size: 14px;
+	transform: translate(-50%, -50%) scale(1.2);
 	background: currentColor;
 	border-radius: 50%;
 }

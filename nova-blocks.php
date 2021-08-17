@@ -3,11 +3,11 @@
  * Plugin Name: Nova Blocks
  * Plugin URI: https://github.com/pixelgrade/nova-blocks/
  * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
- * Version: 1.12.4
+ * Version: 1.12.8
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * Text Domain: __plugin_txtd
- * Tested up to: 5.7.2
+ * Tested up to: 5.8
  * Requires PHP: 5.4.0
  * License: GPLv2 or later
  *

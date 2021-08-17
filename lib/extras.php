@@ -1709,6 +1709,7 @@ function novablocks_get_content_variation( $attributes ) {
 	$palettes = json_decode( $palettes_output );
 
 	$current_palette = null;
+
 	foreach ( $palettes as $palette ) {
 		if ( $attributes['palette'] == $palette->id ) {
 			$current_palette = $palette;
@@ -1716,7 +1717,12 @@ function novablocks_get_content_variation( $attributes ) {
 		}
 	}
 
-	$sourceIndex = $current_palette->sourceIndex;
+	if ( ! empty( $current_palette ) && property_exists( $current_palette, 'sourceIndex' ) ) {
+		$sourceIndex = $current_palette->sourceIndex;
+	} else {
+		$sourceIndex = 6;
+	}
+
 	$siteVariation = get_option( 'sm_site_color_variation', 1 );
 	$offset = $siteVariation - 1;
 

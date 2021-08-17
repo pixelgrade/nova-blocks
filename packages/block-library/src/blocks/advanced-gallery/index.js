@@ -57,7 +57,6 @@ registerBlockType( 'novablocks/advanced-gallery', {
 	supports: {
 		align: [ 'wide', 'full' ],
     html: false,
-    inserter: false,
     novaBlocks: {
       blobs: true
     }

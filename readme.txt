@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.2.2
 Tested up to: 5.7.2
 Requires PHP: 5.6.40
-Stable tag: 1.12.4
+Stable tag: 1.12.8
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,23 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.12.8 =
+* Improved selection of Header Row and Sidecar blocks inside the block editor
+* Improved Header Row blocks layout when Site Logo is missing
+* Fixed Block Alignment Matrix toolbar control
+* Fixed blocks layout inside the Widget Editor
+
+= 1.12.7 =
+* Fixed spacing inside Conversations block.
+* Fixed Food Menu label color.
+* Fixed OpenTable Block preview.
+* Add palette shifted class on frontend when Use Color as Reference is checked.
+* Fixed a bug in Advanced Gallery that was preventing the block from being inserted.
+* Improved OpenTable styling inside the Editor.
+* Removed theme related styles for Site Logo.
+* Update logic for Scroll Button.
+* Removed Header Row background on mobiles.
 
 = 1.12.0 =
 * New Color Signal component for an enhanced experience editing block colors

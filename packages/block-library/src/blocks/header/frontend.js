@@ -4,14 +4,14 @@ import { addSocialMenuClass } from "./utils";
 ( function( $, window, undefined ) {
 
   const $siteHeader = $( '.novablocks-header--main' ),
-    $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
-    $stickyHeader = $( '.novablocks-header--secondary' ),
-    $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
-    $currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
-    mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
-    isArticle = $( 'body' ).hasClass( 'single-post' ),
-    $progressBar = $( '.js-reading-progress' ),
-    $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
+        $primaryRow = $siteHeader.find( '.novablocks-header-row--primary' ),
+        $stickyHeader = $( '.novablocks-header--secondary' ),
+        $stickyMenuTrigger = $( '.js-sticky-menu-trigger' ),
+        $currentHeader = $stickyHeader.length ? $stickyHeader : $siteHeader,
+        mainHeaderShouldBeSticky = $( '.novablocks-header--main[data-sticky]' ).length && !$stickyHeader.length,
+        isArticle = $( 'body' ).hasClass( 'single-post' ),
+        $progressBar = $( '.js-reading-progress' ),
+        $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
 
   const $readingBar = $currentHeader.find( '.js-reading-bar' )
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();

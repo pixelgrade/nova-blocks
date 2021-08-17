@@ -110,12 +110,12 @@ addFilter( 'editor.BlockListBlock', 'novablocks/with-palette-classname', withPal
 // Add Palette Classes on Save
 const applyPaletteFrontEndClasses = (extraProps, blockType, attributes) => {
 
-  const { palette } = attributes;
+  const { palette, useSourceColorAsReference } = attributes;
 
   const supports = select( 'core/blocks' ).getBlockType( blockType.name ).supports;
 
   if ( supports?.novaBlocks?.colorSignal?.paletteClassname ) {
-    extraProps.className = classnames(extraProps.className, `sm-palette-${ palette }`)
+    extraProps.className = classnames(extraProps.className, `sm-palette-${ palette } ${ useSourceColorAsReference ? 'sm-palette--shifted' : '' }`)
   }
 
   return extraProps;

@@ -20,7 +20,10 @@
 }
 
 .novablocks-header--mobile {
-  display: none;
+  
+  @include above(lap) {
+    display: none;
+  }
 
   &.novablocks-header--scrolled {
     color: var(--novablocks-fg2-color);
