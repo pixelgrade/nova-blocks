@@ -17,10 +17,7 @@ import {
 } from "@novablocks/block-editor";
 
 // Load deprecated file
-import deprecated from './deprecated';
-
-// Load extras file
-import extras from './extras';
+import './deprecated';
 
 /**
  * WordPress dependencies
@@ -42,7 +39,7 @@ async function getNewDefaults() {
 		media: {
 			...image,
 			type: 'image',
-		}
+		},
 	};
 }
 

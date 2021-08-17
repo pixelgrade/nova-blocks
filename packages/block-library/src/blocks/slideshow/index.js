@@ -7,7 +7,7 @@ import save from './save';
 import { select } from '@wordpress/data';
 
 // Load deprecated file
-import deprecated from './deprecated';
+import './deprecated';
 
 import {
   getRandomArrayFromArray,
@@ -23,8 +23,6 @@ import {
 import blockAttributes from "./attributes";
 
 // Load extras file
-import extras from './extras';
-
 const attributes = Object.assign( {}, blockAttributes );
 
 /**
@@ -46,7 +44,7 @@ async function getNewDefaults() {
 
 	return {
 		galleryImages: images,
-	};
+  };
 }
 
 generateDefaults( 'novablocks/slideshow', getNewDefaults );

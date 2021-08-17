@@ -9,6 +9,7 @@ import {
   addSiteVariationOffset,
   removeSiteVariationOffset,
 } from "@novablocks/utils";
+import { getColorSignalClassnames } from "@novablocks/utils/src";
 
 const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
 
@@ -83,15 +84,14 @@ const updateBlockSignal = ( block, parentVariation ) => {
 
   removeClass( block, `${ paletteClassname } ${ paletteVariationClassname } sm-palette--shifted` );
 
-  addClass( block, `sm-palette-${ palette }` );
+  const newClassnames = getColorSignalClassnames( {
+    palette,
+    paletteVariation: finalVariation,
+    useSourceColorAsReference,
+    colorSignal,
+  }, true );
 
-  if ( colorSignal > 0 ) {
-    addClass( block, `sm-variation-${ finalVariation }` );
-  }
-
-  if ( useSourceColorAsReference ) {
-    addClass( block, `sm-palette--shifted` );
-  }
+  addClass( block, newClassnames );
 
   innerBlocks.forEach( innerBlock => {
     updateBlockSignal( innerBlock, finalAbsoluteVariation );

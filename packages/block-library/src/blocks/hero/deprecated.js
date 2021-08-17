@@ -5,7 +5,7 @@ import { omit } from 'lodash';
 
 import save from "./save";
 
-export const migrateContentPadding = (attributes) => {
+export const migrateContentPadding = ( attributes ) => {
 
   return {
     attributes: {
@@ -52,7 +52,7 @@ export const migrateContentPadding = (attributes) => {
     save
   }
 }
-const migrateContentToGroup = (attributes) => {
+const migrateContentToGroup = ( attributes ) => {
   return {
     attributes: {
       ...attributes,
@@ -63,7 +63,7 @@ const migrateContentToGroup = (attributes) => {
     },
 
     isEligible( attributes, innerBlocks ) {
-      return innerBlocks[0].name !== 'core/group' && innerBlocks[0].name !== 'novablocks/sidecar';
+      return innerBlocks[ 0 ].name !== 'core/group' && innerBlocks[ 0 ].name !== 'novablocks/sidecar';
     },
 
     migrate( attributes, innerBlocks ) {
@@ -95,7 +95,7 @@ const migrateContentToGroup = (attributes) => {
   }
 }
 
-const heroAddDeprecated = (settings, name) => {
+const heroAddDeprecated = ( settings, name ) => {
 
   if ( name !== 'novablocks/hero' ) {
     return settings;
@@ -104,7 +104,7 @@ const heroAddDeprecated = (settings, name) => {
   const attributes = settings.attributes;
 
   const deprecated = [
-    migrateContentPadding( attributes),
+    migrateContentPadding( attributes ),
     migrateContentToGroup( attributes )
   ]
 
@@ -114,4 +114,4 @@ const heroAddDeprecated = (settings, name) => {
   }
 }
 
-addFilter('blocks.registerBlockType', 'novablocks/hero-add-deprecated', heroAddDeprecated );
+addFilter( 'blocks.registerBlockType', 'novablocks/hero-add-deprecated', heroAddDeprecated );

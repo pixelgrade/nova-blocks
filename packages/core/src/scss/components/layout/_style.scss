@@ -28,8 +28,8 @@
   
   --novablocks-element-spacing-multiplier: 2;
   
-  --novablocks-content-padding-top: calc( var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
-  --novablocks-content-padding-bottom: calc( var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
+  --novablocks-content-padding-top: calc( var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
+  --novablocks-content-padding-bottom: calc( var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
   
   padding-top: var(--novablocks-content-padding-top);
   padding-bottom: var(--novablocks-content-padding-bottom);

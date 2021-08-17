@@ -1003,9 +1003,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes, $b
 			$value = json_encode( $value );
 		}
 
-		if ( ! empty( $value ) && $value !== "false" ) {
-			$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
-		}
+		$data_attributes[] = 'data-' . $data_attribute . "='" . $value . "'";
 	}
 
 	return $data_attributes;
