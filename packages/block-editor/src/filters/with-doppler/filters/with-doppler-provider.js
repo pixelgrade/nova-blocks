@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "@wordpress/element";
 
 import Doppler from "@novablocks/doppler";
-import { getEditorScrollContainer } from "../../utils";
 
-import DopplerContext from "./context";
-import { createBlockObservers } from "./utils";
+import { getEditorScrollContainer } from "../../../utils";
+import { createBlockObservers } from "../utils";
+import DopplerContext from "../context";
 
 const { getStyles, getState } = Doppler.utils;
 
@@ -35,6 +35,7 @@ const withDopplerProvider = ( WrappedComponent ) => {
 
       const observers = createBlockObservers( container, updateConfig );
       const unsubscribeUpdate = wp.data.subscribe( updateConfig );
+
       window.addEventListener( 'resize', updateConfig );
 
       if ( scrollContainer ) {
@@ -62,7 +63,7 @@ const withDopplerProvider = ( WrappedComponent ) => {
 
       setDopplerState( getState( config, attributes ) );
 
-    }, [ config ] );
+    }, [ config, attributes ] );
 
     useEffect( () => {
 
@@ -74,9 +75,9 @@ const withDopplerProvider = ( WrappedComponent ) => {
 
       setStyle( getStyles( cfg, attributes ) );
 
-    }, [ config, dopplerState ] )
+    }, [ config, dopplerState, attributes ] )
 
-    const updateConfig = () => {
+    const updateConfig = useCallback( () => {
 
       setConfig( {
         scrollContainerHeight: scrollContainer.offsetHeight,
@@ -86,7 +87,7 @@ const withDopplerProvider = ( WrappedComponent ) => {
         containerBox: container.getBoundingClientRect(),
       } );
 
-    }
+    }, [ container, scrollContainer ] )
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>

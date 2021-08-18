@@ -1,4 +1,4 @@
-import DopplerContext from "./context";
+import DopplerContext from "../context";
 
 const withDopplerContext = ( WrappedComponent ) => {
 
