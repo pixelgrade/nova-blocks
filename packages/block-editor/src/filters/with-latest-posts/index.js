@@ -1,5 +1,5 @@
 import attributes from './attributes';
-import InpectorControls from './inspector-controls';
+import InspectorControls from './inspector-controls';
 
 import {
 	isSpecificPostModeActive,
@@ -31,7 +31,7 @@ const withPostsQueryControls = createHigherOrderComponent( OriginalComponent => 
     return (
 			<Fragment>
 				<OriginalComponent { ...props } />
-        <InpectorControls { ...props } />
+        <InspectorControls { ...props } />
 			</Fragment>
 		)
 	}

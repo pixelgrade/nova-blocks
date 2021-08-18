@@ -35,7 +35,10 @@ registerBlockType( 'novablocks/supernova', {
       contentColorSignal: true,
       latestPosts: true,
       contentPositionMatrixToolbar: true,
-      doppler: true,
+      doppler: {
+        customWrapper: true
+      },
+      spaceAndSizing: true,
     }
   },
   edit,

@@ -1,73 +1,79 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { select } from "@wordpress/data";
+import { useEffect } from "@wordpress/element";
+import { dispatch, select, subscribe } from "@wordpress/data";
 import { setAttributesToInnerBlocks, blobAttributes } from "@novablocks/block-editor";
 import { getAlignFromMatrix, getContentVariationBySignal } from "@novablocks/utils";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
 
-const withSupernovaAttributesValues = createHigherOrderComponent( ( BlockListBlock ) => {
+const attributeKeys = [
+  'cardLayout',
+  'cardMediaOpacity',
+  'contentAreaWidth',
+  'contentPosition',
+
+  'preview',
+  'sourceType',
+  'layoutStyle',
+
+  'showTitle',
+  'showSubtitle',
+  'showDescription',
+  'showMeta',
+  'showButtons',
+
+  'scrollingEffect',
+
+  'thumbnailAspectRatio',
+  'thumbnailAspectRatioString',
+
+  'contentStyle',
+  ...Object.keys( blobAttributes )
+]
+.concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
+
+const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
 
-    if ( 'novablocks/supernova' === props.name ) {
-      const { clientId, attributes } = props;
-      const { getBlock } = select( 'core/block-editor' );
-      const block = getBlock( clientId );
+    const {
+      name,
+      attributes,
+      clientId,
+    } = props;
 
-      if ( ! block ) {
-        return;
+    useEffect( () => {
+
+      if ( 'novablocks/supernova' !== name ) {
+        return () => {};
       }
-
-      const { innerBlocks } = block;
-
-      const attributeKeys = [
-        'cardLayout',
-        'cardMediaOpacity',
-        'contentAreaWidth',
-        'contentPosition',
-
-        'preview',
-        'sourceType',
-        'layoutStyle',
-
-        'palette',
-        'useSourceColorAsReference',
-        'contentSignal',
-
-        'showTitle',
-        'showSubtitle',
-        'showDescription',
-        'showMeta',
-        'showButtons',
-
-        'scrollingEffect',
-
-        'thumbnailAspectRatio',
-        'thumbnailAspectRatioString',
-
-        'contentStyle',
-        ...Object.keys( blobAttributes )
-      ]
-      .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
 
       const newAttributes = {};
 
-      attributeKeys.forEach( key => { newAttributes[ key ] = attributes[ key ] } );
-      newAttributes.paletteVariation = getContentVariationBySignal( props );
+      attributeKeys.forEach( key => {
+        newAttributes[ key ] = attributes[ key ]
+      } );
 
-      setAttributesToInnerBlocks( clientId, newAttributes );
+      newAttributes.colorSignal = attributes.contentColorSignal;
+
+      const { getBlock } = select( 'core/block-editor' );
+      const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+      const { innerBlocks } = getBlock( clientId );
 
       if ( Array.isArray( innerBlocks ) ) {
-        innerBlocks.forEach( block => {
-          const alignment = getAlignFromMatrix( attributes.contentPosition );
-
-          setAttributesToInnerBlocks( block.clientId, { align: alignment[1] } );
+        innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
+          updateBlockAttributes( block.clientId, newAttributes );
         } );
       }
-    }
 
-    return <BlockListBlock { ...props } />
-  };
-}, 'withSupernovaAttributesValues' );
+    }, [ name, attributes, clientId ] );
 
-wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-collection-visibility-attributes', withSupernovaAttributesValues );
+    return (
+      <BlockListBlock { ...props } />
+    );
+
+  }
+
+}, 'withSupernovaUpdateChildren' );
+
+wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );

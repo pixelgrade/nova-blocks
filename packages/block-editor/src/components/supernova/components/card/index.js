@@ -5,10 +5,10 @@ import { Children, Fragment, useMemo } from '@wordpress/element';
 import {
   getContentVariationBySignal,
   getPaddingTopFromContainerHeight,
-  getAlignFromMatrix,
+  getAlignFromMatrix, getColorSignalClassnames,
 } from "@novablocks/utils";
 
-import { withDoppler } from "../../../../hooks";
+import { withDoppler } from "../../../../filters";
 
 export * from './contents';
 
@@ -24,13 +24,15 @@ export const Card = ( props ) => {
       contentAreaWidth,
       thumbnailAspectRatioString,
     },
+    className
   } = props;
 
-  const className = classnames(
+  const classNames = classnames(
     `supernova-card`,
     `supernova-card--layout-${ cardLayout }`,
     `supernova-card--style-${ contentStyle }`,
     `supernova-card--aspect-ratio-${ thumbnailAspectRatioString }`,
+    className
   );
 
   const style = {
@@ -44,7 +46,7 @@ export const Card = ( props ) => {
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
 
   return (
-    <div className={ className } style={ style }>
+    <div className={ classNames } style={ style }>
       { ! mediaChildren.length && media && <CardMediaWrapper media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
       <CardContentWrapper { ...props }>
@@ -57,9 +59,7 @@ export const Card = ( props ) => {
 export const CardContentWrapper = ( props ) => {
 
   const { attributes } = props;
-  const { palette } = attributes;
   const align = getAlignFromMatrix( attributes?.contentPosition );
-  const contentVariation = getContentVariationBySignal( props );
 
   const contentClassName = classnames(
     `supernova-card__content`,
@@ -69,8 +69,7 @@ export const CardContentWrapper = ( props ) => {
 
   const innerContainerClassName = classnames(
     `supernova-card__inner-container`,
-    `sm-variation-${ contentVariation }`,
-    `sm-palette-${ palette }`,
+    getColorSignalClassnames( attributes, true ),
   );
 
   return (

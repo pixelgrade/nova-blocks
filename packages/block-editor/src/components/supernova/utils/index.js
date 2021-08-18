@@ -19,7 +19,7 @@ const getPreviewAttributes = ( attributes ) => {
 }
 
 export const needsPreview = ( attributes ) => {
-  return attributes.layoutStyle === "parametric" && attributes.sourceType !== "content";
+  return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && attributes.sourceType !== "content";
 }
 
 export const withPreviewAttributes = ( WrappedComponent => {

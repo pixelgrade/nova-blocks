@@ -10,7 +10,7 @@ const { withPreviewAttributes } = SuperNova.utils;
 const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
 
 
-const SuperNovaItemEdit = withPreviewAttributes( props => {
+const SuperNovaItemEdit =  props => {
 
   return (
     <Card { ...props }>
@@ -20,7 +20,7 @@ const SuperNovaItemEdit = withPreviewAttributes( props => {
       <SuperNovaItemContent { ...props } />
     </Card>
   )
-} );
+};
 
 const SuperNovaItemContent = ( props ) => {
 

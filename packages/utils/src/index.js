@@ -300,7 +300,7 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
   const newClassnames = [];
 
-  if ( supports === true || colorSignalSupport?.paletteClassname ) {
+  if ( supports === true || colorSignalSupport === true || colorSignalSupport?.paletteClassname ) {
     newClassnames.push( `sm-palette-${ palette }` );
 
     if ( useSourceColorAsReference ) {
@@ -308,13 +308,13 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
     }
   }
 
-  if ( supports === true || colorSignalSupport?.paletteVariationClassname ) {
+  if ( supports === true || colorSignalSupport === true || colorSignalSupport?.paletteVariationClassname ) {
     if ( colorSignal !== 0 ) {
       newClassnames.push( `sm-variation-${ paletteVariation }` );
     }
   }
 
-  if ( supports === true || colorSignalSupport?.colorSignalClassname ) {
+  if ( supports === true || colorSignalSupport === true || colorSignalSupport?.colorSignalClassname ) {
     newClassnames.push( `sm-color-signal-${ colorSignal }` );
   }
 
@@ -323,6 +323,10 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
 
 export const getAlignmentClassnames = ( attributes ) => {
   const { contentPosition } = attributes;
+
+  if ( typeof contentPosition !== "string" ) {
+    return '';
+  }
 
   const alignment = contentPosition.split( " " );
   const verticalAlignment = alignment[0];

@@ -3,15 +3,9 @@ import Slider from "react-slick";
 
 import { Children } from '@wordpress/element';
 
-import {
-  GridGenerator,
-} from "@novablocks/collection";
+import { GridGenerator } from "@novablocks/collection";
 
-
-
-const {
-  ParametricGrid,
-} = GridGenerator;
+const { ParametricGrid } = GridGenerator;
 
 const CollectionLayout = ( props ) => {
 
@@ -95,7 +89,7 @@ const CarouselLayout = ( props ) => {
   } = props;
 
   const settings = {
-    dots: showPagination && cardLayout !== 'stacked',
+    dots: showPagination,
     infinite: true,
     variableWidth: carouselLayout === 'variable',
   };

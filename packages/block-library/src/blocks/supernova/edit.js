@@ -3,7 +3,7 @@ import { getSaveElement } from '@wordpress/blocks';
 import { dispatch, select } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
-import { getColorSetClassnames } from '@novablocks/utils';
+import { getColorSignalClassnames } from '@novablocks/utils';
 import { CollectionHeader } from "@novablocks/collection";
 import { SuperNova } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
@@ -11,7 +11,10 @@ import AdvancedGallery from "@novablocks/advanced-gallery";
 import Controls from './controls';
 import CollectionLayout from './layout';
 
-const { withPreviewAttributes } = SuperNova.utils;
+const {
+  needsPreview,
+  withPreviewAttributes
+} = SuperNova.utils;
 
 const {
   Card,
@@ -126,7 +129,10 @@ const FieldsPreview = ( props ) => {
 
 const Collection = ( props ) => {
 
-  const { attributes } = props;
+  const {
+    attributes,
+    className
+  } = props;
 
   const {
     align,
@@ -139,8 +145,6 @@ const Collection = ( props ) => {
     emphasisArea,
   } = attributes;
 
-  const colorSetClassnames = getColorSetClassnames( attributes );
-
   const style = {
     '--collection-emphasis-area': emphasisArea,
     '--collection-columns-count': columns,
@@ -152,7 +156,7 @@ const Collection = ( props ) => {
   };
 
   return (
-    <div className={ `supernova ${ colorSetClassnames }` } style={ style }>
+    <div className={ `supernova ${ className }` } style={ style }>
       <div className={ `wp-block__inner-container` }>
         {
           headerPosition === 0 &&

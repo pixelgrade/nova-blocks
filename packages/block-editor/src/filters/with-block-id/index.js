@@ -46,6 +46,3 @@ const withBlockIdAttribute = createHigherOrderComponent( ( BlockEdit ) => {
 }, "withBlockIdAttribute" );
 
 addFilter( 'editor.BlockEdit', 'novablocks/with-blockId-attribute', withBlockIdAttribute );
-
-
-

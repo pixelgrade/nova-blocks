@@ -32,7 +32,3 @@
   padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
   padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
 }
-
-.supernova-collection {
-  --novablocks-element-spacing-multiplier: 1;
-}

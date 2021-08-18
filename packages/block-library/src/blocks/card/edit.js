@@ -44,7 +44,6 @@ const CardEdit = ( props ) => {
     'novablocks-card--fixed-media-aspect-ratio',
     'novablocks-card--portrait',
     'novablocks-block__content',
-    getColorSignalClassnames( attributes, true )
   );
 
 	return (

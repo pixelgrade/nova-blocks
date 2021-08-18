@@ -3,7 +3,6 @@ import "./with-doppler";
 
 import "./with-blobs";
 import "./with-block-id";
-import "./with-block-index";
 import "./with-card-details";
 import "./with-card-elements-display";
 import "./with-cards-manager";

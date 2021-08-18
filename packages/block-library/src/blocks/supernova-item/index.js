@@ -18,7 +18,7 @@ import { generateDefaults, getPlaceholderImages } from "@novablocks/block-editor
 import AdvancedGallery from "@novablocks/advanced-gallery";
 
 import attributes from './attributes.json';
-import {select} from "@wordpress/data";
+import { select } from "@wordpress/data";
 
 const { getRandomAttributes } = AdvancedGallery.utils;
 
@@ -61,9 +61,15 @@ registerBlockType( 'novablocks/supernova-item', {
     html: false,
     inserter: false,
     novaBlocks: {
-      colorSignal: true,
+      colorSignal: {
+        paletteClassname: false,
+        paletteVariationClassname: false,
+        colorSignalClassname: false,
+      },
       latestPosts: true,
-      doppler: true,
+      doppler: {
+        customWrapper: true
+      },
     }
   },
   edit,
