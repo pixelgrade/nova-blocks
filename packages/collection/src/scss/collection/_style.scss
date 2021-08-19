@@ -69,3 +69,20 @@
   @include block-spacing;
 }
 
+.slick-slide {
+  opacity: 1 !important;
+
+  // element on which we apply the custom transition
+  > * {
+    overflow: hidden;
+    background-color: var(--novablocks-bg-color);
+  }
+}
+
+.slick-slide--current {
+  z-index: 1100 !important;
+}
+
+.slick-slide--next {
+  z-index: 1200 !important;
+}

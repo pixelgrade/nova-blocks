@@ -18,11 +18,13 @@ const GRID_SELECTOR = '.novablocks-grid';
 const CAROUSEL_SELECTOR = '.novablocks-collection--carousel .novablocks-collection__layout, ' +
                           '.supernova-collection__layout--carousel';
 
+import './carousel';
+
 (function($, window, undefined) {
 
 	const defaultBlockWidth = 1152; // magic
 
-  handleCarousels( CAROUSEL_SELECTOR );
+//  handleCarousels( CAROUSEL_SELECTOR );
   handleGrids( GRID_SELECTOR );
 
   function handleGrids( selector ) {
