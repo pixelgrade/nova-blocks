@@ -20,6 +20,10 @@
   flex: 0 0 auto;
 }
 
+.supernova-card__inner-container {
+  @include layout-grid;
+}
+
 .supernova-collection__layout {
 
   &:not(&--parametric) .supernova-card--layout-vertical-reverse {

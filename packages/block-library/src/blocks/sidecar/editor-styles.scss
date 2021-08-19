@@ -39,8 +39,7 @@
   
   > * {
     width: 100%;
-    
-    grid-column: var(--block-content-start) / var(--block-content-end);
+
     align-self: flex-start;
   }
   
@@ -127,18 +126,10 @@
   
     // Content
     > :first-child {
-      
-      grid-column: var(--block-content-start)/var(--block-content-end);
     
       > .wp-block-novablocks-sidecar-area {
       
         > #{$grid-selector} {
-        
-          //@include layout-grid;
-        
-          > * {
-            grid-column: var(--block-content-start)/var(--block-content-end);
-          }
         
           [data-type='novablocks/sidecar'] {
             grid-column: var(--all-columns);
@@ -158,10 +149,6 @@
       --block-content-end: var(--block-limit-right);
   
     > #{$grid-selector} {
-  
-      > :first-child {
-        grid-column: var(--block-content-start)/var(--block-content-end);
-      }
   
       // Sidebar
       > :last-child {
@@ -194,16 +181,6 @@
         
         --block-content-start: cs;
         --block-content-end: ce;
-  
-        > .novablocks-content {
-    
-          > #{$grid-selector} {
-      
-            > * {
-              grid-column: var(--block-content-start)/var(--block-content-end);
-            }
-          }
-        }
       }
       
       // Content
@@ -287,7 +264,6 @@
     @include layout-grid;
   
     > * {
-      grid-column: var(--block-content-start)/var(--block-content-end);
       width: 100%;
     }
   }
