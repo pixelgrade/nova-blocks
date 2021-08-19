@@ -35,7 +35,7 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 			$target = 'target="_blank"';
 		}
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		ob_start();

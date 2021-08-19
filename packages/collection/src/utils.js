@@ -179,3 +179,130 @@ export const transposeMatrix = ( source ) => {
 		} );
 	} );
 };
+
+export const getAreaClassname = ( area, attributes, widthRatioMultiplier = 1 ) => {
+  const { width, height } = area;
+  const { gridcolumns, gridrows } = getGridColumnsAndRows( attributes );
+
+  return classnames([
+    getAreaBaseClassname( area ),
+    getAreaClassnameByWidthRatio( widthRatioMultiplier * width / gridcolumns ),
+    getAreaClassnameByHeightRatio( height / gridrows ),
+    getAreaClassnameByAspectRatio( area, attributes )
+  ]);
+
+}
+
+export const removeSmallestColumn = ( areaColumns ) => {
+
+  let data = areaColumns.map( ( area, index ) => {
+    return {
+      area,
+      index,
+    }
+  } );
+
+  data.sort( ( obj1, obj2 ) => {
+    return obj1.area.width - obj2.area.width;
+  } );
+
+  let indexToRemove = data[0].index;
+
+  if ( data[0].area.nth === 1 ) {
+    indexToRemove = data[data.length].index;
+  }
+
+  areaColumns.splice( indexToRemove, 1 );
+}
+
+export const normalizeColumns = ( areaColumns, attributes ) => {
+  moveColumnsToLeft( areaColumns );
+  growColumnsToRight( areaColumns, attributes );
+  moveColumnsToTop( areaColumns );
+
+  areaColumns.forEach( areaColumn => {
+    areaColumn.areas.forEach( area => {
+      area.col = areaColumn.col;
+      area.width = areaColumn.width;
+    } )
+  } )
+}
+
+export const moveColumnsToLeft = ( areaColumns ) => {
+
+  areaColumns.forEach( areaColumn => {
+    let spaceLeft = 0;
+    let movingLeft = true;
+
+    while ( movingLeft ) {
+
+      const overlapLeft = areaColumns.filter( compareColumn => compareColumn !== areaColumn ).some( compareColumn => {
+        return ! ( areaColumn.col + areaColumn.width - 1 < compareColumn.col ||
+                   areaColumn.row + areaColumn.height - 1 < compareColumn.row ||
+                   areaColumn.row > compareColumn.row + compareColumn.height - 1 ||
+                   areaColumn.col - ( spaceLeft + 1 ) > compareColumn.col + compareColumn.width - 1 );
+      } );
+
+      if ( overlapLeft || areaColumn.col - spaceLeft <= 1 ) {
+        movingLeft = false;
+      } else {
+        spaceLeft++;
+      }
+    }
+
+    areaColumn.col = areaColumn.col - spaceLeft;
+  } );
+}
+
+export const growColumnsToRight = ( areaColumns, attributes ) => {
+  const { gridcolumns } = attributes;
+
+  areaColumns.forEach( areaColumn => {
+    let spaceRight = 0;
+    let growingRight = true;
+
+    while ( growingRight ) {
+
+      const overlapRight = areaColumns.filter( compareColumn => compareColumn !== areaColumn ).some( compareColumn => {
+        return ! ( areaColumn.col + areaColumn.width + spaceRight < compareColumn.col ||
+                   areaColumn.row + areaColumn.height - 1 < compareColumn.row ||
+                   areaColumn.row > compareColumn.row + compareColumn.height - 1 ||
+                   areaColumn.col > compareColumn.col + compareColumn.width - 1 );
+      } );
+
+      if ( overlapRight || areaColumn.col + areaColumn.width + spaceRight - 1 >= gridcolumns ) {
+        growingRight = false;
+      } else {
+        spaceRight++;
+      }
+    }
+
+    areaColumn.width = areaColumn.width + spaceRight;
+  } );
+}
+
+export const moveColumnsToTop = ( areaColumns ) => {
+
+  areaColumns.forEach( areaColumn => {
+    let spaceTop = 0;
+    let movingTop = true;
+
+    while ( movingTop ) {
+
+      const overlapTop = areaColumns.filter( compareColumn => compareColumn !== areaColumn ).some( compareColumn => {
+        return ! ( areaColumn.col + areaColumn.width - 1 < compareColumn.col ||
+                   areaColumn.row + areaColumn.height - 1 < compareColumn.row ||
+                   areaColumn.row - ( spaceTop + 1 ) > compareColumn.row + compareColumn.height - 1 ||
+                   areaColumn.col > compareColumn.col + compareColumn.width - 1 );
+      } );
+
+      if ( overlapTop || areaColumn.row - spaceTop <= 1 ) {
+        movingTop = false;
+      } else {
+        spaceTop++;
+      }
+    }
+
+    areaColumn.row = areaColumn.row - spaceTop;
+  } );
+}

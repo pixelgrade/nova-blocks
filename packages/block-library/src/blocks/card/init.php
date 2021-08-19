@@ -48,7 +48,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 			$classes[] = 'content-is-' . $attributes['contentStyle'];
 		}
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		$className = join( ' ', $classes );

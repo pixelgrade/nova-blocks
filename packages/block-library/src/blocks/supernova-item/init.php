@@ -17,16 +17,16 @@ function novablocks_get_supernova_item_attributes() {
 
 		'packages/block-library/src/blocks/supernova-item/attributes.json',
 
-		'packages/block-editor/src/hooks/with-blobs/attributes.json',
-		'packages/block-editor/src/hooks/with-card-details/attributes.json',
-		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
-		'packages/block-editor/src/hooks/with-cards-manager/attributes.json',
-		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
-		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/hooks/with-doppler/attributes.json',
-		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',
-		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
+		'packages/block-editor/src/filters/with-blobs/attributes.json',
+		'packages/block-editor/src/filters/with-card-details/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
+		'packages/block-editor/src/filters/with-color-signal/attributes.json',
+		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
+		'packages/block-editor/src/filters/with-doppler/attributes.json',
+		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/filters/with-visual-balance/attributes.json',
 	) );
 
 }

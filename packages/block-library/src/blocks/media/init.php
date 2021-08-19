@@ -95,7 +95,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-media-spacing) * 5 / 100 );' .
 			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 
 		$blockClasses = array_merge( $blockClasses, $blockPaletteClasses );
 		$contentVariation = novablocks_get_content_variation( $attributes );

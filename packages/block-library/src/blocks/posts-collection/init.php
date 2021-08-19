@@ -54,7 +54,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			'alignfull',
 		);
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		if ( ! empty( $attributes['className'] ) ) {

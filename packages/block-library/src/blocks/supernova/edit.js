@@ -3,7 +3,6 @@ import { getSaveElement } from '@wordpress/blocks';
 import { dispatch, select } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
-import { getColorSignalClassnames } from '@novablocks/utils';
 import { CollectionHeader } from "@novablocks/collection";
 import { SuperNova } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";

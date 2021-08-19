@@ -46,8 +46,4 @@ registerBlockType( 'novablocks/supernova', {
     return <InnerBlocks.Content />
   },
   variations,
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  },
 } );

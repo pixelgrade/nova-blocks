@@ -222,6 +222,7 @@ function novablocks_register_block_types() {
 	$slick_dependent_scripts = array(
 		'novablocks/slideshow/frontend',
 		'novablocks/posts-collection/frontend',
+		'novablocks/supernova/frontend',
 	);
 
 	$bully_dependent_scripts = array(

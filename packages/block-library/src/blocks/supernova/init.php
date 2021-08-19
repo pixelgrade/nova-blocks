@@ -17,16 +17,16 @@ function novablocks_get_supernova_attributes() {
 
 		'packages/block-library/src/blocks/supernova/attributes.json',
 
-		'packages/block-editor/src/hooks/with-blobs/attributes.json',
-		'packages/block-editor/src/hooks/with-card-details/attributes.json',
-		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
-		'packages/block-editor/src/hooks/with-cards-manager/attributes.json',
-		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
-		'packages/block-editor/src/hooks/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/hooks/with-doppler/attributes.json',
-		'packages/block-editor/src/hooks/with-latest-posts/attributes.json',
-		'packages/block-editor/src/hooks/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/hooks/with-visual-balance/attributes.json',
+		'packages/block-editor/src/filters/with-blobs/attributes.json',
+		'packages/block-editor/src/filters/with-card-details/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
+		'packages/block-editor/src/filters/with-color-signal/attributes.json',
+		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
+		'packages/block-editor/src/filters/with-doppler/attributes.json',
+		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/filters/with-visual-balance/attributes.json',
 	) );
 
 }
@@ -38,6 +38,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$attributes_config = novablocks_get_supernova_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$args  = novablocks_build_articles_query( $attributes );
 		$posts = get_posts( $args );
@@ -47,10 +49,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$classes = array(
 			'supernova',
-			'alignfull',
+			'align' . $attributes[ 'align' ]
 		);
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
+		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		$layoutClasses = array(
@@ -90,6 +92,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
         <div
 			class="<?php echo join( ' ', $classes ); ?>"
+			<?php echo join( " ", $data_attributes ); ?>
 			style="<?php echo join(';', $cssProps ); ?>">
 			<?php if ( $supernova_header ) { ?>
 				<div class="supernova__inner-container">

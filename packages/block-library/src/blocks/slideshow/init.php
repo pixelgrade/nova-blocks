@@ -54,7 +54,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 				'alignfull'
 			),
 			novablocks_get_block_extra_classes( $attributes ),
-			novablocks_get_palette_classes( $attributes )
+			novablocks_get_color_signal_classes( $attributes )
 		);
 
 		if ( ! empty( $attributes['className'] ) ) {

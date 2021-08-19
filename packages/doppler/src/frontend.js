@@ -65,6 +65,8 @@ $( function() {
 		$( window ).on( 'scroll', parallaxUpdateState );
 		$( window ).on( 'resize', parallaxUpdateState );
 
+		$container.on( 'update', parallaxUpdateState );
+
     parallaxUpdateState();
 	} );
 

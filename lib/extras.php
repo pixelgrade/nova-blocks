@@ -1246,7 +1246,7 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
 
-		$classes = array_merge( $classes, novablocks_get_palette_classes( $attributes ) );
+		$classes = array_merge( $classes, novablocks_get_color_signal_classes( $attributes ) );
 		$className = join( ' ', $classes );
 
 		ob_start(); ?>
@@ -1700,17 +1700,32 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 	return $script;
 }
 
-function novablocks_get_palette_classes( $attributes ) {
-	$classes = array(
-		'sm-palette-' . $attributes['palette'],
-		'sm-variation-' . $attributes['paletteVariation'],
-	);
+function novablocks_get_color_signal_classes( $attributes ) {
+	$classes = array();
+
+	$classes[] = 'sm-palette-' . $attributes['palette'];
+
+	if ( $attributes['colorSignal'] !== 0 ) {
+		$classes[] = 'sm-variation-' . $attributes['paletteVariation'];
+	}
 
 	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
 		$classes[] = 'sm-palette--shifted';
 	}
 
 	return $classes;
+}
+
+function novablocks_get_color_signal_data_attributes( $attributes ) {
+
+	$data_attributes = array(
+		'data-palette="' . $attributes['palette'] . '"',
+		'data-palette-variation="' . $attributes['paletteVariation'] . '"',
+		'data-color-signal="' . $attributes['colorSignal'] . '"',
+		'data-use-source-color-as-reference="' . $attributes['useSourceColorAsReference'] . '"',
+	);
+
+	return join( " ", $data_attributes );
 }
 
 function novablocks_normalize_variation_value( $variation ) {
@@ -1830,7 +1845,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 		'supernova-card__inner-container'
 	);
 
-	$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
+	$contentPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 	$innerContainerClasses = array_merge( $innerContainerClasses, $contentPaletteClasses );
 
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
@@ -1842,27 +1857,30 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 	);
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+	$blacklist = array( 'images' );
+	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 	ob_start(); ?>
 
-	<div <?php echo join( ' ', $data_attributes ); ?>
-		 class="<?php echo join( ' ', $cardClasses ); ?>"
-		 style="<?php echo join( '; ', $cssProps ); ?>">
-		<div class="supernova-card__media-wrapper">
-			<div class="supernova-card__media-aspect-ratio novablocks-doppler__mask novablocks-doppler__wrapper">
-				<div class="novablocks-doppler__target">
-					<?php echo $media; ?>
+	<div class="supernova-collection__layout-item">
+		<div <?php echo join( ' ', $data_attributes ); ?>
+			 class="<?php echo join( ' ', $cardClasses ); ?>"
+			 style="<?php echo join( '; ', $cssProps ); ?>">
+			<div class="supernova-card__media-wrapper">
+				<div class="supernova-card__media-aspect-ratio novablocks-doppler__mask novablocks-doppler__wrapper">
+					<div class="novablocks-doppler__target">
+						<?php echo $media; ?>
+					</div>
 				</div>
 			</div>
+			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
+				<div class="<?php echo join( ' ', $contentClasses ); ?>">
+					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
+						<?php echo $content; ?>
+					</div>
+				</div>
+			<?php } ?>
 		</div>
-		<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
-			<div class="<?php echo join( ' ', $contentClasses ); ?>">
-				<div class="<?php echo join( ' ', $innerContainerClasses ); ?>">
-					<?php echo $content; ?>
-				</div>
-			</div>
-		<?php } ?>
 	</div>
 	<?php return ob_get_clean();
 }

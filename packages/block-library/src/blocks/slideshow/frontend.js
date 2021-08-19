@@ -61,14 +61,12 @@ const TRANSITION_EASING = "easeInOutCirc";
 	}
 
 	function getBlockMinHeight( $block ) {
-		var windowWidth = window.innerWidth;
-		var $slider = $block.find( SLIDER_SELECTOR );
-		var sliderWidth = $block.find( SLIDER_SELECTOR ).outerWidth();
-		var windowHeight = window.innerHeight;
-		var sliderMinHeight = parseInt( $block.data( 'min-height' ) ) * windowHeight / 100;
-		var mediaMinHeight = 0;
-		var slideMaxHeight = 0;
-		var maxAspectRatio = 0;
+		const sliderWidth = $block.find( SLIDER_SELECTOR ).outerWidth();
+		const windowHeight = window.innerHeight;
+		const sliderMinHeight = parseInt( $block.data( 'min-height' ) ) * windowHeight / 100;
+		let mediaMinHeight = 0;
+		let slideMaxHeight = 0;
+		let maxAspectRatio = 0;
 
 		$block.find( SLIDE_SELECTOR ).each( function( i, obj ) {
 			var $slide = $( obj ),
