@@ -6,10 +6,10 @@
 @mixin block-spacing-top-level-multiplier {
 
   & {
-    --novablocks-element-spacing-multiplier: calc(2 * var(--novablocks-element-spacing-level-1-multiplier));
+    --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
 
     > p + p {
-      --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
+      --novablocks-element-spacing-multiplier: calc( 0.5 * var(--novablocks-element-spacing-level-1-multiplier) );
     }
   }
 }

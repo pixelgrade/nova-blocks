@@ -66,19 +66,34 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
 			const collection = getBlock( clientId );
 
 			const cards = collection.innerBlocks;
+			const attributesToCopy = [
+        'contentAlign',
+        'palette',
+        'showMedia',
+        'showTitle',
+        'showSubtitle',
+        'showDescription',
+        'showButtons',
+        'showMeta'
+      ]
 
 			const newAttributes = (
 				( attributes ) => {
-				  const { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } = attributes;
-					const atts = { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
+				  const newAttributes = {};
+
+				  attributesToCopy.forEach( attributeName => {
+				    newAttributes[ attributeName ] = attributes[ attributeName ];
+          } );
 
 					// Card edit applies the value of the level attribute + 1 for the card title heading level
           // we'll keep this as it is for now since we're implementing supernova
-					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
+					newAttributes.level = Math.max( 1, attributes.cardTitleLevel - 1 );
 
-          return Object.assign( {}, atts, {
+          Object.assign( newAttributes, {
             colorSignal: attributes.contentColorSignal,
           } );
+
+          return newAttributes;
 				}
 			)( attributes );
 

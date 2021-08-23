@@ -219,3 +219,9 @@
     --font-size-modifier: 1;
   }
 }
+
+.novablocks-sidecar__container {
+  @include block-spacing-reset;
+  @include block-spacing-top-level-multiplier;
+  @include block-spacing-nested-levels-multiplier;
+}
