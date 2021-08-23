@@ -1,4 +1,4 @@
-import useApiFetch from "../../../../use-api-fetch";
+import { useApiFetch } from "../../../../../index";
 
 const Tags = ( props ) => {
 
