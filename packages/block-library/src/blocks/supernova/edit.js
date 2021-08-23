@@ -36,26 +36,26 @@ const SuperNovaEdit = withPreviewAttributes( ( props ) => {
     posts,
   } = props;
 
-  if ( sourceType === 'blocks' || sourceType === 'fields' ) {
-
-    if ( preview ) {
-      return <CollectionPreview { ...props } />
-    }
+  if ( sourceType === 'content' ) {
 
     return (
       <Collection { ...props }>
-        <InnerBlocks
-          allowedBlocks={ [ 'novablocks/supernova-item' ] }
-          renderAppender={ false }
-          templateInsertUpdatesSelection={ false }
-        />
+        { Array.isArray( posts ) && posts.map( post => <PostCard { ...props } post={ post } /> ) }
       </Collection>
     )
   }
 
+  if ( preview ) {
+    return <CollectionPreview { ...props } />
+  }
+
   return (
     <Collection { ...props }>
-      { Array.isArray( posts ) && posts.map( post => <PostCard { ...props } post={ post } /> ) }
+      <InnerBlocks
+        allowedBlocks={ [ 'novablocks/supernova-item' ] }
+        renderAppender={ false }
+        templateInsertUpdatesSelection={ false }
+      />
     </Collection>
   )
 } );

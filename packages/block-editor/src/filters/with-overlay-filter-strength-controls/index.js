@@ -7,6 +7,7 @@ import { Fragment } from "@wordpress/element";
 
 import attributes from "./attributes.json";
 import Controls from "./controls";
+import { useSupports } from "../../hooks";
 
 const withOverlayFilterStrengthAttributes = ( block ) => {
 
@@ -28,7 +29,7 @@ const withOverlayFilterStrengthControls = createHigherOrderComponent( OriginalCo
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.overlayFilterStrength ) {
       return <OriginalComponent { ...props } />

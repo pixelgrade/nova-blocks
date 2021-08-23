@@ -164,7 +164,7 @@ const VerticalAnchoringSettings = ( props ) => {
 }
 
 const shouldShowVerticalAlignment = ( props ) => {
-  const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+  const supports = useSupports( props.name );
 
   return supports?.novaBlocks?.contentPositionMatrixToolbar;
 }

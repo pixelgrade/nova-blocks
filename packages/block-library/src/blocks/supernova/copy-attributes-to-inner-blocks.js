@@ -75,4 +75,4 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
 
 }, 'withSupernovaUpdateChildren' );
 
-wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );
+//wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );

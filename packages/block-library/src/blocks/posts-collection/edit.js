@@ -21,6 +21,8 @@ const {
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import { isSpecificPostModeActive } from "@novablocks/block-editor/src/filters/with-latest-posts/utils";
+import { STORE_NAME } from "@novablocks/block-editor/src/filters/with-latest-posts/store";
 
 const PreviewEdit = ( props ) => {
 
@@ -29,7 +31,6 @@ const PreviewEdit = ( props ) => {
     setAttributes,
     posts,
     clientId,
-    markPostsAsDisplayed,
     className,
     isSelected,
   } = props;
@@ -46,6 +47,12 @@ const PreviewEdit = ( props ) => {
 
     headerPosition,
   } = attributes;
+
+  const markPostsAsDisplayed = useDispatch( dispatch => {
+    return isSpecificPostModeActive( attributes )
+    ? dispatch( STORE_NAME ).markSpecificPostsAsDisplayed
+    : dispatch( STORE_NAME ).markPostsAsDisplayed;
+  }, [ attributes ] );
 
   markPostsAsDisplayed( clientId, posts );
 

@@ -60,18 +60,14 @@ registerBlockType( 'novablocks/supernova-item', {
   supports: {
     html: false,
     inserter: false,
-    novaBlocks: {
-      colorSignal: {
-        paletteClassname: false,
-        paletteVariationClassname: false,
-        colorSignalClassname: false,
-      },
-      latestPosts: true,
-      doppler: {
-        attributes: true,
-        customWrapper: true
-      },
-    }
+//    novaBlocks: {
+//      colorSignal: {
+//        paletteClassname: false,
+//        paletteVariationClassname: false,
+//        colorSignalClassname: false,
+//      },
+//      latestPosts: true,
+//    }
   },
   edit,
   save: function() {

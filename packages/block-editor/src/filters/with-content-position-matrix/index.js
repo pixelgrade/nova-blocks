@@ -7,6 +7,7 @@ import { addFilter } from "@wordpress/hooks";
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { select, dispatch } from "@wordpress/data";
 import { Fragment } from "@wordpress/element";
+import { useSupports } from "../../hooks";
 
 function withContentPositionMatrixAttributes( settings ) {
 
@@ -28,7 +29,7 @@ const withContentPositionMatrixControls = createHigherOrderComponent( OriginalCo
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.contentPositionMatrixToolbar ) {
       return <OriginalComponent { ...props } />
@@ -49,8 +50,7 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 
   return ( props ) => {
 
-    const blockType = select( 'core/blocks' ).getBlockType( props.name );
-    const supports = blockType.supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.contentPositionMatrixToolbar ) {
       return <OriginalComponent { ...props } />

@@ -2,12 +2,13 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 import { select } from "@wordpress/data";
 import { Fragment } from "@wordpress/element";
 import Controls from "../controls";
+import { useSupports } from "../../../hooks";
 
 const withDopplerControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
     const dopplerSupport = supports?.novaBlocks?.doppler;
 
     if ( dopplerSupport !== true && ! dopplerSupport?.controls ) {

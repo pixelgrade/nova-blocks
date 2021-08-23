@@ -6,12 +6,13 @@ import { select } from '@wordpress/data';
 import attributes from "./attributes.json";
 
 import InspectorControls from './inspector-controls';
+import { useSupports } from "../../hooks";
 
 const withBlobsControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
-    const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const supports = useSupports( props.name );
 
     if ( ! supports?.novaBlocks?.blobs ) {
       return <OriginalComponent { ...props } />
