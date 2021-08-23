@@ -126,6 +126,16 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 			flex: 1 1 0;
 		}
 	}
+  
+  .novablocks-collection--classic {
+    
+    @include below(mobile) {
+      
+      .novablocks-card__description {
+        display: none;
+      }
+    }
+  }
 }
 
 .supernova-card__media[class] {
