@@ -93,8 +93,6 @@ const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockLi
             colorSignal: attributes.contentColorSignal,
           } );
 
-          console.log( newAttributes );
-
           return newAttributes;
 				}
 			)( attributes );
