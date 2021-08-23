@@ -20,6 +20,6 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
       </Fragment>
     );
   }
-} );
+}, 'withColorSignalControls' );
 
 export default withColorSignalControls;

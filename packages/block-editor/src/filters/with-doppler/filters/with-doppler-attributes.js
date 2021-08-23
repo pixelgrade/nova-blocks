@@ -3,7 +3,9 @@ import altAttributes from "../attributes-alt.json";
 
 const withDopplerAttributes = ( settings ) => {
 
-  if ( ! settings?.supports?.novaBlocks?.doppler && ! settings?.supports?.novaBlocks?.doppler?.attributes ) {
+  const dopplerSupport = settings?.supports?.novaBlocks?.doppler;
+
+  if ( dopplerSupport !== true && ! dopplerSupport?.attributes ) {
     return settings;
   }
 
@@ -12,7 +14,7 @@ const withDopplerAttributes = ( settings ) => {
     attributes: {
       ...settings.attributes,
       ...attributes,
-      ...( !! settings?.supports?.novaBlocks?.doppler?.altAttributes ? altAttributes : {} )
+      ...( !! dopplerSupport?.altAttributes ? altAttributes : {} )
     }
   };
 }

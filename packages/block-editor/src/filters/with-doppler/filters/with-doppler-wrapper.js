@@ -16,6 +16,7 @@ const withDopplerWrapper = createHigherOrderComponent( OriginalComponent => {
 
     return <WrappedComponent { ...props } />
   };
-});
+
+}, 'withDopplerWrapper' );
 
 export default withDopplerWrapper;

@@ -1,6 +1,7 @@
 import DopplerContext from "../context";
+import { createHigherOrderComponent } from "@wordpress/compose";
 
-const withDopplerContext = ( WrappedComponent ) => {
+const withDopplerContext = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
     return (
@@ -9,6 +10,6 @@ const withDopplerContext = ( WrappedComponent ) => {
       </DopplerContext.Consumer>
     )
   }
-};
+}, 'withDopplerContext' );
 
 export default withDopplerContext;

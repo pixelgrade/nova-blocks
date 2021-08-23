@@ -20,6 +20,6 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
       </Fragment>
     )
   };
-});
+}, 'withSpaceAndSizingControls' );
 
 export default withSpaceAndSizingControls;

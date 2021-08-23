@@ -108,7 +108,7 @@ const withFontSizeControl = createHigherOrderComponent(OriginalComponent => {
 
 		return <BetterComponent { ...props } />;
 	};
-});
+}, 'withFontSizeControl' );
 addFilter( 'editor.BlockEdit', 'novablocks/with-inspector-controls', withFontSizeControl );
 
 function addFontSizeAttribute( block ) {

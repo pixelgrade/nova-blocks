@@ -4,14 +4,14 @@ import { Component } from '@wordpress/element';
 
 const enableBlockIdAttributeOnBlocks = [ 'novablocks/announcement-bar' ];
 
-function addBlockIdAttribute( block ) {
+function withBlockIdAttribute( settings ) {
 
-	if ( ! enableBlockIdAttributeOnBlocks.includes( block.name ) ) {
-		return block;
+	if ( ! enableBlockIdAttributeOnBlocks.includes( settings.name ) ) {
+		return settings;
 	}
 
-	if ( typeof block.attributes !== 'undefined' ){
-		block.attributes = Object.assign( block.attributes, {
+	if ( typeof settings.attributes !== 'undefined' ){
+		settings.attributes = Object.assign( settings.attributes, {
 			blockId: {
 				type: 'string',
 				default: '',
@@ -19,11 +19,11 @@ function addBlockIdAttribute( block ) {
 		});
 	}
 
-	return block;
+	return settings;
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/add-blockId-attribute', addBlockIdAttribute );
+addFilter( 'blocks.registerBlockType', 'novablocks/with-block-id-attribute', withBlockIdAttribute );
 
-const withBlockIdAttribute = createHigherOrderComponent( ( BlockEdit ) => {
+const withBlockId = createHigherOrderComponent( ( BlockEdit ) => {
 
 	return class BetterBlockEdit extends Component {
 		constructor() {
@@ -43,6 +43,6 @@ const withBlockIdAttribute = createHigherOrderComponent( ( BlockEdit ) => {
 		}
 	}
 
-}, "withBlockIdAttribute" );
+}, "withBlockId" );
 
-addFilter( 'editor.BlockEdit', 'novablocks/with-blockId-attribute', withBlockIdAttribute );
+addFilter( 'editor.BlockEdit', 'novablocks/with-block-id', withBlockId );

@@ -13,11 +13,12 @@ const HeroBackground = function( props ) {
 	} = props;
 
 	const styles = {
-		...props.parallax.style,
 		opacity: 1,
 	};
 
-	if ( overlayFilterStyle !== 'none' ) {
+  Object.assign( styles, props?.parallax?.style );
+
+  if ( overlayFilterStyle !== 'none' ) {
 		styles.opacity = 1 - ( overlayFilterStrength / 100 );
 	}
 

@@ -1,8 +1,9 @@
 import { useCallback, useState } from "@wordpress/element";
 import { easeInOutCubic, easeOutQuart } from "@novablocks/easings";
-import { scrollFromTo } from './utils';
+import { scrollFromTo } from '../utils';
+import { createHigherOrderComponent } from "@wordpress/compose";
 
-const withScrollingPreview = ( WrappedComponent ) => {
+const withDopplerPreview = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
 
@@ -62,6 +63,6 @@ const withScrollingPreview = ( WrappedComponent ) => {
       <WrappedComponent isScrolling={ isScrolling } previewScrolling={ previewScrolling } { ...props } />
     )
   }
-}
+}, 'withDopplerPreview' );
 
-export default withScrollingPreview;
+export default withDopplerPreview;

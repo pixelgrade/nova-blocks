@@ -6,7 +6,6 @@ import { withDoppler } from '@novablocks/block-editor';
 const SlideshowBackground = function( props ) {
 	const {
 		attributes: {
-			overlayFilterStyle,
 			overlayFilterStrength,
 		},
 		previewImage
@@ -15,10 +14,11 @@ const SlideshowBackground = function( props ) {
 	const focalPoint = previewImage.focalPoint || { x: 0.5, y: 0.5 };
 
 	const styles = {
-		...props.parallax.style,
 		opacity: 1,
 		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 	};
+
+  Object.assign( styles, props?.parallax?.style );
 
 	styles.opacity = 1 - ( overlayFilterStrength / 100 );
 

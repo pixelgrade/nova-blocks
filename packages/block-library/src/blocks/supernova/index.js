@@ -36,6 +36,8 @@ registerBlockType( 'novablocks/supernova', {
       latestPosts: true,
       contentPositionMatrixToolbar: true,
       doppler: {
+        attributes: true,
+        controls: true,
         customWrapper: true
       },
       spaceAndSizing: true,

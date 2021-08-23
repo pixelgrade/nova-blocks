@@ -15,7 +15,7 @@ const {
   }
 } = Blob;
 
-const withBlobsDecoration = createHigherOrderComponent(( OriginalComponent ) => {
+const withBlobsDecoration = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
 		const {

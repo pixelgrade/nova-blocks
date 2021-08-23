@@ -25,25 +25,25 @@ const ALLOWED_BLOCKS = [
 	'novablocks/cards-collection',
 ];
 
-const withCardsManager = createHigherOrderComponent(OriginalComponent => {
+const withCardsManager = createHigherOrderComponent( OriginalComponent => {
 
-	return ( props ) => {
+  return ( props ) => {
 
-		if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
-			return <OriginalComponent { ...props } />
-		}
+    if ( ! ALLOWED_BLOCKS.includes( props.name ) ) {
+      return <OriginalComponent { ...props } />
+    }
 
-		return (
-			<Fragment>
-				<OriginalComponent { ...props } />
-				<ControlsDrawerContent>
-					<PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-						<CardsManager.Component { ...props } />
-					</PanelBody>
-				</ControlsDrawerContent>
-			</Fragment>
-		);
-	};
+    return (
+      <Fragment>
+        <OriginalComponent { ...props } />
+        <ControlsDrawerContent>
+          <PanelBody title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+            <CardsManager.Component { ...props } />
+          </PanelBody>
+        </ControlsDrawerContent>
+      </Fragment>
+    );
+  };
+}, 'withCardsManager' );
 
-});
 addFilter( 'editor.BlockEdit', 'novablocks/with-cards-manager', withCardsManager );

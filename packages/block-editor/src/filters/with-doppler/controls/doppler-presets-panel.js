@@ -1,4 +1,4 @@
-import { Button, PanelBody, RadioControl } from "@wordpress/components";
+import { PanelBody, RadioControl } from "@wordpress/components";
 
 const DopplerPresetsPanel = ( props ) => {
 
@@ -11,8 +11,6 @@ const DopplerPresetsPanel = ( props ) => {
     settings: {
       motionPresetOptions
     },
-    isScrolling,
-    previewScrolling,
   } = props;
 
   if ( scrollingEffect !== 'doppler' ) {
@@ -34,21 +32,9 @@ const DopplerPresetsPanel = ( props ) => {
           }
 
           setAttributes( newAttributes );
-
-          if ( 'custom' !== motionPreset && ! isScrolling ) {
-//						previewScrolling();
-          }
         } }
         options={ motionPresetOptions }
       />
-
-      <div>
-        <Button
-          isLarge
-          isPrimary
-          disabled={ !! isScrolling }
-          onClick={ previewScrolling }>Preview Scrolling</Button>
-      </div>
 
     </PanelBody>
   )

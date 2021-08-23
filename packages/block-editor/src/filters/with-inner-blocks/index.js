@@ -33,6 +33,6 @@ const withInnerBlocksComponent = createHigherOrderComponent( OriginalComponent =
 
 		return <BetterComponent { ...props } />;
 	};
-});
+}, 'withInnerBlocksComponent');
 
 addFilter( 'editor.BlockEdit', 'novablocks/with-inner-blocks-component', withInnerBlocksComponent );

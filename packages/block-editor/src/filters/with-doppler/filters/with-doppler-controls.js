@@ -8,8 +8,9 @@ const withDopplerControls = createHigherOrderComponent( OriginalComponent => {
   return ( props ) => {
 
     const supports = select( 'core/blocks' ).getBlockType( props.name ).supports;
+    const dopplerSupport = supports?.novaBlocks?.doppler;
 
-    if ( !supports?.novaBlocks?.doppler && !supports?.novaBlocks?.doppler?.controls ) {
+    if ( dopplerSupport !== true && ! dopplerSupport?.controls ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -20,6 +21,6 @@ const withDopplerControls = createHigherOrderComponent( OriginalComponent => {
       </Fragment>
     );
   };
-} );
+}, 'withDopplerControls' );
 
 export default withDopplerControls;

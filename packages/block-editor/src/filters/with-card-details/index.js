@@ -26,8 +26,9 @@ const withCardDetailsControls = createHigherOrderComponent( OriginalComponent =>
       </Fragment>
     );
   };
-} );
-addFilter( 'editor.BlockEdit', 'novablocks/with-card-details', withCardDetailsControls );
+}, 'withCardDetailsControls' );
+
+addFilter( 'editor.BlockEdit', 'novablocks/with-card-details-controls', withCardDetailsControls );
 
 const blocksWithCardDetailsAttributes = [
   'novablocks/posts-collection',
@@ -37,7 +38,7 @@ const blocksWithCardDetailsAttributes = [
   'novablocks/supernova-item',
 ];
 
-function addCardDetailsAttributes( block ) {
+function withCardDetailsAttributes( block ) {
 
   if ( ! blocksWithCardDetailsAttributes.includes( block.name ) ) {
     return block;
@@ -51,5 +52,5 @@ function addCardDetailsAttributes( block ) {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addCardDetailsAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/with-card-details-attributes', withCardDetailsAttributes );
 

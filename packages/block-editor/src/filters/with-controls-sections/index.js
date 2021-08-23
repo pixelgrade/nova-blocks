@@ -5,18 +5,18 @@ import { Fragment } from '@wordpress/element';
 
 import { ControlsSections } from "../../components";
 
-const withControlsSections = createHigherOrderComponent(OriginalComponent => {
+const withControlsSections = createHigherOrderComponent( OriginalComponent => {
 
-	return ( props ) => {
-		return (
-			<Fragment>
-				<InspectorControls>
-					<ControlsSections { ...props } />
-				</InspectorControls>
-				<OriginalComponent { ...props } />
-			</Fragment>
-		);
-	};
+  return ( props ) => {
+    return (
+      <Fragment>
+        <InspectorControls>
+          <ControlsSections { ...props } />
+        </InspectorControls>
+        <OriginalComponent { ...props } />
+      </Fragment>
+    );
+  };
+}, 'withControlsSections' );
 
-});
 addFilter( 'editor.BlockEdit', 'novablocks/with-controls-sections', withControlsSections );

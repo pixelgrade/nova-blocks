@@ -26,7 +26,8 @@ const withEmphasisLevelControls = createHigherOrderComponent(OriginalComponent =
       </Fragment>
     );
   };
-});
+}, 'withEmphasisLevelControls' );
+
 addFilter( 'editor.BlockEdit', 'novablocks/with-ehphasis-level-controls', withEmphasisLevelControls );
 
 

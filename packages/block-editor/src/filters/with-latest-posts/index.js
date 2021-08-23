@@ -35,7 +35,7 @@ const withPostsQueryControls = createHigherOrderComponent( OriginalComponent => 
 			</Fragment>
 		)
 	}
-} );
+}, 'withPostsQueryControls' );
 
 function withPostsQueryAttributes( settings ) {
 
@@ -100,6 +100,6 @@ const maybeWithLatestPosts = createHigherOrderComponent( BlockEdit => {
 
     return <BlockEditWithLatestPosts { ...props } />
   }
-} );
+}, 'maybeWithLatestPosts' );
 addFilter( 'editor.BlockEdit', 'novablocks/with-latest-posts', maybeWithLatestPosts );
 

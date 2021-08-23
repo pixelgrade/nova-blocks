@@ -68,6 +68,7 @@ registerBlockType( 'novablocks/supernova-item', {
       },
       latestPosts: true,
       doppler: {
+        attributes: true,
         customWrapper: true
       },
     }

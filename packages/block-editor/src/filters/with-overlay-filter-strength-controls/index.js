@@ -41,5 +41,5 @@ const withOverlayFilterStrengthControls = createHigherOrderComponent( OriginalCo
       </Fragment>
     )
   };
-} );
+}, 'withOverlayFilterStrengthControls' );
 addFilter( 'editor.BlockEdit', 'novablocks/with-overlay-filter-strength-controls', withOverlayFilterStrengthControls );

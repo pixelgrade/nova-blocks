@@ -5,14 +5,15 @@ import Doppler from "@novablocks/doppler";
 import { getEditorScrollContainer } from "../../../utils";
 import { createBlockObservers } from "../utils";
 import DopplerContext from "../context";
+import { createHigherOrderComponent } from "@wordpress/compose";
 
 const { getStyles, getState } = Doppler.utils;
 
-const withDopplerProvider = ( WrappedComponent ) => {
+const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
 
-    const { attributes } = props;
+    const { attributes, isScrolling } = props;
 
     const [ dopplerState, setDopplerState ] = useState( null );
     const [ container, setContainer ] = useState( null );
@@ -79,6 +80,10 @@ const withDopplerProvider = ( WrappedComponent ) => {
 
     const updateConfig = useCallback( () => {
 
+      if ( ! isScrolling ) {
+        return;
+      }
+
       setConfig( {
         scrollContainerHeight: scrollContainer.offsetHeight,
         scrollContainerBox: scrollContainer.getBoundingClientRect(),
@@ -87,7 +92,7 @@ const withDopplerProvider = ( WrappedComponent ) => {
         containerBox: container.getBoundingClientRect(),
       } );
 
-    }, [ container, scrollContainer ] )
+    }, [ isScrolling, container, scrollContainer ] )
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>
@@ -102,6 +107,6 @@ const withDopplerProvider = ( WrappedComponent ) => {
       </div>
     );
   }
-}
+}, 'withDopplerProvider' );
 
 export default withDopplerProvider;

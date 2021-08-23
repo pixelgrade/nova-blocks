@@ -1,7 +1,7 @@
 import { getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
 import { FocalPointPicker, PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { getParallaxFocalPointImage } from './utils';
+import { getParallaxFocalPointImage } from '../utils';
 import { useMemo } from "@wordpress/element";
 
 const EndFramePanel = ( props ) => {

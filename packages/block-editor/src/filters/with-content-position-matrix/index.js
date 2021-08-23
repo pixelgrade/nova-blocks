@@ -41,7 +41,8 @@ const withContentPositionMatrixControls = createHigherOrderComponent( OriginalCo
       </Fragment>
     )
   };
-} );
+}, 'withContentPositionMatrixControls' );
+
 addFilter( 'editor.BlockEdit', 'novablocks/wwith-content-position-matrix-controls', withContentPositionMatrixControls );
 
 const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalComponent => {

@@ -26,7 +26,8 @@ const withElementsVisibilityControls = createHigherOrderComponent( OriginalCompo
       </Fragment>
     );
   };
-} );
+}, 'withElementsVisibilityControls' );
+
 addFilter( 'editor.BlockEdit', 'novablocks/with-elements-visibility-controls', withElementsVisibilityControls );
 
 const blocksWithElementsVisibilityAttributes = [
@@ -35,18 +36,18 @@ const blocksWithElementsVisibilityAttributes = [
   'novablocks/supernova-item',
 ];
 
-function addElementsVisibilityAttributes( block ) {
+function withElementsVisibilityAttributes( settings ) {
 
-  if ( ! blocksWithElementsVisibilityAttributes.includes( block.name ) ) {
-    return block;
+  if ( ! blocksWithElementsVisibilityAttributes.includes( settings.name ) ) {
+    return settings;
   }
 
   return {
-    ...block,
+    ...settings,
     attributes: {
-      ...block.attributes,
+      ...settings.attributes,
       ...attributes
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/add-elements-visibility-attributes', addElementsVisibilityAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/with-elements-visibility-attributes', withElementsVisibilityAttributes );

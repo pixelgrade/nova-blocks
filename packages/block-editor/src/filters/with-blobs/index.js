@@ -5,16 +5,9 @@ import { select } from '@wordpress/data';
 
 import attributes from "./attributes.json";
 
-const blocksWithBlobs = [
-  'novablocks/media',
-  'novablocks/advanced-gallery',
-  'novablocks/supernova',
-  'novablocks/supernova-item',
-];
-
 import InspectorControls from './inspector-controls';
 
-const withBlobControls = createHigherOrderComponent(OriginalComponent => {
+const withBlobsControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
@@ -31,24 +24,24 @@ const withBlobControls = createHigherOrderComponent(OriginalComponent => {
       </Fragment>
     );
   };
-});
-addFilter( 'editor.BlockEdit', 'novablocks/with-blob-controls', withBlobControls );
+}, 'withBlobsControls' );
 
+addFilter( 'editor.BlockEdit', 'novablocks/with-blobs-controls', withBlobsControls );
 
-function addBlobAttributes( block ) {
+function withBlobsAttributes( settings ) {
 
-  if ( ! block?.supports?.novaBlocks?.blobs ) {
-    return block;
+  if ( ! settings?.supports?.novaBlocks?.blobs ) {
+    return settings;
   }
 
   return {
-    ...block,
+    ...settings,
     attributes: {
-      ...block.attributes,
+      ...settings.attributes,
       ...attributes
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/add-emphasis-level-attributes', addBlobAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/with-blobs-attributes', withBlobsAttributes );
 
 
