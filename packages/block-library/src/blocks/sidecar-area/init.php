@@ -26,7 +26,7 @@ if ( ! function_exists('novablocks_render_sidecar_area_block' ) ) {
 
 		ob_start();
 
-		$classes = array('wp-block-novablocks-sidecar-area');
+		$classes = array('wp-block-novablocks-sidecar-area novablocks-sidecar__container');
 
 		if ( ! empty($attributes['className' ] ) ) {
 			$classes[] = $attributes['className'];

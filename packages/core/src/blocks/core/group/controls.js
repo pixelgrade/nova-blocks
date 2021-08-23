@@ -20,8 +20,23 @@ class Inspector extends Component {
     } = this.props;
 
     const {
-      contentAlignment
+      contentAlignment,
+      align
     } = attributes;
+
+    const CAN_BE_PULLED = align === undefined;
+
+    let DEFAULT_CONTENT_ALIGNMENT =[
+      { label: 'None', value: 'pull-none' }
+    ]
+
+    if (CAN_BE_PULLED) {
+
+      DEFAULT_CONTENT_ALIGNMENT.push(
+        { label: 'Pull Left', value: 'pull-left' },
+        { label: 'Pull Right', value: 'pull-right' },
+      )
+    }
 
     return (
     <ControlsSection label={ __( 'Layout' ) }>
@@ -33,11 +48,7 @@ class Inspector extends Component {
           onChange={ ( newAlignment ) => {
             setAttributes( { contentAlignment: newAlignment } );
           } }
-          options={ [
-            { label: 'None', value: 'pull-none' },
-            { label: 'Pull Left', value: 'pull-left' },
-            { label: 'Pull Right', value: 'pull-right' },
-          ] }
+          options={ DEFAULT_CONTENT_ALIGNMENT }
         />
 
       </ControlsTab>

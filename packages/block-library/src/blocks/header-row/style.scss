@@ -7,10 +7,10 @@
     flex-direction: column;
 
     &, * {
-      --sm-current-accent-color: inherit;
-      --sm-current-fg1-color: inherit;
       --sm-current-bg-color: inherit;
+      --sm-current-fg1-color: inherit;
       --sm-current-fg2-color: inherit;
+      --sm-current-accent-color: inherit;
     }
 
     --header-background-opacity: 0;

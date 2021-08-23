@@ -8,7 +8,7 @@ import AdvancedGalleryBlockControls from './block-controls';
 import attributes from './attributes';
 import * as utils from './utils';
 
-import './hooks/with-advanced-gallery-attribtues';
+import './filters/with-advanced-gallery-attribtues';
 
 export {
 	GridItem,

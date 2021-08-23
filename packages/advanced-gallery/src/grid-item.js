@@ -76,7 +76,6 @@ export class GridItemCollection {
 export class GridItem {
 
 	constructor( image, index, attributes, isGroupOfThree ) {
-
 		this.sizeContrast = attributes.sizeContrast / 20;
 		this.positionShift = attributes.positionShift / 5;
 		this.objectPosition = attributes.objectPosition;

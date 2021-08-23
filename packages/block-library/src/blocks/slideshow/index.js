@@ -6,13 +6,15 @@ import edit from './edit';
 import save from './save';
 import { select } from '@wordpress/data';
 
+// Load deprecated file
+import './deprecated';
+
 import {
   getRandomArrayFromArray,
   getRandomBetween,
 } from "@novablocks/utils";
 
 import {
-	layoutAttributes,
 	getPlaceholderImages,
 	generateDefaults,
   getSvg
@@ -20,7 +22,8 @@ import {
 
 import blockAttributes from "./attributes";
 
-const attributes = Object.assign( {}, blockAttributes, layoutAttributes );
+// Load extras file
+const attributes = Object.assign( {}, blockAttributes );
 
 /**
  * WordPress dependencies
@@ -41,7 +44,7 @@ async function getNewDefaults() {
 
 	return {
 		galleryImages: images,
-	};
+  };
 }
 
 generateDefaults( 'novablocks/slideshow', getNewDefaults );
@@ -67,8 +70,10 @@ registerBlockType( 'novablocks/slideshow', {
       },
       customDefaults: true,
       doppler: {
-        altAttributes: true
-      }
+        altAttributes: true,
+        customWrapper: true,
+      },
+      spaceAndSizing: true
     },
   },
 	edit,

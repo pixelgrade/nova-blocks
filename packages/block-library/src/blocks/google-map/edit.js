@@ -2,8 +2,6 @@ import MapPlaceholder from './placeholder';
 import Map from './map';
 import InspectorControls from './inspector-controls';
 
-import { withSettings } from '@novablocks/block-editor';
-
 import { __ } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
 
@@ -200,4 +198,4 @@ class Edit extends Component {
 	}
 }
 
-export default createHigherOrderComponent( withSettings )( Edit );
+export default Edit;

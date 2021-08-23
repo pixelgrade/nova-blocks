@@ -85,62 +85,24 @@
   }
 }
 
-.nb-palette__labels {
+.nb-palette__signal-previews {
   display: flex;
-  position: relative;
-  font-size: 11px;
-  opacity: 0.75;
-
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    border-top: 1px solid #CCC;
-  }
-}
-
-.nb-palette__label {
-  position: relative;
-  padding-top: 5px;
-
-  &:before,
-  &:last-child:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -5px;
-    height: 11px;
-  }
-
-  &:before {
-    left: 0;
-    border-left: 1px solid #CCC;
-  }
-
-  &:last-child:after {
-    right: 0;
-    border-right: 1px solid #CCC;
-  }
-}
-
-.nb-palette__label {
+  gap: 2px;
   text-align: center;
-  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  > * {
+    flex: 1 0 0;
+  }
 }
 
-.nb-palette__label--1,
-.nb-palette__label--12 {
-  flex: 1 0 0;
-}
+.nb-palette__signal-preview {
+  min-height: 30px;
+  background-image: linear-gradient(58deg, white 48%, transparent 52%);
+  box-shadow: rgba(0,0,0,0.1) 0 0 0 1px inset;
 
-.nb-palette__label--low,
-.nb-palette__label--high {
-  flex: 3 0 0;
-}
-
-.nb-palette__label--medium {
-  flex: 4 0 0;
+  &--1 { background-color: #DDDDDD }
+  &--2 { background-color: #888888 }
+  &--3 { background-color: #222222 }
 }

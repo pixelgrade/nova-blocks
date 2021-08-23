@@ -7,8 +7,8 @@
 @import 'components/signal-control/editor-styles';
 @import 'components/color-grades-control/editor-styles';
 
-@import "hooks/with-overlay-filter-strength-controls/editor-styles";
-@import 'hooks/with-color-signal/editor-styles';
+@import "filters/with-overlay-filter-strength-controls/editor-styles";
+@import 'filters/with-color-signal/editor-styles';
 
 .novablocks-change-media-overlay {
 	position: absolute;
@@ -92,3 +92,17 @@
   }
 }
 
+// Group Block editor mark-up is not 1:1 with mark-up used on frontend.
+// The problem is that we are
+// relying on a specific mark-up to manage spacing.
+// However, in editor, the group mark-up is wrapped in extra div,
+// and on that div, we are outputting space and sizing properties.
+// This dumb selector should select that div,
+// and remove it's margins and padding.
+// In this way, the group block will use the custom properties from that div.
+div:not([class])[style*='--novablocks-block'][style*='--novablocks-emphasis'] {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}

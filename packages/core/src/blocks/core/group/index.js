@@ -13,6 +13,7 @@ const { createHigherOrderComponent } = wp.compose;
 const allowedBlocks = [ 'core/group' ];
 
 import Inspector from './controls';
+import {select} from "@wordpress/data";
 
 const alterSettings = ( settings ) => {
 
@@ -34,9 +35,11 @@ const alterSettings = ( settings ) => {
       novaBlocks: {
         colorSignal: {
           paletteClassname: true,
-          variationClassname: true,
+          paletteVariationClassname: true,
+          colorSignalClassname: true,
           functionalColors: true,
         },
+        spaceAndSizing: true,
       }
     }
   };
@@ -90,12 +93,15 @@ const applyFrontEndClasses = ( extraProps, blockType, attributes ) =>{
 
   const { contentAlignment } = attributes;
 
-  if ( allowedBlocks.includes( blockType.name ) && contentAlignment !== 'pull-none' ) {
-    extraProps.className = classnames( extraProps.className, contentAlignment );
+  if ( allowedBlocks.includes( blockType.name ) ) {
+
+    if (contentAlignment !== 'pull-none' ) {
+      extraProps.className = classnames( extraProps.className, contentAlignment );
+    }
+
   }
 
   return extraProps;
-
 }
 
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings', alterSettings, 1 );
