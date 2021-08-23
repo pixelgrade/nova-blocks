@@ -1,9 +1,8 @@
 import classnames from 'classnames';
 
-import { Children, Fragment, useMemo } from '@wordpress/element';
+import { Children, Fragment } from '@wordpress/element';
 
 import {
-  getContentVariationBySignal,
   getPaddingTopFromContainerHeight,
   getAlignFromMatrix, getColorSignalClassnames,
 } from "@novablocks/utils";

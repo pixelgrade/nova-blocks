@@ -1,8 +1,7 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useEffect } from "@wordpress/element";
 import { dispatch, select, subscribe } from "@wordpress/data";
-import { setAttributesToInnerBlocks, blobAttributes } from "@novablocks/block-editor";
-import { getAlignFromMatrix, getContentVariationBySignal } from "@novablocks/utils";
+import { blobAttributes } from "@novablocks/block-editor";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
 
