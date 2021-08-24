@@ -140,3 +140,30 @@
     }
   }
 }
+
+/*
+ * Carousel Layout - Variable Width
+ */
+
+.supernova-collection__layout--carousel {
+  
+  &.supernova-collection__layout--variable-width {
+    
+    .supernova-card__media,
+    .novablocks-doppler__mask {
+      position: static;
+      width: auto;
+      height: 20em;
+      max-width: none;
+    }
+    
+    .supernova-card__media-aspect-ratio:before {
+      position: absolute;
+    }
+    
+    .supernova-card {
+      display: table;
+      width: 1px;
+    }
+  }
+}

@@ -54,7 +54,6 @@
 .supernova-collection__layout--parametric {
 
   @include with-editor-layout-selectors {
-    @debug &;
 
     display: grid;
     grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
