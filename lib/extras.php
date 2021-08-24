@@ -1867,9 +1867,11 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 			 class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
 			<div class="supernova-card__media-wrapper <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
-				<div class="supernova-card__media-aspect-ratio novablocks-doppler__mask novablocks-doppler__wrapper">
-					<div class="novablocks-doppler__target">
-						<?php echo $media; ?>
+				<div class="supernova-card__media-aspect-ratio">
+					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
+						<div class="supernova-card__media-doppler novablocks-doppler__target">
+							<?php echo $media; ?>
+						</div>
 					</div>
 				</div>
 			</div>
