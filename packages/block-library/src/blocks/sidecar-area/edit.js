@@ -1,10 +1,8 @@
 import classnames from 'classnames';
 
-import {InnerBlocks} from '@wordpress/block-editor';
-import { dispatch, select } from '@wordpress/data';
+import { InnerBlocks } from '@wordpress/block-editor';
+import { useDispatch, useSelect } from '@wordpress/data';
 
-const { getBlockRootClientId } = select( 'core/block-editor' );
-const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
 
 const SidecarAreaEdit = function( props ) {
 
@@ -15,9 +13,10 @@ const SidecarAreaEdit = function( props ) {
     isSelected
   } = props;
 
-  const parentClientId = getBlockRootClientId( clientId );
+  const parentClientId = useSelect( select => select( 'core/block-editor' ).getBlockRootClientId( clientId ), [ clientId ] );
+  const { selectBlock, clearSelectedBlock } = useDispatch( 'core/editor' );
 
-  const {lastItemIsSticky} = attributes;
+  const { lastItemIsSticky } = attributes;
 
   if ( isSelected ) {
     clearSelectedBlock().then(() => {

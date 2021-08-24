@@ -5,7 +5,7 @@ import attributes from './attributes.json';
 
 import { addFilter } from "@wordpress/hooks";
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { select, dispatch } from "@wordpress/data";
+import { useSelect, useDispatch } from "@wordpress/data";
 import { Fragment } from "@wordpress/element";
 import { useSupports } from "../../hooks";
 
@@ -68,13 +68,13 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
 }, 'withInnerBlocksContentPosition' );
 
 const alignBlockChildren = ( clientId, horizontalAlignment ) => {
-  const { getBlock } = select( 'core/block-editor' );
-  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-  const block = getBlock( clientId );
+  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const block = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
 
   block.innerBlocks.forEach( innerBlock => {
-    const block = getBlock( innerBlock.clientId );
-    const blockType = wp.data.select( 'core/blocks' ).getBlockType( block.name );
+    const block = useSelect( select => select( 'core/block-editor' ).getBlock( innerBlock.clientId ), [ innerBlock.clientId ] );
+    const blockType = useSelect( select => select( 'core/blocks' ).getBlockType( block.name ), [ block.name ] );
+
     const supportsAlign = blockType?.supports?.align;
 
     if ( Array.isArray( supportsAlign ) && ( supportsAlign.indexOf( 'wide' ) > -1 || supportsAlign.indexOf( 'full' ) > -1 ) ) {

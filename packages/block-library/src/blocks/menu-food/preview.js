@@ -8,7 +8,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
 
 import { Button } from '@wordpress/components';
-import { dispatch, select } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 const ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 const TEMPLATE = [
@@ -54,8 +54,10 @@ const FoodMenuPreview = function( props ) {
 
 	const addFoodMenuSection = () => {
 		const block = createBlock( 'novablocks/menu-food-section' );
-		const index = select( 'core/block-editor' ).getBlocksByClientId( clientId )[0].innerBlocks.length;
-		dispatch( 'core/block-editor' ).insertBlock( block, index, clientId );
+		const index = useSelect( select => select( 'core/block-editor' ).getBlocksByClientId( clientId )[0].innerBlocks.length, [ clientId ] );
+		const { insertBlock } = useDispatch( 'core/block-editor' );
+
+		insertBlock( block, index, clientId );
 	};
 
 	const classNames = classnames(

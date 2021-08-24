@@ -1,5 +1,4 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { select } from "@wordpress/data";
 import { Fragment } from "@wordpress/element";
 import Controls from "../controls";
 import { useSupports } from "../../../hooks";

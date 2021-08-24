@@ -9,7 +9,7 @@ import HeroBackground from './background';
 import { InnerBlocks } from '@wordpress/block-editor';
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
-import { select } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 
 import { getAlignmentClassnames, getColorSignalClassnames } from "@novablocks/utils";
 
@@ -63,9 +63,7 @@ const HeroPreview = function( props ) {
 		styles.hero['--theme-dark-primary'] = '#FFF'
 	}
 
-	const heroBlocks = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
-		return block.name === 'novablocks/hero';
-	} );
+	const heroBlocks = useSelect( select => select( 'core/block-editor' ).getBlocks().filter( block => block.name === 'novablocks/hero' ), [] );
 
 	let heroHeight = minHeightFallback;
 	let contentHeight = heroHeight;

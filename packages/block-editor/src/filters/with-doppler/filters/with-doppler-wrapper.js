@@ -1,9 +1,10 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { select } from "@wordpress/data";
 import withDoppler from "./with-doppler";
 import { useSupports } from "../../../hooks";
 
 const withDopplerWrapper = createHigherOrderComponent( OriginalComponent => {
+
+  const WrappedComponent = withDoppler( OriginalComponent );
 
   return ( props ) => {
 
@@ -12,8 +13,6 @@ const withDopplerWrapper = createHigherOrderComponent( OriginalComponent => {
     if ( ! supports?.novaBlocks?.doppler || !! supports?.novaBlocks?.doppler.customWrapper ) {
       return <OriginalComponent { ...props } />
     }
-
-    const WrappedComponent = withDoppler( OriginalComponent );
 
     return <WrappedComponent { ...props } />
   };

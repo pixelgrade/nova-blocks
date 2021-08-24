@@ -1,6 +1,6 @@
 import { InnerBlocks } from "@wordpress/block-editor";
 import { getSaveElement } from '@wordpress/blocks';
-import { dispatch, select } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
 import { CollectionHeader } from "@novablocks/collection";
@@ -64,9 +64,8 @@ const CardEdit = withPreviewAttributes( Card );
 
 const CollectionPreview = ( props ) => {
   const { clientId } = props;
-  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-  const { getBlock } = select( 'core/block-editor' );
-  const { innerBlocks } = getBlock( clientId );
+  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const innerBlocks = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ).innerBlocks, [ clientId ] );
 
   return (
     <Collection { ...props }>

@@ -10,19 +10,26 @@ import { capitalizeFirstLetter } from '@novablocks/utils';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {RadioControl, ToggleControl, Text} from '@wordpress/components';
-import { select, withDispatch } from "@wordpress/data";
-import { useState } from "@wordpress/element";
+import { RadioControl } from '@wordpress/components';
+import { useSelect, useDispatch } from "@wordpress/data";
+import { useState, useCallback } from "@wordpress/element";
 
 const HeaderInspectorControls = ( props ) => {
 
   const {
     clientId,
-    updateNextStickyRow,
+    innerBlocks
   } = props;
 
-  const { getBlock } = select( 'core/block-editor' );
-  const header = getBlock( clientId );
+  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const updateNextStickyRow = useCallback( nextStickyRowClientId => {
+    innerBlocks.forEach( block => {
+      updateBlockAttributes( block.clientId, {
+        isSticky: block.clientId === nextStickyRowClientId
+      } )
+    } )
+  }, [] );
+  const header = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
   const rows = header.innerBlocks;
 
   const stickyRowOptions = rows.map( row => {
@@ -83,21 +90,4 @@ const HeaderInspectorControls = ( props ) => {
   )
 };
 
-const applyWithDispatch = withDispatch( ( dispatch, ownProps ) => {
-  const { innerBlocks } = ownProps;
-  const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-
-  const updateNextStickyRow = nextStickyRowClientId => {
-    innerBlocks.forEach( block => {
-      updateBlockAttributes( block.clientId, {
-        isSticky: block.clientId === nextStickyRowClientId
-      } )
-    } )
-  }
-
-  return {
-    updateNextStickyRow,
-  };
-} );
-
-export default applyWithDispatch( HeaderInspectorControls );
+export default HeaderInspectorControls;

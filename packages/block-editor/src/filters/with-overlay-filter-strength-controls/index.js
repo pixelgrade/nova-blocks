@@ -1,8 +1,5 @@
-import { isUndefined } from "lodash";
-
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { addFilter } from "@wordpress/hooks";
-import { select } from "@wordpress/data";
 import { Fragment } from "@wordpress/element";
 
 import attributes from "./attributes.json";

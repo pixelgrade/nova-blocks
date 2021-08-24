@@ -1,5 +1,4 @@
 import { addFilter } from "@wordpress/hooks";
-import { select } from "@wordpress/data";
 
 import {
   withDopplerWrapper,

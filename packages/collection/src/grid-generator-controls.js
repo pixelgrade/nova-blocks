@@ -2,7 +2,7 @@ import { isUndefined } from "lodash";
 
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from '@wordpress/element';
-import { dispatch, select, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
 import {
@@ -209,11 +209,7 @@ const SupernovaPostsCountControl = ( props ) => {
     clientId,
   } = props;
 
-  const { itemsCount } = useSelect( ( select ) => {
-    const itemsCount = select( 'core/block-editor' ).getBlockCount( clientId );
-
-    return { itemsCount };
-  }, [ clientId ] );
+  const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
 
   useEffect( () => {
     setAttributes( { postsToShow: itemsCount } );
@@ -225,9 +221,8 @@ const SupernovaPostsCountControl = ( props ) => {
       label={ __( 'Items Count', '__plugin_txtd' ) }
       value={ postsToShow }
       onChange={ newItemsCount => {
-        const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
-        const { getBlock } = select( 'core/block-editor' );
-        const { innerBlocks } = getBlock( clientId );
+        const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+        const { innerBlocks } = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
         const newInnerBlocks = innerBlocks.slice( 0, newItemsCount );
 
         if ( newItemsCount > postsToShow ) {

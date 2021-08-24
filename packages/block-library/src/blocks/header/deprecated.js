@@ -1,4 +1,3 @@
-import { omit } from 'lodash';
 import { createBlock } from '@wordpress/blocks';
 import { select } from '@wordpress/data';
 

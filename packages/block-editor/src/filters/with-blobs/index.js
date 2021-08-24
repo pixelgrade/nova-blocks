@@ -1,7 +1,6 @@
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
-import { select } from '@wordpress/data';
 
 import attributes from "./attributes.json";
 

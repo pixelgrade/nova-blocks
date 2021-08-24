@@ -8,7 +8,7 @@ import {
 	subscribe,
  } from '@wordpress/data';
 
-export default ( blockType, template ) => {
+const insertTemplate = ( blockType, template ) => {
 	const { getBlocksByClientId, getClientIdsWithDescendants } = select( 'core/block-editor' );
 	const { replaceInnerBlocks, updateBlockAttributes } = dispatch( 'core/block-editor' );
 
@@ -43,3 +43,5 @@ export default ( blockType, template ) => {
 		} );
 	} );
 }
+
+export default insertTemplate;

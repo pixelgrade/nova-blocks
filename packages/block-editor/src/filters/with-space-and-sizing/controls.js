@@ -2,7 +2,6 @@ import { getControlsClasses } from "@novablocks/utils";
 import { BlockVerticalAlignmentToolbar, ControlsGroup, ControlsSection, ControlsTab } from "../../components";
 import { __ } from "@wordpress/i18n";
 import { PanelRow, RangeControl, ToggleControl } from "@wordpress/components";
-import { select } from "@wordpress/data";
 import { useSupports } from "../../hooks";
 
 const SpaceAndSizingControls = ( props ) => {

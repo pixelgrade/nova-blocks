@@ -1,7 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { createBlock } from "@wordpress/blocks";
-import { SelectControl } from "@wordpress/components";
-import { useSelect, dispatch } from "@wordpress/data";
+import { useSelect, useDispatch } from "@wordpress/data";
 import { ControlsSection, ControlsTab, QueryControls } from "../../components";
 
 const Controls = ( props ) => {
@@ -38,7 +37,7 @@ const Controls = ( props ) => {
           } }
           numberOfItems={ postsToShow }
           onNumberOfItemsChange={ _postsToShow => {
-            const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
+            const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
             const newInnerBlocks = innerBlocks.slice( 0, _postsToShow );
 
             if ( _postsToShow > itemsCount ) {
