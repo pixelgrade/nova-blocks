@@ -9,8 +9,6 @@ import { onBeforeSlideChange } from './utils';
     const $block = $carousel.closest( '[data-layout-style="carousel"]' );
     const attributes = $block.data();
 
-    console.log( attributes.showPagination, $block.data( 'show-pagination' ) );
-
     const SLICK_OPTIONS = {
 //      rows: 0,
       useTransform: false, // to allow parallax effect inside

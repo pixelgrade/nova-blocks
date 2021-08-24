@@ -4,6 +4,7 @@
 import { withDoppler } from '@novablocks/block-editor';
 
 const HeroBackground = function( props ) {
+
 	const {
 		attributes: {
 			overlayFilterStyle,

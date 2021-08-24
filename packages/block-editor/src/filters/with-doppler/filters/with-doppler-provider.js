@@ -4,6 +4,8 @@ import Doppler from "@novablocks/doppler";
 
 import { getEditorScrollContainer } from "../../../utils";
 import { createBlockObservers } from "../utils";
+import { useScrollContainerBox } from "../../../hooks";
+
 import DopplerContext from "../context";
 import { createHigherOrderComponent } from "@wordpress/compose";
 
@@ -22,6 +24,8 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     const scrollContainer = getEditorScrollContainer();
 
+    const [ scrollContainerBox, scrollContainerHeight ] = useScrollContainerBox( scrollContainer );
+
     const containerRef = useCallback( node => {
       if ( node !== null ) {
         setContainer( node );
@@ -39,19 +43,11 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
       window.addEventListener( 'resize', updateConfig );
 
-      if ( scrollContainer ) {
-        scrollContainer.addEventListener( 'scroll', updateConfig );
-      }
-
       return (
         () => {
           window.removeEventListener( 'resize', updateConfig );
           observers.forEach( observer => observer.disconnect() );
           unsubscribeUpdate();
-
-          if ( scrollContainer ) {
-            scrollContainer.removeEventListener( 'scroll', updateConfig );
-          }
         }
       )
     }, [ container ] )
@@ -80,15 +76,12 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     const updateConfig = useCallback( () => {
 
-      if ( ! isScrolling ) {
-        return;
-      }
+//      if ( ! isScrolling ) {
+//        return;
+//      }
 
       setConfig( {
-        scrollContainerHeight: scrollContainer.offsetHeight,
         scrollContainerBox: scrollContainer.getBoundingClientRect(),
-        containerWidth: container.offsetWidth,
-        containerHeight: container.offsetHeight,
         containerBox: container.getBoundingClientRect(),
       } );
 

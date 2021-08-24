@@ -17,8 +17,6 @@ const withDopplerPreview = createHigherOrderComponent( WrappedComponent => {
         container,
         state: {
           containerBox,
-          containerHeight,
-          scrollContainerHeight,
           scrollContainerBox,
         }
       } = parallax;
@@ -29,15 +27,15 @@ const withDopplerPreview = createHigherOrderComponent( WrappedComponent => {
 
       const scrollTop = scrollContainer.scrollTop;
 
-      let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerHeight;
-      let length = containerHeight + scrollContainerHeight;
+      let start = scrollTop + containerBox.top - scrollContainerBox.top - scrollContainerBox.height;
+      let length = containerBox.height + scrollContainerBox.height;
 
       if ( start < 0 ) {
         length = length + start;
         start = 0;
       }
 
-      let maxScroll = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+      let maxScroll = scrollContainer.scrollHeight - scrollContainerBox.height;
       let distanceToBottom = maxScroll - ( start + length );
 
       if ( distanceToBottom < 0 ) {
