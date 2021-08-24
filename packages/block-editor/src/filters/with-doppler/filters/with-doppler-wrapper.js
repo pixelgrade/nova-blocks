@@ -4,11 +4,11 @@ import { useSupports } from "../../../hooks";
 
 const withDopplerWrapper = createHigherOrderComponent( OriginalComponent => {
 
-  const WrappedComponent = withDoppler( OriginalComponent );
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
+    const WrappedComponent = withDoppler( OriginalComponent );
 
     if ( ! supports?.novaBlocks?.doppler || !! supports?.novaBlocks?.doppler.customWrapper ) {
       return <OriginalComponent { ...props } />

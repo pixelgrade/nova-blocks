@@ -9,6 +9,8 @@ import {
  } from '@wordpress/data';
 
 const insertTemplate = ( blockType, template ) => {
+  return false;
+
 	const { getBlocksByClientId, getClientIdsWithDescendants } = select( 'core/block-editor' );
 	const { replaceInnerBlocks, updateBlockAttributes } = dispatch( 'core/block-editor' );
 

@@ -1,10 +1,8 @@
-import { useCallback, useEffect, useState } from "@wordpress/element";
+import { useCallback, useEffect, useRef, useState } from "@wordpress/element";
 
 import Doppler from "@novablocks/doppler";
 
-import { getEditorScrollContainer } from "../../../utils";
-import { createBlockObservers } from "../utils";
-import { useScrollContainerBox } from "../../../hooks";
+import { useResizeObserver, useOnScroll, useScrollContainer, useScrollContainerBox, useEffectDebugger } from "../../../hooks";
 
 import DopplerContext from "../context";
 import { createHigherOrderComponent } from "@wordpress/compose";
@@ -15,86 +13,72 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
 
+    console.log( 'aici render' );
+
     const { attributes, isScrolling } = props;
+    const [ contextValue, setContextValue ] = useState( {} );
+    const scrollContainer = useScrollContainer();
+    const [ setScrollContainerNode, scrollContainerResizeEntry ] = useResizeObserver();
+    const scrollContainerBox = useScrollContainerBox( scrollContainer );
 
-    const [ dopplerState, setDopplerState ] = useState( null );
-    const [ container, setContainer ] = useState( null );
-    const [ config, setConfig ] = useState( null );
-    const [ style, setStyle ] = useState( {} );
+    useEffectDebugger( () => {
+      setScrollContainerNode( scrollContainer );
+    }, [ scrollContainer ] )
 
-    const scrollContainer = getEditorScrollContainer();
+    const containerRef = useRef( null );
+    const [ setContainerNode, containerResizeEntry ] = useResizeObserver();
+    const [ containerBox, setContainerBox ] = useState( null );
 
-    const [ scrollContainerBox, scrollContainerHeight ] = useScrollContainerBox( scrollContainer );
-
-    const containerRef = useCallback( node => {
-      if ( node !== null ) {
-        setContainer( node );
+    const onScroll = useCallback( event => {
+      if ( containerRef.current ) {
+        const box = containerRef.current.getBoundingClientRect();
+        console.log( 'aici 1', box );
+        setContainerBox( box );
       }
-    }, [] );
+    }, [ containerRef ] );
 
-    useEffect( () => {
+    useOnScroll( scrollContainer, onScroll );
 
-      if ( ! container ) {
-        return;
+    useEffectDebugger( () => {
+      if ( containerRef.current ) {
+        setContainerNode( containerRef.current );
       }
+    }, [ containerRef ] );
 
-      const observers = createBlockObservers( container, updateConfig );
-      const unsubscribeUpdate = wp.data.subscribe( updateConfig );
+    useEffectDebugger( () => {
+      const box = containerResizeEntry.contentRect;
+      console.log( 'aici 2', box );
+      setContainerBox( containerResizeEntry.contentRect );
+    }, [ containerResizeEntry ] );
 
-      window.addEventListener( 'resize', updateConfig );
+    useEffectDebugger( () => {
 
-      return (
-        () => {
-          window.removeEventListener( 'resize', updateConfig );
-          observers.forEach( observer => observer.disconnect() );
-          unsubscribeUpdate();
+      if ( containerBox && scrollContainerBox ) {
+
+        const config = ( {
+          scrollContainerBox: scrollContainerBox,
+          containerBox: containerBox,
+        } );
+
+        const dopplerState = getState( config, attributes );
+        const newConfig = Object.assign( {}, config, dopplerState );
+        const style = getStyles( newConfig, attributes );
+
+        const newContextValue = {
+          style: style,
+          state: dopplerState,
+          container: containerRef.current,
+          scrollContainer: scrollContainer
         }
-      )
-    }, [ container ] )
 
-    useEffect( () => {
-
-      if ( ! config ) {
-        return;
+        setContextValue( newContextValue );
       }
 
-      setDopplerState( getState( config, attributes ) );
-
-    }, [ config, attributes ] );
-
-    useEffect( () => {
-
-      if ( ! config || ! dopplerState ) {
-        return;
-      }
-
-      const cfg = Object.assign( {}, config, dopplerState );
-
-      setStyle( getStyles( cfg, attributes ) );
-
-    }, [ config, dopplerState, attributes ] )
-
-    const updateConfig = useCallback( () => {
-
-//      if ( ! isScrolling ) {
-//        return;
-//      }
-
-      setConfig( {
-        scrollContainerBox: scrollContainer.getBoundingClientRect(),
-        containerBox: container.getBoundingClientRect(),
-      } );
-
-    }, [ isScrolling, container, scrollContainer ] )
+    }, [ containerBox, scrollContainerBox, attributes ] );
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>
-        <DopplerContext.Provider value={ {
-          style: style,
-          state: dopplerState,
-          container: container,
-          scrollContainer: scrollContainer,
-        } }>
+        <DopplerContext.Provider value={ contextValue }>
           <WrappedComponent { ...props } />
         </DopplerContext.Provider>
       </div>

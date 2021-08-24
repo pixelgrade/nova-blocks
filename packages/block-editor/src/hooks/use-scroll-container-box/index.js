@@ -5,14 +5,20 @@ const useScrollContainerBox = ( element ) => {
   const [ box, setBox ] = useState( null );
   const [ setNode, entry ] = useResizeObserver();
 
-  setNode( element );
-
   const updateBox = useCallback( () => {
     setBox( element.getBoundingClientRect() );
-  }, [] );
+  }, [ element ] );
 
   useEffect( () => {
-    setBox( element.contentRect );
+    if ( element ) {
+      setNode( element );
+    }
+  }, [ element ] );
+
+  useEffect( () => {
+    if ( !! element ) {
+      setBox( entry.contentRect );
+    }
   }, [ entry ] )
 
   useEffect( () => {
@@ -30,7 +36,7 @@ const useScrollContainerBox = ( element ) => {
     )
   }, [] );
 
-  return [ box, scrollHeight ];
+  return box;
 }
 
 export default useScrollContainerBox;
