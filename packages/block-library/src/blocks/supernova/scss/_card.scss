@@ -168,5 +168,19 @@
     .supernova-card__media-aspect-ratio:before {
       position: absolute;
     }
+    // !!! TEMPORARY
+    // @todo: should remove this, so doppler can work.
+    .supernova-card__media-doppler {
+      position: relative !important;
+      width: 100% !important;
+    }
+  }
+}
+
+.supernova-collection__layout--content-width {
+  
+  .slick-slide {
+    --slider-content-width: calc( 100vw - ( var(--theme-wrapper-sides-spacing) + var(--full) + var(--wds) + var(--wde) + var(--grid-gap) ) * 2);
+    width: var(--slider-content-width) !important;
   }
 }

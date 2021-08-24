@@ -14,7 +14,7 @@ import { onBeforeSlideChange } from './utils';
       useTransform: false, // to allow parallax effect inside
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
-      variableWidth: attributes.carouselLayout === 'variable',
+      variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
       customPaging: ( slick, index ) => {
         return '<a>' + ( index + 1 ) + '</a>';
       },

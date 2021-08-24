@@ -636,6 +636,7 @@ const CarouselLayoutControls = ( props ) => {
           options={ [
             { label: 'Fixed Width', value: 'fixed' },
             { label: 'Variable Width', value: 'variable' },
+            { label: 'Content Width', value: 'content' },
           ] }
         />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }

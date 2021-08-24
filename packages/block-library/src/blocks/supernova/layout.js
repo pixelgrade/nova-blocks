@@ -84,17 +84,16 @@ const CarouselLayout = ( props ) => {
       columns,
       carouselLayout,
       showPagination,
-      cardLayout,
     }
   } = props;
 
   const settings = {
     dots: showPagination,
     infinite: true,
-    variableWidth: carouselLayout === 'variable',
+    variableWidth: carouselLayout === 'variable' || carouselLayout === 'content',
   };
 
-  if ( carouselLayout !== 'variable' ) {
+  if ( carouselLayout !== 'variable' && carouselLayout !== 'content' ) {
     settings.slidesToShow = columns;
   }
 
