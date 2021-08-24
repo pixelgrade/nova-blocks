@@ -148,6 +148,14 @@
 .supernova-collection__layout--carousel {
   
   &.supernova-collection__layout--variable-width {
+  
+    // Replace display: tablet; width: 1px; trick
+    // with flex-basis, so we can use display: grid
+    // on supernova-card.
+    
+    .slick-track > * {
+      flex-basis: 1px;
+    }
     
     .supernova-card__media,
     .novablocks-doppler__mask {
@@ -159,11 +167,6 @@
     
     .supernova-card__media-aspect-ratio:before {
       position: absolute;
-    }
-    
-    .supernova-card {
-      display: table;
-      width: 1px;
     }
   }
 }
