@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { withDoppler } from '@novablocks/block-editor';
-
 const SlideshowBackground = function( props ) {
 	const {
 		attributes: {
@@ -38,4 +36,4 @@ const SlideshowBackground = function( props ) {
 	);
 };
 
-export default withDoppler( SlideshowBackground );
+export default SlideshowBackground;

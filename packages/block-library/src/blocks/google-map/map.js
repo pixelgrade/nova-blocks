@@ -1,5 +1,3 @@
-import { withDoppler } from '@novablocks/block-editor';
-
 import pin from './pin';
 import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
 import defaultMapCenter from './default-map-center';
@@ -195,4 +193,4 @@ const MapWrapper = ( Map ) => {
 	}
 }
 
-export default MapWrapper( withDoppler( Map ) );
+export default MapWrapper( Map );

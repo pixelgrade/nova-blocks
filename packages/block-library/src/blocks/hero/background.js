@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { withDoppler } from '@novablocks/block-editor';
-
 const HeroBackground = function( props ) {
 
 	const {
@@ -33,4 +31,4 @@ const HeroBackground = function( props ) {
 	);
 };
 
-export default withDoppler( HeroBackground );
+export default HeroBackground;

@@ -1,5 +1,5 @@
 // before any other hooks that may add controls to prevent losing focus
-import "./with-doppler";
+//import "./with-doppler";
 
 //import "./with-blobs";
 //import "./with-block-id";
@@ -7,7 +7,7 @@ import "./with-doppler";
 //import "./with-card-elements-display";
 //import "./with-cards-manager";
 //import "./with-content-position-matrix";
-//import "./with-color-signal";
+import "./with-color-signal";
 import "./with-controls-sections";
 //import "./with-deprecated-group";
 //import "./with-font-size-picker";
@@ -20,10 +20,10 @@ import "./with-controls-sections";
 import './with-settings';
 //import "./with-visual-balance";
 
-import withBlobsDecoration from './with-blobs/with-blobs-decoration';
+//import withBlobsDecoration from './with-blobs/with-blobs-decoration';
 
-export * from "./with-doppler";
+//export * from "./with-doppler";
 
-export {
-  withBlobsDecoration,
-}
+//export {
+//  withBlobsDecoration,
+//}

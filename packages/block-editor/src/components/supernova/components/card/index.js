@@ -7,7 +7,7 @@ import {
   getAlignFromMatrix, getColorSignalClassnames,
 } from "@novablocks/utils";
 
-import { withDoppler } from "../../../../filters";
+//import { withDoppler } from "../../../../filters";
 
 export * from './contents';
 
@@ -91,20 +91,20 @@ const CardMediaContent = props => {
   )
 }
 
-const CardMediaContentWithDoppler = withDoppler( ( props ) => {
-  return (
-    <div className={ `supernova-card__media-doppler` } style={ props?.doppler?.style }>
-      <CardMediaContent { ...props } />
-    </div>
-  )
-} );
+//const CardMediaContentWithDoppler = withDoppler( ( props ) => {
+//  return (
+//    <div className={ `supernova-card__media-doppler` } style={ props?.doppler?.style }>
+//      <CardMediaContent { ...props } />
+//    </div>
+//  )
+//} );
 
 export const CardMediaWrapper = ( props ) => {
 
   return (
     <div className={ `supernova-card__media-wrapper` }>
       <div className={ `supernova-card__media-aspect-ratio` }>
-        <CardMediaContentWithDoppler { ...props } />
+        <CardMediaContent { ...props } />
       </div>
     </div>
   );
