@@ -34,7 +34,9 @@ import { onBeforeSlideChange } from './utils';
       ]
     }
 
-    if ( attributes.cardLayout === 'stacked' && attributes.columns === 1 ) {
+    if ( attributes.cardLayout === 'stacked' &&
+         attributes.columns === 1 &&
+         attributes.carouselLayout !== 'variable' ) {
       Object.assign( SLICK_OPTIONS, {
 //        rows: 0,
         // for simpler reveal transitions between slides

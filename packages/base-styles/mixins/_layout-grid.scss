@@ -28,8 +28,19 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   --full: calc((100vw - var(--theme-content-width-wide)) * 0.5);
   
   grid-template-columns: [fs] Max(0px, var(--editor-full, var(--full))) [ws] calc(var(--wds) * 2) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] calc(var(--wde) * 2) [we] Max(0px, var(--editor-full, var(--full))) [fe];
+
+  @include layout-reset;
+
+  > * {
+    grid-column: var(--block-content-start)/var(--block-content-end);
+  }
 }
 
+@mixin layout-reset {
+  // Default position for blocks is between cs and ce.
+  --block-content-start: cs;
+  --block-content-end: ce;
+}
 
 // Default Layout Settings
 // --display-mode - Block default display mode. (eg. grid or flex)
@@ -47,9 +58,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
   --display-mode: block;
   --all-columns: fs/fe;
   
-  // Default position for blocks is between cs and ce.
-  --block-content-start: cs;
-  --block-content-end: ce;
+  @include layout-reset;
   
   // Default block limits are ws and we.
   --block-limit-left: ws;
