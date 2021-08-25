@@ -49,7 +49,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$classes = array(
 			'supernova',
-			'align' . $attributes[ 'align' ]
+			'alignfull',
 		);
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
@@ -95,11 +95,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php echo join( " ", $data_attributes ); ?>
 			style="<?php echo join(';', $cssProps ); ?>">
 			<?php if ( $supernova_header ) { ?>
-				<div class="supernova__inner-container">
-					<?php echo $supernova_header ?>
-				</div>
+				<?php echo $supernova_header ?>
 			<?php } ?>
-			<div class="supernova__inner-container">
 				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
 					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
 							$layoutClasses[] = 'novablocks-grid';
@@ -113,7 +110,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 						</div>
 					<?php } ?>
 				</div>
-			</div>
 		</div>
 
 		<?php return ob_get_clean();
