@@ -15,24 +15,25 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     console.log( 'aici render' );
 
-    const { attributes, isScrolling } = props;
+    const containerRef = useRef( null );
     const [ contextValue, setContextValue ] = useState( {} );
+
+    const { attributes, isScrolling } = props;
     const scrollContainer = useScrollContainer();
     const [ setScrollContainerNode, scrollContainerResizeEntry ] = useResizeObserver();
     const scrollContainerBox = useScrollContainerBox( scrollContainer );
-
+//
     useEffectDebugger( () => {
       setScrollContainerNode( scrollContainer );
     }, [ scrollContainer ] )
 
-    const containerRef = useRef( null );
     const [ setContainerNode, containerResizeEntry ] = useResizeObserver();
     const [ containerBox, setContainerBox ] = useState( null );
 
     const onScroll = useCallback( event => {
       if ( containerRef.current ) {
         const box = containerRef.current.getBoundingClientRect();
-        console.log( 'aici 1', box );
+        console.log( 'aici 1' );
         setContainerBox( box );
       }
     }, [ containerRef ] );
@@ -78,7 +79,7 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>
-        <DopplerContext.Provider value={ contextValue }>
+        <DopplerContext.Provider value={ { contextValue } }>
           <WrappedComponent { ...props } />
         </DopplerContext.Provider>
       </div>
