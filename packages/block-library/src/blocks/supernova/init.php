@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_supernova_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
+		'packages/block-library/src/blocks/supernova/attributes.json',
+
 		'packages/advanced-gallery/src/attributes.json',
 		'packages/collection/src/collection-attributes.json',
 		'packages/collection/src/grid-generator-attributes.json',
-
-		'packages/block-library/src/blocks/supernova/attributes.json',
 
 		'packages/block-editor/src/filters/with-blobs/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
@@ -88,6 +88,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$supernova_header = novablocks_get_collection_header_output( $attributes );
 
+		$align_class ='';
+
+		if ( ! empty( $attributes['align']) ) {
+			$align_class = 'align' . $attributes['align'];
+		}
+
 		ob_start(); ?>
 
         <div
@@ -97,7 +103,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php if ( $supernova_header ) { ?>
 				<?php echo $supernova_header ?>
 			<?php } ?>
-				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
+				<div class="supernova-collection <?php echo $align_class ?>">
 					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
 							$layoutClasses[] = 'novablocks-grid';
 						?>

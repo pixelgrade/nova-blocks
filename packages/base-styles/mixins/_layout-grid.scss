@@ -33,6 +33,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
   > * {
     grid-column: var(--block-content-start)/var(--block-content-end);
+    
+    &:not([class*='align']):not([data-align]) {
+      @include layout-reset;
+    }
   }
 }
 

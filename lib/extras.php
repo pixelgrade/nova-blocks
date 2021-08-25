@@ -1275,9 +1275,15 @@ function novablocks_get_collection_header_output( $attributes ) {
 
 	$output = '';
 
+	$align_class ='';
+
+	if ( ! empty( $attributes['align']) ) {
+		$align_class = 'align' . $attributes['align'];
+	}
+
 	if ( ! empty( $attributes['showCollectionTitle'] ) ) {
 
-		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block alignwide">';
+		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block ' . $align_class . ' ">';
 
 		$output .= $attributes['title'];
 
@@ -1286,7 +1292,7 @@ function novablocks_get_collection_header_output( $attributes ) {
 	}
 
 	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) {
-		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead alignwide">' . $attributes['subtitle'] . '</p>';
+		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead ' . $align_class . ' ">' . $attributes['subtitle'] . '</p>';
 	}
 
 	return $output;
