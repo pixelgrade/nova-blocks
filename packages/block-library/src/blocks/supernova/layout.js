@@ -25,9 +25,9 @@ const CollectionLayout = ( props ) => {
     `supernova-collection__layout`,
     `supernova-collection__layout--${ layoutStyle }`,
     `supernova-collection__layout--${ carouselLayout }-width`,
-    {
-      'supernova-collection__layout--edit': ! preview,
-    }
+//    {
+//      'supernova-collection__layout--edit': ! preview,
+//    }
   );
 
   const children = Children.toArray( props.children );
