@@ -98,7 +98,7 @@ import { addSocialMenuClass } from "./utils";
     // for reading progress bar.
 
     let $entryContent = $( '.entry-content' ),
-      ignoredElements = ['.article-header', '.post-navigation', '.novablocks-conversations'],
+      ignoredElements = ['.article-header', '.post-navigation', '.novablocks-conversations' ],
       ignoredElementsHeight = 0,
       articleHeaderHeight = $( '.article-header' ).outerHeight(),
       max = 0;
@@ -116,7 +116,7 @@ import { addSocialMenuClass } from "./utils";
     $( window ).on( 'scroll', function() {
 
       let scrollPosition = $( window ).scrollTop(),
-        startPosition = $entryContent.offset().top + articleHeaderHeight;
+        startPosition = $entryContent.offset().top;
 
       if ( scrollPosition > startPosition ) {
         max = $entryContent.outerHeight() - $entryContent.offset().top - ignoredElementsHeight;

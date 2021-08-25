@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_supernova_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
+		'packages/block-library/src/blocks/supernova/attributes.json',
+
 		'packages/advanced-gallery/src/attributes.json',
 		'packages/collection/src/collection-attributes.json',
 		'packages/collection/src/grid-generator-attributes.json',
-
-		'packages/block-library/src/blocks/supernova/attributes.json',
 
 		'packages/block-editor/src/filters/with-blobs/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
@@ -49,7 +49,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$classes = array(
 			'supernova',
-			'align' . $attributes[ 'align' ]
+			'alignfull',
 		);
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
@@ -88,6 +88,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$supernova_header = novablocks_get_collection_header_output( $attributes );
 
+		$align_class ='';
+
+		if ( ! empty( $attributes['align']) ) {
+			$align_class = 'align' . $attributes['align'];
+		}
+
 		ob_start(); ?>
 
         <div
@@ -95,12 +101,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php echo join( " ", $data_attributes ); ?>
 			style="<?php echo join(';', $cssProps ); ?>">
 			<?php if ( $supernova_header ) { ?>
-				<div class="supernova__inner-container">
-					<?php echo $supernova_header ?>
-				</div>
+				<?php echo $supernova_header ?>
 			<?php } ?>
-			<div class="supernova__inner-container">
-				<div class="supernova-collection <?php echo 'align' . $attributes['align']; ?>">
+				<div class="supernova-collection <?php echo $align_class ?>">
 					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
 							$layoutClasses[] = 'novablocks-grid';
 						?>
@@ -113,7 +116,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 						</div>
 					<?php } ?>
 				</div>
-			</div>
 		</div>
 
 		<?php return ob_get_clean();

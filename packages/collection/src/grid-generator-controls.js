@@ -160,15 +160,15 @@ const LayoutControls = ( props ) => {
 						] }
 					/>
 				</ControlsGroup>
-				{ layoutStyle === 'classic' && <ClassicLayoutControls { ...props } /> }
 				{ layoutStyle === 'parametric' && <ParametricLayoutControls { ...props } /> }
-				{ layoutStyle === 'carousel' && <CarouselLayoutControls { ...props } /> }
+        { layoutStyle !== 'parametric' && <UniversalLayoutControls { ...props } /> }
+        { layoutStyle === 'carousel' && <CarouselLayoutControls { ...props } /> }
 			</ControlsTab>
 		</ControlsSection>
 	);
 };
 
-const ClassicLayoutControls = ( props ) => {
+const UniversalLayoutControls = ( props ) => {
 
 	const {
     name,
@@ -631,6 +631,7 @@ const CarouselLayoutControls = ( props ) => {
           options={ [
             { label: 'Fixed Width', value: 'fixed' },
             { label: 'Variable Width', value: 'variable' },
+            { label: 'Content Width', value: 'content' },
           ] }
         />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }

@@ -25,9 +25,9 @@ const CollectionLayout = ( props ) => {
     `supernova-collection__layout`,
     `supernova-collection__layout--${ layoutStyle }`,
     `supernova-collection__layout--${ carouselLayout }-width`,
-    {
-      'supernova-collection__layout--edit': ! preview,
-    }
+//    {
+//      'supernova-collection__layout--edit': ! preview,
+//    }
   );
 
   const children = Children.toArray( props.children );
@@ -84,17 +84,16 @@ const CarouselLayout = ( props ) => {
       columns,
       carouselLayout,
       showPagination,
-      cardLayout,
     }
   } = props;
 
   const settings = {
     dots: showPagination,
     infinite: true,
-    variableWidth: carouselLayout === 'variable',
+    variableWidth: carouselLayout === 'variable' || carouselLayout === 'content',
   };
 
-  if ( carouselLayout !== 'variable' ) {
+  if ( carouselLayout !== 'variable' && carouselLayout !== 'content' ) {
     settings.slidesToShow = columns;
   }
 
