@@ -14,7 +14,7 @@ import { onBeforeSlideChange } from './utils';
       useTransform: false, // to allow parallax effect inside
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
-      variableWidth: attributes.carouselLayout === 'variable',
+      variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
       customPaging: ( slick, index ) => {
         return '<a>' + ( index + 1 ) + '</a>';
       },
@@ -34,7 +34,9 @@ import { onBeforeSlideChange } from './utils';
       ]
     }
 
-    if ( attributes.cardLayout === 'stacked' && attributes.columns === 1 ) {
+    if ( attributes.cardLayout === 'stacked' &&
+         attributes.columns === 1 &&
+         attributes.carouselLayout !== 'variable' ) {
       Object.assign( SLICK_OPTIONS, {
 //        rows: 0,
         // for simpler reveal transitions between slides

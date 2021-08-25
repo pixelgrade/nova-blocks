@@ -141,7 +141,7 @@ if ( ! function_exists('get_reading_bar_markup') ) {
 
 			<!--Share Button-->
 			<div class="c-reading-bar__wrapper-social">
-				<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay {"buttonLabel":"Share"} --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
+				<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay {"buttonLabel":"Share", "useSourceColorAsReference":false,"paletteVariation":3 } /-->' ); ?>
 			</div><!-- .c-reading-bar__wrapper-social -->
 		</div><!-- .c-reading-bar -->
 

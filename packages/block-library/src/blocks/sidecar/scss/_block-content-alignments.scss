@@ -119,7 +119,6 @@
 // ALIGNMENTS
 
 .novablocks-content {
-  grid-column: var(--block-content-start)/var(--block-content-end);
   position: relative;
 }
 
@@ -210,4 +209,9 @@
     margin-left: 0;
     margin-right: 0;
   }
+}
+
+.alignfull .alignfull {
+  margin-left: 0;
+  margin-right: 0;
 }

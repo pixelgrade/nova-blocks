@@ -27,13 +27,8 @@
 }
 
 .novablocks-content {
-  
   grid-column: var(--all-columns);
   --block-content-end: ce;
-  
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
   
   // Collections are coming with .alignfull,
   // to help us with background-color.
@@ -163,10 +158,6 @@
 // Applying Grid on Group Block
 .wp-block-group__inner-container {
   @include layout-grid;
-  
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
 }
 
 

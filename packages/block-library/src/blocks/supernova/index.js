@@ -9,7 +9,7 @@ import edit from './edit';
 import variations from './variations';
 import iconSvg from './super-nova-block.svg';
 
-import attributes from './attributes.json';
+import attributes from './attributes';
 
 import './copy-attributes-to-inner-blocks';
 
@@ -24,21 +24,23 @@ registerBlockType( 'novablocks/supernova', {
   title: __( 'Super Nova', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-  attributes: {
-    ...attributes,
-  },
+  attributes,
   supports: {
     align: [ "wide", "full" ],
     html: false,
     novaBlocks: {
       colorSignal: true,
-//      contentColorSignal: true,
+      contentColorSignal: true,
       latestPosts: true,
-//      contentPositionMatrixToolbar: true,
-//      spaceAndSizing: true,
+      contentPositionMatrixToolbar: true,
+      spaceAndSizing: true,
     }
   },
   edit,
+  getEditWrapperProps() {
+    const settings = select( 'core/block-editor' ).getSettings();
+    return settings.alignWide ? { 'data-align': 'full' } : {};
+  },
   save: function() {
     return <InnerBlocks.Content />
   },
