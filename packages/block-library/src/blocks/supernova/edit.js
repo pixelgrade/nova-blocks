@@ -159,10 +159,8 @@ const Collection = ( props ) => {
       <div className={ `wp-block__inner-container` }>
         {
           headerPosition === 0 &&
-          <div className="wp-block" data-align="wide">
-            <div className={ `supernova__inner-container` }>
+          <div className="wp-block" data-align={ align }>
               <CollectionHeader { ...props } />
-            </div>
           </div>
         }
         <div className="wp-block" data-align={ align }>

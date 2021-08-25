@@ -1,7 +1,13 @@
 .supernova {
   
   > .wp-block__inner-container {
+    @include layout-grid;
     grid-column: var(--all-columns);
+    
+    > * {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
   
 }
