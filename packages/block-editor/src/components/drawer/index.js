@@ -7,49 +7,53 @@ import {
 	Children,
 	cloneElement,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
  } from '@wordpress/element';
 
 const Drawers = ( ownProps ) => {
 
-	const children = Children.toArray( ownProps.children );
+  const { children } = ownProps;
+	const childrenArray = Children.toArray( children );
+	const drawerLists = childrenArray.filter( child => child.type === DrawerList );
+	const drawerPanels = childrenArray.filter( child => child.type === DrawerPanel );
+  const beforeChildren = children.filter( child => child.type === DrawerListBefore );
 
-	const drawerLists = children.filter( child => child.type === DrawerList );
-	const drawerPanels = children.filter( child => child.type === DrawerPanel );
-	const beforeChildren = children.filter( child => child.type === DrawerListBefore );
-	const afterChildren = children.filter( child => child.type === DrawerListAfter );
-
-	let [ active, setActive ] = useState( false );
-	let [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
+	const [ active, setActive ] = useState( false );
+	const [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
 	const [ lastActiveDrawerTitle, setLastActiveDrawerTitle ] = useMemoryState( 'drawerActiveTitle',false );
 	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
-	const existingDrawer = drawerLists.some( drawerList => {
+	const existingDrawer = useMemo( () => drawerLists.some( drawerList => {
 		const drawers = getDrawersFromList( drawerList );
 		return drawers.some( drawer => drawer?.props?.title === lastActiveDrawerTitle );
-	} );
+	} ), [ drawerLists ] );
 
-	if ( existingDrawer ) {
-		let index = 0;
+	useEffect( () => {
 
-		drawerLists.some( drawerList => {
-			const drawers = getDrawersFromList( drawerList );
-			const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerTitle );
+    if ( existingDrawer ) {
+      let index = 0;
 
-			if ( drawerIndex > -1 ) {
-				index += drawerIndex;
-			} else {
-				index += drawers.length;
-			}
+      drawerLists.some( drawerList => {
+        const drawers = getDrawersFromList( drawerList );
+        const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerTitle );
 
-			return drawerIndex > -1;
-		} );
+        if ( drawerIndex > -1 ) {
+          index += drawerIndex;
+        } else {
+          index += drawers.length;
+        }
 
-		active = index;
-	} else {
-		open = false;
-	}
+        return drawerIndex > -1;
+      } );
+
+      setActive( index );
+    } else {
+      setOpen( false );
+    }
+
+  }, [ existingDrawer ] );
 
 	const ref = useRef( null );
 	const [ refMap ] = useState( () => new WeakMap() );
@@ -74,25 +78,27 @@ const Drawers = ( ownProps ) => {
 		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	};
 
-	const { height, transform } = useSpring({
-		transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
-		height: wrapperHeight,
-		// avoid height animation on first render
-		immediate: ! open && false === active
-	} );
+//	const { height, transform } = useSpring({
+//		transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
+////		height: wrapperHeight,
+//		// avoid height animation on first render
+//		immediate: ! open && false === active
+//	} );
 
 	useEffect( () => {
 		updateHeight();
 	}, [ open, active ] );
 
+	const transform = open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)';
+
 	// keep track of number of drawers in previous drawerLists
 	let totalDrawers = 0;
 
 	return (
-		<animated.div
+		<div
 			className={ `novablocks-drawers` }
-			style={ { height } }>
-			<animated.div
+			style={ { height: wrapperHeight } }>
+			<div
 				className={ `novablocks-drawers__wrap` }
 				style={ { transform } }>
 				<div className={ `novablocks-drawers__front` } ref={ ref }>
@@ -138,17 +144,6 @@ const Drawers = ( ownProps ) => {
 							</div>
 						)
 					} ) }
-					{ afterChildren.map( ( afterChild, index ) => {
-						const [ childRef, { contentRect } ] = useResizeObserver();
-
-						useEffect( updateHeight, [ contentRect?.height ] );
-
-						return (
-							<div ref={ childRef } key={ `drawer-list-after-child-${ index }` }>
-								{ afterChild }
-							</div>
-						)
-					} ) }
 				</div>
 				{
 					drawerPanels.map( ( drawerPanel, index ) => {
@@ -171,8 +166,8 @@ const Drawers = ( ownProps ) => {
 
 					} )
 				}
-			</animated.div>
-		</animated.div>
+			</div>
+		</div>
 	);
 };
 

@@ -21,37 +21,40 @@ import { useBlockEditContext } from '@wordpress/block-editor';
 
 import {
 	Children,
+  useCallback,
+  useMemo,
  } from '@wordpress/element';
 
 const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
-	const advancedButton = document.querySelector( '.block-editor-block-inspector__advanced' );
-	const advancedWrapper = !! advancedButton && advancedButton.parentNode;
+	const advancedButton = useMemo( () => {
+	  return document.querySelector( '.block-editor-block-inspector__advanced' );
+  }, [] );
+	const advancedWrapper = useMemo( () => !! advancedButton && advancedButton.parentNode );
 
 	if ( !! advancedWrapper ) {
-		advancedWrapper.style.setProperty( 'transition', 'height .3s ease-out' );
-		advancedWrapper.style.setProperty( 'overflow', 'hidden' );
+		advancedWrapper.style.setProperty( 'transition', 'opacity .3s ease-out' );
 	}
 
-	const onOpen = () => {
+	const onOpen = useCallback( () => {
 		if ( !! advancedWrapper?.style ) {
-			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px`, );
+			advancedWrapper.style.setProperty( 'opacity', 1, );
 			requestAnimationFrame( () => {
-				advancedWrapper.style.setProperty( 'height', 0 );
+				advancedWrapper.style.setProperty( 'opacity', 0 );
 			} );
 		}
-	};
+	}, [ advancedWrapper ] );
 
-	const onClose = () => {
+	const onClose = useCallback( () => {
 		if ( !! advancedWrapper?.style ) {
 			advancedWrapper.addEventListener( 'transitionend', () => {
 				advancedWrapper.style.removeProperty( 'height' );
 			}, { once: true } );
-			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px` );
+			advancedWrapper.style.setProperty( 'opacity', 1 );
 		}
-	};
+	}, [ advancedWrapper ] );
 
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';

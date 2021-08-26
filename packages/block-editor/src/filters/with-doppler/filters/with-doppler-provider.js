@@ -12,9 +12,6 @@ const { getStyles, getState } = Doppler.utils;
 const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
-
-    console.log( 'aici render' );
-
     const containerRef = useRef( null );
     const [ contextValue, setContextValue ] = useState( {} );
 
@@ -33,7 +30,6 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
     const onScroll = useCallback( event => {
       if ( containerRef.current ) {
         const box = containerRef.current.getBoundingClientRect();
-        console.log( 'aici 1' );
         setContainerBox( box );
       }
     }, [ containerRef ] );
@@ -48,7 +44,6 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     useEffectDebugger( () => {
       const box = containerResizeEntry.contentRect;
-      console.log( 'aici 2', box );
       setContainerBox( containerResizeEntry.contentRect );
     }, [ containerResizeEntry ] );
 
