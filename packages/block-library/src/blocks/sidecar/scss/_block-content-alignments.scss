@@ -23,13 +23,17 @@
   --block-limit-right: fe;
 }
 
+// Alignment are clear intentions from user,
+// and to avoid chaining more classes,
+// we are using !important, because this is important.
+
 // Full
 // It will span from
 // [fs] column to [fe] column.
 .alignfull,
 [data-align='full']{
-  --block-content-start: fs;
-  --block-content-end: fe;
+  --block-content-start: fs !important;
+  --block-content-end: fe !important;
 }
 
 // Wide
@@ -37,8 +41,8 @@
 // [ws] column to [we] column.
 .alignwide,
 [data-align='wide'] {
-  --block-content-start: ws;
-  --block-content-end: we;
+  --block-content-start: ws !important;
+  --block-content-end: we !important;
 }
 
 // Stop Right
@@ -48,7 +52,7 @@
 // stop it at the [ce] column.
 .stop-right,
 .stop-right * {
-  --block-content-end: ce;
+  --block-content-end: ce !important;
 }
 
 // Stop Left
@@ -58,7 +62,7 @@
 // stop it at the [cs] column.
 .stop-left,
 .stop-left * {
-  --block-content-start: cs;
+  --block-content-start: cs !important;
 }
 
 // Align Left & Pull Left

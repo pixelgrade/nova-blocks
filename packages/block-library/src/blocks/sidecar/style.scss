@@ -47,6 +47,18 @@
     grid-row: 1;
   }
   
+  &--sidebar-right {
+    
+    .novablocks-content {
+     
+      > *:not([class*='align']) {
+        --block-content-start: var(--block-limit-left);
+        --block-content-end: ce;
+      }
+    }
+    
+  }
+  
   // Sidebar Left with Content on the Right.
   // Content will always start at CS and it
   // will end at layout block limit on the right. Limit on the right
