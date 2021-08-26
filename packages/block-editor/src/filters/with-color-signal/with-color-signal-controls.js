@@ -1,7 +1,7 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useSupports } from "../../hooks";
 import { Fragment } from "@wordpress/element";
-import InspectorControls from "./inspector-controls";
+import Controls from "./controls";
 
 const withColorSignalControls = createHigherOrderComponent( OriginalComponent => {
 
@@ -15,7 +15,7 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 
     return (
       <Fragment>
-        <InspectorControls { ...props } />
+        <Controls { ...props } />
         <OriginalComponent { ...props } />
       </Fragment>
     );

@@ -1,4 +1,5 @@
 .novablocks-sections {
+  overflow: hidden;
 	border-top: 1px solid #e2e4e7;
 }
 
@@ -62,9 +63,9 @@
 }
 
 :root {
-	--novablocks-red: #DE1651;
-	--novablocks-green: #00CAB6;
 	--novablocks-purple: #8E65C0;
+	--novablocks-green: #00CAB6;
+	--novablocks-red: #DE1651;
 }
 
 .novablocks-sections__cube {
@@ -157,6 +158,7 @@
 	text-align: center;
 
 	background-color: var(--novablocks-section-controls-accent);
+  transition: background-color .2s ease-out;
 	color: #FFFFFF;
 }
 
@@ -206,6 +208,7 @@
 .novablocks-sections__tabs {
 	display: flex;
 	background-color: var(--novablocks-section-controls-accent);
+  transition: background-color .2s ease-out;
 	color: #FFFFFF;
 	padding: 0 16px;
 }

@@ -1,5 +1,3 @@
-import { withDoppler } from '@novablocks/block-editor';
-
 import pin from './pin';
 import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
 import defaultMapCenter from './default-map-center';
@@ -161,7 +159,7 @@ class Map extends Component {
 	}
 
 	render() {
-		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` } style={ this.props.parallax.style }></div>;
+		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` } style={ this.props.doppler.style }></div>;
 	}
 }
 
@@ -195,4 +193,4 @@ const MapWrapper = ( Map ) => {
 	}
 }
 
-export default MapWrapper( withDoppler( Map ) );
+export default MapWrapper( Map );

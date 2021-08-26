@@ -1,15 +1,11 @@
-import classnames from 'classnames';
-
 import { __ } from '@wordpress/i18n';
 
 import {
-	compose,
 	createHigherOrderComponent
 } from '@wordpress/compose';
 
 import {
 	Fragment,
-	Component,
 } from '@wordpress/element';
 
 import {
@@ -20,10 +16,6 @@ import {
 import {
 	InspectorControls,
 } from '@wordpress/block-editor';
-
-import {
-	withSelect,
-} from '@wordpress/data';
 
 import {
 	addFilter

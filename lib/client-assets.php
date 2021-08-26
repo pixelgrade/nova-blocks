@@ -265,7 +265,7 @@ function novablocks_register_block_types() {
 		// possible script files to be registered for each block
 		$scripts = array(
 			'editor_script' => 'index.js',
-			'script' => 'frontend.js',
+//			'script' => 'frontend.js',
 		);
 
 		// empty args array that will be programmatically generated for each block

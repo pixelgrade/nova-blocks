@@ -6,7 +6,7 @@ const withDopplerContext = createHigherOrderComponent( WrappedComponent => {
   return ( props ) => {
     return (
       <DopplerContext.Consumer>
-        { context => <WrappedComponent parallax={ context } { ...props } /> }
+        { context => <WrappedComponent doppler={ context } { ...props } /> }
       </DopplerContext.Consumer>
     )
   }

@@ -1,45 +1,27 @@
 import classnames from "classnames";
 import { getIcon } from "@novablocks/icons";
 
-import { isFunctionalPalette } from "@novablocks/utils";
-
 const ColorPalettePicker = ( props ) => {
 
   const {
-    attributes,
-    settings: {
-      palettes,
-    },
-    showFunctionalColors,
     onChange,
+    myPalettes,
+    selected,
+    favorite
   } = props;
 
-  const {
-    palette,
-    paletteVariation,
-    useSourceColorAsReference
-  } = attributes;
-
-  if( ! Array.isArray( palettes ) ) {
-    return null;
-  }
-
-  const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) );
-  const brandColors = palettes.filter( palette => ! isFunctionalPalette( palette ) );
-  const visiblePalettes = showFunctionalColors ? functionalColors : brandColors;
+  const icon = favorite ? 'star' : 'tick';
 
   return (
     <div className="components-base-control color-palette-picker">
       <div className="color-palette-picker__palettes">
-        { visiblePalettes.map( thisPalette => {
+        { myPalettes.map( thisPalette => {
           const colors = thisPalette.source || [];
-          const isSelected = palette === thisPalette.id;
-          const isSourceSelected = ( isSelected && paletteVariation === 1 && useSourceColorAsReference );
-          const icon = isSourceSelected ? 'star' : 'tick';
+          const isSelected = selected === thisPalette.id;
           const colorClassnames = classnames(
             "color-palette-picker__color",
             {
-              "color-palette-picker__color--favorite": isSourceSelected
+              "color-palette-picker__color--favorite": isSelected && favorite
             }
           );
 

@@ -20,40 +20,27 @@ const ToggleGroup = ( props ) => {
 	const disabledToggles = toggles.filter( toggle => ! toggle.value );
 
 	const config = {
-		initial: false,
+		initial: { left: 0 },
+    from: { opacity: 0, height: 0, left: 40 },
 		enter: item => async next => {
-			const ref = refMap.get(item);
-
-			if ( typeof ref === "undefined" ) {
-				return;
-			}
-
-			setTimeout(() => {
-				next( { height: ref.offsetHeight } );
-			}, 100);
-
-			setTimeout(() => {
-				next( { opacity: 1, left: 0 } );
-			}, 200);
+			const ref = refMap.get( item );
+		  await next( { opacity: 1, left: 0, height: ref.offsetHeight } );
 		},
-		leave: item => async next => {
-			next( { opacity: 0, left: 40 } );
-
-			setTimeout(() => {
-				next( { height: 0 } );
-			}, 100);
-		},
+    leave: item => async (next, cancel) => {
+		  await next( { opacity: 0, height: 0, left: 40 } );
+    },
+    keys: item => item.attribute
 	};
 
-	const enabledTransitions = useTransition( enabledToggles, item => item.attribute, config );
-	const disabledTransitions = useTransition( disabledToggles, item => item.attribute, config );
+	const enabledTransitions = useTransition( enabledToggles, config );
+	const disabledTransitions = useTransition( disabledToggles, config );
 
 	return (
 		<div className={ 'components-toggle-group__panel' } key={ 'toggle-group-controls' }>
 			<div className={ 'components-toggle-group' }>
 				{ !! enabledToggles.length &&
 				  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--enabled' }>
-					  { enabledTransitions.map( ( { item, key, props } ) => {
+					  { enabledTransitions( ( props, item, { key } ) => {
 						  return (
 							  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
 								  <div ref={ref => ref && refMap.set(item, ref)}>
@@ -74,7 +61,7 @@ const ToggleGroup = ( props ) => {
 				  <Fragment>
 					  <label className={ 'components-toggle-group__toggle-list-label' }>Elements you aren't using</label>
 					  <div className={ 'components-toggle-group__toggle-list  components-toggle-group__toggle-list--disabled' }>
-						  { disabledTransitions.map( ( { item, key, props } ) => {
+						  { disabledTransitions( ( props, item, { key } ) => {
 							  return (
 								  <animated.div key={ key } style={ props } className={ 'components-toggle-group__toggle-list-animated' }>
 									  <div ref={ref => ref && refMap.set(item, ref)}>

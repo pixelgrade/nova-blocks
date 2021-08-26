@@ -19,4 +19,4 @@ const withControlsSections = createHigherOrderComponent( OriginalComponent => {
   };
 }, 'withControlsSections' );
 
-addFilter( 'editor.BlockEdit', 'novablocks/with-controls-sections', withControlsSections );
+addFilter( 'editor.BlockEdit', 'novablocks/with-controls-sections', withControlsSections, 1 );

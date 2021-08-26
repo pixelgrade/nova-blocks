@@ -75,7 +75,9 @@ registerBlockType( 'novablocks/hero', {
       },
       customDefaults: true,
       doppler: {
+        attributes: true,
         altAttributes: true,
+        controls: true,
         customWrapper: true,
       },
       spaceAndSizing: true

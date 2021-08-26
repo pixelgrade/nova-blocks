@@ -61,6 +61,7 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
     const alignment = contentPosition.split( " " );
     const horizontalAlignment = alignment[1] || 'center';
 
+    // @todo maybe find a better solution instead of reapply-ing attributes every render
     alignBlockChildren( clientId, horizontalAlignment );
 
     return <OriginalComponent { ...props } />

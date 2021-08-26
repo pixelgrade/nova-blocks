@@ -1,7 +1,5 @@
 import classnames from "classnames";
 
-import { useSpring, animated } from 'react-spring';
-
 import { useMemoryState } from '../../index';
 import Cube from "./cube";
 
@@ -11,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 
 import {
 	useEffect,
+  useMemo,
 	Component,
 	createRef,
  } from '@wordpress/element';
@@ -50,24 +49,25 @@ const ActiveSectionTabs = ( props ) => {
 		return null;
 	}
 
-	let [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
-	const existingTab = tabs.some( tab => activeTabLabel === tab.props.label );
+	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
+	const existingTab = useMemo( () => tabs.some( tab => activeTabLabel === tab.props.label ), [ tabs, activeTabLabel ] );
 
-	if ( ! existingTab ) {
-		activeTabLabel = tabs[0].props.label;
-	}
+	useEffect( () => {
+
+    if ( ! existingTab ) {
+      setActiveTabLabel( tabs[0].props.label );
+    }
+
+  }, [ existingTab ] )
 
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
-	const activeTab = tabs[activeTabIndex];
+	const activeTab = tabs[ activeTabIndex ];
+	const accentColor = getTabAccentColor( activeTabLabel );
 
-	const { accentColor } = useSpring({
-		accentColor: getTabAccentColor( activeTabLabel )
-	} );
-
-	useEffect( updateHeight, [activeTabLabel] );
+	useEffect( updateHeight, [ activeTabLabel ] );
 
 	return (
-		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
+		<div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
 				<div className="novablocks-sections__controls-back" onClick={ goBack } key={ 'tabs-back-button' }></div>
 				<div className="novablocks-sections__controls-title" key={ 'tabs-title' }>{ title }</div>
@@ -92,7 +92,7 @@ const ActiveSectionTabs = ( props ) => {
 				</div>
 			}
 			<TabContent activeTab={ activeTab } { ...props } />
-		</animated.div>
+		</div>
 	)
 };
 
@@ -129,6 +129,6 @@ class TabContent extends Component {
 			</div>
 		)
 	}
-};
+}
 
 export { ActiveSectionTabs };

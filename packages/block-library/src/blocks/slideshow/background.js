@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { withDoppler } from '@novablocks/block-editor';
-
 const SlideshowBackground = function( props ) {
 	const {
 		attributes: {
@@ -18,7 +16,7 @@ const SlideshowBackground = function( props ) {
 		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 	};
 
-  Object.assign( styles, props?.parallax?.style );
+  Object.assign( styles, props?.doppler?.style );
 
 	styles.opacity = 1 - ( overlayFilterStrength / 100 );
 
@@ -38,4 +36,4 @@ const SlideshowBackground = function( props ) {
 	);
 };
 
-export default withDoppler( SlideshowBackground );
+export default SlideshowBackground;

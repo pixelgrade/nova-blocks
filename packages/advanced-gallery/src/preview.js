@@ -3,7 +3,7 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
 import { getCardMediaPaddingTop, isSafari } from "@novablocks/utils";
-import { withBlobsDecoration } from "@novablocks/block-editor";
+//import { withBlobsDecoration } from "@novablocks/block-editor";
 
 import { GridItemCollection } from "./grid-item";
 import { getGridStyle } from "./utils";
@@ -79,7 +79,7 @@ const AdvancedGalleryItemMedia = ( props ) => {
 	)
 }
 
-const AdvancedGalleryItemMediaWithBlobs = withBlobsDecoration( AdvancedGalleryItemMedia );
+//const AdvancedGalleryItemMediaWithBlobs = withBlobsDecoration( AdvancedGalleryItemMedia );
 
 const AdvancedGalleryItem = ( props ) => {
 
@@ -99,7 +99,7 @@ const AdvancedGalleryItem = ( props ) => {
 	return (
 		<div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
 			<div className={ `novablocks-advanced-gallery__grid-item-media` }>
-				<AdvancedGalleryItemMediaWithBlobs { ...props } seedOffset={ props?.index } />
+				<AdvancedGalleryItemMedia { ...props } seedOffset={ props?.index } />
 			</div>
 			{
 				( hasCaption || hasDescription ) &&

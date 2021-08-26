@@ -1,9 +1,8 @@
 /**
  * Internal dependencies
  */
-import { withDoppler } from '@novablocks/block-editor';
-
 const HeroBackground = function( props ) {
+
 	const {
 		attributes: {
 			overlayFilterStyle,
@@ -16,7 +15,7 @@ const HeroBackground = function( props ) {
 		opacity: 1,
 	};
 
-  Object.assign( styles, props?.parallax?.style );
+  Object.assign( styles, props?.doppler?.style );
 
   if ( overlayFilterStyle !== 'none' ) {
 		styles.opacity = 1 - ( overlayFilterStrength / 100 );
@@ -32,4 +31,4 @@ const HeroBackground = function( props ) {
 	);
 };
 
-export default withDoppler( HeroBackground );
+export default HeroBackground;
