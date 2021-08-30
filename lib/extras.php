@@ -1929,7 +1929,7 @@ function novablocks_get_card_contents( $attributes ) {
 function novablocks_get_card_item_meta( $metaValue, $attributes ) {
 	ob_start(); ?>
 
-	<?php if ( ! empty( $attributes['showMeta'] ) && ! empty( $metaValue ) ) { ?>
+	<?php if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
 		<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
 			<div class="novablocks-card__meta-size-modifier">
 				<?php echo $metaValue; ?>
