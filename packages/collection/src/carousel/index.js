@@ -15,9 +15,6 @@ import { onBeforeSlideChange } from './utils';
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
       variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
-      customPaging: ( slick, index ) => {
-        return '<a>' + ( index + 1 ) + '</a>';
-      },
       infinite: true,
       responsive: [
         {

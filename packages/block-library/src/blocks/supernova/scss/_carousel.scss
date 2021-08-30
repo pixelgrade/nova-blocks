@@ -1,0 +1,39 @@
+.supernova-collection__layout--carousel {
+  margin-left: calc( -0.5 * var(--novablocks-grid-spacing) );
+  margin-right: calc( -0.5 * var(--novablocks-grid-spacing) );
+  
+  .supernova-card {
+    padding-left: calc( 0.5 * var(--novablocks-grid-spacing) );
+    padding-right: calc( 0.5 * var(--novablocks-grid-spacing) );
+  }
+  
+  .slick-track {
+    display: flex;
+    align-items: stretch;
+  }
+  
+  .slick-slide {
+    float: none;
+    height: auto;
+    
+    > div {
+      
+      &,
+      & > .supernova-card {}
+      height: 100%;
+    }
+  }
+  
+  .slick-dots {
+    padding-left: 0;
+    
+    margin-left: 0;
+    margin-top: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    margin-bottom: 0;
+    
+    button {
+      color: inherit;
+    }
+  }
+}
+
