@@ -46,7 +46,7 @@
 		"type": "boolean",
 		"default": false
 	},
-	"filterStyle": {
+	"overlayFilterStyle": {
 		"type": "string",
 		"default": "unitone"
 	},

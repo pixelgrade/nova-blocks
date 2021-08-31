@@ -3,7 +3,7 @@ import { addFilter } from "@wordpress/hooks";
 import { Fragment } from "@wordpress/element";
 
 import attributes from "./attributes.json";
-import Controls from "./controls";
+import OverlayFilterControls from "./controls";
 import { useSupports } from "../../hooks";
 
 const withOverlayFilterStrengthAttributes = ( block ) => {
@@ -34,8 +34,8 @@ const withOverlayFilterStrengthControls = createHigherOrderComponent( OriginalCo
 
     return (
       <Fragment>
-        <Controls { ...props } />
         <OriginalComponent { ...props } />
+        <OverlayFilterControls { ...props } />
       </Fragment>
     )
   };

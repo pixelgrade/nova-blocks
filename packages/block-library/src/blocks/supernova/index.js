@@ -34,6 +34,7 @@ registerBlockType( 'novablocks/supernova', {
       latestPosts: true,
       contentPositionMatrixToolbar: true,
       spaceAndSizing: true,
+      overlayFilterStrength: true
     },
     color: {
       __experimentalDuotone: 'img',
