@@ -14,7 +14,7 @@ const ElementsDisplaySection = ( props ) => {
   const { showMeta } = attributes;
 
   return (
-    <ControlsSection label={ __( 'Elements Visibility' ) } group={ __( 'Cards Manager' ) }>
+    <ControlsSection label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) } order={ 20 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
           <ToggleGroup
@@ -29,6 +29,7 @@ const ElementsDisplaySection = ( props ) => {
             } ) }
           />
         </ControlsGroup>
+
         { showMeta && <MetaSource { ...props } /> }
       </ControlsTab>
     </ControlsSection>

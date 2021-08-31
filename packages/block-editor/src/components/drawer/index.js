@@ -119,7 +119,7 @@ const Drawers = ( ownProps ) => {
 							}
 						} );
 
-						const orderedDrawers = orderBy( drawersWithTarget, drawer => drawer.props.priority || 0, ['desc'] );
+						const orderedDrawers = orderBy( drawersWithTarget, drawer => drawer.props.order || 100, ['asc'] );
 
 						return (
 							<div className={ `novablocks-drawers__list` } key={ `drawer-list-${ drawerListIndex }` }>

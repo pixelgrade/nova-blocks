@@ -29,9 +29,7 @@ const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
-	const advancedButton = useMemo( () => {
-	  return document.querySelector( '.block-editor-block-inspector__advanced' );
-  }, [] );
+	const advancedButton = useMemo( () => document.querySelector( '.block-editor-block-inspector__advanced' ), [] );
 	const advancedWrapper = useMemo( () => !! advancedButton && advancedButton.parentNode );
 
 	if ( !! advancedWrapper ) {
@@ -76,13 +74,13 @@ const ControlsSectionsComponent = ( props ) => {
 						return (
 							<DrawerList title={ key } key={ key }>
 								{ sections.map( ( section, index ) => {
-									const { label, priority } = section.props;
+									const { label, order } = section.props;
 
 									return (
 										<Drawer
 											key={ index }
 											title={ label }
-											priority={ priority }
+											order={ order }
 										/>
 									);
 								} ) }

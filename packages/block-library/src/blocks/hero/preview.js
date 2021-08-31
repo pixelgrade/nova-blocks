@@ -11,7 +11,7 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
 
 import { useSelect } from '@wordpress/data';
 
-import { getAlignmentClassnames, getColorSignalClassnames } from "@novablocks/utils";
+import { getAlignmentClassnames } from "@novablocks/utils";
 
 const HeroPreview = function( props ) {
 
@@ -20,6 +20,11 @@ const HeroPreview = function( props ) {
 		className,
 		clientId,
 		settings,
+    colorSignal: {
+      utils: {
+        getColorSignalClassnames
+      }
+    }
 	} = props;
 
 	const {

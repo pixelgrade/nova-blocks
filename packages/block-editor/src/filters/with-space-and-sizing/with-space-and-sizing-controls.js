@@ -9,7 +9,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.spaceAndSizing ) {
+    if ( supports?.novaBlocks?.spaceAndSizing !== true && supports?.novaBlocks?.spaceAndSizing?.controls !== true ) {
       return <OriginalComponent { ...props } />
     }
 

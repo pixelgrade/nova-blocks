@@ -1,0 +1,97 @@
+@import "components/color-grades-control/editor-styles";
+
+.novablocks-controls-group--colors-miscellanous-controls {
+
+  .components-toggle-control {
+    margin-bottom: 0;
+  }
+}
+
+.color-palette-picker[class][class] {
+  margin-bottom: 0;
+}
+
+.color-palette-picker__palettes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@keyframes dash {
+  100% { stroke-dashoffset: 0 }
+}
+
+.color-palette-picker__color-dash,
+.color-palette-picker__color-fill {
+  transition: all .2s ease-out;
+}
+
+.color-palette-picker__color-dash {
+  animation: dash .5s linear infinite;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+  stroke-dashoffset: 7;
+}
+
+.color-palette-picker__color {
+  position: relative;
+  padding: 0;
+  outline: 0;
+
+  svg {
+    display: block;
+  }
+
+  &:hover {
+
+    .color-palette-picker__color-dash {
+      r: 23;
+    }
+
+    .color-palette-picker__color-fill {
+      r: 20;
+    }
+
+    .color-palette-picker__color-dash {
+      stroke-width: 2;
+      stroke-dasharray: 4;
+      stroke-dashoffset: 8;
+    }
+  }
+
+  &:focus {
+
+    .color-palette-picker__color-dash {
+      stroke: currentColor;
+    }
+
+    &:not(:hover) .color-palette-picker__color-dash {
+      animation-play-state: paused;
+    }
+  }
+
+  &--favorite[class] {
+
+    .color-palette-picker__color-dash {
+      stroke-dasharray: 8 0;
+    }
+  }
+}
+
+.color-palette-picker__color-svg {
+  width: 54px;
+  height: 54px;
+}
+
+.color-palette-picker__tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #FFFFFF;
+  width: 1em;
+  height: 1em;
+
+  svg {
+    display: block;
+  }
+}

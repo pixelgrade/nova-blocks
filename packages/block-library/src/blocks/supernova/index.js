@@ -24,19 +24,38 @@ registerBlockType( 'novablocks/supernova', {
   title: __( 'Super Nova', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-  attributes,
+//  attributes,
   supports: {
     align: [ "wide", "full" ],
     html: false,
     novaBlocks: {
+      cardElementsStacking: {
+        attributes: true,
+        controls: true,
+      },
+      collectionLayout: {
+        attributes: true,
+        controls: true,
+      },
       colorSignal: true,
-      contentColorSignal: true,
-      latestPosts: true,
       contentPositionMatrixToolbar: true,
-      spaceAndSizing: true,
+      latestPosts: true,
+      mediaComposition: true,
       overlayFilter: {
         duotone: true
-      }
+      },
+      scrollingEffect: {
+        attributes: true,
+        controls: true,
+      },
+      shapeModeling: {
+        attributes: true,
+        controls: true,
+      },
+      spaceAndSizing: {
+        attributes: true,
+        controls: true,
+      },
     },
     color: {
       __experimentalDuotone: 'img',

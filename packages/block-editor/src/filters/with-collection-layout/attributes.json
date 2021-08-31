@@ -1,0 +1,82 @@
+{
+	"layoutStyle": {
+		"type": "string",
+		"default": "parametric"
+	},
+	"gridcolumns": {
+		"type": "number",
+		"default": 6
+	},
+	"gridrows": {
+		"type": "number",
+		"default": 6
+	},
+	"featuresize": {
+		"type": "number",
+		"default": 4
+	},
+	"featureposition": {
+		"type": "number",
+		"default": 1
+	},
+	"fragmentation": {
+		"type": "number",
+		"default": 1
+	},
+	"hierarchycrossing": {
+		"type": "number",
+		"default": 30
+	},
+	"imageweightleft":  {
+		"type": "number",
+		"default": 1
+	},
+	"imageweightright":  {
+		"type":  "number",
+		"default": 2
+	},
+	"metadetailsleft":  {
+		"type":  "number",
+		"default": 10
+	},
+	"metadetailsright":  {
+		"type":  "number",
+		"default": 6
+	},
+	"boostfeature": {
+		"type": "boolean",
+		"default": false
+	},
+	"subfeature": {
+		"type": "boolean",
+		"default": true
+	},
+	"balancemdandiw": {
+		"type": "boolean",
+		"default": false
+	},
+	"flipcolsrows": {
+		"type": "boolean",
+		"default": false
+	},
+	"headerPosition": {
+		"type": "number",
+		"default": 0
+	},
+	"headerColumn": {
+		"type": "number",
+		"default": 0
+	},
+	"postsToShow": {
+		"type": "integer",
+		"default": 6
+	},
+	"carouselLayout": {
+		"type": "string",
+		"default": "fixed"
+	},
+	"showPagination": {
+		"type": "boolean",
+		"default": true
+	}
+}

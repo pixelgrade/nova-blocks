@@ -72,7 +72,7 @@ registerBlockType( 'novablocks/slideshow', {
         deprecated: true
       },
       customDefaults: true,
-      doppler: {
+      scrollingEffect: {
         altAttributes: true,
         customWrapper: true,
       },

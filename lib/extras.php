@@ -501,6 +501,10 @@ function novablocks_get_block_editor_settings() {
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'minimumHeightOptions'         => array(
 			array(
+				'label' => esc_html__( 'None', '__plugin_txtd' ),
+				'value' => 0,
+			),
+			array(
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
 			),
@@ -1014,8 +1018,8 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes, $b
 function novablocks_get_advanced_gallery_component_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
-		'packages/block-editor/src/filters/with-blobs/attributes.json',
-		'packages/advanced-gallery/src/attributes.json'
+		'packages/shape-modeling/src/attributes.json',
+		'packages/media-composition/src/attributes.json'
 	) );
 	
 }

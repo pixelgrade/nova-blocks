@@ -12,7 +12,7 @@ function novablocks_get_header_row_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
 		"packages/block-library/src/blocks/header-row/attributes.json",
-		"packages/block-editor/src/filters/with-color-signal/attributes.json",
+		"packages/color-signal/src/attributes.json",
 	) );
 
 }

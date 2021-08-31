@@ -29,14 +29,15 @@
 		"postinstall": "node ./bin/packages/install.js"
 	},
 	"dependencies": {
-		"@novablocks/advanced-gallery": "file:packages/advanced-gallery",
-		"@novablocks/blob": "file:packages/blob",
+		"@novablocks/media-composition": "file:packages/media-composition",
+		"@novablocks/shape-modeling": "file:packages/shape-modeling",
 		"@novablocks/block-editor": "file:packages/block-editor",
 		"@novablocks/block-library": "file:packages/block-library",
 		"@novablocks/collection": "file:packages/collection",
 		"@novablocks/components": "file:packages/components",
 		"@novablocks/core": "file:packages/core",
-		"@novablocks/doppler": "file:packages/doppler",
+		"@novablocks/color-signal": "file:packages/color-signal",
+		"@novablocks/scrolling-effect": "file:packages/scrolling-effect",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",
 		"@novablocks/utils": "file:packages/utils"

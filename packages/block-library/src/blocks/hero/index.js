@@ -76,7 +76,7 @@ registerBlockType( 'novablocks/hero', {
         deprecated: true
       },
       customDefaults: true,
-      doppler: {
+      scrollingEffect: {
         attributes: true,
         altAttributes: true,
         controls: true,

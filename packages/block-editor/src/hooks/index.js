@@ -1,6 +1,5 @@
 export { default as useApiFetch } from './use-api-fetch';
 export { default as useAnimationFrame } from './use-animation-frame';
-export { default as useDoppler } from './use-doppler';
 export { default as useEffectDebugger } from './use-effect-debugger';
 export { default as useMemoryState } from './use-memory-state';
 export { default as useOnScroll } from './use-on-scroll';

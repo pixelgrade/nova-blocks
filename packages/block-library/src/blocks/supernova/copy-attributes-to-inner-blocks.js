@@ -1,9 +1,10 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useEffect } from "@wordpress/element";
 import { dispatch, select, subscribe } from "@wordpress/data";
-import { blobAttributes } from "@novablocks/block-editor";
 
-import AdvancedGallery from '@novablocks/advanced-gallery';
+import * as shapeModeling from "@novablocks/shape-modeling";
+
+import { attributes as mediaCompositionAttributes } from '@novablocks/media-composition';
 
 const attributeKeys = [
   'cardLayout',
@@ -27,9 +28,9 @@ const attributeKeys = [
   'thumbnailAspectRatioString',
 
   'contentStyle',
-  ...Object.keys( blobAttributes )
+  ...Object.keys( shapeModeling.attributes )
 ]
-.concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
+.concat( Object.keys( _.omit( mediaCompositionAttributes, [ 'images', 'defaultsGenerated' ] ) ) )
 
 const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock ) => {
 
@@ -75,4 +76,4 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
 
 }, 'withSupernovaUpdateChildren' );
 
-//wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );
+wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );

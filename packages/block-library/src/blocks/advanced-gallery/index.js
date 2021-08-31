@@ -1,4 +1,7 @@
-import AdvancedGallery from '@novablocks/advanced-gallery';
+import {
+  attributes as mediaCompositionAttributes,
+  getRandomAttributes
+} from '@novablocks/media-composition';
 
 import iconSvg from './advanced-gallery-block.svg';
 
@@ -19,9 +22,7 @@ import transforms from './transforms';
 
 import blockAttributes from './attributes';
 
-const { getRandomAttributes } = AdvancedGallery.utils;
-
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
+const attributes = Object.assign( {}, blockAttributes, mediaCompositionAttributes );
 
 /**
  * WordPress dependencies
@@ -58,7 +59,7 @@ registerBlockType( 'novablocks/advanced-gallery', {
 		align: [ 'wide', 'full' ],
     html: false,
     novaBlocks: {
-      blobs: true
+      shapeModeling: true
     }
 	},
 	// Additional search terms

@@ -35,7 +35,7 @@ registerBlockType( 'novablocks/google-map', {
   supports: {
     html: false,
     novaBlocks: {
-      doppler: {
+      scrollingEffect: {
         altAttributes: true,
         customWrapper: true,
       }

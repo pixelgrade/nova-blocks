@@ -13,20 +13,20 @@ function novablocks_get_supernova_attributes() {
 	return novablocks_merge_attributes_from_array( array(
 		'packages/block-library/src/blocks/supernova/attributes.json',
 
-		'packages/advanced-gallery/src/attributes.json',
+		'packages/media-composition/src/attributes.json',
+		
 		'packages/collection/src/collection-attributes.json',
 		'packages/collection/src/grid-generator-attributes.json',
 
-		'packages/block-editor/src/filters/with-blobs/attributes.json',
+		'packages/shape-modeling/src/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
 		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
-		'packages/block-editor/src/filters/with-color-signal/attributes.json',
+		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-doppler/attributes.json',
+		'packages/scrolling-effect/src/attributes.json',
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/filters/with-visual-balance/attributes.json',
 	) );
 
 }

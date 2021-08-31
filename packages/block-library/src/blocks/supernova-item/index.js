@@ -15,12 +15,10 @@ import { InnerBlocks } from "@wordpress/block-editor";
 
 import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
 import { generateDefaults, getPlaceholderImages } from "@novablocks/block-editor";
-import AdvancedGallery from "@novablocks/advanced-gallery";
+import { getRandomAttributes } from "@novablocks/media-composition";
 
 import attributes from './attributes.json';
 import { select } from "@wordpress/data";
-
-const { getRandomAttributes } = AdvancedGallery.utils;
 
 async function getNewDefaults( block ) {
   const numberOfImages = getRandomBetween( 2, 4 );
@@ -55,19 +53,35 @@ registerBlockType( 'novablocks/supernova-item', {
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes: {
-    ...attributes,
+//    ...attributes,
   },
   supports: {
     html: false,
     inserter: false,
-//    novaBlocks: {
-//      colorSignal: {
-//        paletteClassname: false,
-//        paletteVariationClassname: false,
-//        colorSignalClassname: false,
-//      },
+    novaBlocks: {
+      spaceAndSizing: {
+        attributes: true,
+      },
+      cardElementsStacking: {
+        attributes: true,
+      },
+      collectionLayout: {
+        attributes: true,
+      },
+      colorSignal: {
+        attributes: true,
+      },
+      mediaComposition: {
+        attributes: true,
+      },
+      scrollingEffect: {
+        attributes: true,
+      },
+      shapeModeling: {
+        attributes: true,
+      }
 //      latestPosts: true,
-//    }
+    }
   },
   edit,
   save: function() {

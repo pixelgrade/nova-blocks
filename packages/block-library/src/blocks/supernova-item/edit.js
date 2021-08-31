@@ -2,20 +2,19 @@ import { Fragment, useState } from '@wordpress/element';
 import { InnerBlocks, RichText, __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 import { Popover } from '@wordpress/components';
 
-import AdvancedGallery from "@novablocks/advanced-gallery";
+import MediaComposition from "@novablocks/media-composition";
 
 import { SuperNova } from "@novablocks/block-editor";
 
 const { withPreviewAttributes } = SuperNova.utils;
 const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
 
-
 const SuperNovaItemEdit =  props => {
 
   return (
     <Card { ...props }>
       <CardMediaWrapper { ...props }>
-        <AdvancedGallery.Component { ...props } />
+        <MediaComposition { ...props } />
       </CardMediaWrapper>
       <SuperNovaItemContent { ...props } />
     </Card>

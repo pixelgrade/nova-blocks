@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import { CollectionHeader } from "@novablocks/collection";
 import { SuperNova } from "@novablocks/block-editor";
-import AdvancedGallery from "@novablocks/advanced-gallery";
+import { MediaCompositionPreview } from "@novablocks/media-composition";
 
 import Controls from './controls';
 import CollectionLayout from './layout';
@@ -83,7 +83,7 @@ const CollectionPreview = ( props ) => {
       return (
         <CardEdit { ...blockProps }>
           <CardMediaWrapper { ...blockProps }>
-            <AdvancedGallery.Preview { ...blockProps } />
+            <MediaCompositionPreview { ...blockProps } />
           </CardMediaWrapper>
           {
             block.attributes.sourceType === 'fields' ?
@@ -178,7 +178,6 @@ const Collection = ( props ) => {
           </div>
         </div>
       </div>
-      <AdvancedGallery.InspectorControls { ...props } />
       <Controls { ...props } />
     </div>
   )

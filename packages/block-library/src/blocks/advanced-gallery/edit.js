@@ -1,4 +1,4 @@
-import AdvancedGallery from '@novablocks/advanced-gallery';
+import MediaComposition from '@novablocks/media-composition';
 
 const Edit = ( props ) => {
 
@@ -10,7 +10,7 @@ const Edit = ( props ) => {
 
 	return (
 		<div className={ className }>
-			<AdvancedGallery.Component { ...props } />
+			<MediaComposition { ...props } />
 		</div>
 	);
 

@@ -10,7 +10,7 @@ if ( ! function_exists( 'novablocks_get_announcement_bar_attributes' ) ) {
 	function novablocks_get_announcement_bar_attributes() {
 		return novablocks_merge_attributes_from_array( array(
 			"packages/block-library/src/blocks/announcement-bar/attributes.json",
-			"packages/block-editor/src/filters/with-color-signal/attributes.json",
+			"packages/color-signal/src/attributes.json",
 		) );
 	}
 }

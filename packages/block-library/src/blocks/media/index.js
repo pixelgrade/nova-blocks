@@ -11,7 +11,10 @@ import {
   getRandomBetween,
 } from "@novablocks/utils";
 
-import AdvancedGallery from "@novablocks/advanced-gallery";
+import {
+  attributes as mediaCompositionAttributes,
+  getRandomAttributes
+} from "@novablocks/media-composition";
 
 import {
   getSvg,
@@ -20,11 +23,9 @@ import {
   insertTemplate,
 } from "@novablocks/block-editor";
 
-const { getRandomAttributes } = AdvancedGallery.utils;
-
 import blockAttributes from './attributes';
 
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
+const attributes = Object.assign( {}, blockAttributes, mediaCompositionAttributes );
 
 /**
  * WordPress dependencies
@@ -72,7 +73,7 @@ registerBlockType( 'novablocks/media', {
     novaBlocks: {
       colorSignal: true,
       contentColorSignal: true,
-      blobs: true,
+      shapeModeling: true,
       contentPositionMatrixToolbar: {
         deprecated: true
       },

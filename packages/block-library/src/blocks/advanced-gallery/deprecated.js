@@ -1,9 +1,9 @@
 import { omit } from 'lodash';
 
 import blockAttributes from "./attributes"
-import AdvancedGallery from '@novablocks/advanced-gallery';
+import { attributes as mediaCompositionAttributes } from '@novablocks/media-composition';
 
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
+const attributes = Object.assign( {}, blockAttributes, mediaCompositionAttributes );
 
 const deprecated = [
 	{
