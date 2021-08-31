@@ -15,6 +15,10 @@ import {
   PresetControl,
 } from '@novablocks/block-editor';
 
+import {
+  getAbsoluteColorVariation,
+} from "@novablocks/utils";
+
 import { getRandomAttributes, generateDuotoneFromPalettes } from "./utils";
 
 const AdvancedGalleryInspectorControls = props => {
@@ -200,9 +204,10 @@ const OverlayFilterControls = props => {
     overlayFilterStrength
   } = attributes;
 
-  const { palette: currentPalette, paletteVariation: currentVariation } = attributes;
+  const { palette: currentPalette } = attributes;
 
-  const palettes = styleManager.palettes;
+  const palettes = styleManager.palettes,
+        currentPaletteVariation = getAbsoluteColorVariation( attributes );
 
   return (
     <Fragment>
@@ -232,7 +237,7 @@ const OverlayFilterControls = props => {
           />
 
           { filterStyle === 'duotone' && <DuotonePicker
-            duotonePalette={  generateDuotoneFromPalettes(palettes, currentPalette, currentVariation) }
+            duotonePalette={  generateDuotoneFromPalettes(palettes, currentPalette, currentPaletteVariation) }
             value = { style?.color?.duotone }
             onChange={ ( newDuotone ) => {
               const newStyle = {

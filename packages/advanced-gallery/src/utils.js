@@ -75,7 +75,7 @@ export const generateDuotoneFromPalettes = ( palettes, currentPalette, currentVa
 
     let colors = userPalette['colors'],
       shadows,
-      highlights = selectedPalette['colors'][currentVariation]['value'];
+      highlights = selectedPalette['colors'][currentVariation - 1]['value'];
 
     if ( currentVariation >= 6 ) {
       shadows = colors[currentVariation - 6]['value'];
@@ -91,7 +91,6 @@ export const generateDuotoneFromPalettes = ( palettes, currentPalette, currentVa
         'colors': mixPaletteColors
       }
     );
-
 
   } )
 
