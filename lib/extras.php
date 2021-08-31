@@ -501,6 +501,10 @@ function novablocks_get_block_editor_settings() {
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'minimumHeightOptions'         => array(
 			array(
+				'label' => esc_html__( 'None', '__plugin_txtd' ),
+				'value' => 0,
+			),
+			array(
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
 			),

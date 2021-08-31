@@ -3,7 +3,7 @@
 
 //import "./with-blobs";
 import "./with-block-id"; // @todo use supports API or add to all blocks?
-import "./with-card-details"; // @todo use supports API
+//import "./with-card-details"; // @todo use supports API
 import "./with-card-elements-display"; // @todo use supports API
 import "./with-cards-manager"; // @todo use supports API
 import "./with-content-position-matrix";

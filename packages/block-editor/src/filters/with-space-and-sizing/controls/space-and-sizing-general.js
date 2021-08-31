@@ -1,9 +1,9 @@
 import { __ } from "@wordpress/i18n";
-import { ControlsSection, ControlsTab, PresetControl } from "../../../components";
+import { PresetControl } from "../../../components";
 import { useSupports } from "../../../hooks";
 import { getRandomAttributes } from "../utils";
 
-const SpaceAndSizingControlsAdvanced = ( props ) => {
+const SpaceAndSizingGeneral = ( props ) => {
 
   const supports = useSupports( props.name );
 
@@ -20,21 +20,18 @@ const SpaceAndSizingControlsAdvanced = ( props ) => {
     }
   }
 
+  if ( ! presets.length ) {
+    return null;
+  }
+
   return (
-    <ControlsSection label={ __( 'Space and Sizing' ) } order={ 10 }>
-      {
-        !! presetOptions &&
-        <ControlsTab label={ __( 'General' ) }>
-          <PresetControl
-            key={ 'media-card-layout-preset' }
-            label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
-            options={ presets }
-            randomize={ getRandomAttributes }
-          />
-        </ControlsTab>
-      }
-    </ControlsSection>
+    <PresetControl
+      key={ 'media-card-layout-preset' }
+      label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
+      options={ presets }
+      randomize={ getRandomAttributes }
+    />
   )
 }
 
-export default SpaceAndSizingControlsAdvanced;
+export default SpaceAndSizingGeneral;

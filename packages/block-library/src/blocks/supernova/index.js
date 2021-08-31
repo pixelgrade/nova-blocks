@@ -24,7 +24,7 @@ registerBlockType( 'novablocks/supernova', {
   title: __( 'Super Nova', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-  attributes,
+//  attributes,
   supports: {
     align: [ "wide", "full" ],
     html: false,
@@ -37,7 +37,8 @@ registerBlockType( 'novablocks/supernova', {
       latestPosts: true,
       contentPositionMatrixToolbar: true,
       spaceAndSizing: {
-        visualBalance: true
+        attributes: true,
+        controls: true,
       },
     }
   },

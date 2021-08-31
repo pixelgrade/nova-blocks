@@ -4,7 +4,8 @@ import { Children, Fragment } from '@wordpress/element';
 
 import {
   getPaddingTopFromContainerHeight,
-  getAlignFromMatrix, getColorSignalClassnames,
+  getAlignFromMatrix,
+  getColorSignalClassnames,
 } from "@novablocks/utils";
 
 //import { withDoppler } from "../../../../filters";

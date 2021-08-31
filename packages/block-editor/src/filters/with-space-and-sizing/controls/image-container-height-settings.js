@@ -14,7 +14,6 @@ const ImageContainerHeightSettings = ( props ) => {
     thumbnailAspectRatio,
     thumbnailAspectRatioString,
     imageResizing,
-    cardMediaOpacity,
   } = attributes;
 
   return (
@@ -56,16 +55,6 @@ const ImageContainerHeightSettings = ( props ) => {
             ] }
           />
       }
-      <RangeControl
-        label={ __( 'Card Media Opacity', '__plugin_txtd' ) }
-        value={ cardMediaOpacity }
-        onChange={ cardMediaOpacity => {
-          setAttributes( { cardMediaOpacity } )
-        } }
-        min={ 0 }
-        max={ 100 }
-        step={ 10 }
-      />
     </ControlsGroup>
   )
 }

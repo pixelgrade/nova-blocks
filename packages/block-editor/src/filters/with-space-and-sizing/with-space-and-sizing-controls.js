@@ -1,6 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { Fragment } from "@wordpress/element";
-import Controls from "./controls/space-and-sizing";
+import Controls from "./controls";
 import { useSupports } from "../../hooks";
 
 const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent => {
@@ -9,7 +9,7 @@ const withSpaceAndSizingControls = createHigherOrderComponent( OriginalComponent
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.spaceAndSizing ) {
+    if ( supports?.novaBlocks?.spaceAndSizing !== true && supports?.novaBlocks?.spaceAndSizing?.controls !== true ) {
       return <OriginalComponent { ...props } />
     }
 

@@ -55,19 +55,22 @@ registerBlockType( 'novablocks/supernova-item', {
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes: {
-    ...attributes,
+//    ...attributes,
   },
   supports: {
     html: false,
     inserter: false,
-//    novaBlocks: {
+    novaBlocks: {
+      spaceAndSizing: {
+        attributes: true
+      }
 //      colorSignal: {
 //        paletteClassname: false,
 //        paletteVariationClassname: false,
 //        colorSignalClassname: false,
 //      },
 //      latestPosts: true,
-//    }
+    }
   },
   edit,
   save: function() {

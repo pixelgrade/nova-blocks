@@ -2,15 +2,19 @@ import attributes from "./attributes.json";
 
 const withSpaceAndSizingAttributes = ( block ) => {
 
-  if ( ! block?.supports?.novaBlocks?.spaceAndSizing ) {
+  const spacingSupports = block?.supports?.novaBlocks?.spaceAndSizing;
+
+  if ( spacingSupports !== true && spacingSupports?.attributes !== true ) {
     return block;
   }
 
-  if ( typeof block.attributes !== 'undefined' ) {
-    Object.assign( block.attributes, attributes );
-  }
-
-  return block;
+  return {
+    ...block,
+    attributes: {
+      ...block.attributes,
+      ...attributes
+    }
+  };
 }
 
 export default withSpaceAndSizingAttributes;

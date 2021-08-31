@@ -58,8 +58,6 @@ const ControlsSectionsComponent = ( props ) => {
 		return !! section.props.group ? section.props.group : '';
 	} );
 
-	console.log( 'aici', groups );
-
 	return (
 		<div className="novablocks-sections">
 			<Drawers onOpen={ onOpen } onClose={ onClose }>
