@@ -184,13 +184,6 @@ const UniversalLayoutControls = ( props ) => {
         }
 				<ItemsPerRowControl { ...props } />
 			</ControlsGroup>
-			<ControlsGroup title={ __( 'Card Layout' ) }>
-        {
-          name === 'novablocks/supernova' ?
-            <CardLayoutControl { ...props } /> :
-            <LegacyCardLayoutControl { ...props } />
-        }
-			</ControlsGroup>
 		</Fragment>
 	)
 };
@@ -268,57 +261,6 @@ const ItemsPerRowControl = ( props ) => {
       label={ __( 'Number of Items per Row' ) }
       min={ 1 }
       max={ 4 }
-    />
-  )
-}
-
-const LegacyCardLayoutControl = ( props ) => {
-
-  const {
-    attributes: {
-      isLandscape,
-    },
-    setAttributes
-  } = props;
-
-  return (
-    <RadioControl
-      key={ 'novablocks-legacy-card-layout-controls' }
-      selected={ isLandscape ? 'landscape' : 'portrait' }
-      className={ 'novablocks-card-layout' }
-      onChange={ ( value ) => {
-        setAttributes( { isLandscape: value === 'landscape' } );
-      } }
-      options={ [
-        { label: 'Vertical', value: 'portrait' },
-        { label: 'Horizontal', value: 'landscape' }
-      ] }
-    />
-  )
-}
-
-const CardLayoutControl = ( props ) => {
-
-  const {
-    attributes: {
-      cardLayout
-    },
-    setAttributes
-  } = props;
-
-  return (
-    <RadioControl
-      key={ 'novablocks-collection-card-layout' }
-      label={ __( 'Card Layout', '__plugin_txtd' ) }
-      selected={ cardLayout }
-      options={ [
-        { label: 'Vertical', value: 'vertical' },
-        { label: 'Vertical Reverse', value: 'vertical-reverse' },
-        { label: 'Horizontal', value: 'horizontal' },
-        { label: 'Horizontal Reverse', value: 'horizontal-reverse' },
-        { label: 'Stacked', value: 'stacked' },
-      ] }
-      onChange={ cardLayout => { setAttributes( { cardLayout } ) } }
     />
   )
 }

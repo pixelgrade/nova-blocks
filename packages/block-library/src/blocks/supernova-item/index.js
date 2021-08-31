@@ -63,7 +63,10 @@ registerBlockType( 'novablocks/supernova-item', {
     novaBlocks: {
       spaceAndSizing: {
         attributes: true
-      }
+      },
+      cardElementsStacking: {
+        attributes: true
+      },
 //      colorSignal: {
 //        paletteClassname: false,
 //        paletteVariationClassname: false,

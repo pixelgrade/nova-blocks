@@ -40,6 +40,10 @@ registerBlockType( 'novablocks/supernova', {
         attributes: true,
         controls: true,
       },
+      cardElementsStacking: {
+        attributes: true,
+        controls: true,
+      },
     }
   },
   edit,
