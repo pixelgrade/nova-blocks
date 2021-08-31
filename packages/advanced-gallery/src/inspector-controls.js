@@ -4,6 +4,7 @@ import { Fragment } from '@wordpress/element';
 import {
 	RadioControl,
 	RangeControl,
+  DuotonePicker,
 } from '@wordpress/components';
 
 import {
@@ -14,7 +15,7 @@ import {
   PresetControl,
 } from '@novablocks/block-editor';
 
-import { getRandomAttributes } from "./utils";
+import { getRandomAttributes, generateDuotoneFromPalettes } from "./utils";
 
 const AdvancedGalleryInspectorControls = props => {
 
@@ -24,7 +25,6 @@ const AdvancedGalleryInspectorControls = props => {
 		settings: {
 			advancedGalleryPresetOptions,
 		},
-    name
 	} = props;
 
 	const {
@@ -38,10 +38,9 @@ const AdvancedGalleryInspectorControls = props => {
 		imageResizing,
 		objectPosition,
 		imageRotation,
-
 	} = attributes;
 
-	return (
+  return (
 		<Fragment>
 			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 
@@ -135,6 +134,7 @@ const AdvancedGalleryInspectorControls = props => {
 					</ControlsGroup>
 				</ControlsTab>
 			</ControlsSection>
+      <OverlayFilterControls {...props}/>
 
 		</Fragment>
 	);
@@ -185,6 +185,83 @@ const ImageResizingControls = ( props ) => {
       />
     </Fragment>
   )
+}
+
+const OverlayFilterControls = props => {
+
+  const {
+    attributes,
+    setAttributes,
+  } = props;
+
+  const {
+    style,
+    filterStyle,
+    overlayFilterStrength
+  } = attributes;
+
+  const { palette: currentPalette, paletteVariation: currentVariation } = attributes;
+
+  const palettes = styleManager.palettes;
+
+  return (
+    <Fragment>
+
+      <ControlsSection label = { __( 'Overlay Filter' ) } group={__('Modules')}>
+        <ControlsTab label={ __( 'General' ) }>
+
+          <RadioControl
+            label={ __( 'Overlay Filter', '__plugin_txtd' ) }
+            selected={ filterStyle }
+            onChange={
+              ( nextFilterStyle ) => {
+                setAttributes( { filterStyle: nextFilterStyle } )
+                // We need to clear Duotone values.
+                if ( nextFilterStyle === 'unitone' ) {
+                  setAttributes( { style: {
+                      ...style,
+                      color: {}
+                    }})
+                }
+              }
+            }
+            options={ [
+              { label: __( 'Unitone' ), value: 'unitone' },
+              { label: __( 'Duotone' ), value: 'duotone' },
+            ] }
+          />
+
+          { filterStyle === 'duotone' && <DuotonePicker
+            duotonePalette={  generateDuotoneFromPalettes(palettes, currentPalette, currentVariation) }
+            value = { style?.color?.duotone }
+            onChange={ ( newDuotone ) => {
+              const newStyle = {
+                ...style,
+                color: {
+                  ...style?.color,
+                  duotone: newDuotone,
+                },
+              };
+              setAttributes( { style: newStyle } );
+            } }
+          />
+          }
+
+          { filterStyle === 'unitone' && <RangeControl
+            label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
+            value={ overlayFilterStrength }
+            onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
+            min={ 0 }
+            max={ 100 }
+            step={ 10 }
+          />
+          }
+
+        </ControlsTab>
+      </ControlsSection>
+
+    </Fragment>
+  );
 }
 
 export default AdvancedGalleryInspectorControls;

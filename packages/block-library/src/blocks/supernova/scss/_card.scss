@@ -106,7 +106,11 @@
   position: relative;
   background-color: var(--novablocks-bg-color);
   padding: var(--novablocks-card-image-padding, 0);
-  opacity: var(--collection-card-media-opacity, 1);
+  //opacity: var(--collection-card-media-opacity, 1);
+  
+  // @todo: Remove old CSS related
+  // to old Media Opacity option.
+  opacity: var(--supernova-overlay-filter-strength, 1);
 }
 
 .supernova-card__media-doppler {

@@ -20,6 +20,9 @@ import "./with-space-and-sizing";
 import './with-settings';
 import "./with-visual-balance"; // @todo needs to use supports API
 
+// Remove Duotone Controls from Toolbar
+import "./with-duotone-control"
+
 //import withBlobsDecoration from './with-blobs/with-blobs-decoration';
 
 //export * from "./with-doppler";
