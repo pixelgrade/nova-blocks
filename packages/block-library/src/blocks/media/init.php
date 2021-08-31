@@ -20,7 +20,6 @@ function novablocks_get_media_attributes() {
 		'packages/block-editor/src/filters/with-emphasis-area/attributes.json',
 		'packages/block-editor/src/filters/with-emphasis-level/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/filters/with-visual-balance/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes.json',
 	) );

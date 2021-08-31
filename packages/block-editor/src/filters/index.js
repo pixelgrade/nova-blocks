@@ -18,7 +18,7 @@ import "./with-overlay-filter-strength-controls";
 import "./with-random-defaults";
 import "./with-space-and-sizing";
 import './with-settings';
-import "./with-visual-balance"; // @todo needs to use supports API
+//import "./with-visual-balance"; // @todo needs to use supports API
 
 //import withBlobsDecoration from './with-blobs/with-blobs-decoration';
 

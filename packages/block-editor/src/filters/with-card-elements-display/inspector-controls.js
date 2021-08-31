@@ -29,6 +29,7 @@ const ElementsDisplaySection = ( props ) => {
             } ) }
           />
         </ControlsGroup>
+
         { showMeta && <MetaSource { ...props } /> }
       </ControlsTab>
     </ControlsSection>

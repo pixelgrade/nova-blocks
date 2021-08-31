@@ -29,9 +29,7 @@ const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
-	const advancedButton = useMemo( () => {
-	  return document.querySelector( '.block-editor-block-inspector__advanced' );
-  }, [] );
+	const advancedButton = useMemo( () => document.querySelector( '.block-editor-block-inspector__advanced' ), [] );
 	const advancedWrapper = useMemo( () => !! advancedButton && advancedButton.parentNode );
 
 	if ( !! advancedWrapper ) {
@@ -59,6 +57,8 @@ const ControlsSectionsComponent = ( props ) => {
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
 	} );
+
+	console.log( 'aici', groups );
 
 	return (
 		<div className="novablocks-sections">

@@ -2,7 +2,7 @@ import { isUndefined } from "lodash";
 
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from '@wordpress/element';
-import {dispatch, select, useSelect} from '@wordpress/data';
+import { dispatch, select, useSelect } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 
 import {
@@ -135,7 +135,7 @@ const LayoutControls = ( props ) => {
 	} = props;
 
 	return (
-		<ControlsSection label={ __( 'Grid Layout' ) } priority={ 100 }>
+		<ControlsSection label={ __( 'Grid Layout' ) }>
 			<ControlsTab label={ __( 'General' ) }>
 				<PresetControl
 					key={ 'novablocks-collection-layout-preset' }

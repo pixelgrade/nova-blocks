@@ -31,6 +31,7 @@ import {
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
 } from "@novablocks/utils";
+import { RangeControl } from "@wordpress/components";
 
 const Controls = ( props ) => {
 
@@ -43,6 +44,7 @@ const Controls = ( props ) => {
   const {
     colorSignal,
     paletteVariation,
+    emphasisArea,
   } = attributes;
 
   const referenceVariation = getParentVariation( clientId );
@@ -95,7 +97,7 @@ const Controls = ( props ) => {
   }, [ updateBlock ] );
 
   return (
-    <ControlsSection label={ __( 'Color Signal' ) }>
+    <ControlsSection label={ __( 'Color Signal' ) } order={ 20 }>
       <ControlsTab label={ __( 'Customize' ) }>
         <Notice
           key={ 'color-signal-quick-start' }
@@ -107,6 +109,16 @@ const Controls = ( props ) => {
           <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ onSignalChange } />
         </ControlsGroup>
         <ContentColorSignalControls { ...props } />
+        <ControlsGroup>
+          <RangeControl
+            value={ emphasisArea }
+            onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
+            label={ __( 'Emphasis Area' ) }
+            min={ 10 }
+            max={ 100 }
+            step={ 5 }
+          />
+        </ControlsGroup>
         <PalettePicker { ...props } showFunctionalColors={ showFunctionalColors } />
         <ColorReferenceToggleControl { ...props } />
       </ControlsTab>
@@ -127,7 +139,7 @@ const Controls = ( props ) => {
 
 const ContentColorSignalControls = ( props ) => {
 
-  const { attributes, name } = props;
+  const { attributes, setAttributes, name } = props;
   const { contentColorSignal } = attributes;
   const supports = useSupports( name );
 

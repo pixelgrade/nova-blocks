@@ -69,7 +69,7 @@ const ActiveSectionTabs = ( props ) => {
 	return (
 		<div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
-				<div className="novablocks-sections__controls-back" onClick={ goBack } key={ 'tabs-back-button' }></div>
+				<div className="novablocks-sections__controls-back" onClick={ goBack } key={ 'tabs-back-button' } />
 				<div className="novablocks-sections__controls-title" key={ 'tabs-title' }>{ title }</div>
 				<Cube />
 			</div>

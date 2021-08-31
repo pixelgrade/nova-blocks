@@ -1,6 +1,6 @@
 import attributes from "./attributes.json";
 
-function withSpaceAndSizingAttributes( block ) {
+const withSpaceAndSizingAttributes = ( block ) => {
 
   if ( ! block?.supports?.novaBlocks?.spaceAndSizing ) {
     return block;

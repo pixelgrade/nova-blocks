@@ -1,6 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { Fragment } from "@wordpress/element";
-import ControlsAdvanced from "./controls-advanced";
+import ControlsAdvanced from "./controls/space-and-sizing-advanced";
 import { useSupports } from "../../hooks";
 
 const withSpaceAndSizingControlsAdvanced = createHigherOrderComponent( OriginalComponent => {
