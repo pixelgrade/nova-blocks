@@ -1,10 +1,19 @@
-import { ControlsGroup, ControlsSection, ControlsTab, PresetControl } from "../../../components";
+import { __ } from "@wordpress/i18n";
+import { RadioControl } from "@wordpress/components";
+import { useMemo } from "@wordpress/element";
+
+import {
+  ControlsGroup,
+  ControlsSection,
+  ControlsTab,
+  PresetControl
+} from "../../../components";
 
 import presets from "./presets";
-import { getRandomAttributes } from "./utils";
+import { getRandomAttributes } from "../utils";
 
-import UniversalLayoutControls from "./universal-layout-controls";
 import ParametricLayoutControls from "./parametric-layout-controls";
+import ClassicLayoutControls from "./classic-layout-controls";
 import CarouselLayoutControls from "./carousel-layout-controls";
 
 const Controls = ( props ) => {
@@ -16,6 +25,17 @@ const Controls = ( props ) => {
     setAttributes
   } = props;
 
+  const layoutStyleOptions = useMemo( () => [
+    { label: __( 'Parametric Grid', '__plugin_txtd' ), value: 'parametric' },
+    { label: __( 'Classic Grid', '__plugin_txtd' ), value: 'classic' },
+    { label: __( 'Carousel', '__plugin_txtd' ), value: 'carousel' },
+  ], [] );
+
+  const currentLayoutStyleLabel = useMemo( () => {
+    const currentLayoutStyleOption = layoutStyleOptions.find( style => style.value === layoutStyle );
+    return currentLayoutStyleOption ? currentLayoutStyleOption.label : null;
+  }, [ layoutStyle ] );
+
   return (
     <ControlsSection label={ __( 'Collection Layout' ) } group={ __( 'Block Anatomy', '__plugin_txtd' ) }>
       <ControlsTab label={ __( 'General' ) }>
@@ -26,23 +46,19 @@ const Controls = ( props ) => {
         />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>
-        <ControlsGroup title={ __( 'Grid Anatomy' ) }>
+        <ControlsGroup title={ __( 'Collection Layout Style' ) }>
           <RadioControl
             selected={ layoutStyle }
             className={ 'novablocks-collection-layout' }
             onChange={ ( layoutStyle ) => {
               setAttributes( { layoutStyle } );
             } }
-            options={ [
-              { label: 'Parametric Grid', value: 'parametric' },
-              { label: 'Classic Grid', value: 'classic' },
-              { label: 'Carousel', value: 'carousel' },
-            ] }
+            options={ layoutStyleOptions }
           />
         </ControlsGroup>
-        { layoutStyle === 'parametric' && <ParametricLayoutControls { ...props } /> }
-        { layoutStyle !== 'parametric' && <UniversalLayoutControls { ...props } /> }
-        { layoutStyle === 'carousel' && <CarouselLayoutControls { ...props } /> }
+        <ParametricLayoutControls { ...props } />
+        <ClassicLayoutControls { ...props } />
+        <CarouselLayoutControls { ...props } />
       </ControlsTab>
     </ControlsSection>
   );

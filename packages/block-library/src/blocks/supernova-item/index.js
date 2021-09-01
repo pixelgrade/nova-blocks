@@ -67,6 +67,9 @@ registerBlockType( 'novablocks/supernova-item', {
       cardElementsStacking: {
         attributes: true
       },
+      collectionLayout: {
+        attributes: true
+      },
 //      colorSignal: {
 //        paletteClassname: false,
 //        paletteVariationClassname: false,

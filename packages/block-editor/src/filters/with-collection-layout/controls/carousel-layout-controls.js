@@ -1,15 +1,28 @@
+import { __ } from "@wordpress/i18n";
+import { Fragment } from "@wordpress/element";
+import { RadioControl, ToggleControl } from '@wordpress/components';
+
 import { ControlsGroup } from "../../../components";
+
+import PostsCountControl from "./posts-count-control";
+import ItemsPerRowControl from "./items-per-row-control";
 
 const CarouselLayoutControls = ( props ) => {
 
   const {
-    attributes: {
-      carouselLayout,
-      columns,
-      showPagination
-    },
+    attributes,
     setAttributes
   } = props;
+
+  const {
+    layoutStyle,
+    carouselLayout,
+    showPagination
+  } = attributes;
+
+  if ( layoutStyle !== "carousel" ) {
+    return null;
+  }
 
   return (
     <Fragment>
@@ -32,7 +45,7 @@ const CarouselLayoutControls = ( props ) => {
         />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
         <ToggleControl
-          label={__( 'Show Pagination', '__plugin_txtd' )}
+          label={ __( 'Show Pagination', '__plugin_txtd' ) }
           checked={ showPagination }
           onChange={ ( showPagination ) => {
             setAttributes( { showPagination } )

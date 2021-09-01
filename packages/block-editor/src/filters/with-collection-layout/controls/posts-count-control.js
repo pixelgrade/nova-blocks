@@ -1,5 +1,7 @@
 import { dispatch, select, useSelect } from "@wordpress/data";
+import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
+import { RangeControl } from '@wordpress/components';
 
 const PostsCountControl = ( props ) => {
 

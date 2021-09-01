@@ -20,6 +20,7 @@ import './with-settings';
 
 // worked on
 import "./with-space-and-sizing";
+import "./with-collection-layout";
 import "./with-card-elements-stacking";
 
 //import withBlobsDecoration from './with-blobs/with-blobs-decoration';

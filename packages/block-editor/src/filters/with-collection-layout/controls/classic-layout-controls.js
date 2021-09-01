@@ -1,8 +1,15 @@
+import { __ } from "@wordpress/i18n";
+
 import { ControlsGroup } from "../../../components";
 
 import PostsCountControl from './posts-count-control';
+import ItemsPerRowControl from "./items-per-row-control";
 
-const UniversalLayoutControls = ( props ) => {
+const ClassicLayoutControls = ( props ) => {
+
+  if ( props.attributes.layoutStyle !== "classic" ) {
+    return null;
+  }
 
   return (
     <ControlsGroup title={ __( 'Cards Count' ) }>
@@ -12,4 +19,4 @@ const UniversalLayoutControls = ( props ) => {
   )
 };
 
-export default UniversalLayoutControls;
+export default ClassicLayoutControls;

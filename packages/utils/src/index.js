@@ -318,3 +318,7 @@ export const removeClass = ( element, classes ) => {
 export const hasClass = ( element, className ) => {
   return element.classList.contains( className );
 }
+
+export const clamp = ( number, min, max ) => {
+  return Math.min( Math.max( min, number ), max )
+};

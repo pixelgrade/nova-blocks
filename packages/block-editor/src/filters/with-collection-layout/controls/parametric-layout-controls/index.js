@@ -1,11 +1,9 @@
-import { useCallback, useMemo } from "@wordpress/element";
+import { Fragment, useMemo } from "@wordpress/element";
 
 import {
   applyLayoutEngine,
   getOptimalHeaderPosition,
 } from "@novablocks/utils";
-
-import { normalizeAttributes } from "../../utils";
 
 import DebugControls from './debug-controls';
 import BlockHeaderControls from './block-header-controls';
@@ -17,21 +15,17 @@ import MiscellaneousParametersControls from './miscellaneous-parameters-controls
 
 const ParametricLayoutControls = ( props ) => {
 
-  const {
-    attributes,
-  } = props;
+  const { attributes } = props;
 
-  const setAttributes = useCallback( newAttributes => {
-    const normalizedAttributes = normalizeAttributes( newAttributes, attributes );
-    props.setAttributes( normalizedAttributes );
-  }, [ attributes ] );
+  if ( attributes.layoutStyle !== "parametric" ) {
+    return null;
+  }
 
   const areaColumns = useMemo( () => applyLayoutEngine( attributes ), [ attributes ] );
   const headerOptimalPositions = useMemo( () => getOptimalHeaderPosition( areaColumns ), [ areaColumns ] );
 
   const newProps = {
     ...props,
-    setAttributes,
     areaColumns,
     headerOptimalPositions,
   }

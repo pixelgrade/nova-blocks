@@ -44,6 +44,10 @@ registerBlockType( 'novablocks/supernova', {
         attributes: true,
         controls: true,
       },
+      collectionLayout: {
+        attributes: true,
+        controls: true,
+      },
     }
   },
   edit,

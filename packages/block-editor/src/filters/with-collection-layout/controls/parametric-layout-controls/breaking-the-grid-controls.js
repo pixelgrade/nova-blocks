@@ -1,7 +1,8 @@
 import { __ } from "@wordpress/i18n";
 import { useCallback } from "@wordpress/element";
-
 import { RangeControl } from '@wordpress/components';
+
+import { clamp } from "@novablocks/utils";
 
 import { ControlsGroup } from "../../../../components";
 
@@ -9,7 +10,6 @@ const BreakingTheGridControls = ( props ) => {
 
   const {
     attributes,
-    setAttributes,
   } = props;
 
   const {
@@ -19,14 +19,28 @@ const BreakingTheGridControls = ( props ) => {
     hierarchycrossing,
   } = attributes;
 
-  const getMinFeatureSize = useCallback( atts => 1, [] );
-  const getMaxFeatureSize = useCallback( atts => atts.gridcolumns, [ atts ] );
-  const getMinFeaturePosition = useCallback( atts => 1, [] );
-  const getMaxFeaturePosition = useCallback( atts => atts.gridcolumns - atts.featuresize + 1, [ atts ] );
-  const getMinColumnsFragmentation = useCallback( attributes => 0, [] );
-  const getMaxColumnsFragmentation = useCallback( attributes => {
+  const getMinFeatureSize = useCallback( () => 1, [] );
+  const getMaxFeatureSize = useCallback( () => attributes.gridcolumns, [ attributes ] );
+  const getMinFeaturePosition = useCallback( () => 1, [] );
+  const getMaxFeaturePosition = useCallback( () => attributes.gridcolumns - attributes.featuresize + 1, [ attributes ] );
+  const getMinColumnsFragmentation = useCallback( () => 0, [] );
+  const getMaxColumnsFragmentation = useCallback( () => {
     return Math.max( 0, Math.pow( 2, attributes.gridcolumns - attributes.featuresize - 1 ) - 1 );
   }, [ attributes ] );
+
+  const normalizeAttributes = useCallback( newAttributes => {
+    const atts = Object.assign( {}, attributes, newAttributes );
+
+    atts.featuresize = clamp( atts.featuresize, getMinFeatureSize(), getMaxFeatureSize() );
+    atts.featureposition = clamp( atts.featureposition, getMinFeaturePosition(), getMaxFeaturePosition() );
+    atts.fragmentation = clamp( atts.fragmentation, getMinColumnsFragmentation(), getMaxColumnsFragmentation() );
+
+    return atts;
+  }, [ attributes ] );
+
+  const setAttributes = useCallback( newAttributes => {
+    props.setAttributes( normalizeAttributes( newAttributes ) );
+  }, [ normalizeAttributes ] );
 
   return (
     <ControlsGroup title={ __( 'Breaking the Grid' ) }>
