@@ -31,11 +31,14 @@ subscribe( () => {
 const updateBlock = ( block ) => {
 
   const supports = getSupports( block.name );
+  const { attributes, clientId } = block;
+  const { colorSignal, palette, paletteVariation, useSourceColorAsReference } = attributes;
 
-  if ( supports?.novaBlocks?.colorSignal ) {
+  if ( supports?.novaBlocks?.colorSignal &&
+       typeof colorSignal !== "undefined" &&
+       typeof palette !== "undefined" &&
+       typeof paletteVariation !== "undefined" ) {
     const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-    const { attributes, clientId } = block;
-    const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
     const parentVariation = getParentVariation( clientId );
     const absoluteVariation = getAbsoluteColorVariation( attributes );
     const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );

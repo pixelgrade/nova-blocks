@@ -11,14 +11,6 @@
 		"type": "string",
 		"default": "moderate"
 	},
-	"horizontalAlignment": {
-		"type": "string",
-		"default": "center"
-	},
-	"verticalAlignment": {
-		"type": "string",
-		"default": ""
-	},
 	"layoutPreset": {
 		"type": "string",
 		"default": "stable"
