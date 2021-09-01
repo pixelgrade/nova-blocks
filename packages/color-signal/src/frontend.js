@@ -2,14 +2,17 @@ import {
   ready,
   addClass,
   removeClass,
+} from "@novablocks/utils";
+
+import {
   computeColorSignal,
   getAbsoluteColorVariation,
   getSiteColorVariation,
   getSourceIndexFromPaletteId,
   addSiteVariationOffset,
   removeSiteVariationOffset,
-} from "@novablocks/utils";
-import { getColorSignalClassnames } from "@novablocks/utils/src";
+  getColorSignalClassnames,
+} from "./utils";
 
 const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
 

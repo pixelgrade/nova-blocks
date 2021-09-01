@@ -1,6 +1,8 @@
 import classnames from "classnames";
-import { getColorSignalClassnames } from "@novablocks/utils";
-import { getSupports } from "../../utils";
+
+import { getSupports } from "@novablocks/block-editor";
+
+import { getColorSignalClassnames } from "../utils";
 
 const withColorSignalSaveClassnames = ( extraProps, blockType, attributes ) => {
   const supports = getSupports( blockType.name );

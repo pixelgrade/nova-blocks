@@ -1,6 +1,8 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { useSupports } from "../../hooks";
 import { Fragment } from "@wordpress/element";
+
+import { useSupports } from "@novablocks/block-editor";
+
 import Controls from "./controls";
 
 const withColorSignalControls = createHigherOrderComponent( OriginalComponent => {

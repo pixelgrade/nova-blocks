@@ -1,6 +1,7 @@
-import { useSupports } from "../../../hooks";
 import { ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
+
+import { useSupports } from "@novablocks/block-editor";
 
 const FunctionalColorsToggleControl = ( props ) => {
 

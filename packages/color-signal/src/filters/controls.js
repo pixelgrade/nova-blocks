@@ -3,7 +3,6 @@ import { useCallback } from "@wordpress/element";
 import { RangeControl } from "@wordpress/components";
 
 import {
-  ColorGradesControl,
   ControlsGroup,
   ControlsSection,
   ControlsTab,
@@ -17,13 +16,11 @@ import {
 import ColorReferenceToggleControl from "../components/color-reference-toggle";
 import MiscellaneousControls from "../components/miscellaneous-controls";
 import PalettePicker from "../components/palette-picker";
-
-import {
-} from "@novablocks/block-editor";
+import ColorGradesControl from "../components/color-grades-control";
 
 import {
   getParentVariation,
-} from "../../../utils";
+} from "../editor/utils";
 
 import {
   addSiteVariationOffset,

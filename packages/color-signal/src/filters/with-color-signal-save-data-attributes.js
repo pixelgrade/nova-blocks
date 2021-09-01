@@ -1,4 +1,4 @@
-import { getSupports } from "../../utils";
+import { getSupports } from "@novablocks/block-editor";
 
 const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => {
 

@@ -1,7 +1,14 @@
-//
 import { dispatch, select, subscribe } from "@wordpress/data";
-import { getParentVariation, getSupports } from "../../utils";
-import { computeColorSignal, getAbsoluteColorVariation, removeSiteVariationOffset } from "@novablocks/utils";
+
+import { getSupports } from "@novablocks/block-editor";
+
+import { getParentVariation } from "../editor/utils";
+
+import {
+  computeColorSignal,
+  getAbsoluteColorVariation,
+  removeSiteVariationOffset
+} from "../utils";
 
 const getBlockList = () => select( 'core/editor' ).getBlocks();
 

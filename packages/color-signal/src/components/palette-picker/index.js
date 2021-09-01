@@ -1,16 +1,17 @@
-import { ControlsGroup } from "../../../components";
-import ColorPalettePicker from "../components/color-palette-picker";
+import { ControlsGroup } from "@novablocks/block-editor";
 
 import {
   getParentVariation,
-} from "../../../utils";
+} from "../../editor/utils";
 
 import {
   addSiteVariationOffset,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
   isFunctionalPalette,
-} from "@novablocks/utils";
+} from "../../utils";
+
+import ColorPalettePicker from "../color-palette-picker";
 
 const PalettePicker = ( props ) => {
 

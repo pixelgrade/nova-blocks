@@ -10,7 +10,7 @@ import {
 
 import {
   getParentVariation,
-} from "../../utils";
+} from "../../editor/utils";
 
 const ColorGradesControl = ( props ) => {
 

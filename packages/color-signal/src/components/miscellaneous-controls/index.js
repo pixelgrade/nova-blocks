@@ -1,9 +1,10 @@
-import { Fragment } from "@wordpress/element";
-import { ControlsGroup } from "../../../components";
 import { __ } from "@wordpress/i18n";
+import { Fragment } from "@wordpress/element";
 
-import FunctionalColorsToggleControl from "./functional-colors-toggle";
-import ColorReferenceToggleControl from "./color-reference-toggle";
+import { ControlsGroup } from "@novablocks/block-editor";
+
+import FunctionalColorsToggleControl from "../functional-colors-toggle";
+import ColorReferenceToggleControl from "../color-reference-toggle";
 
 const MiscellaneousControls = ( props ) => {
 

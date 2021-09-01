@@ -1,5 +1,7 @@
 import { addFilter } from "@wordpress/hooks";
 
+//import "./update-blocks";
+
 import withColorSignalAttributes from "./filters/with-color-signal-attributes";
 import withColorSignalsDeprecated from "./filters/with-color-signal-deprecated";
 import withColorSignalControls from "./filters/with-color-signal-controls";
