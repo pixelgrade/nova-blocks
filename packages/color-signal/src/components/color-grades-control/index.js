@@ -6,7 +6,7 @@ import {
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
   normalizeVariationValue,
-} from "@novablocks/utils";
+} from "../../utils";
 
 import {
   getParentVariation,

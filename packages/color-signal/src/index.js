@@ -1,13 +1,11 @@
-import { addFilter } from '@wordpress/hooks';
+import { addFilter } from "@wordpress/hooks";
 
-//import "./update-blocks";
-
-import withColorSignalAttributes from './with-color-signal-attributes';
-import withColorSignalsDeprecated from './with-color-signal-deprecated';
-import withColorSignalControls from './with-color-signal-controls';
-import withColorSignalEditClassnames from './with-color-signal-edit-classnames';
-import withColorSignalSaveClassnames from "./with-color-signal-save-classnames";
-import withColorSignalSaveDataAttributes from "./with-color-signal-save-data-attributes";
+import withColorSignalAttributes from "./filters/with-color-signal-attributes";
+import withColorSignalsDeprecated from "./filters/with-color-signal-deprecated";
+import withColorSignalControls from "./filters/with-color-signal-controls";
+import withColorSignalEditClassnames from "./filters/with-color-signal-edit-classnames";
+import withColorSignalSaveClassnames from "./filters/with-color-signal-save-classnames";
+import withColorSignalSaveDataAttributes from "./filters/with-color-signal-save-data-attributes";
 
 addFilter( 'blocks.registerBlockType', 'novablocks/with-color-signal-attributes', withColorSignalAttributes );
 addFilter( 'blocks.registerBlockType', 'novablocks/with-color-signal-deprecated', withColorSignalsDeprecated );

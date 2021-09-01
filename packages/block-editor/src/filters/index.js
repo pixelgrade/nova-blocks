@@ -7,7 +7,6 @@ import "./with-block-id"; // @todo use supports API or add to all blocks?
 import "./with-card-elements-display"; // @todo use supports API
 import "./with-cards-manager"; // @todo use supports API
 import "./with-content-position-matrix";
-import "./with-color-signal";
 import "./with-controls-sections";
 import "./with-deprecated-group";
 import "./with-font-size-picker"; // @todo maybe rely on supports API

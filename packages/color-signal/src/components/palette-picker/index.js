@@ -8,7 +8,8 @@ import {
 import {
   addSiteVariationOffset,
   getSignalRelativeToVariation,
-  getSourceIndexFromPaletteId, isFunctionalPalette,
+  getSourceIndexFromPaletteId,
+  isFunctionalPalette,
 } from "@novablocks/utils";
 
 const PalettePicker = ( props ) => {

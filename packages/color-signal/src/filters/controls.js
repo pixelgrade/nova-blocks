@@ -1,9 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { useCallback } from "@wordpress/element";
-
-import ColorReferenceToggleControl from "./color-reference-toggle";
-import MiscellaneousControls from "./miscellanous-controls";
-import PalettePicker from "./palette-picker";
+import { RangeControl } from "@wordpress/components";
 
 import {
   ColorGradesControl,
@@ -12,12 +9,17 @@ import {
   ControlsTab,
   Notice,
   SignalControl,
-} from "../../../components";
 
-import {
   useMemoryState,
   useSupports,
-} from "../../../hooks";
+} from "@novablocks/block-editor";
+
+import ColorReferenceToggleControl from "../components/color-reference-toggle";
+import MiscellaneousControls from "../components/miscellaneous-controls";
+import PalettePicker from "../components/palette-picker";
+
+import {
+} from "@novablocks/block-editor";
 
 import {
   getParentVariation,
@@ -30,8 +32,7 @@ import {
   getAbsoluteColorVariation,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
-} from "@novablocks/utils";
-import { RangeControl } from "@wordpress/components";
+} from "../utils";
 
 const Controls = ( props ) => {
 

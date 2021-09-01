@@ -36,6 +36,7 @@
 		"@novablocks/collection": "file:packages/collection",
 		"@novablocks/components": "file:packages/components",
 		"@novablocks/core": "file:packages/core",
+		"@novablocks/color-signal": "file:packages/color-signal",
 		"@novablocks/doppler": "file:packages/doppler",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",

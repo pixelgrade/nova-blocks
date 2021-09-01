@@ -1,5 +1,4 @@
 export * from './collection-layout';
-export * from './color-signal';
 export * from './debounce';
 export * from './has-touch-screen';
 export * from './is-mobile-device';

@@ -10,7 +10,6 @@ export { default as PalettePresetControl } from "./palette-preset-control";
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
 export { default as SignalControl } from "./signal-control";
-export { default as ColorGradesControl } from "./color-grades-control";
 export { default as ToggleGroup } from "./toggle-group";
 
 export { default as insertTemplate } from './insert-template';

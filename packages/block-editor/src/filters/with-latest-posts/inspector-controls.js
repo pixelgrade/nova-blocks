@@ -26,7 +26,7 @@ const Controls = ( props ) => {
   const { innerBlocks } = useSelect( ( select ) => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
 
   return (
-    <ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Cards Manager' ) }>
+    <ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <QueryControls
           key={ 'query-controls' }
