@@ -1,12 +1,8 @@
 /**
  * Returns a Duotone Presets Array.
  * @param palettes
- * @param currentPalette
- * @param currentVariation
  * @returns {array}
  */
-
-import { isFunctionalPalette } from "@novablocks/utils";
 
 export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
@@ -43,6 +39,12 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
   return presets;
 }
+
+/**
+ * Returns all color from Palettes as array.
+ * @param palettes
+ * @returns {array}
+ */
 
 export const generateColorPalettes = ( palettes ) => {
 
