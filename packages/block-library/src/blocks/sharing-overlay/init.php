@@ -14,8 +14,8 @@ function novablocks_get_sharing_overlay_attributes() {
 	return novablocks_merge_attributes_from_array( array(
 		"packages/block-library/src/blocks/sharing-overlay/attributes.json",
 
-		"packages/block-editor/src/filters/with-color-signal/attributes.json",
-		"packages/block-editor/src/filters/with-color-signal/attributes-alt.json",
+		"packages/color-signal/src/filters/attributes.json",
+		"packages/color-signal/src/filters/attributes-alt.json",
 	) );
 
 }

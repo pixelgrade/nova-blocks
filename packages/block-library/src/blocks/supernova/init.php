@@ -21,7 +21,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
 		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
-		'packages/block-editor/src/filters/with-color-signal/attributes.json',
+		'packages/color-signal/src/filters/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-doppler/attributes.json',
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',

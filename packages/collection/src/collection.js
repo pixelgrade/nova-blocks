@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
-import { getCardMediaPaddingTop, getColorSignalClassnames } from '@novablocks/utils'
+import { getCardMediaPaddingTop } from '@novablocks/utils'
 
 import attributes from './collection-attributes.json';
 import './with-collection-attributes';
@@ -76,7 +76,12 @@ export const CollectionPreview = ( props ) => {
 
 	const {
 		attributes,
-		hasAppender
+		hasAppender,
+    colorSignal: {
+      utils: {
+        getColorSignalClassnames
+      }
+    }
 	} = props;
 
 	const {

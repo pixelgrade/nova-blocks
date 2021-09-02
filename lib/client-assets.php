@@ -265,7 +265,7 @@ function novablocks_register_block_types() {
 		// possible script files to be registered for each block
 		$scripts = array(
 			'editor_script' => 'index.js',
-//			'script' => 'frontend.js',
+			'script' => 'frontend.js',
 		);
 
 		// empty args array that will be programmatically generated for each block
@@ -287,6 +287,15 @@ function novablocks_register_block_types() {
 			// All editor scripts need the core script present.
 			if ( $key === 'editor_script' ) {
 				$dependencies[] = 'novablocks-core';
+				$dependencies[] = 'novablocks-color-signal';
+			}
+
+			/**
+			 * @todo moving blocks to the v2 API would allow to add this dependency
+			 * only when a block adds support for the colorSignal component
+			 */
+			if ( $key === 'script' ) {
+				$dependencies[] = 'novablocks-color-signal/frontend';
 			}
 
 			$basename = substr( $script, 0, - 3 );

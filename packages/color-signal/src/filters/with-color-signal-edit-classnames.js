@@ -1,8 +1,9 @@
 import classnames from "classnames";
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { getColorSignalClassnames } from "@novablocks/utils";
 
 import { useSupports } from "@novablocks/block-editor";
+
+import { getColorSignalClassnames } from "../utils";
 
 const withColorSignalEditClassnames = createHigherOrderComponent( ( BlockListBlock ) => {
 

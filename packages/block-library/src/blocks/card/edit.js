@@ -12,8 +12,6 @@ import {
 	MediaUpload,
  } from '@wordpress/block-editor';
 
-import { getColorSignalClassnames } from "@novablocks/utils";
-
 const CardEdit = ( props ) => {
 
 	const {

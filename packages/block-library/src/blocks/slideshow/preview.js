@@ -12,8 +12,6 @@ import {
 	Fragment,
  } from '@wordpress/element';
 
-import { getColorSignalClassnames } from "@novablocks/utils";
-
 const SlideshowPreview = class extends Component {
 	constructor() {
 		super( ...arguments );
@@ -48,6 +46,11 @@ const SlideshowPreview = class extends Component {
 			attributes,
 			previewImage,
 			className,
+      colorSignal: {
+        utils: {
+          getColorSignalClassnames
+        }
+      }
 		} = this.props;
 
     const {

@@ -3,7 +3,6 @@
  */
 import classnames from 'classnames';
 import { InnerBlocks } from '@wordpress/block-editor';
-import { getColorSignalClassnames } from '@novablocks/utils';
 
 /**
  * Internal dependencies.
@@ -14,7 +13,12 @@ const HeaderRowEdit = function( props ) {
 
   const {
     attributes,
-    className
+    className,
+    colorSignal: {
+      utils: {
+        getColorSignalClassnames
+      }
+    }
   } = props;
 
   const {
