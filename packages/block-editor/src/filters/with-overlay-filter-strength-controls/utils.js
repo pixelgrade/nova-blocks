@@ -5,38 +5,41 @@
  * @param currentVariation
  * @returns {array}
  */
-export const generateDuotoneFromPalettes = ( palettes, currentPalette, currentVariation ) => {
 
-  let presets = []
+import { isFunctionalPalette } from "@novablocks/utils";
 
-  const activePalettes = palettes.filter( palette => typeof palette['id'] === 'number' ),
-    selectedPalette = activePalettes[currentPalette - 1];
+export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
-  // Generate Duotone Presets based on current background color
-  // and another color from every palette, 6 position on the right,
-  // or left depending on current background color position.
+  const userPalettes = palettes.filter( palette => ! isFunctionalPalette( palette ) );
 
-  activePalettes.forEach( userPalette => {
+  // First number is used for highlights.
+  // Second number is used for shadows.
+  const duotones = [
+    [2, 8],
+    [4, 10]
+  ];
 
-    let colors = userPalette['colors'],
-      shadows,
-      highlights = selectedPalette['colors'][currentVariation - 1]['value'];
+  let presets = [],
+    highlightsColor,
+    shadowsColor;
 
-    if ( currentVariation >= 6 ) {
-      shadows = colors[currentVariation - 6]['value'];
-      [highlights, shadows] = [shadows, highlights];
-    } else {
-      shadows = colors[currentVariation + 6]['value'];
-    }
+  duotones.forEach( ( [highlight, shadow] ) => {
+    userPalettes.forEach( palette1 => {
+      userPalettes.forEach( palette2 => {
 
-    let mixPaletteColors = [shadows, highlights];
+        if ( palette2.id === palette1.id ) {
+          return;
+        }
 
-    presets.push( {
-        'name': `Color ${currentVariation} and Color ${currentVariation + 6}`,
-        'colors': mixPaletteColors
-      }
-    );
+        highlightsColor = palette1.colors[highlight]['value'];
+        shadowsColor = palette2.colors[shadow]['value'];
 
+        presets.push( {
+          colors: [shadowsColor, highlightsColor]
+        } )
+
+      } );
+    } );
   } )
 
   return presets;

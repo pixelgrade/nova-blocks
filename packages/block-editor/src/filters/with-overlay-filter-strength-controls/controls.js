@@ -11,11 +11,7 @@ import {
   ControlsTab
 } from '../../components';
 
-import {
-  getAbsoluteColorVariation,
-} from "@novablocks/utils";
-
-import { generateDuotoneFromPalettes } from "./utils";
+import {generateDuotonePresetsFromPalettes} from "./utils";
 
 const OverlayFilterControls = ( props ) => {
 
@@ -30,10 +26,7 @@ const OverlayFilterControls = ( props ) => {
     overlayFilterStrength
   } = attributes;
 
-  const { palette: currentPalette } = attributes;
-
-  const palettes = styleManager.palettes,
-    currentPaletteVariation = getAbsoluteColorVariation( attributes );
+  const palettes = styleManager.palettes;
 
   return (
       <ControlsSection label = { __( 'Overlay Filter' ) } group={__('Modules')}>
@@ -60,7 +53,7 @@ const OverlayFilterControls = ( props ) => {
             />
 
             { overlayFilterStyle === 'duotone' && <DuotonePicker
-              duotonePalette={  generateDuotoneFromPalettes(palettes, currentPalette, currentPaletteVariation) }
+              duotonePalette={  generateDuotonePresetsFromPalettes(palettes) }
               value = { style?.color?.duotone }
               onChange={ ( newDuotone ) => {
                 const newStyle = {
