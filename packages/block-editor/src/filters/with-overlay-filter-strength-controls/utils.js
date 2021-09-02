@@ -1,13 +1,17 @@
+
 /**
  * Returns a Duotone Presets Array.
  * @param palettes
  * @returns {array}
  */
-
 export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
   // First number is used for highlights.
   // Second number is used for shadows.
+  // Since JavaScript arrays are zero-indexed,
+  // Color Grades Indexes are  0 - 11.
+  // Example:
+  // [6,9] will be equivalent of [7,10].
   const duotones = [
     // Staff Picks
     [6, 9],
@@ -16,7 +20,7 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
     [7, 11],
     [8, 11],
     // Separator
-    [0, 0], 
+    [0, 0],
     // Explorations
     [5, 8],
     [5, 9],
@@ -32,11 +36,13 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
     [7, 11]
   ];
 
-  let presets = [],
-    highlightsColor,
-    shadowsColor;
+  const presets = [];
 
-  duotones.forEach( ( [highlight, shadow] ) => {
+  duotones.forEach( ( [highlightIndex, shadowIndex] ) => {
+
+    highlightIndex = clamp(highlightIndex, 0, 11);
+    shadowIndex = clamp(shadowIndex, 0, 11);
+
     palettes.forEach( palette1 => {
       palettes.forEach( palette2 => {
 
@@ -44,11 +50,11 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
           return;
         }
 
-        highlightsColor = palette1.colors[highlight]['value'];
-        shadowsColor = palette2.colors[shadow]['value'];
+        const highlightsColor = palette1.colors[highlightIndex]['value'];
+        const shadowsColor = palette2.colors[shadowIndex]['value'];
 
         presets.push( {
-          name: `${palette2.label}(${shadow}) and ${palette1.label}(${highlight})`,
+          name: `${palette2.label}(${shadowIndex}) and ${palette1.label}(${highlightIndex})`,
           colors: [shadowsColor, highlightsColor]
         } )
 
@@ -89,3 +95,7 @@ export const generateColorPalettes = ( palettes ) => {
 
   return colorPalette;
 }
+
+const clamp = ( number, min, max ) => {
+  return Math.min( Math.max( min, number ), max )
+};
