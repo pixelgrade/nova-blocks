@@ -9,8 +9,27 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
   // First number is used for highlights.
   // Second number is used for shadows.
   const duotones = [
-    [2, 8],
-    [4, 10]
+    // Staff Picks
+    [6, 9],
+    [6, 10],
+    [7, 10],
+    [7, 11],
+    [8, 11],
+    // Separator
+    [0, 0], 
+    // Explorations
+    [5, 8],
+    [5, 9],
+    [5, 10],
+    [5, 11],
+    [6, 8],
+    [6, 9],
+    [6, 10],
+    [6, 11],
+    [7, 8],
+    [7, 9],
+    [7, 10],
+    [7, 11]
   ];
 
   let presets = [],
