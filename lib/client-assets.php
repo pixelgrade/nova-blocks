@@ -291,7 +291,7 @@ function novablocks_register_block_types() {
 			}
 
 			/**
-			 * @todo moving blocks to the v2 API would allow to add this dependency
+			 * @todo moving blocks to the block.json API would allow to add this dependency
 			 * only when a block adds support for the colorSignal component
 			 */
 			if ( $key === 'script' ) {
