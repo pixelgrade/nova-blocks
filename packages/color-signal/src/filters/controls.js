@@ -10,13 +10,15 @@ import {
   SignalControl,
 
   useMemoryState,
-  useSupports,
 } from "@novablocks/block-editor";
 
-import ColorReferenceToggleControl from "../components/color-reference-toggle";
-import MiscellaneousControls from "../components/miscellaneous-controls";
-import PalettePicker from "../components/palette-picker";
-import ColorGradesControl from "../components/color-grades-control";
+import {
+  ColorGradesControl,
+  ColorReferenceToggleControl,
+  ContentColorSignalControls,
+  MiscellaneousControls,
+  PalettePicker,
+} from "../components";
 
 import {
   getParentVariation,
@@ -24,11 +26,11 @@ import {
 
 import {
   addSiteVariationOffset,
-  removeSiteVariationOffset,
   computeColorSignal,
   getAbsoluteColorVariation,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
+  removeSiteVariationOffset,
 } from "../utils";
 
 const Controls = ( props ) => {
@@ -104,7 +106,7 @@ const Controls = ( props ) => {
           dismissLabel={ '✔ Ok, I get it!' }
         />
         <ControlsGroup>
-          <SignalControl { ...props } label={ 'Block Color Signal' } signal={ colorSignal } onChange={ onSignalChange } />
+          <SignalControl { ...props } label={ __( 'Block Color Signal', '__plugin_txtd' ) } signal={ colorSignal } onChange={ onSignalChange } />
         </ControlsGroup>
         <ContentColorSignalControls { ...props } />
         <ControlsGroup>
@@ -132,28 +134,6 @@ const Controls = ( props ) => {
         <MiscellaneousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />
       </ControlsTab>
     </ControlsSection>
-  )
-}
-
-const ContentColorSignalControls = ( props ) => {
-
-  const { attributes, setAttributes, name } = props;
-  const { contentColorSignal } = attributes;
-  const supports = useSupports( name );
-
-  if ( ! supports?.novaBlocks?.contentColorSignal ) {
-    return null;
-  }
-
-  return (
-    <ControlsGroup>
-      <SignalControl { ...props }
-                     label={ 'Content Area Color Signal' }
-                     signal={ contentColorSignal }
-                     onChange={ contentColorSignal => {
-                       setAttributes( { contentColorSignal: contentColorSignal } )
-                     } } />
-    </ControlsGroup>
   )
 }
 

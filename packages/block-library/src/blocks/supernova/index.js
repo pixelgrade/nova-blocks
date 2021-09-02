@@ -29,22 +29,25 @@ registerBlockType( 'novablocks/supernova', {
     align: [ "wide", "full" ],
     html: false,
     novaBlocks: {
-      colorSignal: true,
-      contentColorSignal: true,
-      doppler: {
-        controls: true,
-      },
-      latestPosts: true,
-      contentPositionMatrixToolbar: true,
-      spaceAndSizing: {
-        attributes: true,
-        controls: true,
-      },
       cardElementsStacking: {
         attributes: true,
         controls: true,
       },
       collectionLayout: {
+        attributes: true,
+        controls: true,
+      },
+      colorSignal: true,
+      contentPositionMatrixToolbar: true,
+      doppler: {
+        controls: true,
+      },
+      latestPosts: true,
+      shapeModeling: {
+        attributes: true,
+        controls: true,
+      },
+      spaceAndSizing: {
         attributes: true,
         controls: true,
       },

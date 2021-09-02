@@ -1,7 +1,5 @@
 import $ from 'jquery';
 
-import '@novablocks/blob/frontend';
-
 import { GridItemCollection } from './grid-item';
 import { getGridStyle, safariHeightFix } from './utils';
 

@@ -5,13 +5,13 @@ import { useSupports } from "@novablocks/block-editor";
 
 import Controls from "./controls";
 
-const withBlobsControls = createHigherOrderComponent( OriginalComponent => {
+const withShapeModelingControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.blobs ) {
+    if ( supports?.novaBlocks?.shapeModeling !== true && supports?.novaBlocks?.shapeModeling?.controls !== true ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -24,4 +24,4 @@ const withBlobsControls = createHigherOrderComponent( OriginalComponent => {
   };
 }, 'withBlobsControls' );
 
-export default withBlobsControls;
+export default withShapeModelingControls;

@@ -296,6 +296,7 @@ function novablocks_register_block_types() {
 			 */
 			if ( $key === 'script' ) {
 				$dependencies[] = 'novablocks-color-signal/frontend';
+				$dependencies[] = 'novablocks-shape-modeling/frontend';
 			}
 
 			$basename = substr( $script, 0, - 3 );

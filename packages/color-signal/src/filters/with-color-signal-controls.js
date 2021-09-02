@@ -10,8 +10,9 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
   return props => {
 
     const supports = useSupports( props.name );
+    const colorSignalSupport = supports?.novaBlocks?.colorSignal;
 
-    if ( ! supports?.novaBlocks?.colorSignal ) {
+    if ( colorSignalSupport !== true && colorSignalSupport?.controls !== true ) {
       return <OriginalComponent { ...props } />
     }
 

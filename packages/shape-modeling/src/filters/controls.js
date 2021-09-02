@@ -7,14 +7,14 @@ import {
 } from "@novablocks/block-editor";
 
 import {
-  DebugControls,
+  ShapeDebugControls,
   ShapePropsControls,
   ShapeScalingControls
 } from "../controls";
 
 import getRandomAttributes from "../get-random-attributes";
 
-const InspectorControls = ( props ) => {
+const Controls = ( props ) => {
 
 	const {
 		settings: {
@@ -34,7 +34,7 @@ const InspectorControls = ( props ) => {
 				/>
 			</ControlsTab>
 			<ControlsTab label={ __( 'Settings' ) }>
-				<DebugControls { ...props } />
+				<ShapeDebugControls { ...props } />
         <ShapePropsControls { ...props }
           prefix={ 'blob' }
           enableAttribute={ 'blobsEnableMask' }
@@ -53,4 +53,4 @@ const InspectorControls = ( props ) => {
 	)
 };
 
-export default InspectorControls;
+export default Controls;

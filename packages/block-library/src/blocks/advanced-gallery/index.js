@@ -58,7 +58,7 @@ registerBlockType( 'novablocks/advanced-gallery', {
 		align: [ 'wide', 'full' ],
     html: false,
     novaBlocks: {
-      blobs: true
+      shapeModeling: true
     }
 	},
 	// Additional search terms

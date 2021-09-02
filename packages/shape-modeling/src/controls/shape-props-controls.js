@@ -1,20 +1,54 @@
 import { __ } from "@wordpress/i18n";
+import { Fragment } from "@wordpress/element";
 import { RangeControl, ToggleControl } from "@wordpress/components";
 
 import { getControlsDirtyClasses } from "@novablocks/utils";
 import { ControlsGroup } from "@novablocks/block-editor";
+
+const ShapeControls = props => {
+
+  const { groupTitle } = props;
+
+  return (
+    <ControlsGroup title={ groupTitle }>
+      <ShapePropsToggle { ...props } />
+      <ShapePropsControls { ...props } />
+    </ControlsGroup>
+  );
+};
+
+const ShapePropsToggle = props => {
+
+  const {
+    attributes,
+    setAttributes,
+    enableAttribute,
+    toggleLabel
+  } = props;
+
+  const enabled = attributes[ enableAttribute ];
+
+  return (
+    <ToggleControl
+      label={ toggleLabel }
+      checked={ enabled }
+      onChange={ () => setAttributes( { [ enableAttribute ]: !enabled } ) }
+    />
+  )
+}
 
 const ShapePropsControls = props => {
 
   const {
     attributes,
     setAttributes,
-
     enableAttribute,
     prefix,
-    groupTitle,
-    toggleLabel
   } = props;
+
+  const isPatternSeedDisabled = attributes[ `${ prefix }Complexity` ] === 0;
+  const isSidesDisabled = attributes[ `${ prefix }Complexity` ] === 0 && attributes[ `${ prefix }Smoothness` ] === 100;
+  const isRotationDisabled = attributes[ `${ prefix }Complexity` ] === 0 && attributes[ `${ prefix }Smoothness` ] === 100;
 
   const enabled = attributes[ enableAttribute ];
 
@@ -22,17 +56,8 @@ const ShapePropsControls = props => {
     return null;
   }
 
-  const isPatternSeedDisabled = attributes[ `${ prefix }Complexity` ] === 0;
-  const isSidesDisabled = attributes[ `${ prefix }Complexity` ] === 0 && attributes[ `${ prefix }Smoothness` ] === 100;
-  const isRotationDisabled = attributes[ `${ prefix }Complexity` ] === 0 && attributes[ `${ prefix }Smoothness` ] === 100;
-
   return (
-    <ControlsGroup title={ groupTitle }>
-      <ToggleControl
-        label={ toggleLabel }
-        checked={ enabled }
-        onChange={ () => setAttributes( { [ enableAttribute ]: ! enabled } ) }
-      />
+    <Fragment>
       <div className={ getControlsDirtyClasses( isSidesDisabled ) }>
         <RangeControl
           value={ attributes[ `${ prefix }Sides` ] }
@@ -99,8 +124,8 @@ const ShapePropsControls = props => {
           step={ 10 }
         />
       </div>
-    </ControlsGroup>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default ShapePropsControls;
+export default ShapeControls;

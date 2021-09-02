@@ -5,7 +5,6 @@ import { Children, Fragment } from '@wordpress/element';
 import {
   getPaddingTopFromContainerHeight,
   getAlignFromMatrix,
-  getColorSignalClassnames,
 } from "@novablocks/utils";
 
 //import { withDoppler } from "../../../../filters";
@@ -58,7 +57,15 @@ export const Card = ( props ) => {
 
 export const CardContentWrapper = ( props ) => {
 
-  const { attributes } = props;
+  const {
+    attributes,
+    colorSignal: {
+      utils: {
+        getColorSignalClassnames
+      }
+    }
+  } = props;
+
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(

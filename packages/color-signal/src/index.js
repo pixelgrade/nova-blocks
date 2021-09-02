@@ -17,3 +17,5 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColo
 addFilter( 'editor.BlockListBlock', 'novablocks/with-color-signal-edit-classnames', withColorSignalEditClassnames );
 addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/with-color-signal-save-classnames', withColorSignalSaveClassnames, 1 );
 addFilter( 'blocks.getSaveElement', 'novablocks/add-color-signal-data-to-save-element', withColorSignalSaveDataAttributes, 1 );
+
+export * from './utils';

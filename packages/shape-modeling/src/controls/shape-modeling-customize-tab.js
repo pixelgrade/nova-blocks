@@ -4,9 +4,9 @@ import { RadioControl } from "@wordpress/components";
 import { ControlsTab } from "@novablocks/block-editor";
 import { getControlsClasses } from "@novablocks/utils";
 
-import SwapShapesButton from "./swap-shapes-button";
+import ShapeSwapButton from "./shape-swap-button";
 
-const blobsMixStyleOptions = [ {
+const shapeMixStyleOptions = [ {
   label: 'None',
   value: 'none',
 }, {
@@ -37,7 +37,7 @@ const blobsMixStyleOptions = [ {
   }
 } ];
 
-const getBlobStyleAttributes = ( attributes ) => {
+const getShapeStyleAttributes = ( attributes ) => {
   const { blobsMixStyle } = attributes;
   let newAttributes = attributes;
 
@@ -91,7 +91,7 @@ const getBlobStyleAttributes = ( attributes ) => {
   };
 };
 
-const BlobCustomizeTab = props => {
+const ShapeModelingCustomizeTab = props => {
 
   const {
     attributes,
@@ -104,20 +104,20 @@ const BlobCustomizeTab = props => {
 
   return (
     <ControlsTab label={ __( 'Customize' ) }>
-      <div className={ getControlsClasses( attributes, getBlobStyleAttributes ) }>
+      <div className={ getControlsClasses( attributes, getShapeStyleAttributes ) }>
         <RadioControl
           key={ 'blobs-mixing-style' }
           label={ 'Shape Usage Style' }
           selected={ blobsMixStyle }
           onChange={ blobsMixStyle => {
-            setAttributes( getBlobStyleAttributes( { ...attributes, blobsMixStyle } ) );
+            setAttributes( getShapeStyleAttributes( { ...attributes, blobsMixStyle } ) );
           } }
-          options={ blobsMixStyleOptions }
+          options={ shapeMixStyleOptions }
         />
       </div>
-      <SwapShapesButton { ...props } />
+      <ShapeSwapButton { ...props } />
     </ControlsTab>
   )
 }
 
-export default BlobCustomizeTab;
+export default ShapeModelingCustomizeTab;

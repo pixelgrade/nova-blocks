@@ -10,7 +10,7 @@ import {
 	BLOB_RADIUS
 } from "../utils";
 
-const BlobDebug = ( attributes ) => {
+const ShapeDebug = ( attributes ) => {
 	const points = getPointsArray( attributes );
 	const curvePoints = getCurvePointsFromPoints( attributes );
 	const bounds = getBoundsFromCurves( curvePoints );
@@ -74,4 +74,4 @@ const BlobDebug = ( attributes ) => {
 	)
 };
 
-export default BlobDebug;
+export default ShapeDebug;

@@ -1,5 +1,5 @@
-import attributes from "./attributes.json";
-import altAttributes from "./attributes-alt.json";
+import attributes from "../attributes.json";
+import altAttributes from "../attributes-alt.json";
 
 const withColorSignalAttributes = ( settings, name ) => {
 

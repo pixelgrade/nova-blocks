@@ -70,11 +70,12 @@ registerBlockType( 'novablocks/supernova-item', {
       collectionLayout: {
         attributes: true
       },
-//      colorSignal: {
-//        paletteClassname: false,
-//        paletteVariationClassname: false,
-//        colorSignalClassname: false,
-//      },
+      colorSignal: {
+        attributes: true,
+      },
+      shapeModeling: {
+        attributes: true,
+      }
 //      latestPosts: true,
     }
   },

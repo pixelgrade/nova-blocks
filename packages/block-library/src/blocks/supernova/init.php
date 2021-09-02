@@ -14,14 +14,15 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-library/src/blocks/supernova/attributes.json',
 
 		'packages/advanced-gallery/src/attributes.json',
+		
 		'packages/collection/src/collection-attributes.json',
 		'packages/collection/src/grid-generator-attributes.json',
 
-		'packages/block-editor/src/filters/with-blobs/attributes.json',
+		'packages/shape-modeling/src/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
 		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
-		'packages/color-signal/src/filters/attributes.json',
+		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-doppler/attributes.json',
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',

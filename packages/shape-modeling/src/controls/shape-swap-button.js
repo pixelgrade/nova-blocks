@@ -1,7 +1,7 @@
 import { Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
-const SwapShapesButton = ( props ) => {
+const ShapeSwapButton = ( props ) => {
   const { attributes, setAttributes } = props;
   const newAttributes = {};
   const atts = [ 'Sides', 'PatternSeed', 'Complexity', 'Smoothness' ];
@@ -22,4 +22,4 @@ const SwapShapesButton = ( props ) => {
   )
 };
 
-export default SwapShapesButton;
+export default ShapeSwapButton;

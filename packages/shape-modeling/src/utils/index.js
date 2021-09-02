@@ -238,6 +238,8 @@ export const getBlobStyles = ( attributes ) => {
 		blobsVerticalDisplacement,
 	} = attributes;
 
+	console.log( attributes );
+
 	const xOffset = blobsEnableDecoration ? blobsHorizontalDisplacement : 50;
 	const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
 	const scaleRatio = blobsEnableDecoration ? blobsSizeBalance : 50;

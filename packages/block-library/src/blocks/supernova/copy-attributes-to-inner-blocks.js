@@ -1,7 +1,8 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useEffect } from "@wordpress/element";
 import { dispatch, select, subscribe } from "@wordpress/data";
-import { blobAttributes } from "@novablocks/block-editor";
+
+import * as shapeModeling from "@novablocks/shape-modeling";
 
 import AdvancedGallery from '@novablocks/advanced-gallery';
 
@@ -27,7 +28,7 @@ const attributeKeys = [
   'thumbnailAspectRatioString',
 
   'contentStyle',
-  ...Object.keys( blobAttributes )
+  ...Object.keys( shapeModeling.attributes )
 ]
 .concat( Object.keys( _.omit( AdvancedGallery.attributes, [ 'images', 'defaultsGenerated' ] ) ) )
 

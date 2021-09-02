@@ -50,4 +50,4 @@ const ShapeScalingControls = props => {
   )
 }
 
-export default;
+export default ShapeScalingControls;

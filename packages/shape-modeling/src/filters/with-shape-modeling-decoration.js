@@ -10,9 +10,9 @@ import {
   getBlobMaskStyles,
 } from '../utils';
 
-import { BlobDebug } from '../components';
+import { ShapeDebug } from '../components';
 
-const withBlobsDecoration = createHigherOrderComponent( OriginalComponent => {
+const withShapeModelingDecoration = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
 
@@ -52,7 +52,7 @@ const withBlobsDecoration = createHigherOrderComponent( OriginalComponent => {
 									<svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
 										{
 											blobsEnableMask && enableShapeDebug &&
-											<BlobDebug { ...blobMaskAtts } />
+											<ShapeDebug { ...blobMaskAtts } />
 										}
 									</svg>
 								</div>
@@ -70,7 +70,7 @@ const withBlobsDecoration = createHigherOrderComponent( OriginalComponent => {
 									<animated.path d={ props.path }></animated.path>
 									{
 										enableShapeDebug &&
-										<BlobDebug { ...blobAtts } />
+										<ShapeDebug { ...blobAtts } />
 									}
 								</svg>
 							);
@@ -80,6 +80,6 @@ const withBlobsDecoration = createHigherOrderComponent( OriginalComponent => {
 			</div>
 		)
 	}
-}, 'withBlobsDecoration' );
+}, 'withShapeModelingDecoration' );
 
-export default withBlobsDecoration;
+export default withShapeModelingDecoration;
