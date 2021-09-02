@@ -2,25 +2,21 @@ import { Spring, animated } from 'react-spring/renderprops';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { Fragment } from "@wordpress/element";
 
-import Blob from '@novablocks/blob';
+import {
+  generatePath,
+  getBlobViewBox,
+  getBlobAttsFromAttributes,
+  getBlobStyles,
+  getBlobMaskStyles,
+} from '../utils';
 
-const {
-  BlobDebug,
-  utils: {
-    generatePath,
-    getBlobViewBox,
-    getBlobAttsFromAttributes,
-    getBlobStyles,
-    getBlobMaskStyles,
-  }
-} = Blob;
+import { BlobDebug } from '../components';
 
 const withBlobsDecoration = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
-		const {
-			attributes
-		} = props;
+
+		const { attributes } = props;
 
 		const {
 			blobsEnableMask,

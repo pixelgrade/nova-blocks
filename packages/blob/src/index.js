@@ -1,9 +1,9 @@
-import Debug from './debug';
-import * as utils from './utils';
+import { addFilter } from '@wordpress/hooks';
 
-const Blob = {
-	Debug,
-	utils
-};
+//import withBlobs from './with-blobs';
+import withBlobsControls from './filters/with-blobs-controls';
+import withBlobsAttributes from './filters/with-blobs-attributes';
 
-export default Blob;
+//addFilter( 'editor.BlockEdit', 'novablocks/with-blobs', withBlobs );
+addFilter( 'editor.BlockEdit', 'novablocks/with-blobs-controls', withBlobsControls );
+addFilter( 'blocks.registerBlockType', 'novablocks/with-blobs-attributes', withBlobsAttributes );

@@ -8,7 +8,7 @@ import {
 	scalePoints,
 	scaleCurvePoints,
 	BLOB_RADIUS
-} from "./utils";
+} from "../utils";
 
 const BlobDebug = ( attributes ) => {
 	const points = getPointsArray( attributes );

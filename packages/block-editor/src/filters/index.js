@@ -1,7 +1,6 @@
 // before any other hooks that may add controls to prevent losing focus
 //import "./with-doppler";
 
-//import "./with-blobs";
 import "./with-block-id"; // @todo use supports API or add to all blocks?
 //import "./with-card-details"; // @todo use supports API
 import "./with-card-elements-display"; // @todo use supports API
@@ -22,10 +21,4 @@ import "./with-space-and-sizing";
 import "./with-collection-layout";
 import "./with-card-elements-stacking";
 
-//import withBlobsDecoration from './with-blobs/with-blobs-decoration';
-
 //export * from "./with-doppler";
-
-//export {
-//  withBlobsDecoration,
-//}
