@@ -10,8 +10,6 @@ import { isFunctionalPalette } from "@novablocks/utils";
 
 export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
-  const userPalettes = palettes.filter( palette => ! isFunctionalPalette( palette ) );
-
   // First number is used for highlights.
   // Second number is used for shadows.
   const duotones = [
@@ -24,8 +22,8 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
     shadowsColor;
 
   duotones.forEach( ( [highlight, shadow] ) => {
-    userPalettes.forEach( palette1 => {
-      userPalettes.forEach( palette2 => {
+    palettes.forEach( palette1 => {
+      palettes.forEach( palette2 => {
 
         if ( palette2.id === palette1.id ) {
           return;
@@ -35,6 +33,7 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
         shadowsColor = palette2.colors[shadow]['value'];
 
         presets.push( {
+          name: `${palette2.label}(${shadow}) and ${palette1.label}(${highlight})`,
           colors: [shadowsColor, highlightsColor]
         } )
 
@@ -43,4 +42,29 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
   } )
 
   return presets;
+}
+
+export const generateColorPalettes = ( palettes ) => {
+
+  let colorItem = {}
+  const colorPalette = []
+
+  palettes.forEach( ( palette, index ) => {
+
+    let colors = palette.colors;
+    let colorLabel = palette.label;
+
+    colors.forEach( (color, colorIndex) => {
+
+      colorItem = {
+        'color': color.value,
+        'name': `${colorLabel} - Color-${colorIndex}`,
+        'slug': `${colorLabel.toLowerCase().replace( /\s/g, '-' )}-color-${index}`
+      }
+
+      colorPalette.push( colorItem )
+    } )
+  } );
+
+  return colorPalette;
 }

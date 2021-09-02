@@ -11,7 +11,14 @@ import {
   ControlsTab
 } from '../../components';
 
-import {generateDuotonePresetsFromPalettes} from "./utils";
+import {generateDuotonePresetsFromPalettes, generateColorPalettes} from "./utils";
+import { isFunctionalPalette } from "@novablocks/utils";
+
+const PALETTES = styleManager.palettes;
+const FILTERED_PALETTES = PALETTES.filter( palette => ! isFunctionalPalette( palette ) );
+const DUOTONE_PALETTES = generateDuotonePresetsFromPalettes(FILTERED_PALETTES);
+
+const COLOR_PALETTES = generateColorPalettes(FILTERED_PALETTES);
 
 const OverlayFilterControls = ( props ) => {
 
@@ -25,8 +32,6 @@ const OverlayFilterControls = ( props ) => {
     overlayFilterStyle,
     overlayFilterStrength
   } = attributes;
-
-  const palettes = styleManager.palettes;
 
   return (
       <ControlsSection label = { __( 'Overlay Filter' ) } group={__('Modules')}>
@@ -53,7 +58,8 @@ const OverlayFilterControls = ( props ) => {
             />
 
             { overlayFilterStyle === 'duotone' && <DuotonePicker
-              duotonePalette={  generateDuotonePresetsFromPalettes(palettes) }
+              colorPalette={ COLOR_PALETTES }
+              duotonePalette={ DUOTONE_PALETTES }
               value = { style?.color?.duotone }
               onChange={ ( newDuotone ) => {
                 const newStyle = {
@@ -65,6 +71,7 @@ const OverlayFilterControls = ( props ) => {
                 };
                 setAttributes( { style: newStyle } );
               } }
+              disableCustomColors = { true }
             />
             }
 
