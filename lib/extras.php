@@ -2043,3 +2043,111 @@ function novablocks_get_variation_from_signal( $signal ) {
 
 	return 1;
 }
+
+/**
+ * Render out the duotone stylesheet and SVG.
+ *
+ *
+ * @param string $block_content Rendered block content.
+ * @param array  $block         Block object.
+ *
+ * @return string Filtered block content.
+ */
+function nova_blocks_alter_wp_render_duotone_support( $block_content, $block ) {
+
+	$duotone_support = false;
+
+	if ( $block['blockName'] === 'novablocks/supernova' ) {
+		$duotone_support = 'img';
+	}
+
+	$has_duotone_attribute = isset( $block['attrs']['style']['color']['duotone'] );
+
+	if (
+		! $duotone_support ||
+		! $has_duotone_attribute
+	) {
+		return $block_content;
+	}
+
+	$duotone_colors = $block['attrs']['style']['color']['duotone'];
+
+	$duotone_values = array(
+		'r' => array(),
+		'g' => array(),
+		'b' => array(),
+	);
+	foreach ( $duotone_colors as $color_str ) {
+		$color = wp_tinycolor_string_to_rgb( $color_str );
+
+		$duotone_values['r'][] = $color['r'] / 255;
+		$duotone_values['g'][] = $color['g'] / 255;
+		$duotone_values['b'][] = $color['b'] / 255;
+	}
+
+	$duotone_id = 'wp-duotone-filter-' . uniqid();
+
+	$selectors        = explode( ',', $duotone_support );
+	$selectors_scoped = array_map(
+		function ( $selector ) use ( $duotone_id ) {
+			return '.' . $duotone_id . ' ' . trim( $selector );
+		},
+		$selectors
+	);
+	$selectors_group  = implode( ', ', $selectors_scoped );
+
+	ob_start();
+
+	?>
+
+	<style>
+		<?php echo $selectors_group; ?> {
+			filter: url( <?php echo esc_url( '#' . $duotone_id ); ?> );
+		}
+	</style>
+
+	<svg
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		viewBox="0 0 0 0"
+		width="0"
+		height="0"
+		focusable="false"
+		role="none"
+		style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"
+	>
+		<defs>
+			<filter id="<?php echo esc_attr( $duotone_id ); ?>">
+				<feColorMatrix
+					type="matrix"
+					<?php // phpcs:disable Generic.WhiteSpace.DisallowSpaceIndent ?>
+					values=".299 .587 .114 0 0
+							.299 .587 .114 0 0
+							.299 .587 .114 0 0
+							0 0 0 1 0"
+					<?php // phpcs:enable Generic.WhiteSpace.DisallowSpaceIndent ?>
+				/>
+				<feComponentTransfer color-interpolation-filters="sRGB" >
+					<feFuncR type="table" tableValues="<?php echo esc_attr( implode( ' ', $duotone_values['r'] ) ); ?>" />
+					<feFuncG type="table" tableValues="<?php echo esc_attr( implode( ' ', $duotone_values['g'] ) ); ?>" />
+					<feFuncB type="table" tableValues="<?php echo esc_attr( implode( ' ', $duotone_values['b'] ) ); ?>" />
+				</feComponentTransfer>
+			</filter>
+		</defs>
+	</svg>
+
+	<?php
+
+	$duotone = ob_get_clean();
+
+	// Like the layout hook, this assumes the hook only applies to blocks with a single wrapper.
+	$content = preg_replace(
+		'/' . preg_quote( 'class="', '/' ) . '/',
+		'class="' . $duotone_id . ' ',
+		$block_content,
+		1
+	);
+
+	return $content . $duotone;
+}
+
+add_filter( 'render_block', 'nova_blocks_alter_wp_render_duotone_support', 10, 2 );

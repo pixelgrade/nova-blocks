@@ -3,6 +3,8 @@ import { getSaveElement } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
+import classnames from 'classnames';
+
 import { CollectionHeader } from "@novablocks/collection";
 import { SuperNova } from "@novablocks/block-editor";
 import AdvancedGallery from "@novablocks/advanced-gallery";
@@ -128,8 +130,7 @@ const FieldsPreview = ( props ) => {
 const Collection = ( props ) => {
 
   const {
-    attributes,
-    className
+    attributes
   } = props;
 
   const {
@@ -141,7 +142,15 @@ const Collection = ( props ) => {
     imagePadding,
     contentPadding,
     emphasisArea,
+    filterStyle,
+    overlayFilterStrength
   } = attributes;
+
+  const className = classnames(
+    props.className,
+    'supernova',
+    `supernova-${filterStyle}-filter`
+  );
 
   const style = {
     '--collection-emphasis-area': emphasisArea,
@@ -151,10 +160,11 @@ const Collection = ( props ) => {
 
     '--supernova-card-content-padding-multiplier': contentPadding / 100,
     '--supernova-card-image-padding-multiplier': imagePadding / 100,
+    '--supernova-overlay-filter-strength': overlayFilterStrength / 100
   };
 
   return (
-    <div className={ `supernova ${ className }` } style={ style }>
+    <div  className={ className } style={ style }>
       <div className={ `wp-block__inner-container` }>
         {
           headerPosition === 0 &&

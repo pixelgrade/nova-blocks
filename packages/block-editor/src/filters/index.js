@@ -14,7 +14,7 @@ import "./with-font-size-picker"; // @todo maybe rely on supports API
 import "./with-inner-blocks";
 import "./with-latest-posts";
 import "./with-on-select-images";
-import "./with-overlay-filter-strength-controls";
+import "./with-overlay-filter";
 import "./with-random-defaults";
 import "./with-space-and-sizing";
 import './with-settings';

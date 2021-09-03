@@ -24,7 +24,6 @@ const AdvancedGalleryInspectorControls = props => {
 		settings: {
 			advancedGalleryPresetOptions,
 		},
-    name
 	} = props;
 
 	const {
@@ -38,10 +37,9 @@ const AdvancedGalleryInspectorControls = props => {
 		imageResizing,
 		objectPosition,
 		imageRotation,
-
 	} = attributes;
 
-	return (
+  return (
 		<Fragment>
 			<ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) }>
 
