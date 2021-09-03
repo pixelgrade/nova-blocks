@@ -21,7 +21,7 @@ function novablocks_get_hero_attributes() {
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		"packages/block-editor/src/filters/with-doppler/attributes.json",
 		"packages/block-editor/src/filters/with-doppler/attributes-alt.json",
-		"packages/block-editor/src/filters/with-overlay-filter-strength-controls/attributes.json",
+		"packages/block-editor/src/filters/with-overlay-filter/attributes.json",
 		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
 
 		"packages/block-library/src/blocks/hero/attributes-spacing.json",

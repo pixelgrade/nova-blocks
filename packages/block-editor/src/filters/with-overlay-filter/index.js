@@ -1,14 +1,16 @@
-import { createHigherOrderComponent } from "@wordpress/compose";
-import { addFilter } from "@wordpress/hooks";
-import { Fragment } from "@wordpress/element";
+import {createHigherOrderComponent} from "@wordpress/compose";
+import {addFilter, removeFilter} from "@wordpress/hooks";
+import {Fragment} from "@wordpress/element";
 
 import attributes from "./attributes.json";
 import OverlayFilterControls from "./controls";
-import { useSupports } from "../../hooks";
+import {useSupports} from "../../hooks";
+
+removeFilter( 'editor.BlockEdit', 'core/editor/duotone/with-editor-controls' );
 
 const withOverlayFilterAttributes = ( block ) => {
 
-  if ( ! block?.supports?.novaBlocks?.overlayFilter ) {
+  if ( !block?.supports?.novaBlocks?.overlayFilter ) {
     return block;
   }
 
@@ -28,14 +30,14 @@ const withOverlayFilter = createHigherOrderComponent( OriginalComponent => {
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.overlayFilter ) {
-      return <OriginalComponent { ...props } />
+    if ( !supports?.novaBlocks?.overlayFilter ) {
+      return <OriginalComponent {...props} />
     }
 
     return (
       <Fragment>
-        <OriginalComponent { ...props } />
-        <OverlayFilterControls { ...props } />
+        <OriginalComponent {...props} />
+        <OverlayFilterControls {...props} />
       </Fragment>
     )
   };
