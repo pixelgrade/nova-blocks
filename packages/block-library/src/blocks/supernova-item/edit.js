@@ -2,7 +2,7 @@ import { Fragment, useState } from '@wordpress/element';
 import { InnerBlocks, RichText, __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 import { Popover } from '@wordpress/components';
 
-import MediaComposition from "@novablocks/media-composition";
+import { MediaCompositionPreview } from "@novablocks/media-composition";
 
 import { SuperNova } from "@novablocks/block-editor";
 
@@ -14,7 +14,7 @@ const SuperNovaItemEdit =  props => {
   return (
     <Card { ...props }>
       <CardMediaWrapper { ...props }>
-        <MediaComposition { ...props } />
+        <MediaCompositionPreview { ...props } />
       </CardMediaWrapper>
       <SuperNovaItemContent { ...props } />
     </Card>

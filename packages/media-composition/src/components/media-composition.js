@@ -2,7 +2,6 @@ import { Fragment } from "@wordpress/element";
 
 import {
   MediaCompositionPreview,
-  MediaCompositionPlaceholder,
 } from "./index";
 
 import {
@@ -14,7 +13,6 @@ const MediaComposition = props => {
 
   return (
     <Fragment>
-      <MediaCompositionPlaceholder { ...props } />
       <MediaCompositionPreview { ...props } />
       <BlockControls { ...props } />
       <MediaCompositionSection { ...props } />

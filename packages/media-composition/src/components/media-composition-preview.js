@@ -4,7 +4,10 @@ import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { getCardMediaPaddingTop, isSafari } from "@novablocks/utils";
 
-import { AdvancedGalleryItem } from "./index";
+import {
+  AdvancedGalleryItem,
+  MediaCompositionPlaceholder
+} from "./index";
 
 import {
   getGridStyle,
@@ -22,7 +25,9 @@ const AdvancedGalleryPreview = ( props ) => {
 	const galleryValue = gallery.map( ( image ) => image.id );
 
 	if ( ! gallery || ! gallery.length ) {
-		return null;
+		return (
+		  <MediaCompositionPlaceholder { ...props } />
+    );
 	}
 
 	const [ height, setHeight ] = useState(0);

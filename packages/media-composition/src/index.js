@@ -9,8 +9,8 @@ export * from './utils';
 import withMediaCompositionAttributes from './filters/with-media-composition-attributes';
 import withMediaCompositionControls from './filters/with-media-composition-controls';
 
-addFilter( 'editor.BlockEdit', 'novablocks/with-media-composition-controls', withMediaCompositionControls );
 addFilter( 'blocks.registerBlockType', 'novablocks/with-media-composition-attributes', withMediaCompositionAttributes );
+addFilter( 'editor.BlockEdit', 'novablocks/with-media-composition-controls', withMediaCompositionControls );
 
 export { attributes };
 

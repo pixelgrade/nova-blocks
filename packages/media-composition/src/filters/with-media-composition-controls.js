@@ -5,7 +5,7 @@ import { useSupports } from "@novablocks/block-editor";
 
 import { BlockControls, MediaCompositionSection } from "../controls";
 
-const withShapeModelingControls = createHigherOrderComponent( OriginalComponent => {
+const withMediaCompositionControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
@@ -23,6 +23,6 @@ const withShapeModelingControls = createHigherOrderComponent( OriginalComponent 
       </Fragment>
     );
   };
-}, 'withBlobsControls' );
+}, 'withMediaCompositionControls' );
 
-export default withShapeModelingControls;
+export default withMediaCompositionControls;

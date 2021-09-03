@@ -22,6 +22,6 @@ const withShapeModelingControls = createHigherOrderComponent( OriginalComponent 
       </Fragment>
     );
   };
-}, 'withBlobsControls' );
+}, 'withShapeModelingControls' );
 
 export default withShapeModelingControls;
