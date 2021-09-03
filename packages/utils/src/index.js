@@ -321,3 +321,9 @@ export const hasClass = ( element, className ) => {
 export const clamp = ( number, min, max ) => {
   return Math.min( Math.max( min, number ), max )
 };
+
+export const isFunctionalPalette = palette => {
+  const id = palette.id + '';
+  return id.charAt(0) === '_';
+}
+

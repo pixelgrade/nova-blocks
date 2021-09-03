@@ -44,11 +44,6 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
   return newClassnames.join( " " );
 }
 
-export const isFunctionalPalette = palette => {
-  const id = palette.id + '';
-  return id.charAt(0) === '_';
-}
-
 export const mapPalettesToColorPalette = palette => {
   const { colors, sourceIndex } = palette;
   return {

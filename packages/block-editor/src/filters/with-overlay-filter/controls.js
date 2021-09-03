@@ -13,7 +13,7 @@ import {
 
 import {generateDuotonePresetsFromPalettes, generateColorPalettes} from "./utils";
 import { isFunctionalPalette } from "@novablocks/utils";
-import {useSupports} from "../../hooks";
+import { useSupports } from "../../hooks";
 
 const PALETTES = styleManager.palettes;
 const FILTERED_PALETTES = PALETTES.filter( palette => ! isFunctionalPalette( palette ) );

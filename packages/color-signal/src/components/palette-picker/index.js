@@ -1,4 +1,5 @@
 import { ControlsGroup } from "@novablocks/block-editor";
+import { isFunctionalPalette } from "@novablocks/utils";
 
 import {
   getParentVariation,
@@ -8,7 +9,6 @@ import {
   addSiteVariationOffset,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
-  isFunctionalPalette,
 } from "../../utils";
 
 import ColorPalettePicker from "../color-palette-picker";
