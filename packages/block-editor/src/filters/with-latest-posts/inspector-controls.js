@@ -1,5 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { createBlock } from "@wordpress/blocks";
+import { SelectControl } from "@wordpress/components";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { ControlsSection, ControlsTab, QueryControls } from "../../components";
 
@@ -28,6 +29,19 @@ const Controls = ( props ) => {
   return (
     <ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Cards Manager' ) }>
       <ControlsTab label={ __( 'Settings' ) }>
+        <SelectControl
+          key={ 'collection-source-type' }
+          label={ __( 'Source Type', '__plugin_txtd' ) }
+          value={ sourceType }
+          options={ [
+            { label: 'Content', value: 'content' },
+            { label: 'Blocks', value: 'blocks' },
+            { label: 'Fields', value: 'fields' },
+          ] }
+          onChange={ sourceType => {
+            setAttributes( { sourceType } );
+          } }
+        />
         <QueryControls
           key={ 'query-controls' }
           enableSpecific={ true }
