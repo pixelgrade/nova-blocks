@@ -100,6 +100,7 @@ const withContentPositionMatrixDeprecated = ( settings ) => {
   return Object.assign( {}, settings, {
     deprecated: [ {
       attributes: {
+        ...settings.attributes,
         horizontalAlignment: {
           type: "string",
           default: "center"
@@ -112,11 +113,11 @@ const withContentPositionMatrixDeprecated = ( settings ) => {
       isEligible( attributes ) {
         return ! isUndefined( attributes.horizontalAlignment ) && ! isUndefined( attributes.verticalAlignment ) && isUndefined( attributes.contentPosition );
       },
-      migrate( oldAttributes ) {
-        const { horizontalAlignment, verticalAlignment, ...attributes } = oldAttributes;
+      migrate( attributes ) {
+        const { horizontalAlignment, verticalAlignment, ...newAttributes } = attributes;
 
         return {
-          ...attributes,
+          ...newAttributes,
           contentPosition: `${ verticalAlignment } ${ horizontalAlignment }`
         };
       },
