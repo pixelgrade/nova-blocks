@@ -76,12 +76,12 @@ registerBlockType( 'novablocks/hero', {
         deprecated: true
       },
       customDefaults: true,
-      scrollingEffect: {
-        attributes: true,
-        altAttributes: true,
-        controls: true,
-        customWrapper: true,
-      },
+//      scrollingEffect: {
+//        attributes: true,
+//        altAttributes: true,
+//        controls: true,
+//        customWrapper: true,
+//      },
       spaceAndSizing: true
     },
 	},

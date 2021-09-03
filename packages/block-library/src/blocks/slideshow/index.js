@@ -72,10 +72,10 @@ registerBlockType( 'novablocks/slideshow', {
         deprecated: true
       },
       customDefaults: true,
-      scrollingEffect: {
-        altAttributes: true,
-        customWrapper: true,
-      },
+//      scrollingEffect: {
+//        altAttributes: true,
+//        customWrapper: true,
+//      },
       spaceAndSizing: true
     },
   },

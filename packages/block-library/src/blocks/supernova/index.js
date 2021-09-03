@@ -44,10 +44,10 @@ registerBlockType( 'novablocks/supernova', {
       overlayFilter: {
         duotone: true
       },
-      scrollingEffect: {
-        attributes: true,
-        controls: true,
-      },
+//      scrollingEffect: {
+//        attributes: true,
+//        controls: true,
+//      },
       shapeModeling: {
         attributes: true,
         controls: true,

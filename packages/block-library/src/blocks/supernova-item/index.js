@@ -74,9 +74,9 @@ registerBlockType( 'novablocks/supernova-item', {
       mediaComposition: {
         attributes: true,
       },
-      scrollingEffect: {
-        attributes: true,
-      },
+//      scrollingEffect: {
+//        attributes: true,
+//      },
       shapeModeling: {
         attributes: true,
       }

@@ -35,10 +35,10 @@ registerBlockType( 'novablocks/google-map', {
   supports: {
     html: false,
     novaBlocks: {
-      scrollingEffect: {
-        altAttributes: true,
-        customWrapper: true,
-      }
+//      scrollingEffect: {
+//        altAttributes: true,
+//        customWrapper: true,
+//      }
     }
   },
 	edit,
