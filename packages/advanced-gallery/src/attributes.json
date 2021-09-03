@@ -45,13 +45,5 @@
 	"defaultsGenerated": {
 		"type": "boolean",
 		"default": false
-	},
-	"overlayFilterStyle": {
-		"type": "string",
-		"default": "unitone"
-	},
-	"overlayFilterStrength": {
-		"type": "number",
-		"default": 100
 	}
 }
