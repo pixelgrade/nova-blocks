@@ -1,6 +1,6 @@
 {
 	"name": "nova-blocks",
-	"version": "1.13.1",
+	"version": "1.13.2",
 	"main": "blocks/index.js",
 	"private": false,
 	"sideEffects": false,
