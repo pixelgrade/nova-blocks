@@ -69,7 +69,9 @@ registerBlockType( 'novablocks/hero', {
         altAttributes: true,
         addOverlayColorDeprecatedMethod: true,
       },
-      overlayFilterStrength: true,
+      overlayFilter: {
+        duotone: false
+      },
       contentPositionMatrixToolbar: {
         deprecated: true
       },

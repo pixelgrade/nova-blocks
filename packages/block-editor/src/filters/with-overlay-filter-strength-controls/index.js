@@ -6,9 +6,9 @@ import attributes from "./attributes.json";
 import OverlayFilterControls from "./controls";
 import { useSupports } from "../../hooks";
 
-const withOverlayFilterStrengthAttributes = ( block ) => {
+const withOverlayFilterAttributes = ( block ) => {
 
-  if ( ! block?.supports?.novaBlocks?.overlayFilterStrength ) {
+  if ( ! block?.supports?.novaBlocks?.overlayFilter ) {
     return block;
   }
 
@@ -20,15 +20,15 @@ const withOverlayFilterStrengthAttributes = ( block ) => {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/with-overlay-filter-strength-attributes', withOverlayFilterStrengthAttributes );
+addFilter( 'blocks.registerBlockType', 'novablocks/with-overlay-filter-attributes', withOverlayFilterAttributes );
 
-const withOverlayFilterStrengthControls = createHigherOrderComponent( OriginalComponent => {
+const withOverlayFilter = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.overlayFilterStrength ) {
+    if ( ! supports?.novaBlocks?.overlayFilter ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -39,5 +39,5 @@ const withOverlayFilterStrengthControls = createHigherOrderComponent( OriginalCo
       </Fragment>
     )
   };
-}, 'withOverlayFilterStrengthControls' );
-addFilter( 'editor.BlockEdit', 'novablocks/with-overlay-filter-strength-controls', withOverlayFilterStrengthControls );
+}, 'withOverlayFilter' );
+addFilter( 'editor.BlockEdit', 'novablocks/with-overlay-filter-controls', withOverlayFilter );
