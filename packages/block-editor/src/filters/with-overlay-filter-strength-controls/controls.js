@@ -75,7 +75,7 @@ const OverlayFilterControls = ( props ) => {
             />
             }
 
-            { overlayFilterStyle === 'unitone' && <RangeControl
+         <RangeControl
               label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
               value={ overlayFilterStrength }
               onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
@@ -83,7 +83,7 @@ const OverlayFilterControls = ( props ) => {
               max={ 100 }
               step={ 10 }
             />
-            }
+
 
         </ControlsTab>
       </ControlsSection>
