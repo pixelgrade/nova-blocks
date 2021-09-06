@@ -113,7 +113,8 @@
     z-index: 2;
   }
   
-  .novablocks-advanced-gallery {
+  img,
+  video {
     opacity: calc( 1 - var(--supernova-overlay-filter-strength, 1));
   }
   
