@@ -374,6 +374,10 @@ function novablocks_register_block_types() {
 			$version          = isset( $asset_config['version'] ) ? $asset_config['version'] : filemtime( $path );
 			$css_dependencies = array();
 
+			if ( $key === 'editor_style' ) {
+				$css_dependencies[] = 'novablocks-color-signal-' . $key;
+			}
+
 			foreach ( $js_dependencies as $js_dependency ) {
 				// Create a correspondent style dependency entry.
 				// Only if the script dependency is a Nova Blocks package.
