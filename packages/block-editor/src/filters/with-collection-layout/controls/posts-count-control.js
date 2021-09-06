@@ -3,6 +3,8 @@ import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import { RangeControl } from '@wordpress/components';
 
+import { createBlock } from '@wordpress/blocks';
+
 const PostsCountControl = ( props ) => {
 
   const {
