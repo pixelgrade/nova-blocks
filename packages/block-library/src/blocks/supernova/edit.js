@@ -136,20 +136,22 @@ const Collection = ( props ) => {
   const {
     align,
     columns,
+    colorSignal,
     cardMediaOpacity,
     layoutGutter,
     headerPosition,
     imagePadding,
     contentPadding,
     emphasisArea,
-    filterStyle,
+    overlayFilterStyle,
     overlayFilterStrength
   } = attributes;
 
   const className = classnames(
     props.className,
     'supernova',
-    `supernova-${filterStyle}-filter`
+    `supernova-${overlayFilterStyle}-filter`,
+    `supernova-filter--${colorSignal >= 2 ? 'dark' : 'light'}`
   );
 
   const style = {

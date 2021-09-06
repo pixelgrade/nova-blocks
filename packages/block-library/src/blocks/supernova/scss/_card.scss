@@ -106,11 +106,34 @@
   position: relative;
   background-color: var(--novablocks-bg-color);
   padding: var(--novablocks-card-image-padding, 0);
-  //opacity: var(--collection-card-media-opacity, 1);
   
-  // @todo: Remove old CSS related
-  // to old Media Opacity option.
-  opacity: var(--supernova-overlay-filter-strength, 1);
+  z-index: 1;
+  
+  .supernova-card__media-aspect-ratio {
+    z-index: 2;
+  }
+  
+  .novablocks-advanced-gallery {
+    opacity: var(--supernova-overlay-filter-strength, 1);
+  }
+  
+  &:after {
+    content: '';
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-color: var(--overlay-filter-color);
+    
+    z-index: 1;
+  }
+}
+
+.supernova-card__content {
+  z-index: 2;
 }
 
 .supernova-card__media-doppler {
@@ -142,6 +165,17 @@
     &--halign-#{ $align } {
       text-align: $align;
     }
+  }
+}
+
+.supernova-filter {
+  
+  &--dark {
+    --overlay-filter-color: var(--sm-color-palette-1-color-12);
+  }
+  
+  &--light {
+    --overlay-filter-color: var(--sm-color-palette-1-color-1);
   }
 }
 
