@@ -71,7 +71,9 @@ registerBlockType( 'novablocks/supernova-item', {
       },
       colorSignal: {
         attributes: true,
-        controls: true,
+        paletteClassname: true,
+        paletteVariationClassname: true,
+        colorSignalClassname: true,
       },
       elementsVisibility: {
         attributes: true,

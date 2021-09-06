@@ -74,14 +74,9 @@ export const CardContentWrapper = ( props ) => {
     `supernova-card__content--halign-${ align[1] }`,
   );
 
-  const innerContainerClassName = classnames(
-    `supernova-card__inner-container`,
-    getColorSignalClassnames( attributes, true ),
-  );
-
   return (
     <div className={ contentClassName }>
-      <div className={ innerContainerClassName }>
+      <div className={ 'supernova-card__inner-container' }>
         { props.children }
       </div>
     </div>
