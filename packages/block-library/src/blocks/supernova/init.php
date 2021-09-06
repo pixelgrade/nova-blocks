@@ -27,6 +27,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/scrolling-effect/src/attributes.json',
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 	) );
 
 }
@@ -52,6 +53,23 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'alignfull',
 		);
 
+		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
+			$classes[] = $attributes['overlayFilterStyle'];
+		}
+
+		// Default filter color is light
+		$filter_color = 'light';
+
+		// When Color Signal exists and it's >= 2
+		// filter color should be dark.
+		if ( ! empty( $attributes['colorSignal'] ) && $attributes['colorSignal'] >= 2 ) {
+			$filter_color = 'dark';
+		}
+
+		if( ! empty( $attributes['overlayFilterStyle'] ) && ! empty( $attributes['colorSignal'] )) {
+			$classes[] = "supernova-filter--" . $filter_color;
+		}
+
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
@@ -68,6 +86,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 			'--supernova-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 			'--supernova-card-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+			'--supernova-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );
