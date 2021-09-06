@@ -1,45 +1,13 @@
-import {createHigherOrderComponent} from "@wordpress/compose";
-import {addFilter, removeFilter} from "@wordpress/hooks";
-import {Fragment} from "@wordpress/element";
+import { addFilter, removeFilter } from "@wordpress/hooks";
 
-import attributes from "./attributes.json";
-import OverlayFilterControls from "./controls";
-import {useSupports} from "../../hooks";
+import withOverlayFilterAttributes from "./with-overlay-filter-attributes";
+import withOverlayFilterControls from "./with-overlay-filter-controls"
+import withOverlayFilterEditCustomProps from "./with-overlay-filter-edit-custom-props";
+import withOverlayFilterSaveCustomProps from "./with-overlay-filter-save-custom-props";
 
 removeFilter( 'editor.BlockEdit', 'core/editor/duotone/with-editor-controls' );
 
-const withOverlayFilterAttributes = ( block ) => {
-
-  if ( !block?.supports?.novaBlocks?.overlayFilter ) {
-    return block;
-  }
-
-  return {
-    ...block,
-    attributes: {
-      ...block.attributes,
-      ...attributes
-    }
-  };
-}
 addFilter( 'blocks.registerBlockType', 'novablocks/with-overlay-filter-attributes', withOverlayFilterAttributes );
-
-const withOverlayFilter = createHigherOrderComponent( OriginalComponent => {
-
-  return ( props ) => {
-
-    const supports = useSupports( props.name );
-
-    if ( !supports?.novaBlocks?.overlayFilter ) {
-      return <OriginalComponent {...props} />
-    }
-
-    return (
-      <Fragment>
-        <OriginalComponent {...props} />
-        <OverlayFilterControls {...props} />
-      </Fragment>
-    )
-  };
-}, 'withOverlayFilter' );
-addFilter( 'editor.BlockEdit', 'novablocks/with-overlay-filter-controls', withOverlayFilter );
+addFilter( 'editor.BlockEdit', 'novablocks/with-overlay-filter-controls', withOverlayFilterControls );
+addFilter( 'editor.BlockEdit', 'novablocks/with-overlay-filter-edit-custom-props', withOverlayFilterEditCustomProps );
+addFilter( 'blocks.getSaveElement', 'novablocks/with-overlay-filter-save-custom-props', withOverlayFilterSaveCustomProps );

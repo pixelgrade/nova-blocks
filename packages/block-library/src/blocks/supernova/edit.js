@@ -161,8 +161,7 @@ const Collection = ( props ) => {
     '--collection-card-layout-gutter': layoutGutter,
 
     '--supernova-card-content-padding-multiplier': contentPadding / 100,
-    '--supernova-card-image-padding-multiplier': imagePadding / 100,
-    '--supernova-overlay-filter-strength': overlayFilterStrength / 100
+    '--supernova-card-image-padding-multiplier': imagePadding / 100
   };
 
   return (

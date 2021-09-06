@@ -88,7 +88,7 @@ const OverlayFilterControls = ( props ) => {
               value={ overlayFilterStrength }
               onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
               min={ 0 }
-              max={ 90 }
+              max={ 100 }
               step={ 10 }
             />
 

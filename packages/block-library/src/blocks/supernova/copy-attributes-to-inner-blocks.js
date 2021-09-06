@@ -1,36 +1,7 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { useEffect } from "@wordpress/element";
 import { dispatch, select, subscribe } from "@wordpress/data";
-
-import * as shapeModeling from "@novablocks/shape-modeling";
-
-import { attributes as mediaCompositionAttributes } from '@novablocks/media-composition';
-
-const attributeKeys = [
-  'cardLayout',
-  'cardMediaOpacity',
-  'contentAreaWidth',
-  'contentPosition',
-
-  'preview',
-  'sourceType',
-  'layoutStyle',
-
-  'showTitle',
-  'showSubtitle',
-  'showDescription',
-  'showMeta',
-  'showButtons',
-
-  'scrollingEffect',
-
-  'thumbnailAspectRatio',
-  'thumbnailAspectRatioString',
-
-  'contentStyle',
-  ...Object.keys( shapeModeling.attributes )
-]
-.concat( Object.keys( _.omit( mediaCompositionAttributes, [ 'images', 'defaultsGenerated' ] ) ) )
+import { useEffect } from "@wordpress/element";
+import { addFilter } from "@wordpress/hooks";
 
 const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock ) => {
 
@@ -41,6 +12,10 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
       attributes,
       clientId,
     } = props;
+
+    const attributeKeys = Object.keys( attributes ).filter( key => {
+      return ! [ 'images', 'defaultsGenerated' ].includes( key );
+    } );
 
     useEffect( () => {
 
@@ -76,4 +51,4 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
 
 }, 'withSupernovaUpdateChildren' );
 
-wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );
+addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );

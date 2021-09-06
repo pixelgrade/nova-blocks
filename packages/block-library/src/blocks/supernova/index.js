@@ -43,6 +43,8 @@ registerBlockType( 'novablocks/supernova', {
       latestPosts: true,
       mediaComposition: true,
       overlayFilter: {
+        attributes: true,
+        controls: true,
         duotone: true
       },
 //      scrollingEffect: {

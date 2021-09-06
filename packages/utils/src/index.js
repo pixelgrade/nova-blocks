@@ -4,6 +4,7 @@ export * from './has-touch-screen';
 export * from './is-mobile-device';
 export * from './random';
 export * from './space-and-sizing';
+export * from './overlay-filter';
 
 export const range = function( min, max ) {
 	const array = [];
