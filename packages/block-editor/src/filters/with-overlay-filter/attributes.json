@@ -5,6 +5,6 @@
 	},
 	"overlayFilterStrength": {
 		"type": "number",
-		"default": 100
+		"default": 0
 	}
 }

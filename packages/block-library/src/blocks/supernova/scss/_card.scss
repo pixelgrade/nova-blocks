@@ -114,7 +114,7 @@
   }
   
   .novablocks-advanced-gallery {
-    opacity: var(--supernova-overlay-filter-strength, 1);
+    opacity: calc( 1 - var(--supernova-overlay-filter-strength, 1));
   }
   
   &:after {
