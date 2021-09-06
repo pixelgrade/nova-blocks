@@ -18,5 +18,9 @@
 	"contentColorSignal": {
 		"type": "number",
 		"default": 0
+	},
+	"emphasisArea": {
+		"type": "number",
+		"default": 10
 	}
 }

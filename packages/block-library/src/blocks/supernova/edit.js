@@ -144,7 +144,9 @@ const Collection = ( props ) => {
     contentPadding,
     emphasisArea,
     overlayFilterStyle,
-    overlayFilterStrength
+    overlayFilterStrength,
+    showCollectionTitle,
+    showCollectionSubtitle
   } = attributes;
 
   const className = classnames(
@@ -168,11 +170,12 @@ const Collection = ( props ) => {
     <div  className={ className } style={ style }>
       <div className={ `wp-block__inner-container` }>
         {
-          headerPosition === 0 &&
+          headerPosition === 0 && (showCollectionTitle || showCollectionSubtitle) &&
           <div className="wp-block" data-align={ align }>
               <CollectionHeader { ...props } />
           </div>
         }
+
         <div className="wp-block" data-align={ align }>
           <div className={ `supernova-collection` }>
             <CollectionLayout { ...props } />
