@@ -36,6 +36,7 @@ registerBlockType( 'novablocks/posts-collection', {
       contentColorSignal: true,
       latestPosts: true,
       spaceAndSizing: true,
+      elementsVisibility: true,
     },
   },
 	edit,

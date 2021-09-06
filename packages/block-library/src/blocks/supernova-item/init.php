@@ -19,7 +19,7 @@ function novablocks_get_supernova_item_attributes() {
 
 		'packages/shape-modeling/src/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
-		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
 		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',

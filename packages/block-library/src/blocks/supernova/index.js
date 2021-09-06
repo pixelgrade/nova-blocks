@@ -39,6 +39,7 @@ registerBlockType( 'novablocks/supernova', {
       },
       colorSignal: true,
       contentPositionMatrixToolbar: true,
+      elementsVisibility: true,
       latestPosts: true,
       mediaComposition: true,
       overlayFilter: {

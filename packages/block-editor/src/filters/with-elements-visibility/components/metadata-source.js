@@ -1,50 +1,22 @@
-import { CardsManager, ControlsGroup, ControlsSection, ControlsTab, ToggleGroup } from "../../components";
 import { __ } from "@wordpress/i18n";
 import { SelectControl } from "@wordpress/components";
 
-const { toggles } = CardsManager;
+import { ControlsGroup } from "../../../components";
 
-const ElementsDisplaySection = ( props ) => {
-
-  const {
-    attributes,
-    setAttributes
-  } = props;
-
-  const { showMeta } = attributes;
-
-  return (
-    <ControlsSection label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) } order={ 20 }>
-      <ControlsTab label={ __( 'Settings' ) }>
-        <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-          <ToggleGroup
-            onChange={ setAttributes }
-            toggles={ toggles.filter( toggle => {
-              return toggle.attribute !== 'showSubtitle';
-            } ).map( toggle => {
-              return {
-                ...toggle,
-                value: attributes[ toggle.attribute ]
-              }
-            } ) }
-          />
-        </ControlsGroup>
-
-        { showMeta && <MetaSource { ...props } /> }
-      </ControlsTab>
-    </ControlsSection>
-  );
-}
-
-const MetaSource = ( props ) => {
+const MetadataSource = ( props ) => {
 
   const {
     attributes: {
       primaryMetadata,
       secondaryMetadata,
+      showMeta
     },
     setAttributes
   } = props;
+
+  if ( ! showMeta ) {
+    return null;
+  }
 
   const metaSourceOptions = [
     { label: 'None', value: 'none' },
@@ -80,4 +52,4 @@ const MetaSource = ( props ) => {
   )
 };
 
-export default ElementsDisplaySection;
+export default MetadataSource;

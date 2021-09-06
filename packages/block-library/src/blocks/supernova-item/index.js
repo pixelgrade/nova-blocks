@@ -71,6 +71,9 @@ registerBlockType( 'novablocks/supernova-item', {
       colorSignal: {
         attributes: true,
       },
+      elementsVisibility: {
+        attributes: true,
+      },
       mediaComposition: {
         attributes: true,
       },
