@@ -21,6 +21,6 @@
 	},
 	"emphasisArea": {
 		"type": "number",
-		"default": 10
+		"default": 100
 	}
 }

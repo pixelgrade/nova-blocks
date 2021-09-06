@@ -114,7 +114,7 @@ const Controls = ( props ) => {
             value={ emphasisArea }
             onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
             label={ __( 'Emphasis Area' ) }
-            min={ 10 }
+            min={ 0 }
             max={ 100 }
             step={ 5 }
           />

@@ -3,7 +3,7 @@ import { Fragment } from "@wordpress/element";
 
 import { useSupports } from "@novablocks/block-editor";
 
-import { MediaCompositionSection } from "../controls";
+import { BlockControls } from "../controls";
 
 const withMediaCompositionControls = createHigherOrderComponent( OriginalComponent => {
 
@@ -11,13 +11,13 @@ const withMediaCompositionControls = createHigherOrderComponent( OriginalCompone
 
     const supports = useSupports( props.name );
 
-    if ( supports?.novaBlocks?.mediaComposition !== true && supports?.novaBlocks?.mediaComposition?.controls !== true ) {
+    if ( supports?.novaBlocks?.mediaComposition !== true && supports?.novaBlocks?.mediaComposition?.blockControls !== true ) {
       return <OriginalComponent { ...props } />
     }
 
     return (
       <Fragment>
-        <MediaCompositionSection { ...props } />
+        <BlockControls { ...props } />
         <OriginalComponent { ...props } />
       </Fragment>
     );

@@ -1,9 +1,9 @@
 import { Fragment, useState } from '@wordpress/element';
 
 import {
-  InnerBlocks,
   RichText,
-  __experimentalLinkControl as LinkControl
+  __experimentalLinkControl as LinkControl,
+  useBlockProps,
 } from '@wordpress/block-editor';
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
@@ -17,15 +17,19 @@ import { SuperNova } from "@novablocks/block-editor";
 const { withPreviewAttributes } = SuperNova.utils;
 const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
 
-const SuperNovaItemEdit =  props => {
+const SuperNovaItemEdit = props => {
+
+  const blockProps = useBlockProps();
 
   return (
-    <Card { ...props }>
-      <CardMediaWrapper { ...props }>
-        <MediaCompositionPreview { ...props } />
-      </CardMediaWrapper>
-      <SuperNovaItemContent { ...props } />
-    </Card>
+    <div { ...blockProps }>
+      <Card { ...props }>
+        <CardMediaWrapper { ...props }>
+          <MediaCompositionPreview { ...props } />
+        </CardMediaWrapper>
+        <SuperNovaItemContent { ...props } />
+      </Card>
+    </div>
   )
 };
 

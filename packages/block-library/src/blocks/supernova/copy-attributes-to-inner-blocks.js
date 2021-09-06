@@ -13,8 +13,10 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
       clientId,
     } = props;
 
+    const attributesBlacklist = [ 'images', 'defaultsGenerated', 'contentSignal', 'contentColorSignal' ];
+
     const attributeKeys = Object.keys( attributes ).filter( key => {
-      return ! [ 'images', 'defaultsGenerated' ].includes( key );
+      return ! attributesBlacklist.includes( key );
     } );
 
     useEffect( () => {

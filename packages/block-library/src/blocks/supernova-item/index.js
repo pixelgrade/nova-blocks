@@ -49,6 +49,7 @@ async function getNewDefaults( block ) {
 generateDefaults( 'novablocks/supernova-item', getNewDefaults );
 
 registerBlockType( 'novablocks/supernova-item', {
+  apiVersion: 2,
   title: __( 'Super Nova Item', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
@@ -70,13 +71,14 @@ registerBlockType( 'novablocks/supernova-item', {
       },
       colorSignal: {
         attributes: true,
+        controls: true,
       },
       elementsVisibility: {
         attributes: true,
       },
       mediaComposition: {
         attributes: true,
-        controls: true
+        blockControls: true,
       },
       overlayFilter: {
         attributes: true,

@@ -54,15 +54,14 @@ const SuperNovaEdit = withPreviewAttributes( ( props ) => {
   }
 
   const innerBlocksProps = useInnerBlocksProps( {
+    ...props,
     allowedBlocks: [ 'novablocks/supernova-item' ],
     renderAppender: false,
     templateInsertUpdatesSelection: false
   } );
 
   return (
-    <Collection { ...props }>
-      <div { ...innerBlocksProps } />
-    </Collection>
+    <Collection { ...innerBlocksProps } />
   )
 } );
 

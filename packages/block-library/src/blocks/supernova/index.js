@@ -21,6 +21,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from "@wordpress/block-editor";
 
 registerBlockType( 'novablocks/supernova', {
+  apiVersion: 2,
   title: __( 'Super Nova', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
@@ -41,7 +42,10 @@ registerBlockType( 'novablocks/supernova', {
       contentPositionMatrixToolbar: true,
       elementsVisibility: true,
       latestPosts: true,
-      mediaComposition: true,
+      mediaComposition: {
+        attributes: true,
+        controls: true,
+      },
       overlayFilter: {
         attributes: true,
         controls: true,
