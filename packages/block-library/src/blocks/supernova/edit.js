@@ -1,4 +1,6 @@
-import { InnerBlocks } from "@wordpress/block-editor";
+import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
+
 import { getSaveElement } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
@@ -51,13 +53,15 @@ const SuperNovaEdit = withPreviewAttributes( ( props ) => {
     return <CollectionPreview { ...props } />
   }
 
+  const innerBlocksProps = useInnerBlocksProps( {
+    allowedBlocks: [ 'novablocks/supernova-item' ],
+    renderAppender: false,
+    templateInsertUpdatesSelection: false
+  } );
+
   return (
     <Collection { ...props }>
-      <InnerBlocks
-        allowedBlocks={ [ 'novablocks/supernova-item' ] }
-        renderAppender={ false }
-        templateInsertUpdatesSelection={ false }
-      />
+      <div { ...innerBlocksProps } />
     </Collection>
   )
 } );
@@ -144,7 +148,6 @@ const Collection = ( props ) => {
     contentPadding,
     emphasisArea,
     overlayFilterStyle,
-    overlayFilterStrength,
     showCollectionTitle,
     showCollectionSubtitle
   } = attributes;
@@ -152,22 +155,25 @@ const Collection = ( props ) => {
   const className = classnames(
     props.className,
     'supernova',
-    `supernova-${overlayFilterStyle}-filter`,
-    `supernova-filter--${colorSignal >= 2 ? 'dark' : 'light'}`
+    `supernova-${ overlayFilterStyle }-filter`,
+    `supernova-filter--${ colorSignal >= 2 ? 'dark' : 'light' }`
   );
 
-  const style = {
-    '--collection-emphasis-area': emphasisArea,
-    '--collection-columns-count': columns,
-    '--collection-card-media-opacity': cardMediaOpacity / 100,
-    '--collection-card-layout-gutter': layoutGutter,
+  const blockProps = useBlockProps( {
+    className: className,
+    style: {
+      '--collection-emphasis-area': emphasisArea,
+      '--collection-columns-count': columns,
+      '--collection-card-media-opacity': cardMediaOpacity / 100,
+      '--collection-card-layout-gutter': layoutGutter,
 
-    '--supernova-card-content-padding-multiplier': contentPadding / 100,
-    '--supernova-card-image-padding-multiplier': imagePadding / 100
-  };
+      '--supernova-card-content-padding-multiplier': contentPadding / 100,
+      '--supernova-card-image-padding-multiplier': imagePadding / 100
+    },
+  } );
 
   return (
-    <div  className={ className } style={ style }>
+    <div { ...blockProps }>
       <div className={ `wp-block__inner-container` }>
         {
           headerPosition === 0 && (showCollectionTitle || showCollectionSubtitle) &&

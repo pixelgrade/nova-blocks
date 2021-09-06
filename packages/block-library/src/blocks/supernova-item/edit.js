@@ -1,5 +1,13 @@
 import { Fragment, useState } from '@wordpress/element';
-import { InnerBlocks, RichText, __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+
+import {
+  InnerBlocks,
+  RichText,
+  __experimentalLinkControl as LinkControl
+} from '@wordpress/block-editor';
+
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
+
 import { Popover } from '@wordpress/components';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
@@ -40,6 +48,7 @@ const SuperNovaItemContent = ( props ) => {
   } = props;
 
   const [ showPopover, setShowPopover ] = useState( false );
+  const innerBlocksProps = useInnerBlocksProps();
 
   if ( sourceType === 'fields' ) {
     return (
@@ -117,7 +126,7 @@ const SuperNovaItemContent = ( props ) => {
   }
 
   return (
-    <InnerBlocks />
+    <div { ...innerBlocksProps } />
   )
 }
 
