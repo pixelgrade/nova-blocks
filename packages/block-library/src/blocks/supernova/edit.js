@@ -146,7 +146,6 @@ const Collection = ( props ) => {
     imagePadding,
     contentPadding,
     emphasisArea,
-    overlayFilterStyle,
     showCollectionTitle,
     showCollectionSubtitle
   } = attributes;
@@ -154,8 +153,6 @@ const Collection = ( props ) => {
   const className = classnames(
     props.className,
     'supernova',
-    `supernova-${ overlayFilterStyle }-filter`,
-    `supernova-filter--${ colorSignal >= 2 ? 'dark' : 'light' }`
   );
 
   const blockProps = useBlockProps( {

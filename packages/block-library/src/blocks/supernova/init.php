@@ -57,19 +57,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = $attributes['overlayFilterStyle'];
 		}
 
-		// Default filter color is light
-		$filter_color = 'light';
-
-		// When Color Signal exists and it's >= 2
-		// filter color should be dark.
-		if ( ! empty( $attributes['colorSignal'] ) && $attributes['colorSignal'] >= 2 ) {
-			$filter_color = 'dark';
-		}
-
-		if( ! empty( $attributes['overlayFilterStyle'] ) && ! empty( $attributes['colorSignal'] )) {
-			$classes[] = "supernova-filter--" . $filter_color;
-		}
-
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
