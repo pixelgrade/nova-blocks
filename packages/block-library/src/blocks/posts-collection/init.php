@@ -11,7 +11,7 @@ function novablocks_get_posts_collection_attributes() {
 		'packages/collection/src/grid-generator-attributes.json',
 		'packages/collection/src/collection-attributes.json',
 		'packages/color-signal/src/attributes.json',
-		'packages/block-editor/src/filters/with-card-elements-display/attributes.json',
+		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-library/src/blocks/posts-collection/attributes.json',
