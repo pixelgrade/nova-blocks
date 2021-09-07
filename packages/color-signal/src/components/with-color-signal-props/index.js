@@ -12,7 +12,7 @@ const withColorSignalProps = OriginalComponent => {
 
   return props => {
 
-    const { attributes, clientId } = props;
+    const { attributes, clientId, setAttributes } = props;
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
     const referenceVariation = useMemo( () => getParentVariation( clientId ), [ clientId ] );
 
