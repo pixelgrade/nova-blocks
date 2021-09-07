@@ -53,6 +53,7 @@ const MediaCompositionControls = props => {
           key={ 'advanced-gallery-style-preset' }
           options={ advancedGalleryPresetOptions }
           randomize={ getRandomAttributes }
+          { ...props }
         />
       </ControlsTab>
 

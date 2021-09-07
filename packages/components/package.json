@@ -1,5 +1,5 @@
 {
-	"name": "@novablocks/advanced-gallery",
+	"name": "@novablocks/components",
 	"version": "1.0.0",
 	"description": "",
 	"main": "build/index.js",
@@ -7,7 +7,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (https://razvanonofrei.com)",
 	"license": "ISC",
 	"repository": {
 		"type": "git",

@@ -7,6 +7,7 @@ const postcss = require( 'postcss' );
 const { get, compact } = require( 'lodash' );
 const { basename } = require( 'path' );
 const glob = require( "glob" );
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -195,6 +196,7 @@ const DefaultConfig = {
 		] ),
 	},
 	plugins: [
+    new ESLintPlugin(),
 		new CustomTemplatedPathPlugin( {
 			basename( path, data ) {
 				let rawRequest;

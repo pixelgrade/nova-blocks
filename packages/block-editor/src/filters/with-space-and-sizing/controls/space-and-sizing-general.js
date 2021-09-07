@@ -31,6 +31,7 @@ const SpaceAndSizingGeneral = ( props ) => {
       label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
       options={ presets }
       randomize={ getRandomAttributes }
+      { ...props }
     />
   )
 }

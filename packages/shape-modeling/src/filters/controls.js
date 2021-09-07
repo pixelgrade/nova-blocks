@@ -31,6 +31,7 @@ const Controls = ( props ) => {
 					label={ __( 'Choose a shape preset:', '__plugin_txtd' ) }
 					options={ blobPresetOptions }
 					randomize={ getRandomAttributes }
+          { ...props }
 				/>
 			</ControlsTab>
 			<ControlsTab label={ __( 'Settings' ) }>
