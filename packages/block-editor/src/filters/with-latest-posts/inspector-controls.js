@@ -26,6 +26,8 @@ const Controls = ( props ) => {
   const itemsCount = useSelect( ( select ) => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
   const { innerBlocks } = useSelect( ( select ) => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
 
+  const loadPosts = sourceType === 'content';
+
   return (
     <ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
       <ControlsTab label={ __( 'Settings' ) }>
@@ -42,7 +44,7 @@ const Controls = ( props ) => {
             setAttributes( { sourceType } );
           } }
         />
-        <QueryControls
+        { loadPosts && <QueryControls
           key={ 'query-controls' }
           enableSpecific={ true }
           preventDuplicatePosts={ preventDuplicatePosts }
@@ -83,7 +85,7 @@ const Controls = ( props ) => {
           onTagsChange={ _tags => {
             setAttributes( { tags: _tags } );
           } }
-        />
+        /> }
       </ControlsTab>
     </ControlsSection>
   )
