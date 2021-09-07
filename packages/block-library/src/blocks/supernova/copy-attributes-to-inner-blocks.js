@@ -18,7 +18,9 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
       'contentColorSignal',
       'defaultsGenerated',
       'images',
-      'useSourceColorAsReference'
+      'useSourceColorAsReference',
+      'title',
+      'subtitle',
     ];
 
     const attributeKeys = Object.keys( attributes ).filter( key => {

@@ -1964,7 +1964,7 @@ function novablocks_get_card_item_description( $description, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
-		<div class="novablocks-grid__item-content novablocks-card__description">
+		<div class="novablocks-grid__item-content novablocks-card__content">
 			<div class="novablocks-card__content-size-modifier">
 				<?php echo $description; ?>
 			</div>

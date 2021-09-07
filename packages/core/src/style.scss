@@ -133,7 +133,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
     
     @include below(mobile) {
       
-      .novablocks-card__description {
+      .novablocks-card__content {
         display: none;
       }
     }

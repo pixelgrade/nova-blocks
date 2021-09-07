@@ -23,22 +23,21 @@ export const Card = ( props ) => {
       contentAreaWidth,
       thumbnailAspectRatioString,
     },
-    className
   } = props;
 
   const classNames = classnames(
+    props.className,
     `supernova-card`,
     `supernova-card--layout-${ cardLayout }`,
     `supernova-card--style-${ contentStyle }`,
     `supernova-card--aspect-ratio-${ thumbnailAspectRatioString }`,
-    className
   );
 
-  const style = {
+  const style = Object.assign( {}, props.style, {
     '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-media-aspect-ratio': getPaddingTopFromContainerHeight( containerHeight ),
     '--collection-card-content-area-width': `${ contentAreaWidth }%`,
-  }
+  } );
 
   const children = Children.toArray( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper )
@@ -57,14 +56,7 @@ export const Card = ( props ) => {
 
 export const CardContentWrapper = ( props ) => {
 
-  const {
-    attributes,
-    colorSignal: {
-      utils: {
-        getColorSignalClassnames
-      }
-    }
-  } = props;
+  const { attributes } = props;
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
 

@@ -1,6 +1,7 @@
 export { default as useApiFetch } from './use-api-fetch';
 export { default as useAnimationFrame } from './use-animation-frame';
 export { default as useEffectDebugger } from './use-effect-debugger';
+export { default as useInnerBlocks } from './use-inner-blocks';
 export { default as useMemoryState } from './use-memory-state';
 export { default as useOnScroll } from './use-on-scroll';
 export { default as useResizeObserver } from './use-resize-observer';

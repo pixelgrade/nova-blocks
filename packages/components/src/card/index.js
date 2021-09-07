@@ -114,7 +114,7 @@ const CardContent = ( props ) => {
 		return null;
 	}
 
-	const wrapperClassName = 'wp-block novablocks-grid__item-content novablocks-card__description';
+	const wrapperClassName = 'wp-block novablocks-grid__item-content novablocks-card__content';
 	const fontSizeClassName = 'novablocks-card__content-size-modifier';
 
 	if ( placeholder ) {
