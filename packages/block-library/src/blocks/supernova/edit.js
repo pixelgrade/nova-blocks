@@ -158,6 +158,7 @@ const Collection = ( props ) => {
   const blockProps = useBlockProps( {
     className: className,
     style: {
+      ...props.style,
       '--collection-emphasis-area': emphasisArea,
       '--collection-columns-count': columns,
       '--collection-card-media-opacity': cardMediaOpacity / 100,

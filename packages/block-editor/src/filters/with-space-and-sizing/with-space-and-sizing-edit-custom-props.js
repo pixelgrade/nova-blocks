@@ -8,14 +8,14 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
     const supports = useSupports( props.name );
     const { attributes } = props;
 
-    if ( ! supports?.novaBlocks?.spaceAndSizing ) {
-      return <OriginalComponent { ...props } />;
+    const style = props.style ? props.style : {};
+
+    if ( !! supports?.novaBlocks?.spaceAndSizing ) {
+      Object.assign( style, getSpacingCSSProps( attributes ) );
     }
 
     return (
-      <div style={ getSpacingCSSProps( attributes ) }>
-        <OriginalComponent { ...props } />
-      </div>
+      <OriginalComponent { ...props } style={ style } />
     )
   };
 }, "withSpaceAndSizingEditCustomProps" );
