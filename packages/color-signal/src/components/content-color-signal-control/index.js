@@ -1,6 +1,7 @@
 import { __ } from "@wordpress/i18n";
 
 import { SignalControl, useSupports } from "@novablocks/block-editor";
+import { computeColorSignal } from "../../utils";
 
 const ContentColorSignalControl = ( props ) => {
 
@@ -18,7 +19,13 @@ const ContentColorSignalControl = ( props ) => {
                    label={ __( 'Content Area Color Signal', '__plugin_txtd' ) }
                    signal={ contentColorSignal }
                    onChange={ contentColorSignal => {
-                     setAttributes( { contentColorSignal: contentColorSignal } )
+                     const { contentPaletteVariation, paletteVariation } = attributes;
+                     const nextContentPaletteVariation = computeColorSignal( paletteVariation, contentColorSignal, contentPaletteVariation );
+
+                     setAttributes( {
+                       contentColorSignal: contentColorSignal,
+                       contentPaletteVariation: nextContentPaletteVariation,
+                     } )
                    } } />
   )
 }
