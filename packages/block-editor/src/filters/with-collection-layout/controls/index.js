@@ -43,6 +43,7 @@ const Controls = ( props ) => {
           label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
           options={ presets }
           randomize={ getRandomAttributes }
+          { ...props }
         />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>

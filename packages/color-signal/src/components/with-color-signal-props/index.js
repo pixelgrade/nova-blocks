@@ -12,7 +12,7 @@ const withColorSignalProps = OriginalComponent => {
 
   return props => {
 
-    const { attributes, clientId } = props;
+    const { attributes, setAttributes, clientId } = props;
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
     const referenceVariation = useMemo( () => getParentVariation( clientId ), [ clientId ] );
 
@@ -30,11 +30,15 @@ const withColorSignalProps = OriginalComponent => {
       const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
       const finalVariation = removeSiteVariationOffset( nextVariation );
 
+      const { contentColorSignal, contentPaletteVariation } = nextAttributes;
+      const nextContentPaletteVariation = computeColorSignal( nextVariation, contentColorSignal, contentPaletteVariation );
+
       setAttributes( {
         palette: palette,
         paletteVariation: nextSourceAsReference ? 1 : finalVariation,
         useSourceColorAsReference: nextSourceAsReference,
         colorSignal: nextSignal,
+        contentPaletteVariation: nextContentPaletteVariation,
       } );
 
     }, [ attributes ] );
