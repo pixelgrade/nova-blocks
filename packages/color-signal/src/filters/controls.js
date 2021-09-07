@@ -1,100 +1,26 @@
 import { __ } from "@wordpress/i18n";
-import { useCallback } from "@wordpress/element";
-import { RangeControl } from "@wordpress/components";
 
 import {
   ControlsGroup,
   ControlsSection,
   ControlsTab,
   Notice,
-  SignalControl,
-
-  useMemoryState,
 } from "@novablocks/block-editor";
 
 import {
-  ColorGradesControl,
   ColorReferenceToggleControl,
-  ContentColorSignalControls,
+  ContentColorSignalControl,
   MiscellaneousControls,
   PalettePicker,
+  BlockColorSignalControl,
+  BlockColorGradeControl,
+  ContentColorGradeControl,
+  EmphasisAreaControl,
+
+  withColorSignalProps,
 } from "../components";
 
-import {
-  getParentVariation,
-} from "../editor/utils";
-
-import {
-  addSiteVariationOffset,
-  computeColorSignal,
-  getAbsoluteColorVariation,
-  getSignalRelativeToVariation,
-  getSourceIndexFromPaletteId,
-  removeSiteVariationOffset,
-} from "../utils";
-
-const Controls = ( props ) => {
-
-  const {
-    attributes,
-    setAttributes,
-    clientId,
-  } = props;
-
-  const {
-    colorSignal,
-    paletteVariation,
-    emphasisArea,
-  } = attributes;
-
-  const referenceVariation = getParentVariation( clientId );
-
-  const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
-
-  const updateBlock = useCallback( ( newAttributes, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
-    const nextAttributes = { ...attributes, ...newAttributes };
-    const { palette, useSourceColorAsReference } = nextAttributes;
-    const sourceIndex = getSourceIndexFromPaletteId( palette );
-    const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
-    const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
-    const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
-    const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation );
-    const nextSourceAsReference = useSourceColorAsReference ||
-                                  ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
-                                  ( useSourceOnSameVariation && absoluteVariation === sourceVariation );
-    const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
-    const finalVariation = removeSiteVariationOffset( nextVariation );
-
-    setAttributes( {
-      palette: palette,
-      paletteVariation: nextSourceAsReference ? 1 : finalVariation,
-      useSourceColorAsReference: nextSourceAsReference,
-      colorSignal: nextSignal,
-    } );
-
-  }, [ attributes ] );
-
-  const onPaletteVariationChange = useCallback( nextVariation => {
-
-    updateBlock( {
-      paletteVariation: nextVariation,
-      useSourceColorAsReference: false,
-    }, true, false );
-
-  }, [ updateBlock ] );
-
-  const onSignalChange = useCallback( nextSignal => {
-    const referenceVariation = getParentVariation( clientId );
-    const absoluteVariation = getAbsoluteColorVariation( attributes );
-    const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
-    const finalVariation = removeSiteVariationOffset( nextVariation );
-
-    updateBlock( {
-      paletteVariation: finalVariation,
-      useSourceColorAsReference: false,
-    }, true, true );
-
-  }, [ updateBlock ] );
+const Controls = withColorSignalProps( props => {
 
   return (
     <ControlsSection label={ __( 'Color Signal' ) } order={ 10 }>
@@ -106,35 +32,27 @@ const Controls = ( props ) => {
           dismissLabel={ '✔ Ok, I get it!' }
         />
         <ControlsGroup>
-          <SignalControl { ...props } label={ __( 'Block Color Signal', '__plugin_txtd' ) } signal={ colorSignal } onChange={ onSignalChange } />
+          <BlockColorSignalControl { ...props } />
         </ControlsGroup>
-        <ContentColorSignalControls { ...props } />
         <ControlsGroup>
-          <RangeControl
-            value={ emphasisArea }
-            onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
-            label={ __( 'Emphasis Area' ) }
-            min={ 0 }
-            max={ 100 }
-            step={ 5 }
-          />
+          <ContentColorSignalControl { ...props } />
         </ControlsGroup>
-        <PalettePicker { ...props } showFunctionalColors={ showFunctionalColors } />
+        <ControlsGroup>
+          <EmphasisAreaControl { ...props } />
+        </ControlsGroup>
+        <PalettePicker { ...props } />
         <ColorReferenceToggleControl { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>
-        <PalettePicker { ...props } showFunctionalColors={ showFunctionalColors } />
+        <PalettePicker { ...props } />
         <ControlsGroup>
-          <ColorGradesControl { ...props }
-                              label={ __( 'Block Color Signal', '__plugin_txtd' ) }
-                              value={ paletteVariation }
-                              signal={ colorSignal }
-                              onChange={ onPaletteVariationChange } />
+          <BlockColorGradeControl { ...props } />
+          <ContentColorGradeControl { ...props } />
         </ControlsGroup>
-        <MiscellaneousControls { ...props } showFunctionalColors={ showFunctionalColors } setShowFunctionalColors={ setShowFunctionalColors } />
+        <MiscellaneousControls { ...props } />
       </ControlsTab>
     </ControlsSection>
   )
-}
+} );
 
 export default Controls;

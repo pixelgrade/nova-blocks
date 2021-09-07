@@ -38,6 +38,7 @@ const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock
       } );
 
       newAttributes.colorSignal = attributes.contentColorSignal;
+      newAttributes.paletteVariation = attributes.contentPaletteVariation;
 
       const { getBlock } = select( 'core/block-editor' );
       const { updateBlockAttributes } = dispatch( 'core/block-editor' );

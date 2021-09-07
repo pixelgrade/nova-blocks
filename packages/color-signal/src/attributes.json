@@ -19,6 +19,10 @@
 		"type": "number",
 		"default": 0
 	},
+	"contentPaletteVariation": {
+		"type": "number",
+		"default": 1
+	},
 	"emphasisArea": {
 		"type": "number",
 		"default": 100
