@@ -2,6 +2,7 @@ import classnames from 'classnames';
 
 import { RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 import { getCardMediaPaddingTop } from '@novablocks/utils'
 
@@ -34,7 +35,8 @@ export const CollectionTitle = ( props ) => {
 			<RichText
 				tagName={ `h${ collectionTitleLevel }` }
 				value={ title }
-				onChange={ title => {
+        placeholder={ __( 'Collection title', '__plugin_txtd' ) }
+        onChange={ title => {
 					setAttributes( { title } );
 				} }
 				allowedFormats = {[ 'core/link' ]}
@@ -63,6 +65,7 @@ export const CollectionSubtitle = ( props ) => {
 				tagName={ 'p' }
 				className={ 'is-style-lead' }
 				value={ subtitle }
+        placeholder={ __( 'Collection subtitle', '__plugin_txtd' ) }
 				onChange={ subtitle => {
 					setAttributes( { subtitle } );
 				} }
