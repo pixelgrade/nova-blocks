@@ -161,7 +161,6 @@ const Collection = ( props ) => {
     style: {
       ...props.style,
       '--collection-emphasis-area': emphasisArea,
-      '--collection-columns-count': columns,
       '--collection-card-media-opacity': cardMediaOpacity / 100,
     },
   } );
