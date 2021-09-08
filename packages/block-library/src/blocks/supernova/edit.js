@@ -160,7 +160,6 @@ const Collection = ( props ) => {
     className: className,
     style: {
       ...props.style,
-      '--collection-emphasis-area': emphasisArea,
       '--collection-card-media-opacity': cardMediaOpacity / 100,
     },
   } );
