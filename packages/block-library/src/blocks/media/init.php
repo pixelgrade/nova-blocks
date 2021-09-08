@@ -85,13 +85,13 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$blockClasses[] = 'novablocks-block';
 
 		$style =
-			'--novablocks-block-top-spacing:' . $blockTopSpacing . ';' .
-			'--novablocks-block-bottom-spacing:' . $blockBottomSpacing . ';' .
-			'--novablocks-emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
-			'--novablocks-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
+			'--nb-block-top-spacing:' . $blockTopSpacing . ';' .
+			'--nb-block-bottom-spacing:' . $blockBottomSpacing . ';' .
+			'--nb-emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
+			'--nb-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
 			'--emphasis-area:' . $emphasisArea . ';' .
-			'--novablocks-media-content-width:' . $contentAreaWidth . '%;' .
-			'--novablocks-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--novablocks-media-spacing) * 5 / 100 );' .
+			'--nb-media-content-width:' . $contentAreaWidth . '%;' .
+			'--nb-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--nb-media-spacing) * 5 / 100 );' .
 			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );

@@ -35,11 +35,11 @@
 	// proper spacing inside collection header
 	// and between collection header and cards
 	.novablocks-collection__title + .novablocks-collection__subtitle {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+		--nb-element-spacing-multiplier: var(--nb-element-spacing-level-3-multiplier);
 	}
 
 	.novablocks-collection__cards {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
+		--nb-element-spacing-multiplier: var(--nb-element-spacing-level-1-multiplier);
 	}
 }
 
@@ -75,7 +75,7 @@
   // element on which we apply the custom transition
   > * {
     overflow: hidden;
-    background-color: var(--novablocks-bg-color);
+    background-color: var(--nb-bg-color);
   }
 }
 

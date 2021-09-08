@@ -67,13 +67,13 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		);
 
 		$cssProps = array(
-			'--collection-columns-count: ' . $attributes[ 'columns' ],
+			'--nb-collection-columns-count: ' . $attributes[ 'columns' ],
 			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
-			'--collection-card-layout-gutter: ' . $attributes[ 'layoutGutter' ],
+			'--nb-collection-gutter: ' . $attributes[ 'layoutGutter' ],
 
-			'--supernova-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-			'--supernova-card-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
-			'--supernova-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
+			'--nb-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
+			'--nb-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+			'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );

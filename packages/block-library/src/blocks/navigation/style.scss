@@ -4,16 +4,16 @@ $arrow-down-svg-path: './arrow-down.svg';
 
   ul.menu,
   .menu > ul {
-    margin-left: calc( -1 * var(--novablocks-navigation-item-spacing) * var(--novablocks-navigation-item-spacing-multiplier, 1) );
+    margin-left: calc( -1 * var(--nb-navigation-item-spacing) * var(--nb-navigation-item-spacing-multiplier, 1) );
 
     > li {
-      margin-left: calc( var(--novablocks-navigation-item-spacing) * var(--novablocks-navigation-item-spacing-multiplier, 1) );
+      margin-left: calc( var(--nb-navigation-item-spacing) * var(--nb-navigation-item-spacing-multiplier, 1) );
     }
   }
 }
 
 .novablocks-navigation {
-  --novablocks-navigation-item-padding-y: .75em;
+  --nb-navigation-item-padding-y: .75em;
   @include navigation-links-spacing;
 
   @import "scss/menu";

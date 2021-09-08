@@ -75,17 +75,17 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );
 		$heroStyle = join( '; ', $spacingProps );
-		$heroStyle .= '; --novablocks-hero-text-color: ' . $attributes['contentColor'] . ';';
+		$heroStyle .= '; --nb-hero-text-color: ' . $attributes['contentColor'] . ';';
 
 		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
 		$contentStyle = '';
 		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= '--novablocks-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
+			$contentStyle .= '--nb-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
 		}
 		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
-			$contentStyle .= '--novablocks-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
+			$contentStyle .= '--nb-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
 		}
 
 		if ( ! empty( $attributes['contentColor'] ) && $attributes['contentColor'] !== '#FFF' ) {
@@ -100,8 +100,8 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			$foregroundHeight = 100;
 		}
 
-		$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--novablocks-1vh, 1vh)); ';
-		$foregroundStyle .= 'min-height: calc(' . $foregroundHeight . ' * var(--novablocks-1vh, 1vh)); ';
+		$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--nb-1vh, 1vh)); ';
+		$foregroundStyle .= 'min-height: calc(' . $foregroundHeight . ' * var(--nb-1vh, 1vh)); ';
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
 			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';

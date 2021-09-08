@@ -1,40 +1,40 @@
 :root {
-	--novablocks-content-padding-small: 5%;
-	--novablocks-content-padding-medium: 10%;
-	--novablocks-content-padding-large: 15%;
+	--nb-content-padding-small: 5%;
+	--nb-content-padding-medium: 10%;
+	--nb-content-padding-large: 15%;
 
-	--novablocks-content-width-full: 100%;
-	--novablocks-content-width-large: 70%;
-	--novablocks-content-width-narrow: 30%;
+	--nb-content-width-full: 100%;
+	--nb-content-width-large: 70%;
+	--nb-content-width-narrow: 30%;
 }
 
 .novablocks-u-content-width {
-	--novablocks-content-width: var(--novablocks-content-width-full);
+	--nb-content-width: var(--nb-content-width-full);
 
 	.novablocks-u-content-width-large & {
-		--novablocks-content-width: var(--novablocks-content-width-large);
+		--nb-content-width: var(--nb-content-width-large);
 	}
 
 	.novablocks-u-content-width-narrow & {
-		--novablocks-content-width: var(--novablocks-content-width-narrow);
+		--nb-content-width: var(--nb-content-width-narrow);
 	}
 
 	@include above(lap) {
-		max-width: var(--novablocks-content-width);
+		max-width: var(--nb-content-width);
 	}
 }
 
 .novablocks-u-content-padding {
   
-  --novablocks-element-spacing-multiplier: 2;
+  --nb-element-spacing-multiplier: 2;
   
-  --novablocks-content-padding-top: calc( var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
-  --novablocks-content-padding-bottom: calc( var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier));
+  --nb-content-padding-top: calc( var(--nb-emphasis-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
+  --nb-content-padding-bottom: calc( var(--nb-emphasis-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
   
-  padding-top: var(--novablocks-content-padding-top);
-  padding-bottom: var(--novablocks-content-padding-bottom);
+  padding-top: var(--nb-content-padding-top);
+  padding-bottom: var(--nb-content-padding-bottom);
   
   > * {
-    --novablocks-element-spacing-multiplier: 1;
+    --nb-element-spacing-multiplier: 1;
   }
 }

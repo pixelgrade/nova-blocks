@@ -1,5 +1,5 @@
 .novablocks-media {
-  --novablocks-media-gutter: var(--novablocks-media-spacing);
+  --nb-media-gutter: var(--nb-media-spacing);
 
   margin-left: auto;
 	margin-right: auto;
@@ -26,13 +26,13 @@
 }
 
 .novablocks-media__layout {
-	margin-top: calc( -1 * var(--novablocks-media-gutter) );
-	margin-left: calc( -1 * var(--novablocks-media-gutter) );
+	margin-top: calc( -1 * var(--nb-media-gutter) );
+	margin-left: calc( -1 * var(--nb-media-gutter) );
 	pointer-events: none;
 
 	> * {
-		padding-left: var(--novablocks-media-gutter);
-		margin-top: var(--novablocks-media-gutter);
+		padding-left: var(--nb-media-gutter);
+		margin-top: var(--nb-media-gutter);
 		pointer-events: auto;
 	}
 
@@ -42,11 +42,11 @@
 		align-items: stretch;
 
 		.novablocks-media__aside {
-			flex: 1 1 calc( 100% - var(--novablocks-media-content-width, 50%) );
+			flex: 1 1 calc( 100% - var(--nb-media-content-width, 50%) );
 		}
 
 		.novablocks-media__content {
-			flex: 1 1 var(--novablocks-media-content-width, 50%);
+			flex: 1 1 var(--nb-media-content-width, 50%);
 		}
 	}
 }
@@ -56,15 +56,15 @@
 .novablocks-media__layout,
 .novablocks-media__aside,
 .novablocks-media__content {
-	transition: var(--novablocks-transition);
+	transition: var(--nb-transition);
 	transition-property: padding, margin;
 }
 
 .novablocks-media {
-  --block-top-spacing: var(--novablocks-block-top-spacing, 0);
-  --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
-  --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
-  --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
+  --block-top-spacing: var(--nb-block-top-spacing, 0);
+  --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
+  --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
+  --emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
 
   &[class][class] {
     padding-top: 0;
@@ -72,36 +72,36 @@
   }
 
 	@include above(tablet) {
-		margin-top: calc( var(--block-top-spacing) * var(--novablocks-media-spacing));
-		margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-media-spacing));
+		margin-top: calc( var(--block-top-spacing) * var(--nb-media-spacing));
+		margin-bottom: calc( var(--block-bottom-spacing) * var(--nb-media-spacing));
 
-		padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--novablocks-media-spacing));
-		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--novablocks-media-spacing));
+		padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--nb-media-spacing));
+		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--nb-media-spacing));
 
 		.components-placeholder,
 		.novablocks-advanced-gallery {
-			margin-top: calc( var(--emphasis-top-spacing) * var(--novablocks-media-spacing));
-			margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-media-spacing));
+			margin-top: calc( var(--emphasis-top-spacing) * var(--nb-media-spacing));
+			margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-media-spacing));
 		}
 
 		.novablocks-media__content {
-			padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-media-spacing));
-			padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-media-spacing));
+			padding-top: calc( var(--emphasis-top-spacing) * var(--nb-media-spacing));
+			padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-media-spacing));
 		}
 	}
 
 	@include below(tablet) {
-		--novablocks-media-gutter: 0 !important;
-		--novablocks-block-top-spacing: 1;
-		--novablocks-block-bottom-spacing: 1;
-		--novablocks-emphasis-top-spacing: 0;
-		--novablocks-emphasis-bottom-spacing: 0;
+		--nb-media-gutter: 0 !important;
+		--nb-block-top-spacing: 1;
+		--nb-block-bottom-spacing: 1;
+		--nb-emphasis-top-spacing: 0;
+		--nb-emphasis-bottom-spacing: 0;
 
 		.novablocks-block,
 		.novablocks-media__content,
 		.novablocks-media__aside {
-			padding-top: calc( var(--novablocks-media-spacing) * 0.5 );
-			padding-bottom: calc( var(--novablocks-media-spacing) * 0.5 );
+			padding-top: calc( var(--nb-media-spacing) * 0.5 );
+			padding-bottom: calc( var(--nb-media-spacing) * 0.5 );
 		}
 	}
 }
@@ -110,9 +110,9 @@
 
 	.novablocks-block[class] {
 		background: linear-gradient(
-				var(--novablocks-media-background-direction),
-				var(--novablocks-bg-color) 0,
-				var(--novablocks-bg-color) calc(var(--emphasis-area) * 1%),
+				var(--nb-media-background-direction),
+				var(--nb-bg-color) 0,
+				var(--nb-bg-color) calc(var(--emphasis-area) * 1%),
 				transparent calc(var(--emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;
@@ -123,7 +123,7 @@
 	}
 
 	&.has-image-on-the-left {
-		--novablocks-media-background-direction: -90deg;
+		--nb-media-background-direction: -90deg;
 	}
 }
 
@@ -176,7 +176,7 @@
 	}
 
 	&.has-image-on-the-left {
-		--novablocks-media-background-direction: -90deg;
+		--nb-media-background-direction: -90deg;
 	}
 
 	> * {

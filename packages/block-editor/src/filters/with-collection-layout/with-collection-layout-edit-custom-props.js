@@ -14,7 +14,7 @@ const withCollectionLayoutEditCustomProps = createHigherOrderComponent( Original
 
     if ( !! supports?.novaBlocks?.collectionLayout ) {
 
-      let collectionLayoutProps = { '--collection-columns-count': columns }
+      let collectionLayoutProps = { '--nb-collection-columns-count': columns }
 
       Object.assign( style, collectionLayoutProps);
     }

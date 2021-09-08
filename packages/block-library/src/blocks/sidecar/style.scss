@@ -139,7 +139,7 @@
       top: var(--sticky-element-top-spacing);
       margin-bottom: 1em;
       
-      transition: var(--novablocks-transition);
+      transition: var(--nb-transition);
       transition-property: opacity;
 
       &.novablocks-hidden-block {

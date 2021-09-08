@@ -39,7 +39,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 		display: block;
 		height: 0;
 		flex: 0 0 auto;
-		transition: var(--novablocks-media-transition);
+		transition: var(--nb-media-transition);
 		transition-property: flex-grow;
 	}
 
@@ -71,7 +71,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 .novablocks-media__content:before,
 .novablocks-media__content:after,
 .novablocks-media__inner-container {
-	transition: var(--novablocks-transition);
+	transition: var(--nb-transition);
 	transition-property: flex-grow;
 }
 
@@ -99,7 +99,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 }
 
 .novablocks-card__layout {
-	--card-layout-gap: calc(var(--novablocks-card-spacing-modifier, 0.5) * var(--novablocks-spacing));
+	--card-layout-gap: calc(var(--nb-card-spacing-modifier, 0.5) * var(--nb-spacing));
 
 	display: flex;
 	flex-direction: column;

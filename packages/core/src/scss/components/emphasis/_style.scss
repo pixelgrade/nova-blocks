@@ -1,11 +1,11 @@
 .novablocks-block {
-	--novablocks-block-padding: var(--novablocks-spacing);
-	--novablocks-block-content-padding: var(--novablocks-spacing);
+	--nb-block-padding: var(--nb-spacing);
+	--nb-block-content-padding: var(--nb-spacing);
 }
 
 .novablocks-media {
 	position: relative;
-	z-index: var(--novablocks-current-zindex);
+	z-index: var(--nb-current-zindex);
 }
 
 .novablocks-block__content {
@@ -16,7 +16,7 @@
 
     transform: translateZ(0);
 
-    transition: var(--novablocks-transition);
+    transition: var(--nb-transition);
     transition-property: padding, box-shadow;
   }
 
@@ -34,10 +34,10 @@
     z-index: -1;
 
     display: block;
-    background-color: var(--novablocks-bg-color, transparent);
+    background-color: var(--nb-bg-color, transparent);
     pointer-events: none;
 
-    transition: var(--novablocks-transition);
+    transition: var(--nb-transition);
     transition-property: background-color, opacity;
   }
 }

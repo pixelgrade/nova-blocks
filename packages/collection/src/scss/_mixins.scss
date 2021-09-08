@@ -2,18 +2,18 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
-	--novablocks-collection-layout-spacing: calc(var(--novablocks-collection-layout-spacing-multiplier, 1) * var(--novablocks-spacing));
-	margin-top: calc(-1 * var(--novablocks-collection-layout-spacing));
-	margin-left: calc(-1 * var(--novablocks-collection-layout-spacing));
+	--nb-collection-layout-spacing: calc(var(--nb-collection-layout-spacing-multiplier, 1) * var(--nb-spacing));
+	margin-top: calc(-1 * var(--nb-collection-layout-spacing));
+	margin-left: calc(-1 * var(--nb-collection-layout-spacing));
 	pointer-events: none;
 
 	> * {
 		--surplus: 0px;
-		--width: calc( ( 100% - var(--surplus) ) / var(--columns, 1) - var(--novablocks-collection-layout-spacing));
+		--width: calc( ( 100% - var(--surplus) ) / var(--columns, 1) - var(--nb-collection-layout-spacing));
 
 		flex: 0 1 var(--width);
-		margin-top: var(--novablocks-collection-layout-spacing);
-		margin-left: var(--novablocks-collection-layout-spacing);
+		margin-top: var(--nb-collection-layout-spacing);
+		margin-left: var(--nb-collection-layout-spacing);
 		pointer-events: auto;
 
 		@include below(lap) {

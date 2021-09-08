@@ -1,20 +1,20 @@
   :root {
     --avatar-column-size: 45px;
     --comments-grid-gap: 10px;
-    --component-accent-color: var(--novablocks-accent-color);
-    --novablocks-conversations-width: 48em;
+    --component-accent-color: var(--nb-accent-color);
+    --nb-conversations-width: 48em;
     --field-description-color: #000;
     --field-description-font-size: 13px;
     --conversations-bg-color: #E4E3E4;
     --conversations-reply-bg-color: #CDCCCD;
-    --comment-author-color: var(--novablocks-accent-color);
+    --comment-author-color: var(--nb-accent-color);
     --comment-font-size: 15px;
-    --comment-links-color: var(--novablocks-accent-color);
+    --comment-links-color: var(--nb-accent-color);
     --comment-highlighted-color: #FFF2CE;
     --label-font-size: 15px;
-    --label-bg-color: var(--novablocks-fg1-color);
+    --label-bg-color: var(--nb-fg1-color);
     --label-bg-opacity: 0.4;
-    --label-highlighted-bg-color: var(--novablocks-accent-color);
+    --label-highlighted-bg-color: var(--nb-accent-color);
     --label-highlighted-bg-opacity: 1;
     --label-border-radius: 999em;
     --comment-footer-font-size: 13px;
@@ -42,8 +42,8 @@
   
       > *:first-child,
       > * > *:first-child {
-        --novablocks-block-top-spacing: 0;
-        --novablocks-block-bottom-spacing: 0;
+        --nb-block-top-spacing: 0;
+        --nb-block-bottom-spacing: 0;
       }
   
       p:empty {
@@ -93,10 +93,10 @@
   
     .comment-list {
       @include block-spacing;
-      --novablocks-element-spacing-multiplier: .75;
+      --nb-element-spacing-multiplier: .75;
   
       @include above(tablet) {
-        --novablocks-element-spacing-multiplier: 1;
+        --nb-element-spacing-multiplier: 1;
       }
   
       .no-avatar {
@@ -137,20 +137,20 @@
       > *,
       > * > * {
         @include block-spacing;
-        --novablocks-element-spacing-multiplier: 0.75;
+        --nb-element-spacing-multiplier: 0.75;
       }
   
       .comment-form-comment,
       .field-description,
       input[type="checkbox"] + label {
-        --novablocks-element-spacing-multiplier: 0;
+        --nb-element-spacing-multiplier: 0;
       }
   
       .field-description {
   
         + *,
         label + :not(.field-description) {
-          --novablocks-element-spacing-multiplier: 0.175;
+          --nb-element-spacing-multiplier: 0.175;
   
         }
       }
@@ -274,7 +274,7 @@
     .comment-respond,
     .comment-wrapper,
     .fake-form-placeholder {
-      --element-spacing: calc(var(--novablocks-spacing) * 0.5);
+      --element-spacing: calc(var(--nb-spacing) * 0.5);
   
       padding-top: var(--element-spacing);
       padding-bottom: var(--element-spacing);
@@ -417,7 +417,7 @@
     .comment-content,
     .comment-footer-meta {
       @include block-spacing;
-      --novablocks-element-spacing-multiplier: 0.5;
+      --nb-element-spacing-multiplier: 0.5;
     }
   
     .comment-author-info {
@@ -467,7 +467,7 @@
       display: inline-block;
       padding: .3em .75em;
   
-      color: var(--novablocks-bg-color);
+      color: var(--nb-bg-color);
   
       &:before {
         content: "";
@@ -519,7 +519,7 @@
     }
   
     [id="cancel-comment-reply-link"] {
-      margin-top: calc(var(--novablocks-spacing) * 0.25);
+      margin-top: calc(var(--nb-spacing) * 0.25);
       padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
   
       font-size: var(--comment-footer-font-size);
@@ -549,7 +549,7 @@
     }
   
     .comments-closed {
-      --element-spacing: calc(var(--novablocks-spacing) * 0.5);
+      --element-spacing: calc(var(--nb-spacing) * 0.5);
       --current-font-weight: bold;
     
       margin-top: var(--element-spacing);
@@ -559,8 +559,8 @@
     }
   
     .comments-pagination {
-      padding-top: var(--novablocks-spacing);
-      padding-bottom: var(--novablocks-spacing);
+      padding-top: var(--nb-spacing);
+      padding-bottom: var(--nb-spacing);
   
       .page-numbers {
         display: flex;
@@ -754,8 +754,8 @@
     z-index: 100;
     
     span {
-      background: var(--novablocks-bg-color);
-      color: var(--novablocks-fg1-color);
+      background: var(--nb-bg-color);
+      color: var(--nb-fg1-color);
       padding: 10px;
       border-radius: 0 10px;
       
@@ -811,7 +811,7 @@
     display: flex;
     flex-direction: column;
   
-    background: var(--novablocks-bg-color);
+    background: var(--nb-bg-color);
     min-width: 200px;
     padding: .5em .75em;
   

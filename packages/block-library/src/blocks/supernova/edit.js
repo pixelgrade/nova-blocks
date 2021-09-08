@@ -160,7 +160,6 @@ const Collection = ( props ) => {
     className: className,
     style: {
       ...props.style,
-      '--collection-card-media-opacity': cardMediaOpacity / 100,
     },
   } );
 
