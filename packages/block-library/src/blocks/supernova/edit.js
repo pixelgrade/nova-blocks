@@ -153,6 +153,7 @@ const Collection = ( props ) => {
   const className = classnames(
     props.className,
     'supernova',
+    'alignfull'
   );
 
   const blockProps = useBlockProps( {

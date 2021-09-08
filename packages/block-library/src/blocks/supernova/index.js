@@ -27,7 +27,6 @@ registerBlockType( 'novablocks/supernova', {
   icon: getSvg( iconSvg ),
 //  attributes,
   supports: {
-    align: [ "wide", "full" ],
     html: false,
     novaBlocks: {
       cardElementsStacking: {
@@ -63,6 +62,7 @@ registerBlockType( 'novablocks/supernova', {
         attributes: true,
         controls: true,
       },
+      noDataAlign: true
     },
     color: {
       __experimentalDuotone: 'img',
@@ -71,10 +71,6 @@ registerBlockType( 'novablocks/supernova', {
     }
   },
   edit,
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  },
   save: function() {
     return <InnerBlocks.Content />
   },

@@ -196,7 +196,7 @@ const DefaultConfig = {
 		] ),
 	},
 	plugins: [
-    new ESLintPlugin(),
+//    new ESLintPlugin(),
 		new CustomTemplatedPathPlugin( {
 			basename( path, data ) {
 				let rawRequest;

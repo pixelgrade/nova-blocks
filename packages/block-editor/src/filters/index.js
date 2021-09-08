@@ -12,6 +12,7 @@ import "./with-latest-posts";
 import "./with-on-select-images";
 import "./with-random-defaults";
 import './with-settings';
+import './with-content-alignment';
 
 // worked on
 import "./with-card-elements-stacking";
