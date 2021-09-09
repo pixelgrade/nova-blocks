@@ -1847,7 +1847,6 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$cssProps = array(
 		'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
-		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes[ 'containerHeight' ] ),
 		'--collection-card-content-area-width: ' . $attributes[ 'contentAreaWidth' ] . '%',
 	);
 

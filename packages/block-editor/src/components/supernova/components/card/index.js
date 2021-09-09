@@ -36,7 +36,6 @@ export const Card = ( props ) => {
 
   const style = {
     '--collection-card-media-opacity': cardMediaOpacity / 100,
-    '--nb-card-media-padding-top': getPaddingTopFromContainerHeight( containerHeight ),
     '--collection-card-content-area-width': `${ contentAreaWidth }%`,
   }
 

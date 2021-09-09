@@ -15,6 +15,13 @@
   }
 }
 
+.supernova-card__media[class] {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--nb-card-media-object-fit, cover);
+}
+
+
 .supernova-card__content,
 .supernova-card__media-wrapper {
   flex: 0 0 auto;
