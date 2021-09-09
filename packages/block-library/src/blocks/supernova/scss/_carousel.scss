@@ -24,8 +24,9 @@
     > div {
       
       &,
-      & > .supernova-card {}
-      height: 100%;
+      & > .supernova-card {
+        height: 100%;
+      }
     }
   }
   
