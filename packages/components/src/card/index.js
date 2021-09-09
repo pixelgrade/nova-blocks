@@ -10,6 +10,7 @@ const Card = ( props ) => {
 		showMedia,
 		showMeta,
 		showTitle,
+    showSubtitle,
 		showContent,
 		showButtons,
 
@@ -40,12 +41,13 @@ const Card = ( props ) => {
 					</div>
 				}
 				{
-					( showMeta || showTitle || showContent || showButtons || placeholder ) &&
+					( showMeta || showTitle || showSubtitle || showContent || showButtons || placeholder ) &&
 					<div className="novablocks-card__layout-content">
             <div className="novablocks-card__inner-container">
               <CardMeta { ...props } meta={ metaAboveTitle } />
               <CardTitle { ...props } />
               <CardMeta { ...props } meta={ metaBelowTitle } />
+              <CardSubtitle { ...props } />
               <CardContent { ...props } />
               <CardFooter { ...props } />
             </div>
@@ -76,6 +78,29 @@ const CardTitle = ( props ) => {
 				{ ! placeholder ? title : <TextPlaceholder/> }
 			</div>
 		</TitleTagName>
+	);
+};
+
+const CardSubtitle = ( props ) => {
+
+	const {
+		subtitle,
+		showSubtitle,
+		placeholder
+	} = props;
+
+	if ( ! showSubtitle && ! placeholder ) {
+		return null;
+	}
+
+	const SubtitleTagName = props.titleTagName || 'h3';
+
+	return (
+		<SubtitleTagName className={ 'wp-block novablocks-grid__item-title novablocks-card__subtitle' }>
+			<div className="novablocks-card__subtitle-size-modifier">
+				{ ! placeholder ? subtitle : <TextPlaceholder/> }
+			</div>
+		</SubtitleTagName>
 	);
 };
 

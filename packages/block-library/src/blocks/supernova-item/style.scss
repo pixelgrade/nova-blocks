@@ -1,0 +1,8 @@
+.supernova-card {
+  background: none !important;
+
+  .supernova-card__media-wrapper,
+  .supernova-card__content {
+    background: var(--novablocks-bg-color);
+  }
+}

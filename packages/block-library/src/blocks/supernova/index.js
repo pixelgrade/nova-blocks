@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+import { InnerBlocks } from "@wordpress/block-editor";
 import { select } from '@wordpress/data';
+import { addFilter } from "@wordpress/hooks";
 
 /**
  * Internal dependencies
@@ -11,21 +18,14 @@ import iconSvg from './super-nova-block.svg';
 
 import attributes from './attributes';
 
-import './copy-attributes-to-inner-blocks';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks } from "@wordpress/block-editor";
+import { withSetChildrenAttributes } from "./filters";
 
 registerBlockType( 'novablocks/supernova', {
   apiVersion: 2,
   title: __( 'Super Nova', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-//  attributes,
+  attributes,
   supports: {
     html: false,
     novaBlocks: {
@@ -76,3 +76,5 @@ registerBlockType( 'novablocks/supernova', {
   },
   variations,
 } );
+
+addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );

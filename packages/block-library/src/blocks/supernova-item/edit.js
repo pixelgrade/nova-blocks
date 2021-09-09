@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { Fragment, useState } from '@wordpress/element';
 
 import {
@@ -18,7 +19,12 @@ const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
 
 const SuperNovaItemEdit = props => {
 
-  const blockProps = useBlockProps();
+  const blockProps = useBlockProps( {
+    className: classnames(
+      props.className,
+      'supernova-item'
+    )
+  } );
 
   return (
     <div { ...blockProps }>
@@ -64,9 +70,7 @@ const SuperNovaItemContent = ( props ) => {
             placeholder={ `Meta` }
             tagName={ 'div' }
             value={ metaAboveTitle }
-            onChange={ metaAboveTitle => {
-              setAttributes( { metaAboveTitle } )
-            } }
+            onChange={ metaAboveTitle => { setAttributes( { metaAboveTitle } ) } }
             allowedFormats={ [] }
           />
         </div>
@@ -76,9 +80,7 @@ const SuperNovaItemContent = ( props ) => {
             placeholder={ `Title` }
             tagName={ 'div' }
             value={ title }
-            onChange={ title => {
-              setAttributes( { title } )
-            } }
+            onChange={ title => { setAttributes( { title } ) } }
             allowedFormats={ [] }
           />
         </TitleTagName>
@@ -88,33 +90,27 @@ const SuperNovaItemContent = ( props ) => {
             placeholder={ `Meta` }
             tagName={ 'p' }
             value={ metaBelowTitle }
-            onChange={ metaBelowTitle => {
-              setAttributes( { metaBelowTitle } )
-            } }
+            onChange={ metaBelowTitle => { setAttributes( { metaBelowTitle } ) } }
             allowedFormats={ [] }
           />
         </div>
-        <div className={ `novablocks-card__subtitle block-editor-block-list__block` }>
+        <SubTitleTagName className={ `novablocks-card__subtitle block-editor-block-list__block` }>
           <RichText
             className={ `novablocks-card__subtitle-size-modifier` }
             placeholder={ `Subtitle` }
             tagName={ `h${ level + 2 }` }
             value={ subtitle }
-            onChange={ subtitle => {
-              setAttributes( { subtitle } )
-            } }
+            onChange={ subtitle => { setAttributes( { subtitle } ) } }
             allowedFormats={ [] }
           />
-        </div>
+        </SubTitleTagName>
         <div className={ `novablocks-card__content block-editor-block-list__block` }>
           <RichText
             className={ `novablocks-card__content-size-modifier` }
             placeholder={ `Content` }
             tagName={ 'p' }
             value={ description }
-            onChange={ description => {
-              setAttributes( { description } )
-            } }
+            onChange={ description => { setAttributes( { description } ) } }
             allowedFormats={ [] }
           />
         </div>
@@ -123,9 +119,7 @@ const SuperNovaItemContent = ( props ) => {
             placeholder={ `Button` }
             tagName={ 'span' }
             value={ buttonText }
-            onChange={ buttonText => {
-              setAttributes( { buttonText } )
-            } }
+            onChange={ buttonText => { setAttributes( { buttonText } ) } }
             allowedFormats={ [] }
             unstableOnFocus={ () => { setShowPopover( true ) } }
             onBlur={ () => { setShowPopover( false ) } }

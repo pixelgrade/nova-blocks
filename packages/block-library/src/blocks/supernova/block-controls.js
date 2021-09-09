@@ -4,6 +4,8 @@ import { Button, Toolbar } from '@wordpress/components';
 
 import { getIconSvg } from "@novablocks/block-editor";
 
+import { needsPreview } from "./utils";
+
 const Controls = ( props ) => {
 
   const { attributes, setAttributes } = props;
@@ -11,6 +13,10 @@ const Controls = ( props ) => {
 
   const editModeLabel = __( 'Exit Edit Mode', '__plugin_txtd' );
   const previewModeLabel = __( 'Enter Edit Mode', '__plugin_txtd' );
+
+  if ( ! needsPreview( attributes ) ) {
+    return null;
+  }
 
   return (
     <BlockControls>

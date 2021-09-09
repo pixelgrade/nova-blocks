@@ -12,7 +12,9 @@ import {
   SupernovaItemPreview,
 } from './components';
 
-const SuperNovaEdit = props => {
+import { withPreviewAttributes } from './utils';
+
+const SupernovaEdit = props => {
 
   const {
     attributes,
@@ -69,4 +71,4 @@ const SuperNovaEdit = props => {
   )
 }
 
-export default SuperNovaEdit;
+export default withPreviewAttributes( SupernovaEdit );

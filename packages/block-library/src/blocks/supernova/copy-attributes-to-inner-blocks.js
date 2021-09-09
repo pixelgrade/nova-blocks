@@ -1,65 +1,43 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { dispatch, select, subscribe } from "@wordpress/data";
+import { dispatch, useSelect, subscribe } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 import { addFilter } from "@wordpress/hooks";
 
-const withSupernovaUpdateChildren = createHigherOrderComponent( ( BlockListBlock ) => {
+const setChildrenAttributes = useCallback( ( attributes ) => {
 
-  return ( props ) => {
+}, [] )
 
-    const {
-      name,
-      attributes,
-      clientId,
-    } = props;
+const copyAttributes = ( clientId, attributes ) => {
 
-    const attributesBlacklist = [
-      'contentSignal',
-      'contentColorSignal',
-      'defaultsGenerated',
-      'images',
-      'useSourceColorAsReference',
-      'title',
-      'subtitle',
-    ];
+  const { innerBlocks } = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ) );
+  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
-    const attributeKeys = Object.keys( attributes ).filter( key => {
-      return ! attributesBlacklist.includes( key );
+  const attributesBlacklist = [
+    'contentSignal',
+    'contentColorSignal',
+    'defaultsGenerated',
+    'images',
+    'useSourceColorAsReference',
+    'title',
+    'subtitle',
+  ];
+
+  const attributeKeys = Object.keys( attributes ).filter( key => {
+    return ! attributesBlacklist.includes( key );
+  } );
+
+  const newAttributes = {};
+
+  attributeKeys.forEach( key => {
+    newAttributes[ key ] = attributes[ key ]
+  } );
+
+  newAttributes.colorSignal = attributes.contentColorSignal;
+  newAttributes.paletteVariation = attributes.contentPaletteVariation;
+
+  if ( Array.isArray( innerBlocks ) ) {
+    innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
+      updateBlockAttributes( block.clientId, newAttributes );
     } );
-
-    useEffect( () => {
-
-      if ( 'novablocks/supernova' !== name ) {
-        return () => {};
-      }
-
-      const newAttributes = {};
-
-      attributeKeys.forEach( key => {
-        newAttributes[ key ] = attributes[ key ]
-      } );
-
-      newAttributes.colorSignal = attributes.contentColorSignal;
-      newAttributes.paletteVariation = attributes.contentPaletteVariation;
-
-      const { getBlock } = select( 'core/block-editor' );
-      const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-      const { innerBlocks } = getBlock( clientId );
-
-      if ( Array.isArray( innerBlocks ) ) {
-        innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
-          updateBlockAttributes( block.clientId, newAttributes );
-        } );
-      }
-
-    }, [ name, attributes, clientId ] );
-
-    return (
-      <BlockListBlock { ...props } />
-    );
-
   }
-
-}, 'withSupernovaUpdateChildren' );
-
-addFilter( 'editor.BlockEdit', 'novablocks/with-supernova-update-children', withSupernovaUpdateChildren );
+}
