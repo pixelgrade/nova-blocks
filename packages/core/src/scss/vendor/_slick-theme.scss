@@ -144,21 +144,21 @@ $slick-opacity-not-active: 0.25 !default;
 					opacity: $slick-opacity-on-hover;
 				}
 			}
-			&:before {
-				position: absolute;
-				top: 0;
-				left: 0;
-				content: $slick-dot-character;
-				width: 20px;
-				height: 20px;
-				font-size: $slick-dot-size;
-				line-height: 20px;
-				text-align: center;
-				color: $slick-dot-color;
-				opacity: $slick-opacity-not-active;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-			}
+			//&:before {
+			//	position: absolute;
+			//	top: 0;
+			//	left: 0;
+			//	content: $slick-dot-character;
+			//	width: 20px;
+			//	height: 20px;
+			//	font-size: $slick-dot-size;
+			//	line-height: 20px;
+			//	text-align: center;
+			//	color: $slick-dot-color;
+			//	opacity: $slick-opacity-not-active;
+			//	-webkit-font-smoothing: antialiased;
+			//	-moz-osx-font-smoothing: grayscale;
+			//}
 		}
 
 		&.slick-active button:before {

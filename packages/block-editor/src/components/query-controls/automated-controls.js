@@ -2,10 +2,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { decodeEntities } from '@wordpress/html-entities';
 
-import {
-	QueryControls,
-	ToggleControl
- } from '@wordpress/components';
+import { ToggleControl } from '@wordpress/components';
 
 import { __ } from '@wordpress/i18n';
 import { AutocompleteTokenField } from "../index";
@@ -137,12 +134,6 @@ const AutomatedControls = ( props ) => {
 			help={ __( "The posts displayed by other blocks won't show up in this block" ) }
 			checked={ preventDuplicatePosts }
 			onChange={ onPreventDuplicatePostsChange }
-		/>,
-		<QueryControls
-			key="queryControls"
-			minItems={ 1 }
-      maxItems={ 20 }
-      { ...props }
 		/>,
 		onAuthorsChange && (
 			<AutocompleteTokenField
