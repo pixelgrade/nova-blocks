@@ -1,6 +1,11 @@
 .supernova-collection__layout--carousel {
-  margin-left: calc( -0.5 * var(--novablocks-grid-spacing) );
-  margin-right: calc( -0.5 * var(--novablocks-grid-spacing) );
+  
+  /*
+   * Carousel Settings
+   */
+  --nb-carousel-arrow-width: 2px;
+  --nb-carousel-arrow-color: #555555;
+  --nb-carousel-arrow-bg: #ffffff;
   
   .supernova-card {
     padding-left: calc( 0.5 * var(--novablocks-grid-spacing) );
@@ -24,16 +29,95 @@
     }
   }
   
+  /*
+   * Pagination
+   */
   .slick-dots {
-    padding-left: 0;
     
-    margin-left: 0;
-    margin-top: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+    margin-top: 0;
     margin-bottom: 0;
-    
+  
     button {
-      color: inherit;
+      
+      /*
+       * We are using !important for the moment,
+       * because in Anima, button styles are applied
+       * using a selector with IDS.
+       */
+      
+      color: inherit !important;
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+    
+      margin: 0 0.75em;
+      border: 0;
+      border-bottom: 1px solid transparent !important;
+      outline: 0;
+    
+      transition: opacity .15s ease;
+    
+      cursor: pointer;
+    
+      &:hover {
+        opacity: .6;
+      }
+    }
+  
+    .slick-active {
+    
+      button {
+        border-bottom-color: currentColor !important;
+      }
+    }
+  }
+  
+  
+  /*
+   * Arrows
+   */
+  .slick-arrow {
+    
+    position: absolute;
+    top: 50%;
+    z-index: 999;
+    
+    width: 22px;
+    height: 24px;
+    
+    background: var(--nb-carousel-arrow-bg);
+    border-radius: 3px;
+    
+    &:before {
+      content: '';
+      display: block;
+      
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      
+      width: 8px;
+      height: 8px;
+    }
+  }
+  
+  .slick-prev {
+    left: 10px;
+    
+    &:before {
+      border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
+      border-left: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
+      transform: translate(-30%, -50%) rotate(-45deg);
+    }
+  }
+  
+  .slick-next {
+    right: 10px;
+    
+    &:before {
+      border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
+      border-right: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
+      transform: translate(-70%, -50%) rotate(45deg);
     }
   }
 }
-
