@@ -97,7 +97,7 @@
 
   &:before {
     content: "";
-    padding-top: calc( var(--collection-card-media-aspect-ratio, 100) * 1% );
+    padding-top: var(--nb-card-media-padding-top, 100%);
     display: block;
   }
 }
