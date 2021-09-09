@@ -1,17 +1,17 @@
 :root {
-	--novablocks-text-placeholder-line-height: 1.5;
-	--novablocks-text-placeholder-shine-width: 5em;
+	--nb-text-placeholder-line-height: 1.5;
+	--nb-text-placeholder-shine-width: 5em;
 }
 
 .novablocks-text-placeholder__row[class] {
-	--novablocks-text-placeholder-margin: calc((var(--novablocks-text-placeholder-line-height) - 1) * 0.5em);
+	--nb-text-placeholder-margin: calc((var(--nb-text-placeholder-line-height) - 1) * 0.5em);
 	position: relative;
 	height: 0.8em;
-  background: var(--novablocks-fg1-color);
+  background: var(--nb-fg1-color);
 
 	border: 0 solid transparent;
-	border-top-width: var(--novablocks-text-placeholder-margin);
-	border-bottom-width: var(--novablocks-text-placeholder-margin);
+	border-top-width: var(--nb-text-placeholder-margin);
+	border-bottom-width: var(--nb-text-placeholder-margin);
 	box-sizing: content-box;
 	background-clip: content-box;
 
@@ -23,17 +23,17 @@
 		bottom: 0;
 		left: 0;
 
-		background-image: linear-gradient(90deg, transparent 0%, var(--novablocks-bg-color) 50%, transparent 100%);
-		background-size: var(--novablocks-text-placeholder-shine-width) 100%;
+		background-image: linear-gradient(90deg, transparent 0%, var(--nb-bg-color) 50%, transparent 100%);
+		background-size: var(--nb-text-placeholder-shine-width) 100%;
 		background-repeat: no-repeat;
 		display: block;
 		animation: novablocks-text-placeholder-shine 1s infinite;
-		transform: translateX(calc(-1 * var(--novablocks-text-placeholder-shine-width))) skew(-30deg, 0deg);
+		transform: translateX(calc(-1 * var(--nb-text-placeholder-shine-width))) skew(-30deg, 0deg);
 		opacity: 0.5;
 	}
 }
 
 @keyframes novablocks-text-placeholder-shine {
-	0% { transform: translateX(calc(-1 * var(--novablocks-text-placeholder-shine-width))) skew(-30deg, 0deg) }
+	0% { transform: translateX(calc(-1 * var(--nb-text-placeholder-shine-width))) skew(-30deg, 0deg) }
 	100% { transform: translateX(100%) skew(-30deg, 0deg) }
 }

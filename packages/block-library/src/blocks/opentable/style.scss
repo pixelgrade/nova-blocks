@@ -1,10 +1,10 @@
 .novablocks-opentable {
 
-	--novablocks-opentable-spacing: 5%;
+	--nb-opentable-spacing: 5%;
 
 	.ot-title[class][class] {
 		line-height: 1;
-		margin-bottom: var(--novablocks-opentable-spacing);
+		margin-bottom: var(--nb-opentable-spacing);
 	}
 
 	.ot-button[class] {
@@ -24,7 +24,7 @@
 	.picker__day--selected:hover,
 	.picker__day--infocus:hover,
 	.picker__day--outfocus:hover {
-		border-color: var(--novablocks-fg1-color);
+		border-color: var(--nb-fg1-color);
 	}
 
 	.picker__day {
@@ -41,10 +41,10 @@
 	}
 
 	.picker__close {
-		color: var(--novablocks-fg1-color);
+		color: var(--nb-fg1-color);
 
 		&:hover {
-			color: var(--novablocks-fg2-color);
+			color: var(--nb-fg2-color);
 		}
 	}
 
@@ -53,7 +53,7 @@
 		transition: border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
 
 		&:hover {
-			border-color: var(--novablocks-fg1-color);
+			border-color: var(--nb-fg1-color);
 		}
 	}
 
@@ -64,7 +64,7 @@
 
 	.ot-dtp-picker {
 		width: 100%;
-    padding: calc( 2 * var(--novablocks-spacing) );
+    padding: calc( 2 * var(--nb-spacing) );
 		background: transparent;
 	}
 
@@ -148,7 +148,7 @@
 		width: 100%;
 
 		.ot-dtp-picker-selector[class][class] {
-			border: 1px solid var(--novablocks-fg1-color);
+			border: 1px solid var(--nb-fg1-color);
 		}
 
 		.ot-title {
@@ -181,13 +181,13 @@
 		}
 
 		.ot-button {
-			background-color: var(--sm-button-background-color, var(--novablocks-accent-color));
-			color: var(--novablocks-bg-color);
+			background-color: var(--sm-button-background-color, var(--nb-accent-color));
+			color: var(--nb-bg-color);
 			border-radius: 0;
-			border-color: var(--novablocks-accent-color);
+			border-color: var(--nb-accent-color);
 
 			&:hover {
-				background-color: var(--novablocks-fg1-color);
+				background-color: var(--nb-fg1-color);
 			}
 		}
 
@@ -203,13 +203,13 @@
 	}
 
 	&.novablocks-opentable__standard[class] {
-		background-color: var(--novablocks-bg-color);
-		color: var(--novablocks-fg1-color);
+		background-color: var(--nb-bg-color);
+		color: var(--nb-fg1-color);
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link {
-			padding-left: var(--novablocks-spacing);
+			padding-left: var(--nb-spacing);
 
-			color: var(--novablocks-fg1-color);
+			color: var(--nb-fg1-color);
 			border-bottom: 2px solid currentColor;
 		}
 
@@ -222,7 +222,7 @@
 		}
 
 		.ot-dtp-picker-selector {
-			margin-bottom: var(--novablocks-content-padding-small);
+			margin-bottom: var(--nb-content-padding-small);
 		}
 
 		.ot-title {
@@ -231,8 +231,8 @@
 		}
 
 		.ot-button {
-			background-color: var(--novablocks-fg1-color);
-			color: var(--novablocks-bg-color);
+			background-color: var(--nb-fg1-color);
+			color: var(--nb-bg-color);
 
 			padding: 20px 0;
 		}
@@ -255,7 +255,7 @@
 .ot-powered-by[class] {
 	display: none;
 
-	margin-top: var(--novablocks-content-padding-small);
+	margin-top: var(--nb-content-padding-small);
 
 	.has-opentable-logo & {
 		display: block;

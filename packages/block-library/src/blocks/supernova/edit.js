@@ -1,4 +1,4 @@
-import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps } from "@wordpress/block-editor";
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 import { getSaveElement } from '@wordpress/blocks';
@@ -160,7 +160,6 @@ const Collection = ( props ) => {
     className: className,
     style: {
       ...props.style,
-      '--collection-card-media-opacity': cardMediaOpacity / 100,
     },
   } );
 

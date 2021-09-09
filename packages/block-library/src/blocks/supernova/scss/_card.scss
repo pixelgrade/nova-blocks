@@ -2,16 +2,16 @@
   display: flex;
   flex-direction: column;
 
-  gap: var(--novablocks-card-gap);
+  gap: var(--nb-card-gap);
 
-  --novablocks-card-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 10 );
-  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-content-padding-multiplier, 0) ) );
-  --novablocks-card-image-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-image-padding-multiplier, 0) ) );
-  --novablocks-card-content-column-width: calc( var(--collection-card-content-area-width) - var(--novablocks-card-gap) * 0.5 );
-  --novablocks-card-media-column-width: calc( 100% - var(--novablocks-card-content-column-width) - var(--novablocks-card-gap));
+  --nb-card-gap: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * var(--nb-collection-gutter, 0) / 10 );
+  --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
+  --nb-card-image-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-media-padding-multiplier, 0) ) );
+  --nb-card-content-column-width: calc( var(--collection-card-content-area-width) - var(--nb-card-gap) * 0.5 );
+  --nb-card-media-column-width: calc( 100% - var(--nb-card-content-column-width) - var(--nb-card-gap));
 
   & &__inner-container[class] {
-    padding: var(--novablocks-card-content-padding, 0);
+    padding: var(--nb-card-content-padding, 0);
   }
 }
 
@@ -32,13 +32,13 @@
     flex-direction: row;
 
     .supernova-card__content {
-      width: var(--novablocks-card-content-column-width);
-      flex: 1 0 var(--novablocks-card-content-column-width);
+      width: var(--nb-card-content-column-width);
+      flex: 1 0 var(--nb-card-content-column-width);
     }
 
     .supernova-card__media-wrapper {
-      width: var(--novablocks-card-media-column-width);
-      flex: 1 0 var(--novablocks-card-media-column-width);
+      width: var(--nb-card-media-column-width);
+      flex: 1 0 var(--nb-card-media-column-width);
     }
   }
 
@@ -69,20 +69,20 @@
 .supernova-card--layout-horizontal-reverse {
 
   @include above(tablet) {
-    margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) );
-    margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) );
+    margin-top: calc( var(--block-top-spacing) * var(--nb-spacing) );
+    margin-bottom: calc( var(--block-bottom-spacing) * var(--nb-spacing) );
 
-    padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--novablocks-spacing) );
-    padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
+    padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--nb-spacing) );
+    padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--nb-spacing) );
 
     .supernova-card__media-wrapper {
-      margin-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
-      margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
+      margin-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing) );
+      margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing) );
     }
 
     .supernova-card__content {
-      padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
-      padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
+      padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing) );
+      padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing) );
     }
   }
 }
@@ -104,8 +104,8 @@
 
 .supernova-card__media-wrapper {
   position: relative;
-  background-color: var(--novablocks-bg-color);
-  padding: var(--novablocks-card-image-padding, 0);
+  background-color: var(--nb-bg-color);
+  padding: var(--nb-card-image-padding, 0);
   
   z-index: 1;
   
@@ -115,7 +115,7 @@
   
   img,
   video {
-    opacity: calc( 1 - var(--supernova-overlay-filter-strength, 1));
+    opacity: calc( 1 - var(--nb-overlay-filter-strength, 1));
   }
 }
 

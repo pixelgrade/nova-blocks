@@ -12,10 +12,10 @@
     width: 100%;
     height: 100%;
 
-    background-color: var(--novablocks-bg-color);
+    background-color: var(--nb-bg-color);
     opacity: var(--header-background-opacity, 1);
 
-    transition: var(--novablocks-transition);
+    transition: var(--nb-transition);
     transition-property: opacity;
   }
 }
@@ -36,7 +36,7 @@
     box-shadow: var(--shadow-color, #000000) 0 var(--shadow-y-offset, 0.0625em) var(--shadow-blur, 0.125em);
     opacity: var(--header-shadow-opacity, 0);
     pointer-events: none;
-    transition: var(--novablocks-transition);
+    transition: var(--nb-transition);
     transition-property: opacity;
     z-index: -1;
   }

@@ -58,7 +58,7 @@ const HeroPreview = function( props ) {
 
 	const styles = {
 		hero: {
-			'--novablocks-hero-text-color': contentColor,
+			'--nb-hero-text-color': contentColor,
 		},
 		foreground: {},
 		content: {},

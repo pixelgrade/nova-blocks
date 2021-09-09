@@ -5,9 +5,9 @@
 		.novablocks-advanced-gallery__grid,
 		.novablocks-change-media-overlay {
 
-			transition: var(--novablocks-transition);
+			transition: var(--nb-transition);
 			transition-property: opacity;
-			--novablocks-transition-duration: .15s;
+			--nb-transition-duration: .15s;
 		}
 
     .novablocks-advanced-gallery__grid {

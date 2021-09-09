@@ -32,8 +32,8 @@ class viewportObserver {
 		const vw = windowWidth / 100 + 'px';
 		const vh = windowHeight / 100 + 'px';
 
-		root.style.setProperty( '--novablocks-1vw', vw );
-		root.style.setProperty( '--novablocks-1vh', vh );
+		root.style.setProperty( '--nb-1vw', vw );
+		root.style.setProperty( '--nb-1vh', vh );
 	}
 }
 

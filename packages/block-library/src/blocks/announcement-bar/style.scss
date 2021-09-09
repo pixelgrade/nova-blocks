@@ -1,6 +1,6 @@
 .novablocks-announcement-bar {
-	--novablocks-announcement-bar-padding: #{11/16 * 1em};
-	--novablocks-announcement-bar-close-width: #{15/16 * 1em};
+	--nb-announcement-bar-padding: #{11/16 * 1em};
+	--nb-announcement-bar-close-width: #{15/16 * 1em};
 
 	position: relative;
 	overflow: hidden;
@@ -23,10 +23,10 @@
 	align-items: center;
 	justify-content: center;
 
-	padding: var(--novablocks-announcement-bar-padding)
+	padding: var(--nb-announcement-bar-padding)
 		calc(
-			2 * var(--novablocks-announcement-bar-padding) +
-				var(--novablocks-announcement-bar-close-width)
+			2 * var(--nb-announcement-bar-padding) +
+				var(--nb-announcement-bar-close-width)
 		);
 }
 
@@ -43,11 +43,11 @@
 .novablocks-announcement-bar__close {
 	position: absolute;
 	top: 50%;
-	right: calc(2 * var(--novablocks-announcement-bar-padding));
+	right: calc(2 * var(--nb-announcement-bar-padding));
 	transform: translate(0, -50%);
 	z-index: 100;
 
-	width: var(--novablocks-announcement-bar-close-width);
+	width: var(--nb-announcement-bar-close-width);
 	cursor: pointer;
 
 	transition: opacity 0.3s ease;

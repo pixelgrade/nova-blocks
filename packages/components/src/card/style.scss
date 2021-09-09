@@ -1,7 +1,7 @@
 .novablocks-card {
 	@include clearfix;
   overflow: hidden;
-  --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+  --nb-element-spacing-multiplier: var(--nb-element-spacing-level-3-multiplier);
 
 	.wp-block-buttons[class] {
 		float: none;
@@ -33,19 +33,19 @@
 	overflow: hidden;
 
 	> .novablocks-grid__item-buttons {
-		--novablocks-element-spacing-multiplier: 1;
+		--nb-element-spacing-multiplier: 1;
 	}
 }
 
 .novablocks-card__inner-container[class][class] {
-  padding: calc( var(--novablocks-spacing) * var(--card-content-padding, 0) / 100 );
+  padding: calc( var(--nb-spacing) * var(--nb-card-content-padding, 0) / 100 );
 }
 
 .novablocks-card__media-wrap {
 	max-width: none !important;
-	padding: calc( var(--novablocks-spacing) * var(--card-media-padding, 0) / 100 );
+	padding: calc( var(--nb-spacing) * var(--nb-card-media-padding, 0) / 100 );
 
-	transition: var(--novablocks-transition);
+	transition: var(--nb-transition);
 	transition-property: margin, padding;
 
 	.novablocks-card--placeholder & {
@@ -62,7 +62,7 @@
 
 	.novablocks-card__media {
 		position: relative;
-		padding-top: var(--card-media-padding-top, 100%);
+		padding-top: var(--nb-card-media-padding-top, 100%);
 		overflow: hidden;
 	}
 
@@ -76,7 +76,7 @@
 	}
 
 	.novablocks-card__media-image {
-		object-fit: var(--card-media-object-fit, cover);
+		object-fit: var(--nb-card-media-object-fit, cover);
 	}
 }
 
@@ -84,7 +84,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-  background: var(--novablocks-bg-color);
+  background: var(--nb-bg-color);
 
 	svg {
 		max-width: 50%;

@@ -7,9 +7,9 @@
 .novablocks-card__media-placeholder {
 
 	&[class] {
-		transition: var(--novablocks-transition);
+		transition: var(--nb-transition);
 		transition-property: opacity;
-		--novablocks-transition-duration: .15s;
+		--nb-transition-duration: .15s;
 	}
 }
 

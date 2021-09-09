@@ -23,16 +23,16 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
 
       let spaceAndSizingProps = {
         ...getSpacingCSSProps( attributes ),
-        '--card-media-padding': imagePadding,
-        '--card-content-padding': contentPadding,
-        '--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
-        '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
+        '--nb-card-media-padding': imagePadding,
+        '--nb-card-content-padding': contentPadding,
+        '--nb-card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
+        '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 
-        '--collection-card-layout-gutter': layoutGutter,
+        '--nb-collection-gutter': layoutGutter,
 
         // ???
-        '--supernova-card-content-padding-multiplier': contentPadding / 100,
-        '--supernova-card-image-padding-multiplier': imagePadding / 100
+        '--nb-card-content-padding-multiplier': contentPadding / 100,
+        '--nb-card-media-padding-multiplier': imagePadding / 100
       }
 
       Object.assign( style, spaceAndSizingProps);

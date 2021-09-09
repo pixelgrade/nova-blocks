@@ -14,7 +14,7 @@ const withMediaCompositionEditCustomProps = createHigherOrderComponent( Original
 
     if ( supports?.novaBlocks?.mediaComposition ) {
 
-      let mediaCompositionProps = {'--novablocks-advanced-gallery-grid-gap': `${elementsDistance}px`}
+      let mediaCompositionProps = {'--nb-advanced-gallery-grid-gap': `${elementsDistance}px`}
 
       Object.assign( style, mediaCompositionProps );
     }

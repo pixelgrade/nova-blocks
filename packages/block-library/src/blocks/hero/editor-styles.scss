@@ -1,9 +1,9 @@
 :root {
-	--novablocks-hero-transition-duration: 0.5s;
-	--novablocks-hero-transition-easing: ease;
-	--novablocks-hero-transition: all
-		var(--novablocks-transition-duration)
-		var(--novablocks-transition-easing);
+	--nb-hero-transition-duration: 0.5s;
+	--nb-hero-transition-easing: ease;
+	--nb-hero-transition: all
+		var(--nb-transition-duration)
+		var(--nb-transition-easing);
 }
 
 
@@ -22,8 +22,8 @@
   &__inner-container {
     
     [data-align="full"] {
-      margin-left: calc(-1 * var(--novablocks-container-spacings));
-      margin-right: calc(-1 * var(--novablocks-container-spacings));
+      margin-left: calc(-1 * var(--nb-container-spacings));
+      margin-right: calc(-1 * var(--nb-container-spacings));
     }
   
     > *:not([data-align]) {
@@ -36,13 +36,13 @@
 }
 
 .wp-block-novablocks-hero.novablocks-hero {
-	transition: var(--novablocks-hero-transition);
+	transition: var(--nb-hero-transition);
 	transition-property: color, background-color, opacity;
 }
 
 .novablocks-hero__media,
 .novablocks-hero__foreground {
-	transition: var(--novablocks-hero-transition);
+	transition: var(--nb-hero-transition);
 	transition-property: color, background-color, opacity;
 }
 

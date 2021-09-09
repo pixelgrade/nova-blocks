@@ -41,7 +41,7 @@ body.debug {
 
 			content: '';
 			display: block;
-			height: calc( 5 * var(--novablocks-spacing) );
+			height: calc( 5 * var(--nb-spacing) );
 			background:
 				linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, rgba(0,0,0,0) 1px),
 				linear-gradient(to bottom, transparent 40%, red 40%, red calc(40% + 1px), transparent calc(40% + 1px));
@@ -51,11 +51,11 @@ body.debug {
 		}
 
 		&:before {
-			top: calc( -2 * var(--novablocks-spacing) );
+			top: calc( -2 * var(--nb-spacing) );
 		}
 
 		&:after {
-			bottom: calc( -3 * var(--novablocks-spacing) );
+			bottom: calc( -3 * var(--nb-spacing) );
 		}
 	}
 
@@ -71,22 +71,22 @@ body.debug {
 			left: 0;
 			right: 0;
 
-			transition: var(--novablocks-transition);
+			transition: var(--nb-transition);
 			transition-property: padding, top, bottom;
 		}
 
 		&:before {
-			--offset: calc( max( 0, -1 * var(--novablocks-block-top-spacing, 0) ) );
-			padding-top: calc( -1 * var(--novablocks-block-top-spacing, 0) * var(--novablocks-spacing) );
-			padding-bottom: calc( var(--novablocks-block-top-spacing, 0) * var(--novablocks-spacing) );
-			bottom: calc( 100% - var(--offset) * var(--novablocks-spacing) );
+			--offset: calc( max( 0, -1 * var(--nb-block-top-spacing, 0) ) );
+			padding-top: calc( -1 * var(--nb-block-top-spacing, 0) * var(--nb-spacing) );
+			padding-bottom: calc( var(--nb-block-top-spacing, 0) * var(--nb-spacing) );
+			bottom: calc( 100% - var(--offset) * var(--nb-spacing) );
 		}
 
 		&:after {
-			--offset: calc( max( 0, -1 * var(--novablocks-block-bottom-spacing, 0) ) );
-			padding-top: calc( -1 * var(--novablocks-block-bottom-spacing, 0) * var(--novablocks-spacing) );
-			padding-bottom: calc( var(--novablocks-block-bottom-spacing, 0) * var(--novablocks-spacing) );
-			top: calc( 100% - var(--offset) * var(--novablocks-spacing) );
+			--offset: calc( max( 0, -1 * var(--nb-block-bottom-spacing, 0) ) );
+			padding-top: calc( -1 * var(--nb-block-bottom-spacing, 0) * var(--nb-spacing) );
+			padding-bottom: calc( var(--nb-block-bottom-spacing, 0) * var(--nb-spacing) );
+			top: calc( 100% - var(--offset) * var(--nb-spacing) );
 		}
 	}
 }
@@ -114,7 +114,7 @@ body.debug {
   }
 
   span + .components-toolbar {
-    margin-left: var(--novablocks-spacing);
+    margin-left: var(--nb-spacing);
   }
 
   .components-range-control__wrapper {

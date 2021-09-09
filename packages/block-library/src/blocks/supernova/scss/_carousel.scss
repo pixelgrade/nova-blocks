@@ -8,8 +8,8 @@
   --nb-carousel-arrow-bg: #ffffff;
   
   .supernova-card {
-    padding-left: calc( 0.5 * var(--novablocks-grid-spacing) );
-    padding-right: calc( 0.5 * var(--novablocks-grid-spacing) );
+    padding-left: calc( 0.5 * var(--nb-grid-spacing) );
+    padding-right: calc( 0.5 * var(--nb-grid-spacing) );
   }
   
   .slick-track {
@@ -24,8 +24,9 @@
     > div {
       
       &,
-      & > .supernova-card {}
-      height: 100%;
+      & > .supernova-card {
+        height: 100%;
+      }
     }
   }
   
@@ -34,10 +35,10 @@
    */
   .slick-dots {
     
-    margin-top: var(--novablocks-spacing);
+    margin-top: var(--nb-spacing);
     margin-bottom: 0;
     
-    padding-bottom: var(--novablocks-spacing);
+    padding-bottom: var(--nb-spacing);
   
     button {
       

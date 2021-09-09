@@ -14,7 +14,7 @@ const withColorSignalEditCustomProps = createHigherOrderComponent( OriginalCompo
 
     if ( supports?.novaBlocks?.colorSignal ) {
 
-      let colorSignalProps = {'--collection-emphasis-area': emphasisArea,}
+      let colorSignalProps = {'--nb-collection-emphasis-area': emphasisArea,}
 
       Object.assign( style, colorSignalProps );
     }
