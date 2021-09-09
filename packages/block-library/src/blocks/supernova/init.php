@@ -71,8 +71,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
 			'--nb-collection-gutter: ' . $attributes[ 'layoutGutter' ],
 
-			'--nb-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-			'--nb-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
+			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 			'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
 		);
 

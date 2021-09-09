@@ -112,13 +112,13 @@
 		background: linear-gradient(
 				var(--nb-media-background-direction),
 				var(--nb-bg-color) 0,
-				var(--nb-bg-color) calc(var(--emphasis-area) * 1%),
-				transparent calc(var(--emphasis-area) * 1%)
+				var(--nb-bg-color) calc(var(--nb-emphasis-area) * 1%),
+				transparent calc(var(--nb-emphasis-area) * 1%)
 		);
 		background-size: 100% 100%;
 
 		@include below(tablet) {
-			--emphasis-area: 100;
+			--nb-emphasis-area: 100;
 		}
 	}
 

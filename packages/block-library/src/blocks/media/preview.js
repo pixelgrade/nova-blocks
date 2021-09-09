@@ -57,7 +57,7 @@ const MediaPreview = function( props ) {
 	}
 
 	const cssVars = {
-		'--emphasis-area': emphasisArea,
+		'--nb-emphasis-area': emphasisArea,
     '--card-content-padding': contentPadding,
 		'--nb--media-content-width': `${ contentAreaWidth }%`,
 		'--nb--media-gutter': `calc( ${ layoutGutter } * var(--nb--media-spacing) * 5 / 100 )`,

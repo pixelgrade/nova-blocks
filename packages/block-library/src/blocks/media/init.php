@@ -89,7 +89,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--nb-block-bottom-spacing:' . $blockBottomSpacing . ';' .
 			'--nb-emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
 			'--nb-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
-			'--emphasis-area:' . $emphasisArea . ';' .
+			'--nb-emphasis-area:' . $emphasisArea . ';' .
 			'--nb-media-content-width:' . $contentAreaWidth . '%;' .
 			'--nb-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--nb-media-spacing) * 5 / 100 );' .
 			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
