@@ -1,7 +1,7 @@
 @at-root {
 
 	:root {
-		--nova-food-menu-item-highlight-color: var(--nb-accent-color);
+		--nb-food-menu-item-highlight-color: var(--nb-accent-color);
 	}
 }
 
@@ -84,7 +84,7 @@
 	margin-left: calc( -1 * var( --item-overflow ) );
 	margin-right: calc( -1 * var( --item-overflow ) );
 	padding: 0 calc( 1.25 * var( --item-padding ) ) calc( 0.75 * var( --item-padding ) );
-	border: var(--item-border-width) solid var(--nova-food-menu-item-highlight-color);
+	border: var(--item-border-width) solid var(--nb-food-menu-item-highlight-color);
 	border-top-width: 0;
 	border-radius: var(--item-border-radius);
 }
@@ -99,7 +99,7 @@
 
 	position: relative;
 
-	background-color: var(--nova-food-menu-item-highlight-color);
+	background-color: var(--nb-food-menu-item-highlight-color);
 
 	&:after {
 		content: "";
