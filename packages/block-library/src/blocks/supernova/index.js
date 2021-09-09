@@ -1,5 +1,3 @@
-import { select } from '@wordpress/data';
-
 /**
  * Internal dependencies
  */
