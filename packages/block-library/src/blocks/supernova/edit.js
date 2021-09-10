@@ -4,7 +4,11 @@ import { Fragment } from "@wordpress/element";
 import { useBlockProps } from "@wordpress/block-editor";
 
 import { CollectionHeader } from "@novablocks/collection";
-import { useInnerBlocks } from "@novablocks/block-editor";
+
+import {
+  useInnerBlocks,
+  PostCard
+} from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
 
@@ -14,6 +18,7 @@ import {
 } from './components';
 
 import { withPreviewAttributes } from './utils';
+import { getColorSignalClassnames } from "@novablocks/color-signal";
 
 const SupernovaEdit = props => {
 
@@ -25,23 +30,18 @@ const SupernovaEdit = props => {
   )
 }
 
-const SupernovaPreview = withPreviewAttributes( props => {
+const SupernovaPreview = props => {
 
-  const {
-    attributes,
-    clientId,
-  } = props;
+  const { attributes } = props;
 
   const {
     align,
     headerPosition,
     showCollectionTitle,
     showCollectionSubtitle,
-
-    cardMediaOpacity,
+    sourceType
   } = attributes;
 
-  const innerBlocks = useInnerBlocks( clientId );
 
   const className = classnames(
     props.className,
@@ -51,9 +51,7 @@ const SupernovaPreview = withPreviewAttributes( props => {
 
   const blockProps = useBlockProps( {
     className: className,
-    style: {
-      ...props.style,
-    },
+    style: props.style,
   } );
 
   return (
@@ -67,13 +65,46 @@ const SupernovaPreview = withPreviewAttributes( props => {
         }
 
         <div className="wp-block" data-align={ align }>
-          <CollectionLayout { ...props }>
-            { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-          </CollectionLayout>
+          { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+          { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
         </div>
       </div>
     </div>
   );
+}
+
+const PostsCollectionLayout = props => {
+  const { posts, clientId } = props;
+  const innerBlocks = useInnerBlocks( clientId );
+
+  if ( ! Array.isArray( posts ) ) {
+    return null;
+  }
+
+  // @todo maybe find a better way of getting attributes for post cards
+  return (
+    <CollectionLayout { ...props }>
+      { posts.map( ( post, index ) => {
+        const innerBlock = innerBlocks[ index ];
+        const className = getColorSignalClassnames( innerBlock.attributes, true );
+        return (
+          <PostCard { ...props } post={ post } className={ className } />
+        )
+      } ) }
+    </CollectionLayout>
+  )
+}
+
+const NotPostsCollectionLayout = withPreviewAttributes( props => {
+  const { attributes, clientId } = props;
+  const { sourceType } = attributes;
+  const innerBlocks = useInnerBlocks( clientId );
+
+  return (
+    <CollectionLayout { ...props }>
+      { sourceType !== 'content' && innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
+    </CollectionLayout>
+  )
 } );
 
 export default SupernovaEdit;

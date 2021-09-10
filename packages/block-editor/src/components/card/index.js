@@ -2,10 +2,7 @@ import classnames from 'classnames';
 
 import { Children, Fragment } from '@wordpress/element';
 
-import {
-  getPaddingTopFromContainerHeight,
-  getAlignFromMatrix,
-} from "@novablocks/utils";
+import { getAlignFromMatrix } from "@novablocks/utils";
 
 //import { withDoppler } from "../../../../filters";
 
@@ -53,7 +50,7 @@ export const Card = ( props ) => {
   );
 }
 
-export const CardContentWrapper = ( props ) => {
+export const CardContentWrapper = ( props ) => { 
 
   const { attributes } = props;
 

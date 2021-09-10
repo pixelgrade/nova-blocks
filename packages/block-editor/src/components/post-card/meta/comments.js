@@ -1,4 +1,4 @@
-import { useApiFetch } from "../../../../../index";
+import { useApiFetch } from "../../../index";
 
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';

@@ -1,11 +1,8 @@
 import { Fragment } from "@wordpress/element";
 import { getSaveElement } from '@wordpress/blocks';
 
-import { SuperNova, useInnerBlocks } from "@novablocks/block-editor";
-import { MediaCompositionPreview } from "@novablocks/media-composition";
-import { getColorSignalClassnames } from "@novablocks/color-signal";
-
-const {
+import {
+  useInnerBlocks,
   Card,
   CardMediaWrapper,
   CardMeta,
@@ -13,7 +10,10 @@ const {
   CardDescription,
   CardFooter,
   CardButton,
-} = SuperNova.components;
+} from "@novablocks/block-editor";
+
+import { MediaCompositionPreview } from "@novablocks/media-composition";
+import { getColorSignalClassnames } from "@novablocks/color-signal";
 
 const SupernovaItemPreview = props => {
 

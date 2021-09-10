@@ -12,10 +12,7 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
 import { Popover } from '@wordpress/components';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
-
-import { SuperNova } from "@novablocks/block-editor";
-
-const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
+import { Card, CardButton, CardMediaWrapper } from "@novablocks/block-editor";
 
 const SuperNovaItemEdit = props => {
 

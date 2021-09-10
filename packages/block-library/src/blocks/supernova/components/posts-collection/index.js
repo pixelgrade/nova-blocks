@@ -8,7 +8,7 @@ const PostsCollection = props => {
 
   return (
     <Collection { ...props }>
-      { posts.map( post => <PostCard { ...passedProps } post={ post } /> ) }
+
     </Collection>
   )
 }
