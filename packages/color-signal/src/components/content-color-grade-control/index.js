@@ -3,6 +3,7 @@ import { useCallback } from "@wordpress/element";
 
 import { ColorGradesControl } from "../index";
 import { getAbsoluteColorVariation, getSignalRelativeToVariation } from "../../utils";
+import { useSupports } from "@novablocks/block-editor";
 
 const ContentColorGradeControl = props => {
 
@@ -17,6 +18,13 @@ const ContentColorGradeControl = props => {
     contentPaletteVariation,
     contentColorSignal
   } = attributes;
+
+  const supports = useSupports( name );
+  const colorSignalSupport = supports?.novaBlocks?.colorSignal;
+
+  if ( colorSignalSupport !== true && colorSignalSupport?.contentColorSignal !== true ) {
+    return null;
+  }
 
   const onColorGradeChange = useCallback( nextContentPaletteVariation => {
 
