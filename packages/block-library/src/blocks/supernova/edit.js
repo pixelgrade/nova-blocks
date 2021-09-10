@@ -16,6 +16,16 @@ import { withPreviewAttributes } from './utils';
 
 const SupernovaEdit = props => {
 
+  return (
+    <Fragment>
+      <SupernovaPreview { ...props } />
+      <BlockControls { ...props } />
+    </Fragment>
+  )
+}
+
+const SupernovaPreview = withPreviewAttributes( props => {
+
   const {
     attributes,
     clientId,
@@ -47,28 +57,25 @@ const SupernovaEdit = props => {
   } );
 
   return (
-    <Fragment>
-      <div { ...blockProps }>
-        <div className={ `wp-block__inner-container` }>
-          {
-            headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-            <div className="wp-block" data-align={ align }>
-              <CollectionHeader { ...props } />
-            </div>
-          }
-
+    <div { ...blockProps }>
+      <div className={ `wp-block__inner-container` }>
+        {
+          headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
           <div className="wp-block" data-align={ align }>
-            <div className={ `supernova-collection` }>
-              <CollectionLayout { ...props }>
-                { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-              </CollectionLayout>
-            </div>
+            <CollectionHeader { ...props } />
+          </div>
+        }
+
+        <div className="wp-block" data-align={ align }>
+          <div className={ `supernova-collection` }>
+            <CollectionLayout { ...props }>
+              { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
+            </CollectionLayout>
           </div>
         </div>
       </div>
-      <BlockControls { ...props } />
-    </Fragment>
-  )
-}
+    </div>
+  );
+} );
 
-export default withPreviewAttributes( SupernovaEdit );
+export default SupernovaEdit;
