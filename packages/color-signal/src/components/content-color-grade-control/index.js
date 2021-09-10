@@ -9,7 +9,8 @@ const ContentColorGradeControl = props => {
 
   const {
     attributes,
-    setAttributes
+    setAttributes,
+    name
   } = props;
 
   const {
