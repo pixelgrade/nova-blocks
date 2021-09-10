@@ -1,6 +1,8 @@
 import { useCallback } from "@wordpress/element";
 import { useDispatch, useSelect } from "@wordpress/data";
 
+import { getChildAttributes } from "../utils";
+
 const withSetChildrenAttributes = OriginalComponent => {
 
   return props => {
@@ -12,29 +14,10 @@ const withSetChildrenAttributes = OriginalComponent => {
     const setChildrenAttributes = useCallback( attributes => {
 
       const { innerBlocks } = getBlock( clientId );
-
-      const attributesBlacklist = [
-        'useSourceColorAsReference',
-        'colorSignal',
-        'paletteVariation',
-        'contentColorSignal',
-        'contentPaletteVariation',
-        'defaultsGenerated',
-        'images',
-        'title',
-        'subtitle',
-      ];
-
-      const attributeKeys = Object.keys( attributes ).filter( key => ! attributesBlacklist.includes( key ) );
-      const newAttributes = {};
-
-      attributeKeys.forEach( key => {
-        newAttributes[ key ] = attributes[ key ]
-      } );
+      const newAttributes = getChildAttributes( attributes );
 
       if ( Array.isArray( innerBlocks ) ) {
         innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
-
           updateBlockAttributes( block.clientId, newAttributes );
         } );
       }

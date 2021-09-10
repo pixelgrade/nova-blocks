@@ -1,9 +1,12 @@
 import classnames from "classnames";
 
-import { Fragment } from "@wordpress/element";
+import { createBlock } from '@wordpress/blocks';
+import { Fragment, useEffect } from "@wordpress/element";
 import { useBlockProps } from "@wordpress/block-editor";
+import { useSelect, useDispatch } from "@wordpress/data";
 
 import { CollectionHeader } from "@novablocks/collection";
+import { getColorSignalClassnames } from "@novablocks/color-signal";
 
 import {
   useInnerBlocks,
@@ -18,9 +21,41 @@ import {
 } from './components';
 
 import { withPreviewAttributes } from './utils';
-import { getColorSignalClassnames } from "@novablocks/color-signal";
 
 const SupernovaEdit = props => {
+  const { attributes, clientId } = props;
+
+  const {
+    sourceType,
+    cardLayout,
+    contentPadding,
+    layoutGutter,
+    postsToShow
+  } = attributes;
+
+  const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
+  const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+  const innerBlocks = useInnerBlocks( clientId );
+
+  useEffect( () => {
+    const newInnerBlocks = innerBlocks.slice( 0, postsToShow );
+
+    if ( postsToShow > itemsCount ) {
+      for ( let i = 0; i <  postsToShow - itemsCount; i++ ) {
+        newInnerBlocks.push( createBlock( 'novablocks/supernova-item', {
+          sourceType,
+          cardLayout,
+          contentPadding,
+          layoutGutter,
+          title: 'Title',
+          description: 'This is just an example of what a description for this card could look like',
+          buttonText: 'Button',
+        } ) );
+      }
+    }
+
+    replaceInnerBlocks( clientId, newInnerBlocks );
+  }, [ postsToShow ] );
 
   return (
     <Fragment>
@@ -81,16 +116,23 @@ const PostsCollectionLayout = props => {
     return null;
   }
 
-  // @todo maybe find a better way of getting attributes for post cards
   return (
     <CollectionLayout { ...props }>
-      { posts.map( ( post, index ) => {
-        const innerBlock = innerBlocks[ index ];
-        const className = getColorSignalClassnames( innerBlock.attributes, true );
-        return (
-          <PostCard { ...props } post={ post } className={ className } />
-        )
-      } ) }
+      {
+        posts.map( ( post, index ) => {
+          const innerBlock = innerBlocks[ index ];
+
+          if ( ! innerBlock ) {
+            return null;
+          }
+
+          const className = getColorSignalClassnames( innerBlock.attributes, true );
+
+          return (
+            <PostCard { ...props } post={ post } className={ className } />
+          )
+        } )
+      }
     </CollectionLayout>
   )
 }
