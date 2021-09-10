@@ -1840,7 +1840,6 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$cardClasses = array(
-		'novablocks-doppler',
 		'supernova-item',
 		'supernova-item--layout-' . $attributes[ 'cardLayout' ],
 	);
