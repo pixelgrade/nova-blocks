@@ -144,7 +144,7 @@ const Post = ( props ) => {
 		<div className="wp-block-buttons">
 			<div className="wp-block-button is-style-text">
 				<div className="wp-block-button__link">
-					<div className="novablocks-buttons-size-modifier">
+					<div className="novablocks-card__buttons-size-modifier">
 						{ __( 'Read More' ) }
 					</div>
 				</div>

@@ -6,7 +6,7 @@ export const CardButton = ( props ) => {
   return (
     <div className="wp-block-button is-style-text">
       <div className="wp-block-button__link">
-        <div className="novablocks-buttons-size-modifier">
+        <div className="novablocks-card__buttons-size-modifier">
           { props.children }
         </div>
       </div>
@@ -39,9 +39,9 @@ export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
 
   return (
     <TitleTagName className={ 'wp-block novablocks-grid__item-title novablocks-card__title' }>
-      <div className="novablocks-card__title-size-modifier">
+      <span className="novablocks-card__title-size-modifier">
         { ! placeholder ? children : <TextPlaceholder/> }
-      </div>
+      </span>
     </TitleTagName>
   );
 } );
@@ -58,11 +58,9 @@ export const CardMeta = withVisibilityAndPlaceholder( ( props ) => {
   }
 
   return (
-    <div className="wp-block novablocks-grid__item-meta">
-      <div className="novablocks-card__meta is-style-meta">
-        <div className="novablocks-card__meta-size-modifier">
-          { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
-        </div>
+    <div className="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+      <div className="novablocks-card__meta-size-modifier">
+        { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
       </div>
     </div>
   )
@@ -75,25 +73,15 @@ export const CardDescription = withVisibilityAndPlaceholder( ( props ) => {
     children,
   } = props;
 
-  const wrapperClassName = 'wp-block novablocks-grid__item-content novablocks-card__content';
-  const fontSizeClassName = 'novablocks-card__content-size-modifier';
-
-  if ( placeholder ) {
-    return (
-      <div className={ wrapperClassName }>
-        <div className={ fontSizeClassName }>
-          <TextPlaceholder rows={ 3 } />
-        </div>
-      </div>
-    );
-  }
+  const wrapperClassName = 'wp-block novablocks-grid__item-description novablocks-card__description';
+  const fontSizeClassName = 'novablocks-card__description-size-modifier';
 
   return (
-    <div className={ wrapperClassName }>
-      <RawHTML className={ fontSizeClassName }>
-        { children }
-      </RawHTML>
-    </div>
+    <p className={ wrapperClassName }>
+      <span className={ fontSizeClassName }>
+        { ! placeholder ? children : <TextPlaceholder rows={ 3 } /> }
+      </span>
+    </p>
   );
 } );
 
@@ -106,7 +94,9 @@ export const CardFooter = withVisibilityAndPlaceholder( ( props ) => {
 
   return (
     <div className="wp-block novablocks-grid__item-buttons novablocks-card__buttons">
-      { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
+      <div className="novablocks-card__buttons-size-modifier">
+        { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
+      </div>
     </div>
   );
 } );

@@ -139,8 +139,8 @@ const CardContent = ( props ) => {
 		return null;
 	}
 
-	const wrapperClassName = 'wp-block novablocks-grid__item-content novablocks-card__content';
-	const fontSizeClassName = 'novablocks-card__content-size-modifier';
+	const wrapperClassName = 'wp-block novablocks-grid__item-description novablocks-card__description';
+	const fontSizeClassName = 'novablocks-card__description-size-modifier';
 
 	if ( placeholder ) {
 		return (
@@ -153,11 +153,11 @@ const CardContent = ( props ) => {
 	}
 
 	return (
-		<div className={ wrapperClassName }>
-			<RawHTML className={ fontSizeClassName }>
-				{ content }
-			</RawHTML>
-		</div>
+		<p className={ wrapperClassName }>
+			<span className={ fontSizeClassName }>
+        <RawHTML>{ content }</RawHTML>
+			</span>
+		</p>
 	);
 };
 

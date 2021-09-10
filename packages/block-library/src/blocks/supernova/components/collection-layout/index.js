@@ -12,14 +12,14 @@ const CollectionLayout = ( props ) => {
 
   let className = classnames(
     props.className,
-    `supernova-collection__layout`,
-    `supernova-collection__layout--${ layoutStyle }`
+    `supernova__layout`,
+    `supernova__layout--${ layoutStyle }`
   );
 
   if ( layoutStyle === 'carousel' ) {
     className = classnames(
       className,
-      `supernova-collection__layout--${ carouselLayout }-width`
+      `supernova__layout--${ carouselLayout }-width`
     )
   }
 
@@ -43,15 +43,15 @@ const CollectionLayout = ( props ) => {
 }
 
 const Layout = ( props ) => {
-  const { attributes } = props;
+  const { attributes, className } = props;
   const { layoutStyle } = attributes;
 
   return (
-    <Fragment>
+    <div className={ className }>
       { layoutStyle === 'classic' && <ClassicLayout { ...props } /> }
       { layoutStyle === 'carousel' && <CarouselLayout { ...props } /> }
       { layoutStyle === 'parametric' && <ParametricLayout { ...props } /> }
-    </Fragment>
+    </div>
   )
 }
 

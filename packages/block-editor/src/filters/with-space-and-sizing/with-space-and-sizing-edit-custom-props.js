@@ -31,8 +31,8 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
         '--collection-card-layout-gutter': layoutGutter,
 
         // ???
-        '--supernova-card-content-padding-multiplier': contentPadding / 100,
-        '--supernova-card-image-padding-multiplier': imagePadding / 100
+        '--supernova-item-content-padding-multiplier': contentPadding / 100,
+        '--supernova-item-image-padding-multiplier': imagePadding / 100
       }
 
       Object.assign( style, spaceAndSizingProps);

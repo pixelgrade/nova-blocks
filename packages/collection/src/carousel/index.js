@@ -2,7 +2,7 @@ import { onBeforeSlideChange } from './utils';
 
 ( function( $, window, undefined ) {
 
-  const $carousels = $( '.supernova-collection__layout--carousel' );
+  const $carousels = $( '.supernova__layout--carousel' );
 
   $carousels.each( function( index, slider ) {
     const $carousel = $( slider );

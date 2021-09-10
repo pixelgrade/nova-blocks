@@ -19,9 +19,10 @@ const SupernovaItemPreview = props => {
 
   const { attributes } = props;
   const className = getColorSignalClassnames( attributes, true );
+  const { style, ...otherProps } = props;
 
   return (
-    <Card { ...props } className={ className }>
+    <Card { ...otherProps } className={ className }>
       <CardMediaWrapper { ...props }>
         <MediaCompositionPreview { ...props } />
       </CardMediaWrapper>

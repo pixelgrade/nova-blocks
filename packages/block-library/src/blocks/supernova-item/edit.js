@@ -22,7 +22,7 @@ const SuperNovaItemEdit = props => {
   const blockProps = useBlockProps( {
     className: classnames(
       props.className,
-      'supernova-item'
+      'supernova__layout-item'
     )
   } );
 
@@ -104,16 +104,16 @@ const SuperNovaItemContent = ( props ) => {
             allowedFormats={ [] }
           />
         </SubTitleTagName>
-        <div className={ `novablocks-card__content block-editor-block-list__block` }>
+        <p className={ `novablocks-card__description block-editor-block-list__block` }>
           <RichText
-            className={ `novablocks-card__content-size-modifier` }
+            className={ `novablocks-card__description-size-modifier` }
             placeholder={ `Content` }
-            tagName={ 'p' }
+            tagName={ 'span' }
             value={ description }
             onChange={ description => { setAttributes( { description } ) } }
             allowedFormats={ [] }
           />
-        </div>
+        </p>
         <CardButton>
           <RichText
             placeholder={ `Button` }

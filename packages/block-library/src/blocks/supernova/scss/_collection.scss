@@ -1,16 +1,16 @@
-.supernova-collection__layout {
+.supernova__layout {
   --novablocks-grid-spacing: var(--novablocks-spacing);
 }
 
-.supernova-collection__layout--fixed-width {
-  .supernova-card:not(.supernova-card--aspect-ratio-auto) {
+.supernova__layout--fixed-width {
+  .supernova-item:not(.supernova-item--aspect-ratio-auto) {
     .novablocks-card__media-image {
       @include image-cover;
     }
   }
 }
 
-.supernova-card--aspect-ratio-auto {
+.supernova-item--aspect-ratio-auto {
 
   .novablocks-advanced-gallery__image {
     position: static;
@@ -44,14 +44,14 @@
 
 @mixin with-editor-layout-selectors {
 
-  &:not(.supernova-collection__layout--edit),
-  &.supernova-collection__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
+  &:not(.supernova__layout--edit),
+  &.supernova__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
     @content;
   }
 }
 
-.supernova-collection__layout--classic,
-.supernova-collection__layout--parametric {
+.supernova__layout--classic,
+.supernova__layout--parametric {
 
   @include with-editor-layout-selectors {
 

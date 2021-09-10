@@ -67,11 +67,9 @@ const SupernovaPreview = withPreviewAttributes( props => {
         }
 
         <div className="wp-block" data-align={ align }>
-          <div className={ `supernova-collection` }>
-            <CollectionLayout { ...props }>
-              { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-            </CollectionLayout>
-          </div>
+          <CollectionLayout { ...props }>
+            { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
+          </CollectionLayout>
         </div>
       </div>
     </div>

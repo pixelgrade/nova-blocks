@@ -96,8 +96,4 @@ registerBlockType( 'novablocks/supernova-item', {
   save: function() {
     return <InnerBlocks.Content />
   },
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'wide' } : {};
-  },
 } );

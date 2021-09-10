@@ -164,6 +164,7 @@ function novablocks_get_tag_name( $tag ) {
 function novablocks_show_card_contents( $attributes ) {
 	return ! empty( $attributes['showMeta'] ) ||
 		   ! empty( $attributes['showTitle'] ) ||
+		   ! empty( $attributes['showSubtitle'] ) ||
 		   ! empty( $attributes['showDescription'] ) ||
 		   ! empty( $attributes['showButtons'] );
 }

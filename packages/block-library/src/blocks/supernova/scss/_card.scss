@@ -1,12 +1,12 @@
-.supernova-card {
+.supernova-item {
   display: flex;
   flex-direction: column;
 
   gap: var(--novablocks-card-gap);
 
   --novablocks-card-gap: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * var(--collection-card-layout-gutter, 0) / 10 );
-  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-content-padding-multiplier, 0) ) );
-  --novablocks-card-image-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-card-image-padding-multiplier, 0) ) );
+  --novablocks-card-content-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-item-content-padding-multiplier, 0) ) );
+  --novablocks-card-image-padding: calc( var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) * ( 2 * var(--supernova-item-image-padding-multiplier, 0) ) );
   --novablocks-card-content-column-width: calc( var(--collection-card-content-area-width) - var(--novablocks-card-gap) * 0.5 );
   --novablocks-card-media-column-width: calc( 100% - var(--novablocks-card-content-column-width) - var(--novablocks-card-gap));
 
@@ -15,58 +15,58 @@
   }
 }
 
-.supernova-card__content,
-.supernova-card__media-wrapper {
+.supernova-item__content,
+.supernova-item__media-wrapper {
   flex: 0 0 auto;
 }
 
-.supernova-collection__layout {
+.supernova__layout {
 
-  &:not(&--parametric) .supernova-card--layout-vertical-reverse {
+  &:not(&--parametric) .supernova-item--layout-vertical-reverse {
     flex-direction: column-reverse;
   }
 
-  &--parametric .novablocks-grid__area--landscape .supernova-card,
-  &:not(&--parametric) .supernova-card--layout-horizontal,
-  &:not(&--parametric) .supernova-card--layout-horizontal-reverse {
+  &--parametric .novablocks-grid__area--landscape .supernova-item,
+  &:not(&--parametric) .supernova-item--layout-horizontal,
+  &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
     flex-direction: row;
 
-    .supernova-card__content {
+    .supernova-item__content {
       width: var(--novablocks-card-content-column-width);
       flex: 1 0 var(--novablocks-card-content-column-width);
     }
 
-    .supernova-card__media-wrapper {
+    .supernova-item__media-wrapper {
       width: var(--novablocks-card-media-column-width);
       flex: 1 0 var(--novablocks-card-media-column-width);
     }
   }
 
-  &:not(&--parametric) .supernova-card--layout-horizontal-reverse {
+  &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
     flex-direction: row-reverse;
   }
 }
 
-.supernova-card--layout-stacked {
+.supernova-item--layout-stacked {
   display: grid;
 
-  .supernova-card__media-wrapper,
-  .supernova-card__content {
+  .supernova-item__media-wrapper,
+  .supernova-item__content {
     grid-area: 1 / 1 / span 1 / span 1;
   }
 
-  .supernova-card__inner-container {
+  .supernova-item__inner-container {
     margin-left: auto;
     margin-right: auto;
   }
 
-  &.supernova-card--style-basic .supernova-card__inner-container {
+  &.supernova-item--style-basic .supernova-item__inner-container {
     background: none;
   }
 }
 
-.supernova-card--layout-horizontal,
-.supernova-card--layout-horizontal-reverse {
+.supernova-item--layout-horizontal,
+.supernova-item--layout-horizontal-reverse {
 
   @include above(tablet) {
     margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) );
@@ -75,24 +75,24 @@
     padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--novablocks-spacing) );
     padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
 
-    .supernova-card__media-wrapper {
+    .supernova-item__media-wrapper {
       margin-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
       margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
     }
 
-    .supernova-card__content {
+    .supernova-item__content {
       padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) );
       padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) );
     }
   }
 }
 
-.supernova-card__media-wrapper > *,
-.supernova-card--layout-stacked .supernova-card__media-aspect-ratio {
+.supernova-item__media-wrapper > *,
+.supernova-item--layout-stacked .supernova-item__media-aspect-ratio {
   height: 100%;
 }
 
-.supernova-card__media-aspect-ratio {
+.supernova-item__media-aspect-ratio {
   position: relative;
 
   &:before {
@@ -102,14 +102,14 @@
   }
 }
 
-.supernova-card__media-wrapper {
+.supernova-item__media-wrapper {
   position: relative;
   background-color: var(--novablocks-bg-color);
   padding: var(--novablocks-card-image-padding, 0);
   
   z-index: 1;
   
-  .supernova-card__media-aspect-ratio {
+  .supernova-item__media-aspect-ratio {
     z-index: 2;
   }
   
@@ -119,15 +119,15 @@
   }
 }
 
-.supernova-card__content {
+.supernova-item__content {
   z-index: 2;
 }
 
-.supernova-card__media-doppler {
+.supernova-item__media-doppler {
   width: 100%;
 }
 
-.supernova-card__content {
+.supernova-item__content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -159,19 +159,19 @@
  * Carousel Layout - Variable Width
  */
 
-.supernova-collection__layout--carousel {
+.supernova__layout--carousel {
   
-  &.supernova-collection__layout--variable-width {
+  &.supernova__layout--variable-width {
   
     // Replace display: tablet; width: 1px; trick
     // with flex-basis, so we can use display: grid
-    // on supernova-card.
+    // on supernova-item.
     
     .slick-track > * {
       flex-basis: 1px;
     }
     
-    .supernova-card__media,
+    .supernova-item__media,
     .novablocks-doppler__mask {
       position: static;
       width: auto;
@@ -179,19 +179,19 @@
       max-width: none;
     }
     
-    .supernova-card__media-aspect-ratio:before {
+    .supernova-item__media-aspect-ratio:before {
       position: absolute;
     }
     // !!! TEMPORARY
     // @todo: should remove this, so doppler can work.
-    .supernova-card__media-doppler {
+    .supernova-item__media-doppler {
       position: relative !important;
       width: 100% !important;
     }
   }
 }
 
-.supernova-collection__layout--content-width {
+.supernova__layout--content-width {
   
   .slick-slide {
     --slider-content-width: calc( 100vw - ( var(--theme-wrapper-sides-spacing) + var(--full) + var(--wds) + var(--wde) + var(--grid-gap) ) * 2);
@@ -199,6 +199,6 @@
   }
 }
 
-.supernova-card__media-doppler {
+.supernova-item__media-doppler {
   height: 100%;
 }

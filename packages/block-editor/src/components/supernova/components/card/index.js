@@ -27,10 +27,10 @@ export const Card = ( props ) => {
 
   const classNames = classnames(
     props.className,
-    `supernova-card`,
-    `supernova-card--layout-${ cardLayout }`,
-    `supernova-card--style-${ contentStyle }`,
-    `supernova-card--aspect-ratio-${ thumbnailAspectRatioString }`,
+    `supernova-item`,
+    `supernova-item--layout-${ cardLayout }`,
+    `supernova-item--style-${ contentStyle }`,
+    `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
 
   const style = Object.assign( {}, props.style, {
@@ -61,14 +61,14 @@ export const CardContentWrapper = ( props ) => {
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
-    `supernova-card__content`,
-    `supernova-card__content--valign-${ align[0] }`,
-    `supernova-card__content--halign-${ align[1] }`,
+    `supernova-item__content`,
+    `supernova-item__content--valign-${ align[0] }`,
+    `supernova-item__content--halign-${ align[1] }`,
   );
 
   return (
     <div className={ contentClassName }>
-      <div className={ 'supernova-card__inner-container' }>
+      <div className={ 'supernova-item__inner-container' }>
         { props.children }
       </div>
     </div>
@@ -88,7 +88,7 @@ const CardMediaContent = props => {
 
 //const CardMediaContentWithDoppler = withDoppler( ( props ) => {
 //  return (
-//    <div className={ `supernova-card__media-doppler novablocks-doppler__target` } style={ props?.doppler?.style }>
+//    <div className={ `supernova-item__media-doppler novablocks-doppler__target` } style={ props?.doppler?.style }>
 //      <CardMediaContent { ...props } />
 //    </div>
 //  )
@@ -97,8 +97,8 @@ const CardMediaContent = props => {
 export const CardMediaWrapper = ( props ) => {
 
   return (
-    <div className={ `supernova-card__media-wrapper` }>
-      <div className={ `supernova-card__media-aspect-ratio` }>
+    <div className={ `supernova-item__media-wrapper` }>
+      <div className={ `supernova-item__media-aspect-ratio` }>
         <CardMediaContent { ...props } />
       </div>
     </div>
@@ -117,6 +117,6 @@ const CardMediaItem = ( props ) => {
   } = props;
 
   return (
-    <img className={ `supernova-card__media` } src={ url } width={ width } height={ height } />
+    <img className={ `supernova-item__media` } src={ url } width={ width } height={ height } />
   )
 }

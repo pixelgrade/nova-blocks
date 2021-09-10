@@ -82,7 +82,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 							}
 
 							if ( false != $attributes['showDescription'] && ! empty( $attributes['description'] ) ) { ?>
-								<div class="novablocks-card__content"><?php echo $attributes['description']; ?></div>
+								<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
 							<?php }
 
 							if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>

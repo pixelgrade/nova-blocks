@@ -61,9 +61,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		$layoutClasses = array(
-			"supernova-collection__layout",
-			"supernova-collection__layout--" . $attributes[ 'layoutStyle' ],
-			"supernova-collection__layout--" . $attributes[ 'carouselLayout' ] . "-width",
+			"supernova__layout",
+			"supernova__layout--" . $attributes[ 'layoutStyle' ],
+			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
 		);
 
 		$cssProps = array(
@@ -71,8 +71,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
 			'--collection-card-layout-gutter: ' . $attributes[ 'layoutGutter' ],
 
-			'--supernova-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-			'--supernova-card-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+			'--supernova-item-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
+			'--supernova-item-image-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 			'--supernova-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
 		);
 
@@ -109,19 +109,17 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php if ( $supernova_header ) { ?>
 				<?php echo $supernova_header ?>
 			<?php } ?>
-				<div class="supernova-collection <?php echo $align_class ?>">
-					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
-							$layoutClasses[] = 'novablocks-grid';
-						?>
-						<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
-							<?php echo $content; ?>
-						</div>
-					<?php } else { ?>
-						<div class="<?php echo join( ' ', $layoutClasses );?>">
-							<?php echo $content; ?>
-						</div>
-					<?php } ?>
+			<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
+					$layoutClasses[] = 'novablocks-grid';
+				?>
+				<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
+					<?php echo $content; ?>
 				</div>
+			<?php } else { ?>
+				<div class="<?php echo join( ' ', $layoutClasses );?>">
+					<?php echo $content; ?>
+				</div>
+			<?php } ?>
 		</div>
 
 		<?php return ob_get_clean();

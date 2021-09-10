@@ -1,9 +1,5 @@
 const ClassicLayout = ( props ) => {
-  return (
-    <div className={ props.className }>
-      { props.children }
-    </div>
-  )
+  return props.children;
 }
 
 export default ClassicLayout;

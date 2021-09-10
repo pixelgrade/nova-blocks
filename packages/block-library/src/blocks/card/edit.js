@@ -113,7 +113,7 @@ const CardEdit = ( props ) => {
               {
                 showDescription &&
                 <RichText
-                  className={ `novablocks-card__content block-editor-block-list__block` }
+                  className={ `novablocks-card__description block-editor-block-list__block` }
                   tagName={ 'p' }
                   value={description}
                   onChange={description => {
