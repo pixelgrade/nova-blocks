@@ -28,6 +28,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
 	) );
 
 }

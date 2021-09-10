@@ -5,7 +5,7 @@
 	},
 	"cardLayout": {
 		"type": "string",
-		"default": "horizontal"
+		"default": "vertical"
 	},
 	"level": {
 		"type": "number",
