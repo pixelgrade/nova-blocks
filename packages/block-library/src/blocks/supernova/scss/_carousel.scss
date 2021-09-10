@@ -1,6 +1,6 @@
 .supernova__layout--carousel {
-  margin-left: calc(-0.5 * var(--novablocks-grid-spacing));
-  margin-right: calc(-0.5 * var(--novablocks-grid-spacing));
+  margin-left: calc(-0.5 * var(--nb-grid-spacing));
+  margin-right: calc(-0.5 * var(--nb-grid-spacing));
 
   /*
    * Carousel Settings
@@ -108,7 +108,7 @@
   }
 
   .slick-prev {
-    left: calc(0.5 * var(--novablocks-grid-spacing));
+    left: calc(0.5 * var(--nb-grid-spacing));
 
     &:before {
       border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
@@ -118,7 +118,7 @@
   }
 
   .slick-next {
-    right: calc(0.5 * var(--novablocks-grid-spacing));
+    right: calc(0.5 * var(--nb-grid-spacing));
 
     &:before {
       border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
