@@ -10,28 +10,28 @@
 //}
 
 .supernova {
-  //--block-top-spacing: var(--novablocks-block-top-spacing, 0);
-  //--block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
-  //--emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
-  //--emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
+  //--block-top-spacing: var(--nb-block-top-spacing, 0);
+  //--block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
+  //--emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
+  //--emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
 
   &[class] {
-    --emphasis-area-width: calc( var(--collection-emphasis-area, 100) * 1% );
+    --emphasis-area-width: calc( var(--nb-collection-emphasis-area, 100) * 1% );
 
     background: linear-gradient(
         90deg,
-        var(--novablocks-bg-color) 0,
-        var(--novablocks-bg-color) var(--emphasis-area-width),
+        var(--nb-bg-color) 0,
+        var(--nb-bg-color) var(--emphasis-area-width),
         transparent var(--emphasis-area-width)
     );
   }
 }
 
 //.supernova__inner-container[class] > .wp-block {
-//  margin-top: calc( var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-//  margin-bottom: calc( var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-//  padding-top: calc( var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-//  padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
+//  margin-top: calc( var(--block-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) );
+//  margin-bottom: calc( var(--block-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) );
+//  padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) );
+//  padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) );
 //}
 
 //.supernova {

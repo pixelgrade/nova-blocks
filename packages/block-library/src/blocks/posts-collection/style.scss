@@ -1,5 +1,5 @@
 .novablocks-collection__layout[data-layoutstyle="carousel"] {
-  --novablocks-collection-layout-spacing: 0;
+  --nb-collection-layout-spacing: 0;
 }
 
 .novablocks-collection--carousel {
@@ -11,7 +11,7 @@
       flex-direction: column;
       --grid-item-content-display: block;
       --grid-item-buttons-display: block;
-      --novablocks-card-title-font-size-modifier: 1;
+      --nb-card-title-font-size-modifier: 1;
 
       > .novablocks-card__layout-content {
         flex: 1;
@@ -159,7 +159,7 @@
 
     .slick-active {
       a {
-        color: var(--novablocks-color-primary);
+        color: var(--nb-color-primary);
         border-color: currentColor;
       }
     }

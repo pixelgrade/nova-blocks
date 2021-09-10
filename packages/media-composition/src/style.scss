@@ -3,10 +3,10 @@
 	position: relative;
 
   height: 100%;
-	padding-top: var( --novablocks-advanced-gallery-aspect-ratio, 50% );
+	padding-top: var( --nb-advanced-gallery-aspect-ratio, 50% );
 
-	margin-top: var(--novablocks-advanced-gallery-vertical-spacing);
-	margin-bottom: var(--novablocks-advanced-gallery-vertical-spacing);
+	margin-top: var(--nb-advanced-gallery-vertical-spacing);
+	margin-bottom: var(--nb-advanced-gallery-vertical-spacing);
 
 	transform: translateZ(0);
 }
@@ -22,10 +22,10 @@
 	right: 0;
 	bottom: 0;
 
-	--novablocks-advanced-gallery-grid-gap: 10px;
+	--nb-advanced-gallery-grid-gap: 10px;
 
-	margin-top: calc(-1 * var(--novablocks-advanced-gallery-grid-gap));
-	margin-left: calc(-1 * var(--novablocks-advanced-gallery-grid-gap));
+	margin-top: calc(-1 * var(--nb-advanced-gallery-grid-gap));
+	margin-left: calc(-1 * var(--nb-advanced-gallery-grid-gap));
 
 	& + & {
 		margin-top: 0;
@@ -33,8 +33,8 @@
 }
 
 .novablocks-advanced-gallery__grid-item {
-	margin-top: var(--novablocks-advanced-gallery-grid-gap);
-	margin-left: var(--novablocks-advanced-gallery-grid-gap);
+	margin-top: var(--nb-advanced-gallery-grid-gap);
+	margin-left: var(--nb-advanced-gallery-grid-gap);
 
 	display: flex;
 	flex-direction: column;
@@ -62,7 +62,7 @@
 .novablocks-advanced-gallery__grid-item-info {
 	flex: 0 1 auto;
 
-	padding-top: calc(0.125 * var(--novablocks-spacing));
+	padding-top: calc(0.125 * var(--nb-spacing));
 
 	.show-captions-on-hover & {
 		position: absolute;
@@ -72,8 +72,8 @@
 
 		opacity: 0;
 		pointer-events: none;
-		transition: var(--novablocks-transition);
-		--novablocks-transition-duration: 0.15s;
+		transition: var(--nb-transition);
+		--nb-transition-duration: 0.15s;
 		transition-property: opacity;
 	}
 

@@ -181,8 +181,8 @@
   // Given the fact that we want full items to span on the entire screen,
   // we are going to apply negative margin to achieve that.
   .alignfull {
-    margin-left: calc(-1 * var(--novablocks-container-spacings));
-    margin-right: calc(-1 * var(--novablocks-container-spacings));
+    margin-left: calc(-1 * var(--nb-container-spacings));
+    margin-right: calc(-1 * var(--nb-container-spacings));
     
     @include above(lap) {
       &.stop-left {

@@ -6,6 +6,6 @@
 	word-break: break-word;
 
   &[class][class] {
-    padding: calc( var(--novablocks-media-spacing) * var(--card-content-padding, 0) / 100 );
+    padding: calc( var(--nb-media-spacing) * var(--nb-card-content-padding, 0) / 100 );
   }
 }

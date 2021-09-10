@@ -40,10 +40,10 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		$cssProps = novablocks_get_spacing_css( $attributes );
 
-		$cssProps[] = '--card-content-padding: ' . $attributes['contentPadding'];
-		$cssProps[] = '--card-media-padding: ' . $attributes['imagePadding'];
-		$cssProps[] = '--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%';
-		$cssProps[] = '--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );
+		$cssProps[] = '--nb-card-content-padding: ' . $attributes['contentPadding'];
+		$cssProps[] = '--nb-card-media-padding: ' . $attributes['imagePadding'];
+		$cssProps[] = '--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%';
+		$cssProps[] = '--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );
 
 		$style = join( '; ', $cssProps );
 

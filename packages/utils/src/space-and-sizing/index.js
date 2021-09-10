@@ -12,10 +12,10 @@ export const getSpacingCSSProps = ( attributes ) => {
     emphasisBottomSpacingValue = verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing;
 
   return {
-    '--novablocks-emphasis-top-spacing': emphasisTopSpacingValue + '',
-    '--novablocks-emphasis-bottom-spacing': emphasisBottomSpacingValue + '',
-    '--novablocks-block-top-spacing': blockTopSpacing + '',
-    '--novablocks-block-bottom-spacing': blockBottomSpacing + '',
-    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
+    '--nb-emphasis-top-spacing': emphasisTopSpacingValue + '',
+    '--nb-emphasis-bottom-spacing': emphasisBottomSpacingValue + '',
+    '--nb-block-top-spacing': blockTopSpacing + '',
+    '--nb-block-bottom-spacing': blockBottomSpacing + '',
+    '--nb-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
   }
 }

@@ -45,7 +45,7 @@ const AdvancedGalleryPreview = ( props ) => {
 	}
 
 	const galleryStyle = {
-    '--novablocks-advanced-gallery-aspect-ratio': getCardMediaPaddingTop( attributes.containerHeight )
+    '--nb-advanced-gallery-aspect-ratio': getCardMediaPaddingTop( attributes.containerHeight )
   }
 
 	return (

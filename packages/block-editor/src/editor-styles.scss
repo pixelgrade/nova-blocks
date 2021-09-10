@@ -62,7 +62,7 @@
       width: 1em;
       height: 100%;
 
-      background: var(--novablocks-accent-color);
+      background: var(--nb-accent-color);
     }
 
     &:after {
@@ -86,7 +86,7 @@
   }
 
   &__option--selected {
-    --outline-color: var(--novablocks-section-controls-accent);
+    --outline-color: var(--nb-section-controls-accent);
   }
 }
 
@@ -98,7 +98,7 @@
 // This dumb selector should select that div,
 // and remove it's margins and padding.
 // In this way, the group block will use the custom properties from that div.
-div:not([class])[style*='--novablocks-block'][style*='--novablocks-emphasis'] {
+div:not([class])[style*='--nb-block'][style*='--nb-emphasis'] {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   padding-top: 0 !important;

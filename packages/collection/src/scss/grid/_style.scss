@@ -8,19 +8,19 @@
   .novablocks-grid__area--portrait {
     
     &.novablocks-grid__area--width-xl {
-      --novablocks-card-title-font-size-modifier: 1.8;
+      --nb-card-title-font-size-modifier: 1.8;
     }
     
     &.novablocks-grid__area--width-l {
-      --novablocks-card-title-font-size-modifier: 1.6;
+      --nb-card-title-font-size-modifier: 1.6;
     }
     
     &.novablocks-grid__area--width-m {
-      --novablocks-card-title-font-size-modifier: 1.4;
+      --nb-card-title-font-size-modifier: 1.4;
     }
     
     &.novablocks-grid__area--width-s {
-      --novablocks-card-title-font-size-modifier: 1;
+      --nb-card-title-font-size-modifier: 1;
     }
     
     
@@ -29,12 +29,12 @@
       --grid-item-buttons-display: none;
       
       @include above(tablet) {
-        --novablocks-card-spacing-modifier: 0.25;
-        --novablocks-card-meta-font-size-modifier: 0.8;
-        --novablocks-card-title-font-size-modifier: 0.6;
+        --nb-card-spacing-modifier: 0.25;
+        --nb-card-meta-font-size-modifier: 0.8;
+        --nb-card-title-font-size-modifier: 0.6;
         
         .novablocks-card__inner-container {
-          --novablocks-element-spacing-multiplier: 0.25;
+          --nb-element-spacing-multiplier: 0.25;
         }
       }
     }
@@ -43,21 +43,21 @@
   .novablocks-grid__area--landscape {
     
     &.novablocks-grid__area--width-full {
-      --novablocks-card-title-font-size-modifier: 1.6;
+      --nb-card-title-font-size-modifier: 1.6;
     }
     
     &.novablocks-grid__area--width-xl {
-      --novablocks-card-title-font-size-modifier: 1.4;
+      --nb-card-title-font-size-modifier: 1.4;
     }
     
     &.novablocks-grid__area--width-l {
-      --novablocks-card-title-font-size-modifier: 1;
+      --nb-card-title-font-size-modifier: 1;
     }
     
     &.novablocks-grid__area--width-m {
       
       @include above(tablet) {
-        --novablocks-card-title-font-size-modifier: 0.8;
+        --nb-card-title-font-size-modifier: 0.8;
       }
     }
     
@@ -65,12 +65,12 @@
       --grid-item-content-display: none;
       --grid-item-buttons-display: none;
       
-      --novablocks-card-title-font-size-modifier: 0.8;
+      --nb-card-title-font-size-modifier: 0.8;
       
       @include above(tablet) {
-        --novablocks-card-spacing-modifier: 0.25;
-        --novablocks-card-meta-font-size-modifier: 0.8;
-        --novablocks-card-title-font-size-modifier: 0.6;
+        --nb-card-spacing-modifier: 0.25;
+        --nb-card-meta-font-size-modifier: 0.8;
+        --nb-card-title-font-size-modifier: 0.6;
       }
     }
     
@@ -78,13 +78,13 @@
       --grid-item-content-display: none;
       --grid-item-buttons-display: none;
       
-      --novablocks-card-title-font-size-modifier: 0.8;
+      --nb-card-title-font-size-modifier: 0.8;
       
       @include above(tablet) {
-        --novablocks-card-spacing-modifier: 0.25;
-        --novablocks-card-meta-font-size-modifier: 0.6;
-        --novablocks-card-title-font-size-modifier: 0.5;
-        --novablocks-card-content-font-size-modifier: 0.6;
+        --nb-card-spacing-modifier: 0.25;
+        --nb-card-meta-font-size-modifier: 0.6;
+        --nb-card-title-font-size-modifier: 0.5;
+        --nb-card-content-font-size-modifier: 0.6;
       }
     }
   }
@@ -120,29 +120,29 @@
   // We are also resizing fonts,
   // based on grid area size and ratio.
   .novablocks-card__title-size-modifier {
-    font-size: calc( var(--novablocks-card-title-font-size-modifier, 1) * 1em );
-    line-height: var(--novablocks-card-title-line-height-modifier, var(--current-line-height, 1.5));
+    font-size: calc( var(--nb-card-title-font-size-modifier, 1) * 1em );
+    line-height: var(--nb-card-title-line-height-modifier, var(--current-line-height, 1.5));
   }
   
   .novablocks-card__meta-size-modifier {
-    font-size: calc( var(--novablocks-card-meta-font-size-modifier, 1) * 1em );
-    line-height: var(--novablocks-card-meta-line-height-modifier, var(--current-line-height, 1.5));
+    font-size: calc( var(--nb-card-meta-font-size-modifier, 1) * 1em );
+    line-height: var(--nb-card-meta-line-height-modifier, var(--current-line-height, 1.5));
   }
-  
+
   .novablocks-card__description-size-modifier {
-    font-size: calc( var(--novablocks-card-content-font-size-modifier, 1) * 1em );
-    line-height: var(--novablocks-card-content-line-height-modifier, var(--current-line-height, 1.5));
+    font-size: calc( var(--nb-card-content-font-size-modifier, 1) * 1em );
+    line-height: var(--nb-card-content-line-height-modifier, var(--current-line-height, 1.5));
   }
   
   .novablocks-card__buttons-size-modifier {
-    font-size: calc( var(--novablocks-card-buttons-font-size-modifier, 1) * 1em );
-    line-height: var(--novablocks-card-buttons-line-height-modifier, var(--current-line-height, 1.5));
+    font-size: calc( var(--nb-card-buttons-font-size-modifier, 1) * 1em );
+    line-height: var(--nb-card-buttons-line-height-modifier, var(--current-line-height, 1.5));
   }
 }
 
 .novablocks-grid {
-	--novablocks-grid-spacing: var(--novablocks-spacing);
-	grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+	--nb-grid-spacing: var(--nb-spacing);
+	grid-gap: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
 
 	.novablocks-grid__item {
 		--theme-content-width-normal: 100%;
@@ -158,13 +158,13 @@
 .block-is-highlighted.content-is-highlighted {
 
 	@include above(tablet) {
-		--novablocks-grid-spacing-modifier: 0.5;
+		--nb-grid-spacing-modifier: 0.5;
 	}
 }
 
 .novablocks-grid__area + .novablocks-grid__area,
 .novablocks-grid__area > * + * {
-	margin-top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+	margin-top: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
 }
 
 .novablocks-grid--mask {
@@ -174,11 +174,11 @@
 	}
 
 	.novablocks-grid__area {
-		border: 2px dashed var(--novablocks-purple);
+		border: 2px dashed var(--nb-purple);
 	}
 
 	.novablocks-grid__item {
-		border: 2px dashed var(--novablocks-green);
+		border: 2px dashed var(--nb-green);
 
 		.novablocks-block__content {
 			opacity: 0;
@@ -197,7 +197,7 @@
 
 	.novablocks-grid__column:first-child &:first-child:last-child {
 		position: sticky;
-		top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+		top: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
 	}
 }
 

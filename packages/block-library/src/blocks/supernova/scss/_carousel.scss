@@ -8,10 +8,10 @@
   --nb-carousel-arrow-width: 2px;
   --nb-carousel-arrow-color: #555555;
   --nb-carousel-arrow-bg: #ffffff;
-
+  
   .supernova-item {
-    padding-left: calc( 0.5 * var(--novablocks-grid-spacing) );
-    padding-right: calc( 0.5 * var(--novablocks-grid-spacing) );
+    padding-left: calc( 0.5 * var(--nb-grid-spacing) );
+    padding-right: calc( 0.5 * var(--nb-grid-spacing) );
   }
 
   .slick-track {
@@ -26,8 +26,9 @@
     > div {
 
       &,
-      & > .supernova-item {}
-      height: 100%;
+      & > .supernova-item {
+        height: 100%;
+      }
     }
   }
 
@@ -35,13 +36,13 @@
    * Pagination
    */
   .slick-dots {
-
-    margin-top: var(--novablocks-spacing);
+    
+    margin-top: var(--nb-spacing);
     margin-bottom: 0;
-
-    padding-bottom: var(--novablocks-spacing);
+    
+    padding-bottom: var(--nb-spacing);
     padding-left: 0;
-
+  
     button {
 
       /*

@@ -1,5 +1,5 @@
 .supernova__layout {
-  --novablocks-grid-spacing: var(--novablocks-spacing);
+  --nb-grid-spacing: var(--nb-spacing);
 }
 
 .supernova__layout--fixed-width {
@@ -56,8 +56,8 @@
   @include with-editor-layout-selectors {
 
     display: grid;
-    grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
-    grid-template-columns: repeat(var(--collection-columns-count, 1), 1fr);
+    grid-gap: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
+    grid-template-columns: repeat(var(--nb-collection-columns-count, 1), 1fr);
 
     > * {
       margin: 0;

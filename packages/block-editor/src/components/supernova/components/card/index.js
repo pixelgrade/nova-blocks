@@ -35,7 +35,6 @@ export const Card = ( props ) => {
 
   const style = Object.assign( {}, props.style, {
     '--collection-card-media-opacity': cardMediaOpacity / 100,
-    '--collection-card-media-aspect-ratio': getPaddingTopFromContainerHeight( containerHeight ),
     '--collection-card-content-area-width': `${ contentAreaWidth }%`,
   } );
 

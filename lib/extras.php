@@ -1058,7 +1058,7 @@ function novablocks_get_advanced_gallery( $attributes ) {
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	$cssProps = array(
-		'--novablocks-advanced-gallery-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%'
+		'--nb-advanced-gallery-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%'
 	);
 
 	$style = join( '; ', $cssProps );
@@ -1209,10 +1209,10 @@ function novablocks_get_spacing_css( $attributes ) {
 	}
 
 	return array(
-		'--novablocks-block-top-spacing: ' . $blockTopSpacing,
-		'--novablocks-block-bottom-spacing: ' . $blockBottomSpacing,
-		'--novablocks-emphasis-top-spacing: ' . $emphasisTopSpacing,
-		'--novablocks-emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
+		'--nb-block-top-spacing: ' . $blockTopSpacing,
+		'--nb-block-bottom-spacing: ' . $blockBottomSpacing,
+		'--nb-emphasis-top-spacing: ' . $emphasisTopSpacing,
+		'--nb-emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
 	);
 }
 
@@ -1847,7 +1847,6 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$cssProps = array(
 		'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
-		'--collection-card-media-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes[ 'containerHeight' ] ),
 		'--collection-card-content-area-width: ' . $attributes[ 'contentAreaWidth' ] . '%',
 	);
 

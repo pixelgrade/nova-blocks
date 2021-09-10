@@ -18,7 +18,7 @@ export const getGridStyle = ( attributes ) => {
   const { elementsDistance } = attributes;
 
 	return {
-		'--novablocks-advanced-gallery-grid-gap': `${ elementsDistance }px`
+		'--nb-advanced-gallery-grid-gap': `${ elementsDistance }px`
 	}
 };
 

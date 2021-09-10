@@ -31,6 +31,6 @@
 .novablocks-media__content:before,
 .novablocks-media__content:after,
 .novablocks-media__inner-container {
-	transition: var(--novablocks-transition);
+	transition: var(--nb-transition);
 	transition-property: flex-grow;
 }

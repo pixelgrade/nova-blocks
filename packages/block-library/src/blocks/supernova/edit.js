@@ -1,4 +1,5 @@
 import classnames from "classnames";
+
 import { Fragment } from "@wordpress/element";
 import { useBlockProps } from "@wordpress/block-editor";
 
@@ -52,7 +53,6 @@ const SupernovaPreview = withPreviewAttributes( props => {
     className: className,
     style: {
       ...props.style,
-      '--collection-card-media-opacity': cardMediaOpacity / 100,
     },
   } );
 
