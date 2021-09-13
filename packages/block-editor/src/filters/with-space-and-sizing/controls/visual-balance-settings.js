@@ -42,7 +42,7 @@ const VisualBalanceSettings = ( props ) => {
         } }
         min={ 0 }
         max={ 100 }
-        step={ 50 }
+        step={ 10 }
       />
       <RangeControl
         label={ __( 'Media Area Padding', '__plugin_txtd' ) }
