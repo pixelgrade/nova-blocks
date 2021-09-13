@@ -101,6 +101,7 @@ const SuperNovaItemContent = ( props ) => {
             allowedFormats={ [] }
           />
         </SubTitleTagName>
+
         <p className={ `novablocks-card__description block-editor-block-list__block` }>
           <RichText
             className={ `novablocks-card__description-size-modifier` }
