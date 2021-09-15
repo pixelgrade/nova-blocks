@@ -1,8 +1,18 @@
 .supernova-item {
   background: none !important;
 
-  .supernova-item__media-wrapper,
-  .supernova-item__content {
+  .supernova-item__media-wrapper {
     background: var(--nb-bg-color);
+  }
+  
+  /*
+   * Content should not have background,
+   * when card is stacked, instead we are
+   * going to count on media-wrapper background.
+   */
+  &:not([class*='layout-stacked']) {
+    .supernova-item__content {
+      background: var(--nb-bg-color);
+    }
   }
 }
