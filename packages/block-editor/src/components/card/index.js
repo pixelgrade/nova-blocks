@@ -14,9 +14,6 @@ export const Card = ( props ) => {
     media,
     attributes: {
       cardLayout,
-      cardMediaOpacity,
-      containerHeight,
-      contentStyle,
       contentAreaWidth,
       thumbnailAspectRatioString,
     },
@@ -26,12 +23,10 @@ export const Card = ( props ) => {
     props.className,
     `supernova-item`,
     `supernova-item--layout-${ cardLayout }`,
-    `supernova-item--style-${ contentStyle }`,
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
 
   const style = Object.assign( {}, props.style, {
-    '--collection-card-media-opacity': cardMediaOpacity / 100,
     '--collection-card-content-area-width': `${ contentAreaWidth }%`,
   } );
 

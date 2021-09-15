@@ -37,3 +37,17 @@
 //.supernova {
 //  @include layout-grid;
 //}
+
+
+/*
+ * Currently Slick is applying display: inline-block.
+ * Until we find a solution for that,
+ * we are going to use !important for our style.
+ */
+.supernova-item:not([class*='stacked']) {
+  display: flex !important;
+}
+
+.supernova-item--layout-stacked {
+  display: grid !important;
+}
