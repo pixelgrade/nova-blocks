@@ -28,6 +28,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
 	) );
 
@@ -75,6 +76,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 			'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
+			'--nb-collection-emphasis-area: ' . $attributes['emphasisArea']
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );

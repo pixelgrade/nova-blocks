@@ -12,6 +12,7 @@ import "./with-on-select-images";
 import "./with-random-defaults";
 import './with-settings';
 import './with-content-alignment';
+import './with-emphasis-control';
 
 // worked on
 import "./with-card-elements-stacking";

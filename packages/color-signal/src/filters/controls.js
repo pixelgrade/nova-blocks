@@ -5,6 +5,7 @@ import {
   ControlsSection,
   ControlsTab,
   Notice,
+  NovaBlocksColorSignal
 } from "@novablocks/block-editor";
 
 import {
@@ -37,9 +38,7 @@ const Controls = withColorSignalProps( props => {
         <ControlsGroup>
           <ContentColorSignalControl { ...props } />
         </ControlsGroup>
-        <ControlsGroup>
-          <EmphasisAreaControl { ...props } />
-        </ControlsGroup>
+        <NovaBlocksColorSignal.Slot/>
         <PalettePicker { ...props } />
         <ColorReferenceToggleControl { ...props } />
       </ControlsTab>

@@ -1,18 +1,19 @@
 import {createHigherOrderComponent} from "@wordpress/compose";
-import {useSupports} from "@novablocks/block-editor";
+import {useSupports} from "../../hooks";
 
-const withColorSignalEditCustomProps = createHigherOrderComponent( OriginalComponent => {
+const withEmphasisAreaEditCustomProps = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
+    const colorSignalSupport = supports?.novaBlocks?.colorSignal;
     const {attributes} = props;
 
     const {emphasisArea} = attributes;
 
     const style = props.style ? props.style : {};
 
-    if ( supports?.novaBlocks?.colorSignal ) {
+    if ( colorSignalSupport === true ) {
 
       let colorSignalProps = {'--nb-collection-emphasis-area': emphasisArea,}
 
@@ -23,6 +24,6 @@ const withColorSignalEditCustomProps = createHigherOrderComponent( OriginalCompo
       <OriginalComponent {...props} style={style}/>
     )
   };
-}, "withColorSignalEditCustomProps" );
+}, 'withEmphasisAreaEditCustomProps' )
 
-export default withColorSignalEditCustomProps;
+export default withEmphasisAreaEditCustomProps;
