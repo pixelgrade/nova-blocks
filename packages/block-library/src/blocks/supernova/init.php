@@ -67,14 +67,23 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
 		);
 
+		// @todo: Find a solution for this.
+		// The CSS Props list is getting really big,
+		// We should break them in different functions.
 		$cssProps = array(
 			'--nb-collection-columns-count: ' . $attributes[ 'columns' ],
-			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
 			'--nb-collection-gutter: ' . $attributes[ 'layoutGutter' ],
 
 			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 			'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
+
+			'--nb-collection-emphasis-area: ' . $attributes['emphasisArea'],
+			'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
+			'--nb-card-content-padding: ' . $attributes['contentPadding'],
+			'--nb-card-media-padding: ' . $attributes['imagePadding'],
+			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
+			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );
