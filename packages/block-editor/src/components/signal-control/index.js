@@ -43,7 +43,6 @@ const SignalControl = ( props ) => {
             </div>
             <div className="nb-signal__controls">
               <Button
-                isLarge
                 isSecondary
                 disabled={ signal === 0 }
                 onClick={ () => {
@@ -52,7 +51,6 @@ const SignalControl = ( props ) => {
                 <Icon icon={ 'minus' } />
               </Button>
               <Button
-                isLarge
                 isSecondary
                 disabled={ signal === 3 }
                 onClick={ () => {
