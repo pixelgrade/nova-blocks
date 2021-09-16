@@ -95,7 +95,7 @@ const SuperNovaItemContent = ( props ) => {
           <RichText
             className={ `novablocks-card__subtitle-size-modifier` }
             placeholder={ `Subtitle` }
-            tagName={ `h${ level + 2 }` }
+            tagName= {'span'}
             value={ subtitle }
             onChange={ subtitle => { setAttributes( { subtitle } ) } }
             allowedFormats={ [] }
