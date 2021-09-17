@@ -126,8 +126,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 					<?php echo $content; ?>
 				</div>
 			<?php } else { ?>
-				<div class="<?php echo join( ' ', $layoutClasses );?>">
-					<?php echo $content; ?>
+				<div class="wp-block__inner-container">
+					<div class="<?php echo join( ' ', $layoutClasses );?>">
+						<?php echo $content; ?>
+					</div>
 				</div>
 			<?php } ?>
 		</div>
