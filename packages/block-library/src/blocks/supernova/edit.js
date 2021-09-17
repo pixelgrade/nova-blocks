@@ -11,7 +11,6 @@ import { getColorSignalClassnames } from "@novablocks/color-signal";
 import {
   useInnerBlocks,
   PostCard,
-  CardPreview
 } from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
@@ -19,6 +18,7 @@ import BlockControls from './block-controls';
 import {
   CollectionLayout,
   SupernovaItemPreview,
+  SupernovaCardItemPreview
 } from './components';
 
 import { withPreviewAttributes } from './utils';
@@ -131,7 +131,7 @@ const PostsCollectionLayout = props => {
 
           return (
 //            <PostCard { ...props } post={ post } className={ className } key={index} />
-            <CardPreview { ...props } post={ post } className={ className } key={index} type={'content'} />
+            <SupernovaCardItemPreview { ...props } post={ post } className={ className } key={index} type={'content'} />
           )
         } )
       }

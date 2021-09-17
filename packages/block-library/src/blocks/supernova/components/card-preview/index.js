@@ -12,12 +12,13 @@ import {
   CardDescription,
   CardFooter,
   CardButton
-} from "../card";
-import {sanitizeMediaResponse} from "../post-card/utils";
+} from "@novablocks/block-editor";
+
+import { sanitizeMediaResponse} from "./utils";
 
 const withMedia = withSelect( (select, ownProps ) => {
 
-  const { getMedia } = select( 'core' );
+  const { getMedia } = select('core');
   const { post, attributes } = ownProps;
   const { showMedia } = attributes;
   const { featured_media } = post;
@@ -35,9 +36,10 @@ const withMedia = withSelect( (select, ownProps ) => {
   return {
     media: sanitizeMediaResponse( mediaObject )
   }
+
 });
 
-export const CardPreview = withMedia(( props, type ) => {
+const SupernovaCardItemPreview = withMedia((props, type) => {
 
   const {
     attributes,
@@ -54,18 +56,19 @@ export const CardPreview = withMedia(( props, type ) => {
     metaBelowTitle,
     title,
     description,
-    buttonText,
+    buttonText
   } = attributes;
 
   const IS_FIELDS = type === 'fields'
 
   const cardTitle = IS_FIELDS ? title : post.title.raw;
   const cardDescription = IS_FIELDS ? description : post.excerpt.raw;
-  const cardButton = IS_FIELDS ? buttonText : __( 'Read More' );
+  const cardButton = IS_FIELDS ? buttonText : __('Read More', '__plugin_txtd');
 
   return (
     <Card {...props} >
-      <CardMediaWrapper media={ media } { ...props }/>
+      <CardMediaWrapper media={ media } { ...props }>
+      </CardMediaWrapper>
       <CardMeta show={showMeta}>{metaAboveTitle}</CardMeta>
       <CardTitle show={showTitle}>{cardTitle}</CardTitle>
       <CardMeta show={showMeta}>{metaBelowTitle}</CardMeta>
@@ -75,6 +78,7 @@ export const CardPreview = withMedia(( props, type ) => {
       </CardFooter>
     </Card>
   )
-});
 
+})
 
+export default SupernovaCardItemPreview;
