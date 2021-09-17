@@ -2,6 +2,8 @@ import {__} from "@wordpress/i18n";
 
 import { getMeta } from './utils';
 
+import { withSelect } from "@wordpress/data";
+
 import {
   Card,
   CardMediaWrapper,
@@ -11,12 +13,36 @@ import {
   CardFooter,
   CardButton
 } from "../card";
+import {sanitizeMediaResponse} from "../post-card/utils";
 
-export const CardPreview = ( props ) => {
+const withMedia = withSelect( (select, ownProps ) => {
+
+  const { getMedia } = select( 'core' );
+  const { post, attributes } = ownProps;
+  const { showMedia } = attributes;
+  const { featured_media } = post;
+
+  if ( ! featured_media || ! showMedia ) {
+    return null;
+  }
+
+  const mediaObject = getMedia( featured_media );
+
+  if ( ! mediaObject ) {
+    return null;
+  }
+
+  return {
+    media: sanitizeMediaResponse( mediaObject )
+  }
+});
+
+export const CardPreview = withMedia(( props, type ) => {
 
   const {
     attributes,
-    post
+    post,
+    media
   } = props;
 
   const {
@@ -24,24 +50,31 @@ export const CardPreview = ( props ) => {
     showTitle,
     showDescription,
     showButtons,
-  } = attributes;
-
-  const {
     metaAboveTitle,
     metaBelowTitle,
-  } = getMeta( props );
+    title,
+    description,
+    buttonText,
+  } = attributes;
+
+  const IS_FIELDS = type === 'fields'
+
+  const cardTitle = IS_FIELDS ? title : post.title.raw;
+  const cardDescription = IS_FIELDS ? description : post.excerpt.raw;
+  const cardButton = IS_FIELDS ? buttonText : __( 'Read More' );
 
   return (
     <Card {...props} >
+      <CardMediaWrapper media={ media } { ...props }/>
       <CardMeta show={showMeta}>{metaAboveTitle}</CardMeta>
-      <CardTitle show={showTitle}>{post.title.raw}</CardTitle>
+      <CardTitle show={showTitle}>{cardTitle}</CardTitle>
       <CardMeta show={showMeta}>{metaBelowTitle}</CardMeta>
-      <CardDescription show={showDescription}>{post.excerpt.raw}</CardDescription>
+      <CardDescription show={showDescription}>{cardDescription}</CardDescription>
       <CardFooter show={showButtons}>
-        <CardButton>{__( 'Read More' )}</CardButton>
+        <CardButton>{cardButton}</CardButton>
       </CardFooter>
     </Card>
   )
-}
+});
 
 

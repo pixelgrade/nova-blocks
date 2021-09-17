@@ -10,7 +10,8 @@ import { getColorSignalClassnames } from "@novablocks/color-signal";
 
 import {
   useInnerBlocks,
-  PostCard
+  PostCard,
+  CardPreview
 } from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
@@ -129,7 +130,8 @@ const PostsCollectionLayout = props => {
           const className = getColorSignalClassnames( innerBlock.attributes, true );
 
           return (
-            <PostCard { ...props } post={ post } className={ className } key={index} />
+//            <PostCard { ...props } post={ post } className={ className } key={index} />
+            <CardPreview { ...props } post={ post } className={ className } key={index} type={'content'} />
           )
         } )
       }
