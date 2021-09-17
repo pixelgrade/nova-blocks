@@ -1854,7 +1854,6 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 	);
 
 	$contentPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-	$innerContainerClasses = array_merge( $innerContainerClasses, $contentPaletteClasses );
 
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
 
@@ -1885,7 +1884,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 			</div>
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
 				<div class="<?php echo join( ' ', $contentClasses ); ?>">
-					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
+					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" >
 						<?php echo $content; ?>
 					</div>
 				</div>
