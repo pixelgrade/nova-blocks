@@ -3,9 +3,9 @@ import {
   __experimentalUseSlot as useSlot
 } from '@wordpress/components';
 
-const slotName = 'NovaBlocksColorSignal'
+const slotName = 'ColorSignalCustomizeControls'
 
-const {Fill, Slot: NovaBlocksColorSignalSlot } = createSlotFill( slotName );
+const {Fill, Slot: ColorSignalCustomizeControlsSlot } = createSlotFill( slotName );
 
 function Slot( {children}) {
   const slot = useSlot( slotName );
@@ -15,10 +15,10 @@ function Slot( {children}) {
     return children;
   }
 
-  return <NovaBlocksColorSignalSlot bubblesVirtually />
+  return <ColorSignalCustomizeControlsSlot bubblesVirtually />
 }
 
-const NovaBlocksColorSignal = Fill;
-NovaBlocksColorSignal.Slot = Slot;
+const ColorSignalCustomizeControls = Fill;
+ColorSignalCustomizeControls.Slot = Slot;
 
-export default NovaBlocksColorSignal;
+export default ColorSignalCustomizeControls;
