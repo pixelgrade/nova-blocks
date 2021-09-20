@@ -9,7 +9,6 @@ const EmphasisAreaControl = props => {
   const { emphasisArea } = attributes;
 
   return (
-    <>
       <NovaBlocksColorSignal>
         <RangeControl
           value={ emphasisArea }
@@ -20,7 +19,6 @@ const EmphasisAreaControl = props => {
           step={ 5 }
         />
       </NovaBlocksColorSignal>
-    </>
   )
 }
 
