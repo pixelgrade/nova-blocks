@@ -5,4 +5,11 @@
   .supernova-item__content {
     background: var(--nb-bg-color);
   }
+  
+  &[class*='layout-stacked'] {
+    
+    .supernova-item__media-wrapper + .supernova-item__content {
+      background: none;
+    }
+  }
 }

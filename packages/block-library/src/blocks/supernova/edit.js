@@ -129,7 +129,7 @@ const PostsCollectionLayout = props => {
           const className = getColorSignalClassnames( innerBlock.attributes, true );
 
           return (
-            <PostCard { ...props } post={ post } className={ className } />
+            <PostCard { ...props } post={ post } className={ className } key={index} />
           )
         } )
       }
