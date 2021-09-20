@@ -12,10 +12,10 @@ function Slot( {children}) {
   const hasFills = Boolean( slot.fills && slot.fills.length );
 
   if ( ! hasFills ) {
-    return children;
+    return null;
   }
 
-  return <ColorSignalCustomizeControlsSlot bubblesVirtually />
+  return <ColorSignalCustomizeControlsSlot />
 }
 
 const ColorSignalCustomizeControls = Fill;
