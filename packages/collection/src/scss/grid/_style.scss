@@ -93,7 +93,7 @@
     display: var(--grid-item-media-display, block);
   }
   
-  .novablocks-grid__item-content {
+  .novablocks-grid__item-description {
     display: var(--grid-item-content-display, block);
   }
   
@@ -105,7 +105,7 @@
     display: var(--grid-item-subtitle-display, block);
   }
   
-  .novablocks-grid__item-content {
+  .novablocks-grid__item-description {
     display: var(--grid-item-content-display, block);
   }
   
@@ -128,8 +128,8 @@
     font-size: calc( var(--nb-card-meta-font-size-modifier, 1) * 1em );
     line-height: var(--nb-card-meta-line-height-modifier, var(--current-line-height, 1.5));
   }
-  
-  .novablocks-card__content-size-modifier {
+
+  .novablocks-card__description-size-modifier {
     font-size: calc( var(--nb-card-content-font-size-modifier, 1) * 1em );
     line-height: var(--nb-card-content-line-height-modifier, var(--current-line-height, 1.5));
   }

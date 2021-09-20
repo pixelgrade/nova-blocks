@@ -1,4 +1,4 @@
-import { useApiFetch } from "../../../../../index";
+import { useApiFetch } from "../../../index";
 
 const Author = ( props ) => {
 

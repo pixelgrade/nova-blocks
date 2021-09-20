@@ -1335,13 +1335,13 @@ function novablocks_get_supernova_card_media_markup( $media ) {
 
 	if ( ! empty( $url ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-			echo '<video class="supernova-card__media" muted autoplay loop playsinline src="' . esc_url( $url ) . '"/>';
+			echo '<video class="supernova-item__media" muted autoplay loop playsinline src="' . esc_url( $url ) . '"/>';
 		} else {
 			$url = novablocks_get_image_url( $media, 'novablocks_medium' );
-			echo '<img class="supernova-card__media" src="' . $url . '" />';
+			echo '<img class="supernova-item__media" src="' . $url . '" />';
 		}
 	} else { ?>
-		<div class="supernova-card__media supernova-card__media--placeholder">
+		<div class="supernova-item__media supernova-item__media--placeholder">
 			<svg width="100" height="67" viewBox="0 0 100 67" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z" fill="currentColor"/>
 				<path d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z" fill="currentColor"/>
@@ -1840,9 +1840,8 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$cardClasses = array(
-		'novablocks-doppler',
-		'supernova-card',
-		'supernova-card--layout-' . $attributes[ 'cardLayout' ],
+		'supernova-item',
+		'supernova-item--layout-' . $attributes[ 'cardLayout' ],
 	);
 
 	$cssProps = array(
@@ -1851,18 +1850,17 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 	);
 
 	$innerContainerClasses = array(
-		'supernova-card__inner-container'
+		'supernova-item__inner-container'
 	);
 
 	$contentPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-	$innerContainerClasses = array_merge( $innerContainerClasses, $contentPaletteClasses );
 
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
 
 	$contentClasses = array(
-		'supernova-card__content',
-		'supernova-card__content--valign-' . $align[0],
-		'supernova-card__content--halign-' . $align[1],
+		'supernova-item__content',
+		'supernova-item__content--valign-' . $align[0],
+		'supernova-item__content--halign-' . $align[1],
 	);
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
@@ -1871,14 +1869,14 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="supernova-collection__layout-item">
+	<div class="supernova__layout-item">
 		<div <?php echo join( ' ', $data_attributes ); ?>
 			 class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
-			<div class="supernova-card__media-wrapper <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
-				<div class="supernova-card__media-aspect-ratio">
+			<div class="supernova-item__media-wrapper <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
+				<div class="supernova-item__media-aspect-ratio">
 					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-						<div class="supernova-card__media-doppler novablocks-doppler__target">
+						<div class="supernova-item__media-doppler novablocks-doppler__target">
 							<?php echo $media; ?>
 						</div>
 					</div>
@@ -1886,7 +1884,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 			</div>
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
 				<div class="<?php echo join( ' ', $contentClasses ); ?>">
-					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
+					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" >
 						<?php echo $content; ?>
 					</div>
 				</div>
@@ -1933,11 +1931,11 @@ function novablocks_get_card_item_meta( $metaValue, $attributes ) {
 	ob_start(); ?>
 
 	<?php if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
-		<div class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
-			<div class="novablocks-card__meta-size-modifier">
+		<p class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+			<span class="novablocks-card__meta-size-modifier">
 				<?php echo $metaValue; ?>
-			</div>
-		</div>
+			</span>
+		</p>
 	<?php }
 
 	return ob_get_clean();
@@ -1950,9 +1948,9 @@ function novablocks_get_card_item_title( $title, $attributes ) {
 
 	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
 		echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
-		echo '<div class="novablocks-card__title-size-modifier">';
+		echo '<span class="novablocks-card__title-size-modifier">';
 		echo $title;
-		echo '</div>';
+		echo '</span>';
 		echo '</' . $titleTag . '>';
 	}
 
@@ -1963,11 +1961,11 @@ function novablocks_get_card_item_description( $description, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
-		<div class="novablocks-grid__item-content novablocks-card__description">
-			<div class="novablocks-card__content-size-modifier">
+		<p class="novablocks-grid__item-description novablocks-card__description">
+			<span class="novablocks-card__description-size-modifier">
 				<?php echo $description; ?>
-			</div>
-		</div>
+			</span>
+		</p>
 	<?php }
 
 	return ob_get_clean();
@@ -1982,7 +1980,7 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 				<?php foreach ( $buttons as $button ) { ?>
 					<div class="wp-block-button is-style-text">
 						<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
-							<span class="novablocks-buttons-size-modifier"><?php echo $button['text']; ?></span>
+							<span class="novablocks-card__buttons-size-modifier"><?php echo $button['text']; ?></span>
 						</a>
 					</div>
 				<?php } ?>

@@ -1,6 +1,6 @@
 const TRANSITION_DURATION = 1000;
 const TRANSITION_EASING = 'easeInOutCirc';
-const FOREGROUND_SELECTOR = '.supernova-card__content';
+const FOREGROUND_SELECTOR = '.supernova-item__content';
 
 const transition = ( $current, $next, sign = 1 ) => {
   const slideWidth = $current.outerWidth();

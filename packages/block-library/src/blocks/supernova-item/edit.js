@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { Fragment, useState } from '@wordpress/element';
 
 import {
@@ -11,15 +12,16 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
 import { Popover } from '@wordpress/components';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
-
-import { SuperNova } from "@novablocks/block-editor";
-
-const { withPreviewAttributes } = SuperNova.utils;
-const { Card, CardButton, CardMediaWrapper } = SuperNova.components;
+import { Card, CardButton, CardMediaWrapper } from "@novablocks/block-editor";
 
 const SuperNovaItemEdit = props => {
 
-  const blockProps = useBlockProps();
+  const blockProps = useBlockProps( {
+    className: classnames(
+      props.className,
+      'supernova__layout-item'
+    )
+  } );
 
   return (
     <div { ...blockProps }>
@@ -53,50 +55,63 @@ const SuperNovaItemContent = ( props ) => {
 
   const [ showPopover, setShowPopover ] = useState( false );
   const innerBlocksProps = useInnerBlocksProps();
+  const TitleTagName = `h${ level + 1 }`;
+  const SubTitleTagName = `h${ level + 2 }`;
 
   if ( sourceType === 'fields' ) {
     return (
       <Fragment>
-        <RichText
-          className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
-          placeholder={ `Meta` }
-          tagName={ 'p' }
-          value={ metaAboveTitle }
-          onChange={ metaAboveTitle => { setAttributes( { metaAboveTitle } ) } }
-          allowedFormats={ [] }
-        />
-        <RichText
-          className={ `novablocks-card__title block-editor-block-list__block` }
-          placeholder={ `Title` }
-          tagName={ `h${ level + 1 }` }
-          value={ title }
-          onChange={ title => { setAttributes( { title } ) } }
-          allowedFormats={ [] }
-        />
-        <RichText
-          className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
-          placeholder={ `Meta` }
-          tagName={ 'p' }
-          value={ metaBelowTitle }
-          onChange={ metaBelowTitle => { setAttributes( { metaBelowTitle } ) } }
-          allowedFormats={ [] }
-        />
-        <RichText
-          className={ `novablocks-card__subtitle block-editor-block-list__block` }
-          placeholder={ `Subtitle` }
-          tagName={ `h${ level + 2 }` }
-          value={ subtitle }
-          onChange={ subtitle => { setAttributes( { subtitle } ) } }
-          allowedFormats={ [] }
-        />
-        <RichText
-          className={ `novablocks-card__description block-editor-block-list__block` }
-          placeholder={ `Content` }
-          tagName={ 'p' }
-          value={ description }
-          onChange={ description => { setAttributes( { description } ) } }
-          allowedFormats={ [] }
-        />
+        <div className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }>
+          <RichText
+            className={ `novablocks-card__meta-size-modifier` }
+            placeholder={ `Meta` }
+            tagName={ 'div' }
+            value={ metaAboveTitle }
+            onChange={ metaAboveTitle => { setAttributes( { metaAboveTitle } ) } }
+            allowedFormats={ [] }
+          />
+        </div>
+        <TitleTagName className={ `novablocks-card__title block-editor-block-list__block` }>
+          <RichText
+            className={ `novablocks-card__title-size-modifier` }
+            placeholder={ `Title` }
+            tagName={ 'div' }
+            value={ title }
+            onChange={ title => { setAttributes( { title } ) } }
+            allowedFormats={ [] }
+          />
+        </TitleTagName>
+        <div className={ 'novablocks-card__meta block-editor-block-list__block is-style-meta' }>
+          <RichText
+            className={ `novablocks-card__meta-size-modifier` }
+            placeholder={ `Meta` }
+            tagName={ 'p' }
+            value={ metaBelowTitle }
+            onChange={ metaBelowTitle => { setAttributes( { metaBelowTitle } ) } }
+            allowedFormats={ [] }
+          />
+        </div>
+        <SubTitleTagName className={ `novablocks-card__subtitle block-editor-block-list__block` }>
+          <RichText
+            className={ `novablocks-card__subtitle-size-modifier` }
+            placeholder={ `Subtitle` }
+            tagName= {'span'}
+            value={ subtitle }
+            onChange={ subtitle => { setAttributes( { subtitle } ) } }
+            allowedFormats={ [] }
+          />
+        </SubTitleTagName>
+
+        <p className={ `novablocks-card__description block-editor-block-list__block` }>
+          <RichText
+            className={ `novablocks-card__description-size-modifier` }
+            placeholder={ `Content` }
+            tagName={ 'span' }
+            value={ description }
+            onChange={ description => { setAttributes( { description } ) } }
+            allowedFormats={ [] }
+          />
+        </p>
         <CardButton>
           <RichText
             placeholder={ `Button` }

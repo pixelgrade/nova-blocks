@@ -5,7 +5,6 @@ export { default as BlockVerticalAlignmentToolbar } from "./block-vertical-align
 export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
 export { default as Notice } from "./notice";
-export { default as PostCard } from './post-card';
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
 export { default as SignalControl } from "./signal-control";
@@ -16,7 +15,9 @@ export { default as generateDefaults } from './generate-defaults';
 export { default as getPlaceholderImages } from './get-placeholder-images';
 export { default as normalizeImages } from './normalize-images';
 
-export { default as SuperNova } from './supernova';
+export * from './card';
+export * from './post-card';
+
 
 export {
   getSvg,

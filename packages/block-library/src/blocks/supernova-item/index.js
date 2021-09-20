@@ -53,9 +53,7 @@ registerBlockType( 'novablocks/supernova-item', {
   title: __( 'Super Nova Item', '__plugin_txtd' ),
   category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-  attributes: {
-//    ...attributes,
-  },
+  attributes,
   supports: {
     html: false,
     inserter: false,
@@ -97,9 +95,5 @@ registerBlockType( 'novablocks/supernova-item', {
   edit,
   save: function() {
     return <InnerBlocks.Content />
-  },
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'wide' } : {};
   },
 } );

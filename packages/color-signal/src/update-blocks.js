@@ -38,6 +38,34 @@ const updateBlock = ( block ) => {
     const { updateBlockAttributes } = dispatch( 'core/block-editor' );
     const { attributes, clientId } = block;
     const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+
+    const { getBlockParents, getBlock } = select( 'core/block-editor' );
+    const parents = getBlockParents( clientId ).slice();
+
+    // @todo maybe find closest parent with colorSignal support
+    if ( parents.length ) {
+      const parentClientId = parents.pop();
+      const parentBlock = getBlock( parentClientId );
+      const parentSupports = getSupports( parentBlock.name );
+
+      // @todo contentColorSignal should be part of the colorSignal config
+      const parentColorSignalSupport = parentSupports?.novaBlocks?.colorSignal;
+
+      if ( parentColorSignalSupport === true || parentColorSignalSupport?.contentColorSignal ) {
+        const { contentColorSignal, contentPaletteVariation } = parentBlock.attributes;
+
+        // @todo check if computed signal of contentPaletteVariation is the same as contentColorSignal
+        if ( paletteVariation !== contentPaletteVariation ) {
+          updateBlockAttributes( clientId, {
+            colorSignal: contentColorSignal,
+            paletteVariation: contentPaletteVariation,
+          } );
+        }
+
+        return;
+      }
+    }
+
     const parentVariation = getParentVariation( clientId );
     const absoluteVariation = getAbsoluteColorVariation( attributes );
     const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );

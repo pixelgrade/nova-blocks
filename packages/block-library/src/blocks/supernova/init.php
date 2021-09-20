@@ -28,6 +28,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
 	) );
 
 }
@@ -61,19 +62,28 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$classes = array_merge( $classes, $blockPaletteClasses );
 
 		$layoutClasses = array(
-			"supernova-collection__layout",
-			"supernova-collection__layout--" . $attributes[ 'layoutStyle' ],
-			"supernova-collection__layout--" . $attributes[ 'carouselLayout' ] . "-width",
+			"supernova__layout",
+			"supernova__layout--" . $attributes[ 'layoutStyle' ],
+			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
 		);
 
+		// @todo: Find a solution for this.
+		// The CSS Props list is getting really big,
+		// We should break them in different functions.
 		$cssProps = array(
 			'--nb-collection-columns-count: ' . $attributes[ 'columns' ],
-			'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
 			'--nb-collection-gutter: ' . $attributes[ 'layoutGutter' ],
 
 			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 			'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
+
+			'--nb-collection-emphasis-area: ' . $attributes['emphasisArea'],
+			'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
+			'--nb-card-content-padding: ' . $attributes['contentPadding'],
+			'--nb-card-media-padding: ' . $attributes['imagePadding'],
+			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
+			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
 
 		$spacingProps = novablocks_get_spacing_css( $attributes );
@@ -109,19 +119,19 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php if ( $supernova_header ) { ?>
 				<?php echo $supernova_header ?>
 			<?php } ?>
-				<div class="supernova-collection <?php echo $align_class ?>">
-					<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
-							$layoutClasses[] = 'novablocks-grid';
-						?>
-						<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
-							<?php echo $content; ?>
-						</div>
-					<?php } else { ?>
-						<div class="<?php echo join( ' ', $layoutClasses );?>">
-							<?php echo $content; ?>
-						</div>
-					<?php } ?>
+			<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
+					$layoutClasses[] = 'novablocks-grid';
+				?>
+				<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
+					<?php echo $content; ?>
 				</div>
+			<?php } else { ?>
+				<div class="wp-block__inner-container">
+					<div class="<?php echo join( ' ', $layoutClasses );?>">
+						<?php echo $content; ?>
+					</div>
+				</div>
+			<?php } ?>
 		</div>
 
 		<?php return ob_get_clean();

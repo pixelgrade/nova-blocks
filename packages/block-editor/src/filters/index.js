@@ -7,7 +7,6 @@ import "./with-content-position-matrix";
 import "./with-controls-sections";
 import "./with-deprecated-group";
 import "./with-font-size-picker"; // @todo maybe rely on supports API
-import "./with-inner-blocks";
 import "./with-latest-posts";
 import "./with-on-select-images";
 import "./with-random-defaults";

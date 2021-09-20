@@ -16,7 +16,7 @@ import {
 
 const GRID_SELECTOR = '.novablocks-grid';
 const CAROUSEL_SELECTOR = '.novablocks-collection--carousel .novablocks-collection__layout, ' +
-                          '.supernova-collection__layout--carousel';
+                          '.supernova__layout--carousel';
 
 import './carousel';
 
@@ -32,7 +32,7 @@ import './carousel';
       const $grid = $( grid );
       const $block = $grid.closest( '.novablocks-block' );
       const $cards = $grid.closest( '.novablocks-collection__cards' );
-      const $posts = $grid.children( '.novablocks-card, .supernova-card' );
+      const $posts = $grid.children( '.novablocks-card, .supernova-item' );
       const attributes = $grid.data();
       const cardsCount = $posts.length;
 

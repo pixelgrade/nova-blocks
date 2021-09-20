@@ -1,3 +1,5 @@
+export { default as getChildAttributes } from './get-child-attributes';
+
 const getPreviewAttributes = ( attributes ) => {
 
   if ( ! needsPreview( attributes ) ) {
@@ -23,9 +25,9 @@ export const needsPreview = ( attributes ) => {
 }
 
 export const withPreviewAttributes = ( WrappedComponent => {
-  return ( props => {
+  return props => {
     return (
       <WrappedComponent { ...props } attributes={ getPreviewAttributes( props.attributes ) } />
     );
-  } );
+  }
 } );
