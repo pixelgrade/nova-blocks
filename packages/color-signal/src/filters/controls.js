@@ -5,7 +5,6 @@ import {
   ControlsSection,
   ControlsTab,
   Notice,
-  ColorSignalCustomizeControls
 } from "@novablocks/block-editor";
 
 import {
@@ -16,8 +15,7 @@ import {
   BlockColorSignalControl,
   BlockColorGradeControl,
   ContentColorGradeControl,
-  EmphasisAreaControl,
-
+  ColorSignalCustomizeControls,
   withColorSignalProps,
 } from "../components";
 

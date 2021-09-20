@@ -14,7 +14,6 @@ export { default as insertTemplate } from './insert-template';
 export { default as generateDefaults } from './generate-defaults';
 export { default as getPlaceholderImages } from './get-placeholder-images';
 export { default as normalizeImages } from './normalize-images';
-export { default as ColorSignalCustomizeControls } from './color-signal-slot-fill';
 
 export * from './card';
 export * from './post-card';
@@ -40,11 +39,6 @@ export {
 	DrawerListBefore,
 	DrawerListAfter
 } from "./drawer";
-
-export {
-	default as EmphasisLevelControls,
-	EmphasisContentAreaControls,
-} from './emphasis-level-controls';
 
 export {
 	GalleryPreview,

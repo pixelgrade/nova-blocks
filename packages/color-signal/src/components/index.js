@@ -8,4 +8,6 @@ export { default as BlockColorGradeControl } from "./block-color-grade-control";
 export { default as ContentColorSignalControl } from "./content-color-signal-control";
 export { default as ContentColorGradeControl } from "./content-color-grade-control";
 
+export { default as ColorSignalCustomizeControls} from "./color-signal-slot-fill";
+
 export { default as withColorSignalProps } from "./with-color-signal-props";
