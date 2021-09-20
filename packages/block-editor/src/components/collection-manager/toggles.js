@@ -1,58 +1,58 @@
-const { __ }  = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
 const collectionToggles = [
   {
-    label: __( 'Collection Title' ),
+    label: __( 'Collection Title', '__plugin_txtd' ),
     attribute: 'showCollectionTitle'
   }, {
-    label: __( 'Collection Subtitle' ),
+    label: __( 'Collection Subtitle', '__plugin_txtd' ),
     attribute: 'showCollectionSubtitle',
   },
 ]
 
 const cardToggles = [
   {
-    label: __( 'Media' ),
+    label: __( 'Media', '__plugin_txtd' ),
     attribute: 'showMedia',
   }, {
-    label: __( 'Title' ),
+    label: __( 'Title', '__plugin_txtd' ),
     attribute: 'showTitle',
   }, {
-    label: __( 'Subtitle' ),
+    label: __( 'Subtitle', '__plugin_txtd' ),
     attribute: 'showSubtitle',
   }, {
-    label: __( 'Description' ),
+    label: __( 'Description', '__plugin_txtd' ),
     attribute: 'showDescription',
   }, {
-    label: __( 'Buttons' ),
+    label: __( 'Buttons', '__plugin_txtd' ),
     attribute: 'showButtons',
   }, {
-    label: __( 'Meta' ),
+    label: __( 'Meta', '__plugin_txtd' ),
     attribute: 'showMeta',
   }
 ]
 
 const heroToggles = [
   {
-    label: __( 'Position Indicators' ),
+    label: __( 'Position Indicators', '__plugin_txtd' ),
     attribute: 'positionIndicators'
   }, {
-    label: __( 'Scroll Indicator' ),
+    label: __( 'Scroll Indicator', '__plugin_txtd' ),
     attribute: 'scrollIndicator'
   },
   {
-    label: __( 'Inner Content' ),
+    label: __( 'Inner Content', '__plugin_txtd' ),
     attribute: 'displayInnerContent'
   }
 ]
 
 const carouselToggles = [
   {
-    label: __( 'Show Pagination' ),
+    label: __( 'Show Pagination', '__plugin_txtd' ),
     attribute: 'showPagination'
   },
   {
-    label: __( 'Show Arrows' ),
+    label: __( 'Show Arrows', '__plugin_txtd' ),
     attribute: 'showArrows'
   }
 ]
