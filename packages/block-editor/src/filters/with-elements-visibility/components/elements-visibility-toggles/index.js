@@ -1,4 +1,5 @@
-import { ToggleGroup } from "../index";
+import { ToggleGroup } from '../../../../components/index';
+
 import {
   collectionToggles,
   heroToggles,
@@ -6,7 +7,7 @@ import {
   cardToggles
 } from "./toggles";
 
-const CollectionManager = (props) => {
+const ElementsVisibilityToggles = (props) => {
 
   const {
     attributes,
@@ -19,7 +20,6 @@ const CollectionManager = (props) => {
     postsToShow
   } = attributes;
 
-  // @todo: Maybe we can find a better solution, for this checks.
   // A block is considered carousel when layoutStyle,
   // has been set to carousel, however we may extend that,
   // so the postsToShow is > 1.
@@ -56,4 +56,4 @@ const CollectionManager = (props) => {
   )
 }
 
-export default CollectionManager;
+export default ElementsVisibilityToggles;
