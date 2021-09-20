@@ -62,13 +62,13 @@ const updateAllBlocksSignal = ( siteVariation ) => {
  * @param parentVariation reference color variation
  */
 const updateBlockSignal = ( block, parentVariation ) => {
-  const attributes = block.dataset;
+  const attributes = Object.assign( {}, block.dataset );
   const { useSourceColorAsReference } = attributes;
   const palette = parseInt( attributes?.palette, 10 );
   const colorSignal = parseInt( attributes?.colorSignal, 10 );
   const innerBlocks = Array.from( block.children );
 
-  if ( ! attributes?.colorSignal ) {
+  if ( ! block?.dataset?.colorSignal ) {
     innerBlocks.forEach( innerBlock => {
       updateBlockSignal( innerBlock, parentVariation );
     } );

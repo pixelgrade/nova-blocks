@@ -1873,7 +1873,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 		<div <?php echo join( ' ', $data_attributes ); ?>
 			 class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
-			<div class="supernova-item__media-wrapper <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo novablocks_get_color_signal_data_attributes( $attributes ); ?>>
+			<div class="supernova-item__media-wrapper <?php echo join( ' ', $contentPaletteClasses ); ?>">
 				<div class="supernova-item__media-aspect-ratio">
 					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
 						<div class="supernova-item__media-doppler novablocks-doppler__target">
@@ -1903,6 +1903,9 @@ function novablocks_get_supernova_card_markup_from_post( $post, $attributes ) {
 	) );
 
 	$content_markup = novablocks_get_post_card_contents( $post, $attributes );
+
+	$attributes['colorSignal'] = $attributes['contentColorSignal'];
+	$attributes['paletteVariation'] = $attributes['contentPaletteVariation'];
 
 	return novablocks_get_supernova_card_markup( $media_markup, $content_markup, $attributes );
 
