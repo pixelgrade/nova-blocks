@@ -29,7 +29,9 @@ const BlockColorGradeControl = props => {
                         label={ __( 'Block Color Signal', '__plugin_txtd' ) }
                         value={ paletteVariation }
                         signal={ colorSignal }
-                        onChange={ onPaletteVariationChange } />
+                        useReference={ true }
+                        onChange={ onPaletteVariationChange }
+    />
   )
 }
 

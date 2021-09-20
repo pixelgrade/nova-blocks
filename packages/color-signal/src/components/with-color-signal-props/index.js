@@ -31,14 +31,14 @@ const withColorSignalProps = OriginalComponent => {
       const finalVariation = removeSiteVariationOffset( nextVariation );
 
       const { contentColorSignal, contentPaletteVariation } = nextAttributes;
-      const nextContentPaletteVariation = computeColorSignal( nextVariation, contentColorSignal, contentPaletteVariation );
+      const nextContentVariation = computeColorSignal( finalVariation, contentColorSignal, contentPaletteVariation );
 
       setAttributes( {
         palette: palette,
         paletteVariation: nextSourceAsReference ? 1 : finalVariation,
         useSourceColorAsReference: nextSourceAsReference,
         colorSignal: nextSignal,
-        contentPaletteVariation: nextContentPaletteVariation,
+        contentPaletteVariation: contentColorSignal === 0 ? finalVariation : nextContentVariation,
       } );
 
     }, [ attributes ] );

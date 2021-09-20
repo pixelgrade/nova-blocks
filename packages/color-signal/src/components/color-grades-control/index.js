@@ -20,6 +20,7 @@ const ColorGradesControl = ( props ) => {
     signal,
     clientId,
     value,
+    useReference
   } = props;
 
   const onChange = props.onChange || (() => {});
@@ -43,7 +44,7 @@ const ColorGradesControl = ( props ) => {
 
   const parentVariation = getParentVariation( clientId );
   const variations = Array.from( Array( 12 ) ).map( ( undefined, index ) => index + 1 );
-  const sourceOffset = useSourceColorAsReference ? sourceIndex : 0;
+  const sourceOffset = useReference && useSourceColorAsReference ? sourceIndex : 0;
   const selectedVariation = normalizeVariationValue( value + sourceOffset );
 
   return (

@@ -49,7 +49,9 @@ const ContentColorGradeControl = props => {
                         label={ __( 'Content Area Color Signal', '__plugin_txtd' ) }
                         value={ contentPaletteVariation }
                         signal={ contentColorSignal }
-                        onChange={ onColorGradeChange }/>
+                        useReference={ false }
+                        onChange={ onColorGradeChange }
+    />
   )
 }
 
