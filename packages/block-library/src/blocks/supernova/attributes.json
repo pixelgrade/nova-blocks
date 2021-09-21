@@ -23,14 +23,6 @@
 		"type": "string",
 		"default": "A collection of our latest articles displayed in a cohesive layout"
 	},
-	"showCollectionTitle": {
-		"type": "boolean",
-		"default": true
-	},
-	"showCollectionSubtitle": {
-		"type": "boolean",
-		"default": true
-	},
 	"collectionTitleLevel": {
 		"type": "number",
 		"default": 2

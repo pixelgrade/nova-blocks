@@ -14,6 +14,7 @@ import { onBeforeSlideChange } from './utils';
       useTransform: false, // to allow parallax effect inside
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
+      arrows: attributes.showArrows === 1,
       variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
       infinite: true,
       responsive: [

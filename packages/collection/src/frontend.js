@@ -187,13 +187,15 @@ import './carousel';
     $( selector ).each( function( i, carousel ) {
 
       const $carousel = $( carousel );
-      const $block = $carousel.closest( '[data-layout-style="carousel"]' );
+      const block = carousel.closest( '[data-layout-style="carousel"]' );
+      const attributes = block.dataset;
 
       const SLICK_OPTIONS = {
         useTransform: false, // to allow parallax effect inside
-        slidesToShow: $block.data( 'columns' ),
-        dots: $block.data( 'show-pagination' ) === 1,
-        variableWidth: $block.data( 'carousel-layout' ) === 'variable',
+        slidesToShow: attributes.columns,
+        arrows: attributes.showArrows,
+        dots: attributes.showPagination,
+        variableWidth: attributes.carouselLayout === 'variable',
         customPaging: function( slick, index ) {
           return '<a>' + ( index + 1 ) + '</a>';
         },

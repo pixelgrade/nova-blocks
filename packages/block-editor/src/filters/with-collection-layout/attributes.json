@@ -74,9 +74,5 @@
 	"carouselLayout": {
 		"type": "string",
 		"default": "fixed"
-	},
-	"showPagination": {
-		"type": "boolean",
-		"default": true
 	}
 }

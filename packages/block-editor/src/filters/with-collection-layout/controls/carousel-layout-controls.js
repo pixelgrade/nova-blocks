@@ -17,7 +17,6 @@ const CarouselLayoutControls = ( props ) => {
   const {
     layoutStyle,
     carouselLayout,
-    showPagination
   } = attributes;
 
   if ( layoutStyle !== "carousel" ) {
@@ -42,14 +41,6 @@ const CarouselLayoutControls = ( props ) => {
             { label: 'Variable Width', value: 'variable' },
             { label: 'Content Width', value: 'content' },
           ] }
-        />
-        { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
-        <ToggleControl
-          label={ __( 'Show Pagination', '__plugin_txtd' ) }
-          checked={ showPagination }
-          onChange={ ( showPagination ) => {
-            setAttributes( { showPagination } )
-          } }
         />
       </ControlsGroup>
     </Fragment>

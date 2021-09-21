@@ -48,11 +48,11 @@ const heroToggles = [
 
 const carouselToggles = [
   {
-    label: __( 'Show Pagination', '__plugin_txtd' ),
+    label: __( 'Pagination', '__plugin_txtd' ),
     attribute: 'showPagination'
   },
   {
-    label: __( 'Show Arrows', '__plugin_txtd' ),
+    label: __( 'Arrows', '__plugin_txtd' ),
     attribute: 'showArrows'
   }
 ]
