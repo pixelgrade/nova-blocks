@@ -16,7 +16,7 @@ const PostsCountControl = ( props ) => {
       key={ 'collection-items-count' }
       label={ __( 'Items Count', '__plugin_txtd' ) }
       value={ postsToShow }
-      onChange={ postsToShow => { setAttributes( postsToShow ) } }
+      onChange={ postsToShow => { setAttributes( { postsToShow } ) } }
       min={ 1 }
       max={ 20 }
       step={ 1 }

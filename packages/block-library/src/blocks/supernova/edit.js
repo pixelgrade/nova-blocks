@@ -41,7 +41,7 @@ const SupernovaEdit = props => {
     const newInnerBlocks = innerBlocks.slice( 0, postsToShow );
 
     if ( postsToShow > itemsCount ) {
-      for ( let i = 0; i <  postsToShow - itemsCount; i++ ) {
+      for ( let i = 0; i < postsToShow - itemsCount; i++ ) {
         newInnerBlocks.push( createBlock( 'novablocks/supernova-item', {
           sourceType,
           cardLayout,
