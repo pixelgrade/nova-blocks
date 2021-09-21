@@ -68,7 +68,7 @@ const updateBlockSignal = ( block, parentVariation ) => {
   const colorSignal = parseInt( attributes?.colorSignal, 10 );
   const innerBlocks = Array.from( block.children );
 
-  if ( attributes?.colorSignal ) {
+  if ( ! attributes?.colorSignal ) {
     innerBlocks.forEach( innerBlock => {
       updateBlockSignal( innerBlock, parentVariation );
     } );
