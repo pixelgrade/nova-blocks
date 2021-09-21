@@ -1,11 +1,15 @@
 {
-	"showMedia": {
+	"showCollectionTitle": {
 		"type": "boolean",
 		"default": true
 	},
-	"showMeta": {
+	"showCollectionSubtitle": {
 		"type": "boolean",
-		"default": false
+		"default": true
+	},
+	"showMedia": {
+		"type": "boolean",
+		"default": true
 	},
 	"showTitle": {
 		"type": "boolean",
@@ -20,6 +24,30 @@
 		"default": true
 	},
 	"showButtons": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMeta": {
+		"type": "boolean",
+		"default": false
+	},
+	"positionIndicators": {
+		"type": "boolean",
+		"default": false
+	},
+	"scrollIndicator": {
+		"type": "boolean",
+		"default": false
+	},
+	"displayInnerContent": {
+		"type": "boolean",
+		"default": false
+	},
+	"showPagination": {
+		"type": "boolean",
+		"default": false
+	},
+	"showArrows": {
 		"type": "boolean",
 		"default": true
 	}

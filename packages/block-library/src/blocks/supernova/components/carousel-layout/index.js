@@ -6,11 +6,13 @@ const CarouselLayout = ( props ) => {
     attributes: {
       columns,
       carouselLayout,
+      showArrows,
       showPagination,
     },
   } = props;
 
   const settings = {
+    arrows: showArrows,
     dots: showPagination,
     infinite: true,
     variableWidth: carouselLayout === 'variable' || carouselLayout === 'content',
