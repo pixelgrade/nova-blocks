@@ -1983,15 +1983,13 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 
 	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons ) ) { ?>
 		<div class="novablocks-grid__item-buttons novablocks-card__buttons">
-			<div class="wp-block-buttons alignleft">
-				<?php foreach ( $buttons as $button ) { ?>
-					<div class="wp-block-button is-style-text">
-						<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
-							<span class="novablocks-card__buttons-size-modifier"><?php echo $button['text']; ?></span>
-						</a>
-					</div>
-				<?php } ?>
-			</div>
+			<?php foreach ( $buttons as $button ) { ?>
+				<div class="wp-block-button is-style-text">
+					<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
+						<span class="novablocks-card__buttons-size-modifier"><?php echo $button['text']; ?></span>
+					</a>
+				</div>
+			<?php } ?>
 		</div>
 	<?php }
 
