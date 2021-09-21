@@ -49,7 +49,7 @@
   
   &--sidebar-right {
     
-    .novablocks-content {
+    > .novablocks-content {
      
       > *:not([class*='align']) {
         --block-content-start: var(--block-limit-left);
@@ -184,8 +184,12 @@
 .novablocks-sidecar--sidebar-left {
   
   .novablocks-content {
+
+    > *:not([class*='align']):not([data-align]) {
+      --block-content-end: var(--block-limit-right);
+  
+    }
     
-    --block-content-end: var(--block-limit-right);
   }
 }
 

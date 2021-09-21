@@ -212,7 +212,7 @@
     .novablocks-sidebar,
     .novablocks-content {
       > #{$grid-selector} {
-        @include block-outline;
+        //@include block-outline;
       }
     }
   }
