@@ -41,11 +41,6 @@ export {
 } from "./drawer";
 
 export {
-	default as EmphasisLevelControls,
-	EmphasisContentAreaControls,
-} from './emphasis-level-controls';
-
-export {
 	GalleryPreview,
 	GalleryPlaceholder
 } from './gallery-options';
