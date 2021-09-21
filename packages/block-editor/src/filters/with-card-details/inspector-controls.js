@@ -63,23 +63,20 @@ const InspectorControls = ( props ) => {
             />
           </PanelRow>
         </ControlsGroup>
-        {
-          name === 'novablocks/posts-collection' &&
-          <ControlsGroup title={ __( 'Metadata Position' ) }>
-            <RadioControl
-              key={ 'collection-image-resizing' }
-              selected={ metadataPosition }
-              onChange={ metadataPosition => {
-                setAttributes( { metadataPosition } )
-              } }
-              options={ [
-                { label: 'Above Title', value: 'above-title' },
-                { label: 'Below Title', value: 'below-title' },
-                { label: 'Split (Above Title / Below Content)', value: 'split' },
-              ] }
-            />
-          </ControlsGroup>
-        }
+        <ControlsGroup title={ __( 'Metadata Position' ) }>
+          <RadioControl
+            key={ 'collection-image-resizing' }
+            selected={ metadataPosition }
+            onChange={ metadataPosition => {
+              setAttributes( { metadataPosition } )
+            } }
+            options={ [
+              { label: 'Above Title', value: 'above-title' },
+              { label: 'Below Title', value: 'below-title' },
+              { label: 'Split (Above Title / Below Content)', value: 'split' },
+            ] }
+          />
+        </ControlsGroup>
       </ControlsTab>
     </ControlsSection>
   )

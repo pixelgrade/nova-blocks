@@ -212,7 +212,7 @@
     .novablocks-sidebar,
     .novablocks-content {
       > #{$grid-selector} {
-        @include block-outline;
+        //@include block-outline;
       }
     }
   }
@@ -298,6 +298,18 @@
       --block-content-start: var(--block-limit-left);
       --block-content-end: ce;
     }
+  
+    /*
+     * We need to override alignments
+     * applied by layout-reset.
+     */
+    > #{$grid-selector} {
+      
+      > *:not([class*='align'])[class] {
+        --block-content-start: var(--block-limit-left);
+        --block-content-end: ce;
+      }
+    }
   }
 }
 
@@ -317,6 +329,18 @@
     [data-novablocks-alignment="pull-left"] {
       --block-content-start: cs;
       --block-content-end: var(--block-limit-right)
+    }
+  
+    /*
+     * We need to override alignments
+     * applied by layout-reset.
+     */
+    > #{$grid-selector} {
+    
+      > *:not([class*='align'])[class] {
+        --block-content-start: cs;
+        --block-content-end: var(--block-limit-right);
+      }
     }
   }
 }
