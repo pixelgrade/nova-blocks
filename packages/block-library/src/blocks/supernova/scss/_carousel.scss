@@ -124,4 +124,41 @@
       transform: translate(-70%, -50%) rotate(45deg);
     }
   }
+  
+  
+}
+
+/*
+ * Supernova does not have collection
+ * layout or card stacking classes,
+ * so we are using data attributes to
+ * style properly.
+ * This styles are getting applied when
+ * Collection Layout is Carousel,
+ * Card Layout is Stacked,
+ * Pagination is true,
+ * and Number of Items per Row is set to 1.
+ */
+[data-layout-style="carousel"] {
+  
+  &[data-card-layout="stacked"] {
+    
+    &[data-show-pagination="1"] {
+      
+      &[data-columns="1"] {
+        
+        .supernova-item__content {
+          padding-bottom: calc(3 * var(--nb-spacing));
+        }
+  
+        .slick-dots {
+          position: absolute;
+          bottom: var(--nb-spacing);
+    
+          z-index: 1000;
+        }
+      }
+     
+    }
+  }
 }
